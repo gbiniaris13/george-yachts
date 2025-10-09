@@ -1,14 +1,13 @@
-import React, { useState, useRef } from "react"; // Added useRef
+import React, { useState, useRef } from "react";
 
-// IMPORTANT: Next.js standard for public ENV vars is NEXT_PUBLIC_...
-// You must set NEXT_PUBLIC_RECAPTCHA_SITE_KEY in your .env.local and Vercel settings.
+// FIX: Correctly reference the public environment variable here.
+// This key must be available client-side (via NEXT_PUBLIC_ prefix).
 const RECAPTCHA_PUBLIC_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
 const ContactFormSection = () => {
   const [status, setStatus] = useState("");
   const formRef = React.useRef(null);
 
-  // NOTE: This component is now configured for submission to a Vercel Serverless Function (API Route).
   const handleVercelSubmit = async (e) => {
     e.preventDefault();
     setStatus("Submitting...");
@@ -18,6 +17,7 @@ const ContactFormSection = () => {
     // --- 1. Get reCAPTCHA Token ---
     try {
       if (!RECAPTCHA_PUBLIC_KEY) {
+        // Throws an error if key is missing, matching your console output
         throw new Error("RECAPTCHA_PUBLIC_KEY not configured.");
       }
 
@@ -90,7 +90,7 @@ const ContactFormSection = () => {
       <div className="relative z-10 flex items-center justify-center h-full p-4 md:p-8">
         {/* FORM CONTAINER: Transparent, no blur/shadow */}
         <div className="w-full max-w-lg bg-transparent p-6 sm:p-10 rounded-xl">
-          <h2 className="text-4xl font-bold text-white mb-6 text-center">
+          <h2 className="text-4xl font-extrabold text-white mb-6 text-center">
             CONTACT
           </h2>
 
