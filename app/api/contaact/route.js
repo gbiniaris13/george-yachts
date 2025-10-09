@@ -1,16 +1,11 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-
-// Libraries needed for ReCAPTCHA verification
 import axios from "axios";
 
-// You must set these environment variables in your Vercel Project Settings
-// NOTE: These are server-side only variables (no NEXT_PUBLIC_ prefix)
 const GMAIL_USER = process.env.GMAIL_USER;
 const GMAIL_PASS = process.env.GMAIL_PASS;
-const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY; // The private key
+const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
 
-// Configure the email transport securely outside the handler function
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -85,7 +80,7 @@ export async function POST(request) {
 
     // Success response
     return NextResponse.json(
-      { message: "Email sent successfully!" },
+      { message: "Message sent successfully!" },
       { status: 200 }
     );
   } catch (error) {
