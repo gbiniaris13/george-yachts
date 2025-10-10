@@ -1,6 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Script from "next/script";
+import Script from "next/script"; // Ensure Script is imported
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,15 +23,18 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      {recaptchaKey && (
-        <Script
-          src={`https://www.google.com/recaptcha/enterprise.js?render=${recaptchaKey}`}
-          strategy="beforeInteractive"
-        />
-      )}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* FIX: Moved the Script component inside the body tag to resolve the 'outside the main document' compilation error. */}
+        {recaptchaKey && (
+          <Script
+            id="recaptcha-script" // Static ID required by Next.js
+            src={`https://www.google.com/recaptcha/enterprise.js?render=${recaptchaKey}`}
+            strategy="beforeInteractive"
+          />
+        )}
+
         {children}
       </body>
     </html>

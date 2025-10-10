@@ -8,6 +8,7 @@ import Disruptors from "./components/Disruptors";
 import TwoColumnLayout from "./components/TwoColumnLayout";
 import Footer from "./components/Footer";
 import ContactFormSection from "./components/ContactFormSection";
+import ScrollPopup from "./components/ScrollPopup";
 
 const navLinks = [
   {
@@ -163,6 +164,7 @@ const Home = () => {
         <ContactFormSection />
         <Footer />
       </div>
+      <ScrollPopup />
     </div>
   );
 };

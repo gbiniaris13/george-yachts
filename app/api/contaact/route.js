@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import axios from "axios";
 
+// Environment variables (Vercel Project Settings)
 const GMAIL_USER = process.env.GMAIL_USER;
 const GMAIL_PASS = process.env.GMAIL_PASS;
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
@@ -14,14 +15,19 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// --- FIX: OPTIONS Handler (Allows preflight checks to succeed) ---
+export async function OPTIONS() {
+  // Return an empty response with status 200/204 to confirm the server accepts requests.
+  return NextResponse.json(null, { status: 200 });
+}
+
 // The handler for POST requests (form submission)
 export async function POST(request) {
   try {
-    // 1. Parse Payload (includes form fields AND recaptchaToken)
     const payload = await request.json();
-    const { name, email, phone, message, recaptchaToken } = payload; // Added recaptchaToken
+    const { name, email, phone, message, recaptchaToken } = payload;
 
-    // 2. Simple Validation
+    // 1. Validation Check
     if (!name || !email || !phone || !message || !recaptchaToken) {
       return NextResponse.json(
         { message: "Missing required fields or ReCAPTCHA token." },
@@ -29,36 +35,27 @@ export async function POST(request) {
       );
     }
 
-    // --- 3. RECAPTCHA VERIFICATION ---
-    // If the secret key isn't set in Vercel, block the request
+    // 2. RECAPTCHA VERIFICATION
     if (!RECAPTCHA_SECRET_KEY) {
-      console.error(
-        "RECAPTCHA_SECRET_KEY is not configured in environment variables."
-      );
       return NextResponse.json(
-        { message: "Server configuration error." },
+        { message: "Server configuration error (Secret Key missing)." },
         { status: 500 }
       );
     }
 
     const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`;
-
-    // Make a secure POST request to Google for verification
     const verificationResponse = await axios.post(verificationUrl);
     const { success, score } = verificationResponse.data;
 
-    // Check if verification failed or score is too low (e.g., below 0.7 for v3)
     if (!success || score < 0.7) {
-      console.warn(`Bot detected. Score: ${score}`);
       return NextResponse.json(
-        { message: "Bot verification failed. Please try refreshing." },
-        { status: 403 } // Forbidden
+        { message: "Bot verification failed. Score: " + score },
+        { status: 403 }
       );
     }
-    // --- END RECAPTCHA VERIFICATION ---
 
-    // 4. Send Email (Only runs if ReCAPTCHA passes)
-    const mailOptions = {
+    // 3. Send Email
+    await transporter.sendMail({
       from: GMAIL_USER,
       to: GMAIL_USER,
       subject: `[Yacht Inquiry] New Contact from ${name}`,
@@ -74,18 +71,15 @@ export async function POST(request) {
         <hr>
         <p style="font-size: 10px;">ReCAPTCHA Score: ${score}</p>
       `,
-    };
-
-    await transporter.sendMail(mailOptions);
+    });
 
     // Success response
     return NextResponse.json(
-      { message: "Message sent successfully!" },
+      { message: "Email sent successfully!" },
       { status: 200 }
     );
   } catch (error) {
     console.error("API Route Error:", error);
-    // Respond with a 500 error if the mail server fails
     return NextResponse.json(
       { message: "Failed to send email due to server or connection error." },
       { status: 500 }
