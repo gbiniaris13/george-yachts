@@ -16,9 +16,15 @@ const transporter = nodemailer.createTransport({
 });
 
 // --- FIX: OPTIONS Handler (Allows preflight checks to succeed) ---
+// This handler must return specific headers required by the browser.
 export async function OPTIONS() {
-  // Return an empty response with status 200/204 to confirm the server accepts requests.
-  return NextResponse.json(null, { status: 200 });
+  return NextResponse.json(null, {
+    status: 204, // Use 204 No Content for successful preflight response
+    headers: {
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
 }
 
 // The handler for POST requests (form submission)
@@ -48,6 +54,7 @@ export async function POST(request) {
     const { success, score } = verificationResponse.data;
 
     if (!success || score < 0.7) {
+      console.warn(`Bot detected. Score: ${score}`);
       return NextResponse.json(
         { message: "Bot verification failed. Score: " + score },
         { status: 403 }
