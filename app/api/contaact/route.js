@@ -1,16 +1,14 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-// Removed: import axios from "axios"; // Not needed, using native fetch
+// Removed: import axios from "axios";
 
-// Environment variables (Vercel Project Settings)
+// Environment variables
 const GMAIL_USER = process.env.GMAIL_USER;
 const GMAIL_PASS = process.env.GMAIL_PASS;
-const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY; // The private key
+const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
 
-// Configure the email transport securely
 const transporter = nodemailer.createTransport({
   service: "gmail",
-  // Note: For Gmail/Workspace, using service: 'gmail' is standard.
   auth: {
     user: GMAIL_USER,
     pass: GMAIL_PASS,
@@ -29,48 +27,63 @@ const sendMailPromise = (mailOptions) =>
   });
 
 export async function POST(request) {
+  // Define default headers for all success/error responses
+  const defaultHeaders = {
+    "Access-Control-Allow-Headers":
+      "Content-Type, Authorization, X-Requested-With, Accept",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+  };
+
   try {
-    // 1. Parse Payload
     const payload = await request.json();
     const { name, email, phone, message, recaptchaToken } = payload;
 
-    // 2. Initial Validation (All fields required)
+    // 1. Validation Check
     if (!name || !email || !phone || !message || !recaptchaToken) {
       return NextResponse.json(
         { message: "Missing required fields or ReCAPTCHA token." },
-        { status: 400 }
+        { status: 400, headers: defaultHeaders }
       );
     }
 
-    // --- 3. RECAPTCHA VERIFICATION (Using native fetch) ---
+    // 2. RECAPTCHA VERIFICATION (Using Native Fetch)
     if (!RECAPTCHA_SECRET_KEY) {
       return NextResponse.json(
         { message: "Server configuration error (Secret Key missing)." },
-        { status: 500 }
+        { status: 500, headers: defaultHeaders }
       );
     }
 
-    const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`;
+    const verificationUrl = `https://www.google.com/recaptcha/api/siteverify`;
 
-    // Make a secure POST request to Google using native fetch
+    // Create the body using URLSearchParams, as required by Google's verification API
+    const verificationBody = new URLSearchParams({
+      secret: RECAPTCHA_SECRET_KEY,
+      response: recaptchaToken,
+    });
+
+    // FIX: Using native fetch with explicit headers for compatibility
     const verificationResponse = await fetch(verificationUrl, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded", // CRUCIAL header for this API
+      },
+      body: verificationBody.toString(),
     });
+
     const verificationData = await verificationResponse.json();
     const score = verificationData.score;
 
-    // Check if verification failed or score is too low (0.7 is standard threshold)
     if (!verificationData.success || score < 0.7) {
       console.warn(`Bot detected. Score: ${score}`);
       return NextResponse.json(
         { message: "Bot verification failed. Score: " + score },
-        { status: 403 } // Forbidden
+        { status: 403, headers: defaultHeaders }
       );
     }
-    // --- END RECAPTCHA VERIFICATION ---
 
-    // 4. Send Email (Only runs if ReCAPTCHA passes)
-    const mailOptions = {
+    // 3. Send Email
+    await sendMailPromise({
       from: GMAIL_USER,
       to: GMAIL_USER,
       subject: `[Yacht Inquiry] New Contact from ${name}`,
@@ -86,20 +99,18 @@ export async function POST(request) {
         <hr>
         <p style="font-size: 10px;">ReCAPTCHA Score: ${score}</p>
       `,
-    };
-
-    await sendMailPromise(mailOptions);
+    });
 
     // Success response
     return NextResponse.json(
       { message: "Email sent successfully!" },
-      { status: 200 }
+      { status: 200, headers: defaultHeaders }
     );
   } catch (error) {
     console.error("API Route Error:", error);
     return NextResponse.json(
       { message: "Failed to send email due to server or connection error." },
-      { status: 500 }
+      { status: 500, headers: defaultHeaders }
     );
   }
 }
