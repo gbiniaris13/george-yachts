@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import axios from "axios"; // Re-added for robust external verification
+// Removed: import axios from "axios";
 
 // Environment variables
 const GMAIL_USER = process.env.GMAIL_USER;
@@ -32,6 +32,8 @@ export async function POST(request) {
     "Access-Control-Allow-Headers":
       "Content-Type, Authorization, X-Requested-With, Accept",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
+    // FIX: Add cache busting headers to ensure Vercel and browser don't reuse cached headers
+    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
   };
 
   try {
@@ -46,7 +48,7 @@ export async function POST(request) {
       );
     }
 
-    // 2. RECAPTCHA VERIFICATION (Using Axios)
+    // 2. RECAPTCHA VERIFICATION (Using Native Fetch)
     if (!RECAPTCHA_SECRET_KEY) {
       return NextResponse.json(
         { message: "Server configuration error (Secret Key missing)." },
@@ -56,21 +58,25 @@ export async function POST(request) {
 
     const verificationUrl = `https://www.google.com/recaptcha/api/siteverify`;
 
-    // Axios sends data perfectly as application/x-www-form-urlencoded
-    const verificationResponse = await axios.post(
-      verificationUrl,
-      null, // Body is null as parameters are sent via URL
-      {
-        params: {
-          secret: RECAPTCHA_SECRET_KEY,
-          response: recaptchaToken,
-        },
-      }
-    );
+    // Create the body using URLSearchParams, as required by Google's verification API
+    const verificationBody = new URLSearchParams({
+      secret: RECAPTCHA_SECRET_KEY,
+      response: recaptchaToken,
+    });
 
-    const { success, score } = verificationResponse.data;
+    // Using native fetch with explicit headers for stability
+    const verificationResponse = await fetch(verificationUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded", // CRUCIAL header for this external API
+      },
+      body: verificationBody.toString(),
+    });
 
-    if (!success || score < 0.7) {
+    const verificationData = await verificationResponse.json();
+    const score = verificationData.score;
+
+    if (!verificationData.success || score < 0.7) {
       console.warn(`Bot detected. Score: ${score}`);
       return NextResponse.json(
         { message: "Bot verification failed. Score: " + score },
@@ -116,9 +122,11 @@ export async function OPTIONS() {
   return NextResponse.json(null, {
     status: 204,
     headers: {
-      "Access-Control-Headers":
+      "Access-Control-Allow-Headers":
         "Content-Type, Authorization, X-Requested-With, Accept",
       "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+      // FIX: Add cache busting headers to ensure Vercel and browser don't reuse cached headers
+      "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
     },
   });
 }
