@@ -1,9 +1,5 @@
 import React, { useState, useRef } from "react";
 
-// FIX: Correctly reference the public environment variable here.
-// This key must be available client-side (via NEXT_PUBLIC_ prefix).
-const RECAPTCHA_PUBLIC_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-
 const ContactFormSection = () => {
   const [status, setStatus] = useState("");
   const formRef = React.useRef(null);
@@ -12,59 +8,29 @@ const ContactFormSection = () => {
     e.preventDefault();
     setStatus("Submitting...");
 
-    let recaptchaToken;
-
-    // --- 1. Get reCAPTCHA Token ---
-    try {
-      if (!RECAPTCHA_PUBLIC_KEY) {
-        // Throws an error if key is missing, matching your console output
-        throw new Error("RECAPTCHA_PUBLIC_KEY not configured.");
-      }
-
-      // We assume the global grecaptcha object is available from the script loaded in layout.js
-      if (typeof grecaptcha !== "undefined" && grecaptcha.enterprise) {
-        recaptchaToken = await grecaptcha.enterprise.execute(
-          RECAPTCHA_PUBLIC_KEY,
-          { action: "contact_form_submit" }
-        );
-      } else if (typeof grecaptcha !== "undefined" && grecaptcha.execute) {
-        recaptchaToken = await grecaptcha.execute(RECAPTCHA_PUBLIC_KEY, {
-          action: "contact_form_submit",
-        });
-      } else {
-        // Fallback if script hasn't loaded (usually during development)
-        console.warn("reCAPTCHA script not found. Proceeding with mock token.");
-        recaptchaToken = "mock_token";
-      }
-    } catch (error) {
-      console.error("reCAPTCHA execution failed:", error);
-      setStatus("Submission failed: ReCAPTCHA error (Check console/script).");
-      return;
-    }
-
-    // 2. Prepare Payload (including token)
+    // 1. Get form data (Native FormData object)
     const formData = new FormData(formRef.current);
-    const payload = {
-      ...Object.fromEntries(formData),
-      recaptchaToken: recaptchaToken, // Include the token for backend verification
-    };
+
+    // 2. CONVERSION TO URL-ENCODED STRING (CRITICAL CHANGE)
+    const payloadBody = new URLSearchParams(formData).toString();
 
     // 3. Submitting to the Next.js API Route (/api/contact)
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
+        // IMPORTANT: Sending as URL-encoded form data
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify(payload),
+        body: payloadBody, // Sending the URL-encoded string
       });
 
       if (response.ok) {
         setStatus("Message sent successfully! We will be in touch shortly.");
         formRef.current.reset();
       } else {
-        const errorData = await response.json();
-        setStatus(`Submission failed: ${errorData.message || "Server error."}`);
+        // Since we are sending simple data, we handle the error response carefully
+        setStatus("Submission failed. Please check the logs.");
       }
     } catch (error) {
       console.error("Network or server error:", error);
@@ -77,12 +43,11 @@ const ContactFormSection = () => {
       {/* 1. Background Image/Video Container */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/form_bg.jpg" // IMPORTANT: Update this path to your actual image!
+          src="/images/form_bg.jpg"
           alt="Luxury yacht background for contact form"
           className="w-full h-full object-cover"
           onError={(e) => (e.target.src = "/images/form_bg.jpg")}
         />
-        {/* Dark overlay for better form readability */}
         <div className="absolute inset-0 bg-black opacity-60"></div>
       </div>
 
@@ -94,14 +59,11 @@ const ContactFormSection = () => {
             CONTACT
           </h2>
 
-          {/* NEXT.JS API FORM SETUP: Added ref for data extraction */}
           <form
             ref={formRef}
             onSubmit={handleVercelSubmit}
             className="space-y-4"
           >
-            {/* The name attribute is still required on all inputs for form data collection */}
-
             {/* Name Field (REQUIRED) */}
             <div>
               <label
@@ -174,20 +136,17 @@ const ContactFormSection = () => {
               ></textarea>
             </div>
 
-            {/* ReCAPTCHA Note (Kept for compliance) */}
             <p className="text-xs text-white text-center">
               This site is protected by reCAPTCHA <br></br>and the Google
               Privacy Policy and Terms of Service apply.
             </p>
 
-            {/* Status Message */}
             {status && (
               <p className="text-center font-medium text-sm pt-2 text-white">
                 {status}
               </p>
             )}
 
-            {/* Submit Button */}
             <button
               type="submit"
               className="w-full flex justify-center cursor-pointer py-3 px-4 border border-transparent rounded-full shadow-md text-base font-medium text-white bg-black hover:bg-white hover:text-[#02132d] transition duration-300 active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-offset-2"

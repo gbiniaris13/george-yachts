@@ -5,7 +5,6 @@ import nodemailer from "nodemailer";
 const GMAIL_USER = process.env.GMAIL_USER;
 const GMAIL_PASS = process.env.GMAIL_PASS;
 
-// Setup Nodemailer transport
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -27,16 +26,26 @@ const sendMailPromise = (mailOptions) =>
 
 export async function POST(request) {
   try {
-    const payload = await request.json();
-    const { name, email, phone, message } = payload;
+    // CRITICAL FIX: Get raw text body and parse URL-encoded parameters
+    const text = await request.text();
+    const params = new URLSearchParams(text);
+
+    // Extract fields directly from URLSearchParams
+    const name = params.get("name");
+    const email = params.get("email");
+    const phone = params.get("phone");
+    const message = params.get("message");
 
     // 1. Validation Check (Minimal)
     if (!name || !email || !phone || !message) {
+      // NOTE: We rely on Vercel to handle basic headers for simple requests
       return NextResponse.json(
         { message: "Missing required fields." },
         { status: 400 }
       );
     }
+
+    // --- SECURITY STEP REMOVED: ReCAPTCHA Verification ---
 
     // 2. Send Email
     await sendMailPromise({
@@ -44,7 +53,15 @@ export async function POST(request) {
       to: GMAIL_USER,
       subject: `[Yacht Inquiry] New Contact from ${name}`,
       replyTo: email,
-      html: `Name: ${name}<br>Email: ${email}<br>Phone: ${phone}<br>Message: ${message}`,
+      html: `
+        <h3>New Website Inquiry:</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <hr>
+        <p><strong>Message:</strong></p>
+        <p style="white-space: pre-line;">${message}</p>
+      `,
     });
 
     // Success response
@@ -54,15 +71,16 @@ export async function POST(request) {
     );
   } catch (error) {
     console.error("API Route Error:", error);
+    // Note: Logging the full error in Vercel is important for debugging mail issues.
     return NextResponse.json(
-      { message: "Failed to send email." },
+      { message: "Failed to send email due to server or connection error." },
       { status: 500 }
     );
   }
 }
 
-// OPTIONS Handler: Bare minimum response, relying on next.config.js for headers
+// OPTIONS Handler: Bare minimum response to pass preflight check
 export async function OPTIONS() {
-  // Use Response object with 204 No Content for successful preflight check
+  // Use a simple Response object with 204 No Content for successful preflight check
   return new Response(null, { status: 204 });
 }
