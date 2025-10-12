@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-// Removed: import axios from "axios";
+import axios from "axios"; // Re-added for robust external verification
 
 // Environment variables
 const GMAIL_USER = process.env.GMAIL_USER;
@@ -46,7 +46,7 @@ export async function POST(request) {
       );
     }
 
-    // 2. RECAPTCHA VERIFICATION (Using Native Fetch)
+    // 2. RECAPTCHA VERIFICATION (Using Axios)
     if (!RECAPTCHA_SECRET_KEY) {
       return NextResponse.json(
         { message: "Server configuration error (Secret Key missing)." },
@@ -56,25 +56,21 @@ export async function POST(request) {
 
     const verificationUrl = `https://www.google.com/recaptcha/api/siteverify`;
 
-    // Create the body using URLSearchParams, as required by Google's verification API
-    const verificationBody = new URLSearchParams({
-      secret: RECAPTCHA_SECRET_KEY,
-      response: recaptchaToken,
-    });
+    // Axios sends data perfectly as application/x-www-form-urlencoded
+    const verificationResponse = await axios.post(
+      verificationUrl,
+      null, // Body is null as parameters are sent via URL
+      {
+        params: {
+          secret: RECAPTCHA_SECRET_KEY,
+          response: recaptchaToken,
+        },
+      }
+    );
 
-    // FIX: Using native fetch with explicit headers for compatibility
-    const verificationResponse = await fetch(verificationUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded", // CRUCIAL header for this API
-      },
-      body: verificationBody.toString(),
-    });
+    const { success, score } = verificationResponse.data;
 
-    const verificationData = await verificationResponse.json();
-    const score = verificationData.score;
-
-    if (!verificationData.success || score < 0.7) {
+    if (!success || score < 0.7) {
       console.warn(`Bot detected. Score: ${score}`);
       return NextResponse.json(
         { message: "Bot verification failed. Score: " + score },
@@ -120,7 +116,7 @@ export async function OPTIONS() {
   return NextResponse.json(null, {
     status: 204,
     headers: {
-      "Access-Control-Allow-Headers":
+      "Access-Control-Headers":
         "Content-Type, Authorization, X-Requested-With, Accept",
       "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
     },
