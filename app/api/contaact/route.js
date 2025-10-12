@@ -1,11 +1,14 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import axios from "axios"; // Re-added for reliable external verification
+import axios from "axios";
+
+// --- FIX 1: Force dynamic execution to prevent static export (Crucial for Vercel) ---
+export const dynamic = "force-dynamic";
 
 // Environment variables
 const GMAIL_USER = process.env.GMAIL_USER;
 const GMAIL_PASS = process.env.GMAIL_PASS;
-const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY; // The private key
+const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -33,13 +36,13 @@ export async function POST(request) {
     "Access-Control-Allow-Headers":
       "Content-Type, Authorization, X-Requested-With, Accept",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+    "Cache-Control": "no-cache, no-store, must-revalidate",
   };
 
   try {
     // 1. Parse Payload (JSON)
     const payload = await request.json();
-    const { name, email, phone, message, recaptchaToken } = payload; // Restored recaptchaToken
+    const { name, email, phone, message, recaptchaToken } = payload;
 
     // 2. Validation Check
     if (!name || !email || !phone || !message || !recaptchaToken) {
@@ -122,7 +125,6 @@ export async function OPTIONS() {
       "Content-Type, Authorization, X-Requested-With, Accept",
     "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
     "Cache-Control": "no-cache, no-store, must-revalidate",
-    "Content-Length": "0",
   };
 
   return new Response(null, {
