@@ -120,15 +120,19 @@ export async function POST(request) {
 }
 
 // Ensure the OPTIONS handler is present for preflight checks
+// FIX: Simplified the OPTIONS response structure to maximize compatibility
 export async function OPTIONS() {
-  return NextResponse.json(null, {
-    status: 204,
-    headers: {
-      "Access-Control-Allow-Origin": "*", // FIX: Allow all origins here too
-      "Access-Control-Allow-Headers":
-        "Content-Type, Authorization, X-Requested-With, Accept",
-      "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-      "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
-    },
+  const optionsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers":
+      "Content-Type, Authorization, X-Requested-With, Accept",
+    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+  };
+
+  // We use a simple Response object for maximum compatibility with Vercel's edge network
+  return new Response(null, {
+    status: 204, // 204 No Content for successful preflight
+    headers: optionsHeaders,
   });
 }
