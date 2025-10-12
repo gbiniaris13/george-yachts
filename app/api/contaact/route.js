@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-// Removed: import axios from "axios";
 
 // Environment variables
 const GMAIL_USER = process.env.GMAIL_USER;
 const GMAIL_PASS = process.env.GMAIL_PASS;
-const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
+// Removed: const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -27,66 +26,30 @@ const sendMailPromise = (mailOptions) =>
   });
 
 export async function POST(request) {
-  // Define default headers for all success/error responses
+  // Define bare minimum headers for maximum compatibility
   const defaultHeaders = {
-    // FIX: Allow all origins to bypass Vercel/browser conflicts
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers":
-      "Content-Type, Authorization, X-Requested-With, Accept",
+    "Access-Control-Allow-Headers": "Content-Type, X-Requested-With, Accept",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
-    // FIX: Add cache busting headers to ensure Vercel and browser don't reuse cached headers
     "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
   };
 
   try {
     const payload = await request.json();
-    const { name, email, phone, message, recaptchaToken } = payload;
+    // Removed: recaptchaToken from payload destructuring
+    const { name, email, phone, message } = payload;
 
-    // 1. Validation Check
-    if (!name || !email || !phone || !message || !recaptchaToken) {
+    // 1. Validation Check (No ReCAPTCHA token needed)
+    if (!name || !email || !phone || !message) {
       return NextResponse.json(
-        { message: "Missing required fields or ReCAPTCHA token." },
+        { message: "Missing required fields." },
         { status: 400, headers: defaultHeaders }
       );
     }
 
-    // 2. RECAPTCHA VERIFICATION (Using Native Fetch)
-    if (!RECAPTCHA_SECRET_KEY) {
-      return NextResponse.json(
-        { message: "Server configuration error (Secret Key missing)." },
-        { status: 500, headers: defaultHeaders }
-      );
-    }
+    // --- SECURITY STEP REMOVED: ReCAPTCHA Verification ---
 
-    const verificationUrl = `https://www.google.com/recaptcha/api/siteverify`;
-
-    // Create the body using URLSearchParams, as required by Google's verification API
-    const verificationBody = new URLSearchParams({
-      secret: RECAPTCHA_SECRET_KEY,
-      response: recaptchaToken,
-    });
-
-    // Using native fetch with explicit headers for stability
-    const verificationResponse = await fetch(verificationUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded", // CRUCIAL header for this external API
-      },
-      body: verificationBody.toString(),
-    });
-
-    const verificationData = await verificationResponse.json();
-    const score = verificationData.score;
-
-    if (!verificationData.success || score < 0.7) {
-      console.warn(`Bot detected. Score: ${score}`);
-      return NextResponse.json(
-        { message: "Bot verification failed. Score: " + score },
-        { status: 403, headers: defaultHeaders }
-      );
-    }
-
-    // 3. Send Email
+    // 2. Send Email
     await sendMailPromise({
       from: GMAIL_USER,
       to: GMAIL_USER,
@@ -100,8 +63,6 @@ export async function POST(request) {
         <hr>
         <p><strong>Message:</strong></p>
         <p style="white-space: pre-line;">${message}</p>
-        <hr>
-        <p style="font-size: 10px;">ReCAPTCHA Score: ${score}</p>
       `,
     });
 
@@ -120,17 +81,16 @@ export async function POST(request) {
 }
 
 // Ensure the OPTIONS handler is present for preflight checks
-// FIX: Simplified the OPTIONS response structure to maximize compatibility
 export async function OPTIONS() {
   const optionsHeaders = {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers":
-      "Content-Type, Authorization, X-Requested-With, Accept",
+    "Access-Control-Allow-Headers": "Content-Type, X-Requested-With, Accept",
     "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
     "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+    "Content-Length": "0",
   };
 
-  // We use a simple Response object for maximum compatibility with Vercel's edge network
+  // Use a simple Response object for maximum compatibility with Vercel's edge network
   return new Response(null, {
     status: 204, // 204 No Content for successful preflight
     headers: optionsHeaders,
