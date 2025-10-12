@@ -29,6 +29,8 @@ const sendMailPromise = (mailOptions) =>
 export async function POST(request) {
   // Define default headers for all success/error responses
   const defaultHeaders = {
+    // FIX: Allow all origins to bypass Vercel/browser conflicts
+    "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers":
       "Content-Type, Authorization, X-Requested-With, Accept",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
@@ -122,10 +124,10 @@ export async function OPTIONS() {
   return NextResponse.json(null, {
     status: 204,
     headers: {
+      "Access-Control-Allow-Origin": "*", // FIX: Allow all origins here too
       "Access-Control-Allow-Headers":
         "Content-Type, Authorization, X-Requested-With, Accept",
       "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-      // FIX: Add cache busting headers to ensure Vercel and browser don't reuse cached headers
       "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
     },
   });
