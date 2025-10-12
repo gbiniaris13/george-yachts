@@ -117,18 +117,23 @@ export async function POST(request) {
   }
 }
 
-// Ensure the OPTIONS handler is present for preflight checks
+// Final, Aggressive OPTIONS Handler Fix
 export async function OPTIONS() {
   const optionsHeaders = {
-    "Access-Control-Allow-Origin": "*", // Universal origin allowance
+    // 1. Universal Origin
+    "Access-Control-Allow-Origin": "*",
+    // 2. Allow Content-Type header explicitly
     "Access-Control-Allow-Headers":
       "Content-Type, Authorization, X-Requested-With, Accept",
-    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+    // 3. Allow POST method
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    // 4. Cache control
     "Cache-Control": "no-cache, no-store, must-revalidate",
   };
 
+  // FIX: Returning status 200 OK instead of 204 No Content
   return new Response(null, {
-    status: 204, // 204 No Content for successful preflight
+    status: 200, // Returning 200 OK often resolves the final browser rejection
     headers: optionsHeaders,
   });
 }
