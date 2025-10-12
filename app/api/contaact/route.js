@@ -26,12 +26,11 @@ const sendMailPromise = (mailOptions) =>
   });
 
 export async function POST(request) {
-  // Define bare minimum headers for maximum compatibility
-  const defaultHeaders = {
+  // Define required headers for all success/error POST responses
+  const postHeaders = {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type, X-Requested-With, Accept",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+    "Cache-Control": "no-cache, no-store, must-revalidate",
   };
 
   try {
@@ -43,7 +42,7 @@ export async function POST(request) {
     if (!name || !email || !phone || !message) {
       return NextResponse.json(
         { message: "Missing required fields." },
-        { status: 400, headers: defaultHeaders }
+        { status: 400, headers: postHeaders }
       );
     }
 
@@ -69,30 +68,34 @@ export async function POST(request) {
     // Success response
     return NextResponse.json(
       { message: "Email sent successfully!" },
-      { status: 200, headers: defaultHeaders }
+      { status: 200, headers: postHeaders }
     );
   } catch (error) {
     console.error("API Route Error:", error);
     return NextResponse.json(
       { message: "Failed to send email due to server or connection error." },
-      { status: 500, headers: defaultHeaders }
+      { status: 500, headers: postHeaders }
     );
   }
 }
 
-// Ensure the OPTIONS handler is present for preflight checks
+// --- DEFINITIVE FIX: OPTIONS Handler ---
 export async function OPTIONS() {
   const optionsHeaders = {
+    // 1. Universal Origin
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type, X-Requested-With, Accept",
-    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+    // 2. Allow Content-Type header explicitly (needed for JSON payload)
+    "Access-Control-Allow-Headers": "Content-Type",
+    // 3. Allow POST method
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    // 4. Cache control
+    "Cache-Control": "no-cache, no-store, must-revalidate",
     "Content-Length": "0",
   };
 
-  // Use a simple Response object for maximum compatibility with Vercel's edge network
+  // Use a simple Response object with status 204 for the preflight success
   return new Response(null, {
-    status: 204, // 204 No Content for successful preflight
+    status: 204,
     headers: optionsHeaders,
   });
 }
