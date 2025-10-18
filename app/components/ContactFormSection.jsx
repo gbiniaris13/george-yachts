@@ -1,7 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 
-// FIX: Correctly reference the public environment variable here.
-// This key must be available client-side (via NEXT_PUBLIC_ prefix).
 const RECAPTCHA_PUBLIC_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
 const ContactFormSection = () => {
@@ -14,13 +12,11 @@ const ContactFormSection = () => {
 
     let recaptchaToken;
 
-    // --- 1. Get reCAPTCHA Token ---
     try {
       if (!RECAPTCHA_PUBLIC_KEY) {
         throw new Error("RECAPTCHA_PUBLIC_KEY not configured.");
       }
 
-      // We assume the global grecaptcha object is available from the script loaded in layout.js
       if (typeof grecaptcha !== "undefined" && grecaptcha.enterprise) {
         recaptchaToken = await grecaptcha.enterprise.execute(
           RECAPTCHA_PUBLIC_KEY,
@@ -40,19 +36,17 @@ const ContactFormSection = () => {
       return;
     }
 
-    // 2. Prepare Payload (including token)
     const formData = new FormData(formRef.current);
     const payload = {
       ...Object.fromEntries(formData),
-      recaptchaToken: recaptchaToken, // Include the token for backend verification
+      recaptchaToken: recaptchaToken,
     };
 
-    // 3. Submitting to the Next.js API Route (/api/contact)
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json", // Submitting data as JSON
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
       });
@@ -72,7 +66,6 @@ const ContactFormSection = () => {
 
   return (
     <section className="relative w-full h-[700px] overflow-hidden">
-      {/* 1. Background Image/Video Container */}
       <div className="absolute inset-0 z-0">
         <img
           src="/images/form_bg.jpg"
@@ -80,27 +73,20 @@ const ContactFormSection = () => {
           className="w-full h-full object-cover"
           onError={(e) => (e.target.src = "/images/form_bg.jpg")}
         />
-        {/* Dark overlay for better form readability */}
         <div className="absolute inset-0 bg-black opacity-60"></div>
       </div>
 
-      {/* 2. Contact Form Overlay */}
       <div className="relative z-10 flex items-center justify-center h-full p-4 md:p-8">
-        {/* FORM CONTAINER: Transparent, no blur/shadow */}
         <div className="w-full max-w-lg bg-transparent p-6 sm:p-10 rounded-xl">
           <h2 className="text-4xl font-extrabold text-white mb-6 text-center">
             CONTACT
           </h2>
 
-          {/* NEXT.JS API FORM SETUP: Added ref for data extraction */}
           <form
             ref={formRef}
             onSubmit={handleVercelSubmit}
             className="space-y-4"
           >
-            {/* The name attribute is still required on all inputs for form data collection */}
-
-            {/* Name Field (REQUIRED) */}
             <div>
               <label
                 htmlFor="name"
@@ -118,7 +104,6 @@ const ContactFormSection = () => {
               />
             </div>
 
-            {/* Email Field (REQUIRED) */}
             <div>
               <label
                 htmlFor="email"
@@ -136,7 +121,6 @@ const ContactFormSection = () => {
               />
             </div>
 
-            {/* Phone Field (REQUIRED) */}
             <div>
               <label
                 htmlFor="phone"
@@ -153,8 +137,6 @@ const ContactFormSection = () => {
                 className="w-full px-4 py-3 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150"
               />
             </div>
-
-            {/* Message Field (REQUIRED) */}
             <div>
               <label
                 htmlFor="message"
@@ -171,21 +153,15 @@ const ContactFormSection = () => {
                 className="w-full px-4 py-3 border border-white bg-transparent text-white placeholder-white rounded-2xl transition duration-150 resize-none"
               ></textarea>
             </div>
-
-            {/* ReCAPTCHA Note (Kept for compliance) */}
             <p className="text-xs text-white text-center">
               This site is protected by reCAPTCHA <br></br>and the Google
               Privacy Policy and Terms of Service apply.
             </p>
-
-            {/* Status Message */}
             {status && (
               <p className="text-center font-medium text-sm pt-2 text-white">
                 {status}
               </p>
             )}
-
-            {/* Submit Button */}
             <button
               type="submit"
               className="w-full flex justify-center cursor-pointer py-3 px-4 border border-transparent rounded-full shadow-md text-base font-medium text-white bg-black hover:bg-white hover:text-[#02132d] transition duration-300 active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-offset-2"

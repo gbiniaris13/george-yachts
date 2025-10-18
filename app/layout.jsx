@@ -1,6 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Script from "next/script"; // Ensure Script is imported
+import Script from "next/script";
+// IMPORT THE NEW CONSOLIDATED COMPONENT
+import NavDrawerSystem from "./components/NavDrawerSystem";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,12 +14,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "GEORGE YACHTS | THE YACHT BROKERAGE",
-  description:
-    "George Yachts – Bespoke charters, yacht sales & lifestyle services in Greece.",
-};
-
 export default function RootLayout({ children }) {
   const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
@@ -26,16 +22,15 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* FIX: Moved the Script component inside the body tag to resolve the 'outside the main document' compilation error. */}
         {recaptchaKey && (
           <Script
-            id="recaptcha-script" // Static ID required by Next.js
+            id="recaptcha-script"
             src={`https://www.google.com/recaptcha/enterprise.js?render=${recaptchaKey}`}
             strategy="beforeInteractive"
           />
         )}
-
-        {children}
+        {/* RENDER THE NEW CONSOLIDATED SYSTEM */}
+        <NavDrawerSystem /> {children}
       </body>
     </html>
   );
