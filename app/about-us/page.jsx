@@ -3,6 +3,7 @@
 import AboutUs from "../components/AboutUs";
 import ContactFormSection from "../components/ContactFormSection";
 import TeamSection from "../components/TeamSection";
+import Footer from "../components/Footer";
 
 const AboutUsPage = () => {
   return (
@@ -10,6 +11,7 @@ const AboutUsPage = () => {
       <AboutUs />
       <TeamSection />
       <ContactFormSection />
+      <Footer />
     </main>
   );
 };

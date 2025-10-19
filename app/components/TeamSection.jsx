@@ -41,6 +41,12 @@ const teamMembers = [
     imageUrl: "/images/manos.jpg",
     instagram: "", // Placeholder for missing Instagram
   },
+  {
+    name: "Nemesis",
+    title: "Director of Internal Justice & Loyalty Enforcement",
+    imageUrl: "/images/nemesis.jpg",
+    instagram: "", // Placeholder for missing Instagram
+  },
 ];
 
 // Component for a single team card
