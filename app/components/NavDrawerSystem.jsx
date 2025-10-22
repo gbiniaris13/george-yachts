@@ -14,8 +14,8 @@ const navLinks = [
   {
     name: "ABOUT",
     sublinks: [
-      { name: "About Us", href: "/about-us" },
-      { name: "Our Team", href: "#about/history" },
+      { name: "About Us", href: "/" },
+      { name: "Our Team", href: "/our-team" },
       { name: "Locations", href: "#about/media" },
       { name: "Press & Media", href: "#about/media" },
     ],
@@ -90,7 +90,8 @@ const NavDrawerSystem = () => {
   const currentTextColor = scrolled ? "text-[#02132d]" : "text-white";
   const desktopIconClasses =
     "flex items-center space-x-3 z-10 p-2 rounded-full bg-white/10 backdrop-blur-sm";
-  const mobileIconClasses = "flex items-center space-x-3 z-10 p-2 rounded-full";
+  const mobileIconClasses =
+    "flex items-center space-x-3 z-10 p-2 rounded-full ";
 
   const SocialIconGroup = ({ className, iconClasses }) => (
     <div className={className}>
@@ -115,18 +116,18 @@ const NavDrawerSystem = () => {
     <>
       {/* --- 1. NAVBAR UI (Your original Navbar.jsx JSX) --- */}
       <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300`}
+        className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 `}
         style={{
           backgroundColor: scrolled
             ? "rgba(255, 255, 255, 0.5)"
             : "transparent",
         }}
       >
-        <div className="max-w-[1530px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1530px] mx-auto px-4 sm:px-6 lg:px-8 ">
           <div className="grid grid-cols-2 items-center h-20 relative">
             <div className="flex items-center space-x-4">
               <button
-                onClick={toggleDrawer} // Now uses the local toggleDrawer
+                onClick={toggleDrawer}
                 className={`p-2 rounded-full ${currentTextColor} hover:text-[#DAA520] cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#DAA520] transition duration-150 active:scale-95 drop-shadow-md`}
                 aria-label="Toggle menu"
               >
@@ -136,7 +137,7 @@ const NavDrawerSystem = () => {
               <div className="flex-shrink-0">
                 <a
                   href="/"
-                  className="text-2xl font-extrabold text-indigo-400 tracking-wider"
+                  className="text-2xl font-extrabold text-indigo-400 tracking-wider "
                 >
                   <div className="flex flex-col items-center">
                     <span
@@ -215,7 +216,7 @@ const NavDrawerSystem = () => {
             </div>
             <button
               onClick={toggleDrawer}
-              className="p-2 rounded-full text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 active:scale-95"
+              className="p-2 rounded-full text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 active:scale-95 "
               aria-label="Close menu"
             >
               <X className="w-6 h-6" />
@@ -233,7 +234,7 @@ const NavDrawerSystem = () => {
                     onClick={() =>
                       hasSublinks ? toggleSubMenu(link.name) : toggleDrawer()
                     }
-                    className={`flex justify-between items-center w-full py-3 px-1 border-b border-white transition duration-200 group focus:outline-none`}
+                    className={`flex justify-between items-center w-full py-3 px-1 border-b border-white transition duration-200 group focus:outline-none cursor-pointer`}
                   >
                     <div className="flex flex-col items-start">
                       <span className="text-xl font-semibold uppercase text-white group-hover:text-white transition duration-200">
