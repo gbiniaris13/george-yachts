@@ -10,6 +10,17 @@ import {
   ChevronUp,
 } from "lucide-react";
 
+const WhatsappIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    {...props}
+  >
+    <path d="M12.031 0.725C5.741 0.725 0.547 5.926 0.547 12.215C0.547 14.39 1.155 16.42 2.22 18.15L0.63 23.36l5.352-1.55c1.674 0.99 3.593 1.516 5.619 1.516c6.29 0 11.484-5.201 11.484-11.491C23.595 5.926 18.4 0.725 12.031 0.725zM17.476 15.655c-0.198 0.505-1.127 0.99-1.523 1.054c-0.342 0.054-0.695 0.078-1.574-0.373c-1.028-0.543-2.607-1.583-3.804-2.78c-1.197-1.197-2.237-2.776-2.78-3.804c-0.45-0.879-0.426-1.232-0.373-1.574c0.064-0.396 0.549-1.325 1.054-1.523c0.426-0.165 0.879-0.276 1.197-0.276c0.231 0 0.426 0.015 0.639 0.45l0.58 1.417c0.078 0.165 0.124 0.358 0.046 0.569c-0.078 0.21-0.26 0.45-0.45 0.639c-0.183 0.183-0.33 0.358-0.441 0.569c-0.111 0.21-0.26 0.385-0.137 0.609c0.124 0.223 0.639 1.152 1.518 2.031c0.879 0.879 1.808 1.455 2.031 1.518c0.223 0.124 0.398-0.023 0.609-0.137c0.21-0.111 0.385-0.26 0.569-0.441c0.183-0.183 0.426-0.375 0.639-0.45c0.21-0.078 0.403-0.032 0.569 0.046l1.417 0.58c0.435 0.211 0.546 0.665 0.373 1.197z" />
+  </svg>
+);
+
 const navLinks = [
   {
     name: "ABOUT",
@@ -40,13 +51,15 @@ const navLinks = [
   { name: "FAQ" },
 ];
 
+const WHATSAPP_NUMBER = "+17867988788";
+const WHATSAPP_MESSAGE = encodeURIComponent(
+  "I'm interested in chartering a yacht and would like to chat."
+);
+
 const NavDrawerSystem = () => {
-  // --- STATE (Moved from Home Page) ---
   const [scrolled, setScrolled] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
-
-  // --- HANDLERS (Moved from Home Page) ---
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -59,7 +72,6 @@ const NavDrawerSystem = () => {
     setOpenMenu(openMenu === menuName ? null : menuName);
   };
 
-  // --- SCROLL EFFECT (From your original Navbar) ---
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -68,22 +80,27 @@ const NavDrawerSystem = () => {
         setScrolled(false);
       }
     };
-
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
     };
   }, []);
 
-  // --- STYLING LOGIC (From your original Navbar) ---
   const socialIcons = [
     {
       icon: Instagram,
       href: "https://www.instagram.com/georgeyachts",
       name: "Instagram",
+    },
+    {
+      icon: WhatsappIcon,
+      href: `https://wa.me/${WHATSAPP_NUMBER.replace(
+        "+",
+        ""
+      )}?text=${WHATSAPP_MESSAGE}`,
+      name: "WhatsApp",
     },
   ];
 
@@ -114,7 +131,6 @@ const NavDrawerSystem = () => {
 
   return (
     <>
-      {/* --- 1. NAVBAR UI (Your original Navbar.jsx JSX) --- */}
       <nav
         className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 `}
         style={{
@@ -133,7 +149,6 @@ const NavDrawerSystem = () => {
               >
                 <Menu className="w-6 h-6" />
               </button>
-              {/* ... (Logo/Title JSX goes here) ... */}
               <div className="flex-shrink-0">
                 <a
                   href="/"
@@ -185,7 +200,6 @@ const NavDrawerSystem = () => {
         </div>
       </nav>
 
-      {/* --- 2. DRAWER UI (Moved from Home Page) --- */}
       <div
         className={`fixed inset-0 bg-black transition-opacity duration-300 z-40 ${
           isDrawerOpen

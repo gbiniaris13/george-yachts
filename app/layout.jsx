@@ -1,7 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
-// IMPORT THE NEW CONSOLIDATED COMPONENT
 import NavDrawerSystem from "./components/NavDrawerSystem";
 
 const geistSans = Geist({
@@ -29,7 +28,18 @@ export default function RootLayout({ children }) {
             strategy="beforeInteractive"
           />
         )}
-        {/* RENDER THE NEW CONSOLIDATED SYSTEM */}
+        <Script id="tawk-api-setup" strategy="beforeInteractive">
+          {`
+            var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+          `}
+        </Script>
+        <Script
+          id="tawk-to-script"
+          src="https://embed.tawk.to/68f8bfda482c1e1953b81bb5/1j85qqrm6"
+          strategy="afterInteractive"
+          charSet="UTF-8"
+          crossOrigin="*"
+        />
         <NavDrawerSystem /> {children}
       </body>
     </html>
