@@ -35,7 +35,7 @@ const overlayItems = [
   // Right Column: CHARTER A YACHT (270px -> 40%)
   {
     title: "CHARTER A YACHT",
-    href: "#charter",
+    href: "/yachts-charter/",
     height: "h-[40%]",
     color: "bg-white/70", // CHANGED: Added /70 opacity
     solidColor: getSolidColor("bg-white"),
@@ -148,7 +148,7 @@ const VideoSection = () => {
             muted
             playsInline
             className="w-full h-full object-cover"
-            poster="https://placehold.co/1920x1080/0d1a2f/ffffff?text=Video+Loading"
+            // poster="https://placehold.co/1920x1080/0d1a2f/ffffff?text=Video+Loading"
           >
             Your browser does not support the video tag.
           </video>

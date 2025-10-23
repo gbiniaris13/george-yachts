@@ -25,7 +25,7 @@ const navLinks = [
   {
     name: "ABOUT",
     sublinks: [
-      { name: "About Us", href: "//our-team" },
+      { name: "About Us", href: "/" },
       { name: "Our Team", href: "/our-team" },
       { name: "Locations", href: "#about/media" },
       { name: "Press & Media", href: "#about/media" },
@@ -34,7 +34,7 @@ const navLinks = [
   {
     name: "CHARTER",
     sublinks: [
-      { name: "Charter a Yacht", href: "#charter/fleet" },
+      { name: "Charter a Yacht", href: "/yachts-charter/" },
       { name: "Charter Management", href: "#charter/destinations" },
     ],
   },

@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { sanityClient } from "@/lib/sanity";
 import YachtSwiper from "../components/YachtSwiper";
 import Footer from "../components/Footer";
+import AboutUs from "../components/AboutUs";
+import ContactFormSection from "../components/ContactFormSection";
 
 // GROQ query to get all published yachts
 const ALL_YACHTS_QUERY = `*[_type == "yacht"] | order(_createdAt asc){
@@ -45,13 +47,13 @@ const YachtCharterPage = () => {
   // 3. RENDER LOGIC
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
-      {/* <AboutUs
+      <AboutUs
         heading="CHARTER"
         subtitle="A YACHT"
         paragraph="Contact GEORGE YACHTS today to fully customize your charter experience anywhere in the world."
-        imageUrl="/images/charter-fleet-hero.jpg"
+        imageUrl="/images/yachts-charter.jpg"
         altText="A large luxury yacht sailing on clear blue water at sunset"
-      /> */}
+      />
 
       {/* Conditional Rendering based on fetch state */}
       {isLoading && (
@@ -69,7 +71,6 @@ const YachtCharterPage = () => {
         </section>
       )}
 
-      {/* 🛑 MAP OVER THE FETCHED DATA TO RENDER MULTIPLE SWIPER BLOCKS 🛑 */}
       {!isLoading &&
         yachts.length > 0 &&
         yachts.map((yacht) => (
@@ -79,6 +80,7 @@ const YachtCharterPage = () => {
           />
         ))}
 
+      <ContactFormSection />
       <Footer />
     </div>
   );

@@ -14,8 +14,8 @@ const AboutUs = ({
   const HEIGHT_CLASSES = "h-[60vh] lg:h-[710px]";
 
   // Fallback image URL
-  const FALLBACK_IMAGE =
-    "https://placehold.co/1920x710/02132d/ffffff?text=Image+Loading";
+  // const FALLBACK_IMAGE =
+  //   "https://placehold.co/1920x710/02132d/ffffff?text=Image+Loading";
 
   return (
     <section className="relative w-full overflow-hidden">

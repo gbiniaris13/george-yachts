@@ -17,6 +17,12 @@ const teamMembers = [
     instagram: "george_p.biniaris",
   },
   {
+    name: "George Katrantzos",
+    title: "U.S. Partner & Sales Director, George Yachts",
+    imageUrl: "/images/george-katrantzos.jpg",
+    instagram: "helllo.gk",
+  },
+  {
     name: "Elleanna Karvouni",
     title: "Head of Business Operations & Finance",
     imageUrl: "/images/elleanna.jpg",
