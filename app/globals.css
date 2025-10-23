@@ -10,3 +10,20 @@
 .george-yachts {
   font-family: "Cormorant Garamond", serif;
 }
+
+/* Base style for ALL dots (make them bigger and set the inactive color) */
+.yacht-swiper .swiper-pagination-bullet {
+  width: 12px !important; /* Makes dots bigger (e.g., 12px) */
+  height: 12px !important;
+  background-color: #fff !important; /* Example: Dark Gray for inactive dot */
+  opacity: 0.7 !important;
+  margin: 0 6px !important;
+  border-radius: 50% !important; /* Ensure they remain circles */
+  transition: background-color 0.3s;
+}
+
+/* Style for the ACTIVE dot (make it the gold color) */
+.yacht-swiper .swiper-pagination-bullet-active {
+  background-color: #daa520 !important; /* Gold color for the active dot */
+  opacity: 1 !important;
+}
