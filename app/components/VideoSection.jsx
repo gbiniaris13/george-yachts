@@ -19,7 +19,7 @@ const overlayItems = [
   },
   // Left Column: SELL MY YACHT (270px -> 40%)
   {
-    title: "SELL MY YACHT",
+    title: "FLY PRIVATE",
     href: "#sell",
     height: "h-[40%]",
     color: "bg-white/70", // CHANGED: Added /70 opacity

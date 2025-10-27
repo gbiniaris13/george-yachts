@@ -35,6 +35,7 @@ const navLinks = [
     name: "CHARTER",
     sublinks: [
       { name: "Charter a Yacht", href: "/yachts-charter/" },
+      { name: "Aviation Charter", href: "/aviation-charter/" },
       { name: "Charter Management", href: "#charter/destinations" },
     ],
   },
@@ -149,7 +150,7 @@ const NavDrawerSystem = () => {
               >
                 <Menu className="w-6 h-6" />
               </button>
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <a
                   href="/"
                   className="text-2xl font-extrabold text-indigo-400 tracking-wider "
@@ -212,7 +213,7 @@ const NavDrawerSystem = () => {
 
       <div
         className={`fixed top-0 left-0 h-full min-w-[370px] xl:min-w-[700px] bg-black shadow-2xl z-50 transform transition-transform duration-300 ease-in-out 
-          ${isDrawerOpen ? "translate-x-0" : "translate-x-[-100%]"}`}
+          ${isDrawerOpen ? "translate-x-0" : "-translate-x-full"}`}
         role="dialog"
         aria-modal="true"
         aria-label="Navigation drawer"
@@ -237,7 +238,7 @@ const NavDrawerSystem = () => {
             </button>
           </div>
 
-          <nav className="space-y-4 mt-6 flex-grow overflow-y-auto">
+          <nav className="space-y-4 mt-6 grow overflow-y-auto">
             {navLinks.map((link) => {
               const isOpen = openMenu === link.name;
               const hasSublinks = link.sublinks && link.sublinks.length > 0;

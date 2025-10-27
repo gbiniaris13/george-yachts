@@ -56,7 +56,7 @@ const YachtSwiper = ({ yachtData }) => {
   };
 
   return (
-    <section className="max-w-[1440px] mx-auto py-20 px-2">
+    <section className="max-w-[1440px] mx-auto py-10 px-2">
       <div className="relative">
         <div className="bg-white border-2 border-[#DAA520] overflow-hidden">
           <div className="lg:grid lg:grid-cols-2">
@@ -130,7 +130,7 @@ const YachtSwiper = ({ yachtData }) => {
                 <p className="text-[24px] font-normal uppercase text-[#DAA520] text-center md:text-start leading-none mb-6">
                   {yacht.subtitle}
                 </p>
-                <div className="py-4 max-w-xl border-b border-gray-300">
+                <div className="py-4 max-w-xl md:w-full border-b border-gray-300">
                   <div className="grid grid-cols-2 gap-y-1 text-sm">
                     <p className="text-gray-500 font-normal text-base">
                       Length
