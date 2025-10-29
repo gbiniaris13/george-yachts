@@ -1,5 +1,6 @@
 import React from "react";
 import { Instagram } from "lucide-react";
+import Link from "next/link"; // Added for internal navigation
 
 // Define the dimensions for the cards
 const CARD_DIMENSIONS = { width: "372px", height: "400px" };
@@ -8,31 +9,34 @@ const IMAGE_PLACEHOLDER_URL =
 const GOLD_HEX = "#DAA520";
 
 // --- Team Data ---
-// Creating members for the grid
 const teamMembers = [
   {
     name: "George P. Biniaris",
     title: "Founder & CEO",
     imageUrl: "/images/george.jpg",
     instagram: "george_p.biniaris",
+    profileUrl: "/team/george-biniaris", // Example link
   },
   {
     name: "George Katrantzos",
     title: "U.S. Partner & Sales Director, George Yachts",
     imageUrl: "/images/george-katrantzos.jpg",
     instagram: "helllo.gk",
+    profileUrl: "", // No link
   },
   {
     name: "Elleanna Karvouni",
     title: "Head of Business Operations & Finance",
     imageUrl: "/images/elleanna.jpg",
     instagram: "eleanna_karvoun",
+    profileUrl: "", // No link
   },
   {
     name: "Chris Daskalopoulos",
-    title: "Marine Insurance & ISO Maritime Compliance Advisor",
+    title: "Marine Insurance & ISO Maritime Compliance Advisor",
     imageUrl: "/images/chris.jpg",
     instagram: "dask15",
+    profileUrl: "", // No link
   },
 
   {
@@ -40,25 +44,28 @@ const teamMembers = [
     title: "Administrative & Charter Logistics Coordinator",
     imageUrl: "/images/valeria.jpg",
     instagram: "valeria_karv",
+    profileUrl: "", // No link
   },
   {
     name: "Captain Emmanouil “Manos” Kourmoulakis",
     title: "Aviation & Private Travel Advisor",
     imageUrl: "/images/manos.jpg",
-    instagram: "", // Placeholder for missing Instagram
+    instagram: "",
+    profileUrl: "", // No link
   },
   {
     name: "Nemesis",
     title: "Director of Internal Justice & Loyalty Enforcement",
     imageUrl: "/images/nemesis.jpg",
-    instagram: "", // Placeholder for missing Instagram
+    instagram: "",
+    profileUrl: "", // No link
   },
 ];
 
 // Component for a single team card
 const TeamCard = ({ member }) => {
-  // Only render Instagram link if the handle exists
   const hasInstagram = member.instagram && member.instagram.length > 0;
+  const hasProfileUrl = member.profileUrl && member.profileUrl.length > 0;
 
   return (
     <div
@@ -103,10 +110,15 @@ const TeamCard = ({ member }) => {
           )}
         </div>
 
-        {/* Full Rounded Button */}
-        <button className="w-full py-2 border border-white text-sm font-semibold rounded-full bg-transparent hover:bg-white hover:text-[#02132d] transition duration-300 active:scale-[0.98] cursor-pointer">
-          Learn More
-        </button>
+        {/* 🛑 FIX: Removed <a> tag, applied styles directly to <Link> */}
+        {hasProfileUrl && (
+          <Link
+            href={member.profileUrl}
+            className="w-full py-2 border border-white text-sm font-semibold rounded-full bg-transparent hover:bg-white hover:text-[#02132d] transition duration-300 active:scale-[0.98] cursor-pointer text-center"
+          >
+            Learn More
+          </Link>
+        )}
       </div>
     </div>
   );

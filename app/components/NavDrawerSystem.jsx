@@ -26,7 +26,7 @@ const navLinks = [
     name: "ABOUT",
     sublinks: [
       { name: "About Us", href: "/" },
-      { name: "Our Team", href: "/our-team" },
+      { name: "Our Team", href: "/team" },
       { name: "Locations", href: "#about/media" },
       { name: "Press & Media", href: "#about/media" },
     ],
