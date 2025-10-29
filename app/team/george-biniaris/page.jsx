@@ -18,7 +18,7 @@ const GeorgeBiniaris = () => {
     <div className="min-h-screen font-sans">
       {/* 1. The Split-Screen Profile Section (from before) */}
       <ProfileSection
-        heading="George Biniaris"
+        heading="George P. Biniaris"
         subtitle="CEO"
         paragraph="Founder and CEO of GEORGE YACHTS"
         imageUrl="/images/george.jpg" // Update with the correct profile image path
