@@ -22,21 +22,21 @@ const teamMembers = [
     title: "U.S. Partner & Sales Director, George Yachts",
     imageUrl: "/images/george-katrantzos.jpg",
     instagram: "helllo.gk",
-    profileUrl: "", // No link
+    profileUrl: "/team/george-katrantzos", // No link
   },
   {
     name: "Elleanna Karvouni",
     title: "Head of Business Operations & Finance",
     imageUrl: "/images/elleanna.jpg",
     instagram: "eleanna_karvoun",
-    profileUrl: "", // No link
+    profileUrl: "/team/elleana-karvouni", // No link
   },
   {
     name: "Chris Daskalopoulos",
     title: "Marine Insurance & ISO Maritime Compliance Advisor",
     imageUrl: "/images/chris.jpg",
     instagram: "dask15",
-    profileUrl: "", // No link
+    profileUrl: "/team/chris-daskalopoulos", // No link
   },
 
   {
@@ -44,21 +44,21 @@ const teamMembers = [
     title: "Administrative & Charter Logistics Coordinator",
     imageUrl: "/images/valeria.jpg",
     instagram: "valeria_karv",
-    profileUrl: "", // No link
+    profileUrl: "/team/valleria-karvouni", // No link
   },
   {
     name: "Captain Emmanouil “Manos” Kourmoulakis",
     title: "Aviation & Private Travel Advisor",
     imageUrl: "/images/manos.jpg",
     instagram: "",
-    profileUrl: "", // No link
+    profileUrl: "/team/manos-kourmoulakis", // No link
   },
   {
     name: "Nemesis",
     title: "Director of Internal Justice & Loyalty Enforcement",
     imageUrl: "/images/nemesis.jpg",
     instagram: "",
-    profileUrl: "", // No link
+    profileUrl: "/team/nemesis", // No link
   },
 ];
 
