@@ -17,7 +17,7 @@ const GeorgeKatrantzos = () => {
       {/* 1. The Split-Screen Profile Section (from before) */}
       <ProfileSection
         heading="George Katrantzos"
-        subtitle="Sales Director"
+        subtitle="U.S. partner"
         paragraph="U.S. Partner & Sales Director, George Yachts"
         imageUrl="/images/george-katrantzos.jpg" // Update with the correct profile image path
         altText="Portrait of George Katrantzos"

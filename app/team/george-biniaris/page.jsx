@@ -19,7 +19,7 @@ const GeorgeBiniaris = () => {
       {/* 1. The Split-Screen Profile Section (from before) */}
       <ProfileSection
         heading="George P. Biniaris"
-        subtitle="CEO"
+        subtitle="CEO Head Broker IYBA member"
         paragraph="Founder and CEO of GEORGE YACHTS"
         imageUrl="/images/george.jpg" // Update with the correct profile image path
         altText="Portrait of George Biniaris"
