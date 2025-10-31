@@ -27,7 +27,6 @@ const navLinks = [
     sublinks: [
       { name: "About Us", href: "/" },
       { name: "Core Team", href: "/team" },
-      { name: "Locations", href: "#about/media" },
       { name: "Press & Media", href: "#about/media" },
     ],
   },
@@ -36,7 +35,6 @@ const navLinks = [
     sublinks: [
       { name: "Charter a Yacht", href: "/yachts-charter/" },
       { name: "Aviation Charter", href: "/aviation-charter/" },
-      { name: "Charter Management", href: "#charter/destinations" },
     ],
   },
   {
@@ -46,8 +44,6 @@ const navLinks = [
       { name: "Sell My Yacht", href: "#sales/used" },
     ],
   },
-  { name: "BUILD" },
-  { name: "MANAGE" },
   { name: "CONTACT" },
   { name: "FAQ" },
 ];

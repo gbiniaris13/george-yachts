@@ -48,7 +48,7 @@ const overlayItems = [
   },
   // Right Column: MANAGE A YACHT (440px -> 60%)
   {
-    title: "MANAGE A YACHT",
+    title: "SIGNATURE ITINERARIES",
     href: "#manage",
     height: "h-[60%]",
     color: "bg-black/70", // Desktop Color (with 70% opacity)

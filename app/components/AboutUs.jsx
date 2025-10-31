@@ -35,7 +35,7 @@ const AboutUs = ({
                 {subtitle}
               </p>
               {paragraph && (
-                <p className="mt-8 text-lg text-white/90 drop-shadow-md">
+                <p className="max-w-sm mt-8 text-lg text-white/90 drop-shadow-md">
                   {paragraph}
                 </p>
               )}
