@@ -19,7 +19,7 @@ const ManosKourmoulakis = () => {
         heading="Cpt. Emmanouil 'Manos' Kourmoulakis"
         subtitle="Aviation"
         paragraph="Aviation & Private Travel Advisor"
-        imageUrl="/images/manos.jpg" // Update with the correct profile image path
+        imageUrl="/images/manos-new.jpg" // Update with the correct profile image path
         altText="Portrait of Manos Kourmoulakis"
         // instagramUrl="https://instagram.com/valeria_karv"
         bgColor="bg-black"

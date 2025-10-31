@@ -49,7 +49,7 @@ const teamMembers = [
   {
     name: "Captain Emmanouil “Manos” Kourmoulakis",
     title: "Aviation & Private Travel Advisor",
-    imageUrl: "/images/manos.jpg",
+    imageUrl: "/images/manos-new.jpg",
     instagram: "",
     profileUrl: "/team/manos-kourmoulakis", // No link
   },
