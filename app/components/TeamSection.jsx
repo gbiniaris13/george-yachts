@@ -12,7 +12,7 @@ const GOLD_HEX = "#DAA520";
 const teamMembers = [
   {
     name: "George P. Biniaris",
-    title: "Founder & CEO",
+    title: "Founder & Principal Broker — IYBA Certified",
     imageUrl: "/images/george.jpg",
     instagram: "george_p.biniaris",
     profileUrl: "/team/george-biniaris", // Example link
