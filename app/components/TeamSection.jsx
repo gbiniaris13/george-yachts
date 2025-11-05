@@ -116,7 +116,7 @@ const TeamCard = ({ member }) => {
             href={member.profileUrl}
             className="w-full py-2 border border-white text-sm font-semibold rounded-full bg-transparent hover:bg-white hover:text-[#02132d] transition duration-300 active:scale-[0.98] cursor-pointer text-center"
           >
-            Learn More
+            View Profile
           </Link>
         )}
       </div>
@@ -126,8 +126,7 @@ const TeamCard = ({ member }) => {
 
 const TeamSection = () => {
   // Split service list into parts for coloring
-  const services =
-    "YACHT MANAGEMENT | YACHT SALES | YACHT CHARTER | CHARTER MANAGEMENT | CREW PLACEMENT";
+  const services = "YACHT MANAGEMENT | YACHT SALES | YACHT CHARTER";
   const serviceParts = services.split("|").map((s) => s.trim());
 
   return (
@@ -149,8 +148,9 @@ const TeamSection = () => {
         </h2>
 
         {/* 2. OUR TEAM Header (Text Hierarchy) - NOW SECOND IN ORDER */}
-        <h2 className="text-4xl font-extrabold text-center text-[#02132d] my-12">
-          OUR <span style={{ color: GOLD_HEX }}>TEAM</span>
+        <h2 className="text-4xl font-bold text-center text-[#02132d] my-12 uppercase">
+          Meet the People <br></br>
+          <span style={{ color: GOLD_HEX }}>Behind Your Voyage</span>
         </h2>
 
         {/* Grid Container */}

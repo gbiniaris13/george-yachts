@@ -27,3 +27,7 @@
   background-color: #daa520 !important; /* Gold color for the active dot */
   opacity: 1 !important;
 }
+
+.grecaptcha-badge {
+  display: none !important;
+}

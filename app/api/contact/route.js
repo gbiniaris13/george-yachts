@@ -2,10 +2,8 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import axios from "axios";
 
-// --- FIX 1: Force dynamic execution to prevent static export (Crucial for Vercel) ---
 export const dynamic = "force-dynamic";
 
-// Environment variables
 const GMAIL_USER = process.env.GMAIL_USER;
 const GMAIL_PASS = process.env.GMAIL_PASS;
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
@@ -30,7 +28,6 @@ const sendMailPromise = (mailOptions) =>
   });
 
 export async function POST(request) {
-  // Define default headers for all success/error responses
   const defaultHeaders = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers":
@@ -40,19 +37,16 @@ export async function POST(request) {
   };
 
   try {
-    // 1. Parse Payload (JSON)
     const payload = await request.json();
-    const { name, email, phone, message, recaptchaToken } = payload;
+    const { name, email, phone, country, message, recaptchaToken } = payload;
 
-    // 2. Validation Check
-    if (!name || !email || !phone || !message || !recaptchaToken) {
+    if (!name || !email || !phone || !country || !message || !recaptchaToken) {
       return NextResponse.json(
         { message: "Missing required fields or ReCAPTCHA token." },
         { status: 400, headers: defaultHeaders }
       );
     }
 
-    // 3. RECAPTCHA VERIFICATION (Using Axios)
     if (!RECAPTCHA_SECRET_KEY) {
       return NextResponse.json(
         { message: "Server configuration error (Secret Key missing)." },
@@ -62,17 +56,12 @@ export async function POST(request) {
 
     const verificationUrl = `https://www.google.com/recaptcha/api/siteverify`;
 
-    // Using Axios for reliable external verification POST request
-    const verificationResponse = await axios.post(
-      verificationUrl,
-      null, // Body is null as parameters are sent via URL
-      {
-        params: {
-          secret: RECAPTCHA_SECRET_KEY,
-          response: recaptchaToken,
-        },
-      }
-    );
+    const verificationResponse = await axios.post(verificationUrl, null, {
+      params: {
+        secret: RECAPTCHA_SECRET_KEY,
+        response: recaptchaToken,
+      },
+    });
 
     const { success, score } = verificationResponse.data;
 
@@ -84,28 +73,27 @@ export async function POST(request) {
       );
     }
 
-    // 4. Send Email
     await sendMailPromise({
       from: GMAIL_USER,
       to: GMAIL_USER,
       subject: `[Yacht Inquiry] New Contact from ${name}`,
       replyTo: email,
       html: `
-        <h3>New Website Inquiry:</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <hr>
-        <p><strong>Message:</strong></p>
-        <p style="white-space: pre-line;">${message}</p>
-        <hr>
-        <p style="font-size: 10px;">ReCAPTCHA Score: ${score}</p>
-      `,
+        <h3>New Website Inquiry:</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Country:</strong> ${country}</p>
+        <hr>
+        <p><strong>Message:</strong></p>
+        <p style="white-space: pre-line;">${message}</p>
+        <hr>
+        <p style="font-size: 10px;">ReCAPTCHA Score: ${score}</p>
+      `,
     });
 
-    // Success response
     return NextResponse.json(
-      { message: "Email sent successfully!" },
+      { message: "Thank you — we’ll get back within 24h." },
       { status: 200, headers: defaultHeaders }
     );
   } catch (error) {
@@ -117,23 +105,17 @@ export async function POST(request) {
   }
 }
 
-// Final, Aggressive OPTIONS Handler Fix
 export async function OPTIONS() {
   const optionsHeaders = {
-    // 1. Universal Origin
     "Access-Control-Allow-Origin": "*",
-    // 2. Allow Content-Type header explicitly
     "Access-Control-Allow-Headers":
       "Content-Type, Authorization, X-Requested-With, Accept",
-    // 3. Allow POST method
     "Access-Control-Allow-Methods": "POST, OPTIONS",
-    // 4. Cache control
     "Cache-Control": "no-cache, no-store, must-revalidate",
   };
 
-  // FIX: Returning status 200 OK instead of 204 No Content
   return new Response(null, {
-    status: 200, // Returning 200 OK often resolves the final browser rejection
+    status: 200,
     headers: optionsHeaders,
   });
 }

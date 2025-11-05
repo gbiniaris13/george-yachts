@@ -137,6 +137,24 @@ const ContactFormSection = () => {
                 className="w-full px-4 py-3 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150"
               />
             </div>
+
+            <div>
+              <label
+                htmlFor="country"
+                className="block text-sm font-medium text-gray-700 sr-only"
+              >
+                Country
+              </label>
+              <input
+                type="text"
+                id="country"
+                name="country"
+                placeholder="Country"
+                required
+                className="w-full px-4 py-3 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-1A50"
+              />
+            </div>
+
             <div>
               <label
                 htmlFor="message"
@@ -147,7 +165,7 @@ const ContactFormSection = () => {
               <textarea
                 id="message"
                 name="message"
-                placeholder="Your message or inquiry..."
+                placeholder="Tell us dates, destination, group size, and any preferences."
                 required
                 rows="4"
                 className="w-full px-4 py-3 border border-white bg-transparent text-white placeholder-white rounded-2xl transition duration-150 resize-none"

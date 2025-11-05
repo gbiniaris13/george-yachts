@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import Footer from "../components/Footer";
 import AboutUs from "../components/AboutUs";
 import ContactFormSection from "../components/ContactFormSection";
+import TeamSection from "../components/TeamSection";
+import AboutSection from "../components/AboutSection";
 
 const AboutUsPage = () => {
   return (
@@ -15,6 +17,7 @@ const AboutUsPage = () => {
         imageUrl="/images/yachts-charter.jpg"
         altText="A luxury private jet on a runway at sunset"
       />
+      <AboutSection />
       <ContactFormSection />
       <Footer />
     </div>

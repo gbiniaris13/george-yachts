@@ -2,9 +2,9 @@ import React from "react";
 import { Instagram } from "lucide-react";
 
 const AboutUs = ({
-  heading = "OUR TEAM",
-  subtitle = "BESPOKE SERVICES MANAGED WITH PRECISION",
-  paragraph = "For effortless execution and absolute peace of mind appoint GEORGE YACHTS as your indispensable partner in your superyacht journey.",
+  heading = "CORE TEAM",
+  subtitle = "AND ADVISORY NETWORK",
+  paragraph = "Bespoke service, managed with precision.",
   imageUrl = "/images/about-us.jpg",
   altText = "Luxury yacht background covering full width",
   instagramUrl,
