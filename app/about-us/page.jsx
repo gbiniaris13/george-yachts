@@ -12,8 +12,8 @@ const AboutUsPage = () => {
     <div className="min-h-screen bg-gray-100 font-sans">
       <AboutUs
         heading="ABOUT US"
-        subtitle="LOOKING AFTER YOUR WORLD"
-        paragraph="Appoint GEORGE YACHTS as your Central Agent to successfully charter your yacht."
+        subtitle="BOUTIQUE YACHT BROKERAGE FROM ATHENS"
+        paragraph="360° luxury, one trusted team."
         imageUrl="/images/yachts-charter.jpg"
         altText="A luxury private jet on a runway at sunset"
       />
