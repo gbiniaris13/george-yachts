@@ -14,7 +14,7 @@ const AboutUsPage = () => {
         heading="ABOUT US"
         subtitle="BOUTIQUE YACHT BROKERAGE FROM ATHENS"
         paragraph="360° luxury, one trusted team."
-        imageUrl="/images/yachts-charter.jpg"
+        imageUrl="/images/about-us-section.jpg"
         altText="A luxury private jet on a runway at sunset"
       />
       <AboutSection />
