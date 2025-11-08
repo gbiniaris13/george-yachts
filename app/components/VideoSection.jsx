@@ -14,7 +14,7 @@ const overlayItems = [
     titleLine2: "A YACHT",
     subline: "Tailor-made charters across Greece & the Med.",
     buttonText: "Start your charter",
-    href: "/yachts-charter/",
+    href: "/charter-yacht-greece/",
     height: "h-1/3", // 🛑 Changed from % to 1/3
     color: "bg-white/70",
     solidColor: getSolidColor("bg-white"),
@@ -30,7 +30,7 @@ const overlayItems = [
     titleLine2: "A YACHT",
     subline: "Curated listings • Discreet sourcing • Clear surveys.",
     buttonText: "View yachts for sale",
-    href: "/buy-yacht/", // Update href as needed
+    href: "/yachts-for-sale/", // Update href as needed
     height: "h-1/3", // 🛑 Changed from % to 1/3
     color: "bg-black/70",
     solidColor: getSolidColor("bg-black"),
@@ -46,7 +46,7 @@ const overlayItems = [
     titleLine2: "STAY / INVEST",
     subline: "Luxury villa stays, plus discreet buying advisory.",
     buttonText: "Explore villas & homes",
-    href: "#villas", // Update href as needed
+    href: "/luxury-villas-greece/", // Update href as needed
     height: "h-1/3", // 🛑 New item
     color: "bg-white/70",
     solidColor: getSolidColor("bg-white"),
@@ -63,7 +63,7 @@ const overlayItems = [
     titleLine2: "PRIVATE",
     subline: "Helicopters & jets • Athens, islands, Med hops.",
     buttonText: "Request a flight",
-    href: "/aviation-charter/",
+    href: "/private-jet-charter/",
     height: "h-1/3", // 🛑 Changed from % to 1/3
     color: "bg-black/70",
     solidColor: getSolidColor("bg-black"),
@@ -79,7 +79,7 @@ const overlayItems = [
     titleLine2: "TRANSFERS",
     subline: "Chauffeured sedans, SUVs & sprinters • 24/7.",
     buttonText: "Book a transfer",
-    href: "#transfers", // Update href as needed
+    href: "/vip-transfers-greece/", // Update href as needed
     height: "h-1/3", // 🛑 Changed from % to 1/3
     color: "bg-white/70",
     solidColor: getSolidColor("bg-white"),
@@ -95,7 +95,7 @@ const overlayItems = [
     titleLine2: "ITINERARIES",
     subline: "Cyclades, Ionian, Saronic — time-true routes.",
     buttonText: "Explore itineraries",
-    href: "#manage", // Update href as needed
+    href: "/yacht-itineraries-greece/", // Update href as needed
     height: "h-1/3", // 🛑 New item
     color: "bg-black/70",
     solidColor: getSolidColor("bg-black"),

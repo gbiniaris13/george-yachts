@@ -33,15 +33,15 @@ const navLinks = [
   {
     name: "CHARTER",
     sublinks: [
-      { name: "Charter a Yacht", href: "/yachts-charter/" },
-      { name: "Aviation Charter", href: "/aviation-charter/" },
+      { name: "Charter a Yacht", href: "/charter-yacht-greece/" },
+      { name: "Aviation Charter", href: "/private-jet-charter/" },
     ],
   },
   {
     name: "SALES",
     sublinks: [
       { name: "Buy a Yacht", href: "#sales/new" },
-      { name: "Sell My Yacht", href: "#sales/used" },
+      { name: "Sell My Yacht", href: "/yachts-for-sale/" },
     ],
   },
   { name: "CONTACT" },
