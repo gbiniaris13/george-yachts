@@ -131,9 +131,7 @@ const NavDrawerSystem = () => {
       <nav
         className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 `}
         style={{
-          backgroundColor: scrolled
-            ? "rgba(255, 255, 255, 0.5)"
-            : "transparent",
+          backgroundColor: scrolled ? "white" : "transparent",
         }}
       >
         <div className="max-w-[1530px] mx-auto px-4 sm:px-6 lg:px-8 ">
