@@ -49,7 +49,7 @@ const VipTransfersPage = () => {
         heading="VIP TRANSFERS"
         subtitle="SEAMLESS & LUXURIOUS"
         paragraph="Your journey, curated from start to finish. Arrive in style with our fleet of luxury vehicles and professional chauffeurs."
-        imageUrl="/images/transfers-hero.jpg" // Make sure this image exists in /public/images/
+        imageUrl="/images/vip-transfers.jpeg" // Make sure this image exists in /public/images/
         altText="A luxury sedan interior"
       />
       {isLoading && (

@@ -45,8 +45,8 @@ const LuxuryVillasPage = () => {
       <AboutUs
         heading="LUXURY VILLAS"
         subtitle="GREECE & THE MED"
-        paragraph="Bespoke villa rentals, fully serviced and curated by our expert team for your ultimate holiday."
-        imageUrl="/images/villas-hero.jpg"
+        paragraph="Private villas, seafront homes & investment opportunities across Greece."
+        imageUrl="/images/villas-real-estate.jpeg"
         altText="A luxury villa overlooking the ocean"
       />
       {isLoading && (
