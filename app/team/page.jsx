@@ -1,19 +1,14 @@
-"use client";
+import React from "react";
+import TeamPageClient from "./TeamPageClient";
 
-import AboutUs from "../components/AboutUs";
-import ContactFormSection from "../components/ContactFormSection";
-import TeamSection from "../components/TeamSection";
-import Footer from "../components/Footer";
-
-const AboutUsPage = () => {
-  return (
-    <main>
-      <AboutUs />
-      <TeamSection />
-      <ContactFormSection />
-      <Footer />
-    </main>
-  );
+export const metadata = {
+  title: "Our Team | George Yachts | Athens Yacht Brokerage",
+  description:
+    "Meet the expert team at George Yachts. Our brokers, managers, and advisors are dedicated to providing bespoke, 360° luxury yachting services from Athens, Greece.",
 };
 
-export default AboutUsPage;
+const TeamPage = () => {
+  return <TeamPageClient />;
+};
+
+export default TeamPage;

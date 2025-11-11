@@ -57,7 +57,7 @@ export default function RootLayout({ children }) {
         <Script
           id="tawk-to-script"
           src="https://embed.tawk.to/68f8bfda482c1e1953b81bb5/1j85qqrm6"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           charSet="UTF-8"
           crossOrigin="*"
         />

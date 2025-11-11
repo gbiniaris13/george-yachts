@@ -1,11 +1,14 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Footer from "../components/Footer";
 import AboutUs from "../components/AboutUs";
 import ContactFormSection from "../components/ContactFormSection";
-import TeamSection from "../components/TeamSection";
 import AboutSection from "../components/AboutSection";
+
+export const metadata = {
+  title: "About Us | George Yachts | Boutique Yacht Brokerage Athens",
+  description:
+    "Learn about George Yachts, a boutique yacht brokerage based in Athens, Greece. We specialize in luxury yacht charters, sales, and management with transparent processes and personal communication.",
+};
 
 const AboutUsPage = () => {
   return (

@@ -1,50 +1,44 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { sanityClient } from "@/lib/sanity";
 import YachtSwiper from "../components/YachtSwiper";
 import Footer from "../components/Footer";
 import AboutUs from "../components/AboutUs";
 import ContactFormSection from "../components/ContactFormSection";
 
-// GROQ query to get all published yachts
+// 1. Metadata for SEO
+export const metadata = {
+  title: "Luxury Yacht Charter Greece | George Yachts",
+  description:
+    "Explore bespoke luxury yacht charters in Greece and the Mediterranean. Contact George Yachts to customize your sailing experience today.",
+};
+
+// 2. GROQ query
 const ALL_YACHTS_QUERY = `*[_type == "yacht"] | order(_createdAt asc){
-  _id,
-  name,
-  subtitle,
-  length,
-  yearBuiltRefit,
-  sleeps,
-  cruisingRegion,
-  weeklyRatePrice,
-  images[]{
-    asset, 
-    alt 
-  }
+  _id,
+  name,
+  subtitle,
+  length,
+  yearBuiltRefit,
+  sleeps,
+  cruisingRegion,
+  weeklyRatePrice,
+  images[]{
+    asset, 
+    alt 
+  }
 }`;
 
-const YachtCharterPage = () => {
-  // 1. STATE MANAGEMENT
-  const [yachts, setYachts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+// 3. Page converted to an async Server Component
+const YachtCharterPage = async () => {
+  // 4. Data is fetched on the server (no more useState/useEffect)
+  let yachts = [];
+  try {
+    yachts = await sanityClient.fetch(ALL_YACHTS_QUERY);
+  } catch (error) {
+    console.error("Failed to fetch yachts from Sanity:", error);
+  }
 
-  // 2. DATA FETCHING (Client-side via useEffect)
-  useEffect(() => {
-    async function fetchYachts() {
-      try {
-        const fetchedYachts = await sanityClient.fetch(ALL_YACHTS_QUERY);
-        setYachts(fetchedYachts);
-      } catch (error) {
-        console.error("Failed to fetch yachts from Sanity:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchYachts();
-  }, []);
-
-  // 3. RENDER LOGIC
+  // 5. Render logic is now simpler (no 'isLoading' state)
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
       <AboutUs
@@ -55,14 +49,10 @@ const YachtCharterPage = () => {
         altText="A large luxury yacht sailing on clear blue water at sunset"
       />
 
-      {/* Conditional Rendering based on fetch state */}
-      {isLoading && (
-        <section className="text-center py-20">
-          <p>Loading the available yachts...</p>
-        </section>
-      )}
-
-      {!isLoading && yachts.length === 0 && (
+      {/* 6. Simplified rendering: Show yachts or show the "empty" message */}
+      {yachts.length > 0 ? (
+        yachts.map((yacht) => <YachtSwiper key={yacht._id} yachtData={yacht} />)
+      ) : (
         <section className="text-center py-20">
           <p>
             We currently have no yachts listed for charter. Please check back
@@ -70,15 +60,6 @@ const YachtCharterPage = () => {
           </p>
         </section>
       )}
-
-      {!isLoading &&
-        yachts.length > 0 &&
-        yachts.map((yacht) => (
-          <YachtSwiper
-            key={yacht._id}
-            yachtData={yacht} // Pass the individual yacht data to the component
-          />
-        ))}
 
       <ContactFormSection />
       <Footer />

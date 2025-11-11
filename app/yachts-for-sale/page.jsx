@@ -1,13 +1,18 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { sanityClient } from "@/lib/sanity";
-import SaleYachtSwiper from "../components/SaleYachtSwiper"; // 1. Import the new SaleYachtSwiper
+import SaleYachtSwiper from "../components/SaleYachtSwiper";
 import Footer from "../components/Footer";
 import AboutUs from "../components/AboutUs";
 import ContactFormSection from "../components/ContactFormSection";
 
-// 2. New GROQ query for "saleYacht"
+// 1. Metadata (from original page.jsx)
+export const metadata = {
+  title: "Yachts for Sale | George Yachts | Yacht Acquisition & Advisory",
+  description:
+    "Explore curated listings of luxury yachts for sale. George Yachts offers discreet sourcing and expert advisory for your next yacht acquisition.",
+};
+
+// 2. GROQ query (from BuyYachtClient.jsx)
 const ALL_SALE_YACHTS_QUERY = `*[_type == "saleYacht"] | order(_createdAt asc){
   _id,
   name,
@@ -22,26 +27,17 @@ const ALL_SALE_YACHTS_QUERY = `*[_type == "saleYacht"] | order(_createdAt asc){
   }
 }`;
 
-const BuyYacht = () => {
-  // 3. Add state for loading and data
-  const [yachts, setYachts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+// 3. Page converted to an async Server Component
+const BuyYachtPage = async () => {
+  // 4. Data fetched on the server
+  let yachts = [];
+  try {
+    yachts = await sanityClient.fetch(ALL_SALE_YACHTS_QUERY);
+  } catch (error) {
+    console.error("Failed to fetch sale yachts from Sanity:", error);
+  }
 
-  // 4. Add useEffect to fetch data
-  useEffect(() => {
-    async function fetchSaleYachts() {
-      try {
-        const fetchedYachts = await sanityClient.fetch(ALL_SALE_YACHTS_QUERY);
-        setYachts(fetchedYachts);
-      } catch (error) {
-        console.error("Failed to fetch sale yachts from Sanity:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchSaleYachts();
-  }, []);
-
+  // 5. Return statement (from BuyYachtClient.jsx)
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
       <AboutUs
@@ -52,13 +48,12 @@ const BuyYacht = () => {
         altText="A large luxury yacht sailing on clear blue water at sunset"
       />
 
-      {/* 5. Replace hardcoded sections with dynamic rendering */}
-      {isLoading && (
-        <section className="text-center py-20">
-          <p>Loading available yachts for sale...</p>
-        </section>
-      )}
-      {!isLoading && yachts.length === 0 && (
+      {/* 6. Simplified render logic (no isLoading) */}
+      {yachts.length > 0 ? (
+        yachts.map((yacht) => (
+          <SaleYachtSwiper key={yacht._id} yachtData={yacht} />
+        ))
+      ) : (
         <section className="text-center py-20">
           <p>
             We currently have no yachts listed for purchase. Please check back
@@ -66,11 +61,6 @@ const BuyYacht = () => {
           </p>
         </section>
       )}
-      {!isLoading &&
-        yachts.length > 0 &&
-        yachts.map((yacht) => (
-          <SaleYachtSwiper key={yacht._id} yachtData={yacht} />
-        ))}
 
       <ContactFormSection />
       <Footer />
@@ -78,4 +68,4 @@ const BuyYacht = () => {
   );
 };
 
-export default BuyYacht;
+export default BuyYachtPage;

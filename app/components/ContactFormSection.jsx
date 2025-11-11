@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 
 const RECAPTCHA_PUBLIC_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
