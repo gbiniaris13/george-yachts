@@ -1,24 +1,14 @@
-"use client";
+import React from "react";
+import HomeClient from "./HomeClient";
 
-import VideoSection from "./components/VideoSection";
-import Disruptors from "./components/Disruptors";
-import TwoColumnLayout from "./components/TwoColumnLayout";
-import Footer from "./components/Footer";
-import ContactFormSection from "./components/ContactFormSection";
-import ScrollPopup from "./components/ScrollPopup";
-
-// Renamed 'App' to 'Home' (or default export name for the page file)
-const Home = () => {
-  return (
-    <div className="min-h-screen bg-gray-100 font-sans">
-      <VideoSection />
-      <Disruptors />
-      <TwoColumnLayout />
-      <ContactFormSection />
-      <Footer />
-      <ScrollPopup />
-    </div>
-  );
+export const metadata = {
+  title: "George Yachts | Luxury Yacht Charter, Sales & Management | Greece",
+  description:
+    "Discover the elite world of luxury yachting with George Yachts. Specializing in bespoke yacht charters, sales, and management in Greece and the Mediterranean.",
 };
 
-export default Home;
+const HomePage = () => {
+  return <HomeClient />;
+};
+
+export default HomePage;
