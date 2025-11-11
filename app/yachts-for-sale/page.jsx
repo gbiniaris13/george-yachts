@@ -22,10 +22,12 @@ const ALL_SALE_YACHTS_QUERY = `*[_type == "saleYacht"] | order(_createdAt asc){
   }
 }`;
 
-const BuyAYachtPage = () => {
+const BuyYacht = () => {
+  // 3. Add state for loading and data
   const [yachts, setYachts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // 4. Add useEffect to fetch data
   useEffect(() => {
     async function fetchSaleYachts() {
       try {
@@ -43,12 +45,14 @@ const BuyAYachtPage = () => {
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
       <AboutUs
-        heading="BUY A YACHT"
-        subtitle="ACQUISITION & ADVISORY"
-        paragraph="Discreet sourcing and expert advisory for your next yacht acquisition. Explore our curated listings."
-        imageUrl="/images/buy-yacht-hero.jpg"
-        altText="A large superyacht at anchor"
+        heading="BUY"
+        subtitle="A YACHT"
+        paragraph="Owning the sea starts with knowing its value."
+        imageUrl="/images/buy-a-yacht.jpeg"
+        altText="A large luxury yacht sailing on clear blue water at sunset"
       />
+
+      {/* 5. Replace hardcoded sections with dynamic rendering */}
       {isLoading && (
         <section className="text-center py-20">
           <p>Loading available yachts for sale...</p>
@@ -57,20 +61,21 @@ const BuyAYachtPage = () => {
       {!isLoading && yachts.length === 0 && (
         <section className="text-center py-20">
           <p>
-            We currently have no yachts listed for sale. Please check back soon!
+            We currently have no yachts listed for purchase. Please check back
+            soon!
           </p>
         </section>
       )}
       {!isLoading &&
         yachts.length > 0 &&
-        // 3. Map logic updated to use SaleYachtSwiper
         yachts.map((yacht) => (
           <SaleYachtSwiper key={yacht._id} yachtData={yacht} />
         ))}
+
       <ContactFormSection />
       <Footer />
     </div>
   );
 };
 
-export default BuyAYachtPage;
+export default BuyYacht;
