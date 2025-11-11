@@ -72,7 +72,7 @@ const LayoutRow = ({ item, index }) => {
     // Apply text alignment based on isRightAligned state for MD: and above
     // The container needs to be the one controlling the alignment and flow.
     <div
-      className={`flex flex-col justify-center p-0 order-2 md:order-none text-left ${
+      className={`flex flex-col justify-center p-0 order-2 md:order-0 text-left ${
         isRightAligned ? "md:text-right" : "md:text-left"
       }`}
     >
@@ -94,7 +94,7 @@ const LayoutRow = ({ item, index }) => {
 
   const imageBlock = (
     // Mobile order: Image always first (on top). Desktop order: Varies.
-    <div className="w-full order-1 md:order-none">
+    <div className="w-full order-1 md:order-0">
       <img
         src={item.imageSrc}
         alt={item.title}
