@@ -5,6 +5,8 @@ import Footer from "../components/Footer";
 import AboutUs from "../components/AboutUs";
 import ContactFormSection from "../components/ContactFormSection";
 
+export const revalidate = 0;
+
 export const metadata = {
   title: "VIP Transfers Athens & Greece | George Yachts",
   description:
