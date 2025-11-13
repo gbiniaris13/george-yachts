@@ -10,8 +10,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y, EffectFade } from "swiper/modules";
 
 import { urlFor } from "@/lib/sanity";
+import EnquirePopup from "./EnquirePopup"; // 1. Import Popup
 
-// --- SVG Components (Copied) ---
+// --- SVG Components (No changes) ---
 const CustomNextArrowSVG = (props) => (
   <svg
     {...props}
@@ -45,6 +46,7 @@ const SaleYachtSwiper = ({ yachtData }) => {
   if (!yachtData) return null;
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // 2. Add State
   const yacht = yachtData;
 
   const prevRef = useRef(null);
@@ -58,6 +60,13 @@ const SaleYachtSwiper = ({ yachtData }) => {
 
   return (
     <section className="max-w-[1440px] mx-auto py-10 px-2">
+      {/* 3. Render Popup */}
+      <EnquirePopup
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        yachtName={yacht.name}
+      />
+
       <div className="relative">
         <div className="bg-white border-2 border-[#DAA520] overflow-hidden">
           <div className="lg:grid lg:grid-cols-2">
@@ -106,7 +115,6 @@ const SaleYachtSwiper = ({ yachtData }) => {
               </Swiper>
             </div>
 
-            {/* RIGHT COLUMN: MODIFIED FOR SALES */}
             <div className="p-8 md:p-12 flex flex-col justify-between h-full">
               <div className="flex flex-col md:justify-start md:items-start">
                 <h2 className="text-[35px] text-center md:text-start font-bold text-[#02132d]">
@@ -137,7 +145,6 @@ const SaleYachtSwiper = ({ yachtData }) => {
                     </p>
                   </div>
                 </div>
-                {/* MODIFIED PRICE SECTION */}
                 <div className="flex justify-between items-center pb-6">
                   <p className="text-gray-500 text-lg font-normal py-4 pe-2">
                     Asking Price
@@ -150,7 +157,11 @@ const SaleYachtSwiper = ({ yachtData }) => {
             </div>
 
             <div className="absolute bottom-[-22px] left-1/2 -translate-x-1/2 md:right-[-50px] md:left-auto">
-              <button className="px-8 py-3 bg-[#DAA520] text-black font-bold uppercase tracking-wider rounded-full hover:bg-black hover:text-white cursor-pointer">
+              <button
+                // 4. Connect Button
+                onClick={() => setIsPopupOpen(true)}
+                className="px-8 py-3 bg-[#DAA520] text-black font-bold uppercase tracking-wider rounded-full hover:bg-black hover:text-white cursor-pointer"
+              >
                 ENQUIRE
               </button>
             </div>

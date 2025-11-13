@@ -10,6 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y, EffectFade } from "swiper/modules";
 
 import { urlFor } from "@/lib/sanity";
+import EnquirePopup from "./EnquirePopup"; // 1. Import the Popup
 
 // --- SVG Components (No changes) ---
 const CustomNextArrowSVG = (props) => (
@@ -22,9 +23,7 @@ const CustomNextArrowSVG = (props) => (
     focusable="false"
     className="fill-current text-white"
   >
-       {" "}
     <path d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z"></path>
-     {" "}
   </svg>
 );
 
@@ -39,16 +38,13 @@ const CustomPrevArrowSVG = (props) => (
     className="fill-current text-white"
     style={{ transform: "scaleX(-1)" }}
   >
-       {" "}
     <path d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z"></path>
-     {" "}
   </svg>
 );
 // --- End SVG Components ---
 
 // Function to map the yacht data fields to dynamic labels
 const getDetailsConfig = (yacht) => {
-  // Check for a unique field name that identifies a jet schema
   const isJet = !!yacht.cruisingSpeed;
 
   if (isJet) {
@@ -60,7 +56,7 @@ const getDetailsConfig = (yacht) => {
         { label: "Powerplant", key: "powerplant" },
       ],
       rateLabel: "Hourly rate from",
-      ratePriceKey: "price", // Jet uses 'price'
+      ratePriceKey: "price",
     };
   } else {
     return {
@@ -71,7 +67,7 @@ const getDetailsConfig = (yacht) => {
         { label: "Cruising region", key: "cruisingRegion" },
       ],
       rateLabel: "Weekly rate from",
-      ratePriceKey: "weeklyRatePrice", // Yacht uses 'weeklyRatePrice'
+      ratePriceKey: "weeklyRatePrice",
     };
   }
 };
@@ -80,8 +76,10 @@ const YachtSwiper = ({ yachtData }) => {
   if (!yachtData) return null;
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const yacht = yachtData;
+  // 2. Add state for the popup
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
+  const yacht = yachtData;
   const { details, rateLabel, ratePriceKey } = getDetailsConfig(yacht);
 
   const prevRef = useRef(null);
@@ -95,6 +93,13 @@ const YachtSwiper = ({ yachtData }) => {
 
   return (
     <section className="max-w-[1440px] mx-auto py-10 px-2">
+      {/* 3. Render the Popup (conditionally hidden by its own logic but mounted here) */}
+      <EnquirePopup
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        yachtName={yacht.name}
+      />
+
       <div className="relative">
         <div className="bg-white border-2 border-[#DAA520] overflow-hidden">
           <div className="lg:grid lg:grid-cols-2">
@@ -132,13 +137,13 @@ const YachtSwiper = ({ yachtData }) => {
                 <div
                   ref={prevRef}
                   className={`
-                                        absolute top-1/2 left-3 z-10 
-                                        p-3 rounded-full 
-                                        bg-[rgb(0_0_0_/60%)] // Your specific background color
-                                        transform -translate-y-1/2
-                                        flex items-center justify-center
-                                        cursor-pointer transition-opacity
-                                    `}
+                    absolute top-1/2 left-3 z-10 
+                    p-3 rounded-full 
+                    bg-[rgb(0_0_0_/60%)]
+                    transform -translate-y-1/2
+                    flex items-center justify-center
+                    cursor-pointer transition-opacity
+                  `}
                 >
                   <CustomPrevArrowSVG />
                 </div>
@@ -146,20 +151,20 @@ const YachtSwiper = ({ yachtData }) => {
                 <div
                   ref={nextRef}
                   className={`
-                                        absolute top-1/2 right-3 z-10 
-                                        p-3 rounded-full 
-                                        bg-[rgb(0_0_0_/60%)] // Your specific background color
-                                        transform -translate-y-1/2
-                                        flex items-center justify-center
-                                        cursor-pointer transition-opacity
-                                    `}
+                    absolute top-1/2 right-3 z-10 
+                    p-3 rounded-full 
+                    bg-[rgb(0_0_0_/60%)]
+                    transform -translate-y-1/2
+                    flex items-center justify-center
+                    cursor-pointer transition-opacity
+                  `}
                 >
                   <CustomNextArrowSVG />
                 </div>
               </Swiper>
             </div>
 
-            {/* RIGHT COLUMN: DYNAMIC CONTENT BLOCK */}
+            {/* RIGHT COLUMN */}
             <div className="p-8 md:p-12 flex flex-col justify-between h-full">
               <div className="flex flex-col md:justify-start md:items-start">
                 <h2 className="text-[35px] text-center md:text-start font-bold text-[#02132d]">
@@ -170,7 +175,6 @@ const YachtSwiper = ({ yachtData }) => {
                 </p>
                 <div className="py-4 max-w-xl md:w-full border-b border-gray-300">
                   <div className="grid grid-cols-2 gap-y-1 text-sm">
-                    {/* DYNAMIC DETAIL LIST MAPPING */}
                     {details.map((item) => (
                       <React.Fragment key={item.key}>
                         <p className="text-gray-500 font-normal text-base">
@@ -194,8 +198,13 @@ const YachtSwiper = ({ yachtData }) => {
               </div>
             </div>
 
+            {/* ENQUIRE BUTTON */}
             <div className="absolute bottom-[-22px] left-1/2 -translate-x-1/2 md:right-[-50px] md:left-auto">
-              <button className="px-8 py-3 bg-[#DAA520] text-black font-bold uppercase tracking-wider rounded-full hover:bg-black hover:text-white cursor-pointer">
+              <button
+                // 4. Connect the button to the state
+                onClick={() => setIsPopupOpen(true)}
+                className="px-8 py-3 bg-[#DAA520] text-black font-bold uppercase tracking-wider rounded-full hover:bg-black hover:text-white cursor-pointer"
+              >
                 ENQUIRE
               </button>
             </div>

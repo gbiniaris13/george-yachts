@@ -10,8 +10,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y, EffectFade } from "swiper/modules";
 
 import { urlFor } from "@/lib/sanity";
+import EnquirePopup from "./EnquirePopup"; // 1. Import Popup
 
-// --- SVG Components (Copied from VillaSwiper) ---
+// --- SVG Components (No changes) ---
 const CustomNextArrowSVG = (props) => (
   <svg
     {...props}
@@ -25,7 +26,6 @@ const CustomNextArrowSVG = (props) => (
     <path d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z"></path>
   </svg>
 );
-
 const CustomPrevArrowSVG = (props) => (
   <svg
     {...props}
@@ -46,6 +46,7 @@ const TransferSwiper = ({ transferData }) => {
   if (!transferData) return null;
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // 2. Add State
   const transfer = transferData;
 
   const prevRef = useRef(null);
@@ -59,6 +60,13 @@ const TransferSwiper = ({ transferData }) => {
 
   return (
     <section className="max-w-[1440px] mx-auto py-10 px-2">
+      {/* 3. Render Popup */}
+      <EnquirePopup
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        yachtName={transfer.vehicleType} // Passes Vehicle Type as "Re: [Vehicle]"
+      />
+
       <div className="relative">
         <div className="bg-white border-2 border-[#DAA520] overflow-hidden">
           <div className="lg:grid lg:grid-cols-2">
@@ -95,38 +103,21 @@ const TransferSwiper = ({ transferData }) => {
                       <div className="absolute inset-0 bg-black/30"></div>
                     </SwiperSlide>
                   ))}
-
                 <div
                   ref={prevRef}
-                  className={`
-                    absolute top-1/2 left-3 z-10 
-                    p-3 rounded-full 
-                    bg-[rgb(0_0_0_/60%)]
-                    transform -translate-y-1/2
-                    flex items-center justify-center
-                    cursor-pointer transition-opacity
-                  `}
+                  className="absolute top-1/2 left-3 z-10 p-3 rounded-full bg-[rgb(0_0_0_/60%)] transform -translate-y-1/2 flex items-center justify-center cursor-pointer transition-opacity"
                 >
                   <CustomPrevArrowSVG />
                 </div>
-
                 <div
                   ref={nextRef}
-                  className={`
-                    absolute top-1/2 right-3 z-10 
-                    p-3 rounded-full 
-                    bg-[rgb(0_0_0_/60%)]
-                    transform -translate-y-1/2
-                    flex items-center justify-center
-                    cursor-pointer transition-opacity
-                  `}
+                  className="absolute top-1/2 right-3 z-10 p-3 rounded-full bg-[rgb(0_0_0_/60%)] transform -translate-y-1/2 flex items-center justify-center cursor-pointer transition-opacity"
                 >
                   <CustomNextArrowSVG />
                 </div>
               </Swiper>
             </div>
 
-            {/* RIGHT COLUMN: DYNAMIC TRANSFER CONTENT */}
             <div className="p-8 md:p-12 flex flex-col justify-between h-full">
               <div className="flex flex-col md:justify-start md:items-start">
                 <h2 className="text-[35px] text-center md:text-start font-bold text-[#02132d]">
@@ -157,12 +148,15 @@ const TransferSwiper = ({ transferData }) => {
                     </p>
                   </div>
                 </div>
-                {/* Note: Price row removed as it's not in the schema */}
               </div>
             </div>
 
             <div className="absolute bottom-[-22px] left-1/2 -translate-x-1/2 md:right-[-50px] md:left-auto">
-              <button className="px-8 py-3 bg-[#DAA520] text-black font-bold uppercase tracking-wider rounded-full hover:bg-black hover:text-white cursor-pointer">
+              <button
+                // 4. Connect Button
+                onClick={() => setIsPopupOpen(true)}
+                className="px-8 py-3 bg-[#DAA520] text-black font-bold uppercase tracking-wider rounded-full hover:bg-black hover:text-white cursor-pointer"
+              >
                 ENQUIRE
               </button>
             </div>
