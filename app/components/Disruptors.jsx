@@ -1,12 +1,36 @@
+import React from "react";
+import Marquee from "react-fast-marquee";
+
 const Disruptors = () => {
   return (
-    <div className="w-full mx-auto flex flex-col items-center justify-center bg-white py-24">
-      <div className="flex flex-col items-center justify-center text-center px-[34px] leading-[40px]">
-        <span className="font-bold text-[34px] text-black">WHERE LUXURY</span>
-        <span className="text-[34px] font-normal tracking-widest text-[#DAA520]">
-          MEETS TRUST AND <i>"FILOTIMON"</i>
+    <div className="w-full mx-auto flex flex-col items-center justify-center bg-white py-14">
+      <Marquee
+        speed={160}
+        gradient={true}
+        gradientColor="#FFFFFF"
+        gradientWidth={150}
+      >
+        <span
+          className="text-[120px] font-bold text-transparent mx-12"
+          style={{ WebkitTextStroke: "1px black" }}
+        >
+          WHERE LUXURY MEETS TRUST AND FILOTIMON
         </span>
-      </div>
+        <span
+          className="text-[120px] font-bold text-transparent mx-12"
+          style={{ WebkitTextStroke: "1px black" }}
+        >
+          WHERE LUXURY MEETS TRUST AND FILOTIMON
+        </span>
+        <span
+          className="text-[120px] font-bold text-transparent mx-12"
+          style={{
+            WebkitTextStroke: "1px black",
+          }}
+        >
+          WHERE LUXURY MEETS TRUST AND FILOTIMON
+        </span>
+      </Marquee>
     </div>
   );
 };

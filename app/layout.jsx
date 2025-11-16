@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Marcellus } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import NavDrawerSystem from "./components/NavDrawerSystem";
@@ -17,13 +17,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const marcellus = Marcellus({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-marcellus",
+});
+
 export default function RootLayout({ children }) {
   const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${marcellus.variable} antialiased`}
       >
         {/* Apollo.io Website Tracker */}
         <Script id="apollo-tracker" strategy="afterInteractive">
