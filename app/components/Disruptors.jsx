@@ -10,24 +10,13 @@ const Disruptors = () => {
         gradientColor="#FFFFFF"
         gradientWidth={150}
       >
-        <span
-          className="text-[120px] font-bold text-transparent mx-12"
-          style={{ WebkitTextStroke: "1px black" }}
-        >
+        <span className="text-[120px] font-bold text-black mx-12">
           WHERE LUXURY MEETS TRUST AND FILOTIMON
         </span>
-        <span
-          className="text-[120px] font-bold text-transparent mx-12"
-          style={{ WebkitTextStroke: "1px black" }}
-        >
+        <span className="text-[120px] font-bold text-black mx-12">
           WHERE LUXURY MEETS TRUST AND FILOTIMON
         </span>
-        <span
-          className="text-[120px] font-bold text-transparent mx-12"
-          style={{
-            WebkitTextStroke: "1px black",
-          }}
-        >
+        <span className="text-[120px] font-bold text-black mx-12">
           WHERE LUXURY MEETS TRUST AND FILOTIMON
         </span>
       </Marquee>
