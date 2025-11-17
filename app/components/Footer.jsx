@@ -22,7 +22,7 @@ const Footer = () => {
               href={Social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:text-[#DAA520] transition duration-200"
+              className="text-white hover:text-[#CEA681] transition duration-200"
               aria-label={Social.name}
             >
               <Social.icon className="w-6 h-6" />
@@ -36,7 +36,7 @@ const Footer = () => {
             <a
               key={index}
               href={link.href}
-              className="hover:text-[#DAA520] transition duration-200"
+              className="hover:text-[#CEA681] transition duration-200"
             >
               {link.name}
             </a>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const GOLD_HEX = "#DAA520";
+const GOLD_HEX = "#CEA681";
 
 const AboutSection = ({
   paragraphs = [

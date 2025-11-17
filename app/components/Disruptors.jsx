@@ -5,18 +5,27 @@ const Disruptors = () => {
   return (
     <div className="w-full mx-auto flex flex-col items-center justify-center bg-white py-14">
       <Marquee
-        speed={160}
+        speed={30}
         gradient={true}
         gradientColor="#FFFFFF"
         gradientWidth={150}
       >
-        <span className="text-[120px] font-bold text-black mx-12">
+        <span
+          className="text-[120px] font-bold text-black mx-12"
+          style={{ fontFamily: "var(--font-marcellus)" }}
+        >
           WHERE LUXURY MEETS TRUST AND FILOTIMON
         </span>
-        <span className="text-[120px] font-bold text-black mx-12">
+        <span
+          className="text-[120px] font-bold text-black mx-12"
+          style={{ fontFamily: "var(--font-marcellus)" }}
+        >
           WHERE LUXURY MEETS TRUST AND FILOTIMON
         </span>
-        <span className="text-[120px] font-bold text-black mx-12">
+        <span
+          className="text-[120px] font-bold text-black mx-12"
+          style={{ fontFamily: "var(--font-marcellus)" }}
+        >
           WHERE LUXURY MEETS TRUST AND FILOTIMON
         </span>
       </Marquee>

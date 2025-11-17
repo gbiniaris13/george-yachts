@@ -127,7 +127,7 @@ const NavDrawerSystem = () => {
             href={Social.href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`${currentTextColor} hover:text-[#DAA520] p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md`}
+            className={`${currentTextColor} hover:text-[#CEA681] p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md`}
             aria-label={`Link to ${Social.name}`}
           >
             <Social.icon className="w-5 h-5" />
@@ -150,7 +150,7 @@ const NavDrawerSystem = () => {
           <div className="flex items-center space-x-4">
             <button
               onClick={toggleDrawer}
-              className={`p-2 rounded-full ${currentTextColor} hover:text-[#DAA520] cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#DAA520] transition duration-150 active:scale-95 drop-shadow-md lg:hidden`}
+              className={`p-2 rounded-full ${currentTextColor} hover:text-[#CEA681] cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#CEA681] transition duration-150 active:scale-95 drop-shadow-md xl:hidden`}
               aria-label="Toggle menu"
             >
               <Menu className="w-6 h-6" />
@@ -183,7 +183,7 @@ const NavDrawerSystem = () => {
 
           {/* --- 2. CENTER BLOCK (Desktop Nav) --- */}
           {/* 🛑 MODIFIED: Now maps over 'navLinks' */}
-          <nav className="hidden lg:flex items-center space-x-6">
+          <nav className="hidden xl:flex items-center space-x-6">
             {navLinks.map((link) => {
               // Get the href from the first sublink, or fallback to '#'
               const mainHref =
@@ -195,7 +195,7 @@ const NavDrawerSystem = () => {
                 <Link
                   key={link.name}
                   href={mainHref}
-                  className={`text-sm lg:text-lg font-semibold uppercase tracking-wider ${currentTextColor} hover:text-[#DAA520] transition-colors duration-200`}
+                  className={`text-sm lg:text-lg font-semibold uppercase tracking-wider ${currentTextColor} hover:text-[#CEA681] transition-colors duration-200`}
                   style={{ fontFamily: "var(--font-marcellus)" }}
                 >
                   {link.name}
@@ -296,7 +296,7 @@ const NavDrawerSystem = () => {
                         key={sublink.name}
                         href={sublink.href}
                         onClick={toggleDrawer}
-                        className="block py-2 pl-6 pr-1 text-sm text-gray-300 hover:text-[#DAA520] transition duration-150"
+                        className="block py-2 pl-6 pr-1 text-sm text-gray-300 hover:text-[#CEA681] transition duration-150"
                       >
                         {sublink.name}
                       </a>

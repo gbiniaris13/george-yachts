@@ -31,7 +31,7 @@ const EnquirePopup = ({ isOpen, onClose, yachtName }) => {
         {/* Custom Header inside the popup (Optional) */}
         <div className="absolute top-0 left-0 w-full p-4 z-40 pointer-events-none">
           <p className="text-white/80 text-xs font-bold uppercase tracking-widest text-center mt-2">
-            Enquiring about: <span className="text-[#DAA520]">{yachtName}</span>
+            Enquiring about: <span className="text-[#CEA681]">{yachtName}</span>
           </p>
         </div>
 

@@ -11,7 +11,7 @@ const features = [
     imageSrc: "/images/yacht-1.jpeg",
     color: "bg-black",
     color1: "text-white",
-    color2: "text-[#DAA520]",
+    color2: "text-[#CEA681]",
   },
   // Row 2 (Index 1): Image Left, Content Right (bg-white)
   {
@@ -21,7 +21,7 @@ const features = [
     imageSrc: "/images/yacht-2.jpeg",
     color: "bg-white",
     color1: "text-[#000]",
-    color2: "text-[#DAA520]",
+    color2: "text-[#CEA681]",
   },
   // Row 3 (Index 2): Content Left, Image Right (bg-black)
   {
@@ -31,7 +31,7 @@ const features = [
     imageSrc: "/images/yacht-3.jpeg",
     color: "bg-black",
     color1: "text-white",
-    color2: "text-[#DAA520]",
+    color2: "text-[#CEA681]",
   },
   // Row 4 (Index 3): ADDED - Image Left, Content Right (bg-white)
   {
@@ -41,10 +41,12 @@ const features = [
     imageSrc: "/images/yacht-4.jpeg",
     color: "bg-white",
     color1: "text-[#000]",
-    color2: "text-[#DAA520]",
+    color2: "text-[#CEA681]",
   },
 ];
 // --- END: Data ---
+
+// color2: "text-[#CEA681]",
 
 const LayoutRow = ({ item, index }) => {
   const isContentFirst = index % 2 === 0;
@@ -56,7 +58,7 @@ const LayoutRow = ({ item, index }) => {
   const content = (
     <div className="mx-auto">
       <h2
-        className={`md:text-[80px] text-start text-3xl font-extrabold ${item.color1}`}
+        className={`xl:text-[50px] text-start text-3xl font-extrabold ${item.color1}`}
         style={{ fontFamily: "var(--font-marcellus)" }}
       >
         <span>{titlePart1}</span>
@@ -64,7 +66,7 @@ const LayoutRow = ({ item, index }) => {
         <span className={`${item.color2} font-normal`}>{titlePart2}</span>
       </h2>
       <p
-        className={`mt-4 text-xl md:text-4xl text-start max-w-[600px]`}
+        className={`mt-4 text-xl md:text-xl text-start max-w-[600px]`}
         style={{ fontFamily: "var(--font-marcellus)" }}
       >
         {item.paragraph}

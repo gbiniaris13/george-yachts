@@ -23,7 +23,7 @@ const NemesisClient = () => {
         altText="Portrait of Nemesis"
         bgColor="bg-black"
         textColor="text-white"
-        accentColor="text-[#DAA520]"
+        accentColor="text-[#CEA681]"
       />
 
       <MemberAboutSection

@@ -23,7 +23,7 @@ const ManosKourmoulakisClient = () => {
         altText="Portrait of Manos Kourmoulakis"
         bgColor="bg-black"
         textColor="text-white"
-        accentColor="text-[#DAA520]"
+        accentColor="text-[#CEA681]"
       />
       <MemberAboutSection
         name="MANOS"
