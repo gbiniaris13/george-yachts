@@ -9,6 +9,7 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
+import Link from "next/link"; // Import Link for navigation
 
 const WhatsappIcon = (props) => (
   <svg
@@ -21,32 +22,43 @@ const WhatsappIcon = (props) => (
   </svg>
 );
 
+// --- NAVLINKS (This is the single source of truth) ---
 const navLinks = [
   {
     name: "ABOUT",
     sublinks: [
-      { name: "About Us", href: "/about-us" },
-      { name: "Core Team", href: "/team" },
-      { name: "Press & Media", href: "#about/media" },
+      { name: "About Us", href: "/about-us/" },
+      { name: "Core Team", href: "/team/" },
+      // { name: "Press & Media", href: "#about/media" },
     ],
   },
   {
-    name: "CHARTER",
+    name: "CHARTER A YACHT",
+    sublinks: [{ name: "Charter a Yacht", href: "/charter-yacht-greece/" }],
+  },
+  {
+    name: "BUY A YACHT",
+    sublinks: [{ name: "Buy a Yacht", href: "/yachts-for-sale/" }],
+  },
+  {
+    name: "VILLAS & REAL ESTATE",
     sublinks: [
-      { name: "Charter a Yacht", href: "/charter-yacht-greece/" },
-      { name: "Aviation Charter", href: "/private-jet-charter/" },
+      { name: "Villas & Real Estate", href: "/luxury-villas-greece/" },
     ],
   },
   {
-    name: "SALES",
-    sublinks: [
-      { name: "Buy a Yacht", href: "#sales/new" },
-      { name: "Sell My Yacht", href: "/yachts-for-sale/" },
-    ],
+    name: "FLY PRIVATE",
+    sublinks: [{ name: "Aviation Charter", href: "/private-jet-charter/" }],
   },
-  { name: "CONTACT" },
-  { name: "FAQ" },
+  {
+    name: "VIP TRANSFERS",
+    sublinks: [{ name: "VIP Transfers", href: "/vip-transfers-greece/" }],
+  },
+  // { name: "CONTACT", sublinks: [{ name: "Contact Us", href: "/contact" }] },
+  // { name: "FAQ", sublinks: [{ name: "FAQ", href: "/faq" }] },
 ];
+
+// 🛑 REMOVED the simplified 'desktopNavLinks' array
 
 const WHATSAPP_NUMBER = "+17867988788";
 const WHATSAPP_MESSAGE = encodeURIComponent(
@@ -102,10 +114,9 @@ const NavDrawerSystem = () => {
   ];
 
   const currentTextColor = scrolled ? "text-[#02132d]" : "text-white";
-  const desktopIconClasses =
-    "flex items-center space-x-3 z-10 p-2 rounded-full bg-white/10 backdrop-blur-sm";
-  const mobileIconClasses =
-    "flex items-center space-x-3 z-10 p-2 rounded-full ";
+  const iconClasses = `flex items-center space-x-3 z-10 p-2 rounded-full ${
+    scrolled ? "bg-white/10" : "bg-white/10 backdrop-blur-sm"
+  }`;
 
   const SocialIconGroup = ({ className, iconClasses }) => (
     <div className={className}>
@@ -129,72 +140,79 @@ const NavDrawerSystem = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 `}
+        className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 px-4 sm:px-6 lg:px-8`}
         style={{
           backgroundColor: scrolled ? "white" : "transparent",
         }}
       >
-        <div className="max-w-[1530px] mx-auto px-4 sm:px-6 lg:px-8 ">
-          <div className="grid grid-cols-2 items-center h-20 relative">
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={toggleDrawer}
-                className={`p-2 rounded-full ${currentTextColor} hover:text-[#DAA520] cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#DAA520] transition duration-150 active:scale-95 drop-shadow-md`}
-                aria-label="Toggle menu"
+        <div className="flex items-center justify-between h-20 relative">
+          {/* --- 1. LEFT BLOCK (Logo & Hamburger) --- */}
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={toggleDrawer}
+              className={`p-2 rounded-full ${currentTextColor} hover:text-[#DAA520] cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#DAA520] transition duration-150 active:scale-95 drop-shadow-md lg:hidden`}
+              aria-label="Toggle menu"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+            <div className="shrink-0">
+              <a
+                href="/"
+                className="text-2xl font-extrabold text-indigo-400 tracking-wider "
               >
-                <Menu className="w-6 h-6" />
-              </button>
-              <div className="shrink-0">
-                <a
-                  href="/"
-                  className="text-2xl font-extrabold text-indigo-400 tracking-wider "
-                >
-                  <div className="flex flex-col items-center">
-                    <span
-                      className={`the text-[10px] drop-shadow-md ${currentTextColor}`}
-                    >
-                      THE
-                    </span>
-                    <span
-                      className={`george-yachts text-base drop-shadow-md ${currentTextColor}`}
-                    >
-                      GEORGE YACHTS
-                    </span>
-                    <span
-                      className={`the text-[10px] drop-shadow-md ${currentTextColor}`}
-                    >
-                      YACHT BROKERAGE
-                    </span>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            <SocialIconGroup
-              className="flex justify-end lg:hidden"
-              iconClasses={mobileIconClasses}
-            />
-
-            <div className="hidden lg:flex absolute inset-x-0 mx-auto w-fit">
-              <div className={desktopIconClasses}>
-                {socialIcons.map((Social, index) => (
-                  <a
-                    key={index}
-                    href={Social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${currentTextColor} hover:text-[#DAA520] p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md`}
-                    aria-label={`Link to ${Social.name}`}
+                <div className="flex flex-col items-center">
+                  <span
+                    className={`the text-[10px] drop-shadow-md ${currentTextColor}`}
                   >
-                    <Social.icon className="w-5 h-5" />
-                  </a>
-                ))}
-              </div>
+                    THE
+                  </span>
+                  <span
+                    className={`george-yachts text-base drop-shadow-md ${currentTextColor}`}
+                  >
+                    GEORGE YACHTS
+                  </span>
+                  <span
+                    className={`the text-[10px] drop-shadow-md ${currentTextColor}`}
+                  >
+                    YACHT BROKERAGE
+                  </span>
+                </div>
+              </a>
             </div>
           </div>
+
+          {/* --- 2. CENTER BLOCK (Desktop Nav) --- */}
+          {/* 🛑 MODIFIED: Now maps over 'navLinks' */}
+          <nav className="hidden lg:flex items-center space-x-6">
+            {navLinks.map((link) => {
+              // Get the href from the first sublink, or fallback to '#'
+              const mainHref =
+                link.sublinks && link.sublinks.length > 0
+                  ? link.sublinks[0].href
+                  : "#";
+
+              return (
+                <Link
+                  key={link.name}
+                  href={mainHref}
+                  className={`text-sm lg:text-lg font-semibold uppercase tracking-wider ${currentTextColor} hover:text-[#DAA520] transition-colors duration-200`}
+                  style={{ fontFamily: "var(--font-marcellus)" }}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* --- 3. RIGHT BLOCK (Social Icons) --- */}
+          <SocialIconGroup
+            className="flex justify-end"
+            iconClasses={iconClasses}
+          />
         </div>
       </nav>
 
+      {/* --- (DRAWER / OVERLAY - NO CHANGES) --- */}
       <div
         className={`fixed inset-0 bg-black transition-opacity duration-300 z-40 ${
           isDrawerOpen
@@ -236,12 +254,16 @@ const NavDrawerSystem = () => {
             {navLinks.map((link) => {
               const isOpen = openMenu === link.name;
               const hasSublinks = link.sublinks && link.sublinks.length > 0;
+              // 🛑 Use the first sublink href for the main link if it exists
+              const mainHref = hasSublinks ? link.sublinks[0].href || "#" : "#";
 
               return (
                 <div key={link.name} className="flex flex-col">
                   <button
                     onClick={() =>
-                      hasSublinks ? toggleSubMenu(link.name) : toggleDrawer()
+                      hasSublinks
+                        ? toggleSubMenu(link.name)
+                        : ((window.location.href = mainHref), toggleDrawer())
                     }
                     className={`flex justify-between items-center w-full py-3 px-1 border-b border-white transition duration-200 group focus:outline-none cursor-pointer`}
                   >

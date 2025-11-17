@@ -5,7 +5,7 @@ const SCROLL_THRESHOLD = 100; // Pixels to scroll down before the popup appears
 
 // Reusable component for the site logo structure
 const SiteLogo = () => (
-  <div className="flex-shrink-0 mb-4">
+  <div className="shrink-0 mb-4">
     <a href="#" className="text-2xl font-extrabold tracking-wider">
       <div className="flex flex-col items-center text-center">
         <span className="the text-black text-[10px]">THE</span>
@@ -50,7 +50,7 @@ const ScrollPopup = () => {
 
   return (
     // Fixed positioning in the center of the viewport
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-sm bg-black/5">
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 backdrop-blur-sm bg-black/5">
       {/* Modal Content */}
       <div
         className="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-sm relative transform transition-all duration-300 ease-out scale-100"
