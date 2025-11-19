@@ -6,7 +6,6 @@ import Disruptors from "./components/Disruptors";
 import TwoColumnLayout from "./components/TwoColumnLayout";
 import Footer from "./components/Footer";
 import ContactFormSection from "./components/ContactFormSection";
-import ScrollPopup from "./components/ScrollPopup";
 
 // Renamed 'Home' to 'HomeClient'
 const HomeClient = () => {
@@ -17,7 +16,6 @@ const HomeClient = () => {
       <TwoColumnLayout />
       <ContactFormSection />
       <Footer />
-      <ScrollPopup />
     </div>
   );
 };

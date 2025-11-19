@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -68,6 +69,7 @@ export default function RootLayout({ children }) {
           crossOrigin="*"
         />
         <NavDrawerSystem /> {children}
+        <GoogleAnalytics gaId="G-CM483Z0JT5" />
       </body>
     </html>
   );
