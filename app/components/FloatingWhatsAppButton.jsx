@@ -28,7 +28,7 @@ const FloatingWhatsAppButton = () => {
       target="_blank"
       rel="noopener noreferrer"
       // lg:hidden ensures this button ONLY shows on screens smaller than 1024px
-      className="lg:hidden fixed bottom-34 right-3 z-9999 flex items-center space-x-2 bg-[#25D366] text-white px-4 py-3 rounded-full shadow-lg transition-all duration-300 hover:bg-[#128C7E]"
+      className="lg:hidden fixed bottom-50 right-3 z-9999 flex items-center space-x-2 bg-[#25D366] text-white px-4 py-3 rounded-full shadow-lg transition-all duration-300 hover:bg-[#128C7E]"
       style={{ fontFamily: "var(--font-marcellus)" }}
     >
       <WhatsappIcon className="w-6 h-6" />
