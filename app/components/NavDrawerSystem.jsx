@@ -16,6 +16,7 @@ const WhatsappIcon = (props) => (
   </svg>
 );
 
+// --- 1. MAIN NAVLINKS (Flat Structure - No Dropdowns) ---
 const navLinks = [
   { name: "ABOUT GEORGE YACHTS", href: "/about-us/" },
   { name: "OUR CORE TEAM", href: "/team/" },
@@ -30,6 +31,7 @@ const navLinks = [
   { name: "CONTACT US", href: "/contact/" },
 ];
 
+// --- 2. LEGAL LINKS ---
 const legalLinks = [
   { name: "Legal", href: "/legal" },
   { name: "Privacy Policy", href: "/privacy-policy" },
@@ -82,8 +84,8 @@ const NavDrawerSystem = () => {
           <div className="flex items-center space-x-4">
             <button
               onClick={toggleDrawer}
-              // 🛑 CHANGED: 'xl:hidden' to 'lg:hidden'
-              className={`p-2 rounded-full ${currentTextColor} hover:text-[#7a6200] cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7a6200] transition duration-150 active:scale-95 drop-shadow-md lg:hidden`}
+              // 🛑 CHANGED: Removed 'lg:hidden' so it is ALWAYS visible
+              className={`p-2 rounded-full ${currentTextColor} hover:text-[#CEA681] cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#CEA681] transition duration-150 active:scale-95 drop-shadow-md`}
               aria-label="Toggle menu"
             >
               <Menu className="w-6 h-6" />
@@ -114,10 +116,10 @@ const NavDrawerSystem = () => {
             </div>
           </div>
 
-          {/* --- 2. CENTER BLOCK (Desktop Nav) --- */}
-          {/* 🛑 CHANGED: 'hidden xl:flex' to 'hidden lg:flex' for better visibility */}
+          {/* --- 2. CENTER BLOCK (Desktop Nav - Filtered) --- */}
           <nav className="hidden lg:flex items-center space-x-6 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             {navLinks.map((link) => {
+              // Only show specific links on Desktop Header
               if (
                 link.name !== "CHARTER A YACHT" &&
                 link.name !== "BUY A YACHT"
@@ -129,7 +131,7 @@ const NavDrawerSystem = () => {
                 <Link
                   key={link.name}
                   href={link.href || "#"}
-                  className={`text-sm lg:text-lg font-semibold uppercase tracking-wider ${currentTextColor} hover:text-[#7a6200] transition-colors duration-200`}
+                  className={`text-sm lg:text-lg font-semibold uppercase tracking-wider ${currentTextColor} hover:text-[#CEA681] transition-colors duration-200`}
                   style={{ fontFamily: "var(--font-marcellus)" }}
                 >
                   {link.name}
@@ -138,14 +140,14 @@ const NavDrawerSystem = () => {
             })}
           </nav>
 
-          {/* --- 3. RIGHT BLOCK (Socials + Text) --- */}
+          {/* --- 3. RIGHT BLOCK (Social Icons + Text) --- */}
           <div className="flex justify-end">
             <div className={iconClasses}>
               <a
                 href="https://www.instagram.com/georgeyachts"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${currentTextColor} hover:text-[#7a6200] p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md`}
+                className={`${currentTextColor} hover:text-[#CEA681] p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md`}
                 aria-label="Link to Instagram"
               >
                 <Instagram className="w-5 h-5" />
@@ -158,11 +160,10 @@ const NavDrawerSystem = () => {
                 )}?text=${WHATSAPP_MESSAGE}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${currentTextColor} hover:text-[#7a6200] p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md flex items-center space-x-2`}
+                className={`${currentTextColor} hover:text-[#CEA681] p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md flex items-center space-x-2`}
                 aria-label="Link to WhatsApp"
               >
                 <WhatsappIcon className="w-5 h-5" />
-                {/* 🛑 CHANGED: 'hidden xl:inline-block' to 'hidden lg:inline-block' */}
                 <span
                   className="hidden lg:inline-block text-sm font-semibold uppercase tracking-wider whitespace-nowrap"
                   style={{ fontFamily: "var(--font-marcellus)" }}
@@ -178,7 +179,7 @@ const NavDrawerSystem = () => {
       {/* --- 4. FLOATING BUTTON (Mobile Only) --- */}
       <FloatingWhatsAppButton />
 
-      {/* --- DRAWER (Mobile Menu) --- */}
+      {/* --- DRAWER (Unchanged) --- */}
       <div
         className={`fixed inset-0 bg-black transition-opacity duration-300 z-40 ${
           isDrawerOpen
@@ -222,7 +223,7 @@ const NavDrawerSystem = () => {
                 <Link
                   href={link.href || "#"}
                   onClick={toggleDrawer}
-                  className="block w-full py-3 px-1 border-b border-white/20 text-xl font-semibold uppercase text-white hover:text-[#7a6200] transition duration-200"
+                  className="block w-full py-3 px-1 border-b border-white/20 text-xl font-semibold uppercase text-white hover:text-[#CEA681] transition duration-200"
                 >
                   {link.name}
                 </Link>
