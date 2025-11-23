@@ -19,12 +19,15 @@ const Footer = () => {
         {/* 1. Social Icons & IYBA (Left/Center on Mobile) */}
         <div className="flex flex-col md:flex-row items-center md:space-x-6 space-y-4 md:space-y-0">
           {/* MOBILE ONLY: IYBA Logo above Instagram */}
-          <div className="md:hidden mb-6">
+          <div className="md:hidden mb-4 flex flex-col items-center">
             <img
               src="/images/iyba.png"
               alt="IYBA Member"
-              className="h-8 w-auto"
+              className="h-12 w-auto opacity-90 mb-2"
             />
+            <span className="text-[10px] text-gray-400 text-center leading-tight max-w-[200px]">
+              Proud member of IYBA – International Yacht Brokers Association
+            </span>
           </div>
 
           {/* Instagram Icon */}
@@ -59,12 +62,15 @@ const Footer = () => {
           </div>
 
           {/* DESKTOP ONLY: IYBA Logo next to copyright */}
-          <div className="hidden md:block pl-4 border-l border-white/20">
+          <div className="hidden md:flex items-center space-x-3 pl-4 border-l border-white/20">
             <img
               src="/images/iyba.png"
               alt="IYBA Member"
               className="h-8 w-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
             />
+            <span className="text-[10px] text-gray-400 leading-tight max-w-[150px]">
+              Proud member of IYBA – International Yacht Brokers Association
+            </span>
           </div>
         </div>
       </div>
