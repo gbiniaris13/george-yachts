@@ -11,7 +11,7 @@ const features = [
     imageSrc: "/images/yacht-1.jpeg",
     color: "bg-black",
     color1: "text-white",
-    color2: "text-[#CEA681]",
+    color2: "text-[#7a6200]",
   },
   // Row 2 (Index 1): Image Left, Content Right (bg-white)
   {
@@ -21,7 +21,7 @@ const features = [
     imageSrc: "/images/yacht-2.jpeg",
     color: "bg-white",
     color1: "text-[#000]",
-    color2: "text-[#CEA681]",
+    color2: "text-[#7a6200]",
   },
   // Row 3 (Index 2): Content Left, Image Right (bg-black)
   {
@@ -31,7 +31,7 @@ const features = [
     imageSrc: "/images/yacht-3.jpeg",
     color: "bg-black",
     color1: "text-white",
-    color2: "text-[#CEA681]",
+    color2: "text-[#7a6200]",
   },
   // Row 4 (Index 3): ADDED - Image Left, Content Right (bg-white)
   {
@@ -41,12 +41,12 @@ const features = [
     imageSrc: "/images/yacht-4.jpeg",
     color: "bg-white",
     color1: "text-[#000]",
-    color2: "text-[#CEA681]",
+    color2: "text-[#7a6200]",
   },
 ];
 // --- END: Data ---
 
-// color2: "text-[#CEA681]",
+// color2: "text-[#7a6200]",
 
 const LayoutRow = ({ item, index }) => {
   const isContentFirst = index % 2 === 0;

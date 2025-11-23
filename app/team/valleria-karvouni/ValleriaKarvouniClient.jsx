@@ -23,7 +23,7 @@ const ValleriaKarvouniClient = () => {
         instagramUrl="https://instagram.com/valeria_karv"
         bgColor="bg-black"
         textColor="text-white"
-        accentColor="text-[#CEA681]"
+        accentColor="text-[#7a6200]"
       />
       <MemberAboutSection
         name="VALLERIA"

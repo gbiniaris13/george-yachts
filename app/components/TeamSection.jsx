@@ -6,7 +6,7 @@ import Link from "next/link"; // Added for internal navigation
 const CARD_DIMENSIONS = { width: "372px", height: "400px" };
 const IMAGE_PLACEHOLDER_URL =
   "https://placehold.co/372x400/02132d/2fd5c3?text=TEAM";
-const GOLD_HEX = "#CEA681";
+const GOLD_HEX = "#7a6200";
 
 // --- Team Data ---
 const teamMembers = [

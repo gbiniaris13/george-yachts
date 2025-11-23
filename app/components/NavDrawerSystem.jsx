@@ -1,15 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Menu,
-  Linkedin,
-  Instagram,
-  X,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
-import Link from "next/link"; // Import Link for navigation
+import { Menu, Instagram, X } from "lucide-react";
+import Link from "next/link";
+import FloatingWhatsAppButton from "./FloatingWhatsAppButton";
 
 const WhatsappIcon = (props) => (
   <svg
@@ -22,43 +16,24 @@ const WhatsappIcon = (props) => (
   </svg>
 );
 
-// --- NAVLINKS (This is the single source of truth) ---
 const navLinks = [
-  {
-    name: "ABOUT",
-    sublinks: [
-      { name: "About Us", href: "/about-us/" },
-      { name: "Core Team", href: "/team/" },
-      // { name: "Press & Media", href: "#about/media" },
-    ],
-  },
-  {
-    name: "CHARTER A YACHT",
-    sublinks: [{ name: "Charter a Yacht", href: "/charter-yacht-greece/" }],
-  },
-  {
-    name: "BUY A YACHT",
-    sublinks: [{ name: "Buy a Yacht", href: "/yachts-for-sale/" }],
-  },
-  {
-    name: "VILLAS & REAL ESTATE",
-    sublinks: [
-      { name: "Villas & Real Estate", href: "/luxury-villas-greece/" },
-    ],
-  },
-  {
-    name: "FLY PRIVATE",
-    sublinks: [{ name: "Aviation Charter", href: "/private-jet-charter/" }],
-  },
-  {
-    name: "VIP TRANSFERS",
-    sublinks: [{ name: "VIP Transfers", href: "/vip-transfers-greece/" }],
-  },
-  // { name: "CONTACT", sublinks: [{ name: "Contact Us", href: "/contact" }] },
-  // { name: "FAQ", sublinks: [{ name: "FAQ", href: "/faq" }] },
+  { name: "ABOUT GEORGE YACHTS", href: "/about-us/" },
+  { name: "OUR CORE TEAM", href: "/team/" },
+  { name: "CHARTER A YACHT", href: "/charter-yacht-greece/" },
+  { name: "BUY A YACHT", href: "/yachts-for-sale/" },
+  { name: "VILLAS & REAL ESTATE", href: "/luxury-villas-greece/" },
+  { name: "FLY PRIVATE", href: "/private-jet-charter/" },
+  { name: "VIP TRANSFERS", href: "/vip-transfers-greece/" },
+  { name: "FOR PARTNERS / TRAVEL ADVISORS", href: "/" },
+  { name: "BLOG", href: "/" },
+  { name: "FAQ", href: "/faq/" },
+  { name: "CONTACT US", href: "/contact/" },
 ];
 
-// 🛑 REMOVED the simplified 'desktopNavLinks' array
+const legalLinks = [
+  { name: "Legal", href: "/legal" },
+  { name: "Privacy Policy", href: "/privacy-policy" },
+];
 
 const WHATSAPP_NUMBER = "+17867988788";
 const WHATSAPP_MESSAGE = encodeURIComponent(
@@ -68,17 +43,9 @@ const WHATSAPP_MESSAGE = encodeURIComponent(
 const NavDrawerSystem = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [openMenu, setOpenMenu] = useState(null);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
-    if (isDrawerOpen) {
-      setOpenMenu(null);
-    }
-  };
-
-  const toggleSubMenu = (menuName) => {
-    setOpenMenu(openMenu === menuName ? null : menuName);
   };
 
   useEffect(() => {
@@ -97,45 +64,10 @@ const NavDrawerSystem = () => {
     };
   }, []);
 
-  const socialIcons = [
-    {
-      icon: Instagram,
-      href: "https://www.instagram.com/georgeyachts",
-      name: "Instagram",
-    },
-    {
-      icon: WhatsappIcon,
-      href: `https://wa.me/${WHATSAPP_NUMBER.replace(
-        "+",
-        ""
-      )}?text=${WHATSAPP_MESSAGE}`,
-      name: "WhatsApp",
-    },
-  ];
-
   const currentTextColor = scrolled ? "text-[#02132d]" : "text-white";
   const iconClasses = `flex items-center space-x-3 z-10 p-2 rounded-full ${
     scrolled ? "bg-white/10" : "bg-white/10 backdrop-blur-sm"
   }`;
-
-  const SocialIconGroup = ({ className, iconClasses }) => (
-    <div className={className}>
-      <div className={iconClasses}>
-        {socialIcons.map((Social, index) => (
-          <a
-            key={index}
-            href={Social.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${currentTextColor} hover:text-[#CEA681] p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md`}
-            aria-label={`Link to ${Social.name}`}
-          >
-            <Social.icon className="w-5 h-5" />
-          </a>
-        ))}
-      </div>
-    </div>
-  );
 
   return (
     <>
@@ -146,11 +78,12 @@ const NavDrawerSystem = () => {
         }}
       >
         <div className="flex items-center justify-between h-20 relative">
-          {/* --- 1. LEFT BLOCK (Logo & Hamburger) --- */}
+          {/* --- 1. LEFT BLOCK --- */}
           <div className="flex items-center space-x-4">
             <button
               onClick={toggleDrawer}
-              className={`p-2 rounded-full ${currentTextColor} hover:text-[#CEA681] cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#CEA681] transition duration-150 active:scale-95 drop-shadow-md xl:hidden`}
+              // 🛑 CHANGED: 'xl:hidden' to 'lg:hidden'
+              className={`p-2 rounded-full ${currentTextColor} hover:text-[#7a6200] cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7a6200] transition duration-150 active:scale-95 drop-shadow-md lg:hidden`}
               aria-label="Toggle menu"
             >
               <Menu className="w-6 h-6" />
@@ -182,20 +115,21 @@ const NavDrawerSystem = () => {
           </div>
 
           {/* --- 2. CENTER BLOCK (Desktop Nav) --- */}
-          {/* 🛑 MODIFIED: Now maps over 'navLinks' */}
-          <nav className="hidden xl:flex items-center space-x-6">
+          {/* 🛑 CHANGED: 'hidden xl:flex' to 'hidden lg:flex' for better visibility */}
+          <nav className="hidden lg:flex items-center space-x-6 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             {navLinks.map((link) => {
-              // Get the href from the first sublink, or fallback to '#'
-              const mainHref =
-                link.sublinks && link.sublinks.length > 0
-                  ? link.sublinks[0].href
-                  : "#";
+              if (
+                link.name !== "CHARTER A YACHT" &&
+                link.name !== "BUY A YACHT"
+              ) {
+                return null;
+              }
 
               return (
                 <Link
                   key={link.name}
-                  href={mainHref}
-                  className={`text-sm lg:text-lg font-semibold uppercase tracking-wider ${currentTextColor} hover:text-[#CEA681] transition-colors duration-200`}
+                  href={link.href || "#"}
+                  className={`text-sm lg:text-lg font-semibold uppercase tracking-wider ${currentTextColor} hover:text-[#7a6200] transition-colors duration-200`}
                   style={{ fontFamily: "var(--font-marcellus)" }}
                 >
                   {link.name}
@@ -204,15 +138,47 @@ const NavDrawerSystem = () => {
             })}
           </nav>
 
-          {/* --- 3. RIGHT BLOCK (Social Icons) --- */}
-          <SocialIconGroup
-            className="flex justify-end"
-            iconClasses={iconClasses}
-          />
+          {/* --- 3. RIGHT BLOCK (Socials + Text) --- */}
+          <div className="flex justify-end">
+            <div className={iconClasses}>
+              <a
+                href="https://www.instagram.com/georgeyachts"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${currentTextColor} hover:text-[#7a6200] p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md`}
+                aria-label="Link to Instagram"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER.replace(
+                  "+",
+                  ""
+                )}?text=${WHATSAPP_MESSAGE}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${currentTextColor} hover:text-[#7a6200] p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md flex items-center space-x-2`}
+                aria-label="Link to WhatsApp"
+              >
+                <WhatsappIcon className="w-5 h-5" />
+                {/* 🛑 CHANGED: 'hidden xl:inline-block' to 'hidden lg:inline-block' */}
+                <span
+                  className="hidden lg:inline-block text-sm font-semibold uppercase tracking-wider whitespace-nowrap"
+                  style={{ fontFamily: "var(--font-marcellus)" }}
+                >
+                  Speak with George
+                </span>
+              </a>
+            </div>
+          </div>
         </div>
       </nav>
 
-      {/* --- (DRAWER / OVERLAY - NO CHANGES) --- */}
+      {/* --- 4. FLOATING BUTTON (Mobile Only) --- */}
+      <FloatingWhatsAppButton />
+
+      {/* --- DRAWER (Mobile Menu) --- */}
       <div
         className={`fixed inset-0 bg-black transition-opacity duration-300 z-40 ${
           isDrawerOpen
@@ -230,7 +196,7 @@ const NavDrawerSystem = () => {
         aria-modal="true"
         aria-label="Navigation drawer"
       >
-        <div className="p-8 h-full flex flex-col">
+        <div className="p-8 h-full flex flex-col overflow-y-auto">
           <div className="flex justify-between items-center pb-6 ">
             <div className="flex flex-col items-center">
               <span className="the text-white text-[10px]">THE</span>
@@ -250,62 +216,35 @@ const NavDrawerSystem = () => {
             </button>
           </div>
 
-          <nav className="space-y-4 mt-6 grow overflow-y-auto">
-            {navLinks.map((link) => {
-              const isOpen = openMenu === link.name;
-              const hasSublinks = link.sublinks && link.sublinks.length > 0;
-              // 🛑 Use the first sublink href for the main link if it exists
-              const mainHref = hasSublinks ? link.sublinks[0].href || "#" : "#";
-
-              return (
-                <div key={link.name} className="flex flex-col">
-                  <button
-                    onClick={() =>
-                      hasSublinks
-                        ? toggleSubMenu(link.name)
-                        : ((window.location.href = mainHref), toggleDrawer())
-                    }
-                    className={`flex justify-between items-center w-full py-3 px-1 border-b border-white transition duration-200 group focus:outline-none cursor-pointer`}
-                  >
-                    <div className="flex flex-col items-start">
-                      <span className="text-xl font-semibold uppercase text-white group-hover:text-white transition duration-200">
-                        {link.name}
-                      </span>
-                      <span className="text-sm text-gray-400 mt-0.5">
-                        {link.subtitle}
-                      </span>
-                    </div>
-                    {hasSublinks && (
-                      <div className="ml-4 p-1 rounded-full text-gray-400 group-hover:text-white transition duration-200">
-                        {isOpen ? (
-                          <ChevronUp className="w-5 h-5 text-white" />
-                        ) : (
-                          <ChevronDown className="w-5 h-5 text-white" />
-                        )}
-                      </div>
-                    )}
-                  </button>
-
-                  <div
-                    className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                      isOpen ? "max-h-96 opacity-100 py-2" : "max-h-0 opacity-0"
-                    }`}
-                  >
-                    {link.sublinks?.map((sublink) => (
-                      <a
-                        key={sublink.name}
-                        href={sublink.href}
-                        onClick={toggleDrawer}
-                        className="block py-2 pl-6 pr-1 text-sm text-gray-300 hover:text-[#CEA681] transition duration-150"
-                      >
-                        {sublink.name}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+          <nav className="space-y-4 mt-6">
+            {navLinks.map((link) => (
+              <div key={link.name} className="flex flex-col">
+                <Link
+                  href={link.href || "#"}
+                  onClick={toggleDrawer}
+                  className="block w-full py-3 px-1 border-b border-white/20 text-xl font-semibold uppercase text-white hover:text-[#7a6200] transition duration-200"
+                >
+                  {link.name}
+                </Link>
+              </div>
+            ))}
           </nav>
+
+          <div className="mt-auto pt-12 flex space-x-6">
+            {legalLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={toggleDrawer}
+                className="text-xs text-gray-500 hover:text-gray-300 transition duration-200"
+              >
+                {link.name}
+              </Link>
+            ))}
+            <span className="text-xs text-gray-500">
+              © {new Date().getFullYear()} George Yachts
+            </span>
+          </div>
         </div>
       </div>
     </>

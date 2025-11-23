@@ -24,7 +24,7 @@
 
 /* Style for the ACTIVE dot (make it the gold color) */
 .yacht-swiper .swiper-pagination-bullet-active {
-  background-color: #cea681 !important; /* Gold color for the active dot */
+  background-color: #7a6200 !important; /* Gold color for the active dot */
   opacity: 1 !important;
 }
 

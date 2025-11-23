@@ -24,7 +24,7 @@ const ElleanaKarvouniClient = () => {
         instagramUrl="https://instagram.com/eleanna_karvoun"
         bgColor="bg-black"
         textColor="text-white"
-        accentColor="text-[#CEA681]"
+        accentColor="text-[#7a6200]"
       />
       <MemberAboutSection
         name="ELLEANA"

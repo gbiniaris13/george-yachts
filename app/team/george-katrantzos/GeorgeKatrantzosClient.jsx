@@ -25,7 +25,7 @@ const GeorgeKatrantzosClient = () => {
         instagramUrl="https://instagram.com/helllo.gk"
         bgColor="bg-black"
         textColor="text-white"
-        accentColor="text-[#CEA681]"
+        accentColor="text-[#7a6200]"
       />
       <MemberAboutSection
         name="GEORGE"

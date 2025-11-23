@@ -68,7 +68,7 @@ const SaleYachtSwiper = ({ yachtData }) => {
       />
 
       <div className="relative">
-        <div className="bg-white border-2 border-[#CEA681] overflow-hidden">
+        <div className="bg-white border-2 border-[#7a6200] overflow-hidden">
           <div className="lg:grid lg:grid-cols-2">
             <div className="relativel">
               <Swiper
@@ -120,7 +120,7 @@ const SaleYachtSwiper = ({ yachtData }) => {
                 <h2 className="text-[35px] text-center md:text-start font-bold text-[#02132d]">
                   {yacht.name}
                 </h2>
-                <p className="text-[24px] font-normal uppercase text-[#CEA681] text-center md:text-start leading-none mb-6">
+                <p className="text-[24px] font-normal uppercase text-[#7a6200] text-center md:text-start leading-none mb-6">
                   {yacht.subtitle}
                 </p>
                 <div className="py-4 max-w-xl md:w-full border-b border-gray-300">
@@ -160,7 +160,7 @@ const SaleYachtSwiper = ({ yachtData }) => {
               <button
                 // 4. Connect Button
                 onClick={() => setIsPopupOpen(true)}
-                className="px-8 py-3 bg-[#CEA681] text-black font-bold uppercase tracking-wider rounded-full hover:bg-black hover:text-white cursor-pointer"
+                className="px-8 py-3 bg-[#7a6200] text-black font-bold uppercase tracking-wider rounded-full hover:bg-black hover:text-white cursor-pointer"
               >
                 ENQUIRE
               </button>

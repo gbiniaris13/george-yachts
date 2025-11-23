@@ -23,7 +23,7 @@ const ChrisDaskalopoulosClient = () => {
         instagramUrl="https://instagram.com/dask15"
         bgColor="bg-black"
         textColor="text-white"
-        accentColor="text-[#CEA681]"
+        accentColor="text-[#7a6200]"
       />
 
       <MemberAboutSection

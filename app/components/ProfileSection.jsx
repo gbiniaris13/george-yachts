@@ -11,7 +11,7 @@ const ProfileSection = ({
   instagramUrl,
   bgColor = "bg-black",
   textColor = "text-white",
-  accentColor = "text-[#CEA681]",
+  accentColor = "text-[#7a6200]",
 }) => {
   const router = useRouter();
   const DESKTOP_HEIGHT_CLASSES = "lg:h-[710px]";
@@ -144,7 +144,7 @@ const ProfileSection = ({
               <div className="flex flex-col items-start justify-start">
                 <button
                   onClick={() => router.back()}
-                  className={`flex items-center justify-center rounded-full border-2 bg-white text-black hover:bg-[#CEA681] mt-6 px-4 py-2 cursor-pointer`}
+                  className={`flex items-center justify-center rounded-full border-2 bg-white text-black hover:bg-[#7a6200] mt-6 px-4 py-2 cursor-pointer`}
                 >
                   <span className="text-sm uppercase font-semibold">
                     Go Back

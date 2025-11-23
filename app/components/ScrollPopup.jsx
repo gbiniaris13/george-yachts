@@ -95,7 +95,7 @@ const ScrollPopup = () => {
             Mail: {/* ADDED PREFIX */}
             {/* Email Link */}
             <a
-              className="text-[#CEA681] underline"
+              className="text-[#7a6200] underline"
               href="mailto:george@georgeyachts.com"
             >
               george@georgeyachts.com
@@ -103,13 +103,13 @@ const ScrollPopup = () => {
             <br />
             Tel: {/* ADDED PREFIX */}
             {/* Phone Link */}
-            <a className="text-[#CEA681] underline" href="tel:+306970380999">
+            <a className="text-[#7a6200] underline" href="tel:+306970380999">
               +30 6970 380 999
             </a>
             <br />
             Whatsapp: {/* WhatsApp Link */}
             <a
-              className="text-[#CEA681] underline"
+              className="text-[#7a6200] underline"
               href="https://wa.me/17867988798"
             >
               +1 (786) 798-8798
