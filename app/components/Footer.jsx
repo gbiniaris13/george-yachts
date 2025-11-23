@@ -23,7 +23,7 @@ const Footer = () => {
             <img
               src="/images/iyba.png"
               alt="IYBA Member"
-              className="h-10 w-auto opacity-90 mb-2"
+              className="h-6 w-auto opacity-90 mb-2"
             />
             <span className="text-[12px] text-gray-400 text-center leading-tight max-w-[250px]">
               Proud member of IYBA – International Yacht Brokers Association
@@ -66,7 +66,7 @@ const Footer = () => {
             <img
               src="/images/iyba.png"
               alt="IYBA Member"
-              className="h-8 w-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
+              className="h-6 w-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
             />
             <span className="text-[12px] text-gray-400 leading-tight max-w-[150px]">
               Proud member of IYBA – International Yacht Brokers Association
