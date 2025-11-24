@@ -25,10 +25,10 @@ const navLinks = [
   { name: "VILLAS & REAL ESTATE", href: "/luxury-villas-greece/" },
   { name: "FLY PRIVATE", href: "/private-jet-charter/" },
   { name: "VIP TRANSFERS", href: "/vip-transfers-greece/" },
-  { name: "FOR PARTNERS / TRAVEL ADVISORS", href: "/" },
-  { name: "BLOG", href: "/" },
-  { name: "FAQ", href: "/" },
-  { name: "CONTACT US", href: "/" },
+  // { name: "FOR PARTNERS / TRAVEL ADVISORS", href: "/" },
+  // { name: "BLOG", href: "/" },
+  // { name: "FAQ", href: "/" },
+  // { name: "CONTACT US", href: "/" },
 ];
 
 // --- 2. LEGAL LINKS ---
@@ -177,7 +177,7 @@ const NavDrawerSystem = () => {
       </nav>
 
       {/* --- 4. FLOATING BUTTON (Mobile Only) --- */}
-      <FloatingWhatsAppButton />
+      {/* <FloatingWhatsAppButton /> */}
 
       {/* --- DRAWER (Unchanged) --- */}
       <div
