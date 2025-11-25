@@ -27,7 +27,7 @@ const navLinks = [
   { name: "VIP TRANSFERS", href: "/vip-transfers-greece/" },
   // { name: "FOR PARTNERS / TRAVEL ADVISORS", href: "/" },
   // { name: "BLOG", href: "/" },
-  // { name: "FAQ", href: "/" },
+  { name: "FAQ", href: "/faq" },
   // { name: "CONTACT US", href: "/" },
 ];
 
