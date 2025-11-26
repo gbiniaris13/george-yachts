@@ -297,7 +297,7 @@ const FAQClient = () => {
         heading="FREQUENTLY ASKED"
         subtitle="QUESTIONS"
         paragraph="Clear answers about chartering a yacht in Greece with George Yachts."
-        imageUrl="/images/about-us.jpg"
+        imageUrl="/images/faq.jpg"
         altText="Calm sea background"
       />
 
