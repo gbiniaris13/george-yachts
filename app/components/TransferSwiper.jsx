@@ -155,7 +155,7 @@ const TransferSwiper = ({ transferData }) => {
               <button
                 // 4. Connect Button
                 onClick={() => setIsPopupOpen(true)}
-                className="px-8 py-3 bg-[#7a6200] text-black font-bold uppercase tracking-wider rounded-full hover:bg-black hover:text-white cursor-pointer"
+                className="px-8 py-3 bg-[#7a6200] text-white font-bold uppercase tracking-wider rounded-full hover:bg-black hover:text-white cursor-pointer"
               >
                 ENQUIRE
               </button>
