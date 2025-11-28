@@ -11,22 +11,25 @@ const Disruptors = () => {
         gradientWidth={150}
       >
         <span
-          className="text-[120px] font-bold text-black mx-12"
+          className="md:text-[60px] text-[40px] font-bold text-black mx-8 uppercase"
           style={{ fontFamily: "var(--font-marcellus)" }}
         >
-          WHERE LUXURY MEETS TRUST AND FILOTIMON
+          Boutique yacht brokerage & 360° luxury concierge for luxury yacht
+          charters in Greece
         </span>
         <span
-          className="text-[120px] font-bold text-black mx-12"
+          className="md:text-[60px] text-[40px] font-bold text-black mx-8 uppercase"
           style={{ fontFamily: "var(--font-marcellus)" }}
         >
-          WHERE LUXURY MEETS TRUST AND FILOTIMON
+          Boutique yacht brokerage & 360° luxury concierge for luxury yacht
+          charters in Greece
         </span>
         <span
-          className="text-[120px] font-bold text-black mx-12"
+          className="md:text-[60px] text-[40px] font-bold text-black mx-8 uppercase"
           style={{ fontFamily: "var(--font-marcellus)" }}
         >
-          WHERE LUXURY MEETS TRUST AND FILOTIMON
+          Boutique yacht brokerage & 360° luxury concierge for luxury yacht
+          charters in Greece
         </span>
       </Marquee>
     </div>

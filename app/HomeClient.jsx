@@ -6,6 +6,7 @@ import Disruptors from "./components/Disruptors";
 import TwoColumnLayout from "./components/TwoColumnLayout";
 import Footer from "./components/Footer";
 import ContactFormSection from "./components/ContactFormSection";
+import Filotimon from "./components/Filotimon";
 
 // Renamed 'Home' to 'HomeClient'
 const HomeClient = () => {
@@ -13,6 +14,7 @@ const HomeClient = () => {
     <div className="min-h-screen bg-gray-100 font-sans">
       <VideoSection />
       <Disruptors />
+      <Filotimon />
       <TwoColumnLayout />
       <ContactFormSection />
       <Footer />

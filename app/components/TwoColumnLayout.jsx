@@ -9,8 +9,8 @@ const features = [
     paragraph:
       "At George Yachts, every charter begins with a vision — yours. We create tailor-made experiences across the Mediterranean, combining performance yachts, exclusive itineraries, and a modern sense of luxury. From the Aegean’s hidden coves to the Ionian’s calm horizons, we turn every journey into a story worth remembering. Yachting isn’t just what we do — it’s how we live.",
     imageSrc: "/images/yacht-1.jpeg",
-    color: "bg-black",
-    color1: "text-white",
+    color: "bg-white",
+    color1: "text-black",
     color2: "text-[#7a6200]",
   },
   // Row 2 (Index 1): Image Left, Content Right (bg-white)
@@ -19,8 +19,8 @@ const features = [
     paragraph:
       "Based in Athens and operating across the Mediterranean, George Yachts brings a new generation of professionalism to luxury yachting. We specialize in crewed motor yacht charters, sales, and charter management — delivering seamless service and clear communication every step of the way. Whether you’re chartering, buying, or trusting us with your yacht’s representation, expect nothing less than precision, discretion, and genuine passion for the sea.",
     imageSrc: "/images/yacht-2.jpeg",
-    color: "bg-white",
-    color1: "text-[#000]",
+    color: "bg-black",
+    color1: "text-white",
     color2: "text-[#7a6200]",
   },
   // Row 3 (Index 2): Content Left, Image Right (bg-black)
@@ -29,8 +29,8 @@ const features = [
     paragraph:
       "Our service doesn’t end when you step off the yacht. Through our network of trusted partners, we arrange every special request — from private jets and luxury villas to curated transfers and reservations. George Yachts is not just about travel, but about lifestyle — tailored for those who value effortless elegance and true exclusivity.",
     imageSrc: "/images/yacht-3.jpeg",
-    color: "bg-black",
-    color1: "text-white",
+    color: "bg-white",
+    color1: "text-black",
     color2: "text-[#7a6200]",
   },
   // Row 4 (Index 3): ADDED - Image Left, Content Right (bg-white)
@@ -39,8 +39,8 @@ const features = [
     paragraph:
       "George Yachts represents a fresh chapter in Mediterranean yachting — a boutique company with international mindset and modern drive. We blend experience, aesthetics, and digital precision to redefine what it means to charter with confidence. With every client, every yacht, every detail — we bring the art of yachting to life, with calm sophistication and contemporary edge.",
     imageSrc: "/images/yacht-4.jpeg",
-    color: "bg-white",
-    color1: "text-[#000]",
+    color: "bg-black",
+    color1: "text-white",
     color2: "text-[#7a6200]",
   },
 ];
