@@ -11,21 +11,21 @@ const Disruptors = () => {
         gradientWidth={150}
       >
         <span
-          className="md:text-[60px] text-[40px] font-bold text-black mx-8 uppercase"
+          className="md:text-[60px] text-[40px] font-bold text-[#7a6200] mx-8 uppercase"
           style={{ fontFamily: "var(--font-marcellus)" }}
         >
           Boutique yacht brokerage & 360° luxury concierge for luxury yacht
           charters in Greece
         </span>
         <span
-          className="md:text-[60px] text-[40px] font-bold text-black mx-8 uppercase"
+          className="md:text-[60px] text-[40px] font-bold text-[#7a6200] mx-8 uppercase"
           style={{ fontFamily: "var(--font-marcellus)" }}
         >
           Boutique yacht brokerage & 360° luxury concierge for luxury yacht
           charters in Greece
         </span>
         <span
-          className="md:text-[60px] text-[40px] font-bold text-black mx-8 uppercase"
+          className="md:text-[60px] text-[40px] font-bold text-[#7a6200] mx-8 uppercase"
           style={{ fontFamily: "var(--font-marcellus)" }}
         >
           Boutique yacht brokerage & 360° luxury concierge for luxury yacht
