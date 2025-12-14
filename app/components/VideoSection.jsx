@@ -18,34 +18,34 @@ const slideData = [
     href: "/charter-yacht-greece/",
     buttonText: "Explore charter yachts",
   },
-  {
-    id: 2,
-    title: "FLY PRIVATE",
-    imageUrl: "/images/george-aviation.jpg",
-    href: "/private-jet-charter/",
-    buttonText: "Arrange a private flight",
-  },
-  {
-    id: 3,
-    title: "LUXURY VILLAS",
-    imageUrl: "/images/villas-real-estate.jpeg",
-    href: "/luxury-villas-greece/",
-    buttonText: "View select villas",
-  },
-  {
-    id: 4,
-    title: "VIP TRANSFERS",
-    imageUrl: "/images/vip-transfers.jpeg",
-    href: "/vip-transfers-greece/",
-    buttonText: "Arrange VIP transfers",
-  },
-  {
-    id: 5,
-    title: "BUY A YACHT",
-    imageUrl: "/images/buy-a-yacht.jpeg",
-    href: "/yachts-for-sale/",
-    buttonText: "Explore yachts for sale",
-  },
+  // {
+  //   id: 2,
+  //   title: "FLY PRIVATE",
+  //   imageUrl: "/images/george-aviation.jpg",
+  //   href: "/private-jet-charter/",
+  //   buttonText: "Arrange a private flight",
+  // },
+  // {
+  //   id: 3,
+  //   title: "LUXURY VILLAS",
+  //   imageUrl: "/images/villas-real-estate.jpeg",
+  //   href: "/luxury-villas-greece/",
+  //   buttonText: "View select villas",
+  // },
+  // {
+  //   id: 4,
+  //   title: "VIP TRANSFERS",
+  //   imageUrl: "/images/vip-transfers.jpeg",
+  //   href: "/vip-transfers-greece/",
+  //   buttonText: "Arrange VIP transfers",
+  // },
+  // {
+  //   id: 5,
+  //   title: "BUY A YACHT",
+  //   imageUrl: "/images/buy-a-yacht.jpeg",
+  //   href: "/yachts-for-sale/",
+  //   buttonText: "Explore yachts for sale",
+  // },
 ];
 
 // const slideData = [

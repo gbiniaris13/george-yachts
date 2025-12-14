@@ -121,8 +121,8 @@ const NavDrawerSystem = () => {
             {navLinks.map((link) => {
               // Only show specific links on Desktop Header
               if (
-                link.name !== "CHARTER A YACHT" &&
-                link.name !== "BUY A YACHT"
+                link.name !== "CHARTER A YACHT"
+                // link.name !== "BUY A YACHT"
               ) {
                 return null;
               }
