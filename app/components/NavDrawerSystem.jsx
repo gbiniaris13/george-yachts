@@ -22,7 +22,7 @@ const navLinks = [
   { name: "OUR CORE TEAM", href: "/team/" },
   { name: "CHARTER A YACHT", href: "/charter-yacht-greece/" },
   { name: "BUY A YACHT", href: "/yachts-for-sale/" },
-  { name: "VILLAS & REAL ESTATE", href: "/luxury-villas-greece/" },
+  // { name: "VILLAS & REAL ESTATE", href: "/luxury-villas-greece/" },
   { name: "FLY PRIVATE", href: "/private-jet-charter/" },
   { name: "VIP TRANSFERS", href: "/vip-transfers-greece/" },
   // { name: "FOR PARTNERS / TRAVEL ADVISORS", href: "/" },
