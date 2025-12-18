@@ -27,7 +27,7 @@ const features = [
   {
     title: "BEYOND THE SEA | AND THE HORIZON",
     paragraph:
-      "Our service doesn’t end when you step off the yacht. Through our network of trusted partners, we arrange every special request — from private jets and luxury villas to curated transfers and reservations. George Yachts is not just about travel, but about lifestyle — tailored for those who value effortless elegance and true exclusivity.",
+      "Our service doesn’t end when you step off the yacht. Through our network of trusted partners, we arrange every special request — from private jets to curated transfers and reservations. George Yachts is not just about travel, but about lifestyle — tailored for those who value effortless elegance and true exclusivity.",
     imageSrc: "/images/yacht-3.jpeg",
     color: "bg-white",
     color1: "text-black",
