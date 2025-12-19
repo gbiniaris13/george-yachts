@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import Link from "next/link";
@@ -9,32 +9,58 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 
-// --- START: Data for the Slides ---
+// --- START: Data ---
 const slideData = [
   {
     id: 1,
     title: "CHARTER A YACHT",
-    // FIXED: Corrected the double file extension typo here
     imageUrl: "/videos/yacht-cruising.mp4",
     href: "/charter-yacht-greece/",
     buttonText: "Explore charter yachts",
   },
-  // {
-  //   id: 2,
-  //   title: "FLY PRIVATE",
-  //   imageUrl: "/images/george-aviation.jpg",
-  //   href: "/private-jet-charter/",
-  //   buttonText: "Arrange a private flight",
-  // },
-  // ... other slides
+  // Add other slides here...
 ];
-// --- END: Data for the Slides ---
+// --- END: Data ---
+
+// 1. New Sub-component to handle Safari Autoplay quirks
+const BackgroundVideo = ({ src, poster }) => {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Force muted property directly on the DOM element
+    video.muted = true;
+
+    // Attempt to play (handling the Promise to avoid console errors)
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch((error) => {
+        console.log("Autoplay prevented by browser:", error);
+      });
+    }
+  }, [src]);
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      poster={poster} // Optional: shows image while video loads
+      autoPlay
+      loop
+      muted // Keeps React happy
+      playsInline // CRITICAL for iOS Safari
+      className="w-full h-full object-cover"
+    />
+  );
+};
 
 const VideoSection = () => {
   const HEIGHT_CLASSES = "h-[calc(100dvh-292px)]";
 
-  // Helper function to check if the URL is a video
-  const isVideo = (url) => url && url.endsWith(".mp4");
+  // Helper to check for video extension
+  const isVideo = (url) => url && url.toLowerCase().endsWith(".mp4");
 
   return (
     <section className="relative w-full overflow-hidden">
@@ -53,17 +79,11 @@ const VideoSection = () => {
           <SwiperSlide key={slide.id}>
             {({ isActive }) => (
               <div className={`relative w-full ${HEIGHT_CLASSES} z-0`}>
-                {/* Background Media (Video or Image) */}
+                {/* Background Media */}
                 <div className="absolute inset-0 z-0">
                   {isVideo(slide.imageUrl) ? (
-                    <video
-                      src={slide.imageUrl}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      className="w-full h-full object-cover"
-                    />
+                    // Use the Safari-proof sub-component
+                    <BackgroundVideo src={slide.imageUrl} />
                   ) : (
                     <img
                       src={slide.imageUrl}
@@ -75,10 +95,9 @@ const VideoSection = () => {
                   <div className="absolute inset-0 bg-black opacity-30"></div>
                 </div>
 
-                {/* Text Content Block */}
+                {/* Text Content */}
                 <div className="relative z-10 h-full max-w-[1530px] mx-auto p-8">
                   <div className="relative z-10 flex items-center justify-center h-full text-center p-8">
-                    {/* Animation wrapper */}
                     <div
                       className={`mx-auto transition-opacity duration-1000 ease-in-out ${
                         isActive ? "opacity-100" : "opacity-0"
