@@ -14,7 +14,8 @@ const slideData = [
   {
     id: 1,
     title: "CHARTER A YACHT",
-    imageUrl: "/images/yachts-charter.jpg",
+    // FIXED: Corrected the double file extension typo here
+    imageUrl: "/videos/yacht-cruising.mp4",
     href: "/charter-yacht-greece/",
     buttonText: "Explore charter yachts",
   },
@@ -25,78 +26,15 @@ const slideData = [
   //   href: "/private-jet-charter/",
   //   buttonText: "Arrange a private flight",
   // },
-  // {
-  //   id: 3,
-  //   title: "LUXURY VILLAS",
-  //   imageUrl: "/images/villas-real-estate.jpeg",
-  //   href: "/luxury-villas-greece/",
-  //   buttonText: "View select villas",
-  // },
-  // {
-  //   id: 4,
-  //   title: "VIP TRANSFERS",
-  //   imageUrl: "/images/vip-transfers.jpeg",
-  //   href: "/vip-transfers-greece/",
-  //   buttonText: "Arrange VIP transfers",
-  // },
-  // {
-  //   id: 5,
-  //   title: "BUY A YACHT",
-  //   imageUrl: "/images/buy-a-yacht.jpeg",
-  //   href: "/yachts-for-sale/",
-  //   buttonText: "Explore yachts for sale",
-  // },
+  // ... other slides
 ];
-
-// const slideData = [
-//   {
-//     id: 1,
-//     title: "CHARTER A YACHT",
-//     subtitle: "Bespoke journeys across the Greek islands.",
-//     imageUrl: "/images/yachts-charter.jpg",
-//     href: "/charter-yacht-greece/",
-//     buttonText: "View Charter Yachts", // 🛑 1. Custom Button Text
-//   },
-//   {
-//     id: 2,
-//     title: "FLY PRIVATE",
-//     subtitle: "Seamless helicopter & jet transfers.",
-//     imageUrl: "/images/george-aviation.jpg",
-//     href: "/private-jet-charter/",
-//     buttonText: "Book Private Jet", // 🛑 1. Custom Button Text
-//   },
-//   {
-//     id: 3,
-//     title: "LUXURY VILLAS",
-//     subtitle: "Curated stays in exclusive properties.",
-//     imageUrl: "/images/villas-real-estate.jpeg",
-//     href: "/luxury-villas-greece/",
-//     buttonText: "Explore Villas", // 🛑 1. Custom Button Text
-//   },
-//   {
-//     id: 4,
-//     title: "VIP TRANSFERS",
-//     subtitle: "Chauffeured sedans, SUVs & sprinters • 24/7.",
-//     imageUrl: "/images/vip-transfers.jpeg",
-//     href: "/vip-transfers-greece/",
-//     buttonText: "Arrange Transfer", // 🛑 1. Custom Button Text
-//   },
-//   {
-//     id: 5,
-//     title: "BUY A YACHT",
-//     subtitle: "Discreet acquisition & advisory.",
-//     imageUrl: "/images/buy-a-yacht.jpeg",
-//     href: "/yachts-for-sale/",
-//     buttonText: "View Yachts for Sale", // 🛑 1. Custom Button Text
-//   },
-// ];
-// --- END: Data for the Slides ---
 // --- END: Data for the Slides ---
 
 const VideoSection = () => {
   const HEIGHT_CLASSES = "h-[calc(100dvh-292px)]";
-  const FALLBACK_IMAGE =
-    "https://placehold.co/1920x710/02132d/ffffff?text=Image+Loading";
+
+  // Helper function to check if the URL is a video
+  const isVideo = (url) => url && url.endsWith(".mp4");
 
   return (
     <section className="relative w-full overflow-hidden">
@@ -115,14 +53,25 @@ const VideoSection = () => {
           <SwiperSlide key={slide.id}>
             {({ isActive }) => (
               <div className={`relative w-full ${HEIGHT_CLASSES} z-0`}>
-                {/* Background Image for this slide */}
+                {/* Background Media (Video or Image) */}
                 <div className="absolute inset-0 z-0">
-                  <img
-                    src={slide.imageUrl || FALLBACK_IMAGE}
-                    alt={slide.title}
-                    className="w-full h-full object-cover"
-                    onError={(e) => (e.target.src = FALLBACK_IMAGE)}
-                  />
+                  {isVideo(slide.imageUrl) ? (
+                    <video
+                      src={slide.imageUrl}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <img
+                      src={slide.imageUrl}
+                      alt={slide.title}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                  {/* Overlay */}
                   <div className="absolute inset-0 bg-black opacity-30"></div>
                 </div>
 
@@ -142,7 +91,6 @@ const VideoSection = () => {
                         {slide.title}
                       </h1>
 
-                      {/* 🛑 2. Use the specific buttonText from data */}
                       <Link
                         href={slide.href}
                         className="inline-block mt-8 px-8 lg:py-4 py-3 rounded-full bg-white text-black font-semibold uppercase text-sm lg:text-lg hover:bg-black hover:text-white tracking-wide"
