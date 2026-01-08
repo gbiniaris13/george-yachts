@@ -1,216 +1,132 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, EffectFade, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, A11y, EffectFade } from "swiper/modules";
-
 import { urlFor } from "@/lib/sanity";
-import EnquirePopup from "./EnquirePopup"; // 1. Import the Popup
-
-// --- SVG Components (No changes) ---
-const CustomNextArrowSVG = (props) => (
-  <svg
-    {...props}
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 40 40"
-    width="20"
-    height="20"
-    focusable="false"
-    className="fill-current text-white"
-  >
-    <path d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z"></path>
-  </svg>
-);
-
-const CustomPrevArrowSVG = (props) => (
-  <svg
-    {...props}
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 40 40"
-    width="20"
-    height="20"
-    focusable="false"
-    className="fill-current text-white"
-    style={{ transform: "scaleX(-1)" }}
-  >
-    <path d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z"></path>
-  </svg>
-);
-// --- End SVG Components ---
-
-// Function to map the yacht data fields to dynamic labels
-const getDetailsConfig = (yacht) => {
-  const isJet = !!yacht.cruisingSpeed;
-
-  if (isJet) {
-    return {
-      details: [
-        { label: "Cruising Speed", key: "cruisingSpeed" },
-        { label: "Range", key: "range" },
-        { label: "Capacity", key: "capacity" },
-        { label: "Powerplant", key: "powerplant" },
-      ],
-      rateLabel: "Hourly rate from",
-      ratePriceKey: "price",
-    };
-  } else {
-    return {
-      details: [
-        { label: "Length", key: "length" },
-        { label: "Year built / refit", key: "yearBuiltRefit" },
-        { label: "Sleeps", key: "sleeps" },
-        { label: "Cruising region", key: "cruisingRegion" },
-      ],
-      rateLabel: "Weekly rate from",
-      ratePriceKey: "weeklyRatePrice",
-    };
-  }
-};
+import EnquirePopup from "./EnquirePopup";
 
 const YachtSwiper = ({ yachtData }) => {
   if (!yachtData) return null;
 
-  const [activeIndex, setActiveIndex] = useState(0);
-  // 2. Add state for the popup
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-
   const yacht = yachtData;
-  const { details, rateLabel, ratePriceKey } = getDetailsConfig(yacht);
 
-  const prevRef = useRef(null);
-  const nextRef = useRef(null);
-
-  const navigationConfig = {
-    prevEl: prevRef.current,
-    nextEl: nextRef.current,
-    disabledClass: "opacity-40 cursor-not-allowed",
-  };
+  const specs = [
+    { label: "LENGTH", value: yacht.length },
+    { label: "BUILDER", value: yacht.subtitle },
+    { label: "GUESTS", value: yacht.sleeps },
+    { label: "REGION", value: yacht.cruisingRegion },
+  ];
 
   return (
-    <section className="max-w-[1440px] mx-auto py-10 px-2">
-      {/* 3. Render the Popup (conditionally hidden by its own logic but mounted here) */}
+    <section className="relative w-full mb-20 lg:mb-32 group flex flex-col">
       <EnquirePopup
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
         yachtName={yacht.name}
       />
 
-      <div className="relative">
-        <div className="bg-white border-2 border-[#7a6200] overflow-hidden">
-          <div className="lg:grid lg:grid-cols-2">
-            <div className="relativel">
-              <Swiper
-                className="yacht-swiper max-h-[245px] lg:max-h-[477px]"
-                modules={[Navigation, Pagination, A11y, EffectFade]}
-                spaceBetween={0}
-                slidesPerView={1}
-                navigation={navigationConfig}
-                pagination={{ clickable: true }}
-                onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-                onInit={(swiper) => {
-                  swiper.params.navigation.prevEl = prevRef.current;
-                  swiper.params.navigation.nextEl = nextRef.current;
-                  swiper.navigation.init();
-                  swiper.navigation.update();
-                }}
-                initialSlide={0}
-                effect="fade"
-                fadeEffect={{ crossFade: true }}
-              >
-                {yacht.images &&
-                  yacht.images.map((image, index) => (
-                    <SwiperSlide key={index}>
-                      <img
-                        src={urlFor(image.asset).width(1200).height(800).url()}
-                        alt={image.alt || yacht.name + " image " + (index + 1)}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-black/30"></div>
-                    </SwiperSlide>
-                  ))}
-
-                <div
-                  ref={prevRef}
-                  className={`
-                    absolute top-1/2 left-3 z-10 
-                    p-3 rounded-full 
-                    bg-[rgb(0_0_0_/60%)]
-                    transform -translate-y-1/2
-                    flex items-center justify-center
-                    cursor-pointer transition-opacity
-                  `}
-                >
-                  <CustomPrevArrowSVG />
-                </div>
-
-                <div
-                  ref={nextRef}
-                  className={`
-                    absolute top-1/2 right-3 z-10 
-                    p-3 rounded-full 
-                    bg-[rgb(0_0_0_/60%)]
-                    transform -translate-y-1/2
-                    flex items-center justify-center
-                    cursor-pointer transition-opacity
-                  `}
-                >
-                  <CustomNextArrowSVG />
-                </div>
-              </Swiper>
-            </div>
-
-            {/* RIGHT COLUMN */}
-            <div className="p-8 md:p-12 flex flex-col justify-between h-full">
-              <div className="flex flex-col md:justify-start md:items-start">
-                <h2 className="text-[35px] text-center md:text-start font-bold text-[#02132d]">
-                  {yacht.name}
-                </h2>
-                <p className="text-[24px] font-normal uppercase text-[#7a6200] text-center md:text-start leading-none mb-6">
-                  {yacht.subtitle}
-                </p>
-                <div className="py-4 max-w-xl md:w-full border-b border-gray-300">
-                  <div className="grid grid-cols-2 gap-y-1 text-sm">
-                    {details.map((item) => (
-                      <React.Fragment key={item.key}>
-                        <p className="text-gray-500 font-normal text-base">
-                          {item.label}
-                        </p>
-                        <p className="text-gray-500 font-normal text-base">
-                          {yacht[item.key]}
-                        </p>
-                      </React.Fragment>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex justify-between items-center pb-6">
-                  <p className="text-gray-500 text-lg font-normal py-4 pe-2">
-                    {rateLabel}
-                  </p>
-                  <p className="text-[#02132d] text-xl font-bold">
-                    {yacht[ratePriceKey]}
-                  </p>
-                </div>
+      {/* 1. THE CINEMATIC BACKGROUND SLIDER */}
+      {/* On mobile, we reduce height slightly to 50vh so the scroll to details is faster */}
+      <div className="relative h-[50vh] lg:h-[85vh] w-full overflow-hidden border-y border-white/5 order-1">
+        <Swiper
+          modules={[Navigation, Pagination, EffectFade, Autoplay]}
+          effect="fade"
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
+          loop={true}
+          className="h-full w-full"
+        >
+          {yacht.images?.map((image, index) => (
+            <SwiperSlide key={index}>
+              <div className="relative h-full w-full">
+                <img
+                  src={urlFor(image.asset).width(1920).height(1080).url()}
+                  alt={yacht.name}
+                  className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-10000 ease-out"
+                />
+                <div className="absolute inset-0 bg-linear-to-r from-[#020617] via-transparent to-[#020617]/40"></div>
               </div>
-            </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
 
-            {/* ENQUIRE BUTTON */}
-            <div className="absolute bottom-[-22px] left-1/2 -translate-x-1/2 md:right-[-50px] md:left-auto">
-              <button
-                // 4. Connect the button to the state
-                onClick={() => setIsPopupOpen(true)}
-                className="px-8 py-3 bg-[#7a6200] text-white font-bold uppercase tracking-wider rounded-full hover:bg-black hover:text-white cursor-pointer"
-              >
-                ENQUIRE
-              </button>
-            </div>
+        {/* Minimalist Nav - Desktop Only */}
+        <div className="hidden lg:flex absolute bottom-10 left-[10%] z-40 items-center gap-12">
+          <div className="flex items-center gap-4">
+            <span className="h-px w-20 bg-white/20"></span>
+            <p className="text-white/40 font-marcellus text-xs tracking-widest">
+              SCROLL TO EXPLORE
+            </p>
           </div>
         </div>
       </div>
+
+      {/* 2. THE COMMAND PANE */}
+      {/* Logic: relative on mobile (follows photo), absolute on desktop (floats on photo) */}
+      <div className="relative lg:absolute lg:top-1/2 lg:right-[5%] lg:lg:right-[10%] lg:-translate-y-1/2 z-30 w-full lg:max-w-[450px] px-0 lg:px-6 order-2">
+        <div className="bg-[#050505] lg:bg-[#050505]/80 backdrop-blur-2xl border-x lg:border border-white/10 p-8 lg:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.8)] relative">
+          {/* Top Gold Accent Line */}
+          <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-[#DAA520] via-[#8a6d21] to-transparent"></div>
+
+          <div className="mb-10">
+            <h2 className="text-4xl lg:text-6xl font-marcellus text-white uppercase tracking-tighter leading-none">
+              {yacht.name}
+            </h2>
+            <p className="text-[#DAA520] font-sans text-[10px] tracking-[0.5em] uppercase mt-4 opacity-80">
+              Vessel Specification
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-5 mb-10">
+            {specs.map((spec, i) => (
+              <div
+                key={i}
+                className="flex justify-between items-end border-b border-white/5 pb-2"
+              >
+                <span className="text-white/30 text-[9px] tracking-[0.3em] font-sans uppercase">
+                  {spec.label}
+                </span>
+                <span className="text-white font-marcellus text-sm uppercase tracking-widest">
+                  {spec.value}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-col gap-6">
+            <div>
+              <span className="text-white/30 text-[9px] tracking-[0.3em] uppercase">
+                Charter Value
+              </span>
+              <p className="text-2xl font-marcellus text-white mt-1">
+                {yacht.weeklyRatePrice}
+              </p>
+            </div>
+
+            <button
+              onClick={() => setIsPopupOpen(true)}
+              className="w-full bg-[#DAA520] hover:bg-white text-black py-5 text-xs font-sans font-bold tracking-[0.4em] uppercase transition-all duration-500 shadow-[0_0_30px_rgba(218,165,32,0.2)] hover:shadow-[0_0_50px_rgba(255,255,255,0.2)]"
+            >
+              Secure This Vessel
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <style jsx global>{`
+        .swiper-pagination {
+          display: none !important;
+        }
+        * {
+          border-radius: 0 !important;
+        }
+      `}</style>
     </section>
   );
 };

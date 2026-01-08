@@ -119,11 +119,7 @@ const NavDrawerSystem = () => {
           {/* --- 2. CENTER BLOCK (Desktop Nav - Filtered) --- */}
           <nav className="hidden lg:flex items-center space-x-6 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             {navLinks.map((link) => {
-              // Only show specific links on Desktop Header
-              if (
-                link.name !== "CHARTER A YACHT"
-                // link.name !== "BUY A YACHT"
-              ) {
+              if (link.name !== "") {
                 return null;
               }
 
