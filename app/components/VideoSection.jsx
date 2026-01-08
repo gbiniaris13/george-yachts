@@ -16,7 +16,7 @@ const slideData = [
     title: "CHARTER A YACHT",
     imageUrl: "/videos/yacht-cruising.mp4",
     href: "/charter-yacht-greece/",
-    buttonText: "Explore charter yachts",
+    buttonText: "View yachts for charter",
   },
   // Add other slides here...
 ];
@@ -99,7 +99,7 @@ const VideoSection = () => {
 
                 {/* Hide slide button temporalily */}
 
-                {/* <div className="relative z-10 h-full max-w-[1530px] mx-auto p-8">
+                <div className="relative z-10 h-full max-w-[1530px] mx-auto p-8">
                   <div className="relative z-10 flex items-center justify-center h-full text-center p-8">
                     <div
                       className={`mx-auto transition-opacity duration-1000 ease-in-out ${
@@ -121,7 +121,7 @@ const VideoSection = () => {
                       </Link>
                     </div>
                   </div>
-                </div> */}
+                </div>
               </div>
             )}
           </SwiperSlide>
