@@ -8,7 +8,7 @@ import YachtListClient from "../components/YachtListClient";
 export const metadata = {
   title: "Luxury Yacht Charter Greece | George Yachts",
   description:
-    "Explore bespoke luxury yacht charters in Greece. Curated fleets across the Cyclades, Ionian, and Athens Riviera.",
+    "Bespoke yacht charters in Greece. Curated yachts across the Cyclades, Ionian Islands, Saronic Gulf, and the Athens Riviera.",
 };
 
 const ALL_YACHTS_QUERY = `*[_type == "yacht"] | order(_createdAt asc){
