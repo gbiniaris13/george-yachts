@@ -69,7 +69,7 @@ const YachtSwiper = ({ yachtData }) => {
 
       {/* 2. THE COMMAND PANE */}
       {/* Logic: relative on mobile (follows photo), absolute on desktop (floats on photo) */}
-      <div className="relative lg:absolute lg:top-1/2 lg:right-[5%] lg:lg:right-[10%] lg:-translate-y-1/2 z-30 w-full lg:max-w-[450px] px-0 lg:px-6 order-2">
+      <div className="relative lg:absolute lg:top-1/2 lg:right-[5%] lg:lg:right-[10%] lg:-translate-y-1/2 z-30 w-full lg:max-w-[500px] px-0 lg:px-6 order-2">
         <div className="bg-[#050505] lg:bg-[#050505]/80 backdrop-blur-2xl border-x lg:border border-white/10 p-8 lg:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.8)] relative">
           {/* Top Gold Accent Line */}
           <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-[#DAA520] via-[#8a6d21] to-transparent"></div>
@@ -83,16 +83,19 @@ const YachtSwiper = ({ yachtData }) => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-5 mb-10">
+          <div className="grid grid-cols-1 gap-6 mb-10">
             {specs.map((spec, i) => (
               <div
                 key={i}
-                className="flex justify-between items-end border-b border-white/5 pb-2"
+                className="grid grid-cols-12 gap-2 border-b border-white/5 pb-3 items-start"
               >
-                <span className="text-white/30 text-[9px] tracking-[0.3em] font-sans uppercase">
+                {/* Label: Takes up 4 columns out of 12 */}
+                <span className="col-span-4 text-white/40 text-[9px] tracking-[0.3em] font-sans uppercase pt-1">
                   {spec.label}
                 </span>
-                <span className="text-white font-marcellus text-sm uppercase tracking-widest">
+
+                {/* Value: Takes up 8 columns and wraps naturally */}
+                <span className="col-span-8 text-white font-marcellus text-sm uppercase tracking-widest text-right leading-relaxed">
                   {spec.value}
                 </span>
               </div>

@@ -13,7 +13,7 @@ import "swiper/css/pagination";
 const slideData = [
   {
     id: 1,
-    title: "CHARTER A YACHT",
+    // title: "CHARTER A YACHT",
     imageUrl: "/videos/yacht-cruising.mp4",
     href: "/charter-yacht-greece/",
     buttonText: "View yachts for charter",
