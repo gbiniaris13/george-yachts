@@ -9,36 +9,22 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 
-// --- START: Data ---
-const slideData = [
-  {
-    id: 1,
-    // title: "CHARTER A YACHT",
-    imageUrl: "/videos/yacht-cruising.mp4",
-    href: "/charter-yacht-greece/",
-    buttonText: "View yachts for charter",
-  },
-  // Add other slides here...
+const CATEGORIES = [
+  { label: "Sailing Monohulls", value: "sailing-monohulls" },
+  { label: "Sailing Catamarans", value: "sailing-catamarans" },
+  { label: "Power Catamarans", value: "power-catamarans" },
+  { label: "Motor Yachts", value: "motor-yachts" },
 ];
-// --- END: Data ---
 
-// 1. New Sub-component to handle Safari Autoplay quirks
 const BackgroundVideo = ({ src, poster }) => {
   const videoRef = useRef(null);
-
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-
-    // Force muted property directly on the DOM element
     video.muted = true;
-
-    // Attempt to play (handling the Promise to avoid console errors)
     const playPromise = video.play();
     if (playPromise !== undefined) {
-      playPromise.catch((error) => {
-        console.log("Autoplay prevented by browser:", error);
-      });
+      playPromise.catch((error) => console.log("Autoplay prevented:", error));
     }
   }, [src]);
 
@@ -46,11 +32,11 @@ const BackgroundVideo = ({ src, poster }) => {
     <video
       ref={videoRef}
       src={src}
-      poster={poster} // Optional: shows image while video loads
+      poster={poster}
       autoPlay
       loop
-      muted // Keeps React happy
-      playsInline // CRITICAL for iOS Safari
+      muted
+      playsInline
       className="w-full h-full object-cover"
     />
   );
@@ -58,18 +44,23 @@ const BackgroundVideo = ({ src, poster }) => {
 
 const VideoSection = () => {
   const HEIGHT_CLASSES = "h-[calc(100dvh-292px)]";
-
-  // Helper to check for video extension
   const isVideo = (url) => url && url.toLowerCase().endsWith(".mp4");
 
+  const slideData = [
+    {
+      id: 1,
+      // title: "CHARTER A YACHT",
+      imageUrl: "/videos/yacht-cruising.mp4",
+      href: "/charter-yacht-greece/",
+      buttonText: "View all fleet",
+    },
+  ];
+
   return (
-    <section className="relative w-full overflow-hidden">
+    <section className="relative w-full overflow-hidden bg-[#020617]">
       <Swiper
         modules={[Autoplay, EffectFade]}
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: false,
-        }}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
         effect={"fade"}
         fadeEffect={{ crossFade: true }}
         loop={true}
@@ -79,10 +70,8 @@ const VideoSection = () => {
           <SwiperSlide key={slide.id}>
             {({ isActive }) => (
               <div className={`relative w-full ${HEIGHT_CLASSES} z-0`}>
-                {/* Background Media */}
                 <div className="absolute inset-0 z-0">
                   {isVideo(slide.imageUrl) ? (
-                    // Use the Safari-proof sub-component
                     <BackgroundVideo src={slide.imageUrl} />
                   ) : (
                     <img
@@ -91,35 +80,28 @@ const VideoSection = () => {
                       className="w-full h-full object-cover"
                     />
                   )}
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-black opacity-30"></div>
+                  <div className="absolute inset-0 bg-black opacity-40"></div>
                 </div>
 
-                {/* Text Content */}
+                <div className="relative z-10 flex items-center justify-center h-full text-center p-8">
+                  <div
+                    className={`transition-opacity duration-1000 ${
+                      isActive ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    <h1 className="text-5xl md:text-[110px] font-bold text-white tracking-tight drop-shadow-2xl mb-2 uppercase font-marcellus">
+                      {slide.title}
+                    </h1>
 
-                {/* Hide slide button temporalily */}
-
-                <div className="relative z-10 h-full max-w-[1530px] mx-auto p-8">
-                  <div className="relative z-10 flex items-center justify-center h-full text-center p-8">
-                    <div
-                      className={`mx-auto transition-opacity duration-1000 ease-in-out ${
-                        isActive ? "opacity-100" : "opacity-0"
-                      }`}
+                    {/* MOBILE ONLY BUTTON: Styled as a Category Monolith */}
+                    {/* MOBILE ONLY BUTTON: Styled as a Category Monolith */}
+                    <Link
+                      href={`${slide.href}#fleet-anchor`} // Appended the anchor ID here
+                      className="lg:hidden inline-block mt-8 px-10 py-5 bg-white/10 backdrop-blur-2xl border border-white/20 text-white font-marcellus uppercase text-xs tracking-[0.4em] hover:bg-white/20 transition-all duration-500"
+                      style={{ borderRadius: 0 }}
                     >
-                      <h1
-                        className="text-5xl md:text-[110px] font-bold text-white tracking-wide drop-shadow-lg mb-2"
-                        style={{ fontFamily: "var(--font-marcellus)" }}
-                      >
-                        {slide.title}
-                      </h1>
-
-                      <Link
-                        href={slide.href}
-                        className="inline-block mt-8 px-8 lg:py-4 py-3 rounded-full bg-white text-black font-semibold uppercase text-sm lg:text-lg hover:bg-black hover:text-white tracking-wide"
-                      >
-                        {slide.buttonText || "Learn More"}
-                      </Link>
-                    </div>
+                      {slide.buttonText}
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -127,6 +109,32 @@ const VideoSection = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* INDUSTRY KILLING ANGULAR CATEGORIES - DESKTOP ONLY */}
+      <div className="hidden lg:flex absolute bottom-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-[1200px] justify-center">
+        <div
+          className="flex bg-white/10 backdrop-blur-3xl border-t border-x border-white/20 px-12 py-1"
+          style={{
+            clipPath: "polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%)",
+          }}
+        >
+          {CATEGORIES.map((cat) => (
+            <Link
+              key={cat.value}
+              href={`/charter-yacht-greece?type=${cat.value}#fleet-anchor`}
+              className="px-8 py-6 text-white font-marcellus text-[10px] tracking-[0.4em] uppercase hover:text-[#DAA520] transition-colors duration-300 whitespace-nowrap"
+            >
+              {cat.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      <style jsx global>{`
+        * {
+          border-radius: 0 !important;
+        }
+      `}</style>
     </section>
   );
 };

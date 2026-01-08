@@ -70,10 +70,10 @@ const YachtSwiper = ({ yachtData }) => {
       {/* 2. THE COMMAND PANE */}
       {/* Logic: relative on mobile (follows photo), absolute on desktop (floats on photo) */}
       <div className="relative lg:absolute lg:top-1/2 lg:right-[5%] lg:lg:right-[10%] lg:-translate-y-1/2 z-30 w-full lg:max-w-[500px] px-0 lg:px-6 order-2">
-        <div className="bg-[#050505] lg:bg-[#050505]/80 backdrop-blur-2xl border-x lg:border border-white/10 p-8 lg:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.8)] relative">
+        <div className="bg-[#0a0a0a]/60 lg:bg-[#0a0a0a]/65 backdrop-blur-xl border border-white/10 p-8 lg:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.6)] relative overflow-hidden">
+          {" "}
           {/* Top Gold Accent Line */}
           <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-[#DAA520] via-[#8a6d21] to-transparent"></div>
-
           <div className="mb-10">
             <h2 className="text-4xl lg:text-6xl font-marcellus text-white uppercase tracking-tighter leading-none">
               {yacht.name}
@@ -82,7 +82,6 @@ const YachtSwiper = ({ yachtData }) => {
               Vessel Specification
             </p>
           </div>
-
           <div className="grid grid-cols-1 gap-6 mb-10">
             {specs.map((spec, i) => (
               <div
@@ -101,7 +100,6 @@ const YachtSwiper = ({ yachtData }) => {
               </div>
             ))}
           </div>
-
           <div className="flex flex-col gap-6">
             <div>
               <span className="text-white/30 text-[9px] tracking-[0.3em] uppercase">
