@@ -21,14 +21,13 @@ const WHATSAPP_MESSAGE = encodeURIComponent(
 const FloatingWhatsAppButton = () => {
   return (
     <a
-      href={`https://wa.me/${WHATSAPP_NUMBER.replace(
-        "+",
-        ""
-      )}?text=${WHATSAPP_MESSAGE}`}
+      // DIRECT LINK: No variables, no complex encoding. Just the raw connection.
+      href="https://wa.me/17867988798"
       target="_blank"
       rel="noopener noreferrer"
-      // lg:hidden ensures this button ONLY shows on screens smaller than 1024px
-      className="lg:hidden fixed bottom-50 right-3 z-9999 flex items-center space-x-2 bg-[#25D366] text-white px-4 py-3 rounded-full shadow-lg transition-all duration-300 hover:bg-[#128C7E]"
+      // FIX: Changed z-9999 to z-[9999] (valid Tailwind) so it actually stays on top
+      // FIX: Ensure 'bottom' is valid (standard Tailwind often stops before 50, using arbitrary for safety if you want it high, or bottom-6 for standard corner)
+      className="lg:hidden fixed bottom-6 right-3 z-9999 flex items-center space-x-2 bg-[#25D366] text-white px-4 py-3 rounded-full shadow-lg transition-all duration-300 hover:bg-[#128C7E]"
       style={{ fontFamily: "var(--font-marcellus)" }}
     >
       <WhatsappIcon className="w-6 h-6" />

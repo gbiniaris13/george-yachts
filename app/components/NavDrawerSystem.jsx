@@ -150,10 +150,7 @@ const NavDrawerSystem = () => {
               </a>
 
               <a
-                href={`https://wa.me/${WHATSAPP_NUMBER.replace(
-                  "+",
-                  ""
-                )}?text=${WHATSAPP_MESSAGE}`}
+                href="https://wa.me/17867988798"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`${currentTextColor} hover:text-[#CEA681] p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md flex items-center space-x-2`}
