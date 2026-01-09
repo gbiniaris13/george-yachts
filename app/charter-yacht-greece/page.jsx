@@ -5,6 +5,8 @@ import AboutUs from "../components/AboutUs";
 import ContactFormSection from "../components/ContactFormSection";
 import YachtListClient from "../components/YachtListClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Luxury Yacht Charter Greece | George Yachts",
   description:
