@@ -70,8 +70,7 @@ const YachtSwiper = ({ yachtData }) => {
       {/* 2. THE COMMAND PANE */}
       {/* Logic: relative on mobile (follows photo), absolute on desktop (floats on photo) */}
       <div className="relative lg:absolute lg:top-1/2 lg:right-[5%] lg:lg:right-[10%] lg:-translate-y-1/2 z-30 w-full lg:max-w-[500px] px-0 lg:px-6 order-2">
-        <div className="bg-[#0a0a0a]/60 lg:bg-[#0a0a0a]/65 backdrop-blur-xl border border-white/10 p-8 lg:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.6)] relative overflow-hidden">
-          {" "}
+        <div className="bg-[#0a0a0a]/40 lg:bg-[#0a0a0a]/60 backdrop-blur-2xl border border-white/10 p-8 lg:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.5)] relative overflow-hidden">
           {/* Top Gold Accent Line */}
           <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-[#DAA520] via-[#8a6d21] to-transparent"></div>
           <div className="mb-10">
@@ -116,6 +115,18 @@ const YachtSwiper = ({ yachtData }) => {
             >
               Secure This Vessel
             </button>
+
+            {/* ELEGANT PDF DOWNLOAD BUTTON - Integrated Carefully */}
+            {yacht.brochure && (
+              <a
+                href={yacht.brochure}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-transparent border border-white/10 text-white/50 py-4 text-[10px] font-sans font-bold tracking-[0.3em] uppercase transition-all duration-300 hover:bg-white/5 hover:text-white hover:border-white/30 text-center block"
+              >
+                Download Brochure
+              </a>
+            )}
           </div>
         </div>
       </div>

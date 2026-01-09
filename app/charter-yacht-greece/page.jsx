@@ -11,6 +11,7 @@ export const metadata = {
     "Explore bespoke luxury yacht charters in Greece. Curated fleets across the Cyclades, Ionian, and Athens Riviera.",
 };
 
+// 1. UPDATED QUERY to fetch the PDF URL
 const ALL_YACHTS_QUERY = `*[_type == "yacht"] | order(_createdAt asc){
   _id,
   name,
@@ -21,6 +22,7 @@ const ALL_YACHTS_QUERY = `*[_type == "yacht"] | order(_createdAt asc){
   sleeps,
   cruisingRegion,
   weeklyRatePrice,
+  "brochure": brochure.asset->url, 
   images[]{
     asset, 
     alt 
