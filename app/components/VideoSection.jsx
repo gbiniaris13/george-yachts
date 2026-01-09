@@ -111,7 +111,7 @@ const VideoSection = () => {
       </Swiper>
 
       {/* INDUSTRY KILLING ANGULAR CATEGORIES - DESKTOP ONLY */}
-      <div className="hidden lg:flex absolute bottom-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-[1200px] justify-center">
+      <div className="hidden lg:flex absolute bottom-0 left-1/2 -translate-x-1/2 z-20 w-full max-w-[1200px] justify-center">
         <div
           className="flex bg-white/10 backdrop-blur-3xl border-t border-x border-white/20 px-12 py-1"
           style={{
