@@ -113,7 +113,7 @@ const YachtSwiper = ({ yachtData }) => {
               onClick={() => setIsPopupOpen(true)}
               className="w-full bg-[#DAA520] hover:bg-white text-black py-5 text-xs font-sans font-bold tracking-[0.4em] uppercase transition-all duration-500 shadow-[0_0_30px_rgba(218,165,32,0.2)] hover:shadow-[0_0_50px_rgba(255,255,255,0.2)]"
             >
-              Secure This Vessel
+              Plan this charter
             </button>
 
             {/* ELEGANT PDF DOWNLOAD BUTTON - Integrated Carefully */}
