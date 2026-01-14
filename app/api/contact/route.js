@@ -38,9 +38,41 @@ export async function POST(request) {
 
   try {
     const payload = await request.json();
-    const { name, email, phone, country, message, recaptchaToken } = payload;
 
-    if (!name || !email || !phone || !country || !message || !recaptchaToken) {
+    // Updated Destructuring to include new fields
+    const {
+      name,
+      email,
+      phone,
+      country,
+      message,
+      recaptchaToken,
+      // New Fields added below
+      yacht_type,
+      guests,
+      budget,
+      check_in,
+      check_out,
+      embarkation,
+      disembarkation,
+    } = payload;
+
+    // Updated Validation to check for new fields
+    if (
+      !name ||
+      !email ||
+      !phone ||
+      !country ||
+      !message ||
+      !recaptchaToken ||
+      !yacht_type ||
+      !guests ||
+      !budget ||
+      !check_in ||
+      !check_out ||
+      !embarkation ||
+      !disembarkation
+    ) {
       return NextResponse.json(
         { message: "Missing required fields or ReCAPTCHA token." },
         { status: 400, headers: defaultHeaders }
@@ -79,17 +111,31 @@ export async function POST(request) {
       subject: `[Yacht Inquiry] New Contact from ${name}`,
       replyTo: email,
       html: `
-        <h3>New Website Inquiry:</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Country:</strong> ${country}</p>
-        <hr>
-        <p><strong>Message:</strong></p>
-        <p style="white-space: pre-line;">${message}</p>
-        <hr>
-        <p style="font-size: 10px;">ReCAPTCHA Score: ${score}</p>
-      `,
+        <h3>New Website Inquiry:</h3>
+        
+        <h4>Client Details:</h4>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Country:</strong> ${country}</p>
+        
+        <hr>
+        
+        <h4>Charter Preferences:</h4>
+        <p><strong>Yacht Type:</strong> ${yacht_type}</p>
+        <p><strong>Guests:</strong> ${guests}</p>
+        <p><strong>Budget/Week:</strong> ${budget}</p>
+        <p><strong>Dates:</strong> ${check_in} to ${check_out}</p>
+        <p><strong>Route:</strong> ${embarkation} &rarr; ${disembarkation}</p>
+        
+        <hr>
+        
+        <h4>Message:</h4>
+        <p style="white-space: pre-line;">${message}</p>
+        
+        <hr>
+        <p style="font-size: 10px;">ReCAPTCHA Score: ${score}</p>
+      `,
     });
 
     return NextResponse.json(
