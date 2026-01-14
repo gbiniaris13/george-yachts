@@ -37,7 +37,7 @@ const EnquirePopup = ({ isOpen, onClose, yachtName }) => {
 
         {/* The Contact Form */}
         {/* We wrap it in a div to ensure it fits nicely */}
-        <div className="max-h-[90vh] overflow-y-auto scrollbar-hide rounded-2xl">
+        <div className="max-h-[90vh] overflow-y-auto scrollbar-hide rounded-2xl mt-2">
           <ContactFormSection />
         </div>
       </div>
