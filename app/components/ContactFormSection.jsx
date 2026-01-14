@@ -238,7 +238,7 @@ const ContactFormSection = () => {
                 type="text"
                 id="embarkation"
                 name="embarkation"
-                placeholder="Embarkation Athens (Yachts Home Base)*"
+                placeholder="Embarkation*"
                 required
                 className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
               />
@@ -251,7 +251,7 @@ const ContactFormSection = () => {
                 type="text"
                 id="disembarkation"
                 name="disembarkation"
-                placeholder="Disembarkation Mykonos (Yachts Home Base)*"
+                placeholder="Disembarkation*"
                 required
                 className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
               />
