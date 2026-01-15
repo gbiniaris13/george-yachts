@@ -11,6 +11,9 @@ export const metadata = {
   title: "Buy a Yacht | Off-Market & Partner Listings | George Yachts",
   description:
     "Buying a yacht in Greece or the Med? We source off-market & partner listings based on your exact specs. Share budget & timeline—get options.",
+  alternates: {
+    canonical: "https://georgeyachts.com/yachts-for-sale",
+  },
 };
 
 // 2. GROQ query (Kept for future use if needed, currently unused in render)

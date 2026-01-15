@@ -8,6 +8,9 @@ export const metadata = {
   title: "About Us | George Yachts | Boutique Yacht Brokerage Athens",
   description:
     "Learn about George Yachts, a boutique yacht brokerage based in Athens, Greece. We specialize in luxury yacht charters, sales, and management with transparent processes and personal communication.",
+  alternates: {
+    canonical: "https://georgeyachts.com/about-us",
+  },
 };
 
 const AboutUsPage = () => {
@@ -16,7 +19,7 @@ const AboutUsPage = () => {
       <AboutUs
         heading="ABOUT US"
         subtitle="BOUTIQUE YACHT BROKERAGE FROM ATHENS"
-        paragraph="360° luxury, one trusted team."
+        paragraph="360° luxury, one trusted team."
         imageUrl="/images/about-us-section.jpg"
         altText="A luxury private jet on a runway at sunset"
       />

@@ -11,6 +11,9 @@ export const metadata = {
   title: "VIP Transfers Athens & Greece | George Yachts",
   description:
     "Arrive in style with George Yachts. We offer seamless VIP transfers with luxury vehicles and professional chauffeurs in Athens, Mykonos, and across Greece.",
+  alternates: {
+    canonical: "https://georgeyachts.com/vip-transfers-greece",
+  },
 };
 
 const ALL_TRANSFERS_QUERY = `*[_type == "transfer"] | order(_createdAt asc){

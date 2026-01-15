@@ -1,8 +1,7 @@
-// app/sitemap.js
-
 import { sanityClient } from "@/lib/sanity";
 
-const URL = "https://georgeyachts.com/";
+// REMOVED the trailing slash here for cleaner concatenation
+const BASE_URL = "https://georgeyachts.com";
 
 async function getDynamicRoutes() {
   const query = `*[_type in ["yacht", "saleYacht", "jet", "villa", "transfer"]]{
@@ -14,7 +13,6 @@ async function getDynamicRoutes() {
 
   return data.map((item) => {
     let route = "";
-    // Assign the correct path based on the schema type
     switch (item._type) {
       case "yacht":
         route = `/charter-yacht-greece/${item._id}`;
@@ -36,7 +34,8 @@ async function getDynamicRoutes() {
     }
 
     return {
-      url: `${URL}${route}`,
+      // Clean URL: https://georgeyachts.com/route/id
+      url: `${BASE_URL}${route}`,
       lastModified: new Date(item._updatedAt).toISOString(),
     };
   });
@@ -44,7 +43,7 @@ async function getDynamicRoutes() {
 
 export default async function sitemap() {
   const staticRoutes = [
-    "/",
+    "", // This represents the homepage: https://georgeyachts.com
     "/about-us",
     "/charter-yacht-greece",
     "/luxury-villas-greece",
@@ -61,7 +60,7 @@ export default async function sitemap() {
     "/yacht-itineraries-greece",
     "/yachts-for-sale",
   ].map((route) => ({
-    url: `${URL}${route}`,
+    url: `${BASE_URL}${route}`,
     lastModified: new Date().toISOString(),
   }));
 

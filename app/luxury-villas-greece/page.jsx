@@ -11,6 +11,9 @@ export const metadata = {
   title: "Luxury Villas in Greece | Available on Request | George Yachts",
   description:
     "Luxury villas in Mykonos, Paros, Antiparos, Santorini & Athens Riviera. Curated privately via our partner network. Share dates & budget—get a shortlist.",
+  alternates: {
+    canonical: "https://georgeyachts.com/luxury-villas-greece",
+  },
 };
 
 // 2. Query for villas

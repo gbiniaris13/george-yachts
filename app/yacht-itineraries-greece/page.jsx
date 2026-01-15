@@ -6,6 +6,9 @@ export const metadata = {
     "Yacht Itineraries Greece | Cyclades, Ionian & Saronic | George Yachts",
   description:
     "Explore signature Greek yacht itineraries. Discover the art of the Greek voyage with routes covering the Cyclades, Ionian, and Saronic islands.",
+  alternates: {
+    canonical: "https://georgeyachts.com/yacht-itineraries-greece",
+  },
 };
 
 const YachtItinerariesPage = () => {
