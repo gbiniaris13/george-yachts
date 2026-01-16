@@ -11,7 +11,7 @@ const Filotimon = () => {
       {/* 2. THE BACKGROUND GIANT (Greek Watermark) */}
       {/* This sits huge in the background to give 'weight' to the section */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none z-0 overflow-hidden">
-        <h1 className="text-[18vw] font-marcellus font-bold text-white/[0.02] tracking-widest leading-none uppercase blur-sm">
+        <h1 className="text-[18vw] font-marcellus font-bold text-white/2 tracking-widest leading-none uppercase blur-sm">
           ΦΙΛΟΤΙΜΟ
         </h1>
       </div>
@@ -29,7 +29,17 @@ const Filotimon = () => {
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-marcellus text-white leading-[1.05] tracking-tight mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-150">
           WHEN LUXURY MEETS <br className="hidden md:block" />
           TRUST AND{" "}
-          <span className="italic text-[#DAA520] font-light relative inline-block">
+          <span
+            className="italic font-light relative inline-block"
+            style={{
+              backgroundImage:
+                "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
             "FILOTIMO"
             {/* Subtle glow effect behind the gold word */}
             <div className="absolute inset-0 blur-2xl bg-[#DAA520]/20 -z-10"></div>
@@ -37,7 +47,7 @@ const Filotimon = () => {
         </h2>
 
         {/* The Gold Divider Line */}
-        <div className="h-px w-32 bg-gradient-to-r from-transparent via-[#DAA520] to-transparent mb-14 opacity-60"></div>
+        <div className="h-px w-32 bg-linear-to-r from-transparent via-[#DAA520] to-transparent mb-14 opacity-60"></div>
 
         {/* The Definition Paragraph */}
         <p className="text-lg md:text-2xl text-gray-400 font-marcellus leading-relaxed max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">

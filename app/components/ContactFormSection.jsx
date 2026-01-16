@@ -66,24 +66,34 @@ const ContactFormSection = () => {
     }
   };
 
-  // Sharp, border-only inputs
+  // Sharp, border-only inputs (Applied uniformly to all fields)
   const inputStyles =
     "w-full bg-white/[0.03] text-white border-b border-white/20 px-0 py-4 text-lg focus:outline-none focus:border-[#DAA520] focus:bg-white/[0.05] transition-all duration-500 placeholder:text-white/40 placeholder:font-light rounded-none";
 
   const labelStyles = "sr-only";
 
   return (
-    // FIX: Hardcoded bg-black to ensure visibility, then added gradient on top
     <section className="relative w-full min-h-screen bg-black flex items-center justify-center py-24 overflow-hidden">
       {/* Gradient Overlay: Deep Gold/Brown at the bottom fading to Black */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#2e2000] via-black to-black z-0"></div>
+      <div className="absolute inset-0 bg-linear-to-t from-[#2e2000] via-black to-black z-0"></div>
 
       {/* Texture: Grain Overlay */}
       <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay z-10"></div>
 
       <div className="relative z-30 w-full max-w-6xl px-6 md:px-12">
         <div className="text-center mb-20">
-          <h2 className="text-5xl md:text-7xl font-marcellus text-white tracking-tighter mt-4">
+          {/* APPLIED GRADIENT TO TITLE */}
+          <h2
+            className="text-5xl md:text-7xl font-marcellus tracking-tighter mt-4"
+            style={{
+              backgroundImage:
+                "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
             CONTACT
           </h2>
         </div>
@@ -99,13 +109,14 @@ const ContactFormSection = () => {
             <label htmlFor="yacht_type" className={labelStyles}>
               Type of Yacht
             </label>
+            {/* FIXED: Removed extra text size classes so it matches the rest */}
             <input
               type="text"
               id="yacht_type"
               name="yacht_type"
               required
               placeholder="Select Type of Yacht*"
-              className={`${inputStyles} text-2xl md:text-3xl`}
+              className={inputStyles}
             />
           </div>
 
@@ -223,7 +234,7 @@ const ContactFormSection = () => {
             />
           </div>
 
-          {/* Row 4 */}
+          {/* Row 4 - FIXED: Applied uniform inputStyles here */}
           <div>
             <label htmlFor="embarkation" className="sr-only">
               Embarkation
@@ -234,7 +245,7 @@ const ContactFormSection = () => {
               name="embarkation"
               placeholder="Embarkation"
               required
-              className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
+              className={inputStyles}
             />
           </div>
           <div>
@@ -247,7 +258,7 @@ const ContactFormSection = () => {
               name="disembarkation"
               placeholder="Disembarkation"
               required
-              className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
+              className={inputStyles}
             />
           </div>
 

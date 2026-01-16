@@ -43,7 +43,8 @@ const BackgroundVideo = ({ src, poster }) => {
 };
 
 const VideoSection = () => {
-  const HEIGHT_CLASSES = "h-[calc(100dvh-292px)]";
+  // CHANGED: Set to 100dvh (Dynamic Viewport Height) for full screen on all devices
+  const HEIGHT_CLASSES = "h-[100dvh]";
   const isVideo = (url) => url && url.toLowerCase().endsWith(".mp4");
 
   const slideData = [
@@ -93,7 +94,6 @@ const VideoSection = () => {
                       {slide.title}
                     </h1>
 
-                    {/* MOBILE ONLY BUTTON: Styled as a Category Monolith */}
                     {/* MOBILE ONLY BUTTON: Styled as a Category Monolith */}
                     <Link
                       href={`${slide.href}#fleet-anchor`} // Appended the anchor ID here

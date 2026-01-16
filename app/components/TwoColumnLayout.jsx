@@ -9,7 +9,6 @@ const features = [
     paragraph:
       "At George Yachts, every charter begins with a vision — yours. We create tailor-made experiences across the Mediterranean, combining performance yachts, exclusive itineraries, and a modern sense of luxury. From the Aegean’s hidden coves to the Ionian’s calm horizons, we turn every journey into a story worth remembering. Yachting isn’t just what we do — it’s how we live.",
     imageSrc: "/images/yacht-1.jpeg",
-    // We ignore the 'color' property now. We control the palette globally.
   },
   {
     title: "BOUTIQUE SERVICE | GLOBAL STANDARDS",
@@ -38,9 +37,7 @@ const MonolithSlide = ({ item, index, total }) => {
   const isRight = index % 2 !== 0;
 
   return (
-    // THE STICKY CONTAINER:
-    // This is the magic. 'sticky top-0' makes them stack like a deck of cards.
-    // h-screen ensures each slide takes the full viewport.
+    // THE STICKY CONTAINER
     <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
       {/* 1. CINEMATIC BACKGROUND LAYER */}
       <div className="absolute inset-0 z-0">
@@ -67,7 +64,7 @@ const MonolithSlide = ({ item, index, total }) => {
       >
         <div className="w-full md:w-[500px] lg:w-[600px] backdrop-blur-3xl bg-black/40 border border-white/10 p-8 md:p-16 shadow-[0_0_50px_rgba(0,0,0,0.5)] group hover:bg-black/50 transition-colors duration-700">
           {/* Top Decorative Line */}
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-[#DAA520] to-transparent mb-10 opacity-50"></div>
+          <div className="w-full h-px bg-linear-to-r from-transparent via-[#DAA520] to-transparent mb-10 opacity-50"></div>
 
           {/* Index Counter */}
           <span className="block text-[#DAA520] font-mono text-xs tracking-[0.3em] mb-4">
@@ -77,7 +74,17 @@ const MonolithSlide = ({ item, index, total }) => {
           {/* Typography */}
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-marcellus text-white leading-[0.9] tracking-tight mb-8">
             <span className="block opacity-90">{titleMain}</span>
-            <span className="block text-[#DAA520] italic font-light mt-2 opacity-80">
+            <span
+              className="block italic font-light mt-2"
+              style={{
+                backgroundImage:
+                  "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
               {titleSub}
             </span>
           </h2>
@@ -88,7 +95,7 @@ const MonolithSlide = ({ item, index, total }) => {
 
           {/* Bottom Decorative Element */}
           <div className="mt-10 flex items-center gap-4">
-            <div className="h-[1px] w-12 bg-white/30"></div>
+            <div className="h-px w-12 bg-white/30"></div>
             <span className="text-[10px] uppercase tracking-[0.4em] text-white/50">
               Discover
             </span>
