@@ -13,7 +13,7 @@ const HomeClient = () => {
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
       <VideoSection />
-      <Disruptors />
+      {/* <Disruptors /> */}
       <Filotimon />
       <TwoColumnLayout />
       <ContactFormSection />
