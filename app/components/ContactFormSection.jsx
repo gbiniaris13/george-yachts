@@ -66,240 +66,254 @@ const ContactFormSection = () => {
     }
   };
 
-  return (
-    <section className="relative w-full min-h-screen overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <img
-          src="/images/form_bg.jpg"
-          alt="Luxury yacht background for contact form"
-          className="w-full h-full object-cover"
-          onError={(e) => (e.target.src = "/images/form_bg.jpg")}
-        />
-        <div className="absolute inset-0 bg-black opacity-60"></div>
-      </div>
+  // Sharp, border-only inputs
+  const inputStyles =
+    "w-full bg-white/[0.03] text-white border-b border-white/20 px-0 py-4 text-lg focus:outline-none focus:border-[#DAA520] focus:bg-white/[0.05] transition-all duration-500 placeholder:text-white/40 placeholder:font-light rounded-none";
 
-      <div className="relative z-10 flex items-center justify-center h-full p-4 md:p-12 lg:p-20">
-        <div className="w-full max-w-5xl bg-transparent p-6 sm:p-10 rounded-xl">
-          <h2 className="text-4xl lg:text-5xl font-extrabold text-white mb-12 text-center tracking-tight">
+  const labelStyles = "sr-only";
+
+  return (
+    // FIX: Hardcoded bg-black to ensure visibility, then added gradient on top
+    <section className="relative w-full min-h-screen bg-black flex items-center justify-center py-24 overflow-hidden">
+      {/* Gradient Overlay: Deep Gold/Brown at the bottom fading to Black */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#2e2000] via-black to-black z-0"></div>
+
+      {/* Texture: Grain Overlay */}
+      <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay z-10"></div>
+
+      <div className="relative z-30 w-full max-w-6xl px-6 md:px-12">
+        <div className="text-center mb-20">
+          <h2 className="text-5xl md:text-7xl font-marcellus text-white tracking-tighter mt-4">
             CONTACT
           </h2>
-
-          <form
-            ref={formRef}
-            onSubmit={handleVercelSubmit}
-            // GRID SYSTEM: 1 column mobile, 2 columns desktop (strict uniformity)
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            {/* --- TIER 1: FULL WIDTH HEADERS (Span 2 cols on desktop) --- */}
-
-            {/* Type of Yacht */}
-            <div className="md:col-span-2">
-              <label htmlFor="yacht_type" className="sr-only">
-                Type of Yacht
-              </label>
-              <input
-                type="text"
-                id="yacht_type"
-                name="yacht_type"
-                placeholder="Select Type of Yacht*"
-                required
-                className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
-              />
-            </div>
-
-            {/* Full Name */}
-            <div className="md:col-span-2">
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700 sr-only"
-              >
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Full Name*"
-                required
-                className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
-              />
-            </div>
-
-            {/* Country */}
-            <div className="md:col-span-2">
-              <label
-                htmlFor="country"
-                className="block text-sm font-medium text-gray-700 sr-only"
-              >
-                Country
-              </label>
-              <input
-                type="text"
-                id="country"
-                name="country"
-                placeholder="Country of Residence*"
-                required
-                className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
-              />
-            </div>
-
-            {/* --- TIER 2: UNIFORM 2-COLUMN GRID (8 Fields) --- */}
-
-            {/* Row 1 */}
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Email Address*"
-                required
-                className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
-              />
-            </div>
-            <div>
-              <label htmlFor="phone" className="sr-only">
-                Phone
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                placeholder="Phone Number*"
-                required
-                className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
-              />
-            </div>
-
-            {/* Row 2 */}
-            <div>
-              <label htmlFor="guests" className="sr-only">
-                Number of Guests
-              </label>
-              <input
-                type="text"
-                id="guests"
-                name="guests"
-                placeholder="Number of Guests*"
-                required
-                className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
-              />
-            </div>
-            <div>
-              <label htmlFor="budget" className="sr-only">
-                Budget
-              </label>
-              <input
-                type="text"
-                id="budget"
-                name="budget"
-                placeholder="Budget / Week (Fees Included)*"
-                required
-                className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
-              />
-            </div>
-
-            {/* Row 3 */}
-            <div>
-              <label htmlFor="check_in" className="sr-only">
-                Check-in Date
-              </label>
-              <input
-                type="text"
-                id="check_in"
-                name="check_in"
-                placeholder="Check-in Date*"
-                required
-                className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
-              />
-            </div>
-            <div>
-              <label htmlFor="check_out" className="sr-only">
-                Check-out Date
-              </label>
-              <input
-                type="text"
-                id="check_out"
-                name="check_out"
-                placeholder="Check-out Date*"
-                required
-                className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
-              />
-            </div>
-
-            {/* Row 4 */}
-            <div>
-              <label htmlFor="embarkation" className="sr-only">
-                Embarkation
-              </label>
-              <input
-                type="text"
-                id="embarkation"
-                name="embarkation"
-                placeholder="Embarkation Athens (Yachts Home Base)*"
-                required
-                className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
-              />
-            </div>
-            <div>
-              <label htmlFor="disembarkation" className="sr-only">
-                Disembarkation
-              </label>
-              <input
-                type="text"
-                id="disembarkation"
-                name="disembarkation"
-                placeholder="Disembarkation Mykonos (Yachts Home Base)*"
-                required
-                className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
-              />
-            </div>
-
-            {/* --- MESSAGE & SUBMIT (Span 2 cols) --- */}
-
-            <div className="md:col-span-2">
-              <label
-                htmlFor="message"
-                className="block text-sm font-medium text-gray-700 sr-only"
-              >
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                placeholder="Tell us any specific preferences, special occasions, etc."
-                required
-                rows="4"
-                className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-2xl transition duration-150 resize-none focus:bg-white/10 outline-none"
-              ></textarea>
-            </div>
-
-            <div className="md:col-span-2 space-y-4">
-              <p className="text-xs text-white/60 text-center">
-                This site is protected by reCAPTCHA{" "}
-                <br className="hidden md:block" />
-                and the Google Privacy Policy and Terms of Service apply.
-              </p>
-
-              {status && (
-                <p className="text-center font-medium text-sm pt-2 text-white">
-                  {status}
-                </p>
-              )}
-
-              <button
-                type="submit"
-                className="w-full flex justify-center cursor-pointer py-4 px-4 border border-transparent rounded-full shadow-lg text-lg font-medium text-white bg-black hover:bg-white hover:text-[#02132d] transition-all duration-300 active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-offset-2 uppercase tracking-widest"
-                disabled={status === "Submitting..."}
-              >
-                Send Inquiry
-              </button>
-            </div>
-          </form>
         </div>
+
+        <form
+          ref={formRef}
+          onSubmit={handleVercelSubmit}
+          className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12"
+        >
+          {/* --- TIER 1: FULL WIDTH --- */}
+
+          <div className="md:col-span-2 group">
+            <label htmlFor="yacht_type" className={labelStyles}>
+              Type of Yacht
+            </label>
+            <input
+              type="text"
+              id="yacht_type"
+              name="yacht_type"
+              required
+              placeholder="Select Type of Yacht*"
+              className={`${inputStyles} text-2xl md:text-3xl`}
+            />
+          </div>
+
+          <div className="md:col-span-2 group">
+            <label htmlFor="name" className={labelStyles}>
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              placeholder="Full Name*"
+              className={inputStyles}
+            />
+          </div>
+
+          <div className="md:col-span-2 group">
+            <label htmlFor="country" className={labelStyles}>
+              Country
+            </label>
+            <input
+              type="text"
+              id="country"
+              name="country"
+              required
+              placeholder="Country of Residence*"
+              className={inputStyles}
+            />
+          </div>
+
+          {/* --- TIER 2: THE DETAILS --- */}
+
+          <div>
+            <label htmlFor="email" className={labelStyles}>
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="Email Address*"
+              className={inputStyles}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="phone" className={labelStyles}>
+              Phone
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              required
+              placeholder="Phone Number*"
+              className={inputStyles}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="guests" className={labelStyles}>
+              Guests
+            </label>
+            <input
+              type="text"
+              id="guests"
+              name="guests"
+              required
+              placeholder="Number of Guests*"
+              className={inputStyles}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="budget" className={labelStyles}>
+              Budget
+            </label>
+            <input
+              type="text"
+              id="budget"
+              name="budget"
+              required
+              placeholder="Budget / Week (Fees Included)*"
+              className={inputStyles}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="check_in" className={labelStyles}>
+              Check In
+            </label>
+            <input
+              type="text"
+              id="check_in"
+              name="check_in"
+              required
+              placeholder="Check-in Date*"
+              className={inputStyles}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="check_out" className={labelStyles}>
+              Check Out
+            </label>
+            <input
+              type="text"
+              id="check_out"
+              name="check_out"
+              required
+              placeholder="Check-out Date*"
+              className={inputStyles}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="embarkation" className={labelStyles}>
+              Embarkation
+            </label>
+            <input
+              type="text"
+              id="embarkation"
+              name="embarkation"
+              required
+              placeholder="Embarkation (e.g. Athens Port etc)*"
+              className={inputStyles}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="disembarkation" className={labelStyles}>
+              Disembarkation
+            </label>
+            <input
+              type="text"
+              id="disembarkation"
+              name="disembarkation"
+              required
+              placeholder="Disembarkation (e.g. Piraeus Port etc)*"
+              className={inputStyles}
+            />
+          </div>
+
+          {/* --- TIER 3: MESSAGE --- */}
+
+          <div className="md:col-span-2 mt-8">
+            <label htmlFor="message" className={labelStyles}>
+              Message
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows="4"
+              placeholder="Tell us any specific preferences, special occasions, etc."
+              className={`${inputStyles} resize-none`}
+            ></textarea>
+          </div>
+
+          {/* --- FOOTER & TRIGGER --- */}
+
+          <div className="md:col-span-2 flex flex-col items-center space-y-8 mt-12">
+            <div className="text-[10px] text-white/40 uppercase tracking-widest text-center">
+              This site is protected by reCAPTCHA{" "}
+              <br className="hidden md:block" /> and the Google Privacy Policy
+              and Terms of Service apply.
+            </div>
+
+            {status && (
+              <div className="text-[#DAA520] font-mono text-sm tracking-widest uppercase animate-pulse">
+                [{status}]
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={status === "Submitting..."}
+              className="group relative w-full py-6 bg-white hover:bg-[#DAA520] transition-colors duration-500 ease-out overflow-hidden"
+            >
+              <span className="relative z-10 text-black font-bold text-lg tracking-[0.3em] uppercase group-hover:text-white transition-colors duration-300">
+                Send Inquiry
+              </span>
+              {/* Hover Reveal Effect */}
+              <div className="absolute inset-0 bg-[#DAA520] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+            </button>
+          </div>
+        </form>
       </div>
+
+      <style jsx global>{`
+        input,
+        textarea,
+        button {
+          border-radius: 0 !important;
+        }
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        textarea:-webkit-autofill,
+        textarea:-webkit-autofill:hover,
+        textarea:-webkit-autofill:focus {
+          -webkit-text-fill-color: white;
+          -webkit-box-shadow: 0 0 0px 1000px #000000 inset;
+          transition: background-color 5000s ease-in-out 0s;
+        }
+      `}</style>
     </section>
   );
 };

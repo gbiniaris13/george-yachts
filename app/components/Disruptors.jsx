@@ -1,36 +1,32 @@
+"use client";
+
 import React from "react";
 import Marquee from "react-fast-marquee";
 
 const Disruptors = () => {
   return (
-    <div className="w-full mx-auto flex flex-col items-center justify-center bg-white py-14">
+    <div className="w-full bg-white py-6 border-y border-black/10 overflow-hidden">
       <Marquee
-        speed={30}
+        speed={50}
         gradient={true}
         gradientColor="#FFFFFF"
-        gradientWidth={150}
+        gradientWidth={100}
+        autoFill={true} // Ensures smooth looping without gaps
       >
-        <span
-          className="md:text-[60px] text-[40px] font-bold text-[#7a6200] mx-8 uppercase"
-          style={{ fontFamily: "var(--font-marcellus)" }}
-        >
-          Boutique yacht brokerage & 360° luxury concierge for luxury yacht
-          charters in Greece
-        </span>
-        <span
-          className="md:text-[60px] text-[40px] font-bold text-[#7a6200] mx-8 uppercase"
-          style={{ fontFamily: "var(--font-marcellus)" }}
-        >
-          Boutique yacht brokerage & 360° luxury concierge for luxury yacht
-          charters in Greece
-        </span>
-        <span
-          className="md:text-[60px] text-[40px] font-bold text-[#7a6200] mx-8 uppercase"
-          style={{ fontFamily: "var(--font-marcellus)" }}
-        >
-          Boutique yacht brokerage & 360° luxury concierge for luxury yacht
-          charters in Greece
-        </span>
+        <div className="flex items-center">
+          <span
+            className="text-3xl md:text-5xl font-black font-sans text-black uppercase tracking-tighter mx-4 select-none"
+            // If you want to force a specific system font stack that looks expensive:
+            style={{ fontFamily: "'Helvetica Neue', 'Arial', sans-serif" }}
+          >
+            Boutique Yacht Brokerage & 360° Luxury Concierge
+          </span>
+
+          {/* The Divider: A sharp, modern slash in Gold */}
+          <span className="text-3xl md:text-5xl font-black font-sans text-[#B8860B] mx-8 md:mx-16 opacity-100">
+            //
+          </span>
+        </div>
       </Marquee>
     </div>
   );
