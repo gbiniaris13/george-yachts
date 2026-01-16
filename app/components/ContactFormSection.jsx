@@ -223,31 +223,31 @@ const ContactFormSection = () => {
             />
           </div>
 
+          {/* Row 4 */}
           <div>
-            <label htmlFor="embarkation" className={labelStyles}>
+            <label htmlFor="embarkation" className="sr-only">
               Embarkation
             </label>
             <input
               type="text"
               id="embarkation"
               name="embarkation"
+              placeholder="Embarkation Athens (Yachts Home Base)*"
               required
-              placeholder="Embarkation (e.g. Athens Port etc)*"
-              className={inputStyles}
+              className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
             />
           </div>
-
           <div>
-            <label htmlFor="disembarkation" className={labelStyles}>
+            <label htmlFor="disembarkation" className="sr-only">
               Disembarkation
             </label>
             <input
               type="text"
               id="disembarkation"
               name="disembarkation"
+              placeholder="Disembarkation Mykonos (Yachts Home Base)*"
               required
-              placeholder="Disembarkation (e.g. Piraeus Port etc)*"
-              className={inputStyles}
+              className="w-full px-6 py-4 border border-white bg-transparent text-white placeholder-white rounded-full transition duration-150 focus:bg-white/10 outline-none"
             />
           </div>
 

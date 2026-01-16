@@ -10,6 +10,9 @@ export const metadata = {
   title: "Private Jet & Helicopter Charter | George Yachts",
   description:
     "Book private jets and helicopters with George Yachts. We offer 24/7 bespoke aviation services for Athens, the Greek islands, and the Mediterranean.",
+  alternates: {
+    canonical: "https://georgeyachts.com/private-jet-charter",
+  },
 };
 
 // 2. GROQ query for jets

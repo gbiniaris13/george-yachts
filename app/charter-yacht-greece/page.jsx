@@ -11,6 +11,9 @@ export const metadata = {
   title: "Luxury Yacht Charter Greece | George Yachts",
   description:
     "Explore bespoke luxury yacht charters in Greece. Curated fleets across the Cyclades, Ionian, and Athens Riviera.",
+  alternates: {
+    canonical: "https://georgeyachts.com/charter-yacht-greece",
+  },
 };
 
 // 1. UPDATED QUERY to fetch the PDF URL
