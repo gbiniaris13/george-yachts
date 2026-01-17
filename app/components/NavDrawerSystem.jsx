@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { Menu, Instagram, X } from "lucide-react";
 import Link from "next/link";
-import FloatingWhatsAppButton from "./FloatingWhatsAppButton";
 
 const WhatsappIcon = (props) => (
   <svg
@@ -57,25 +56,22 @@ const NavDrawerSystem = () => {
     };
   }, []);
 
+  // UPDATED: Always white text, whether transparent or scrolled (black)
   const currentTextColor = "text-white";
+
+  // UPDATED: Background logic (Transparent -> Black)
   const navBackground = scrolled ? "#000000" : "transparent";
 
   const iconClasses = `flex items-center space-x-3 z-10 p-2 rounded-full ${
     scrolled ? "bg-white/10" : "bg-white/10 backdrop-blur-sm"
   }`;
 
-  // SHARED CLASS: The gradient hover text
-  const hoverGradientText =
-    "hover:text-transparent hover:bg-[linear-gradient(90deg,#E6C77A_0%,#C9A24D_45%,#A67C2E_100%)] hover:bg-clip-text transition-all duration-200";
-  // SHARED CLASS: Solid gold for icons (since SVG stroke gradients break easily)
-  const hoverIconColor = "hover:text-[#C9A24D]";
-
   return (
     <>
       <nav
         className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 px-4 sm:px-6 lg:px-8`}
         style={{
-          backgroundColor: navBackground,
+          backgroundColor: navBackground, // Applied Black Background Logic
         }}
       >
         <div className="flex items-center justify-between h-20 relative">
@@ -83,9 +79,7 @@ const NavDrawerSystem = () => {
           <div className="flex items-center space-x-4">
             <button
               onClick={toggleDrawer}
-              // REPLACED: focus:ring-[#CEA681] -> focus:ring-[#C9A24D] (Solid Gold)
-              // REPLACED: hover:text-[#CEA681] -> hover:text-[#C9A24D] (Solid Gold for Icon)
-              className={`p-2 rounded-full ${currentTextColor} ${hoverIconColor} cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#C9A24D] transition duration-150 active:scale-95 drop-shadow-md`}
+              className={`p-2 rounded-full ${currentTextColor} hover:text-[#CEA681] cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#CEA681] transition duration-150 active:scale-95 drop-shadow-md`}
               aria-label="Toggle menu"
             >
               <Menu className="w-6 h-6" />
@@ -127,8 +121,7 @@ const NavDrawerSystem = () => {
                 href="https://www.instagram.com/georgeyachts"
                 target="_blank"
                 rel="noopener noreferrer"
-                // REPLACED: hover:text-[#CEA681] -> hover:text-[#C9A24D]
-                className={`${currentTextColor} ${hoverIconColor} p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md`}
+                className={`${currentTextColor} hover:text-[#CEA681] p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md`}
                 aria-label="Link to Instagram"
               >
                 <Instagram className="w-5 h-5" />
@@ -138,25 +131,19 @@ const NavDrawerSystem = () => {
                 href="https://wa.me/17867988798"
                 target="_blank"
                 rel="noopener noreferrer"
-                // REPLACED: hover:text-[#CEA681] -> hover:text-[#C9A24D]
-                className={`${currentTextColor} ${hoverIconColor} p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md flex items-center space-x-2`}
+                className={`${currentTextColor} hover:text-[#CEA681] p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md flex items-center space-x-2`}
                 aria-label="Link to WhatsApp"
               >
                 <WhatsappIcon className="w-5 h-5" />
                 <span
                   className="hidden lg:inline-block text-xs font-bold uppercase tracking-widest whitespace-nowrap"
                   style={{ fontFamily: "var(--font-marcellus)" }}
-                >
-                  {/* Empty span as per your code */}
-                </span>
+                ></span>
               </a>
             </div>
           </div>
         </div>
       </nav>
-
-      {/* --- FLOATING BUTTON (MOBILE) --- */}
-      <FloatingWhatsAppButton />
 
       {/* --- DRAWER --- */}
       <div
@@ -203,8 +190,7 @@ const NavDrawerSystem = () => {
                 <Link
                   href={link.href || "#"}
                   onClick={toggleDrawer}
-                  // REPLACED: hover:text-[#CEA681] -> hoverGradientText (Arbitrary Tailwind Value)
-                  className={`block w-full py-3 px-1 border-b border-white/20 text-xl font-semibold uppercase text-white ${hoverGradientText}`}
+                  className="block w-full py-3 px-1 border-b border-white/20 text-xl font-semibold uppercase text-white hover:text-[#CEA681] transition duration-200"
                 >
                   {link.name}
                 </Link>
