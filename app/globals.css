@@ -31,3 +31,28 @@
 .grecaptcha-badge {
   display: none !important;
 }
+
+/* --- THE LUXURY PROTOCOL --- */
+
+/* 1. For Backgrounds (Buttons, Sections) */
+.bg-luxury {
+  background: linear-gradient(90deg, #e6c77a 0%, #c9a24d 45%, #a67c2e 100%);
+}
+
+/* 2. For Text (Headings, Spans) */
+.text-luxury {
+  background: linear-gradient(90deg, #e6c77a 0%, #c9a24d 45%, #a67c2e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block; /* Fixes clipping on some browsers */
+}
+
+/* 3. For Borders (Squared elements only) */
+/* Note: Gradient borders on rounded elements are complex in CSS. 
+   For square inputs/divs, use this: */
+.border-luxury {
+  border-width: 1px;
+  border-style: solid;
+  border-image: linear-gradient(90deg, #e6c77a 0%, #c9a24d 45%, #a67c2e 100%) 1;
+}
