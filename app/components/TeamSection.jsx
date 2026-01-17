@@ -92,7 +92,7 @@ const TeamCard = ({ member }) => {
           {/* Title uses the gold color */}
           <p
             className="text-sm font-bold"
-            style={{ color: GOLD_HEX, marginBottom: "1rem" }}
+            style={{ color: "#D1AE63", marginBottom: "1rem" }}
           >
             {member.title}
           </p>
