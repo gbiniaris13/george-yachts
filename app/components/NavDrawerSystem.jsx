@@ -85,15 +85,30 @@ const NavDrawerSystem = () => {
               <Menu className="w-6 h-6" />
             </button>
 
-            {/* LOGO REPLACEMENT: SVG Logo */}
+            {/* RESTORED: Original Text Logo */}
             <div className="shrink-0">
-              <Link href="/">
-                <img
-                  src="/images/logo.svg"
-                  alt="George Yachts"
-                  className="h-30 w-auto" // Adjusted height to fit the h-20 navbar
-                />
-              </Link>
+              <a
+                href="/"
+                className="text-2xl font-extrabold text-indigo-400 tracking-wider "
+              >
+                <div className="flex flex-col items-center">
+                  <span
+                    className={`the text-[10px] drop-shadow-md ${currentTextColor}`}
+                  >
+                    THE
+                  </span>
+                  <span
+                    className={`george-yachts text-base drop-shadow-md ${currentTextColor}`}
+                  >
+                    GEORGE YACHTS
+                  </span>
+                  <span
+                    className={`the text-[10px] drop-shadow-md ${currentTextColor}`}
+                  >
+                    YACHT BROKERAGE
+                  </span>
+                </div>
+              </a>
             </div>
           </div>
 
@@ -150,7 +165,7 @@ const NavDrawerSystem = () => {
       >
         <div className="p-8 h-full flex flex-col overflow-y-auto">
           <div className="flex justify-between items-center pb-6 ">
-            {/* RESTORED: Original Text Logo in Drawer (You only asked to change the Navbar logo) */}
+            {/* RESTORED: Original Text Logo in Drawer */}
             <div className="flex flex-col items-center">
               <span className="the text-white text-[10px]">THE</span>
               <span className="george-yachts text-white text-lg font-bold">
