@@ -12,7 +12,7 @@ const GOLD_HEX = "#7a6200";
 const teamMembers = [
   {
     name: "George P. Biniaris",
-    title: "Founder & Principal Broker — IYBA Certified",
+    title: "Yacht Broker",
     imageUrl: "/images/george.jpg",
     instagram: "george_p.biniaris",
     profileUrl: "/team/george-biniaris", // Example link
