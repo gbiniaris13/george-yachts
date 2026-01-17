@@ -97,7 +97,7 @@ const VideoSection = () => {
                     {/* MOBILE ONLY BUTTON: Styled as a Category Monolith */}
                     <Link
                       href={`${slide.href}#fleet-anchor`} // Appended the anchor ID here
-                      className="lg:hidden inline-block mt-8 px-10 py-5 bg-white/10 backdrop-blur-2xl border border-white/20 text-white font-marcellus uppercase text-xs tracking-[0.4em] hover:bg-white/20 transition-all duration-500"
+                      className="lg:hidden inline-block mt-8 px-10 py-5 bg-transparent border border-white/20 text-white font-marcellus uppercase text-xs tracking-[0.4em] hover:bg-black transition-all duration-500"
                       style={{ borderRadius: 0 }}
                     >
                       {slide.buttonText}
