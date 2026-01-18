@@ -51,7 +51,7 @@ const VideoSection = () => {
     {
       id: 1,
       // title: "CHARTER A YACHT",
-      imageUrl: "/videos/yacht-cruising.mp4",
+      imageUrl: "/videos/yacht-cruising-new.mp4",
       href: "/charter-yacht-greece/",
       buttonText: "View all fleet",
     },
