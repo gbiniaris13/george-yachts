@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { Menu, Instagram, X } from "lucide-react";
 import Link from "next/link";
-import FloatingWhatsAppButton from "./FloatingWhatsAppButton";
 
 const WhatsappIcon = (props) => (
   <svg
@@ -16,19 +15,15 @@ const WhatsappIcon = (props) => (
   </svg>
 );
 
-// --- 1. MAIN NAVLINKS (Flat Structure - No Dropdowns) ---
+// --- 1. MAIN NAVLINKS ---
 const navLinks = [
   { name: "ABOUT GEORGE YACHTS", href: "/about-us/" },
   { name: "OUR CORE TEAM", href: "/team/" },
   { name: "CHARTER A YACHT", href: "/charter-yacht-greece/" },
   { name: "BUY A YACHT", href: "/yachts-for-sale/" },
-  // { name: "VILLAS & REAL ESTATE", href: "/luxury-villas-greece/" },
   { name: "FLY PRIVATE", href: "/private-jet-charter/" },
   { name: "VIP TRANSFERS", href: "/vip-transfers-greece/" },
-  // { name: "FOR PARTNERS / TRAVEL ADVISORS", href: "/" },
-  // { name: "BLOG", href: "/" },
   { name: "FAQ", href: "/faq" },
-  // { name: "CONTACT US", href: "/" },
 ];
 
 // --- 2. LEGAL LINKS ---
@@ -36,11 +31,6 @@ const legalLinks = [
   { name: "Legal", href: "/legal" },
   { name: "Privacy Policy", href: "/privacy-policy" },
 ];
-
-const WHATSAPP_NUMBER = "+17867988788";
-const WHATSAPP_MESSAGE = encodeURIComponent(
-  "I'm interested in chartering a yacht and would like to chat."
-);
 
 const NavDrawerSystem = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -66,7 +56,12 @@ const NavDrawerSystem = () => {
     };
   }, []);
 
-  const currentTextColor = scrolled ? "text-[#02132d]" : "text-white";
+  // UPDATED: Always white text, whether transparent or scrolled (black)
+  const currentTextColor = "text-white";
+
+  // UPDATED: Background logic (Transparent -> Black)
+  const navBackground = scrolled ? "#000000" : "transparent";
+
   const iconClasses = `flex items-center space-x-3 z-10 p-2 rounded-full ${
     scrolled ? "bg-white/10" : "bg-white/10 backdrop-blur-sm"
   }`;
@@ -76,7 +71,7 @@ const NavDrawerSystem = () => {
       <nav
         className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 px-4 sm:px-6 lg:px-8`}
         style={{
-          backgroundColor: scrolled ? "white" : "transparent",
+          backgroundColor: navBackground, // Applied Black Background Logic
         }}
       >
         <div className="flex items-center justify-between h-20 relative">
@@ -84,12 +79,13 @@ const NavDrawerSystem = () => {
           <div className="flex items-center space-x-4">
             <button
               onClick={toggleDrawer}
-              // 🛑 CHANGED: Removed 'lg:hidden' so it is ALWAYS visible
               className={`p-2 rounded-full ${currentTextColor} hover:text-[#CEA681] cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#CEA681] transition duration-150 active:scale-95 drop-shadow-md`}
               aria-label="Toggle menu"
             >
               <Menu className="w-6 h-6" />
             </button>
+
+            {/* RESTORED: Original Text Logo */}
             <div className="shrink-0">
               <a
                 href="/"
@@ -116,25 +112,7 @@ const NavDrawerSystem = () => {
             </div>
           </div>
 
-          {/* --- 2. CENTER BLOCK (Desktop Nav - Filtered) --- */}
-          <nav className="hidden lg:flex items-center space-x-6 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            {navLinks.map((link) => {
-              if (link.name !== "") {
-                return null;
-              }
-
-              return (
-                <Link
-                  key={link.name}
-                  href={link.href || "#"}
-                  className={`text-sm lg:text-lg font-semibold uppercase tracking-wider ${currentTextColor} hover:text-[#CEA681] transition-colors duration-200`}
-                  style={{ fontFamily: "var(--font-marcellus)" }}
-                >
-                  {link.name}
-                </Link>
-              );
-            })}
-          </nav>
+          {/* --- 2. CENTER BLOCK (REMOVED/NUKED) --- */}
 
           {/* --- 3. RIGHT BLOCK (Social Icons + Text) --- */}
           <div className="flex justify-end">
@@ -158,21 +136,16 @@ const NavDrawerSystem = () => {
               >
                 <WhatsappIcon className="w-5 h-5" />
                 <span
-                  className="hidden lg:inline-block text-sm font-semibold uppercase tracking-wider whitespace-nowrap"
+                  className="hidden lg:inline-block text-xs font-bold uppercase tracking-widest whitespace-nowrap"
                   style={{ fontFamily: "var(--font-marcellus)" }}
-                >
-                  Speak with George
-                </span>
+                ></span>
               </a>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* --- 4. FLOATING BUTTON (Mobile Only) --- */}
-      {/* <FloatingWhatsAppButton /> */}
-
-      {/* --- DRAWER (Unchanged) --- */}
+      {/* --- DRAWER --- */}
       <div
         className={`fixed inset-0 bg-black transition-opacity duration-300 z-40 ${
           isDrawerOpen
@@ -192,6 +165,7 @@ const NavDrawerSystem = () => {
       >
         <div className="p-8 h-full flex flex-col overflow-y-auto">
           <div className="flex justify-between items-center pb-6 ">
+            {/* RESTORED: Original Text Logo in Drawer */}
             <div className="flex flex-col items-center">
               <span className="the text-white text-[10px]">THE</span>
               <span className="george-yachts text-white text-lg font-bold">

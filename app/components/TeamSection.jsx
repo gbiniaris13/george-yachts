@@ -12,7 +12,7 @@ const GOLD_HEX = "#7a6200";
 const teamMembers = [
   {
     name: "George P. Biniaris",
-    title: "Founder & Principal Broker — IYBA Certified",
+    title: "Yacht Broker",
     imageUrl: "/images/george.jpg",
     instagram: "george_p.biniaris",
     profileUrl: "/team/george-biniaris", // Example link
@@ -92,7 +92,7 @@ const TeamCard = ({ member }) => {
           {/* Title uses the gold color */}
           <p
             className="text-sm font-bold"
-            style={{ color: GOLD_HEX, marginBottom: "1rem" }}
+            style={{ color: "#D1AE63", marginBottom: "1rem" }}
           >
             {member.title}
           </p>

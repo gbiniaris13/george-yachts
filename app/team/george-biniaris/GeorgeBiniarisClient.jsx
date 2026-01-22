@@ -21,8 +21,7 @@ const GeorgeBiniarisClient = () => {
       {/* 1. The Split-Screen Profile Section (from before) */}
       <ProfileSection
         heading="George P. Biniaris"
-        subtitle="CEO Head Broker IYBA member"
-        paragraph="Founder and CEO of GEORGE YACHTS"
+        subtitle="Yacht Broker"
         imageUrl="/images/george.jpg"
         altText="Portrait of George Biniaris"
         instagramUrl="https://instagram.com/george_p.biniaris"

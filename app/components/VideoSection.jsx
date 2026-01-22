@@ -43,14 +43,15 @@ const BackgroundVideo = ({ src, poster }) => {
 };
 
 const VideoSection = () => {
-  const HEIGHT_CLASSES = "h-[calc(100dvh-292px)]";
+  // CHANGED: Set to 100dvh (Dynamic Viewport Height) for full screen on all devices
+  const HEIGHT_CLASSES = "h-[100dvh]";
   const isVideo = (url) => url && url.toLowerCase().endsWith(".mp4");
 
   const slideData = [
     {
       id: 1,
       // title: "CHARTER A YACHT",
-      imageUrl: "/videos/yacht-cruising.mp4",
+      imageUrl: "/videos/yacht-cruising-new.mp4",
       href: "/charter-yacht-greece/",
       buttonText: "View all fleet",
     },
@@ -94,10 +95,9 @@ const VideoSection = () => {
                     </h1>
 
                     {/* MOBILE ONLY BUTTON: Styled as a Category Monolith */}
-                    {/* MOBILE ONLY BUTTON: Styled as a Category Monolith */}
                     <Link
                       href={`${slide.href}#fleet-anchor`} // Appended the anchor ID here
-                      className="lg:hidden inline-block mt-8 px-10 py-5 bg-white/10 backdrop-blur-2xl border border-white/20 text-white font-marcellus uppercase text-xs tracking-[0.4em] hover:bg-white/20 transition-all duration-500"
+                      className="lg:hidden inline-block mt-8 px-10 py-5 bg-transparent border border-white/20 text-white font-marcellus uppercase text-xs tracking-[0.4em] hover:bg-black transition-all duration-500"
                       style={{ borderRadius: 0 }}
                     >
                       {slide.buttonText}

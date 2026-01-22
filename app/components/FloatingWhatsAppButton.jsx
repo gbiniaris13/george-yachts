@@ -13,27 +13,37 @@ const WhatsappIcon = (props) => (
   </svg>
 );
 
-const WHATSAPP_NUMBER = "+17867988788";
-const WHATSAPP_MESSAGE = encodeURIComponent(
-  "I'm interested in chartering a yacht and would like to chat."
-);
-
 const FloatingWhatsAppButton = () => {
   return (
     <a
-      // DIRECT LINK: No variables, no complex encoding. Just the raw connection.
       href="https://wa.me/17867988798"
       target="_blank"
       rel="noopener noreferrer"
-      // FIX: Changed z-9999 to z-[9999] (valid Tailwind) so it actually stays on top
-      // FIX: Ensure 'bottom' is valid (standard Tailwind often stops before 50, using arbitrary for safety if you want it high, or bottom-6 for standard corner)
-      className="lg:hidden fixed bottom-6 right-3 z-9999 flex items-center space-x-2 bg-[#25D366] text-white px-4 py-3 rounded-full shadow-lg transition-all duration-300 hover:bg-[#128C7E]"
-      style={{ fontFamily: "var(--font-marcellus)" }}
+      className="lg:hidden fixed bottom-6 right-6 z-9999 group flex items-center bg-[#0a0a0a] border border-[#DAA520] shadow-[0_5px_30px_rgba(0,0,0,0.8)] transition-all duration-300 hover:scale-105 active:scale-95 overflow-hidden"
+      style={{
+        borderRadius: "0px",
+        padding: "12px 18px",
+      }}
     >
-      <WhatsappIcon className="w-6 h-6" />
-      <span className="text-sm font-bold uppercase tracking-wide">
-        Speak with George
+      {/* 1. Live Beacon */}
+      <div className="relative mr-4 flex h-2 w-2">
+        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DAA520] opacity-75"></span>
+        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#DAA520]"></span>
+      </div>
+
+      {/* 2. Minimal Text */}
+      <span
+        className="text-[10px] font-bold text-white uppercase tracking-[0.25em] mr-4 group-hover:text-[#DAA520] transition-colors duration-300"
+        style={{ fontFamily: "var(--font-marcellus)" }}
+      >
+        Concierge
       </span>
+
+      {/* 3. Icon */}
+      <WhatsappIcon className="w-4 h-4 text-white group-hover:text-[#DAA520] transition-colors duration-300" />
+
+      {/* 4. Hover Shine */}
+      <div className="absolute inset-0 bg-linaer-to-r from-transparent via-[#DAA520]/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
     </a>
   );
 };

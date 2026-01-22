@@ -32,8 +32,7 @@ const YachtSwiper = ({ yachtData }) => {
         yachtName={yacht.name}
       />
 
-      {/* 1. THE CINEMATIC BACKGROUND SLIDER */}
-      {/* On mobile, we reduce height slightly to 50vh so the scroll to details is faster */}
+      {/* 1. SLIDER (Unchanged) */}
       <div className="relative h-[50vh] lg:h-[85vh] w-full overflow-hidden border-y border-white/5 order-1">
         <Swiper
           modules={[Navigation, Pagination, EffectFade, Autoplay]}
@@ -56,7 +55,6 @@ const YachtSwiper = ({ yachtData }) => {
           ))}
         </Swiper>
 
-        {/* Minimalist Nav - Desktop Only */}
         <div className="hidden lg:flex absolute bottom-10 left-[10%] z-40 items-center gap-12">
           <div className="flex items-center gap-4">
             <span className="h-px w-20 bg-white/20"></span>
@@ -67,12 +65,11 @@ const YachtSwiper = ({ yachtData }) => {
         </div>
       </div>
 
-      {/* 2. THE COMMAND PANE */}
-      {/* Logic: relative on mobile (follows photo), absolute on desktop (floats on photo) */}
+      {/* 2. COMMAND PANE */}
       <div className="relative lg:absolute lg:top-1/2 lg:right-[5%] lg:lg:right-[10%] lg:-translate-y-1/2 z-30 w-full lg:max-w-[500px] px-0 lg:px-6 order-2">
         <div className="bg-[#0a0a0a]/40 lg:bg-[#0a0a0a]/60 backdrop-blur-2xl border border-white/10 p-8 lg:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.5)] relative overflow-hidden">
-          {/* Top Gold Accent Line */}
           <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-[#DAA520] via-[#8a6d21] to-transparent"></div>
+
           <div className="mb-10">
             <h2 className="text-4xl lg:text-6xl font-marcellus text-white uppercase tracking-tighter leading-none">
               {yacht.name}
@@ -81,24 +78,23 @@ const YachtSwiper = ({ yachtData }) => {
               Vessel Specification
             </p>
           </div>
+
           <div className="grid grid-cols-1 gap-6 mb-10">
             {specs.map((spec, i) => (
               <div
                 key={i}
                 className="grid grid-cols-12 gap-2 border-b border-white/5 pb-3 items-start"
               >
-                {/* Label: Takes up 4 columns out of 12 */}
                 <span className="col-span-4 text-white/40 text-[9px] tracking-[0.3em] font-sans uppercase pt-1">
                   {spec.label}
                 </span>
-
-                {/* Value: Takes up 8 columns and wraps naturally */}
                 <span className="col-span-8 text-white font-marcellus text-sm uppercase tracking-widest text-right leading-relaxed">
                   {spec.value}
                 </span>
               </div>
             ))}
           </div>
+
           <div className="flex flex-col gap-6">
             <div>
               <span className="text-white/30 text-[9px] tracking-[0.3em] uppercase">
@@ -109,14 +105,19 @@ const YachtSwiper = ({ yachtData }) => {
               </p>
             </div>
 
+            {/* --- BUTTON WITH PERMANENT GRADIENT --- */}
             <button
               onClick={() => setIsPopupOpen(true)}
-              className="w-full bg-[#DAA520] hover:bg-white text-black py-5 text-xs font-sans font-bold tracking-[0.4em] uppercase transition-all duration-500 shadow-[0_0_30px_rgba(218,165,32,0.2)] hover:shadow-[0_0_50px_rgba(255,255,255,0.2)]"
+              className="w-full text-black py-5 text-xs font-sans font-bold tracking-[0.4em] uppercase shadow-[0_0_30px_rgba(218,165,32,0.2)] hover:shadow-[0_0_50px_rgba(255,255,255,0.2)] hover:brightness-110 transition-all duration-300"
+              style={{
+                background:
+                  "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
+              }}
             >
               Plan this charter
             </button>
+            {/* -------------------------------------- */}
 
-            {/* ELEGANT PDF DOWNLOAD BUTTON - Integrated Carefully */}
             {yacht.brochure && (
               <a
                 href={yacht.brochure}
