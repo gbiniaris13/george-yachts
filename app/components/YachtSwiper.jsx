@@ -8,15 +8,15 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 
-// --- LIGHTBOX IMPORTS ---
+// --- GALLERY LIBRARY ---
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
-// Optional Plugins for "Best of Best" feel (Zoom & Thumbnails)
+// Plugins
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
-// ------------------------
+// -----------------------
 
 import { urlFor } from "@/lib/sanity";
 import EnquirePopup from "./EnquirePopup";
@@ -24,14 +24,17 @@ import EnquirePopup from "./EnquirePopup";
 const YachtSwiper = ({ yachtData }) => {
   if (!yachtData) return null;
 
+  // 1. LOCAL STATE
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-  // --- LIGHTBOX STATE ---
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  // ----------------------
 
   const yacht = yachtData;
+
+  // --- CRITICAL FIX: Filter out images with missing assets first ---
+  // This prevents the "Unable to resolve image URL from source (null)" error
+  // and ensures the Slider and Lightbox indexes always match.
+  const validImages = yacht.images?.filter((img) => img?.asset) || [];
 
   const specs = [
     { label: "LENGTH", value: yacht.length },
@@ -40,10 +43,13 @@ const YachtSwiper = ({ yachtData }) => {
     { label: "REGION", value: yacht.cruisingRegion },
   ];
 
-  // Prepare slides for the Lightbox (High Res)
-  const lightboxSlides = yacht.images?.map((image) => ({
-    src: urlFor(image.asset).width(2400).url(), // 2400px for high quality full screen
+  // Prepare slides for the Lightbox using ONLY valid images
+  const lightboxSlides = validImages.map((image) => ({
+    src: urlFor(image.asset).width(2400).url(),
   }));
+
+  // If no valid images exist, we can render a placeholder or return null to avoid empty white space
+  if (validImages.length === 0) return null;
 
   return (
     <section className="relative w-full mb-20 lg:mb-32 group flex flex-col">
@@ -53,7 +59,7 @@ const YachtSwiper = ({ yachtData }) => {
         yachtName={yacht.name}
       />
 
-      {/* --- THE LIGHTBOX COMPONENT --- */}
+      {/* --- LIGHTBOX COMPONENT --- */}
       <Lightbox
         open={lightboxOpen}
         close={() => setLightboxOpen(false)}
@@ -63,7 +69,7 @@ const YachtSwiper = ({ yachtData }) => {
         styles={{ container: { backgroundColor: "rgba(0, 0, 0, .95)" } }}
       />
 
-      {/* 1. SLIDER */}
+      {/* 3. SLIDER SECTION */}
       <div className="relative h-[50vh] lg:h-[85vh] w-full overflow-hidden border-y border-white/5 order-1">
         <Swiper
           modules={[Navigation, Pagination, EffectFade, Autoplay]}
@@ -72,10 +78,10 @@ const YachtSwiper = ({ yachtData }) => {
           loop={true}
           className="h-full w-full"
         >
-          {yacht.images?.map((image, index) => (
+          {validImages.map((image, index) => (
             <SwiperSlide key={index}>
               <div
-                className="relative h-full w-full cursor-pointer"
+                className="relative h-full w-full cursor-zoom-in"
                 onClick={() => {
                   setLightboxIndex(index);
                   setLightboxOpen(true);
@@ -87,13 +93,6 @@ const YachtSwiper = ({ yachtData }) => {
                   className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-10000 ease-out"
                 />
                 <div className="absolute inset-0 bg-linear-to-r from-[#020617] via-transparent to-[#020617]/40"></div>
-
-                {/* Visual cue for desktop users that this is clickable */}
-                <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center bg-black/20 pointer-events-none">
-                  <span className="text-white font-marcellus tracking-widest text-sm uppercase border border-white/50 px-4 py-2 backdrop-blur-sm">
-                    View Gallery
-                  </span>
-                </div>
               </div>
             </SwiperSlide>
           ))}
@@ -109,7 +108,7 @@ const YachtSwiper = ({ yachtData }) => {
         </div>
       </div>
 
-      {/* 2. COMMAND PANE */}
+      {/* 4. COMMAND PANE */}
       <div className="relative lg:absolute lg:top-1/2 lg:right-[5%] lg:lg:right-[10%] lg:-translate-y-1/2 z-30 w-full lg:max-w-[500px] px-0 lg:px-6 order-2">
         <div className="bg-[#0a0a0a]/40 lg:bg-[#0a0a0a]/60 backdrop-blur-2xl border border-white/10 p-8 lg:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.5)] relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-[#DAA520] via-[#8a6d21] to-transparent"></div>
@@ -149,6 +148,7 @@ const YachtSwiper = ({ yachtData }) => {
               </p>
             </div>
 
+            {/* BUTTON: Triggers Local State Popup */}
             <button
               onClick={() => setIsPopupOpen(true)}
               className="w-full text-black py-5 text-xs font-sans font-bold tracking-[0.4em] uppercase shadow-[0_0_30px_rgba(218,165,32,0.2)] hover:shadow-[0_0_50px_rgba(255,255,255,0.2)] hover:brightness-110 transition-all duration-300"
