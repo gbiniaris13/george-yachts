@@ -12,14 +12,15 @@
     "@sanity/client": "^7.12.0",
     "axios": "^1.12.2",
     "lucide-react": "^0.545.0",
-    "next": "15.5.9",
+    "next": "^15.5.10",
     "next-sanity-image": "^6.2.0",
     "nodemailer": "^7.0.9",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-fast-marquee": "^1.6.5",
     "react-google-recaptcha": "^3.1.0",
-    "swiper": "^12.0.3"
+    "swiper": "^12.0.3",
+    "yet-another-react-lightbox": "^3.28.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

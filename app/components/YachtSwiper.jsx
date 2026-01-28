@@ -1,12 +1,22 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, EffectFade, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
+
+// --- LIGHTBOX IMPORTS ---
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+
+// Optional Plugins for "Best of Best" feel (Zoom & Thumbnails)
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
+// ------------------------
 
 import { urlFor } from "@/lib/sanity";
 import EnquirePopup from "./EnquirePopup";
@@ -15,6 +25,12 @@ const YachtSwiper = ({ yachtData }) => {
   if (!yachtData) return null;
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  // --- LIGHTBOX STATE ---
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  // ----------------------
+
   const yacht = yachtData;
 
   const specs = [
@@ -24,6 +40,11 @@ const YachtSwiper = ({ yachtData }) => {
     { label: "REGION", value: yacht.cruisingRegion },
   ];
 
+  // Prepare slides for the Lightbox (High Res)
+  const lightboxSlides = yacht.images?.map((image) => ({
+    src: urlFor(image.asset).width(2400).url(), // 2400px for high quality full screen
+  }));
+
   return (
     <section className="relative w-full mb-20 lg:mb-32 group flex flex-col">
       <EnquirePopup
@@ -32,7 +53,17 @@ const YachtSwiper = ({ yachtData }) => {
         yachtName={yacht.name}
       />
 
-      {/* 1. SLIDER (Unchanged) */}
+      {/* --- THE LIGHTBOX COMPONENT --- */}
+      <Lightbox
+        open={lightboxOpen}
+        close={() => setLightboxOpen(false)}
+        index={lightboxIndex}
+        slides={lightboxSlides}
+        plugins={[Zoom, Thumbnails]}
+        styles={{ container: { backgroundColor: "rgba(0, 0, 0, .95)" } }}
+      />
+
+      {/* 1. SLIDER */}
       <div className="relative h-[50vh] lg:h-[85vh] w-full overflow-hidden border-y border-white/5 order-1">
         <Swiper
           modules={[Navigation, Pagination, EffectFade, Autoplay]}
@@ -43,19 +74,32 @@ const YachtSwiper = ({ yachtData }) => {
         >
           {yacht.images?.map((image, index) => (
             <SwiperSlide key={index}>
-              <div className="relative h-full w-full">
+              <div
+                className="relative h-full w-full cursor-pointer"
+                onClick={() => {
+                  setLightboxIndex(index);
+                  setLightboxOpen(true);
+                }}
+              >
                 <img
                   src={urlFor(image.asset).width(1920).height(1080).url()}
                   alt={yacht.name}
                   className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-10000 ease-out"
                 />
                 <div className="absolute inset-0 bg-linear-to-r from-[#020617] via-transparent to-[#020617]/40"></div>
+
+                {/* Visual cue for desktop users that this is clickable */}
+                <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center bg-black/20 pointer-events-none">
+                  <span className="text-white font-marcellus tracking-widest text-sm uppercase border border-white/50 px-4 py-2 backdrop-blur-sm">
+                    View Gallery
+                  </span>
+                </div>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
 
-        <div className="hidden lg:flex absolute bottom-10 left-[10%] z-40 items-center gap-12">
+        <div className="hidden lg:flex absolute bottom-10 left-[10%] z-40 items-center gap-12 pointer-events-none">
           <div className="flex items-center gap-4">
             <span className="h-px w-20 bg-white/20"></span>
             <p className="text-white/40 font-marcellus text-xs tracking-widest">
@@ -105,7 +149,6 @@ const YachtSwiper = ({ yachtData }) => {
               </p>
             </div>
 
-            {/* --- BUTTON WITH PERMANENT GRADIENT --- */}
             <button
               onClick={() => setIsPopupOpen(true)}
               className="w-full text-black py-5 text-xs font-sans font-bold tracking-[0.4em] uppercase shadow-[0_0_30px_rgba(218,165,32,0.2)] hover:shadow-[0_0_50px_rgba(255,255,255,0.2)] hover:brightness-110 transition-all duration-300"
@@ -116,7 +159,6 @@ const YachtSwiper = ({ yachtData }) => {
             >
               Plan this charter
             </button>
-            {/* -------------------------------------- */}
 
             {yacht.brochure && (
               <a
