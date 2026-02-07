@@ -13,7 +13,7 @@ const features = [
   {
     title: "BOUTIQUE SERVICE | GLOBAL STANDARDS",
     paragraph:
-      "Based in Athens and operating across the Mediterranean, George Yachts brings a new generation of professionalism to luxury yachting. We specialize in crewed motor yacht charters, sales, and charter management — delivering seamless service and clear communication every step of the way. Whether you’re chartering, buying, or trusting us with your yacht’s representation, expect nothing less than precision, discretion, and genuine passion for the sea.",
+      "Focusing on Mediterranean excellence and operating internationally, George Yachts brings a new generation of professionalism to luxury yachting. We specialize in crewed motor yacht charters, sales, and charter management — delivering seamless service and clear communication every step of the way. Whether you’re chartering, buying, or trusting us with your yacht’s representation, expect nothing less than precision, discretion, and genuine passion for the sea.",
     imageSrc: "/images/yacht-2.jpeg",
   },
   {

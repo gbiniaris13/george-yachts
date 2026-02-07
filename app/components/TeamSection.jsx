@@ -19,7 +19,7 @@ const teamMembers = [
   },
   {
     name: "George Katrantzos",
-    title: "U.S. Partner & Sales Director, George Yachts",
+    title: "Luxury Travel Liaison & Strategic Associate (U.S.)",
     imageUrl: "/images/george-katrantzos.jpg",
     instagram: "helllo.gk",
     profileUrl: "/team/george-katrantzos", // No link

@@ -8,9 +8,9 @@ import ContactFormSection from "@/components/ContactFormSection";
 
 // Mock data for the paragraphs
 const georgeParagraphs = [
-  "Founder of George Yachts and member of the International Yacht Brokers Association (IYBA), George specializes in high-end motor yacht charters across Greece and the Mediterranean.",
-  "With a background in luxury hospitality, leadership and client relations, he approaches every charter with discretion, precision and a deep understanding of HNW expectations.",
-  "Based in Athens, trusted by international families and private brokers from the U.S., U.K. & Middle East.",
+  "Managing Broker of George Yachts and member of the International Yacht Brokers Association (IYBA), George specializes in high-end motor yacht charters across the Mediterranean.",
+  "With an extensive background in luxury hospitality, leadership, and client relations, he approaches every charter with discretion, precision, and a deep understanding of UHNWI expectations.",
+  "Strategically focused on the East Med—including the Ionian, Cyclades, and Saronic islands—George is trusted by international families and private brokers from the U.S., U.K., and Middle East. He bridges local expertise with international operational standards to deliver seamless maritime experiences.",
   "“Smooth seas & sharp suits.”",
 ];
 
@@ -21,7 +21,7 @@ const GeorgeBiniarisClient = () => {
       {/* 1. The Split-Screen Profile Section (from before) */}
       <ProfileSection
         heading="George P. Biniaris"
-        subtitle="Yacht Broker"
+        subtitle="Managing Broker"
         imageUrl="/images/george.jpg"
         altText="Portrait of George Biniaris"
         instagramUrl="https://instagram.com/george_p.biniaris"

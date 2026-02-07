@@ -9,8 +9,8 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const links = [
-    { name: "PRIVACY POLICY", href: "/privacy" },
-    { name: "COOKIE POLICY", href: "/cookies" },
+    { name: "PRIVACY POLICY", href: "/privacy-policy" },
+    { name: "COOKIE POLICY", href: "/cookie-policy" },
   ];
 
   return (

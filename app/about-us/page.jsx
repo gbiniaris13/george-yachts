@@ -18,7 +18,7 @@ const AboutUsPage = () => {
     <div className="min-h-screen bg-gray-100 font-sans">
       <AboutUs
         heading="ABOUT US"
-        subtitle="BOUTIQUE YACHT BROKERAGE FROM ATHENS"
+        subtitle="ABOUT US BOUTIQUE YACHT BROKERAGE & MEDITERRANEAN EXPERTISE"
         paragraph="360° luxury, one trusted team."
         imageUrl="/images/about-us-section.jpg"
         altText="A luxury private jet on a runway at sunset"
