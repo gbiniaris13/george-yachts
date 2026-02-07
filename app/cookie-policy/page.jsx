@@ -1,9 +1,9 @@
-import Footer from "../components/Footer"; // Kept your requested path
+import Footer from "../components/Footer";
 
 export const metadata = {
   title: "Cookie Policy | George Yachts",
   description:
-    "Transparency regarding our use of digital tracking technologies.",
+    "We use advanced digital technologies to ensure your experience on George Yachts is seamless, personalized, and secure.",
 };
 
 // This is a Helper Component (Capitalized!)
@@ -50,7 +50,7 @@ const CookiePolicy = () => {
             tailored digital experience.
           </p>
           <p>
-            Under the General Data Protection Regulation (GDPR), we
+            Under international data protection standards (including GDPR), we
             differentiate between cookies that are strictly necessary for the
             technical operation of the site and those used for analytics or
             marketing purposes.
@@ -66,64 +66,55 @@ const CookiePolicy = () => {
           <p>
             <em>
               Note: These cookies do not store personally identifiable
-              information and do not require user consent under GDPR.
+              information and are active by default to ensure site integrity.
             </em>
           </p>
         </Section>
 
-        <Section title="3. Analytics & Performance (Google)">
+        <Section title="3. Analytics & Performance">
           <p>
-            We use <strong>Google Analytics</strong> to understand how our
-            discerning clientele interacts with our website. This helps us
-            identify which yachts are most popular, how users navigate our
-            fleet, and where we can improve user experience.
-          </p>
-          <p>
-            The data collected is aggregated and anonymized. It includes metrics
-            such as session duration, bounce rates, and device types.
+            We use Google Analytics to understand how our discerning clientele
+            interacts with our platform. This helps us identify which yachts and
+            destinations are most popular, how users navigate our fleet, and
+            where we can improve the user experience. The data collected is
+            aggregated and anonymized.
           </p>
         </Section>
 
         <Section title="4. Marketing & CRM Technologies">
           <p>
-            To provide a bespoke service, we utilize specific third-party tools
-            that may set cookies or use similar tracking technologies:
+            To provide a bespoke service, we utilize specific professional tools
+            that may set cookies:
           </p>
           <ul className="list-disc pl-5 space-y-2 mt-4 text-white/50">
             <li>
               <strong className="text-white">Google Ads:</strong> Used to
-              deliver relevant advertisements to you on other platforms based on
+              deliver relevant opportunities to you on other platforms based on
               your interest in our fleet.
             </li>
             <li>
               <strong className="text-white">Apollo.io:</strong> We use this
-              sales intelligence software to maintain accurate client records
-              and ensure our communications are reaching the correct
-              individuals. Apollo may use tracking technologies to verify
-              engagement with our emails or website.
+              solution to maintain accurate professional records and ensure our
+              communications reach the correct individuals.
             </li>
           </ul>
         </Section>
 
         <Section title="5. Managing Your Preferences">
           <p>
-            You have the right to accept or reject cookies. Most web browsers
-            automatically accept cookies, but you can usually modify your
-            browser setting to decline cookies if you prefer.
-          </p>
-          <p>
+            You have the right to accept or reject non-essential cookies. You
+            can modify your browser settings to decline cookies if you prefer.
             Additionally, upon your first visit to George Yachts, you will be
             presented with a Cookie Consent Banner allowing you to opt-in or
-            opt-out of non-essential cookies. You may withdraw this consent at
-            any time.
+            opt-out.
           </p>
         </Section>
 
         <Section title="6. Updates to This Policy">
           <p>
             We may update our Cookie Policy from time to time to reflect changes
-            in technology or legislation. Any changes will be posted on this
-            page with an updated revision date.
+            in technology or international legislation. Any changes will be
+            posted on this page with an updated revision date.
           </p>
         </Section>
 
@@ -131,12 +122,28 @@ const CookiePolicy = () => {
           <p>
             If you have any questions regarding our use of cookies or wish to
             exercise your data rights, please contact our Data Protection
-            Officer at:
+            Officer:
           </p>
-          <p className="mt-4 text-white">
-            <strong>Email:</strong> info@georgeyachts.com
-            <br />
-            <strong>Address:</strong> Athens, Greece
+          <p className="mt-6 text-white space-y-2">
+            <div>
+              <strong>Legal Entity:</strong> GEORGE YACHTS BROKERAGE HOUSE LLC
+            </div>
+            <div>
+              <strong>Email:</strong>{" "}
+              <a
+                href="mailto:george@georgeyachts.com"
+                className="hover:text-[#DAA520] transition-colors"
+              >
+                george@georgeyachts.com
+              </a>
+            </div>
+            <div>
+              <strong>Registered Office:</strong> 30 N Gould St Ste R, Sheridan,
+              WY 82801, USA
+            </div>
+            <div>
+              <strong>Operational Scope:</strong> Mediterranean Operations
+            </div>
           </p>
         </Section>
 
@@ -148,7 +155,6 @@ const CookiePolicy = () => {
         </div>
       </div>
 
-      {/* --- ADDED FOOTER HERE --- */}
       <Footer />
     </div>
   );

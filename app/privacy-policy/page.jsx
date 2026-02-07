@@ -3,7 +3,7 @@ import Footer from "../components/Footer";
 export const metadata = {
   title: "Privacy Policy | George Yachts",
   description:
-    "Our commitment to confidentiality, data protection, and digital privacy.",
+    "George Yachts Brokerage House LLC commitment to confidentiality, data protection, and digital privacy.",
 };
 
 // This Component is perfectly valid.
@@ -32,9 +32,10 @@ const PrivacyPolicy = () => {
             Privacy Policy
           </h1>
           <p className="text-white/50 max-w-2xl mx-auto leading-relaxed font-light">
-            Your privacy is paramount. This document outlines how George Yachts
-            collects, protects, and utilizes your data to provide a bespoke
-            luxury experience.
+            George Yachts Brokerage House LLC is committed to protecting your
+            privacy. This document outlines how we collect, protect, and utilize
+            your data to provide a bespoke luxury experience in accordance with
+            Wyoming state and federal regulations.
           </p>
         </div>
 
@@ -46,11 +47,12 @@ const PrivacyPolicy = () => {
       <div className="container mx-auto max-w-3xl px-6 py-24">
         <Section title="1. Introduction">
           <p>
-            George Yachts ("we," "us," or "our") is committed to protecting your
-            privacy. This Privacy Policy explains how we collect, use, disclose,
-            and safeguard your information when you visit our website. By
-            accessing or using our services, you consent to the data practices
-            described in this policy.
+            George Yachts Brokerage House LLC ("we," "us," or "our") is
+            committed to protecting your privacy. This Privacy Policy explains
+            how we collect, use, disclose, and safeguard your information when
+            you visit our website. As a Wyoming-registered entity, we operate in
+            accordance with applicable state and federal regulations to provide
+            a bespoke luxury experience.
           </p>
         </Section>
 
@@ -126,11 +128,27 @@ const PrivacyPolicy = () => {
             to update, delete, or change any Personal Information we hold,
             please contact us at:
           </p>
-          <p className="mt-4 text-white">
-            <strong>Email:</strong> info@georgeyachts.com
-            <br />
-            <strong>Location:</strong> Athens, Greece
-          </p>
+          <div className="mt-6 text-white space-y-2">
+            <div>
+              <strong>Legal Entity:</strong> GEORGE YACHTS BROKERAGE HOUSE LLC
+            </div>
+            <div>
+              <strong>Email:</strong>{" "}
+              <a
+                href="mailto:george@georgeyachts.com"
+                className="hover:text-[#DAA520] transition-colors"
+              >
+                george@georgeyachts.com
+              </a>
+            </div>
+            <div>
+              <strong>Registered Office Address:</strong> 30 N Gould St Ste R,
+              Sheridan, WY 82801, USA
+            </div>
+            <div>
+              <strong>Operational Scope:</strong> Mediterranean Operations
+            </div>
+          </div>
         </Section>
 
         {/* Footer Note */}
