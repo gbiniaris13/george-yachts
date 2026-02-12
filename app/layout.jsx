@@ -8,16 +8,11 @@ import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
 const marcellus = Marcellus({
   subsets: ["latin"],
   weight: "400",
@@ -32,7 +27,23 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${marcellus.variable} antialiased`}
       >
-        {/* Apollo.io Website Tracker */}
+        {/* 1. Critical External Scripts (Load Early) */}
+        {recaptchaKey && (
+          <Script
+            id="recaptcha-script"
+            src={`https://www.google.com/recaptcha/enterprise.js?render=${recaptchaKey}`}
+            strategy="beforeInteractive"
+          />
+        )}
+
+        {/* 2. Page Content */}
+        <NavDrawerSystem />
+        {children}
+
+        {/* 3. Analytics & Tracking (Load after content is interactive) */}
+        <GoogleAnalytics gaId="G-CM483Z0JT5" />
+
+        {/* Apollo.io Tracker */}
         <Script id="apollo-tracker" strategy="afterInteractive">
           {`
             function initApollo() {
@@ -49,27 +60,20 @@ export default function RootLayout({ children }) {
             initApollo();
           `}
         </Script>
-        {recaptchaKey && (
-          <Script
-            id="recaptcha-script"
-            src={`https://www.google.com/recaptcha/enterprise.js?render=${recaptchaKey}`}
-            strategy="beforeInteractive"
-          />
-        )}
-        <Script id="tawk-api-setup" strategy="beforeInteractive">
+
+        {/* Smartsupp Setup */}
+        <Script id="smartsupp-init" strategy="lazyOnload">
           {`
-            var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+            var _smartsupp = _smartsupp || {};
+            _smartsupp.key = '100ac95e1a30b01edc4750b15cfd20a7002dcfae';
+            window.smartsupp||(function(d) {
+              var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+              s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+              c.type='text/javascript';c.charset='utf-8';c.async=true;
+              c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+            })(document);
           `}
         </Script>
-        <Script
-          id="tawk-to-script"
-          src="https://embed.tawk.to/68f8bfda482c1e1953b81bb5/1j85qqrm6"
-          strategy="afterInteractive"
-          charSet="UTF-8"
-          crossOrigin="*"
-        />
-        <NavDrawerSystem /> {children}
-        <GoogleAnalytics gaId="G-CM483Z0JT5" />
       </body>
     </html>
   );
