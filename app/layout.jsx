@@ -56,6 +56,18 @@ export default function RootLayout({ children }) {
             strategy="beforeInteractive"
           />
         )}
+        <Script id="tawk-api-setup" strategy="beforeInteractive">
+          {`
+            var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+          `}
+        </Script>
+        <Script
+          id="tawk-to-script"
+          src="https://embed.tawk.to/68f8bfda482c1e1953b81bb5/1j85qqrm6"
+          strategy="afterInteractive"
+          charSet="UTF-8"
+          crossOrigin="*"
+        />
         <NavDrawerSystem /> {children}
         <GoogleAnalytics gaId="G-CM483Z0JT5" />
       </body>
