@@ -74,6 +74,15 @@ export default function RootLayout({ children }) {
             })(document);
           `}
         </Script>
+
+        {/* Leadsy AI Tracker */}
+        <Script
+          id="vtag-ai-js"
+          src="https://r2.leadsy.ai/tag.js"
+          strategy="afterInteractive"
+          data-pid="6aeJg49QjgxMfguK"
+          data-version="062024"
+        />
       </body>
     </html>
   );
