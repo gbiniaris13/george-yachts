@@ -68,6 +68,53 @@ const getPriceValue = (priceStr) => {
   return parseInt(cleanNumString, 10);
 };
 
+// --- SCHEMA GENERATOR ---
+const generateYachtsSchema = (yachts) => {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: yachts.map((yacht, index) => {
+      const parsedPrice = getPriceValue(yacht.weeklyRatePrice);
+      const slugString =
+        yacht.slug?.current ||
+        yacht.name
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "");
+      const imageUrl = yacht.images?.[0]?.asset?.url || "";
+
+      const itemData = {
+        "@type": ["Product", "Vehicle"],
+        name: yacht.name,
+        description: `${yacht.subtitle || yacht.category}. MYBA Charter Agreement. Sleeps up to ${yacht.sleeps || "12"} guests. Cruising region: ${yacht.cruisingRegion || "Mediterranean"}. Length: ${yacht.length || "TBA"}.`,
+        image: imageUrl,
+        brand: {
+          "@type": "Brand",
+          name: "George Yachts",
+        },
+      };
+
+      // Only attach pricing if it's an actual number, otherwise Google gets mad at fake prices
+      if (parsedPrice !== 999999999) {
+        itemData.offers = {
+          "@type": "Offer",
+          price: parsedPrice,
+          priceCurrency: "EUR",
+          availability: "https://schema.org/InStock",
+          url: `https://georgeyachts.com/charter-yacht-greece#${slugString}`,
+        };
+      }
+
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        item: itemData,
+      };
+    }),
+  };
+};
+
 const YachtCharterPage = async () => {
   let yachts = [];
   try {
@@ -83,8 +130,16 @@ const YachtCharterPage = async () => {
     console.error("Failed to fetch yachts:", error);
   }
 
+  // Generate Schema from the fetched Sanity data
+  const jsonLdSchema = generateYachtsSchema(yachts);
+
   return (
     <div className="min-h-screen bg-[#020617]">
+      {/* INJECT JSON-LD SCHEMA FOR GOOGLE */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
+      />
       <AboutUs
         heading="CHARTER"
         subtitle="A YACHT"
