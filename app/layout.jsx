@@ -27,6 +27,15 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${marcellus.variable} antialiased`}
       >
+        {/* Cookiebot Consent Management (Load First for Auto-Blocking) */}
+        <Script
+          id="Cookiebot"
+          src="https://consent.cookiebot.com/uc.js"
+          data-cbid="68bdc358-3b91-4c4e-a5e8-b0b4c2cbd294"
+          data-blockingmode="auto"
+          strategy="beforeInteractive"
+        />
+
         {/* 1. Critical External Scripts (Load Early) */}
         {recaptchaKey && (
           <Script

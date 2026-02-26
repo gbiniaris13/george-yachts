@@ -3,7 +3,7 @@ import Footer from "../components/Footer";
 export const metadata = {
   title: "Cookie Policy | George Yachts",
   description:
-    "We use advanced digital technologies to ensure your experience on George Yachts is seamless, personalized, and secure.",
+    "Cookie & Digital Tracking Policy for George Yachts Brokerage House LLC.",
 };
 
 // This is a Helper Component (Capitalized!)
@@ -27,12 +27,16 @@ const CookiePolicy = () => {
           <p className="text-[#DAA520] text-xs font-bold tracking-[0.4em] uppercase mb-6">
             Digital Transparency
           </p>
-          <h1 className="text-5xl md:text-7xl font-marcellus text-white mb-8 tracking-tight">
-            Cookie Policy
+          <h1 className="text-5xl md:text-7xl font-marcellus text-white mb-4 tracking-tight">
+            Cookie & Digital Tracking Policy
           </h1>
+          <p className="text-white/50 text-sm tracking-[0.2em] uppercase mb-8">
+            George Yachts Brokerage House LLC
+          </p>
           <p className="text-white/50 max-w-2xl mx-auto leading-relaxed font-light">
-            We use advanced digital technologies to ensure your experience on
-            George Yachts is seamless, personalized, and secure.
+            We utilize advanced digital technologies to ensure your experience
+            on George Yachts is secure, personalized, and compliant with the
+            highest standards of data integrity.
           </p>
         </div>
 
@@ -42,94 +46,199 @@ const CookiePolicy = () => {
 
       {/* --- CONTENT SECTION --- */}
       <div className="container mx-auto max-w-3xl px-6 py-24">
-        <Section title="1. What Are Cookies?">
+        <Section title="1. Executive Statement on Privacy & Transparency">
           <p>
-            Cookies are small text files stored on your device (computer,
-            tablet, or mobile) when you visit our website. They allow us to
-            recognize your device, remember your preferences, and provide a
-            tailored digital experience.
-          </p>
-          <p>
-            Under international data protection standards (including GDPR), we
-            differentiate between cookies that are strictly necessary for the
-            technical operation of the site and those used for analytics or
-            marketing purposes.
+            GEORGE YACHTS BROKERAGE HOUSE LLC (referred to as "the Company,"
+            "we," "us," or "our"), a limited liability company registered in
+            Wyoming, USA, is committed to the highest standards of data
+            integrity and digital transparency. This Policy provides a granular
+            disclosure of how we utilize cookies, web beacons, pixel tags, and
+            similar tracking technologies ("Tracking Technologies") to provide a
+            bespoke digital experience for our global clientele.
           </p>
         </Section>
 
-        <Section title="2. Strictly Necessary Cookies">
+        <Section title="2. Definitions & Scope of Technology">
           <p>
-            These cookies are essential for the website to function properly.
-            Without them, critical features—such as navigating between pages,
-            securing forms, or loading high-resolution imagery—would not work.
-          </p>
-          <p>
-            <em>
-              Note: These cookies do not store personally identifiable
-              information and are active by default to ensure site integrity.
-            </em>
-          </p>
-        </Section>
-
-        <Section title="3. Analytics & Performance">
-          <p>
-            We use Google Analytics to understand how our discerning clientele
-            interacts with our platform. This helps us identify which yachts and
-            destinations are most popular, how users navigate our fleet, and
-            where we can improve the user experience. The data collected is
-            aggregated and anonymized.
-          </p>
-        </Section>
-
-        <Section title="4. Marketing & CRM Technologies">
-          <p>
-            To provide a bespoke service, we utilize specific professional tools
-            that may set cookies:
+            "Cookies" are sophisticated data files placed on your device that
+            enable our systems to recognize your browser and capture specific
+            information. To ensure a secure and personalized environment, we
+            utilize:
           </p>
           <ul className="list-disc pl-5 space-y-2 mt-4 text-white/50">
             <li>
-              <strong className="text-white">Google Ads:</strong> Used to
-              deliver relevant opportunities to you on other platforms based on
-              your interest in our fleet.
+              <strong className="text-white">First-Party Cookies:</strong>{" "}
+              Managed directly by our domain to ensure core functionality.
             </li>
             <li>
-              <strong className="text-white">Apollo.io:</strong> We use this
-              solution to maintain accurate professional records and ensure our
-              communications reach the correct individuals.
+              <strong className="text-white">Third-Party Cookies:</strong>{" "}
+              Managed by industry-leading partners (e.g., HubSpot, Google) for
+              advanced analytics and client relationship management.
+            </li>
+            <li>
+              <strong className="text-white">
+                Persistent vs. Session Cookies:
+              </strong>{" "}
+              We utilize session-based tracking (expiring upon browser closure)
+              and persistent tracking (stored to recognize returning HNWIs and
+              their preferences).
             </li>
           </ul>
         </Section>
 
-        <Section title="5. Managing Your Preferences">
+        <Section title="3. Detailed Categorization of Tracking Technologies">
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-white font-bold tracking-wider mb-2">
+                A. Essential & Strictly Necessary (Non-Consensual)
+              </h3>
+              <p>
+                These are technically mandatory for the structural integrity of
+                the website. They facilitate secure encrypted connections (SSL),
+                load balancing, and high-fidelity media rendering.
+              </p>
+              <p className="text-xs text-white/40 mt-1 uppercase tracking-widest">
+                Legal Basis: Necessary for the performance of the service.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-white font-bold tracking-wider mb-2">
+                B. Analytical & Performance Optimization
+              </h3>
+              <p>
+                We employ advanced diagnostic tools, including Google Analytics,
+                to monitor platform health and user interaction patterns. This
+                data is processed to optimize the presentation of our fleet and
+                ensure our digital infrastructure meets the expectations of a
+                discerning audience.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-white font-bold tracking-wider mb-2">
+                C. Functional & Personalization Preferences
+              </h3>
+              <p>
+                These technologies remember your specific interactions, such as
+                preferred yacht categories, regional interests (Ionian,
+                Cyclades, Saronic), and communication preferences, ensuring a
+                seamless transition between visits.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-white font-bold tracking-wider mb-2">
+                D. Strategic Marketing & CRM Integration
+              </h3>
+              <p>
+                In alignment with our bespoke service model, we utilize
+                professional-grade systems:
+              </p>
+              <ul className="list-disc pl-5 space-y-2 mt-4 text-white/50">
+                <li>
+                  <strong className="text-white">
+                    CRM Tracking (HubSpot):
+                  </strong>{" "}
+                  To synchronize your digital journey with our advisory
+                  services, ensuring that your inquiries are managed with
+                  absolute precision.
+                </li>
+                <li>
+                  <strong className="text-white">
+                    Lead Intelligence (Apollo.io):
+                  </strong>{" "}
+                  To verify professional data and maintain the accuracy of our
+                  global network.
+                </li>
+                <li>
+                  <strong className="text-white">
+                    Targeted Outreach (Google Ads):
+                  </strong>{" "}
+                  To deliver relevant opportunities to our users across the
+                  digital ecosystem based on demonstrated interest in our
+                  brokerage services.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </Section>
+
+        <Section title="4. International Data Transfers & Regulatory Compliance">
           <p>
-            You have the right to accept or reject non-essential cookies. You
-            can modify your browser settings to decline cookies if you prefer.
-            Additionally, upon your first visit to George Yachts, you will be
-            presented with a Cookie Consent Banner allowing you to opt-in or
-            opt-out.
+            As a Wyoming-based entity, data collected via cookies may be
+            transferred to, and processed in, the United States and other
+            jurisdictions. We implement rigorous safeguards to ensure that such
+            transfers comply with:
+          </p>
+          <ul className="list-disc pl-5 space-y-2 mt-4 text-white/50">
+            <li>
+              <strong className="text-white">
+                GDPR (General Data Protection Regulation):
+              </strong>{" "}
+              For our European clientele.
+            </li>
+            <li>
+              <strong className="text-white">
+                CCPA/CPRA (California Consumer Privacy Act):
+              </strong>{" "}
+              For our US-based clients.
+            </li>
+            <li>
+              <strong className="text-white">
+                Wyoming Statutory Requirements:
+              </strong>{" "}
+              Ensuring full compliance with our primary jurisdiction.
+            </li>
+          </ul>
+        </Section>
+
+        <Section title='5. Consent Management & The "Cookiebot" Protocol'>
+          <p>
+            The Company utilizes the Cookiebot consent management platform (CMP)
+            to provide you with granular control over your privacy. Upon your
+            first engagement with our platform, you are granted the statutory
+            right to:
+          </p>
+          <ul className="list-disc pl-5 space-y-2 mt-4 text-white/50">
+            <li>
+              <strong className="text-white">Grant Affirmative Consent</strong>{" "}
+              to all categories.
+            </li>
+            <li>
+              <strong className="text-white">Selectively Opt-In</strong> to
+              specific technologies.
+            </li>
+            <li>
+              <strong className="text-white">
+                Exercise the Right to Decline
+              </strong>{" "}
+              non-essential tracking.
+            </li>
+          </ul>
+        </Section>
+
+        <Section title="6. Modification of Browser Settings">
+          <p>
+            Independent of our internal controls, users may configure their
+            browser environments (Chrome, Safari, Edge, etc.) to block or delete
+            cookies. Note that disabling tracking may degrade the functionality
+            of certain high-end features of the George Yachts digital platform.
           </p>
         </Section>
 
-        <Section title="6. Updates to This Policy">
+        <Section title="7. Legal Contact & Governance">
           <p>
-            We may update our Cookie Policy from time to time to reflect changes
-            in technology or international legislation. Any changes will be
-            posted on this page with an updated revision date.
+            For formal inquiries regarding our digital tracking protocols or to
+            exercise your rights under global data protection laws, please
+            contact our Legal Compliance Department:
           </p>
-        </Section>
-
-        <Section title="7. Contact & Compliance">
-          <p>
-            If you have any questions regarding our use of cookies or wish to
-            exercise your data rights, please contact our Data Protection
-            Officer:
-          </p>
-          <p className="mt-6 text-white space-y-2">
+          <div className="mt-6 text-white space-y-2">
             <div>
               <strong>Legal Entity:</strong> GEORGE YACHTS BROKERAGE HOUSE LLC
             </div>
             <div>
-              <strong>Email:</strong>{" "}
+              <strong>Primary Contact:</strong>{" "}
               <a
                 href="mailto:george@georgeyachts.com"
                 className="hover:text-[#DAA520] transition-colors"
@@ -138,13 +247,13 @@ const CookiePolicy = () => {
               </a>
             </div>
             <div>
-              <strong>Registered Office:</strong> 30 N Gould St Ste R, Sheridan,
-              WY 82801, USA
+              <strong>Attention:</strong> Data Protection Officer (DPO)
             </div>
             <div>
-              <strong>Operational Scope:</strong> Mediterranean Operations
+              <strong>Registered Office:</strong> 30 N Gould St, STE R,
+              Sheridan, WY 82801, USA
             </div>
-          </p>
+          </div>
         </Section>
 
         {/* Footer Note */}
