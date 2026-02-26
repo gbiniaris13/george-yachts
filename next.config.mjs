@@ -8,6 +8,20 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/yachts-charter",
+        destination: "/charter-yacht-greece",
+        permanent: true, // 301 redirect for SEO
+      },
+      {
+        source: "/aviation-charter",
+        destination: "/private-jet-charter",
+        permanent: true, // 301 redirect for SEO
+      },
+    ];
+  },
 };
 
 export default nextConfig;
