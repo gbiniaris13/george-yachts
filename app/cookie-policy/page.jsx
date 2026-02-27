@@ -3,10 +3,12 @@ import Footer from "../components/Footer";
 export const metadata = {
   title: "Cookie Policy | George Yachts",
   description:
-    "Cookie & Digital Tracking Policy for George Yachts Brokerage House LLC.",
+    "Global Digital Tracking & Cookie Disclosure for George Yachts Brokerage House LLC.",
+  alternates: {
+    canonical: "https://georgeyachts.com/cookie-policy",
+  },
 };
 
-// This is a Helper Component (Capitalized!)
 const Section = ({ title, children }) => (
   <div className="mb-16 border-l border-[#DAA520]/30 pl-8">
     <h2 className="text-2xl font-marcellus text-white mb-6 tracking-wide">
@@ -27,218 +29,170 @@ const CookiePolicy = () => {
           <p className="text-[#DAA520] text-xs font-bold tracking-[0.4em] uppercase mb-6">
             Digital Transparency
           </p>
-          <h1 className="text-5xl md:text-7xl font-marcellus text-white mb-4 tracking-tight">
-            Cookie & Digital Tracking Policy
+          <h1 className="text-4xl md:text-6xl font-marcellus text-white mb-4 tracking-tight uppercase leading-tight">
+            Global Digital Tracking & Cookie Disclosure
           </h1>
           <p className="text-white/50 text-sm tracking-[0.2em] uppercase mb-8">
             George Yachts Brokerage House LLC
           </p>
-          <p className="text-white/50 max-w-2xl mx-auto leading-relaxed font-light">
-            We utilize advanced digital technologies to ensure your experience
-            on George Yachts is secure, personalized, and compliant with the
-            highest standards of data integrity.
-          </p>
         </div>
-
-        {/* Luxury Gold Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-[#DAA520] opacity-[0.03] blur-[100px] pointer-events-none"></div>
       </div>
 
       {/* --- CONTENT SECTION --- */}
       <div className="container mx-auto max-w-3xl px-6 py-24">
-        <Section title="1. Executive Statement on Privacy & Transparency">
+        <Section title="I. JURISDICTIONAL FRAMEWORK & CORPORATE MANDATE">
           <p>
-            GEORGE YACHTS BROKERAGE HOUSE LLC (referred to as "the Company,"
-            "we," "us," or "our"), a limited liability company registered in
-            Wyoming, USA, is committed to the highest standards of data
-            integrity and digital transparency. This Policy provides a granular
-            disclosure of how we utilize cookies, web beacons, pixel tags, and
-            similar tracking technologies ("Tracking Technologies") to provide a
-            bespoke digital experience for our global clientele.
+            GEORGE YACHTS BROKERAGE HOUSE LLC, a Wyoming Limited Liability
+            Company (the “Company”), operates a premier digital brokerage
+            platform designed for High-Net-Worth Individuals (HNWIs). In
+            alignment with global privacy imperatives, including the General
+            Data Protection Regulation (GDPR), the California Consumer Privacy
+            Act (CCPA/CPRA), and the statutory requirements of the State of
+            Wyoming, this disclosure articulates our methodologies regarding
+            digital identifiers and tracking telemetry.
           </p>
         </Section>
 
-        <Section title="2. Definitions & Scope of Technology">
+        <Section title="II. TECHNICAL TAXONOMY OF TRACKING TECHNOLOGIES">
           <p>
-            "Cookies" are sophisticated data files placed on your device that
-            enable our systems to recognize your browser and capture specific
-            information. To ensure a secure and personalized environment, we
-            utilize:
+            The Company utilizes an integrated stack of Tracking Technologies to
+            maintain operational excellence:
           </p>
           <ul className="list-disc pl-5 space-y-2 mt-4 text-white/50">
             <li>
-              <strong className="text-white">First-Party Cookies:</strong>{" "}
-              Managed directly by our domain to ensure core functionality.
+              <strong className="text-white">
+                HTTP Cookies & Local Storage:
+              </strong>{" "}
+              Sophisticated data packets facilitating state management and
+              secure user authentication.
             </li>
             <li>
-              <strong className="text-white">Third-Party Cookies:</strong>{" "}
-              Managed by industry-leading partners (e.g., HubSpot, Google) for
-              advanced analytics and client relationship management.
+              <strong className="text-white">Web Beacons & Pixel Tags:</strong>{" "}
+              Transparent graphic identifiers utilized to audit the efficacy of
+              our bespoke marketing campaigns and high-fidelity content
+              delivery.
             </li>
             <li>
               <strong className="text-white">
-                Persistent vs. Session Cookies:
+                Cryptographic Session Identifiers:
               </strong>{" "}
-              We utilize session-based tracking (expiring upon browser closure)
-              and persistent tracking (stored to recognize returning HNWIs and
-              their preferences).
+              Secure tokens ensuring that client interactions with our fleet
+              remain encrypted and private.
             </li>
           </ul>
         </Section>
 
-        <Section title="3. Detailed Categorization of Tracking Technologies">
-          <div className="space-y-6">
+        <Section title="III. OPERATIONAL CLASSIFICATION">
+          <p>
+            To ensure total transparency, we categorize our digital assets as
+            follows:
+          </p>
+          <div className="space-y-6 mt-4">
             <div>
               <h3 className="text-white font-bold tracking-wider mb-2">
-                A. Essential & Strictly Necessary (Non-Consensual)
+                Strictly Necessary & Systemic
               </h3>
               <p>
-                These are technically mandatory for the structural integrity of
-                the website. They facilitate secure encrypted connections (SSL),
-                load balancing, and high-fidelity media rendering.
+                These technologies are indispensable for the structural
+                integrity of georgeyachts.com. They govern SSL/TLS handshakes,
+                load balancing, and the rendering of high-resolution maritime
+                imagery.
               </p>
-              <p className="text-xs text-white/40 mt-1 uppercase tracking-widest">
-                Legal Basis: Necessary for the performance of the service.
+              <p className="text-xs text-[#DAA520] mt-1 uppercase tracking-widest">
+                (Legal Basis: Essential for the provision of requested digital
+                services).
               </p>
             </div>
-
             <div>
               <h3 className="text-white font-bold tracking-wider mb-2">
-                B. Analytical & Performance Optimization
+                Advanced Behavioral Analytics
               </h3>
               <p>
-                We employ advanced diagnostic tools, including Google Analytics,
-                to monitor platform health and user interaction patterns. This
-                data is processed to optimize the presentation of our fleet and
-                ensure our digital infrastructure meets the expectations of a
-                discerning audience.
+                Utilizing industry-standard diagnostic tools (e.g., Google
+                Analytics), we aggregate anonymized telemetry to optimize fleet
+                navigation and user-experience (UX) flows.
               </p>
             </div>
-
             <div>
               <h3 className="text-white font-bold tracking-wider mb-2">
-                C. Functional & Personalization Preferences
+                Cross-Platform Functional Personalization
               </h3>
               <p>
-                These technologies remember your specific interactions, such as
-                preferred yacht categories, regional interests (Ionian,
-                Cyclades, Saronic), and communication preferences, ensuring a
-                seamless transition between visits.
+                These cookies preserve the "user state," remembering specific
+                yacht preferences, geographical interest (Ionian, Cyclades,
+                Saronic), and language settings to ensure a frictionless
+                transition between sessions.
               </p>
             </div>
-
             <div>
               <h3 className="text-white font-bold tracking-wider mb-2">
-                D. Strategic Marketing & CRM Integration
+                Institutional CRM & Lead Intelligence
               </h3>
               <p>
-                In alignment with our bespoke service model, we utilize
-                professional-grade systems:
+                In coordination with professional-grade systems (HubSpot,
+                Apollo.io, and Google Ads), these identifiers synchronize
+                visitor engagement with our proprietary advisory database. This
+                ensures that our communications are precise, relevant, and meet
+                the exacting standards of our global network.
               </p>
-              <ul className="list-disc pl-5 space-y-2 mt-4 text-white/50">
-                <li>
-                  <strong className="text-white">
-                    CRM Tracking (HubSpot):
-                  </strong>{" "}
-                  To synchronize your digital journey with our advisory
-                  services, ensuring that your inquiries are managed with
-                  absolute precision.
-                </li>
-                <li>
-                  <strong className="text-white">
-                    Lead Intelligence (Apollo.io):
-                  </strong>{" "}
-                  To verify professional data and maintain the accuracy of our
-                  global network.
-                </li>
-                <li>
-                  <strong className="text-white">
-                    Targeted Outreach (Google Ads):
-                  </strong>{" "}
-                  To deliver relevant opportunities to our users across the
-                  digital ecosystem based on demonstrated interest in our
-                  brokerage services.
-                </li>
-              </ul>
             </div>
           </div>
         </Section>
 
-        <Section title="4. International Data Transfers & Regulatory Compliance">
+        <Section title="IV. CONSENT ARCHITECTURE (THE COOKIEBOT PROTOCOL)">
           <p>
-            As a Wyoming-based entity, data collected via cookies may be
-            transferred to, and processed in, the United States and other
-            jurisdictions. We implement rigorous safeguards to ensure that such
-            transfers comply with:
+            The Company has deployed the Cookiebot Consent Management Platform
+            (CMP), a gold-standard regulatory solution. This interface provides
+            users with granular, real-time control over their data footprint.
+            You hold the statutory right to:
           </p>
           <ul className="list-disc pl-5 space-y-2 mt-4 text-white/50">
             <li>
-              <strong className="text-white">
-                GDPR (General Data Protection Regulation):
-              </strong>{" "}
-              For our European clientele.
+              <strong className="text-white">Affirmative Opt-In:</strong> Active
+              consent for the full bespoke experience.
             </li>
             <li>
-              <strong className="text-white">
-                CCPA/CPRA (California Consumer Privacy Act):
-              </strong>{" "}
-              For our US-based clients.
+              <strong className="text-white">Granular Selection:</strong>{" "}
+              Targeted consent for specific categories.
             </li>
             <li>
-              <strong className="text-white">
-                Wyoming Statutory Requirements:
-              </strong>{" "}
-              Ensuring full compliance with our primary jurisdiction.
+              <strong className="text-white">The Right to Erasure:</strong>{" "}
+              Independent management of your digital trail via browser-level
+              clearing or our manual compliance portal.
             </li>
           </ul>
         </Section>
 
-        <Section title='5. Consent Management & The "Cookiebot" Protocol'>
+        <Section title="V. DATA TRANSFERS & SOVEREIGNTY">
           <p>
-            The Company utilizes the Cookiebot consent management platform (CMP)
-            to provide you with granular control over your privacy. Upon your
-            first engagement with our platform, you are granted the statutory
-            right to:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 mt-4 text-white/50">
-            <li>
-              <strong className="text-white">Grant Affirmative Consent</strong>{" "}
-              to all categories.
-            </li>
-            <li>
-              <strong className="text-white">Selectively Opt-In</strong> to
-              specific technologies.
-            </li>
-            <li>
-              <strong className="text-white">
-                Exercise the Right to Decline
-              </strong>{" "}
-              non-essential tracking.
-            </li>
-          </ul>
-        </Section>
-
-        <Section title="6. Modification of Browser Settings">
-          <p>
-            Independent of our internal controls, users may configure their
-            browser environments (Chrome, Safari, Edge, etc.) to block or delete
-            cookies. Note that disabling tracking may degrade the functionality
-            of certain high-end features of the George Yachts digital platform.
+            As a Wyoming-domiciled entity, data captured via our platform is
+            processed within the United States. We maintain rigorous data
+            processing agreements (DPAs) with our third-party providers to
+            ensure that all transfers meet or exceed international adequacy
+            standards.
           </p>
         </Section>
 
-        <Section title="7. Legal Contact & Governance">
+        <Section title="VI. COMPLIANCE & GOVERNANCE CONTACT">
           <p>
-            For formal inquiries regarding our digital tracking protocols or to
-            exercise your rights under global data protection laws, please
-            contact our Legal Compliance Department:
+            For inquiries regarding our privacy posture or the exercise of your
+            data subject rights (DSRs), please direct all formal correspondence
+            to:
           </p>
-          <div className="mt-6 text-white space-y-2">
+          <div className="mt-6 text-white space-y-2 bg-white/5 border border-white/10 p-6">
             <div>
-              <strong>Legal Entity:</strong> GEORGE YACHTS BROKERAGE HOUSE LLC
+              <strong>Compliance Office</strong>
             </div>
             <div>
-              <strong>Primary Contact:</strong>{" "}
+              <strong>Entity:</strong> GEORGE YACHTS BROKERAGE HOUSE LLC
+            </div>
+            <div>
+              <strong>Registered Office:</strong> 30 N Gould St, STE R,
+              Sheridan, WY 82801, USA
+            </div>
+            <div>
+              <strong>Email:</strong>{" "}
               <a
                 href="mailto:george@georgeyachts.com"
                 className="hover:text-[#DAA520] transition-colors"
@@ -249,21 +203,15 @@ const CookiePolicy = () => {
             <div>
               <strong>Attention:</strong> Data Protection Officer (DPO)
             </div>
-            <div>
-              <strong>Registered Office:</strong> 30 N Gould St, STE R,
-              Sheridan, WY 82801, USA
-            </div>
           </div>
         </Section>
 
-        {/* Footer Note */}
         <div className="mt-24 pt-12 border-t border-white/10 text-center">
           <p className="text-white/30 text-xs uppercase tracking-widest">
             Last Updated: February 2026
           </p>
         </div>
       </div>
-
       <Footer />
     </div>
   );

@@ -3,11 +3,12 @@ import Footer from "../components/Footer";
 export const metadata = {
   title: "Privacy Policy | George Yachts",
   description:
-    "George Yachts Brokerage House LLC commitment to confidentiality, data protection, and digital privacy.",
+    "Master Privacy & Data Protection Policy for George Yachts Brokerage House LLC.",
+  alternates: {
+    canonical: "https://georgeyachts.com/privacy-policy",
+  },
 };
 
-// This Component is perfectly valid.
-// It starts with a Capital Letter (Section) so React knows it's a component.
 const Section = ({ title, children }) => (
   <div className="mb-16 border-l border-[#DAA520]/30 pl-8">
     <h2 className="text-2xl font-marcellus text-white mb-6 tracking-wide">
@@ -26,114 +27,191 @@ const PrivacyPolicy = () => {
       <div className="relative pt-40 pb-20 px-6 md:px-12 border-b border-white/5">
         <div className="container mx-auto max-w-4xl text-center">
           <p className="text-[#DAA520] text-xs font-bold tracking-[0.4em] uppercase mb-6">
-            Legal & Compliance
+            Data Protection
           </p>
-          <h1 className="text-5xl md:text-7xl font-marcellus text-white mb-8 tracking-tight">
-            Privacy Policy
+          <h1 className="text-4xl md:text-6xl font-marcellus text-white mb-4 tracking-tight uppercase leading-tight">
+            Master Privacy & Data Protection Policy
           </h1>
-          <p className="text-white/50 max-w-2xl mx-auto leading-relaxed font-light">
-            George Yachts Brokerage House LLC is committed to protecting your
-            privacy. This document outlines how we collect, protect, and utilize
-            your data to provide a bespoke luxury experience in accordance with
-            Wyoming state and federal regulations.
+          <p className="text-white/50 text-sm tracking-[0.2em] uppercase mb-8">
+            George Yachts Brokerage House LLC
           </p>
         </div>
-
-        {/* Background Gradient Effect */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-[#DAA520] opacity-[0.03] blur-[100px] pointer-events-none"></div>
       </div>
 
       {/* --- CONTENT SECTION --- */}
       <div className="container mx-auto max-w-3xl px-6 py-24">
-        <Section title="1. Introduction">
+        <Section title="I. EXECUTIVE PRIVACY STATEMENT & FIDUCIARY DUTY">
           <p>
-            George Yachts Brokerage House LLC ("we," "us," or "our") is
-            committed to protecting your privacy. This Privacy Policy explains
-            how we collect, use, disclose, and safeguard your information when
-            you visit our website. As a Wyoming-registered entity, we operate in
-            accordance with applicable state and federal regulations to provide
-            a bespoke luxury experience.
+            GEORGE YACHTS BROKERAGE HOUSE LLC (the "Company") operates at the
+            highest echelon of the international maritime brokerage industry. We
+            strictly recognize that our discerning global clientele requires
+            absolute discretion and unparalleled digital security. This Master
+            Policy delineates our rigorous, institutional-grade protocols for
+            the collection, cryptographic encryption, and professional
+            processing of personally identifiable information (PII) and
+            sensitive financial documentation.
           </p>
         </Section>
 
-        <Section title="2. Information We Collect">
+        <Section title="II. GLOBAL REGULATORY COMPLIANCE">
           <p>
-            We collect information that you voluntarily provide to us when you
-            inquire about a charter, sign up for our newsletter, or contact us
-            directly. This may include your name, email address, phone number,
-            and specific preferences regarding your yacht charter requirements.
+            As a Wyoming-domiciled limited liability company facilitating
+            bespoke charter operations across the Mediterranean and
+            internationally, our data infrastructure is engineered to comply
+            with the most stringent global privacy frameworks. This encompasses:
           </p>
+          <ul className="list-disc pl-5 space-y-2 mt-4 text-white/50">
+            <li>
+              <strong className="text-white">
+                The General Data Protection Regulation (GDPR)
+              </strong>{" "}
+              for our European clientele.
+            </li>
+            <li>
+              <strong className="text-white">
+                The California Consumer Privacy Act (CCPA/CPRA)
+              </strong>{" "}
+              for our US-based network.
+            </li>
+            <li>
+              <strong className="text-white">The Statutory Mandates</strong> of
+              the State of Wyoming, USA.
+            </li>
+          </ul>
+        </Section>
+
+        <Section title="III. TAXONOMY OF PROCESSED DATA">
           <p>
-            Additionally, we may automatically collect certain information about
-            your device and browsing patterns, including your IP address,
-            browser type, and operating system, to enhance your digital
-            experience.
+            To deliver a seamless, high-end advisory service, we classify and
+            process data under strict confidentiality protocols:
+          </p>
+          <div className="space-y-6 mt-4">
+            <div>
+              <h3 className="text-white font-bold tracking-wider mb-2">
+                Inquiry & CRM Coordinates
+              </h3>
+              <p>
+                Contact details, preferred cruising itineraries (e.g., Ionian,
+                Cyclades, Saronic), and vessel preferences voluntarily submitted
+                via our encrypted digital portals.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-white font-bold tracking-wider mb-2">
+                Highly Confidential Client Data (KYC/AML)
+              </h3>
+              <p>
+                During the advanced stages of formal charter execution,
+                international maritime law and financial regulatory bodies
+                mandate the collection of precise documentation. This includes
+                passport copies, official identification, and financial
+                coordinates strictly for Know Your Customer (KYC) and Anti-Money
+                Laundering (AML) compliance.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-white font-bold tracking-wider mb-2">
+                Digital Telemetry
+              </h3>
+              <p>
+                Aggregated diagnostic data (IP addresses, session behavior)
+                utilized solely to optimize the user experience and
+                architectural performance of our platform.
+              </p>
+            </div>
+          </div>
+        </Section>
+
+        <Section title="IV. STRATEGIC THIRD-PARTY ARCHITECTURE">
+          <p>
+            We integrate elite, enterprise-grade systems to manage our
+            proprietary advisory database and bespoke marketing initiatives.
+          </p>
+          <ul className="list-disc pl-5 space-y-2 mt-4 text-white/50">
+            <li>
+              <strong className="text-white">Analytics & Engagement:</strong> We
+              utilize Google Analytics and Google Ads to ensure our digital
+              presence precisely meets the expectations of our market,
+              delivering relevant opportunities across the digital landscape.
+            </li>
+            <li>
+              <strong className="text-white">CRM & Lead Intelligence:</strong>{" "}
+              We deploy professional-grade solutions, including HubSpot and
+              Apollo.io, to securely manage client relationships and verify
+              global network accuracy.
+            </li>
+          </ul>
+          <div className="mt-4 p-4 border border-[#DAA520]/20 bg-[#DAA520]/5">
+            <p>
+              <strong className="text-[#DAA520]">
+                Non-Monetization Guarantee:
+              </strong>{" "}
+              These third-party environments are bound by rigorous Data
+              Processing Agreements (DPAs). We explicitly declare that the
+              Company does not, and will never, monetize, lease, or broker your
+              personal or financial data to unauthorized external entities.
+            </p>
+          </div>
+        </Section>
+
+        <Section title="V. CRYPTOGRAPHIC SECURITY & DATA RETENTION">
+          <p>
+            Client data is fortified utilizing industry-standard cryptographic
+            protocols and secure server environments. Highly Confidential Client
+            Data (such as KYC documentation) is retained strictly for the
+            duration necessitated by international maritime law, tax compliance,
+            and financial auditing standards, after which it is systematically
+            and securely expunged from our active infrastructure.
           </p>
         </Section>
 
-        <Section title="3. Use of Google Analytics & Ads">
+        <Section title="VI. DATA SUBJECT RIGHTS (DSRs) & SOVEREIGNTY">
           <p>
-            We utilize <strong>Google Analytics</strong> to analyze traffic and
-            user behavior on our website. This tool collects data such as
-            session duration, pages visited, and demographic information. This
-            data is anonymized and used solely to improve our platform's
-            performance and user experience.
+            In accordance with overarching international laws, our clients
+            retain ultimate sovereignty over their digital footprint. You
+            possess the statutory right to:
           </p>
-          <p>
-            We also engage in <strong>Google Ads</strong> services. These
-            services may use data regarding your interactions with our website
-            to present relevant opportunities to you across the digital
-            landscape.
-          </p>
+          <ul className="list-disc pl-5 space-y-2 mt-4 text-white/50">
+            <li>
+              <strong className="text-white">
+                Request a comprehensive audit
+              </strong>{" "}
+              of your data currently held by the Company.
+            </li>
+            <li>
+              <strong className="text-white">
+                Demand the rectification or immediate erasure
+              </strong>{" "}
+              ("Right to be Forgotten") of your records, subject to overriding
+              legal retention mandates.
+            </li>
+            <li>
+              <strong className="text-white">Opt-out</strong> of any strategic
+              marketing communications or digital tracking.
+            </li>
+          </ul>
         </Section>
 
-        <Section title="4. Third-Party Data & CRM Tools">
+        <Section title="VII. CORPORATE COMPLIANCE CONTACT">
           <p>
-            To maintain high-quality communication with our prospective and
-            existing clients, we utilize third-party software solutions,
-            including <strong>Apollo.io</strong>. These tools assist us in
-            managing client relationships, verifying contact details, and
-            ensuring that our communications are relevant and timely.
+            For the execution of Data Subject Rights, formal inquiries
+            concerning our privacy posture, or to update your records, please
+            direct correspondence to our Compliance Office:
           </p>
-          <p>
-            Data processed through these platforms is handled in strict
-            compliance with applicable data protection regulations. We do not
-            sell your personal data to unauthorized third parties.
-          </p>
-        </Section>
-
-        <Section title="5. Data Security">
-          <p>
-            We have implemented appropriate technical and organizational
-            security measures designed to protect the security of any personal
-            information we process. However, please also remember that we cannot
-            guarantee that the internet itself is 100% secure. Although we will
-            do our best to protect your personal information, transmission of
-            personal information to and from our services is at your own risk.
-          </p>
-        </Section>
-
-        <Section title="6. Your Rights">
-          <p>
-            Depending on your location, you may have certain rights regarding
-            your personal information, including the right to access, correct,
-            or delete the data we hold about you. If you wish to exercise any of
-            these rights, please contact us using the details provided below.
-          </p>
-        </Section>
-
-        <Section title="7. Contact Us">
-          <p>
-            If you have questions or comments about this policy, or if you wish
-            to update, delete, or change any Personal Information we hold,
-            please contact us at:
-          </p>
-          <div className="mt-6 text-white space-y-2">
+          <div className="mt-6 text-white space-y-2 bg-white/5 border border-white/10 p-6">
             <div>
               <strong>Legal Entity:</strong> GEORGE YACHTS BROKERAGE HOUSE LLC
             </div>
             <div>
-              <strong>Email:</strong>{" "}
+              <strong>Registered Office Address:</strong> 30 N Gould St, STE R,
+              Sheridan, WY 82801, USA
+            </div>
+            <div>
+              <strong>Operational Scope:</strong> Mediterranean Operations
+            </div>
+            <div>
+              <strong>Primary Contact:</strong>{" "}
               <a
                 href="mailto:george@georgeyachts.com"
                 className="hover:text-[#DAA520] transition-colors"
@@ -141,17 +219,9 @@ const PrivacyPolicy = () => {
                 george@georgeyachts.com
               </a>
             </div>
-            <div>
-              <strong>Registered Office Address:</strong> 30 N Gould St Ste R,
-              Sheridan, WY 82801, USA
-            </div>
-            <div>
-              <strong>Operational Scope:</strong> Mediterranean Operations
-            </div>
           </div>
         </Section>
 
-        {/* Footer Note */}
         <div className="mt-24 pt-12 border-t border-white/10 text-center">
           <p className="text-white/30 text-xs uppercase tracking-widest">
             Last Updated: February 2026
