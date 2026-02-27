@@ -27,10 +27,12 @@ export default function RootLayout({ children }) {
       <head>
         <Script
           id="Cookiebot"
+          async={true}
           src="https://consent.cookiebot.com/uc.js"
+          strategy="beforeInteractive"
           data-cbid="68bdc358-3b91-4c4e-a5e8-b0b4c2cbd294"
           data-blockingmode="auto"
-          strategy="beforeInteractive"
+          type="text/javascript"
         />
       </head>
 
