@@ -2,7 +2,7 @@
 
 import React from "react";
 import Footer from "@/components/Footer";
-import ProfileSection from "@/components/ProfileSection"; // The split-screen component
+import ProfileSection from "/components/ProfileSection";
 import MemberAboutSection from "@/components/MemberAboutSection"; // The new component
 import ContactFormSection from "@/components/ContactFormSection"; // Kept ContactForm
 
