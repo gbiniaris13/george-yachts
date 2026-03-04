@@ -1,9 +1,9 @@
 import React from "react";
 import { sanityClient } from "@/lib/sanity";
-import YachtSwiper from "../components/YachtSwiper";
-import Footer from "../components/Footer";
-import AboutUs from "../components/AboutUs";
-import ContactFormSection from "../components/ContactFormSection";
+import YachtSwiper from "@/components/YachtSwiper";
+import Footer from "@/components/Footer";
+import AboutUs from "@/components/AboutUs";
+import ContactFormSection from "@/components/ContactFormSection";
 
 // 1. Metadata for SEO
 export const metadata = {

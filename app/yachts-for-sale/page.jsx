@@ -1,9 +1,9 @@
 import React from "react";
 import { sanityClient } from "@/lib/sanity";
-import SaleYachtSwiper from "../components/SaleYachtSwiper";
-import Footer from "../components/Footer";
-import AboutUs from "../components/AboutUs";
-import ContactFormSection from "../components/ContactFormSection";
+import SaleYachtSwiper from "@/components/SaleYachtSwiper";
+import Footer from "@/components/Footer";
+import AboutUs from "@/components/AboutUs";
+import ContactFormSection from "@/components/ContactFormSection";
 import { Check } from "lucide-react"; // Import Check icon
 
 // 1. Metadata

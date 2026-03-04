@@ -1,8 +1,8 @@
 import React from "react";
-import Footer from "../components/Footer";
-import AboutUs from "../components/AboutUs";
-import ContactFormSection from "../components/ContactFormSection";
-import AboutSection from "../components/AboutSection";
+import Footer from "@/components/Footer";
+import AboutUs from "@/components/AboutUs";
+import ContactFormSection from "@/components/ContactFormSection";
+import AboutSection from "@/components/AboutSection";
 
 export const metadata = {
   title: "About Us | George Yachts | Boutique Yacht Brokerage Athens",

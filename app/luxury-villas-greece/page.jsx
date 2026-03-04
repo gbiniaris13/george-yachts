@@ -1,9 +1,9 @@
 import React from "react";
 import { sanityClient } from "@/lib/sanity";
-import VillaSwiper from "../components/VillaSwiper";
-import Footer from "../components/Footer";
-import AboutUs from "../components/AboutUs";
-import ContactFormSection from "../components/ContactFormSection";
+import VillaSwiper from "@/components/VillaSwiper";
+import Footer from "@/components/Footer";
+import AboutUs from "@/components/AboutUs";
+import ContactFormSection from "@/components/ContactFormSection";
 import { Check } from "lucide-react"; // Imported for the bullet points
 
 // 1. Metadata added

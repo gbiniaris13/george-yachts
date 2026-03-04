@@ -1,7 +1,7 @@
 import React from "react";
-import { sanityClient } from "../../lib/sanity";
-import Footer from "../components/Footer";
-import ContactFormSection from "../components/ContactFormSection";
+import { sanityClient } from "@/lib/sanity";
+import Footer from "@/components/Footer";
+import ContactFormSection from "@/components/ContactFormSection";
 import Link from "next/link";
 
 // Force dynamic rendering to ensure new posts appear immediately
@@ -121,7 +121,7 @@ const BlogPage = async () => {
             </div>
           ) : (
             // Empty State
-            <div className="text-center py-40 border border-white/5 bg-white/[0.02]">
+            <div className="text-center py-40 border border-white/5 bg-white/2">
               <h3 className="text-2xl text-white font-marcellus mb-4 uppercase tracking-widest">
                 No entries found
               </h3>

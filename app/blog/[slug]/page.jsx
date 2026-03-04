@@ -1,9 +1,9 @@
 import React from "react";
-import { sanityClient } from "../../../lib/sanity";
+import { sanityClient } from "@/lib/sanity";
 import { PortableText } from "@portabletext/react";
-import { RichTextComponents } from "../../components/RichTextComponents";
-import Footer from "../../components/Footer";
-import ContactFormSection from "../../components/ContactFormSection";
+import { RichTextComponents } from "@/components/RichTextComponents";
+import Footer from "@/components/Footer";
+import ContactFormSection from "@/components/ContactFormSection";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 

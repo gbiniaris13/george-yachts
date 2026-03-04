@@ -1,9 +1,9 @@
 import React from "react";
 import { sanityClient } from "@/lib/sanity";
-import Footer from "../components/Footer";
-import AboutUs from "../components/AboutUs";
-import ContactFormSection from "../components/ContactFormSection";
-import YachtListClient from "../components/YachtListClient";
+import Footer from "@/components/Footer";
+import AboutUs from "@/components/AboutUs";
+import ContactFormSection from "@/components/ContactFormSection";
+import YachtListClient from "@/components/YachtListClient";
 
 // Force dynamic rendering to ensure fresh data on every visit
 export const dynamic = "force-dynamic";
