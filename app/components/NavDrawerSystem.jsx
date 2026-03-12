@@ -23,6 +23,7 @@ const navLinks = [
   { name: "BUY A YACHT", href: "/yachts-for-sale/" },
   { name: "FLY PRIVATE", href: "/private-jet-charter/" },
   { name: "VIP TRANSFERS", href: "/vip-transfers-greece/" },
+  { name: "BLOG", href: "/blog" },
   { name: "FAQ", href: "/faq" },
 ];
 
