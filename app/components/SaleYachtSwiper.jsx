@@ -10,7 +10,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y, EffectFade } from "swiper/modules";
 
 import { urlFor } from "@/lib/sanity";
-import EnquirePopup from "./EnquirePopup"; // 1. Import Popup
+import dynamic from "next/dynamic";
+
+const EnquirePopup = dynamic(() => import("./EnquirePopup"), {
+  ssr: false,
+});
 
 // --- SVG Components (No changes) ---
 const CustomNextArrowSVG = (props) => (

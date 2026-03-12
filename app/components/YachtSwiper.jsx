@@ -14,8 +14,11 @@ import "yet-another-react-lightbox/styles.css";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
+import dynamic from "next/dynamic";
 
-import EnquirePopup from "./EnquirePopup";
+const EnquirePopup = dynamic(() => import("./EnquirePopup"), {
+  ssr: false,
+});
 
 // --- SVG ICONS ---
 const ShareIcon = (props) => (

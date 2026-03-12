@@ -6,7 +6,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
-import { GoogleAnalytics } from "@next/third-parties/google";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -25,11 +24,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/* Changed strategy to afterInteractive to fix the synchronous blocking error */}
         <Script
           id="Cookiebot"
-          async={true}
           src="https://consent.cookiebot.com/uc.js"
-          strategy="beforeInteractive"
+          strategy="lazyOnload"
           data-cbid="68bdc358-3b91-4c4e-a5e8-b0b4c2cbd294"
           data-blockingmode="auto"
           type="text/javascript"
@@ -39,7 +38,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${marcellus.variable} antialiased`}
       >
-        {/* 1. Critical External Scripts (Load Early) */}
+        {/* 1. Critical External Scripts */}
         {recaptchaKey && (
           <Script
             id="recaptcha-script"
@@ -52,8 +51,19 @@ export default function RootLayout({ children }) {
         <NavDrawerSystem />
         {children}
 
-        {/* 3. Analytics & Tracking (Load after content is interactive) */}
-        <GoogleAnalytics gaId="G-CM483Z0JT5" />
+        {/* 3. Analytics & Tracking */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-CM483Z0JT5"
+          strategy="lazyOnload"
+        />
+        <Script id="google-analytics" strategy="lazyOnload">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){window.dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-CM483Z0JT5');
+          `}
+        </Script>
 
         {/* Apollo.io Tracker */}
         <Script id="apollo-tracker" strategy="afterInteractive">
