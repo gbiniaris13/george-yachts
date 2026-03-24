@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Instagram } from "lucide-react";
+import { Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
 
 const Footer = () => {
@@ -21,17 +21,30 @@ const Footer = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-6 items-center lg:items-start">
           {/* 1. Social Icons & IYBA (Left on Desktop, Center on Mobile) */}
           <div className="flex flex-col items-center lg:items-start space-y-5">
-            <a
-              href="https://www.instagram.com/georgeyachts"
-              target="_blank"
-              rel="noopener noreferrer"
-              // ADDED: Background, padding, rounded circle, and smooth hover inversion
-              className="bg-white/10 p-2.5 rounded-full text-white hover:bg-[#DAA520] hover:text-black transition-all duration-300"
-              aria-label="Instagram"
-            >
-              {/* Scaled the icon down slightly to sit perfectly inside the new background padding */}
-              <Instagram className="w-5 h-5" />
-            </a>
+            {/* WRAPPED ICONS IN A HORIZONTAL FLEX CONTAINER */}
+            <div className="flex space-x-4">
+              <a
+                href="https://www.instagram.com/georgeyachts"
+                target="_blank"
+                rel="noopener noreferrer"
+                // ADDED: Background, padding, rounded circle, and smooth hover inversion
+                className="bg-white/10 p-2.5 rounded-full text-white hover:bg-[#DAA520] hover:text-black transition-all duration-300"
+                aria-label="Instagram"
+              >
+                {/* Scaled the icon down slightly to sit perfectly inside the new background padding */}
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/george-p-biniaris/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 p-2.5 rounded-full text-white hover:bg-[#DAA520] hover:text-black transition-all duration-300"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
+            </div>
+
             <div className="flex items-center space-x-3">
               <img
                 src="/images/iyba.png"
