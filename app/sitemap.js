@@ -1,11 +1,11 @@
-export default function sitemap() {
-  const BASE_URL = "https://georgeyachts.com";
+import { sanityClient } from "@/lib/sanity";
 
-  // This is the absolute truth of your project structure based on your app directory.
-  // No dynamic IDs, no ghost pages, no 404s.
-  const routes = [
-    "", // Homepage: https://georgeyachts.com
+const BASE_URL = "https://georgeyachts.com";
+
+const staticRoutes = [
+    "",
     "/about-us",
+    "/blog",
     "/charter-yacht-greece",
     "/cookie-policy",
     "/faq",
@@ -25,8 +25,26 @@ export default function sitemap() {
     "/yachts-for-sale",
   ];
 
-  return routes.map((route) => ({
-    url: `${BASE_URL}${route}`,
-    lastModified: new Date().toISOString(),
-  }));
+export default async function sitemap() {
+    const staticEntries = staticRoutes.map((route) => ({
+          url: `${BASE_URL}${route}`,
+          lastModified: new Date().toISOString(),
+    }));
+
+  let blogEntries = [];
+    try {
+          const posts = await sanityClient.fetch(
+                  `*[_type == "post" && defined(slug.current)]{ "slug": slug.current, _updatedAt }`
+                );
+          blogEntries = posts.map((post) => ({
+                  url: `${BASE_URL}/blog/${post.slug}`,
+                  lastModified: post._updatedAt || new Date().toISOString(),
+                  changeFrequency: "weekly",
+                  priority: 0.8,
+          }));
+    } catch (error) {
+          console.error("Sitemap: failed to fetch blog posts from Sanity", error);
+    }
+
+  return [...staticEntries, ...blogEntries];
 }
