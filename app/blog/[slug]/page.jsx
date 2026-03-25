@@ -1,5 +1,5 @@
 import React from "react";
-import { sanityClient } from "@/lib/sanity";
+import { sanityClient, urlFor } from "@/lib/sanity";
 import { PortableText } from "@portabletext/react";
 import { RichTextComponents } from "@/components/RichTextComponents";
 import Footer from "@/components/Footer";
@@ -20,19 +20,61 @@ async function getPost(slug) {
     "imageAlt": mainImage.alt,
     publishedAt,
     author,
-    body
+    body,
+        excerpt,
+            mainImage
   }`;
   return sanityClient.fetch(query, { slug });
 }
 
 export async function generateMetadata({ params }) {
-  const { slug } = await params;
-  const post = await getPost(slug);
-  if (!post) return { title: "Article Not Found | George Yachts" };
-  return {
-    title: `${post.title} | The Journal | George Yachts`,
-    description: `Expert insights and maritime analysis: ${post.title}.`,
-  };
+    const { slug } = await params;
+    const post = await getPost(slug);
+    if (!post) return { title: "Article Not Found | George Yachts" };
+
+    // --- Description: excerpt → body text fallback → generic fallback ---
+    let description = post.excerpt || null;
+    if (!description && post.body) {
+          const firstTextBlock = post.body.find(
+                  (block) => block._type === "block" && block.children
+                        );
+          if (firstTextBlock) {
+                  const rawText = firstTextBlock.children
+                    .map((span) => span.text || "")
+                    .join("");
+                  description = rawText.slice(0, 155) || null;
+          }
+    }
+    if (!description) {
+          description = `Expert insights and maritime analysis: ${post.title}.`;
+    }
+
+    // --- OG Image: Sanity mainImage → opengraph-image.png fallback ---
+    const ogImageUrl = post.mainImage
+      ? urlFor(post.mainImage).width(1200).height(630).url()
+          : "https://georgeyachts.com/opengraph-image.png";
+
+    const canonicalUrl = `https://georgeyachts.com/blog/${slug}`;
+
+    return {
+          title: `${post.title} | The Journal | George Yachts`,
+          description,
+          alternates: {
+                  canonical: canonicalUrl,
+          },
+          openGraph: {
+                  title: `${post.title} | The Journal | George Yachts`,
+                  description,
+                  url: canonicalUrl,
+                  images: [{ url: ogImageUrl, width: 1200, height: 630 }],
+          },
+          twitter: {
+                  card: "summary_large_image",
+                  title: `${post.title} | The Journal | George Yachts`,
+                  description,
+                  images: [ogImageUrl],
+          },
+    };
 }
 
 const ArticlePage = async ({ params }) => {
