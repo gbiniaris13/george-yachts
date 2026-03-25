@@ -6,6 +6,7 @@ import Link from "next/link";
 
 // Force dynamic rendering to ensure new posts appear immediately
 export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export const metadata = {
   title: "The Journal | George Yachts",
