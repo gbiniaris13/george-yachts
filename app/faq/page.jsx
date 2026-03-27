@@ -1,5 +1,7 @@
 import React from "react";
 import FAQClient from "./FAQClient";
+import JsonLd from "../components/JsonLd";
+import { faqSchema } from "@/lib/faqSchema";
 
 export const metadata = {
   title: "FAQ - Frequently Asked Questions | George Yachts",
@@ -11,7 +13,12 @@ export const metadata = {
 };
 
 const FAQPage = () => {
-  return <FAQClient />;
+  return (
+    <>
+      <JsonLd data={faqSchema} />
+      <FAQClient />
+    </>
+  );
 };
 
 export default FAQPage;
