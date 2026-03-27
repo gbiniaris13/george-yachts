@@ -2,6 +2,8 @@ import { Geist, Geist_Mono, Marcellus } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import NavDrawerSystem from "./components/NavDrawerSystem";
+import JsonLd from "./components/JsonLd";
+import { organizationSchema } from "@/lib/organizationSchema";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -38,6 +40,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${marcellus.variable} antialiased`}
       >
+        <JsonLd data={organizationSchema} />
         {/* 1. Critical External Scripts */}
         {recaptchaKey && (
           <Script
@@ -58,42 +61,42 @@ export default function RootLayout({ children }) {
         />
         <Script id="google-analytics" strategy="lazyOnload">
           {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){window.dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-CM483Z0JT5');
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-CM483Z0JT5');
           `}
         </Script>
 
         {/* Apollo.io Tracker */}
         <Script id="apollo-tracker" strategy="afterInteractive">
           {`
-            function initApollo() {
-              var n = Math.random().toString(36).substring(7),
-                  o = document.createElement("script");
-              o.src = "https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache=" + n;
-              o.async = true;
-              o.defer = true;
-              o.onload = function() {
-                window.trackingFunctions.onLoad({ appId: "6900ba1d130409000d727aa4" });
-              };
-              document.head.appendChild(o);
-            }
-            initApollo();
+          function initApollo() {
+            var n = Math.random().toString(36).substring(7),
+                o = document.createElement("script");
+            o.src = "https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache=" + n;
+            o.async = true;
+            o.defer = true;
+            o.onload = function() {
+              window.trackingFunctions.onLoad({ appId: "6900ba1d130409000d727aa4" });
+            };
+            document.head.appendChild(o);
+          }
+          initApollo();
           `}
         </Script>
 
         {/* Smartsupp Setup */}
         <Script id="smartsupp-init" strategy="lazyOnload">
           {`
-            var _smartsupp = _smartsupp || {};
-            _smartsupp.key = '100ac95e1a30b01edc4750b15cfd20a7002dcfae';
-            window.smartsupp||(function(d) {
-              var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-              s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-              c.type='text/javascript';c.charset='utf-8';c.async=true;
-              c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-            })(document);
+          var _smartsupp = _smartsupp || {};
+          _smartsupp.key = '100ac95e1a30b01edc4750b15cfd20a7002dcfae';
+          window.smartsupp||(function(d) {
+            var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+            s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+            c.type='text/javascript';c.charset='utf-8';c.async=true;
+            c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+          })(document);
           `}
         </Script>
 
