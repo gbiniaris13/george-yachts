@@ -6,6 +6,8 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
+import JsonLd from "../../components/JsonLd";
+import { generateArticleSchema } from "@/lib/articleSchema";
 
 export async function generateStaticParams() {
   const query = `*[_type == "post"]{ "slug": slug.current }`;
@@ -19,62 +21,67 @@ async function getPost(slug) {
     "imageUrl": mainImage.asset->url,
     "imageAlt": mainImage.alt,
     publishedAt,
+    _createdAt,
+    _updatedAt,
     author,
     body,
-        excerpt,
-            mainImage
+    excerpt,
+    mainImage
   }`;
   return sanityClient.fetch(query, { slug });
 }
 
 export async function generateMetadata({ params }) {
-    const { slug } = await params;
-    const post = await getPost(slug);
-    if (!post) return { title: "Article Not Found | George Yachts" };
+  const { slug } = await params;
+  const post = await getPost(slug);
 
-    // --- Description: excerpt → body text fallback → generic fallback ---
-    let description = post.excerpt || null;
-    if (!description && post.body) {
-          const firstTextBlock = post.body.find(
-                  (block) => block._type === "block" && block.children
-                        );
-          if (firstTextBlock) {
-                  const rawText = firstTextBlock.children
-                    .map((span) => span.text || "")
-                    .join("");
-                  description = rawText.slice(0, 155) || null;
-          }
+  if (!post) return { title: "Article Not Found | George Yachts" };
+
+  // --- Description: excerpt → body text fallback → generic fallback ---
+  let description = post.excerpt || null;
+
+  if (!description && post.body) {
+    const firstTextBlock = post.body.find(
+      (block) => block._type === "block" && block.children
+    );
+    if (firstTextBlock) {
+      const rawText = firstTextBlock.children
+        .map((span) => span.text || "")
+        .join("");
+      description = rawText.slice(0, 155) || null;
     }
-    if (!description) {
-          description = `Expert insights and maritime analysis: ${post.title}.`;
-    }
+  }
 
-    // --- OG Image: Sanity mainImage → opengraph-image.png fallback ---
-    const ogImageUrl = post.mainImage
-      ? urlFor(post.mainImage).width(1200).height(630).url()
-          : "https://georgeyachts.com/opengraph-image.png";
+  if (!description) {
+    description = `Expert insights and maritime analysis: ${post.title}.`;
+  }
 
-    const canonicalUrl = `https://georgeyachts.com/blog/${slug}`;
+  // --- OG Image: Sanity mainImage → opengraph-image.png fallback ---
+  const ogImageUrl = post.mainImage
+    ? urlFor(post.mainImage).width(1200).height(630).url()
+    : "https://georgeyachts.com/opengraph-image.png";
 
-    return {
-          title: `${post.title} | The Journal | George Yachts`,
-          description,
-          alternates: {
-                  canonical: canonicalUrl,
-          },
-          openGraph: {
-                  title: `${post.title} | The Journal | George Yachts`,
-                  description,
-                  url: canonicalUrl,
-                  images: [{ url: ogImageUrl, width: 1200, height: 630 }],
-          },
-          twitter: {
-                  card: "summary_large_image",
-                  title: `${post.title} | The Journal | George Yachts`,
-                  description,
-                  images: [ogImageUrl],
-          },
-    };
+  const canonicalUrl = `https://georgeyachts.com/blog/${slug}`;
+
+  return {
+    title: `${post.title} | The Journal | George Yachts`,
+    description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: `${post.title} | The Journal | George Yachts`,
+      description,
+      url: canonicalUrl,
+      images: [{ url: ogImageUrl, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${post.title} | The Journal | George Yachts`,
+      description,
+      images: [ogImageUrl],
+    },
+  };
 }
 
 const ArticlePage = async ({ params }) => {
@@ -91,6 +98,8 @@ const ArticlePage = async ({ params }) => {
     );
   }
 
+  const articleSchema = generateArticleSchema(post);
+
   const date = new Date(post.publishedAt).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
@@ -99,10 +108,10 @@ const ArticlePage = async ({ params }) => {
 
   return (
     <div className="min-h-screen bg-[#020617] font-sans selection:bg-[#DAA520] selection:text-black">
+      <JsonLd data={articleSchema} />
 
       {/* PURE TYPOGRAPHIC HERO */}
       <section className="relative w-full min-h-[60vh] md:min-h-[68vh] flex flex-col px-8 md:px-20 pt-16 pb-16 md:pb-24 overflow-hidden">
-
         {/* Subtle grain overlay */}
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.03]"
@@ -125,14 +134,28 @@ const ArticlePage = async ({ params }) => {
             The Journal
           </Link>
 
-          <span className="text-white/20 text-[9px] tracking-[0.55em] uppercase">
-            {date}
-          </span>
+          <div className="flex flex-col items-end gap-1">
+            <span className="text-white/20 text-[9px] tracking-[0.55em] uppercase">
+              {new Date(post.publishedAt || post._createdAt).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </span>
+            {post._updatedAt && post._updatedAt !== post.publishedAt && (
+              <span className="text-[#DAA520]/40 text-[8px] tracking-[0.4em] uppercase">
+                Updated: {new Date(post._updatedAt).toLocaleDateString('en-US', { 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                })}
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Typographic block — left on mobile, centered on desktop */}
         <div className="flex flex-col items-start md:items-center md:text-center flex-1 justify-center mt-12 md:mt-0">
-
           <div className="flex items-center space-x-4 mb-8">
             <span className="block w-8 h-px bg-[#DAA520]" />
             <span className="text-[#DAA520] text-[9px] tracking-[0.6em] uppercase font-bold">
@@ -176,7 +199,6 @@ const ArticlePage = async ({ params }) => {
       {/* EDITORIAL BODY */}
       <section className="relative z-10 bg-[#020617] px-6 py-20 md:py-32">
         <div className="max-w-[720px] mx-auto">
-
           <div className="flex items-center space-x-6 mb-16">
             <span className="block w-6 h-px bg-[#DAA520]/50" />
             <span className="text-[#DAA520]/50 text-[8px] tracking-[0.7em] uppercase">
