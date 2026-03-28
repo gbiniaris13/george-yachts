@@ -1,0 +1,578 @@
+/* ============================================
+   GEORGE YACHTS - Individual Yacht Page
+   Boutique Luxury Aesthetic — Matching Homepage
+   ============================================ */
+
+/* Variables — Exact homepage values */
+:root {
+  /* Primary */
+  --gy-gold: #DAA520;
+  --gy-gold-light: #E6C77A;
+  --gy-gold-mid: #C9A24D;
+  --gy-gold-dark: #A67C2E;
+
+  /* Backgrounds */
+  --gy-black: #0a0a0a;
+  --gy-navy: #020617;
+
+  /* Text */
+  --gy-white: #ffffff;
+  --gy-gray: #9ca3af;
+
+  /* Gold Gradient (for titles) */
+  --gy-gold-gradient: linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%);
+}
+
+/* Gold gradient text effect */
+.gradient-gold {
+  background-image: linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Small labels */
+.label-text {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gy-gold);
+}
+
+/* Gold accent line */
+.gold-line {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #DAA520, transparent);
+  opacity: 0.5;
+  width: 0;
+  transition: width 1s ease;
+}
+
+.gold-line.visible {
+  width: 100%;
+}
+
+/* Film grain overlay */
+.yacht-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: 0.05;
+  pointer-events: none;
+  background: url('https://grainy-gradients.vercel.app/noise.svg');
+  mix-blend-mode: overlay;
+  z-index: 100;
+}
+
+/* ---- Scroll Reveal ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Hero Section ---- */
+.yacht-hero {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 80px;
+}
+
+.yacht-hero__image-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.yacht-hero__image {
+  object-fit: cover;
+  transform: scale(1.05);
+  transition: transform 8s ease-out;
+}
+
+.yacht-hero:hover .yacht-hero__image {
+  transform: scale(1.0);
+}
+
+.yacht-hero__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.1) 40%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.yacht-hero__content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: white;
+}
+
+.yacht-hero__title {
+  font-family: var(--font-marcellus), 'Marcellus', serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 16px 0;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
+.yacht-hero__subtitle {
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gy-gold);
+  margin: 0;
+}
+
+/* ---- Container ---- */
+.yacht-page .container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---- Story Section ---- */
+.yacht-story {
+  padding: 80px 0;
+  margin-top: 0;
+  border-top: none;
+  background: var(--gy-black);
+}
+
+.yacht-story p {
+  font-size: 1.125rem;
+  line-height: 1.9;
+  color: var(--gy-gray);
+  margin-bottom: 1.5em;
+}
+
+.yacht-story h2 {
+  font-family: var(--font-marcellus), 'Marcellus', serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gy-white);
+  margin: 2em 0 1em 0;
+}
+
+.yacht-story strong {
+  color: var(--gy-white);
+}
+
+.yacht-story em {
+  font-style: italic;
+  color: var(--gy-gold-light);
+}
+
+/* ---- George's Inside Info ---- */
+.yacht-insider {
+  padding: 80px 0;
+  background: var(--gy-navy);
+}
+
+.yacht-insider__card {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 4px solid var(--gy-gold);
+  padding: 40px;
+  border-radius: 0 8px 8px 0;
+  transition: all 0.5s ease;
+}
+
+.yacht-insider__card:hover {
+  background: rgba(0, 0, 0, 0.5);
+  border-color: rgba(218, 165, 32, 0.3);
+  border-left-color: var(--gy-gold);
+  transform: translateY(-2px);
+}
+
+.yacht-insider__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.yacht-insider__icon {
+  font-size: 2rem;
+}
+
+.yacht-insider__title {
+  font-family: var(--font-marcellus), 'Marcellus', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gy-gold);
+  margin: 0;
+}
+
+.yacht-insider__quote {
+  font-size: 1.125rem;
+  font-style: italic;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 24px 0;
+  padding: 0;
+  border: none;
+}
+
+.yacht-insider__signature {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--gy-gold);
+  margin: 0;
+  text-align: right;
+  letter-spacing: 0.1em;
+}
+
+/* ---- Specifications ---- */
+.yacht-specs {
+  padding: 80px 0;
+  background: var(--gy-black);
+}
+
+.yacht-specs__title {
+  font-family: var(--font-marcellus), 'Marcellus', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gy-white);
+  text-align: center;
+  margin: 0 0 48px 0;
+}
+
+.yacht-specs__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 32px;
+}
+
+.yacht-specs__item {
+  text-align: center;
+  padding: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.yacht-specs__label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gy-gold);
+  margin-bottom: 8px;
+}
+
+.yacht-specs__value {
+  display: block;
+  font-family: var(--font-marcellus), 'Marcellus', serif;
+  font-size: 1.5rem;
+  color: var(--gy-white);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Ideal For ---- */
+.yacht-ideal {
+  padding: 60px 0;
+  background: var(--gy-navy);
+  text-align: center;
+}
+
+.yacht-ideal__title {
+  font-family: var(--font-marcellus), 'Marcellus', serif;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gy-white);
+  margin: 0 0 16px 0;
+}
+
+.yacht-ideal__text {
+  font-size: 1.125rem;
+  color: var(--gy-gray);
+  margin: 0;
+}
+
+/* ---- Features ---- */
+.yacht-features {
+  padding: 80px 0;
+  background: var(--gy-black);
+}
+
+.yacht-features__title {
+  font-family: var(--font-marcellus), 'Marcellus', serif;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gy-white);
+  text-align: center;
+  margin: 0 0 48px 0;
+}
+
+.yacht-features__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.yacht-features__item {
+  font-size: 1rem;
+  color: var(--gy-gray);
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.yacht-features__check {
+  color: var(--gy-gold);
+  font-weight: bold;
+}
+
+/* ---- Water Toys ---- */
+.yacht-toys {
+  padding: 80px 0;
+  background: var(--gy-navy);
+}
+
+.yacht-toys__title {
+  font-family: var(--font-marcellus), 'Marcellus', serif;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gy-gold);
+  text-align: center;
+  margin: 0 0 48px 0;
+}
+
+.yacht-toys__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.yacht-toys__item {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 12px 24px;
+  border: 1px solid rgba(218, 165, 32, 0.3);
+  border-radius: 24px;
+  transition: all 0.3s ease;
+}
+
+.yacht-toys__item:hover {
+  border-color: var(--gy-gold);
+  background: rgba(218, 165, 32, 0.1);
+}
+
+/* ---- Gallery ---- */
+.yacht-gallery {
+  padding: 80px 0;
+  background: var(--gy-black);
+}
+
+.yacht-gallery__title {
+  font-family: var(--font-marcellus), 'Marcellus', serif;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gy-white);
+  text-align: center;
+  margin: 0 0 48px 0;
+}
+
+.yacht-gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.yacht-gallery__item {
+  position: relative;
+  aspect-ratio: 3/2;
+  overflow: hidden;
+  border-radius: 4px;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.6s ease;
+}
+
+.yacht-gallery__item.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger delay */
+.yacht-gallery__item:nth-child(1) { transition-delay: 0s; }
+.yacht-gallery__item:nth-child(2) { transition-delay: 0.1s; }
+.yacht-gallery__item:nth-child(3) { transition-delay: 0.15s; }
+.yacht-gallery__item:nth-child(4) { transition-delay: 0.2s; }
+.yacht-gallery__item:nth-child(5) { transition-delay: 0.25s; }
+.yacht-gallery__item:nth-child(6) { transition-delay: 0.3s; }
+
+.yacht-gallery__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease, filter 0.7s ease;
+}
+
+.yacht-gallery__item:hover .yacht-gallery__image {
+  transform: scale(1.08);
+  filter: brightness(1.1);
+}
+
+/* ---- Pricing ---- */
+.yacht-pricing {
+  padding: 80px 0;
+  background: var(--gy-navy);
+  text-align: center;
+}
+
+.yacht-pricing__title {
+  font-family: var(--font-marcellus), 'Marcellus', serif;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gy-white);
+  margin: 0 0 16px 0;
+}
+
+.yacht-pricing__rate {
+  font-family: var(--font-marcellus), 'Marcellus', serif;
+  font-size: 2rem;
+  background-image: linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+/* ---- CTA Section ---- */
+.yacht-cta {
+  padding: 100px 0;
+  background: var(--gy-navy);
+  text-align: center;
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-block;
+  background: white;
+  color: black;
+  font-weight: bold;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  padding: 16px 48px;
+  transition: all 0.5s ease;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: var(--gy-gold);
+  color: white;
+}
+
+.btn-secondary {
+  display: inline-block;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 0.75rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  padding: 16px 48px;
+  transition: all 0.5s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--gy-gold);
+}
+
+/* ---- Back Link ---- */
+.yacht-back {
+  padding: 40px 0;
+  background: var(--gy-black);
+  text-align: center;
+}
+
+.yacht-back__link {
+  font-size: 0.875rem;
+  color: var(--gy-gray);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  letter-spacing: 0.1em;
+}
+
+.yacht-back__link:hover {
+  color: var(--gy-gold);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .yacht-hero {
+    height: 70vh;
+  }
+
+  .yacht-insider__card {
+    padding: 24px;
+  }
+
+  .yacht-specs__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
