@@ -115,7 +115,7 @@ const VideoSection = () => {
                       Exclusively Greek Waters
                     </p>
 
-                    {/* Brand Name — GEORGE YACHTS */}
+                    {/* Brand Name — H1 with SEO keyword (visually hidden span) */}
                     <h1
                       style={{
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
@@ -132,6 +132,7 @@ const VideoSection = () => {
                       }}
                     >
                       GEORGE YACHTS
+                      <span className="sr-only"> — Luxury Yacht Charter Greece</span>
                     </h1>
 
                     {/* Subtitle — BROKERAGE HOUSE LLC */}

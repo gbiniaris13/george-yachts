@@ -48,10 +48,10 @@ export default function HomeStats() {
   }, [ref]);
 
   const stats = [
-    { end: 50, suffix: "+", label: "Curated Yachts" },
-    { end: 4, suffix: "", label: "Sailing Regions" },
-    { end: 360, suffix: "\u00b0", label: "Luxury Services" },
-    { end: 100, suffix: "%", label: "Greek Waters" },
+    { end: 50, suffix: "+", label: "Charter Yachts in Greece" },
+    { end: 4, suffix: "", label: "Greek Sailing Regions" },
+    { end: 360, suffix: "\u00b0", label: "Concierge Services" },
+    { end: 100, suffix: "%", label: "Greek Waters Focus" },
   ];
 
   return (

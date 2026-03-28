@@ -5,27 +5,27 @@ import React from "react";
 // --- DATA (UNCHANGED) ---
 const features = [
   {
-    title: "WE TURN DREAMS | INTO DESTINATIONS",
+    title: "CREWED YACHT CHARTER | IN GREEK WATERS",
     paragraph:
-      "At George Yachts, every charter begins with a vision — yours. We create tailor-made experiences across the Mediterranean, combining performance yachts, exclusive itineraries, and a modern sense of luxury. From the Aegean’s hidden coves to the Ionian’s calm horizons, we turn every journey into a story worth remembering. Yachting isn’t just what we do — it’s how we live.",
+      "From the Cyclades to the Ionian, from the Saronic Gulf to the Sporades — George Yachts curates crewed yacht charters across every Greek sailing region. Our fleet of 50+ motor yachts, sailing catamarans, and monohulls is handpicked for quality, crew excellence, and guest experience. Whether you envision Mykonos sunsets or Corfu coastlines, your charter begins with a single conversation.",
     imageSrc: "/images/yacht-1.jpeg",
   },
   {
-    title: "BOUTIQUE SERVICE | GLOBAL STANDARDS",
+    title: "WHY CHOOSE | A BOUTIQUE BROKER?",
     paragraph:
-      "Focusing on Mediterranean excellence and operating internationally, George Yachts brings a new generation of professionalism to luxury yachting. We specialize in crewed motor yacht charters, sales, and charter management — delivering seamless service and clear communication every step of the way. Whether you’re chartering, buying, or trusting us with your yacht’s representation, expect nothing less than precision, discretion, and genuine passion for the sea.",
+      "Unlike aggregator platforms with thousands of listings and no personal touch, George Yachts operates as a boutique brokerage — one broker, one relationship, one standard. Every yacht is personally vetted. Every captain is known by name. Every itinerary is crafted from real experience sailing these waters. IYBA member, MYBA contracts, transparent pricing with APA and VAT explained upfront. No surprises, no middlemen.",
     imageSrc: "/images/yacht-2.jpeg",
   },
   {
-    title: "BEYOND THE SEA | AND THE HORIZON",
+    title: "360° LUXURY | BEYOND THE YACHT",
     paragraph:
-      "Our service doesn’t end when you step off the yacht. Through our network of trusted partners, we arrange every special request — from private jets to curated transfers and reservations. George Yachts is not just about travel, but about lifestyle — tailored for those who value effortless elegance and true exclusivity.",
+      "Your experience extends far beyond the deck. Through our network of trusted partners across Greece, we arrange private jet and helicopter transfers, VIP ground transport, luxury villa stays in Mykonos, Santorini, and the Athens Riviera, Michelin-level dining reservations, and bespoke island itineraries. One point of contact for everything — from touchdown at Athens International to your final sunset anchorage.",
     imageSrc: "/images/yacht-3.jpeg",
   },
   {
-    title: "FUTURE OF YACHTING | MODERN ELEGANCE",
+    title: "CHARTER WITH | CONFIDENCE",
     paragraph:
-      "George Yachts represents a fresh chapter in Mediterranean yachting — a boutique company with international mindset and modern drive. We blend experience, aesthetics, and digital precision to redefine what it means to charter with confidence. With every client, every yacht, every detail — we bring the art of yachting to life, with calm sophistication and contemporary edge.",
+      "George Yachts brings a new standard to Mediterranean yacht charter — combining international professionalism with deep local expertise in Greek waters. Weekly rates from €5,900 for intimate sailing catamarans to €235,000 for flagship superyachts. Clear contracts, fast proposals, and an IYBA member broker who answers the phone personally. This is yacht charter as it should be — precise, discreet, and genuinely personal.",
     imageSrc: "/images/yacht-4.jpeg",
   },
 ];
