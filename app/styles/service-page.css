@@ -1,0 +1,460 @@
+/* ============================================
+   GEORGE YACHTS — Shared Service Page Styles
+   BLACK + GOLD — Multi-Million Aesthetic
+   Used by: Buy a Yacht, Fly Private, VIP Transfers, Luxury Villas, FAQ
+   ============================================ */
+
+@keyframes svcHeroEyebrow {
+  from { opacity: 0; transform: translateY(12px); letter-spacing: 0.6em; }
+  to { opacity: 1; transform: translateY(0); letter-spacing: 0.35em; }
+}
+@keyframes svcHeroTitle {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes svcGoldLine {
+  from { width: 0; opacity: 0; }
+  to { width: 80px; opacity: 1; }
+}
+@keyframes svcHeroSub {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes svcCtaShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ── HERO ── */
+.svc-hero {
+  position: relative;
+  height: 75vh;
+  min-height: 500px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.svc-hero__bg {
+  position: absolute;
+  inset: -20%;
+  width: 140%;
+  height: 140%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(100%) !important;
+  -webkit-filter: grayscale(100%) !important;
+  will-change: transform;
+}
+
+.svc-hero__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.9) 100%);
+}
+
+.svc-hero__content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.svc-hero__eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #DAA520;
+  margin-bottom: 20px;
+  font-weight: 500;
+  opacity: 0;
+  animation: svcHeroEyebrow 0.8s ease-out 0.3s forwards;
+}
+
+.svc-hero__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(36px, 7vw, 72px);
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  color: #fff;
+  margin: 0 0 28px;
+  opacity: 0;
+  animation: svcHeroTitle 0.9s ease-out 0.6s forwards;
+}
+
+.svc-hero__line {
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E);
+  margin: 0 auto 28px;
+  animation: svcGoldLine 1.2s ease-out 1s forwards;
+}
+
+.svc-hero__subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-weight: 300;
+  opacity: 0;
+  animation: svcHeroSub 0.8s ease-out 1.4s forwards;
+}
+
+/* ── INTRO SECTION ── */
+.svc-intro {
+  padding: 100px 24px;
+  background: #000;
+}
+
+.svc-intro__inner {
+  max-width: 750px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.svc-intro__eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #DAA520;
+  margin-bottom: 24px;
+}
+
+.svc-intro__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 300;
+  color: #fff;
+  line-height: 1.35;
+  margin: 0 0 32px;
+}
+
+.svc-intro__line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, #E6C77A, #A67C2E);
+  margin: 0 auto 32px;
+}
+
+.svc-intro__text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.9;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.svc-intro__text:last-child {
+  margin-bottom: 0;
+}
+
+.svc-intro__highlight {
+  color: rgba(255,255,255,0.7);
+  font-weight: 400;
+}
+
+/* ── FEATURES GRID ── */
+.svc-features {
+  padding: 100px 24px;
+  background: #000;
+  border-top: 1px solid rgba(218,165,32,0.08);
+}
+
+.svc-features__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 300;
+  color: #fff;
+  text-align: center;
+  margin: 0 0 56px;
+}
+
+.svc-features__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  max-width: 1100px;
+  margin: 0 auto;
+  background: rgba(218,165,32,0.06);
+}
+
+.svc-features__card {
+  background: #000;
+  padding: 48px 28px;
+  text-align: center;
+  transition: background 0.5s ease;
+}
+
+.svc-features__card:hover {
+  background: rgba(218,165,32,0.03);
+}
+
+.svc-features__icon {
+  color: #DAA520;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.svc-features__card-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0 0 12px;
+}
+
+.svc-features__card-desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ── CHECKLIST ── */
+.svc-checklist {
+  padding: 80px 24px;
+  background: #000;
+  border-top: 1px solid rgba(218,165,32,0.08);
+}
+
+.svc-checklist__inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.svc-checklist__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 300;
+  color: #fff;
+  text-align: center;
+  margin: 0 0 48px;
+}
+
+.svc-checklist__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.svc-checklist__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.svc-checklist__check {
+  color: #DAA520;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.svc-checklist__text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* ── CTA ── */
+.svc-cta {
+  padding: 100px 24px;
+  background: #000;
+  text-align: center;
+  border-top: 1px solid rgba(218,165,32,0.08);
+}
+
+.svc-cta__eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #DAA520;
+  margin-bottom: 16px;
+}
+
+.svc-cta__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 300;
+  color: #fff;
+  margin: 0 0 16px;
+}
+
+.svc-cta__text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 500px;
+  margin: 0 auto 40px;
+}
+
+.svc-cta__button {
+  display: inline-block;
+  background: linear-gradient(90deg, #E6C77A 0%, #C9A24D 25%, #A67C2E 50%, #C9A24D 75%, #E6C77A 100%);
+  background-size: 200% 100%;
+  color: #000;
+  padding: 16px 48px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: svcCtaShimmer 4s ease-in-out infinite;
+}
+
+.svc-cta__button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(218,165,32,0.35);
+}
+
+/* ── FAQ STYLES ── */
+.faq-section {
+  padding: 100px 24px;
+  background: #000;
+}
+
+.faq-section__inner {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.faq-category {
+  margin-bottom: 64px;
+}
+
+.faq-category:last-child {
+  margin-bottom: 0;
+}
+
+.faq-category__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0 0 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(218,165,32,0.2);
+  display: inline-block;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+}
+
+.faq-item__button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 20px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.faq-item__question {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.6);
+  transition: color 0.3s ease;
+  line-height: 1.5;
+  padding-right: 16px;
+}
+
+.faq-item__button:hover .faq-item__question {
+  color: #DAA520;
+}
+
+.faq-item--open .faq-item__question {
+  color: #DAA520;
+  font-weight: 500;
+}
+
+.faq-item__icon {
+  flex-shrink: 0;
+  color: rgba(255,255,255,0.2);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.faq-item--open .faq-item__icon {
+  color: #DAA520;
+  transform: rotate(180deg);
+}
+
+.faq-item__answer {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+  padding: 0 0 0 0;
+}
+
+.faq-item--open .faq-item__answer {
+  max-height: 500px;
+  opacity: 1;
+  padding: 0 0 24px 0;
+}
+
+.faq-item__answer-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .svc-features__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .svc-hero {
+    height: 60vh;
+    min-height: 400px;
+  }
+
+  .svc-intro, .svc-features, .svc-cta {
+    padding: 70px 20px;
+  }
+
+  .svc-features__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .svc-checklist__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .svc-checklist {
+    padding: 60px 20px;
+  }
+
+  .faq-section {
+    padding: 70px 20px;
+  }
+}

@@ -1,120 +1,89 @@
 import React from "react";
-import { sanityClient } from "@/lib/sanity";
-import TransferSwiper from "@/components/TransferSwiper";
 import Footer from "@/components/Footer";
-import AboutUs from "@/components/AboutUs";
 import ContactFormSection from "@/components/ContactFormSection";
-import { Check } from "lucide-react";
-
-export const revalidate = 0;
+import { ServiceParallax, Reveal } from "@/components/ServiceParallax";
+import Image from "next/image";
+import "@/styles/service-page.css";
 
 export const metadata = {
-  title: "VIP Transfers Athens & Greece | George Yachts",
+  title: "VIP Transfers Athens & Greek Islands | Luxury Chauffeur | George Yachts",
   description:
-    "Arrive in style with George Yachts. We offer seamless VIP transfers with luxury vehicles and professional chauffeurs in Athens, Mykonos, and across Greece.",
-  alternates: {
-    canonical: "https://georgeyachts.com/vip-transfers-greece",
+    "Luxury VIP transfers in Athens, Mykonos, Santorini, and across Greece. Professional chauffeurs, premium vehicles. Airport to marina, seamless coordination with yacht charters.",
+  alternates: { canonical: "https://georgeyachts.com/vip-transfers-greece" },
+  openGraph: {
+    title: "VIP Transfers Greece | Luxury Chauffeur Services | George Yachts",
+    description: "Premium chauffeur services coordinated with your yacht charter. Athens, Mykonos, Santorini.",
+    url: "https://georgeyachts.com/vip-transfers-greece",
   },
 };
 
-const ALL_TRANSFERS_QUERY = `*[_type == "transfer"] | order(_createdAt asc){
-  _id,
-  vehicleType,
-  capacity,
-  availability,
-  includes,
-  transfersFromTo,
-  images[]{
-    asset, 
-    alt 
-  }
-}`;
+function PageSchema() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "VIP Transfers Greece",
+    provider: { "@type": "Organization", name: "George Yachts Brokerage House LLC", url: "https://georgeyachts.com" },
+    description: "Luxury VIP chauffeur transfers in Athens, Mykonos, Santorini and across Greece. Airport, hotel, marina coordination.",
+    areaServed: { "@type": "Place", name: "Greece" },
+    serviceType: "VIP Ground Transportation",
+  };
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
+}
 
-const VipTransfersPage = async () => {
-  let transfers = [];
-  try {
-    transfers = await sanityClient.fetch(ALL_TRANSFERS_QUERY);
-  } catch (error) {
-    console.error("Failed to fetch transfers from Sanity:", error);
-  }
+const CHECK = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>;
 
+export default function VipTransfersPage() {
   return (
-    <div className="min-h-screen bg-gray-100 font-sans">
-      <AboutUs
-        heading="VIP TRANSFERS"
-        subtitle="SEAMLESS & LUXURIOUS"
-        paragraph="Your journey, curated from start to finish. Arrive in style with our fleet of luxury vehicles and professional chauffeurs."
-        imageUrl="/images/vip-transfers.jpeg"
-        altText="A luxury sedan interior"
-      />
+    <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+      <PageSchema />
+      <ServiceParallax />
 
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-4xl mx-auto">
-          {/* Header & Intro */}
-          <div className="text-center mb-16">
-            <h1
-              className="text-3xl md:text-5xl font-bold text-[#02132d] mb-4 uppercase"
-              style={{ fontFamily: "var(--font-marcellus)" }}
-            >
-              VIP TRANSFERS — AVAILABLE ON REQUEST
-            </h1>
-
-            <div className="text-gray-600 leading-relaxed text-base md:text-lg space-y-4 max-w-3xl mx-auto">
-              <p>
-                Premium chauffeur services in Athens and across the Greek
-                islands, coordinated around your itinerary.
-              </p>
-              <p>
-                We arrange discreet transportation with vetted professional
-                drivers and high-standard vehicles. Airport arrivals, marina
-                transfers, day schedules, multi-stop routing. One point of
-                contact, clean execution.
-              </p>
-            </div>
-          </div>
-
-          {/* Bullet Points Section */}
-          <div className="bg-gray-50 p-8 md:p-12 rounded-xl border border-gray-100">
-            <h2
-              className="text-2xl md:text-3xl font-bold text-[#02132d] mb-8 text-center"
-              style={{ fontFamily: "var(--font-marcellus)" }}
-            >
-              What We Can Arrange
-            </h2>
-
-            <ul className="grid md:grid-cols-2 gap-x-8 gap-y-4 max-w-3xl mx-auto">
-              {[
-                "Chauffeured transfers: airport, hotel, marina, intercity",
-                "Driver on standby (full-day or multi-day)",
-                "Multi-vehicle coordination for groups and events",
-                "Meet & greet and luggage handling (upon request)",
-                "Route planning aligned with yacht and flight schedules",
-              ].map((item, index) => (
-                <li key={index} className="flex items-start space-x-3">
-                  <Check className="w-5 h-5 text-[#DAA520] mt-1 shrink-0" />
-                  <span className="text-gray-700">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+      <section className="svc-hero">
+        <Image src="/images/vip-transfers.jpeg" alt="VIP luxury chauffeur transfers Athens Greece - George Yachts" fill priority className="svc-hero__bg" sizes="100vw" />
+        <div className="svc-hero__gradient" />
+        <div className="svc-hero__content">
+          <p className="svc-hero__eyebrow">Seamless &amp; Luxurious</p>
+          <h1 className="svc-hero__title">VIP Transfers</h1>
+          <div className="svc-hero__line" />
+          <p className="svc-hero__subtitle">Your journey, curated from start to finish. Arrive in style with luxury vehicles and professional chauffeurs.</p>
         </div>
       </section>
-      {/* {transfers.length > 0 ? (
-        transfers.map((transfer) => (
-          <TransferSwiper key={transfer._id} transferData={transfer} />
-        ))
-      ) : (
-        <section className="text-center py-20">
-          <p>
-            We currently have no vehicles listed for transfer. Please check back
-            soon!
-          </p>
-        </section>
-      )} */}
+
+      <section className="svc-intro">
+        <Reveal className="svc-intro__inner">
+          <p className="svc-intro__eyebrow">Premium Ground Transport</p>
+          <h2 className="svc-intro__title">How Do VIP Transfers Work with George Yachts?</h2>
+          <div className="svc-intro__line" />
+          <p className="svc-intro__text">Premium chauffeur services in Athens and across the Greek islands, coordinated around your itinerary.</p>
+          <p className="svc-intro__text">We arrange discreet transportation with vetted professional drivers and high-standard vehicles. Airport arrivals, marina transfers, day schedules, multi-stop routing. One point of contact, clean execution.</p>
+        </Reveal>
+      </section>
+
+      <section className="svc-checklist">
+        <Reveal className="svc-checklist__inner">
+          <h2 className="svc-checklist__title">What VIP Transfer Services Are Available?</h2>
+          <div className="svc-checklist__grid">
+            {["Chauffeured transfers: airport, hotel, marina, intercity","Driver on standby (full-day or multi-day)","Multi-vehicle coordination for groups and events","Meet & greet and luggage handling (upon request)","Route planning aligned with yacht and flight schedules"].map((item, i) => (
+              <Reveal key={i} className="svc-checklist__item" delay={i * 0.06}>
+                <span className="svc-checklist__check">{CHECK}</span>
+                <span className="svc-checklist__text">{item}</span>
+              </Reveal>
+            ))}
+          </div>
+        </Reveal>
+      </section>
+
+      <section className="svc-cta">
+        <Reveal>
+          <p className="svc-cta__eyebrow">Effortless Arrivals</p>
+          <h2 className="svc-cta__title">Let&apos;s Arrange Your Transfer</h2>
+          <p className="svc-cta__text">Share your schedule and we&apos;ll coordinate everything &mdash; airport to marina and beyond.</p>
+          <a href="https://calendly.com/george-georgeyachts/30min" target="_blank" rel="noopener noreferrer" className="svc-cta__button">Book a Free Consultation</a>
+        </Reveal>
+      </section>
+
       <ContactFormSection />
       <Footer />
     </div>
   );
-};
-
-export default VipTransfersPage;
+}
