@@ -73,54 +73,52 @@ const NavDrawerSystem = () => {
         }}
       >
         <div className="flex items-center justify-between h-20 relative">
-          {/* --- 1. LEFT BLOCK --- */}
-          <div className="flex items-center space-x-4">
+          {/* --- 1. LEFT — Menu Button --- */}
+          <div className="flex items-center w-20">
             <button
               onClick={toggleDrawer}
-              className={`p-2 rounded-full ${currentTextColor} hover:text-[#CEA681] cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#CEA681] transition duration-150 active:scale-95 drop-shadow-md`}
+              className={`p-2 ${currentTextColor} hover:text-[#DAA520] cursor-pointer focus:outline-none transition duration-300 active:scale-95`}
               aria-label="Toggle menu"
               data-cursor="Menu"
             >
-              <Menu className="w-6 h-6" />
+              <Menu className="w-5 h-5" />
             </button>
-
-            {/* Logo — Original yacht graphic (yacht only, no text, full visible) */}
-            <a href="/" className="shrink-0 group" data-cursor="Home">
-              <img
-                src="/images/yacht-icon-only.svg"
-                alt="George Yachts Brokerage House"
-                className="transition-opacity duration-300 group-hover:opacity-80"
-                style={{
-                  height: "clamp(28px, 5vw, 46px)",
-                  width: "auto",
-                }}
-              />
-            </a>
           </div>
 
-          {/* --- 2. CENTER BLOCK (REMOVED/NUKED) --- */}
+          {/* --- 2. CENTER — Logo --- */}
+          <a href="/" className="absolute left-1/2 -translate-x-1/2 shrink-0 group" data-cursor="Home">
+            <img
+              src="/images/yacht-icon-only.svg"
+              alt="George Yachts Brokerage House"
+              className="transition-opacity duration-300 group-hover:opacity-80"
+              style={{
+                height: "clamp(28px, 5vw, 46px)",
+                width: "auto",
+              }}
+            />
+          </a>
 
-          {/* --- 3. RIGHT BLOCK — Minimal Social Icons --- */}
-          <div className="flex items-center gap-1">
+          {/* --- 3. RIGHT — Social Icons --- */}
+          <div className="flex items-center gap-1 w-20 justify-end">
             <a
               href="https://www.instagram.com/georgeyachts"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative w-9 h-9 flex items-center justify-center border border-white/[0.08] hover:border-[#DAA520]/30 transition-all duration-500"
+              className="group relative w-9 h-9 flex items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
               aria-label="Instagram"
               data-cursor="Instagram"
             >
-              <Instagram className="w-[14px] h-[14px] text-white/50 group-hover:text-[#DAA520] transition-colors duration-300" />
+              <Instagram className="w-[14px] h-[14px] text-white/40 group-hover:text-[#DAA520] transition-colors duration-300" />
             </a>
             <a
               href="https://wa.me/17867988798"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative w-9 h-9 flex items-center justify-center border border-white/[0.08] hover:border-[#DAA520]/30 transition-all duration-500"
+              className="group relative w-9 h-9 flex items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
               aria-label="WhatsApp"
               data-cursor="WhatsApp"
             >
-              <WhatsappIcon className="w-[14px] h-[14px] text-white/50 group-hover:text-[#DAA520] transition-colors duration-300" />
+              <WhatsappIcon className="w-[14px] h-[14px] text-white/40 group-hover:text-[#DAA520] transition-colors duration-300" />
             </a>
           </div>
         </div>

@@ -419,9 +419,11 @@ const ContactFormSection = () => {
               </div>
             </div>
 
-            {/* reCAPTCHA notice */}
-            <div className="text-[9px] text-white/25 uppercase tracking-widest text-center mb-8">
-              Protected by reCAPTCHA · Google Privacy Policy and Terms of Service apply
+            {/* GDPR + reCAPTCHA notice */}
+            <div className="text-[9px] text-white/25 tracking-widest text-center mb-8 leading-relaxed">
+              By submitting this form you consent to George Yachts Brokerage House LLC processing your personal data to respond to your inquiry.
+              See our <a href="/privacy-policy" className="underline text-[#DAA520]/40 hover:text-[#DAA520]/70 transition-colors">Privacy Policy</a>.
+              <br />Protected by reCAPTCHA · Google Privacy Policy and Terms of Service apply.
             </div>
 
             {/* Status */}

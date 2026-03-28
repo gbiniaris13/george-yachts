@@ -25,7 +25,7 @@ const data = {
     { name: "Paros", desc: "Traditional villages, golden beaches, excellent windsurfing. The family favorite." },
     { name: "Naxos", desc: "Largest Cycladic island. Mountain villages, ancient temples, long sandy beaches." },
     { name: "Milos", desc: "70+ beaches, volcanic rock formations, Kleftiko sea caves. Instagram's best-kept secret." },
-    { name: "Antiparos", desc: "Bohemian tranquility, crystal caves, Tom Hanks' favorite Greek island." },
+    { name: "Antiparos", desc: "Bohemian tranquility, crystal caves, celebrity hideaway with laid-back island charm." },
     { name: "Koufonisia", desc: "Turquoise lagoons, car-free island life. The Caribbean of Greece." },
     { name: "Folegandros", desc: "Dramatic cliffs, zero crowds, one of the most authentic Cycladic experiences." },
   ],

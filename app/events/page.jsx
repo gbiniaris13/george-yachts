@@ -17,40 +17,40 @@ const events = [
     name: "Mediterranean Yacht Show (MEDYS)",
     location: "Athens, Greece",
     desc: "Greece's premier charter yacht show. Meet George Yachts on-site and tour our curated fleet in person.",
-    status: "attending",
+    status: "tbd",
   },
   {
-    date: "September 8-13, 2026",
+    date: "September 2026",
     name: "Cannes Yachting Festival",
     location: "Cannes, France",
-    desc: "Europe's leading in-water yacht show. George Yachts will be available for meetings and yacht viewings.",
-    status: "attending",
+    desc: "Europe's leading in-water yacht show. Contact us if you'd like to arrange a meeting.",
+    status: "tbd",
   },
   {
-    date: "September 23-26, 2026",
+    date: "September 2026",
     name: "Monaco Yacht Show",
     location: "Port Hercules, Monaco",
-    desc: "The world's most prestigious superyacht event. Connect with George Yachts for private viewings and charter consultations.",
-    status: "attending",
+    desc: "The world's most prestigious superyacht event. Reach out to discuss meeting opportunities.",
+    status: "tbd",
   },
   {
-    date: "October 26-30, 2026",
+    date: "October 2026",
     name: "Fort Lauderdale International Boat Show",
     location: "Fort Lauderdale, Florida",
-    desc: "The Western Hemisphere's largest boat show. George Yachts available for U.S. client meetings.",
-    status: "planned",
+    desc: "The Western Hemisphere's largest boat show. Contact us for U.S. meeting arrangements.",
+    status: "tbd",
   },
   {
     date: "December 2026",
     name: "Antigua Charter Yacht Show",
     location: "Antigua, Caribbean",
-    desc: "The Caribbean's most important charter yacht event. Networking and fleet preview for the winter season.",
-    status: "planned",
+    desc: "The Caribbean's most important charter yacht event for the winter season.",
+    status: "tbd",
   },
 ];
 
 function PageSchema() {
-  const schema = { "@context": "https://schema.org", "@type": "ItemList", name: "George Yachts Events & Boat Shows 2026", description: "Yacht shows and maritime events where George Yachts Brokerage House will be present in 2026", numberOfItems: events.length, itemListElement: events.map((e, i) => ({ "@type": "ListItem", position: i + 1, item: { "@type": "Event", name: e.name, startDate: e.date, location: { "@type": "Place", name: e.location }, organizer: { "@type": "Organization", name: "George Yachts Brokerage House LLC" } } })) };
+  const schema = { "@context": "https://schema.org", "@type": "WebPage", name: "Yacht Shows & Events | George Yachts", description: "Major yacht shows and maritime events relevant to George Yachts Brokerage House clients." };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
 
@@ -98,8 +98,8 @@ export default function EventsPage() {
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
                     <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", fontWeight: 500, color: "#fff", margin: 0 }}>{event.name}</h3>
-                    <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "7px", letterSpacing: "0.15em", textTransform: "uppercase", padding: "3px 10px", border: `1px solid ${event.status === "attending" ? "rgba(218,165,32,0.4)" : "rgba(255,255,255,0.1)"}`, color: event.status === "attending" ? "#DAA520" : "rgba(255,255,255,0.3)" }}>
-                      {event.status === "attending" ? "Confirmed" : "Planned"}
+                    <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "7px", letterSpacing: "0.15em", textTransform: "uppercase", padding: "3px 10px", border: `1px solid ${event.status === "confirmed" ? "rgba(218,165,32,0.4)" : "rgba(255,255,255,0.1)"}`, color: event.status === "confirmed" ? "#DAA520" : "rgba(255,255,255,0.3)" }}>
+                      {event.status === "confirmed" ? "Confirmed" : "To Be Confirmed"}
                     </span>
                   </div>
                   <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.4)", lineHeight: 1.7, fontWeight: 300 }}>{event.desc}</p>

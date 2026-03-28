@@ -168,8 +168,7 @@ const Footer = () => {
                   George Yachts Brokerage House LLC
                 </span>
                 30 N Gould St, STE R<br />
-                Sheridan, WY 82801, USA<br />
-                <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.2)" }}>EIN: 30-1480422</span>
+                Sheridan, WY 82801, USA
               </div>
             </div>
           </div>
@@ -235,7 +234,8 @@ const Footer = () => {
               </form>
             )}
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.15)", marginTop: "12px", letterSpacing: "0.05em" }}>
-              No spam. Unsubscribe anytime. Your privacy is respected.
+              By subscribing you agree to receive occasional emails from George Yachts Brokerage House LLC.
+              Unsubscribe anytime. See our <Link href="/privacy-policy" style={{ color: "rgba(218,165,32,0.4)", textDecoration: "underline" }}>Privacy Policy</Link>.
             </p>
           </div>
         </div>

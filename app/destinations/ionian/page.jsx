@@ -21,7 +21,7 @@ const data = {
   islandsTitle: "Which Ionian Islands Should You Visit?",
   islands: [
     { name: "Corfu", desc: "Venetian old town (UNESCO), lush hillsides, luxury resorts. Gateway to the Ionian." },
-    { name: "Paxos", desc: "Tiny, car-free, crystal caves and blue grottos. The most exclusive Ionian island." },
+    { name: "Paxos", desc: "Tiny, tranquil, crystal caves and blue grottos. The most exclusive Ionian island." },
     { name: "Lefkada", desc: "Connected by bridge to mainland. Porto Katsiki — one of Greece's most stunning beaches." },
     { name: "Kefalonia", desc: "Largest Ionian island. Myrtos Beach, Melissani Cave, Captain Corelli's island." },
     { name: "Ithaca", desc: "Odysseus' legendary homeland. Unspoiled, authentic, deeply romantic." },
