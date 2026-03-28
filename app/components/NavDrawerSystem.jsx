@@ -84,15 +84,17 @@ const NavDrawerSystem = () => {
               <Menu className="w-6 h-6" />
             </button>
 
-            {/* Logo — SVG image + LLC subtitle */}
+            {/* Logo — Graphic on desktop, clean text on mobile */}
             <a href="/" className="shrink-0 flex flex-col items-center group" data-cursor="Home">
+              {/* Desktop: SVG graphic */}
               <img
                 src="/images/logo-transparent.svg"
                 alt="George Yachts Brokerage House"
-                className="h-10 md:h-12 w-auto drop-shadow-md transition-opacity duration-300 group-hover:opacity-90"
+                className="hidden md:block h-12 w-auto drop-shadow-md transition-opacity duration-300 group-hover:opacity-90"
                 style={{ filter: "brightness(1.1)" }}
               />
               <span
+                className="hidden md:block"
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: "6px",
@@ -104,6 +106,33 @@ const NavDrawerSystem = () => {
               >
                 BROKERAGE HOUSE LLC
               </span>
+              {/* Mobile: Elegant text logo */}
+              <div className="flex md:hidden flex-col items-start">
+                <span
+                  style={{
+                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontSize: "15px",
+                    fontWeight: 400,
+                    letterSpacing: "0.1em",
+                    color: "#fff",
+                    lineHeight: 1,
+                  }}
+                >
+                  GEORGE YACHTS
+                </span>
+                <span
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: "5.5px",
+                    fontWeight: 500,
+                    letterSpacing: "0.28em",
+                    color: "rgba(218,165,32,0.6)",
+                    marginTop: "3px",
+                  }}
+                >
+                  BROKERAGE HOUSE LLC
+                </span>
+              </div>
             </a>
           </div>
 
