@@ -98,9 +98,11 @@ const Footer = () => {
 
             {/* IYBA */}
             <div className="flex items-center gap-3">
-              <img
+              <Image
                 src="/images/iyba.png"
                 alt="IYBA Member - International Yacht Brokers Association"
+                width={80}
+                height={24}
                 className="h-6 w-auto opacity-60 hover:opacity-100 transition-opacity duration-500"
               />
               <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", letterSpacing: "0.15em", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", maxWidth: "140px", lineHeight: 1.5 }}>

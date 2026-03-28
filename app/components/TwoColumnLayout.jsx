@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 // --- DATA (UNCHANGED) ---
 const features = [
@@ -41,14 +42,13 @@ const MonolithSlide = ({ item, index, total }) => {
     <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
       {/* 1. CINEMATIC BACKGROUND LAYER */}
       <div className="absolute inset-0 z-0">
-        <img
+        <Image
           src={item.imageSrc}
-          alt={item.title}
-          className="w-full h-full object-cover scale-105"
-          onError={(e) =>
-            (e.target.src =
-              "https://placehold.co/1920x1080/050505/ffffff?text=George+Yachts")
-          }
+          alt={`${item.title.replace('|', '–')} - George Yachts luxury yacht charter Greece`}
+          fill
+          className="object-cover scale-105"
+          sizes="100vw"
+          quality={85}
         />
         {/* Expensive "Vignette" Overlay to focus eyes on center */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)]"></div>
