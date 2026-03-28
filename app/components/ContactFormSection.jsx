@@ -73,7 +73,7 @@ const ContactFormSection = () => {
   const labelStyles = "sr-only";
 
   return (
-    <section className="relative w-full min-h-screen bg-black flex items-center justify-center py-24 overflow-hidden">
+    <section id="contact" className="relative w-full min-h-screen bg-black flex items-center justify-center py-24 overflow-hidden">
       {/* Gradient Overlay: Deep Gold/Brown at the bottom fading to Black */}
       <div className="absolute inset-0 bg-linear-to-t from-[#2e2000] via-black to-black z-0"></div>
 

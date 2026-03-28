@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ScrollReveal from './ScrollReveal';
+import Lightbox from './Lightbox';
 import './yacht-page.css';
 
 // ISR - revalidate every hour
@@ -50,16 +51,16 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// Product Schema for GEO
+// Product Schema for GEO — Complete
 function YachtSchema({ yacht, imageUrl }) {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: yacht.name,
-    description: `Luxury ${yacht.subtitle} yacht charter in Greek waters`,
+    description: `Luxury ${yacht.subtitle || ''} yacht available for charter in Greek waters. ${yacht.length}, accommodating ${yacht.sleeps} guests.`,
     brand: {
       '@type': 'Brand',
-      name: yacht.builder || yacht.subtitle,
+      name: yacht.builder || 'Luxury Yacht',
     },
     category: 'Luxury Motor Yacht Charter',
     image: imageUrl,
@@ -82,6 +83,9 @@ function YachtSchema({ yacht, imageUrl }) {
       { '@type': 'PropertyValue', name: 'Guests', value: yacht.sleeps },
       { '@type': 'PropertyValue', name: 'Cabins', value: yacht.cabins },
       { '@type': 'PropertyValue', name: 'Crew', value: yacht.crew },
+      { '@type': 'PropertyValue', name: 'Builder', value: yacht.builder },
+      { '@type': 'PropertyValue', name: 'Max Speed', value: yacht.maxSpeed },
+      { '@type': 'PropertyValue', name: 'Cruise Speed', value: yacht.cruiseSpeed },
     ].filter(prop => prop.value),
   };
 
@@ -142,7 +146,7 @@ export default async function YachtPage({ params }) {
             <div className="yacht-hero__image-container">
               <Image
                 src={heroImage.url}
-                alt={heroImage.alt || `${yacht.name} - luxury yacht charter Greece`}
+                alt={`${yacht.name} ${yacht.subtitle} - luxury yacht charter Greece`}
                 fill
                 priority
                 className="yacht-hero__image"
@@ -168,7 +172,7 @@ export default async function YachtPage({ params }) {
           </section>
         )}
 
-        {/* GEORGE'S INSIDE INFO - The Boutique Differentiator */}
+        {/* GEORGE'S INSIDE INFO — Author Attribution */}
         {yacht.georgeInsiderTip && (
           <section className="yacht-insider reveal">
             <div className="container">
@@ -177,21 +181,21 @@ export default async function YachtPage({ params }) {
                   <span className="yacht-insider__icon">💬</span>
                   <h2 className="yacht-insider__title">George&apos;s Inside Info</h2>
                 </div>
-                <blockquote className="yacht-insider__quote">
+                <blockquote className="yacht-insider__quote" cite="https://georgeyachts.com/team/george-biniaris">
                   &ldquo;{yacht.georgeInsiderTip}&rdquo;
                 </blockquote>
                 <p className="yacht-insider__signature">
-                  — George P. Biniaris, Managing Broker
+                  — <span itemProp="author">George P. Biniaris</span>, Managing Broker &amp; IYBA Member
                 </p>
               </div>
             </div>
           </section>
         )}
 
-        {/* SPECIFICATIONS - Elegant, Minimal */}
+        {/* SPECIFICATIONS — GEO Question H2 */}
         <section className="yacht-specs reveal">
           <div className="container">
-            <h2 className="yacht-specs__title">Specifications</h2>
+            <h2 className="yacht-specs__title">What Are the Specifications of {yacht.name}?</h2>
             <div className="yacht-specs__grid">
               {yacht.length && (
                 <div className="yacht-specs__item">
@@ -245,21 +249,21 @@ export default async function YachtPage({ params }) {
           </div>
         </section>
 
-        {/* IDEAL FOR */}
+        {/* IDEAL FOR — GEO Question H2 */}
         {yacht.idealFor && (
           <section className="yacht-ideal reveal">
             <div className="container">
-              <h2 className="yacht-ideal__title">Ideal For</h2>
+              <h2 className="yacht-ideal__title">Who Is {yacht.name} Ideal For?</h2>
               <p className="yacht-ideal__text">{yacht.idealFor}</p>
             </div>
           </section>
         )}
 
-        {/* KEY FEATURES */}
+        {/* KEY FEATURES — GEO Question H2 */}
         {yacht.features && yacht.features.length > 0 && (
           <section className="yacht-features reveal">
             <div className="container">
-              <h2 className="yacht-features__title">Key Features</h2>
+              <h2 className="yacht-features__title">What Features Make {yacht.name} Stand Out?</h2>
               <ul className="yacht-features__list">
                 {yacht.features.map((feature, index) => (
                   <li key={index} className="yacht-features__item">
@@ -272,11 +276,11 @@ export default async function YachtPage({ params }) {
           </section>
         )}
 
-        {/* WATER TOYS */}
+        {/* WATER TOYS — GEO Question H2 */}
         {yacht.toys && yacht.toys.length > 0 && (
           <section className="yacht-toys reveal">
             <div className="container">
-              <h2 className="yacht-toys__title">Water Toys & Tenders</h2>
+              <h2 className="yacht-toys__title">What Water Toys Are Available on {yacht.name}?</h2>
               <ul className="yacht-toys__list">
                 {yacht.toys.map((toy, index) => (
                   <li key={index} className="yacht-toys__item">{toy}</li>
@@ -286,33 +290,24 @@ export default async function YachtPage({ params }) {
           </section>
         )}
 
-        {/* PHOTO GALLERY */}
+        {/* PHOTO GALLERY — Lightbox + GEO Question H2 */}
         {yacht.images && yacht.images.length > 1 && (
           <section className="yacht-gallery">
             <div className="container">
-              <h2 className="yacht-gallery__title">Gallery</h2>
-              <div className="yacht-gallery__grid">
-                {yacht.images.slice(1).map((image, index) => (
-                  <div key={index} className="yacht-gallery__item">
-                    <Image
-                      src={image.url}
-                      alt={image.alt || `${yacht.name} - view ${index + 2}`}
-                      width={600}
-                      height={400}
-                      className="yacht-gallery__image"
-                    />
-                  </div>
-                ))}
-              </div>
+              <h2 className="yacht-gallery__title">What Does {yacht.name} Look Like Inside and Out?</h2>
+              <Lightbox
+                images={yacht.images.slice(1)}
+                yachtName={yacht.name}
+              />
             </div>
           </section>
         )}
 
-        {/* PRICING */}
+        {/* PRICING — GEO Question H2 */}
         {yacht.weeklyRatePrice && (
           <section className="yacht-pricing reveal">
             <div className="container">
-              <h2 className="yacht-pricing__title">Weekly Charter Rate</h2>
+              <h2 className="yacht-pricing__title">What Is the Weekly Charter Rate for {yacht.name}?</h2>
               <p className="yacht-pricing__rate">{yacht.weeklyRatePrice}</p>
             </div>
           </section>
@@ -321,15 +316,12 @@ export default async function YachtPage({ params }) {
         {/* CTA SECTION - Dual Options */}
         <section className="yacht-cta reveal">
           <div className="container">
-            {/* Gold line */}
             <div className="gold-line mb-12" />
 
-            {/* Section label */}
             <span className="label-text block text-center mb-4">
               Begin Your Journey
             </span>
 
-            {/* Title with gradient */}
             <h2 className="text-4xl md:text-5xl font-marcellus text-white text-center mb-4 uppercase tracking-wide">
               Experience{' '}
               <span className="gradient-gold italic font-light">
@@ -342,9 +334,7 @@ export default async function YachtPage({ params }) {
               Choose how you&apos;d like to connect.
             </p>
 
-            {/* Dual buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              {/* Primary: Video Call */}
               <a
                 href="https://calendly.com/george-georgeyachts/30min"
                 target="_blank"
@@ -354,7 +344,6 @@ export default async function YachtPage({ params }) {
                 Book a Video Consultation
               </a>
 
-              {/* Secondary: Form */}
               <a
                 href="/#contact"
                 className="btn-secondary"
@@ -363,7 +352,6 @@ export default async function YachtPage({ params }) {
               </a>
             </div>
 
-            {/* Trust badge */}
             <p className="text-center text-gray-500 text-xs mt-8 tracking-widest uppercase">
               Personal service · No obligation · Response within 24 hours
             </p>
