@@ -122,14 +122,14 @@ export default function AboutContent() {
       <section className="about-george">
         <div className="about-george__inner">
           <RevealSection className="about-george__text-col">
-            <p className="about-george__eyebrow">The Founder</p>
+            <p className="about-george__eyebrow">Managing Broker</p>
             <h2 className="about-george__name">George P. Biniaris</h2>
             <p className="about-george__role">Managing Broker &middot; IYBA Member</p>
             <div className="about-george__line" />
             <p className="about-george__bio">
               With a career built on trust, discretion, and an uncompromising eye for
-              quality, George founded George Yachts Brokerage House to offer something
-              the industry lacked &mdash; a truly personal brokerage experience.
+              quality, George leads George Yachts Brokerage House with a singular mission
+              &mdash; to deliver a truly personal brokerage experience that the industry lacks.
             </p>
             <p className="about-george__bio">
               Every client works directly with George. No call centers, no junior agents,
