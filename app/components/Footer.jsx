@@ -3,107 +3,205 @@
 import React from "react";
 import { Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+
+const WhatsappIcon = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M12.031 0.725C5.741 0.725 0.547 5.926 0.547 12.215C0.547 14.39 1.155 16.42 2.22 18.15L0.63 23.36l5.352-1.55c1.674 0.99 3.593 1.516 5.619 1.516c6.29 0 11.484-5.201 11.484-11.491C23.595 5.926 18.4 0.725 12.031 0.725zM17.476 15.655c-0.198 0.505-1.127 0.99-1.523 1.054c-0.342 0.054-0.695 0.078-1.574-0.373c-1.028-0.543-2.607-1.583-3.804-2.78c-1.197-1.197-2.237-2.776-2.78-3.804c-0.45-0.879-0.426-1.232-0.373-1.574c0.064-0.396 0.549-1.325 1.054-1.523c0.426-0.165 0.879-0.276 1.197-0.276c0.231 0 0.426 0.015 0.639 0.45l0.58 1.417c0.078 0.165 0.124 0.358 0.046 0.569c-0.078 0.21-0.26 0.45-0.45 0.639c-0.183 0.183-0.33 0.358-0.441 0.569c-0.111 0.21-0.26 0.385-0.137 0.609c0.124 0.223 0.639 1.152 1.518 2.031c0.879 0.879 1.808 1.455 2.031 1.518c0.223 0.124 0.398-0.023 0.609-0.137c0.21-0.111 0.385-0.26 0.569-0.441c0.183-0.183 0.426-0.375 0.639-0.45c0.21-0.078 0.403-0.032 0.569 0.046l1.417 0.58c0.435 0.211 0.546 0.665 0.373 1.197z" />
+  </svg>
+);
 
 const Footer = () => {
-  // Dynamic year for copyright
   const currentYear = new Date().getFullYear();
 
-  const links = [
-    { name: "TERMS OF SERVICE", href: "/terms-of-service" },
-    { name: "PRIVACY POLICY", href: "/privacy-policy" },
-    { name: "COOKIE POLICY", href: "/cookie-policy" },
+  const serviceLinks = [
+    { name: "Charter a Yacht", href: "/charter-yacht-greece/" },
+    { name: "Buy a Yacht", href: "/yachts-for-sale/" },
+    { name: "Fly Private", href: "/private-jet-charter/" },
+    { name: "VIP Transfers", href: "/vip-transfers-greece/" },
+    { name: "Luxury Villas", href: "/luxury-villas-greece/" },
+  ];
+
+  const companyLinks = [
+    { name: "About Us", href: "/about-us/" },
+    { name: "Our Team", href: "/team/" },
+    { name: "The Journal", href: "/blog" },
+    { name: "FAQ", href: "/faq" },
+  ];
+
+  const legalLinks = [
+    { name: "Terms of Service", href: "/terms-of-service" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Cookie Policy", href: "/cookie-policy" },
   ];
 
   return (
-    <footer className="w-full bg-black text-white py-12 px-4 sm:px-6 lg:px-8 z-40 border-t border-white/10">
-      <div className="max-w-[1530px] mx-auto flex flex-col space-y-10">
-        {/* --- TOP SECTION: Social, Company Info, Links --- */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-6 items-center lg:items-start">
-          {/* 1. Social Icons & IYBA (Left on Desktop, Center on Mobile) */}
-          <div className="flex flex-col items-center lg:items-start space-y-5">
-            {/* WRAPPED ICONS IN A HORIZONTAL FLEX CONTAINER */}
-            <div className="flex space-x-4">
+    <footer className="relative w-full bg-black text-white overflow-hidden">
+      {/* Gold line top */}
+      <div className="w-full h-px bg-gradient-to-r from-transparent via-[#DAA520]/20 to-transparent" />
+
+      {/* Main footer content */}
+      <div className="max-w-[1200px] mx-auto px-6 md:px-12 pt-20 pb-16">
+
+        {/* Top section — Brand + Links */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-16 lg:gap-8 mb-20">
+
+          {/* Brand Column */}
+          <div className="lg:col-span-1 flex flex-col items-center lg:items-start">
+            <Link href="/" className="block mb-8">
+              <div className="flex flex-col items-center lg:items-start">
+                <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", fontWeight: 400, letterSpacing: "0.08em", color: "#fff" }}>
+                  GEORGE YACHTS
+                </span>
+                <div className="w-full h-px my-2" style={{ background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)" }} />
+                <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", fontWeight: 500, letterSpacing: "0.3em", color: "rgba(255,255,255,0.4)" }}>
+                  BROKERAGE HOUSE LLC
+                </span>
+              </div>
+            </Link>
+
+            {/* Social Icons */}
+            <div className="flex items-center gap-4 mb-8">
               <a
                 href="https://www.instagram.com/georgeyachts"
                 target="_blank"
                 rel="noopener noreferrer"
-                // ADDED: Background, padding, rounded circle, and smooth hover inversion
-                className="bg-white/10 p-2.5 rounded-full text-white hover:bg-[#DAA520] hover:text-black transition-all duration-300"
+                className="group relative w-10 h-10 flex items-center justify-center border border-white/10 hover:border-[#DAA520]/40 transition-all duration-500"
                 aria-label="Instagram"
+                data-cursor="Instagram"
               >
-                {/* Scaled the icon down slightly to sit perfectly inside the new background padding */}
-                <Instagram className="w-5 h-5" />
+                <Instagram className="w-4 h-4 text-white/50 group-hover:text-[#DAA520] transition-colors duration-300" />
               </a>
               <a
                 href="https://www.linkedin.com/in/george-p-biniaris/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/10 p-2.5 rounded-full text-white hover:bg-[#DAA520] hover:text-black transition-all duration-300"
+                className="group relative w-10 h-10 flex items-center justify-center border border-white/10 hover:border-[#DAA520]/40 transition-all duration-500"
                 aria-label="LinkedIn"
+                data-cursor="LinkedIn"
               >
-                <Linkedin className="w-5 h-5" />
+                <Linkedin className="w-4 h-4 text-white/50 group-hover:text-[#DAA520] transition-colors duration-300" />
+              </a>
+              <a
+                href="https://wa.me/17867988798"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative w-10 h-10 flex items-center justify-center border border-white/10 hover:border-[#DAA520]/40 transition-all duration-500"
+                aria-label="WhatsApp"
+                data-cursor="WhatsApp"
+              >
+                <WhatsappIcon className="w-4 h-4 text-white/50 group-hover:text-[#DAA520] transition-colors duration-300" />
               </a>
             </div>
 
-            <div className="flex items-center space-x-3">
+            {/* IYBA */}
+            <div className="flex items-center gap-3">
               <img
                 src="/images/iyba.png"
-                alt="IYBA Member"
-                className="h-7 w-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
+                alt="IYBA Member - International Yacht Brokers Association"
+                className="h-6 w-auto opacity-60 hover:opacity-100 transition-opacity duration-500"
               />
-              <span className="text-[11px] text-gray-400 leading-tight max-w-[180px] text-center lg:text-left">
-                Proud member of IYBA – International Yacht Brokers Association
+              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", letterSpacing: "0.15em", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", maxWidth: "140px", lineHeight: 1.5 }}>
+                IYBA Member Broker
               </span>
             </div>
           </div>
 
-          {/* 2. Company Legal Info (Center on Desktop & Mobile) */}
-          <div className="flex flex-col items-center text-center space-y-1.5">
-            <span className="text-sm font-bold tracking-widest text-white">
-              GEORGE YACHTS BROKERAGE HOUSE LLC
-            </span>
-            <span className="text-[11px] tracking-wider text-gray-400 uppercase">
-              30 N Gould St, STE R, Sheridan, WY 82801, USA
-            </span>
-            <span className="text-[11px] tracking-wider text-gray-400">
-              EIN: 30-1480422
-            </span>
+          {/* Services Column */}
+          <div className="flex flex-col items-center lg:items-start">
+            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#DAA520", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
+              Services
+            </h4>
+            <nav className="flex flex-col gap-3">
+              {serviceLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="text-white/35 hover:text-white transition-colors duration-300"
+                  style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", letterSpacing: "0.05em" }}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
           </div>
 
-          {/* 3. Policy Links (Right on Desktop, Center on Mobile) */}
-          {/* UPDATED: Added flex-wrap and gap to gracefully handle 3 links on mobile screens */}
-          <div className="flex flex-wrap justify-center lg:justify-end gap-x-6 gap-y-3 text-xs font-bold pt-2 lg:pt-0">
-            {links.map((link, index) => (
+          {/* Company Column */}
+          <div className="flex flex-col items-center lg:items-start">
+            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#DAA520", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
+              Company
+            </h4>
+            <nav className="flex flex-col gap-3">
+              {companyLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="text-white/35 hover:text-white transition-colors duration-300"
+                  style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", letterSpacing: "0.05em" }}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* Contact Column */}
+          <div className="flex flex-col items-center lg:items-start">
+            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#DAA520", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
+              Contact
+            </h4>
+            <div className="flex flex-col gap-4 text-center lg:text-left">
+              <a
+                href="https://calendly.com/george-georgeyachts/30min"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-6 py-3 text-center border border-[#DAA520]/30 hover:border-[#DAA520] text-[#DAA520] hover:bg-[#DAA520]/5 transition-all duration-500"
+                style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, textDecoration: "none" }}
+                data-cursor="Book"
+              >
+                Book a Consultation
+              </a>
+              <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.3)", lineHeight: 1.8 }}>
+                <span className="block" style={{ fontWeight: 500, color: "rgba(255,255,255,0.5)", letterSpacing: "0.1em", textTransform: "uppercase", fontSize: "9px", marginBottom: "8px" }}>
+                  George Yachts Brokerage House LLC
+                </span>
+                30 N Gould St, STE R<br />
+                Sheridan, WY 82801, USA<br />
+                <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.2)" }}>EIN: 30-1480422</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-12" />
+
+        {/* Bottom section */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+          {/* Legal links */}
+          <div className="flex flex-wrap justify-center md:justify-start gap-x-8 gap-y-2">
+            {legalLinks.map((link) => (
               <Link
-                key={index}
+                key={link.name}
                 href={link.href}
-                className="hover:text-[#DAA520] transition duration-200 uppercase tracking-wider text-center"
+                className="text-white/20 hover:text-[#DAA520] transition-colors duration-300"
+                style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.15em", textTransform: "uppercase" }}
               >
                 {link.name}
               </Link>
             ))}
           </div>
+
+          {/* Copyright */}
+          <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(255,255,255,0.2)", textTransform: "uppercase" }}>
+            &copy; {currentYear} George Yachts Brokerage House LLC
+          </span>
         </div>
 
-        {/* --- DIVIDER --- */}
-        <div className="w-full h-px bg-white/10"></div>
-
-        {/* --- BOTTOM SECTION: Disclaimer & Copyright --- */}
-        <div className="flex flex-col items-center space-y-6 text-center">
-          <p className="text-[10px] text-gray-500 leading-relaxed max-w-5xl uppercase tracking-wide">
-            All yacht specifications, images, and pricing are provided for
-            informational purposes only. George Yachts Brokerage House LLC
-            offers the details of these vessels in good faith but cannot
-            guarantee the accuracy of this information or the condition of the
-            vessels. All information is subject to change without notice and is
-            not contractual.
-          </p>
-
-          <div className="text-[11px] text-white/80 font-bold tracking-[0.2em] uppercase">
-            &copy; {currentYear} GEORGE YACHTS BROKERAGE HOUSE LLC. ALL RIGHTS
-            RESERVED.
-          </div>
-        </div>
+        {/* Disclaimer */}
+        <p className="mt-10 text-center" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.12)", letterSpacing: "0.05em", lineHeight: 1.8, maxWidth: "800px", margin: "40px auto 0" }}>
+          All yacht specifications, images, and pricing are provided for informational purposes only. George Yachts Brokerage House LLC offers the details of these vessels in good faith but cannot guarantee the accuracy of this information or the condition of the vessels. All information is subject to change without notice and is not contractual.
+        </p>
       </div>
     </footer>
   );

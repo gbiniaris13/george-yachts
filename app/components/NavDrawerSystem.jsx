@@ -64,10 +64,6 @@ const NavDrawerSystem = () => {
   // UPDATED: Background logic (Transparent -> Black)
   const navBackground = scrolled ? "#000000" : "transparent";
 
-  const iconClasses = `flex items-center space-x-3 z-10 p-2 rounded-full ${
-    scrolled ? "bg-white/10" : "bg-white/10 backdrop-blur-sm"
-  }`;
-
   return (
     <>
       <nav
@@ -117,33 +113,28 @@ const NavDrawerSystem = () => {
 
           {/* --- 2. CENTER BLOCK (REMOVED/NUKED) --- */}
 
-          {/* --- 3. RIGHT BLOCK (Social Icons + Text) --- */}
-          <div className="flex justify-end">
-            <div className={iconClasses}>
-              <a
-                href="https://www.instagram.com/georgeyachts"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${currentTextColor} hover:text-[#CEA681] p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md`}
-                aria-label="Link to Instagram"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
-
-              <a
-                href="https://wa.me/17867988798"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${currentTextColor} hover:text-[#CEA681] p-1 rounded-full transition duration-150 active:scale-95 drop-shadow-md flex items-center space-x-2`}
-                aria-label="Link to WhatsApp"
-              >
-                <WhatsappIcon className="w-5 h-5" />
-                <span
-                  className="hidden lg:inline-block text-xs font-bold uppercase tracking-widest whitespace-nowrap"
-                  style={{ fontFamily: "var(--font-marcellus)" }}
-                ></span>
-              </a>
-            </div>
+          {/* --- 3. RIGHT BLOCK — Minimal Social Icons --- */}
+          <div className="flex items-center gap-1">
+            <a
+              href="https://www.instagram.com/georgeyachts"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative w-9 h-9 flex items-center justify-center border border-white/[0.08] hover:border-[#DAA520]/30 transition-all duration-500"
+              aria-label="Instagram"
+              data-cursor="Instagram"
+            >
+              <Instagram className="w-[14px] h-[14px] text-white/50 group-hover:text-[#DAA520] transition-colors duration-300" />
+            </a>
+            <a
+              href="https://wa.me/17867988798"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative w-9 h-9 flex items-center justify-center border border-white/[0.08] hover:border-[#DAA520]/30 transition-all duration-500"
+              aria-label="WhatsApp"
+              data-cursor="WhatsApp"
+            >
+              <WhatsappIcon className="w-[14px] h-[14px] text-white/50 group-hover:text-[#DAA520] transition-colors duration-300" />
+            </a>
           </div>
         </div>
       </nav>
