@@ -20,6 +20,10 @@ const marcellus = Marcellus({
   variable: "--font-marcellus",
 });
 
+export const metadata = {
+  metadataBase: new URL("https://georgeyachts.com"),
+};
+
 export default function RootLayout({ children }) {
   const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 

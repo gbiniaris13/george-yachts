@@ -30,7 +30,7 @@ const navLinks = [
 // --- 2. LEGAL LINKS ---
 const legalLinks = [
   { name: "Terms of Service", href: "/terms-of-service" },
-  { name: "Cookies", href: "/cookies" },
+  { name: "Cookies", href: "/cookie-policy" },
   { name: "Privacy Policy", href: "/privacy-policy" },
 ];
 
@@ -86,7 +86,7 @@ const NavDrawerSystem = () => {
           </div>
 
           {/* --- 2. CENTER — Logo --- */}
-          <a href="/" className="absolute left-1/2 -translate-x-1/2 shrink-0 group" data-cursor="Home">
+          <Link href="/" className="absolute left-1/2 -translate-x-1/2 shrink-0 group" data-cursor="Home">
             <img
               src="/images/yacht-icon-only.svg"
               alt="George Yachts Brokerage House"
@@ -96,7 +96,7 @@ const NavDrawerSystem = () => {
                 width: "auto",
               }}
             />
-          </a>
+          </Link>
 
           {/* --- 3. RIGHT — Social Icons --- */}
           <div className="flex items-center gap-1 w-20 justify-end">
@@ -136,7 +136,7 @@ const NavDrawerSystem = () => {
       ></div>
 
       <div
-        className={`fixed top-0 left-0 h-full min-w-[370px] xl:min-w-[700px] bg-black shadow-2xl z-50 transform transition-transform duration-300 ease-in-out 
+        className={`fixed top-0 left-0 h-full w-full sm:w-[370px] xl:w-[700px] bg-black shadow-2xl z-50 transform transition-transform duration-300 ease-in-out 
           ${isDrawerOpen ? "translate-x-0" : "-translate-x-full"}`}
         role="dialog"
         aria-modal="true"
@@ -145,7 +145,7 @@ const NavDrawerSystem = () => {
         <div className="p-8 h-full flex flex-col overflow-y-auto">
           <div className="flex justify-between items-center pb-6 ">
             {/* Logo in drawer — original yacht icon + text */}
-            <a href="/" className="flex items-center gap-4" onClick={toggleDrawer}>
+            <Link href="/" className="flex items-center gap-4" onClick={toggleDrawer}>
               <img
                 src="/images/yacht-icon-only.svg"
                 alt="George Yachts"
@@ -159,7 +159,7 @@ const NavDrawerSystem = () => {
                   BROKERAGE HOUSE LLC
                 </span>
               </div>
-            </a>
+            </Link>
             <button
               onClick={toggleDrawer}
               className="p-2 rounded-full text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 active:scale-95 "
