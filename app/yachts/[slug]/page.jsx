@@ -1,0 +1,384 @@
+import { sanityClient } from '@/lib/sanity';
+import { PortableText } from '@portabletext/react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import ScrollReveal from './ScrollReveal';
+import './yacht-page.css';
+
+// ISR - revalidate every hour
+export const revalidate = 3600;
+
+// Generate static paths for all yachts with slugs
+export async function generateStaticParams() {
+  const yachts = await sanityClient.fetch(`*[_type == "yacht" && defined(slug.current)]{
+    "slug": slug.current
+  }`);
+  return yachts.map((yacht) => ({ slug: yacht.slug }));
+}
+
+// Generate metadata for SEO
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const yacht = await sanityClient.fetch(
+    `*[_type == "yacht" && slug.current == $slug][0]{
+      name, subtitle, length, sleeps, weeklyRatePrice, cruisingRegion,
+      "imageUrl": images[0].asset->url
+    }`,
+    { slug }
+  );
+
+  if (!yacht) return { title: 'Yacht Not Found' };
+
+  const title = `${yacht.name} | ${yacht.subtitle} | Luxury Yacht Charter Greece`;
+  const description = `Charter ${yacht.name}, a ${yacht.length} ${yacht.subtitle} accommodating ${yacht.sleeps} guests in Greek waters. ${yacht.weeklyRatePrice}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: yacht.imageUrl ? [{ url: yacht.imageUrl }] : [],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+  };
+}
+
+// Product Schema for GEO
+function YachtSchema({ yacht, imageUrl }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: yacht.name,
+    description: `Luxury ${yacht.subtitle} yacht charter in Greek waters`,
+    brand: {
+      '@type': 'Brand',
+      name: yacht.builder || yacht.subtitle,
+    },
+    category: 'Luxury Motor Yacht Charter',
+    image: imageUrl,
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+      areaServed: {
+        '@type': 'Place',
+        name: yacht.cruisingRegion || 'Greece',
+      },
+      seller: {
+        '@type': 'Organization',
+        name: 'George Yachts Brokerage House',
+        url: 'https://georgeyachts.com',
+      },
+    },
+    additionalProperty: [
+      { '@type': 'PropertyValue', name: 'Length', value: yacht.length },
+      { '@type': 'PropertyValue', name: 'Guests', value: yacht.sleeps },
+      { '@type': 'PropertyValue', name: 'Cabins', value: yacht.cabins },
+      { '@type': 'PropertyValue', name: 'Crew', value: yacht.crew },
+    ].filter(prop => prop.value),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+export default async function YachtPage({ params }) {
+  const { slug } = await params;
+
+  const yacht = await sanityClient.fetch(
+    `*[_type == "yacht" && slug.current == $slug][0]{
+      _id,
+      name,
+      subtitle,
+      description,
+      georgeInsiderTip,
+      length,
+      yearBuiltRefit,
+      builder,
+      sleeps,
+      cabins,
+      crew,
+      maxSpeed,
+      cruiseSpeed,
+      cruisingRegion,
+      weeklyRatePrice,
+      features,
+      toys,
+      idealFor,
+      "images": images[]{
+        "url": asset->url,
+        "alt": alt
+      }
+    }`,
+    { slug }
+  );
+
+  if (!yacht) {
+    notFound();
+  }
+
+  const heroImage = yacht.images?.[0];
+
+  return (
+    <>
+      <YachtSchema yacht={yacht} imageUrl={heroImage?.url} />
+      <ScrollReveal />
+
+      <article className="yacht-page">
+        {/* HERO SECTION - Full Width Cinematic */}
+        <section className="yacht-hero">
+          {heroImage && (
+            <div className="yacht-hero__image-container">
+              <Image
+                src={heroImage.url}
+                alt={heroImage.alt || `${yacht.name} - luxury yacht charter Greece`}
+                fill
+                priority
+                className="yacht-hero__image"
+                sizes="100vw"
+              />
+              <div className="yacht-hero__overlay" />
+            </div>
+          )}
+          <div className="yacht-hero__content">
+            <h1 className="yacht-hero__title">{yacht.name}</h1>
+            <p className="yacht-hero__subtitle">
+              {yacht.subtitle} · {yacht.length} · {yacht.sleeps} guests
+            </p>
+          </div>
+        </section>
+
+        {/* STORY SECTION */}
+        {yacht.description && (
+          <section className="yacht-story reveal">
+            <div className="container">
+              <PortableText value={yacht.description} />
+            </div>
+          </section>
+        )}
+
+        {/* GEORGE'S INSIDE INFO - The Boutique Differentiator */}
+        {yacht.georgeInsiderTip && (
+          <section className="yacht-insider reveal">
+            <div className="container">
+              <div className="yacht-insider__card">
+                <div className="yacht-insider__header">
+                  <span className="yacht-insider__icon">💬</span>
+                  <h2 className="yacht-insider__title">George&apos;s Inside Info</h2>
+                </div>
+                <blockquote className="yacht-insider__quote">
+                  &ldquo;{yacht.georgeInsiderTip}&rdquo;
+                </blockquote>
+                <p className="yacht-insider__signature">
+                  — George P. Biniaris, Managing Broker
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* SPECIFICATIONS - Elegant, Minimal */}
+        <section className="yacht-specs reveal">
+          <div className="container">
+            <h2 className="yacht-specs__title">Specifications</h2>
+            <div className="yacht-specs__grid">
+              {yacht.length && (
+                <div className="yacht-specs__item">
+                  <span className="yacht-specs__label">Length</span>
+                  <span className="yacht-specs__value">{yacht.length}</span>
+                </div>
+              )}
+              {yacht.builder && (
+                <div className="yacht-specs__item">
+                  <span className="yacht-specs__label">Builder</span>
+                  <span className="yacht-specs__value">{yacht.builder}</span>
+                </div>
+              )}
+              {yacht.yearBuiltRefit && (
+                <div className="yacht-specs__item">
+                  <span className="yacht-specs__label">Year</span>
+                  <span className="yacht-specs__value">{yacht.yearBuiltRefit}</span>
+                </div>
+              )}
+              {yacht.sleeps && (
+                <div className="yacht-specs__item">
+                  <span className="yacht-specs__label">Guests</span>
+                  <span className="yacht-specs__value">{yacht.sleeps}</span>
+                </div>
+              )}
+              {yacht.cabins && (
+                <div className="yacht-specs__item">
+                  <span className="yacht-specs__label">Cabins</span>
+                  <span className="yacht-specs__value">{yacht.cabins}</span>
+                </div>
+              )}
+              {yacht.crew && (
+                <div className="yacht-specs__item">
+                  <span className="yacht-specs__label">Crew</span>
+                  <span className="yacht-specs__value">{yacht.crew}</span>
+                </div>
+              )}
+              {yacht.cruiseSpeed && (
+                <div className="yacht-specs__item">
+                  <span className="yacht-specs__label">Cruise Speed</span>
+                  <span className="yacht-specs__value">{yacht.cruiseSpeed}</span>
+                </div>
+              )}
+              {yacht.maxSpeed && (
+                <div className="yacht-specs__item">
+                  <span className="yacht-specs__label">Max Speed</span>
+                  <span className="yacht-specs__value">{yacht.maxSpeed}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* IDEAL FOR */}
+        {yacht.idealFor && (
+          <section className="yacht-ideal reveal">
+            <div className="container">
+              <h2 className="yacht-ideal__title">Ideal For</h2>
+              <p className="yacht-ideal__text">{yacht.idealFor}</p>
+            </div>
+          </section>
+        )}
+
+        {/* KEY FEATURES */}
+        {yacht.features && yacht.features.length > 0 && (
+          <section className="yacht-features reveal">
+            <div className="container">
+              <h2 className="yacht-features__title">Key Features</h2>
+              <ul className="yacht-features__list">
+                {yacht.features.map((feature, index) => (
+                  <li key={index} className="yacht-features__item">
+                    <span className="yacht-features__check">✓</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
+
+        {/* WATER TOYS */}
+        {yacht.toys && yacht.toys.length > 0 && (
+          <section className="yacht-toys reveal">
+            <div className="container">
+              <h2 className="yacht-toys__title">Water Toys & Tenders</h2>
+              <ul className="yacht-toys__list">
+                {yacht.toys.map((toy, index) => (
+                  <li key={index} className="yacht-toys__item">{toy}</li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
+
+        {/* PHOTO GALLERY */}
+        {yacht.images && yacht.images.length > 1 && (
+          <section className="yacht-gallery">
+            <div className="container">
+              <h2 className="yacht-gallery__title">Gallery</h2>
+              <div className="yacht-gallery__grid">
+                {yacht.images.slice(1).map((image, index) => (
+                  <div key={index} className="yacht-gallery__item">
+                    <Image
+                      src={image.url}
+                      alt={image.alt || `${yacht.name} - view ${index + 2}`}
+                      width={600}
+                      height={400}
+                      className="yacht-gallery__image"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* PRICING */}
+        {yacht.weeklyRatePrice && (
+          <section className="yacht-pricing reveal">
+            <div className="container">
+              <h2 className="yacht-pricing__title">Weekly Charter Rate</h2>
+              <p className="yacht-pricing__rate">{yacht.weeklyRatePrice}</p>
+            </div>
+          </section>
+        )}
+
+        {/* CTA SECTION - Dual Options */}
+        <section className="yacht-cta reveal">
+          <div className="container">
+            {/* Gold line */}
+            <div className="gold-line mb-12" />
+
+            {/* Section label */}
+            <span className="label-text block text-center mb-4">
+              Begin Your Journey
+            </span>
+
+            {/* Title with gradient */}
+            <h2 className="text-4xl md:text-5xl font-marcellus text-white text-center mb-4 uppercase tracking-wide">
+              Experience{' '}
+              <span className="gradient-gold italic font-light">
+                {yacht.name}
+              </span>
+            </h2>
+
+            <p className="text-gray-400 text-center max-w-2xl mx-auto mb-12">
+              Ready to explore the Greek islands aboard this magnificent vessel?
+              Choose how you&apos;d like to connect.
+            </p>
+
+            {/* Dual buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              {/* Primary: Video Call */}
+              <a
+                href="https://calendly.com/george-georgeyachts/30min"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+              >
+                Book a Video Consultation
+              </a>
+
+              {/* Secondary: Form */}
+              <a
+                href="/#contact"
+                className="btn-secondary"
+              >
+                Submit an Inquiry
+              </a>
+            </div>
+
+            {/* Trust badge */}
+            <p className="text-center text-gray-500 text-xs mt-8 tracking-widest uppercase">
+              Personal service · No obligation · Response within 24 hours
+            </p>
+          </div>
+        </section>
+
+        {/* BACK LINK */}
+        <section className="yacht-back">
+          <div className="container">
+            <Link href="/charter-yacht-greece" className="yacht-back__link">
+              ← View All Charter Yachts
+            </Link>
+          </div>
+        </section>
+      </article>
+    </>
+  );
+}
