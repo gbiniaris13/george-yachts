@@ -2,6 +2,17 @@
 
 @import "tailwindcss";
 
+/* Smooth scroll globally */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: #DAA520;
+  color: #000;
+}
+
 .the {
   font-family: "Barlow", sans-serif;
   font-weight: 100;

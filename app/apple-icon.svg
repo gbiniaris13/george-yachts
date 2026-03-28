@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <rect width="180" height="180" fill="#000000"/>
+  <defs>
+    <linearGradient id="ag" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F7DA6F"/>
+      <stop offset="45%" stop-color="#DAA520"/>
+      <stop offset="100%" stop-color="#A67C2E"/>
+    </linearGradient>
+    <linearGradient id="as" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C8C8C8"/>
+      <stop offset="50%" stop-color="#A8A8A8"/>
+      <stop offset="100%" stop-color="#888888"/>
+    </linearGradient>
+  </defs>
+  <path d="M20 100 C28 96, 50 72, 72 60 C88 54, 106 50, 118 56 C128 62, 134 70, 146 76" stroke="url(#ag)" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <path d="M35 112 C46 104, 66 82, 88 72 C104 66, 122 62, 140 70" stroke="url(#ag)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.65"/>
+  <path d="M78 110 C92 104, 112 92, 132 86 C144 82, 156 84, 162 90 C158 100, 148 108, 136 112 C120 116, 94 116, 78 110Z" fill="url(#as)" opacity="0.8"/>
+  <path d="M95 106 C110 100, 128 92, 148 88 C156 86, 160 88, 162 90 C158 96, 148 102, 136 106 C120 108, 100 108, 95 106Z" fill="#D8D8D8" opacity="0.25"/>
+</svg>
