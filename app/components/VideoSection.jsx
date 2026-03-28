@@ -100,8 +100,14 @@ const VideoSection = () => {
                   >
                     {/* Eyebrow */}
                     <p
-                      className="text-[#DAA520] text-[9px] md:text-[10px] tracking-[0.5em] uppercase font-semibold mb-6 md:mb-8"
                       style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: "9px",
+                        letterSpacing: "0.5em",
+                        textTransform: "uppercase",
+                        color: "#DAA520",
+                        fontWeight: 600,
+                        marginBottom: "32px",
                         opacity: heroVisible ? 1 : 0,
                         transition: "opacity 1s ease 0.5s",
                       }}
@@ -109,38 +115,72 @@ const VideoSection = () => {
                       Exclusively Greek Waters
                     </p>
 
-                    {/* Brand Name */}
+                    {/* Brand Name — GEORGE YACHTS */}
                     <h1
-                      className="font-marcellus text-white leading-[0.85] tracking-tight mb-4"
                       style={{
-                        fontSize: "clamp(40px, 10vw, 120px)",
+                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                        fontSize: "clamp(42px, 9vw, 110px)",
+                        fontWeight: 300,
+                        letterSpacing: "0.12em",
+                        lineHeight: 0.95,
+                        color: "#fff",
+                        textTransform: "uppercase",
+                        margin: "0 0 8px 0",
                         opacity: heroVisible ? 1 : 0,
                         transform: heroVisible ? "translateY(0)" : "translateY(20px)",
-                        transition: "opacity 1.2s ease 0.8s, transform 1.2s ease 0.8s",
+                        transition: "opacity 1.2s ease 0.7s, transform 1.2s ease 0.7s",
                       }}
                     >
                       GEORGE YACHTS
                     </h1>
 
+                    {/* Subtitle — BROKERAGE HOUSE LLC */}
+                    <p
+                      style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: "clamp(10px, 1.8vw, 16px)",
+                        fontWeight: 400,
+                        letterSpacing: "0.45em",
+                        textTransform: "uppercase",
+                        margin: "0 0 28px 0",
+                        background: "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
+                        WebkitBackgroundClip: "text",
+                        backgroundClip: "text",
+                        color: "transparent",
+                        WebkitTextFillColor: "transparent",
+                        opacity: heroVisible ? 1 : 0,
+                        transform: heroVisible ? "translateY(0)" : "translateY(12px)",
+                        transition: "opacity 1s ease 1.1s, transform 1s ease 1.1s",
+                      }}
+                    >
+                      BROKERAGE HOUSE LLC
+                    </p>
+
                     {/* Gold line */}
                     <div
-                      className="h-px mx-auto mb-6 md:mb-8"
+                      className="h-px mx-auto mb-8"
                       style={{
                         background: "linear-gradient(90deg, transparent, #DAA520, transparent)",
-                        width: heroVisible ? "120px" : "0px",
-                        transition: "width 1.2s ease 1.4s",
+                        width: heroVisible ? "140px" : "0px",
+                        transition: "width 1.2s ease 1.5s",
                       }}
                     />
 
                     {/* Tagline */}
                     <p
-                      className="text-white/50 text-[10px] md:text-xs tracking-[0.35em] uppercase font-light mb-10 md:mb-12"
                       style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: "10px",
+                        letterSpacing: "0.3em",
+                        textTransform: "uppercase",
+                        color: "rgba(255,255,255,0.4)",
+                        fontWeight: 300,
+                        marginBottom: "40px",
                         opacity: heroVisible ? 1 : 0,
-                        transition: "opacity 1s ease 1.8s",
+                        transition: "opacity 1s ease 1.9s",
                       }}
                     >
-                      Boutique Yacht Brokerage House
+                      Boutique Luxury Yacht Charter &middot; Est. U.S.A. &middot; Operating from Athens
                     </p>
 
                     {/* CTA Button — Magnetic */}
