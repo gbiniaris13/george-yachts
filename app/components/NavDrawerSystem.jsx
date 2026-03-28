@@ -84,36 +84,23 @@ const NavDrawerSystem = () => {
               <Menu className="w-6 h-6" />
             </button>
 
-            {/* Logo — Graphic on desktop, clean text on mobile */}
-            <a href="/" className="shrink-0 flex flex-col items-center group" data-cursor="Home">
-              {/* Desktop: SVG graphic */}
+            {/* Logo — Yacht icon + text, responsive */}
+            <a href="/" className="shrink-0 flex items-center gap-2 md:gap-3 group" data-cursor="Home">
+              {/* Yacht icon — always visible, scales */}
               <img
                 src="/images/logo-transparent.svg"
-                alt="George Yachts Brokerage House"
-                className="hidden md:block h-12 w-auto drop-shadow-md transition-opacity duration-300 group-hover:opacity-90"
-                style={{ filter: "brightness(1.1)" }}
+                alt="George Yachts"
+                className="h-7 md:h-10 w-auto drop-shadow-md transition-all duration-300 group-hover:opacity-90"
+                style={{ filter: "brightness(1.15)" }}
               />
-              <span
-                className="hidden md:block"
-                style={{
-                  fontFamily: "'Montserrat', sans-serif",
-                  fontSize: "6px",
-                  letterSpacing: "0.35em",
-                  textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.35)",
-                  marginTop: "2px",
-                }}
-              >
-                BROKERAGE HOUSE LLC
-              </span>
-              {/* Mobile: Elegant text logo */}
-              <div className="flex md:hidden flex-col items-start">
+              {/* Text next to icon */}
+              <div className="flex flex-col items-start">
                 <span
                   style={{
                     fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    fontSize: "15px",
+                    fontSize: "clamp(13px, 2vw, 18px)",
                     fontWeight: 400,
-                    letterSpacing: "0.1em",
+                    letterSpacing: "0.08em",
                     color: "#fff",
                     lineHeight: 1,
                   }}
@@ -121,12 +108,13 @@ const NavDrawerSystem = () => {
                   GEORGE YACHTS
                 </span>
                 <span
+                  className="hidden sm:block"
                   style={{
                     fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "5.5px",
+                    fontSize: "5px",
                     fontWeight: 500,
-                    letterSpacing: "0.28em",
-                    color: "rgba(218,165,32,0.6)",
+                    letterSpacing: "0.25em",
+                    color: "rgba(218,165,32,0.5)",
                     marginTop: "3px",
                   }}
                 >
