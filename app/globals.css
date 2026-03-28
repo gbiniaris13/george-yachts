@@ -159,6 +159,131 @@ html {
   to { opacity: 1; }
 }
 
+/* ═══════ MOBILE + DESKTOP EXTRA EFFECTS ═══════ */
+
+/* Image clip-path reveal on scroll */
+@supports (animation-timeline: view()) {
+  .img-reveal {
+    clip-path: inset(0 100% 0 0);
+    animation: clipReveal 1s ease both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 80%;
+  }
+  .img-reveal-left {
+    clip-path: inset(0 0 0 100%);
+    animation: clipRevealLeft 1s ease both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 80%;
+  }
+}
+
+@keyframes clipReveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes clipRevealLeft {
+  from { clip-path: inset(0 0 0 100%); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* Floating animation — subtle hover effect */
+.float {
+  animation: floatAnim 4s ease-in-out infinite;
+}
+@keyframes floatAnim {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Gold border glow animation */
+.border-glow {
+  position: relative;
+}
+.border-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(90deg, transparent, #DAA520, transparent);
+  background-size: 300% 100%;
+  z-index: -1;
+  animation: borderGlowAnim 3s ease-in-out infinite;
+  opacity: 0.3;
+}
+@keyframes borderGlowAnim {
+  0% { background-position: 300% 0; }
+  100% { background-position: -300% 0; }
+}
+
+/* Text character stagger — typing effect feel */
+.char-reveal {
+  animation: charRevealAnim 0.8s ease both;
+}
+@keyframes charRevealAnim {
+  from { opacity: 0; filter: blur(4px); transform: translateY(10px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+/* Smooth pulse for CTAs */
+.pulse-soft {
+  animation: pulseSoftAnim 3s ease-in-out infinite;
+}
+@keyframes pulseSoftAnim {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(218,165,32,0.15); }
+  50% { box-shadow: 0 0 0 12px rgba(218,165,32,0); }
+}
+
+/* Touch feedback — active state for mobile */
+@media (hover: none) {
+  a:active, button:active {
+    transform: scale(0.97) !important;
+    transition: transform 0.1s ease !important;
+  }
+}
+
+/* Gradient text animation — flowing gold */
+.text-flow {
+  background: linear-gradient(90deg, #A67C2E, #E6C77A, #DAA520, #E6C77A, #A67C2E);
+  background-size: 400% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textFlowAnim 8s ease-in-out infinite;
+}
+@keyframes textFlowAnim {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
+/* Line draw animation */
+.line-draw {
+  width: 0;
+  animation: lineDrawAnim 1.5s ease forwards;
+}
+@keyframes lineDrawAnim {
+  to { width: 100%; }
+}
+
+/* Parallax-style depth on scroll (CSS only) */
+@supports (animation-timeline: scroll()) {
+  .depth-slow {
+    animation: depthSlow linear both;
+    animation-timeline: scroll();
+  }
+  .depth-fast {
+    animation: depthFast linear both;
+    animation-timeline: scroll();
+  }
+}
+@keyframes depthSlow {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5%); }
+}
+@keyframes depthFast {
+  from { transform: translateY(0); }
+  to { transform: translateY(-15%); }
+}
+
 .the {
   font-family: "Barlow", sans-serif;
   font-weight: 100;

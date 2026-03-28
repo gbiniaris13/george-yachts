@@ -2,6 +2,7 @@ import { Geist, Geist_Mono, Marcellus, Cormorant_Garamond, Barlow, Montserrat } 
 import "./globals.css";
 import Script from "next/script";
 import NavDrawerSystem from "./components/NavDrawerSystem";
+import GlobalEffects from "./components/GlobalEffects";
 import JsonLd from "./components/JsonLd";
 import { organizationSchema } from "@/lib/organizationSchema";
 import "swiper/css";
@@ -75,6 +76,8 @@ export default function RootLayout({ children }) {
           />
         )}
 
+        {/* Global Effects — all pages */}
+        <GlobalEffects />
         {/* 2. Page Content */}
         <NavDrawerSystem />
         {children}
