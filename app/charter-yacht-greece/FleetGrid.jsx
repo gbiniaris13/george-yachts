@@ -125,6 +125,32 @@ function parsePriceNum(priceStr) {
   return parseInt(nums[0], 10) || Infinity;
 }
 
+// Parallax effect for hero image
+function useHeroParallax() {
+  useEffect(() => {
+    const heroImg = document.querySelector('.fleet-hero__bg');
+    if (!heroImg) return;
+
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          const heroHeight = window.innerHeight * 0.7;
+          if (scrollY < heroHeight) {
+            heroImg.style.transform = `translateY(${scrollY * 0.35}px)`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+}
+
 // Intersection Observer hook for staggered scroll animations
 function useScrollReveal() {
   const gridRef = useRef(null);
@@ -135,14 +161,26 @@ function useScrollReveal() {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        // Sort entries by their position in the grid for proper stagger order
+        const sortedEntries = [...entries].sort((a, b) => {
+          const aRect = a.boundingClientRect;
+          const bRect = b.boundingClientRect;
+          return aRect.top - bRect.top || aRect.left - bRect.left;
+        });
+
+        let visibleIndex = 0;
+        sortedEntries.forEach((entry) => {
           if (entry.isIntersecting) {
+            // Stagger delay: 50ms between each card
+            const delay = visibleIndex * 50;
+            entry.target.style.transitionDelay = `${delay}ms`;
             entry.target.classList.add('fleet-card--visible');
             observer.unobserve(entry.target);
+            visibleIndex++;
           }
         });
       },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
     );
 
     const cards = grid.querySelectorAll('.fleet-card');
@@ -267,6 +305,7 @@ export default function FleetGrid({ yachts }) {
   const [priceRange, setPriceRange] = useState('all');
   const [sortBy, setSortBy] = useState('recommended');
   const gridRef = useScrollReveal();
+  useHeroParallax();
 
   // Compute categories with counts
   const categories = useMemo(() => {
