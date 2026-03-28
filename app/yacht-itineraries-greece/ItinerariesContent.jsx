@@ -152,7 +152,7 @@ function ItineraryCard({ itin, index }) {
         >
           <div>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.25em", textTransform: "uppercase", color: "#DAA520", fontWeight: 600, marginBottom: "12px" }}>
-              {itin.duration} &middot; {itin.season}
+              {itin.duration} &middot; {itin.days.reduce((sum, d) => sum + parseInt(d.nm) || 0, 0)} NM Total &middot; {itin.season}
             </p>
             <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 400, color: "#fff", margin: "0 0 6px", lineHeight: 1.2 }}>
               {itin.title}
