@@ -92,7 +92,7 @@ const NavDrawerSystem = () => {
               alt="George Yachts Brokerage House"
               className="transition-opacity duration-300 group-hover:opacity-80"
               style={{
-                height: "clamp(28px, 5vw, 46px)",
+                height: "clamp(34px, 6vw, 56px)",
                 width: "auto",
               }}
             />
