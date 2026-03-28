@@ -116,7 +116,7 @@ const MonolithSlide = ({ item, index, total }) => {
 
 const TwoColumnLayout = () => {
   return (
-    <section className="relative w-full bg-[#020617]">
+    <section className="relative w-full bg-[#000]">
       {/* This is the "Deck Container".
         Each child is Sticky. As you scroll, they naturally stack on top of each other.
       */}

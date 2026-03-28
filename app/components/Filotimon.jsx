@@ -4,7 +4,7 @@ import React from "react";
 
 const Filotimon = () => {
   return (
-    <section className="relative w-full bg-[#0a0a0a] py-32 lg:py-48 overflow-hidden flex items-center justify-center">
+    <section className="relative w-full bg-[#000000] py-32 lg:py-48 overflow-hidden flex items-center justify-center">
       {/* 1. TEXTURE: Cinematic Grain Overlay */}
       <div className="absolute inset-0 opacity-[0.07] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
 
