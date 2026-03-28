@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  poweredByHeader: false,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
   images: {
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",
@@ -13,12 +18,12 @@ const nextConfig = {
       {
         source: "/yachts-charter",
         destination: "/charter-yacht-greece",
-        permanent: true, // 301 redirect for SEO
+        permanent: true,
       },
       {
         source: "/aviation-charter",
         destination: "/private-jet-charter",
-        permanent: true, // 301 redirect for SEO
+        permanent: true,
       },
     ];
   },

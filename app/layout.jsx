@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono, Marcellus } from "next/font/google";
+import { Geist, Geist_Mono, Marcellus, Cormorant_Garamond, Barlow, Montserrat } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import NavDrawerSystem from "./components/NavDrawerSystem";
@@ -18,6 +18,24 @@ const marcellus = Marcellus({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-marcellus",
+});
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
+const barlow = Barlow({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400"],
+  variable: "--font-barlow",
+  display: "swap",
+});
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-montserrat",
+  display: "swap",
 });
 
 export const metadata = {
@@ -45,7 +63,7 @@ export default function RootLayout({ children }) {
       </head>
 
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${marcellus.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${marcellus.variable} ${cormorant.variable} ${barlow.variable} ${montserrat.variable} antialiased`}
       >
         <JsonLd data={organizationSchema} />
         {/* 1. Critical External Scripts */}

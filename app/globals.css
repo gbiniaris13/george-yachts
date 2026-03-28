@@ -1,16 +1,162 @@
-@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap");
-
+/* Fonts loaded via next/font in layout.jsx — no render-blocking @import */
 @import "tailwindcss";
 
 /* Smooth scroll globally */
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Selection color */
 ::selection {
   background: #DAA520;
   color: #000;
+}
+
+/* ═══════════════════════════════════════
+   GLOBAL PREMIUM EFFECTS — €1M Feel
+   Applied via CSS classes on any element
+   ═══════════════════════════════════════ */
+
+/* Scroll-driven reveal (CSS native, no JS needed) */
+@supports (animation-timeline: view()) {
+  .reveal-up {
+    animation: globalRevealUp 0.8s ease both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 80%;
+  }
+  .reveal-left {
+    animation: globalRevealLeft 0.8s ease both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 80%;
+  }
+  .reveal-right {
+    animation: globalRevealRight 0.8s ease both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 80%;
+  }
+  .reveal-scale {
+    animation: globalRevealScale 0.8s ease both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 80%;
+  }
+  .reveal-blur {
+    animation: globalRevealBlur 1s ease both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 90%;
+  }
+}
+
+@keyframes globalRevealUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes globalRevealLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes globalRevealRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes globalRevealScale {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes globalRevealBlur {
+  from { opacity: 0; filter: blur(8px); transform: translateY(20px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+/* Gold shimmer text effect */
+.text-shimmer {
+  background: linear-gradient(90deg, #E6C77A 0%, #fff 20%, #C9A24D 40%, #fff 60%, #A67C2E 80%, #E6C77A 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmerAnim 6s ease-in-out infinite;
+}
+
+@keyframes textShimmerAnim {
+  0% { background-position: 300% center; }
+  100% { background-position: -300% center; }
+}
+
+/* Image cinematic hover */
+.img-cinema {
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+  filter: brightness(0.85) saturate(0.95);
+}
+.img-cinema:hover {
+  transform: scale(1.04);
+  filter: brightness(1) saturate(1.05);
+}
+
+/* Gold underline reveal */
+.gold-underline {
+  position: relative;
+  display: inline-block;
+}
+.gold-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.gold-underline:hover::after {
+  width: 100%;
+}
+
+/* Glass panel */
+.glass {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(218, 165, 32, 0.08);
+}
+
+/* Ambient glow */
+.glow-gold {
+  box-shadow: 0 0 40px rgba(218, 165, 32, 0.06), 0 0 80px rgba(218, 165, 32, 0.03);
+}
+
+/* Magnetic-style scale on hover */
+.hover-lift {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Staggered children reveal */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: globalRevealUp 0.6s ease forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.08s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.16s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.24s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.32s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.48s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.56s; }
+
+/* Page transition fade */
+.page-fade {
+  animation: pageFadeIn 0.5s ease both;
+}
+@keyframes pageFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .the {
