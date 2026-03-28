@@ -120,8 +120,8 @@ const VideoSection = () => {
                       style={{
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
                         fontSize: "clamp(42px, 9vw, 110px)",
-                        fontWeight: 300,
-                        letterSpacing: "0.12em",
+                        fontWeight: 200,
+                        letterSpacing: "0.15em",
                         lineHeight: 0.95,
                         color: "#fff",
                         textTransform: "uppercase",
