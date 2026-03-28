@@ -83,6 +83,7 @@ const NavDrawerSystem = () => {
               onClick={toggleDrawer}
               className={`p-2 rounded-full ${currentTextColor} hover:text-[#CEA681] cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#CEA681] transition duration-150 active:scale-95 drop-shadow-md`}
               aria-label="Toggle menu"
+              data-cursor="Menu"
             >
               <Menu className="w-6 h-6" />
             </button>

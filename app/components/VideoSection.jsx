@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import Link from "next/link";
+import MagneticButton from "./MagneticButton";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
@@ -142,18 +143,20 @@ const VideoSection = () => {
                       Boutique Yacht Brokerage House
                     </p>
 
-                    {/* CTA Button */}
-                    <Link
-                      href={`${slide.href}#fleet-anchor`}
-                      className="inline-block px-10 md:px-14 py-4 md:py-5 text-white text-[10px] tracking-[0.35em] uppercase font-semibold border border-white/20 hover:border-[#DAA520] hover:text-[#DAA520] transition-all duration-500 backdrop-blur-sm bg-white/[0.03]"
-                      style={{
-                        opacity: heroVisible ? 1 : 0,
-                        transform: heroVisible ? "translateY(0)" : "translateY(10px)",
-                        transition: "opacity 0.8s ease 2.2s, transform 0.8s ease 2.2s, border-color 0.3s, color 0.3s",
-                      }}
-                    >
-                      {slide.buttonText}
-                    </Link>
+                    {/* CTA Button — Magnetic */}
+                    <div style={{
+                      opacity: heroVisible ? 1 : 0,
+                      transform: heroVisible ? "translateY(0)" : "translateY(10px)",
+                      transition: "opacity 0.8s ease 2.2s, transform 0.8s ease 2.2s",
+                    }}>
+                      <MagneticButton
+                        href={`${slide.href}#fleet-anchor`}
+                        dataCursor="Explore"
+                        className="inline-block px-10 md:px-14 py-4 md:py-5 text-white text-[10px] tracking-[0.35em] uppercase font-semibold border border-white/20 hover:border-[#DAA520] hover:text-[#DAA520] transition-colors duration-500 backdrop-blur-sm bg-white/[0.03]"
+                      >
+                        {slide.buttonText}
+                      </MagneticButton>
+                    </div>
                   </div>
                 </div>
               </div>

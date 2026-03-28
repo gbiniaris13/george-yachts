@@ -5,6 +5,10 @@ import React from "react";
 const Filotimon = () => {
   return (
     <section className="relative w-full bg-[#000000] py-32 lg:py-48 overflow-hidden flex items-center justify-center">
+      {/* 0. AMBIENT GRADIENT ORBS — alive background */}
+      <div className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(218,165,32,0.04) 0%, transparent 70%)", filter: "blur(80px)" }} />
+      <div className="absolute bottom-1/4 -right-1/4 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(218,165,32,0.03) 0%, transparent 70%)", filter: "blur(80px)" }} />
+
       {/* 1. TEXTURE: Cinematic Grain Overlay */}
       <div className="absolute inset-0 opacity-[0.07] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
 
