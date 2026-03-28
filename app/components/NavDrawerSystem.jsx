@@ -67,12 +67,15 @@ const NavDrawerSystem = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 px-4 sm:px-6 lg:px-8`}
+        className="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 lg:px-8"
         style={{
-          backgroundColor: navBackground, // Applied Black Background Logic
+          backgroundColor: navBackground,
+          transition: "background-color 0.5s ease, height 0.5s cubic-bezier(0.16, 1, 0.3, 1), padding 0.5s ease",
+          height: scrolled ? "72px" : "140px",
+          paddingTop: scrolled ? "0px" : "12px",
         }}
       >
-        <div className="flex items-center justify-between h-24 md:h-28 relative">
+        <div className="flex items-center justify-between h-full relative">
           {/* --- 1. LEFT — Menu Button --- */}
           <div className="flex items-center w-20">
             <button
@@ -85,15 +88,16 @@ const NavDrawerSystem = () => {
             </button>
           </div>
 
-          {/* --- 2. CENTER — Logo --- */}
+          {/* --- 2. CENTER — Logo (shrinks on scroll) --- */}
           <Link href="/" className="absolute left-1/2 -translate-x-1/2 shrink-0 group" data-cursor="Home">
             <img
               src="/images/yacht-icon-only.svg"
               alt="George Yachts Brokerage House"
-              className="transition-opacity duration-300 group-hover:opacity-80"
+              className="group-hover:opacity-80"
               style={{
-                height: "clamp(48px, 9vw, 80px)",
+                height: scrolled ? "40px" : "clamp(70px, 12vw, 110px)",
                 width: "auto",
+                transition: "height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
               }}
             />
           </Link>
