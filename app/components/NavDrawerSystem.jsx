@@ -84,29 +84,38 @@ const NavDrawerSystem = () => {
               <Menu className="w-6 h-6" />
             </button>
 
-            {/* Logo — Yacht icon only (cropped SVG, no text) */}
+            {/* Logo — Yacht icon (inline SVG for perfect control) */}
             <a href="/" className="shrink-0 group" data-cursor="Home">
-              <div
-                className="overflow-hidden transition-opacity duration-300 group-hover:opacity-85"
-                style={{
-                  height: "clamp(28px, 5vw, 44px)",
-                  width: "clamp(55px, 10vw, 90px)",
-                }}
+              <svg
+                viewBox="0 0 120 50"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="transition-opacity duration-300 group-hover:opacity-80"
+                style={{ height: "clamp(24px, 4.5vw, 38px)", width: "auto" }}
               >
-                <img
-                  src="/images/logo-transparent.svg"
-                  alt="George Yachts Brokerage House"
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                    marginTop: "-10%",
-                    clipPath: "inset(0 5% 52% 25%)",
-                    filter: "brightness(1.2)",
-                    transform: "scale(2.8)",
-                    transformOrigin: "center 30%",
-                  }}
-                />
-              </div>
+                <defs>
+                  <linearGradient id="navGold" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#F7DA6F"/>
+                    <stop offset="45%" stopColor="#DAA520"/>
+                    <stop offset="100%" stopColor="#A67C2E"/>
+                  </linearGradient>
+                  <linearGradient id="navSilver" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#C0C0C0"/>
+                    <stop offset="50%" stopColor="#A0A0A0"/>
+                    <stop offset="100%" stopColor="#808080"/>
+                  </linearGradient>
+                </defs>
+                {/* Gold wave - top swoosh */}
+                <path d="M15 28 C20 26, 30 18, 45 12 C55 8, 65 6, 72 8 C78 10, 82 14, 88 16" stroke="url(#navGold)" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+                {/* Gold wave - second line */}
+                <path d="M25 32 C32 28, 42 20, 55 16 C65 13, 75 12, 85 15" stroke="url(#navGold)" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.7"/>
+                {/* Silver hull */}
+                <path d="M50 30 C58 27, 70 22, 82 18 C90 16, 98 16, 108 20 C104 24, 96 28, 85 30 C75 31, 62 31, 50 30Z" fill="url(#navSilver)" opacity="0.85"/>
+                {/* Silver hull highlight */}
+                <path d="M60 28 C70 25, 82 21, 95 19 C100 18, 105 19, 108 20 C104 22, 96 25, 85 27 C75 28, 65 28, 60 28Z" fill="#D0D0D0" opacity="0.3"/>
+                {/* Gold accent line on hull */}
+                <path d="M52 30 C62 28, 75 24, 90 21" stroke="url(#navGold)" strokeWidth="0.8" fill="none" opacity="0.5"/>
+              </svg>
             </a>
           </div>
 
@@ -159,23 +168,28 @@ const NavDrawerSystem = () => {
         <div className="p-8 h-full flex flex-col overflow-y-auto">
           <div className="flex justify-between items-center pb-6 ">
             {/* Logo in drawer — yacht icon + text */}
-            <a href="/" className="flex items-center gap-3" onClick={toggleDrawer}>
-              <div className="overflow-hidden" style={{ height: "36px", width: "72px" }}>
-                <img
-                  src="/images/logo-transparent.svg"
-                  alt="George Yachts Brokerage House"
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                    clipPath: "inset(0 5% 52% 25%)",
-                    filter: "brightness(1.2)",
-                    transform: "scale(2.8)",
-                    transformOrigin: "center 30%",
-                  }}
-                />
-              </div>
+            <a href="/" className="flex items-center gap-4" onClick={toggleDrawer}>
+              <svg viewBox="0 0 120 50" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ height: "32px", width: "auto" }}>
+                <defs>
+                  <linearGradient id="drawerGold" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#F7DA6F"/>
+                    <stop offset="45%" stopColor="#DAA520"/>
+                    <stop offset="100%" stopColor="#A67C2E"/>
+                  </linearGradient>
+                  <linearGradient id="drawerSilver" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#C0C0C0"/>
+                    <stop offset="50%" stopColor="#A0A0A0"/>
+                    <stop offset="100%" stopColor="#808080"/>
+                  </linearGradient>
+                </defs>
+                <path d="M15 28 C20 26, 30 18, 45 12 C55 8, 65 6, 72 8 C78 10, 82 14, 88 16" stroke="url(#drawerGold)" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+                <path d="M25 32 C32 28, 42 20, 55 16 C65 13, 75 12, 85 15" stroke="url(#drawerGold)" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.7"/>
+                <path d="M50 30 C58 27, 70 22, 82 18 C90 16, 98 16, 108 20 C104 24, 96 28, 85 30 C75 31, 62 31, 50 30Z" fill="url(#drawerSilver)" opacity="0.85"/>
+                <path d="M60 28 C70 25, 82 21, 95 19 C100 18, 105 19, 108 20 C104 22, 96 25, 85 27 C75 28, 65 28, 60 28Z" fill="#D0D0D0" opacity="0.3"/>
+                <path d="M52 30 C62 28, 75 24, 90 21" stroke="url(#drawerGold)" strokeWidth="0.8" fill="none" opacity="0.5"/>
+              </svg>
               <div className="flex flex-col">
-                <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "16px", fontWeight: 400, letterSpacing: "0.08em", color: "#fff", lineHeight: 1 }}>
+                <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "17px", fontWeight: 300, letterSpacing: "0.1em", color: "#fff", lineHeight: 1 }}>
                   GEORGE YACHTS
                 </span>
                 <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "6px", letterSpacing: "0.25em", color: "rgba(218,165,32,0.5)", marginTop: "4px" }}>
