@@ -1,17 +1,49 @@
 import React from "react";
-import TeamPageClient from "./TeamPageClient";
+import Footer from "@/components/Footer";
+import ContactFormSection from "@/components/ContactFormSection";
+import TeamContent from "./TeamContent";
+import Image from "next/image";
+import "./team.css";
 
 export const metadata = {
-  title: "Our Team | George Yachts | Athens Yacht Brokerage",
+  title: "Our Core Team | George Yachts | Boutique Yacht Brokerage Athens",
   description:
-    "Meet the expert team at George Yachts. Our brokers, managers, and advisors are dedicated to providing bespoke, 360° luxury yachting services from Athens, Greece.",
+    "Meet the expert team behind George Yachts Brokerage House. Managing brokers, luxury travel liaisons, operations & finance, maritime compliance. Athens, Greece.",
   alternates: {
-    canonical: "https://georgeyachts.com/team/valleria-karvouni",
+    canonical: "https://georgeyachts.com/team",
   },
 };
 
-const TeamPage = () => {
-  return <TeamPageClient />;
-};
+export default function TeamPage() {
+  return (
+    <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
 
-export default TeamPage;
+      {/* ── HERO ── */}
+      <section className="team-hero">
+        <Image
+          src="/images/about-us.jpg"
+          alt="George Yachts Core Team - boutique yacht brokerage Athens Greece"
+          fill
+          priority
+          className="team-hero__bg"
+          sizes="100vw"
+        />
+        <div className="team-hero__gradient" />
+        <div className="team-hero__content">
+          <p className="team-hero__eyebrow">Bespoke Service, Managed with Precision</p>
+          <h1 className="team-hero__title">Our Core Team</h1>
+          <div className="team-hero__line" />
+          <p className="team-hero__subtitle">&amp; Advisory Network</p>
+        </div>
+      </section>
+
+      {/* ── TEAM CONTENT (Client Component) ── */}
+      <TeamContent />
+
+      {/* ── CONTACT ── */}
+      <ContactFormSection />
+
+      <Footer />
+    </div>
+  );
+}
