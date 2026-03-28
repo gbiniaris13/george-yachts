@@ -35,10 +35,10 @@ export default function AboutUsPage() {
         />
         <div className="about-hero__gradient" />
         <div className="about-hero__content">
-          <p className="about-hero__eyebrow">Est. Athens, Greece</p>
-          <h1 className="about-hero__title">George Yachts</h1>
+          <p className="about-hero__eyebrow">Established in the U.S. &middot; Operating from Athens</p>
+          <h1 className="about-hero__title">George Yachts<br /><span className="about-hero__title-llc">Brokerage House LLC</span></h1>
           <div className="about-hero__line" />
-          <p className="about-hero__subtitle">Boutique Yacht Brokerage House</p>
+          <p className="about-hero__subtitle">Boutique Yacht Brokerage &middot; Exclusively Greek Waters</p>
         </div>
       </section>
 
