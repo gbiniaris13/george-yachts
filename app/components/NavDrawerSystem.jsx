@@ -84,31 +84,27 @@ const NavDrawerSystem = () => {
               <Menu className="w-6 h-6" />
             </button>
 
-            {/* RESTORED: Original Text Logo */}
-            <div className="shrink-0">
-              <a
-                href="/"
-                className="text-2xl font-extrabold text-indigo-400 tracking-wider "
+            {/* Logo — SVG image + LLC subtitle */}
+            <a href="/" className="shrink-0 flex flex-col items-center group" data-cursor="Home">
+              <img
+                src="/images/logo-transparent.svg"
+                alt="George Yachts Brokerage House"
+                className="h-10 md:h-12 w-auto drop-shadow-md transition-opacity duration-300 group-hover:opacity-90"
+                style={{ filter: "brightness(1.1)" }}
+              />
+              <span
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: "6px",
+                  letterSpacing: "0.35em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.35)",
+                  marginTop: "2px",
+                }}
               >
-                <div className="flex flex-col items-center">
-                  <span
-                    className={`the text-[10px] drop-shadow-md ${currentTextColor}`}
-                  >
-                    THE
-                  </span>
-                  <span
-                    className={`george-yachts text-base drop-shadow-md ${currentTextColor}`}
-                  >
-                    GEORGE YACHTS
-                  </span>
-                  <span
-                    className={`the text-[10px] drop-shadow-md ${currentTextColor}`}
-                  >
-                    YACHT BROKERAGE
-                  </span>
-                </div>
-              </a>
-            </div>
+                BROKERAGE HOUSE LLC
+              </span>
+            </a>
           </div>
 
           {/* --- 2. CENTER BLOCK (REMOVED/NUKED) --- */}
@@ -159,16 +155,27 @@ const NavDrawerSystem = () => {
       >
         <div className="p-8 h-full flex flex-col overflow-y-auto">
           <div className="flex justify-between items-center pb-6 ">
-            {/* RESTORED: Original Text Logo in Drawer */}
-            <div className="flex flex-col items-center">
-              <span className="the text-white text-[10px]">THE</span>
-              <span className="george-yachts text-white text-lg font-bold">
-                GEORGE YACHTS
+            {/* Logo in drawer */}
+            <a href="/" className="flex flex-col items-center" onClick={toggleDrawer}>
+              <img
+                src="/images/logo-transparent.svg"
+                alt="George Yachts Brokerage House"
+                className="h-14 w-auto"
+                style={{ filter: "brightness(1.1)" }}
+              />
+              <span
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: "7px",
+                  letterSpacing: "0.35em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.35)",
+                  marginTop: "3px",
+                }}
+              >
+                BROKERAGE HOUSE LLC
               </span>
-              <span className="the text-white text-[10px]">
-                YACHT BROKERAGE
-              </span>
-            </div>
+            </a>
             <button
               onClick={toggleDrawer}
               className="p-2 rounded-full text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 active:scale-95 "
