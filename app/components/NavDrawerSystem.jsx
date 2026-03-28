@@ -84,42 +84,28 @@ const NavDrawerSystem = () => {
               <Menu className="w-6 h-6" />
             </button>
 
-            {/* Logo — Yacht icon + text, responsive */}
-            <a href="/" className="shrink-0 flex items-center gap-2 md:gap-3 group" data-cursor="Home">
-              {/* Yacht icon — always visible, scales */}
-              <img
-                src="/images/logo-transparent.svg"
-                alt="George Yachts"
-                className="h-7 md:h-10 w-auto drop-shadow-md transition-all duration-300 group-hover:opacity-90"
-                style={{ filter: "brightness(1.15)" }}
-              />
-              {/* Text next to icon */}
-              <div className="flex flex-col items-start">
-                <span
+            {/* Logo — Yacht icon only (cropped SVG, no text) */}
+            <a href="/" className="shrink-0 group" data-cursor="Home">
+              <div
+                className="overflow-hidden transition-opacity duration-300 group-hover:opacity-85"
+                style={{
+                  height: "clamp(28px, 5vw, 44px)",
+                  width: "clamp(55px, 10vw, 90px)",
+                }}
+              >
+                <img
+                  src="/images/logo-transparent.svg"
+                  alt="George Yachts Brokerage House"
                   style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    fontSize: "clamp(13px, 2vw, 18px)",
-                    fontWeight: 400,
-                    letterSpacing: "0.08em",
-                    color: "#fff",
-                    lineHeight: 1,
+                    width: "100%",
+                    height: "auto",
+                    marginTop: "-10%",
+                    clipPath: "inset(0 5% 52% 25%)",
+                    filter: "brightness(1.2)",
+                    transform: "scale(2.8)",
+                    transformOrigin: "center 30%",
                   }}
-                >
-                  GEORGE YACHTS
-                </span>
-                <span
-                  className="hidden sm:block"
-                  style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "5px",
-                    fontWeight: 500,
-                    letterSpacing: "0.25em",
-                    color: "rgba(218,165,32,0.5)",
-                    marginTop: "3px",
-                  }}
-                >
-                  BROKERAGE HOUSE LLC
-                </span>
+                />
               </div>
             </a>
           </div>
@@ -172,26 +158,30 @@ const NavDrawerSystem = () => {
       >
         <div className="p-8 h-full flex flex-col overflow-y-auto">
           <div className="flex justify-between items-center pb-6 ">
-            {/* Logo in drawer */}
-            <a href="/" className="flex flex-col items-center" onClick={toggleDrawer}>
-              <img
-                src="/images/logo-transparent.svg"
-                alt="George Yachts Brokerage House"
-                className="h-14 w-auto"
-                style={{ filter: "brightness(1.1)" }}
-              />
-              <span
-                style={{
-                  fontFamily: "'Montserrat', sans-serif",
-                  fontSize: "7px",
-                  letterSpacing: "0.35em",
-                  textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.35)",
-                  marginTop: "3px",
-                }}
-              >
-                BROKERAGE HOUSE LLC
-              </span>
+            {/* Logo in drawer — yacht icon + text */}
+            <a href="/" className="flex items-center gap-3" onClick={toggleDrawer}>
+              <div className="overflow-hidden" style={{ height: "36px", width: "72px" }}>
+                <img
+                  src="/images/logo-transparent.svg"
+                  alt="George Yachts Brokerage House"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    clipPath: "inset(0 5% 52% 25%)",
+                    filter: "brightness(1.2)",
+                    transform: "scale(2.8)",
+                    transformOrigin: "center 30%",
+                  }}
+                />
+              </div>
+              <div className="flex flex-col">
+                <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "16px", fontWeight: 400, letterSpacing: "0.08em", color: "#fff", lineHeight: 1 }}>
+                  GEORGE YACHTS
+                </span>
+                <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "6px", letterSpacing: "0.25em", color: "rgba(218,165,32,0.5)", marginTop: "4px" }}>
+                  BROKERAGE HOUSE LLC
+                </span>
+              </div>
             </a>
             <button
               onClick={toggleDrawer}
