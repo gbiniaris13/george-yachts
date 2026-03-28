@@ -1,0 +1,599 @@
+/* ============================================
+   GEORGE YACHTS — Fleet Page Redesign
+   Card Grid with Filters
+   ============================================ */
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes goldLine {
+  from { width: 0; }
+  to { width: 80px; }
+}
+
+/* ---- HERO ---- */
+.fleet-hero {
+  position: relative;
+  height: 60vh;
+  min-height: 400px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.fleet-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+
+.fleet-hero__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(13, 27, 42, 0.3) 0%,
+    rgba(13, 27, 42, 0.6) 60%,
+    rgba(13, 27, 42, 1) 100%
+  );
+}
+
+.fleet-hero__content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 0 24px 60px;
+  animation: fadeSlideUp 0.8s ease-out 0.2s both;
+}
+
+.fleet-hero__eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #C9A84C;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.fleet-hero__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  color: #fff;
+  margin: 0 0 20px;
+}
+
+.fleet-hero__line {
+  width: 80px;
+  height: 1px;
+  background: #C9A84C;
+  margin: 0 auto 20px;
+  animation: goldLine 1s ease-out 0.6s both;
+}
+
+.fleet-hero__desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+/* ---- STICKY FILTER BAR ---- */
+.fleet-filters {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(13, 27, 42, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.12);
+  padding: 0 24px;
+}
+
+.fleet-filters__tabs {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  padding: 16px 0 0;
+  flex-wrap: wrap;
+}
+
+.fleet-filters__tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 8px 20px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.fleet-filters__tab:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.fleet-filters__tab--active {
+  background: rgba(201, 168, 76, 0.15);
+  border-color: rgba(201, 168, 76, 0.4);
+  color: #C9A84C;
+}
+
+.fleet-filters__tab-count {
+  margin-left: 6px;
+  font-size: 9px;
+  opacity: 0.6;
+}
+
+.fleet-filters__row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  padding: 12px 0 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.fleet-filters__select-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fleet-filters__label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 500;
+}
+
+.fleet-filters__select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 6px 28px 6px 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23C9A84C' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  border-radius: 0;
+}
+
+.fleet-filters__select option {
+  background: #0D1B2A;
+}
+
+/* ---- RESULTS COUNT ---- */
+.fleet-results {
+  padding: 24px 24px 8px;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fleet-results__count {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.1em;
+}
+
+.fleet-results__highlight {
+  color: #C9A84C;
+}
+
+.fleet-results__note {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.1em;
+}
+
+/* ---- YACHT GRID ---- */
+.fleet-grid {
+  padding: 16px 24px 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 24px;
+}
+
+/* ---- YACHT CARD ---- */
+.fleet-card {
+  overflow: hidden;
+  border-radius: 2px;
+  animation: fadeSlideUp 0.6s ease-out both;
+}
+
+.fleet-card__image-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.fleet-card__image-wrap {
+  position: relative;
+  padding-bottom: 66.67%; /* 3:2 aspect ratio */
+  background: #0a1520;
+  overflow: hidden;
+}
+
+.fleet-card__img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fleet-card:hover .fleet-card__img {
+  transform: scale(1.05);
+}
+
+.fleet-card__placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.2);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.fleet-card__badge {
+  position: absolute;
+  top: 16px;
+  padding: 4px 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  z-index: 5;
+}
+
+.fleet-card__badge--category {
+  left: 16px;
+  background: rgba(13, 27, 42, 0.85);
+  backdrop-filter: blur(8px);
+  color: #C9A84C;
+}
+
+.fleet-card__badge--featured {
+  right: 16px;
+  left: auto;
+  background: #C9A84C;
+  color: #0D1B2A;
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+}
+
+.fleet-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13, 27, 42, 0.7) 0%, transparent 60%);
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+
+.fleet-card:hover .fleet-card__overlay {
+  background: linear-gradient(to top, rgba(13, 27, 42, 0.9) 0%, rgba(13, 27, 42, 0.3) 50%, transparent 100%);
+}
+
+.fleet-card__name-area {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 20px 20px;
+  z-index: 5;
+}
+
+.fleet-card__name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+}
+
+.fleet-card__builder {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  color: #C9A84C;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 6px 0 0;
+  font-weight: 500;
+}
+
+/* Card info section */
+.fleet-card__info {
+  background: #0f1f30;
+  padding: 20px;
+  border-top: 1px solid rgba(201, 168, 76, 0.15);
+}
+
+.fleet-card__specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.fleet-card__spec {
+  text-align: center;
+}
+
+.fleet-card__spec-label {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 4px;
+}
+
+.fleet-card__spec-value {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.fleet-card__divider {
+  height: 1px;
+  background: rgba(201, 168, 76, 0.12);
+  margin-bottom: 16px;
+}
+
+.fleet-card__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fleet-card__price-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 2px;
+}
+
+.fleet-card__price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  color: #C9A84C;
+  font-weight: 600;
+}
+
+.fleet-card__buttons {
+  display: flex;
+  gap: 8px;
+  opacity: 0.7;
+  transform: translateY(4px);
+  transition: all 0.4s ease;
+}
+
+.fleet-card:hover .fleet-card__buttons {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fleet-card__btn {
+  display: inline-block;
+  padding: 8px 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+}
+
+.fleet-card__btn--details {
+  background: transparent;
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  color: #C9A84C;
+}
+
+.fleet-card__btn--details:hover {
+  background: rgba(201, 168, 76, 0.1);
+  border-color: #C9A84C;
+}
+
+.fleet-card__btn--inquire {
+  background: #C9A84C;
+  border: none;
+  color: #0D1B2A;
+  font-weight: 700;
+}
+
+.fleet-card__btn--inquire:hover {
+  background: #d4b65c;
+}
+
+/* ---- EMPTY STATE ---- */
+.fleet-empty {
+  text-align: center;
+  padding: 80px 24px;
+}
+
+.fleet-empty__text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 16px;
+}
+
+.fleet-empty__reset {
+  background: rgba(201, 168, 76, 0.15);
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  color: #C9A84C;
+  padding: 10px 24px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ---- TRUST SECTION ---- */
+.fleet-trust {
+  border-top: 1px solid rgba(201, 168, 76, 0.12);
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.fleet-trust__eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C9A84C;
+  margin-bottom: 24px;
+}
+
+.fleet-trust__badges {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 12px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.1em;
+}
+
+.fleet-trust__dot {
+  color: rgba(201, 168, 76, 0.3);
+}
+
+.fleet-trust__cta {
+  display: inline-block;
+  margin-top: 40px;
+  background: #C9A84C;
+  color: #0D1B2A;
+  padding: 14px 40px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.fleet-trust__cta:hover {
+  background: #d4b65c;
+  transform: translateY(-2px);
+}
+
+.fleet-trust__note {
+  margin-top: 16px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 1024px) {
+  .fleet-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .fleet-hero {
+    height: 50vh;
+    min-height: 350px;
+  }
+
+  .fleet-grid {
+    grid-template-columns: 1fr;
+    padding: 16px 16px 60px;
+    gap: 20px;
+  }
+
+  .fleet-filters__tabs {
+    gap: 2px;
+  }
+
+  .fleet-filters__tab {
+    padding: 6px 12px;
+    font-size: 9px;
+  }
+
+  .fleet-filters__row {
+    gap: 12px;
+  }
+
+  .fleet-results {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 16px 4px;
+  }
+
+  .fleet-card__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .fleet-card__buttons {
+    opacity: 1;
+    transform: none;
+    width: 100%;
+  }
+
+  .fleet-card__btn {
+    flex: 1;
+    text-align: center;
+  }
+
+  .fleet-trust__badges {
+    gap: 20px;
+  }
+}

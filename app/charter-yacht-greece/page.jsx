@@ -1,165 +1,154 @@
 import React from "react";
 import { sanityClient } from "@/lib/sanity";
 import Footer from "@/components/Footer";
-import AboutUs from "@/components/AboutUs";
-import ContactFormSection from "@/components/ContactFormSection";
-import YachtListClient from "@/components/YachtListClient";
+import FleetGrid from "./FleetGrid";
+import Image from "next/image";
+import "./fleet-page.css";
 
-// Force dynamic rendering to ensure fresh data on every visit
-export const dynamic = "force-dynamic";
+// ISR - revalidate every hour
+export const revalidate = 3600;
 
 export const metadata = {
   title: "Luxury Yacht Charter Fleet Greece | 50+ Yachts | George Yachts",
   description:
-    "Explore our curated fleet of 50+ luxury charter yachts in Greek waters. Motor yachts, sailing catamarans, and power catamarans from €5,900 to €235,000 per week. Cyclades, Ionian, Saronic, Sporades.",
+    "Browse our curated fleet of 50+ luxury charter yachts in Greek waters. Motor yachts, sailing catamarans, and monohulls. Cyclades, Ionian, Saronic, Sporades. IYBA member broker.",
   alternates: {
     canonical: "https://georgeyachts.com/charter-yacht-greece",
   },
   openGraph: {
-    title: "Luxury Yacht Charter Fleet Greece | George Yachts",
-    description: "Browse 50+ handpicked luxury yachts for charter in Greek waters. Personal service by George P. Biniaris, IYBA Member.",
+    title: "Charter Fleet | George Yachts Brokerage House",
+    description:
+      "50+ curated luxury yachts for charter in Greek waters. From 14m sailing catamarans to 64m superyachts.",
     url: "https://georgeyachts.com/charter-yacht-greece",
+    images: [
+      "https://cdn.sanity.io/images/ecqr94ey/production/5a1d2f46e69d3e21c61aa3950deb11085e725b9d-1024x768.jpg",
+    ],
   },
 };
 
-// 1. QUERY WITH LQIP METADATA FOR BLUR EFFECT
-const ALL_YACHTS_QUERY = `*[_type == "yacht"] | order(_createdAt asc){
+// Fetch only the data we need - 1 image per yacht
+const FLEET_QUERY = `*[_type == "yacht" && defined(slug.current)] | order(length desc) {
   _id,
+  "slug": slug.current,
   name,
   category,
   subtitle,
   length,
-  yearBuiltRefit,
   sleeps,
-  cruisingRegion,
+  cabins,
+  crew,
+  builder,
   weeklyRatePrice,
-  slug,
-  "brochure": brochure.asset->url, 
-  images[]{
-    asset->{
-      _id,
-      url,
-      metadata {
-        lqip
-      }
-    },
-    alt 
-  }
+  cruisingRegion,
+  "imageUrl": images[0].asset->url
 }`;
 
-// --- PRICE PARSER ---
-const getPriceValue = (priceStr) => {
-  if (!priceStr) return 999999999;
-
-  const str = String(priceStr).trim();
-  const lower = str.toLowerCase();
-
-  if (
-    lower.includes("request") ||
-    lower.includes("application") ||
-    lower.includes("contact")
-  ) {
-    return 999999999;
-  }
-
-  // Regex to find the first sequence of numbers (e.g. "20.000")
-  const match = str.match(/([0-9]+[.,]?[0-9]*)/);
-
-  if (!match) return 999999999;
-
-  // Remove dots/commas to get raw integer
-  const cleanNumString = match[0].replace(/[.,]/g, "");
-
-  return parseInt(cleanNumString, 10);
-};
-
-// --- SCHEMA GENERATOR ---
-const generateYachtsSchema = (yachts) => {
+// Schema for SEO
+function generateFleetSchema(yachts) {
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    itemListElement: yachts.map((yacht, index) => {
-      const parsedPrice = getPriceValue(yacht.weeklyRatePrice);
-      const slugString =
-        yacht.slug?.current ||
-        yacht.name
-          .toLowerCase()
-          .trim()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/^-+|-+$/g, "");
-      const imageUrl = yacht.images?.[0]?.asset?.url || "";
-
-      const itemData = {
-        "@type": ["Product", "Vehicle"],
-        name: yacht.name,
-        description: `${yacht.subtitle || yacht.category}. MYBA Charter Agreement. Sleeps up to ${yacht.sleeps || "12"} guests. Cruising region: ${yacht.cruisingRegion || "Mediterranean"}. Length: ${yacht.length || "TBA"}.`,
-        image: imageUrl,
+    name: "George Yachts Charter Fleet Greece",
+    description:
+      "Curated fleet of 50+ luxury yachts for charter in Greek waters",
+    numberOfItems: yachts.length,
+    itemListElement: yachts.slice(0, 20).map((yacht, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Product",
+        name: yacht.name || yacht.slug,
+        url: `https://georgeyachts.com/yachts/${yacht.slug}`,
+        image: yacht.imageUrl,
+        category: "Luxury Yacht Charter",
         brand: {
           "@type": "Brand",
           name: "George Yachts",
         },
-      };
-
-      // Only attach pricing if it's an actual number, otherwise Google gets mad at fake prices
-      if (parsedPrice !== 999999999) {
-        itemData.offers = {
-          "@type": "Offer",
-          price: parsedPrice,
-          priceCurrency: "EUR",
-          availability: "https://schema.org/InStock",
-          url: yacht.slug?.current
-            ? `https://georgeyachts.com/yachts/${yacht.slug.current}`
-            : `https://georgeyachts.com/charter-yacht-greece#${slugString}`,
-        };
-      }
-
-      return {
-        "@type": "ListItem",
-        position: index + 1,
-        item: itemData,
-      };
-    }),
+      },
+    })),
   };
-};
+}
 
-const YachtCharterPage = async () => {
+export default async function CharterFleetPage() {
   let yachts = [];
   try {
-    yachts = await sanityClient.fetch(ALL_YACHTS_QUERY);
-
-    // --- SORT: CHEAPEST FIRST ---
-    yachts.sort((a, b) => {
-      const priceA = getPriceValue(a.weeklyRatePrice);
-      const priceB = getPriceValue(b.weeklyRatePrice);
-      return priceA - priceB;
-    });
+    yachts = await sanityClient.fetch(FLEET_QUERY);
   } catch (error) {
     console.error("Failed to fetch yachts:", error);
   }
 
-  // Generate Schema from the fetched Sanity data
-  const jsonLdSchema = generateYachtsSchema(yachts);
+  const jsonLdSchema = generateFleetSchema(yachts);
 
   return (
-    <div className="min-h-screen bg-[#020617]">
-      {/* INJECT JSON-LD SCHEMA FOR GOOGLE */}
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#0D1B2A",
+        color: "#fff",
+        fontFamily: "'Montserrat', 'Helvetica Neue', sans-serif",
+      }}
+    >
+      {/* JSON-LD Schema */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
       />
-      <AboutUs
-        heading="CHARTER"
-        subtitle="A YACHT"
-        paragraph="Explore bespoke luxury yacht charters in Greece. Curated fleets across the Cyclades, Ionian, and Athens Riviera."
-        imageUrl="/images/yachts-charter.jpg"
-        altText="Luxury yacht at sunset"
-      />
-      {/* Pass the sorted yachts to the Client Component */}
-      <YachtListClient initialYachts={yachts} />
-      <ContactFormSection />
+
+      {/* HERO */}
+      <section className="fleet-hero">
+        <Image
+          src="https://cdn.sanity.io/images/ecqr94ey/production/5a1d2f46e69d3e21c61aa3950deb11085e725b9d-1024x768.jpg?w=1920&h=800&fit=crop&auto=format"
+          alt="George Yachts Charter Fleet Greece"
+          fill
+          priority
+          className="fleet-hero__bg"
+          sizes="100vw"
+        />
+        <div className="fleet-hero__gradient" />
+        <div className="fleet-hero__content">
+          <div className="fleet-hero__eyebrow">Exclusively Greek Waters</div>
+          <h1 className="fleet-hero__title">Charter Fleet</h1>
+          <div className="fleet-hero__line" />
+          <p className="fleet-hero__desc">
+            {yachts.length} curated vessels — from intimate sailing catamarans
+            to 64-meter superyachts. Cyclades · Ionian · Saronic · Sporades.
+          </p>
+        </div>
+      </section>
+
+      {/* FLEET GRID (Client Component) */}
+      <FleetGrid yachts={yachts} />
+
+      {/* TRUST / CTA SECTION */}
+      <section className="fleet-trust">
+        <div className="fleet-trust__eyebrow">Trusted Brokerage</div>
+        <div className="fleet-trust__badges">
+          <span>IYBA Member</span>
+          <span className="fleet-trust__dot">·</span>
+          <span>MYBA Contracts</span>
+          <span className="fleet-trust__dot">·</span>
+          <span>Greek Waters Exclusively</span>
+          <span className="fleet-trust__dot">·</span>
+          <span>Personal Service</span>
+        </div>
+        <div>
+          <a
+            href="https://calendly.com/george-georgeyachts/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="fleet-trust__cta"
+          >
+            Book a Free Consultation
+          </a>
+        </div>
+        <p className="fleet-trust__note">
+          Can&apos;t find what you&apos;re looking for? We have access to 200+
+          additional vessels.
+        </p>
+      </section>
+
       <Footer />
     </div>
   );
-};
-
-export default YachtCharterPage;
+}
