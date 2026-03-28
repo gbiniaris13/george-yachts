@@ -46,5 +46,20 @@ export default async function sitemap() {
           console.error("Sitemap: failed to fetch blog posts from Sanity", error);
     }
 
-  return [...staticEntries, ...blogEntries];
+  let yachtEntries = [];
+    try {
+          const yachts = await sanityClient.fetch(
+                  `*[_type == "yacht" && defined(slug.current)]{ "slug": slug.current, _updatedAt }`
+                );
+          yachtEntries = yachts.map((yacht) => ({
+                  url: `${BASE_URL}/yachts/${yacht.slug}`,
+                  lastModified: yacht._updatedAt || new Date().toISOString(),
+                  changeFrequency: "weekly",
+                  priority: 0.8,
+          }));
+    } catch (error) {
+          console.error("Sitemap: failed to fetch yachts from Sanity", error);
+    }
+
+  return [...staticEntries, ...blogEntries, ...yachtEntries];
 }

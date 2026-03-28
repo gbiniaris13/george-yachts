@@ -163,11 +163,26 @@ export default async function YachtPage({ params }) {
           </div>
         </section>
 
-        {/* STORY SECTION */}
-        {yacht.description && (
+        {/* STORY SECTION — Rich content or auto-generated summary */}
+        {yacht.description && yacht.description.length > 0 ? (
           <section className="yacht-story reveal">
             <div className="container">
               <PortableText value={yacht.description} />
+            </div>
+          </section>
+        ) : (
+          <section className="yacht-story reveal">
+            <div className="container">
+              <h2 className="yacht-story__heading">About {yacht.name}</h2>
+              <p>
+                {yacht.name} is a {yacht.subtitle?.split('|')[0]?.trim() || 'luxury yacht'} available
+                for charter in Greek waters. At {yacht.length || 'her impressive length'}, she accommodates {yacht.sleeps || 'up to 12'} guests
+                for unforgettable voyages through the Cyclades, Ionian Islands, Saronic Gulf, and Sporades.
+              </p>
+              <p>
+                Contact George Yachts for detailed specifications, availability, and a personalized
+                charter proposal tailored to your preferences.
+              </p>
             </div>
           </section>
         )}

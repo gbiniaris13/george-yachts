@@ -9,11 +9,16 @@ import YachtListClient from "@/components/YachtListClient";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Luxury Yacht Charter Greece | George Yachts",
+  title: "Luxury Yacht Charter Fleet Greece | 50+ Yachts | George Yachts",
   description:
-    "Explore bespoke luxury yacht charters in Greece. Curated fleets across the Cyclades, Ionian, and Athens Riviera.",
+    "Explore our curated fleet of 50+ luxury charter yachts in Greek waters. Motor yachts, sailing catamarans, and power catamarans from €5,900 to €235,000 per week. Cyclades, Ionian, Saronic, Sporades.",
   alternates: {
     canonical: "https://georgeyachts.com/charter-yacht-greece",
+  },
+  openGraph: {
+    title: "Luxury Yacht Charter Fleet Greece | George Yachts",
+    description: "Browse 50+ handpicked luxury yachts for charter in Greek waters. Personal service by George P. Biniaris, IYBA Member.",
+    url: "https://georgeyachts.com/charter-yacht-greece",
   },
 };
 
@@ -102,7 +107,9 @@ const generateYachtsSchema = (yachts) => {
           price: parsedPrice,
           priceCurrency: "EUR",
           availability: "https://schema.org/InStock",
-          url: `https://georgeyachts.com/charter-yacht-greece#${slugString}`,
+          url: yacht.slug?.current
+            ? `https://georgeyachts.com/yachts/${yacht.slug.current}`
+            : `https://georgeyachts.com/charter-yacht-greece#${slugString}`,
         };
       }
 

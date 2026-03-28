@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, EffectFade, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -257,6 +258,15 @@ const YachtSwiper = ({ yachtData }) => {
             >
               Plan this charter
             </button>
+
+            {yacht.slug?.current && (
+              <Link
+                href={`/yachts/${yacht.slug.current}`}
+                className="w-full bg-transparent border border-white/10 text-white/50 py-4 text-[10px] font-sans font-bold tracking-[0.3em] uppercase transition-all duration-300 hover:bg-white/5 hover:text-[#DAA520] hover:border-[#DAA520]/30 text-center block"
+              >
+                View Full Details
+              </Link>
+            )}
 
             {yacht.brochure && (
               <a
