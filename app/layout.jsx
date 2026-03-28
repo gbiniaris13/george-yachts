@@ -3,6 +3,7 @@ import "./globals.css";
 import Script from "next/script";
 import NavDrawerSystem from "./components/NavDrawerSystem";
 import GlobalEffects from "./components/GlobalEffects";
+import CustomCursor from "./components/CustomCursor";
 import JsonLd from "./components/JsonLd";
 import { organizationSchema } from "@/lib/organizationSchema";
 import "swiper/css";
@@ -76,8 +77,9 @@ export default function RootLayout({ children }) {
           />
         )}
 
-        {/* Global Effects — all pages */}
+        {/* Global Effects + Custom Cursor — all pages */}
         <GlobalEffects />
+        <CustomCursor />
         {/* 2. Page Content */}
         <NavDrawerSystem />
         {children}

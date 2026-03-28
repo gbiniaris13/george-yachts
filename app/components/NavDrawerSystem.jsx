@@ -20,6 +20,7 @@ const navLinks = [
   { name: "ABOUT GEORGE YACHTS", href: "/about-us/" },
   { name: "OUR CORE TEAM", href: "/team/" },
   { name: "CHARTER A YACHT", href: "/charter-yacht-greece/" },
+  { name: "YACHT ITINERARIES", href: "/yacht-itineraries-greece/" },
   { name: "BUY A YACHT", href: "/yachts-for-sale/" },
   { name: "FLY PRIVATE", href: "/private-jet-charter/" },
   { name: "VIP TRANSFERS", href: "/vip-transfers-greece/" },

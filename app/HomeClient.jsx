@@ -7,16 +7,18 @@ import TwoColumnLayout from "./components/TwoColumnLayout";
 import Footer from "./components/Footer";
 import ContactFormSection from "./components/ContactFormSection";
 import Filotimon from "./components/Filotimon";
-import CustomCursor from "./components/CustomCursor";
+import Testimonials from "./components/Testimonials";
+import ContactBar from "./components/ContactBar";
 
 const HomeClient = () => {
   return (
     <div className="min-h-screen bg-black font-sans">
-      <CustomCursor />
       <VideoSection />
       <HomeStats />
       <Filotimon />
       <TwoColumnLayout />
+      <Testimonials />
+      <ContactBar />
       <ContactFormSection />
       <Footer />
     </div>

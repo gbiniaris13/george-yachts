@@ -22,6 +22,7 @@ const Footer = () => {
     { name: "Fly Private", href: "/private-jet-charter/" },
     { name: "VIP Transfers", href: "/vip-transfers-greece/" },
     { name: "Luxury Villas", href: "/luxury-villas-greece/" },
+    { name: "Yacht Itineraries", href: "/yacht-itineraries-greece/" },
   ];
 
   const companyLinks = [
