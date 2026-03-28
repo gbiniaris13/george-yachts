@@ -21,8 +21,8 @@ export default function TeamPage() {
       {/* ── HERO ── */}
       <section className="team-hero">
         <Image
-          src="/images/about-us.jpg"
-          alt="George Yachts Core Team - boutique yacht brokerage Athens Greece"
+          src="https://cdn.sanity.io/images/ecqr94ey/production/5a1d2f46e69d3e21c61aa3950deb11085e725b9d-1024x768.jpg?w=1920&h=900&fit=crop&auto=format&q=85"
+          alt="George Yachts Core Team - luxury yacht brokerage Athens Greece"
           fill
           priority
           className="team-hero__bg"
