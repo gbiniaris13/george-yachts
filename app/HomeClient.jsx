@@ -7,7 +7,6 @@ import TwoColumnLayout from "./components/TwoColumnLayout";
 import Footer from "./components/Footer";
 import ContactFormSection from "./components/ContactFormSection";
 import Filotimon from "./components/Filotimon";
-import Testimonials from "./components/Testimonials";
 import ContactBar from "./components/ContactBar";
 
 const HomeClient = () => {
@@ -17,7 +16,6 @@ const HomeClient = () => {
       <HomeStats />
       <Filotimon />
       <TwoColumnLayout />
-      <Testimonials />
       <ContactBar />
       <ContactFormSection />
       <Footer />
