@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -13,6 +13,8 @@ const WhatsappIcon = (props) => (
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
 
   const serviceLinks = [
     { name: "Charter a Yacht", href: "/charter-yacht-greece/" },
@@ -170,6 +172,71 @@ const Footer = () => {
                 <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.2)" }}>EIN: 30-1480422</span>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Newsletter Section */}
+        <div className="border-t border-b border-white/[0.04] py-12 my-8">
+          <div className="max-w-xl mx-auto text-center">
+            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#DAA520", fontWeight: 600, marginBottom: "12px" }}>
+              Stay Informed
+            </h4>
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", fontWeight: 300, color: "#fff", marginBottom: "8px" }}>
+              The George Yachts Journal
+            </p>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.3)", marginBottom: "28px", lineHeight: 1.7 }}>
+              Market insights, new yacht arrivals, and curated charter opportunities — delivered discreetly.
+            </p>
+            {subscribed ? (
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", color: "#DAA520", letterSpacing: "0.15em" }}>
+                Thank you. You&apos;re on the list.
+              </p>
+            ) : (
+              <form
+                onSubmit={(e) => { e.preventDefault(); if (email) setSubscribed(true); }}
+                className="flex items-stretch max-w-md mx-auto"
+              >
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Your email address"
+                  required
+                  style={{
+                    flex: 1,
+                    background: "rgba(255,255,255,0.03)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    borderRight: "none",
+                    color: "#fff",
+                    padding: "14px 16px",
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: "11px",
+                    outline: "none",
+                  }}
+                />
+                <button
+                  type="submit"
+                  style={{
+                    background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)",
+                    color: "#000",
+                    padding: "14px 24px",
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: "9px",
+                    letterSpacing: "0.2em",
+                    textTransform: "uppercase",
+                    fontWeight: 700,
+                    border: "none",
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Subscribe
+                </button>
+              </form>
+            )}
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.15)", marginTop: "12px", letterSpacing: "0.05em" }}>
+              No spam. Unsubscribe anytime. Your privacy is respected.
+            </p>
           </div>
         </div>
 

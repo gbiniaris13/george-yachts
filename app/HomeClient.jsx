@@ -7,6 +7,7 @@ import TwoColumnLayout from "./components/TwoColumnLayout";
 import Footer from "./components/Footer";
 import ContactFormSection from "./components/ContactFormSection";
 import Filotimon from "./components/Filotimon";
+import Testimonials from "./components/Testimonials";
 import CustomCursor from "./components/CustomCursor";
 
 const HomeClient = () => {
@@ -17,6 +18,7 @@ const HomeClient = () => {
       <HomeStats />
       <Filotimon />
       <TwoColumnLayout />
+      <Testimonials />
       <ContactFormSection />
       <Footer />
     </div>
