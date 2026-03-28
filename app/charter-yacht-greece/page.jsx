@@ -26,8 +26,8 @@ export const metadata = {
   },
 };
 
-// Fetch only the data we need - 1 image per yacht
-const FLEET_QUERY = `*[_type == "yacht" && defined(slug.current)] | order(length desc) {
+// Fetch fresh data from Sanity - 1 image per yacht
+const FLEET_QUERY = `*[_type == "yacht" && defined(slug.current)] {
   _id,
   "slug": slug.current,
   name,
@@ -95,11 +95,11 @@ export default async function CharterFleetPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
       />
 
-      {/* HERO */}
+      {/* HERO — Grayscale + Staggered Animation */}
       <section className="fleet-hero">
         <Image
-          src="https://cdn.sanity.io/images/ecqr94ey/production/5a1d2f46e69d3e21c61aa3950deb11085e725b9d-1024x768.jpg?w=1920&h=800&fit=crop&auto=format"
-          alt="George Yachts Charter Fleet Greece"
+          src="https://cdn.sanity.io/images/ecqr94ey/production/5a1d2f46e69d3e21c61aa3950deb11085e725b9d-1024x768.jpg?w=1920&h=900&fit=crop&auto=format"
+          alt="George Yachts Charter Fleet Greece - luxury yachts in Greek waters"
           fill
           priority
           className="fleet-hero__bg"
@@ -111,9 +111,15 @@ export default async function CharterFleetPage() {
           <h1 className="fleet-hero__title">Charter Fleet</h1>
           <div className="fleet-hero__line" />
           <p className="fleet-hero__desc">
-            {yachts.length} curated vessels — from intimate sailing catamarans
-            to 64-meter superyachts. Cyclades · Ionian · Saronic · Sporades.
+            {yachts.length} curated vessels &mdash; from intimate sailing catamarans
+            to 64-meter superyachts. Cyclades &middot; Ionian &middot; Saronic &middot; Sporades.
           </p>
+        </div>
+        {/* Scroll indicator */}
+        <div className="fleet-hero__scroll">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 8L10 14L16 8" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </div>
       </section>
 
@@ -125,11 +131,11 @@ export default async function CharterFleetPage() {
         <div className="fleet-trust__eyebrow">Trusted Brokerage</div>
         <div className="fleet-trust__badges">
           <span>IYBA Member</span>
-          <span className="fleet-trust__dot">·</span>
+          <span className="fleet-trust__dot">&middot;</span>
           <span>MYBA Contracts</span>
-          <span className="fleet-trust__dot">·</span>
+          <span className="fleet-trust__dot">&middot;</span>
           <span>Greek Waters Exclusively</span>
-          <span className="fleet-trust__dot">·</span>
+          <span className="fleet-trust__dot">&middot;</span>
           <span>Personal Service</span>
         </div>
         <div>
