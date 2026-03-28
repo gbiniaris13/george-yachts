@@ -72,7 +72,7 @@ const NavDrawerSystem = () => {
           backgroundColor: navBackground, // Applied Black Background Logic
         }}
       >
-        <div className="flex items-center justify-between h-20 relative">
+        <div className="flex items-center justify-between h-24 md:h-28 relative">
           {/* --- 1. LEFT — Menu Button --- */}
           <div className="flex items-center w-20">
             <button
@@ -92,7 +92,7 @@ const NavDrawerSystem = () => {
               alt="George Yachts Brokerage House"
               className="transition-opacity duration-300 group-hover:opacity-80"
               style={{
-                height: "clamp(34px, 6vw, 56px)",
+                height: "clamp(48px, 9vw, 80px)",
                 width: "auto",
               }}
             />
