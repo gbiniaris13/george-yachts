@@ -84,38 +84,17 @@ const NavDrawerSystem = () => {
               <Menu className="w-6 h-6" />
             </button>
 
-            {/* Logo — Yacht icon (inline SVG for perfect control) */}
+            {/* Logo — Original yacht graphic (yacht only, no text, full visible) */}
             <a href="/" className="shrink-0 group" data-cursor="Home">
-              <svg
-                viewBox="0 0 120 50"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+              <img
+                src="/images/yacht-icon-only.svg"
+                alt="George Yachts Brokerage House"
                 className="transition-opacity duration-300 group-hover:opacity-80"
-                style={{ height: "clamp(24px, 4.5vw, 38px)", width: "auto" }}
-              >
-                <defs>
-                  <linearGradient id="navGold" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#F7DA6F"/>
-                    <stop offset="45%" stopColor="#DAA520"/>
-                    <stop offset="100%" stopColor="#A67C2E"/>
-                  </linearGradient>
-                  <linearGradient id="navSilver" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#C0C0C0"/>
-                    <stop offset="50%" stopColor="#A0A0A0"/>
-                    <stop offset="100%" stopColor="#808080"/>
-                  </linearGradient>
-                </defs>
-                {/* Gold wave - top swoosh */}
-                <path d="M15 28 C20 26, 30 18, 45 12 C55 8, 65 6, 72 8 C78 10, 82 14, 88 16" stroke="url(#navGold)" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-                {/* Gold wave - second line */}
-                <path d="M25 32 C32 28, 42 20, 55 16 C65 13, 75 12, 85 15" stroke="url(#navGold)" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.7"/>
-                {/* Silver hull */}
-                <path d="M50 30 C58 27, 70 22, 82 18 C90 16, 98 16, 108 20 C104 24, 96 28, 85 30 C75 31, 62 31, 50 30Z" fill="url(#navSilver)" opacity="0.85"/>
-                {/* Silver hull highlight */}
-                <path d="M60 28 C70 25, 82 21, 95 19 C100 18, 105 19, 108 20 C104 22, 96 25, 85 27 C75 28, 65 28, 60 28Z" fill="#D0D0D0" opacity="0.3"/>
-                {/* Gold accent line on hull */}
-                <path d="M52 30 C62 28, 75 24, 90 21" stroke="url(#navGold)" strokeWidth="0.8" fill="none" opacity="0.5"/>
-              </svg>
+                style={{
+                  height: "clamp(28px, 5vw, 46px)",
+                  width: "auto",
+                }}
+              />
             </a>
           </div>
 
@@ -167,27 +146,13 @@ const NavDrawerSystem = () => {
       >
         <div className="p-8 h-full flex flex-col overflow-y-auto">
           <div className="flex justify-between items-center pb-6 ">
-            {/* Logo in drawer — yacht icon + text */}
+            {/* Logo in drawer — original yacht icon + text */}
             <a href="/" className="flex items-center gap-4" onClick={toggleDrawer}>
-              <svg viewBox="0 0 120 50" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ height: "32px", width: "auto" }}>
-                <defs>
-                  <linearGradient id="drawerGold" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#F7DA6F"/>
-                    <stop offset="45%" stopColor="#DAA520"/>
-                    <stop offset="100%" stopColor="#A67C2E"/>
-                  </linearGradient>
-                  <linearGradient id="drawerSilver" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#C0C0C0"/>
-                    <stop offset="50%" stopColor="#A0A0A0"/>
-                    <stop offset="100%" stopColor="#808080"/>
-                  </linearGradient>
-                </defs>
-                <path d="M15 28 C20 26, 30 18, 45 12 C55 8, 65 6, 72 8 C78 10, 82 14, 88 16" stroke="url(#drawerGold)" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-                <path d="M25 32 C32 28, 42 20, 55 16 C65 13, 75 12, 85 15" stroke="url(#drawerGold)" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.7"/>
-                <path d="M50 30 C58 27, 70 22, 82 18 C90 16, 98 16, 108 20 C104 24, 96 28, 85 30 C75 31, 62 31, 50 30Z" fill="url(#drawerSilver)" opacity="0.85"/>
-                <path d="M60 28 C70 25, 82 21, 95 19 C100 18, 105 19, 108 20 C104 22, 96 25, 85 27 C75 28, 65 28, 60 28Z" fill="#D0D0D0" opacity="0.3"/>
-                <path d="M52 30 C62 28, 75 24, 90 21" stroke="url(#drawerGold)" strokeWidth="0.8" fill="none" opacity="0.5"/>
-              </svg>
+              <img
+                src="/images/yacht-icon-only.svg"
+                alt="George Yachts"
+                style={{ height: "36px", width: "auto" }}
+              />
               <div className="flex flex-col">
                 <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "17px", fontWeight: 300, letterSpacing: "0.1em", color: "#fff", lineHeight: 1 }}>
                   GEORGE YACHTS
