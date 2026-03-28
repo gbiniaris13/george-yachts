@@ -84,7 +84,7 @@ export default async function CharterFleetPage() {
     <div
       style={{
         minHeight: "100vh",
-        background: "#0D1B2A",
+        background: "#000000",
         color: "#fff",
         fontFamily: "'Montserrat', 'Helvetica Neue', sans-serif",
       }}
