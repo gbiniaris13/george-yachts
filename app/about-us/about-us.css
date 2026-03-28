@@ -1,0 +1,505 @@
+/* ============================================
+   GEORGE YACHTS — About Us Page
+   BLACK + GOLD — Multi-Million Aesthetic
+   ============================================ */
+
+/* ── Animations ── */
+@keyframes heroEyebrow {
+  from { opacity: 0; transform: translateY(12px); letter-spacing: 0.6em; }
+  to { opacity: 1; transform: translateY(0); letter-spacing: 0.35em; }
+}
+@keyframes heroTitle {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes goldLine {
+  from { width: 0; opacity: 0; }
+  to { width: 80px; opacity: 1; }
+}
+@keyframes heroSub {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ctaShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ── HERO ── */
+.about-hero {
+  position: relative;
+  height: 80vh;
+  min-height: 550px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-hero__bg {
+  position: absolute;
+  inset: -20%;
+  width: 140%;
+  height: 140%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(100%) !important;
+  -webkit-filter: grayscale(100%) !important;
+  will-change: transform;
+}
+
+.about-hero__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.3) 40%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+}
+
+.about-hero__content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.about-hero__eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #DAA520;
+  margin-bottom: 20px;
+  font-weight: 500;
+  opacity: 0;
+  animation: heroEyebrow 0.8s ease-out 0.3s forwards;
+}
+
+.about-hero__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(40px, 7vw, 80px);
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  color: #fff;
+  margin: 0 0 28px;
+  opacity: 0;
+  animation: heroTitle 0.9s ease-out 0.6s forwards;
+}
+
+.about-hero__line {
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E);
+  margin: 0 auto 28px;
+  animation: goldLine 1.2s ease-out 1s forwards;
+}
+
+.about-hero__subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  font-weight: 400;
+  opacity: 0;
+  animation: heroSub 0.8s ease-out 1.4s forwards;
+}
+
+/* ── PHILOSOPHY ── */
+.about-philosophy {
+  padding: 120px 24px;
+  background: #000;
+}
+
+.about-philosophy__inner {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-philosophy__eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #DAA520;
+  margin-bottom: 32px;
+}
+
+.about-philosophy__quote {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(26px, 3.5vw, 42px);
+  font-weight: 300;
+  color: #fff;
+  line-height: 1.35;
+  margin: 0 0 40px;
+  letter-spacing: 0.01em;
+}
+
+.about-philosophy__line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, #E6C77A, #A67C2E);
+  margin: 0 auto 40px;
+}
+
+.about-philosophy__text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.9;
+  font-weight: 300;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* ── STATS ── */
+.about-stats {
+  padding: 80px 24px;
+  background: #000;
+  border-top: 1px solid rgba(218,165,32,0.08);
+  border-bottom: 1px solid rgba(218,165,32,0.08);
+}
+
+.about-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-stats__item {
+  text-align: center;
+  padding: 24px 0;
+}
+
+.about-stats__number {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 300;
+  background: linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+
+.about-stats__label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  font-weight: 500;
+}
+
+/* ── GEORGE'S STORY ── */
+.about-george {
+  padding: 120px 24px;
+  background: #000;
+}
+
+.about-george__inner {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.about-george__text-col {
+  text-align: center;
+}
+
+.about-george__eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #DAA520;
+  margin-bottom: 20px;
+}
+
+.about-george__name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 400;
+  color: #fff;
+  margin: 0 0 8px;
+  letter-spacing: 0.02em;
+}
+
+.about-george__role {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin: 0 0 32px;
+}
+
+.about-george__line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, #E6C77A, #A67C2E);
+  margin: 0 auto 40px;
+}
+
+.about-george__bio {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.9;
+  font-weight: 300;
+  margin: 0 0 24px;
+  text-align: center;
+}
+
+.about-george__quote {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 20px;
+  font-style: italic;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+  border-left: 2px solid #DAA520;
+  padding-left: 24px;
+  margin: 40px 0 0;
+  text-align: left;
+}
+
+/* ── SERVICES ── */
+.about-services {
+  padding: 120px 24px;
+  background: #000;
+  border-top: 1px solid rgba(218,165,32,0.08);
+}
+
+.about-services__eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #DAA520;
+  margin-bottom: 16px;
+}
+
+.about-services__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 300;
+  color: #fff;
+  margin: 0 0 16px;
+}
+
+.about-services__subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+.about-services__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  max-width: 1100px;
+  margin: 64px auto 0;
+  background: rgba(218,165,32,0.06);
+}
+
+.about-services__card {
+  background: #000;
+  padding: 48px 32px;
+  text-align: center;
+  transition: background 0.5s ease;
+}
+
+.about-services__card:hover {
+  background: rgba(218,165,32,0.03);
+}
+
+.about-services__icon {
+  color: #DAA520;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.about-services__card-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0 0 12px;
+}
+
+.about-services__card-desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ── CREDENTIALS ── */
+.about-credentials {
+  padding: 80px 24px;
+  background: #000;
+  border-top: 1px solid rgba(218,165,32,0.08);
+}
+
+.about-credentials__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-credentials__eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #DAA520;
+  margin-bottom: 48px;
+}
+
+.about-credentials__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.about-credentials__item {
+  text-align: center;
+  padding: 24px 16px;
+  border: 1px solid rgba(218,165,32,0.08);
+  transition: border-color 0.4s ease;
+}
+
+.about-credentials__item:hover {
+  border-color: rgba(218,165,32,0.2);
+}
+
+.about-credentials__item-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.about-credentials__item-desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── CTA ── */
+.about-cta {
+  padding: 120px 24px;
+  background: #000;
+  border-top: 1px solid rgba(218,165,32,0.08);
+}
+
+.about-cta__eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #DAA520;
+  margin-bottom: 16px;
+}
+
+.about-cta__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 300;
+  color: #fff;
+  margin: 0 0 16px;
+}
+
+.about-cta__text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 500px;
+  margin: 0 auto 40px;
+}
+
+.about-cta__button {
+  display: inline-block;
+  background: linear-gradient(90deg, #E6C77A 0%, #C9A24D 25%, #A67C2E 50%, #C9A24D 75%, #E6C77A 100%);
+  background-size: 200% 100%;
+  color: #000;
+  padding: 16px 48px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: ctaShimmer 4s ease-in-out infinite;
+}
+
+.about-cta__button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(218,165,32,0.35);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .about-services__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-hero {
+    height: 65vh;
+    min-height: 450px;
+  }
+
+  .about-stats__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-credentials__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .about-services__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-philosophy,
+  .about-george,
+  .about-services,
+  .about-cta {
+    padding: 80px 20px;
+  }
+
+  .about-george__quote {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-stats__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .about-credentials__grid {
+    grid-template-columns: 1fr;
+  }
+}
