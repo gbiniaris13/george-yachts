@@ -90,7 +90,7 @@ const ArticlePage = async ({ params }) => {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-[#020617] flex items-center justify-center">
+      <div className="min-h-screen bg-[#000] flex items-center justify-center">
         <h1 className="text-white font-marcellus text-3xl">
           Article Not Found
         </h1>
@@ -107,8 +107,17 @@ const ArticlePage = async ({ params }) => {
   });
 
   return (
-    <div className="min-h-screen bg-[#020617] font-sans selection:bg-[#DAA520] selection:text-black">
+    <div className="min-h-screen bg-[#000] font-sans selection:bg-[#DAA520] selection:text-black">
       <JsonLd data={articleSchema} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://georgeyachts.com" },
+          { "@type": "ListItem", "position": 2, "name": "The Journal", "item": "https://georgeyachts.com/blog" },
+          { "@type": "ListItem", "position": 3, "name": post.title }
+        ]
+      }) }} />
 
       {/* PURE TYPOGRAPHIC HERO */}
       <section className="relative w-full min-h-[60vh] md:min-h-[68vh] flex flex-col px-8 md:px-20 pt-16 pb-16 md:pb-24 overflow-hidden">
@@ -184,20 +193,20 @@ const ArticlePage = async ({ params }) => {
       {/* FULL-WIDTH EDITORIAL IMAGE — contain, no crop */}
       {post.imageUrl && (
         <section className="w-full px-8 md:px-20">
-          <div className="relative w-full bg-[#020617]">
+          <div className="relative w-full bg-[#000]">
             <img
               src={post.imageUrl}
               alt={post.imageAlt || post.title}
               className="w-full h-auto block"
               style={{ filter: "brightness(0.85) saturate(0.9)" }}
             />
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#020617] to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#000] to-transparent" />
           </div>
         </section>
       )}
 
       {/* EDITORIAL BODY */}
-      <section className="relative z-10 bg-[#020617] px-6 py-20 md:py-32">
+      <section className="relative z-10 bg-[#000] px-6 py-20 md:py-32">
         <div className="max-w-[720px] mx-auto">
           <div className="flex items-center space-x-6 mb-16">
             <span className="block w-6 h-px bg-[#DAA520]/50" />
