@@ -19,6 +19,7 @@ const SPEC_KEYS = [
   { key: 'cruiseSpeed', label: 'Cruise Speed' },
   { key: 'maxSpeed', label: 'Max Speed' },
   { key: 'weeklyRate', label: 'Weekly Rate' },
+  { key: 'perPersonNight', label: 'Per Person / Night' },
 ];
 
 function parseNumeric(val) {

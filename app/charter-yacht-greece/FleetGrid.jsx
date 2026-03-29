@@ -355,17 +355,34 @@ export default function FleetGrid({ yachts }) {
       const exists = prev.find((y) => y.slug === yacht.slug);
       if (exists) return prev.filter((y) => y.slug !== yacht.slug);
       if (prev.length >= 3) return prev; // max 3
+      const override = YACHT_OVERRIDES[yacht.slug] || {};
+      const name = yacht.name || override.name || yacht.slug?.replace(/-/g, ' ').toUpperCase();
+      const price = yacht.weeklyRatePrice || override.price || 'On Request';
+      const guestCount = yacht.sleeps || override.guests || '–';
+      const cabinCount = yacht.cabins || override.cabins || '–';
+      const crewInfo = yacht.crew || override.crew || '–';
+      // Per person per night
+      let ppn = null;
+      const gn = parseInt(guestCount) || 0;
+      if (gn > 0 && price !== 'On Request') {
+        const m = price.replace(/[^\d.,€]/g, '').match(/€?([\d,.]+)/);
+        if (m) {
+          const lowest = parseFloat(m[1].replace(/,/g, '').replace(/\./g, ''));
+          if (!isNaN(lowest) && lowest > 0) ppn = `€${Math.round(lowest / gn / 7).toLocaleString()}/person/night`;
+        }
+      }
       return [...prev, {
-        title: yacht.displayName,
+        title: name,
         slug: yacht.slug,
-        builder: yacht.builder,
-        length: yacht.length,
-        guests: yacht.guests,
-        cabins: yacht.cabins,
-        crew: yacht.crew,
-        cruiseSpeed: yacht.cruiseSpeed,
-        maxSpeed: yacht.maxSpeed,
-        weeklyRate: yacht.displayPrice,
+        builder: yacht.subtitle || override.builder || yacht.builder || '–',
+        length: yacht.length || '–',
+        guests: guestCount,
+        cabins: cabinCount,
+        crew: crewInfo,
+        cruiseSpeed: yacht.cruiseSpeed || '–',
+        maxSpeed: yacht.maxSpeed || '–',
+        weeklyRate: price,
+        perPersonNight: ppn,
         imageUrl: yacht.imageUrl,
       }];
     });
