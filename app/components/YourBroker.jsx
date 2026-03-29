@@ -47,13 +47,14 @@ export default function YourBroker() {
         className="your-broker-grid"
       >
         {/* Photo */}
-        <div style={{ position: "relative", aspectRatio: "3/4", overflow: "hidden" }}>
+        <div style={{ position: "relative", aspectRatio: "3/4", overflow: "hidden", minHeight: "300px" }}>
           <Image
             src="/images/george.jpg"
             alt="George P. Biniaris — Managing Broker, George Yachts"
             fill
             className="object-cover"
-            sizes="280px"
+            sizes="(max-width: 768px) 250px, 280px"
+            priority
           />
           <div style={{
             position: "absolute", bottom: 0, left: 0, right: 0, height: "50%",
