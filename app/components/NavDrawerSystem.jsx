@@ -17,25 +17,50 @@ const WhatsappIcon = (props) => (
 );
 
 // --- 1. MAIN NAVLINKS ---
-const navLinks = [
-  { name: "ABOUT GEORGE YACHTS", href: "/about-us/" },
-  { name: "OUR CORE TEAM", href: "/team/" },
-  { name: "CHARTER A YACHT", href: "/charter-yacht-greece/" },
-  { name: "FIND YOUR YACHT", href: "/yacht-finder/" },
-  { name: "BUILD YOUR ITINERARY", href: "/itinerary-builder/" },
-  { name: "COST CALCULATOR", href: "/cost-calculator/" },
-  { name: "ISLAND QUIZ", href: "/island-quiz/" },
-  { name: "YACHT SIZE GUIDE", href: "/yacht-size-visualizer/" },
-  { name: "WEATHER GUIDE", href: "/weather-greece/" },
-  { name: "ISLAND GUIDES", href: "/destinations/" },
-  { name: "CHARTER TIMELINE", href: "/charter-timeline/" },
-  { name: "YACHT ITINERARIES", href: "/yacht-itineraries-greece/" },
-  { name: "HOW IT WORKS", href: "/how-it-works/" },
-  { name: "BUY A YACHT", href: "/yachts-for-sale/" },
-  { name: "FLY PRIVATE", href: "/private-jet-charter/" },
-  { name: "VIP TRANSFERS", href: "/vip-transfers-greece/" },
-  { name: "BLOG", href: "/blog" },
-  { name: "FAQ", href: "/faq" },
+const navSections = [
+  {
+    label: "CHARTER",
+    links: [
+      { name: "CHARTER A YACHT", href: "/charter-yacht-greece/" },
+      { name: "YACHT ITINERARIES", href: "/yacht-itineraries-greece/" },
+      { name: "HOW IT WORKS", href: "/how-it-works/" },
+      { name: "CHARTER TIMELINE", href: "/charter-timeline/" },
+    ],
+  },
+  {
+    label: "TOOLS",
+    links: [
+      { name: "FIND YOUR YACHT", href: "/yacht-finder/" },
+      { name: "COST CALCULATOR", href: "/cost-calculator/" },
+      { name: "BUILD YOUR ITINERARY", href: "/itinerary-builder/" },
+      { name: "ISLAND QUIZ", href: "/island-quiz/" },
+      { name: "YACHT SIZE GUIDE", href: "/yacht-size-visualizer/" },
+    ],
+  },
+  {
+    label: "EXPLORE",
+    links: [
+      { name: "ISLAND GUIDES", href: "/destinations/" },
+      { name: "WEATHER GUIDE", href: "/weather-greece/" },
+      { name: "BLOG", href: "/blog" },
+    ],
+  },
+  {
+    label: "SERVICES",
+    links: [
+      { name: "BUY A YACHT", href: "/yachts-for-sale/" },
+      { name: "FLY PRIVATE", href: "/private-jet-charter/" },
+      { name: "VIP TRANSFERS", href: "/vip-transfers-greece/" },
+    ],
+  },
+  {
+    label: "COMPANY",
+    links: [
+      { name: "ABOUT GEORGE YACHTS", href: "/about-us/" },
+      { name: "OUR CORE TEAM", href: "/team/" },
+      { name: "FAQ", href: "/faq" },
+    ],
+  },
 ];
 
 // --- 2. LEGAL LINKS ---
@@ -203,17 +228,23 @@ const NavDrawerSystem = () => {
             </button>
           </div>
 
-          <nav className="space-y-4 mt-6">
-            {navLinks.map((link) => (
-              <div key={link.name} className="flex flex-col">
-                <Link
-                  href={link.href || "#"}
-                  onClick={closeDrawer}
-                  className="block w-full py-3 px-1 border-b border-white/20 text-xl font-semibold uppercase text-white hover:text-[#CEA681] transition duration-200 active:text-[#DAA520]"
-                  style={{ WebkitTapHighlightColor: "transparent", touchAction: "manipulation" }}
-                >
-                  {link.name}
-                </Link>
+          <nav className="mt-6 space-y-6 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+            {navSections.map((section) => (
+              <div key={section.label}>
+                <p className="px-1 mb-2 text-[9px] tracking-[0.3em] uppercase" style={{ color: '#DAA520', fontFamily: "'Montserrat', sans-serif", opacity: 0.6 }}>
+                  {section.label}
+                </p>
+                {section.links.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href || "#"}
+                    onClick={closeDrawer}
+                    className="block w-full py-2.5 px-1 border-b border-white/[0.06] text-sm font-medium uppercase text-white/80 hover:text-[#DAA520] transition duration-200 active:text-[#DAA520]"
+                    style={{ WebkitTapHighlightColor: "transparent", touchAction: "manipulation", fontFamily: "'Montserrat', sans-serif", letterSpacing: '0.08em' }}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
               </div>
             ))}
           </nav>
