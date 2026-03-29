@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import CompareYachts from './CompareYachts';
 
 // Fallback data for yachts missing data in Sanity
 const YACHT_OVERRIDES = {
@@ -192,7 +193,7 @@ function useScrollReveal() {
   return gridRef;
 }
 
-function YachtCard({ yacht, index }) {
+function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount }) {
   const [imgLoaded, setImgLoaded] = useState(false);
   const slug = yacht.slug;
   const override = YACHT_OVERRIDES[slug] || {};
@@ -291,6 +292,28 @@ function YachtCard({ yacht, index }) {
               <span>Inquire</span>
             </a>
           </div>
+          {/* Compare toggle */}
+          <button
+            onClick={(e) => { e.stopPropagation(); onToggleCompare(); }}
+            disabled={!isComparing && compareCount >= 3}
+            style={{
+              width: "100%",
+              marginTop: "8px",
+              padding: "6px",
+              background: isComparing ? "rgba(218,165,32,0.15)" : "transparent",
+              border: isComparing ? "1px solid rgba(218,165,32,0.4)" : "1px solid rgba(255,255,255,0.08)",
+              color: isComparing ? "#DAA520" : "rgba(255,255,255,0.3)",
+              fontSize: "9px",
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+              fontFamily: "'Montserrat', sans-serif",
+              cursor: !isComparing && compareCount >= 3 ? "not-allowed" : "pointer",
+              opacity: !isComparing && compareCount >= 3 ? 0.3 : 1,
+              transition: "all 0.3s ease",
+            }}
+          >
+            {isComparing ? "✓ Added to Compare" : compareCount >= 3 ? "Max 3 Yachts" : "+ Compare"}
+          </button>
         </div>
       </div>
     </div>
@@ -304,8 +327,30 @@ export default function FleetGrid({ yachts }) {
   const [cabinFilter, setCabinFilter] = useState('all');
   const [priceRange, setPriceRange] = useState('all');
   const [sortBy, setSortBy] = useState('recommended');
+  const [compareList, setCompareList] = useState([]);
   const gridRef = useScrollReveal();
   useHeroParallax();
+
+  const toggleCompare = useCallback((yacht) => {
+    setCompareList((prev) => {
+      const exists = prev.find((y) => y.slug === yacht.slug);
+      if (exists) return prev.filter((y) => y.slug !== yacht.slug);
+      if (prev.length >= 3) return prev; // max 3
+      return [...prev, {
+        title: yacht.displayName,
+        slug: yacht.slug,
+        builder: yacht.builder,
+        length: yacht.length,
+        guests: yacht.guests,
+        cabins: yacht.cabins,
+        crew: yacht.crew,
+        cruiseSpeed: yacht.cruiseSpeed,
+        maxSpeed: yacht.maxSpeed,
+        weeklyRate: yacht.displayPrice,
+        imageUrl: yacht.imageUrl,
+      }];
+    });
+  }, []);
 
   // Compute categories with counts
   const categories = useMemo(() => {
@@ -471,9 +516,23 @@ export default function FleetGrid({ yachts }) {
       {/* YACHT GRID */}
       <div className="fleet-grid" ref={gridRef}>
         {filtered.map((yacht, i) => (
-          <YachtCard key={yacht._id || yacht.slug} yacht={yacht} index={i} />
+          <YachtCard
+            key={yacht._id || yacht.slug}
+            yacht={yacht}
+            index={i}
+            isComparing={compareList.some((c) => c.slug === yacht.slug)}
+            onToggleCompare={() => toggleCompare(yacht)}
+            compareCount={compareList.length}
+          />
         ))}
       </div>
+
+      {/* COMPARE YACHTS */}
+      <CompareYachts
+        compareList={compareList}
+        onRemove={(slug) => setCompareList((prev) => prev.filter((y) => y.slug !== slug))}
+        onClear={() => setCompareList([])}
+      />
 
       {/* EMPTY STATE — Elegant */}
       {filtered.length === 0 && (
