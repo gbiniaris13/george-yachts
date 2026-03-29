@@ -233,9 +233,9 @@ const ContactFormSection = () => {
         {/* ── Step Indicator ── */}
         <div className="flex items-center justify-center gap-3 mb-16">
           {[
-            { num: 1, label: "About You" },
-            { num: 2, label: "Charter Details" },
-            { num: 3, label: "Your Vision" },
+            { num: 1, label: t('common.aboutYou') },
+            { num: 2, label: t('common.yourCharter') },
+            { num: 3, label: t('common.details') },
           ].map((s) => (
             <React.Fragment key={s.num}>
               {s.num > 1 && (

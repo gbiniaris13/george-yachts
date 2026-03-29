@@ -97,7 +97,10 @@
     "message": "ספר לנו על השכרת החלומות שלך",
     "submit": "שלח פנייה",
     "success": "תודה. George יבחן את הפנייה שלך באופן אישי ויגיב תוך 24 שעות.",
-    "secure": "הצפנה 256-ביט · המידע שלך מוגן"
+    "secure": "הצפנה 256-ביט · המידע שלך מוגן",
+    "step1": "עליך",
+    "step2": "ההשכרה שלך",
+    "step3": "פרטים"
   },
   "fleet": {
     "title": "צי ההשכרה",
@@ -107,7 +110,9 @@
     "perPersonWeek": "לאדם/שבוע",
     "inclApaVat": "כולל APA ומע״מ",
     "weeklyCharter": "השכרה שבועית",
-    "bookConsultation": "קבע ייעוץ חינם"
+    "bookConsultation": "קבע ייעוץ חינם",
+    "compare": "+ השוואה",
+    "fromJournal": "מהיומן"
   },
   "footer": {
     "servicesTitle": "שירותים",
@@ -121,7 +126,22 @@
   },
   "tools": {
     "label": "כלים בלעדיים",
-    "title": "תכנן את ההשכרה שלך בדרך שלך"
+    "title": "תכנן את ההשכרה שלך בדרך שלך",
+    "findYacht": "חיפוש יאכטה חכם",
+    "findYachtDesc": "ענה על 5 שאלות. מצא את היאכטה המושלמת.",
+    "findYachtCta": "התחל חידון",
+    "buildItinerary": "בנה מסלול",
+    "buildItineraryDesc": "לחץ על איים במפה האינטראקטיבית.",
+    "buildItineraryCta": "פתח מפה",
+    "costCalc": "מחשבון עלויות",
+    "costCalcDesc": "ראה את העלות הכוללת — APA, מע״מ, העברות. בלי עמלות נסתרות.",
+    "costCalcCta": "חשב",
+    "islandQuiz": "איזה אי אתה?",
+    "islandQuizDesc": "חידון כיף — גלה את האי היווני המושלם שלך.",
+    "islandQuizCta": "עשה את החידון",
+    "compare": "השווה יאכטות",
+    "compareDesc": "בחר עד 3 יאכטות והשווה אותן זו לזו.",
+    "compareCta": "צפה בצי"
   },
   "common": {
     "guests": "אורחים",
