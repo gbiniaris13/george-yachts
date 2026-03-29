@@ -516,3 +516,12 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ── George Photo + Bio Grid — Mobile Responsive ── */
+@media (max-width: 768px) {
+  .about-george-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+}
+

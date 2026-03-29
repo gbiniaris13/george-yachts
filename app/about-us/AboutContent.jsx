@@ -120,29 +120,78 @@ export default function AboutContent() {
 
       {/* ═══════ GEORGE'S STORY ═══════ */}
       <section className="about-george">
-        <div className="about-george__inner">
-          <RevealSection className="about-george__text-col">
-            <p className="about-george__eyebrow">Managing Broker</p>
-            <h2 className="about-george__name">George P. Biniaris</h2>
-            <p className="about-george__role">Managing Broker &middot; IYBA Member</p>
-            <div className="about-george__line" />
-            <p className="about-george__bio">
-              With a career built on trust, discretion, and an uncompromising eye for
-              quality, George leads George Yachts Brokerage House with a singular mission
-              &mdash; to deliver a truly personal brokerage experience that the industry lacks.
-            </p>
-            <p className="about-george__bio">
-              Every client works directly with George. No call centers, no junior agents,
-              no automated responses. When you reach out, George answers. When you board
-              your yacht, George has personally vetted the crew, the itinerary, and every
-              detail of your experience.
-            </p>
-            <blockquote className="about-george__quote">
-              &ldquo;My clients don&apos;t just charter a yacht. They gain a trusted advisor
-              who knows every captain, every cove, and every sunset worth seeing in Greece.&rdquo;
-            </blockquote>
-          </RevealSection>
+        <div className="about-george__inner" style={{ display: "grid", gridTemplateColumns: "1fr", gap: "60px", maxWidth: "1100px", margin: "0 auto", padding: "0 24px" }}>
+
+          {/* Photo + Bio Side by Side on Desktop */}
+          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 380px) 1fr", gap: "60px", alignItems: "start" }} className="about-george-grid">
+            <RevealSection>
+              <div style={{ position: "relative", aspectRatio: "3/4", overflow: "hidden" }}>
+                <img
+                  src="/images/george.jpg"
+                  alt="George P. Biniaris — Managing Broker, George Yachts Brokerage House"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%", background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)" }} />
+              </div>
+              {/* IYBA Badge under photo */}
+              <div style={{ marginTop: "20px", display: "flex", alignItems: "center", gap: "12px", padding: "16px", border: "1px solid rgba(218,165,32,0.15)", background: "rgba(218,165,32,0.03)" }}>
+                <img src="/images/iyba.png" alt="IYBA Member" style={{ height: "36px", width: "auto", opacity: 0.8 }} />
+                <div>
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", margin: 0 }}>Member of</p>
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.1em", color: "#DAA520", margin: 0 }}>International Yacht Brokers Association</p>
+                </div>
+              </div>
+            </RevealSection>
+
+            <RevealSection className="about-george__text-col" delay={0.2}>
+              <p className="about-george__eyebrow">Managing Broker</p>
+              <h2 className="about-george__name">George P. Biniaris</h2>
+              <p className="about-george__role">Managing Broker &middot; IYBA Member</p>
+              <div className="about-george__line" />
+              <p className="about-george__bio">
+                With a career built on trust, discretion, and an uncompromising eye for
+                quality, George leads George Yachts Brokerage House with a singular mission
+                &mdash; to deliver a truly personal brokerage experience that the industry lacks.
+              </p>
+              <p className="about-george__bio">
+                Every client works directly with George. No call centers, no junior agents,
+                no automated responses. When you reach out, George answers. When you board
+                your yacht, George has personally vetted the crew, the itinerary, and every
+                detail of your experience.
+              </p>
+              <p className="about-george__bio">
+                Based in Athens with the company registered in the United States, George bridges
+                two worlds &mdash; bringing international operational standards and American business
+                transparency to the intimate, relationship-driven Greek charter market.
+              </p>
+              <blockquote className="about-george__quote">
+                &ldquo;My clients don&apos;t just charter a yacht. They gain a trusted advisor
+                who knows every captain, every cove, and every sunset worth seeing in Greece.&rdquo;
+              </blockquote>
+            </RevealSection>
+          </div>
         </div>
+      </section>
+
+      {/* ═══════ WHY BOUTIQUE ═══════ */}
+      <section style={{ padding: "100px 24px", background: "rgba(218,165,32,0.02)", borderTop: "1px solid rgba(218,165,32,0.08)", borderBottom: "1px solid rgba(218,165,32,0.08)" }}>
+        <RevealSection className="text-center" style={{ maxWidth: "800px", margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.4em", color: "#DAA520", textTransform: "uppercase", marginBottom: "24px" }}>The Difference</p>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 300, color: "#fff", marginBottom: "40px", lineHeight: 1.3 }}>
+            Why Choose a Boutique Broker?
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "32px", textAlign: "left" }}>
+            {[
+              { label: "Large Aggregator", value: "Thousands of yachts, generic filters, algorithm-matched", vs: "vs" },
+              { label: "George Yachts", value: "53 personally vetted yachts, hand-selected for you by someone who has been aboard each one", highlight: true },
+            ].map((item, i) => (
+              <div key={i} style={{ padding: "32px", border: item.highlight ? "1px solid rgba(218,165,32,0.3)" : "1px solid rgba(255,255,255,0.08)", background: item.highlight ? "rgba(218,165,32,0.05)" : "transparent" }}>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: item.highlight ? "#DAA520" : "rgba(255,255,255,0.3)", textTransform: "uppercase", marginBottom: "16px" }}>{item.label}</p>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", lineHeight: 1.9, color: item.highlight ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.4)" }}>{item.value}</p>
+              </div>
+            ))}
+          </div>
+        </RevealSection>
       </section>
 
       {/* ═══════ SERVICES — 360° ═══════ */}
