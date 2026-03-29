@@ -306,7 +306,7 @@ export default function WelcomeLanguagePopup() {
           color: 'rgba(218,165,32,0.2)',
           marginTop: 24,
         }}>
-          George Yachts Brokerage House
+          <span className="notranslate">George Yachts Brokerage House</span>
         </p>
       </div>
     </div>

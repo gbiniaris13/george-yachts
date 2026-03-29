@@ -91,7 +91,7 @@ const Filotimon = () => {
         {/* The Application — What it means for George Yachts */}
         <div className="max-w-3xl mb-16">
           <p className="text-lg md:text-2xl text-gray-400 font-marcellus leading-relaxed">
-            At George Yachts, filotimo is not a marketing word.{" "}
+            At <span className="notranslate">George Yachts</span>, filotimo is not a marketing word.{" "}
             <span className="text-white">It is how we operate.</span>
           </p>
         </div>

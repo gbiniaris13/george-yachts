@@ -54,7 +54,7 @@ const Footer = () => {
             <Link href="/" className="block mb-8">
               <img
                 src="/images/yacht-icon-only.svg"
-                alt="George Yachts Brokerage House LLC"
+                alt="<span className="notranslate">George Yachts Brokerage House LLC</span>"
                 style={{ height: "150px", width: "auto" }}
               />
             </Link>
@@ -164,7 +164,7 @@ const Footer = () => {
               </a>
               <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.3)", lineHeight: 1.8 }}>
                 <span className="block" style={{ fontWeight: 500, color: "rgba(255,255,255,0.5)", letterSpacing: "0.1em", textTransform: "uppercase", fontSize: "9px", marginBottom: "8px" }}>
-                  George Yachts Brokerage House LLC
+                  <span className="notranslate">George Yachts Brokerage House LLC</span>
                 </span>
                 30 N Gould St, STE R<br />
                 Sheridan, WY 82801, USA
@@ -233,7 +233,7 @@ const Footer = () => {
               </form>
             )}
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.15)", marginTop: "12px", letterSpacing: "0.05em" }}>
-              By subscribing you agree to receive occasional emails from George Yachts Brokerage House LLC.
+              By subscribing you agree to receive occasional emails from <span className="notranslate">George Yachts Brokerage House LLC</span>.
               Unsubscribe anytime. See our <Link href="/privacy-policy" style={{ color: "rgba(218,165,32,0.4)", textDecoration: "underline" }}>Privacy Policy</Link>.
             </p>
           </div>
@@ -260,13 +260,13 @@ const Footer = () => {
 
           {/* Copyright */}
           <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(255,255,255,0.2)", textTransform: "uppercase" }}>
-            &copy; {currentYear} George Yachts Brokerage House LLC
+            &copy; {currentYear} <span className="notranslate">George Yachts Brokerage House LLC</span>
           </span>
         </div>
 
         {/* Disclaimer */}
         <p className="mt-10 text-center" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.12)", letterSpacing: "0.05em", lineHeight: 1.8, maxWidth: "800px", margin: "40px auto 0" }}>
-          All yacht specifications, images, and pricing are provided for informational purposes only. George Yachts Brokerage House LLC offers the details of these vessels in good faith but cannot guarantee the accuracy of this information or the condition of the vessels. All information is subject to change without notice and is not contractual.
+          All yacht specifications, images, and pricing are provided for informational purposes only. <span className="notranslate">George Yachts Brokerage House LLC</span> offers the details of these vessels in good faith but cannot guarantee the accuracy of this information or the condition of the vessels. All information is subject to change without notice and is not contractual.
         </p>
       </div>
     </footer>

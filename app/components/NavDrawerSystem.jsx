@@ -213,10 +213,10 @@ const NavDrawerSystem = () => {
                 style={{ height: "36px", width: "auto" }}
               />
               <div className="flex flex-col">
-                <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "17px", fontWeight: 300, letterSpacing: "0.1em", color: "#fff", lineHeight: 1 }}>
+                <span className="notranslate" style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "17px", fontWeight: 300, letterSpacing: "0.1em", color: "#fff", lineHeight: 1 }}>
                   GEORGE YACHTS
                 </span>
-                <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "6px", letterSpacing: "0.25em", color: "rgba(218,165,32,0.5)", marginTop: "4px" }}>
+                <span className="notranslate" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "6px", letterSpacing: "0.25em", color: "rgba(218,165,32,0.5)", marginTop: "4px" }}>
                   BROKERAGE HOUSE LLC
                 </span>
               </div>
