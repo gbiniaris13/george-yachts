@@ -6,6 +6,7 @@ import GlobalEffects from "./components/GlobalEffects";
 import CustomCursor from "./components/CustomCursor";
 import WhatsAppButton from "./components/WhatsAppButton";
 import MobileStickyBar from "./components/MobileStickyBar";
+import { WishlistProvider } from "./components/WishlistProvider";
 import JsonLd from "./components/JsonLd";
 import { organizationSchema } from "@/lib/organizationSchema";
 import "swiper/css";
@@ -83,10 +84,12 @@ export default function RootLayout({ children }) {
         <GlobalEffects />
         <CustomCursor />
         {/* 2. Page Content */}
+        <WishlistProvider>
         <NavDrawerSystem />
         {children}
         <WhatsAppButton />
         <MobileStickyBar />
+        </WishlistProvider>
 
         {/* 3. Analytics & Tracking */}
         <Script

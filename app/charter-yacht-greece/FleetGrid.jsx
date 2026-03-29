@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import CompareYachts from './CompareYachts';
+import { useWishlist } from '../components/WishlistProvider';
 
 // Fallback data for yachts missing data in Sanity
 const YACHT_OVERRIDES = {
@@ -195,6 +196,7 @@ function useScrollReveal() {
 
 function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount }) {
   const [imgLoaded, setImgLoaded] = useState(false);
+  const { toggle: toggleWishlist, has: hasWishlist } = useWishlist();
   const slug = yacht.slug;
   const override = YACHT_OVERRIDES[slug] || {};
   const name = yacht.name || override.name || slug?.replace(/-/g, ' ').toUpperCase() || 'Yacht';
@@ -256,6 +258,30 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount })
             <div className="fleet-card__badge fleet-card__badge--featured">
               Flagship
             </div>
+          )}
+          {/* Wishlist heart button */}
+          <button
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleWishlist({ slug, name, price, guests, builder }); }}
+            aria-label={hasWishlist(slug) ? 'Remove from favorites' : 'Add to favorites'}
+            className="fleet-card__heart"
+            style={{
+              position: 'absolute', top: 12, right: 12, zIndex: 5,
+              width: 36, height: 36, borderRadius: '50%',
+              background: 'rgba(0,0,0,0.5)', border: 'none',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', transition: 'all 0.3s ease',
+              backdropFilter: 'blur(4px)',
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24"
+              fill={hasWishlist(slug) ? '#DAA520' : 'none'}
+              stroke={hasWishlist(slug) ? '#DAA520' : 'rgba(255,255,255,0.6)'}
+              strokeWidth="2"
+            >
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+          </button>
+          {/* Wishlist heart — end */}
           )}
           {/* Overlay gradient */}
           <div className="fleet-card__overlay" />
