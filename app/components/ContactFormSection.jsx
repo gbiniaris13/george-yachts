@@ -213,11 +213,12 @@ const ContactFormSection = () => {
             Exclusively Greek Waters
           </p>
           <h2
-            className="text-5xl md:text-7xl font-marcellus tracking-tight"
+            className="text-5xl md:text-7xl font-marcellus tracking-tight pb-2"
             style={{
               backgroundImage: "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
               WebkitBackgroundClip: "text", backgroundClip: "text",
               color: "transparent", WebkitTextFillColor: "transparent",
+              lineHeight: "1.15",
             }}
           >
             Begin Your Charter
