@@ -7,6 +7,7 @@ import CustomCursor from "./components/CustomCursor";
 import WhatsAppButton from "./components/WhatsAppButton";
 import MobileStickyBar from "./components/MobileStickyBar";
 import TranslateWidget from "./components/TranslateWidget";
+import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { WishlistProvider } from "./components/WishlistProvider";
 import JsonLd from "./components/JsonLd";
 import { organizationSchema } from "@/lib/organizationSchema";
@@ -85,6 +86,7 @@ export default function RootLayout({ children }) {
         <GlobalEffects />
         <CustomCursor />
         {/* 2. Page Content */}
+        <I18nProvider>
         <WishlistProvider>
         <NavDrawerSystem />
         {children}
@@ -92,6 +94,7 @@ export default function RootLayout({ children }) {
         <WhatsAppButton />
         <MobileStickyBar />
         </WishlistProvider>
+        </I18nProvider>
 
         {/* 3. Analytics & Tracking */}
         <Script
