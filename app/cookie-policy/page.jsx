@@ -9,42 +9,54 @@ export const metadata = {
   },
 };
 
-const Section = ({ title, children }) => (
-  <div className="mb-16 border-l border-[#DAA520]/30 pl-8">
-    <h2 className="text-2xl font-marcellus text-white mb-6 tracking-wide">
-      {title}
-    </h2>
-    <div className="text-white/60 font-sans text-sm leading-8 tracking-wide space-y-4">
-      {children}
+const Section = ({ number, title, children }) => (
+  <div className="mb-20 group" style={{ opacity: 1 }}>
+    <div className="flex items-start gap-6">
+      {number && (
+        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "48px", fontWeight: 300, lineHeight: 1, color: "rgba(218,165,32,0.15)" }}>
+          {String(number).padStart(2, "0")}
+        </span>
+      )}
+      <div className="flex-1">
+        <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.5rem", fontWeight: 400, color: "#fff", letterSpacing: "0.05em", marginBottom: "24px" }}>
+          {title}
+        </h2>
+        <div className="w-12 h-px mb-8" style={{ background: "linear-gradient(90deg, #DAA520, transparent)" }} />
+        <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", lineHeight: 2.2, color: "rgba(255,255,255,0.55)", letterSpacing: "0.02em" }} className="space-y-4">
+          {children}
+        </div>
+      </div>
     </div>
   </div>
 );
 
 const CookiePolicy = () => {
   return (
-    <div className="min-h-screen bg-[#020617] text-white">
+    <div className="min-h-screen bg-black text-white">
       {/* --- HERO SECTION --- */}
-      <div className="relative pt-40 pb-20 px-6 md:px-12 border-b border-white/5">
+      <div className="relative pt-44 pb-24 px-6 md:px-12" style={{ borderBottom: "1px solid rgba(218,165,32,0.1)" }}>
         <div className="container mx-auto max-w-4xl text-center">
-          <p className="text-[#DAA520] text-xs font-bold tracking-[0.4em] uppercase mb-6">
+          <div className="w-16 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #DAA520, transparent)" }} />
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#DAA520", marginBottom: "24px", textTransform: "uppercase" }}>
             Digital Transparency
           </p>
-          <h1 className="text-4xl md:text-6xl font-marcellus text-white mb-4 tracking-tight uppercase leading-tight">
+          <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#fff", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "16px" }}>
             Global Digital Tracking & Cookie Disclosure
           </h1>
-          <p className="text-white/50 text-sm tracking-[0.2em] uppercase mb-8">
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", marginBottom: "32px" }}>
             George Yachts Brokerage House LLC
           </p>
+          <div className="w-16 h-px mx-auto" style={{ background: "linear-gradient(90deg, transparent, #DAA520, transparent)" }} />
         </div>
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-[#DAA520] opacity-[0.03] blur-[100px] pointer-events-none"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(218,165,32,0.04) 0%, transparent 70%)" }} />
       </div>
 
       {/* --- CONTENT SECTION --- */}
       <div className="container mx-auto max-w-3xl px-6 py-24">
-        <Section title="I. JURISDICTIONAL FRAMEWORK & CORPORATE MANDATE">
+        <Section number={1} title="I. JURISDICTIONAL FRAMEWORK & CORPORATE MANDATE">
           <p>
             GEORGE YACHTS BROKERAGE HOUSE LLC, a Wyoming Limited Liability
-            Company (the “Company”), operates a premier digital brokerage
+            Company (the "Company"), operates a premier digital brokerage
             platform designed for High-Net-Worth Individuals (HNWIs). In
             alignment with global privacy imperatives, including the General
             Data Protection Regulation (GDPR), the California Consumer Privacy
@@ -54,12 +66,12 @@ const CookiePolicy = () => {
           </p>
         </Section>
 
-        <Section title="II. TECHNICAL TAXONOMY OF TRACKING TECHNOLOGIES">
+        <Section number={2} title="II. TECHNICAL TAXONOMY OF TRACKING TECHNOLOGIES">
           <p>
             The Company utilizes an integrated stack of Tracking Technologies to
             maintain operational excellence:
           </p>
-          <ul className="list-disc pl-5 space-y-2 mt-4 text-white/50">
+          <ul className="list-disc pl-5 space-y-2 mt-4" style={{ color: "rgba(255,255,255,0.5)" }}>
             <li>
               <strong className="text-white">
                 HTTP Cookies & Local Storage:
@@ -83,7 +95,7 @@ const CookiePolicy = () => {
           </ul>
         </Section>
 
-        <Section title="III. OPERATIONAL CLASSIFICATION">
+        <Section number={3} title="III. OPERATIONAL CLASSIFICATION">
           <p>
             To ensure total transparency, we categorize our digital assets as
             follows:
@@ -140,14 +152,14 @@ const CookiePolicy = () => {
           </div>
         </Section>
 
-        <Section title="IV. CONSENT ARCHITECTURE (THE COOKIEBOT PROTOCOL)">
+        <Section number={4} title="IV. CONSENT ARCHITECTURE (THE COOKIEBOT PROTOCOL)">
           <p>
             The Company has deployed the Cookiebot Consent Management Platform
             (CMP), a gold-standard regulatory solution. This interface provides
             users with granular, real-time control over their data footprint.
             You hold the statutory right to:
           </p>
-          <ul className="list-disc pl-5 space-y-2 mt-4 text-white/50">
+          <ul className="list-disc pl-5 space-y-2 mt-4" style={{ color: "rgba(255,255,255,0.5)" }}>
             <li>
               <strong className="text-white">Affirmative Opt-In:</strong> Active
               consent for the full bespoke experience.
@@ -164,7 +176,7 @@ const CookiePolicy = () => {
           </ul>
         </Section>
 
-        <Section title="V. DATA TRANSFERS & SOVEREIGNTY">
+        <Section number={5} title="V. DATA TRANSFERS & SOVEREIGNTY">
           <p>
             As a Wyoming-domiciled entity, data captured via our platform is
             processed within the United States. We maintain rigorous data
@@ -174,13 +186,13 @@ const CookiePolicy = () => {
           </p>
         </Section>
 
-        <Section title="VI. COMPLIANCE & GOVERNANCE CONTACT">
+        <Section number={6} title="VI. COMPLIANCE & GOVERNANCE CONTACT">
           <p>
             For inquiries regarding our privacy posture or the exercise of your
             data subject rights (DSRs), please direct all formal correspondence
             to:
           </p>
-          <div className="mt-6 text-white space-y-2 bg-white/5 border border-white/10 p-6">
+          <div className="mt-6 text-white space-y-2" style={{ background: "rgba(218,165,32,0.03)", border: "1px solid rgba(218,165,32,0.15)", padding: "32px" }}>
             <div>
               <strong>Compliance Office</strong>
             </div>
@@ -206,8 +218,9 @@ const CookiePolicy = () => {
           </div>
         </Section>
 
-        <div className="mt-24 pt-12 border-t border-white/10 text-center">
-          <p className="text-white/30 text-xs uppercase tracking-widest">
+        <div className="mt-32 pt-16 text-center" style={{ borderTop: "1px solid rgba(218,165,32,0.1)" }}>
+          <div className="w-8 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #DAA520, transparent)" }} />
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.3em", color: "rgba(255,255,255,0.2)", textTransform: "uppercase" }}>
             Last Updated: February 2026
           </p>
         </div>
