@@ -55,7 +55,7 @@ const Footer = () => {
               <img
                 src="/images/yacht-icon-only.svg"
                 alt="George Yachts Brokerage House LLC"
-                style={{ height: "80px", width: "auto" }}
+                style={{ height: "150px", width: "auto" }}
               />
             </Link>
 
