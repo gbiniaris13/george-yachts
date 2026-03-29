@@ -87,6 +87,18 @@ export default function ItineraryBuilderClient() {
   const [activeRegion, setActiveRegion] = useState('all');
   const svgRef = useRef(null);
 
+  // Region zoom viewBoxes
+  const regionViewBoxes = {
+    all: '100 180 750 420',
+    Cyclades: '480 360 220 180',
+    Saronic: '370 360 120 120',
+    Ionian: '140 200 130 260',
+    Sporades: '380 200 120 80',
+    Dodecanese: '680 420 180 140',
+    Mainland: '350 330 200 160',
+  };
+  const currentViewBox = regionViewBoxes[activeRegion] || regionViewBoxes.all;
+
   const toggleIsland = useCallback((island) => {
     setSelected((prev) => {
       const exists = prev.find((s) => s.id === island.id);
@@ -202,7 +214,7 @@ export default function ItineraryBuilderClient() {
       >
         {/* MAP */}
         <div style={{ position: 'relative', background: '#060d1f', border: '1px solid rgba(218,165,32,0.12)', borderRadius: 16, overflow: 'hidden', aspectRatio: '5/4', boxShadow: 'inset 0 0 80px rgba(0,0,0,0.5), 0 8px 32px rgba(0,0,0,0.4)' }}>
-          <svg ref={svgRef} viewBox="100 180 750 420" style={{ width: '100%', height: '100%' }}>
+          <svg ref={svgRef} viewBox={currentViewBox} style={{ width: '100%', height: '100%', transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }}>
             <defs>
               {/* Deep ocean gradient */}
               <radialGradient id="seaGlow" cx="45%" cy="45%" r="65%">
