@@ -1,65 +1,18 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { useI18n } from '@/lib/i18n/I18nProvider';
 
 const GOLD = '#DAA520';
 
-const LANGUAGES = [
-  { code: 'en', label: 'English', flag: '🇺🇸' },
-  { code: 'el', label: 'Ελληνικά', flag: '🇬🇷' },
-  { code: 'ar', label: 'العربية', flag: '🇦🇪' },
-  { code: 'ru', label: 'Русский', flag: '🇷🇺' },
-  { code: 'zh-CN', label: '中文', flag: '🇨🇳' },
-  { code: 'fr', label: 'Français', flag: '🇫🇷' },
-  { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
-  { code: 'it', label: 'Italiano', flag: '🇮🇹' },
-  { code: 'es', label: 'Español', flag: '🇪🇸' },
-  { code: 'pt', label: 'Português', flag: '🇧🇷' },
-  { code: 'ja', label: '日本語', flag: '🇯🇵' },
-  { code: 'ko', label: '한국어', flag: '🇰🇷' },
-  { code: 'tr', label: 'Türkçe', flag: '🇹🇷' },
-  { code: 'nl', label: 'Nederlands', flag: '🇳🇱' },
-  { code: 'pl', label: 'Polski', flag: '🇵🇱' },
-];
-
-// Use Google Translate via URL redirect method (no widget, no crash)
-function translatePage(langCode) {
-  if (langCode === 'en') {
-    // If currently on translated page, go back to original
-    if (window.location.hostname.includes('translate.goog')) {
-      const originalUrl = new URL(window.location.href).searchParams.get('_x_tr_pto');
-      window.location.href = 'https://georgeyachts.com';
-    }
-    return;
-  }
-
-  // Use Google Translate page translation (no widget needed)
-  const currentUrl = window.location.href;
-  const baseUrl = currentUrl.replace(/https?:\/\//, '').replace(/\/$/, '');
-  window.open(
-    `https://georgeyachts-com.translate.goog/${window.location.pathname}?_x_tr_sl=en&_x_tr_tl=${langCode}&_x_tr_hl=${langCode}&_x_tr_pto=wapp`,
-    '_self'
-  );
-}
-
 export default function TranslateWidget() {
+  const { locale, setLocale, locales: availableLocales } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState('en');
   const dropdownRef = useRef(null);
 
+  const flags = { en: '🇺🇸', el: '🇬🇷', ar: '🇦🇪', ru: '🇷🇺' };
+
   useEffect(() => {
-    // Detect if we're on a translated page
-    if (typeof window !== 'undefined' && window.location.hostname.includes('translate.goog')) {
-      const url = new URL(window.location.href);
-      const lang = url.searchParams.get('_x_tr_tl');
-      if (lang) setCurrentLang(lang);
-    }
-
-    // Saved language preference
-    const saved = localStorage.getItem('gy-lang');
-    if (saved) setCurrentLang(saved);
-
-    // Click outside
     const handler = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setIsOpen(false);
@@ -69,14 +22,8 @@ export default function TranslateWidget() {
     return () => document.removeEventListener('click', handler);
   }, []);
 
-  const handleSelect = (langCode) => {
-    setCurrentLang(langCode);
-    localStorage.setItem('gy-lang', langCode);
-    setIsOpen(false);
-    translatePage(langCode);
-  };
-
-  const currentLanguage = LANGUAGES.find(l => l.code === currentLang) || LANGUAGES[0];
+  const currentFlag = flags[locale] || '🌐';
+  const currentLabel = availableLocales.find(l => l.code === locale)?.label || 'English';
 
   return (
     <div ref={dropdownRef} className="fixed z-[60]" style={{ top: '20px', right: '20px' }}>
@@ -98,8 +45,8 @@ export default function TranslateWidget() {
           transition: 'all 0.3s ease',
         }}
       >
-        <span style={{ fontSize: '14px', lineHeight: 1 }}>{currentLanguage.flag}</span>
-        <span className="hidden sm:inline">{currentLanguage.label}</span>
+        <span style={{ fontSize: '14px', lineHeight: 1 }}>{currentFlag}</span>
+        <span className="hidden sm:inline">{currentLabel}</span>
         <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" strokeWidth="1.5"
           style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.3s ease' }}>
           <path d="M1 3l3 3 3-3" />
@@ -111,7 +58,7 @@ export default function TranslateWidget() {
           position: 'absolute', top: '100%', right: 0, marginTop: 8,
           background: 'rgba(0,0,0,0.95)', backdropFilter: 'blur(20px)',
           border: '1px solid rgba(218,165,32,0.15)', borderRadius: 12,
-          overflow: 'hidden', minWidth: 200, maxHeight: '70vh', overflowY: 'auto',
+          overflow: 'hidden', minWidth: 200,
           boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
         }}>
           <div style={{
@@ -121,22 +68,22 @@ export default function TranslateWidget() {
           }}>
             Select Language
           </div>
-          {LANGUAGES.map(lang => (
+          {availableLocales.map(lang => (
             <button
               key={lang.code}
-              onClick={(e) => { e.stopPropagation(); handleSelect(lang.code); }}
+              onClick={(e) => { e.stopPropagation(); setLocale(lang.code); setIsOpen(false); }}
               style={{
                 display: 'flex', alignItems: 'center', gap: 10, width: '100%',
                 padding: '11px 16px', fontFamily: "'Montserrat', sans-serif", fontSize: 11,
-                color: currentLang === lang.code ? '#DAA520' : 'rgba(255,255,255,0.5)',
-                background: currentLang === lang.code ? 'rgba(218,165,32,0.06)' : 'transparent',
+                color: locale === lang.code ? '#DAA520' : 'rgba(255,255,255,0.5)',
+                background: locale === lang.code ? 'rgba(218,165,32,0.06)' : 'transparent',
                 border: 'none', borderBottom: '1px solid rgba(255,255,255,0.03)',
                 cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s ease',
               }}
             >
-              <span style={{ fontSize: 16, lineHeight: 1 }}>{lang.flag}</span>
+              <span style={{ fontSize: 16, lineHeight: 1 }}>{flags[lang.code] || '🌐'}</span>
               <span>{lang.label}</span>
-              {currentLang === lang.code && <span style={{ marginLeft: 'auto', fontSize: 10, color: '#DAA520' }}>✓</span>}
+              {locale === lang.code && <span style={{ marginLeft: 'auto', fontSize: 10, color: '#DAA520' }}>✓</span>}
             </button>
           ))}
         </div>

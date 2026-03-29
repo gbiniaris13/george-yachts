@@ -1,8 +1,10 @@
 "use client";
 
 import React from "react";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const Filotimon = () => {
+  const { t } = useI18n();
   return (
     <section className="relative w-full bg-[#000000] py-32 lg:py-48 overflow-hidden flex items-center justify-center">
       {/* 0. AMBIENT GRADIENT ORBS */}
@@ -24,14 +26,14 @@ const Filotimon = () => {
         {/* Crown Label */}
         <div className="mb-10">
           <span className="text-[#DAA520] text-[10px] tracking-[0.6em] uppercase font-bold opacity-80 border border-[#DAA520]/30 px-4 py-2">
-            The Philosophy
+            {t('filotimo.label')}
           </span>
         </div>
 
         {/* Statement Headline */}
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-marcellus text-white leading-[1.05] tracking-tight mb-12">
-          WHEN LUXURY MEETS <br className="hidden md:block" />
-          TRUST AND{" "}
+          {t('filotimo.headline1')} <br className="hidden md:block" />
+          {t('filotimo.headline2')}{" "}
           <span
             className="italic font-light relative inline-block"
             style={{
@@ -53,10 +55,10 @@ const Filotimon = () => {
         {/* Etymology */}
         <div className="mb-12 max-w-2xl">
           <p className="text-[10px] tracking-[0.4em] uppercase text-[#DAA520]/50 mb-4 font-light" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-            φίλο (philo) = love &middot; τιμώ (timo) = honour
+            {t('filotimo.etymology')}
           </p>
           <p className="text-base md:text-lg text-white/40 leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-            A word that exists only in the Greek language. Untranslatable in English, French, German, or any other tongue. First written by the poet Pindar in the 6th century BCE. Referenced by the Apostle Paul. Carried through 400 years of Ottoman rule. Still alive in every Greek who lives by it.
+            {t('filotimo.intro')}
           </p>
         </div>
 
@@ -64,23 +66,23 @@ const Filotimon = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 max-w-4xl w-full">
           <div className="text-center px-4">
             <div className="text-3xl mb-4 opacity-60">🫶</div>
-            <h3 className="font-marcellus text-white/80 text-lg mb-3">Selfless Generosity</h3>
+            <h3 className="font-marcellus text-white/80 text-lg mb-3">{t('filotimo.pillar1Title')}</h3>
             <p className="text-white/30 text-sm leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              Acts of kindness without expectation of return. Taking care of others as if they were family — not because you must, but because you cannot imagine doing otherwise.
+              {t('filotimo.pillar1Desc')}
             </p>
           </div>
           <div className="text-center px-4">
             <div className="text-3xl mb-4 opacity-60">⚖️</div>
-            <h3 className="font-marcellus text-white/80 text-lg mb-3">Deep Honour</h3>
+            <h3 className="font-marcellus text-white/80 text-lg mb-3">{t('filotimo.pillar2Title')}</h3>
             <p className="text-white/30 text-sm leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              Not the honour of titles or praise, but the quiet dignity of doing what is right when no one is watching. A standard you hold for yourself, not one imposed from outside.
+              {t('filotimo.pillar2Desc')}
             </p>
           </div>
           <div className="text-center px-4">
             <div className="text-3xl mb-4 opacity-60">🔥</div>
-            <h3 className="font-marcellus text-white/80 text-lg mb-3">Accountable Pride</h3>
+            <h3 className="font-marcellus text-white/80 text-lg mb-3">{t('filotimo.pillar3Title')}</h3>
             <p className="text-white/30 text-sm leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              If you lack filotimo, you embarrass not just yourself — but your family, your community, your name. It is the invisible thread that holds Greek society together.
+              {t('filotimo.pillar3Desc')}
             </p>
           </div>
         </div>
@@ -91,30 +93,30 @@ const Filotimon = () => {
         {/* The Application — What it means for George Yachts */}
         <div className="max-w-3xl mb-16">
           <p className="text-lg md:text-2xl text-gray-400 font-marcellus leading-relaxed">
-            At <span className="notranslate">George Yachts</span>, filotimo is not a marketing word.{" "}
-            <span className="text-white">It is how we operate.</span>
+            {t('filotimo.application')}{" "}
+            <span className="text-white">{t('filotimo.applicationBold')}</span>
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl w-full mb-16 text-left">
           <div className="border-l-2 border-[#DAA520]/20 pl-6 py-2">
             <p className="text-white/50 text-sm leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              It means telling a client that a yacht is wrong for them — even when it would be the easier sale.
+              {t('filotimo.example1')}
             </p>
           </div>
           <div className="border-l-2 border-[#DAA520]/20 pl-6 py-2">
             <p className="text-white/50 text-sm leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              It means answering the phone at midnight because a guest has a question about their itinerary.
+              {t('filotimo.example2')}
             </p>
           </div>
           <div className="border-l-2 border-[#DAA520]/20 pl-6 py-2">
             <p className="text-white/50 text-sm leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              It means protecting your investment with transparent contracts and honest pricing — no hidden fees, no surprises.
+              {t('filotimo.example3')}
             </p>
           </div>
           <div className="border-l-2 border-[#DAA520]/20 pl-6 py-2">
             <p className="text-white/50 text-sm leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              It means treating your journey as if it were our own — because in the Greek way of thinking, it is.
+              {t('filotimo.example4')}
             </p>
           </div>
         </div>
@@ -122,7 +124,7 @@ const Filotimon = () => {
         {/* The Quote */}
         <div className="max-w-2xl mb-12 px-4">
           <blockquote className="text-lg md:text-xl text-white/60 font-marcellus leading-relaxed italic">
-            "Filotimo to the Greeks is like breathing. A Greek is not a Greek without it."
+            {t('filotimo.quote')}
           </blockquote>
           <p className="text-[10px] tracking-[0.2em] uppercase text-[#DAA520]/40 mt-4" style={{ fontFamily: "'Montserrat', sans-serif" }}>
             — Thales of Miletus, 624–546 BCE
