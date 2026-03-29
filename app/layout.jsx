@@ -6,6 +6,7 @@ import GlobalEffects from "./components/GlobalEffects";
 import CustomCursor from "./components/CustomCursor";
 import WhatsAppButton from "./components/WhatsAppButton";
 import MobileStickyBar from "./components/MobileStickyBar";
+import TranslateWidget from "./components/TranslateWidget";
 import { WishlistProvider } from "./components/WishlistProvider";
 import JsonLd from "./components/JsonLd";
 import { organizationSchema } from "@/lib/organizationSchema";
@@ -87,6 +88,7 @@ export default function RootLayout({ children }) {
         <WishlistProvider>
         <NavDrawerSystem />
         {children}
+        <TranslateWidget />
         <WhatsAppButton />
         <MobileStickyBar />
         </WishlistProvider>
