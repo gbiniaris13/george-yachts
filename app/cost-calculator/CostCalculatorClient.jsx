@@ -1,5 +1,6 @@
 'use client';
 
+import { useI18n } from '@/lib/i18n/I18nProvider';
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 

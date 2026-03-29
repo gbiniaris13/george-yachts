@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { useI18n } from '@/lib/i18n/I18nProvider';
 
 const GOLD = '#DAA520';
 
@@ -79,6 +80,7 @@ const COMPARISONS = [
 function fmt(n) { return n.toFixed(1); }
 
 export default function SizeVisualizerClient() {
+  const { t } = useI18n();
   const [selectedYacht, setSelectedYacht] = useState(YACHTS[6]); // Genny default
 
   const comparisons = useMemo(() => {
@@ -98,13 +100,13 @@ export default function SizeVisualizerClient() {
       {/* Hero */}
       <div style={{ padding: '160px 24px 40px', textAlign: 'center' }}>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
-          Interactive Tool
+          {t('tools.label', 'Interactive Tool')}
         </p>
         <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#fff', fontWeight: 300, margin: '0 0 16px' }}>
-          How Big Is Your Yacht?
+          {t('sizeViz.title', 'How Big Is Your Yacht?')}
         </h1>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(255,255,255,0.4)', maxWidth: 480, margin: '0 auto', lineHeight: 1.8 }}>
-          Numbers on paper don't tell the story. See how each yacht compares to things you know.
+          {t('sizeViz.subtitle', "Numbers on paper don't tell the story. See how each yacht compares to things you know.")}
         </p>
       </div>
 
@@ -151,7 +153,7 @@ export default function SizeVisualizerClient() {
           {/* Yacht bar */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             <div style={{ width: 100, textAlign: 'right', fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: GOLD, fontWeight: 600 }}>
-              Your Yacht
+              {t('sizeViz.yourYacht', 'Your Yacht')}
             </div>
             <div style={{ flex: 1, position: 'relative', height: 40, background: 'rgba(255,255,255,0.02)', borderRadius: 4, overflow: 'hidden' }}>
               <div style={{
@@ -230,7 +232,7 @@ export default function SizeVisualizerClient() {
               textDecoration: 'none',
             }}
           >
-            View {selectedYacht.name}
+            {t('common.viewDetails', 'View')} {selectedYacht.name}
           </Link>
         </div>
       </div>

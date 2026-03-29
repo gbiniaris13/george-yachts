@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import CompareYachts from './CompareYachts';
 import { useWishlist } from '../components/WishlistProvider';
+import { useI18n } from '@/lib/i18n/I18nProvider';
 
 // Fallback data for yachts missing data in Sanity
 const YACHT_OVERRIDES = {
@@ -194,7 +195,7 @@ function useScrollReveal() {
   return gridRef;
 }
 
-function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount }) {
+function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t }) {
   const [imgLoaded, setImgLoaded] = useState(false);
   const { toggle: toggleWishlist, has: hasWishlist } = useWishlist();
   const slug = yacht.slug;
@@ -267,7 +268,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount })
           {/* Flagship badge - ONLY La Pellegrina */}
           {isFlagship && (
             <div className="fleet-card__badge fleet-card__badge--featured">
-              Flagship
+              {t('fleet.flagship', 'Flagship')}
             </div>
           )}
           {/* Wishlist heart button */}
@@ -308,15 +309,15 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount })
         {/* Specs row */}
         <div className="fleet-card__specs">
           <div className="fleet-card__spec">
-            <span className="fleet-card__spec-label">Length</span>
+            <span className="fleet-card__spec-label">{t('common.length', 'Length')}</span>
             <span className="fleet-card__spec-value">{lengthShort}</span>
           </div>
           <div className="fleet-card__spec">
-            <span className="fleet-card__spec-label">Guests</span>
+            <span className="fleet-card__spec-label">{t('common.guests', 'Guests')}</span>
             <span className="fleet-card__spec-value">{guests}</span>
           </div>
           <div className="fleet-card__spec">
-            <span className="fleet-card__spec-label">Cabins</span>
+            <span className="fleet-card__spec-label">{t('common.cabins', 'Cabins')}</span>
             <span className="fleet-card__spec-value">{cabins}</span>
           </div>
         </div>
@@ -326,21 +327,21 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount })
         {/* Price + buttons */}
         <div className="fleet-card__bottom">
           <div>
-            <div className="fleet-card__price-label">Weekly Charter</div>
+            <div className="fleet-card__price-label">{t('fleet.weeklyCharter', 'Weekly Charter')}</div>
             <div className="fleet-card__price">{price}</div>
             {perPersonWeekly && (
               <div className="fleet-card__per-person">
                 {perPersonWeekly.low === perPersonWeekly.high
-                  ? `from ${perPersonWeekly.low}/person/week`
-                  : `${perPersonWeekly.low} – ${perPersonWeekly.high}/person/week`
+                  ? `from ${perPersonWeekly.low}/${t('fleet.perPersonWeek', 'person/week')}`
+                  : `${perPersonWeekly.low} – ${perPersonWeekly.high}/${t('fleet.perPersonWeek', 'person/week')}`
                 }
-                <span className="fleet-card__per-person-note">incl. APA & VAT</span>
+                <span className="fleet-card__per-person-note">{t('fleet.inclApaVat', 'incl. APA & VAT')}</span>
               </div>
             )}
           </div>
           <div className="fleet-card__buttons">
             <Link href={`/yachts/${slug}`} className="fleet-card__btn fleet-card__btn--details">
-              <span>Details</span>
+              <span>{t('fleet.details', 'Details')}</span>
             </Link>
             <a
               href="https://calendly.com/george-georgeyachts/30min"
@@ -348,7 +349,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount })
               rel="noopener noreferrer"
               className="fleet-card__btn fleet-card__btn--inquire"
             >
-              <span>Inquire</span>
+              <span>{t('fleet.inquire', 'Inquire')}</span>
             </a>
           </div>
           {/* Compare toggle */}
@@ -380,6 +381,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount })
 }
 
 export default function FleetGrid({ yachts }) {
+  const { t } = useI18n();
   const [activeCategory, setActiveCategory] = useState('all');
   const [lengthRange, setLengthRange] = useState('all');
   const [guestFilter, setGuestFilter] = useState('all');
@@ -547,7 +549,7 @@ export default function FleetGrid({ yachts }) {
         {/* Sub-filters */}
         <div className="fleet-filters__row">
           <div className="fleet-filters__select-group">
-            <span className="fleet-filters__label">Length</span>
+            <span className="fleet-filters__label">{t('common.length', 'Length')}</span>
             <select value={lengthRange} onChange={(e) => setLengthRange(e.target.value)} className="fleet-filters__select">
               {LENGTH_RANGES.map((opt) => (
                 <option key={opt.id} value={opt.id}>{opt.label}</option>
@@ -555,7 +557,7 @@ export default function FleetGrid({ yachts }) {
             </select>
           </div>
           <div className="fleet-filters__select-group">
-            <span className="fleet-filters__label">Guests</span>
+            <span className="fleet-filters__label">{t('common.guests', 'Guests')}</span>
             <select value={guestFilter} onChange={(e) => setGuestFilter(e.target.value)} className="fleet-filters__select">
               {GUEST_OPTIONS.map((opt) => (
                 <option key={opt.id} value={opt.id}>{opt.label}</option>
@@ -563,7 +565,7 @@ export default function FleetGrid({ yachts }) {
             </select>
           </div>
           <div className="fleet-filters__select-group">
-            <span className="fleet-filters__label">Cabins</span>
+            <span className="fleet-filters__label">{t('common.cabins', 'Cabins')}</span>
             <select value={cabinFilter} onChange={(e) => setCabinFilter(e.target.value)} className="fleet-filters__select">
               {CABIN_OPTIONS.map((opt) => (
                 <option key={opt.id} value={opt.id}>{opt.label}</option>
@@ -571,7 +573,7 @@ export default function FleetGrid({ yachts }) {
             </select>
           </div>
           <div className="fleet-filters__select-group">
-            <span className="fleet-filters__label">Price</span>
+            <span className="fleet-filters__label">{t('fleet.price', 'Price')}</span>
             <select value={priceRange} onChange={(e) => setPriceRange(e.target.value)} className="fleet-filters__select">
               {PRICE_RANGES.map((opt) => (
                 <option key={opt.id} value={opt.id}>{opt.label}</option>
@@ -579,7 +581,7 @@ export default function FleetGrid({ yachts }) {
             </select>
           </div>
           <div className="fleet-filters__select-group">
-            <span className="fleet-filters__label">Sort</span>
+            <span className="fleet-filters__label">{t('fleet.sort', 'Sort')}</span>
             <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="fleet-filters__select">
               {SORT_OPTIONS.map((opt) => (
                 <option key={opt.id} value={opt.id}>{opt.label}</option>
@@ -609,6 +611,7 @@ export default function FleetGrid({ yachts }) {
             isComparing={compareList.some((c) => c.slug === yacht.slug)}
             onToggleCompare={() => toggleCompare(yacht)}
             compareCount={compareList.length}
+            t={t}
           />
         ))}
       </div>

@@ -152,7 +152,30 @@
     "weeklyCharter": "Weekly Charter",
     "flagship": "Flagship",
     "fromJournal": "From The Journal",
-    "bookConsultation": "Book a Free Consultation"
+    "bookConsultation": "Book a Free Consultation",
+    "price": "Price",
+    "sort": "Sort"
+  },
+  "yacht": {
+    "specsTitle": "What Are the Specifications of",
+    "featuresTitle": "What Features Make",
+    "standOut": "Stand Out",
+    "toysTitle": "What Water Toys Are Available on",
+    "galleryTitle": "What Does",
+    "lookLike": "Look Like Inside and Out",
+    "idealTitle": "Who Is",
+    "idealFor": "Ideal For",
+    "pricingTitle": "What Is the Weekly Charter Rate for",
+    "insiderTitle": "George's Inside Info",
+    "managingBroker": "Managing Broker",
+    "member": "Member",
+    "beginJourney": "Begin Your Journey",
+    "experience": "Experience",
+    "ctaText": "Ready to explore the Greek islands aboard this magnificent vessel? Choose how you'd like to connect.",
+    "bookVideo": "Book a Video Consultation",
+    "submitInquiry": "Submit an Inquiry",
+    "servicePromise": "Personal service · No obligation · Response within 24 hours",
+    "viewAllYachts": "View All Charter Yachts"
   },
   "common": {
     "guests": "Guests",
@@ -219,5 +242,10 @@
     "panel3Text": "Your experience extends far beyond the deck. Private jet transfers, luxury villas, Michelin dining, bespoke itineraries. One point of contact for everything — from touchdown at Athens International to your final sunset anchorage.",
     "panel4Title": "CHARTER WITH | CONFIDENCE",
     "panel4Text": "Weekly rates from €5,900 to €235,000. Clear contracts, fast proposals, and an IYBA member broker who answers the phone personally. Yacht charter as it should be — precise, discreet, and genuinely personal."
+  },
+  "sizeViz": {
+    "title": "How Big Is Your Yacht?",
+    "subtitle": "Numbers on paper don't tell the story. See how each yacht compares to things you know.",
+    "yourYacht": "Your Yacht"
   }
 }

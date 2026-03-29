@@ -1,10 +1,6 @@
 import { sanityClient } from '@/lib/sanity';
-import { PortableText } from '@portabletext/react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import ScrollReveal from './ScrollReveal';
-import Lightbox from './Lightbox';
+import YachtPageContent from './YachtPageContent';
 import './yacht-page.css';
 
 // ISR - revalidate every hour
@@ -137,310 +133,28 @@ export default async function YachtPage({ params }) {
   return (
     <>
       <YachtSchema yacht={yacht} imageUrl={heroImage?.url} />
-      <ScrollReveal />
-
-      <article className="yacht-page">
-        {/* HERO SECTION - Full Width Cinematic */}
-        <section className="yacht-hero">
-          {heroImage && (
-            <div className="yacht-hero__image-container">
-              <Image
-                src={heroImage.url}
-                alt={`${yacht.name} ${yacht.subtitle} - luxury yacht charter Greece`}
-                fill
-                priority
-                className="yacht-hero__image"
-                sizes="100vw"
-              />
-              <div className="yacht-hero__overlay" />
-            </div>
-          )}
-          <div className="yacht-hero__content">
-            <h1 className="yacht-hero__title"><span className="notranslate">{yacht.name}</span></h1>
-            <p className="yacht-hero__subtitle">
-              {yacht.subtitle} · {yacht.length} · {yacht.sleeps} guests
-            </p>
-          </div>
-        </section>
-
-        {/* STORY SECTION — Rich content or auto-generated summary */}
-        {yacht.description && yacht.description.length > 0 ? (
-          <section className="yacht-story reveal">
-            <div className="container">
-              <PortableText value={yacht.description} />
-            </div>
-          </section>
-        ) : (
-          <section className="yacht-story reveal">
-            <div className="container">
-              <h2 className="yacht-story__heading">About <span className="notranslate">{yacht.name}</span></h2>
-              <p>
-                <span className="notranslate">{yacht.name}</span> is a {yacht.subtitle?.split('|')[0]?.trim() || 'luxury yacht'} available
-                for charter in Greek waters. At {yacht.length || 'her impressive length'}, she accommodates {yacht.sleeps || 'up to 12'} guests
-                for unforgettable voyages through the Cyclades, Ionian Islands, Saronic Gulf, and Sporades.
-              </p>
-              <p>
-                Contact George Yachts for detailed specifications, availability, and a personalized
-                charter proposal tailored to your preferences.
-              </p>
-            </div>
-          </section>
-        )}
-
-        {/* GEORGE'S INSIDE INFO — Author Attribution */}
-        {yacht.georgeInsiderTip && (
-          <section className="yacht-insider reveal">
-            <div className="container">
-              <div className="yacht-insider__card">
-                <div className="yacht-insider__header">
-                  <span className="yacht-insider__icon">💬</span>
-                  <h2 className="yacht-insider__title">George&apos;s Inside Info</h2>
-                </div>
-                <blockquote className="yacht-insider__quote" cite="https://georgeyachts.com/team/george-biniaris">
-                  &ldquo;{yacht.georgeInsiderTip}&rdquo;
-                </blockquote>
-                <p className="yacht-insider__signature">
-                  — <span itemProp="author">George P. Biniaris</span>, Managing Broker &amp; IYBA Member
-                </p>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* SPECIFICATIONS — GEO Question H2 */}
-        <section className="yacht-specs reveal">
-          <div className="container">
-            <h2 className="yacht-specs__title">What Are the Specifications of <span className="notranslate">{yacht.name}</span>?</h2>
-            <div className="yacht-specs__grid">
-              {yacht.length && (
-                <div className="yacht-specs__item">
-                  <span className="yacht-specs__label">Length</span>
-                  <span className="yacht-specs__value">{yacht.length}</span>
-                </div>
-              )}
-              {yacht.builder && (
-                <div className="yacht-specs__item">
-                  <span className="yacht-specs__label">Builder</span>
-                  <span className="yacht-specs__value">{yacht.builder}</span>
-                </div>
-              )}
-              {yacht.yearBuiltRefit && (
-                <div className="yacht-specs__item">
-                  <span className="yacht-specs__label">Year</span>
-                  <span className="yacht-specs__value">{yacht.yearBuiltRefit}</span>
-                </div>
-              )}
-              {yacht.sleeps && (
-                <div className="yacht-specs__item">
-                  <span className="yacht-specs__label">Guests</span>
-                  <span className="yacht-specs__value">{yacht.sleeps}</span>
-                </div>
-              )}
-              {yacht.cabins && (
-                <div className="yacht-specs__item">
-                  <span className="yacht-specs__label">Cabins</span>
-                  <span className="yacht-specs__value">{yacht.cabins}</span>
-                </div>
-              )}
-              {yacht.crew && (
-                <div className="yacht-specs__item">
-                  <span className="yacht-specs__label">Crew</span>
-                  <span className="yacht-specs__value">{(() => {
-                    const c = yacht.crew;
-                    // Extract number and generic roles (strip names)
-                    const numMatch = c.match(/^(\d+)/);
-                    if (!numMatch) return c;
-                    const num = numMatch[1];
-                    // Extract roles, removing personal names
-                    const rolesStr = c.replace(/^\d+\s*[—–-]\s*/, '');
-                    if (!rolesStr || rolesStr === num) return num;
-                    const roles = rolesStr.split(',').map(r => {
-                      // Remove names: "Captain Thanos Kourtelis (..." → "Captain"
-                      return r.trim()
-                        .replace(/\s*\([^)]*\)/g, '') // remove parentheses
-                        .replace(/^(Captain|Chef|Stewardess|Deckhand|Hostess|Engineer|Mate|Bosun|Chef\/Hostess)\s+[A-Z].*/i, '$1') // remove name after role
-                        .replace(/\s+$/, '');
-                    }).filter(r => r.length > 0);
-                    // Deduplicate and count multiples
-                    const roleCounts = {};
-                    roles.forEach(r => {
-                      const generic = r.replace(/^(Award-winning\s+)/i, '').replace(/^\d+\s+/, '');
-                      roleCounts[generic] = (roleCounts[generic] || 0) + 1;
-                    });
-                    const roleList = Object.entries(roleCounts).map(([role, count]) =>
-                      count > 1 ? `${count} ${role}s` : role
-                    ).join(', ');
-                    return `${num} — ${roleList}`;
-                  })()}</span>
-                </div>
-              )}
-              {yacht.cruiseSpeed && (
-                <div className="yacht-specs__item">
-                  <span className="yacht-specs__label">Cruise Speed</span>
-                  <span className="yacht-specs__value">{yacht.cruiseSpeed}</span>
-                </div>
-              )}
-              {yacht.maxSpeed && (
-                <div className="yacht-specs__item">
-                  <span className="yacht-specs__label">Max Speed</span>
-                  <span className="yacht-specs__value">{yacht.maxSpeed}</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-
-        {/* IDEAL FOR — GEO Question H2 */}
-        {yacht.idealFor && (
-          <section className="yacht-ideal reveal">
-            <div className="container">
-              <h2 className="yacht-ideal__title">Who Is <span className="notranslate">{yacht.name}</span> Ideal For?</h2>
-              <p className="yacht-ideal__text">{yacht.idealFor}</p>
-            </div>
-          </section>
-        )}
-
-        {/* KEY FEATURES — GEO Question H2 */}
-        {yacht.features && yacht.features.length > 0 && (
-          <section className="yacht-features reveal">
-            <div className="container">
-              <h2 className="yacht-features__title">What Features Make <span className="notranslate">{yacht.name}</span> Stand Out?</h2>
-              <ul className="yacht-features__list">
-                {yacht.features.map((feature, index) => (
-                  <li key={index} className="yacht-features__item">
-                    <span className="yacht-features__check">✓</span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-        )}
-
-        {/* WATER TOYS — GEO Question H2 */}
-        {yacht.toys && yacht.toys.length > 0 && (
-          <section className="yacht-toys reveal">
-            <div className="container">
-              <h2 className="yacht-toys__title">What Water Toys Are Available on <span className="notranslate">{yacht.name}</span>?</h2>
-              <ul className="yacht-toys__list">
-                {yacht.toys.map((toy, index) => (
-                  <li key={index} className="yacht-toys__item">{toy}</li>
-                ))}
-              </ul>
-            </div>
-          </section>
-        )}
-
-        {/* PHOTO GALLERY — Lightbox + GEO Question H2 */}
-        {yacht.images && yacht.images.length > 1 && (
-          <section className="yacht-gallery">
-            <div className="container">
-              <h2 className="yacht-gallery__title">What Does <span className="notranslate">{yacht.name}</span> Look Like Inside and Out?</h2>
-              <Lightbox
-                images={yacht.images.slice(1)}
-                yachtName={yacht.name}
-              />
-            </div>
-          </section>
-        )}
-
-        {/* PRICING — GEO Question H2 */}
-        {yacht.weeklyRatePrice && (
-          <section className="yacht-pricing reveal">
-            <div className="container">
-              <h2 className="yacht-pricing__title">What Is the Weekly Charter Rate for <span className="notranslate">{yacht.name}</span>?</h2>
-              <p className="yacht-pricing__rate">{yacht.weeklyRatePrice}</p>
-              {(() => {
-                const guestCount = parseInt(yacht.sleeps) || 0;
-                const priceStr = yacht.weeklyRatePrice || '';
-                if (!guestCount || priceStr === 'On Request') return null;
-                // Extract all prices
-                const numbers = [];
-                const regex = /€?([\d,.]+)/g;
-                const cleanStr = priceStr.replace(/[^\d.,€\-–]/g, ' ');
-                let m;
-                while ((m = regex.exec(cleanStr)) !== null) {
-                  const num = parseFloat(m[1].replace(/,/g, '').replace(/\./g, ''));
-                  if (!isNaN(num) && num > 100) numbers.push(num);
-                }
-                if (numbers.length === 0) return null;
-                const lowBase = numbers[0];
-                const highBase = numbers.length > 1 ? numbers[numbers.length - 1] : lowBase;
-                // All-in: charter + APA (30%) + VAT (12%) = ×1.42
-                const lowPPW = Math.round((lowBase * 1.42) / guestCount);
-                const highPPW = Math.round((highBase * 1.42) / guestCount);
-                return lowPPW > 0 ? (
-                  <>
-                    <p className="yacht-pricing__per-person">
-                      {lowPPW === highPPW
-                        ? `€${lowPPW.toLocaleString()} per person / week`
-                        : `€${lowPPW.toLocaleString()} – €${highPPW.toLocaleString()} per person / week`
-                      }
-                    </p>
-                    <p className="yacht-pricing__per-person-note">
-                      All-in estimate: charter + APA (30%) + VAT (12%) · {guestCount} guests
-                    </p>
-                  </>
-                ) : null;
-              })()}
-            </div>
-          </section>
-        )}
-
-        {/* CTA SECTION - Dual Options */}
-        <section className="yacht-cta reveal">
-          <div className="container">
-            <div className="gold-line mb-12" />
-
-            <span className="label-text block text-center mb-4">
-              Begin Your Journey
-            </span>
-
-            <h2 className="text-4xl md:text-5xl font-marcellus text-white text-center mb-4 uppercase tracking-wide">
-              Experience{' '}
-              <span className="gradient-gold italic font-light">
-                <span className="notranslate">{yacht.name}</span>
-              </span>
-            </h2>
-
-            <p className="text-gray-400 text-center max-w-2xl mx-auto mb-12">
-              Ready to explore the Greek islands aboard this magnificent vessel?
-              Choose how you&apos;d like to connect.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <a
-                href="https://calendly.com/george-georgeyachts/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary"
-              >
-                Book a Video Consultation
-              </a>
-
-              <a
-                href="/#contact"
-                className="btn-secondary"
-              >
-                Submit an Inquiry
-              </a>
-            </div>
-
-            <p className="text-center text-gray-500 text-xs mt-8 tracking-widest uppercase">
-              Personal service · No obligation · Response within 24 hours
-            </p>
-          </div>
-        </section>
-
-        {/* BACK LINK */}
-        <section className="yacht-back">
-          <div className="container">
-            <Link href="/charter-yacht-greece" className="yacht-back__link">
-              ← View All Charter Yachts
-            </Link>
-          </div>
-        </section>
-      </article>
+      <YachtPageContent
+        yacht={{
+          name: yacht.name,
+          subtitle: yacht.subtitle,
+          georgeInsiderTip: yacht.georgeInsiderTip,
+          length: yacht.length,
+          yearBuiltRefit: yacht.yearBuiltRefit,
+          builder: yacht.builder,
+          sleeps: yacht.sleeps,
+          cabins: yacht.cabins,
+          crew: yacht.crew,
+          maxSpeed: yacht.maxSpeed,
+          cruiseSpeed: yacht.cruiseSpeed,
+          weeklyRatePrice: yacht.weeklyRatePrice,
+          features: yacht.features,
+          toys: yacht.toys,
+          idealFor: yacht.idealFor,
+          images: yacht.images,
+        }}
+        heroImage={heroImage}
+        description={yacht.description}
+      />
     </>
   );
 }
