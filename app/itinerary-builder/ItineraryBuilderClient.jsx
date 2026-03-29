@@ -49,7 +49,9 @@ const ISLANDS = [
   { id: 'symi', name: 'Symi', region: 'Dodecanese', x: 760, y: 500, lat: 36.6170, lng: 27.8370, desc: 'Pastel harbour, sponge diving, Panormitis' },
 
   // Key mainland ports
-  { id: 'athens', name: 'Athens', region: 'Mainland', x: 430, y: 380, lat: 37.9838, lng: 23.7275, desc: 'Lavrion & Alimos — main charter bases' },
+  { id: 'athens', name: 'Athens (Alimos)', region: 'Mainland', x: 430, y: 380, lat: 37.9838, lng: 23.7275, desc: 'Alimos Marina — main charter base, easy airport access' },
+  { id: 'lavrio', name: 'Lavrio', region: 'Mainland', x: 470, y: 400, lat: 37.7265, lng: 24.0548, desc: 'Lavrion Marina — closest port to Cyclades, fast access to Kea' },
+  { id: 'nea-peramos', name: 'Nea Peramos', region: 'Mainland', x: 440, y: 370, lat: 37.9667, lng: 23.9167, desc: 'Quiet port near Athens, sheltered anchorage' },
   { id: 'nafplio', name: 'Nafplio', region: 'Mainland', x: 400, y: 430, lat: 37.5675, lng: 22.7958, desc: 'Greece\'s first capital, Palamidi fortress' },
   { id: 'porto-heli', name: 'Porto Heli', region: 'Mainland', x: 420, y: 455, lat: 37.3187, lng: 23.1456, desc: 'Greek Hamptons, Amanzoe resort' },
 ];
@@ -73,10 +75,13 @@ const REGION_COLORS = {
 };
 
 export default function ItineraryBuilderClient() {
-  // Athens as default starting point
+  // Starting points
   const athensIsland = ISLANDS.find((i) => i.id === 'athens');
   const corfu = ISLANDS.find((i) => i.id === 'corfu');
-  const skiathos = ISLANDS.find((i) => i.id === 'skiathos');
+  const zakynthos = ISLANDS.find((i) => i.id === 'zakynthos');
+  const neaPeramos = ISLANDS.find((i) => i.id === 'nea-peramos');
+  const mykonos = ISLANDS.find((i) => i.id === 'mykonos');
+  const lavrio = ISLANDS.find((i) => i.id === 'lavrio');
   const [selected, setSelected] = useState(athensIsland ? [athensIsland] : []);
   const [hoveredIsland, setHoveredIsland] = useState(null);
   const [activeRegion, setActiveRegion] = useState('all');
@@ -137,7 +142,10 @@ export default function ItineraryBuilderClient() {
         {[
           { island: athensIsland, label: 'Athens' },
           { island: corfu, label: 'Corfu' },
-          { island: skiathos, label: 'Skiathos' },
+          { island: zakynthos, label: 'Zakynthos' },
+          { island: neaPeramos, label: 'Nea Peramos' },
+          { island: mykonos, label: 'Mykonos' },
+          { island: lavrio, label: 'Lavrio' },
         ].map(({ island, label }) => (
           <button
             key={label}
