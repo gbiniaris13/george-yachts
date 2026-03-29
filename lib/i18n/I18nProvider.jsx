@@ -23,6 +23,19 @@ export function I18nProvider({ children }) {
       document.documentElement.lang = locales[saved].meta.lang;
       document.documentElement.dir = locales[saved].meta.dir;
     }
+
+    // Listen for locale change events from WelcomeLanguagePopup
+    const handleLocaleEvent = (e) => {
+      const newLocale = e.detail;
+      if (locales[newLocale]) {
+        setLocaleState(newLocale);
+        localStorage.setItem('gy-locale', newLocale);
+        document.documentElement.lang = locales[newLocale].meta.lang;
+        document.documentElement.dir = locales[newLocale].meta.dir;
+      }
+    };
+    window.addEventListener('gy-set-locale', handleLocaleEvent);
+    return () => window.removeEventListener('gy-set-locale', handleLocaleEvent);
   }, []);
 
   const setLocale = useCallback((newLocale) => {

@@ -200,15 +200,13 @@ export default function WelcomeLanguagePopup() {
       return;
     }
 
-    // Non-English browser — translate via Google Translate URL method
-    localStorage.setItem('gy-lang', langData.code);
+    // Non-English browser — switch language via our i18n system
     setTimeout(() => {
       setVisible(false);
-      window.open(
-        `https://georgeyachts-com.translate.goog/${window.location.pathname}?_x_tr_sl=en&_x_tr_tl=${langData.code}&_x_tr_hl=${langData.code}&_x_tr_pto=wapp`,
-        '_self'
-      );
-    }, 500);
+      // Find and use the i18n setLocale
+      const event = new CustomEvent('gy-set-locale', { detail: langData.code });
+      window.dispatchEvent(event);
+    }, 400);
   };
 
   const handleStayEnglish = () => {

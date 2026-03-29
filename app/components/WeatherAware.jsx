@@ -41,6 +41,8 @@ export default function WeatherAware() {
         const weather = await res.json();
         const currentTemp = parseInt(weather.current_condition?.[0]?.temp_C || '0');
         const condition = weather.current_condition?.[0]?.weatherDesc?.[0]?.value || 'cloudy';
+        const windSpeed = parseInt(weather.current_condition?.[0]?.windspeedKmph || '0');
+        const windDir = weather.current_condition?.[0]?.winddir16Point || '';
         const greekTemp = getGreekTemp();
 
         // Only show if user's weather is significantly colder or worse
@@ -49,6 +51,8 @@ export default function WeatherAware() {
             userCity: city,
             userTemp: currentTemp,
             userCondition: condition,
+            userWind: windSpeed,
+            userWindDir: windDir,
             greekTemp,
             diff: greekTemp - currentTemp,
           });
@@ -114,6 +118,11 @@ export default function WeatherAware() {
               <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 18, color: '#fff', fontWeight: 300 }}>
                 {data.userTemp}°C
               </div>
+              {data.userWind > 0 && (
+                <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 7, color: 'rgba(255,255,255,0.25)', marginTop: 2 }}>
+                  💨 {data.userWind} km/h {data.userWindDir}
+                </div>
+              )}
               <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 8, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 2 }}>
                 {data.userCity}
               </div>
