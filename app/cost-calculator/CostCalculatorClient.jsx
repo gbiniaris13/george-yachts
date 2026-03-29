@@ -73,28 +73,33 @@ export default function CostCalculatorClient() {
     const yacht = YACHT_DATA.find(y => y.slug === selectedYacht);
     if (!yacht) return null;
 
+    const actualGuests = Math.min(guestCount, yacht.guests);
     const seasonMultiplier = season === 'low' ? 0 : season === 'mid' ? 0.5 : 1;
     const charterRate = yacht.low + (yacht.high - yacht.low) * seasonMultiplier;
     const weeklyCharter = charterRate * weeks;
+    // VAT 12% applies ONLY to charter rate (not APA)
+    const vat = weeklyCharter * 0.12;
+    // APA 30% is provisioning advance (fuel, food, marina fees) — not taxed
     const apa = weeklyCharter * 0.30;
-    const subtotal = weeklyCharter + apa;
-    const vat = subtotal * 0.12;
-    const transferCost = TRANSFER_OPTIONS.find(t => t.id === transfer)?.cost || 0;
-    const totalTransfer = transferCost * Math.min(guestCount, yacht.guests);
-    const grandTotal = subtotal + vat + totalTransfer;
-    const perPerson = grandTotal / Math.min(guestCount, yacht.guests);
-    const perPersonPerNight = perPerson / (weeks * 7);
+    // Charter total = charter + VAT + APA
+    const charterTotal = weeklyCharter + vat + apa;
+    const perPersonWeek = Math.round(charterTotal / actualGuests / weeks);
+    // Transfer is SEPARATE — per person, not included in charter total
+    const transferCostPP = TRANSFER_OPTIONS.find(t => t.id === transfer)?.cost || 0;
+    const totalTransfer = transferCostPP * actualGuests;
 
     return {
       yacht,
       charterRate: weeklyCharter,
-      apa,
       vat,
-      transferCost: totalTransfer,
-      grandTotal,
-      perPerson,
-      perPersonPerNight,
-      guests: Math.min(guestCount, yacht.guests),
+      apa,
+      charterTotal,
+      transferCostPP,
+      totalTransfer,
+      grandTotal: charterTotal + totalTransfer,
+      perPersonWeek,
+      guests: actualGuests,
+      weeks,
     };
   }, [selectedYacht, season, guestCount, transfer, weeks]);
 
@@ -270,13 +275,12 @@ export default function CostCalculatorClient() {
                 {breakdown.guests} guests · {weeks} {weeks === 1 ? 'week' : 'weeks'} · {SEASONS.find(s => s.id === season)?.label}
               </p>
 
-              {/* Line items */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 32 }}>
+              {/* Line items — Charter costs */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 16 }}>
                 {[
-                  { label: `Charter Rate (${weeks}w)`, value: breakdown.charterRate, note: 'Base weekly rate × duration' },
-                  { label: 'APA (30%)', value: breakdown.apa, note: 'Advance Provisioning Allowance — fuel, food, marina fees' },
-                  { label: 'VAT (12%)', value: breakdown.vat, note: 'Greek charter VAT on charter + APA' },
-                  ...(breakdown.transferCost > 0 ? [{ label: `Transfers (${breakdown.guests} pax)`, value: breakdown.transferCost, note: 'Airport to marina, round trip per person' }] : []),
+                  { label: `Charter Rate (${breakdown.weeks}w)`, value: breakdown.charterRate, note: 'Base weekly rate × duration' },
+                  { label: 'VAT (12%)', value: breakdown.vat, note: 'Greek charter VAT — applied to charter rate only' },
+                  { label: 'APA (30%)', value: breakdown.apa, note: 'Advance Provisioning Allowance — fuel, food, marina fees (not taxed)' },
                 ].map((item, i) => (
                   <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingBottom: 16, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                     <div>
@@ -290,34 +294,55 @@ export default function CostCalculatorClient() {
                 ))}
               </div>
 
-              {/* Grand Total */}
+              {/* Charter Total — ALL IN */}
               <div style={{
                 background: `${GOLD}10`,
                 border: `1px solid ${GOLD}30`,
                 borderRadius: 12,
                 padding: 24,
                 textAlign: 'center',
-                marginBottom: 24,
+                marginBottom: 8,
               }}>
                 <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: `${GOLD}99`, marginBottom: 8 }}>
-                  Estimated Total
+                  Charter Total (All-In)
                 </div>
                 <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 36, color: GOLD, fontWeight: 400 }}>
-                  {fmt(breakdown.grandTotal)}
+                  {fmt(breakdown.charterTotal)}
+                </div>
+                <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(255,255,255,0.25)', marginTop: 4, letterSpacing: '0.1em' }}>
+                  Charter + VAT + APA · Final price · No hidden fees
                 </div>
               </div>
 
-              {/* Per person */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 32 }}>
-                <div style={{ textAlign: 'center', padding: 16, background: 'rgba(255,255,255,0.02)', borderRadius: 8 }}>
-                  <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 8, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: 4 }}>Per Person</div>
-                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: '#fff' }}>{fmt(breakdown.perPerson)}</div>
-                </div>
-                <div style={{ textAlign: 'center', padding: 16, background: 'rgba(255,255,255,0.02)', borderRadius: 8 }}>
-                  <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 8, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: 4 }}>Per Person / Night</div>
-                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: '#fff' }}>{fmt(breakdown.perPersonPerNight)}</div>
+              {/* Per person per week */}
+              <div style={{ textAlign: 'center', padding: 20, background: 'rgba(255,255,255,0.02)', borderRadius: 8, marginBottom: 24 }}>
+                <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: 6 }}>Per Person / Week (All-In)</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, color: '#fff' }}>{fmt(breakdown.perPersonWeek)}</div>
+                <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 8, color: 'rgba(255,255,255,0.2)', marginTop: 4 }}>
+                  {breakdown.guests} guests · {breakdown.weeks} {breakdown.weeks === 1 ? 'week' : 'weeks'} · incl. APA & VAT
                 </div>
               </div>
+
+              {/* Transfer — SEPARATE section */}
+              {breakdown.totalTransfer > 0 && (
+                <div style={{ padding: 16, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 8, marginBottom: 24 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                    <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: 'rgba(255,255,255,0.5)' }}>Airport Transfer</div>
+                    <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: '#fff', fontWeight: 500 }}>{fmt(breakdown.totalTransfer)}</div>
+                  </div>
+                  <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(255,255,255,0.2)' }}>
+                    {fmt(breakdown.transferCostPP)}/person × {breakdown.guests} guests — separate from charter cost
+                  </div>
+                </div>
+              )}
+
+              {/* Grand total with transfer */}
+              {breakdown.totalTransfer > 0 && (
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', marginBottom: 24, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Total incl. Transfer</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: '#fff' }}>{fmt(breakdown.grandTotal)}</div>
+                </div>
+              )}
 
               {/* Disclaimer */}
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(255,255,255,0.2)', lineHeight: 1.8, marginBottom: 24 }}>
@@ -327,7 +352,7 @@ export default function CostCalculatorClient() {
               {/* CTAs */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <a
-                  href={`https://wa.me/17867988798?text=${encodeURIComponent(`Hi George, I used the cost calculator for ${breakdown.yacht.name}:\n\n${breakdown.guests} guests, ${weeks} week(s), ${SEASONS.find(s => s.id === season)?.label}\nEstimated total: ${fmt(breakdown.grandTotal)} (${fmt(breakdown.perPerson)}/person)\n\nCan we discuss availability?`)}`}
+                  href={`https://wa.me/17867988798?text=${encodeURIComponent(`Hi George, I used the cost calculator for ${breakdown.yacht.name}:\n\n${breakdown.guests} guests, ${breakdown.weeks} week(s), ${SEASONS.find(s => s.id === season)?.label}\nCharter all-in: ${fmt(breakdown.charterTotal)} (${fmt(breakdown.perPersonWeek)}/person/week)\nIncludes charter + VAT 12% + APA 30%\n\nCan we discuss availability?`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
