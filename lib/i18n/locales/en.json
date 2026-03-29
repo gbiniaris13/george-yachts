@@ -209,5 +209,15 @@
     "label": "Explore by Budget",
     "title": "What Can You Charter?",
     "subtitle": "Slide to see which yachts fit your weekly budget"
+  },
+  "panels": {
+    "panel1Title": "CREWED YACHT CHARTER | IN GREEK WATERS",
+    "panel1Text": "From the Cyclades to the Ionian, from the Saronic Gulf to the Sporades — George Yachts curates crewed yacht charters across every Greek sailing region. Our fleet of 50+ motor yachts, sailing catamarans, and monohulls is handpicked for quality, crew excellence, and guest experience.",
+    "panel2Title": "WHY CHOOSE | A BOUTIQUE BROKER?",
+    "panel2Text": "Unlike aggregator platforms with thousands of listings and no personal touch, George Yachts operates as a boutique brokerage — one broker, one relationship, one standard. Every yacht is personally vetted. Every captain is known by name. IYBA member, MYBA contracts, transparent pricing.",
+    "panel3Title": "360° LUXURY | BEYOND THE YACHT",
+    "panel3Text": "Your experience extends far beyond the deck. Private jet transfers, luxury villas, Michelin dining, bespoke itineraries. One point of contact for everything — from touchdown at Athens International to your final sunset anchorage.",
+    "panel4Title": "CHARTER WITH | CONFIDENCE",
+    "panel4Text": "Weekly rates from €5,900 to €235,000. Clear contracts, fast proposals, and an IYBA member broker who answers the phone personally. Yacht charter as it should be — precise, discreet, and genuinely personal."
   }
 }
