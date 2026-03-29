@@ -11,6 +11,7 @@ import WelcomeLanguagePopup from "./components/WelcomeLanguagePopup";
 import SmartWelcome from "./components/SmartWelcome";
 import WeatherAware from "./components/WeatherAware";
 import LiveTicker from "./components/LiveTicker";
+import VoiceSearch from "./components/VoiceSearch";
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { WishlistProvider } from "./components/WishlistProvider";
 import JsonLd from "./components/JsonLd";
@@ -98,6 +99,7 @@ export default function RootLayout({ children }) {
         <SmartWelcome />
         <WeatherAware />
         <LiveTicker />
+        <VoiceSearch />
         <TranslateWidget />
         <WhatsAppButton />
         <MobileStickyBar />
