@@ -184,6 +184,29 @@ const VideoSection = () => {
                       Boutique Luxury Yacht Charter &middot; Est. U.S.A. &middot; Operating from Athens
                     </p>
 
+                    {/* Seasonal Message */}
+                    <p
+                      style={{
+                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                        fontSize: "clamp(12px, 2vw, 16px)",
+                        fontWeight: 300,
+                        fontStyle: "italic",
+                        color: "rgba(218,165,32,0.5)",
+                        marginBottom: "32px",
+                        opacity: heroVisible ? 1 : 0,
+                        transition: "opacity 1.2s ease 2s",
+                      }}
+                    >
+                      {(() => {
+                        const m = new Date().getMonth();
+                        if (m >= 0 && m <= 2) return "Summer 2026 bookings are open — secure your preferred dates";
+                        if (m >= 3 && m <= 4) return "The season begins — early summer is the insider's choice";
+                        if (m >= 5 && m <= 7) return "The Aegean is calling — charter season at its finest";
+                        if (m === 8) return "September — the sea is warmest, the islands are quietest";
+                        return "Plan ahead — 2027 early bookings now available";
+                      })()}
+                    </p>
+
                     {/* CTA Button — Magnetic */}
                     <div style={{
                       opacity: heroVisible ? 1 : 0,
