@@ -191,7 +191,7 @@ export default function WelcomeLanguagePopup() {
     sessionStorage.setItem('gy-lang-chosen', 'true');
 
     if (!langData.code) {
-      // English browser — clicked "Choose a Language" — open translate dropdown
+      // English browser — open translate dropdown
       setTimeout(() => {
         setVisible(false);
         const btn = document.querySelector('.fixed.z-\\[60\\] button');
@@ -200,20 +200,14 @@ export default function WelcomeLanguagePopup() {
       return;
     }
 
-    // Non-English browser — translate directly
-    const d = new Date();
-    d.setTime(d.getTime() + 30 * 86400000);
-    document.cookie = `googtrans=/en/${langData.code};expires=${d.toUTCString()};path=/`;
+    // Non-English browser — translate via Google Translate URL method
+    localStorage.setItem('gy-lang', langData.code);
     setTimeout(() => {
-      const select = document.querySelector('.goog-te-combo');
-      if (select) {
-        select.value = langData.code;
-        select.dispatchEvent(new Event('change'));
-        setVisible(false);
-      } else {
-        setVisible(false);
-        window.location.reload();
-      }
+      setVisible(false);
+      window.open(
+        `https://georgeyachts-com.translate.goog/${window.location.pathname}?_x_tr_sl=en&_x_tr_tl=${langData.code}&_x_tr_hl=${langData.code}&_x_tr_pto=wapp`,
+        '_self'
+      );
     }, 500);
   };
 

@@ -97,7 +97,7 @@ export default function VoiceSearch() {
 
   const startListening = useCallback(() => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-      setError('Voice search is not supported in this browser. Try Chrome or Safari.');
+      setError('Voice not available on this device. Use the text box below instead.');
       return;
     }
 
@@ -229,15 +229,67 @@ export default function VoiceSearch() {
 
         {/* Status text */}
         <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: '#fff', fontWeight: 300, marginBottom: 8 }}>
-          {isListening ? 'Listening...' : results ? 'Here\'s what I found' : 'Tap the microphone and speak'}
+          {isListening ? 'Listening...' : results ? 'Here\'s what I found' : 'Search by Voice or Text'}
         </p>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: 'rgba(255,255,255,0.3)', marginBottom: 24, lineHeight: 1.6 }}>
           {isListening
             ? 'Try: "I want a yacht for 8 people under 40 thousand in the Cyclades"'
             : !results
-              ? 'Search by guests, budget, yacht type, or region'
+              ? 'Tap the mic or type your request below'
               : ''}
         </p>
+
+        {/* Text input fallback (works on ALL devices including iOS) */}
+        {!isListening && !results && (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const text = e.target.elements.query.value.trim();
+              if (text) {
+                setTranscript(text);
+                const filters = parseQuery(text);
+                const matches = searchYachts(filters);
+                setResults({ filters, matches, query: text });
+              }
+            }}
+            style={{ marginBottom: 24, display: 'flex', gap: 8, maxWidth: 400, margin: '0 auto 24px' }}
+          >
+            <input
+              name="query"
+              type="text"
+              placeholder="e.g. yacht for 8 people under 40k in Cyclades"
+              style={{
+                flex: 1,
+                padding: '14px 16px',
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: 12,
+                background: 'rgba(255,255,255,0.04)',
+                border: `1px solid ${GOLD}20`,
+                borderRadius: 10,
+                color: '#fff',
+                outline: 'none',
+              }}
+            />
+            <button
+              type="submit"
+              style={{
+                padding: '14px 20px',
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: 10,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                fontWeight: 600,
+                background: `linear-gradient(90deg, #E6C77A, #C9A24D)`,
+                color: '#000',
+                border: 'none',
+                borderRadius: 10,
+                cursor: 'pointer',
+              }}
+            >
+              Search
+            </button>
+          </form>
+        )}
 
         {/* Transcript */}
         {transcript && (
