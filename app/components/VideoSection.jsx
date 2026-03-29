@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import Link from "next/link";
 import MagneticButton from "./MagneticButton";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
@@ -44,6 +45,7 @@ const BackgroundVideo = ({ src, poster }) => {
 };
 
 const VideoSection = () => {
+  const { t } = useI18n();
   const HEIGHT_CLASSES = "h-[100dvh]";
   const isVideo = (url) => url && url.toLowerCase().endsWith(".mp4");
   const [heroVisible, setHeroVisible] = useState(false);
@@ -112,7 +114,7 @@ const VideoSection = () => {
                         transition: "opacity 1s ease 0.5s",
                       }}
                     >
-                      Exclusively Greek Waters
+                      {t('hero.tagline')}
                     </p>
 
                     {/* Brand Name — H1 with SEO keyword (visually hidden span) */}

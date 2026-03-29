@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const RECAPTCHA_PUBLIC_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
@@ -88,6 +89,7 @@ function Field({ icon, delay, children }) {
 
 /* ─── Main Component ─── */
 const ContactFormSection = () => {
+  const { t } = useI18n();
   const [status, setStatus] = useState("");
   const [step, setStep] = useState(1);
   const formRef = React.useRef(null);
@@ -210,7 +212,7 @@ const ContactFormSection = () => {
         {/* ── Header ── */}
         <div className="text-center mb-20">
           <p className="text-[10px] tracking-[0.4em] uppercase text-[#DAA520]/70 mb-6 font-light">
-            Exclusively Greek Waters
+            {t('contact.label')}
           </p>
           <h2
             className="text-5xl md:text-7xl font-marcellus tracking-tight pb-2"
@@ -221,10 +223,10 @@ const ContactFormSection = () => {
               lineHeight: "1.15",
             }}
           >
-            Begin Your Charter
+            {t('contact.title')}
           </h2>
           <p className="mt-6 text-white/40 text-sm md:text-base font-light max-w-xl mx-auto leading-relaxed">
-            Share your vision and we&apos;ll curate the perfect yacht, crew, and itinerary for your Greek island experience.
+            {t('contact.subtitle')}
           </p>
         </div>
 
@@ -273,8 +275,8 @@ const ContactFormSection = () => {
           <div className={step === 1 ? 'block' : 'hidden'}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
               <Field icon={Icons.user} delay={0}>
-                <label htmlFor="name" className="sr-only">Full Name</label>
-                <input type="text" id="name" name="name" required placeholder="Full Name *" className={inputBase} />
+                <label htmlFor="name" className="sr-only">{t('contact.name')}</label>
+                <input type="text" id="name" name="name" required placeholder={`${t('contact.name')} *`} className={inputBase} />
               </Field>
 
               <Field icon={Icons.globe} delay={0.05}>
@@ -283,13 +285,13 @@ const ContactFormSection = () => {
               </Field>
 
               <Field icon={Icons.mail} delay={0.1}>
-                <label htmlFor="email" className="sr-only">Email</label>
-                <input type="email" id="email" name="email" required placeholder="Email Address *" className={inputBase} />
+                <label htmlFor="email" className="sr-only">{t('contact.email')}</label>
+                <input type="email" id="email" name="email" required placeholder={`${t('contact.email')} *`} className={inputBase} />
               </Field>
 
               <Field icon={Icons.phone} delay={0.15}>
-                <label htmlFor="phone" className="sr-only">Phone</label>
-                <input type="tel" id="phone" name="phone" required placeholder="Phone Number *" className={inputBase} />
+                <label htmlFor="phone" className="sr-only">{t('contact.phone')}</label>
+                <input type="tel" id="phone" name="phone" required placeholder={`${t('contact.phone')} *`} className={inputBase} />
               </Field>
             </div>
 
@@ -421,7 +423,7 @@ const ContactFormSection = () => {
               <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
                 <div className="flex items-center gap-2 text-white/30 text-[10px] tracking-[0.15em] uppercase">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                  <span>256-bit Encrypted</span>
+                  <span>{t('contact.secure')}</span>
                 </div>
                 <div className="flex items-center gap-2 text-white/30 text-[10px] tracking-[0.15em] uppercase">
                   {Icons.shield}
@@ -467,7 +469,7 @@ const ContactFormSection = () => {
               >
                 <span className="relative z-10 flex items-center justify-center gap-3 text-black font-bold text-sm tracking-[0.3em] uppercase">
                   {Icons.send}
-                  Send Inquiry
+                  {t('contact.submit')}
                 </span>
                 {/* Shimmer effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />

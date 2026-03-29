@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 import Image from "next/image";
 
 const WhatsappIcon = (props) => (
@@ -12,6 +13,7 @@ const WhatsappIcon = (props) => (
 );
 
 const Footer = () => {
+  const { t } = useI18n();
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
@@ -111,7 +113,7 @@ const Footer = () => {
           {/* Services Column */}
           <div className="flex flex-col items-center lg:items-start">
             <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#DAA520", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
-              Services
+              {t('footer.servicesTitle')}
             </h4>
             <nav className="flex flex-col gap-3">
               {serviceLinks.map((link) => (
@@ -130,7 +132,7 @@ const Footer = () => {
           {/* Company Column */}
           <div className="flex flex-col items-center lg:items-start">
             <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#DAA520", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
-              Company
+              {t('footer.companyTitle')}
             </h4>
             <nav className="flex flex-col gap-3">
               {companyLinks.map((link) => (
@@ -149,7 +151,7 @@ const Footer = () => {
           {/* Contact Column */}
           <div className="flex flex-col items-center lg:items-start">
             <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#DAA520", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
-              Contact
+              {t('footer.contactTitle')}
             </h4>
             <div className="flex flex-col gap-4 text-center lg:text-left">
               <a
@@ -177,7 +179,7 @@ const Footer = () => {
         <div className="border-t border-b border-white/[0.04] py-12 my-8">
           <div className="max-w-xl mx-auto text-center">
             <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#DAA520", fontWeight: 600, marginBottom: "12px" }}>
-              Stay Informed
+              {t('footer.newsletter')}
             </h4>
             <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", fontWeight: 300, color: "#fff", marginBottom: "8px" }}>
               The George Yachts Journal
@@ -228,7 +230,7 @@ const Footer = () => {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  Subscribe
+                  {t('footer.subscribe')}
                 </button>
               </form>
             )}

@@ -6,8 +6,9 @@ import en from './locales/en.json';
 import el from './locales/el.json';
 import ar from './locales/ar.json';
 import ru from './locales/ru.json';
+import he from './locales/he.json';
 
-const locales = { en, el, ar, ru };
+const locales = { en, el, ar, ru, he };
 
 const I18nContext = createContext({ locale: 'en', t: (key) => key, setLocale: () => {} });
 

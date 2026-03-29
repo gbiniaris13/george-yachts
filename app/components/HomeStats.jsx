@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 function Counter({ end, suffix = "", duration = 2000 }) {
   const [count, setCount] = useState(0);
@@ -34,6 +35,7 @@ function Counter({ end, suffix = "", duration = 2000 }) {
 }
 
 export default function HomeStats() {
+  const { t } = useI18n();
   const [ref, setRef] = useState(null);
   const [visible, setVisible] = useState(false);
 
@@ -48,10 +50,10 @@ export default function HomeStats() {
   }, [ref]);
 
   const stats = [
-    { end: 53, suffix: "+", label: "Charter Yachts in Greece" },
-    { end: 4, suffix: "", label: "Greek Sailing Regions" },
-    { end: 360, suffix: "\u00b0", label: "Concierge Services" },
-    { end: 100, suffix: "%", label: "Greek Waters Focus" },
+    { end: 53, suffix: "+", label: t('stats.yachts') },
+    { end: 4, suffix: "", label: t('stats.regions') },
+    { end: 360, suffix: "\u00b0", label: t('stats.service') },
+    { end: 100, suffix: "%", label: t('stats.satisfaction') },
   ];
 
   return (

@@ -1,6 +1,9 @@
 "use client";
 
+import { useI18n } from "@/lib/i18n/I18nProvider";
+
 export default function MobileStickyBar() {
+  const { t } = useI18n();
   return (
     <div
       className="fixed bottom-0 left-0 right-0 z-40 md:hidden"
@@ -21,7 +24,7 @@ export default function MobileStickyBar() {
             color: "#020617",
           }}
         >
-          Book a Free Consultation
+          {t('common.bookCall')}
         </a>
       </div>
     </div>

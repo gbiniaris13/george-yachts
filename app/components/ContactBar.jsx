@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const PhoneIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -15,6 +16,7 @@ const WhatsAppIcon = () => (
 );
 
 export default function ContactBar() {
+  const { t } = useI18n();
   return (
     <section className="relative w-full bg-black py-12 border-t border-b border-white/[0.04]">
       <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16 px-6">

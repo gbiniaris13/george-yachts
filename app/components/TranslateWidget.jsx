@@ -10,7 +10,7 @@ export default function TranslateWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const flags = { en: '🇺🇸', el: '🇬🇷', ar: '🇦🇪', ru: '🇷🇺' };
+  const flags = { en: '🇺🇸', el: '🇬🇷', ar: '🇦🇪', ru: '🇷🇺', he: '🇮🇱' };
 
   useEffect(() => {
     const handler = (e) => {
