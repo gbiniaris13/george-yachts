@@ -153,23 +153,48 @@ export default function WelcomeLanguagePopup() {
     // Detect browser language
     const browserLang = navigator.language?.split('-')[0] || 'en';
 
-    // Only show popup for non-English speakers
-    if (browserLang === 'en') return;
-
+    // For non-English browsers, show personalized welcome
     const data = LANGUAGE_MAP[browserLang];
-    if (!data) return;
+    if (data) {
+      setTimeout(() => {
+        setLangData(data);
+        setVisible(true);
+      }, 1500);
+      return;
+    }
 
-    // Show after a small delay for dramatic effect
+    // For English browsers (or unsupported languages), show language chooser
     setTimeout(() => {
-      setLangData(data);
+      setLangData({
+        flag: '🌍',
+        country: '',
+        countryLocal: '',
+        label: '',
+        welcome: 'Welcome',
+        message: 'This site is available in 15 languages. Would you like to view it in a different language?',
+        keepButton: '🌐 Choose a Language',
+        switchButton: 'Continue in English',
+        code: null, // Will open translate dropdown instead
+      });
       setVisible(true);
-    }, 1500);
+    }, 2000);
   }, []);
 
   const handleAcceptLanguage = () => {
-    // Close popup (will show again next visit)
     setClosing(true);
-    // Set Google Translate cookie + trigger
+
+    if (!langData.code) {
+      // English browser — clicked "Choose a Language" — scroll to top and let them use the dropdown
+      setTimeout(() => {
+        setVisible(false);
+        // Click the translate dropdown button
+        const btn = document.querySelector('[aria-label="Translate this page"], .fixed.z-\\[60\\] button');
+        if (btn) btn.click();
+      }, 400);
+      return;
+    }
+
+    // Non-English browser — translate directly
     const d = new Date();
     d.setTime(d.getTime() + 30 * 86400000);
     document.cookie = `googtrans=/en/${langData.code};expires=${d.toUTCString()};path=/`;
@@ -180,7 +205,6 @@ export default function WelcomeLanguagePopup() {
         select.dispatchEvent(new Event('change'));
         setVisible(false);
       } else {
-        // Cookie is set, reload to activate translation
         setVisible(false);
         window.location.reload();
       }
