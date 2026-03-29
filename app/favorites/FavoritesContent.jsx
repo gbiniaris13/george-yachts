@@ -36,7 +36,7 @@ export default function FavoritesContent() {
 
   if (items.length === 0) {
     return (
-      <div style={{ minHeight: '100vh', background: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '80px 24px', textAlign: 'center' }}>
+      <div style={{ minHeight: '100vh', background: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '160px 24px', textAlign: 'center' }}>
         <div style={{ fontSize: 48, marginBottom: 24, opacity: 0.3 }}>♡</div>
         <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#fff', fontWeight: 300, margin: '0 0 16px 0' }}>
           No Favorites Yet

@@ -372,7 +372,7 @@ export default function YachtFinderQuiz() {
 
   // QUIZ VIEW
   return (
-    <div style={{ minHeight: '100vh', background: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '120px 24px' }}>
+    <div style={{ minHeight: '100vh', background: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '160px 24px' }}>
       <div style={{ maxWidth: 600, width: '100%' }}>
         {/* Progress bar */}
         <div style={{ marginBottom: 48 }}>
