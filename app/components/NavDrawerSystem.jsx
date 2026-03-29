@@ -132,16 +132,7 @@ const NavDrawerSystem = () => {
             >
               <Instagram className="w-[14px] h-[14px] text-white/40 group-hover:text-[#DAA520] transition-colors duration-300" />
             </a>
-            <a
-              href="https://wa.me/17867988798"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative w-9 h-9 flex items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
-              aria-label="WhatsApp"
-              data-cursor="WhatsApp"
-            >
-              <WhatsappIcon className="w-[14px] h-[14px] text-white/40 group-hover:text-[#DAA520] transition-colors duration-300" />
-            </a>
+            {/* WhatsApp moved to floating button — see WhatsAppButton.jsx */}
           </div>
         </div>
       </nav>
