@@ -245,7 +245,33 @@ export default async function YachtPage({ params }) {
               {yacht.crew && (
                 <div className="yacht-specs__item">
                   <span className="yacht-specs__label">Crew</span>
-                  <span className="yacht-specs__value">{yacht.crew}</span>
+                  <span className="yacht-specs__value">{(() => {
+                    const c = yacht.crew;
+                    // Extract number and generic roles (strip names)
+                    const numMatch = c.match(/^(\d+)/);
+                    if (!numMatch) return c;
+                    const num = numMatch[1];
+                    // Extract roles, removing personal names
+                    const rolesStr = c.replace(/^\d+\s*[—–-]\s*/, '');
+                    if (!rolesStr || rolesStr === num) return num;
+                    const roles = rolesStr.split(',').map(r => {
+                      // Remove names: "Captain Thanos Kourtelis (..." → "Captain"
+                      return r.trim()
+                        .replace(/\s*\([^)]*\)/g, '') // remove parentheses
+                        .replace(/^(Captain|Chef|Stewardess|Deckhand|Hostess|Engineer|Mate|Bosun|Chef\/Hostess)\s+[A-Z].*/i, '$1') // remove name after role
+                        .replace(/\s+$/, '');
+                    }).filter(r => r.length > 0);
+                    // Deduplicate and count multiples
+                    const roleCounts = {};
+                    roles.forEach(r => {
+                      const generic = r.replace(/^(Award-winning\s+)/i, '').replace(/^\d+\s+/, '');
+                      roleCounts[generic] = (roleCounts[generic] || 0) + 1;
+                    });
+                    const roleList = Object.entries(roleCounts).map(([role, count]) =>
+                      count > 1 ? `${count} ${role}s` : role
+                    ).join(', ');
+                    return `${num} — ${roleList}`;
+                  })()}</span>
                 </div>
               )}
               {yacht.cruiseSpeed && (
