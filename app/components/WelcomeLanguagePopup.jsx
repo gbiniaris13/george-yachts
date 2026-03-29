@@ -169,15 +169,22 @@ export default function WelcomeLanguagePopup() {
   const handleAcceptLanguage = () => {
     // Close popup (will show again next visit)
     setClosing(true);
-    // Trigger Google Translate
+    // Set Google Translate cookie + trigger
+    const d = new Date();
+    d.setTime(d.getTime() + 30 * 86400000);
+    document.cookie = `googtrans=/en/${langData.code};expires=${d.toUTCString()};path=/`;
     setTimeout(() => {
       const select = document.querySelector('.goog-te-combo');
       if (select) {
         select.value = langData.code;
         select.dispatchEvent(new Event('change'));
+        setVisible(false);
+      } else {
+        // Cookie is set, reload to activate translation
+        setVisible(false);
+        window.location.reload();
       }
-      setVisible(false);
-    }, 400);
+    }, 500);
   };
 
   const handleStayEnglish = () => {
