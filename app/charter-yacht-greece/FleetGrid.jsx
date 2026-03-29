@@ -206,6 +206,20 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount })
   const imageUrl = yacht.imageUrl;
   const lengthShort = yacht.length ? yacht.length.split('/')[0].trim() : '\u2013';
 
+  // Calculate per-person per-night cost from lowest weekly price
+  const perPersonPerNight = useMemo(() => {
+    const priceStr = yacht.weeklyRatePrice || override.price || '';
+    const guestCount = parseInt(guests) || 0;
+    if (!priceStr || guestCount === 0 || priceStr === 'On Request') return null;
+    // Extract first number (lowest price) — handles €5,900, €20,500, €180,000 etc.
+    const match = priceStr.replace(/[^\d.,€]/g, '').match(/€?([\d,.]+)/);
+    if (!match) return null;
+    const lowestPrice = parseFloat(match[1].replace(/,/g, '').replace(/\./g, ''));
+    if (isNaN(lowestPrice) || lowestPrice === 0) return null;
+    const ppn = Math.round(lowestPrice / guestCount / 7);
+    return ppn > 0 ? `€${ppn.toLocaleString()}` : null;
+  }, [yacht.weeklyRatePrice, override.price, guests]);
+
   return (
     <div
       className="fleet-card"
@@ -278,6 +292,11 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount })
           <div>
             <div className="fleet-card__price-label">Weekly Charter</div>
             <div className="fleet-card__price">{price}</div>
+            {perPersonPerNight && (
+              <div className="fleet-card__per-person">
+                from {perPersonPerNight}/person/night
+              </div>
+            )}
           </div>
           <div className="fleet-card__buttons">
             <Link href={`/yachts/${slug}`} className="fleet-card__btn fleet-card__btn--details">

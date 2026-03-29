@@ -350,6 +350,21 @@ export default async function YachtPage({ params }) {
             <div className="container">
               <h2 className="yacht-pricing__title">What Is the Weekly Charter Rate for {yacht.name}?</h2>
               <p className="yacht-pricing__rate">{yacht.weeklyRatePrice}</p>
+              {(() => {
+                const guestCount = parseInt(yacht.sleeps) || 0;
+                const priceStr = yacht.weeklyRatePrice || '';
+                if (!guestCount || priceStr === 'On Request') return null;
+                const match = priceStr.replace(/[^\d.,€]/g, '').match(/€?([\d,.]+)/);
+                if (!match) return null;
+                const lowest = parseFloat(match[1].replace(/,/g, '').replace(/\./g, ''));
+                if (isNaN(lowest) || lowest === 0) return null;
+                const ppn = Math.round(lowest / guestCount / 7);
+                return ppn > 0 ? (
+                  <p className="yacht-pricing__per-person">
+                    From €{ppn.toLocaleString()} per person per night · {guestCount} guests · 7 nights
+                  </p>
+                ) : null;
+              })()}
             </div>
           </section>
         )}
