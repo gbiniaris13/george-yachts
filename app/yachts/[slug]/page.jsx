@@ -354,15 +354,33 @@ export default async function YachtPage({ params }) {
                 const guestCount = parseInt(yacht.sleeps) || 0;
                 const priceStr = yacht.weeklyRatePrice || '';
                 if (!guestCount || priceStr === 'On Request') return null;
-                const match = priceStr.replace(/[^\d.,€]/g, '').match(/€?([\d,.]+)/);
-                if (!match) return null;
-                const lowest = parseFloat(match[1].replace(/,/g, '').replace(/\./g, ''));
-                if (isNaN(lowest) || lowest === 0) return null;
-                const ppn = Math.round(lowest / guestCount / 7);
-                return ppn > 0 ? (
-                  <p className="yacht-pricing__per-person">
-                    From €{ppn.toLocaleString()} per person per night · {guestCount} guests · 7 nights
-                  </p>
+                // Extract all prices
+                const numbers = [];
+                const regex = /€?([\d,.]+)/g;
+                const cleanStr = priceStr.replace(/[^\d.,€\-–]/g, ' ');
+                let m;
+                while ((m = regex.exec(cleanStr)) !== null) {
+                  const num = parseFloat(m[1].replace(/,/g, '').replace(/\./g, ''));
+                  if (!isNaN(num) && num > 100) numbers.push(num);
+                }
+                if (numbers.length === 0) return null;
+                const lowBase = numbers[0];
+                const highBase = numbers.length > 1 ? numbers[numbers.length - 1] : lowBase;
+                // All-in: charter + APA (30%) + VAT (12%) = ×1.42
+                const lowPPW = Math.round((lowBase * 1.42) / guestCount);
+                const highPPW = Math.round((highBase * 1.42) / guestCount);
+                return lowPPW > 0 ? (
+                  <>
+                    <p className="yacht-pricing__per-person">
+                      {lowPPW === highPPW
+                        ? `€${lowPPW.toLocaleString()} per person / week`
+                        : `€${lowPPW.toLocaleString()} – €${highPPW.toLocaleString()} per person / week`
+                      }
+                    </p>
+                    <p className="yacht-pricing__per-person-note">
+                      All-in estimate: charter + APA (30%) + VAT (12%) · {guestCount} guests
+                    </p>
+                  </>
                 ) : null;
               })()}
             </div>

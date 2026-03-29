@@ -496,10 +496,19 @@
 
 .yacht-pricing__per-person {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.35);
-  margin-top: 12px;
+  font-size: 1rem;
+  color: var(--gy-gold);
+  margin-top: 16px;
   letter-spacing: 0.05em;
+  font-weight: 400;
+}
+.yacht-pricing__per-person-note {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.25);
+  margin-top: 6px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   font-weight: 300;
 }
 
