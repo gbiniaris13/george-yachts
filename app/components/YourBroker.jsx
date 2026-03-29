@@ -141,6 +141,24 @@ export default function YourBroker() {
           >
             Book a Call with George
           </a>
+
+          <a
+            href="/about-us"
+            style={{
+              display: "inline-block",
+              fontFamily: "'Montserrat', sans-serif",
+              fontSize: "11px",
+              letterSpacing: "0.15em",
+              color: "rgba(255,255,255,0.4)",
+              textDecoration: "none",
+              marginLeft: "24px",
+              transition: "color 0.3s ease",
+            }}
+            onMouseEnter={(e) => e.target.style.color = "#DAA520"}
+            onMouseLeave={(e) => e.target.style.color = "rgba(255,255,255,0.4)"}
+          >
+            Learn more about George →
+          </a>
         </div>
       </div>
 

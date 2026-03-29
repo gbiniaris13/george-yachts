@@ -4,6 +4,8 @@ import Script from "next/script";
 import NavDrawerSystem from "./components/NavDrawerSystem";
 import GlobalEffects from "./components/GlobalEffects";
 import CustomCursor from "./components/CustomCursor";
+import WhatsAppButton from "./components/WhatsAppButton";
+import MobileStickyBar from "./components/MobileStickyBar";
 import JsonLd from "./components/JsonLd";
 import { organizationSchema } from "@/lib/organizationSchema";
 import "swiper/css";
@@ -83,6 +85,8 @@ export default function RootLayout({ children }) {
         {/* 2. Page Content */}
         <NavDrawerSystem />
         {children}
+        <WhatsAppButton />
+        <MobileStickyBar />
 
         {/* 3. Analytics & Tracking */}
         <Script
