@@ -11,6 +11,7 @@ import ContactBar from "./components/ContactBar";
 import YourBroker from "./components/YourBroker";
 import HowItWorks from "./components/HowItWorks";
 import CredentialsStrip from "./components/CredentialsStrip";
+import InteractiveTools from "./components/InteractiveTools";
 
 const HomeClient = () => {
   return (
@@ -21,6 +22,7 @@ const HomeClient = () => {
       <HowItWorks />
       <Filotimon />
       <CredentialsStrip />
+      <InteractiveTools />
       <TwoColumnLayout />
       <ContactBar />
       <ContactFormSection />

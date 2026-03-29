@@ -21,6 +21,8 @@ const navLinks = [
   { name: "ABOUT GEORGE YACHTS", href: "/about-us/" },
   { name: "OUR CORE TEAM", href: "/team/" },
   { name: "CHARTER A YACHT", href: "/charter-yacht-greece/" },
+  { name: "FIND YOUR YACHT", href: "/yacht-finder/" },
+  { name: "BUILD YOUR ITINERARY", href: "/itinerary-builder/" },
   { name: "YACHT ITINERARIES", href: "/yacht-itineraries-greece/" },
   { name: "HOW IT WORKS", href: "/how-it-works/" },
   { name: "BUY A YACHT", href: "/yachts-for-sale/" },
