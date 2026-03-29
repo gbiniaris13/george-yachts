@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#000"/>
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#F7DA6F"/>
+      <stop offset="50%" stop-color="#DAA520"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+    <linearGradient id="silver" x1="0%" y1="0%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#E0E0E0"/>
+      <stop offset="50%" stop-color="#B0B0B0"/>
+      <stop offset="100%" stop-color="#909090"/>
+    </linearGradient>
+  </defs>
+  <!-- Top gold wave (wake/spray) -->
+  <path d="M8 30 C12 28, 18 22, 24 19 C28 17, 32 16, 36 17.5 C40 19, 44 22, 50 24"
+        stroke="url(#gold)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <!-- Second gold wave -->
+  <path d="M12 34 C16 31, 22 25, 28 22 C32 20, 36 19, 42 21.5 C46 23, 50 26, 54 28"
+        stroke="url(#gold)" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.7"/>
+  <!-- Silver hull body -->
+  <path d="M22 38 C26 36, 32 32, 38 29 C42 27.5, 46 27, 50 28.5 C52 29.5, 54 31, 54 33
+           C52 36, 48 39, 44 40.5 C39 42, 30 42, 22 38Z"
+        fill="url(#silver)" opacity="0.9"/>
+  <!-- Silver hull highlight -->
+  <path d="M30 37 C34 35, 40 32, 46 30 C49 29, 52 29.5, 53 31
+           C52 33, 49 35.5, 45 37.5 C41 39, 34 39, 30 37Z"
+        fill="#D8D8D8" opacity="0.3"/>
+  <!-- Gold waterline accent -->
+  <path d="M8 44 C16 42, 28 42, 40 43 C48 44, 54 45, 56 44"
+        stroke="url(#gold)" stroke-width="0.8" stroke-linecap="round" fill="none" opacity="0.4"/>
+</svg>
