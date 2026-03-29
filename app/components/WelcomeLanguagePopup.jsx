@@ -146,9 +146,14 @@ export default function WelcomeLanguagePopup() {
   const [closing, setClosing] = useState(false);
 
   useEffect(() => {
-    // Don't show if already dismissed
     if (typeof window === 'undefined') return;
-    // Always show — every visit, every time
+
+    // Don't show if user JUST selected a language (googtrans cookie exists)
+    const hasTranslation = document.cookie.includes('googtrans=/en/');
+    if (hasTranslation) return;
+
+    // Don't show if dismissed this session
+    if (sessionStorage.getItem('gy-lang-chosen')) return;
 
     // Detect browser language
     const browserLang = navigator.language?.split('-')[0] || 'en';
@@ -183,12 +188,13 @@ export default function WelcomeLanguagePopup() {
   const handleAcceptLanguage = () => {
     setClosing(true);
 
+    sessionStorage.setItem('gy-lang-chosen', 'true');
+
     if (!langData.code) {
-      // English browser — clicked "Choose a Language" — scroll to top and let them use the dropdown
+      // English browser — clicked "Choose a Language" — open translate dropdown
       setTimeout(() => {
         setVisible(false);
-        // Click the translate dropdown button
-        const btn = document.querySelector('[aria-label="Translate this page"], .fixed.z-\\[60\\] button');
+        const btn = document.querySelector('.fixed.z-\\[60\\] button');
         if (btn) btn.click();
       }, 400);
       return;
@@ -212,7 +218,7 @@ export default function WelcomeLanguagePopup() {
   };
 
   const handleStayEnglish = () => {
-    // Close popup (will show again next visit)
+    sessionStorage.setItem('gy-lang-chosen', 'true');
     setClosing(true);
     setTimeout(() => setVisible(false), 400);
   };

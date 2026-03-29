@@ -31,8 +31,8 @@ export async function generateMetadata({ params }) {
 
   if (!yacht) return { title: 'Yacht Not Found' };
 
-  const title = `$<span className="notranslate">{yacht.name}</span> | ${yacht.subtitle} | Luxury Yacht Charter Greece`;
-  const description = `Charter $<span className="notranslate">{yacht.name}</span>, a ${yacht.length} ${yacht.subtitle} accommodating ${yacht.sleeps} guests in Greek waters. ${yacht.weeklyRatePrice}`;
+  const title = `${yacht.name} | ${yacht.subtitle} | Luxury Yacht Charter Greece`;
+  const description = `Charter ${yacht.name}, a ${yacht.length} ${yacht.subtitle} accommodating ${yacht.sleeps} guests in Greek waters. ${yacht.weeklyRatePrice}`;
 
   return {
     title,
@@ -146,7 +146,7 @@ export default async function YachtPage({ params }) {
             <div className="yacht-hero__image-container">
               <Image
                 src={heroImage.url}
-                alt={`$<span className="notranslate">{yacht.name}</span> ${yacht.subtitle} - luxury yacht charter Greece`}
+                alt={`${yacht.name} ${yacht.subtitle} - luxury yacht charter Greece`}
                 fill
                 priority
                 className="yacht-hero__image"
@@ -338,7 +338,7 @@ export default async function YachtPage({ params }) {
               <h2 className="yacht-gallery__title">What Does <span className="notranslate">{yacht.name}</span> Look Like Inside and Out?</h2>
               <Lightbox
                 images={yacht.images.slice(1)}
-                yachtName=<span className="notranslate">{yacht.name}</span>
+                yachtName={yacht.name}
               />
             </div>
           </section>
