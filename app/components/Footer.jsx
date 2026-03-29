@@ -53,6 +53,11 @@ const Footer = () => {
           <div className="lg:col-span-1 flex flex-col items-center lg:items-start">
             <Link href="/" className="block mb-8">
               <div className="flex flex-col items-center lg:items-start">
+                <img
+                  src="/images/yacht-icon-only.svg"
+                  alt="George Yachts Logo"
+                  style={{ height: "50px", width: "auto", marginBottom: "12px" }}
+                />
                 <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", fontWeight: 400, letterSpacing: "0.08em", color: "#fff" }}>
                   GEORGE YACHTS
                 </span>
