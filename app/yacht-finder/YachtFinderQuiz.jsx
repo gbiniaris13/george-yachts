@@ -157,9 +157,10 @@ function matchYachts(answers) {
     if (yacht.tags.includes('awards')) score += 3;
     if (yacht.slug === 'la-pellegrina-1' && b === 'top') score += 10;
 
-    const ppn = Math.round(yacht.price / yacht.guests / 7);
+    const totalAllIn = Math.round(yacht.price * 1.42); // charter + APA 30% + VAT 12%
+    const ppw = Math.round(totalAllIn / yacht.guests); // per person per week
 
-    return { ...yacht, score, ppn };
+    return { ...yacht, score, ppw, totalAllIn };
   });
 
   return scored.sort((a, b) => b.score - a.score).slice(0, 3);
@@ -280,12 +281,15 @@ export default function YachtFinderQuiz() {
 
                   {/* Price */}
                   <div style={{ textAlign: 'center', padding: '16px 0', background: 'rgba(218,165,32,0.05)', borderRadius: 4, marginBottom: 20 }}>
-                    <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 6 }}>From</div>
+                    <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 6 }}>Total All-In (incl. APA & VAT)</div>
                     <div style={{ fontFamily: "'Cormorant Garamond'", fontSize: 24, color: GOLD, fontWeight: 600 }}>
-                      €{yacht.price.toLocaleString()}/week
+                      €{yacht.totalAllIn.toLocaleString()}/week
                     </div>
                     <div style={{ fontFamily: "'Montserrat'", fontSize: 10, color: 'rgba(255,255,255,0.25)', marginTop: 4 }}>
-                      €{yacht.ppn}/person/night
+                      €{yacht.ppw.toLocaleString()}/person/week
+                    </div>
+                    <div style={{ fontFamily: "'Montserrat'", fontSize: 8, color: 'rgba(255,255,255,0.15)', marginTop: 2, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                      charter + 30% APA + 12% VAT
                     </div>
                   </div>
 
