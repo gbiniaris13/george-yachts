@@ -27,6 +27,7 @@ const navLinks = [
   { name: "ISLAND QUIZ", href: "/island-quiz/" },
   { name: "YACHT SIZE GUIDE", href: "/yacht-size-visualizer/" },
   { name: "WEATHER GUIDE", href: "/weather-greece/" },
+  { name: "ISLAND GUIDES", href: "/destinations/" },
   { name: "CHARTER TIMELINE", href: "/charter-timeline/" },
   { name: "YACHT ITINERARIES", href: "/yacht-itineraries-greece/" },
   { name: "HOW IT WORKS", href: "/how-it-works/" },

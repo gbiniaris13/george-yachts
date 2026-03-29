@@ -1,0 +1,296 @@
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+
+const GOLD = '#DAA520';
+
+const ISLANDS = [
+  {
+    id: 'mykonos',
+    name: 'Mykonos',
+    region: 'Cyclades',
+    tagline: 'Where the world comes to play',
+    emoji: '🎉',
+    bestFor: 'Nightlife, beach clubs, cosmopolitan dining, celebrity spotting',
+    bestMonths: 'June – September',
+    anchorage: 'Ornos Bay (sheltered), Psarou (for show), Super Paradise (party)',
+    restaurants: [
+      { name: 'Nammos', type: 'Beach club dining', note: 'The original Mykonos beach restaurant. Book lunch early.' },
+      { name: "Kiki's Taverna", type: 'Traditional Greek', note: 'No reservations, no phone. Arrive at 12:30 or wait. Worth every minute.' },
+      { name: 'Scorpios', type: 'Bohemian-luxury', note: 'Sunset rituals, live music, organic Mediterranean. The anti-club club.' },
+      { name: 'Remezzo', type: 'Fine dining', note: 'Harbour views, refined Greek cuisine. Old-school Mykonos glamour.' },
+    ],
+    hiddenGems: ['Fokos Beach — empty, wild, no sunbeds. The Mykonos locals keep for themselves.', 'Ano Mera village — monasteries and real tavernas, 10 minutes from the chaos.', 'Delos island — UNESCO site, birthplace of Apollo. Take the tender at dawn before the ferries arrive.'],
+    yachtTip: 'Anchor at Ornos overnight for calm waters. Psarou is beautiful but exposed to the Meltemi. In July–August, secure your stern-to spot by 2pm or you won\'t get one.',
+    yachts: ['la-pellegrina-1', 'genny', 'above-beyond'],
+  },
+  {
+    id: 'santorini',
+    name: 'Santorini',
+    region: 'Cyclades',
+    tagline: 'The caldera that stops time',
+    emoji: '🌅',
+    bestFor: 'Sunsets, wine tasting, romance, volcanic landscape, photography',
+    bestMonths: 'May – October',
+    anchorage: 'Inside the caldera (spectacular but deep — need good anchor), Vlychada (south, quieter)',
+    restaurants: [
+      { name: 'Selene', type: 'Fine dining', note: 'Santorini\'s most acclaimed restaurant. Local ingredients, volcanic terroir.' },
+      { name: 'Ammoudi Fish Tavernas', type: 'Seafood', note: 'At the base of Oia\'s cliff. Walk down 300 steps. Fresh fish, sunset, perfection.' },
+      { name: 'Metaxy Mas', type: 'Cretan-Greek', note: 'In Exo Gonia village. Locals\' favourite. Extraordinary value for the quality.' },
+    ],
+    hiddenGems: ['Red Beach at dawn — before the tour boats arrive, it\'s another world.', 'Santo Wines — wine tasting overlooking the caldera. Better than any rooftop bar.', 'Thirassia island — Santorini\'s forgotten twin. Take the tender for a half-day escape.'],
+    yachtTip: 'Anchoring inside the caldera is unforgettable but requires experience — depths of 200m+ mean you need a lot of chain. Your captain will know the spots. Overnight inside the caldera = the most photographed view on the yacht.',
+    yachts: ['ad-astra', 'sol-madinina', 'aloia'],
+  },
+  {
+    id: 'hydra',
+    name: 'Hydra',
+    region: 'Saronic',
+    tagline: 'The island that banned cars',
+    emoji: '🎨',
+    bestFor: 'Art, tranquility, walking, donkeys, Leonard Cohen heritage, architecture',
+    bestMonths: 'April – October',
+    anchorage: 'Harbour (stern-to, lively), Mandraki Bay (quiet, swimming), Vlychos (beach, calm)',
+    restaurants: [
+      { name: 'Omilos', type: 'Harbour fine dining', note: 'On the rocks at the harbour entrance. Seafood, cocktails, incredible setting.' },
+      { name: 'Sunset', type: 'Harbour taverna', note: 'The name tells you everything. Book the waterfront table at golden hour.' },
+      { name: 'Techne', type: 'Creative Greek', note: 'In a converted stone warehouse. The island\'s newest culinary gem.' },
+    ],
+    hiddenGems: ['Bisti Bay — only reachable by boat or a long hike. Crystal water, pine trees to the waterline, total silence.', 'The DESTE Foundation — Jeff Koons has exhibited here. Art on a car-free island.', 'Leonard Cohen\'s house — you can\'t go in, but standing outside it is a pilgrimage.'],
+    yachtTip: 'Hydra harbour is stern-to Mediterranean style. In peak season, arrive by 3pm for a spot. The harbour at night — lit by the chandelier of restaurants and bars — is one of the most beautiful sights in Greek sailing.',
+    yachts: ['gigreca', 'nadamas', 'helidoni'],
+  },
+  {
+    id: 'paxos',
+    name: 'Paxos',
+    region: 'Ionian',
+    tagline: 'The secret the Ionian keeps',
+    emoji: '🌿',
+    bestFor: 'Privacy, olive groves, turquoise water, slow pace, intimate dining',
+    bestMonths: 'May – October',
+    anchorage: 'Lakka (horseshoe bay, perfect shelter), Gaios (charming port), Mongonissi (south, calm)',
+    restaurants: [
+      { name: 'Vassilis', type: 'Waterfront taverna', note: 'Lakka harbour. Simple, honest, extraordinary fish. The octopus is legendary.' },
+      { name: 'Taka Taka', type: 'Grill house', note: 'In Gaios. Locals queue for the souvlaki. No pretension, all flavour.' },
+      { name: 'La Rosa di Paxos', type: 'Italian-Greek', note: 'Candlelit garden. The island\'s most romantic dinner.' },
+    ],
+    hiddenGems: ['Blue Caves (west coast) — sea caves that glow turquoise from within. Only accessible by tender.', 'Antipaxos — the tiny island to the south. Voutoumi Beach has the clearest water in Greece. Bar none.', 'The olive oil trail — 300,000 olive trees on an island of 2,500 people. The oil is extraordinary.'],
+    yachtTip: 'Lakka is one of the most perfect natural harbours in the Mediterranean. You can anchor overnight in total calm and swim off the stern at dawn. Paxos is where charter guests say "I never want to leave."',
+    yachts: ['kimata', 'serenissima', 'worlds-end'],
+  },
+  {
+    id: 'milos',
+    name: 'Milos',
+    region: 'Cyclades',
+    tagline: 'The island that paints with geology',
+    emoji: '🌊',
+    bestFor: 'Unique beaches, volcanic landscape, photography, off-beaten-path exploration',
+    bestMonths: 'May – October',
+    anchorage: 'Adamas (main port, sheltered), Kleftiko (legendary, day anchor only), Firopotamos (north, picturesque)',
+    restaurants: [
+      { name: 'O! Hamos!', type: 'Traditional taverna', note: 'In Adamas. Rustic, packed, delicious. The cheese saganaki catches fire at the table.' },
+      { name: 'Medusa', type: 'Seafood', note: 'In Mandrakia fishing village. 6 tables. The freshest catch on the island.' },
+      { name: 'Sirocco', type: 'Beach dining', note: 'Paleochori Beach. Food cooked using volcanic geothermal heat from the sand.' },
+    ],
+    hiddenGems: ['Sarakiniko — white volcanic moonscape that looks like you\'re on another planet. Swim at dawn.', 'Kleftiko — pirate caves only accessible by boat. Your yacht IS the ticket. Anchor and snorkel.', 'The catacombs — 2nd century AD Christian burial site. One of only 3 in the world.'],
+    yachtTip: 'Kleftiko is the #1 must-see by yacht in the entire Cyclades. You cannot reach it by land. Anchor, swim into the caves, snorkel over crystal water. This alone justifies chartering a yacht in Greece.',
+    yachts: ['odyssey', 'azul', 'explorion'],
+  },
+  {
+    id: 'kefalonia',
+    name: 'Kefalonia',
+    region: 'Ionian',
+    tagline: 'Where mountains meet wine-dark seas',
+    emoji: '⛰️',
+    bestFor: 'Wine, fine dining, dramatic scenery, Fiskardo elegance, Captain Corelli heritage',
+    bestMonths: 'May – October',
+    anchorage: 'Fiskardo (Venetian harbour, stern-to), Agia Efimia (quieter), Sami (ferry port, practical)',
+    restaurants: [
+      { name: 'Tassia', type: 'Legendary cooking', note: 'Captain Tassia\'s restaurant in Fiskardo. She\'s been cooking here for 40 years. Lobster pasta is the island\'s most famous dish.' },
+      { name: 'Vasso\'s', type: 'Harbour seafood', note: 'Fiskardo waterfront. Fresh fish by the kilo. Watch the boats while you eat.' },
+      { name: 'Ladokolla', type: 'Mountain taverna', note: 'In the hills above Argostoli. Meat-focused. The view alone is worth the drive.' },
+    ],
+    hiddenGems: ['Myrtos Beach — consistently rated one of the world\'s most beautiful. The turquoise is almost violent.', 'Melissani Cave — underground lake inside a collapsed cave. The light at noon is supernatural.', 'Robola wine trail — Kefalonia\'s indigenous grape. Visit the cooperative winery in the mountains.'],
+    yachtTip: 'Fiskardo is the jewel of the Ionian for yacht guests. It\'s the only Kefalonian village that survived the 1953 earthquake, so the Venetian architecture is intact. Stern-to in the harbour, dinner at Tassia\'s — this is peak Ionian cruising.',
+    yachts: ['crazy-horse', 'huayra', 'just-marie-2'],
+  },
+  {
+    id: 'koufonisia',
+    name: 'Koufonisia',
+    region: 'Cyclades',
+    tagline: 'The Caribbean of Greece',
+    emoji: '🏝️',
+    bestFor: 'Beaches, simplicity, barefoot luxury, stargazing, car-free life',
+    bestMonths: 'June – September',
+    anchorage: 'Main harbour (small, get there early), Pori Bay (north, open but stunning)',
+    restaurants: [
+      { name: 'Captain Nikolas', type: 'Harbourside', note: 'The island\'s oldest taverna. Fresh fish, cold beer, feet in the sand. Simple perfection.' },
+      { name: 'Scholio', type: 'Greek', note: 'In the village. Home-cooked quality. The fava is exceptional.' },
+    ],
+    hiddenGems: ['Italida Beach — walk past Pori Beach and keep going. You\'ll find natural rock pools and absolute solitude.', 'Kato Koufonisi — the uninhabited sister island. Take the tender. One beach bar, zero development, pristine.', 'Night sky — zero light pollution. The Milky Way is visible with the naked eye. Sleep on deck.'],
+    yachtTip: 'Koufonisia is tiny — the main island is 3.5km long. The magic is in anchoring off the beaches and spending the day in the water. No marina, no bow-to — you anchor and tender in. This is the Greek charter experience at its purest.',
+    yachts: ['helidoni', 'alegria', 'my-star'],
+  },
+];
+
+export default function DestinationsClient() {
+  const [activeIsland, setActiveIsland] = useState(ISLANDS[0]);
+
+  return (
+    <div style={{ minHeight: '100vh', background: '#000' }}>
+      {/* Hero */}
+      <div style={{ padding: '160px 24px 60px', textAlign: 'center' }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
+          Insider Knowledge
+        </p>
+        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#fff', fontWeight: 300, margin: '0 0 16px' }}>
+          Greek Island Guides
+        </h1>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(255,255,255,0.4)', maxWidth: 520, margin: '0 auto', lineHeight: 1.8 }}>
+          Restaurants, hidden beaches, anchorages, and secrets that only come from years on the water. Not from a guidebook — from George.
+        </p>
+      </div>
+
+      <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 24px 120px' }}>
+        {/* Island tabs */}
+        <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 48, flexWrap: 'wrap' }}>
+          {ISLANDS.map(island => (
+            <button
+              key={island.id}
+              onClick={() => setActiveIsland(island)}
+              style={{
+                padding: '12px 20px',
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: 11,
+                letterSpacing: '0.1em',
+                border: `1px solid ${activeIsland.id === island.id ? GOLD : '#333'}`,
+                background: activeIsland.id === island.id ? `${GOLD}15` : 'transparent',
+                color: activeIsland.id === island.id ? GOLD : 'rgba(255,255,255,0.4)',
+                borderRadius: 8,
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+              }}
+            >
+              {island.emoji} {island.name}
+            </button>
+          ))}
+        </div>
+
+        {/* Island content */}
+        <div key={activeIsland.id}>
+          {/* Header */}
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <div style={{ fontSize: 56, marginBottom: 16 }}>{activeIsland.emoji}</div>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 4vw, 3rem)', color: '#fff', fontWeight: 300, margin: '0 0 8px' }}>
+              {activeIsland.name}
+            </h2>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: GOLD, fontStyle: 'italic', margin: '0 0 16px' }}>
+              {activeIsland.tagline}
+            </p>
+            <div style={{ display: 'flex', gap: 24, justifyContent: 'center', flexWrap: 'wrap' }}>
+              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em' }}>
+                📍 {activeIsland.region}
+              </span>
+              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em' }}>
+                📅 {activeIsland.bestMonths}
+              </span>
+            </div>
+          </div>
+
+          {/* Best for */}
+          <div style={{ textAlign: 'center', marginBottom: 48, padding: '20px 0', borderTop: '1px solid #1a1a1a', borderBottom: '1px solid #1a1a1a' }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: 8 }}>Best For</p>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>{activeIsland.bestFor}</p>
+          </div>
+
+          {/* Content grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }} className="dest-grid">
+            {/* Restaurants */}
+            <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid #1a1a1a', borderRadius: 12, padding: 28 }}>
+              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: '#fff', fontWeight: 400, margin: '0 0 20px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                🍽️ Where to Eat
+              </h3>
+              {activeIsland.restaurants.map((r, i) => (
+                <div key={i} style={{ marginBottom: 20, paddingBottom: 20, borderBottom: i < activeIsland.restaurants.length - 1 ? '1px solid #1a1a1a' : 'none' }}>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: '#fff', marginBottom: 4 }}>{r.name}</div>
+                  <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: GOLD, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>{r.type}</div>
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(255,255,255,0.35)', lineHeight: 1.7, margin: 0 }}>{r.note}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Hidden gems */}
+            <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid #1a1a1a', borderRadius: 12, padding: 28 }}>
+              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: '#fff', fontWeight: 400, margin: '0 0 20px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                💎 Hidden Gems
+              </h3>
+              {activeIsland.hiddenGems.map((gem, i) => (
+                <div key={i} style={{ marginBottom: 16, paddingLeft: 20, position: 'relative' }}>
+                  <span style={{ position: 'absolute', left: 0, top: 2, color: GOLD, fontSize: 10 }}>✦</span>
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(255,255,255,0.4)', lineHeight: 1.7, margin: 0 }}>{gem}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Anchorage */}
+          <div style={{ marginTop: 24, background: 'rgba(218,165,32,0.03)', border: `1px solid ${GOLD}15`, borderRadius: 12, padding: 24 }}>
+            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: '#fff', fontWeight: 400, margin: '0 0 12px', display: 'flex', alignItems: 'center', gap: 8 }}>
+              ⚓ Best Anchorages
+            </h3>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.4)', lineHeight: 1.8, margin: 0 }}>
+              {activeIsland.anchorage}
+            </p>
+          </div>
+
+          {/* George's yacht tip */}
+          <div style={{ marginTop: 24, borderLeft: `3px solid ${GOLD}`, paddingLeft: 24, paddingTop: 8, paddingBottom: 8 }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: GOLD, marginBottom: 8 }}>George's Yacht Tip</p>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.5)', lineHeight: 1.8, margin: '0 0 8px', fontStyle: 'italic' }}>
+              "{activeIsland.yachtTip}"
+            </p>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: `${GOLD}60`, margin: 0 }}>
+              — George P. Biniaris, Managing Broker
+            </p>
+          </div>
+
+          {/* Recommended yachts */}
+          <div style={{ marginTop: 32, textAlign: 'center' }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: 16 }}>
+              Recommended Yachts for {activeIsland.name}
+            </p>
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+              {activeIsland.yachts.map(slug => (
+                <Link
+                  key={slug}
+                  href={`/yachts/${slug}`}
+                  style={{
+                    padding: '10px 20px',
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: 10,
+                    letterSpacing: '0.1em',
+                    border: `1px solid ${GOLD}30`,
+                    color: GOLD,
+                    borderRadius: 20,
+                    textDecoration: 'none',
+                    transition: 'all 0.3s ease',
+                  }}
+                >
+                  {slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Nav link */}
+      <style jsx global>{`
+        @media (max-width: 768px) {
+          .dest-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </div>
+  );
+}
