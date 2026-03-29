@@ -8,6 +8,7 @@ import WhatsAppButton from "./components/WhatsAppButton";
 import MobileStickyBar from "./components/MobileStickyBar";
 import TranslateWidget from "./components/TranslateWidget";
 import WelcomeLanguagePopup from "./components/WelcomeLanguagePopup";
+import SmartWelcome from "./components/SmartWelcome";
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { WishlistProvider } from "./components/WishlistProvider";
 import JsonLd from "./components/JsonLd";
@@ -92,6 +93,7 @@ export default function RootLayout({ children }) {
         <NavDrawerSystem />
         {children}
         <WelcomeLanguagePopup />
+        <SmartWelcome />
         <TranslateWidget />
         <WhatsAppButton />
         <MobileStickyBar />
