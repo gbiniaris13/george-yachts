@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Menu, Instagram, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const WhatsappIcon = (props) => (
   <svg
@@ -38,24 +39,38 @@ const legalLinks = [
 const NavDrawerSystem = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const pathname = usePathname();
 
-  const toggleDrawer = () => {
-    setIsDrawerOpen(!isDrawerOpen);
-  };
+  // Close drawer when route changes (fixes the double-tap bug)
+  useEffect(() => {
+    setIsDrawerOpen(false);
+  }, [pathname]);
+
+  const toggleDrawer = useCallback(() => {
+    setIsDrawerOpen((prev) => !prev);
+  }, []);
+
+  const closeDrawer = useCallback(() => {
+    setIsDrawerOpen(false);
+  }, []);
+
+  // Lock body scroll when drawer is open
+  useEffect(() => {
+    if (isDrawerOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [isDrawerOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
     };
   }, []);
 
@@ -84,6 +99,7 @@ const NavDrawerSystem = () => {
               className={`p-2 ${currentTextColor} hover:text-[#DAA520] cursor-pointer focus:outline-none transition duration-300 active:scale-95`}
               aria-label="Toggle menu"
               data-cursor="Menu"
+              style={{ touchAction: "manipulation" }}
             >
               <Menu className="w-5 h-5" />
             </button>
@@ -136,7 +152,9 @@ const NavDrawerSystem = () => {
             ? "opacity-60 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
-        onClick={toggleDrawer}
+        onClick={closeDrawer}
+        onTouchEnd={(e) => { e.preventDefault(); closeDrawer(); }}
+        style={{ touchAction: "manipulation" }}
         aria-hidden={!isDrawerOpen}
       ></div>
 
@@ -150,7 +168,7 @@ const NavDrawerSystem = () => {
         <div className="p-8 h-full flex flex-col overflow-y-auto">
           <div className="flex justify-between items-center pb-6 ">
             {/* Logo in drawer — original yacht icon + text */}
-            <Link href="/" className="flex items-center gap-4" onClick={toggleDrawer}>
+            <Link href="/" className="flex items-center gap-4" onClick={closeDrawer}>
               <img
                 src="/images/yacht-icon-only.svg"
                 alt="George Yachts"
@@ -166,7 +184,7 @@ const NavDrawerSystem = () => {
               </div>
             </Link>
             <button
-              onClick={toggleDrawer}
+              onClick={closeDrawer}
               className="p-2 rounded-full text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 active:scale-95 "
               aria-label="Close menu"
             >
@@ -179,8 +197,9 @@ const NavDrawerSystem = () => {
               <div key={link.name} className="flex flex-col">
                 <Link
                   href={link.href || "#"}
-                  onClick={toggleDrawer}
-                  className="block w-full py-3 px-1 border-b border-white/20 text-xl font-semibold uppercase text-white hover:text-[#CEA681] transition duration-200"
+                  onClick={closeDrawer}
+                  className="block w-full py-3 px-1 border-b border-white/20 text-xl font-semibold uppercase text-white hover:text-[#CEA681] transition duration-200 active:text-[#DAA520]"
+                  style={{ WebkitTapHighlightColor: "transparent", touchAction: "manipulation" }}
                 >
                   {link.name}
                 </Link>
@@ -193,7 +212,7 @@ const NavDrawerSystem = () => {
               <Link
                 key={link.name}
                 href={link.href}
-                onClick={toggleDrawer}
+                onClick={closeDrawer}
                 className="text-xs text-gray-500 hover:text-gray-300 transition duration-200"
               >
                 {link.name}
