@@ -14,7 +14,7 @@ const tools = [
         <path d="M11 8v6M8 11h6" />
       </svg>
     ),
-    title: 'Find Your Yacht',
+    title: 'AI Yacht Finder',
     desc: 'Answer 5 questions. Get matched with your perfect vessel.',
     cta: 'Start Quiz',
   },
@@ -32,6 +32,32 @@ const tools = [
     title: 'Build Your Itinerary',
     desc: 'Click islands on our interactive map. Design your dream route.',
     cta: 'Open Map',
+  },
+  {
+    href: '/cost-calculator',
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="1.2">
+        <rect x="2" y="3" width="20" height="18" rx="2" />
+        <line x1="2" y1="9" x2="22" y2="9" />
+        <path d="M12 15h4M12 12h2" />
+      </svg>
+    ),
+    title: 'Cost Calculator',
+    desc: 'See your total charter cost — APA, VAT, transfers. No hidden fees.',
+    cta: 'Calculate',
+  },
+  {
+    href: '/island-quiz',
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="1.2">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
+        <line x1="12" y1="17" x2="12.01" y2="17" />
+      </svg>
+    ),
+    title: 'Which Island Are You?',
+    desc: 'Fun personality quiz — discover your perfect Greek island match.',
+    cta: 'Take Quiz',
   },
   {
     href: '/charter-yacht-greece',
