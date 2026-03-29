@@ -208,18 +208,29 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount })
   const imageUrl = yacht.imageUrl;
   const lengthShort = yacht.length ? yacht.length.split('/')[0].trim() : '\u2013';
 
-  // Calculate per-person per-night cost from lowest weekly price
-  const perPersonPerNight = useMemo(() => {
+  // Calculate per-person per-week cost with APA (30%) + VAT (12%) included
+  const perPersonWeekly = useMemo(() => {
     const priceStr = yacht.weeklyRatePrice || override.price || '';
     const guestCount = parseInt(guests) || 0;
     if (!priceStr || guestCount === 0 || priceStr === 'On Request') return null;
-    // Extract first number (lowest price) — handles €5,900, €20,500, €180,000 etc.
-    const match = priceStr.replace(/[^\d.,€]/g, '').match(/€?([\d,.]+)/);
-    if (!match) return null;
-    const lowestPrice = parseFloat(match[1].replace(/,/g, '').replace(/\./g, ''));
-    if (isNaN(lowestPrice) || lowestPrice === 0) return null;
-    const ppn = Math.round(lowestPrice / guestCount / 7);
-    return ppn > 0 ? `€${ppn.toLocaleString()}` : null;
+    // Extract all numbers from price string
+    const numbers = [];
+    const regex = /€?([\d,.]+)/g;
+    const cleanStr = priceStr.replace(/[^\d.,€\-–]/g, ' ');
+    let m;
+    while ((m = regex.exec(cleanStr)) !== null) {
+      const num = parseFloat(m[1].replace(/,/g, '').replace(/\./g, ''));
+      if (!isNaN(num) && num > 100) numbers.push(num);
+    }
+    if (numbers.length === 0) return null;
+    const lowBase = numbers[0];
+    const highBase = numbers.length > 1 ? numbers[numbers.length - 1] : lowBase;
+    // Add APA (30%) + VAT (12%) = total multiplier 1.456
+    const multiplier = 1.42; // 30% APA + 12% VAT on charter
+    const lowTotal = Math.round((lowBase * multiplier) / guestCount);
+    const highTotal = Math.round((highBase * multiplier) / guestCount);
+    if (lowTotal <= 0) return null;
+    return { low: `€${lowTotal.toLocaleString()}`, high: `€${highTotal.toLocaleString()}` };
   }, [yacht.weeklyRatePrice, override.price, guests]);
 
   return (
@@ -317,9 +328,13 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount })
           <div>
             <div className="fleet-card__price-label">Weekly Charter</div>
             <div className="fleet-card__price">{price}</div>
-            {perPersonPerNight && (
+            {perPersonWeekly && (
               <div className="fleet-card__per-person">
-                from {perPersonPerNight}/person/night
+                {perPersonWeekly.low === perPersonWeekly.high
+                  ? `from ${perPersonWeekly.low}/person/week`
+                  : `${perPersonWeekly.low} – ${perPersonWeekly.high}/person/week`
+                }
+                <span className="fleet-card__per-person-note">incl. APA & VAT</span>
               </div>
             )}
           </div>
@@ -386,14 +401,23 @@ export default function FleetGrid({ yachts }) {
       const guestCount = yacht.sleeps || override.guests || '–';
       const cabinCount = yacht.cabins || override.cabins || '–';
       const crewInfo = yacht.crew || override.crew || '–';
-      // Per person per night
-      let ppn = null;
+      // Per person per week with APA + VAT
+      let ppwLow = null;
+      let ppwHigh = null;
       const gn = parseInt(guestCount) || 0;
       if (gn > 0 && price !== 'On Request') {
-        const m = price.replace(/[^\d.,€]/g, '').match(/€?([\d,.]+)/);
-        if (m) {
-          const lowest = parseFloat(m[1].replace(/,/g, '').replace(/\./g, ''));
-          if (!isNaN(lowest) && lowest > 0) ppn = `€${Math.round(lowest / gn / 7).toLocaleString()}/person/night`;
+        const nums = [];
+        const rx = /€?([\d,.]+)/g;
+        const cs = price.replace(/[^\d.,€\-–]/g, ' ');
+        let mx;
+        while ((mx = rx.exec(cs)) !== null) {
+          const n = parseFloat(mx[1].replace(/,/g, '').replace(/\./g, ''));
+          if (!isNaN(n) && n > 100) nums.push(n);
+        }
+        if (nums.length > 0) {
+          const mult = 1.42;
+          ppwLow = `€${Math.round((nums[0] * mult) / gn).toLocaleString()}`;
+          ppwHigh = nums.length > 1 ? `€${Math.round((nums[nums.length - 1] * mult) / gn).toLocaleString()}` : ppwLow;
         }
       }
       return [...prev, {
@@ -407,7 +431,8 @@ export default function FleetGrid({ yachts }) {
         cruiseSpeed: yacht.cruiseSpeed || '–',
         maxSpeed: yacht.maxSpeed || '–',
         weeklyRate: price,
-        perPersonNight: ppn,
+        perPersonWeekLow: ppwLow,
+        perPersonWeekHigh: ppwHigh,
         imageUrl: yacht.imageUrl,
       }];
     });
