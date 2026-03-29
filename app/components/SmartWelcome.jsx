@@ -2,33 +2,22 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useI18n } from '@/lib/i18n/I18nProvider';
 
 const GOLD = '#DAA520';
 
-// Time-based messages
-function getTimeMessage() {
+// Time-based message keys (translated via t())
+function getTimeMessageKeys() {
   const hour = new Date().getHours();
-  const day = new Date().getDay(); // 0=Sun, 5=Fri, 6=Sat
+  const day = new Date().getDay();
 
-  if (hour >= 22 || hour < 5) {
-    return { text: "Still dreaming about the Aegean?", sub: "Let us make it real.", icon: "🌙" };
-  }
-  if (hour >= 5 && hour < 9) {
-    return { text: "Good morning.", sub: "The sea is waiting for you.", icon: "🌅" };
-  }
-  if (day === 5 && hour >= 14) {
-    return { text: "Weekend plans?", sub: "We have better ones. Much better.", icon: "⛵" };
-  }
-  if (day === 0 || day === 6) {
-    return { text: "Perfect day to plan an escape.", sub: "The Greek islands are calling.", icon: "🏝️" };
-  }
-  if (hour >= 12 && hour < 14) {
-    return { text: "Lunch break?", sub: "Imagine lunch on a yacht instead.", icon: "🍷" };
-  }
-  if (hour >= 17 && hour < 22) {
-    return { text: "End of the day.", sub: "Start dreaming about the next one — on the water.", icon: "🌊" };
-  }
-  return { text: "Welcome.", sub: "Your Greek island adventure starts here.", icon: "⚓" };
+  if (hour >= 22 || hour < 5) return { textKey: 'smartWelcome.lateNight', subKey: 'smartWelcome.lateNightSub', icon: '🌙' };
+  if (hour >= 5 && hour < 9) return { textKey: 'smartWelcome.morning', subKey: 'smartWelcome.morningSub', icon: '🌅' };
+  if (day === 5 && hour >= 14) return { textKey: 'smartWelcome.friday', subKey: 'smartWelcome.fridaySub', icon: '⛵' };
+  if (day === 0 || day === 6) return { textKey: 'smartWelcome.weekend', subKey: 'smartWelcome.weekendSub', icon: '🏝️' };
+  if (hour >= 12 && hour < 14) return { textKey: 'smartWelcome.lunch', subKey: 'smartWelcome.lunchSub', icon: '🍷' };
+  if (hour >= 17 && hour < 22) return { textKey: 'smartWelcome.evening', subKey: 'smartWelcome.eveningSub', icon: '🌊' };
+  return { textKey: 'smartWelcome.default', subKey: 'smartWelcome.defaultSub', icon: '⚓' };
 }
 
 // Get previously viewed yachts from localStorage
@@ -56,6 +45,7 @@ export function trackYachtView(name, slug) {
 }
 
 export default function SmartWelcome() {
+  const { t } = useI18n();
   const [visible, setVisible] = useState(false);
   const [closing, setClosing] = useState(false);
   const [data, setData] = useState(null);
@@ -63,7 +53,7 @@ export default function SmartWelcome() {
   useEffect(() => {
     // Small delay for dramatic effect
     const timer = setTimeout(() => {
-      const timeMsg = getTimeMessage();
+      const timeMsg = getTimeMessageKeys();
       const viewHistory = getViewHistory();
       const visitCount = parseInt(localStorage.getItem('gy-visit-count') || '0');
       const isReturning = visitCount > 1;
@@ -131,7 +121,7 @@ export default function SmartWelcome() {
               <span style={{ fontSize: 24 }}>👋</span>
               <div>
                 <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: '#fff', margin: 0, fontWeight: 300 }}>
-                  Welcome back
+                  {t('smartWelcome.returnVisitor')}
                 </p>
                 <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(255,255,255,0.35)', margin: 0, letterSpacing: '0.1em' }}>
                   Visit #{data.visitCount}
@@ -139,7 +129,7 @@ export default function SmartWelcome() {
               </div>
             </div>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: '0 0 12px', lineHeight: 1.6 }}>
-              Last time you were looking at:
+              {t('smartWelcome.lastTime')}
             </p>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {data.viewHistory.map(yacht => (
@@ -170,10 +160,10 @@ export default function SmartWelcome() {
             <span style={{ fontSize: 32, flexShrink: 0 }}>{data.icon}</span>
             <div>
               <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: '#fff', margin: '0 0 4px', fontWeight: 300 }}>
-                {data.text}
+                {t(data.textKey || data.text)}
               </p>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: `${GOLD}80`, margin: 0, lineHeight: 1.5 }}>
-                {data.sub}
+                {t(data.subKey || data.sub)}
               </p>
             </div>
           </div>

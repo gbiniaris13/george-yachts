@@ -60,7 +60,7 @@ const VideoSection = () => {
       id: 1,
       imageUrl: "/videos/yacht-cruising-new.mp4",
       href: "/charter-yacht-greece/",
-      buttonText: "Explore Our Fleet",
+      buttonText: t('common.exploreFleet'),
     },
   ];
 
@@ -201,11 +201,11 @@ const VideoSection = () => {
                     >
                       {(() => {
                         const m = new Date().getMonth();
-                        if (m >= 0 && m <= 2) return "Summer 2026 bookings are open — secure your preferred dates";
-                        if (m >= 3 && m <= 4) return "The season begins — early summer is the insider's choice";
-                        if (m >= 5 && m <= 7) return "The Aegean is calling — charter season at its finest";
-                        if (m === 8) return "September — the sea is warmest, the islands are quietest";
-                        return "Plan ahead — 2027 early bookings now available";
+                        if (m >= 0 && m <= 2) return t('seasonal.winter');
+                        if (m >= 3 && m <= 4) return t('seasonal.spring');
+                        if (m >= 5 && m <= 7) return t('seasonal.summer');
+                        if (m === 8) return t('seasonal.september');
+                        return t('seasonal.autumn');
                       })()}
                     </p>
 

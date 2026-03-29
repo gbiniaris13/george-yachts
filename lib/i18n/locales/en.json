@@ -169,6 +169,45 @@
     "bookCall": "Book a Free Consultation",
     "messageGeorge": "Message George",
     "back": "Back",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "exploreFleet": "Explore Our Fleet",
+    "aboutYou": "About You",
+    "yourCharter": "Your Charter",
+    "details": "Details",
+    "perWeek": "per week",
+    "charterRate": "charter rate",
+    "yachtsAvailable": "yachts available at this budget",
+    "viewAllYachts": "View all yachts"
+  },
+  "seasonal": {
+    "winter": "Summer 2026 bookings are open — secure your preferred dates",
+    "spring": "The season begins — early summer is the insider's choice",
+    "summer": "The Aegean is calling — charter season at its finest",
+    "september": "September — the sea is warmest, the islands are quietest",
+    "autumn": "Plan ahead — 2027 early bookings now available"
+  },
+  "smartWelcome": {
+    "lateNight": "Still dreaming about the Aegean?",
+    "lateNightSub": "Let us make it real.",
+    "morning": "Good morning.",
+    "morningSub": "The sea is waiting for you.",
+    "friday": "Weekend plans?",
+    "fridaySub": "We have better ones. Much better.",
+    "weekend": "Perfect day to plan an escape.",
+    "weekendSub": "The Greek islands are calling.",
+    "lunch": "Lunch break?",
+    "lunchSub": "Imagine lunch on a yacht instead.",
+    "evening": "End of the day.",
+    "eveningSub": "Start dreaming about the next one — on the water.",
+    "default": "Welcome.",
+    "defaultSub": "Your Greek island adventure starts here.",
+    "returnVisitor": "Welcome back",
+    "lastTime": "Last time you were looking at:",
+    "visit": "Visit"
+  },
+  "budget": {
+    "label": "Explore by Budget",
+    "title": "What Can You Charter?",
+    "subtitle": "Slide to see which yachts fit your weekly budget"
   }
 }

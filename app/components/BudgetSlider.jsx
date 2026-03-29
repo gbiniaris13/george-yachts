@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { useI18n } from '@/lib/i18n/I18nProvider';
 
 const GOLD = '#DAA520';
 
@@ -34,6 +35,7 @@ const YACHTS_BY_BUDGET = [
 ];
 
 export default function BudgetSlider() {
+  const { t } = useI18n();
   const [budget, setBudget] = useState(30000);
 
   const matchingYachts = useMemo(() => {
@@ -50,13 +52,13 @@ export default function BudgetSlider() {
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}80`, textTransform: 'uppercase', marginBottom: 12 }}>
-            Explore by Budget
+            {t('budget.label')}
           </p>
           <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#fff', fontWeight: 300, margin: '0 0 8px' }}>
-            What Can You Charter?
+            {t('budget.title')}
           </h2>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(255,255,255,0.3)', margin: 0 }}>
-            Slide to see which yachts fit your weekly budget
+            {t('budget.subtitle')}
           </p>
         </div>
 
