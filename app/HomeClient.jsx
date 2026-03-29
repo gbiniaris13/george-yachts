@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import ContactFormSection from "./components/ContactFormSection";
 import Filotimon from "./components/Filotimon";
 import ContactBar from "./components/ContactBar";
+import YourBroker from "./components/YourBroker";
 
 const HomeClient = () => {
   return (
@@ -17,6 +18,7 @@ const HomeClient = () => {
       <Filotimon />
       <TwoColumnLayout />
       <ContactBar />
+      <YourBroker />
       <ContactFormSection />
       <Footer />
     </div>

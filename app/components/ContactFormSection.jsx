@@ -158,8 +158,9 @@ const ContactFormSection = () => {
             </svg>
           </div>
           <h3
-            className="text-4xl md:text-5xl font-marcellus mb-6"
+            className="text-4xl md:text-5xl mb-6"
             style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
               backgroundImage: "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
               WebkitBackgroundClip: "text", backgroundClip: "text",
               color: "transparent", WebkitTextFillColor: "transparent",
@@ -167,8 +168,19 @@ const ContactFormSection = () => {
           >
             Thank You
           </h3>
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <img
+              src="/images/george.jpg"
+              alt="George P. Biniaris"
+              className="w-16 h-16 rounded-full object-cover border border-[#DAA520]/30"
+            />
+            <div className="text-left">
+              <p className="text-white text-sm font-medium">George P. Biniaris</p>
+              <p className="text-[#DAA520]/60 text-xs tracking-wider uppercase">Managing Broker</p>
+            </div>
+          </div>
           <p className="text-white/60 text-lg font-light leading-relaxed mb-4">
-            Your inquiry has been received. Our team will review your preferences and get back to you as soon as possible.
+            George will personally review your inquiry and respond within 24 hours.
           </p>
           <p className="text-white/30 text-sm tracking-wider uppercase">
             George Yachts Brokerage House

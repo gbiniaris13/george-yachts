@@ -22,6 +22,7 @@ const navLinks = [
   { name: "OUR CORE TEAM", href: "/team/" },
   { name: "CHARTER A YACHT", href: "/charter-yacht-greece/" },
   { name: "YACHT ITINERARIES", href: "/yacht-itineraries-greece/" },
+  { name: "HOW IT WORKS", href: "/how-it-works/" },
   { name: "BUY A YACHT", href: "/yachts-for-sale/" },
   { name: "FLY PRIVATE", href: "/private-jet-charter/" },
   { name: "VIP TRANSFERS", href: "/vip-transfers-greece/" },
