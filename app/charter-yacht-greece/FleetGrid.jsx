@@ -282,7 +282,6 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount })
             </svg>
           </button>
           {/* Wishlist heart — end */}
-          )}
           {/* Overlay gradient */}
           <div className="fleet-card__overlay" />
           {/* Name on image */}
