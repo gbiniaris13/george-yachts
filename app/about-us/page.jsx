@@ -26,8 +26,8 @@ export default function AboutUsPage() {
       {/* ── HERO ── */}
       <section className="about-hero">
         <Image
-          src="https://cdn.sanity.io/images/ecqr94ey/production/bf9877a87748ca45db2d4d2462db5cb7439fe406-1024x768.jpg?w=1920&h=900&fit=crop&auto=format&q=85"
-          alt="George Yachts — luxury yacht charter brokerage Athens Greece"
+          src="/images/about-hero-santorini.jpg"
+          alt="Santorini Greece — George Yachts luxury yacht charter brokerage Greek islands"
           fill
           priority
           className="about-hero__bg"
