@@ -12,6 +12,7 @@ import YourBroker from "./components/YourBroker";
 import HowItWorks from "./components/HowItWorks";
 import CredentialsStrip from "./components/CredentialsStrip";
 import InteractiveTools from "./components/InteractiveTools";
+import BudgetSlider from "./components/BudgetSlider";
 
 const HomeClient = () => {
   return (
@@ -22,6 +23,7 @@ const HomeClient = () => {
       <HowItWorks />
       <Filotimon />
       <CredentialsStrip />
+      <BudgetSlider />
       <InteractiveTools />
       <TwoColumnLayout />
       <ContactBar />
