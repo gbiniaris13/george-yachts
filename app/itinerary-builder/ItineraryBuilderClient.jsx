@@ -73,7 +73,11 @@ const REGION_COLORS = {
 };
 
 export default function ItineraryBuilderClient() {
-  const [selected, setSelected] = useState([]);
+  // Athens as default starting point
+  const athensIsland = ISLANDS.find((i) => i.id === 'athens');
+  const corfu = ISLANDS.find((i) => i.id === 'corfu');
+  const skiathos = ISLANDS.find((i) => i.id === 'skiathos');
+  const [selected, setSelected] = useState(athensIsland ? [athensIsland] : []);
   const [hoveredIsland, setHoveredIsland] = useState(null);
   const [activeRegion, setActiveRegion] = useState('all');
   const svgRef = useRef(null);
@@ -123,6 +127,40 @@ export default function ItineraryBuilderClient() {
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(255,255,255,0.35)', maxWidth: 500, margin: '0 auto' }}>
           Click islands on the map to create your route. We'll calculate distances and sailing time.
         </p>
+      </div>
+
+      {/* Starting port selector */}
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 12, padding: '0 24px 16px', flexWrap: 'wrap', alignItems: 'center' }}>
+        <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>
+          Start from:
+        </span>
+        {[
+          { island: athensIsland, label: 'Athens' },
+          { island: corfu, label: 'Corfu' },
+          { island: skiathos, label: 'Skiathos' },
+        ].map(({ island, label }) => (
+          <button
+            key={label}
+            onClick={() => {
+              if (island) setSelected([island]);
+            }}
+            style={{
+              padding: '6px 16px',
+              fontFamily: "'Montserrat', sans-serif",
+              fontSize: 10,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              border: `1px solid ${selected[0]?.id === island?.id ? GOLD : '#333'}`,
+              background: selected[0]?.id === island?.id ? `${GOLD}15` : 'transparent',
+              color: selected[0]?.id === island?.id ? GOLD : 'rgba(255,255,255,0.4)',
+              borderRadius: 20,
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+            }}
+          >
+            {label}
+          </button>
+        ))}
       </div>
 
       {/* Region filters */}
@@ -415,7 +453,7 @@ export default function ItineraryBuilderClient() {
             )}
             {selected.length > 0 && (
               <button
-                onClick={() => setSelected([])}
+                onClick={() => setSelected(athensIsland ? [athensIsland] : [])}
                 style={{
                   width: '100%', padding: '12px 0',
                   fontFamily: "'Montserrat', sans-serif", fontSize: 10,
