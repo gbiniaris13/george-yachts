@@ -54,7 +54,7 @@ const Footer = () => {
             <Link href="/" className="block mb-8">
               <img
                 src="/images/yacht-icon-only.svg"
-                alt="<span className="notranslate">George Yachts Brokerage House LLC</span>"
+                alt="George Yachts Brokerage House LLC"
                 style={{ height: "150px", width: "auto" }}
               />
             </Link>

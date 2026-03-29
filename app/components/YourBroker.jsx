@@ -53,7 +53,6 @@ export default function YourBroker() {
           <Image
             src="/images/george.jpg"
             alt="George P. Biniaris — Managing Broker, George Yachts"
-            className="object-cover notranslate"
             fill
             className="object-cover"
             sizes="(max-width: 768px) 250px, 280px"
