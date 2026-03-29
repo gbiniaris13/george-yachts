@@ -81,20 +81,27 @@ export default function AboutContent() {
 
   return (
     <>
-      {/* ═══════ PHILOSOPHY ═══════ */}
+      {/* ═══════ YOUR BROKER IN GREEK WATERS ═══════ */}
       <section className="about-philosophy">
         <RevealSection className="about-philosophy__inner">
-          <p className="about-philosophy__eyebrow">Our Philosophy</p>
+          <p className="about-philosophy__eyebrow">Your Broker in Greek Waters</p>
           <h2 className="about-philosophy__quote">
-            We don&apos;t sell vacations.<br />
-            We craft experiences that stay<br className="hidden md:block" /> with you forever.
+            One point of contact.<br />
+            One standard of care.<br className="hidden md:block" />
+            No call centres. No middlemen.
           </h2>
           <div className="about-philosophy__line" />
           <p className="about-philosophy__text">
-            George Yachts is a boutique brokerage house specializing exclusively in Greek waters.
-            We bridge international operational standards with deep local expertise to deliver
-            bespoke maritime experiences &mdash; from the Cyclades to the Ionian, from intimate
-            sailing catamarans to 64-meter superyachts.
+            George Yachts is led by George P. Biniaris, Managing Broker and IYBA member, operating from Athens with a hands-on approach built from years on the water. From crewed sailing charters in the Ionian to complex MYBA-contract superyacht operations in the Cyclades, every recommendation comes from first-hand experience &mdash; not a database.
+          </p>
+          <p className="about-philosophy__text">
+            As a boutique brokerage, we do one thing and we do it properly: crewed yacht charters in Greek waters. The Cyclades, the Ionian, the Saronic Gulf, the Sporades &mdash; every region, every season, every type of vessel. One broker, one relationship, one standard.
+          </p>
+          <p className="about-philosophy__text">
+            Every yacht in our fleet is personally vetted. Every captain is known by name. Itineraries are crafted from real routes sailed in these waters &mdash; not copied from brochures. We work exclusively with MYBA-standard contracts, transparent APA and VAT breakdowns, and fast, detailed proposals.
+          </p>
+          <p className="about-philosophy__text">
+            George Yachts is registered in the United States (Wyoming LLC) and operates from Athens, Greece. We serve an international clientele who expect discretion, precision, and a level of personal attention that larger platforms simply cannot provide.
           </p>
         </RevealSection>
       </section>
@@ -149,20 +156,15 @@ export default function AboutContent() {
               <p className="about-george__role">Managing Broker &middot; IYBA Member</p>
               <div className="about-george__line" />
               <p className="about-george__bio">
-                With a career built on trust, discretion, and an uncompromising eye for
-                quality, George leads George Yachts Brokerage House with a singular mission
-                &mdash; to deliver a truly personal brokerage experience that the industry lacks.
-              </p>
-              <p className="about-george__bio">
-                Every client works directly with George. No call centers, no junior agents,
+                Every client works directly with George. No call centres, no junior agents,
                 no automated responses. When you reach out, George answers. When you board
                 your yacht, George has personally vetted the crew, the itinerary, and every
                 detail of your experience.
               </p>
               <p className="about-george__bio">
-                Based in Athens with the company registered in the United States, George bridges
-                two worlds &mdash; bringing international operational standards and American business
-                transparency to the intimate, relationship-driven Greek charter market.
+                George knows these waters first-hand &mdash; every anchorage, every crew,
+                every restaurant worth the taxi ride. His recommendations come from personal
+                experience aboard the yachts, not from a brochure or a database.
               </p>
               <blockquote className="about-george__quote">
                 &ldquo;My clients don&apos;t just charter a yacht. They gain a trusted advisor

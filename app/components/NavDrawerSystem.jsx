@@ -32,7 +32,7 @@ const navLinks = [
 // --- 2. LEGAL LINKS ---
 const legalLinks = [
   { name: "Terms of Service", href: "/terms-of-service" },
-  { name: "Cookies", href: "/cookie-policy" },
+  { name: "Cookie Policy", href: "/cookie-policy" },
   { name: "Privacy Policy", href: "/privacy-policy" },
 ];
 

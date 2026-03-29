@@ -26,8 +26,8 @@ export default function AboutUsPage() {
       {/* ── HERO ── */}
       <section className="about-hero">
         <Image
-          src="/images/about-us-section.jpg"
-          alt="George Yachts Brokerage House - luxury yacht brokerage Greece"
+          src="https://cdn.sanity.io/images/ecqr94ey/production/bf9877a87748ca45db2d4d2462db5cb7439fe406-1024x768.jpg?w=1920&h=900&fit=crop&auto=format&q=85"
+          alt="George Yachts — luxury yacht charter brokerage Athens Greece"
           fill
           priority
           className="about-hero__bg"
@@ -36,9 +36,9 @@ export default function AboutUsPage() {
         <div className="about-hero__gradient" />
         <div className="about-hero__content">
           <p className="about-hero__eyebrow">Established in the U.S. &middot; Operating from Athens</p>
-          <h1 className="about-hero__title">George Yachts<br /><span className="about-hero__title-llc">Brokerage House LLC</span></h1>
+          <h1 className="about-hero__title">About George Yachts</h1>
           <div className="about-hero__line" />
-          <p className="about-hero__subtitle">Boutique Yacht Brokerage &middot; Exclusively Greek Waters</p>
+          <p className="about-hero__subtitle">Boutique Brokerage &middot; Personal Service &middot; Greek Waters Exclusively</p>
         </div>
       </section>
 
