@@ -297,8 +297,8 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount })
           <div className="fleet-card__overlay" />
           {/* Name on image */}
           <div className="fleet-card__name-area">
-            <h3 className="fleet-card__name">{name}</h3>
-            {builder && <p className="fleet-card__builder">{builder}</p>}
+            <h3 className="fleet-card__name notranslate">{name}</h3>
+            {builder && <p className="fleet-card__builder notranslate">{builder}</p>}
           </div>
         </div>
       </Link>

@@ -120,7 +120,7 @@ function TeamCard({ member, index }) {
 
           {/* Info overlay */}
           <div className="team-card__info">
-            <h3 className="team-card__name">{member.name}</h3>
+            <h3 className="team-card__name notranslate">{member.name}</h3>
             <p className="team-card__title">{member.title}</p>
 
             {hasInstagram && (

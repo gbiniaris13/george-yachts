@@ -417,7 +417,7 @@ export default function DestinationsClient() {
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
             <div style={{ fontSize: 56, marginBottom: 16 }}>{activeIsland.emoji}</div>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 4vw, 3rem)', color: '#fff', fontWeight: 300, margin: '0 0 8px' }}>
-              {activeIsland.name}
+              <span className="notranslate">{activeIsland.name}</span>
             </h2>
             <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: GOLD, fontStyle: 'italic', margin: '0 0 16px' }}>
               {activeIsland.tagline}
@@ -447,7 +447,7 @@ export default function DestinationsClient() {
               </h3>
               {activeIsland.restaurants.map((r, i) => (
                 <div key={i} style={{ marginBottom: 20, paddingBottom: 20, borderBottom: i < activeIsland.restaurants.length - 1 ? '1px solid #1a1a1a' : 'none' }}>
-                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: '#fff', marginBottom: 4 }}>{r.name}</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: '#fff', marginBottom: 4 }}><span className="notranslate">{r.name}</span></div>
                   <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: GOLD, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>{r.type}</div>
                   <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(255,255,255,0.35)', lineHeight: 1.7, margin: 0 }}>{r.note}</p>
                 </div>
@@ -492,7 +492,7 @@ export default function DestinationsClient() {
           {/* Recommended yachts */}
           <div style={{ marginTop: 32, textAlign: 'center' }}>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: 16 }}>
-              Recommended Yachts for {activeIsland.name}
+              Recommended Yachts for <span className="notranslate">{activeIsland.name}</span>
             </p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               {activeIsland.yachts.map(slug => (

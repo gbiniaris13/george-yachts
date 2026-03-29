@@ -31,8 +31,8 @@ export async function generateMetadata({ params }) {
 
   if (!yacht) return { title: 'Yacht Not Found' };
 
-  const title = `${yacht.name} | ${yacht.subtitle} | Luxury Yacht Charter Greece`;
-  const description = `Charter ${yacht.name}, a ${yacht.length} ${yacht.subtitle} accommodating ${yacht.sleeps} guests in Greek waters. ${yacht.weeklyRatePrice}`;
+  const title = `$<span className="notranslate">{yacht.name}</span> | ${yacht.subtitle} | Luxury Yacht Charter Greece`;
+  const description = `Charter $<span className="notranslate">{yacht.name}</span>, a ${yacht.length} ${yacht.subtitle} accommodating ${yacht.sleeps} guests in Greek waters. ${yacht.weeklyRatePrice}`;
 
   return {
     title,
@@ -146,7 +146,7 @@ export default async function YachtPage({ params }) {
             <div className="yacht-hero__image-container">
               <Image
                 src={heroImage.url}
-                alt={`${yacht.name} ${yacht.subtitle} - luxury yacht charter Greece`}
+                alt={`$<span className="notranslate">{yacht.name}</span> ${yacht.subtitle} - luxury yacht charter Greece`}
                 fill
                 priority
                 className="yacht-hero__image"
@@ -156,7 +156,7 @@ export default async function YachtPage({ params }) {
             </div>
           )}
           <div className="yacht-hero__content">
-            <h1 className="yacht-hero__title">{yacht.name}</h1>
+            <h1 className="yacht-hero__title"><span className="notranslate">{yacht.name}</span></h1>
             <p className="yacht-hero__subtitle">
               {yacht.subtitle} · {yacht.length} · {yacht.sleeps} guests
             </p>
@@ -173,9 +173,9 @@ export default async function YachtPage({ params }) {
         ) : (
           <section className="yacht-story reveal">
             <div className="container">
-              <h2 className="yacht-story__heading">About {yacht.name}</h2>
+              <h2 className="yacht-story__heading">About <span className="notranslate">{yacht.name}</span></h2>
               <p>
-                {yacht.name} is a {yacht.subtitle?.split('|')[0]?.trim() || 'luxury yacht'} available
+                <span className="notranslate">{yacht.name}</span> is a {yacht.subtitle?.split('|')[0]?.trim() || 'luxury yacht'} available
                 for charter in Greek waters. At {yacht.length || 'her impressive length'}, she accommodates {yacht.sleeps || 'up to 12'} guests
                 for unforgettable voyages through the Cyclades, Ionian Islands, Saronic Gulf, and Sporades.
               </p>
@@ -210,7 +210,7 @@ export default async function YachtPage({ params }) {
         {/* SPECIFICATIONS — GEO Question H2 */}
         <section className="yacht-specs reveal">
           <div className="container">
-            <h2 className="yacht-specs__title">What Are the Specifications of {yacht.name}?</h2>
+            <h2 className="yacht-specs__title">What Are the Specifications of <span className="notranslate">{yacht.name}</span>?</h2>
             <div className="yacht-specs__grid">
               {yacht.length && (
                 <div className="yacht-specs__item">
@@ -294,7 +294,7 @@ export default async function YachtPage({ params }) {
         {yacht.idealFor && (
           <section className="yacht-ideal reveal">
             <div className="container">
-              <h2 className="yacht-ideal__title">Who Is {yacht.name} Ideal For?</h2>
+              <h2 className="yacht-ideal__title">Who Is <span className="notranslate">{yacht.name}</span> Ideal For?</h2>
               <p className="yacht-ideal__text">{yacht.idealFor}</p>
             </div>
           </section>
@@ -304,7 +304,7 @@ export default async function YachtPage({ params }) {
         {yacht.features && yacht.features.length > 0 && (
           <section className="yacht-features reveal">
             <div className="container">
-              <h2 className="yacht-features__title">What Features Make {yacht.name} Stand Out?</h2>
+              <h2 className="yacht-features__title">What Features Make <span className="notranslate">{yacht.name}</span> Stand Out?</h2>
               <ul className="yacht-features__list">
                 {yacht.features.map((feature, index) => (
                   <li key={index} className="yacht-features__item">
@@ -321,7 +321,7 @@ export default async function YachtPage({ params }) {
         {yacht.toys && yacht.toys.length > 0 && (
           <section className="yacht-toys reveal">
             <div className="container">
-              <h2 className="yacht-toys__title">What Water Toys Are Available on {yacht.name}?</h2>
+              <h2 className="yacht-toys__title">What Water Toys Are Available on <span className="notranslate">{yacht.name}</span>?</h2>
               <ul className="yacht-toys__list">
                 {yacht.toys.map((toy, index) => (
                   <li key={index} className="yacht-toys__item">{toy}</li>
@@ -335,10 +335,10 @@ export default async function YachtPage({ params }) {
         {yacht.images && yacht.images.length > 1 && (
           <section className="yacht-gallery">
             <div className="container">
-              <h2 className="yacht-gallery__title">What Does {yacht.name} Look Like Inside and Out?</h2>
+              <h2 className="yacht-gallery__title">What Does <span className="notranslate">{yacht.name}</span> Look Like Inside and Out?</h2>
               <Lightbox
                 images={yacht.images.slice(1)}
-                yachtName={yacht.name}
+                yachtName=<span className="notranslate">{yacht.name}</span>
               />
             </div>
           </section>
@@ -348,7 +348,7 @@ export default async function YachtPage({ params }) {
         {yacht.weeklyRatePrice && (
           <section className="yacht-pricing reveal">
             <div className="container">
-              <h2 className="yacht-pricing__title">What Is the Weekly Charter Rate for {yacht.name}?</h2>
+              <h2 className="yacht-pricing__title">What Is the Weekly Charter Rate for <span className="notranslate">{yacht.name}</span>?</h2>
               <p className="yacht-pricing__rate">{yacht.weeklyRatePrice}</p>
               {(() => {
                 const guestCount = parseInt(yacht.sleeps) || 0;
@@ -399,7 +399,7 @@ export default async function YachtPage({ params }) {
             <h2 className="text-4xl md:text-5xl font-marcellus text-white text-center mb-4 uppercase tracking-wide">
               Experience{' '}
               <span className="gradient-gold italic font-light">
-                {yacht.name}
+                <span className="notranslate">{yacht.name}</span>
               </span>
             </h2>
 
