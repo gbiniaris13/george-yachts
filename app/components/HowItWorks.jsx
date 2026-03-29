@@ -1,6 +1,9 @@
 "use client";
 
+import { useI18n } from "@/lib/i18n/I18nProvider";
+
 export default function HowItWorks() {
+  const { t } = useI18n();
   const steps = [
     {
       num: "01",
@@ -9,8 +12,8 @@ export default function HowItWorks() {
           <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
         </svg>
       ),
-      title: "Share Your Vision",
-      desc: "Tell us your dates, group size, and dream destination. We listen first — every charter starts with understanding what matters to you.",
+      title: t('howItWorks.step1Title'),
+      desc: t('howItWorks.step1Desc'),
     },
     {
       num: "02",
@@ -21,8 +24,8 @@ export default function HowItWorks() {
           <path d="M12 2v2M12 20v2M2 12h2M20 12h2" />
         </svg>
       ),
-      title: "Receive Your Curated Options",
-      desc: "Within 24 hours, you receive a handpicked selection of yachts, itineraries, and insider recommendations — tailored exclusively to your group.",
+      title: t('howItWorks.step2Title'),
+      desc: t('howItWorks.step2Desc'),
     },
     {
       num: "03",
@@ -33,8 +36,8 @@ export default function HowItWorks() {
           <path d="M12 16a4 4 0 100-8 4 4 0 000 8z" />
         </svg>
       ),
-      title: "Step Aboard",
-      desc: "We handle every detail — contracts, provisioning, captain briefing, concierge requests. You just arrive and sail.",
+      title: t('howItWorks.step3Title'),
+      desc: t('howItWorks.step3Desc'),
     },
   ];
 
@@ -49,13 +52,13 @@ export default function HowItWorks() {
         {/* Header */}
         <div className="text-center mb-20">
           <p className="text-[10px] tracking-[0.4em] uppercase text-[#DAA520]/60 mb-4 font-light">
-            Your Journey
+            {t('howItWorks.label')}
           </p>
           <h2 className="text-4xl md:text-5xl font-marcellus text-white/90 mb-6">
-            How It Works
+            {t('howItWorks.title')}
           </h2>
           <p className="text-white/40 text-sm md:text-base font-light max-w-xl mx-auto leading-relaxed">
-            From your first message to stepping aboard — we handle everything.
+            {t('howItWorks.subtitle')}
           </p>
         </div>
 
@@ -105,7 +108,7 @@ export default function HowItWorks() {
             href="/charter-yacht-greece"
             className="inline-block px-10 py-4 text-xs tracking-[0.2em] uppercase font-medium border border-[#DAA520]/30 text-[#DAA520] hover:bg-[#DAA520]/10 transition-all duration-500 rounded-sm"
           >
-            Start Planning Your Charter
+            {t('howItWorks.cta')}
           </a>
         </div>
       </div>

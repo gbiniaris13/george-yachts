@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 export default function CredentialsStrip() {
+  const { t } = useI18n();
   const credentials = [
     {
       icon: (
@@ -14,7 +16,7 @@ export default function CredentialsStrip() {
           className="opacity-60 group-hover:opacity-100 transition-opacity duration-500"
         />
       ),
-      label: "IYBA Member",
+      label: t('credentials.iyba'),
     },
     {
       icon: (
@@ -25,7 +27,7 @@ export default function CredentialsStrip() {
           <line x1="16" y1="17" x2="8" y2="17" />
         </svg>
       ),
-      label: "MYBA-Standard Contracts",
+      label: t('credentials.myba'),
     },
     {
       icon: (
@@ -36,7 +38,7 @@ export default function CredentialsStrip() {
           <path d="M8 21h8" />
         </svg>
       ),
-      label: "U.S. Registered LLC",
+      label: t('credentials.us'),
     },
     {
       icon: (
@@ -46,7 +48,7 @@ export default function CredentialsStrip() {
           <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
         </svg>
       ),
-      label: "Exclusive Greek Waters Specialist",
+      label: t('credentials.greek'),
     },
   ];
 

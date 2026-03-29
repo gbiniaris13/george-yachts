@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 function useReveal(threshold = 0.2) {
   const ref = useRef(null);
@@ -20,6 +21,7 @@ function useReveal(threshold = 0.2) {
 }
 
 export default function YourBroker() {
+  const { t } = useI18n();
   const [ref, visible] = useReveal(0.15);
 
   return (
@@ -72,7 +74,7 @@ export default function YourBroker() {
             textTransform: "uppercase",
             marginBottom: "20px",
           }}>
-            Your Broker
+            {t('broker.label')}
           </p>
 
           <h2 style={{
@@ -83,7 +85,7 @@ export default function YourBroker() {
             lineHeight: 1.2,
             marginBottom: "24px",
           }}>
-            George P. Biniaris
+            {t('broker.name')}
           </h2>
 
           <p style={{
@@ -94,7 +96,7 @@ export default function YourBroker() {
             textTransform: "uppercase",
             marginBottom: "32px",
           }}>
-            Managing Broker &middot; IYBA Member
+            {t('broker.title')}
           </p>
 
           <div style={{
@@ -109,7 +111,7 @@ export default function YourBroker() {
             color: "rgba(255,255,255,0.55)",
             marginBottom: "16px",
           }}>
-            Every client works directly with me. No call centres. No junior agents. No automated responses.
+            {t('broker.text1')}
           </p>
 
           <p style={{
@@ -119,7 +121,7 @@ export default function YourBroker() {
             color: "rgba(255,255,255,0.55)",
             marginBottom: "40px",
           }}>
-            One conversation is all it takes to understand exactly what you need — and to deliver it.
+            {t('broker.text2')}
           </p>
 
           <a
@@ -140,7 +142,7 @@ export default function YourBroker() {
               transition: "all 0.4s ease",
             }}
           >
-            Book a Call with George
+            {t('broker.cta')}
           </a>
 
           <a
@@ -158,7 +160,7 @@ export default function YourBroker() {
             onMouseEnter={(e) => e.target.style.color = "#DAA520"}
             onMouseLeave={(e) => e.target.style.color = "rgba(255,255,255,0.4)"}
           >
-            Learn more about George →
+            {t('broker.learnMore')}
           </a>
         </div>
       </div>

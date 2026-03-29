@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Menu, Instagram, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const WhatsappIcon = (props) => (
   <svg
@@ -16,61 +17,62 @@ const WhatsappIcon = (props) => (
   </svg>
 );
 
-// --- 1. MAIN NAVLINKS ---
+// --- 1. MAIN NAVLINKS (i18n keys) ---
 const navSections = [
   {
-    label: "CHARTER",
+    labelKey: "nav.charter",
     links: [
-      { name: "CHARTER A YACHT", href: "/charter-yacht-greece/" },
-      { name: "YACHT ITINERARIES", href: "/yacht-itineraries-greece/" },
-      { name: "HOW IT WORKS", href: "/how-it-works/" },
-      { name: "CHARTER TIMELINE", href: "/charter-timeline/" },
+      { nameKey: "nav.charterYacht", href: "/charter-yacht-greece/" },
+      { nameKey: "nav.itineraries", href: "/yacht-itineraries-greece/" },
+      { nameKey: "nav.howItWorks", href: "/how-it-works/" },
+      { nameKey: "nav.timeline", href: "/charter-timeline/" },
     ],
   },
   {
-    label: "TOOLS",
+    labelKey: "nav.tools",
     links: [
-      { name: "FIND YOUR YACHT", href: "/yacht-finder/" },
-      { name: "COST CALCULATOR", href: "/cost-calculator/" },
-      { name: "BUILD YOUR ITINERARY", href: "/itinerary-builder/" },
-      { name: "ISLAND QUIZ", href: "/island-quiz/" },
-      { name: "YACHT SIZE GUIDE", href: "/yacht-size-visualizer/" },
+      { nameKey: "nav.findYacht", href: "/yacht-finder/" },
+      { nameKey: "nav.costCalculator", href: "/cost-calculator/" },
+      { nameKey: "nav.buildItinerary", href: "/itinerary-builder/" },
+      { nameKey: "nav.islandQuiz", href: "/island-quiz/" },
+      { nameKey: "nav.sizeGuide", href: "/yacht-size-visualizer/" },
     ],
   },
   {
-    label: "EXPLORE",
+    labelKey: "nav.explore",
     links: [
-      { name: "ISLAND GUIDES", href: "/destinations/" },
-      { name: "WEATHER GUIDE", href: "/weather-greece/" },
-      { name: "BLOG", href: "/blog" },
+      { nameKey: "nav.islandGuides", href: "/destinations/" },
+      { nameKey: "nav.weatherGuide", href: "/weather-greece/" },
+      { nameKey: "nav.blog", href: "/blog" },
     ],
   },
   {
-    label: "SERVICES",
+    labelKey: "nav.services",
     links: [
-      { name: "BUY A YACHT", href: "/yachts-for-sale/" },
-      { name: "FLY PRIVATE", href: "/private-jet-charter/" },
-      { name: "VIP TRANSFERS", href: "/vip-transfers-greece/" },
+      { nameKey: "nav.buyYacht", href: "/yachts-for-sale/" },
+      { nameKey: "nav.flyPrivate", href: "/private-jet-charter/" },
+      { nameKey: "nav.vipTransfers", href: "/vip-transfers-greece/" },
     ],
   },
   {
-    label: "COMPANY",
+    labelKey: "nav.company",
     links: [
-      { name: "ABOUT GEORGE YACHTS", href: "/about-us/" },
-      { name: "OUR CORE TEAM", href: "/team/" },
-      { name: "FAQ", href: "/faq" },
+      { nameKey: "nav.aboutUs", href: "/about-us/" },
+      { nameKey: "nav.team", href: "/team/" },
+      { nameKey: "nav.faq", href: "/faq" },
     ],
   },
 ];
 
 // --- 2. LEGAL LINKS ---
 const legalLinks = [
-  { name: "Terms of Service", href: "/terms-of-service" },
-  { name: "Cookie Policy", href: "/cookie-policy" },
-  { name: "Privacy Policy", href: "/privacy-policy" },
+  { nameKey: "footer.terms", fallback: "Terms of Service", href: "/terms-of-service" },
+  { nameKey: "footer.cookies", fallback: "Cookie Policy", href: "/cookie-policy" },
+  { nameKey: "footer.privacy", fallback: "Privacy Policy", href: "/privacy-policy" },
 ];
 
 const NavDrawerSystem = () => {
+  const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const pathname = usePathname();
@@ -230,19 +232,19 @@ const NavDrawerSystem = () => {
 
           <nav className="mt-6 space-y-6 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
             {navSections.map((section) => (
-              <div key={section.label}>
+              <div key={section.labelKey}>
                 <p className="px-1 mb-2 text-[9px] tracking-[0.3em] uppercase" style={{ color: '#DAA520', fontFamily: "'Montserrat', sans-serif", opacity: 0.6 }}>
-                  {section.label}
+                  {t(section.labelKey)}
                 </p>
                 {section.links.map((link) => (
                   <Link
-                    key={link.name}
+                    key={link.nameKey}
                     href={link.href || "#"}
                     onClick={closeDrawer}
                     className="block w-full py-2.5 px-1 border-b border-white/[0.06] text-sm font-medium uppercase text-white/80 hover:text-[#DAA520] transition duration-200 active:text-[#DAA520]"
                     style={{ WebkitTapHighlightColor: "transparent", touchAction: "manipulation", fontFamily: "'Montserrat', sans-serif", letterSpacing: '0.08em' }}
                   >
-                    {link.name}
+                    {t(link.nameKey)}
                   </Link>
                 ))}
               </div>
@@ -252,12 +254,12 @@ const NavDrawerSystem = () => {
           <div className="mt-auto pt-12 flex space-x-6">
             {legalLinks.map((link) => (
               <Link
-                key={link.name}
+                key={link.nameKey}
                 href={link.href}
                 onClick={closeDrawer}
                 className="text-xs text-gray-500 hover:text-gray-300 transition duration-200"
               >
-                {link.name}
+                {t(link.nameKey, link.fallback)}
               </Link>
             ))}
             <span className="text-xs text-gray-500">
