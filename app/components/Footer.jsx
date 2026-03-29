@@ -52,20 +52,11 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-1 flex flex-col items-center lg:items-start">
             <Link href="/" className="block mb-8">
-              <div className="flex flex-col items-center lg:items-start">
-                <img
-                  src="/images/yacht-icon-only.svg"
-                  alt="George Yachts Logo"
-                  style={{ height: "50px", width: "auto", marginBottom: "12px" }}
-                />
-                <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", fontWeight: 400, letterSpacing: "0.08em", color: "#fff" }}>
-                  GEORGE YACHTS
-                </span>
-                <div className="w-full h-px my-2" style={{ background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)" }} />
-                <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", fontWeight: 500, letterSpacing: "0.3em", color: "rgba(255,255,255,0.4)" }}>
-                  BROKERAGE HOUSE LLC
-                </span>
-              </div>
+              <img
+                src="/images/yacht-icon-only.svg"
+                alt="George Yachts Brokerage House LLC"
+                style={{ height: "80px", width: "auto" }}
+              />
             </Link>
 
             {/* Social Icons */}
