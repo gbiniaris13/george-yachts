@@ -41,20 +41,37 @@ function useFeatures() {
 
 const MonolithSlide = ({ item, index, total }) => {
   const [titleMain, titleSub] = item.title.split("|").map((s) => s.trim());
+  const slideRef = React.useRef(null);
+  const [isVisible, setIsVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    const el = slideRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setIsVisible(true); },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   // Logic to alternate the position of the Glass HUD (Left vs Right)
   const isRight = index % 2 !== 0;
 
   return (
     // THE STICKY CONTAINER
-    <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center panel-slide" style={{ zIndex: index + 1 }}>
+    <div ref={slideRef} className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center panel-slide" style={{ zIndex: index + 1 }}>
       {/* 1. CINEMATIC BACKGROUND LAYER */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0" style={{
+        transition: "transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease",
+        transform: isVisible ? "scale(1.05)" : "scale(1.2)",
+        opacity: isVisible ? 1 : 0.5,
+      }}>
         <Image
           src={item.imageSrc}
           alt={`${item.title.replace('|', '–')} - George Yachts luxury yacht charter Greece`}
           fill
-          className="object-cover panel-image"
+          className="object-cover"
           sizes="100vw"
           quality={85}
         />

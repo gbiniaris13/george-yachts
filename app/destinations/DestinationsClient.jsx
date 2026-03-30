@@ -21,6 +21,7 @@ const ISLANDS = [
       { name: "Kiki's Taverna", type: 'Traditional Greek', note: 'No reservations, no phone. Arrive at 12:30 or wait. Worth every minute.' },
       { name: 'Scorpios', type: 'Bohemian-luxury', note: 'Sunset rituals, live music, organic Mediterranean. The anti-club club.' },
       { name: 'Remezzo', type: 'Fine dining', note: 'Harbour views, refined Greek cuisine. Old-school Mykonos glamour.' },
+      { name: 'Interni', type: 'Contemporary Greek', note: 'Garden courtyard dining in the heart of Mykonos Town. Creative Mediterranean cuisine, craft cocktails, and one of the island\'s most beautiful settings.' },
     ],
     hiddenGems: ['Fokos Beach — empty, wild, no sunbeds. The Mykonos locals keep for themselves.', 'Ano Mera village — monasteries and real tavernas, 10 minutes from the chaos.', 'Delos island — UNESCO site, birthplace of Apollo. Take the tender at dawn before the ferries arrive.'],
     yachtTip: 'Anchor at Ornos overnight for calm waters. Psarou is beautiful but exposed to the Meltemi. In July–August, secure your stern-to spot by 2pm or you won\'t get one.',

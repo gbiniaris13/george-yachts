@@ -7,7 +7,7 @@ import CustomCursor from "./components/CustomCursor";
 import WhatsAppButton from "./components/WhatsAppButton";
 import MobileStickyBar from "./components/MobileStickyBar";
 import TranslateWidget from "./components/TranslateWidget";
-import WelcomeLanguagePopup from "./components/WelcomeLanguagePopup";
+// Removed: WelcomeLanguagePopup (country detection popup — users choose language themselves)
 // Removed: SmartWelcome (time-based greetings — gimmick)
 // Removed: WeatherAware (weather popup — not useful)
 import LiveTicker from "./components/LiveTicker";
@@ -95,8 +95,7 @@ export default function RootLayout({ children }) {
         <WishlistProvider>
         <NavDrawerSystem />
         {children}
-        <WelcomeLanguagePopup />
-        {/* Kept: WelcomeLanguagePopup (language detection) + LiveTicker (social proof) */}
+        {/* Language: users choose from flag selector. LiveTicker: social proof */}
         <LiveTicker />
         {/* Removed VoiceSearch */}
         <TranslateWidget />
