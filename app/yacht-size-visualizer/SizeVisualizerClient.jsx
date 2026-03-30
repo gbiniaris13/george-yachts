@@ -68,13 +68,13 @@ const YACHTS = [
 ];
 
 const COMPARISONS = [
-  { name: 'Tennis Court', length: 23.77, icon: '🎾', color: '#2ECC71' },
-  { name: 'Basketball Court', length: 28.65, icon: '🏀', color: '#E67E22' },
-  { name: 'Olympic Pool', length: 50, icon: '🏊', color: '#3498DB' },
-  { name: 'Boeing 737', length: 39.5, icon: '✈️', color: '#95A5A6' },
-  { name: 'NYC Studio Apt', length: 6, icon: '🏠', color: '#9B59B6' },
-  { name: 'London Bus', length: 11.23, icon: '🚌', color: '#E74C3C' },
-  { name: 'Blue Whale', length: 30, icon: '🐋', color: '#2980B9' },
+  { name: 'Tennis Court', key: 'tennisCourt', length: 23.77, icon: '🎾', color: '#2ECC71' },
+  { name: 'Basketball Court', key: 'basketballCourt', length: 28.65, icon: '🏀', color: '#E67E22' },
+  { name: 'Olympic Pool', key: 'olympicPool', length: 50, icon: '🏊', color: '#3498DB' },
+  { name: 'Boeing 737', key: 'boeing737', length: 39.5, icon: '✈️', color: '#95A5A6' },
+  { name: 'NYC Studio Apt', key: 'nycStudio', length: 6, icon: '🏠', color: '#9B59B6' },
+  { name: 'London Bus', key: 'londonBus', length: 11.23, icon: '🚌', color: '#E74C3C' },
+  { name: 'Blue Whale', key: 'blueWhale', length: 30, icon: '🐋', color: '#2980B9' },
 ];
 
 function fmt(n) { return n.toFixed(1); }
@@ -88,10 +88,10 @@ export default function SizeVisualizerClient() {
       ...c,
       ratio: selectedYacht.length / c.length,
       display: selectedYacht.length >= c.length
-        ? `${fmt(selectedYacht.length / c.length)}× longer`
-        : `${Math.round((c.length / selectedYacht.length) * 100)}% of its length`,
+        ? `${fmt(selectedYacht.length / c.length)}× ${t('sizeViz.longer', 'longer')}`
+        : `${Math.round((c.length / selectedYacht.length) * 100)}% ${t('sizeViz.ofItsLength', 'of its length')}`,
     }));
-  }, [selectedYacht]);
+  }, [selectedYacht, t]);
 
   const maxLen = 55; // max scale for the bars
 
@@ -141,10 +141,10 @@ export default function SizeVisualizerClient() {
             {selectedYacht.name}
           </h2>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: `${GOLD}80`, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
-            {selectedYacht.length}m length · {selectedYacht.beam}m beam · {selectedYacht.type}
+            {selectedYacht.length}m {t('sizeViz.length', 'length')} · {selectedYacht.beam}m {t('sizeViz.beam', 'beam')} · {selectedYacht.type}
           </p>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(255,255,255,0.3)', marginTop: 8 }}>
-            Total deck area ≈ {Math.round(selectedYacht.length * selectedYacht.beam * 0.7)}m² ({Math.round(selectedYacht.length * selectedYacht.beam * 0.7 * 10.76)} sq ft)
+            {t('sizeViz.deckArea', 'Total deck area')} ≈ {Math.round(selectedYacht.length * selectedYacht.beam * 0.7)}m² ({Math.round(selectedYacht.length * selectedYacht.beam * 0.7 * 10.76)} sq ft)
           </p>
         </div>
 
@@ -178,7 +178,7 @@ export default function SizeVisualizerClient() {
           {comparisons.map((c, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
               <div style={{ width: 100, textAlign: 'right', fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(255,255,255,0.4)' }}>
-                {c.icon} {c.name}
+                {c.icon} {t(`sizeViz.${c.key}`, c.name)}
               </div>
               <div style={{ flex: 1, position: 'relative', height: 28, background: 'rgba(255,255,255,0.02)', borderRadius: 4, overflow: 'hidden' }}>
                 <div style={{
@@ -207,10 +207,10 @@ export default function SizeVisualizerClient() {
         {/* Fun facts */}
         <div style={{ marginTop: 48, padding: 24, background: 'rgba(218,165,32,0.03)', border: `1px solid ${GOLD}15`, borderRadius: 12, textAlign: 'center' }}>
           <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: '#fff', fontStyle: 'italic', margin: '0 0 8px' }}>
-            "{selectedYacht.name} is as long as {fmt(selectedYacht.length / 11.23)} London buses parked end to end"
+            "{selectedYacht.name} {t('sizeViz.asLongAs', 'is as long as')} {fmt(selectedYacht.length / 11.23)} {t('sizeViz.londonBusesEndToEnd', 'London buses parked end to end')}"
           </p>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(255,255,255,0.25)', margin: 0, letterSpacing: '0.1em' }}>
-            Or {Math.round(selectedYacht.length / 6)} NYC studio apartments laid in a row
+            {t('sizeViz.or', 'Or')} {Math.round(selectedYacht.length / 6)} {t('sizeViz.nycStudiosInRow', 'NYC studio apartments laid in a row')}
           </p>
         </div>
 

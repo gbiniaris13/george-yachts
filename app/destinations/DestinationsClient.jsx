@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useI18n } from '@/lib/i18n/I18nProvider';
 
 const GOLD = '#DAA520';
 
@@ -369,6 +370,7 @@ const ISLANDS = [
 ];
 
 export default function DestinationsClient() {
+  const { t } = useI18n();
   const [activeIsland, setActiveIsland] = useState(ISLANDS[0]);
 
   return (
@@ -376,13 +378,13 @@ export default function DestinationsClient() {
       {/* Hero */}
       <div style={{ padding: '160px 24px 60px', textAlign: 'center' }}>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
-          Insider Knowledge
+          {t('destinations.label', 'Insider Knowledge')}
         </p>
         <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#fff', fontWeight: 300, margin: '0 0 16px' }}>
-          Greek Island Guides
+          {t('destinations.title', 'Greek Island Guides')}
         </h1>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(255,255,255,0.4)', maxWidth: 520, margin: '0 auto', lineHeight: 1.8 }}>
-          Restaurants, hidden beaches, anchorages, and secrets that only come from years on the water. Not from a guidebook — from George.
+          {t('destinations.subtitle', "Restaurants, hidden beaches, anchorages, and secrets that only come from years on the water. Not from a guidebook — from George.")}
         </p>
       </div>
 
@@ -434,7 +436,7 @@ export default function DestinationsClient() {
 
           {/* Best for */}
           <div style={{ textAlign: 'center', marginBottom: 48, padding: '20px 0', borderTop: '1px solid #1a1a1a', borderBottom: '1px solid #1a1a1a' }}>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: 8 }}>Best For</p>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: 8 }}>{t('destinations.bestFor', 'Best For')}</p>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>{activeIsland.bestFor}</p>
           </div>
 
@@ -443,7 +445,7 @@ export default function DestinationsClient() {
             {/* Restaurants */}
             <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid #1a1a1a', borderRadius: 12, padding: 28 }}>
               <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: '#fff', fontWeight: 400, margin: '0 0 20px', display: 'flex', alignItems: 'center', gap: 8 }}>
-                🍽️ Where to Eat
+                🍽️ {t('destinations.whereToEat', 'Where to Eat')}
               </h3>
               {activeIsland.restaurants.map((r, i) => (
                 <div key={i} style={{ marginBottom: 20, paddingBottom: 20, borderBottom: i < activeIsland.restaurants.length - 1 ? '1px solid #1a1a1a' : 'none' }}>
@@ -457,7 +459,7 @@ export default function DestinationsClient() {
             {/* Hidden gems */}
             <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid #1a1a1a', borderRadius: 12, padding: 28 }}>
               <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: '#fff', fontWeight: 400, margin: '0 0 20px', display: 'flex', alignItems: 'center', gap: 8 }}>
-                💎 Hidden Gems
+                💎 {t('destinations.hiddenGems', 'Hidden Gems')}
               </h3>
               {activeIsland.hiddenGems.map((gem, i) => (
                 <div key={i} style={{ marginBottom: 16, paddingLeft: 20, position: 'relative' }}>
@@ -471,7 +473,7 @@ export default function DestinationsClient() {
           {/* Anchorage */}
           <div style={{ marginTop: 24, background: 'rgba(218,165,32,0.03)', border: `1px solid ${GOLD}15`, borderRadius: 12, padding: 24 }}>
             <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: '#fff', fontWeight: 400, margin: '0 0 12px', display: 'flex', alignItems: 'center', gap: 8 }}>
-              ⚓ Best Anchorages
+              ⚓ {t('destinations.bestAnchorages', 'Best Anchorages')}
             </h3>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.4)', lineHeight: 1.8, margin: 0 }}>
               {activeIsland.anchorage}
@@ -480,7 +482,7 @@ export default function DestinationsClient() {
 
           {/* George's yacht tip */}
           <div style={{ marginTop: 24, borderLeft: `3px solid ${GOLD}`, paddingLeft: 24, paddingTop: 8, paddingBottom: 8 }}>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: GOLD, marginBottom: 8 }}>George's Yacht Tip</p>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: GOLD, marginBottom: 8 }}>{t('destinations.yachtTip', "George's Yacht Tip")}</p>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.5)', lineHeight: 1.8, margin: '0 0 8px', fontStyle: 'italic' }}>
               "{activeIsland.yachtTip}"
             </p>
@@ -492,7 +494,7 @@ export default function DestinationsClient() {
           {/* Recommended yachts */}
           <div style={{ marginTop: 32, textAlign: 'center' }}>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: 16 }}>
-              Recommended Yachts for <span className="notranslate">{activeIsland.name}</span>
+              {t('destinations.recommendedYachts', 'Recommended Yachts for')} <span className="notranslate">{activeIsland.name}</span>
             </p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               {activeIsland.yachts.map(slug => (

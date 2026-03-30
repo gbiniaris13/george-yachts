@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import { useI18n } from '@/lib/i18n/I18nProvider';
 
 const GOLD = '#DAA520';
 const DARK = '#000';
@@ -75,6 +76,7 @@ const REGION_COLORS = {
 };
 
 export default function ItineraryBuilderClient() {
+  const { t } = useI18n();
   // Starting points
   const athensIsland = ISLANDS.find((i) => i.id === 'athens');
   const corfu = ISLANDS.find((i) => i.id === 'corfu');
@@ -136,20 +138,20 @@ export default function ItineraryBuilderClient() {
       {/* Hero */}
       <div style={{ padding: '160px 24px 40px', textAlign: 'center' }}>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
-          Interactive Route Planner
+          {t('builder.label', 'Interactive Route Planner')}
         </p>
         <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#fff', fontWeight: 300, margin: '0 0 12px 0' }}>
-          Build Your Dream Itinerary
+          {t('builder.title', 'Build Your Dream Itinerary')}
         </h1>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(255,255,255,0.35)', maxWidth: 500, margin: '0 auto' }}>
-          Click islands on the map to create your route. We'll calculate distances and sailing time.
+          {t('builder.subtitle', "Click islands on the map to create your route. We'll calculate distances and sailing time.")}
         </p>
       </div>
 
       {/* Starting port selector */}
       <div style={{ display: 'flex', justifyContent: 'center', gap: 12, padding: '0 24px 16px', flexWrap: 'wrap', alignItems: 'center' }}>
         <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>
-          Start from:
+          {t('builder.startFrom', 'Start from:')}
         </span>
         {[
           { island: athensIsland, label: 'Athens' },
@@ -203,7 +205,7 @@ export default function ItineraryBuilderClient() {
               transition: 'all 0.3s ease',
             }}
           >
-            {r === 'all' ? 'All Regions' : r}
+            {r === 'all' ? t('builder.allRegions', 'All Regions') : r}
           </button>
         ))}
       </div>
@@ -436,10 +438,10 @@ export default function ItineraryBuilderClient() {
         {/* ROUTE PANEL */}
         <div style={{ background: '#111', border: '1px solid #222', borderRadius: 12, padding: 24, display: 'flex', flexDirection: 'column' }}>
           <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: '#fff', margin: '0 0 4px 0' }}>
-            Your Route
+            {t('builder.yourRoute', 'Your Route')}
           </h3>
           <p style={{ fontFamily: "'Montserrat'", fontSize: 10, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 20 }}>
-            {selected.length === 0 ? 'Click islands to begin' : `${selected.length} stop${selected.length !== 1 ? 's' : ''} selected`}
+            {selected.length === 0 ? t('builder.clickToBegin', 'Click islands to begin') : `${selected.length} ${t('builder.stopsSelected', 'stops selected')}`}
           </p>
 
           {/* Selected islands list */}
@@ -448,7 +450,7 @@ export default function ItineraryBuilderClient() {
               <div style={{ textAlign: 'center', padding: '40px 0', opacity: 0.3 }}>
                 <div style={{ fontSize: 32, marginBottom: 12 }}>🏝️</div>
                 <p style={{ fontFamily: "'Montserrat'", fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>
-                  Tap islands on the map to build your itinerary
+                  {t('builder.tapIslands', 'Tap islands on the map to build your itinerary')}
                 </p>
               </div>
             ) : (
@@ -496,7 +498,7 @@ export default function ItineraryBuilderClient() {
             }}>
               <div style={{ textAlign: 'center' }}>
                 <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 4 }}>
-                  Total Distance
+                  {t('builder.totalDistance', 'Total Distance')}
                 </div>
                 <div style={{ fontFamily: "'Cormorant Garamond'", fontSize: 24, color: GOLD, fontWeight: 600 }}>
                   {routeStats.totalNM} NM
@@ -504,7 +506,7 @@ export default function ItineraryBuilderClient() {
               </div>
               <div style={{ textAlign: 'center' }}>
                 <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 4 }}>
-                  Sailing Time
+                  {t('builder.sailingTime', 'Sailing Time')}
                 </div>
                 <div style={{ fontFamily: "'Cormorant Garamond'", fontSize: 24, color: GOLD, fontWeight: 600 }}>
                   ~{routeStats.hours}h
@@ -517,7 +519,7 @@ export default function ItineraryBuilderClient() {
           {routeStats.legs.length > 0 && (
             <div style={{ marginBottom: 20 }}>
               <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 8 }}>
-                Legs
+                {t('builder.legs', 'Legs')}
               </div>
               {routeStats.legs.map((leg, i) => (
                 <div key={i} style={{
@@ -546,7 +548,7 @@ export default function ItineraryBuilderClient() {
                   transition: 'all 0.3s ease',
                 }}
               >
-                Send Route to George
+                {t('builder.sendToGeorge', 'Send Route to George')}
               </button>
             )}
             {selected.length > 0 && (
@@ -560,7 +562,7 @@ export default function ItineraryBuilderClient() {
                   letterSpacing: '0.1em', textTransform: 'uppercase',
                 }}
               >
-                Clear Route
+                {t('builder.clearRoute', 'Clear Route')}
               </button>
             )}
           </div>

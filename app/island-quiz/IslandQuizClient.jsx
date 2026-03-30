@@ -65,6 +65,7 @@ const QUESTIONS = [
 ];
 
 export default function IslandQuizClient() {
+  const { t } = useI18n();
   const [step, setStep] = useState(0);
   const [scores, setScores] = useState({});
   const [result, setResult] = useState(null);
@@ -108,10 +109,10 @@ export default function IslandQuizClient() {
 
           {/* Question */}
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: `${GOLD}80`, marginBottom: 16 }}>
-            Question {step + 1} of {QUESTIONS.length}
+            {t('quiz.question', 'Question')} {step + 1} {t('quiz.of', 'of')} {QUESTIONS.length}
           </p>
           <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', color: '#fff', fontWeight: 300, textAlign: 'center', marginBottom: 48, maxWidth: 600 }}>
-            {QUESTIONS[step].q}
+            {t(`quiz.q${step + 1}`, QUESTIONS[step].q)}
           </h2>
 
           {/* Options */}
@@ -144,7 +145,7 @@ export default function IslandQuizClient() {
                   e.target.style.color = 'rgba(255,255,255,0.7)';
                 }}
               >
-                {opt.text}
+                {t(`quiz.q${step + 1}o${i + 1}`, opt.text)}
               </button>
             ))}
           </div>
@@ -154,7 +155,7 @@ export default function IslandQuizClient() {
         <div style={{ textAlign: 'center', maxWidth: 600 }}>
           <div style={{ fontSize: 72, marginBottom: 24 }}>{result.emoji}</div>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: `${GOLD}80`, marginBottom: 12 }}>
-            You are...
+            {t('quiz.youAre', 'You are...')}
           </p>
           <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#fff', fontWeight: 300, marginBottom: 8 }}>
             {result.name}
@@ -168,15 +169,15 @@ export default function IslandQuizClient() {
 
           <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(218,165,32,0.15)', borderRadius: 12, padding: 24, marginBottom: 32, textAlign: 'left' }}>
             <div style={{ marginBottom: 16 }}>
-              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>Region</span>
+              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>{t('quiz.region', 'Region')}</span>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: '#fff', margin: '4px 0 0' }}>{result.region}</p>
             </div>
             <div style={{ marginBottom: 16 }}>
-              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>Best For</span>
+              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>{t('quiz.bestFor', 'Best For')}</span>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: '#fff', margin: '4px 0 0' }}>{result.bestFor}</p>
             </div>
             <div>
-              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>Recommended Yacht</span>
+              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>{t('quiz.recommendedYacht', 'Recommended Yacht')}</span>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: GOLD, margin: '4px 0 0' }}>{result.yacht}</p>
             </div>
           </div>
@@ -201,7 +202,7 @@ export default function IslandQuizClient() {
                 textAlign: 'center',
               }}
             >
-              Share Your Result
+              {t('quiz.shareResult', 'Share Your Result')}
             </a>
             <a
               href="/charter-yacht-greece"
@@ -218,7 +219,7 @@ export default function IslandQuizClient() {
                 textAlign: 'center',
               }}
             >
-              Browse Yachts for {result.name}
+              {t('quiz.browseYachts', 'Browse Yachts for')} {result.name}
             </a>
             <button
               onClick={restart}
@@ -235,7 +236,7 @@ export default function IslandQuizClient() {
                 cursor: 'pointer',
               }}
             >
-              Take Quiz Again
+              {t('quiz.takeAgain', 'Take Quiz Again')}
             </button>
           </div>
         </div>

@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useWishlist } from '../components/WishlistProvider';
+import { useI18n } from '@/lib/i18n/I18nProvider';
 
 const GOLD = '#DAA520';
 
 export default function FavoritesContent() {
+  const { t } = useI18n();
   const { items, toggle, clear } = useWishlist();
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
@@ -39,10 +41,10 @@ export default function FavoritesContent() {
       <div style={{ minHeight: '100vh', background: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '160px 24px', textAlign: 'center' }}>
         <div style={{ fontSize: 48, marginBottom: 24, opacity: 0.3 }}>♡</div>
         <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#fff', fontWeight: 300, margin: '0 0 16px 0' }}>
-          No Favorites Yet
+          {t('favorites.empty', 'No Favorites Yet')}
         </h1>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(255,255,255,0.35)', maxWidth: 400, marginBottom: 32 }}>
-          Browse our fleet and tap the heart icon on any yacht that catches your eye. Your favorites will appear here.
+          {t('favorites.emptyDesc', 'Browse our fleet and tap the heart icon on any yacht that catches your eye. Your favorites will appear here.')}
         </p>
         <Link
           href="/charter-yacht-greece"
@@ -60,7 +62,7 @@ export default function FavoritesContent() {
             borderRadius: 4,
           }}
         >
-          Browse Fleet
+          {t('favorites.browse', 'Browse Fleet')}
         </Link>
       </div>
     );
@@ -72,13 +74,13 @@ export default function FavoritesContent() {
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
-            Your Selection
+            {t('favorites.label', 'Your Selection')}
           </p>
           <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#fff', fontWeight: 300, margin: '0 0 12px 0' }}>
-            {items.length} Favorite{items.length !== 1 ? 's' : ''} Saved
+            {items.length} {t('favorites.saved', 'Favorites Saved')}
           </h1>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.35)' }}>
-            Review your selection and send them to George for a personalized proposal.
+            {t('favorites.reviewDesc', 'Review your selection and send them to George for a personalized proposal.')}
           </p>
         </div>
 
@@ -134,16 +136,16 @@ export default function FavoritesContent() {
         {!sent ? (
           <div style={{ background: '#111', border: `1px solid ${GOLD}20`, borderRadius: 8, padding: 32, textAlign: 'center' }}>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, color: '#fff', fontWeight: 300, margin: '0 0 8px 0' }}>
-              Send to George
+              {t('favorites.sendToGeorge', 'Send to George')}
             </h2>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(255,255,255,0.35)', marginBottom: 24 }}>
-              Share your favorites and receive a personalized proposal within 24 hours.
+              {t('favorites.sendDesc', 'Share your favorites and receive a personalized proposal within 24 hours.')}
             </p>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20, maxWidth: 400, margin: '0 auto 20px' }}>
               <input
                 type="text"
-                placeholder="Your name"
+                placeholder={t('favorites.yourName', 'Your name')}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 style={{
@@ -159,7 +161,7 @@ export default function FavoritesContent() {
               />
               <input
                 type="email"
-                placeholder="Your email"
+                placeholder={t('favorites.yourEmail', 'Your email')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={{
@@ -193,17 +195,17 @@ export default function FavoritesContent() {
                 transition: 'all 0.3s ease',
               }}
             >
-              {sending ? 'Opening WhatsApp...' : 'Send via WhatsApp'}
+              {sending ? t('favorites.openingWhatsApp', 'Opening WhatsApp...') : t('favorites.sendViaWhatsApp', 'Send via WhatsApp')}
             </button>
           </div>
         ) : (
           <div style={{ background: '#111', border: `1px solid ${GOLD}40`, borderRadius: 8, padding: 32, textAlign: 'center' }}>
             <div style={{ fontSize: 32, marginBottom: 16 }}>✓</div>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, color: GOLD, fontWeight: 300, margin: '0 0 12px 0' }}>
-              Sent to George
+              {t('favorites.sentToGeorge', 'Sent to George')}
             </h2>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>
-              George will personally review your selection and respond within 24 hours.
+              {t('favorites.sentDesc', 'George will personally review your selection and respond within 24 hours.')}
             </p>
           </div>
         )}
@@ -222,7 +224,7 @@ export default function FavoritesContent() {
               letterSpacing: '0.1em',
             }}
           >
-            Clear all favorites
+            {t('favorites.clearAll', 'Clear all favorites')}
           </button>
         </div>
       </div>

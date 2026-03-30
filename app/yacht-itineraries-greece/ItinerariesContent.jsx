@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 function Reveal({ children, className = "", delay = 0 }) {
   const ref = useRef(null);
@@ -217,6 +218,7 @@ function ItineraryCard({ itin, index }) {
 }
 
 export default function ItinerariesContent() {
+  const { t } = useI18n();
   useParallax();
 
   return (
@@ -225,13 +227,13 @@ export default function ItinerariesContent() {
       <section style={{ padding: "100px 24px", background: "#000" }}>
         <Reveal>
           <div style={{ maxWidth: "750px", margin: "0 auto", textAlign: "center" }}>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#DAA520", marginBottom: "24px" }}>Curated by George</p>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#DAA520", marginBottom: "24px" }}>{t('itin.curatedBy', 'Curated by George')}</p>
             <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 300, color: "#fff", lineHeight: 1.35, margin: "0 0 32px" }}>
-              Why Trust These Itineraries?
+              {t('itin.whyTrust', 'Why Trust These Itineraries?')}
             </h2>
             <div style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, #E6C77A, #A67C2E)", margin: "0 auto 32px" }} />
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.45)", lineHeight: 1.9, fontWeight: 300 }}>
-              Every route below has been personally sailed and refined by George Biniaris &mdash; drawing on deep local knowledge of Greek waters. These are not generic suggestions. They are tested, trusted, and designed to deliver the best possible week aboard.
+              {t('itin.whyTrustDesc', 'Every route below has been personally sailed and refined by George Biniaris — drawing on deep local knowledge of Greek waters. These are not generic suggestions. They are tested, trusted, and designed to deliver the best possible week aboard.')}
             </p>
           </div>
         </Reveal>
@@ -247,15 +249,15 @@ export default function ItinerariesContent() {
       {/* CTA */}
       <section style={{ padding: "100px 24px", background: "#000", textAlign: "center", borderTop: "1px solid rgba(218,165,32,0.08)" }}>
         <Reveal>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#DAA520", marginBottom: "16px" }}>Your Itinerary, Your Way</p>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#DAA520", marginBottom: "16px" }}>{t('itin.yourWay', 'Your Itinerary, Your Way')}</p>
           <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 300, color: "#fff", margin: "0 0 16px" }}>
-            Let&apos;s Design Your Perfect Week
+            {t('itin.designWeek', "Let's Design Your Perfect Week")}
           </h2>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.4)", lineHeight: 1.7, fontWeight: 300, maxWidth: "550px", margin: "0 auto 40px" }}>
-            These routes are starting points. Every charter is personally tailored by George &mdash; your preferences, your pace, your islands. Tell us your dream and we&apos;ll design your perfect week in Greek waters.
+            {t('itin.designDesc', "These routes are starting points. Every charter is personally tailored by George — your preferences, your pace, your islands. Tell us your dream and we'll design your perfect week in Greek waters.")}
           </p>
           <a href="#contact" style={{ display: "inline-block", background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)", color: "#000", padding: "16px 48px", fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none", fontWeight: 700 }}>
-            Start Planning
+            {t('itin.startPlanning', 'Start Planning')}
           </a>
         </Reveal>
       </section>

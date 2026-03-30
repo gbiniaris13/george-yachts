@@ -1,5 +1,6 @@
 'use client';
 
+import { useI18n } from '@/lib/i18n/I18nProvider';
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -167,6 +168,7 @@ function matchYachts(answers) {
 }
 
 export default function YachtFinderQuiz() {
+  const { t } = useI18n();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
@@ -217,13 +219,13 @@ export default function YachtFinderQuiz() {
           {/* Header */}
           <div style={{ textAlign: 'center', marginBottom: 60 }}>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
-              Your Perfect Match
+              {t('finder.yourMatch', 'Your Perfect Match')}
             </p>
             <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#fff', fontWeight: 300, margin: '0 0 16px 0' }}>
-              We Found Your Yachts
+              {t('finder.weFoundYachts', 'We Found Your Yachts')}
             </h1>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(255,255,255,0.4)', maxWidth: 500, margin: '0 auto' }}>
-              Based on your preferences, these three vessels are your ideal match in Greek waters.
+              {t('finder.resultsDesc', 'Based on your preferences, these three vessels are your ideal match in Greek waters.')}
             </p>
           </div>
 
@@ -254,7 +256,7 @@ export default function YachtFinderQuiz() {
                     color: '#000',
                     textTransform: 'uppercase',
                   }}>
-                    ★ Best Match
+                    ★ {t('finder.bestMatch', 'Best Match')}
                   </div>
                 )}
 
@@ -270,18 +272,18 @@ export default function YachtFinderQuiz() {
                   {/* Specs */}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
                     <div style={{ textAlign: 'center', padding: '12px 0', borderBottom: '1px solid #222' }}>
-                      <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 4 }}>Guests</div>
+                      <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 4 }}>{t('common.guests', 'Guests')}</div>
                       <div style={{ fontFamily: "'Cormorant Garamond'", fontSize: 20, color: '#fff' }}>{yacht.guests}</div>
                     </div>
                     <div style={{ textAlign: 'center', padding: '12px 0', borderBottom: '1px solid #222' }}>
-                      <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 4 }}>Cabins</div>
+                      <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 4 }}>{t('common.cabins', 'Cabins')}</div>
                       <div style={{ fontFamily: "'Cormorant Garamond'", fontSize: 20, color: '#fff' }}>{yacht.cabins}</div>
                     </div>
                   </div>
 
                   {/* Price */}
                   <div style={{ textAlign: 'center', padding: '16px 0', background: 'rgba(218,165,32,0.05)', borderRadius: 4, marginBottom: 20 }}>
-                    <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 6 }}>Total All-In (incl. APA & VAT)</div>
+                    <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 6 }}>{t('finder.totalAllIn', 'Total All-In (incl. APA & VAT)')}</div>
                     <div style={{ fontFamily: "'Cormorant Garamond'", fontSize: 24, color: GOLD, fontWeight: 600 }}>
                       €{yacht.totalAllIn.toLocaleString()}/week
                     </div>
@@ -312,7 +314,7 @@ export default function YachtFinderQuiz() {
                       transition: 'all 0.3s ease',
                     }}
                   >
-                    View Details
+                    {t('common.viewDetails', 'View Details')}
                   </Link>
                 </div>
               </div>
@@ -338,7 +340,7 @@ export default function YachtFinderQuiz() {
                 transition: 'all 0.3s ease',
               }}
             >
-              Start Over
+              {t('finder.startOver', 'Start Over')}
             </button>
             <a
               href="https://calendly.com/george-georgeyachts/30min"
@@ -359,7 +361,7 @@ export default function YachtFinderQuiz() {
                 transition: 'all 0.3s ease',
               }}
             >
-              Talk to George Instead
+              {t('finder.talkToGeorge', 'Talk to George Instead')}
             </a>
           </div>
         </div>
@@ -382,14 +384,14 @@ export default function YachtFinderQuiz() {
         <div style={{ marginBottom: 48 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
             <span style={{ fontFamily: "'Montserrat'", fontSize: 10, letterSpacing: '0.3em', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>
-              Question {step + 1} of {QUESTIONS.length}
+              {t('finder.questionOf', 'Question')} {step + 1} {t('quiz.of', 'of')} {QUESTIONS.length}
             </span>
             {step > 0 && (
               <button
                 onClick={handleBack}
                 style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', fontFamily: "'Montserrat'", fontSize: 11, cursor: 'pointer', letterSpacing: '0.1em' }}
               >
-                ← Back
+                ← {t('common.back', 'Back')}
               </button>
             )}
           </div>
@@ -401,10 +403,10 @@ export default function YachtFinderQuiz() {
         {/* Question */}
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
           <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.8rem, 5vw, 2.8rem)', color: '#fff', fontWeight: 300, margin: '0 0 12px 0' }}>
-            {currentQ.title}
+            {t(`finder.step${step + 1}Title`, currentQ.title)}
           </h2>
           <p style={{ fontFamily: "'Montserrat'", fontSize: 13, color: 'rgba(255,255,255,0.35)' }}>
-            {currentQ.subtitle}
+            {t(`finder.step${step + 1}Subtitle`, currentQ.subtitle)}
           </p>
         </div>
 
@@ -431,10 +433,10 @@ export default function YachtFinderQuiz() {
               <span style={{ fontSize: 28, flexShrink: 0 }}>{opt.emoji}</span>
               <div>
                 <div style={{ fontFamily: "'Montserrat'", fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 4 }}>
-                  {opt.label}
+                  {t(`finder.step${step + 1}Option${currentQ.options.indexOf(opt) + 1}`, opt.label)}
                 </div>
                 <div style={{ fontFamily: "'Montserrat'", fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>
-                  {opt.desc}
+                  {t(`finder.step${step + 1}Desc${currentQ.options.indexOf(opt) + 1}`, opt.desc)}
                 </div>
               </div>
             </button>
