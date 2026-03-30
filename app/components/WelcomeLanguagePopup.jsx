@@ -148,41 +148,83 @@ export default function WelcomeLanguagePopup() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    // Don't show if user JUST selected a language (googtrans cookie exists)
-    const hasTranslation = document.cookie.includes('googtrans=/en/');
-    if (hasTranslation) return;
-
     // Don't show if dismissed this session
     if (sessionStorage.getItem('gy-lang-chosen')) return;
 
-    // Detect browser language
-    const browserLang = navigator.language?.split('-')[0] || 'en';
+    // Don't show if already set language
+    if (localStorage.getItem('gy-language') && localStorage.getItem('gy-language') !== 'en') return;
 
-    // For non-English browsers, show personalized welcome
-    const data = LANGUAGE_MAP[browserLang];
-    if (data) {
-      setTimeout(() => {
-        setLangData(data);
-        setVisible(true);
-      }, 1500);
-      return;
-    }
+    // Use IP geolocation API to detect country
+    const detectCountry = async () => {
+      try {
+        // Try ipapi.co first (free, no key needed, 1000 req/day)
+        const res = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
+        const geo = await res.json();
+        const countryCode = geo?.country_code?.toLowerCase();
 
-    // For English browsers (or unsupported languages), show language chooser
-    setTimeout(() => {
-      setLangData({
-        flag: '🌍',
-        country: '',
-        countryLocal: '',
-        label: '',
-        welcome: 'Welcome',
-        message: 'This site is available in 15 languages. Would you like to view it in a different language?',
-        keepButton: '🌐 Choose a Language',
-        switchButton: 'Continue in English',
-        code: null, // Will open translate dropdown instead
-      });
-      setVisible(true);
-    }, 2000);
+        // Map country code to language
+        const COUNTRY_TO_LANG = {
+          gr: 'el', cy: 'el', // Greece, Cyprus → Greek
+          ae: 'ar', sa: 'ar', qa: 'ar', kw: 'ar', bh: 'ar', om: 'ar', eg: 'ar', lb: 'ar', jo: 'ar', // Arab countries
+          ru: 'ru', by: 'ru', kz: 'ru', // Russia + CIS
+          il: 'he', // Israel
+          fr: 'fr', be: 'fr', mc: 'fr', // French
+          de: 'de', at: 'de', ch: 'de', // German
+          it: 'it', // Italy
+          es: 'es', mx: 'es', ar: 'es', // Spanish
+          pt: 'pt', br: 'pt', // Portuguese
+          jp: 'ja', // Japan
+          kr: 'ko', // Korea
+          cn: 'zh', tw: 'zh', hk: 'zh', // Chinese
+          tr: 'tr', // Turkey
+          nl: 'nl', // Netherlands
+          pl: 'pl', // Poland
+        };
+
+        const langCode = COUNTRY_TO_LANG[countryCode];
+        const countryName = geo?.country_name || '';
+
+        if (langCode && LANGUAGE_MAP[langCode]) {
+          const data = { ...LANGUAGE_MAP[langCode] };
+          // Override country name with actual detected country
+          data.country = countryName;
+          data.message = data.message.replace(/από την? \w+|from \w+|из \w+/, (m) => {
+            // Keep the original phrasing but it's already correct for major countries
+            return m;
+          });
+
+          setTimeout(() => {
+            setLangData(data);
+            setVisible(true);
+          }, 1500);
+        } else {
+          // English-speaking or unsupported country
+          setTimeout(() => {
+            setLangData({
+              flag: '🌍',
+              country: countryName,
+              countryLocal: '',
+              label: '',
+              welcome: 'Welcome',
+              message: `We see you're visiting from ${countryName || 'abroad'}. This site is available in 15 languages.`,
+              keepButton: '🌐 Choose a Language',
+              switchButton: 'Continue in English',
+              code: null,
+            });
+            setVisible(true);
+          }, 2000);
+        }
+      } catch (err) {
+        // Fallback to browser language if API fails
+        const browserLang = navigator.language?.split('-')[0] || 'en';
+        const data = LANGUAGE_MAP[browserLang];
+        if (data) {
+          setTimeout(() => { setLangData(data); setVisible(true); }, 1500);
+        }
+      }
+    };
+
+    detectCountry();
   }, []);
 
   const handleAcceptLanguage = () => {

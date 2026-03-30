@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { useI18n } from '@/lib/i18n/I18nProvider';
 
 const GOLD = '#DAA520';
 
@@ -105,7 +106,14 @@ export default function VoiceSearch() {
     const recognition = new SpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = true;
-    recognition.lang = 'en-US';
+    // Map site language to speech recognition locale
+    const LANG_TO_SPEECH = {
+      en: 'en-US', el: 'el-GR', ar: 'ar-AE', ru: 'ru-RU', he: 'he-IL',
+      fr: 'fr-FR', de: 'de-DE', it: 'it-IT', es: 'es-ES', pt: 'pt-BR',
+      ja: 'ja-JP', ko: 'ko-KR', zh: 'zh-CN', tr: 'tr-TR', nl: 'nl-NL', pl: 'pl-PL',
+    };
+    const siteLang = localStorage.getItem('gy-language') || 'en';
+    recognition.lang = LANG_TO_SPEECH[siteLang] || 'en-US';
 
     recognition.onstart = () => {
       setIsListening(true);
