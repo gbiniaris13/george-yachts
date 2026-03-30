@@ -42,7 +42,6 @@ const navSections = [
     labelKey: "nav.explore",
     links: [
       { nameKey: "nav.islandGuides", href: "/destinations/" },
-      { nameKey: "nav.weatherGuide", href: "/weather-greece/" },
       { nameKey: "nav.blog", href: "/blog" },
     ],
   },
