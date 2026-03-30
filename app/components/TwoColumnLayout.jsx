@@ -47,14 +47,14 @@ const MonolithSlide = ({ item, index, total }) => {
 
   return (
     // THE STICKY CONTAINER
-    <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
+    <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center panel-slide" style={{ zIndex: index + 1 }}>
       {/* 1. CINEMATIC BACKGROUND LAYER */}
       <div className="absolute inset-0 z-0">
         <Image
           src={item.imageSrc}
           alt={`${item.title.replace('|', '–')} - George Yachts luxury yacht charter Greece`}
           fill
-          className="object-cover scale-105"
+          className="object-cover panel-image"
           sizes="100vw"
           quality={85}
         />
@@ -142,6 +142,32 @@ const TwoColumnLayout = () => {
         /* Force squares everywhere. No rounding allowed in this dojo. */
         * {
           border-radius: 0 !important;
+        }
+
+        /* Panel scroll reveal — image scales up as panel enters */
+        @supports (animation-timeline: view()) {
+          .panel-image {
+            scale: 1.15;
+            animation: panelImageReveal 1s ease both;
+            animation-timeline: view();
+            animation-range: entry 0% cover 50%;
+          }
+
+          @keyframes panelImageReveal {
+            from { scale: 1.15; opacity: 0.7; }
+            to { scale: 1.05; opacity: 1; }
+          }
+
+          .panel-slide {
+            animation: panelSlideIn 0.8s ease both;
+            animation-timeline: view();
+            animation-range: entry 0% entry 40%;
+          }
+
+          @keyframes panelSlideIn {
+            from { opacity: 0.6; }
+            to { opacity: 1; }
+          }
         }
       `}</style>
     </section>
