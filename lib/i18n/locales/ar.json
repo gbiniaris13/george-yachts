@@ -104,7 +104,8 @@
     "fromJournal": "من المجلة",
     "flagship": "الرائد",
     "price": "السعر",
-    "sort": "ترتيب"
+    "sort": "ترتيب",
+    "totalPerPerson": "الإجمالي لكل شخص/أسبوع"
   },
   "yacht": {
     "specsTitle": "ما هي مواصفات",

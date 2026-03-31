@@ -157,7 +157,8 @@
     "fromJournal": "From The Journal",
     "bookConsultation": "Book a Free Consultation",
     "price": "Price",
-    "sort": "Sort"
+    "sort": "Sort",
+    "totalPerPerson": "Total per person/week"
   },
   "yacht": {
     "specsTitle": "What Are the Specifications of",

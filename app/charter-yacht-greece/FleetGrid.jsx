@@ -331,9 +331,11 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
             <div className="fleet-card__price">{price}</div>
             {perPersonWeekly && (
               <div className="fleet-card__per-person">
+                <span className="fleet-card__per-person-label">{t('fleet.totalPerPerson', 'Total per person/week')}:</span>
+                {' '}
                 {perPersonWeekly.low === perPersonWeekly.high
-                  ? `from ${perPersonWeekly.low}/${t('fleet.perPersonWeek', 'person/week')}`
-                  : `${perPersonWeekly.low} – ${perPersonWeekly.high}/${t('fleet.perPersonWeek', 'person/week')}`
+                  ? perPersonWeekly.low
+                  : `${perPersonWeekly.low} – ${perPersonWeekly.high}`
                 }
                 <span className="fleet-card__per-person-note">{t('fleet.inclApaVat', 'incl. APA & VAT')}</span>
               </div>

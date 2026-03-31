@@ -118,7 +118,8 @@
     "fromJournal": "מהיומן",
     "flagship": "דגל",
     "price": "מחיר",
-    "sort": "מיון"
+    "sort": "מיון",
+    "totalPerPerson": "סה\"כ לאדם/שבוע"
   },
   "yacht": {
     "specsTitle": "מהן המפרטים של",

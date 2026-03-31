@@ -179,14 +179,40 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
         )}
 
         {/* PRICING — GEO Question H2 */}
-        {yacht.weeklyRatePrice && (
-          <section className="yacht-pricing reveal">
-            <div className="container">
-              <h2 className="yacht-pricing__title">{t('yacht.pricingTitle', 'What Is the Weekly Charter Rate for')} {yacht.name}?</h2>
-              <p className="yacht-pricing__rate">{yacht.weeklyRatePrice}</p>
-            </div>
-          </section>
-        )}
+        {yacht.weeklyRatePrice && (() => {
+          // Calculate per-person/week with APA (30%) + VAT (12%)
+          const priceStr = yacht.weeklyRatePrice || '';
+          const guestCount = parseInt(yacht.sleeps) || 0;
+          const numbers = [];
+          const regex = /€?([\d,.]+)/g;
+          let m;
+          while ((m = regex.exec(priceStr.replace(/[^\d.,€]/g, ' '))) !== null) {
+            const num = parseFloat(m[1].replace(/,/g, '').replace(/\./g, ''));
+            if (!isNaN(num) && num > 100) numbers.push(num);
+          }
+          const lowBase = numbers[0] || 0;
+          const highBase = numbers.length > 1 ? numbers[numbers.length - 1] : lowBase;
+          const multiplier = 1.42; // 30% APA + 12% VAT
+          const lowPP = guestCount > 0 ? Math.round((lowBase * multiplier) / guestCount) : 0;
+          const highPP = guestCount > 0 ? Math.round((highBase * multiplier) / guestCount) : 0;
+
+          return (
+            <section className="yacht-pricing reveal">
+              <div className="container">
+                <h2 className="yacht-pricing__title">{t('yacht.pricingTitle', 'What Is the Weekly Charter Rate for')} {yacht.name}?</h2>
+                <p className="yacht-pricing__rate">{yacht.weeklyRatePrice}</p>
+                {lowPP > 0 && (
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "0.95rem", color: "#DAA520", marginTop: "16px", letterSpacing: "0.05em" }}>
+                    {t('fleet.totalPerPerson', 'Total per person/week')}: {lowPP === highPP ? `€${lowPP.toLocaleString()}` : `€${lowPP.toLocaleString()} – €${highPP.toLocaleString()}`}
+                    <span style={{ display: "block", fontSize: "0.75rem", color: "rgba(255,255,255,0.4)", marginTop: "4px" }}>
+                      {t('fleet.inclApaVat', 'incl. APA & VAT')}
+                    </span>
+                  </p>
+                )}
+              </div>
+            </section>
+          );
+        })()}
 
         {/* CTA SECTION - Dual Options */}
         <section className="yacht-cta reveal">
