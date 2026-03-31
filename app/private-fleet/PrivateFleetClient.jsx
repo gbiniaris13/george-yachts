@@ -9,9 +9,16 @@ export default function PrivateFleetClient({ yachts }) {
 
   return (
     <div style={{ minHeight: "100vh", background: "#000" }}>
+      {/* Back Button */}
+      <Link href="/" style={{ position: "fixed", top: 24, left: 24, zIndex: 40, display: "flex", alignItems: "center", gap: 8, textDecoration: "none", fontFamily: "'Montserrat', sans-serif", fontSize: 11, letterSpacing: "0.15em", color: "rgba(255,255,255,0.4)", transition: "color 0.3s ease" }}
+        onMouseEnter={(e) => e.currentTarget.style.color = "#DAA520"}
+        onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,0.4)"}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        BACK
+      </Link>
       {/* Hero */}
       <section style={{ position: "relative", height: "80vh", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-        <Image src="/images/private-fleet-hero.jpg" alt="Private Fleet — luxury yacht charter Greece" fill style={{ objectFit: "cover", objectPosition: "center 55%", filter: "grayscale(100%) contrast(1.2) brightness(0.4)" }} sizes="100vw" priority />
+        <Image src="/images/private-fleet-hero.jpg" alt="Private Fleet — luxury yacht charter Greece" fill style={{ objectFit: "cover", objectPosition: "center 40%", filter: "grayscale(100%) contrast(1.2) brightness(0.4)" }} sizes="100vw" priority />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 40%, rgba(0,0,0,0.4) 100%)" }} />
         <div style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px" }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.5em", color: "#DAA520", textTransform: "uppercase", marginBottom: 24 }}>
