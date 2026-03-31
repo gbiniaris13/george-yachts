@@ -31,7 +31,7 @@ export default function PrivateFleetClient({ yachts }) {
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(0.8rem, 1.5vw, 1rem)", fontWeight: 300, color: "rgba(255,255,255,0.5)", letterSpacing: "0.15em", marginBottom: 40 }}>
             Your own world at sea. Full crew. Total discretion.
           </p>
-          <a href="https://calendly.com/george-georgeyachts/30min" target="_blank" rel="noopener noreferrer"
+          <a href="/#contact"
             style={{ display: "inline-block", fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#000", background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)", padding: "16px 48px", textDecoration: "none" }}>
             Discuss Your Charter
           </a>
@@ -118,7 +118,7 @@ export default function PrivateFleetClient({ yachts }) {
         <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#fff", marginBottom: 24 }}>
           Begin Your Private Charter
         </h2>
-        <a href="https://calendly.com/george-georgeyachts/30min" target="_blank" rel="noopener noreferrer"
+        <a href="/#contact"
           style={{ display: "inline-block", fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#000", background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)", padding: "18px 56px", textDecoration: "none" }}>
           Discuss Your Charter
         </a>
