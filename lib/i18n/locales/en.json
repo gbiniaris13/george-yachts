@@ -28,7 +28,9 @@
     "aboutUs": "About George Yachts",
     "team": "Our Core Team",
     "faq": "FAQ",
-    "proposal": "Instant Proposal"
+    "proposal": "Instant Proposal",
+    "privateFleet": "Private Fleet",
+    "explorerFleet": "Explorer Fleet"
   },
   "hero": {
     "tagline": "Exclusively Greek Waters",

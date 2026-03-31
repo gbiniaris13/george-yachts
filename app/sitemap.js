@@ -5,6 +5,8 @@ const BASE_URL = "https://georgeyachts.com";
 const staticRoutes = [
   { path: "", priority: 1.0, changeFrequency: "weekly" },
   { path: "/charter-yacht-greece", priority: 0.95, changeFrequency: "daily" },
+  { path: "/private-fleet", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/explorer-fleet", priority: 0.9, changeFrequency: "weekly" },
   { path: "/about-us", priority: 0.8, changeFrequency: "monthly" },
   { path: "/team", priority: 0.7, changeFrequency: "monthly" },
   { path: "/blog", priority: 0.9, changeFrequency: "daily" },

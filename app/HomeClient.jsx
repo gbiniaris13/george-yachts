@@ -13,11 +13,13 @@ import HowItWorks from "./components/HowItWorks";
 import CredentialsStrip from "./components/CredentialsStrip";
 import InteractiveTools from "./components/InteractiveTools";
 import BudgetSlider from "./components/BudgetSlider";
+import FleetCTAs from "./components/FleetCTAs";
 
 const HomeClient = () => {
   return (
     <div className="min-h-screen bg-black font-sans">
       <VideoSection />
+      <FleetCTAs />
       <HomeStats />
       <YourBroker />
       <HowItWorks />

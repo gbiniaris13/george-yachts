@@ -22,6 +22,8 @@ const navSections = [
   {
     labelKey: "nav.charter",
     links: [
+      { nameKey: "nav.privateFleet", href: "/private-fleet/" },
+      { nameKey: "nav.explorerFleet", href: "/explorer-fleet/" },
       { nameKey: "nav.charterYacht", href: "/charter-yacht-greece/" },
       { nameKey: "nav.itineraries", href: "/yacht-itineraries-greece/" },
       { nameKey: "nav.howItWorks", href: "/how-it-works/" },

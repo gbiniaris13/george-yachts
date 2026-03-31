@@ -28,7 +28,9 @@
     "aboutUs": "О George Yachts",
     "team": "Наша команда",
     "faq": "Вопросы и ответы",
-    "proposal": "Мгновенное предложение"
+    "proposal": "Мгновенное предложение",
+    "privateFleet": "Приватный флот",
+    "explorerFleet": "Флот Explorer"
   },
   "hero": {
     "tagline": "Исключительно в греческих водах",
