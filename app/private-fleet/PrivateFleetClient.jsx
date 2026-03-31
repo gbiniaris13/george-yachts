@@ -11,8 +11,8 @@ export default function PrivateFleetClient({ yachts }) {
     <div style={{ minHeight: "100vh", background: "#000" }}>
       {/* Hero */}
       <section style={{ position: "relative", height: "80vh", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #0a0a0a 0%, #1a1020 50%, #0d0d1a 100%)" }} />
-        <div style={{ position: "absolute", inset: 0, opacity: 0.03, backgroundImage: "radial-gradient(circle at 30% 40%, #DAA520 0%, transparent 50%)" }} />
+        <Image src="/images/private-fleet-hero.jpg" alt="Private Fleet — luxury yacht charter Greece" fill style={{ objectFit: "cover", filter: "brightness(0.35)" }} sizes="100vw" priority />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 40%, rgba(0,0,0,0.4) 100%)" }} />
         <div style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px" }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.5em", color: "#DAA520", textTransform: "uppercase", marginBottom: 24 }}>
             George Yachts Brokerage House
