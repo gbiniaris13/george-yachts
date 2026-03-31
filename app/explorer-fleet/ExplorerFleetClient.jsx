@@ -10,12 +10,12 @@ export default function ExplorerFleetClient({ yachts }) {
   return (
     <div style={{ minHeight: "100vh", background: "#000" }}>
       {/* Back Button */}
-      <Link href="/" style={{ position: "fixed", top: 24, left: 24, zIndex: 40, display: "flex", alignItems: "center", gap: 8, textDecoration: "none", fontFamily: "'Montserrat', sans-serif", fontSize: 11, letterSpacing: "0.15em", color: "rgba(255,255,255,0.4)", transition: "color 0.3s ease" }}
-        onMouseEnter={(e) => e.currentTarget.style.color = "#DAA520"}
-        onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,0.4)"}>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        BACK
-      </Link>
+      <div style={{ position: "fixed", top: 100, left: 24, zIndex: 9999 }}>
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", fontFamily: "'Montserrat', sans-serif", fontSize: 11, letterSpacing: "0.15em", color: "rgba(255,255,255,0.5)", padding: "12px 20px", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)", borderRadius: 4, border: "1px solid rgba(218,165,32,0.2)" }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          BACK
+        </Link>
+      </div>
       {/* Hero */}
       <section style={{ position: "relative", height: "80vh", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
         <Image src="/images/explorer-fleet-hero.jpg" alt="Explorer Fleet — group yacht charter Greece" fill style={{ objectFit: "cover", objectPosition: "center 30%", filter: "grayscale(100%) contrast(1.2) brightness(0.4)" }} sizes="100vw" priority />
