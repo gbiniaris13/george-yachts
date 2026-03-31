@@ -11,7 +11,7 @@ export default function ExplorerFleetClient({ yachts }) {
     <div style={{ minHeight: "100vh", background: "#000" }}>
       {/* Hero */}
       <section style={{ position: "relative", height: "80vh", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-        <Image src="/images/explorer-fleet-hero.jpg" alt="Explorer Fleet — group yacht charter Greece" fill style={{ objectFit: "cover", filter: "brightness(0.35)" }} sizes="100vw" priority />
+        <Image src="/images/explorer-fleet-hero.jpg" alt="Explorer Fleet — group yacht charter Greece" fill style={{ objectFit: "cover", objectPosition: "center 30%", filter: "grayscale(100%) contrast(1.2) brightness(0.4)" }} sizes="100vw" priority />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 40%, rgba(0,0,0,0.4) 100%)" }} />
         <div style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px" }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.5em", color: "#DAA520", textTransform: "uppercase", marginBottom: 24 }}>
