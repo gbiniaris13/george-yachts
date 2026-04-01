@@ -25,19 +25,19 @@ const FALLBACK_QUERY = `*[_type == "yacht"] | order(weeklyRatePrice asc) {
   "imageUrl": images[0].asset->url
 }`;
 
-function ExplorerFleetSchema({ yachts }) {
+function ExplorerFleetSchema({ lowestPerPerson }) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Service",
     name: "Explorer Fleet Yacht Charter",
     provider: { "@type": "Organization", name: "George Yachts Brokerage House", url: "https://georgeyachts.com" },
     areaServed: { "@type": "Place", name: "Greek Waters" },
-    description: "Group yacht charters in Greece from €1,200 per person. The smart way to see the islands.",
+    description: `Group yacht charters in Greece from €${lowestPerPerson} per person. The smart way to see the islands.`,
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "EUR",
-      lowPrice: "1200",
-      priceSpecification: { "@type": "UnitPriceSpecification", price: "1200", priceCurrency: "EUR", unitText: "per person" },
+      lowPrice: String(lowestPerPerson),
+      priceSpecification: { "@type": "UnitPriceSpecification", price: String(lowestPerPerson), priceCurrency: "EUR", unitText: "per person" },
     },
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
@@ -87,10 +87,21 @@ export default async function ExplorerFleetPage() {
     })
     .sort((a, b) => extractPrice(a) - extractPrice(b));
 
+  // Cheapest per-person across fleet (same formula as card display: base ÷ guests)
+  const lowestPerPerson = displayYachts.reduce((min, y) => {
+    const base = extractPrice(y);
+    if (base === 0) return min;
+    const guests = parseInt(y.sleeps) || 8;
+    const pp = Math.round(base / guests);
+    return pp < min ? pp : min;
+  }, 9999);
+
+  const displayLowest = lowestPerPerson < 9999 ? lowestPerPerson : 420;
+
   return (
     <>
-      <ExplorerFleetSchema yachts={displayYachts} />
-      <ExplorerFleetClient yachts={displayYachts} />
+      <ExplorerFleetSchema lowestPerPerson={displayLowest} />
+      <ExplorerFleetClient yachts={displayYachts} lowestPerPerson={displayLowest} />
     </>
   );
 }
