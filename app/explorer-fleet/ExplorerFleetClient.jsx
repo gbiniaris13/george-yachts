@@ -105,7 +105,10 @@ export default function ExplorerFleetClient({ yachts }) {
 
               // Honest label derived directly from what's in the price string
               let priceNote;
-              if (rawLower.includes('plus skipper')) {
+              if (rawLower.includes('fuel') || rawLower.includes('port fees')) {
+                // Seth's all-in total (charter + skipper + pack) — only fuel, ports & provisioning extra
+                priceNote = 'Skipper incl. · fuel, ports & provisioning extra';
+              } else if (rawLower.includes('plus skipper')) {
                 priceNote = 'Skipper, expenses & VAT not included';
               } else if (rawLower.includes('plus expenses')) {
                 priceNote = 'Expenses & VAT not included';
