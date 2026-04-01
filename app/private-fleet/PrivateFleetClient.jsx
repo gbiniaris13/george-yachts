@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
-export default function PrivateFleetClient({ yachts }) {
+export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highestPrice = 235000 }) {
   const { t } = useI18n();
 
   return (
@@ -35,6 +35,18 @@ export default function PrivateFleetClient({ yachts }) {
             style={{ display: "inline-block", fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#000", background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)", padding: "16px 48px", textDecoration: "none" }}>
             Discuss Your Charter
           </a>
+        </div>
+      </section>
+
+      {/* Price Range */}
+      <section style={{ padding: "80px 24px", background: "#000", textAlign: "center" }}>
+        <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 40px", border: "1px solid rgba(218,165,32,0.15)", borderRadius: 4 }}>
+          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.6rem, 4vw, 2.4rem)", color: "#DAA520", margin: "0 0 16px 0" }}>
+            From €{lowestPrice.toLocaleString()} to €{highestPrice.toLocaleString()} / week
+          </p>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.4)", lineHeight: 1.8, margin: 0, letterSpacing: "0.05em" }}>
+            Full crew included · APA & expenses extra · curated for Greek waters
+          </p>
         </div>
       </section>
 
