@@ -53,19 +53,37 @@ export default async function ExplorerFleetPage() {
     try { yachts = await sanityClient.fetch(FALLBACK_QUERY); } catch {}
   }
 
-  // Explorer Fleet: only yachts up to €29,000/week charter rate
-  // Use first number found in price string (handles ranges like "€21,000 - €28,000")
-  // Keep only Explorer Fleet yachts (≤€29,000/week)
   // Extract first number from price string (handles "€21,000 - €28,000" ranges)
   const extractPrice = (yacht) => {
     const match = String(yacht.weeklyRatePrice || '').match(/[\d,]+/);
     return match ? parseInt(match[0].replace(/,/g, '')) : 0;
   };
 
+  // Calculate all-in per-person price (VAT + APA + skipper where applicable)
+  // Mirrors the logic in ExplorerFleetClient.jsx
+  const calcPerPerson = (yacht) => {
+    const basePrice = extractPrice(yacht);
+    if (basePrice === 0) return 0; // "Contact for rates" → keep
+    const rawLower = String(yacht.weeklyRatePrice || '').toLowerCase();
+    const crewLower = String(yacht.crew || '').toLowerCase();
+    const guests = parseInt(yacht.sleeps) || 8;
+    let total;
+    if (rawLower.includes('plus skipper') || rawLower.includes('skipper')) {
+      total = Math.round(basePrice * 1.32) + 1400;
+    } else if (crewLower.includes('optional')) {
+      total = Math.round(basePrice * 1.27);
+    } else {
+      total = Math.round(basePrice * 1.42);
+    }
+    return Math.round(total / guests);
+  };
+
   const displayYachts = yachts
     .filter(y => {
-      const price = extractPrice(y);
-      return price === 0 || price <= 29000; // 0 = "Contact for rates" → keep
+      const charterPrice = extractPrice(y);
+      if (charterPrice > 29000) return false; // hard cap: no yacht >€29k/week in Explorer
+      const pp = calcPerPerson(y);
+      return pp === 0 || pp <= 2500; // 0 = "Contact for rates" → keep; else cap at €2,500/person
     })
     .sort((a, b) => extractPrice(a) - extractPrice(b));
 
