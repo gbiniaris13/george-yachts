@@ -93,32 +93,25 @@ export default function ExplorerFleetClient({ yachts }) {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 24 }}>
             {yachts.map((yacht) => {
               const rawPrice = String(yacht.weeklyRatePrice || '');
-              const crewStr = String(yacht.crew || '');
               const rawLower = rawPrice.toLowerCase();
-              const crewLower = crewStr.toLowerCase();
 
-              const priceMatch = rawPrice.match(/[\d,.]+/);
-              const basePrice = priceMatch ? parseInt(priceMatch[0].replace(/[,.]/g, '')) : 0;
+              // Extract base charter rate (first number in price string)
+              const priceMatch = rawPrice.match(/[\d,]+/);
+              const basePrice = priceMatch ? parseInt(priceMatch[0].replace(/,/g, '')) : 0;
               const guests = parseInt(yacht.sleeps) || 8;
 
-              // Calculate total per-person cost including VAT, APA, and skipper where applicable
-              // "plus skipper & expenses" = skipper is NOT in charter rate, paid separately
-              // "Optional Skipper" = pure bareboat, no crew
-              // Otherwise = fully crewed (crew included in charter rate)
-              let total = 0;
-              if (basePrice > 0) {
-                if (rawLower.includes('plus skipper')) {
-                  // Bareboat + mandatory skipper (paid separately): base × 1.32 (20% APA + 12% VAT) + €1,400 skipper
-                  total = Math.round(basePrice * 1.32) + 1400;
-                } else if (crewLower.includes('optional')) {
-                  // Pure bareboat (no crew): base × 1.27 (15% APA + 12% VAT)
-                  total = Math.round(basePrice * 1.27);
-                } else {
-                  // Fully crewed (crew in charter rate): base × 1.42 (30% APA + 12% VAT)
-                  total = Math.round(basePrice * 1.42);
-                }
+              // Clean per-person price = base charter rate ÷ guests (no hidden multipliers)
+              const perPerson = basePrice > 0 ? Math.round(basePrice / guests) : 0;
+
+              // Honest label derived directly from what's in the price string
+              let priceNote;
+              if (rawLower.includes('plus skipper')) {
+                priceNote = 'Skipper, expenses & VAT not included';
+              } else if (rawLower.includes('plus expenses')) {
+                priceNote = 'Expenses & VAT not included';
+              } else {
+                priceNote = 'Contact for full pricing details';
               }
-              const perPerson = total > 0 ? Math.round(total / guests) : 0;
 
               return (
                 <Link key={yacht._id} href={`/yachts/${yacht.slug}`} style={{ textDecoration: "none", display: "block", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 4, overflow: "hidden" }}>
@@ -138,10 +131,10 @@ export default function ExplorerFleetClient({ yachts }) {
                     {perPerson > 0 ? (
                       <>
                         <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.3rem", color: "#DAA520", margin: "0 0 2px 0" }}>
-                          From €{perPerson.toLocaleString()} per person
+                          From €{perPerson.toLocaleString()} / person
                         </p>
                         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: "rgba(255,255,255,0.25)", margin: 0, letterSpacing: "0.08em" }}>
-                          per week · incl. VAT & APA
+                          per week · {priceNote}
                         </p>
                       </>
                     ) : (
