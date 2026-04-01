@@ -80,23 +80,50 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 24 }}>
             {yachts.map((yacht) => (
-              <Link key={yacht._id} href={`/yachts/${yacht.slug}`} style={{ textDecoration: "none", display: "block", border: "1px solid rgba(218,165,32,0.08)", borderRadius: 4, overflow: "hidden", transition: "border-color 0.5s ease" }}>
+              <Link key={yacht._id} href={`/yachts/${yacht.slug}`} style={{ textDecoration: "none", display: "block", border: "1px solid rgba(218,165,32,0.08)", borderRadius: 4, overflow: "hidden" }}>
+                {/* Image */}
                 <div style={{ position: "relative", aspectRatio: "16/10", overflow: "hidden" }}>
                   {yacht.imageUrl && (
-                    <Image src={yacht.imageUrl} alt={`${yacht.name} — luxury yacht charter Greece`} fill style={{ objectFit: "cover", transition: "transform 0.7s ease" }} sizes="400px" />
+                    <Image src={yacht.imageUrl} alt={`${yacht.name} — luxury yacht charter Greece`} fill style={{ objectFit: "cover" }} sizes="400px" />
                   )}
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%)" }} />
-                  <div style={{ position: "absolute", bottom: 16, left: 16, right: 16 }}>
-                    <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.4rem", color: "#fff", margin: 0 }}>{yacht.name}</h3>
-                    <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: "rgba(255,255,255,0.5)", letterSpacing: "0.1em", marginTop: 4 }}>
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%)" }} />
+                  <div style={{ position: "absolute", bottom: 20, left: 20, right: 20 }}>
+                    <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", fontWeight: 300, color: "#fff", margin: 0, letterSpacing: "0.02em" }}>{yacht.name}</h3>
+                    <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: "rgba(255,255,255,0.45)", letterSpacing: "0.18em", textTransform: "uppercase", marginTop: 5 }}>
                       {yacht.builder} · {yacht.length} · {yacht.sleeps} guests
                     </p>
                   </div>
                 </div>
-                <div style={{ padding: "16px", background: "rgba(10,10,10,0.95)" }}>
-                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: "#DAA520", margin: 0 }}>
-                    {yacht.weeklyRatePrice || "Price on request"}
-                  </p>
+
+                {/* Pricing Panel */}
+                <div style={{ padding: "24px 28px", background: "rgba(8,8,8,0.98)", textAlign: "center", borderTop: "1px solid rgba(218,165,32,0.1)" }}>
+                  {/* Gold divider */}
+                  <div style={{ width: 32, height: 1, background: "linear-gradient(90deg, transparent, #DAA520, transparent)", margin: "0 auto 18px" }} />
+
+                  {yacht.weeklyRatePrice ? (
+                    <>
+                      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.35rem", fontWeight: 300, color: "#DAA520", margin: "0 0 8px 0", letterSpacing: "0.03em" }}>
+                        {yacht.weeklyRatePrice.split('|')[0].trim()}
+                      </p>
+                      {yacht.weeklyRatePrice.includes('|') && (
+                        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase", margin: 0 }}>
+                          {yacht.weeklyRatePrice.split('|')[1].trim()}
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.2rem", fontWeight: 300, color: "#DAA520", margin: "0 0 6px 0" }}>
+                        Price on request
+                      </p>
+                      <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase", margin: 0 }}>
+                        Contact for rates
+                      </p>
+                    </>
+                  )}
+
+                  {/* Bottom rule */}
+                  <div style={{ width: 32, height: 1, background: "linear-gradient(90deg, transparent, rgba(218,165,32,0.3), transparent)", margin: "18px auto 0" }} />
                 </div>
               </Link>
             ))}
