@@ -95,7 +95,7 @@ export default function ExplorerFleetClient({ yachts }) {
               const priceMatch = String(yacht.weeklyRatePrice || '').match(/[\d,.]+/);
               const basePrice = priceMatch ? parseInt(priceMatch[0].replace(/[,.]/g, '')) : 0;
               const guests = parseInt(yacht.sleeps) || 8;
-              const perPerson = basePrice > 0 ? Math.round((basePrice * 1.322) / guests) : 0;
+              const perPerson = basePrice > 0 ? Math.round(basePrice / guests) : 0;
 
               return (
                 <Link key={yacht._id} href={`/yachts/${yacht.slug}`} style={{ textDecoration: "none", display: "block", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 4, overflow: "hidden" }}>
@@ -111,13 +111,19 @@ export default function ExplorerFleetClient({ yachts }) {
                       </p>
                     </div>
                   </div>
-                  <div style={{ padding: "16px", background: "rgba(10,10,10,0.95)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: "#DAA520", margin: 0 }}>
-                      {yacht.weeklyRatePrice || "Price on request"}
-                    </p>
-                    {perPerson > 0 && (
-                      <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.3)", margin: 0 }}>
-                        ~€{perPerson.toLocaleString()}/person
+                  <div style={{ padding: "16px 20px", background: "rgba(10,10,10,0.95)" }}>
+                    {perPerson > 0 ? (
+                      <>
+                        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.3rem", color: "#DAA520", margin: "0 0 2px 0" }}>
+                          From €{perPerson.toLocaleString()} per person
+                        </p>
+                        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: "rgba(255,255,255,0.25)", margin: 0, letterSpacing: "0.08em" }}>
+                          per week · excl. expenses
+                        </p>
+                      </>
+                    ) : (
+                      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.2rem", color: "#DAA520", margin: 0 }}>
+                        Price on request
                       </p>
                     )}
                   </div>

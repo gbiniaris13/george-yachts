@@ -53,7 +53,14 @@ export default async function ExplorerFleetPage() {
     try { yachts = await sanityClient.fetch(FALLBACK_QUERY); } catch {}
   }
 
-  const displayYachts = yachts;
+  // Explorer Fleet: only yachts up to €29,000/week
+  // Yachts ≥ €30,000/week belong to Private Fleet
+  const displayYachts = yachts.filter(y => {
+    const raw = String(y.weeklyRatePrice || '');
+    const price = parseInt(raw.replace(/[^0-9]/g, ''));
+    // Keep if price ≤ 29,000, or if price is unknown (Contact for rates etc.)
+    return !price || price <= 29000;
+  });
 
   return (
     <>
