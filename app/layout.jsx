@@ -5,7 +5,6 @@ import NavDrawerSystem from "./components/NavDrawerSystem";
 import GlobalEffects from "./components/GlobalEffects";
 import CustomCursor from "./components/CustomCursor";
 import WhatsAppButton from "./components/WhatsAppButton";
-import MobileStickyBar from "./components/MobileStickyBar";
 import TranslateWidget from "./components/TranslateWidget";
 // Removed: WelcomeLanguagePopup (country detection popup — users choose language themselves)
 // Removed: SmartWelcome (time-based greetings — gimmick)
@@ -100,7 +99,6 @@ export default function RootLayout({ children }) {
         {/* Removed VoiceSearch */}
         <TranslateWidget />
         <WhatsAppButton />
-        <MobileStickyBar />
         </WishlistProvider>
         </I18nProvider>
 
