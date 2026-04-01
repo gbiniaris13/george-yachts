@@ -1,5 +1,6 @@
 import React from "react";
 import HomeClient from "./HomeClient";
+import { sanityClient } from "@/lib/sanity";
 
 export const metadata = {
   title: "George Yachts | Luxury Yacht Charter Greece | Boutique Brokerage",
@@ -43,11 +44,16 @@ function WebSiteSchema() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  let yachtCount = 60;
+  try {
+    yachtCount = await sanityClient.fetch(`count(*[_type == "yacht"])`);
+  } catch {}
+
   return (
     <>
       <WebSiteSchema />
-      <HomeClient />
+      <HomeClient yachtCount={yachtCount} />
     </>
   );
 }

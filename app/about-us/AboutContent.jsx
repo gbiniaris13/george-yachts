@@ -110,7 +110,7 @@ export default function AboutContent() {
       <section className="about-stats">
         <div className="about-stats__grid">
           {[
-            { number: 50, suffix: "+", label: "Curated Yachts" },
+            { number: 63, suffix: "+", label: "Curated Yachts" },
             { number: 4, suffix: "", label: "Sailing Regions" },
             { number: 360, suffix: "\u00b0", label: "Luxury Services" },
             { number: 100, suffix: "%", label: "Greek Waters" },
@@ -185,7 +185,7 @@ export default function AboutContent() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "32px", textAlign: "left" }}>
             {[
               { label: "Large Aggregator", value: "Thousands of yachts, generic filters, algorithm-matched", vs: "vs" },
-              { label: "George Yachts", value: "53 personally vetted yachts, hand-selected for you by someone who has been aboard each one", highlight: true },
+              { label: "George Yachts", value: "63 personally vetted yachts, hand-selected for you by someone who has been aboard each one", highlight: true },
             ].map((item, i) => (
               <div key={i} style={{ padding: "32px", border: item.highlight ? "1px solid rgba(218,165,32,0.3)" : "1px solid rgba(255,255,255,0.08)", background: item.highlight ? "rgba(218,165,32,0.05)" : "transparent" }}>
                 <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: item.highlight ? "#DAA520" : "rgba(255,255,255,0.3)", textTransform: "uppercase", marginBottom: "16px" }}>{item.label}</p>
