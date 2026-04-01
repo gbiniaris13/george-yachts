@@ -53,13 +53,7 @@ export default async function ExplorerFleetPage() {
     try { yachts = await sanityClient.fetch(FALLBACK_QUERY); } catch {}
   }
 
-  // Filter for accessible yachts (price < €55K or smaller vessels)
-  const explorerYachts = yachts.filter(y => {
-    const price = parseInt(String(y.weeklyRatePrice).replace(/[^0-9]/g, ''));
-    return price <= 55000 || !y.weeklyRatePrice;
-  });
-
-  const displayYachts = explorerYachts.length > 3 ? explorerYachts : yachts;
+  const displayYachts = yachts;
 
   return (
     <>
