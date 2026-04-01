@@ -87,21 +87,23 @@ export default async function ExplorerFleetPage() {
     })
     .sort((a, b) => extractPrice(a) - extractPrice(b));
 
-  // Cheapest per-person across fleet (same formula as card display: base ÷ guests)
-  const lowestPerPerson = displayYachts.reduce((min, y) => {
-    const base = extractPrice(y);
-    if (base === 0) return min;
-    const guests = parseInt(y.sleeps) || 8;
-    const pp = Math.round(base / guests);
-    return pp < min ? pp : min;
-  }, 9999);
+  // Per-person price range (same formula as card display: base ÷ guests)
+  const perPersonPrices = displayYachts
+    .map(y => {
+      const base = extractPrice(y);
+      if (base === 0) return null;
+      const guests = parseInt(y.sleeps) || 8;
+      return Math.round(base / guests);
+    })
+    .filter(Boolean);
 
-  const displayLowest = lowestPerPerson < 9999 ? lowestPerPerson : 420;
+  const displayLowest  = perPersonPrices.length ? Math.min(...perPersonPrices) : 420;
+  const displayHighest = perPersonPrices.length ? Math.max(...perPersonPrices) : 1800;
 
   return (
     <>
       <ExplorerFleetSchema lowestPerPerson={displayLowest} />
-      <ExplorerFleetClient yachts={displayYachts} lowestPerPerson={displayLowest} />
+      <ExplorerFleetClient yachts={displayYachts} lowestPerPerson={displayLowest} highestPerPerson={displayHighest} />
     </>
   );
 }

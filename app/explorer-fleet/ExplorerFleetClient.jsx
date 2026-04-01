@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
-export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420 }) {
+export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, highestPerPerson = 1800 }) {
   const { t } = useI18n();
 
   return (
@@ -41,11 +41,11 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420 }) {
       {/* Price Anchor */}
       <section style={{ padding: "80px 24px", background: "#000", textAlign: "center" }}>
         <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 40px", border: "1px solid rgba(218,165,32,0.15)", borderRadius: 4 }}>
-          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem, 5vw, 3rem)", color: "#DAA520", margin: "0 0 16px 0" }}>
-            From €{lowestPerPerson.toLocaleString()} per person
+          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.6rem, 4vw, 2.4rem)", color: "#DAA520", margin: "0 0 16px 0" }}>
+            From €{lowestPerPerson.toLocaleString()} to €{highestPerPerson.toLocaleString()} per person
           </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 1.8, margin: 0 }}>
-            The same money as a week in a nice hotel on one island. But you wake up in a different bay every morning.
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.4)", lineHeight: 1.8, margin: 0, letterSpacing: "0.05em" }}>
+            Per week · skipper included or available · expenses extra
           </p>
         </div>
       </section>
