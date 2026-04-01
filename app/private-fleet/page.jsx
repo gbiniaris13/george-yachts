@@ -56,13 +56,12 @@ export default async function PrivateFleetPage() {
     try { yachts = await sanityClient.fetch(FALLBACK_QUERY); } catch {}
   }
 
-  // Filter for premium yachts (price > €25K or large vessels)
-  const premiumYachts = yachts.filter(y => {
-    const price = parseInt(String(y.weeklyRatePrice).replace(/[^0-9]/g, ''));
-    return price >= 25000 || !y.weeklyRatePrice;
-  });
-
-  const displayYachts = premiumYachts.length > 3 ? premiumYachts : yachts;
+  // Sort by price ascending (extract first number from price string)
+  const extractPrice = (yacht) => {
+    const match = String(yacht.weeklyRatePrice || '').match(/[\d,]+/);
+    return match ? parseInt(match[0].replace(/,/g, '')) : 999999;
+  };
+  const displayYachts = [...yachts].sort((a, b) => extractPrice(a) - extractPrice(b));
 
   return (
     <>
