@@ -6,12 +6,12 @@ const GOLD = '#DAA520';
 
 // Yacht names for random selection
 const YACHTS = [
-  'La Pellegrina 1', 'S/Y Genny', 'S/Y Above & Beyond', "S/Y World's End",
-  'S/Y Ad Astra', 'S/Y Aloia', 'S/Y Imladris', 'S/Y Kimata',
-  'Crazy Horse', 'Just Marie 2', 'Alteya', 'Alina', 'SAMARA',
-  'S/Y Helidoni', 'S/Y Odyssey', 'S/Y Azul', 'S/Y Sahana',
-  'S/Y Libra', 'S/Y Gigreca', 'S/Y Huayra', 'S/Y Nadamas',
-  'M/Y Brooklyn', 'Explorion', 'S/Y Summer Star',
+  'M/Y La Pellegrina 1', 'S/CAT Genny', 'S/CAT Above & Beyond', "S/CAT World's End",
+  'S/CAT Ad Astra', 'S/CAT Aloia', 'S/CAT Imladris', 'S/CAT Kimata',
+  'P/CAT Crazy Horse', 'P/CAT Just Marie 2', 'P/CAT Alteya', 'P/CAT Alina', 'P/CAT SAMARA',
+  'S/CAT Helidoni', 'S/CAT Odyssey', 'S/CAT Azul', 'S/CAT Sahana',
+  'S/CAT Libra', 'S/Y Gigreca', 'S/Y Huayra', 'S/Y Nadamas',
+  'M/Y Brooklyn', 'P/CAT Explorion', 'S/CAT Summer Star',
 ];
 
 // Cities with flags — realistic charter client origins
@@ -42,24 +42,24 @@ const ORIGINS = [
   { city: 'Brussels', flag: '🇧🇪' },
 ];
 
-// Viewing actions (80%) vs booking actions (20%) — realistic ratio
+// Viewing actions (85%) vs inquiry actions (15%) — realistic ratio
 const VIEWING_ACTIONS = [
   (origin, yacht) => `Someone from ${origin.city} is viewing ${yacht}`,
   (origin, yacht) => `A visitor from ${origin.city} is browsing ${yacht}`,
   (origin, yacht) => `${yacht} is being viewed from ${origin.city}`,
   (origin, yacht) => `Someone in ${origin.city} just opened ${yacht}`,
-  (origin, yacht) => `A couple from ${origin.city} is exploring ${yacht}`,
+  (origin, yacht) => `Someone from ${origin.city} is exploring ${yacht}`,
   (origin, yacht) => `${yacht} is getting attention from ${origin.city}`,
-  (origin, yacht) => `A group from ${origin.city} is comparing yachts`,
+  (origin, yacht) => `Someone from ${origin.city} is comparing yachts`,
   (origin, yacht) => `Someone from ${origin.city} is checking availability`,
   (origin, yacht) => `A visitor from ${origin.city} is reading about ${yacht}`,
-  (origin, yacht) => `${yacht} was just saved to favorites from ${origin.city}`,
+  (origin, yacht) => `${yacht} was just opened from ${origin.city}`,
 ];
 
 const BOOKING_ACTIONS = [
-  (origin, yacht) => `A group from ${origin.city} just requested a quote for ${yacht}`,
-  (origin, yacht) => `Someone from ${origin.city} booked a consultation about ${yacht}`,
-  (origin) => `A family from ${origin.city} just sent an inquiry`,
+  (origin, yacht) => `Someone from ${origin.city} just requested a quote for ${yacht}`,
+  (origin, yacht) => `Someone from ${origin.city} inquired about ${yacht}`,
+  (origin) => `A visitor from ${origin.city} just sent an inquiry`,
 ];
 
 function generateMessage() {
