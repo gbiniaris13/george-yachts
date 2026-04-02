@@ -274,6 +274,9 @@ export default function CompareYachts({ compareList = [], onRemove, onClear }) {
             </div>
           </div>
 
+          {/* Smart Insights */}
+          <CompareInsights compareList={compareList} isMobile={isMobile} />
+
           {/* Cards Container */}
           <div
             style={{
@@ -303,6 +306,161 @@ export default function CompareYachts({ compareList = [], onRemove, onClear }) {
         </div>
       )}
     </>
+  );
+}
+
+function CompareInsights({ compareList, isMobile }) {
+  const insights = useMemo(() => {
+    if (compareList.length < 2) return [];
+    const result = [];
+
+    // Helper: extract number from value string
+    const num = (val) => {
+      if (val == null) return null;
+      const s = String(val).replace(/[^0-9.]/g, '');
+      const n = parseFloat(s);
+      return isNaN(n) ? null : n;
+    };
+
+    // --- Price insights ---
+    const withPrice = compareList.filter(y => num(y.weeklyRate) > 0);
+    if (withPrice.length >= 2) {
+      const sorted = [...withPrice].sort((a, b) => num(a.weeklyRate) - num(b.weeklyRate));
+      const cheapest = sorted[0];
+      const priciest = sorted[sorted.length - 1];
+      result.push({
+        icon: '💰',
+        text: `${cheapest.title} is the most affordable at ${cheapest.weeklyRate}/week`,
+      });
+      if (priciest.slug !== cheapest.slug) {
+        result.push({
+          icon: '👑',
+          text: `${priciest.title} is the premium choice at ${priciest.weeklyRate}/week`,
+        });
+      }
+    }
+
+    // --- Size / Length ---
+    const withLength = compareList.filter(y => num(y.length) > 0);
+    if (withLength.length >= 2) {
+      const sorted = [...withLength].sort((a, b) => num(b.length) - num(a.length));
+      if (num(sorted[0].length) !== num(sorted[sorted.length - 1].length)) {
+        result.push({
+          icon: '📏',
+          text: `${sorted[0].title} is the largest at ${sorted[0].length}`,
+        });
+      }
+    }
+
+    // --- Guest capacity ---
+    const withGuests = compareList.filter(y => num(y.guests) > 0);
+    if (withGuests.length >= 2) {
+      const sorted = [...withGuests].sort((a, b) => num(b.guests) - num(a.guests));
+      if (num(sorted[0].guests) !== num(sorted[sorted.length - 1].guests)) {
+        result.push({
+          icon: '👥',
+          text: `${sorted[0].title} accommodates the most guests (${sorted[0].guests})`,
+        });
+      }
+    }
+
+    // --- Cabins ---
+    const withCabins = compareList.filter(y => num(y.cabins) > 0);
+    if (withCabins.length >= 2) {
+      const sorted = [...withCabins].sort((a, b) => num(b.cabins) - num(a.cabins));
+      if (num(sorted[0].cabins) !== num(sorted[sorted.length - 1].cabins)) {
+        result.push({
+          icon: '🛏️',
+          text: `${sorted[0].title} offers the most cabins (${sorted[0].cabins})`,
+        });
+      }
+    }
+
+    // --- Crew ---
+    const withCrew = compareList.filter(y => num(y.crew) > 0);
+    if (withCrew.length >= 2) {
+      const sorted = [...withCrew].sort((a, b) => num(b.crew) - num(a.crew));
+      if (num(sorted[0].crew) !== num(sorted[sorted.length - 1].crew)) {
+        result.push({
+          icon: '⚓',
+          text: `${sorted[0].title} has the largest crew (${sorted[0].crew} members)`,
+        });
+      }
+    }
+
+    // --- Per-person value ---
+    const withPP = compareList.filter(y => num(y.perPersonWeekLow) > 0);
+    if (withPP.length >= 2) {
+      const sorted = [...withPP].sort((a, b) => num(a.perPersonWeekLow) - num(b.perPersonWeekLow));
+      if (num(sorted[0].perPersonWeekLow) !== num(sorted[sorted.length - 1].perPersonWeekLow)) {
+        result.push({
+          icon: '✨',
+          text: `Best value per person: ${sorted[0].title} at ${sorted[0].perPersonWeekLow}/person`,
+        });
+      }
+    }
+
+    return result;
+  }, [compareList]);
+
+  if (insights.length === 0) return null;
+
+  return (
+    <div
+      style={{
+        maxWidth: 1400,
+        margin: '0 auto',
+        width: '100%',
+        padding: isMobile ? '20px 16px 0' : '32px 40px 0',
+      }}
+    >
+      <div
+        style={{
+          background: 'rgba(218, 165, 32, 0.06)',
+          border: `1px solid rgba(218, 165, 32, 0.15)`,
+          borderRadius: 10,
+          padding: isMobile ? '16px 18px' : '20px 28px',
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: 10,
+            fontWeight: 700,
+            letterSpacing: '0.2em',
+            textTransform: 'uppercase',
+            color: GOLD,
+            margin: '0 0 14px',
+          }}
+        >
+          Quick Insights
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {insights.map((insight, i) => (
+            <div
+              key={i}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+              }}
+            >
+              <span style={{ fontSize: 16, flexShrink: 0 }}>{insight.icon}</span>
+              <span
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: isMobile ? 12 : 13,
+                  color: TEXT_LIGHT,
+                  lineHeight: 1.5,
+                }}
+              >
+                {insight.text}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
