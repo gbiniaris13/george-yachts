@@ -6,45 +6,30 @@ import { useI18n } from '@/lib/i18n/I18nProvider';
 
 const GOLD = '#DAA520';
 
-const YACHTS_BY_BUDGET = [
-  { name: 'S/Y Helidoni', slug: 'helidoni', price: 5900, guests: 8, type: 'Sailing Cat', length: '14m' },
-  { name: 'S/Y Alegria', slug: 'alegria', price: 10900, guests: 8, type: 'Sailing Cat', length: '14m' },
-  { name: 'S/Y Odyssey', slug: 'odyssey', price: 10900, guests: 8, type: 'Sailing Cat', length: '14m' },
-  { name: 'S/Y My Star', slug: 'my-star', price: 12000, guests: 8, type: 'Sailing Cat', length: '14m' },
-  { name: 'S/Y Shooting Star', slug: 'shooting-star', price: 13000, guests: 6, type: 'Monohull', length: '20m' },
-  { name: 'M/Y Endless Beauty', slug: 'endless-beauty', price: 14000, guests: 6, type: 'Power Cat', length: '13m' },
-  { name: 'S/Y Summer Star', slug: 'summer-star', price: 17000, guests: 10, type: 'Sailing Cat', length: '16m' },
-  { name: 'S/Y Libra', slug: 'libra', price: 18900, guests: 10, type: 'Sailing Cat', length: '17m' },
-  { name: 'S/Y Sahana', slug: 'sahana', price: 19500, guests: 8, type: 'Sailing Cat', length: '16m' },
-  { name: 'S/Y Azul', slug: 'azul', price: 20000, guests: 8, type: 'Sailing Cat', length: '17m' },
-  { name: "S/Y World's End", slug: 'worlds-end', price: 20500, guests: 10, type: 'Sailing Cat', length: '19m' },
-  { name: 'Explorion', slug: 'explorion', price: 21000, guests: 8, type: 'Power Cat', length: '16m' },
-  { name: 'S/Y Gigreca', slug: 'gigreca', price: 24000, guests: 8, type: 'Monohull', length: '24m' },
-  { name: 'S/Y Kimata', slug: 'kimata', price: 31500, guests: 8, type: 'Sailing Cat', length: '20m' },
-  { name: 'Alena', slug: 'alena', price: 34000, guests: 8, type: 'Power Cat', length: '20m' },
-  { name: 'S/Y Nadamas', slug: 'nadamas', price: 35000, guests: 8, type: 'Monohull', length: '24m' },
-  { name: 'S/Y Huayra', slug: 'huayra', price: 44000, guests: 8, type: 'Monohull', length: '31m' },
-  { name: 'Alteya', slug: 'alteya', price: 49000, guests: 8, type: 'Power Cat', length: '21m' },
-  { name: 'Crazy Horse', slug: 'crazy-horse', price: 50000, guests: 10, type: 'Sailing Cat', length: '24m' },
-  { name: 'S/Y Genny', slug: 'genny', price: 56000, guests: 10, type: 'Sailing Cat', length: '24m' },
-  { name: 'S/Y Aloia', slug: 'aloia', price: 65000, guests: 10, type: 'Sailing Cat', length: '24m' },
-  { name: 'SAMARA', slug: 'samara', price: 65000, guests: 8, type: 'Power Cat', length: '24m' },
-  { name: 'Alina', slug: 'alina', price: 70000, guests: 10, type: 'Power Cat', length: '24m' },
-  { name: 'M/Y Brooklyn', slug: 'brooklyn', price: 85000, guests: 10, type: 'Motor Yacht', length: '36m' },
-  { name: 'M/Y La Pellegrina 1', slug: 'la-pellegrina-1', price: 180000, guests: 12, type: 'Motor Yacht', length: '50m' },
-];
-
-export default function BudgetSlider() {
+export default function BudgetSlider({ yachts = [] }) {
   const { t } = useI18n();
-  const [budget, setBudget] = useState(30000);
+
+  const minPrice = useMemo(() => yachts.length ? yachts[0].price : 5000, [yachts]);
+  const maxPrice = useMemo(() => yachts.length ? yachts[yachts.length - 1].price : 200000, [yachts]);
+
+  const [budget, setBudget] = useState(() => {
+    if (!yachts.length) return 30000;
+    return Math.min(30000, maxPrice);
+  });
 
   const matchingYachts = useMemo(() => {
-    return YACHTS_BY_BUDGET.filter(y => y.price <= budget).slice(-3);
-  }, [budget]);
+    return yachts.filter(y => y.price <= budget).slice(-3);
+  }, [budget, yachts]);
 
   const totalAvailable = useMemo(() => {
-    return YACHTS_BY_BUDGET.filter(y => y.price <= budget).length;
-  }, [budget]);
+    return yachts.filter(y => y.price <= budget).length;
+  }, [budget, yachts]);
+
+  if (!yachts.length) return null;
+
+  const sliderMin = Math.floor(minPrice / 1000) * 1000;
+  const sliderMax = Math.ceil(maxPrice / 1000) * 1000;
+  const range = sliderMax - sliderMin || 1;
 
   return (
     <section style={{ padding: '80px 24px', background: '#000', borderTop: '1px solid rgba(218,165,32,0.06)' }}>
@@ -76,8 +61,8 @@ export default function BudgetSlider() {
         <div style={{ padding: '0 12px', marginBottom: 32 }}>
           <input
             type="range"
-            min="5000"
-            max="200000"
+            min={sliderMin}
+            max={sliderMax}
             step="1000"
             value={budget}
             onChange={(e) => setBudget(parseInt(e.target.value))}
@@ -85,7 +70,7 @@ export default function BudgetSlider() {
               width: '100%',
               height: 4,
               borderRadius: 2,
-              background: `linear-gradient(90deg, ${GOLD} 0%, ${GOLD} ${((budget - 5000) / 195000) * 100}%, #222 ${((budget - 5000) / 195000) * 100}%, #222 100%)`,
+              background: `linear-gradient(90deg, ${GOLD} 0%, ${GOLD} ${((budget - sliderMin) / range) * 100}%, #222 ${((budget - sliderMin) / range) * 100}%, #222 100%)`,
               outline: 'none',
               appearance: 'none',
               WebkitAppearance: 'none',
@@ -93,8 +78,8 @@ export default function BudgetSlider() {
             }}
           />
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-            <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(255,255,255,0.2)' }}>€5,000</span>
-            <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(255,255,255,0.2)' }}>€200,000</span>
+            <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(255,255,255,0.2)' }}>€{sliderMin.toLocaleString()}</span>
+            <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(255,255,255,0.2)' }}>€{sliderMax.toLocaleString()}</span>
           </div>
         </div>
 

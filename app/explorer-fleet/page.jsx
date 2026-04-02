@@ -3,15 +3,23 @@ import ExplorerFleetClient from "./ExplorerFleetClient";
 
 export const revalidate = 3600;
 
-export const metadata = {
-  title: "Explorer Fleet | Yacht Charter Greece from €1,200/person | George Yachts",
-  description: "More islands. More adventure. The smart way to see Greece. Group yacht charters from €1,200 per person per week.",
-  openGraph: {
-    title: "Explorer Fleet | George Yachts",
-    description: "More islands. More adventure. The smart way to see Greece.",
-    url: "https://georgeyachts.com/explorer-fleet",
-  },
-};
+export async function generateMetadata() {
+  let low = 420, high = 1800;
+  try {
+    const yachts = await sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"]]{ weeklyRatePrice, sleeps }`);
+    const pp = yachts.map(y => { const m = String(y.weeklyRatePrice || '').match(/[\d,]+/); const base = m ? parseInt(m[0].replace(/,/g, '')) : 0; if (!base) return 0; return Math.round(base / (parseInt(y.sleeps) || 8)); }).filter(Boolean);
+    if (pp.length) { low = Math.min(...pp); high = Math.max(...pp); }
+  } catch {}
+  return {
+    title: `Explorer Fleet | Yacht Charter Greece from €${low.toLocaleString()}/person | George Yachts`,
+    description: `More islands. More adventure. The smart way to see Greece. Group yacht charters from €${low.toLocaleString()} to €${high.toLocaleString()} per person per week.`,
+    openGraph: {
+      title: "Explorer Fleet | George Yachts",
+      description: `More islands. More adventure. From €${low.toLocaleString()} to €${high.toLocaleString()} per person per week.`,
+      url: "https://georgeyachts.com/explorer-fleet",
+    },
+  };
+}
 
 const QUERY = `*[_type == "yacht" && fleetTier in ["explorer", "both"]] | order(weeklyRatePrice asc) {
   _id, name, subtitle, builder, length, sleeps, cabins, crew, weeklyRatePrice, cruisingRegion,

@@ -5,15 +5,23 @@ import PrivateFleetClient from "./PrivateFleetClient";
 
 export const revalidate = 3600;
 
-export const metadata = {
-  title: "Private Fleet | Luxury Yacht Charter Greece | George Yachts",
-  description: "Your own world at sea. Full crew. Total discretion. Premium crewed yacht charters in Greek waters — from €30,000/week.",
-  openGraph: {
-    title: "Private Fleet | George Yachts",
-    description: "Your own world at sea. Full crew. Total discretion.",
-    url: "https://georgeyachts.com/private-fleet",
-  },
-};
+export async function generateMetadata() {
+  let low = 13000, high = 180000;
+  try {
+    const yachts = await sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["private", "both"]]{ weeklyRatePrice }`);
+    const prices = yachts.map(y => { const m = String(y.weeklyRatePrice || '').match(/[\d,]+/); return m ? parseInt(m[0].replace(/,/g, '')) : 0; }).filter(Boolean);
+    if (prices.length) { low = Math.min(...prices); high = Math.max(...prices); }
+  } catch {}
+  return {
+    title: "Private Fleet | Luxury Yacht Charter Greece | George Yachts",
+    description: `Your own world at sea. Full crew. Total discretion. Premium crewed yacht charters in Greek waters — from €${low.toLocaleString()} to €${high.toLocaleString()}/week.`,
+    openGraph: {
+      title: "Private Fleet | George Yachts",
+      description: `Your own world at sea. Full crew. Total discretion. From €${low.toLocaleString()} to €${high.toLocaleString()}/week.`,
+      url: "https://georgeyachts.com/private-fleet",
+    },
+  };
+}
 
 const QUERY = `*[_type == "yacht" && fleetTier in ["private", "both"]] | order(weeklyRatePrice desc) {
   _id, name, subtitle, builder, length, sleeps, cabins, crew, weeklyRatePrice, cruisingRegion,

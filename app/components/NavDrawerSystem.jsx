@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Menu, Instagram, X } from "lucide-react";
+import { Menu, Instagram, Linkedin, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useI18n } from "@/lib/i18n/I18nProvider";
@@ -158,7 +158,7 @@ const NavDrawerSystem = () => {
           </Link>
 
           {/* --- 3. RIGHT — Social Icons --- */}
-          <div className="flex items-center gap-1 w-20 justify-end">
+          <div className="flex items-center gap-1 justify-end">
             <a
               href="https://www.instagram.com/georgeyachts"
               target="_blank"
@@ -169,7 +169,16 @@ const NavDrawerSystem = () => {
             >
               <Instagram className="w-[14px] h-[14px] text-white/40 group-hover:text-[#DAA520] transition-colors duration-300" />
             </a>
-            {/* WhatsApp moved to floating button — see WhatsAppButton.jsx */}
+            <a
+              href="https://www.linkedin.com/in/george-p-biniaris/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative w-9 h-9 flex items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
+              aria-label="LinkedIn"
+              data-cursor="LinkedIn"
+            >
+              <Linkedin className="w-[14px] h-[14px] text-white/40 group-hover:text-[#DAA520] transition-colors duration-300" />
+            </a>
             {/* Favorites heart link */}
             <a
               href="/favorites"

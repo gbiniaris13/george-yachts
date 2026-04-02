@@ -15,17 +15,17 @@ import InteractiveTools from "./components/InteractiveTools";
 import BudgetSlider from "./components/BudgetSlider";
 import FleetCTAs from "./components/FleetCTAs";
 
-const HomeClient = ({ yachtCount }) => {
+const HomeClient = ({ yachtCount, privateRange, explorerRange, budgetYachts }) => {
   return (
     <div className="min-h-screen bg-black font-sans">
       <VideoSection />
-      <FleetCTAs />
+      <FleetCTAs privateRange={privateRange} explorerRange={explorerRange} />
       <HomeStats yachtCount={yachtCount} />
       <YourBroker />
       <HowItWorks />
       <Filotimon />
       <CredentialsStrip />
-      <BudgetSlider />
+      <BudgetSlider yachts={budgetYachts} />
       <InteractiveTools />
       <TwoColumnLayout />
       <ContactBar />

@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
-export default function FleetCTAs() {
+export default function FleetCTAs({ privateRange = { low: 13000, high: 180000 }, explorerRange = { low: 420, high: 1800 } }) {
   const { t } = useI18n();
+
+  const fmtK = (n) => n >= 1000 ? `€${Math.round(n / 1000)}K` : `€${n.toLocaleString()}`;
 
   return (
     <section style={{ padding: "60px 24px", background: "#000" }}>
@@ -18,7 +20,7 @@ export default function FleetCTAs() {
             Private Fleet
           </span>
           <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: "#DAA520", letterSpacing: "0.1em" }}>
-            From €30K/week
+            From {fmtK(privateRange.low)} to {fmtK(privateRange.high)}/week
           </span>
           <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 8 }}>
             Full crew · Total discretion
@@ -33,7 +35,7 @@ export default function FleetCTAs() {
             Explorer Fleet
           </span>
           <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: "#DAA520", letterSpacing: "0.1em" }}>
-            From €1,200/person
+            From €{explorerRange.low.toLocaleString()} to €{explorerRange.high.toLocaleString()}/person
           </span>
           <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 8 }}>
             More islands · More adventure
