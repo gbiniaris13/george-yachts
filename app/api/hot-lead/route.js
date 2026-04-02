@@ -1,10 +1,9 @@
-// Visitor tracking — sends Telegram notification + stores stats for daily summary
-// Uses Vercel's free x-vercel-ip-country header for geo-detection
+// Hot Lead Alert — fires when a visitor views 3+ yacht pages in one session
+// Sends urgent Telegram notification with yacht names and visitor country
 
 export const runtime = 'edge';
 
 import { sendTelegram, getFlag, getCountryName, detectDevice, athensTime } from '@/lib/telegram';
-import { kvIncr, kvHincrby, todayKey } from '@/lib/kv';
 
 export async function POST(request) {
   try {
@@ -15,34 +14,32 @@ export async function POST(request) {
     let body = {};
     try { body = await request.json(); } catch {}
 
-    const page = body.page || '/';
-    const referrer = body.referrer || 'Direct';
+    const yachts = body.yachts || [];
     const flag = getFlag(country);
     const countryName = getCountryName(country);
     const device = detectDevice(ua);
     const time = athensTime();
     const cityStr = city ? ` — ${decodeURIComponent(city)}` : '';
 
-    // Send Telegram notification
+    // Format yacht names nicely (remove slug format)
+    const yachtNames = yachts.map(s =>
+      s.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+    ).join(', ');
+
     const text = [
-      `🌐 *New Visitor on George Yachts*`,
+      `🔥 *HOT LEAD — George Yachts*`,
       ``,
       `${flag} *${countryName}*${cityStr}`,
       `${device}`,
-      `📄 Page: \`${page}\``,
-      `🔗 Source: ${referrer === 'Direct' ? 'Direct / Bookmark' : referrer}`,
+      ``,
+      `👀 Viewed *${yachts.length} yachts*:`,
+      `${yachtNames}`,
+      ``,
+      `💡 _This visitor is seriously browsing. Consider reaching out!_`,
       `🕐 ${time} Athens time`,
     ].join('\n');
 
-    // Fire Telegram + KV stats in parallel (don't wait for KV if it fails)
-    const date = todayKey();
-    await Promise.allSettled([
-      sendTelegram(text),
-      kvIncr(`stats:${date}:visitors`),
-      kvHincrby(`stats:${date}:countries`, country),
-      kvHincrby(`stats:${date}:pages`, page),
-      kvHincrby(`stats:${date}:sources`, referrer),
-    ]);
+    await sendTelegram(text);
 
     return new Response('OK', { status: 200 });
   } catch {

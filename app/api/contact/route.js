@@ -1,8 +1,47 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import axios from "axios";
+import { kvLpush, todayKey } from "@/lib/kv";
 
 export const dynamic = "force-dynamic";
+
+// Send inquiry notification to Telegram
+async function notifyTelegram(data) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) return;
+
+  const text = [
+    `📩 *New Yacht Inquiry!*`,
+    ``,
+    `👤 *${data.name}*`,
+    `📧 ${data.email}`,
+    `📞 ${data.phone}`,
+    `🌍 ${data.country}`,
+    ``,
+    `⛵ Type: ${data.yacht_type}`,
+    `👥 Guests: ${data.guests}`,
+    `💰 Budget: ${data.budget}`,
+    `📅 ${data.check_in} → ${data.check_out}`,
+    `🗺 ${data.embarkation} → ${data.disembarkation}`,
+    ``,
+    `💬 _${data.message.substring(0, 200)}${data.message.length > 200 ? '...' : ''}_`,
+    ``,
+    `⏱ _Reply within 2 hours!_`,
+  ].join('\n');
+
+  try {
+    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        parse_mode: 'Markdown',
+      }),
+    });
+  } catch {}
+}
 
 const GMAIL_USER = process.env.GMAIL_USER;
 const GMAIL_PASS = process.env.GMAIL_PASS;
@@ -137,6 +176,15 @@ export async function POST(request) {
         <p style="font-size: 10px;">ReCAPTCHA Score: ${score}</p>
       `,
     });
+
+    // Send Telegram notification + store for response tracking (non-blocking)
+    const inquiryData = { name, email, phone, country, message, yacht_type, guests, budget, check_in, check_out, embarkation, disembarkation };
+    const inquiryId = `${Date.now()}_${name.replace(/\s/g, ‘_’)}`;
+    await Promise.allSettled([
+      notifyTelegram(inquiryData),
+      kvLpush(‘inquiries:pending’, JSON.stringify({ id: inquiryId, name, email, yacht_type, ts: Date.now() })),
+      (async () => { const { kvIncr } = await import("@/lib/kv"); await kvIncr(`stats:${todayKey()}:inquiries`); })(),
+    ]);
 
     return NextResponse.json(
       { message: "Thank you — we’ll get back within 24h." },

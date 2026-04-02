@@ -1,4 +1,18 @@
 {
+  "crons": [
+    {
+      "path": "/api/cron/health-check",
+      "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/cron/daily-summary",
+      "schedule": "0 19 * * *"
+    },
+    {
+      "path": "/api/cron/inquiry-reminder",
+      "schedule": "*/30 * * * *"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
