@@ -179,15 +179,15 @@ export async function POST(request) {
 
     // Send Telegram notification + store for response tracking (non-blocking)
     const inquiryData = { name, email, phone, country, message, yacht_type, guests, budget, check_in, check_out, embarkation, disembarkation };
-    const inquiryId = `${Date.now()}_${name.replace(/\s/g, ‘_’)}`;
+    const inquiryId = `${Date.now()}_${name.replace(/\s/g, '_')}`;
     await Promise.allSettled([
       notifyTelegram(inquiryData),
-      kvLpush(‘inquiries:pending’, JSON.stringify({ id: inquiryId, name, email, yacht_type, ts: Date.now() })),
+      kvLpush('inquiries:pending', JSON.stringify({ id: inquiryId, name, email, yacht_type, ts: Date.now() })),
       (async () => { const { kvIncr } = await import("@/lib/kv"); await kvIncr(`stats:${todayKey()}:inquiries`); })(),
     ]);
 
     return NextResponse.json(
-      { message: "Thank you — we’ll get back within 24h." },
+      { message: "Thank you — we'll get back within 24h." },
       { status: 200, headers: defaultHeaders }
     );
   } catch (error) {
