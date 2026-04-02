@@ -236,12 +236,12 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <a
-                href="https://calendly.com/george-georgeyachts/30min"
+                href={`https://wa.me/17867988798?text=${encodeURIComponent(`Hi, I'm interested in chartering ${yacht.name} — could you share availability and rates?`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary"
               >
-                {t('yacht.bookVideo', 'Book a Video Consultation')}
+                {t('yacht.whatsappInquiry', 'Inquire on WhatsApp')}
               </a>
 
               <a

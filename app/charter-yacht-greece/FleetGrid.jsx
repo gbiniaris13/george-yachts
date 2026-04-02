@@ -346,7 +346,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
               <span>{t('fleet.details', 'Details')}</span>
             </Link>
             <a
-              href="https://calendly.com/george-georgeyachts/30min"
+              href={`https://wa.me/17867988798?text=${encodeURIComponent(`Hi, I'm interested in chartering ${name} — could you share availability and rates?`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="fleet-card__btn fleet-card__btn--inquire"
