@@ -6,45 +6,6 @@ import Link from 'next/link';
 
 const GOLD = '#DAA520';
 
-const YACHT_DATA = [
-  { name: 'S/Y Helidoni', slug: 'helidoni', low: 5900, high: 5900, guests: 8, type: 'Sailing Cat' },
-  { name: 'S/Y Alegria', slug: 'alegria', low: 10900, high: 10900, guests: 8, type: 'Sailing Cat' },
-  { name: 'S/Y Odyssey', slug: 'odyssey', low: 10900, high: 14900, guests: 8, type: 'Sailing Cat' },
-  { name: 'S/Y My Star', slug: 'my-star', low: 12000, high: 15000, guests: 8, type: 'Sailing Cat' },
-  { name: 'S/Y Shooting Star', slug: 'shooting-star', low: 13000, high: 13000, guests: 6, type: 'Monohull' },
-  { name: 'M/Y Endless Beauty', slug: 'endless-beauty', low: 14000, high: 17500, guests: 6, type: 'Power Cat' },
-  { name: 'S/Y Summer Star', slug: 'summer-star', low: 17000, high: 22000, guests: 10, type: 'Sailing Cat' },
-  { name: 'S/Y Libra', slug: 'libra', low: 18900, high: 26900, guests: 10, type: 'Sailing Cat' },
-  { name: 'S/Y Sahana', slug: 'sahana', low: 19500, high: 27500, guests: 8, type: 'Sailing Cat' },
-  { name: 'S/Y Azul', slug: 'azul', low: 20000, high: 26900, guests: 8, type: 'Sailing Cat' },
-  { name: "S/Y World's End", slug: 'worlds-end', low: 20500, high: 20500, guests: 10, type: 'Sailing Cat' },
-  { name: 'M/Y Explorion', slug: 'explorion', low: 21000, high: 28000, guests: 8, type: 'Power Cat' },
-  { name: 'S/Y Gigreca', slug: 'gigreca', low: 24000, high: 29900, guests: 8, type: 'Monohull' },
-  { name: 'S/Y Kimata', slug: 'kimata', low: 31500, high: 42500, guests: 8, type: 'Sailing Cat' },
-  { name: 'S/Y Pixie', slug: 'pixie', low: 31500, high: 42500, guests: 9, type: 'Sailing Cat' },
-  { name: 'S/Y Serenissima', slug: 'serenissima', low: 31500, high: 42500, guests: 10, type: 'Sailing Cat' },
-  { name: 'S/Y Aizu', slug: 'aizu', low: 33000, high: 39000, guests: 8, type: 'Monohull' },
-  { name: 'S/Y Alexandra II', slug: 'alexandra-ii', low: 33500, high: 43500, guests: 8, type: 'Sailing Cat' },
-  { name: 'ALENA', slug: 'alena', low: 34000, high: 48000, guests: 8, type: 'Power Cat' },
-  { name: 'ChristAl MiO', slug: 'christal-mio', low: 34000, high: 48000, guests: 10, type: 'Power Cat' },
-  { name: 'Majesty of Greece', slug: 'majesty-of-greece', low: 34000, high: 48000, guests: 10, type: 'Power Cat' },
-  { name: 'S/Y Nadamas', slug: 'nadamas', low: 35000, high: 41000, guests: 8, type: 'Monohull' },
-  { name: 'S/Y Huayra', slug: 'huayra', low: 44000, high: 49000, guests: 8, type: 'Monohull' },
-  { name: 'ALTEYA', slug: 'alteya', low: 49000, high: 69000, guests: 8, type: 'Power Cat' },
-  { name: 'Just Marie 2', slug: 'just-marie-2', low: 49000, high: 59000, guests: 6, type: 'Sailing Cat' },
-  { name: 'Crazy Horse', slug: 'crazy-horse', low: 50000, high: 69000, guests: 10, type: 'Sailing Cat' },
-  { name: 'S/Y Above & Beyond', slug: 'above-beyond', low: 56000, high: 77000, guests: 8, type: 'Sailing Cat' },
-  { name: 'S/Y Genny', slug: 'genny', low: 56000, high: 79000, guests: 10, type: 'Sailing Cat' },
-  { name: 'S/Y Aloia', slug: 'aloia', low: 65000, high: 85000, guests: 10, type: 'Sailing Cat' },
-  { name: 'S/Y Imladris', slug: 'imladris', low: 65000, high: 85000, guests: 8, type: 'Sailing Cat' },
-  { name: 'S/Y Serenissima III', slug: 'serenissima-iii', low: 65000, high: 85000, guests: 10, type: 'Sailing Cat' },
-  { name: 'S/Y Sol Madinina', slug: 'sol-madinina', low: 65000, high: 85000, guests: 10, type: 'Sailing Cat' },
-  { name: 'S/Y Ad Astra', slug: 'ad-astra', low: 65000, high: 90000, guests: 10, type: 'Sailing Cat' },
-  { name: 'SAMARA', slug: 'samara', low: 65000, high: 70000, guests: 8, type: 'Power Cat' },
-  { name: 'ALINA', slug: 'alina', low: 70000, high: 90000, guests: 10, type: 'Power Cat' },
-  { name: 'M/Y La Pellegrina 1', slug: 'la-pellegrina-1', low: 180000, high: 235000, guests: 12, type: 'Motor Yacht' },
-];
-
 const SEASONS = [
   { id: 'low', label: 'Low Season', months: 'Apr–May, Oct', desc: 'Quieter waters, cooler weather, best rates' },
   { id: 'mid', label: 'Mid Season', months: 'Jun, Sep', desc: 'Warm weather, moderate crowds' },
@@ -62,7 +23,7 @@ function fmt(n) {
   return '€' + Math.round(n).toLocaleString();
 }
 
-export default function CostCalculatorClient() {
+export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
   const { t } = useI18n();
   const [selectedYacht, setSelectedYacht] = useState(null);
   const [season, setSeason] = useState('mid');

@@ -7,48 +7,6 @@ import Image from 'next/image';
 
 const GOLD = '#DAA520';
 
-// All yachts with key data for matching
-const FLEET = [
-  { slug: 'la-pellegrina-1', name: 'M/Y La Pellegrina 1', type: 'motor', guests: 12, cabins: 5, price: 180000, builder: 'Couach 164', length: '50m', img: '/images/yacht-1.jpeg', tags: ['luxury', 'superyacht', 'romance', 'cuisine', 'relaxation'] },
-  { slug: 'brooklyn', name: 'M/Y Brooklyn', type: 'motor', guests: 10, cabins: 5, price: 85000, builder: 'Custom Built', length: '36m', tags: ['luxury', 'watersports', 'families', 'cuisine'] },
-  { slug: 'genny', name: 'S/Y Genny', type: 'sailing-cat', guests: 10, cabins: 5, price: 56000, builder: 'Sunreef 80', length: '24m', tags: ['luxury', 'watersports', 'families', 'sailing'] },
-  { slug: 'above-beyond', name: 'S/Y Above & Beyond', type: 'sailing-cat', guests: 8, cabins: 4, price: 56000, builder: 'Sunreef 80', length: '24m', tags: ['cuisine', 'luxury', 'romance', 'awards'] },
-  { slug: 'ad-astra', name: 'S/Y Ad Astra', type: 'sailing-cat', guests: 10, cabins: 5, price: 65000, builder: 'FP Thíra 80', length: '24m', tags: ['luxury', 'sailing', 'families', 'relaxation'] },
-  { slug: 'aloia', name: 'S/Y Aloia', type: 'sailing-cat', guests: 10, cabins: 5, price: 65000, builder: 'FP Thíra 80', length: '24m', tags: ['eco', 'luxury', 'relaxation', 'families'] },
-  { slug: 'sol-madinina', name: 'S/Y Sol Madinina', type: 'sailing-cat', guests: 10, cabins: 5, price: 65000, builder: 'FP Thíra 80', length: '24m', tags: ['diving', 'watersports', 'adventure', 'luxury'] },
-  { slug: 'imladris', name: 'S/Y Imladris', type: 'sailing-cat', guests: 8, cabins: 4, price: 65000, builder: 'Bordeaux 81', length: '24m', tags: ['luxury', 'romance', 'sailing', 'craftsmanship'] },
-  { slug: 'serenissima-iii', name: 'S/Y Serenissima III', type: 'sailing-cat', guests: 10, cabins: 5, price: 65000, builder: 'FP 80', length: '24m', tags: ['luxury', 'families', 'sailing'] },
-  { slug: 'crazy-horse', name: 'S/Y Crazy Horse', type: 'sailing-cat', guests: 10, cabins: 5, price: 50000, builder: 'Lagoon 78', length: '24m', tags: ['cuisine', 'families', 'adventure', 'watersports'] },
-  { slug: 'just-marie-2', name: 'Just Marie 2', type: 'sailing-cat', guests: 6, cabins: 3, price: 49000, builder: 'Lagoon 78', length: '24m', tags: ['romance', 'privacy', 'luxury', 'relaxation'] },
-  { slug: 'alteya', name: 'M/Y Alteya', type: 'power-cat', guests: 8, cabins: 4, price: 49000, builder: 'Sunreef 70 Power', length: '21m', tags: ['luxury', 'design', 'cuisine', 'watersports'] },
-  { slug: 'alina', name: 'M/Y Alina', type: 'power-cat', guests: 10, cabins: 5, price: 70000, builder: 'FP Power 80', length: '24m', tags: ['watersports', 'adventure', 'families', 'luxury'] },
-  { slug: 'huayra', name: 'S/Y Huayra', type: 'sailing-mono', guests: 8, cabins: 4, price: 44000, builder: 'Comet 100', length: '31m', tags: ['sailing', 'performance', 'adventure', 'thrill'] },
-  { slug: 'aizu', name: 'S/Y Aizu', type: 'sailing-mono', guests: 8, cabins: 4, price: 33000, builder: 'Marine 99', length: '30m', tags: ['classic', 'sailing', 'romance', 'relaxation'] },
-  { slug: 'nadamas', name: 'S/Y Nadamas', type: 'sailing-mono', guests: 8, cabins: 4, price: 35000, builder: 'Y8', length: '24m', tags: ['design', 'modern', 'sailing', 'romance'] },
-  { slug: 'kimata', name: 'S/Y Kimata', type: 'sailing-cat', guests: 8, cabins: 4, price: 31500, builder: 'FP Alegria 67', length: '20m', tags: ['cuisine', 'families', 'sailing', 'flexible'] },
-  { slug: 'serenissima', name: 'S/Y Serenissima', type: 'sailing-cat', guests: 10, cabins: 5, price: 31500, builder: 'FP Alegria 67', length: '20m', tags: ['adventure', 'diving', 'exploring', 'families'] },
-  { slug: 'alexandra-ii', name: 'S/Y Alexandra II', type: 'sailing-cat', guests: 8, cabins: 4, price: 33500, builder: 'FP Alegria 67', length: '20m', tags: ['relaxation', 'families', 'budget-luxury'] },
-  { slug: 'pixie', name: 'S/Y Pixie', type: 'sailing-cat', guests: 9, cabins: 4, price: 31500, builder: 'FP Alegria 67', length: '20m', tags: ['families', 'flexible', 'sailing'] },
-  { slug: 'alena', name: 'M/Y Alena', type: 'power-cat', guests: 8, cabins: 4, price: 34000, builder: 'FP Power 67', length: '20m', tags: ['eco', 'relaxation', 'families'] },
-  { slug: 'christal-mio', name: 'ChristAl MiO', type: 'power-cat', guests: 10, cabins: 5, price: 34000, builder: 'FP Power 67', length: '20m', tags: ['families', 'watersports', 'first-time'] },
-  { slug: 'majesty-of-greece', name: 'Majesty of Greece', type: 'power-cat', guests: 10, cabins: 5, price: 34000, builder: 'FP Power 67', length: '20m', tags: ['luxury', 'families', 'first-time'] },
-  { slug: 'shero', name: 'M/Y Shero', type: 'motor', guests: 8, cabins: 4, price: 28000, builder: 'Motor Yacht', length: '20m', tags: ['families', 'relaxation', 'watersports'] },
-  { slug: 'samara', name: 'SAMARA', type: 'power-cat', guests: 8, cabins: 4, price: 65000, builder: 'Custom Power Cat', length: '24m', tags: ['unique', 'design', 'luxury', 'cinema'] },
-  { slug: 'gigreca', name: 'S/Y Gigreca', type: 'sailing-mono', guests: 8, cabins: 4, price: 24000, builder: 'Admiral Silent 76', length: '24m', tags: ['classic', 'quiet', 'romance', 'relaxation'] },
-  { slug: 'worlds-end', name: "S/Y World's End", type: 'sailing-cat', guests: 10, cabins: 5, price: 20500, builder: 'FP Galathea 65', length: '19m', tags: ['cuisine', 'families', 'value', 'first-time'] },
-  { slug: 'explorion', name: 'Explorion', type: 'power-cat', guests: 8, cabins: 4, price: 21000, builder: 'Aquila 54', length: '16m', tags: ['adventure', 'diving', 'budget', 'eco'] },
-  { slug: 'azul', name: 'S/Y Azul', type: 'sailing-cat', guests: 8, cabins: 4, price: 20000, builder: 'Lagoon 55', length: '17m', tags: ['families', 'watersports', 'value', 'first-time'] },
-  { slug: 'sahana', name: 'S/Y Sahana', type: 'sailing-cat', guests: 8, cabins: 4, price: 19500, builder: 'Bali 5.4', length: '16m', tags: ['families', 'female-captain', 'cuisine', 'first-time'] },
-  { slug: 'libra', name: 'S/Y Libra', type: 'sailing-cat', guests: 10, cabins: 5, price: 18900, builder: 'Bali Catspace 55', length: '17m', tags: ['families', 'cooking-class', 'value', 'first-time'] },
-  { slug: 'summer-star', name: 'S/Y Summer Star', type: 'sailing-cat', guests: 10, cabins: 5, price: 17000, builder: 'Lagoon 52', length: '16m', tags: ['families', 'diving', 'children', 'budget'] },
-  { slug: 'endless-beauty', name: 'M/Y Endless Beauty', type: 'power-cat', guests: 6, cabins: 3, price: 14000, builder: 'FP MY 44', length: '13m', tags: ['intimate', 'budget', 'couples', 'speed'] },
-  { slug: 'shooting-star', name: 'S/Y Shooting Star', type: 'sailing-mono', guests: 6, cabins: 3, price: 13000, builder: 'Sailing 20m', length: '20m', tags: ['classic', 'sailing', 'budget', 'authentic'] },
-  { slug: 'my-star', name: 'S/Y My Star', type: 'sailing-cat', guests: 8, cabins: 4, price: 12000, builder: 'Lagoon 46', length: '14m', tags: ['budget', 'families', 'first-time'] },
-  { slug: 'odyssey', name: 'S/Y Odyssey', type: 'sailing-cat', guests: 8, cabins: 4, price: 10900, builder: 'Nautitech 46', length: '14m', tags: ['sailing', 'adventure', 'budget', 'authentic'] },
-  { slug: 'alegria', name: 'S/Y Alegria', type: 'sailing-cat', guests: 8, cabins: 4, price: 10900, builder: 'Lagoon 46', length: '14m', tags: ['budget', 'first-time', 'young-groups'] },
-  { slug: 'helidoni', name: 'S/Y Helidoni', type: 'sailing-cat', guests: 8, cabins: 4, price: 5900, builder: 'Lagoon 46', length: '14m', tags: ['budget', 'first-time', 'entry-level', 'families'] },
-];
-
 const QUESTIONS = [
   {
     id: 'group',
@@ -167,7 +125,7 @@ function matchYachts(answers) {
   return scored.sort((a, b) => b.score - a.score).slice(0, 3);
 }
 
-export default function YachtFinderQuiz() {
+export default function YachtFinderQuiz({ fleet: FLEET = [] }) {
   const { t } = useI18n();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
