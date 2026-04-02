@@ -11,6 +11,7 @@ import TranslateWidget from "./components/TranslateWidget";
 // Removed: SmartWelcome (time-based greetings — gimmick)
 // Removed: WeatherAware (weather popup — not useful)
 import LiveTicker from "./components/LiveTicker";
+import CookieConsent from "./components/CookieConsent";
 // Removed: VoiceSearch (nobody uses voice on yacht sites)
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { WishlistProvider } from "./components/WishlistProvider";
@@ -97,6 +98,7 @@ export default function RootLayout({ children }) {
         {children}
         {/* Language: users choose from flag selector. LiveTicker: social proof */}
         <LiveTicker />
+        <CookieConsent />
         {/* Removed VoiceSearch */}
         <TranslateWidget />
         <WhatsAppButton />
