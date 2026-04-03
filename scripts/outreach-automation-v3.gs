@@ -18,8 +18,11 @@ const CONFIG = {
   FOLLOWUP_1_DAYS: 4,
   FOLLOWUP_2_DAYS: 10,
 
-  // Daily sending limit
+  // Daily sending limit (safe for warmed-up account)
   DAILY_LIMIT: 50,
+
+  // Max emails per trigger run (hourly) — spreads sends across the day
+  PER_RUN_LIMIT: 7,
 
   // Default business hours (used if country not found)
   SEND_HOUR_START: 9,
@@ -270,6 +273,12 @@ function sendOutreach(skipHoursCheck) {
   var skippedTimezone = 0;
 
   for (var i = 1; i < data.length; i++) {
+    // Per-run limit: max 7 emails per hourly trigger (spreads across day)
+    if (sentThisRun >= CONFIG.PER_RUN_LIMIT) {
+      Logger.log('Per-run limit reached (' + CONFIG.PER_RUN_LIMIT + '). Next batch in 1 hour.');
+      break;
+    }
+
     if (sentToday >= CONFIG.DAILY_LIMIT) {
       sendTelegram_('\u26a0\ufe0f Daily limit reached (' + CONFIG.DAILY_LIMIT + '). Remaining prospects continue tomorrow.');
       break;
@@ -912,9 +921,10 @@ function daysBetween_(d1, d2) {
   return Math.floor((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
 }
 
-// Random delay 30-90 seconds (looks human)
+// Random delay 2-5 minutes between emails (Google anti-spam best practice)
+// Looks natural — no human sends emails every 30 seconds
 function randomDelay_() {
-  return (30 + Math.floor(Math.random() * 60)) * 1000;
+  return (120 + Math.floor(Math.random() * 180)) * 1000; // 120-300 sec
 }
 
 

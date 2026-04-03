@@ -157,7 +157,7 @@ export default function LeadCapturePopup({ isOpen, onClose, hotLeadData }) {
                 fontSize: 11, color: GOLD, margin: 0,
                 letterSpacing: '0.05em',
               }}>
-                {'\u{1F381}'} Your 10% early booking benefit has been activated
+                {'\u{1F381}'} We'll negotiate the best possible price for you
               </p>
             </div>
           </div>
@@ -189,7 +189,7 @@ export default function LeadCapturePopup({ isOpen, onClose, hotLeadData }) {
             {/* Benefits list */}
             <div style={{ margin: '0 0 24px', padding: '0 8px' }}>
               {[
-                { icon: '\u{1F3F7}\uFE0F', text: '10% early booking discount' },
+                { icon: '\u{1F3F7}\uFE0F', text: 'Best price negotiated on your behalf' },
                 { icon: '\u{1F4CB}', text: 'Personalized yacht recommendations' },
                 { icon: '\u{1F30A}', text: 'Priority availability updates' },
                 { icon: '\u{1F4DE}', text: 'Direct line to our yacht specialist' },
