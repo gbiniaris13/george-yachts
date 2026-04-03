@@ -17,6 +17,7 @@ import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { WishlistProvider } from "./components/WishlistProvider";
 import JsonLd from "./components/JsonLd";
 import { organizationSchema } from "@/lib/organizationSchema";
+import VisitorIntelligence from "./components/VisitorIntelligence";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -105,6 +106,9 @@ export default function RootLayout({ children }) {
         <VisitorBeacon />
         </WishlistProvider>
         </I18nProvider>
+
+        {/* Visitor Intelligence: real-time tracking + hot lead popup */}
+        <VisitorIntelligence />
 
         {/* 3. Analytics & Tracking */}
         <Script
