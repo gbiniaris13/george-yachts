@@ -158,11 +158,9 @@ export default function BlogGrid({ posts }) {
     );
   }
 
-  // Feature the First-Timer's Guide as hero (viral piece), fallback to most recent
-  const viralSlug = "the-first-timer-s-complete-guide-to-crewed-yacht-charter-in-greece";
-  const viralIndex = posts.findIndex((p) => p.slug === viralSlug);
-  const featured = viralIndex >= 0 ? posts[viralIndex] : posts[0];
-  const rest = posts.filter((p) => p._id !== featured._id);
+  // Always feature the most recent article (posts are ordered by publishedAt desc)
+  const featured = posts[0];
+  const rest = posts.slice(1);
 
   return (
     <>
