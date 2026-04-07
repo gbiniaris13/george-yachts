@@ -91,6 +91,9 @@ export default async function HomePage() {
 
   return (
     <>
+      <head>
+        <link rel="preload" href="/images/hero-poster.jpg" as="image" fetchPriority="high" />
+      </head>
       <WebSiteSchema />
       <HomeClient yachtCount={yachtCount} privateRange={privateRange} explorerRange={explorerRange} budgetYachts={budgetYachts} />
     </>

@@ -35,6 +35,7 @@ const BackgroundVideo = ({ src, poster }) => {
       ref={videoRef}
       src={src}
       poster={poster}
+      preload="none"
       autoPlay
       loop
       muted
@@ -80,7 +81,7 @@ const VideoSection = () => {
               <div className={`relative w-full ${HEIGHT_CLASSES} z-0`}>
                 <div className="absolute inset-0 z-0">
                   {isVideo(slide.imageUrl) ? (
-                    <BackgroundVideo src={slide.imageUrl} />
+                    <BackgroundVideo src={slide.imageUrl} poster="/images/hero-poster.jpg" />
                   ) : (
                     <img
                       src={slide.imageUrl}
