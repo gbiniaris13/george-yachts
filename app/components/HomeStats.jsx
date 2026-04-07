@@ -1,41 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useI18n } from "@/lib/i18n/I18nProvider";
 
-function Counter({ end, suffix = "", duration = 2000 }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const [started, setStarted] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setStarted(true); obs.disconnect(); } },
-      { threshold: 0.3 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!started) return;
-    let start = 0;
-    const step = end / (duration / 16);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= end) { setCount(end); clearInterval(timer); }
-      else setCount(Math.floor(start));
-    }, 16);
-    return () => clearInterval(timer);
-  }, [started, end, duration]);
-
-  return <span ref={ref}>{count}{suffix}</span>;
-}
-
-export default function HomeStats({ yachtCount = 60 }) {
-  const { t } = useI18n();
+export default function HomeStats({ yachtCount = 53 }) {
   const [ref, setRef] = useState(null);
   const [visible, setVisible] = useState(false);
 
@@ -50,10 +17,10 @@ export default function HomeStats({ yachtCount = 60 }) {
   }, [ref]);
 
   const stats = [
-    { end: yachtCount, suffix: "+", label: t('stats.yachts') },
-    { end: 4, suffix: "", label: t('stats.regions') },
-    { end: 360, suffix: "\u00b0", label: t('stats.service') },
-    { end: 100, suffix: "%", label: t('stats.satisfaction') },
+    { value: `${yachtCount}+`, label: "Curated Yachts" },
+    { value: "4", label: "Greek Regions" },
+    { value: "360\u00b0", label: "Full Service" },
+    { value: "100%", label: "Client Satisfaction" },
   ];
 
   return (
@@ -72,7 +39,7 @@ export default function HomeStats({ yachtCount = 60 }) {
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(20px)",
-              transition: `opacity 0.6s ease ${i * 0.12}s, transform 0.6s ease ${i * 0.12}s`,
+              transition: `opacity 0.6s ease ${i * 0.15}s, transform 0.6s ease ${i * 0.15}s`,
             }}
           >
             <div
@@ -85,7 +52,7 @@ export default function HomeStats({ yachtCount = 60 }) {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              <Counter end={stat.end} suffix={stat.suffix} />
+              {stat.value}
             </div>
             <div className="text-[9px] tracking-[0.2em] uppercase text-white/30 font-medium" style={{ fontFamily: "'Montserrat', sans-serif" }}>
               {stat.label}
