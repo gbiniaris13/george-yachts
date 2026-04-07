@@ -98,7 +98,7 @@ const ArticlePage = async ({ params }) => {
     );
   }
 
-  const articleSchema = generateArticleSchema(post);
+  const articleSchema = generateArticleSchema({ ...post, slug });
 
   const date = new Date(post.publishedAt).toLocaleDateString("en-US", {
     month: "long",
