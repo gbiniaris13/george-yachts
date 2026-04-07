@@ -31,7 +31,8 @@ export default function TranslateWidget() {
         onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }}
         style={{
           display: 'flex', alignItems: 'center', gap: '8px',
-          padding: '7px 14px',
+          padding: '10px 14px',
+          minHeight: '44px',
           background: 'rgba(0,0,0,0.75)',
           backdropFilter: 'blur(12px)',
           border: '1px solid rgba(218,165,32,0.2)',

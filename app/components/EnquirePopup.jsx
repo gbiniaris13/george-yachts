@@ -23,7 +23,7 @@ const EnquirePopup = ({ isOpen, onClose, yachtName }) => {
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-50 p-2 bg-black/50 rounded-full text-white hover:bg-white hover:text-black transition-colors duration-200"
+          className="absolute top-4 right-4 z-50 p-3 bg-black/50 rounded-full text-white hover:bg-white hover:text-black transition-colors duration-200"
         >
           <X size={24} />
         </button>

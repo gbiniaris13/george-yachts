@@ -134,7 +134,7 @@ const NavDrawerSystem = () => {
           <div className="flex items-center w-20">
             <button
               onClick={toggleDrawer}
-              className={`p-2 ${currentTextColor} hover:text-[#DAA520] cursor-pointer focus:outline-none focus-visible:outline-2 focus-visible:outline-[#DAA520] focus-visible:outline-offset-2 transition duration-300 active:scale-95`}
+              className={`p-3 ${currentTextColor} hover:text-[#DAA520] cursor-pointer focus:outline-none focus-visible:outline-2 focus-visible:outline-[#DAA520] focus-visible:outline-offset-2 transition duration-300 active:scale-95`}
               aria-label={isDrawerOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={isDrawerOpen}
               data-cursor="Menu"
@@ -164,7 +164,7 @@ const NavDrawerSystem = () => {
               href="https://www.instagram.com/georgeyachts"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative w-9 h-9 flex items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
+              className="group relative w-11 h-11 flex items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
               aria-label="Instagram"
               data-cursor="Instagram"
             >
@@ -174,7 +174,7 @@ const NavDrawerSystem = () => {
               href="https://www.linkedin.com/in/george-p-biniaris/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative w-9 h-9 flex items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
+              className="group relative w-11 h-11 flex items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
               aria-label="LinkedIn"
               data-cursor="LinkedIn"
             >
@@ -183,7 +183,7 @@ const NavDrawerSystem = () => {
             {/* Favorites heart link */}
             <a
               href="/favorites"
-              className="group relative w-9 h-9 flex items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
+              className="group relative w-11 h-11 flex items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
               aria-label="My Favorites"
               data-cursor="Favorites"
             >
