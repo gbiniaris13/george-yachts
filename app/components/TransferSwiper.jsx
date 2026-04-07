@@ -97,7 +97,7 @@ const TransferSwiper = ({ transferData }) => {
                   transfer.images.map((image, index) => (
                     <SwiperSlide key={index}>
                       <img
-                        src={urlFor(image.asset).width(1200).height(800).url()}
+                        src={urlFor(image.asset).width(1200).height(800).format('webp').quality(75).url()}
                         alt={
                           image.alt ||
                           transfer.vehicleType + " image " + (index + 1)

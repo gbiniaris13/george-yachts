@@ -213,10 +213,11 @@ const ArticlePage = async ({ params }) => {
         <section className="w-full px-8 md:px-20">
           <div className="relative w-full bg-[#000]">
             <img
-              src={post.imageUrl}
+              src={`${post.imageUrl}?w=1400&fm=webp&q=75`}
               alt={post.imageAlt || post.title}
               className="w-full h-auto block"
               style={{ filter: "brightness(0.85) saturate(0.9)" }}
+              fetchPriority="high"
             />
             <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#000] to-transparent" />
           </div>

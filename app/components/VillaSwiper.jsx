@@ -97,7 +97,7 @@ const VillaSwiper = ({ villaData }) => {
                   villa.images.map((image, index) => (
                     <SwiperSlide key={index}>
                       <img
-                        src={urlFor(image.asset).width(1200).height(800).url()}
+                        src={urlFor(image.asset).width(1200).height(800).format('webp').quality(75).url()}
                         alt={image.alt || villa.name + " image " + (index + 1)}
                         className="w-full h-full object-cover"
                       />

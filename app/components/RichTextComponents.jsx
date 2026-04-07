@@ -7,9 +7,11 @@ export const RichTextComponents = {
       return (
         <div className="relative w-full h-[50vh] md:h-[70vh] my-16 border border-white/10">
           <img
-            src={urlFor(value).url()}
+            src={urlFor(value).width(1200).format('webp').quality(75).url()}
             alt={value.alt || "Editorial Image"}
             className="object-cover w-full h-full"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       );

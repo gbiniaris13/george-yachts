@@ -18,10 +18,7 @@ import { WishlistProvider } from "./components/WishlistProvider";
 import JsonLd from "./components/JsonLd";
 import { organizationSchema } from "@/lib/organizationSchema";
 import VisitorIntelligence from "./components/VisitorIntelligence";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/effect-fade";
+// Swiper CSS moved to individual Swiper components to avoid loading on non-Swiper pages
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -79,13 +76,21 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${marcellus.variable} ${cormorant.variable} ${barlow.variable} ${montserrat.variable} antialiased`}
       >
+        {/* Skip to main content — accessibility */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-[#DAA520] focus:text-black focus:px-6 focus:py-3 focus:text-sm focus:font-semibold focus:rounded"
+        >
+          Skip to main content
+        </a>
+
         <JsonLd data={organizationSchema} />
         {/* 1. Critical External Scripts */}
         {recaptchaKey && (
           <Script
             id="recaptcha-script"
             src={`https://www.google.com/recaptcha/enterprise.js?render=${recaptchaKey}`}
-            strategy="beforeInteractive"
+            strategy="lazyOnload"
           />
         )}
 
@@ -96,7 +101,9 @@ export default function RootLayout({ children }) {
         <I18nProvider>
         <WishlistProvider>
         <NavDrawerSystem />
+        <main id="main-content">
         {children}
+        </main>
         {/* Language: users choose from flag selector. LiveTicker: social proof */}
         <LiveTicker />
         <CookieConsent />
@@ -143,7 +150,7 @@ export default function RootLayout({ children }) {
         <Script
           id="vtag-ai-js"
           src="https://r2.leadsy.ai/tag.js"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           data-pid="6aeJg49QjgxMfguK"
           data-version="062024"
         />
