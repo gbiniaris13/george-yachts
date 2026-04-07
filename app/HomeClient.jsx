@@ -1,19 +1,22 @@
 "use client";
 
 import React from "react";
+import dynamic from "next/dynamic";
 import VideoSection from "./components/VideoSection";
-import HomeStats from "./components/HomeStats";
-import TwoColumnLayout from "./components/TwoColumnLayout";
-import Footer from "./components/Footer";
-import ContactFormSection from "./components/ContactFormSection";
-import Filotimon from "./components/Filotimon";
-import ContactBar from "./components/ContactBar";
-import YourBroker from "./components/YourBroker";
-import HowItWorks from "./components/HowItWorks";
-import CredentialsStrip from "./components/CredentialsStrip";
-import InteractiveTools from "./components/InteractiveTools";
-import BudgetSlider from "./components/BudgetSlider";
 import FleetCTAs from "./components/FleetCTAs";
+import HomeStats from "./components/HomeStats";
+import Footer from "./components/Footer";
+
+// Dynamic imports for below-fold components — reduces initial JS bundle
+const YourBroker = dynamic(() => import("./components/YourBroker"), { ssr: false });
+const HowItWorks = dynamic(() => import("./components/HowItWorks"), { ssr: false });
+const Filotimon = dynamic(() => import("./components/Filotimon"), { ssr: false });
+const CredentialsStrip = dynamic(() => import("./components/CredentialsStrip"), { ssr: false });
+const BudgetSlider = dynamic(() => import("./components/BudgetSlider"), { ssr: false });
+const InteractiveTools = dynamic(() => import("./components/InteractiveTools"), { ssr: false });
+const TwoColumnLayout = dynamic(() => import("./components/TwoColumnLayout"), { ssr: false });
+const ContactBar = dynamic(() => import("./components/ContactBar"), { ssr: false });
+const ContactFormSection = dynamic(() => import("./components/ContactFormSection"), { ssr: false });
 
 const HomeClient = ({ yachtCount, privateRange, explorerRange, budgetYachts }) => {
   return (

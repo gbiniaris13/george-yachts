@@ -12,6 +12,7 @@
     "@portabletext/react": "^6.0.2",
     "@sanity/client": "^7.12.0",
     "axios": "^1.12.2",
+    "critters": "^0.0.23",
     "lucide-react": "^0.545.0",
     "next": "^15.5.10",
     "next-sanity-image": "^6.2.0",
