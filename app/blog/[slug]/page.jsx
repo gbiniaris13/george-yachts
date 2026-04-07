@@ -151,12 +151,13 @@ const ArticlePage = async ({ params }) => {
                 day: 'numeric' 
               })}
             </span>
-            {post._updatedAt && post._updatedAt !== post.publishedAt && (
+            {post._updatedAt && post.publishedAt &&
+              Math.abs(new Date(post._updatedAt) - new Date(post.publishedAt)) > 24 * 60 * 60 * 1000 && (
               <span className="text-[#DAA520]/40 text-[8px] tracking-[0.4em] uppercase">
-                Updated: {new Date(post._updatedAt).toLocaleDateString('en-US', { 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric' 
+                Updated: {new Date(post._updatedAt).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
                 })}
               </span>
             )}
