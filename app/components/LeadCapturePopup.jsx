@@ -116,10 +116,12 @@ export default function LeadCapturePopup({ isOpen, onClose, hotLeadData }) {
         <button
           onClick={handleClose}
           style={{
-            position: 'absolute', top: 14, right: 14,
+            position: 'absolute', top: 8, right: 8,
             background: 'transparent', border: 'none',
-            color: 'rgba(255,255,255,0.4)', fontSize: 20,
-            cursor: 'pointer', padding: 4,
+            color: 'rgba(255,255,255,0.5)', fontSize: 20,
+            cursor: 'pointer', padding: 12,
+            minWidth: 44, minHeight: 44,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
             transition: 'color 0.2s',
           }}
           onMouseEnter={(e) => e.target.style.color = '#fff'}

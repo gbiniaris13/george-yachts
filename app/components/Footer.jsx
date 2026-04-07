@@ -68,7 +68,7 @@ const Footer = () => {
                 href="https://www.instagram.com/georgeyachts"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative w-10 h-10 flex items-center justify-center border border-white/10 hover:border-[#DAA520]/40 transition-all duration-500"
+                className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#DAA520]/40 transition-all duration-500"
                 aria-label="Instagram"
                 data-cursor="Instagram"
               >
@@ -78,7 +78,7 @@ const Footer = () => {
                 href="https://www.linkedin.com/in/george-p-biniaris/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative w-10 h-10 flex items-center justify-center border border-white/10 hover:border-[#DAA520]/40 transition-all duration-500"
+                className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#DAA520]/40 transition-all duration-500"
                 aria-label="LinkedIn"
                 data-cursor="LinkedIn"
               >
@@ -88,7 +88,7 @@ const Footer = () => {
                 href="https://wa.me/17867988798"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative w-10 h-10 flex items-center justify-center border border-white/10 hover:border-[#DAA520]/40 transition-all duration-500"
+                className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#DAA520]/40 transition-all duration-500"
                 aria-label="WhatsApp"
                 data-cursor="WhatsApp"
               >
@@ -121,7 +121,7 @@ const Footer = () => {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-white/35 hover:text-white transition-colors duration-300"
+                  className="text-white/60 hover:text-white transition-colors duration-300"
                   style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", letterSpacing: "0.05em" }}
                 >
                   {link.name}
@@ -140,7 +140,7 @@ const Footer = () => {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-white/35 hover:text-white transition-colors duration-300"
+                  className="text-white/60 hover:text-white transition-colors duration-300"
                   style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", letterSpacing: "0.05em" }}
                 >
                   {link.name}
@@ -256,7 +256,7 @@ const Footer = () => {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-white/20 hover:text-[#DAA520] transition-colors duration-300"
+                className="text-white/50 hover:text-[#DAA520] transition-colors duration-300"
                 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.15em", textTransform: "uppercase" }}
               >
                 {link.name}
@@ -265,13 +265,13 @@ const Footer = () => {
           </div>
 
           {/* Copyright */}
-          <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(255,255,255,0.2)", textTransform: "uppercase" }}>
+          <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(255,255,255,0.5)", textTransform: "uppercase" }}>
             &copy; {currentYear} <span className="notranslate">George Yachts Brokerage House LLC</span>
           </span>
         </div>
 
         {/* Disclaimer */}
-        <p className="mt-10 text-center" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.12)", letterSpacing: "0.05em", lineHeight: 1.8, maxWidth: "800px", margin: "40px auto 0" }}>
+        <p className="mt-10 text-center" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.45)", letterSpacing: "0.05em", lineHeight: 1.8, maxWidth: "800px", margin: "40px auto 0" }}>
           All yacht specifications, images, and pricing are provided for informational purposes only. <span className="notranslate">George Yachts Brokerage House LLC</span> offers the details of these vessels in good faith but cannot guarantee the accuracy of this information or the condition of the vessels. All information is subject to change without notice and is not contractual.
         </p>
       </div>

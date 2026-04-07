@@ -154,14 +154,14 @@ const ArticlePage = async ({ params }) => {
         <div className="flex items-center justify-between w-full">
           <Link
             href="/blog"
-            className="inline-flex items-center text-white/30 hover:text-[#DAA520] transition-colors duration-500 text-[9px] tracking-[0.55em] uppercase font-bold group"
+            className="inline-flex items-center text-white/50 hover:text-[#DAA520] transition-colors duration-500 text-[9px] tracking-[0.55em] uppercase font-bold group"
           >
             <ChevronLeft className="w-3 h-3 mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
             The Journal
           </Link>
 
           <div className="flex flex-col items-end gap-1">
-            <span className="text-white/20 text-[9px] tracking-[0.55em] uppercase">
+            <span className="text-white/50 text-[9px] tracking-[0.55em] uppercase">
               {new Date(post.publishedAt || post._createdAt).toLocaleDateString('en-US', { 
                 year: 'numeric', 
                 month: 'long', 
@@ -197,7 +197,7 @@ const ArticlePage = async ({ params }) => {
 
           <div className="flex items-center space-x-5 mt-10">
             <span className="block w-12 h-px bg-white/10" />
-            <span className="text-white/30 text-[9px] tracking-[0.5em] uppercase">
+            <span className="text-white/50 text-[9px] tracking-[0.5em] uppercase">
               By {post.author}
             </span>
             <span className="block w-12 h-px bg-white/10" />
@@ -244,7 +244,7 @@ const ArticlePage = async ({ params }) => {
             <span className="text-[#DAA520]/25 text-4xl font-marcellus select-none">
               &#10022;
             </span>
-            <p className="text-white/15 text-[8px] tracking-[0.7em] uppercase">
+            <p className="text-white/50 text-[8px] tracking-[0.7em] uppercase">
               George Yachts Brokerage Editorial
             </p>
           </div>
@@ -253,7 +253,7 @@ const ArticlePage = async ({ params }) => {
           <div className="mt-16 flex justify-center">
             <Link
               href="/blog"
-              className="inline-flex items-center text-white/20 hover:text-[#DAA520] transition-colors duration-500 text-[9px] tracking-[0.55em] uppercase font-bold group"
+              className="inline-flex items-center text-white/50 hover:text-[#DAA520] transition-colors duration-500 text-[9px] tracking-[0.55em] uppercase font-bold group"
             >
               <ChevronLeft className="w-3 h-3 mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
               Return to The Journal

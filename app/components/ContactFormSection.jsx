@@ -252,14 +252,14 @@ const ContactFormSection = () => {
                     ? 'border-[#DAA520] text-[#DAA520] bg-[#DAA520]/10'
                     : step > s.num
                       ? 'border-[#DAA520]/40 text-[#DAA520]/60 bg-[#DAA520]/5'
-                      : 'border-white/15 text-white/30'
+                      : 'border-white/30 text-white/50'
                   }
                 `}>
                   {step > s.num ? '✓' : s.num}
                 </span>
                 <span className={`
                   text-[10px] tracking-[0.15em] uppercase hidden md:inline transition-colors duration-300
-                  ${step === s.num ? 'text-white/70' : 'text-white/25'}
+                  ${step === s.num ? 'text-white/70' : 'text-white/50'}
                 `}>
                   {s.label}
                 </span>
@@ -421,32 +421,32 @@ const ContactFormSection = () => {
             {/* Trust & Security Signals */}
             <div className="mt-14 mb-10 py-6 px-8 border border-white/5" style={{ background: "rgba(218,165,32,0.02)" }}>
               <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-                <div className="flex items-center gap-2 text-white/30 text-[10px] tracking-[0.15em] uppercase">
+                <div className="flex items-center gap-2 text-white/60 text-[10px] tracking-[0.15em] uppercase">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                   <span>{t('contact.secure')}</span>
                 </div>
-                <div className="flex items-center gap-2 text-white/30 text-[10px] tracking-[0.15em] uppercase">
+                <div className="flex items-center gap-2 text-white/60 text-[10px] tracking-[0.15em] uppercase">
                   {Icons.shield}
                   <span>Strictly Confidential</span>
                 </div>
-                <div className="flex items-center gap-2 text-white/30 text-[10px] tracking-[0.15em] uppercase">
+                <div className="flex items-center gap-2 text-white/60 text-[10px] tracking-[0.15em] uppercase">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                   <span>No Obligation</span>
                 </div>
-                <div className="flex items-center gap-2 text-white/30 text-[10px] tracking-[0.15em] uppercase">
+                <div className="flex items-center gap-2 text-white/60 text-[10px] tracking-[0.15em] uppercase">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                   <span>Priority Response</span>
                 </div>
               </div>
-              <p className="text-center text-[9px] text-white/20 mt-4 tracking-wider">
-                Your data is protected with bank-grade encryption. <a href="/your-privacy-security" className="text-[#DAA520]/40 hover:text-[#DAA520]/70 underline transition-colors">Learn how we protect your information</a>
+              <p className="text-center text-[9px] text-white/50 mt-4 tracking-wider">
+                Your data is protected with bank-grade encryption. <a href="/your-privacy-security" className="text-[#DAA520]/70 hover:text-[#DAA520] underline transition-colors">Learn how we protect your information</a>
               </p>
             </div>
 
             {/* GDPR + reCAPTCHA notice */}
-            <div className="text-[9px] text-white/25 tracking-widest text-center mb-8 leading-relaxed">
+            <div className="text-[9px] text-white/50 tracking-widest text-center mb-8 leading-relaxed">
               By submitting this form you consent to George Yachts Brokerage House LLC processing your personal data to respond to your inquiry.
-              See our <a href="/privacy-policy" className="underline text-[#DAA520]/40 hover:text-[#DAA520]/70 transition-colors" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+              See our <a href="/privacy-policy" className="underline text-[#DAA520]/70 hover:text-[#DAA520] transition-colors" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
               <br />Protected by reCAPTCHA · Google Privacy Policy and Terms of Service apply.
             </div>
 

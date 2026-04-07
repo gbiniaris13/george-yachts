@@ -74,7 +74,7 @@ export default function RelatedArticles({ posts }) {
               {/* Content */}
               <div className="p-4">
                 <span
-                  className="text-[#DAA520]/40 text-[8px] tracking-[0.3em] uppercase block mb-2"
+                  className="text-[#DAA520]/70 text-[8px] tracking-[0.3em] uppercase block mb-2"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
                   {formatDate(post.publishedAt)}
@@ -87,7 +87,7 @@ export default function RelatedArticles({ posts }) {
                 </h3>
                 {post.excerpt && (
                   <p
-                    className="text-white/30 text-[12px] leading-relaxed mt-2 line-clamp-2"
+                    className="text-white/60 text-[12px] leading-relaxed mt-2 line-clamp-2"
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
                     {post.excerpt}
@@ -108,7 +108,7 @@ export default function RelatedArticles({ posts }) {
         <div className="mt-10 text-center">
           <Link
             href="/blog"
-            className="text-white/20 hover:text-[#DAA520] transition-colors duration-500 text-[9px] tracking-[0.4em] uppercase"
+            className="text-white/50 hover:text-[#DAA520] transition-colors duration-500 text-[9px] tracking-[0.4em] uppercase"
             style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
             View All Articles

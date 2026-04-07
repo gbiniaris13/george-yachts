@@ -170,7 +170,7 @@ export default function LiveTicker() {
           <p style={{
             fontFamily: "'Montserrat', sans-serif",
             fontSize: 8,
-            color: 'rgba(255,255,255,0.15)',
+            color: 'rgba(255,255,255,0.5)',
             margin: 0,
             letterSpacing: '0.08em',
           }}>
@@ -180,10 +180,13 @@ export default function LiveTicker() {
 
         <button
           onClick={(e) => { e.stopPropagation(); setVisible(false); }}
+          aria-label="Dismiss notification"
           style={{
             background: 'none', border: 'none',
-            color: 'rgba(255,255,255,0.12)', fontSize: 10,
-            cursor: 'pointer', padding: 0, flexShrink: 0, marginTop: 2,
+            color: 'rgba(255,255,255,0.5)', fontSize: 12,
+            cursor: 'pointer', padding: 8, flexShrink: 0,
+            minWidth: 44, minHeight: 44,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}
         >
           ✕
