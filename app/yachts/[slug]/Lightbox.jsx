@@ -42,7 +42,7 @@ export default function Lightbox({ images, yachtName }) {
           >
             <Image
               src={image.url}
-              alt={`${yachtName} - interior exterior view ${index + 2} - luxury yacht charter Greece`}
+              alt={image.alt || `${yachtName} — charter yacht in Greece, image ${index + 2}`}
               width={600}
               height={400}
               className="yacht-gallery__image transition-transform duration-500 group-hover:scale-110"
@@ -84,7 +84,7 @@ export default function Lightbox({ images, yachtName }) {
           >
             <Image
               src={images[currentIndex].url}
-              alt={`${yachtName} - gallery image ${currentIndex + 1}`}
+              alt={images[currentIndex].alt || `${yachtName} — charter yacht in Greece, image ${currentIndex + 1}`}
               fill
               className="object-contain"
               sizes="90vw"

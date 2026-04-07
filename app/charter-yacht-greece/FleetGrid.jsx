@@ -249,7 +249,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
           {imageUrl ? (
             <Image
               src={`${imageUrl}?w=600&h=400&fit=crop&auto=format`}
-              alt={`${name} - luxury yacht charter Greece`}
+              alt={yacht.imageAlt || `${name} — charter yacht in Greece`}
               width={600}
               height={400}
               loading={index < 6 ? 'eager' : 'lazy'}
@@ -550,40 +550,40 @@ export default function FleetGrid({ yachts }) {
         {/* Sub-filters */}
         <div className="fleet-filters__row">
           <div className="fleet-filters__select-group">
-            <span className="fleet-filters__label">{t('common.length', 'Length')}</span>
-            <select value={lengthRange} onChange={(e) => setLengthRange(e.target.value)} className="fleet-filters__select">
+            <label htmlFor="filter-length" className="fleet-filters__label">{t('common.length', 'Length')}</label>
+            <select id="filter-length" value={lengthRange} onChange={(e) => setLengthRange(e.target.value)} className="fleet-filters__select">
               {LENGTH_RANGES.map((opt) => (
                 <option key={opt.id} value={opt.id}>{opt.label}</option>
               ))}
             </select>
           </div>
           <div className="fleet-filters__select-group">
-            <span className="fleet-filters__label">{t('common.guests', 'Guests')}</span>
-            <select value={guestFilter} onChange={(e) => setGuestFilter(e.target.value)} className="fleet-filters__select">
+            <label htmlFor="filter-guests" className="fleet-filters__label">{t('common.guests', 'Guests')}</label>
+            <select id="filter-guests" value={guestFilter} onChange={(e) => setGuestFilter(e.target.value)} className="fleet-filters__select">
               {GUEST_OPTIONS.map((opt) => (
                 <option key={opt.id} value={opt.id}>{opt.label}</option>
               ))}
             </select>
           </div>
           <div className="fleet-filters__select-group">
-            <span className="fleet-filters__label">{t('common.cabins', 'Cabins')}</span>
-            <select value={cabinFilter} onChange={(e) => setCabinFilter(e.target.value)} className="fleet-filters__select">
+            <label htmlFor="filter-cabins" className="fleet-filters__label">{t('common.cabins', 'Cabins')}</label>
+            <select id="filter-cabins" value={cabinFilter} onChange={(e) => setCabinFilter(e.target.value)} className="fleet-filters__select">
               {CABIN_OPTIONS.map((opt) => (
                 <option key={opt.id} value={opt.id}>{opt.label}</option>
               ))}
             </select>
           </div>
           <div className="fleet-filters__select-group">
-            <span className="fleet-filters__label">{t('fleet.price', 'Price')}</span>
-            <select value={priceRange} onChange={(e) => setPriceRange(e.target.value)} className="fleet-filters__select">
+            <label htmlFor="filter-price" className="fleet-filters__label">{t('fleet.price', 'Price')}</label>
+            <select id="filter-price" value={priceRange} onChange={(e) => setPriceRange(e.target.value)} className="fleet-filters__select">
               {PRICE_RANGES.map((opt) => (
                 <option key={opt.id} value={opt.id}>{opt.label}</option>
               ))}
             </select>
           </div>
           <div className="fleet-filters__select-group">
-            <span className="fleet-filters__label">{t('fleet.sort', 'Sort')}</span>
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="fleet-filters__select">
+            <label htmlFor="filter-sort" className="fleet-filters__label">{t('fleet.sort', 'Sort')}</label>
+            <select id="filter-sort" value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="fleet-filters__select">
               {SORT_OPTIONS.map((opt) => (
                 <option key={opt.id} value={opt.id}>{opt.label}</option>
               ))}

@@ -142,7 +142,7 @@ export default function AboutContent() {
               </div>
               {/* IYBA Badge under photo */}
               <div style={{ marginTop: "20px", display: "flex", alignItems: "center", gap: "12px", padding: "16px", border: "1px solid rgba(218,165,32,0.15)", background: "rgba(218,165,32,0.03)" }}>
-                <img src="/images/iyba.png" alt="IYBA Member" style={{ height: "36px", width: "auto", opacity: 0.8 }} />
+                <img src="/images/iyba.png" alt="IYBA Member — International Yacht Brokers Association" style={{ height: "36px", width: "auto", opacity: 0.8 }} />
                 <div>
                   <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", margin: 0 }}>Member of</p>
                   <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.1em", color: "#DAA520", margin: 0 }}>International Yacht Brokers Association</p>

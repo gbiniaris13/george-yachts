@@ -40,7 +40,8 @@ const FLEET_QUERY = `*[_type == "yacht" && defined(slug.current)] {
   builder,
   weeklyRatePrice,
   cruisingRegion,
-  "imageUrl": images[0].asset->url
+  "imageUrl": images[0].asset->url,
+  "imageAlt": images[0].alt
 }`;
 
 // Schema for SEO

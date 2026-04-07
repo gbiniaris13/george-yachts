@@ -21,7 +21,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             <div className="yacht-hero__image-container">
               <Image
                 src={heroImage.url}
-                alt={`${yacht.name} ${yacht.subtitle} - luxury yacht charter Greece`}
+                alt={heroImage.alt || `${yacht.name} ${yacht.subtitle} — luxury yacht charter Greece`}
                 fill
                 priority
                 className="yacht-hero__image"
