@@ -14,6 +14,87 @@ export const RichTextComponents = {
         </div>
       );
     },
+    table: ({ value }) => {
+      const { rows = [], headerRow = true, caption } = value;
+      if (!rows.length) return null;
+
+      const headerData = headerRow ? rows[0] : null;
+      const bodyRows = headerRow ? rows.slice(1) : rows;
+
+      const cellStyle = (isHeader) => ({
+        padding: "12px 16px",
+        textAlign: "left",
+        color: isHeader ? "#F8F5F0" : "#1a1a1a",
+        fontFamily: isHeader
+          ? "var(--font-montserrat), Montserrat, sans-serif"
+          : "Lato, var(--font-sans), sans-serif",
+        fontWeight: isHeader ? 600 : 300,
+        fontSize: "0.95rem",
+        lineHeight: 1.6,
+        borderBottom: isHeader ? "2px solid #C9A84C" : "1px solid #e5e5e5",
+      });
+
+      return (
+        <div className="my-12">
+          <div
+            style={{
+              overflowX: "auto",
+              WebkitOverflowScrolling: "touch",
+            }}
+          >
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                borderLeft: "3px solid #C9A84C",
+                minWidth: "480px",
+              }}
+            >
+              {headerData && (
+                <thead>
+                  <tr style={{ backgroundColor: "#0D1B2A" }}>
+                    {(headerData.cells || []).map((cell, i) => (
+                      <th key={i} style={cellStyle(true)}>
+                        {cell}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+              )}
+              <tbody>
+                {bodyRows.map((row, bodyIdx) => (
+                  <tr
+                    key={bodyIdx}
+                    style={{
+                      backgroundColor: bodyIdx % 2 === 0 ? "#ffffff" : "#f9f9f9",
+                    }}
+                  >
+                    {(row.cells || []).map((cell, i) => (
+                      <td key={i} style={cellStyle(false)}>
+                        {cell}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {caption && (
+            <p
+              style={{
+                marginTop: "8px",
+                fontSize: "0.8rem",
+                color: "rgba(255,255,255,0.4)",
+                fontStyle: "italic",
+                fontFamily: "var(--font-sans), sans-serif",
+              }}
+            >
+              {caption}
+            </p>
+          )}
+        </div>
+      );
+    },
   },
   block: {
     // Normal paragraphs
