@@ -38,6 +38,7 @@ const navSections = [
       { nameKey: "nav.buildItinerary", href: "/itinerary-builder/" },
       { nameKey: "nav.islandQuiz", href: "/island-quiz/" },
       { nameKey: "nav.sizeGuide", href: "/yacht-size-visualizer/" },
+      { nameKey: "nav.instantProposal", href: "/proposal-generator/" },
     ],
   },
   {
