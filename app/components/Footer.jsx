@@ -197,11 +197,14 @@ const Footer = () => {
                 onSubmit={(e) => { e.preventDefault(); if (email) setSubscribed(true); }}
                 className="flex items-stretch max-w-md mx-auto"
               >
+                <label htmlFor="newsletter-email" className="sr-only">Email address for newsletter</label>
                 <input
+                  id="newsletter-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email address"
+                  aria-label="Email address for newsletter"
                   required
                   style={{
                     flex: 1,

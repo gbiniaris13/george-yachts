@@ -33,6 +33,17 @@ body {
   color: #000;
 }
 
+/* Focus-visible — accessible keyboard focus ring (brand gold) */
+*:focus-visible {
+  outline: 2px solid #DAA520;
+  outline-offset: 2px;
+}
+
+/* Remove default outline only when NOT keyboard-navigating */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* ═══════════════════════════════════════
    GLOBAL PREMIUM EFFECTS — €1M Feel
    Applied via CSS classes on any element

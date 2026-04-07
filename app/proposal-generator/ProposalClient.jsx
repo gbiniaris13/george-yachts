@@ -130,38 +130,38 @@ export default function ProposalClient({ yachts }) {
           {/* Form */}
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
             <div>
-              <label style={labelStyle}>Your Name (optional)</label>
-              <input type="text" value={formData.clientName} onChange={(e) => setFormData({ ...formData, clientName: e.target.value })} placeholder="For a personalized proposal" style={inputStyle} />
+              <label htmlFor="proposal-name" style={labelStyle}>Your Name (optional)</label>
+              <input id="proposal-name" type="text" value={formData.clientName} onChange={(e) => setFormData({ ...formData, clientName: e.target.value })} placeholder="For a personalized proposal" style={inputStyle} />
             </div>
             <div>
-              <label style={labelStyle}>Season</label>
-              <select value={formData.season} onChange={(e) => setFormData({ ...formData, season: e.target.value })} style={inputStyle}>
+              <label htmlFor="proposal-season" style={labelStyle}>Season</label>
+              <select id="proposal-season" value={formData.season} onChange={(e) => setFormData({ ...formData, season: e.target.value })} style={inputStyle}>
                 {SEASONS.map((s) => <option key={s.key} value={s.key}>{s.label}</option>)}
               </select>
             </div>
             <div>
-              <label style={labelStyle}>Preferred Region</label>
-              <select value={formData.region} onChange={(e) => setFormData({ ...formData, region: e.target.value })} style={inputStyle}>
+              <label htmlFor="proposal-region" style={labelStyle}>Preferred Region</label>
+              <select id="proposal-region" value={formData.region} onChange={(e) => setFormData({ ...formData, region: e.target.value })} style={inputStyle}>
                 {REGIONS.map((r) => <option key={r} value={r}>{r}</option>)}
               </select>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
               <div>
-                <label style={labelStyle}>Start Date</label>
-                <input type="date" value={formData.startDate} onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} style={inputStyle} />
+                <label htmlFor="proposal-start" style={labelStyle}>Start Date</label>
+                <input id="proposal-start" type="date" value={formData.startDate} onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} style={inputStyle} />
               </div>
               <div>
-                <label style={labelStyle}>End Date</label>
-                <input type="date" value={formData.endDate} onChange={(e) => setFormData({ ...formData, endDate: e.target.value })} style={inputStyle} />
+                <label htmlFor="proposal-end" style={labelStyle}>End Date</label>
+                <input id="proposal-end" type="date" value={formData.endDate} onChange={(e) => setFormData({ ...formData, endDate: e.target.value })} style={inputStyle} />
               </div>
             </div>
             <div>
-              <label style={labelStyle}>Number of Guests</label>
-              <input type="number" min={1} max={parseInt(yacht?.sleeps) || 12} value={formData.guests} onChange={(e) => setFormData({ ...formData, guests: parseInt(e.target.value) || 1 })} style={inputStyle} />
+              <label htmlFor="proposal-guests" style={labelStyle}>Number of Guests</label>
+              <input id="proposal-guests" type="number" min={1} max={parseInt(yacht?.sleeps) || 12} value={formData.guests} onChange={(e) => setFormData({ ...formData, guests: parseInt(e.target.value) || 1 })} style={inputStyle} />
             </div>
             <div>
-              <label style={labelStyle}>Special Requests (optional)</label>
-              <textarea value={formData.specialRequests} onChange={(e) => setFormData({ ...formData, specialRequests: e.target.value })} placeholder="Birthday celebration, dietary requirements, specific islands..." rows={3} style={{ ...inputStyle, resize: "vertical" }} />
+              <label htmlFor="proposal-requests" style={labelStyle}>Special Requests (optional)</label>
+              <textarea id="proposal-requests" value={formData.specialRequests} onChange={(e) => setFormData({ ...formData, specialRequests: e.target.value })} placeholder="Birthday celebration, dietary requirements, specific islands..." rows={3} style={{ ...inputStyle, resize: "vertical" }} />
             </div>
           </div>
 

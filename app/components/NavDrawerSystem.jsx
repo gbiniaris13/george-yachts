@@ -134,8 +134,9 @@ const NavDrawerSystem = () => {
           <div className="flex items-center w-20">
             <button
               onClick={toggleDrawer}
-              className={`p-2 ${currentTextColor} hover:text-[#DAA520] cursor-pointer focus:outline-none transition duration-300 active:scale-95`}
-              aria-label="Toggle menu"
+              className={`p-2 ${currentTextColor} hover:text-[#DAA520] cursor-pointer focus:outline-none focus-visible:outline-2 focus-visible:outline-[#DAA520] focus-visible:outline-offset-2 transition duration-300 active:scale-95`}
+              aria-label={isDrawerOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={isDrawerOpen}
               data-cursor="Menu"
               style={{ touchAction: "manipulation" }}
             >

@@ -141,16 +141,22 @@ function Reveal({ children, className = "", delay = 0 }) {
 }
 
 /* ─── FAQ Item ─── */
-function FAQItem({ item, isOpen, onClick }) {
+function FAQItem({ item, isOpen, onClick, id }) {
+  const answerId = `faq-answer-${id}`;
   return (
     <div className={`faq-item ${isOpen ? "faq-item--open" : ""}`}>
-      <button className="faq-item__button" onClick={onClick}>
+      <button
+        className="faq-item__button"
+        onClick={onClick}
+        aria-expanded={isOpen}
+        aria-controls={answerId}
+      >
         <span className="faq-item__question">{item.q}</span>
-        <svg className="faq-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg className="faq-item__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </button>
-      <div className="faq-item__answer">
+      <div className="faq-item__answer" id={answerId} role="region" aria-labelledby={`faq-q-${id}`}>
         <p className="faq-item__answer-text">{item.a}</p>
       </div>
     </div>
@@ -198,6 +204,7 @@ export default function FAQClient() {
                 return (
                   <FAQItem
                     key={key}
+                    id={key}
                     item={item}
                     isOpen={openKey === key}
                     onClick={() => setOpenKey(openKey === key ? null : key)}
