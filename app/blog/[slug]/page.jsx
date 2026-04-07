@@ -8,6 +8,7 @@ import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import JsonLd from "../../components/JsonLd";
 import { generateArticleSchema } from "@/lib/articleSchema";
+import RelatedArticles from "@/components/RelatedArticles";
 
 export async function generateStaticParams() {
   const query = `*[_type == "post"]{ "slug": slug.current }`;
@@ -29,6 +30,19 @@ async function getPost(slug) {
     mainImage
   }`;
   return sanityClient.fetch(query, { slug });
+}
+
+async function getRelatedPosts(currentSlug) {
+  const query = `*[_type == "post" && slug.current != $currentSlug && defined(slug.current)] | order(publishedAt desc)[0...3]{
+    _id,
+    title,
+    "slug": slug.current,
+    publishedAt,
+    excerpt,
+    "imageUrl": mainImage.asset->url,
+    "imageAlt": mainImage.alt
+  }`;
+  return sanityClient.fetch(query, { currentSlug });
 }
 
 export async function generateMetadata({ params }) {
@@ -86,7 +100,10 @@ export async function generateMetadata({ params }) {
 
 const ArticlePage = async ({ params }) => {
   const { slug } = await params;
-  const post = await getPost(slug);
+  const [post, relatedPosts] = await Promise.all([
+    getPost(slug),
+    getRelatedPosts(slug),
+  ]);
 
   if (!post) {
     return (
@@ -244,6 +261,7 @@ const ArticlePage = async ({ params }) => {
         </div>
       </section>
 
+      <RelatedArticles posts={relatedPosts} />
       <ContactFormSection />
       <Footer />
     </div>
