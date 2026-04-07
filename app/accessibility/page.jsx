@@ -117,10 +117,10 @@ export default function AccessibilityPage() {
               <li>
                 Email:{" "}
                 <a
-                  href="mailto:info@georgeyachts.com"
+                  href="mailto:george@georgeyachts.com"
                   className="text-[#DAA520] hover:text-white border-b border-[#DAA520]/30 hover:border-white transition-colors duration-300"
                 >
-                  info@georgeyachts.com
+                  george@georgeyachts.com
                 </a>
               </li>
               <li>
