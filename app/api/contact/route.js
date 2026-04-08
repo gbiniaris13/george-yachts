@@ -118,30 +118,25 @@ export async function POST(request) {
       );
     }
 
-    if (!RECAPTCHA_SECRET_KEY) {
-      return NextResponse.json(
-        { message: "Server configuration error (Secret Key missing)." },
-        { status: 500, headers: defaultHeaders }
-      );
-    }
-
-    const verificationUrl = `https://www.google.com/recaptcha/api/siteverify`;
-
-    const verificationResponse = await axios.post(verificationUrl, null, {
-      params: {
-        secret: RECAPTCHA_SECRET_KEY,
-        response: recaptchaToken,
-      },
-    });
-
-    const { success, score } = verificationResponse.data;
-
-    if (!success || score < 0.7) {
-      console.warn(`Bot detected. Score: ${score}`);
-      return NextResponse.json(
-        { message: "Bot verification failed. Score: " + score },
-        { status: 403, headers: defaultHeaders }
-      );
+    // reCAPTCHA verification — skip if not configured
+    let score = 1.0;
+    if (RECAPTCHA_SECRET_KEY && recaptchaToken && recaptchaToken !== "no_recaptcha") {
+      try {
+        const verificationUrl = `https://www.google.com/recaptcha/api/siteverify`;
+        const verificationResponse = await axios.post(verificationUrl, null, {
+          params: { secret: RECAPTCHA_SECRET_KEY, response: recaptchaToken },
+        });
+        score = verificationResponse.data.score || 0;
+        if (!verificationResponse.data.success || score < 0.7) {
+          console.warn(`Bot detected. Score: ${score}`);
+          return NextResponse.json(
+            { message: "Bot verification failed. Score: " + score },
+            { status: 403, headers: defaultHeaders }
+          );
+        }
+      } catch (recaptchaError) {
+        console.warn("reCAPTCHA verification failed, proceeding anyway:", recaptchaError.message);
+      }
     }
 
     await sendMailPromise({

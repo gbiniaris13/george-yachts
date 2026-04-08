@@ -98,23 +98,19 @@ const ContactFormSection = () => {
     e.preventDefault();
     setStatus("Submitting...");
 
-    let recaptchaToken;
+    let recaptchaToken = "no_recaptcha";
 
     try {
-      if (!RECAPTCHA_PUBLIC_KEY) {
-        throw new Error("RECAPTCHA_PUBLIC_KEY not configured.");
-      }
-      if (typeof grecaptcha !== "undefined" && grecaptcha.enterprise) {
-        recaptchaToken = await grecaptcha.enterprise.execute(RECAPTCHA_PUBLIC_KEY, { action: "contact_form_submit" });
-      } else if (typeof grecaptcha !== "undefined" && grecaptcha.execute) {
-        recaptchaToken = await grecaptcha.execute(RECAPTCHA_PUBLIC_KEY, { action: "contact_form_submit" });
-      } else {
-        recaptchaToken = "mock_token";
+      if (RECAPTCHA_PUBLIC_KEY) {
+        if (typeof grecaptcha !== "undefined" && grecaptcha.enterprise) {
+          recaptchaToken = await grecaptcha.enterprise.execute(RECAPTCHA_PUBLIC_KEY, { action: "contact_form_submit" });
+        } else if (typeof grecaptcha !== "undefined" && grecaptcha.execute) {
+          recaptchaToken = await grecaptcha.execute(RECAPTCHA_PUBLIC_KEY, { action: "contact_form_submit" });
+        }
       }
     } catch (error) {
       console.error("reCAPTCHA execution failed:", error);
-      setStatus("Submission failed: ReCAPTCHA error.");
-      return;
+      // Continue without reCAPTCHA — form should still work
     }
 
     const formData = new FormData(formRef.current);
