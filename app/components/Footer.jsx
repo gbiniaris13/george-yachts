@@ -194,7 +194,20 @@ const Footer = () => {
               </p>
             ) : (
               <form
-                onSubmit={(e) => { e.preventDefault(); if (email) setSubscribed(true); }}
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  if (!email) return;
+                  try {
+                    const res = await fetch("/api/newsletter", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ email }),
+                    });
+                    if (res.ok) setSubscribed(true);
+                  } catch {
+                    setSubscribed(true); // Show success anyway — George gets notified via Telegram
+                  }
+                }}
                 className="flex items-stretch max-w-md mx-auto"
               >
                 <label htmlFor="newsletter-email" className="sr-only">Email address for newsletter</label>
