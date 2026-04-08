@@ -40,6 +40,7 @@ const staticRoutes = [
   { path: "/about-us", priority: 0.8, changeFrequency: "monthly" },
   { path: "/team", priority: 0.7, changeFrequency: "monthly" },
   { path: "/faq", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/partners", priority: 0.8, changeFrequency: "monthly" },
   { path: "/events", priority: 0.7, changeFrequency: "monthly" },
 
   // Team members

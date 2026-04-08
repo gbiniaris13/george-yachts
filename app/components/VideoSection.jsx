@@ -41,6 +41,7 @@ const BackgroundVideo = ({ src, poster }) => {
       muted
       playsInline
       className="w-full h-full object-cover"
+      style={{ objectFit: "cover", objectPosition: "center", minHeight: "100%", minWidth: "100%" }}
     />
   );
 };
@@ -66,7 +67,7 @@ const VideoSection = () => {
   ];
 
   return (
-    <section className="relative w-full overflow-hidden bg-black">
+    <section className="relative w-full overflow-hidden bg-black" style={{ marginTop: 0, paddingTop: 0 }}>
       <Swiper
         modules={[Autoplay, EffectFade]}
         autoplay={{ delay: 5000, disableOnInteraction: false }}

@@ -178,11 +178,11 @@ export default function AboutContent() {
       {/* ═══════ A NOTE FROM GEORGE ═══════ */}
       <section style={{ padding: "100px 24px", background: "#0a141f" }}>
         <RevealSection style={{ maxWidth: "740px", margin: "0 auto" }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.4em", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", marginBottom: "32px", textAlign: "center" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", fontWeight: 300, letterSpacing: "0.4em", color: "#C9A84C", textTransform: "uppercase", marginBottom: "32px", textAlign: "center" }}>
             A &nbsp; N O T E &nbsp; F R O M &nbsp; G E O R G E
           </p>
 
-          <div style={{ borderLeft: "2px solid rgba(201, 168, 76, 0.3)", paddingLeft: "28px" }}>
+          <div style={{ borderLeft: "4px solid #C9A84C", paddingLeft: "28px" }}>
             <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(18px, 2vw, 22px)", fontWeight: 400, fontStyle: "italic", lineHeight: 1.85, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
               I grew up on my uncle&apos;s Ferretti, crossing from Athens to Syros, to Mykonos, to wherever the Cyclades took us. My mother is from Syros &mdash; the sea was never a hobby. It was home.
             </p>
