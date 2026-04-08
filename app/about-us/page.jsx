@@ -19,9 +19,32 @@ export const metadata = {
   },
 };
 
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "George P. Biniaris",
+  "jobTitle": "Managing Broker",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "George Yachts Brokerage House LLC",
+    "url": "https://georgeyachts.com"
+  },
+  "url": "https://georgeyachts.com/about-us",
+  "image": "https://georgeyachts.com/images/george.jpg",
+  "sameAs": [
+    "https://www.linkedin.com/in/george-p-biniaris/",
+    "https://www.instagram.com/georgeyachts/"
+  ],
+  "knowsAbout": ["Luxury Yacht Charter", "Greek Waters Navigation", "MYBA Charter Contracts"]
+};
+
 export default function AboutUsPage() {
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
 
       {/* ── HERO ── */}
       <section className="about-hero">

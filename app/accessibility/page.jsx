@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import Link from "next/link";
+import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
 
 export const metadata = {
   title: "Accessibility Statement | George Yachts Brokerage House",
@@ -116,12 +117,7 @@ export default function AccessibilityPage() {
             <ul>
               <li>
                 Email:{" "}
-                <a
-                  href="mailto:george@georgeyachts.com"
-                  className="text-[#DAA520] hover:text-white border-b border-[#DAA520]/30 hover:border-white transition-colors duration-300"
-                >
-                  george@georgeyachts.com
-                </a>
+                <ObfuscatedEmail className="text-[#DAA520] hover:text-white border-b border-[#DAA520]/30 hover:border-white transition-colors duration-300" />
               </li>
               <li>
                 WhatsApp:{" "}

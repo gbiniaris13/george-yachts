@@ -1,4 +1,5 @@
 import Footer from "@/components/Footer";
+import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
 
 export const metadata = {
   title: "Privacy Policy | George Yachts",
@@ -224,12 +225,7 @@ const PrivacyPolicy = () => {
             </div>
             <div>
               <strong>Primary Contact:</strong>{" "}
-              <a
-                href="mailto:george@georgeyachts.com"
-                className="hover:text-[#DAA520] transition-colors"
-              >
-                george@georgeyachts.com
-              </a>
+              <ObfuscatedEmail className="hover:text-[#DAA520] transition-colors" />
             </div>
           </div>
         </Section>

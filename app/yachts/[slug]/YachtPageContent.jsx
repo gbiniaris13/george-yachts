@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ScrollReveal from './ScrollReveal';
 import Lightbox from './Lightbox';
+import WhatsAppEnquiry from '@/app/components/WhatsAppEnquiry';
 
 export default function YachtPageContent({ yacht, heroImage, description }) {
   const { t } = useI18n();
@@ -267,6 +268,9 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </div>
         </section>
       </article>
+
+      {/* Sticky WhatsApp Enquiry */}
+      <WhatsAppEnquiry yachtName={yacht.name} />
     </>
   );
 }

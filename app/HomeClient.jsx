@@ -11,10 +11,11 @@ import Footer from "./components/Footer";
 const YourBroker = dynamic(() => import("./components/YourBroker"), { ssr: false });
 const HowItWorks = dynamic(() => import("./components/HowItWorks"), { ssr: false });
 const Filotimon = dynamic(() => import("./components/Filotimon"), { ssr: false });
+const BrokerTestimonials = dynamic(() => import("./components/BrokerTestimonials"), { ssr: false });
 const CredentialsStrip = dynamic(() => import("./components/CredentialsStrip"), { ssr: false });
 const BudgetSlider = dynamic(() => import("./components/BudgetSlider"), { ssr: false });
 const InteractiveTools = dynamic(() => import("./components/InteractiveTools"), { ssr: false });
-const TwoColumnLayout = dynamic(() => import("./components/TwoColumnLayout"), { ssr: false });
+// TwoColumnLayout (4 rotating panels) removed — content was redundant with hero + about + how-it-works
 const ContactBar = dynamic(() => import("./components/ContactBar"), { ssr: false });
 const ContactFormSection = dynamic(() => import("./components/ContactFormSection"), { ssr: false });
 
@@ -27,10 +28,12 @@ const HomeClient = ({ yachtCount, privateRange, explorerRange, budgetYachts }) =
       <YourBroker />
       <HowItWorks />
       <Filotimon />
+      <BrokerTestimonials />
       <CredentialsStrip />
       <BudgetSlider yachts={budgetYachts} />
       <InteractiveTools />
-      <TwoColumnLayout />
+      {/* Extra breathing room where 4 rotating panels used to be */}
+      <div className="py-10 md:py-20" />
       <ContactBar />
       <ContactFormSection />
       <Footer />

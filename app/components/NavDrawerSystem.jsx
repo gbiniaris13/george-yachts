@@ -62,6 +62,7 @@ const navSections = [
       { nameKey: "nav.aboutUs", href: "/about-us/" },
       { nameKey: "nav.team", href: "/team/" },
       { nameKey: "nav.faq", href: "/faq" },
+      { nameKey: "nav.forPartners", href: "/partners" },
     ],
   },
 ];

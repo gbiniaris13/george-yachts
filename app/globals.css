@@ -12,6 +12,19 @@ html {
 body {
   overflow-x: hidden;
   max-width: 100vw;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+/* Typography refresh — readability & luxury spacing */
+p, li, dd, blockquote {
+  max-width: 720px;
+}
+
+/* Increase section breathing room globally */
+section {
+  padding-top: clamp(3rem, 6vw, 5rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
 }
 
 /* Prevent horizontal scroll on mobile */

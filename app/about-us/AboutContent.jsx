@@ -175,6 +175,36 @@ export default function AboutContent() {
         </div>
       </section>
 
+      {/* ═══════ A NOTE FROM GEORGE ═══════ */}
+      <section style={{ padding: "100px 24px", background: "#0a141f" }}>
+        <RevealSection style={{ maxWidth: "740px", margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.4em", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", marginBottom: "32px", textAlign: "center" }}>
+            A &nbsp; N O T E &nbsp; F R O M &nbsp; G E O R G E
+          </p>
+
+          <div style={{ borderLeft: "2px solid rgba(201, 168, 76, 0.3)", paddingLeft: "28px" }}>
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(18px, 2vw, 22px)", fontWeight: 400, fontStyle: "italic", lineHeight: 1.85, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
+              I grew up on my uncle&apos;s Ferretti, crossing from Athens to Syros, to Mykonos, to wherever the Cyclades took us. My mother is from Syros &mdash; the sea was never a hobby. It was home.
+            </p>
+            <p style={{ fontFamily: "'Lato', sans-serif", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(255,255,255,0.55)", marginBottom: "20px" }}>
+              I studied shipping. I became a skipper in Corfu. I earned my motor yacht licence. I managed charters across the Ionian and the Cyclades &mdash; briefing captains, building itineraries, solving problems at midnight.
+            </p>
+            <p style={{ fontFamily: "'Lato', sans-serif", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(255,255,255,0.55)", marginBottom: "20px" }}>
+              I started George Yachts because I wanted to do this properly. Not as another name on a platform. Not as a cold transaction. But as someone who knows these waters first-hand, who has untangled an anchor under pressure in Paxos, and who has watched a family of twelve cry at disembarkation &mdash; not because something went wrong, but because they didn&apos;t want it to end.
+            </p>
+            <p style={{ fontFamily: "'Lato', sans-serif", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(255,255,255,0.55)", marginBottom: "20px" }}>
+              That moment &mdash; when your clients hold you and tell you this was unlike anything they&apos;ve ever experienced &mdash; that is why I do this.
+            </p>
+            <p style={{ fontFamily: "'Lato', sans-serif", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(255,255,255,0.55)", marginBottom: "28px" }}>
+              Greece is not one destination. It is hundreds. And if you have the right person guiding you, every voyage reveals something new. I am that person.
+            </p>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.15em", color: "#C9A84C" }}>
+              &mdash; George P. Biniaris, Managing Broker
+            </p>
+          </div>
+        </RevealSection>
+      </section>
+
       {/* ═══════ WHY BOUTIQUE ═══════ */}
       <section style={{ padding: "100px 24px", background: "rgba(218,165,32,0.02)", borderTop: "1px solid rgba(218,165,32,0.08)", borderBottom: "1px solid rgba(218,165,32,0.08)" }}>
         <RevealSection className="text-center" style={{ maxWidth: "800px", margin: "0 auto" }}>

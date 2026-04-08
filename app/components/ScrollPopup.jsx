@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
+import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
 
 const SCROLL_THRESHOLD = 100; // Pixels to scroll down before the popup appears
 
@@ -94,12 +95,7 @@ const ScrollPopup = () => {
             <br />
             Mail: {/* ADDED PREFIX */}
             {/* Email Link */}
-            <a
-              className="text-[#7a6200] underline"
-              href="mailto:george@georgeyachts.com"
-            >
-              george@georgeyachts.com
-            </a>
+            <ObfuscatedEmail className="text-[#7a6200] underline" />
             <br />
             Tel: {/* ADDED PREFIX */}
             {/* Phone Link */}

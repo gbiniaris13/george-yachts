@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
 
 export const metadata = {
   title: "How We Protect Your Information | George Yachts",
@@ -140,12 +141,9 @@ export default function YourPrivacySecurity() {
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.4)", marginBottom: "32px" }}>
             Reach out anytime. We&apos;re happy to explain anything in more detail.
           </p>
-          <a
-            href="mailto:george@georgeyachts.com"
-            style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", letterSpacing: "0.15em", color: "#DAA520", textDecoration: "none", borderBottom: "1px solid rgba(218,165,32,0.3)", paddingBottom: "4px" }}
-          >
-            george@georgeyachts.com
-          </a>
+          <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", letterSpacing: "0.15em", color: "#DAA520", textDecoration: "none", borderBottom: "1px solid rgba(218,165,32,0.3)", paddingBottom: "4px" }}>
+            <ObfuscatedEmail className="text-[#DAA520] no-underline" />
+          </span>
           <div className="mt-12">
             <Link
               href="/privacy-policy"

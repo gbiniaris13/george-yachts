@@ -27,7 +27,7 @@ export default function FavoritesContent() {
     // Also create mailto fallback
     const subject = `Charter Inquiry — ${items.length} Favorite Yachts`;
     const body = `Dear George,\n\nI've been browsing your fleet and saved the following yachts:\n\n${yachtList}\n\nI'd love to discuss availability and options.\n\nBest regards,\n${name}\n${email}`;
-    const mailUrl = `mailto:george@georgeyachts.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const mailUrl = `mailto:${'george'}@${'georgeyachts.com'}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
     // Open WhatsApp
     window.open(waUrl, '_blank');
