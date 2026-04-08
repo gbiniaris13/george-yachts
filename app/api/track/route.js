@@ -7,6 +7,62 @@ export const dynamic = 'force-dynamic';
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
+// CRM Supabase connection (write leads + sessions to GY Command)
+const CRM_SUPABASE_URL = process.env.CRM_SUPABASE_URL;
+const CRM_SUPABASE_KEY = process.env.CRM_SUPABASE_SERVICE_KEY;
+
+async function writeToCRM(table, data) {
+  if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY) return null;
+  try {
+    const res = await fetch(`${CRM_SUPABASE_URL}/rest/v1/${table}`, {
+      method: 'POST',
+      headers: {
+        'apikey': CRM_SUPABASE_KEY,
+        'Authorization': `Bearer ${CRM_SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation',
+      },
+      body: JSON.stringify(data),
+    });
+    if (res.ok) return await res.json();
+    return null;
+  } catch { return null; }
+}
+
+async function findCRMContact(email) {
+  if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY || !email) return null;
+  try {
+    const res = await fetch(`${CRM_SUPABASE_URL}/rest/v1/contacts?email=eq.${encodeURIComponent(email)}&limit=1`, {
+      headers: {
+        'apikey': CRM_SUPABASE_KEY,
+        'Authorization': `Bearer ${CRM_SUPABASE_KEY}`,
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data?.[0] || null;
+    }
+    return null;
+  } catch { return null; }
+}
+
+async function getHotStageId() {
+  if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY) return null;
+  try {
+    const res = await fetch(`${CRM_SUPABASE_URL}/rest/v1/pipeline_stages?name=eq.Hot&limit=1`, {
+      headers: {
+        'apikey': CRM_SUPABASE_KEY,
+        'Authorization': `Bearer ${CRM_SUPABASE_KEY}`,
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data?.[0]?.id || null;
+    }
+    return null;
+  } catch { return null; }
+}
+
 // Country code → flag emoji
 function countryFlag(code) {
   if (!code || code.length !== 2) return '\u{1F30D}'; // globe
@@ -119,7 +175,19 @@ export async function POST(request) {
         `\u23F0 ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/Athens', hour: '2-digit', minute: '2-digit' })} Athens`,
       ].join('\n');
 
-      await sendTelegram(msg);
+      // Write to CRM + Telegram in parallel
+      await Promise.allSettled([
+        sendTelegram(msg),
+        writeToCRM('sessions', {
+          session_id: sessionId,
+          country: countryCode,
+          city: city ? decodeURIComponent(city) : null,
+          device_type: device.type,
+          referrer: source,
+          pages_visited: [page || '/'],
+          yachts_viewed: [],
+        }),
+      ]);
     }
 
     // --- EVENT: Hot Lead Detected ---
@@ -159,8 +227,67 @@ export async function POST(request) {
         `\u23F1 *Time on site:* ${formatDuration(timeOnSite)}`,
         `${device.icon} ${device.type}`,
         '',
-        `\u2705 _Add to CRM & follow up!_`,
+        `\u2705 _Auto-added to CRM!_`,
       ].join('\n');
+
+      // CRM: Check if contact exists (merge) or create new
+      const nameParts = (leadData.name || '').split(' ');
+      const firstName = nameParts[0] || '';
+      const lastName = nameParts.slice(1).join(' ') || '';
+
+      const existingContact = await findCRMContact(leadData.email);
+      const hotStageId = await getHotStageId();
+
+      if (existingContact) {
+        // MERGE: update existing contact with website data
+        const updateUrl = `${CRM_SUPABASE_URL}/rest/v1/contacts?id=eq.${existingContact.id}`;
+        await fetch(updateUrl, {
+          method: 'PATCH',
+          headers: {
+            'apikey': CRM_SUPABASE_KEY,
+            'Authorization': `Bearer ${CRM_SUPABASE_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            phone: leadData.phone || existingContact.phone,
+            yachts_viewed: yachtsViewed || [],
+            time_on_site: timeOnSite || 0,
+            pipeline_stage_id: hotStageId || existingContact.pipeline_stage_id,
+            last_activity_at: new Date().toISOString(),
+          }),
+        }).catch(() => {});
+
+        // Log merge activity
+        writeToCRM('activities', {
+          contact_id: existingContact.id,
+          type: 'lead_captured',
+          description: `Website lead merged — viewed ${(yachtsViewed || []).join(', ')}`,
+          metadata: { yachts_viewed: yachtsViewed, time_on_site: timeOnSite, source: 'website_popup' },
+        }).catch(() => {});
+      } else {
+        // CREATE new contact
+        const newContact = await writeToCRM('contacts', {
+          first_name: firstName,
+          last_name: lastName,
+          email: leadData.email || null,
+          phone: leadData.phone || null,
+          country: countryCode || null,
+          city: city ? decodeURIComponent(city) : null,
+          source: 'website_lead',
+          pipeline_stage_id: hotStageId,
+          yachts_viewed: yachtsViewed || [],
+          time_on_site: timeOnSite || 0,
+        });
+
+        if (newContact?.[0]?.id) {
+          writeToCRM('activities', {
+            contact_id: newContact[0].id,
+            type: 'lead_captured',
+            description: `Captured from website popup — ${country}, viewed ${(yachtsViewed || []).join(', ')}`,
+            metadata: { yachts_viewed: yachtsViewed, time_on_site: timeOnSite, device: device.type, referrer },
+          }).catch(() => {});
+        }
+      }
 
       await sendTelegram(msg);
     }
