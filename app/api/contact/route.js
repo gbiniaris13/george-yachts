@@ -5,6 +5,25 @@ import { kvLpush, todayKey } from "@/lib/kv";
 
 export const dynamic = "force-dynamic";
 
+// CRM Supabase — same env vars already used by /api/track
+const CRM_SUPABASE_URL = process.env.CRM_SUPABASE_URL;
+const CRM_SUPABASE_KEY = process.env.CRM_SUPABASE_SERVICE_KEY;
+
+async function writeCRMNotification(data) {
+  if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY) return;
+  try {
+    await fetch(`${CRM_SUPABASE_URL}/rest/v1/notifications`, {
+      method: 'POST',
+      headers: {
+        'apikey': CRM_SUPABASE_KEY,
+        'Authorization': `Bearer ${CRM_SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+  } catch {}
+}
+
 // Send inquiry notification to Telegram
 async function notifyTelegram(data) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -179,6 +198,12 @@ export async function POST(request) {
       notifyTelegram(inquiryData),
       kvLpush('inquiries:pending', JSON.stringify({ id: inquiryId, name, email, yacht_type, ts: Date.now() })),
       (async () => { const { kvIncr } = await import("@/lib/kv"); await kvIncr(`stats:${todayKey()}:inquiries`); })(),
+      writeCRMNotification({
+        type: 'form_submission',
+        title: `📩 New yacht inquiry from ${name}`,
+        description: `${yacht_type || 'yacht'} · ${guests || '?'} guests · ${budget || '?'} · ${country || ''} · ${email}`,
+        link: '/dashboard/contacts',
+      }),
     ]);
 
     return NextResponse.json(

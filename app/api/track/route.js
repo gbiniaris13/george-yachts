@@ -226,12 +226,19 @@ export async function POST(request) {
         `_Popup shown to capture their details._`,
       ].join('\n');
 
+      const hotLeadDesc = `${country}${city ? ` (${decodeURIComponent(city)})` : ''} — ${formatDuration(timeOnSite)}${(yachtsViewed || []).length ? ` — viewed ${(yachtsViewed || []).join(', ')}` : ''}`;
       await Promise.allSettled([
         sendTelegram(msg),
         updateCRMSession(sessionId, {
           is_hot_lead: true,
           time_on_site: Math.round(timeOnSite || 0),
           yachts_viewed: yachtsViewed || [],
+        }),
+        writeToCRM('notifications', {
+          type: 'hot_lead',
+          title: `${flag} Hot lead from ${country}`,
+          description: hotLeadDesc,
+          link: '/dashboard/visitors',
         }),
       ]);
     }
@@ -323,6 +330,14 @@ export async function POST(request) {
         is_hot_lead: true,
         time_on_site: Math.round(timeOnSite || 0),
         yachts_viewed: yachtsViewed || [],
+      });
+
+      // In-app notification for the dashboard bell
+      await writeToCRM('notifications', {
+        type: 'lead',
+        title: `🎉 New lead captured: ${leadData.name || leadData.email || 'Unknown'}`,
+        description: `${country}${city ? ` (${decodeURIComponent(city)})` : ''} — ${leadData.email ?? ''}${(yachtsViewed || []).length ? ` — viewed ${(yachtsViewed || []).join(', ')}` : ''}`,
+        link: '/dashboard/contacts',
       });
 
       await sendTelegram(msg);
