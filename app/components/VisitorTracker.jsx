@@ -125,6 +125,19 @@ export default function VisitorTracker({ onHotLead }) {
     saveSession(session);
     sessionRef.current = session;
 
+    // Persist progress to the CRM session row so the Visitors dashboard
+    // reflects the real time_on_site + pages list even if the visitor
+    // leaves without firing beforeunload (common on mobile).
+    const timeOnSite = Math.round((Date.now() - session.startTime) / 1000);
+    sendBeacon({
+      event: 'page_view',
+      sessionId: session.id,
+      page: pathname,
+      yachtsViewed: session.yachtsViewed,
+      timeOnSite,
+      isTest: false,
+    });
+
     // Check hot lead conditions
     checkHotLead(session);
   }, [pathname]);
@@ -168,16 +181,33 @@ export default function VisitorTracker({ onHotLead }) {
     }
   }, [onHotLead]);
 
-  // Periodic hot lead check (for time-based trigger)
+  // Periodic hot lead check (for time-based trigger) + heartbeat ping
+  // The heartbeat keeps sessions.time_on_site up-to-date even when the
+  // visitor stays on one page the whole time (no pathname change to
+  // piggyback on) and even if beforeunload never fires.
   useEffect(() => {
     const interval = setInterval(() => {
-      if (sessionRef.current && !hotLeadTriggeredRef.current) {
-        checkHotLead(sessionRef.current);
+      const session = sessionRef.current;
+      if (!session) return;
+
+      const timeOnSite = Math.round((Date.now() - session.startTime) / 1000);
+
+      sendBeacon({
+        event: 'page_view',
+        sessionId: session.id,
+        page: pathname,
+        yachtsViewed: session.yachtsViewed,
+        timeOnSite,
+        isTest: false,
+      });
+
+      if (!hotLeadTriggeredRef.current) {
+        checkHotLead(session);
       }
-    }, 30000); // Check every 30 seconds
+    }, 30000); // Every 30 seconds
 
     return () => clearInterval(interval);
-  }, [checkHotLead]);
+  }, [checkHotLead, pathname]);
 
   // Send session end on page unload
   useEffect(() => {

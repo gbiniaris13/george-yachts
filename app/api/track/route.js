@@ -29,6 +29,25 @@ async function writeToCRM(table, data) {
   } catch { return null; }
 }
 
+// PATCH a session row matched by session_id. Used to enrich the row the
+// new_visit event inserted (time_on_site, ended_at, pages, yachts, hot-lead flag).
+async function updateCRMSession(sessionId, patch) {
+  if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY || !sessionId) return null;
+  try {
+    const url = `${CRM_SUPABASE_URL}/rest/v1/sessions?session_id=eq.${encodeURIComponent(sessionId)}`;
+    const res = await fetch(url, {
+      method: 'PATCH',
+      headers: {
+        'apikey': CRM_SUPABASE_KEY,
+        'Authorization': `Bearer ${CRM_SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(patch),
+    });
+    return res.ok ? true : null;
+  } catch { return null; }
+}
+
 async function findCRMContact(email) {
   if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY || !email) return null;
   try {
@@ -207,7 +226,14 @@ export async function POST(request) {
         `_Popup shown to capture their details._`,
       ].join('\n');
 
-      await sendTelegram(msg);
+      await Promise.allSettled([
+        sendTelegram(msg),
+        updateCRMSession(sessionId, {
+          is_hot_lead: true,
+          time_on_site: Math.round(timeOnSite || 0),
+          yachts_viewed: yachtsViewed || [],
+        }),
+      ]);
     }
 
     // --- EVENT: Lead Captured (form submitted from popup) ---
@@ -289,13 +315,55 @@ export async function POST(request) {
         }
       }
 
+      // Flag the session row so the Visitors dashboard shows the 🎉 state
+      // and the correct duration even if session_end never fires (popup-submit
+      // visitors often leave without triggering beforeunload).
+      await updateCRMSession(sessionId, {
+        lead_captured: true,
+        is_hot_lead: true,
+        time_on_site: Math.round(timeOnSite || 0),
+        yachts_viewed: yachtsViewed || [],
+      });
+
       await sendTelegram(msg);
     }
 
     // --- EVENT: Page View Update (aggregated) ---
     if (event === 'page_view') {
-      // We don't send Telegram for every page view — too noisy
-      // This is just logged for session tracking
+      // No Telegram — too noisy — but we DO persist the progress so the
+      // Visitors dashboard can show real time_on_site + the full pages list.
+      // Supabase has no array-append operator over REST, so we read the
+      // current row, merge in memory, and PATCH it back.
+      if (sessionId && CRM_SUPABASE_URL && CRM_SUPABASE_KEY) {
+        try {
+          const getRes = await fetch(
+            `${CRM_SUPABASE_URL}/rest/v1/sessions?session_id=eq.${encodeURIComponent(sessionId)}&select=pages_visited,yachts_viewed&limit=1`,
+            {
+              headers: {
+                'apikey': CRM_SUPABASE_KEY,
+                'Authorization': `Bearer ${CRM_SUPABASE_KEY}`,
+              },
+            }
+          );
+          const rows = getRes.ok ? await getRes.json() : [];
+          const row = rows?.[0] || {};
+          const existingPages = Array.isArray(row.pages_visited) ? row.pages_visited : [];
+          const existingYachts = Array.isArray(row.yachts_viewed) ? row.yachts_viewed : [];
+          const nextPages = page && !existingPages.includes(page)
+            ? [...existingPages, page]
+            : existingPages;
+          const incomingYachts = Array.isArray(yachtsViewed) ? yachtsViewed : [];
+          const nextYachts = incomingYachts.length
+            ? Array.from(new Set([...existingYachts.map(String), ...incomingYachts.map(String)]))
+            : existingYachts;
+
+          await updateCRMSession(sessionId, {
+            time_on_site: Math.round(timeOnSite || 0),
+            pages_visited: nextPages,
+            yachts_viewed: nextYachts,
+          });
+        } catch { /* best-effort */ }
+      }
     }
 
     // --- EVENT: Session Summary (when visitor leaves) ---
@@ -316,7 +384,18 @@ export async function POST(request) {
         yachtList,
       ].join('\n');
 
-      // Only send if they spent more than 30 seconds
+      // Persist the final duration + end timestamp + full pages/yachts list
+      // so the Visitors dashboard matches what the Telegram bot just reported.
+      await updateCRMSession(sessionId, {
+        time_on_site: Math.round(timeOnSite || 0),
+        ended_at: new Date().toISOString(),
+        pages_visited: Array.isArray(body.pagesVisited)
+          ? body.pagesVisited
+          : undefined,
+        yachts_viewed: yachtsViewed || [],
+      });
+
+      // Only send Telegram if they spent more than 30 seconds
       if (timeOnSite > 30) {
         await sendTelegram(msg);
       }
