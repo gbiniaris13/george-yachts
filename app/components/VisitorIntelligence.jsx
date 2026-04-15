@@ -1,11 +1,19 @@
 'use client';
 
-// VisitorIntelligence — Wrapper that connects VisitorTracker + LeadCapturePopup
-// Drop this one component into layout.jsx and everything works
+// VisitorIntelligence — Wrapper that connects VisitorTracker with both
+// popups:
+//   1. LeadCapturePopup    — fires on hot-lead thresholds (3 yachts,
+//                            same yacht 3x, 5+ min on site)
+//   2. HotLeadIGPopup      — fires after 30s on premium pages,
+//                            captures IG handle → webhook to GY Command
+//                            → personalized ManyChat DM
+//
+// Drop this one component into layout.jsx and everything works.
 
 import { useState, useCallback } from 'react';
 import VisitorTracker from './VisitorTracker';
 import LeadCapturePopup from './LeadCapturePopup';
+import HotLeadIGPopup from './HotLeadIGPopup';
 
 export default function VisitorIntelligence() {
   const [showPopup, setShowPopup] = useState(false);
@@ -28,6 +36,7 @@ export default function VisitorIntelligence() {
         onClose={() => setShowPopup(false)}
         hotLeadData={hotLeadData}
       />
+      <HotLeadIGPopup />
     </>
   );
 }
