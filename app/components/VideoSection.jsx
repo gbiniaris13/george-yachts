@@ -98,9 +98,10 @@ const VideoSection = () => {
                 {/* Hero Content */}
                 <div className="relative z-10 flex items-center justify-center h-full text-center p-8">
                   <div
-                    className={`transition-all duration-[1500ms] ${
+                    className={`text-center transition-all duration-[1500ms] ${
                       isActive && heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                     }`}
+                    style={{ textAlign: "center" }}
                   >
                     {/* Eyebrow */}
                     <p
@@ -112,6 +113,7 @@ const VideoSection = () => {
                         color: "#DAA520",
                         fontWeight: 600,
                         marginBottom: "32px",
+                        textAlign: "center",
                         opacity: heroVisible ? 1 : 0,
                         transition: "opacity 1s ease 0.5s",
                       }}
@@ -130,6 +132,7 @@ const VideoSection = () => {
                         color: "#fff",
                         textTransform: "uppercase",
                         margin: "0 0 8px 0",
+                        textAlign: "center",
                         opacity: heroVisible ? 1 : 0,
                         transform: heroVisible ? "translateY(0)" : "translateY(20px)",
                         transition: "opacity 1.2s ease 0.7s, transform 1.2s ease 0.7s",
@@ -148,6 +151,7 @@ const VideoSection = () => {
                         letterSpacing: "0.45em",
                         textTransform: "uppercase",
                         margin: "0 0 28px 0",
+                        textAlign: "center",
                         background: "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
                         WebkitBackgroundClip: "text",
                         backgroundClip: "text",
@@ -181,6 +185,7 @@ const VideoSection = () => {
                         color: "rgba(255,255,255,0.4)",
                         fontWeight: 300,
                         marginBottom: "40px",
+                        textAlign: "center",
                         opacity: heroVisible ? 1 : 0,
                         transition: "opacity 1s ease 1.9s",
                       }}
@@ -197,6 +202,7 @@ const VideoSection = () => {
                         fontStyle: "italic",
                         color: "rgba(218,165,32,0.5)",
                         marginBottom: "32px",
+                        textAlign: "center",
                         opacity: heroVisible ? 1 : 0,
                         transition: "opacity 1.2s ease 2s",
                       }}
