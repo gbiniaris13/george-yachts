@@ -10,6 +10,23 @@ import { usePathname } from 'next/navigation';
 const SESSION_KEY = 'gy-tracker-session';
 const YACHT_HISTORY_KEY = 'gy-view-history';
 const HOT_LEAD_SHOWN_KEY = 'gy-hot-lead-shown';
+const VISITOR_ID_KEY = 'gy-visitor-id'; // persistent across sessions for return-visitor detection
+
+function getOrCreateVisitorId() {
+  try {
+    let id = localStorage.getItem(VISITOR_ID_KEY);
+    if (!id) {
+      id =
+        (typeof crypto !== 'undefined' && crypto.randomUUID)
+          ? crypto.randomUUID()
+          : Math.random().toString(36).slice(2) + Date.now().toString(36);
+      localStorage.setItem(VISITOR_ID_KEY, id);
+    }
+    return id;
+  } catch {
+    return null;
+  }
+}
 
 // Hot lead thresholds
 const HOT_LEAD_UNIQUE_YACHTS = 3;     // 3+ different yachts
@@ -78,10 +95,12 @@ export default function VisitorTracker({ onHotLead }) {
       };
       saveSession(session);
 
-      // Send new visit notification
+      // Send new visit notification — include the persistent visitor id
+      // so the server can flag return visitors across sessions.
       sendBeacon({
         event: 'new_visit',
         sessionId: session.id,
+        visitorId: getOrCreateVisitorId(),
         page: pathname,
         referrer: document.referrer || '',
         isTest: false,

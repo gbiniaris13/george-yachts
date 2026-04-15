@@ -29,6 +29,26 @@ async function writeToCRM(table, data) {
   } catch { return null; }
 }
 
+// Check whether a session with this persistent visitorId already exists.
+// Used to flag return visitors without relying on IPs (mobile-friendly).
+async function hasPriorSession(visitorId) {
+  if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY || !visitorId) return false;
+  try {
+    const res = await fetch(
+      `${CRM_SUPABASE_URL}/rest/v1/sessions?visitor_id=eq.${encodeURIComponent(visitorId)}&select=id&limit=1`,
+      {
+        headers: {
+          'apikey': CRM_SUPABASE_KEY,
+          'Authorization': `Bearer ${CRM_SUPABASE_KEY}`,
+        },
+      }
+    );
+    if (!res.ok) return false;
+    const rows = await res.json();
+    return Array.isArray(rows) && rows.length > 0;
+  } catch { return false; }
+}
+
 // PATCH a session row matched by session_id. Used to enrich the row the
 // new_visit event inserted (time_on_site, ended_at, pages, yachts, hot-lead flag).
 async function updateCRMSession(sessionId, patch) {
@@ -157,7 +177,7 @@ export async function POST(request) {
 
   try {
     const body = await request.json();
-    const { event, sessionId, page, yachtsViewed, timeOnSite, referrer, isTest, leadData } = body;
+    const { event, sessionId, visitorId, page, yachtsViewed, timeOnSite, referrer, isTest, leadData } = body;
 
     // Get geo from Vercel headers
     const countryCode = request.headers.get('x-vercel-ip-country') || '';
@@ -194,18 +214,37 @@ export async function POST(request) {
         `\u23F0 ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/Athens', hour: '2-digit', minute: '2-digit' })} Athens`,
       ].join('\n');
 
-      // Write to CRM + Telegram in parallel
+      // Check if we've seen this visitor before (return-visitor flag).
+      // Runs before the insert so the new row can be stamped on creation.
+      const isReturn = await hasPriorSession(visitorId);
+
+      // Write to CRM + Telegram in parallel. Try with the new columns
+      // first; if Supabase rejects them (migration not yet applied), retry
+      // without them so the base tracking keeps working.
+      const baseRow = {
+        session_id: sessionId,
+        country: countryCode,
+        city: city ? decodeURIComponent(city) : null,
+        device_type: device.type,
+        referrer: source,
+        pages_visited: [page || '/'],
+        yachts_viewed: [],
+      };
+      const extendedRow = {
+        ...baseRow,
+        visitor_id: visitorId || null,
+        is_return_visitor: isReturn,
+      };
+
+      const insertWithFallback = async () => {
+        const firstTry = await writeToCRM('sessions', extendedRow);
+        if (firstTry !== null) return firstTry;
+        return writeToCRM('sessions', baseRow);
+      };
+
       await Promise.allSettled([
         sendTelegram(msg),
-        writeToCRM('sessions', {
-          session_id: sessionId,
-          country: countryCode,
-          city: city ? decodeURIComponent(city) : null,
-          device_type: device.type,
-          referrer: source,
-          pages_visited: [page || '/'],
-          yachts_viewed: [],
-        }),
+        insertWithFallback(),
       ]);
     }
 
