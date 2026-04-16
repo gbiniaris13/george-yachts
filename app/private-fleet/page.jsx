@@ -64,13 +64,21 @@ export default async function PrivateFleetPage() {
     try { yachts = await sanityClient.fetch(FALLBACK_QUERY); } catch {}
   }
 
-  // Sort by price ascending (extract first number from price string)
+  // Extract numeric price from price string (e.g. "€45,000" → 45000)
   const extractPrice = (yacht) => {
     const match = String(yacht.weeklyRatePrice || '').match(/[\d,]+/);
-    return match ? parseInt(match[0].replace(/,/g, '')) : 999999;
+    return match ? parseInt(match[0].replace(/,/g, '')) : 0;
   };
 
-  const displayYachts = [...yachts].sort((a, b) => extractPrice(a) - extractPrice(b));
+  // Flagship yachts always appear first, then the rest sorted most expensive → cheapest
+  const FLAGSHIP_NAMES = ["la pellegrina"];
+
+  const isFlagship = (yacht) =>
+    FLAGSHIP_NAMES.some((f) => (yacht.name || "").toLowerCase().includes(f));
+
+  const flagships = yachts.filter(isFlagship).sort((a, b) => extractPrice(b) - extractPrice(a));
+  const rest = yachts.filter((y) => !isFlagship(y)).sort((a, b) => extractPrice(b) - extractPrice(a));
+  const displayYachts = [...flagships, ...rest];
 
   // Dynamic price range — auto-updates as fleet grows
   const prices = displayYachts.map(extractPrice).filter(p => p > 0 && p < 999999);
