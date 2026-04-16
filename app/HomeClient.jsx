@@ -15,7 +15,6 @@ const BrokerTestimonials = dynamic(() => import("./components/BrokerTestimonials
 const CredentialsStrip = dynamic(() => import("./components/CredentialsStrip"), { ssr: false });
 const BudgetSlider = dynamic(() => import("./components/BudgetSlider"), { ssr: false });
 const InteractiveTools = dynamic(() => import("./components/InteractiveTools"), { ssr: false });
-const CinematicExperience = dynamic(() => import("./components/CinematicExperience"), { ssr: false });
 // TwoColumnLayout (4 rotating panels) removed — content was redundant with hero + about + how-it-works
 const ContactBar = dynamic(() => import("./components/ContactBar"), { ssr: false });
 const ContactFormSection = dynamic(() => import("./components/ContactFormSection"), { ssr: false });
@@ -24,7 +23,6 @@ const HomeClient = ({ yachtCount, privateRange, explorerRange, budgetYachts }) =
   return (
     <div className="min-h-screen bg-black font-sans">
       <VideoSection />
-      <CinematicExperience />
       <FleetCTAs privateRange={privateRange} explorerRange={explorerRange} />
       <HomeStats yachtCount={yachtCount} />
       <YourBroker />
