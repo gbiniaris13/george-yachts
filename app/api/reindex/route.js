@@ -246,7 +246,7 @@ function buildUrl(type, slug) {
 }
 
 /**
- * GET — Health check / manual trigger
+ * GET — Health check / manual trigger (no auth required)
  * Usage: /api/reindex?type=post&slug=my-article
  */
 export async function GET(request) {
@@ -263,12 +263,58 @@ export async function GET(request) {
     });
   }
 
-  // Manual trigger — create a fake request body and call POST logic
-  const fakeRequest = new Request(request.url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ _type: type, slug, operation: "manual" }),
+  // Manual trigger — run revalidation + pings directly (bypasses auth)
+  const url = buildUrl(type, slug);
+  if (!url) {
+    return NextResponse.json({ error: `Unknown content type: ${type}` }, { status: 400 });
+  }
+
+  const results = { url, operation: "manual", actions: [] };
+
+  // Revalidate Next.js cache
+  const pathsToRevalidate = getRevalidationPaths(type, slug);
+  const tagsToRevalidate = getRevalidationTags(type);
+
+  for (const path of pathsToRevalidate) {
+    try { revalidatePath(path); } catch (err) {
+      console.error(`[reindex] Failed to revalidate path ${path}:`, err);
+    }
+  }
+  for (const tag of tagsToRevalidate) {
+    try { revalidateTag(tag); } catch (err) {
+      console.error(`[reindex] Failed to revalidate tag ${tag}:`, err);
+    }
+  }
+  results.actions.push({
+    service: "next-revalidate",
+    status: "ok",
+    paths: pathsToRevalidate,
+    tags: tagsToRevalidate,
   });
 
-  return POST(fakeRequest);
+  // Ping IndexNow
+  if (INDEXNOW_KEY) {
+    try {
+      const indexNowResponse = await fetch("https://api.indexnow.org/indexnow", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          host: "georgeyachts.com",
+          key: INDEXNOW_KEY,
+          keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
+          urlList: [url],
+        }),
+      });
+      results.actions.push({
+        service: "indexnow",
+        status: indexNowResponse.ok ? "ok" : "error",
+        httpStatus: indexNowResponse.status,
+      });
+    } catch (err) {
+      results.actions.push({ service: "indexnow", status: "error", message: err.message });
+    }
+  }
+
+  console.log("[reindex] manual:", JSON.stringify(results));
+  return NextResponse.json(results, { status: 200 });
 }

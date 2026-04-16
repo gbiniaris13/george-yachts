@@ -1,5 +1,6 @@
 import React from "react";
 import { sanityClient, urlFor } from "@/lib/sanity";
+import { createClient } from "@sanity/client";
 import { PortableText } from "@portabletext/react";
 import { RichTextComponents } from "@/components/RichTextComponents";
 import Footer from "@/components/Footer";
@@ -11,6 +12,16 @@ import { generateArticleSchema } from "@/lib/articleSchema";
 import RelatedArticles from "@/components/RelatedArticles";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { autoLinkPortableText } from "@/lib/auto-link-content";
+
+// Non-CDN client for real-time content fetching
+const freshClient = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2023-11-09",
+  useCdn: false,
+});
+
+export const revalidate = 60;
 
 export async function generateStaticParams() {
   const query = `*[_type == "post"]{ "slug": slug.current }`;
@@ -31,7 +42,7 @@ async function getPost(slug) {
     excerpt,
     mainImage
   }`;
-  return sanityClient.fetch(query, { slug });
+  return freshClient.fetch(query, { slug });
 }
 
 async function getRelatedPosts(currentSlug) {
@@ -44,7 +55,7 @@ async function getRelatedPosts(currentSlug) {
     "imageUrl": mainImage.asset->url,
     "imageAlt": mainImage.alt
   }`;
-  return sanityClient.fetch(query, { currentSlug });
+  return freshClient.fetch(query, { currentSlug });
 }
 
 /**
