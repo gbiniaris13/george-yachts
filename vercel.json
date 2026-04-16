@@ -11,6 +11,10 @@
     {
       "path": "/api/cron/inquiry-reminder",
       "schedule": "*/30 * * * *"
+    },
+    {
+      "path": "/api/cron/link-audit",
+      "schedule": "0 8 * * 1"
     }
   ],
   "headers": [

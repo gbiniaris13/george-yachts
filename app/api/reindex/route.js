@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { revalidatePath, revalidateTag } from "next/cache";
+import crypto from "crypto";
 
 export const dynamic = "force-dynamic";
 
@@ -7,24 +9,72 @@ const INDEXNOW_KEY = process.env.INDEXNOW_KEY;
 const SANITY_WEBHOOK_SECRET = process.env.SANITY_WEBHOOK_SECRET;
 
 /**
- * Sanity Webhook → Auto-notify Google & Bing when content is published.
+ * Verify Sanity HMAC webhook signature.
+ * Sanity sends: sanity-webhook-signature: t=TIMESTAMP,v1=SIGNATURE
+ * We compute: HMAC-SHA256(secret, "TIMESTAMP.BODY") and compare.
+ */
+function verifySanitySignature(rawBody, signatureHeader) {
+  if (!signatureHeader || !SANITY_WEBHOOK_SECRET) return false;
+
+  try {
+    const parts = {};
+    for (const pair of signatureHeader.split(",")) {
+      const [key, val] = pair.split("=", 2);
+      parts[key.trim()] = val;
+    }
+
+    const timestamp = parts["t"];
+    const signature = parts["v1"];
+    if (!timestamp || !signature) return false;
+
+    const payloadToSign = `${timestamp}.${rawBody}`;
+    const computed = crypto
+      .createHmac("sha256", SANITY_WEBHOOK_SECRET)
+      .update(payloadToSign)
+      .digest("hex");
+
+    return crypto.timingSafeEqual(
+      Buffer.from(computed, "hex"),
+      Buffer.from(signature, "hex")
+    );
+  } catch (err) {
+    console.error("[reindex] Signature verification error:", err);
+    return false;
+  }
+}
+
+/**
+ * Sanity Webhook → Full auto-SEO pipeline.
  *
  * Sanity sends a POST with:
  *   { _type: "post", slug: "my-article", operation: "create" | "update" | "delete" }
  *
  * We then:
- *   1. Ping Google's sitemap endpoint (instant re-crawl trigger)
- *   2. Submit the specific URL to IndexNow (Bing, Yandex, Naver + Google)
+ *   1. Revalidate affected Next.js pages (instant cache bust)
+ *   2. Ping Google's sitemap endpoint
+ *   3. Submit the specific URL to IndexNow (Bing, Yandex, Naver + Google)
+ *   4. Ping Bing sitemap endpoint
  */
 export async function POST(request) {
   try {
-    // ── Verify webhook secret ──
-    const secret = request.headers.get("x-sanity-webhook-secret");
-    if (SANITY_WEBHOOK_SECRET && secret !== SANITY_WEBHOOK_SECRET) {
+    const rawBody = await request.text();
+
+    // ── Verify webhook signature (HMAC) or shared secret fallback ──
+    const signatureHeader = request.headers.get("sanity-webhook-signature");
+    const legacySecret = request.headers.get("x-sanity-webhook-secret");
+
+    if (signatureHeader) {
+      // Sanity HMAC signature verification (preferred)
+      if (!verifySanitySignature(rawBody, signatureHeader)) {
+        console.error("[reindex] HMAC signature verification failed");
+        return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
+      }
+    } else if (SANITY_WEBHOOK_SECRET && legacySecret !== SANITY_WEBHOOK_SECRET) {
+      // Fallback: shared secret header (for backward compatibility)
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const body = await request.json();
+    const body = JSON.parse(rawBody);
     const { _type, slug, operation } = body;
 
     if (!_type || !slug) {
@@ -45,6 +95,31 @@ export async function POST(request) {
 
     const results = { url, operation: operation || "update", actions: [] };
 
+    // ── 0. Revalidate Next.js cache (instant page updates) ──
+    const pathsToRevalidate = getRevalidationPaths(_type, slug);
+    const tagsToRevalidate = getRevalidationTags(_type);
+
+    for (const path of pathsToRevalidate) {
+      try {
+        revalidatePath(path);
+      } catch (err) {
+        console.error(`[reindex] Failed to revalidate path ${path}:`, err);
+      }
+    }
+    for (const tag of tagsToRevalidate) {
+      try {
+        revalidateTag(tag);
+      } catch (err) {
+        console.error(`[reindex] Failed to revalidate tag ${tag}:`, err);
+      }
+    }
+    results.actions.push({
+      service: "next-revalidate",
+      status: "ok",
+      paths: pathsToRevalidate,
+      tags: tagsToRevalidate,
+    });
+
     // ── 1. Ping Google Sitemap ──
     try {
       const googlePing = `https://www.google.com/ping?sitemap=${encodeURIComponent(
@@ -63,6 +138,7 @@ export async function POST(request) {
     // ── 2. Submit to IndexNow ──
     if (INDEXNOW_KEY) {
       try {
+        const urlsToPing = [url, `${SITE_URL}/blog`];
         const indexNowResponse = await fetch(
           "https://api.indexnow.org/indexnow",
           {
@@ -72,7 +148,7 @@ export async function POST(request) {
               host: "georgeyachts.com",
               key: INDEXNOW_KEY,
               keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
-              urlList: [url],
+              urlList: urlsToPing,
             }),
           }
         );
@@ -120,6 +196,36 @@ export async function POST(request) {
       { status: 500 }
     );
   }
+}
+
+/**
+ * Determine which Next.js paths to revalidate based on content type
+ */
+function getRevalidationPaths(type, slug) {
+  const paths = ["/"];  // Always revalidate homepage
+
+  if (type === "post") {
+    paths.push(`/blog/${slug}`, "/blog", "/llms.txt");
+  } else if (type === "yacht") {
+    paths.push(`/yachts/${slug}`, "/private-fleet", "/explorer-fleet");
+  } else if (type === "destination") {
+    paths.push(`/destinations/${slug}`, "/destinations");
+  } else if (type === "itinerary") {
+    paths.push(`/yacht-itineraries-greece/${slug}`, "/yacht-itineraries-greece");
+  } else if (type === "teamMember") {
+    paths.push(`/team/${slug}`, "/team");
+  }
+
+  return paths;
+}
+
+/**
+ * Determine which Next.js cache tags to revalidate
+ */
+function getRevalidationTags(type) {
+  if (type === "post") return ["posts"];
+  if (type === "yacht") return ["yachts"];
+  return [];
 }
 
 /**

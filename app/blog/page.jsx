@@ -5,7 +5,7 @@ import ContactFormSection from "@/components/ContactFormSection";
 import BlogGrid from "./BlogGrid";
 import "@/styles/blog.css";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export const metadata = {
   title: "The Journal | Luxury Yacht Charter Insights | George Yachts",
@@ -75,7 +75,7 @@ function BlogListSchema(posts) {
 export default async function BlogPage() {
   let posts = [];
   try {
-    posts = await sanityClient.fetch(BLOG_QUERY);
+    posts = await sanityClient.fetch(BLOG_QUERY, {}, { next: { tags: ['posts'] } });
   } catch (error) {
     console.error("Failed to fetch blog posts:", error);
   }

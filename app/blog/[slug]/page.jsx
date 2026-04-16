@@ -9,6 +9,8 @@ import { ChevronLeft } from "lucide-react";
 import JsonLd from "../../components/JsonLd";
 import { generateArticleSchema } from "@/lib/articleSchema";
 import RelatedArticles from "@/components/RelatedArticles";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { autoLinkPortableText } from "@/lib/auto-link-content";
 
 export async function generateStaticParams() {
   const query = `*[_type == "post"]{ "slug": slug.current }`;
@@ -45,13 +47,39 @@ async function getRelatedPosts(currentSlug) {
   return sanityClient.fetch(query, { currentSlug });
 }
 
+/**
+ * Extract FAQ-style Q&A pairs from Portable Text body.
+ * Looks for H3 headings ending in "?" followed by a normal paragraph.
+ */
+function extractFAQs(body) {
+  if (!body || !Array.isArray(body)) return [];
+  const faqs = [];
+
+  for (let i = 0; i < body.length; i++) {
+    const block = body[i];
+    if (block._type !== "block" || block.style !== "h3") continue;
+
+    const questionText = (block.children || []).map((c) => c.text || "").join("");
+    if (!questionText.trim().endsWith("?")) continue;
+
+    const answerBlock = body[i + 1];
+    if (!answerBlock || answerBlock._type !== "block" || answerBlock.style !== "normal") continue;
+
+    const answerText = (answerBlock.children || []).map((c) => c.text || "").join("");
+    if (answerText) {
+      faqs.push({ question: questionText, answer: answerText });
+    }
+  }
+
+  return faqs;
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const post = await getPost(slug);
 
   if (!post) return { title: "Article Not Found | George Yachts" };
 
-  // --- Description: excerpt → body text fallback → generic fallback ---
   let description = post.excerpt || null;
 
   if (!description && post.body) {
@@ -70,7 +98,6 @@ export async function generateMetadata({ params }) {
     description = `Expert insights and maritime analysis: ${post.title}.`;
   }
 
-  // --- OG Image: Sanity mainImage → opengraph-image.png fallback ---
   const ogImageUrl = post.mainImage
     ? urlFor(post.mainImage).width(1200).height(630).url()
     : "https://georgeyachts.com/opengraph-image.png";
@@ -117,6 +144,24 @@ const ArticlePage = async ({ params }) => {
 
   const articleSchema = generateArticleSchema({ ...post, slug });
 
+  // Extract FAQs from H3 headings ending in "?"
+  const faqs = extractFAQs(post.body);
+  const faqSchema = faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: f.answer,
+      },
+    })),
+  } : null;
+
+  // Auto-link keywords (Cyclades, APA, MYBA, etc.) to internal pages
+  const enhancedBody = autoLinkPortableText(post.body);
+
   const date = new Date(post.publishedAt).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
@@ -126,6 +171,9 @@ const ArticlePage = async ({ params }) => {
   return (
     <div className="min-h-screen bg-[#000] font-sans selection:bg-[#DAA520] selection:text-black">
       <JsonLd data={articleSchema} />
+      {faqSchema && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      )}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
@@ -135,6 +183,13 @@ const ArticlePage = async ({ params }) => {
           { "@type": "ListItem", "position": 3, "name": post.title }
         ]
       }) }} />
+
+      {/* Visual breadcrumbs */}
+      <Breadcrumbs items={[
+        { name: "Home", url: "/" },
+        { name: "The Journal", url: "/blog" },
+        { name: post.title },
+      ]} />
 
       {/* PURE TYPOGRAPHIC HERO */}
       <section className="relative w-full min-h-[60vh] md:min-h-[68vh] flex flex-col px-8 md:px-20 pt-16 pb-16 md:pb-24 overflow-hidden">
@@ -162,10 +217,10 @@ const ArticlePage = async ({ params }) => {
 
           <div className="flex flex-col items-end gap-1">
             <span className="text-white/50 text-[9px] tracking-[0.55em] uppercase">
-              {new Date(post.publishedAt || post._createdAt).toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+              {new Date(post.publishedAt || post._createdAt).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
               })}
             </span>
             {post._updatedAt && post.publishedAt &&
@@ -236,7 +291,7 @@ const ArticlePage = async ({ params }) => {
           </div>
 
           <article className="editorial-content [&_p]:mb-10 [&_p]:leading-[2] [&_p]:text-white/60 [&_p]:text-[1.05rem] [&_p:first-of-type]:text-white/80 [&_p:first-of-type]:text-[1.15rem] [&_p:first-of-type]:leading-[1.85]">
-            <PortableText value={post.body} components={RichTextComponents} />
+            <PortableText value={enhancedBody} components={RichTextComponents} />
           </article>
 
           {/* End-of-article marker */}

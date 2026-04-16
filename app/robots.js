@@ -3,16 +3,28 @@ export default function robots() {
 
   return {
     rules: [
-      {
-        userAgent: "*", // Applies to all bots (Google, Bing, etc.)
-        allow: "/", // Allow them to crawl the whole site
-        disallow: [
-          "/_next/", // Don't crawl internal Next.js build files
-          "/api/", // Don't crawl your internal API routes
-          "/admin/", // If you ever add a private admin area
-        ],
-      },
+      // Traditional search engines — full access
+      { userAgent: "*", allow: "/", disallow: ["/_next/", "/api/", "/admin/", "/studio"] },
+
+      // AI crawlers — explicitly allowed (GEO strategy)
+      { userAgent: "GPTBot", allow: "/" },
+      { userAgent: "ChatGPT-User", allow: "/" },
+      { userAgent: "OAI-SearchBot", allow: "/" },
+      { userAgent: "anthropic-ai", allow: "/" },
+      { userAgent: "Claude-Web", allow: "/" },
+      { userAgent: "ClaudeBot", allow: "/" },
+      { userAgent: "PerplexityBot", allow: "/" },
+      { userAgent: "Perplexity-User", allow: "/" },
+      { userAgent: "Google-Extended", allow: "/" },
+      { userAgent: "Applebot-Extended", allow: "/" },
+      { userAgent: "FacebookBot", allow: "/" },
+      { userAgent: "Bytespider", allow: "/" },
+      { userAgent: "Amazonbot", allow: "/" },
+      { userAgent: "CCBot", allow: "/" },
+      { userAgent: "cohere-ai", allow: "/" },
+      { userAgent: "Diffbot", allow: "/" },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,
+    host: BASE_URL,
   };
 }

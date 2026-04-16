@@ -1,5 +1,48 @@
 import React from "react";
+import Link from "next/link";
 import { urlFor } from "../../lib/sanity";
+
+const INTERNAL_HOSTS = ["georgeyachts.com", "www.georgeyachts.com"];
+
+const OWN_PROPERTIES = [
+  "calendly.com/george-georgeyachts",
+  "wa.me/17867988798",
+  "linkedin.com/in/georgebiniaris",
+  "instagram.com/georgeyachts",
+];
+
+const TRUSTED_AUTHORITIES = [
+  "myba-association.com",
+  "iyba.org",
+  "ynanp.gr",
+  "knightfrank.com",
+  "schema.org",
+  "google.com",
+  "wikipedia.org",
+];
+
+function classifyLink(href) {
+  try {
+    const url = new URL(href, "https://georgeyachts.com");
+    const host = url.hostname.toLowerCase();
+    const fullUrl = url.href.toLowerCase();
+
+    const isInternal = INTERNAL_HOSTS.some(
+      (h) => host === h || host.endsWith("." + h)
+    );
+    const isOwnProperty = OWN_PROPERTIES.some((p) => fullUrl.includes(p));
+    const isTrustedAuthority = TRUSTED_AUTHORITIES.some(
+      (a) => host === a || host.endsWith("." + a)
+    );
+
+    return { isInternal, isOwnProperty, isTrustedAuthority };
+  } catch {
+    return { isInternal: true, isOwnProperty: false, isTrustedAuthority: false };
+  }
+}
+
+const linkStyle =
+  "text-[#DAA520] hover:text-white border-b border-[#DAA520]/30 hover:border-white transition-colors duration-300";
 
 export const RichTextComponents = {
   types: {
@@ -99,25 +142,21 @@ export const RichTextComponents = {
     },
   },
   block: {
-    // Normal paragraphs
     normal: ({ children }) => (
       <p className="text-white/70 font-sans font-light text-base md:text-lg leading-loose mb-8">
         {children}
       </p>
     ),
-    // H2 Headings
     h2: ({ children }) => (
       <h2 className="text-3xl md:text-4xl text-white font-marcellus mt-16 mb-6 uppercase tracking-wide">
         {children}
       </h2>
     ),
-    // H3 Headings
     h3: ({ children }) => (
       <h3 className="text-2xl md:text-3xl text-[#DAA520] font-marcellus mt-12 mb-4">
         {children}
       </h3>
     ),
-    // Blockquotes (styled luxuriously with a gold border)
     blockquote: ({ children }) => (
       <blockquote className="border-l-2 border-[#DAA520] pl-6 md:pl-8 my-12 py-2">
         <p className="text-2xl md:text-3xl text-white italic font-marcellus leading-relaxed opacity-90">
@@ -127,22 +166,45 @@ export const RichTextComponents = {
     ),
   },
   marks: {
-    // Links inside text
     link: ({ children, value }) => {
-      const rel = !value.href.startsWith("/")
-        ? "noreferrer noopener"
-        : undefined;
+      const href = value?.href || "#";
+      const { isInternal, isOwnProperty, isTrustedAuthority } = classifyLink(href);
+
+      // Internal link — Next.js Link for SPA navigation + prefetching
+      if (isInternal) {
+        const path = href.replace(/^https?:\/\/(www\.)?georgeyachts\.com/, "") || "/";
+        return (
+          <Link href={path} className={linkStyle}>
+            {children}
+          </Link>
+        );
+      }
+
+      // Own property (Calendly, WhatsApp, LinkedIn, Instagram) — dofollow, new tab
+      if (isOwnProperty) {
+        return (
+          <a href={href} target="_blank" rel="noopener" className={linkStyle}>
+            {children}
+          </a>
+        );
+      }
+
+      // Trusted authority (MYBA, IYBA, Greek gov) — dofollow for E-E-A-T, new tab
+      if (isTrustedAuthority) {
+        return (
+          <a href={href} target="_blank" rel="noopener" className={linkStyle}>
+            {children}
+          </a>
+        );
+      }
+
+      // All other external — nofollow + noopener, new tab
       return (
-        <a
-          href={value.href}
-          rel={rel}
-          className="text-[#DAA520] hover:text-white border-b border-[#DAA520]/30 hover:border-white transition-colors duration-300"
-        >
+        <a href={href} target="_blank" rel="nofollow noopener" className={linkStyle}>
           {children}
         </a>
       );
     },
-    // Bold text
     strong: ({ children }) => (
       <strong className="text-white font-semibold tracking-wide">
         {children}
