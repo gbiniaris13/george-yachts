@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import axios from "axios";
 import { kvLpush, todayKey } from "@/lib/kv";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 export const dynamic = "force-dynamic";
 
@@ -94,8 +95,23 @@ export async function POST(request) {
     "Cache-Control": "no-cache, no-store, must-revalidate",
   };
 
+  // Rate limit: 5 submissions per minute per IP
+  const rl = checkRateLimit(request, { max: 5, windowMs: 60000 });
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again shortly." },
+      { status: 429, headers: { ...defaultHeaders, "Retry-After": String(rl.retryAfter) } }
+    );
+  }
+
   try {
     const payload = await request.json();
+
+    // Honeypot: if the hidden "website" field is filled, it's a bot
+    if (payload.website && payload.website.trim() !== "") {
+      // Respond 200 so bot thinks it worked but silently drop
+      return NextResponse.json({ ok: true }, { status: 200, headers: defaultHeaders });
+    }
 
     // Updated Destructuring to include new fields
     const {

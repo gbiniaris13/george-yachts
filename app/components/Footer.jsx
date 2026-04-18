@@ -16,6 +16,7 @@ const Footer = () => {
   const { t } = useI18n();
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState(""); // honeypot — bots autofill, humans never see
   const [subscribed, setSubscribed] = useState(false);
 
   const serviceLinks = [
@@ -201,7 +202,7 @@ const Footer = () => {
                     const res = await fetch("/api/newsletter", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ email }),
+                      body: JSON.stringify({ email, website }),
                     });
                     if (res.ok) setSubscribed(true);
                   } catch {
@@ -210,6 +211,17 @@ const Footer = () => {
                 }}
                 className="flex items-stretch max-w-md mx-auto"
               >
+                {/* Honeypot — hidden from real users, bots autofill it */}
+                <input
+                  type="text"
+                  name="website"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", opacity: 0 }}
+                />
                 <label htmlFor="newsletter-email" className="sr-only">Email address for newsletter</label>
                 <input
                   id="newsletter-email"

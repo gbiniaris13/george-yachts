@@ -70,6 +70,7 @@ const credentials = [
 
 export default function PartnersClient() {
   const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState(""); // honeypot
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -82,7 +83,7 @@ export default function PartnersClient() {
       await fetch("/api/partner-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, website }),
       });
       setSubmitted(true);
     } catch {
@@ -305,6 +306,17 @@ export default function PartnersClient() {
 
           {!submitted ? (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-8">
+              {/* Honeypot — hidden from real users, bots autofill it */}
+              <input
+                type="text"
+                name="website"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", opacity: 0 }}
+              />
               <input
                 type="email"
                 required

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { readFileSync } from "fs";
 import { join } from "path";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 export const dynamic = "force-dynamic";
 
@@ -44,8 +45,23 @@ export async function POST(request) {
     "Access-Control-Allow-Methods": "POST, OPTIONS",
   };
 
+  // Rate limit: 3 partner requests per minute per IP
+  const rl = checkRateLimit(request, { max: 3, windowMs: 60000 });
+  if (!rl.ok) {
+    return NextResponse.json(
+      { message: "Too many requests." },
+      { status: 429, headers: { ...headers, "Retry-After": String(rl.retryAfter) } }
+    );
+  }
+
   try {
-    const { email } = await request.json();
+    const body = await request.json();
+    const { email } = body;
+
+    // Honeypot
+    if (body.website && body.website.trim() !== "") {
+      return NextResponse.json({ ok: true }, { status: 200, headers });
+    }
 
     if (!email || !email.includes("@")) {
       return NextResponse.json(

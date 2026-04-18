@@ -267,6 +267,16 @@ const ContactFormSection = () => {
         {/* ── Form ── */}
         <form ref={formRef} onSubmit={handleVercelSubmit}>
 
+          {/* Honeypot — hidden from real users, bots autofill it */}
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", opacity: 0 }}
+          />
+
           {/* STEP 1: About You */}
           <div className={step === 1 ? 'block' : 'hidden'}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
