@@ -3,6 +3,7 @@ import Image from "next/image";
 import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import DestinationContent from "../DestinationContent";
+import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import "@/styles/service-page.css";
 
 export const metadata = {
@@ -49,6 +50,11 @@ function PageSchema() {
 export default function CycladesPage() {
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "https://georgeyachts.com/" },
+        { name: "Destinations", url: "https://georgeyachts.com/destinations" },
+        { name: "Cyclades", url: "https://georgeyachts.com/destinations/cyclades" },
+      ]} />
       <PageSchema />
       <section className="svc-hero">
         <Image src="https://cdn.sanity.io/images/ecqr94ey/production/72a5bc25ad09c9b4d0a872fdd36469d3d231ad0a-5472x3648.jpg?w=1920&h=900&fit=crop&auto=format" alt="Cyclades yacht charter Greece - Mykonos Santorini sailing" fill priority className="svc-hero__bg" sizes="100vw" />

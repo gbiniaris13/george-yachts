@@ -1,6 +1,7 @@
 import { sanityClient } from '@/lib/sanity';
 import { notFound } from 'next/navigation';
 import YachtPageContent from './YachtPageContent';
+import BreadcrumbSchema from '@/app/components/BreadcrumbSchema';
 import './yacht-page.css';
 
 // ISR - revalidate every hour
@@ -130,9 +131,16 @@ export default async function YachtPage({ params }) {
 
   const heroImage = yacht.images?.[0];
 
+  const breadcrumbs = [
+    { name: "Home", url: "https://georgeyachts.com/" },
+    { name: "Charter Yachts Greece", url: "https://georgeyachts.com/charter-yacht-greece" },
+    { name: yacht.name, url: `https://georgeyachts.com/yachts/${slug}` },
+  ];
+
   return (
     <>
       <YachtSchema yacht={yacht} imageUrl={heroImage?.url} />
+      <BreadcrumbSchema items={breadcrumbs} />
       <YachtPageContent
         yacht={{
           name: yacht.name,

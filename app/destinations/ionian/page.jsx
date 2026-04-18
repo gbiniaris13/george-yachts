@@ -3,6 +3,7 @@ import Image from "next/image";
 import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import DestinationContent from "../DestinationContent";
+import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import "@/styles/service-page.css";
 
 export const metadata = {
@@ -47,6 +48,11 @@ function PageSchema() {
 export default function IonianPage() {
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "https://georgeyachts.com/" },
+        { name: "Destinations", url: "https://georgeyachts.com/destinations" },
+        { name: "Ionian", url: "https://georgeyachts.com/destinations/ionian" },
+      ]} />
       <PageSchema />
       <section className="svc-hero">
         <Image src="https://cdn.sanity.io/images/ecqr94ey/production/0a7391a08ebd3746b26123b159fb94fb15353852-1280x853.jpg?w=1920&h=900&fit=crop&auto=format" alt="Ionian islands yacht charter Greece - Corfu Lefkada Kefalonia" fill priority className="svc-hero__bg" sizes="100vw" />

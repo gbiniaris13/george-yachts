@@ -18,6 +18,8 @@ import { WishlistProvider } from "./components/WishlistProvider";
 import JsonLd from "./components/JsonLd";
 import { organizationSchema } from "@/lib/organizationSchema";
 import VisitorIntelligence from "./components/VisitorIntelligence";
+import EnhancedAnalytics from "./components/EnhancedAnalytics";
+import MicrosoftClarity from "./components/MicrosoftClarity";
 // Swiper CSS moved to individual Swiper components to avoid loading on non-Swiper pages
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -154,6 +156,10 @@ export default function RootLayout({ children }) {
           data-pid="6aeJg49QjgxMfguK"
           data-version="062024"
         />
+
+        {/* Safe Pass Apr 2026 — additive enhanced analytics */}
+        <EnhancedAnalytics />
+        <MicrosoftClarity />
       </body>
     </html>
   );

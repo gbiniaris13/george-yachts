@@ -3,6 +3,7 @@ import Image from "next/image";
 import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import DestinationContent from "../DestinationContent";
+import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import "@/styles/service-page.css";
 
 export const metadata = {
@@ -43,6 +44,11 @@ function PageSchema() {
 export default function SporadesPage() {
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "https://georgeyachts.com/" },
+        { name: "Destinations", url: "https://georgeyachts.com/destinations" },
+        { name: "Sporades", url: "https://georgeyachts.com/destinations/sporades" },
+      ]} />
       <PageSchema />
       <section className="svc-hero">
         <Image src="https://cdn.sanity.io/images/ecqr94ey/production/95a00b4760aedc3cd1f7a8959b026107cd4ca488-813x650.jpg?w=1920&h=900&fit=crop&auto=format" alt="Sporades yacht charter Greece - Skiathos Skopelos Alonissos" fill priority className="svc-hero__bg" sizes="100vw" />
