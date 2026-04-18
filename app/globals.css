@@ -381,3 +381,205 @@ section {
   border-style: solid;
   border-image: linear-gradient(90deg, #e6c77a 0%, #c9a24d 45%, #a67c2e 100%) 1;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   SAFE PASS APR 2026 — ADDITIVE ONLY
+   Non-destructive quality upgrades. No existing rule modified.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── #13 Typography polish — widow/orphan control, kerning ─── */
+h1, h2, h3 {
+  text-wrap: balance; /* modern browsers: balances headings, no widows */
+  font-kerning: normal;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  letter-spacing: -0.01em; /* subtle tightening on large type */
+}
+
+p, li, blockquote {
+  text-wrap: pretty; /* prevents single-word last lines */
+  font-kerning: normal;
+  font-feature-settings: "kern" 1, "liga" 1;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* Proper small caps (not fake CSS transform) where supported */
+.small-caps {
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+}
+
+/* ─── #14 Spacing consistency — 8pt grid helpers (opt-in) ─── */
+:root {
+  --space-1: 0.5rem;   /* 8px  */
+  --space-2: 1rem;     /* 16px */
+  --space-3: 1.5rem;   /* 24px */
+  --space-4: 2rem;     /* 32px */
+  --space-5: 3rem;     /* 48px */
+  --space-6: 4rem;     /* 64px */
+  --space-7: 6rem;     /* 96px */
+  --space-8: 8rem;     /* 128px */
+}
+
+/* ─── #11 Extra micro-interactions (additive) ─── */
+
+/* Button press feedback — universal, gentle */
+button, [role="button"], a.btn, .cta {
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 220ms ease,
+              background-color 220ms ease;
+}
+button:active, [role="button"]:active, a.btn:active, .cta:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+/* Link underline reveal (opt-in via .link-polish) */
+.link-polish {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+.link-polish::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 320ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+.link-polish:hover::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* Card hover lift — subtle, luxury-appropriate */
+.card-polish {
+  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 400ms ease;
+  will-change: transform;
+}
+.card-polish:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px -12px rgba(13, 27, 42, 0.15);
+}
+
+/* Image zoom on hover (contained) */
+.img-zoom-wrap {
+  overflow: hidden;
+}
+.img-zoom-wrap > img,
+.img-zoom-wrap > picture > img {
+  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.img-zoom-wrap:hover > img,
+.img-zoom-wrap:hover > picture > img {
+  transform: scale(1.04);
+}
+
+/* ─── #15 Respect prefers-reduced-motion (critical a11y) ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  .float,
+  .pulse-soft,
+  .text-shimmer,
+  .text-flow,
+  .border-glow::before,
+  .depth-slow,
+  .depth-fast,
+  .stagger-children > * {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .reveal-up, .reveal-left, .reveal-right, .reveal-scale, .reveal-blur,
+  .img-reveal, .img-reveal-left, .img-cinema {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
+
+/* ─── #25 Color contrast helpers (AA compliant) ─── */
+/* Utility: force high-contrast variant for text-on-image situations */
+.text-contrast-safe {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+}
+
+/* WCAG AA: body text on ivory must be at least #5A5A5A for 4.5:1 ratio
+   — use this class where designs had lighter gray that fails contrast */
+.muted-aa {
+  color: #4A4A4A; /* Tested against #F8F5F0 ivory: 8.2:1 (AAA) */
+}
+
+/* Gold on navy — brand-safe contrast */
+.gold-on-navy {
+  color: #C9A84C;
+  background: #0D1B2A;
+}
+/* #C9A84C on #0D1B2A = 6.2:1 (AA-Large) */
+
+/* ─── Skip-link styling (accessibility - already in layout, style it) ─── */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 9999;
+}
+.skip-link:focus {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  padding: 0.75rem 1.25rem;
+  background: #0D1B2A;
+  color: #F8F5F0;
+  border: 2px solid #C9A84C;
+  border-radius: 4px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ─── Screen-reader-only utility ─── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
