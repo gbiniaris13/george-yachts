@@ -49,15 +49,28 @@ export default async function HomePage() {
   let privateRange = { low: 13000, high: 180000 };
   let explorerRange = { low: 420, high: 1800 };
   let budgetYachts = [];
+  let privateHeroImage = null;
+  let explorerHeroImage = null;
+  let privateCount = 0;
+  let explorerCount = 0;
 
   try {
-    const [count, privateYachts, explorerYachts, allYachts] = await Promise.all([
+    const [count, privateYachts, explorerYachts, allYachts, privateHero, explorerHero] = await Promise.all([
       sanityClient.fetch(`count(*[_type == "yacht"])`),
       sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["private", "both"]]{ weeklyRatePrice }`),
       sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"]]{ weeklyRatePrice, sleeps }`),
       sanityClient.fetch(`*[_type == "yacht"] | order(weeklyRatePrice asc) { name, "slug": slug.current, weeklyRatePrice, sleeps, builder, length, subtitle }`),
+      // Move #2 — pick one representative hero image per fleet for the split-screen showcase.
+      // We order by name for stability (same image per deploy) and ask for the first image
+      // of whichever yacht has one. Null fallback handled client-side.
+      sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["private", "both"] && count(images) > 0] | order(name asc) [0] { "url": images[0].asset->url }`),
+      sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"] && count(images) > 0] | order(name asc) [0] { "url": images[0].asset->url }`),
     ]);
     yachtCount = count;
+    privateHeroImage = privateHero?.url ?? null;
+    explorerHeroImage = explorerHero?.url ?? null;
+    privateCount = privateYachts.length;
+    explorerCount = explorerYachts.length;
 
     const extractPrice = (str) => {
       const m = String(str || '').match(/[\d,]+/);
@@ -95,7 +108,16 @@ export default async function HomePage() {
         <link rel="preload" href="/images/hero-poster.jpg" as="image" fetchPriority="high" />
       </head>
       <WebSiteSchema />
-      <HomeClient yachtCount={yachtCount} privateRange={privateRange} explorerRange={explorerRange} budgetYachts={budgetYachts} />
+      <HomeClient
+        yachtCount={yachtCount}
+        privateRange={privateRange}
+        explorerRange={explorerRange}
+        budgetYachts={budgetYachts}
+        privateHeroImage={privateHeroImage}
+        explorerHeroImage={explorerHeroImage}
+        privateCount={privateCount}
+        explorerCount={explorerCount}
+      />
     </>
   );
 }

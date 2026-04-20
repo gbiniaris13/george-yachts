@@ -19,11 +19,27 @@ const InteractiveTools = dynamic(() => import("./components/InteractiveTools"), 
 const ContactBar = dynamic(() => import("./components/ContactBar"), { ssr: false });
 const ContactFormSection = dynamic(() => import("./components/ContactFormSection"), { ssr: false });
 
-const HomeClient = ({ yachtCount, privateRange, explorerRange, budgetYachts }) => {
+const HomeClient = ({
+  yachtCount,
+  privateRange,
+  explorerRange,
+  budgetYachts,
+  privateHeroImage,
+  explorerHeroImage,
+  privateCount,
+  explorerCount,
+}) => {
   return (
     <div className="min-h-screen bg-black font-sans">
       <VideoSection />
-      <FleetCTAs privateRange={privateRange} explorerRange={explorerRange} />
+      <FleetCTAs
+        privateRange={privateRange}
+        explorerRange={explorerRange}
+        privateHeroImage={privateHeroImage}
+        explorerHeroImage={explorerHeroImage}
+        privateCount={privateCount}
+        explorerCount={explorerCount}
+      />
       <HomeStats yachtCount={yachtCount} />
       <YourBroker />
       <HowItWorks />
