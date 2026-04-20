@@ -87,10 +87,16 @@ export default function SignatureYacht({ yacht }) {
     >
       {/* Hero image layer — zooms gently with scroll (Ken Burns) and
           translates slower than the page (parallax). Oversized so the
-          translate never reveals an edge. */}
+          translate never reveals an edge.
+
+          Height: the previous 100dvh/900px cap left a lot of dark
+          dead space above/below the content on tall viewports (the
+          corner-bracket frame made it feel like an empty picture
+          frame). Tightened to 80dvh with an 760px cap so the image
+          stays dramatic but the black gaps shrink. */}
       <div
         className="relative w-full"
-        style={{ height: "min(100dvh, 900px)" }}
+        style={{ height: "min(80dvh, 760px)", minHeight: "560px" }}
       >
         <div
           className="absolute inset-x-0 -top-[10%] -bottom-[10%] bg-cover bg-center will-change-transform"
@@ -106,9 +112,10 @@ export default function SignatureYacht({ yacht }) {
         <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/10 to-black/85" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-black/35" />
 
-        {/* Top label — FEATURED THIS WEEK */}
+        {/* Top label — FEATURED THIS WEEK. Pushed below the fixed
+            nav zone (72px scrolled-state) plus a bit more breathing. */}
         <div
-          className="absolute top-10 md:top-14 left-0 right-0 text-center z-10"
+          className="absolute top-6 md:top-8 left-0 right-0 text-center z-10"
           style={{ fontFamily: "'Montserrat', sans-serif" }}
         >
           <span
@@ -126,8 +133,9 @@ export default function SignatureYacht({ yacht }) {
           </span>
         </div>
 
-        {/* Bottom-anchored content block */}
-        <div className="absolute inset-x-0 bottom-0 z-10 px-6 md:px-12 pb-16 md:pb-24 text-center">
+        {/* Bottom-anchored content block — pb tightened so the text
+            lifts closer to the image bottom, closing the dark gap. */}
+        <div className="absolute inset-x-0 bottom-0 z-10 px-6 md:px-12 pb-10 md:pb-14 text-center">
           <div className="max-w-[880px] mx-auto">
             {/* Yacht name */}
             <h2
