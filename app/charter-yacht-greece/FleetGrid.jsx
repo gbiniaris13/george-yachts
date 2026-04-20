@@ -602,8 +602,31 @@ export default function FleetGrid({ yachts }) {
         <div className="fleet-results__note">Prices per week &middot; Plus VAT &amp; APA</div>
       </div>
 
-      {/* YACHT GRID */}
-      <div className="fleet-grid" ref={gridRef}>
+      {/* Live count — George 2026-04-20 C1: visible feedback so the
+          filters feel responsive, not guesswork. */}
+      <div className="fleet-count" aria-live="polite">
+        <span className="fleet-count__n">{filtered.length}</span>
+        <span className="fleet-count__label">
+          {filtered.length === 1 ? 'yacht' : 'yachts'} matching
+        </span>
+        {(activeCategory !== 'all' || lengthRange !== 'all' || guestFilter !== 'all' || cabinFilter !== 'all' || priceRange !== 'all' || sortBy !== 'recommended') && (
+          <button
+            onClick={resetFilters}
+            className="fleet-count__reset"
+            aria-label="Reset all filters"
+          >
+            Clear filters
+          </button>
+        )}
+      </div>
+
+      {/* YACHT GRID — keyed on filter signature so cards re-stagger
+          gracefully whenever filters/sort change. */}
+      <div
+        className="fleet-grid"
+        ref={gridRef}
+        key={`${activeCategory}|${lengthRange}|${guestFilter}|${cabinFilter}|${priceRange}|${sortBy}`}
+      >
         {filtered.map((yacht, i) => (
           <YachtCard
             key={yacht._id || yacht.slug}
