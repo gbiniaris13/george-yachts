@@ -213,7 +213,7 @@ export default function GreekWatersMap() {
                 textAnchor="end"
                 fill="rgba(255,255,255,0.55)"
                 fontFamily="'Montserrat', sans-serif"
-                fontSize="11"
+                fontSize="16"
                 letterSpacing="3"
               >
                 ATHENS
@@ -237,7 +237,7 @@ export default function GreekWatersMap() {
                     isActive ? "rgba(218,165,32,1)" : "rgba(255,255,255,0.48)"
                   }
                   fontFamily="'Montserrat', sans-serif"
-                  fontSize="13"
+                  fontSize="20"
                   letterSpacing="4"
                   fontWeight="600"
                   style={{ transition: "fill 500ms ease" }}

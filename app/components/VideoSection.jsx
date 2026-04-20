@@ -150,9 +150,14 @@ const VideoSection = () => {
                       aria-label="George Yachts"
                       style={{
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
-                        fontSize: "clamp(42px, 9vw, 110px)",
+                        // Mobile audit 2026-04-20: dropped the min from
+                        // 42 → 34 and tightened tracking so "GEORGE
+                        // YACHTS" never overlaps itself on 320–360 px
+                        // devices. Letters breathe from native kerning
+                        // at the smaller size.
+                        fontSize: "clamp(34px, 9vw, 110px)",
                         fontWeight: 200,
-                        letterSpacing: "0.15em",
+                        letterSpacing: "clamp(0.06em, 0.15vw, 0.15em)",
                         lineHeight: 0.95,
                         color: "#fff",
                         textTransform: "uppercase",
@@ -183,7 +188,10 @@ const VideoSection = () => {
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
                         fontSize: "10px",
-                        letterSpacing: "0.55em",
+                        // 0.55em would spread 8 words to 80%+ width on
+                        // 360 px devices. Responsive clamp keeps the
+                        // cinematic wide tracking on desktop.
+                        letterSpacing: "clamp(0.22em, 1.2vw, 0.55em)",
                         textTransform: "uppercase",
                         color: "#DAA520",
                         fontWeight: 600,
@@ -315,8 +323,11 @@ const VideoSection = () => {
         }}
       >
         <span
-          className="text-white/30 text-[8px] tracking-[0.35em] uppercase"
-          style={{ fontFamily: "'Montserrat', sans-serif" }}
+          className="text-white/50 text-[10px] tracking-[0.35em] uppercase"
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            textShadow: "0 1px 2px rgba(0,0,0,0.45)",
+          }}
         >
           Scroll
         </span>

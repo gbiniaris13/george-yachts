@@ -99,10 +99,15 @@ function FleetPanel({
           className="text-white mb-6"
           style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: "clamp(40px, 6vw, 76px)",
+            // Mobile: min 32 (was 40) so "Explorer Fleet" fits on
+            // 320px devices. maxWidth guards against edge-case long
+            // builder names.
+            fontSize: "clamp(32px, 6vw, 76px)",
             fontWeight: 200,
-            letterSpacing: "0.08em",
+            letterSpacing: "0.06em",
             lineHeight: 1,
+            maxWidth: "90%",
+            wordBreak: "break-word",
           }}
         >
           {name}

@@ -40,6 +40,69 @@ section {
   }
 }
 
+/* ──────────────────────────────────────────────────────────────
+   2026-04-20 — Mobile safety net (≤ 480px).
+   Audit surfaced overlapping letters, text running off screen, and
+   eyebrow text with 0.55em tracking exploding to 80 % of viewport
+   width on narrow phones. Applied as low-specificity safety rules
+   so per-component styles still win where they explicitly set
+   letter-spacing for design effect.
+   ────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  /* Headlines — calm the tracking, let long words wrap instead
+     of overflowing. Works with every inline style: a Cormorant
+     clamp headline can still pick its own size, we just guarantee
+     it never bursts the viewport. */
+  h1, h2, h3 {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+    letter-spacing: 0.02em;
+  }
+
+  /* Any "eyebrow" — Montserrat pill with big tracking — should
+     be readable on 320 px phones. Scopes by the typical classes
+     used across the site. */
+  [class*="eyebrow"],
+  [class*="svc-hero__eyebrow"],
+  [class*="fleet-filters__label"] {
+    letter-spacing: 0.28em !important;
+  }
+
+  /* Native inputs must hit 44×44 touch target minimum. */
+  button, a[role="button"],
+  input[type="submit"], input[type="button"] {
+    min-height: 40px;
+  }
+
+  /* Prevent fixed-footprint widgets (LiveTicker, CookieConsent,
+     exit-intent modal) from hugging the viewport edge and being
+     unreadable on 360-400 px devices. */
+  [class*="fixed"][class*="max-w"],
+  [role="dialog"] {
+    max-width: calc(100vw - 16px) !important;
+  }
+
+  /* Inputs — cap font size at 16 so iOS Safari doesn't auto-zoom
+     on focus (common mobile papercut). */
+  input, select, textarea {
+    font-size: max(16px, 1rem);
+  }
+}
+
+/* Extra-narrow guard for 320 px devices (old iPhones, Huawei Y
+   series). */
+@media (max-width: 380px) {
+  h1 { letter-spacing: 0 !important; }
+
+  /* Any `clamp(...)` eyebrow text survives → force minimum legible
+     size. */
+  p[style*="fontSize"][style*="0.55em"],
+  p[style*="fontSize"][style*="0.5em"] {
+    letter-spacing: 0.22em !important;
+  }
+}
+
 /* Selection color */
 ::selection {
   background: #DAA520;
@@ -328,7 +391,9 @@ section {
 }
 
 .the {
-  font-family: "Barlow", sans-serif;
+  /* Barlow removed — system sans keeps the same thin, neutral feel
+     at 1/3 the payload cost. */
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
   font-weight: 100;
 }
 

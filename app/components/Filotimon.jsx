@@ -107,9 +107,11 @@ export default function Filotimon({ filotimoImage = null }) {
             }}
           >
             <span
-              className="uppercase"
+              className="uppercase hidden sm:inline-block"
               style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
+                // Watermark hides on ≤ 640 px where it was overlapping
+                // copy and adding visual noise on narrow phones.
                 fontSize: "clamp(48px, 9vw, 140px)",
                 fontWeight: 200,
                 color: "rgba(218,165,32,0.25)",
@@ -155,9 +157,11 @@ export default function Filotimon({ filotimoImage = null }) {
               className="text-white mb-12"
               style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: "clamp(32px, 3.8vw, 56px)",
+                fontSize: "clamp(26px, 3.8vw, 56px)",
                 fontWeight: 200,
-                lineHeight: 1.1,
+                // Bumped from 1.1 → 1.2 so the headline doesn't break
+                // into cramped ligatures on 320 px devices.
+                lineHeight: 1.2,
                 letterSpacing: "0.005em",
               }}
             >

@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono, Marcellus, Cormorant_Garamond, Barlow, Montserrat } from "next/font/google";
+import { Geist, Marcellus, Cormorant_Garamond, Montserrat } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import NavDrawerSystem from "./components/NavDrawerSystem";
@@ -26,10 +26,9 @@ import MicrosoftClarity from "./components/MicrosoftClarity";
 // Swiper CSS moved to individual Swiper components to avoid loading on non-Swiper pages
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// Removed: Geist_Mono (zero uses anywhere in the tree) and Barlow
+// (used in a single legacy `.the` rule in globals.css — replaced with
+// system sans). Saves ~33 KB of font payload on every first paint.
 const marcellus = Marcellus({
   subsets: ["latin"],
   weight: "400",
@@ -39,12 +38,6 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-cormorant",
-  display: "swap",
-});
-const barlow = Barlow({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400"],
-  variable: "--font-barlow",
   display: "swap",
 });
 const montserrat = Montserrat({
@@ -79,7 +72,7 @@ export default function RootLayout({ children }) {
       </head>
 
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${marcellus.variable} ${cormorant.variable} ${barlow.variable} ${montserrat.variable} antialiased`}
+        className={`${geistSans.variable} ${marcellus.variable} ${cormorant.variable} ${montserrat.variable} antialiased`}
       >
         {/* Skip to main content — accessibility */}
         <a

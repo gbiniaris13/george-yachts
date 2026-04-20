@@ -96,7 +96,13 @@ export default function SignatureYacht({ yacht }) {
           stays dramatic but the black gaps shrink. */}
       <div
         className="relative w-full"
-        style={{ height: "min(80dvh, 760px)", minHeight: "560px" }}
+        // Mobile audit 2026-04-20: minHeight 560 was taller than 100vh
+        // on 375×667 iPhone SE, forcing the image to anchor a jankier
+        // scroll. Lowered the floor to 460 on narrow screens.
+        style={{
+          height: "min(80dvh, 760px)",
+          minHeight: "clamp(460px, 55vh, 560px)",
+        }}
       >
         <div
           className="absolute inset-x-0 -top-[10%] -bottom-[10%] bg-cover bg-center will-change-transform"
