@@ -37,8 +37,9 @@
   "hero": {
     "tagline": "Exclusively Greek Waters",
     "subtitle": "Boutique Yacht Brokerage",
-    "primaryCta": "Explore the Private Fleet",
-    "secondaryCta": "Or find your yacht in 60 seconds"
+    "secondaryCta": "Or find your yacht in 60 seconds",
+    "fleetPrivate": "Explore the Private Fleet",
+    "fleetExplorer": "Explore the Explorer Fleet"
   },
   "stats": {
     "yachts": "Curated Yachts",

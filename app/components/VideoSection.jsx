@@ -58,17 +58,19 @@ const VideoSection = () => {
   }, []);
 
   // CTA hierarchy — George 2026-04-20:
-  // Primary CTA leads directly into the Private Fleet so a first-time
-  // visitor sees real yachts inside one click. The quiz (yacht-finder)
-  // stays in the hero as a soft secondary link below the primary
-  // button — useful for visitors who prefer a guided path, but no
-  // longer competing for the primary click.
+  // Both fleets surfaced in the hero as equal-weight primary CTAs so
+  // a first-time visitor reaches real yachts — at whichever price
+  // point fits — inside one click. The 60-second quiz stays in the
+  // hero as a quiet secondary text link underneath for visitors who
+  // prefer the guided path.
   const slideData = [
     {
       id: 1,
       imageUrl: "/videos/yacht-cruising-new.mp4",
-      primaryHref: "/private-fleet",
-      primaryText: t('hero.primaryCta'),
+      fleets: [
+        { href: "/private-fleet", text: t('hero.fleetPrivate') },
+        { href: "/explorer-fleet", text: t('hero.fleetExplorer') },
+      ],
       secondaryHref: "/yacht-finder",
       secondaryText: t('hero.secondaryCta'),
     },
@@ -225,45 +227,60 @@ const VideoSection = () => {
                       })()}
                     </p>
 
-                    {/* CTA stack — primary: Private Fleet, secondary: 60-sec quiz */}
+                    {/* CTA stack — primaries: both fleets; secondary: 60-sec quiz */}
                     <div
-                      className="flex flex-col items-center gap-6"
+                      className="flex flex-col items-center gap-7"
                       style={{
                         opacity: heroVisible ? 1 : 0,
                         transform: heroVisible ? "translateY(0)" : "translateY(10px)",
                         transition: "opacity 0.8s ease 2.2s, transform 0.8s ease 2.2s",
                       }}
                     >
-                      {/* PRIMARY — Enter the Private Fleet. Solid gold-gradient
-                          border + soft gold tint on hover. Bigger padding and
-                          weightier typography than the old single CTA so it
-                          visually dominates without shouting. */}
-                      <MagneticButton
-                        href={slide.primaryHref}
-                        dataCursor="Enter"
-                        className="group inline-flex items-center gap-3 px-12 md:px-16 py-5 md:py-6 text-white text-[11px] md:text-[12px] tracking-[0.4em] uppercase font-semibold border border-[#DAA520]/60 hover:border-[#DAA520] hover:text-[#DAA520] transition-colors duration-500 backdrop-blur-sm bg-[#DAA520]/[0.04] hover:bg-[#DAA520]/[0.08]"
-                      >
-                        <span>{slide.primaryText}</span>
-                        <svg
-                          width="16"
-                          height="10"
-                          viewBox="0 0 22 10"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="translate-y-[0.5px] transition-transform duration-500 group-hover:translate-x-1"
-                        >
-                          <line x1="0" y1="5" x2="20" y2="5" />
-                          <polyline points="15 1 21 5 15 9" />
-                        </svg>
-                      </MagneticButton>
+                      {/* BOTH FLEETS — equal-weight primary CTAs. Side-by-side
+                          on desktop with a subtle gold divider dot between them;
+                          stacked on mobile. Same gold-bordered magnetic styling
+                          so neither dominates visually — the labels carry the
+                          differentiation (Private vs Explorer).
+                          A subtle hover lift (the arrow slides) is the only
+                          motion — no scale, no shadow, no shout. */}
+                      <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+                        {slide.fleets.map((fleet, idx) => (
+                          <React.Fragment key={fleet.href}>
+                            {idx === 1 && (
+                              <span
+                                aria-hidden="true"
+                                className="hidden md:inline-block w-1 h-1 rounded-full bg-[#DAA520]/50"
+                              />
+                            )}
+                            <MagneticButton
+                              href={fleet.href}
+                              dataCursor="Enter"
+                              className="group inline-flex items-center gap-3 px-10 md:px-14 py-5 md:py-6 text-white text-[11px] md:text-[12px] tracking-[0.4em] uppercase font-semibold border border-[#DAA520]/60 hover:border-[#DAA520] hover:text-[#DAA520] transition-colors duration-500 backdrop-blur-sm bg-[#DAA520]/[0.04] hover:bg-[#DAA520]/[0.08] whitespace-nowrap"
+                            >
+                              <span>{fleet.text}</span>
+                              <svg
+                                width="16"
+                                height="10"
+                                viewBox="0 0 22 10"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="translate-y-[0.5px] transition-transform duration-500 group-hover:translate-x-1"
+                              >
+                                <line x1="0" y1="5" x2="20" y2="5" />
+                                <polyline points="15 1 21 5 15 9" />
+                              </svg>
+                            </MagneticButton>
+                          </React.Fragment>
+                        ))}
+                      </div>
 
-                      {/* SECONDARY — soft text link. No button chrome — a single
-                          underlined line in the ivory/60 register, gold on
-                          hover. Deliberately quieter than the primary so the
-                          visual hierarchy is unambiguous. */}
+                      {/* SECONDARY — soft text link for the guided quiz path.
+                          Ivory/55 with a gold-on-hover animated underline.
+                          Deliberately quiet so the two fleet buttons read as
+                          the main call to action. */}
                       <Link
                         href={slide.secondaryHref}
                         className="group inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase font-light text-white/55 hover:text-[#DAA520] transition-colors duration-500"

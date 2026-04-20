@@ -36,8 +36,9 @@
   "hero": {
     "tagline": "באופן בלעדי במים היווניים",
     "subtitle": "תיווך יאכטות בוטיק",
-    "primaryCta": "גלה את הצי הפרטי",
-    "secondaryCta": "או מצא את היאכטה שלך ב-60 שניות"
+    "secondaryCta": "או מצא את היאכטה שלך ב-60 שניות",
+    "fleetPrivate": "גלה את הצי הפרטי",
+    "fleetExplorer": "גלה את צי Explorer"
   },
   "stats": {
     "yachts": "יאכטות נבחרות",

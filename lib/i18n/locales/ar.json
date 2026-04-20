@@ -36,8 +36,9 @@
   "hero": {
     "tagline": "حصرياً في المياه اليونانية",
     "subtitle": "وساطة يخوت فاخرة",
-    "primaryCta": "استكشف أسطولنا الخاص",
-    "secondaryCta": "أو ابحث عن يختك في 60 ثانية"
+    "secondaryCta": "أو ابحث عن يختك في 60 ثانية",
+    "fleetPrivate": "استكشف أسطولنا الخاص",
+    "fleetExplorer": "استكشف أسطول Explorer"
   },
   "stats": {
     "yachts": "يخوت مختارة",
