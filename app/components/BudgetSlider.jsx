@@ -92,7 +92,7 @@ export default function BudgetSlider({ yachts = [] }) {
 
         {/* Top 3 matching yachts */}
         {matchingYachts.length > 0 ? (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(160px, 100%), 1fr))', gap: 12 }}>
             {matchingYachts.map(yacht => (
               <Link
                 key={yacht.slug}

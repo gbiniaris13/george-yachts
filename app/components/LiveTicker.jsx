@@ -137,11 +137,12 @@ export default function LiveTicker() {
         position: 'fixed',
         bottom: 100,
         left: 24,
+        right: 24, // lets the card shrink on narrow phones instead of overflowing
         zIndex: 45,
         opacity: animating ? 0 : 1,
         transform: animating ? 'translateY(8px)' : 'translateY(0)',
         transition: 'all 0.4s ease',
-        maxWidth: 340,
+        maxWidth: 'min(340px, calc(100vw - 48px))',
       }}
     >
       <div style={{

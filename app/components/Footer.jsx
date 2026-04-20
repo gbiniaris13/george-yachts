@@ -59,7 +59,10 @@ const Footer = () => {
               <img
                 src="/images/yacht-icon-only.svg"
                 alt="George Yachts Brokerage House LLC"
-                style={{ height: "150px", width: "auto" }}
+                // Mobile audit 2026-04-20: 150 px was oversized on
+                // 360 px phones where the footer stacks — shrinks
+                // fluidly now.
+                style={{ height: "clamp(90px, 20vw, 150px)", width: "auto" }}
               />
             </Link>
 
@@ -209,7 +212,7 @@ const Footer = () => {
                     setSubscribed(true); // Show success anyway — George gets notified via Telegram
                   }
                 }}
-                className="flex items-stretch max-w-md mx-auto"
+                className="flex flex-col sm:flex-row items-stretch gap-2 sm:gap-0 max-w-md mx-auto"
               >
                 {/* Honeypot — hidden from real users, bots autofill it */}
                 <input

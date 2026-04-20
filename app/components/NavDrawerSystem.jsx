@@ -223,7 +223,7 @@ const NavDrawerSystem = () => {
       ></div>
 
       <div
-        className={`fixed top-0 left-0 h-full w-full sm:w-[370px] xl:w-[700px] bg-black shadow-2xl z-50 transform transition-transform duration-300 ease-in-out 
+        className={`fixed top-0 left-0 h-full w-full sm:w-[370px] xl:w-[700px] max-w-[calc(100vw-16px)] bg-black shadow-2xl z-50 transform transition-transform duration-300 ease-in-out
           ${isDrawerOpen ? "translate-x-0" : "-translate-x-full"}`}
         role="dialog"
         aria-modal="true"
@@ -276,7 +276,7 @@ const NavDrawerSystem = () => {
                     href={link.href || "#"}
                     onClick={closeDrawer}
                     className="block w-full py-3 px-1 border-b border-white/[0.06] text-[13px] font-medium uppercase text-white/85 hover:text-[#DAA520] hover:pl-2 transition-all duration-200 active:text-[#DAA520]"
-                    style={{ WebkitTapHighlightColor: "transparent", touchAction: "manipulation", fontFamily: "'Montserrat', sans-serif", letterSpacing: '0.12em' }}
+                    style={{ WebkitTapHighlightColor: "transparent", touchAction: "manipulation", fontFamily: "'Montserrat', sans-serif", letterSpacing: 'clamp(0.05em, 0.4vw, 0.12em)' }}
                   >
                     {t(link.nameKey, link.fallback)}
                   </Link>

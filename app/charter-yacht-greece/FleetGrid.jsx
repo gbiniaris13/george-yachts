@@ -3,7 +3,11 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import CompareYachts from './CompareYachts';
+import dynamic from 'next/dynamic';
+// CompareYachts is a heavy modal only rendered after the visitor
+// actually ticks the compare checkbox on two yachts. Lazy-loaded to
+// keep the /charter-yacht-greece first-load bundle ~12 KB smaller.
+const CompareYachts = dynamic(() => import('./CompareYachts'), { ssr: false });
 import { useWishlist } from '../components/WishlistProvider';
 import { useI18n } from '@/lib/i18n/I18nProvider';
 

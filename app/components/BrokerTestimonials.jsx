@@ -33,13 +33,18 @@ const BrokerTestimonials = () => {
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "11px",
             fontWeight: 300,
-            letterSpacing: "0.45em",
+            // Mobile audit 2026-04-20: was 0.45em + manually-spaced
+            // letters ("W H A T") which combined for ~40 characters on
+            // a 320 px screen → hard wrap with orphan letters. Now one
+            // clean run of text with fluid tracking.
+            letterSpacing: "clamp(0.2em, 0.8vw, 0.45em)",
             textTransform: "uppercase",
             color: "#000000",
             opacity: 0.5,
+            wordSpacing: "0.15em",
           }}
         >
-          W H A T &nbsp; T H E &nbsp; I N D U S T R Y &nbsp; S A Y S
+          What the industry says
         </p>
       </div>
 

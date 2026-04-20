@@ -59,10 +59,15 @@ export default function WhatsAppButton() {
         <div
           role="dialog"
           aria-label="A quick message from George"
-          className="fixed z-[51] max-w-[300px] animate-gy-greet-in"
+          className="fixed z-[51] animate-gy-greet-in"
           style={{
             bottom: "168px",
             right: "24px",
+            // Mobile audit 2026-04-20: was max-w-[300px] which kept
+            // the bubble anchored to the right edge and risked
+            // overlapping CookieConsent on 360 px phones. Now shrinks
+            // naturally with the viewport.
+            maxWidth: "min(300px, calc(100vw - 48px))",
           }}
         >
           <div

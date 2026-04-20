@@ -72,7 +72,7 @@ export default function CookieConsent() {
           WebkitBackdropFilter: 'blur(20px)',
           border: '1px solid rgba(218, 165, 32, 0.12)',
           borderRadius: 12,
-          padding: '24px 28px',
+          padding: 'clamp(16px, 4vw, 24px) clamp(16px, 4vw, 28px)',
           boxShadow: '0 12px 48px rgba(0, 0, 0, 0.5)',
         }}
       >

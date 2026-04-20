@@ -211,12 +211,16 @@ const ContactFormSection = () => {
             {t('contact.label')}
           </p>
           <h2
-            className="text-5xl md:text-7xl font-marcellus tracking-tight pb-2"
+            className="font-marcellus tracking-tight pb-2"
             style={{
+              // Mobile audit 2026-04-20: 5xl (48 px) at 320 px
+              // broke awkwardly. Clamped to a fluid scale that hits
+              // the same 7xl peak on desktop.
+              fontSize: "clamp(32px, 7vw, 80px)",
               backgroundImage: "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
               WebkitBackgroundClip: "text", backgroundClip: "text",
               color: "transparent", WebkitTextFillColor: "transparent",
-              lineHeight: "1.15",
+              lineHeight: "1.2",
             }}
           >
             {t('contact.title')}
