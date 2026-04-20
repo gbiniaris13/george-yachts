@@ -1,11 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useWishlist } from '../components/WishlistProvider';
 import { useI18n } from '@/lib/i18n/I18nProvider';
 
 const GOLD = '#DAA520';
+
+const inputStyle = {
+  padding: '12px 16px',
+  background: '#000',
+  border: '1px solid #333',
+  borderRadius: 4,
+  color: '#fff',
+  fontFamily: "'Montserrat', sans-serif",
+  fontSize: 13,
+  outline: 'none',
+};
 
 export default function FavoritesContent() {
   const { t } = useI18n();
@@ -14,26 +25,87 @@ export default function FavoritesContent() {
   const [sent, setSent] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  // D1 (George 2026-04-20): "Save to favorites + email capture".
+  // Extended the form with a phone field so the lead we log to
+  // /api/lead-gate actually matches the richness we gate elsewhere
+  // (Instant Proposal / Partners). Also persists to the newsletter
+  // set via lead-gate → kvSadd, so saved-favorites visitors start
+  // receiving the weekly Journal even if they never hit WhatsApp.
+  const [phone, setPhone] = useState('');
+  const [subscribe, setSubscribe] = useState(true);
+  const [copyStatus, setCopyStatus] = useState('idle'); // idle | copied
+  const [error, setError] = useState('');
 
   const handleSendToGeorge = async () => {
-    if (!name || !email || items.length === 0) return;
+    setError('');
+    if (!name.trim() || !email.includes('@') || items.length === 0) {
+      setError('Please add your name and a valid email.');
+      return;
+    }
     setSending(true);
 
+    // Fire to lead-gate FIRST so George gets the contact details even
+    // if the visitor closes the WhatsApp tab before sending the
+    // message. Non-blocking — WhatsApp still opens if the API is down.
+    try {
+      await fetch('/api/lead-gate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          source: 'favorites',
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          meta: {
+            favorites_count: items.length,
+            favorites: items.map((y) => ({
+              name: y.name,
+              slug: y.slug,
+              price: y.price || null,
+            })),
+            wants_newsletter: subscribe,
+          },
+        }),
+      });
+    } catch {
+      /* non-blocking */
+    }
+
     // Build WhatsApp message with favorites
-    const yachtList = items.map((y) => `• ${y.name} (${y.price || 'Price on request'})`).join('\n');
+    const yachtList = items
+      .map((y) => `• ${y.name} (${y.price || 'Price on request'})`)
+      .join('\n');
     const msg = `Hello George, I'm ${name} (${email}). I've saved these yachts from your website and would like to discuss:\n\n${yachtList}\n\nPlease send me a proposal.`;
     const waUrl = `https://wa.me/17867988798?text=${encodeURIComponent(msg)}`;
 
-    // Also create mailto fallback
-    const subject = `Charter Inquiry — ${items.length} Favorite Yachts`;
-    const body = `Dear George,\n\nI've been browsing your fleet and saved the following yachts:\n\n${yachtList}\n\nI'd love to discuss availability and options.\n\nBest regards,\n${name}\n${email}`;
-    const mailUrl = `mailto:${'george'}@${'georgeyachts.com'}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-    // Open WhatsApp
     window.open(waUrl, '_blank');
 
     setSending(false);
     setSent(true);
+  };
+
+  // D1: shareable favorites URL. Encodes the list of slugs into the
+  // /favorites URL so a visitor can email/whatsapp their picks to a
+  // travel companion and they see the same list when they click.
+  const buildShareUrl = () => {
+    if (typeof window === 'undefined' || items.length === 0) return '';
+    const slugs = items
+      .map((y) => y.slug)
+      .filter(Boolean)
+      .join(',');
+    return `${window.location.origin}/favorites?yachts=${encodeURIComponent(slugs)}`;
+  };
+
+  const handleCopyShare = async () => {
+    const url = buildShareUrl();
+    if (!url) return;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopyStatus('copied');
+      setTimeout(() => setCopyStatus('idle'), 2200);
+    } catch {
+      /* ignore — older browsers */
+    }
   };
 
   if (items.length === 0) {
@@ -142,61 +214,104 @@ export default function FavoritesContent() {
               {t('favorites.sendDesc', 'Share your favorites and receive a personalized proposal within 24 hours.')}
             </p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20, maxWidth: 400, margin: '0 auto 20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12, maxWidth: 520, marginLeft: 'auto', marginRight: 'auto' }}>
               <input
                 type="text"
                 placeholder={t('favorites.yourName', 'Your name')}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                style={{
-                  padding: '12px 16px',
-                  background: '#000',
-                  border: '1px solid #333',
-                  borderRadius: 4,
-                  color: '#fff',
-                  fontFamily: "'Montserrat', sans-serif",
-                  fontSize: 13,
-                  outline: 'none',
-                }}
+                style={inputStyle}
               />
               <input
                 type="email"
                 placeholder={t('favorites.yourEmail', 'Your email')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={{
-                  padding: '12px 16px',
-                  background: '#000',
-                  border: '1px solid #333',
-                  borderRadius: 4,
-                  color: '#fff',
-                  fontFamily: "'Montserrat', sans-serif",
-                  fontSize: 13,
-                  outline: 'none',
-                }}
+                style={inputStyle}
+              />
+            </div>
+            <div style={{ maxWidth: 520, margin: '0 auto 14px' }}>
+              <input
+                type="tel"
+                placeholder={t('favorites.yourPhone', 'Your phone (with country code)')}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                style={{ ...inputStyle, width: '100%' }}
               />
             </div>
 
-            <button
-              onClick={handleSendToGeorge}
-              disabled={!name || !email || sending}
+            <label
               style={{
-                padding: '14px 40px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
                 fontFamily: "'Montserrat', sans-serif",
                 fontSize: 11,
-                fontWeight: 600,
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
-                color: (!name || !email) ? '#666' : '#000',
-                background: (!name || !email) ? '#333' : `linear-gradient(90deg, ${GOLD}, #8B6914)`,
-                border: 'none',
-                borderRadius: 4,
-                cursor: (!name || !email) ? 'default' : 'pointer',
-                transition: 'all 0.3s ease',
+                color: 'rgba(255,255,255,0.55)',
+                cursor: 'pointer',
+                marginBottom: 20,
               }}
             >
-              {sending ? t('favorites.openingWhatsApp', 'Opening WhatsApp...') : t('favorites.sendViaWhatsApp', 'Send via WhatsApp')}
-            </button>
+              <input
+                type="checkbox"
+                checked={subscribe}
+                onChange={(e) => setSubscribe(e.target.checked)}
+                style={{ accentColor: GOLD }}
+              />
+              {t(
+                'favorites.subscribeCta',
+                'Also send me the monthly Yachts Journal (curated picks & fresh availability)'
+              )}
+            </label>
+
+            {error && (
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: '#ff9b9b', marginBottom: 14 }}>
+                {error}
+              </p>
+            )}
+
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button
+                onClick={handleSendToGeorge}
+                disabled={!name || !email || sending}
+                style={{
+                  padding: '14px 40px',
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: 11,
+                  fontWeight: 600,
+                  letterSpacing: '0.15em',
+                  textTransform: 'uppercase',
+                  color: (!name || !email) ? '#666' : '#000',
+                  background: (!name || !email) ? '#333' : `linear-gradient(90deg, ${GOLD}, #8B6914)`,
+                  border: 'none',
+                  borderRadius: 4,
+                  cursor: (!name || !email) ? 'default' : 'pointer',
+                  transition: 'all 0.3s ease',
+                }}
+              >
+                {sending ? t('favorites.openingWhatsApp', 'Opening WhatsApp...') : t('favorites.sendViaWhatsApp', 'Send via WhatsApp')}
+              </button>
+
+              <button
+                onClick={handleCopyShare}
+                style={{
+                  padding: '14px 28px',
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: 10,
+                  fontWeight: 600,
+                  letterSpacing: '0.22em',
+                  textTransform: 'uppercase',
+                  color: copyStatus === 'copied' ? '#000' : `${GOLD}cc`,
+                  background: copyStatus === 'copied' ? GOLD : 'transparent',
+                  border: `1px solid ${GOLD}60`,
+                  borderRadius: 4,
+                  cursor: 'pointer',
+                  transition: 'all 0.25s ease',
+                }}
+              >
+                {copyStatus === 'copied' ? t('favorites.linkCopied', 'Link copied ✓') : t('favorites.copyShare', 'Copy share link')}
+              </button>
+            </div>
           </div>
         ) : (
           <div style={{ background: '#111', border: `1px solid ${GOLD}40`, borderRadius: 8, padding: 32, textAlign: 'center' }}>
