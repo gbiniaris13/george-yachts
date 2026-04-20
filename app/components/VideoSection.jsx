@@ -227,9 +227,12 @@ const VideoSection = () => {
                       })()}
                     </p>
 
-                    {/* CTA stack — primaries: both fleets; secondary: 60-sec quiz */}
+                    {/* CTA stack — primaries: both fleets; secondary: 60-sec quiz
+                        mx-auto + w-fit so the stack sits on the same vertical
+                        axis as the headline above even when the flex row's
+                        content width is smaller than the headline's. */}
                     <div
-                      className="flex flex-col items-center gap-7"
+                      className="flex flex-col items-center justify-center gap-7 mx-auto w-fit"
                       style={{
                         opacity: heroVisible ? 1 : 0,
                         transform: heroVisible ? "translateY(0)" : "translateY(10px)",
@@ -243,7 +246,7 @@ const VideoSection = () => {
                           differentiation (Private vs Explorer).
                           A subtle hover lift (the arrow slides) is the only
                           motion — no scale, no shadow, no shout. */}
-                      <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+                      <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
                         {slide.fleets.map((fleet, idx) => (
                           <React.Fragment key={fleet.href}>
                             {idx === 1 && (
