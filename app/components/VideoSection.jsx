@@ -105,10 +105,15 @@ const VideoSection = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20"></div>
                 </div>
 
-                {/* Hero Content */}
-                <div className="relative z-10 flex items-center justify-center h-full text-center p-8">
+                {/* Hero Content — explicit max-width + mx-auto on the inner
+                    stack so every child is centered on the same horizontal
+                    axis regardless of its own natural width. Prior build
+                    let the inner block size to its widest child (the H1),
+                    which made small lines like the eyebrow, season copy,
+                    and the sub-tagline read as off-axis on narrow viewports. */}
+                <div className="relative z-10 flex items-center justify-center h-full text-center px-6 md:px-8">
                   <div
-                    className={`text-center transition-all duration-[1500ms] ${
+                    className={`w-full max-w-[1200px] mx-auto transition-all duration-[1500ms] ${
                       isActive && heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                     }`}
                     style={{ textAlign: "center" }}

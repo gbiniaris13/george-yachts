@@ -26,7 +26,11 @@ export default function TranslateWidget() {
   const currentLabel = availableLocales.find(l => l.code === locale)?.label || 'English';
 
   return (
-    <div ref={dropdownRef} className="fixed z-[60]" style={{ top: '20px', right: '20px' }}>
+    // Pushed below the nav bar's 140px expanded height so it never
+    // overlaps the Instagram / LinkedIn / Favorites icon strip on
+    // the right. Also pulled in from the edge so on narrow viewports
+    // the pill and the icons don't visually collide.
+    <div ref={dropdownRef} className="fixed z-[60]" style={{ top: '156px', right: '16px' }}>
       <button
         onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }}
         style={{
