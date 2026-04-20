@@ -5,6 +5,8 @@ import NavDrawerSystem from "./components/NavDrawerSystem";
 import GlobalEffects from "./components/GlobalEffects";
 import CustomCursor from "./components/CustomCursor";
 import WhatsAppButton from "./components/WhatsAppButton";
+import GoldCurtain from "./components/GoldCurtain";
+import ExitIntentModal from "./components/ExitIntentModal";
 // TranslateWidget now rendered inside NavDrawerSystem — removed here.
 // Removed: WelcomeLanguagePopup (country detection popup — users choose language themselves)
 // Removed: SmartWelcome (time-based greetings — gimmick)
@@ -86,6 +88,9 @@ export default function RootLayout({ children }) {
           Skip to main content
         </a>
 
+        {/* E1 — Gold curtain opens once per session, first thing visitors see */}
+        <GoldCurtain />
+
         <JsonLd data={organizationSchema} />
         {/* 1. Critical External Scripts */}
         {recaptchaKey && (
@@ -114,6 +119,8 @@ export default function RootLayout({ children }) {
             strip — cleaner placement, no floating pill clashing with
             social icons or the hero content. */}
         <WhatsAppButton />
+        {/* D2 — Exit-intent capture, one shot per session */}
+        <ExitIntentModal />
         <VisitorBeacon />
         </WishlistProvider>
         </I18nProvider>

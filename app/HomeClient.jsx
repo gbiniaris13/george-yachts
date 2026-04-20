@@ -7,6 +7,7 @@ import SignatureYacht from "./components/SignatureYacht";
 import FleetCTAs from "./components/FleetCTAs";
 import HomeStats from "./components/HomeStats";
 import Footer from "./components/Footer";
+import StickyMiniNav from "./components/StickyMiniNav";
 
 // Dynamic imports for below-fold components — reduces initial JS bundle
 const YourBroker = dynamic(() => import("./components/YourBroker"), { ssr: false });
@@ -35,31 +36,46 @@ const HomeClient = ({
 }) => {
   return (
     <div className="min-h-screen bg-black font-sans">
+      {/* A2 — Sticky mini-nav surfaces after the hero (>600px) */}
+      <StickyMiniNav />
+
       <VideoSection />
       {/* Move #3 — Signature Yacht slot (weekly auto-rotating feature) */}
-      <SignatureYacht yacht={signatureYacht} />
-      <FleetCTAs
-        privateRange={privateRange}
-        explorerRange={explorerRange}
-        privateHeroImage={privateHeroImage}
-        explorerHeroImage={explorerHeroImage}
-        privateCount={privateCount}
-        explorerCount={explorerCount}
-      />
+      <section id="signature">
+        <SignatureYacht yacht={signatureYacht} />
+      </section>
+      <section id="fleet">
+        <FleetCTAs
+          privateRange={privateRange}
+          explorerRange={explorerRange}
+          privateHeroImage={privateHeroImage}
+          explorerHeroImage={explorerHeroImage}
+          privateCount={privateCount}
+          explorerCount={explorerCount}
+        />
+      </section>
       <HomeStats yachtCount={yachtCount} />
       <YourBroker />
-      <HowItWorks />
+      <section id="how">
+        <HowItWorks />
+      </section>
       {/* Move #5 — Interactive Greek waters map (statement piece) */}
-      <GreekWatersMap />
-      <Filotimon filotimoImage={filotimoImage} />
+      <section id="map">
+        <GreekWatersMap />
+      </section>
+      <section id="filotimo">
+        <Filotimon filotimoImage={filotimoImage} />
+      </section>
       <BrokerTestimonials />
       <CredentialsStrip />
       <BudgetSlider yachts={budgetYachts} />
       <InteractiveTools />
       {/* Extra breathing room where 4 rotating panels used to be */}
       <div className="py-10 md:py-20" />
-      <ContactBar />
-      <ContactFormSection />
+      <section id="contact">
+        <ContactBar />
+        <ContactFormSection />
+      </section>
       <Footer />
     </div>
   );
