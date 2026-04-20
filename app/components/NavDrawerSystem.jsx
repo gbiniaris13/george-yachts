@@ -18,52 +18,59 @@ const WhatsappIcon = (props) => (
   </svg>
 );
 
-// --- 1. MAIN NAVLINKS (i18n keys) ---
+// --- 1. MAIN NAVLINKS ---
+// George 2026-04-20: "to hamburger menu pou einai se katigories thelw
+// na ftiaxtoun poli kalitera kai na einai poli user friendly". Rebuilt
+// into 4 intuitive buckets — Charter-first (revenue), then Explore
+// Greece, then Other Services, then the company pages. The old
+// 5-bucket layout buried high-converting pages (Instant Proposal,
+// Find Your Yacht) inside a generic "Tools" group; now everything
+// charter-related lives in one place at the top. Each link carries a
+// fallback label so the drawer never blanks out when an i18n key is
+// missing.
 const navSections = [
   {
     labelKey: "nav.charter",
+    fallback: "Charter",
     links: [
-      { nameKey: "nav.privateFleet", href: "/private-fleet/" },
-      { nameKey: "nav.explorerFleet", href: "/explorer-fleet/" },
-      { nameKey: "nav.charterYacht", href: "/charter-yacht-greece/" },
-      { nameKey: "nav.itineraries", href: "/yacht-itineraries-greece/" },
-      { nameKey: "nav.howItWorks", href: "/how-it-works/" },
-      { nameKey: "nav.timeline", href: "/charter-timeline/" },
-    ],
-  },
-  {
-    labelKey: "nav.tools",
-    links: [
-      { nameKey: "nav.findYacht", href: "/yacht-finder/" },
-      { nameKey: "nav.costCalculator", href: "/cost-calculator/" },
-      { nameKey: "nav.buildItinerary", href: "/itinerary-builder/" },
-      { nameKey: "nav.islandQuiz", href: "/island-quiz/" },
-      { nameKey: "nav.sizeGuide", href: "/yacht-size-visualizer/" },
-      { nameKey: "nav.instantProposal", href: "/proposal-generator/" },
+      { nameKey: "nav.allFleet", fallback: "View All Yachts", href: "/charter-yacht-greece/" },
+      { nameKey: "nav.privateFleet", fallback: "Private Fleet", href: "/private-fleet/" },
+      { nameKey: "nav.explorerFleet", fallback: "Explorer Fleet", href: "/explorer-fleet/" },
+      { nameKey: "nav.findYacht", fallback: "Find Your Yacht", href: "/yacht-finder/" },
+      { nameKey: "nav.instantProposal", fallback: "Instant Proposal", href: "/proposal-generator/" },
+      { nameKey: "nav.costCalculator", fallback: "Cost Calculator", href: "/cost-calculator/" },
     ],
   },
   {
     labelKey: "nav.explore",
+    fallback: "Explore Greece",
     links: [
-      { nameKey: "nav.islandGuides", href: "/destinations/" },
-      { nameKey: "nav.blog", href: "/blog" },
+      { nameKey: "nav.islandGuides", fallback: "Destinations", href: "/destinations/" },
+      { nameKey: "nav.itineraries", fallback: "Curated Itineraries", href: "/yacht-itineraries-greece/" },
+      { nameKey: "nav.islandQuiz", fallback: "Island Quiz", href: "/island-quiz/" },
+      { nameKey: "nav.buildItinerary", fallback: "Build My Itinerary", href: "/itinerary-builder/" },
+      { nameKey: "nav.blog", fallback: "Journal", href: "/blog" },
     ],
   },
   {
     labelKey: "nav.services",
+    fallback: "Other Services",
     links: [
-      { nameKey: "nav.buyYacht", href: "/yachts-for-sale/" },
-      { nameKey: "nav.flyPrivate", href: "/private-jet-charter/" },
-      { nameKey: "nav.vipTransfers", href: "/vip-transfers-greece/" },
+      { nameKey: "nav.buyYacht", fallback: "Yachts for Sale", href: "/yachts-for-sale/" },
+      { nameKey: "nav.villas", fallback: "Luxury Villas", href: "/luxury-villas-greece/" },
+      { nameKey: "nav.flyPrivate", fallback: "Private Jet", href: "/private-jet-charter/" },
+      { nameKey: "nav.vipTransfers", fallback: "VIP Transfers", href: "/vip-transfers-greece/" },
     ],
   },
   {
     labelKey: "nav.company",
+    fallback: "George Yachts",
     links: [
-      { nameKey: "nav.aboutUs", href: "/about-us/" },
-      { nameKey: "nav.team", href: "/team/" },
-      { nameKey: "nav.faq", href: "/faq" },
-      { nameKey: "nav.forPartners", href: "/partners" },
+      { nameKey: "nav.howItWorks", fallback: "How It Works", href: "/how-it-works/" },
+      { nameKey: "nav.aboutUs", fallback: "About Us", href: "/about-us/" },
+      { nameKey: "nav.team", fallback: "Meet the Team", href: "/team/" },
+      { nameKey: "nav.forPartners", fallback: "For Partners", href: "/partners" },
+      { nameKey: "nav.faq", fallback: "FAQ", href: "/faq" },
     ],
   },
 ];
@@ -248,21 +255,29 @@ const NavDrawerSystem = () => {
             </button>
           </div>
 
-          <nav className="mt-6 space-y-6 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+          <nav className="mt-6 space-y-7 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
             {navSections.map((section) => (
               <div key={section.labelKey}>
-                <p className="px-1 mb-2 text-[9px] tracking-[0.3em] uppercase" style={{ color: '#DAA520', fontFamily: "'Montserrat', sans-serif", opacity: 0.6 }}>
-                  {t(section.labelKey)}
+                <p
+                  className="px-1 mb-3 text-[10px] tracking-[0.4em] uppercase"
+                  style={{
+                    color: '#DAA520',
+                    fontFamily: "'Montserrat', sans-serif",
+                    opacity: 0.85,
+                    fontWeight: 600,
+                  }}
+                >
+                  {t(section.labelKey, section.fallback)}
                 </p>
                 {section.links.map((link) => (
                   <Link
                     key={link.nameKey}
                     href={link.href || "#"}
                     onClick={closeDrawer}
-                    className="block w-full py-2.5 px-1 border-b border-white/[0.06] text-sm font-medium uppercase text-white/80 hover:text-[#DAA520] transition duration-200 active:text-[#DAA520]"
-                    style={{ WebkitTapHighlightColor: "transparent", touchAction: "manipulation", fontFamily: "'Montserrat', sans-serif", letterSpacing: '0.08em' }}
+                    className="block w-full py-3 px-1 border-b border-white/[0.06] text-[13px] font-medium uppercase text-white/85 hover:text-[#DAA520] hover:pl-2 transition-all duration-200 active:text-[#DAA520]"
+                    style={{ WebkitTapHighlightColor: "transparent", touchAction: "manipulation", fontFamily: "'Montserrat', sans-serif", letterSpacing: '0.12em' }}
                   >
-                    {t(link.nameKey)}
+                    {t(link.nameKey, link.fallback)}
                   </Link>
                 ))}
               </div>
