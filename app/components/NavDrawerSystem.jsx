@@ -38,6 +38,7 @@ const navSections = [
       { nameKey: "nav.explorerFleet", fallback: "Explorer Fleet", href: "/explorer-fleet/" },
       { nameKey: "nav.findYacht", fallback: "Find Your Yacht", href: "/yacht-finder/" },
       { nameKey: "nav.instantProposal", fallback: "Instant Proposal", href: "/proposal-generator/" },
+      { nameKey: "nav.startInquiry", fallback: "Start an Inquiry", href: "/inquiry/" },
       { nameKey: "nav.costCalculator", fallback: "Cost Calculator", href: "/cost-calculator/" },
     ],
   },
