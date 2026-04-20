@@ -2,6 +2,8 @@ import { sanityClient } from '@/lib/sanity';
 import { notFound } from 'next/navigation';
 import YachtPageContent from './YachtPageContent';
 import BreadcrumbSchema from '@/app/components/BreadcrumbSchema';
+import SimilarYachts from './SimilarYachts';
+import { similarYachts } from '@/lib/yacht-similarity';
 import './yacht-page.css';
 
 // ISR - revalidate every hour
@@ -129,6 +131,23 @@ export default async function YachtPage({ params }) {
     notFound();
   }
 
+  // E4 — pull a compact projection of the whole fleet so we can score
+  // similarity at render time and suggest 4 related yachts. Runs once
+  // per ISR window (3600s). No runtime cost per visit.
+  const fleet = await sanityClient
+    .fetch(
+      `*[_type == "yacht" && defined(slug.current) && slug.current != $slug]{
+        _id, name, subtitle, builder, length, sleeps, cabins,
+        weeklyRatePrice, cruisingRegion, fleetTier,
+        "slug": slug.current,
+        "imageUrl": images[0].asset->url
+      }`,
+      { slug }
+    )
+    .catch(() => []);
+
+  const similar = similarYachts(yacht, fleet, 4);
+
   const heroImage = yacht.images?.[0];
 
   const breadcrumbs = [
@@ -163,6 +182,7 @@ export default async function YachtPage({ params }) {
         heroImage={heroImage}
         description={yacht.description}
       />
+      <SimilarYachts items={similar} />
     </>
   );
 }
