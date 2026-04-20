@@ -28,6 +28,9 @@ export default function ProposalClient({ yachts }) {
   const [selectedYacht, setSelectedYacht] = useState(null);
   const [formData, setFormData] = useState({
     clientName: "",
+    clientSurname: "",
+    clientEmail: "",
+    clientPhone: "",
     season: "mid",
     region: "Cyclades",
     startDate: "",
@@ -35,7 +38,58 @@ export default function ProposalClient({ yachts }) {
     guests: 6,
     specialRequests: "",
   });
+  const [leadError, setLeadError] = useState("");
+  const [leadSubmitting, setLeadSubmitting] = useState(false);
   const proposalRef = useRef(null);
+
+  // Gate: we require name + surname + email + phone before we reveal the
+  // full proposal. The details are posted to /api/hot-lead (already on
+  // the site) so George gets the contact in Telegram + Gmail instantly.
+  const generateProposal = async () => {
+    setLeadError("");
+    const { clientName, clientSurname, clientEmail, clientPhone } = formData;
+    if (!clientName.trim() || !clientSurname.trim()) {
+      setLeadError("Please add your first and last name to continue.");
+      return;
+    }
+    if (!clientEmail.includes("@") || clientEmail.length < 5) {
+      setLeadError("Please enter a valid email address.");
+      return;
+    }
+    if (clientPhone.replace(/\D/g, "").length < 7) {
+      setLeadError("Please enter a valid phone number (with country code).");
+      return;
+    }
+    setLeadSubmitting(true);
+    try {
+      await fetch("/api/lead-gate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          source: "proposal-generator",
+          name: `${clientName.trim()} ${clientSurname.trim()}`.trim(),
+          email: clientEmail.trim(),
+          phone: clientPhone.trim(),
+          meta: {
+            yacht: yacht?.name || null,
+            yachtSlug: yacht?.slug || null,
+            region: formData.region,
+            season: formData.season,
+            guests: formData.guests,
+            startDate: formData.startDate,
+            endDate: formData.endDate,
+            specialRequests: formData.specialRequests,
+          },
+        }),
+      }).catch(() => {});
+    } catch {
+      /* silent — if the notifier is down we still let the user see
+         their proposal. Their contact details are captured in state
+         and re-sent when they hit "Send to George" on step 3. */
+    }
+    setLeadSubmitting(false);
+    setStep(3);
+  };
 
   const yacht = selectedYacht;
   const prices = yacht ? parsePrice(yacht.weeklyRatePrice) : { low: 0, high: 0 };
@@ -127,11 +181,47 @@ export default function ProposalClient({ yachts }) {
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: GOLD, letterSpacing: "0.15em", marginTop: 8 }}>Customize Your Proposal</p>
           </div>
 
+          {/* Lead gate — George 2026-04-20: "gia na doun h na paroun pdf
+              thelw mail onoma eponimo kai tilefwno ipoxrewtika". First
+              name, last name, email and phone are all required before
+              we unlock the proposal preview and the Save-as-PDF button. */}
+          <div
+            style={{
+              marginBottom: 28,
+              padding: "18px 20px",
+              border: "1px solid rgba(218,165,32,0.25)",
+              background: "rgba(218,165,32,0.03)",
+            }}
+          >
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: "0.35em", color: GOLD, textTransform: "uppercase", marginBottom: 6, fontWeight: 600 }}>
+              Your details
+            </p>
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.55, margin: 0, fontStyle: "italic" }}>
+              We use these only to send you the proposal and, if you wish, follow up personally.
+            </p>
+          </div>
+
           {/* Form */}
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-            <div>
-              <label htmlFor="proposal-name" style={labelStyle}>Your Name (optional)</label>
-              <input id="proposal-name" type="text" value={formData.clientName} onChange={(e) => setFormData({ ...formData, clientName: e.target.value })} placeholder="For a personalized proposal" style={inputStyle} />
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <div>
+                <label htmlFor="proposal-name" style={labelStyle}>First Name <span style={{ color: GOLD }}>*</span></label>
+                <input id="proposal-name" type="text" required value={formData.clientName} onChange={(e) => setFormData({ ...formData, clientName: e.target.value })} placeholder="First name" style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="proposal-surname" style={labelStyle}>Last Name <span style={{ color: GOLD }}>*</span></label>
+                <input id="proposal-surname" type="text" required value={formData.clientSurname} onChange={(e) => setFormData({ ...formData, clientSurname: e.target.value })} placeholder="Last name" style={inputStyle} />
+              </div>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <div>
+                <label htmlFor="proposal-email" style={labelStyle}>Email <span style={{ color: GOLD }}>*</span></label>
+                <input id="proposal-email" type="email" required value={formData.clientEmail} onChange={(e) => setFormData({ ...formData, clientEmail: e.target.value })} placeholder="you@example.com" style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="proposal-phone" style={labelStyle}>Phone <span style={{ color: GOLD }}>*</span></label>
+                <input id="proposal-phone" type="tel" required value={formData.clientPhone} onChange={(e) => setFormData({ ...formData, clientPhone: e.target.value })} placeholder="+30 210 000 0000" style={inputStyle} />
+              </div>
             </div>
             <div>
               <label htmlFor="proposal-season" style={labelStyle}>Season</label>
@@ -165,8 +255,17 @@ export default function ProposalClient({ yachts }) {
             </div>
           </div>
 
-          <button onClick={() => setStep(3)} style={{ width: "100%", marginTop: 40, padding: "18px 0", background: `linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)`, color: "#000", fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>
-            Generate Proposal →
+          {leadError && (
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: "#ff9b9b", letterSpacing: "0.05em", marginTop: 18 }}>
+              {leadError}
+            </p>
+          )}
+          <button
+            onClick={generateProposal}
+            disabled={leadSubmitting}
+            style={{ width: "100%", marginTop: 32, padding: "18px 0", background: `linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)`, color: "#000", fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: leadSubmitting ? "wait" : "pointer", opacity: leadSubmitting ? 0.7 : 1 }}
+          >
+            {leadSubmitting ? "Preparing…" : "Generate Proposal →"}
           </button>
         </div>
       </div>

@@ -35,7 +35,7 @@ const BrokerTestimonials = () => {
             fontWeight: 300,
             letterSpacing: "0.45em",
             textTransform: "uppercase",
-            color: "#0D1B2A",
+            color: "#000000",
             opacity: 0.5,
           }}
         >
@@ -56,7 +56,7 @@ const BrokerTestimonials = () => {
                   fontSize: "clamp(18px, 2.2vw, 24px)",
                   fontWeight: 400,
                   lineHeight: 1.8,
-                  color: "#0D1B2A",
+                  color: "#000000",
                   maxWidth: "720px",
                   margin: "0 auto",
                 }}

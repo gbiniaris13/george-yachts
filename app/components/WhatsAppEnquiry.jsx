@@ -30,7 +30,7 @@ const WhatsAppEnquiry = ({ yachtName }) => {
         className="hidden md:inline-flex items-center gap-2.5 px-8 py-3.5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
         style={{
           backgroundColor: "#C9A84C",
-          color: "#0D1B2A",
+          color: "#000000",
           fontFamily: "'Montserrat', sans-serif",
           fontSize: "12px",
           fontWeight: 600,
@@ -46,7 +46,7 @@ const WhatsAppEnquiry = ({ yachtName }) => {
       {/* Mobile: sticky bottom bar */}
       <div
         className="md:hidden fixed bottom-0 left-0 right-0 z-50 p-3"
-        style={{ backgroundColor: "rgba(13, 27, 42, 0.95)", backdropFilter: "blur(12px)" }}
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.95)", backdropFilter: "blur(12px)" }}
       >
         <a
           href={whatsappUrl}
@@ -55,7 +55,7 @@ const WhatsAppEnquiry = ({ yachtName }) => {
           className="flex items-center justify-center gap-2.5 w-full py-3.5 transition-all duration-300 active:scale-[0.98]"
           style={{
             backgroundColor: "#C9A84C",
-            color: "#0D1B2A",
+            color: "#000000",
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "12px",
             fontWeight: 600,
