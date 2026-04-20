@@ -57,22 +57,18 @@ const VideoSection = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // CTA hierarchy — George 2026-04-20:
-  // Both fleets surfaced in the hero as equal-weight primary CTAs so
-  // a first-time visitor reaches real yachts — at whichever price
-  // point fits — inside one click. The 60-second quiz stays in the
-  // hero as a quiet secondary text link underneath for visitors who
-  // prefer the guided path.
+  // CTA hierarchy — George 2026-04-20 post-Move-#2 cleanup:
+  // The split-screen fleet showcase (Move #2) sits immediately
+  // below the hero, so the Private / Explorer choice is already
+  // unmissable on the next scroll. Duplicating the fleet buttons
+  // inside the hero became visual noise — reverted to the original
+  // single 'Find Your Yacht in 60 Seconds' CTA.
   const slideData = [
     {
       id: 1,
       imageUrl: "/videos/yacht-cruising-new.mp4",
-      fleets: [
-        { href: "/private-fleet", text: t('hero.fleetPrivate') },
-        { href: "/explorer-fleet", text: t('hero.fleetExplorer') },
-      ],
-      secondaryHref: "/yacht-finder",
-      secondaryText: t('hero.secondaryCta'),
+      href: "/yacht-finder",
+      buttonText: t('common.findYourYacht'),
     },
   ];
 
@@ -280,79 +276,24 @@ const VideoSection = () => {
                       })()}
                     </p>
 
-                    {/* CTA stack — primaries: both fleets; secondary: 60-sec quiz
-                        mx-auto + w-fit so the stack sits on the same vertical
-                        axis as the headline above even when the flex row's
-                        content width is smaller than the headline's. */}
+                    {/* Single CTA — 'Find Your Yacht in 60 Seconds' (original).
+                        The fleet choice lives in Move #2's split-screen
+                        immediately below; this button is the guided quiz
+                        for visitors who don't yet know which tier fits. */}
                     <div
-                      className="flex flex-col items-center justify-center gap-7 mx-auto w-fit"
                       style={{
                         opacity: heroVisible ? 1 : 0,
                         transform: heroVisible ? "translateY(0)" : "translateY(10px)",
                         transition: "opacity 0.9s ease 2.8s, transform 0.9s ease 2.8s",
                       }}
                     >
-                      {/* BOTH FLEETS — equal-weight primary CTAs. Side-by-side
-                          on desktop with a subtle gold divider dot between them;
-                          stacked on mobile. Same gold-bordered magnetic styling
-                          so neither dominates visually — the labels carry the
-                          differentiation (Private vs Explorer).
-                          A subtle hover lift (the arrow slides) is the only
-                          motion — no scale, no shadow, no shout. */}
-                      <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
-                        {slide.fleets.map((fleet, idx) => (
-                          <React.Fragment key={fleet.href}>
-                            {idx === 1 && (
-                              <span
-                                aria-hidden="true"
-                                className="hidden md:inline-block w-1 h-1 rounded-full bg-[#DAA520]/50"
-                              />
-                            )}
-                            <MagneticButton
-                              href={fleet.href}
-                              dataCursor="Enter"
-                              className="group inline-flex items-center gap-3 px-10 md:px-14 py-5 md:py-6 text-white text-[11px] md:text-[12px] tracking-[0.4em] uppercase font-semibold border border-[#DAA520]/60 hover:border-[#DAA520] hover:text-[#DAA520] transition-colors duration-500 backdrop-blur-sm bg-[#DAA520]/[0.04] hover:bg-[#DAA520]/[0.08] whitespace-nowrap"
-                            >
-                              <span>{fleet.text}</span>
-                              <svg
-                                width="16"
-                                height="10"
-                                viewBox="0 0 22 10"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="1.2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="translate-y-[0.5px] transition-transform duration-500 group-hover:translate-x-1"
-                              >
-                                <line x1="0" y1="5" x2="20" y2="5" />
-                                <polyline points="15 1 21 5 15 9" />
-                              </svg>
-                            </MagneticButton>
-                          </React.Fragment>
-                        ))}
-                      </div>
-
-                      {/* SECONDARY — soft text link for the guided quiz path.
-                          Ivory/55 with a gold-on-hover animated underline.
-                          Deliberately quiet so the two fleet buttons read as
-                          the main call to action. */}
-                      <Link
-                        href={slide.secondaryHref}
-                        className="group inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase font-light text-white/55 hover:text-[#DAA520] transition-colors duration-500"
-                        style={{ fontFamily: "'Montserrat', sans-serif" }}
+                      <MagneticButton
+                        href={slide.href}
+                        dataCursor="Explore"
+                        className="inline-block px-10 md:px-14 py-4 md:py-5 text-white text-[10px] tracking-[0.35em] uppercase font-semibold border border-white/20 hover:border-[#DAA520] hover:text-[#DAA520] transition-colors duration-500 backdrop-blur-sm bg-white/[0.03]"
                       >
-                        <span className="relative">
-                          {slide.secondaryText}
-                          <span
-                            className="pointer-events-none absolute left-0 right-0 -bottom-1 h-px bg-current origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"
-                            aria-hidden="true"
-                          />
-                        </span>
-                        <span aria-hidden="true" className="transition-transform duration-500 group-hover:translate-x-0.5">
-                          →
-                        </span>
-                      </Link>
+                        {slide.buttonText}
+                      </MagneticButton>
                     </div>
                   </div>
                 </div>

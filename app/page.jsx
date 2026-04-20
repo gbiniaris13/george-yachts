@@ -60,11 +60,17 @@ export default async function HomePage() {
       sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["private", "both"]]{ weeklyRatePrice }`),
       sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"]]{ weeklyRatePrice, sleeps }`),
       sanityClient.fetch(`*[_type == "yacht"] | order(weeklyRatePrice asc) { name, "slug": slug.current, weeklyRatePrice, sleeps, builder, length, subtitle }`),
-      // Move #2 — pick one representative hero image per fleet for the split-screen showcase.
-      // We order by name for stability (same image per deploy) and ask for the first image
-      // of whichever yacht has one. Null fallback handled client-side.
-      sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["private", "both"] && count(images) > 0] | order(name asc) [0] { "url": images[0].asset->url }`),
-      sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"] && count(images) > 0] | order(name asc) [0] { "url": images[0].asset->url }`),
+      // Move #2 — pinned hero images for the split-screen fleet showcase.
+      //   Private → M/Y LA PELLEGRINA 1 (50m Couach flagship, €180K–€235K/week).
+      //             George's explicit pick: the flagship carries the fleet identity.
+      //   Explorer → highest-priced yacht with images (most aspirational in the tier).
+      // If La Pellegrina's record moves or its images change, the fallback chain
+      // drops to the alphabetical-first private yacht with images.
+      sanityClient.fetch(`coalesce(
+        *[_type == "yacht" && name match "*PELLEGRINA*" && count(images) > 0][0],
+        *[_type == "yacht" && fleetTier in ["private", "both"] && count(images) > 0] | order(name asc) [0]
+      ) { "url": images[0].asset->url }`),
+      sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"] && count(images) > 0] | order(weeklyRatePrice desc) [0] { "url": images[0].asset->url }`),
     ]);
     yachtCount = count;
     privateHeroImage = privateHero?.url ?? null;
