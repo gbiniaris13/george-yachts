@@ -100,6 +100,8 @@ const VillaSwiper = ({ villaData }) => {
                         src={urlFor(image.asset).width(1200).height(800).format('webp').quality(75).url()}
                         alt={image.alt || villa.name + " image " + (index + 1)}
                         className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-black/30"></div>
                     </SwiperSlide>

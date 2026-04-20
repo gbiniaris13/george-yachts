@@ -77,6 +77,8 @@ const TeamCard = ({ member }) => {
         src={member.imageUrl}
         alt={member.name}
         className="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
+        decoding="async"
         onError={(e) => (e.target.src = IMAGE_PLACEHOLDER_URL)}
       />
       {/* Overlay Gradient (for text contrast) */}

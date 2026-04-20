@@ -34,6 +34,8 @@ const ProfileSection = ({
             src={imageUrl || FALLBACK_IMAGE}
             alt={altText}
             className="w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
             onError={(e) => (e.target.src = FALLBACK_IMAGE)}
           />
           <div
@@ -97,7 +99,9 @@ const ProfileSection = ({
             src={imageUrl || FALLBACK_IMAGE}
             alt={altText}
             className="w-full h-full object-cover"
-            onError={(e) => (e.targe.src = FALLBACK_IMAGE)}
+            loading="lazy"
+            decoding="async"
+            onError={(e) => (e.target.src = FALLBACK_IMAGE)}
           />
           <div
             className="absolute inset-0"

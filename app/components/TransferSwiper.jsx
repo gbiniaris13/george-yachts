@@ -103,6 +103,8 @@ const TransferSwiper = ({ transferData }) => {
                           transfer.vehicleType + " image " + (index + 1)
                         }
                         className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-black/30"></div>
                     </SwiperSlide>
