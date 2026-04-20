@@ -4,7 +4,8 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import DestinationContent from "../DestinationContent";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
-import { imageFor } from "@/lib/destination-images";
+import DestinationHero from "@/app/components/DestinationHero";
+import { imageFor, videoForRegion } from "@/lib/destination-images";
 import "@/styles/service-page.css";
 
 export const metadata = {
@@ -66,16 +67,13 @@ export default function IonianPage() {
         { name: "Ionian", url: "https://georgeyachts.com/destinations/ionian" },
       ]} />
       <PageSchema />
-      <section className="svc-hero">
-        <Image src="https://cdn.sanity.io/images/ecqr94ey/production/0a7391a08ebd3746b26123b159fb94fb15353852-1280x853.jpg?w=1920&h=900&fit=crop&auto=format" alt="Ionian islands yacht charter Greece - Corfu Lefkada Kefalonia" fill priority className="svc-hero__bg" sizes="100vw" />
-        <div className="svc-hero__gradient" />
-        <div className="svc-hero__content">
-          <p className="svc-hero__eyebrow">Destination Guide</p>
-          <h1 className="svc-hero__title">The Ionian</h1>
-          <div className="svc-hero__line" />
-          <p className="svc-hero__subtitle">Corfu &middot; Lefkada &middot; Kefalonia &middot; Zakynthos &middot; Ithaca &middot; Paxos</p>
-        </div>
-      </section>
+      <DestinationHero
+        imageUrl="https://cdn.sanity.io/images/ecqr94ey/production/0a7391a08ebd3746b26123b159fb94fb15353852-1280x853.jpg?w=1920&h=900&fit=crop&auto=format"
+        imageAlt="Ionian islands yacht charter Greece - Corfu Lefkada Kefalonia"
+        videoUrl={videoForRegion("ionian")}
+        title="The Ionian"
+        subtitle="Corfu · Lefkada · Kefalonia · Zakynthos · Ithaca · Paxos · Kythira"
+      />
       <DestinationContent data={data} />
       <ContactFormSection />
       <Footer />

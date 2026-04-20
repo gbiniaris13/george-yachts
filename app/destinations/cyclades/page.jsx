@@ -3,8 +3,9 @@ import Image from "next/image";
 import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import DestinationContent from "../DestinationContent";
+import DestinationHero from "@/app/components/DestinationHero";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
-import { imageFor } from "@/lib/destination-images";
+import { imageFor, videoForRegion } from "@/lib/destination-images";
 import "@/styles/service-page.css";
 
 export const metadata = {
@@ -80,16 +81,13 @@ export default function CycladesPage() {
         { name: "Cyclades", url: "https://georgeyachts.com/destinations/cyclades" },
       ]} />
       <PageSchema />
-      <section className="svc-hero">
-        <Image src="https://cdn.sanity.io/images/ecqr94ey/production/72a5bc25ad09c9b4d0a872fdd36469d3d231ad0a-5472x3648.jpg?w=1920&h=900&fit=crop&auto=format" alt="Cyclades yacht charter Greece - Mykonos Santorini sailing" fill priority className="svc-hero__bg" sizes="100vw" />
-        <div className="svc-hero__gradient" />
-        <div className="svc-hero__content">
-          <p className="svc-hero__eyebrow">Destination Guide</p>
-          <h1 className="svc-hero__title">The Cyclades</h1>
-          <div className="svc-hero__line" />
-          <p className="svc-hero__subtitle">Mykonos &middot; Santorini &middot; Paros &middot; Naxos &middot; Milos &middot; Syros &middot; Tinos &middot; Amorgos</p>
-        </div>
-      </section>
+      <DestinationHero
+        imageUrl="https://cdn.sanity.io/images/ecqr94ey/production/72a5bc25ad09c9b4d0a872fdd36469d3d231ad0a-5472x3648.jpg?w=1920&h=900&fit=crop&auto=format"
+        imageAlt="Cyclades yacht charter Greece - Mykonos Santorini sailing"
+        videoUrl={videoForRegion("cyclades")}
+        title="The Cyclades"
+        subtitle="Mykonos · Santorini · Paros · Naxos · Milos · Syros · Tinos · Amorgos"
+      />
       <DestinationContent data={data} />
       <ContactFormSection />
       <Footer />

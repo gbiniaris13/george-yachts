@@ -4,7 +4,8 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import DestinationContent from "../DestinationContent";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
-import { imageFor } from "@/lib/destination-images";
+import DestinationHero from "@/app/components/DestinationHero";
+import { imageFor, videoForRegion } from "@/lib/destination-images";
 import "@/styles/service-page.css";
 
 export const metadata = {
@@ -54,16 +55,13 @@ export default function SaronicPage() {
         { name: "Saronic", url: "https://georgeyachts.com/destinations/saronic" },
       ]} />
       <PageSchema />
-      <section className="svc-hero">
-        <Image src="https://cdn.sanity.io/images/ecqr94ey/production/87ae1ae73a3193daf60aec58384c29f89408c945-813x650.jpg?w=1920&h=900&fit=crop&auto=format" alt="Saronic Gulf yacht charter Greece - Hydra Spetses Poros" fill priority className="svc-hero__bg" sizes="100vw" />
-        <div className="svc-hero__gradient" />
-        <div className="svc-hero__content">
-          <p className="svc-hero__eyebrow">Destination Guide</p>
-          <h1 className="svc-hero__title">The Saronic</h1>
-          <div className="svc-hero__line" />
-          <p className="svc-hero__subtitle">Hydra &middot; Spetses &middot; Poros &middot; Aegina &middot; Agistri</p>
-        </div>
-      </section>
+      <DestinationHero
+        imageUrl="https://cdn.sanity.io/images/ecqr94ey/production/87ae1ae73a3193daf60aec58384c29f89408c945-813x650.jpg?w=1920&h=900&fit=crop&auto=format"
+        imageAlt="Saronic Gulf yacht charter Greece - Hydra Spetses Poros"
+        videoUrl={videoForRegion("saronic")}
+        title="The Saronic"
+        subtitle="Hydra · Spetses · Poros · Aegina · Angistri · Dokos"
+      />
       <DestinationContent data={data} />
       <ContactFormSection />
       <Footer />

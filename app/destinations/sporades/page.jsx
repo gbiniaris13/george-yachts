@@ -4,7 +4,8 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import DestinationContent from "../DestinationContent";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
-import { imageFor } from "@/lib/destination-images";
+import DestinationHero from "@/app/components/DestinationHero";
+import { imageFor, videoForRegion } from "@/lib/destination-images";
 import "@/styles/service-page.css";
 
 export const metadata = {
@@ -58,16 +59,13 @@ export default function SporadesPage() {
         { name: "Sporades", url: "https://georgeyachts.com/destinations/sporades" },
       ]} />
       <PageSchema />
-      <section className="svc-hero">
-        <Image src="https://cdn.sanity.io/images/ecqr94ey/production/95a00b4760aedc3cd1f7a8959b026107cd4ca488-813x650.jpg?w=1920&h=900&fit=crop&auto=format" alt="Sporades yacht charter Greece - Skiathos Skopelos Alonissos" fill priority className="svc-hero__bg" sizes="100vw" />
-        <div className="svc-hero__gradient" />
-        <div className="svc-hero__content">
-          <p className="svc-hero__eyebrow">Destination Guide</p>
-          <h1 className="svc-hero__title">The Sporades</h1>
-          <div className="svc-hero__line" />
-          <p className="svc-hero__subtitle">Skiathos &middot; Skopelos &middot; Alonissos &middot; Skyros</p>
-        </div>
-      </section>
+      <DestinationHero
+        imageUrl="https://cdn.sanity.io/images/ecqr94ey/production/95a00b4760aedc3cd1f7a8959b026107cd4ca488-813x650.jpg?w=1920&h=900&fit=crop&auto=format"
+        imageAlt="Sporades yacht charter Greece - Skiathos Skopelos Alonissos"
+        videoUrl={videoForRegion("sporades")}
+        title="The Sporades"
+        subtitle="Skiathos · Skopelos · Alonissos · Skyros · Marine Park islets"
+      />
       <DestinationContent data={data} />
       <ContactFormSection />
       <Footer />
