@@ -113,31 +113,45 @@ const VideoSection = () => {
                     and the sub-tagline read as off-axis on narrow viewports. */}
                 <div className="relative z-10 flex items-center justify-center h-full text-center px-6 md:px-8">
                   <div
-                    className={`w-full max-w-[1200px] mx-auto transition-all duration-[1500ms] ${
-                      isActive && heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                    className={`w-full max-w-[1200px] mx-auto ${
+                      isActive && heroVisible ? "opacity-100" : "opacity-0"
                     }`}
-                    style={{ textAlign: "center" }}
+                    style={{ textAlign: "center", transition: "opacity 800ms ease" }}
                   >
-                    {/* Eyebrow */}
-                    <p
-                      style={{
-                        fontFamily: "'Montserrat', sans-serif",
-                        fontSize: "9px",
-                        letterSpacing: "0.5em",
-                        textTransform: "uppercase",
-                        color: "#DAA520",
-                        fontWeight: 600,
-                        marginBottom: "32px",
-                        textAlign: "center",
-                        opacity: heroVisible ? 1 : 0,
-                        transition: "opacity 1s ease 0.5s",
-                      }}
-                    >
-                      {t('hero.tagline')}
-                    </p>
+                    {/* ── Move #1: cinematic reveal choreography ──
+                        - t=0        video is playing, everything invisible
+                        - t=400ms    gold curtain line expands from centre
+                        - t=900ms    letter-by-letter reveal of "GEORGE YACHTS"
+                                     (60ms per glyph, Cormorant Garamond)
+                        - t=1700ms   "EXCLUSIVELY GREEK WATERS" eyebrow appears
+                                     BELOW the headline (moved from above —
+                                     more confident, signature line under the
+                                     name, not above it)
+                        - t=1900ms   BROKERAGE HOUSE LLC gold gradient
+                        - t=2200ms   gold divider + sub-tagline
+                        - t=2500ms   seasonal italic
+                        - t=2800ms   CTAs
+                        - t=3100ms   secondary quiz link                    */}
 
-                    {/* Brand Name — H1 with SEO keyword (visually hidden span) */}
+                    {/* Gold curtain — reveals the headline on load.
+                        Draws from centre outward to 800px, then holds. */}
+                    <div
+                      aria-hidden="true"
+                      className="mx-auto mb-6 md:mb-8"
+                      style={{
+                        height: "1px",
+                        background:
+                          "linear-gradient(90deg, transparent, #DAA520 20%, #DAA520 80%, transparent)",
+                        width: heroVisible ? "min(80vw, 800px)" : "0px",
+                        transition: "width 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s",
+                      }}
+                    />
+
+                    {/* Brand Name — letter-by-letter reveal. Split into
+                        spans so each glyph gets its own staggered delay. */}
                     <h1
+                      className="gy-hero-headline"
+                      aria-label="George Yachts"
                       style={{
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
                         fontSize: "clamp(42px, 9vw, 110px)",
@@ -146,18 +160,48 @@ const VideoSection = () => {
                         lineHeight: 0.95,
                         color: "#fff",
                         textTransform: "uppercase",
-                        margin: "0 0 8px 0",
+                        margin: "0 0 24px 0",
                         textAlign: "center",
-                        opacity: heroVisible ? 1 : 0,
-                        transform: heroVisible ? "translateY(0)" : "translateY(20px)",
-                        transition: "opacity 1.2s ease 0.7s, transform 1.2s ease 0.7s",
                       }}
                     >
-                      GEORGE YACHTS
+                      {"GEORGE\u00A0YACHTS".split("").map((ch, i) => (
+                        <span
+                          key={i}
+                          className="gy-hero-letter"
+                          aria-hidden="true"
+                          style={{
+                            display: "inline-block",
+                            opacity: heroVisible ? undefined : 0,
+                            animationDelay: heroVisible ? `${900 + i * 55}ms` : "0ms",
+                          }}
+                        >
+                          {ch === " " ? "\u00A0" : ch}
+                        </span>
+                      ))}
                       <span className="sr-only"> — Luxury Yacht Charter Greece</span>
                     </h1>
 
-                    {/* Subtitle — BROKERAGE HOUSE LLC */}
+                    {/* Eyebrow — MOVED below the headline (cinematic pattern:
+                        the name arrives first, the signature follows). */}
+                    <p
+                      style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: "10px",
+                        letterSpacing: "0.55em",
+                        textTransform: "uppercase",
+                        color: "#DAA520",
+                        fontWeight: 600,
+                        margin: "0 0 28px 0",
+                        textAlign: "center",
+                        opacity: heroVisible ? 1 : 0,
+                        transform: heroVisible ? "translateY(0)" : "translateY(8px)",
+                        transition: "opacity 1s ease 1.7s, transform 1s ease 1.7s",
+                      }}
+                    >
+                      {t('hero.tagline')}
+                    </p>
+
+                    {/* Subtitle — BROKERAGE HOUSE LLC (retimed for Move #1) */}
                     <p
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
@@ -174,41 +218,45 @@ const VideoSection = () => {
                         WebkitTextFillColor: "transparent",
                         opacity: heroVisible ? 1 : 0,
                         transform: heroVisible ? "translateY(0)" : "translateY(12px)",
-                        transition: "opacity 1s ease 1.1s, transform 1s ease 1.1s",
+                        transition: "opacity 1s ease 1.9s, transform 1s ease 1.9s",
                       }}
                     >
                       BROKERAGE HOUSE LLC
                     </p>
 
-                    {/* Gold line */}
+                    {/* Secondary inline gold dash (between brand block and
+                        descriptor block). Narrower than the top curtain so
+                        it reads as a separator, not another hero element. */}
                     <div
+                      aria-hidden="true"
                       className="h-px mx-auto mb-8"
                       style={{
-                        background: "linear-gradient(90deg, transparent, #DAA520, transparent)",
-                        width: heroVisible ? "140px" : "0px",
-                        transition: "width 1.2s ease 1.5s",
+                        background:
+                          "linear-gradient(90deg, transparent, rgba(218,165,32,0.45), transparent)",
+                        width: heroVisible ? "100px" : "0px",
+                        transition: "width 1s cubic-bezier(0.16, 1, 0.3, 1) 2.1s",
                       }}
                     />
 
-                    {/* Tagline */}
+                    {/* Sub-tagline — descriptor block */}
                     <p
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
                         fontSize: "10px",
                         letterSpacing: "0.3em",
                         textTransform: "uppercase",
-                        color: "rgba(255,255,255,0.4)",
+                        color: "rgba(255,255,255,0.42)",
                         fontWeight: 300,
                         marginBottom: "40px",
                         textAlign: "center",
                         opacity: heroVisible ? 1 : 0,
-                        transition: "opacity 1s ease 1.9s",
+                        transition: "opacity 1s ease 2.3s",
                       }}
                     >
                       Boutique Luxury Yacht Charter &middot; Est. U.S.A. &middot; Operating from Athens
                     </p>
 
-                    {/* Seasonal Message */}
+                    {/* Seasonal Message (retimed for Move #1) */}
                     <p
                       style={{
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
@@ -216,10 +264,10 @@ const VideoSection = () => {
                         fontWeight: 300,
                         fontStyle: "italic",
                         color: "rgba(218,165,32,0.5)",
-                        marginBottom: "32px",
+                        marginBottom: "40px",
                         textAlign: "center",
                         opacity: heroVisible ? 1 : 0,
-                        transition: "opacity 1.2s ease 2s",
+                        transition: "opacity 1.2s ease 2.5s",
                       }}
                     >
                       {(() => {
@@ -241,7 +289,7 @@ const VideoSection = () => {
                       style={{
                         opacity: heroVisible ? 1 : 0,
                         transform: heroVisible ? "translateY(0)" : "translateY(10px)",
-                        transition: "opacity 0.8s ease 2.2s, transform 0.8s ease 2.2s",
+                        transition: "opacity 0.9s ease 2.8s, transform 0.9s ease 2.8s",
                       }}
                     >
                       {/* BOTH FLEETS — equal-weight primary CTAs. Side-by-side
@@ -314,20 +362,34 @@ const VideoSection = () => {
         ))}
       </Swiper>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator — Move #1: breathing vertical line instead of
+          bouncing chevron. Gold gradient top→transparent, 1px × 40px,
+          pulses opacity every 3.2s. No motion jitter, just a slow
+          breath that signals "keep going" without shouting. */}
       <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3"
         style={{
           opacity: heroVisible ? 1 : 0,
-          transition: "opacity 1s ease 2.8s",
+          transition: "opacity 1s ease 3.4s",
         }}
       >
-        <div className="flex flex-col items-center gap-2 animate-bounce" style={{ animationDuration: "2s" }}>
-          <span className="text-white/30 text-[8px] tracking-[0.3em] uppercase">Scroll</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(218,165,32,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </div>
+        <span
+          className="text-white/30 text-[8px] tracking-[0.35em] uppercase"
+          style={{ fontFamily: "'Montserrat', sans-serif" }}
+        >
+          Scroll
+        </span>
+        <span
+          aria-hidden="true"
+          className="gy-hero-scroll-line"
+          style={{
+            display: "block",
+            width: "1px",
+            height: "40px",
+            background:
+              "linear-gradient(to bottom, rgba(218,165,32,0.7) 0%, rgba(218,165,32,0.1) 100%)",
+          }}
+        />
       </div>
 
       {/* Desktop Category Navigation */}
@@ -352,6 +414,40 @@ const VideoSection = () => {
 
       <style jsx global>{`
         * { border-radius: 0 !important; }
+
+        /* Move #1 — letter-by-letter reveal choreography */
+        .gy-hero-letter {
+          opacity: 0;
+          transform: translateY(18px);
+          filter: blur(6px);
+          animation: gy-hero-letter-in 900ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        @keyframes gy-hero-letter-in {
+          0%   { opacity: 0; transform: translateY(18px); filter: blur(6px); }
+          60%  { opacity: 1; filter: blur(0); }
+          100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        /* Move #1 — scroll line breathing pulse */
+        .gy-hero-scroll-line {
+          animation: gy-hero-breathe 3.2s ease-in-out infinite;
+          transform-origin: top center;
+        }
+        @keyframes gy-hero-breathe {
+          0%, 100% { opacity: 0.35; transform: scaleY(1); }
+          50%      { opacity: 1;    transform: scaleY(1.08); }
+        }
+
+        /* Respect reduced-motion preference — instant reveal, no breath */
+        @media (prefers-reduced-motion: reduce) {
+          .gy-hero-letter {
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+            animation: none !important;
+          }
+          .gy-hero-scroll-line { animation: none !important; opacity: 0.5 !important; }
+        }
       `}</style>
     </section>
   );
