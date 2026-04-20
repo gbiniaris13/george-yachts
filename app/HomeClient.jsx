@@ -3,6 +3,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import VideoSection from "./components/VideoSection";
+import SignatureYacht from "./components/SignatureYacht";
 import FleetCTAs from "./components/FleetCTAs";
 import HomeStats from "./components/HomeStats";
 import Footer from "./components/Footer";
@@ -28,10 +29,13 @@ const HomeClient = ({
   explorerHeroImage,
   privateCount,
   explorerCount,
+  signatureYacht,
 }) => {
   return (
     <div className="min-h-screen bg-black font-sans">
       <VideoSection />
+      {/* Move #3 — Signature Yacht slot (weekly auto-rotating feature) */}
+      <SignatureYacht yacht={signatureYacht} />
       <FleetCTAs
         privateRange={privateRange}
         explorerRange={explorerRange}

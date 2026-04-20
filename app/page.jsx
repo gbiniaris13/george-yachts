@@ -59,9 +59,10 @@ export default async function HomePage() {
   let explorerHeroImage = null;
   let privateCount = 0;
   let explorerCount = 0;
+  let signatureYacht = null;
 
   try {
-    const [count, privateYachts, explorerYachts, allYachts, privateHero, explorerHero] = await Promise.all([
+    const [count, privateYachts, explorerYachts, allYachts, privateHero, explorerHero, signaturePool] = await Promise.all([
       sanityClient.fetch(`count(*[_type == "yacht"])`),
       sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["private", "both"]]{ weeklyRatePrice }`),
       sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"]]{ weeklyRatePrice, sleeps }`),
@@ -80,6 +81,21 @@ export default async function HomePage() {
         *[_type == "yacht" && fleetTier in ["private", "both"] && count(images) > 0] | order(name asc) [0]
       ) { "url": images[0].asset->url }`),
       sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"] && count(images) > 0] | order(name asc) { "url": images[0].asset->url, name }`),
+      // Move #3 — Signature Yacht pool. Only yachts with a meaningful
+      // insider tip (>100 chars) AND at least 3 images qualify — those
+      // are the ones with enough story to anchor a full-viewport
+      // feature slot. Pick rotates weekly (see below).
+      sanityClient.fetch(`*[_type == "yacht"
+        && defined(georgeInsiderTip)
+        && length(georgeInsiderTip) > 100
+        && count(images) >= 3
+      ]{
+        _id, name, subtitle, "slug": slug.current,
+        length, sleeps, cabins, builder, yearBuiltRefit,
+        cruisingRegion, weeklyRatePrice, georgeInsiderTip,
+        "heroImage": images[0].asset->url,
+        "detailImage": images[1].asset->url
+      } | order(name asc)`),
     ]);
     yachtCount = count;
     privateHeroImage = privateHero?.url ?? null;
@@ -90,12 +106,22 @@ export default async function HomePage() {
     // Same yacht for every visitor inside the same week → stable SEO,
     // predictable experience, zero admin.
     const explorerList = Array.isArray(explorerHero) ? explorerHero.filter((x) => x && x.url) : [];
+    const now = new Date();
+    const jan1 = new Date(Date.UTC(now.getUTCFullYear(), 0, 1));
+    const daysSince = Math.floor((now.getTime() - jan1.getTime()) / 86400000);
+    const weekOfYear = Math.floor(daysSince / 7);
+
     if (explorerList.length > 0) {
-      const now = new Date();
-      const jan1 = new Date(Date.UTC(now.getUTCFullYear(), 0, 1));
-      const daysSince = Math.floor((now.getTime() - jan1.getTime()) / 86400000);
-      const weekOfYear = Math.floor(daysSince / 7);
       explorerHeroImage = explorerList[weekOfYear % explorerList.length].url;
+    }
+
+    // Signature Yacht — same weekly-rotation pattern (Move #3). We
+    // shift the week index by a different prime offset from the
+    // Explorer rotation so the two sections don't always swap in
+    // lockstep. Different yacht every Monday.
+    const signatureList = Array.isArray(signaturePool) ? signaturePool.filter((y) => y && y.heroImage) : [];
+    if (signatureList.length > 0) {
+      signatureYacht = signatureList[(weekOfYear + 3) % signatureList.length];
     }
 
     privateCount = privateYachts.length;
@@ -146,6 +172,7 @@ export default async function HomePage() {
         explorerHeroImage={explorerHeroImage}
         privateCount={privateCount}
         explorerCount={explorerCount}
+        signatureYacht={signatureYacht}
       />
     </>
   );
