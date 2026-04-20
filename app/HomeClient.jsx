@@ -30,6 +30,7 @@ const HomeClient = ({
   privateCount,
   explorerCount,
   signatureYacht,
+  filotimoImage,
 }) => {
   return (
     <div className="min-h-screen bg-black font-sans">
@@ -47,7 +48,7 @@ const HomeClient = ({
       <HomeStats yachtCount={yachtCount} />
       <YourBroker />
       <HowItWorks />
-      <Filotimon />
+      <Filotimon filotimoImage={filotimoImage} />
       <BrokerTestimonials />
       <CredentialsStrip />
       <BudgetSlider yachts={budgetYachts} />

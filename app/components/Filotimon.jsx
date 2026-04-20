@@ -1,149 +1,237 @@
 "use client";
 
+// Move #4 — Filotimo editorial spread.
+//
+// Replaces the dense pillar-grid Filotimo block with a Times-magazine
+// style two-column spread:
+//   Desktop:  Image (left 45%)  |  Text (right 55%)
+//   Mobile:   Image on top, text below
+//
+// The intent is contemplative, not transactional. No buttons, no
+// CTAs — the reader sits with the word "filotimo" for thirty
+// seconds and leaves with an impression, not a next action.
+//
+// Content pared back from 3 pillars + 4 examples + quote + label
+// down to:
+//   - Eyebrow "THE PHILOSOPHY"
+//   - Signature line: "A word that does not translate cleanly into English."
+//   - Etymology couplet
+//   - Two paragraphs of meaning (from existing i18n)
+//   - Hairline gold divider
+//   - Pullquote from Thales
+//   - Signature diamond mark
+//
+// Falls back gracefully if filotimoImage is null — the image column
+// just shows a dark navy panel with the gold ΦΙΛΟΤΙΜΟ watermark.
+
 import React from "react";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
-const Filotimon = () => {
+export default function Filotimon({ filotimoImage = null }) {
   const { t } = useI18n();
+
   return (
-    <section className="relative w-full bg-[#000000] py-32 lg:py-48 overflow-hidden flex items-center justify-center">
-      {/* 0. AMBIENT GRADIENT ORBS */}
-      <div className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(218,165,32,0.04) 0%, transparent 70%)", filter: "blur(80px)" }} />
-      <div className="absolute bottom-1/4 -right-1/4 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(218,165,32,0.03) 0%, transparent 70%)", filter: "blur(80px)" }} />
+    <section
+      className="relative w-full overflow-hidden"
+      style={{ background: "#0D1B2A" }}
+      aria-label="The Philosophy of Filotimo"
+    >
+      {/* Ambient gold wash — barely perceptible */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 50%, rgba(218,165,32,0.05) 0%, transparent 60%)",
+        }}
+      />
 
-      {/* 1. TEXTURE: Cinematic Grain */}
-      <div className="absolute inset-0 opacity-[0.07] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
+      <div className="relative grid grid-cols-1 lg:grid-cols-[45%_55%] min-h-[100dvh]">
+        {/* ── LEFT — editorial image ── */}
+        <div className="relative overflow-hidden min-h-[60vh] lg:min-h-[100dvh]">
+          {filotimoImage ? (
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{
+                backgroundImage: `url(${filotimoImage})`,
+                filter: "grayscale(0.15) brightness(0.85) contrast(1.05)",
+              }}
+            />
+          ) : (
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(135deg, #0D1B2A 0%, #1a2b3a 50%, #0a0f1a 100%)",
+              }}
+            />
+          )}
 
-      {/* 2. THE BACKGROUND GIANT (Greek Watermark) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none z-0 overflow-hidden">
-        <h1 className="text-[18vw] font-marcellus font-bold text-white/2 tracking-widest leading-none uppercase blur-sm">
-          ΦΙΛΟΤΙΜΟ
-        </h1>
-      </div>
-
-      {/* 3. THE CONTENT */}
-      <div className="relative z-10 max-w-5xl px-6 md:px-12 flex flex-col items-center text-center">
-        {/* Crown Label */}
-        <div className="mb-10">
-          <span className="text-[#DAA520] text-[10px] tracking-[0.6em] uppercase font-bold opacity-80 border border-[#DAA520]/30 px-4 py-2">
-            {t('filotimo.label')}
-          </span>
-        </div>
-
-        {/* Statement Headline */}
-        <h2 className="text-4xl md:text-6xl lg:text-7xl font-marcellus text-white leading-[1.05] tracking-tight mb-12">
-          {t('filotimo.headline1')} <br className="hidden md:block" />
-          {t('filotimo.headline2')}{" "}
-          <span
-            className="italic font-light relative inline-block"
+          {/* Subtle navy→transparent→navy vignette top & bottom */}
+          <div
+            className="absolute inset-0 pointer-events-none"
             style={{
-              backgroundImage: "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              color: "transparent",
-              WebkitTextFillColor: "transparent",
+              background:
+                "linear-gradient(to bottom, rgba(13,27,42,0.45) 0%, transparent 25%, transparent 75%, rgba(13,27,42,0.65) 100%)",
             }}
-          >
-            "FILOTIMO"
-            <div className="absolute inset-0 blur-2xl bg-[#DAA520]/20 -z-10"></div>
-          </span>
-        </h2>
+          />
 
-        {/* Gold Divider */}
-        <div className="h-px w-32 bg-linear-to-r from-transparent via-[#DAA520] to-transparent mb-14 opacity-60"></div>
+          {/* Watermark ΦΙΛΟΤΙΜΟ — very faint on top of image */}
+          <div className="absolute inset-0 flex items-end justify-start pb-12 pl-8 md:pl-14 pointer-events-none select-none">
+            <span
+              className="uppercase"
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: "clamp(48px, 9vw, 140px)",
+                fontWeight: 200,
+                color: "rgba(218,165,32,0.22)",
+                letterSpacing: "0.08em",
+                lineHeight: 0.9,
+                mixBlendMode: "overlay",
+              }}
+            >
+              ΦΙΛΟΤΙΜΟ
+            </span>
+          </div>
 
-        {/* Etymology */}
-        <div className="mb-12 max-w-2xl">
-          <p className="text-[10px] tracking-[0.4em] uppercase text-[#DAA520]/50 mb-4 font-light" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-            {t('filotimo.etymology')}
-          </p>
-          <p className="text-base md:text-lg text-white/40 leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-            {t('filotimo.intro')}
-          </p>
+          {/* Corner accents */}
+          <span
+            aria-hidden="true"
+            className="absolute top-6 left-6 md:top-10 md:left-10 w-10 h-10 md:w-14 md:h-14 border-t border-l border-[#DAA520]/35 pointer-events-none"
+          />
+          <span
+            aria-hidden="true"
+            className="absolute bottom-6 left-6 md:bottom-10 md:left-10 w-10 h-10 md:w-14 md:h-14 border-b border-l border-[#DAA520]/35 pointer-events-none"
+          />
         </div>
 
-        {/* The Deep Definition — 3 pillars */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 max-w-4xl w-full">
-          <div className="text-center px-4">
-            <div className="text-3xl mb-4 opacity-60">🫶</div>
-            <h3 className="font-marcellus text-white/80 text-lg mb-3">{t('filotimo.pillar1Title')}</h3>
-            <p className="text-white/30 text-sm leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              {t('filotimo.pillar1Desc')}
+        {/* ── RIGHT — editorial text ── */}
+        <div className="relative flex items-center justify-center px-8 md:px-16 lg:px-20 py-20 lg:py-32">
+          <article className="max-w-[620px] w-full">
+            {/* Eyebrow */}
+            <p
+              className="text-[#DAA520] mb-10"
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: "9px",
+                letterSpacing: "0.55em",
+                textTransform: "uppercase",
+                fontWeight: 600,
+              }}
+            >
+              {t('filotimo.label')}
             </p>
-          </div>
-          <div className="text-center px-4">
-            <div className="text-3xl mb-4 opacity-60">⚖️</div>
-            <h3 className="font-marcellus text-white/80 text-lg mb-3">{t('filotimo.pillar2Title')}</h3>
-            <p className="text-white/30 text-sm leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              {t('filotimo.pillar2Desc')}
-            </p>
-          </div>
-          <div className="text-center px-4">
-            <div className="text-3xl mb-4 opacity-60">🔥</div>
-            <h3 className="font-marcellus text-white/80 text-lg mb-3">{t('filotimo.pillar3Title')}</h3>
-            <p className="text-white/30 text-sm leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              {t('filotimo.pillar3Desc')}
-            </p>
-          </div>
-        </div>
 
-        {/* Gold line */}
-        <div className="h-px w-24 bg-linear-to-r from-transparent via-[#DAA520] to-transparent mb-14 opacity-40"></div>
+            {/* Signature line — one thought, serif, large */}
+            <h2
+              className="text-white mb-12"
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: "clamp(32px, 3.8vw, 56px)",
+                fontWeight: 200,
+                lineHeight: 1.1,
+                letterSpacing: "0.005em",
+              }}
+            >
+              A word that does not translate cleanly
+              <br className="hidden md:block" />
+              into{" "}
+              <span
+                className="italic"
+                style={{
+                  background:
+                    "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  color: "transparent",
+                }}
+              >
+                English
+              </span>
+              .
+            </h2>
 
-        {/* The Application — What it means for George Yachts */}
-        <div className="max-w-3xl mb-16">
-          <p className="text-lg md:text-2xl text-gray-400 font-marcellus leading-relaxed">
-            {t('filotimo.application')}{" "}
-            <span className="text-white">{t('filotimo.applicationBold')}</span>
-          </p>
-        </div>
+            {/* Etymology couplet */}
+            <p
+              className="text-[#DAA520]/70 mb-10"
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontStyle: "italic",
+                fontSize: "clamp(15px, 1.4vw, 18px)",
+                letterSpacing: "0.04em",
+              }}
+            >
+              φίλο <span className="text-[#DAA520]/50">(philo)</span> — love &nbsp;·&nbsp;
+              τιμώ <span className="text-[#DAA520]/50">(timo)</span> — honour
+            </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl w-full mb-16 text-left">
-          <div className="border-l-2 border-[#DAA520]/20 pl-6 py-2">
-            <p className="text-white/50 text-sm leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              {t('filotimo.example1')}
-            </p>
-          </div>
-          <div className="border-l-2 border-[#DAA520]/20 pl-6 py-2">
-            <p className="text-white/50 text-sm leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              {t('filotimo.example2')}
-            </p>
-          </div>
-          <div className="border-l-2 border-[#DAA520]/20 pl-6 py-2">
-            <p className="text-white/50 text-sm leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              {t('filotimo.example3')}
-            </p>
-          </div>
-          <div className="border-l-2 border-[#DAA520]/20 pl-6 py-2">
-            <p className="text-white/50 text-sm leading-relaxed" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              {t('filotimo.example4')}
-            </p>
-          </div>
-        </div>
+            {/* Two short paragraphs — pulled from existing i18n intro string,
+                split on sentences for readable rhythm. */}
+            <div
+              className="text-white/65 space-y-6 mb-12"
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: "clamp(15px, 1.3vw, 18px)",
+                lineHeight: 1.7,
+                fontWeight: 300,
+              }}
+            >
+              <p>{t('filotimo.intro')}</p>
+              <p className="text-white/55">
+                {t('filotimo.application')}{" "}
+                <em className="text-white/80 not-italic" style={{ fontWeight: 400 }}>
+                  {t('filotimo.applicationBold')}
+                </em>
+              </p>
+            </div>
 
-        {/* The Quote */}
-        <div className="max-w-2xl mb-12 px-4">
-          <blockquote className="text-lg md:text-xl text-white/60 font-marcellus leading-relaxed italic">
-            {t('filotimo.quote')}
-          </blockquote>
-          <p className="text-[10px] tracking-[0.2em] uppercase text-[#DAA520]/40 mt-4" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-            — Thales of Miletus, 624–546 BCE
-          </p>
-        </div>
+            {/* Hairline gold rule */}
+            <div
+              aria-hidden="true"
+              className="h-px w-24 mb-10"
+              style={{
+                background:
+                  "linear-gradient(to right, #DAA520, rgba(218,165,32,0.1))",
+              }}
+            />
 
-        {/* The Signature Mark */}
-        <div className="mt-8 opacity-40 hover:opacity-100 transition-opacity duration-500">
-          <div className="w-2 h-2 bg-[#DAA520] rotate-45 mx-auto"></div>
+            {/* Pullquote from Thales */}
+            <blockquote
+              className="text-white/75 italic mb-4"
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: "clamp(18px, 1.8vw, 24px)",
+                lineHeight: 1.5,
+                fontWeight: 300,
+              }}
+            >
+              {t('filotimo.quote')}
+            </blockquote>
+
+            <p
+              className="text-[#DAA520]/50"
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: "9px",
+                letterSpacing: "0.35em",
+                textTransform: "uppercase",
+                fontWeight: 500,
+              }}
+            >
+              — Thales of Miletus · 624–546 BCE
+            </p>
+
+            {/* Signature diamond mark — unchanged from original */}
+            <div className="mt-14 opacity-40 hover:opacity-90 transition-opacity duration-500">
+              <div className="w-2 h-2 bg-[#DAA520] rotate-45" />
+            </div>
+          </article>
         </div>
       </div>
 
       <style jsx global>{`
-        * {
-          border-radius: 0 !important;
-        }
+        * { border-radius: 0 !important; }
       `}</style>
     </section>
   );
-};
-
-export default Filotimon;
+}

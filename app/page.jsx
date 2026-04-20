@@ -61,8 +61,10 @@ export default async function HomePage() {
   let explorerCount = 0;
   let signatureYacht = null;
 
+  let filotimoImage = null;
+
   try {
-    const [count, privateYachts, explorerYachts, allYachts, privateHero, explorerHero, signaturePool] = await Promise.all([
+    const [count, privateYachts, explorerYachts, allYachts, privateHero, explorerHero, signaturePool, filotimoEditorial] = await Promise.all([
       sanityClient.fetch(`count(*[_type == "yacht"])`),
       sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["private", "both"]]{ weeklyRatePrice }`),
       sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"]]{ weeklyRatePrice, sleeps }`),
@@ -96,6 +98,15 @@ export default async function HomePage() {
         "heroImage": images[0].asset->url,
         "detailImage": images[1].asset->url
       } | order(name asc)`),
+      // Move #4 — editorial image for the Filotimo spread. Pull the
+      // 6th image (index 5) of whichever yacht has the deepest image
+      // library — later shots tend to be anchor / golden-hour / deck
+      // lifestyle rather than formal hero exteriors, which matches
+      // the contemplative register of the Filotimo section.
+      sanityClient.fetch(`*[_type == "yacht" && count(images) >= 6]
+        | order(count(images) desc) [0] {
+          "url": images[5].asset->url
+        }`),
     ]);
     yachtCount = count;
     privateHeroImage = privateHero?.url ?? null;
@@ -123,6 +134,8 @@ export default async function HomePage() {
     if (signatureList.length > 0) {
       signatureYacht = signatureList[(weekOfYear + 3) % signatureList.length];
     }
+
+    filotimoImage = filotimoEditorial?.url ?? null;
 
     privateCount = privateYachts.length;
     explorerCount = explorerYachts.length;
@@ -173,6 +186,7 @@ export default async function HomePage() {
         privateCount={privateCount}
         explorerCount={explorerCount}
         signatureYacht={signatureYacht}
+        filotimoImage={filotimoImage}
       />
     </>
   );
