@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { checkRateLimit } from "@/lib/rateLimit";
+import { kvSadd } from "@/lib/kv";
+
+// KV set key that holds the authoritative subscriber list.
+// Consumed by /api/cron/weekly-newsletter to build each broadcast.
+const SUBSCRIBERS_SET = "newsletter:subscribers";
 
 export const dynamic = "force-dynamic";
 
@@ -73,6 +78,12 @@ export async function POST(request) {
         { status: 500, headers }
       );
     }
+
+    // 0. Persist the subscriber in KV (set — naturally de-duped).
+    //    Normalized to lowercase so "George@X" and "george@x" resolve
+    //    to a single row. Non-blocking if KV is unreachable.
+    const normalized = email.trim().toLowerCase();
+    kvSadd(SUBSCRIBERS_SET, normalized).catch(() => {});
 
     // 1. Notify George about the new subscriber
     await transporter.sendMail({
