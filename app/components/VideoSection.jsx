@@ -57,12 +57,20 @@ const VideoSection = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // CTA hierarchy — George 2026-04-20:
+  // Primary CTA leads directly into the Private Fleet so a first-time
+  // visitor sees real yachts inside one click. The quiz (yacht-finder)
+  // stays in the hero as a soft secondary link below the primary
+  // button — useful for visitors who prefer a guided path, but no
+  // longer competing for the primary click.
   const slideData = [
     {
       id: 1,
       imageUrl: "/videos/yacht-cruising-new.mp4",
-      href: "/yacht-finder",
-      buttonText: t('common.findYourYacht'),
+      primaryHref: "/private-fleet",
+      primaryText: t('hero.primaryCta'),
+      secondaryHref: "/yacht-finder",
+      secondaryText: t('hero.secondaryCta'),
     },
   ];
 
@@ -217,19 +225,61 @@ const VideoSection = () => {
                       })()}
                     </p>
 
-                    {/* CTA Button — Magnetic */}
-                    <div style={{
-                      opacity: heroVisible ? 1 : 0,
-                      transform: heroVisible ? "translateY(0)" : "translateY(10px)",
-                      transition: "opacity 0.8s ease 2.2s, transform 0.8s ease 2.2s",
-                    }}>
+                    {/* CTA stack — primary: Private Fleet, secondary: 60-sec quiz */}
+                    <div
+                      className="flex flex-col items-center gap-6"
+                      style={{
+                        opacity: heroVisible ? 1 : 0,
+                        transform: heroVisible ? "translateY(0)" : "translateY(10px)",
+                        transition: "opacity 0.8s ease 2.2s, transform 0.8s ease 2.2s",
+                      }}
+                    >
+                      {/* PRIMARY — Enter the Private Fleet. Solid gold-gradient
+                          border + soft gold tint on hover. Bigger padding and
+                          weightier typography than the old single CTA so it
+                          visually dominates without shouting. */}
                       <MagneticButton
-                        href={slide.href}
-                        dataCursor="Explore"
-                        className="inline-block px-10 md:px-14 py-4 md:py-5 text-white text-[10px] tracking-[0.35em] uppercase font-semibold border border-white/20 hover:border-[#DAA520] hover:text-[#DAA520] transition-colors duration-500 backdrop-blur-sm bg-white/[0.03]"
+                        href={slide.primaryHref}
+                        dataCursor="Enter"
+                        className="group inline-flex items-center gap-3 px-12 md:px-16 py-5 md:py-6 text-white text-[11px] md:text-[12px] tracking-[0.4em] uppercase font-semibold border border-[#DAA520]/60 hover:border-[#DAA520] hover:text-[#DAA520] transition-colors duration-500 backdrop-blur-sm bg-[#DAA520]/[0.04] hover:bg-[#DAA520]/[0.08]"
                       >
-                        {slide.buttonText}
+                        <span>{slide.primaryText}</span>
+                        <svg
+                          width="16"
+                          height="10"
+                          viewBox="0 0 22 10"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="translate-y-[0.5px] transition-transform duration-500 group-hover:translate-x-1"
+                        >
+                          <line x1="0" y1="5" x2="20" y2="5" />
+                          <polyline points="15 1 21 5 15 9" />
+                        </svg>
                       </MagneticButton>
+
+                      {/* SECONDARY — soft text link. No button chrome — a single
+                          underlined line in the ivory/60 register, gold on
+                          hover. Deliberately quieter than the primary so the
+                          visual hierarchy is unambiguous. */}
+                      <Link
+                        href={slide.secondaryHref}
+                        className="group inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase font-light text-white/55 hover:text-[#DAA520] transition-colors duration-500"
+                        style={{ fontFamily: "'Montserrat', sans-serif" }}
+                      >
+                        <span className="relative">
+                          {slide.secondaryText}
+                          <span
+                            className="pointer-events-none absolute left-0 right-0 -bottom-1 h-px bg-current origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"
+                            aria-hidden="true"
+                          />
+                        </span>
+                        <span aria-hidden="true" className="transition-transform duration-500 group-hover:translate-x-0.5">
+                          →
+                        </span>
+                      </Link>
                     </div>
                   </div>
                 </div>

@@ -35,7 +35,9 @@
   },
   "hero": {
     "tagline": "Αποκλειστικά στα Ελληνικά Νερά",
-    "subtitle": "Boutique Ναυλομεσιτεία Σκαφών"
+    "subtitle": "Boutique Ναυλομεσιτεία Σκαφών",
+    "primaryCta": "Εξερεύνησε τον Private Fleet",
+    "secondaryCta": "Ή βρες το σκάφος σου σε 60 δευτερόλεπτα"
   },
   "stats": {
     "yachts": "Επιλεγμένα Σκάφη",
