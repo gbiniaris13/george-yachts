@@ -33,7 +33,7 @@ export default function Filotimon({ filotimoImage = null }) {
   return (
     <section
       className="relative w-full overflow-hidden"
-      style={{ background: "#0D1B2A" }}
+      style={{ background: "#000000" }}
       aria-label="The Philosophy of Filotimo"
     >
       {/* Ambient gold wash — barely perceptible */}
@@ -71,7 +71,7 @@ export default function Filotimon({ filotimoImage = null }) {
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(13,27,42,0.45) 0%, transparent 25%, transparent 75%, rgba(13,27,42,0.65) 100%)",
+                "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, transparent 25%, transparent 75%, rgba(0,0,0,0.65) 100%)",
             }}
           />
 

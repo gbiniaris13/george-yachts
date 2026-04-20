@@ -117,7 +117,7 @@ export default function GreekWatersMap() {
   return (
     <section
       className="relative w-full overflow-hidden"
-      style={{ background: "#0a0f1a" }}
+      style={{ background: "#000000" }}
       aria-label="Greek waters — four cruising regions"
     >
       {/* Soft radial wash — reads as moonlight on water */}
@@ -332,7 +332,7 @@ export default function GreekWatersMap() {
               aria-live="polite"
               className="hidden md:block absolute top-8 right-8 max-w-sm p-8 pointer-events-none"
               style={{
-                background: "rgba(13, 27, 42, 0.88)",
+                background: "rgba(0, 0, 0, 0.9)",
                 backdropFilter: "blur(14px)",
                 border: "1px solid rgba(218,165,32,0.35)",
                 color: "#fff",
@@ -409,7 +409,7 @@ export default function GreekWatersMap() {
               key={`list-${r.id}`}
               href={r.href}
               className="group block border border-[#DAA520]/15 hover:border-[#DAA520]/55 p-6 transition-colors duration-500"
-              style={{ background: "rgba(13,27,42,0.55)" }}
+              style={{ background: "rgba(0,0,0,0.55)" }}
               onMouseEnter={() => setActiveId(r.id)}
               onMouseLeave={() =>
                 setActiveId((prev) => (prev === r.id ? null : prev))

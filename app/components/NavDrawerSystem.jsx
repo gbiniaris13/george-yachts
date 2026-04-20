@@ -5,6 +5,7 @@ import { Menu, Instagram, Linkedin, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useI18n } from "@/lib/i18n/I18nProvider";
+import TranslateWidget from "./TranslateWidget";
 
 const WhatsappIcon = (props) => (
   <svg
@@ -159,8 +160,12 @@ const NavDrawerSystem = () => {
             />
           </Link>
 
-          {/* --- 3. RIGHT — Social Icons --- */}
+          {/* --- 3. RIGHT — Language selector + Social Icons --- */}
           <div className="flex items-center gap-1 justify-end">
+            {/* Language pill sits first so it reads left-to-right as
+                "choose language, then jump to our channels". Same 44×44
+                footprint as the icons so the row stays rhythmic. */}
+            <TranslateWidget variant="inline" />
             <a
               href="https://www.instagram.com/georgeyachts"
               target="_blank"

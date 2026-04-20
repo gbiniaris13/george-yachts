@@ -5,7 +5,7 @@ import NavDrawerSystem from "./components/NavDrawerSystem";
 import GlobalEffects from "./components/GlobalEffects";
 import CustomCursor from "./components/CustomCursor";
 import WhatsAppButton from "./components/WhatsAppButton";
-import TranslateWidget from "./components/TranslateWidget";
+// TranslateWidget now rendered inside NavDrawerSystem — removed here.
 // Removed: WelcomeLanguagePopup (country detection popup — users choose language themselves)
 // Removed: SmartWelcome (time-based greetings — gimmick)
 // Removed: WeatherAware (weather popup — not useful)
@@ -110,7 +110,9 @@ export default function RootLayout({ children }) {
         <LiveTicker />
         <CookieConsent />
         {/* Removed VoiceSearch */}
-        <TranslateWidget />
+        {/* TranslateWidget moved into NavDrawerSystem's right icon
+            strip — cleaner placement, no floating pill clashing with
+            social icons or the hero content. */}
         <WhatsAppButton />
         <VisitorBeacon />
         </WishlistProvider>
