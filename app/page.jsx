@@ -2,6 +2,12 @@ import React from "react";
 import HomeClient from "./HomeClient";
 import { sanityClient } from "@/lib/sanity";
 
+// Re-render at most once an hour. The homepage uses weekly-rotating
+// photography on the Explorer fleet panel; at the week-boundary the
+// next hourly revalidation picks up the new yacht automatically.
+// No manual work required from George.
+export const revalidate = 3600;
+
 export const metadata = {
   title: "George Yachts | Luxury Yacht Charter Greece | Boutique Brokerage",
   description:
@@ -60,21 +66,38 @@ export default async function HomePage() {
       sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["private", "both"]]{ weeklyRatePrice }`),
       sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"]]{ weeklyRatePrice, sleeps }`),
       sanityClient.fetch(`*[_type == "yacht"] | order(weeklyRatePrice asc) { name, "slug": slug.current, weeklyRatePrice, sleeps, builder, length, subtitle }`),
-      // Move #2 — pinned hero images for the split-screen fleet showcase.
-      //   Private → M/Y LA PELLEGRINA 1 (50m Couach flagship, €180K–€235K/week).
-      //             George's explicit pick: the flagship carries the fleet identity.
-      //   Explorer → highest-priced yacht with images (most aspirational in the tier).
-      // If La Pellegrina's record moves or its images change, the fallback chain
-      // drops to the alphabetical-first private yacht with images.
+      // Move #2 — photography strategy (George 2026-04-20):
+      //   Private  → PINNED to M/Y LA PELLEGRINA 1 (50m Couach flagship,
+      //             €180K–€235K/week). The flagship = brand signature; a
+      //             rotation here would dilute the "this is what Private
+      //             means" anchor. Fallback chain if the record changes.
+      //   Explorer → AUTO-ROTATES weekly. We pull every Explorer yacht
+      //             that has at least one image, and below we pick by
+      //             ISO week number so the hero refreshes every Monday
+      //             without any manual work.
       sanityClient.fetch(`coalesce(
         *[_type == "yacht" && name match "*PELLEGRINA*" && count(images) > 0][0],
         *[_type == "yacht" && fleetTier in ["private", "both"] && count(images) > 0] | order(name asc) [0]
       ) { "url": images[0].asset->url }`),
-      sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"] && count(images) > 0] | order(weeklyRatePrice desc) [0] { "url": images[0].asset->url }`),
+      sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"] && count(images) > 0] | order(name asc) { "url": images[0].asset->url, name }`),
     ]);
     yachtCount = count;
     privateHeroImage = privateHero?.url ?? null;
-    explorerHeroImage = explorerHero?.url ?? null;
+
+    // Weekly rotation for the Explorer hero image.
+    // `explorerHero` is now an array of { url, name } — pick by ISO
+    // week-of-year so the hero swaps deterministically every Monday.
+    // Same yacht for every visitor inside the same week → stable SEO,
+    // predictable experience, zero admin.
+    const explorerList = Array.isArray(explorerHero) ? explorerHero.filter((x) => x && x.url) : [];
+    if (explorerList.length > 0) {
+      const now = new Date();
+      const jan1 = new Date(Date.UTC(now.getUTCFullYear(), 0, 1));
+      const daysSince = Math.floor((now.getTime() - jan1.getTime()) / 86400000);
+      const weekOfYear = Math.floor(daysSince / 7);
+      explorerHeroImage = explorerList[weekOfYear % explorerList.length].url;
+    }
+
     privateCount = privateYachts.length;
     explorerCount = explorerYachts.length;
 
