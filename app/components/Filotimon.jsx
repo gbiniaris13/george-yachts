@@ -54,12 +54,15 @@ export default function Filotimon({ filotimoImage = null }) {
       style={{ background: "#000000" }}
       aria-label="Filotimo — the Greek philosophy that shapes George Yachts"
     >
-      {/* Ambient gold wash */}
+      {/* Ambient gold wash — drifts slowly on scroll (A4 ambient parallax) */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
             "radial-gradient(ellipse at 50% 50%, rgba(218,165,32,0.05) 0%, transparent 60%)",
+          transform:
+            "translate3d(0, calc(var(--gy-scroll-vy, 0) * -6px), 0)",
+          willChange: "transform",
         }}
       />
 
@@ -94,8 +97,15 @@ export default function Filotimon({ filotimoImage = null }) {
             }}
           />
 
-          {/* Faint ΦΙΛΟΤΙΜΟ watermark */}
-          <div className="absolute inset-0 flex items-end justify-start pb-12 pl-8 md:pl-14 pointer-events-none select-none">
+          {/* Faint ΦΙΛΟΤΙΜΟ watermark — gentle ambient drift */}
+          <div
+            className="absolute inset-0 flex items-end justify-start pb-12 pl-8 md:pl-14 pointer-events-none select-none"
+            style={{
+              transform:
+                "translate3d(0, calc(var(--gy-scroll-vy, 0) * -3px), 0)",
+              willChange: "transform",
+            }}
+          >
             <span
               className="uppercase"
               style={{

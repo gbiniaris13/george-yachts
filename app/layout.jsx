@@ -7,6 +7,7 @@ import CustomCursor from "./components/CustomCursor";
 import WhatsAppButton from "./components/WhatsAppButton";
 import GoldCurtain from "./components/GoldCurtain";
 import ExitIntentModal from "./components/ExitIntentModal";
+import AmbientScroll from "./components/AmbientScroll";
 // TranslateWidget now rendered inside NavDrawerSystem — removed here.
 // Removed: WelcomeLanguagePopup (country detection popup — users choose language themselves)
 // Removed: SmartWelcome (time-based greetings — gimmick)
@@ -104,6 +105,8 @@ export default function RootLayout({ children }) {
         {/* Global Effects + Custom Cursor — all pages */}
         <GlobalEffects />
         <CustomCursor />
+        {/* A4 — Ambient scroll parallax driver (publishes CSS vars) */}
+        <AmbientScroll />
         {/* 2. Page Content */}
         <I18nProvider>
         <WishlistProvider>
