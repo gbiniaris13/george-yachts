@@ -77,7 +77,7 @@ export default function DestinationContent({ data }) {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(240px, 100%), 1fr))",
             gap: "22px",
             maxWidth: "1200px",
             margin: "0 auto",
