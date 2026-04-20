@@ -192,7 +192,7 @@ export default function FleetCTAs({
           descriptor="Full crew, total discretion. A private world at sea."
           footer={privateCount > 0 ? `${privateCount} Yachts · Motor, Sailing, Catamaran` : null}
           image={privateHeroImage}
-          gradientFallback="linear-gradient(135deg, #0a0f1a 0%, #1a2b3a 100%)"
+          gradientFallback="linear-gradient(135deg, #000 0%, #0a0a0a 100%)"
           ctaLabel="View the Fleet"
         />
 
@@ -207,9 +207,73 @@ export default function FleetCTAs({
           descriptor="Skippered or lightly crewed. More islands, more adventure."
           footer={explorerCount > 0 ? `${explorerCount} Yachts · Sailing & Power Cats` : null}
           image={explorerHeroImage}
-          gradientFallback="linear-gradient(135deg, #1a2b3a 0%, #0a0f1a 100%)"
+          gradientFallback="linear-gradient(135deg, #0a0a0a 0%, #000 100%)"
           ctaLabel="View the Fleet"
         />
+      </div>
+
+      {/* All Fleet bridge — George 2026-04-20:
+          "Private Fleet και Explorer Fleet στο hero είναι πολύ μεγάλα —
+          θέλω να μπει All Fleet ώστε να μπορούν να δουν όλο τον στόλο."
+          A thin gold band under the two panels with a single link to
+          the unified charter catalogue so nobody gets locked into one
+          collection before seeing everything we have. */}
+      <div
+        className="relative flex items-center justify-center py-6 md:py-8"
+        style={{
+          background:
+            "linear-gradient(to bottom, #000 0%, #050505 100%)",
+          borderTop: "1px solid rgba(218,165,32,0.35)",
+          borderBottom: "1px solid rgba(218,165,32,0.15)",
+        }}
+      >
+        <Link
+          href="/charter-yacht-greece"
+          className="group inline-flex items-center gap-4 px-6"
+          data-cursor="Fleet"
+        >
+          <span
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+              fontSize: "9px",
+              letterSpacing: "0.45em",
+              textTransform: "uppercase",
+              color: "rgba(218,165,32,0.7)",
+              fontWeight: 600,
+            }}
+          >
+            Or
+          </span>
+          <span
+            className="relative transition-colors duration-500 group-hover:text-[#DAA520]"
+            style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: "clamp(18px, 2vw, 24px)",
+              fontWeight: 300,
+              color: "#fff",
+              letterSpacing: "0.04em",
+              borderBottom: "1px solid rgba(218,165,32,0.5)",
+              paddingBottom: "3px",
+            }}
+          >
+            Explore the Entire Fleet
+          </span>
+          <svg
+            width="22"
+            height="10"
+            viewBox="0 0 22 10"
+            fill="none"
+            stroke="#DAA520"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="transition-transform duration-500 group-hover:translate-x-1"
+            aria-hidden="true"
+          >
+            <line x1="0" y1="5" x2="18" y2="5" />
+            <polyline points="14 1 21 5 14 9" />
+          </svg>
+        </Link>
       </div>
 
       <style jsx global>{`
