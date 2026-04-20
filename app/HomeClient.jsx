@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 const YourBroker = dynamic(() => import("./components/YourBroker"), { ssr: false });
 const HowItWorks = dynamic(() => import("./components/HowItWorks"), { ssr: false });
 const Filotimon = dynamic(() => import("./components/Filotimon"), { ssr: false });
+const GreekWatersMap = dynamic(() => import("./components/GreekWatersMap"), { ssr: false });
 const BrokerTestimonials = dynamic(() => import("./components/BrokerTestimonials"), { ssr: false });
 const CredentialsStrip = dynamic(() => import("./components/CredentialsStrip"), { ssr: false });
 const BudgetSlider = dynamic(() => import("./components/BudgetSlider"), { ssr: false });
@@ -48,6 +49,8 @@ const HomeClient = ({
       <HomeStats yachtCount={yachtCount} />
       <YourBroker />
       <HowItWorks />
+      {/* Move #5 — Interactive Greek waters map (statement piece) */}
+      <GreekWatersMap />
       <Filotimon filotimoImage={filotimoImage} />
       <BrokerTestimonials />
       <CredentialsStrip />
