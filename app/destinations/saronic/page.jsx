@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import DestinationContent from "../DestinationContent";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import { imageFor } from "@/lib/destination-images";
 import "@/styles/service-page.css";
 
 export const metadata = {
@@ -19,14 +20,17 @@ const data = {
     "The Saronic Gulf is Athens' backyard paradise — a cluster of elegant islands just 1-3 hours from the capital. Hydra's car-free stone mansions, Spetses' old-money charm, Poros' pine-covered hills, and Aegina's pistachio groves offer a refined escape without the long sail.",
     "Perfect for short charters (3-5 days), weekend getaways, or day charters from Athens. The Saronic is also ideal for combining a yacht experience with city exploration — board in the morning, anchor in Hydra for lunch, and return to Athens for dinner at a Michelin-starred restaurant.",
   ],
-  islandsTitle: "Which Saronic Islands Should You Visit?",
+  islandsTitle: "Every Saronic Island Worth Your Time",
   islands: [
+    { name: "Aegina", desc: "Ancient Temple of Aphaia, famous pistachio groves, charming fishing harbor." },
+    { name: "Angistri", desc: "Tiny pine-covered gem. Crystal waters, zero crowds. A local secret." },
+    { name: "Poros", desc: "Lush pine forests, volcanic scenery, romantic clock tower overlooking the strait." },
     { name: "Hydra", desc: "No cars, no airports. Stone mansions, donkey trails, Leonard Cohen's island. Pure elegance." },
     { name: "Spetses", desc: "Old-money aristocracy, horse-drawn carriages, pine forests, Poseidonion Grand Hotel." },
-    { name: "Poros", desc: "Lush pine forests, volcanic scenery, romantic clock tower overlooking the strait." },
-    { name: "Aegina", desc: "Ancient Temple of Aphaia, famous pistachio groves, charming fishing harbor." },
-    { name: "Agistri", desc: "Tiny pine-covered gem. Crystal waters, zero crowds. A local secret." },
-  ],
+    { name: "Dokos", desc: "Uninhabited islet between Hydra and the Peloponnese. World's oldest known shipwreck. Remote anchoring at its best." },
+    { name: "Salamis", desc: "Battle-of-Salamis history, Athenian coastline, often skipped — a quiet detour between ports." },
+    { name: "Methana", desc: "Saronic's volcanic peninsula. Thermal springs, dramatic lava landscapes, the surprise of the Gulf." },
+  ].map((i) => ({ ...i, image: imageFor(i.name) })),
   itineraryTitle: "4-Day Saronic Gulf Yacht Charter Itinerary",
   itinerary: [
     { day: 1, title: "Athens \u2192 Aegina", desc: "Board at Alimos marina. Short cruise to Aegina. Visit the Temple of Aphaia. Fresh fish dinner in the port." },

@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import DestinationContent from "../DestinationContent";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import { imageFor } from "@/lib/destination-images";
 import "@/styles/service-page.css";
 
 export const metadata = {
@@ -19,13 +20,20 @@ const data = {
     "The Sporades are Greece's green paradise — pine-forested islands rising from sapphire waters, with some of the most beautiful beaches in the Mediterranean. Skiathos' 60+ beaches, Skopelos' Mamma Mia church, and Alonissos' National Marine Park create a charter experience that feels untouched by mass tourism.",
     "Fewer yachts, more nature, absolute tranquility. The Sporades are for those who want Greece at its most authentic — swimming with monk seals in Europe's largest marine reserve, dining in villages where the fisherman is also the restaurant owner, and anchoring in bays where the only sound is the wind in the pines.",
   ],
-  islandsTitle: "Which Sporades Islands Should You Visit?",
+  islandsTitle: "Every Sporades Island Worth Your Time",
+  // George 2026-04-20: "kane to idio kai se sporades". The main four
+  // inhabited islands plus the uninhabited Marine Park gems that
+  // define a Sporades charter — visitable only by yacht.
   islands: [
     { name: "Skiathos", desc: "60+ beaches, vibrant nightlife, Koukounaries — consistently ranked among Europe's finest beaches." },
     { name: "Skopelos", desc: "Mamma Mia's island. Stone villages, olive groves, Agios Ioannis chapel on the cliff." },
     { name: "Alonissos", desc: "National Marine Park, monk seal habitat, pristine underwater world. The eco-luxury choice." },
-    { name: "Skyros", desc: "Most remote Sporades island. Wild horses, traditional pottery, authentic Greek island life." },
-  ],
+    { name: "Skyros", desc: "The remote Sporades. Wild horses, traditional pottery, Byzantine castle, authentic island life." },
+    { name: "Peristera", desc: "Uninhabited Marine Park islet opposite Alonissos. Classical-era shipwreck, a diver's pilgrimage." },
+    { name: "Kyra Panagia", desc: "Monastery-topped, goat-grazed Marine Park island. A deserted anchorage by day, silence by night." },
+    { name: "Gioura", desc: "Protected islet of wild goats and sea caves — the western Aegean's hidden corner." },
+    { name: "Skantzoura", desc: "Southernmost Sporades islet. Cypress forest, perfect beaches, almost never visited." },
+  ].map((i) => ({ ...i, image: imageFor(i.name) })),
   itineraryTitle: "5-Day Sporades Yacht Charter Itinerary",
   itinerary: [
     { day: 1, title: "Skiathos", desc: "Board in Skiathos marina. Afternoon at Lalaria Beach — accessible only by sea. Old Town dinner." },
