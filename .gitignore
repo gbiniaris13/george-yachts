@@ -40,3 +40,25 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 public/videos/yacht-cruising-new-original.mp4
+
+# Claude Code working trees (embedded git repos) — never commit
+.claude/worktrees/
+
+# Lead lists / scraped contacts — NEVER commit to a public repo
+leads/
+*.csv
+!public/**/*.csv
+
+# Accidental macOS duplicate files (" 2.ext")
+* 2.jsx
+* 2.js
+* 2.png
+* 2.jpg
+* 2.jpeg
+* 2.svg
+
+# Internal outreach docs / scripts that should not be public
+docs/outreach-bot-guide-*.md
+scripts/DOMINGO-OMKAR-INSTRUCTIONS.md
+scripts/OUTREACH-SETUP.md
+scripts/outreach-automation.gs
