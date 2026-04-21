@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
 
 function Counter({ end, suffix = "", duration = 1800 }) {
   const [display, setDisplay] = useState(0);
@@ -124,31 +125,78 @@ export default function HomeStats({ yachtCount = 66 }) {
         ))}
       </div>
 
-      {/* Trust badges */}
+      {/* Credentials — merged from the standalone CredentialsStrip
+          section 2026-04-21 (Proposal A). Same icons, now flowing
+          directly below the stat counters so "Proof" lives on one
+          screen instead of two stacked sections. */}
       <div
-        className="max-w-[900px] mx-auto px-6 mt-14 flex flex-wrap items-center justify-center gap-6 md:gap-10"
+        className="max-w-5xl mx-auto px-6 mt-14"
         style={{
           opacity: visible ? 1 : 0,
           transition: "opacity 0.8s ease 0.6s",
         }}
       >
-        {["IYBA Member", "MYBA Contracts", "U.S. Registered", "Personal Broker"].map(
-          (badge, i) => (
-            <React.Fragment key={i}>
-              {i > 0 && (
-                <span className="text-[#DAA520]/20 text-xs hidden md:inline">
-                  &middot;
-                </span>
-              )}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+          {[
+            {
+              icon: (
+                <Image
+                  src="/images/iyba.png"
+                  alt="IYBA Member — International Yacht Brokers Association"
+                  width={44}
+                  height={44}
+                  className="opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+                />
+              ),
+              label: "IYBA Member",
+            },
+            {
+              icon: (
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#DAA520]/60 group-hover:text-[#DAA520] transition-colors duration-500">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                  <polyline points="14,2 14,8 20,8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                </svg>
+              ),
+              label: "MYBA Contracts",
+            },
+            {
+              icon: (
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#DAA520]/60 group-hover:text-[#DAA520] transition-colors duration-500">
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <path d="M2 7h20" />
+                  <path d="M12 21v-4" />
+                  <path d="M8 21h8" />
+                </svg>
+              ),
+              label: "U.S. Registered",
+            },
+            {
+              icon: (
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#DAA520]/60 group-hover:text-[#DAA520] transition-colors duration-500">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M2 12h20" />
+                  <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+                </svg>
+              ),
+              label: "Greek Waters Specialist",
+            },
+          ].map((cred, i) => (
+            <div
+              key={i}
+              className="group flex flex-col items-center gap-3 text-center"
+            >
+              <div className="h-12 flex items-center justify-center">{cred.icon}</div>
               <span
-                className="text-[9px] tracking-[0.2em] uppercase text-white/20 font-medium"
+                className="text-[10px] tracking-[0.2em] uppercase text-white/35 group-hover:text-white/55 transition-colors duration-500 font-light"
                 style={{ fontFamily: "'Montserrat', sans-serif" }}
               >
-                {badge}
+                {cred.label}
               </span>
-            </React.Fragment>
-          )
-        )}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

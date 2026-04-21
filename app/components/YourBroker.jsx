@@ -165,6 +165,116 @@ export default function YourBroker() {
         </div>
       </div>
 
+      {/* Process — merged from the standalone HowItWorks section
+          (2026-04-21, Proposal B). Three editorial steps sit under
+          the bio so the "Meet George + how he works" story reads on
+          ONE scroll instead of two stacked sections. Copy kept
+          generic so i18n/string edits stay in one place. */}
+      <div
+        style={{
+          maxWidth: "1000px",
+          margin: "80px auto 0",
+          opacity: visible ? 1 : 0,
+          transform: visible ? "translateY(0)" : "translateY(32px)",
+          transition: "opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s",
+        }}
+      >
+        <div style={{ textAlign: "center", marginBottom: 32 }}>
+          <p
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+              fontSize: 10,
+              letterSpacing: "0.35em",
+              textTransform: "uppercase",
+              color: "#DAA520",
+              opacity: 0.85,
+              fontWeight: 600,
+              marginBottom: 10,
+            }}
+          >
+            How we work together
+          </p>
+          <div
+            aria-hidden="true"
+            style={{
+              width: 40,
+              height: 1,
+              margin: "0 auto",
+              background: "linear-gradient(90deg, transparent, #DAA520, transparent)",
+              opacity: 0.7,
+            }}
+          />
+        </div>
+
+        <div
+          className="your-broker-process"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 32,
+          }}
+        >
+          {[
+            {
+              num: "01",
+              title: "You share the dream",
+              desc: "A quick call — dates, group, islands you love, islands you'd skip.",
+            },
+            {
+              num: "02",
+              title: "I curate the fleet",
+              desc: "A short, honest shortlist from our 66 yachts, with real availability and my notes.",
+            },
+            {
+              num: "03",
+              title: "We sail",
+              desc: "MYBA contract, full crew brief, and a broker on call through every day at sea.",
+            },
+          ].map((step) => (
+            <div key={step.num} style={{ textAlign: "center" }}>
+              <p
+                style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: 40,
+                  fontWeight: 300,
+                  color: "#DAA520",
+                  opacity: 0.45,
+                  margin: "0 0 8px",
+                  lineHeight: 1,
+                }}
+              >
+                {step.num}
+              </p>
+              <h3
+                style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: 20,
+                  fontWeight: 400,
+                  color: "#fff",
+                  margin: "0 0 8px",
+                  letterSpacing: "0.01em",
+                }}
+              >
+                {step.title}
+              </h3>
+              <p
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: 12,
+                  color: "rgba(255,255,255,0.48)",
+                  lineHeight: 1.7,
+                  fontWeight: 300,
+                  maxWidth: 260,
+                  margin: "0 auto",
+                }}
+              >
+                {step.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <style jsx global>{`
         @media (max-width: 768px) {
           .your-broker-grid {
@@ -175,6 +285,10 @@ export default function YourBroker() {
           .your-broker-grid > div:first-child {
             max-width: 250px;
             margin: 0 auto;
+          }
+          .your-broker-process {
+            grid-template-columns: 1fr !important;
+            gap: 28px !important;
           }
         }
       `}</style>

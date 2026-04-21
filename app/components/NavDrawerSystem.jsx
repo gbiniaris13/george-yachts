@@ -36,10 +36,11 @@ const navSections = [
       { nameKey: "nav.allFleet", fallback: "View All Yachts", href: "/charter-yacht-greece/" },
       { nameKey: "nav.privateFleet", fallback: "Private Fleet", href: "/private-fleet/" },
       { nameKey: "nav.explorerFleet", fallback: "Explorer Fleet", href: "/explorer-fleet/" },
-      { nameKey: "nav.findYacht", fallback: "Find Your Yacht", href: "/yacht-finder/" },
-      { nameKey: "nav.instantProposal", fallback: "Instant Proposal", href: "/proposal-generator/" },
+      // Collapsed 2026-04-21 (Proposal F): Find Your Yacht + Cost
+      // Calculator both redirect to /inquiry — removed their links
+      // so the menu stops offering three routes to the same flow.
       { nameKey: "nav.startInquiry", fallback: "Start an Inquiry", href: "/inquiry/" },
-      { nameKey: "nav.costCalculator", fallback: "Cost Calculator", href: "/cost-calculator/" },
+      { nameKey: "nav.instantProposal", fallback: "Instant Proposal", href: "/proposal-generator/" },
     ],
   },
   {

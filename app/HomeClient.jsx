@@ -9,24 +9,28 @@ import HomeStats from "./components/HomeStats";
 import Footer from "./components/Footer";
 import StickyMiniNav from "./components/StickyMiniNav";
 
-// Dynamic imports for below-fold components — reduces initial JS bundle
+// Dynamic imports for below-fold components — reduces initial JS bundle.
+// 2026-04-21 declutter: the following were removed from the home tree
+// (routes still exist, just no longer surfaced on the landing page):
+//   • HowItWorks         — merged into YourBroker "how we work" block
+//   • CredentialsStrip   — merged into HomeStats (unified "Proof" block)
+//   • BudgetSlider       — low intent on home; tool kept standalone
+//   • InteractiveTools   — duplicates the hamburger menu
+//   • ContactBar         — one-line banner absorbed into ContactFormSection
 const YourBroker = dynamic(() => import("./components/YourBroker"), { ssr: false });
-const HowItWorks = dynamic(() => import("./components/HowItWorks"), { ssr: false });
 const Filotimon = dynamic(() => import("./components/Filotimon"), { ssr: false });
 const GreekWatersMap = dynamic(() => import("./components/GreekWatersMap"), { ssr: false });
 const BrokerTestimonials = dynamic(() => import("./components/BrokerTestimonials"), { ssr: false });
-const CredentialsStrip = dynamic(() => import("./components/CredentialsStrip"), { ssr: false });
-const BudgetSlider = dynamic(() => import("./components/BudgetSlider"), { ssr: false });
-const InteractiveTools = dynamic(() => import("./components/InteractiveTools"), { ssr: false });
-// TwoColumnLayout (4 rotating panels) removed — content was redundant with hero + about + how-it-works
-const ContactBar = dynamic(() => import("./components/ContactBar"), { ssr: false });
 const ContactFormSection = dynamic(() => import("./components/ContactFormSection"), { ssr: false });
 
 const HomeClient = ({
   yachtCount,
   privateRange,
   explorerRange,
-  budgetYachts,
+  // budgetYachts prop still accepted for backwards compat — BudgetSlider
+  // was cut from the home tree 2026-04-21 but the standalone page may
+  // still consume it.
+  budgetYachts: _budgetYachts,
   privateHeroImage,
   explorerHeroImage,
   privateCount,
@@ -36,14 +40,16 @@ const HomeClient = ({
 }) => {
   return (
     <div className="min-h-screen bg-black font-sans">
-      {/* A2 — Sticky mini-nav surfaces after the hero (>600px) */}
+      {/* Sticky mini-nav surfaces after the hero (>600px) */}
       <StickyMiniNav />
 
       <VideoSection />
-      {/* Move #3 — Signature Yacht slot (weekly auto-rotating feature) */}
+
+      {/* Signature Yacht slot (weekly auto-rotating feature) */}
       <section id="signature">
         <SignatureYacht yacht={signatureYacht} />
       </section>
+
       <section id="fleet">
         <FleetCTAs
           privateRange={privateRange}
@@ -54,28 +60,31 @@ const HomeClient = ({
           explorerCount={explorerCount}
         />
       </section>
+
+      {/* Proof = Stats + Credentials merged (Proposal A) */}
       <HomeStats yachtCount={yachtCount} />
-      <YourBroker />
+
+      {/* Meet George + how we work, merged into one section (Proposal B) */}
       <section id="how">
-        <HowItWorks />
+        <YourBroker />
       </section>
-      {/* Move #5 — Interactive Greek waters map (statement piece) */}
+
+      {/* Interactive Greek waters map (statement piece) */}
       <section id="map">
         <GreekWatersMap />
       </section>
+
       <section id="filotimo">
         <Filotimon filotimoImage={filotimoImage} />
       </section>
+
       <BrokerTestimonials />
-      <CredentialsStrip />
-      <BudgetSlider yachts={budgetYachts} />
-      <InteractiveTools />
-      {/* Extra breathing room where 4 rotating panels used to be */}
-      <div className="py-10 md:py-20" />
+
+      {/* ContactBar absorbed into ContactFormSection (Proposal D) */}
       <section id="contact">
-        <ContactBar />
         <ContactFormSection />
       </section>
+
       <Footer />
     </div>
   );

@@ -65,6 +65,30 @@ const nextConfig = {
         destination: "/private-jet-charter",
         permanent: true,
       },
+      // Proposal F (George 2026-04-21): collapse three overlapping
+      // lead-capture tools into the single /inquiry flow so visitors
+      // stop having to pick between quiz / calculator / form. The
+      // old routes permanent-redirect so SEO juice transfers cleanly.
+      {
+        source: "/yacht-finder",
+        destination: "/inquiry",
+        permanent: true,
+      },
+      {
+        source: "/yacht-finder/:path*",
+        destination: "/inquiry",
+        permanent: true,
+      },
+      {
+        source: "/cost-calculator",
+        destination: "/inquiry",
+        permanent: true,
+      },
+      {
+        source: "/cost-calculator/:path*",
+        destination: "/inquiry",
+        permanent: true,
+      },
     ];
   },
 };
