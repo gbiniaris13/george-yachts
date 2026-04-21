@@ -8,16 +8,15 @@ import WhatsAppButton from "./components/WhatsAppButton";
 import GoldCurtain from "./components/GoldCurtain";
 import ExitIntentModal from "./components/ExitIntentModal";
 import AmbientScroll from "./components/AmbientScroll";
-// TranslateWidget now rendered inside NavDrawerSystem — removed here.
-// Removed: WelcomeLanguagePopup (country detection popup — users choose language themselves)
-// Removed: SmartWelcome (time-based greetings — gimmick)
-// Removed: WeatherAware (weather popup — not useful)
+// Cleanup log (for anyone wondering where these went):
+//   • TranslateWidget — relocated inside NavDrawerSystem's icon strip
+//   • WelcomeLanguagePopup, SmartWelcome, WeatherAware, VoiceSearch —
+//     removed as interactive clutter (user picks language themselves)
+//   • CookieConsent (custom) — superseded by the Cookiebot banner
+//     loaded via the <Script id="Cookiebot"> tag below; two banners
+//     was the primary "siege" feel on first visit
+//   • Leadsy AI tracker — overlapped with Microsoft Clarity
 import LiveTicker from "./components/LiveTicker";
-// CookieConsent: removed from the tree 2026-04-21. The Cookiebot
-// script (injected via <Script id="Cookiebot" …>) already renders
-// a compliance banner — having the custom CookieConsent.jsx stacked
-// on top was a second banner on every first visit. One compliance
-// surface is enough, and Cookiebot is the legally-binding one.
 import VisitorBeacon from "./components/VisitorBeacon";
 // Removed: VoiceSearch (nobody uses voice on yacht sites)
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
@@ -157,14 +156,11 @@ export default function RootLayout({ children }) {
           `}
         </Script>
 
-        {/* Leadsy AI Tracker */}
-        <Script
-          id="vtag-ai-js"
-          src="https://r2.leadsy.ai/tag.js"
-          strategy="lazyOnload"
-          data-pid="6aeJg49QjgxMfguK"
-          data-version="062024"
-        />
+        {/* Removed: Leadsy AI tracker — form-interaction + visitor
+            tracking was overlapping with Microsoft Clarity (which
+            already captures full session recordings + heatmaps).
+            Keeping one vendor for that surface keeps the page lighter
+            and the GDPR disclosure simpler. */}
 
         {/* Safe Pass Apr 2026 — additive enhanced analytics */}
         <EnhancedAnalytics />
