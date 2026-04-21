@@ -13,7 +13,11 @@ import AmbientScroll from "./components/AmbientScroll";
 // Removed: SmartWelcome (time-based greetings — gimmick)
 // Removed: WeatherAware (weather popup — not useful)
 import LiveTicker from "./components/LiveTicker";
-import CookieConsent from "./components/CookieConsent";
+// CookieConsent: removed from the tree 2026-04-21. The Cookiebot
+// script (injected via <Script id="Cookiebot" …>) already renders
+// a compliance banner — having the custom CookieConsent.jsx stacked
+// on top was a second banner on every first visit. One compliance
+// surface is enough, and Cookiebot is the legally-binding one.
 import VisitorBeacon from "./components/VisitorBeacon";
 // Removed: VoiceSearch (nobody uses voice on yacht sites)
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
@@ -109,7 +113,7 @@ export default function RootLayout({ children }) {
         </main>
         {/* Language: users choose from flag selector. LiveTicker: social proof */}
         <LiveTicker />
-        <CookieConsent />
+        {/* CookieConsent (custom) — removed; Cookiebot handles it */}
         {/* Removed VoiceSearch */}
         {/* TranslateWidget moved into NavDrawerSystem's right icon
             strip — cleaner placement, no floating pill clashing with

@@ -27,8 +27,14 @@ import { useEffect, useState, useRef } from "react";
 
 const SESSION_KEY = "gy_exit_intent_seen";
 const SUBSCRIBED_KEY = "gy_exit_intent_subscribed";
-const MOBILE_DELAY_MS = 45_000;
-const MOBILE_SCROLL_THRESHOLD = 0.7;
+// George 2026-04-21: modal was firing within the first minute — felt
+// like a siege. Now the mobile time-based trigger needs 2 min of
+// viewing time, and the desktop cursor-leave trigger ignores mouseouts
+// that happen before DESKTOP_MIN_TIME_MS too. No visitor sees this
+// modal in the first 45 s of their visit.
+const MOBILE_DELAY_MS = 120_000;
+const MOBILE_SCROLL_THRESHOLD = 0.8;
+const DESKTOP_MIN_TIME_MS = 45_000;
 
 export default function ExitIntentModal() {
   const [open, setOpen] = useState(false);
@@ -50,15 +56,18 @@ export default function ExitIntentModal() {
       /* ignore */
     }
 
+    const mountedAt = Date.now();
     const trigger = () => {
       if (firedRef.current) return;
+      // Honour the desktop minimum dwell time — don't surprise
+      // someone who bounces off the site in the first 45 s.
+      if (Date.now() - mountedAt < DESKTOP_MIN_TIME_MS) return;
       firedRef.current = true;
       setOpen(true);
     };
 
-    // Desktop: cursor exits top of viewport
+    // Desktop: cursor exits top of viewport, but only after 45s dwell.
     const onMouseOut = (e) => {
-      // relatedTarget null + moving upward = leaving the page
       if (e.clientY <= 2 && !e.relatedTarget) {
         trigger();
       }

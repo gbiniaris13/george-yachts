@@ -21,7 +21,10 @@ import { usePathname } from 'next/navigation';
 const GOLD = '#DAA520';
 const HOT_LEAD_IG_KEY = 'gy-hot-lead-ig-captured';
 const LEAD_CAPTURED_KEY = 'gy-lead-captured';
-const TRIGGER_DELAY_MS = 30_000;
+// George 2026-04-21: 30 s was stacking with the WhatsApp bubble + any
+// exit-intent fire → felt like a siege. Pushed to 2 min so this
+// only surfaces to genuinely engaged visitors on premium pages.
+const TRIGGER_DELAY_MS = 120_000;
 const VISITOR_ID_KEY = 'gy-visitor-id';
 
 function isPremiumPath(pathname) {

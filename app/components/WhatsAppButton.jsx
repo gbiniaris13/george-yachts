@@ -21,20 +21,30 @@ const WA_DEFAULT_MSG =
 const WA_QUICK_MSG =
   "Hi George — exploring Greek charter options. Can I ask a few questions?";
 const STORAGE_KEY = "gy_wa_greeted";
-const GREETING_DELAY_MS = 10_000;
+// Dismiss lock (localStorage, not session): once greeted, don't pester
+// again for a week. Returning visitors shouldn't feel sieged.
+const DISMISS_KEY = "gy_wa_dismissed_at";
+const DISMISS_LOCK_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+// George 2026-04-21: bubble was firing 10 s into the visit alongside
+// the cookie banner + hot-lead popup → felt like a siege. Pushed to
+// 60 s so the visitor has breathing room to actually look at the site
+// before a message surfaces.
+const GREETING_DELAY_MS = 60_000;
 
 export default function WhatsAppButton() {
   const [hovered, setHovered] = useState(false);
   const [greetOpen, setGreetOpen] = useState(false);
 
-  // Surface the greeting after a short delay on first visit only.
+  // Surface the greeting after a delay, respecting both the session-
+  // once guard and a 7-day dismiss lock stored in localStorage.
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
-      const already = window.sessionStorage.getItem(STORAGE_KEY);
-      if (already) return;
+      if (window.sessionStorage.getItem(STORAGE_KEY)) return;
+      const dismissedAt = Number(window.localStorage.getItem(DISMISS_KEY) || 0);
+      if (dismissedAt && Date.now() - dismissedAt < DISMISS_LOCK_MS) return;
     } catch {
-      /* private browsing — just continue without the guard */
+      /* private browsing — just continue without the guards */
     }
     const t = setTimeout(() => setGreetOpen(true), GREETING_DELAY_MS);
     return () => clearTimeout(t);
@@ -44,6 +54,7 @@ export default function WhatsAppButton() {
     setGreetOpen(false);
     try {
       window.sessionStorage.setItem(STORAGE_KEY, "1");
+      window.localStorage.setItem(DISMISS_KEY, String(Date.now()));
     } catch {
       /* ignore */
     }

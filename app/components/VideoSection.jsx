@@ -9,7 +9,9 @@ import { useI18n } from "@/lib/i18n/I18nProvider";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
-import "swiper/css/pagination";
+// Removed: swiper/css/pagination — we don't use the Pagination module
+// here (only Autoplay + EffectFade), so the pagination stylesheet was
+// dead weight on every first paint.
 
 const CATEGORIES = [
   { label: "Sailing Monohulls", value: "sailing-monohulls" },

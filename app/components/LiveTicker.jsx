@@ -112,7 +112,10 @@ export default function LiveTicker() {
           if (countRef.current >= 6) return;
 
           // Next message in 45-90 seconds (realistic interval)
-          const nextDelay = 45000 + Math.random() * 45000;
+          // George 2026-04-21: 45-90 s felt relentless stacked with
+          // the other popups. Widened to 90-180 s so the ticker is
+          // an occasional whisper, not a constant notification.
+          const nextDelay = 90000 + Math.random() * 90000;
           timerRef.current = setTimeout(showMessage, nextDelay);
         }, 300);
       }, 6000);
@@ -120,8 +123,9 @@ export default function LiveTicker() {
   }, []);
 
   useEffect(() => {
-    // First message after 15-25 seconds
-    const initialDelay = 15000 + Math.random() * 10000;
+    // First message after 60-90s (was 15-25s). Visitor gets to
+    // actually see the site before the first social-proof toast.
+    const initialDelay = 60000 + Math.random() * 30000;
     timerRef.current = setTimeout(showMessage, initialDelay);
 
     return () => {
