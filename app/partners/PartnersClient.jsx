@@ -588,9 +588,32 @@ export default function PartnersClient() {
             </form>
           ) : (
             <div className="mb-8 p-6" style={{ backgroundColor: "rgba(201, 168, 76, 0.08)", borderRadius: "2px" }}>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", color: "#000000" }}>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", color: "#000000", marginBottom: "12px" }}>
                 Thank you! Check your inbox shortly.
               </p>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", color: "#000000", opacity: 0.7, marginBottom: "16px" }}>
+                Or open the Partnership Programme directly:
+              </p>
+              <a
+                href="/partnership-deck.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-block",
+                  padding: "10px 22px",
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: "11px",
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  fontWeight: 600,
+                  color: "#000000",
+                  background: "#C9A84C",
+                  textDecoration: "none",
+                  borderRadius: "2px",
+                }}
+              >
+                Open PDF →
+              </a>
             </div>
           )}
 

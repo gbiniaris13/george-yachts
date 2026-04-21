@@ -58,7 +58,9 @@ leads/
 * 2.svg
 
 # Internal outreach docs / scripts that should not be public
+# (these contain the Telegram bot token + Gmail-authenticated
+# sender credentials — keep them out of git).
 docs/outreach-bot-guide-*.md
 scripts/DOMINGO-OMKAR-INSTRUCTIONS.md
 scripts/OUTREACH-SETUP.md
-scripts/outreach-automation.gs
+scripts/outreach-automation*.gs

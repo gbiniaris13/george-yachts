@@ -77,8 +77,13 @@ export async function POST(request) {
       );
     }
 
-    // Read the PDF from public folder
-    const pdfPath = join(process.cwd(), "public", "George_Yachts_Partnership_Programme_2026.pdf");
+    // Read the PDF from the public folder. Renamed 2026-04-21 to
+    // `partnership-deck.pdf` so it lives behind a clean public URL
+    // (georgeyachts.com/partnership-deck.pdf) — the outreach bots +
+    // marketing site now link to that directly. Attachment filename
+    // stays the long descriptive one so the recipient sees a
+    // branded filename when they download.
+    const pdfPath = join(process.cwd(), "public", "partnership-deck.pdf");
     let pdfBuffer;
     try {
       pdfBuffer = readFileSync(pdfPath);
@@ -117,6 +122,13 @@ export async function POST(request) {
             <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
               We remain invisible to your clients — you stay the hero.
             </p>
+
+            <div style="margin: 24px 0; padding: 18px 20px; border-left: 3px solid #C9A84C; background: rgba(201,168,76,0.05);">
+              <p style="font-size: 14px; color: #0D1B2A; margin: 0 0 6px;">
+                The PDF is attached to this email. You can also
+                <a href="https://georgeyachts.com/partnership-deck.pdf" style="color: #C9A84C; font-weight: 600;">open it directly in your browser</a>.
+              </p>
+            </div>
 
             <div style="margin: 32px 0; padding: 20px; border-left: 3px solid #C9A84C; background: rgba(201,168,76,0.05);">
               <p style="font-size: 14px; color: #0D1B2A; margin: 0;">
