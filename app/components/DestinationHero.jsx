@@ -36,17 +36,22 @@ export default function DestinationHero({
   subtitle,
 }) {
   const videoRef = useRef(null);
-  const [showVideo, setShowVideo] = useState(false);
+  // videoReady stays false until onCanPlay fires — meaning the video
+  // genuinely loaded. Until then the still image remains fully opaque,
+  // so a missing / 404 .mp4 doesn't result in a black hero.
+  // (George 2026-04-21: we shipped videoUrls for files that didn't
+  // exist yet → hero went empty. This gates the fade on real playback.)
+  const [videoReady, setVideoReady] = useState(false);
+  const [wantVideo, setWantVideo] = useState(false);
 
   useEffect(() => {
-    // Respect reduced motion + only activate video when URL provided.
     if (!videoUrl) return;
     if (typeof window === "undefined") return;
     const reduced = window.matchMedia?.(
       "(prefers-reduced-motion: reduce)"
     )?.matches;
     if (reduced) return;
-    setShowVideo(true);
+    setWantVideo(true);
   }, [videoUrl]);
 
   // Parallax: drift the background media slowly on scroll. The existing
@@ -54,7 +59,10 @@ export default function DestinationHero({
   // we keep that class on whatever element is visible.
   return (
     <section className="svc-hero">
-      {/* Always render the image — it's also the video poster */}
+      {/* Always render the image — it's the reliable baseline + the
+          video's poster. We only fade it once the video has actually
+          reached canplay, so a missing or 404 .mp4 leaves the image
+          fully visible. */}
       {imageUrl && (
         <Image
           src={imageUrl}
@@ -63,11 +71,14 @@ export default function DestinationHero({
           priority
           className="svc-hero__bg"
           sizes="100vw"
-          style={{ opacity: showVideo ? 0 : 1, transition: "opacity 0.8s ease" }}
+          style={{
+            opacity: videoReady ? 0 : 1,
+            transition: "opacity 0.8s ease",
+          }}
         />
       )}
 
-      {showVideo && (
+      {wantVideo && (
         <video
           ref={videoRef}
           className="svc-hero__bg"
@@ -79,6 +90,16 @@ export default function DestinationHero({
           playsInline
           preload="metadata"
           aria-hidden="true"
+          onCanPlay={() => setVideoReady(true)}
+          onError={() => {
+            // Keep the image showing if the video source breaks.
+            setVideoReady(false);
+            setWantVideo(false);
+          }}
+          style={{
+            opacity: videoReady ? 1 : 0,
+            transition: "opacity 0.8s ease",
+          }}
         />
       )}
 
