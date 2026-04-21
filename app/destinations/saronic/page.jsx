@@ -5,7 +5,7 @@ import ContactFormSection from "@/components/ContactFormSection";
 import DestinationContent from "../DestinationContent";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import DestinationHero from "@/app/components/DestinationHero";
-import { imageFor, videoForRegion } from "@/lib/destination-images";
+import { fetchYachtImagePool, imageFromPool, videoForRegion } from "@/lib/destination-images";
 import "@/styles/service-page.css";
 
 export const metadata = {
@@ -14,7 +14,18 @@ export const metadata = {
   alternates: { canonical: "https://georgeyachts.com/destinations/saronic" },
 };
 
-const data = {
+const SARONIC_ISLANDS = [
+  { name: "Aegina", desc: "Ancient Temple of Aphaia, famous pistachio groves, charming fishing harbor." },
+  { name: "Angistri", desc: "Tiny pine-covered gem. Crystal waters, zero crowds. A local secret." },
+  { name: "Poros", desc: "Lush pine forests, volcanic scenery, romantic clock tower overlooking the strait." },
+  { name: "Hydra", desc: "No cars, no airports. Stone mansions, donkey trails, Leonard Cohen's island. Pure elegance." },
+  { name: "Spetses", desc: "Old-money aristocracy, horse-drawn carriages, pine forests, Poseidonion Grand Hotel." },
+  { name: "Dokos", desc: "Uninhabited islet between Hydra and the Peloponnese. World's oldest known shipwreck. Remote anchoring at its best." },
+  { name: "Salamis", desc: "Battle-of-Salamis history, Athenian coastline, often skipped — a quiet detour between ports." },
+  { name: "Methana", desc: "Saronic's volcanic peninsula. Thermal springs, dramatic lava landscapes, the surprise of the Gulf." },
+];
+
+const SARONIC_BASE = {
   region: "Saronic Gulf",
   introTitle: "Why Charter a Yacht in the Saronic Gulf?",
   introText: [
@@ -22,16 +33,6 @@ const data = {
     "Perfect for short charters (3-5 days), weekend getaways, or day charters from Athens. The Saronic is also ideal for combining a yacht experience with city exploration — board in the morning, anchor in Hydra for lunch, and return to Athens for dinner at a Michelin-starred restaurant.",
   ],
   islandsTitle: "Every Saronic Island Worth Your Time",
-  islands: [
-    { name: "Aegina", desc: "Ancient Temple of Aphaia, famous pistachio groves, charming fishing harbor." },
-    { name: "Angistri", desc: "Tiny pine-covered gem. Crystal waters, zero crowds. A local secret." },
-    { name: "Poros", desc: "Lush pine forests, volcanic scenery, romantic clock tower overlooking the strait." },
-    { name: "Hydra", desc: "No cars, no airports. Stone mansions, donkey trails, Leonard Cohen's island. Pure elegance." },
-    { name: "Spetses", desc: "Old-money aristocracy, horse-drawn carriages, pine forests, Poseidonion Grand Hotel." },
-    { name: "Dokos", desc: "Uninhabited islet between Hydra and the Peloponnese. World's oldest known shipwreck. Remote anchoring at its best." },
-    { name: "Salamis", desc: "Battle-of-Salamis history, Athenian coastline, often skipped — a quiet detour between ports." },
-    { name: "Methana", desc: "Saronic's volcanic peninsula. Thermal springs, dramatic lava landscapes, the surprise of the Gulf." },
-  ].map((i) => ({ ...i, image: imageFor(i.name) })),
   itineraryTitle: "4-Day Saronic Gulf Yacht Charter Itinerary",
   itinerary: [
     { day: 1, title: "Athens \u2192 Aegina", desc: "Board at Alimos marina. Short cruise to Aegina. Visit the Temple of Aphaia. Fresh fish dinner in the port." },
@@ -46,7 +47,18 @@ function PageSchema() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
 
-export default function SaronicPage() {
+export const revalidate = 3600;
+
+export default async function SaronicPage() {
+  const pool = await fetchYachtImagePool();
+  const data = {
+    ...SARONIC_BASE,
+    islands: SARONIC_ISLANDS.map((i) => ({
+      ...i,
+      image: imageFromPool(pool, i.name),
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
       <BreadcrumbSchema items={[

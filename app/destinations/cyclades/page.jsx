@@ -5,7 +5,7 @@ import ContactFormSection from "@/components/ContactFormSection";
 import DestinationContent from "../DestinationContent";
 import DestinationHero from "@/app/components/DestinationHero";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
-import { imageFor, videoForRegion } from "@/lib/destination-images";
+import { fetchYachtImagePool, imageFromPool, videoForRegion } from "@/lib/destination-images";
 import "@/styles/service-page.css";
 
 export const metadata = {
@@ -44,9 +44,9 @@ const CYCLADES_ISLANDS = [
   { name: "Iraklia", desc: "Little Cyclades gem. Cave of Agios Ioannis, wild hiking, fewer than 150 residents." },
   { name: "Donousa", desc: "Easternmost Little Cyclade. Kendros beach, the Aegean's clearest water, no crowds, no noise." },
   { name: "Thirasia", desc: "Santorini's silent sister across the caldera. A glimpse of Santorini before tourism." },
-].map((i) => ({ ...i, image: imageFor(i.name) }));
+];
 
-const data = {
+const CYCLADES_BASE = {
   region: "Cyclades",
   introTitle: "Why Charter a Yacht in the Cyclades?",
   introText: [
@@ -54,7 +54,6 @@ const data = {
     "A crewed yacht charter is the ultimate way to experience the Cyclades. No ferry queues, no hotel check-ins — just island-hopping at your own pace with a dedicated crew, private chef, and your broker's insider knowledge of every anchorage, beach club, and hidden taverna.",
   ],
   islandsTitle: "Every Cycladic Island Worth Your Time",
-  islands: CYCLADES_ISLANDS,
   itineraryTitle: "7-Day Cyclades Yacht Charter Itinerary",
   itinerary: [
     { day: 1, title: "Athens \u2192 Kea", desc: "Board in Athens marina. Cruise to Kea for a quiet first evening in Vourkari bay." },
@@ -72,7 +71,21 @@ function PageSchema() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
 
-export default function CycladesPage() {
+// Async server component — pulls the Sanity yacht photo pool at
+// build / ISR time and stamps each island with a deterministic pick.
+// Cached by Next's fetch cache + the page-level `revalidate = 3600`.
+export const revalidate = 3600;
+
+export default async function CycladesPage() {
+  const pool = await fetchYachtImagePool();
+  const data = {
+    ...CYCLADES_BASE,
+    islands: CYCLADES_ISLANDS.map((i) => ({
+      ...i,
+      image: imageFromPool(pool, i.name),
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
       <BreadcrumbSchema items={[

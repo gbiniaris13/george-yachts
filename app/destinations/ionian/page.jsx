@@ -5,7 +5,7 @@ import ContactFormSection from "@/components/ContactFormSection";
 import DestinationContent from "../DestinationContent";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import DestinationHero from "@/app/components/DestinationHero";
-import { imageFor, videoForRegion } from "@/lib/destination-images";
+import { fetchYachtImagePool, imageFromPool, videoForRegion } from "@/lib/destination-images";
 import "@/styles/service-page.css";
 
 export const metadata = {
@@ -14,7 +14,27 @@ export const metadata = {
   alternates: { canonical: "https://georgeyachts.com/destinations/ionian" },
 };
 
-const data = {
+// Complete Ionian archipelago. Adds Antipaxos, Meganisi, Kalamos,
+// Kastos, Kythira, Othoni, Erikoussa, Mathraki — the smaller islets
+// that elevate an Ionian charter from a classic to a private one.
+const IONIAN_ISLANDS = [
+  { name: "Corfu", desc: "Venetian old town (UNESCO), lush hillsides, luxury resorts. Gateway to the Ionian." },
+  { name: "Paxos", desc: "Tiny, tranquil, crystal caves and blue grottos. The most exclusive Ionian island." },
+  { name: "Antipaxos", desc: "Vineyards, white-sand Voutoumi and Vrika beaches — water clearer than any pool." },
+  { name: "Lefkada", desc: "Connected by bridge to mainland. Porto Katsiki — one of Greece's most stunning beaches." },
+  { name: "Meganisi", desc: "Sheltered Vathi and Spartochori bays. The Ionian yachtie's favourite anchorage." },
+  { name: "Kalamos", desc: "Sleepy pine-covered island. One waterfront taverna, one stone quay, one unforgettable sunset." },
+  { name: "Kastos", desc: "Smallest inhabited Ionian island. A single village, dozens of tiny beaches you'll share with nobody." },
+  { name: "Kefalonia", desc: "Largest Ionian island. Myrtos Beach, Melissani Cave, Captain Corelli's island." },
+  { name: "Ithaca", desc: "Odysseus' legendary homeland. Unspoiled, authentic, deeply romantic." },
+  { name: "Zakynthos", desc: "Navagio Shipwreck Beach, loggerhead turtle nesting grounds, vibrant nightlife." },
+  { name: "Kythira", desc: "Aphrodite's birthplace, southernmost Ionian. Venetian castles, untouched coves, rarely chartered." },
+  { name: "Othoni", desc: "Greece's westernmost point. Forty-minute sail north of Corfu, Calypso's cave, wild silence." },
+  { name: "Erikoussa", desc: "Tiny Diapontia islet off Corfu. Fine sand beaches, cedar forests, a single hotel." },
+  { name: "Mathraki", desc: "Third of the Diapontia islets. Virgin Aegean, not Ionian, on this far-northwest edge of Greece." },
+];
+
+const IONIAN_BASE = {
   region: "Ionian Islands",
   introTitle: "Why Charter a Yacht in the Ionian?",
   introText: [
@@ -22,25 +42,6 @@ const data = {
     "With shorter distances between islands and consistently calm conditions, the Ionian is perfect for relaxed island-hopping. Your crew will guide you to secret swimming spots, waterfront tavernas serving the freshest seafood, and anchorages where you'll be the only yacht in sight.",
   ],
   islandsTitle: "Every Ionian Island Worth Your Time",
-  // Complete Ionian archipelago. Adds Antipaxos, Meganisi, Kalamos,
-  // Kastos, Kythira, Othoni, Erikoussa, Mathraki — the smaller islets
-  // that elevate an Ionian charter from a classic to a private one.
-  islands: [
-    { name: "Corfu", desc: "Venetian old town (UNESCO), lush hillsides, luxury resorts. Gateway to the Ionian." },
-    { name: "Paxos", desc: "Tiny, tranquil, crystal caves and blue grottos. The most exclusive Ionian island." },
-    { name: "Antipaxos", desc: "Vineyards, white-sand Voutoumi and Vrika beaches — water clearer than any pool." },
-    { name: "Lefkada", desc: "Connected by bridge to mainland. Porto Katsiki — one of Greece's most stunning beaches." },
-    { name: "Meganisi", desc: "Sheltered Vathi and Spartochori bays. The Ionian yachtie's favourite anchorage." },
-    { name: "Kalamos", desc: "Sleepy pine-covered island. One waterfront taverna, one stone quay, one unforgettable sunset." },
-    { name: "Kastos", desc: "Smallest inhabited Ionian island. A single village, dozens of tiny beaches you'll share with nobody." },
-    { name: "Kefalonia", desc: "Largest Ionian island. Myrtos Beach, Melissani Cave, Captain Corelli's island." },
-    { name: "Ithaca", desc: "Odysseus' legendary homeland. Unspoiled, authentic, deeply romantic." },
-    { name: "Zakynthos", desc: "Navagio Shipwreck Beach, loggerhead turtle nesting grounds, vibrant nightlife." },
-    { name: "Kythira", desc: "Aphrodite's birthplace, southernmost Ionian. Venetian castles, untouched coves, rarely chartered." },
-    { name: "Othoni", desc: "Greece's westernmost point. Forty-minute sail north of Corfu, Calypso's cave, wild silence." },
-    { name: "Erikoussa", desc: "Tiny Diapontia islet off Corfu. Fine sand beaches, cedar forests, a single hotel." },
-    { name: "Mathraki", desc: "Third of the Diapontia islets. Virgin Aegean, not Ionian, on this far-northwest edge of Greece." },
-  ].map((i) => ({ ...i, image: imageFor(i.name) })),
   itineraryTitle: "7-Day Ionian Yacht Charter Itinerary",
   itinerary: [
     { day: 1, title: "Lefkada \u2192 Meganisi", desc: "Board in Lefkada marina. Short cruise to Meganisi's secluded Vathi bay." },
@@ -58,7 +59,18 @@ function PageSchema() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
 
-export default function IonianPage() {
+export const revalidate = 3600;
+
+export default async function IonianPage() {
+  const pool = await fetchYachtImagePool();
+  const data = {
+    ...IONIAN_BASE,
+    islands: IONIAN_ISLANDS.map((i) => ({
+      ...i,
+      image: imageFromPool(pool, i.name),
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
       <BreadcrumbSchema items={[
