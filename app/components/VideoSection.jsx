@@ -145,21 +145,28 @@ const VideoSection = () => {
                       }}
                     />
 
-                    {/* Brand Name — letter-by-letter reveal. Split into
-                        spans so each glyph gets its own staggered delay. */}
+                    {/* Brand Name — letter-by-letter reveal.
+                        2026-04-21 CENTERING FIX: CSS `letter-spacing`
+                        adds trailing whitespace after the final glyph,
+                        so `textAlign:center` on the <h1> centres the
+                        bounding-box (letters + phantom trailing space)
+                        — making the visible word look shifted LEFT.
+                        Fix: wrap all letters in a single inline-block
+                        span, move the letter-spacing to the wrapper,
+                        and give it a matching negative
+                        `margin-inline-end`. The phantom space is
+                        literally pulled back into the wrapper, so the
+                        visible letters centre dead-on the viewport
+                        axis. Same trick used below for every other
+                        letter-spaced line (eyebrow, BROKERAGE HOUSE,
+                        sub-tagline). */}
                     <h1
                       className="gy-hero-headline"
                       aria-label="George Yachts"
                       style={{
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
-                        // Mobile audit 2026-04-20: dropped the min from
-                        // 42 → 34 and tightened tracking so "GEORGE
-                        // YACHTS" never overlaps itself on 320–360 px
-                        // devices. Letters breathe from native kerning
-                        // at the smaller size.
                         fontSize: "clamp(34px, 9vw, 110px)",
                         fontWeight: 200,
-                        letterSpacing: "clamp(0.06em, 0.15vw, 0.15em)",
                         lineHeight: 0.95,
                         color: "#fff",
                         textTransform: "uppercase",
@@ -167,33 +174,39 @@ const VideoSection = () => {
                         textAlign: "center",
                       }}
                     >
-                      {"GEORGE\u00A0YACHTS".split("").map((ch, i) => (
-                        <span
-                          key={i}
-                          className="gy-hero-letter"
-                          aria-hidden="true"
-                          style={{
-                            display: "inline-block",
-                            opacity: heroVisible ? undefined : 0,
-                            animationDelay: heroVisible ? `${900 + i * 55}ms` : "0ms",
-                          }}
-                        >
-                          {ch === " " ? "\u00A0" : ch}
-                        </span>
-                      ))}
+                      <span
+                        className="gy-hero-letters-wrap"
+                        style={{
+                          display: "inline-block",
+                          letterSpacing: "clamp(0.06em, 0.15vw, 0.15em)",
+                          marginInlineEnd: "calc(-1 * clamp(0.06em, 0.15vw, 0.15em))",
+                        }}
+                      >
+                        {"GEORGE\u00A0YACHTS".split("").map((ch, i) => (
+                          <span
+                            key={i}
+                            className="gy-hero-letter"
+                            aria-hidden="true"
+                            style={{
+                              display: "inline-block",
+                              opacity: heroVisible ? undefined : 0,
+                              animationDelay: heroVisible ? `${900 + i * 55}ms` : "0ms",
+                            }}
+                          >
+                            {ch === " " ? "\u00A0" : ch}
+                          </span>
+                        ))}
+                      </span>
                       <span className="sr-only"> — Luxury Yacht Charter Greece</span>
                     </h1>
 
-                    {/* Eyebrow — MOVED below the headline (cinematic pattern:
-                        the name arrives first, the signature follows). */}
+                    {/* Eyebrow — same trailing-letter-spacing fix as
+                        the headline: inline-block wrapper absorbs the
+                        phantom space so the gold eyebrow sits centered. */}
                     <p
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
                         fontSize: "10px",
-                        // 0.55em would spread 8 words to 80%+ width on
-                        // 360 px devices. Responsive clamp keeps the
-                        // cinematic wide tracking on desktop.
-                        letterSpacing: "clamp(0.22em, 1.2vw, 0.55em)",
                         textTransform: "uppercase",
                         color: "#DAA520",
                         fontWeight: 600,
@@ -204,16 +217,23 @@ const VideoSection = () => {
                         transition: "opacity 1s ease 1.7s, transform 1s ease 1.7s",
                       }}
                     >
-                      {t('hero.tagline')}
+                      <span
+                        style={{
+                          display: "inline-block",
+                          letterSpacing: "clamp(0.22em, 1.2vw, 0.55em)",
+                          marginInlineEnd: "calc(-1 * clamp(0.22em, 1.2vw, 0.55em))",
+                        }}
+                      >
+                        {t('hero.tagline')}
+                      </span>
                     </p>
 
-                    {/* Subtitle — BROKERAGE HOUSE LLC (retimed for Move #1) */}
+                    {/* Subtitle — BROKERAGE HOUSE LLC */}
                     <p
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
                         fontSize: "clamp(10px, 1.8vw, 16px)",
                         fontWeight: 400,
-                        letterSpacing: "0.45em",
                         textTransform: "uppercase",
                         margin: "0 0 28px 0",
                         textAlign: "center",
@@ -227,7 +247,15 @@ const VideoSection = () => {
                         transition: "opacity 1s ease 1.9s, transform 1s ease 1.9s",
                       }}
                     >
-                      BROKERAGE HOUSE LLC
+                      <span
+                        style={{
+                          display: "inline-block",
+                          letterSpacing: "0.45em",
+                          marginInlineEnd: "-0.45em",
+                        }}
+                      >
+                        BROKERAGE HOUSE LLC
+                      </span>
                     </p>
 
                     {/* Secondary inline gold dash (between brand block and
@@ -249,7 +277,6 @@ const VideoSection = () => {
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
                         fontSize: "10px",
-                        letterSpacing: "0.3em",
                         textTransform: "uppercase",
                         color: "rgba(255,255,255,0.42)",
                         fontWeight: 300,
@@ -259,7 +286,15 @@ const VideoSection = () => {
                         transition: "opacity 1s ease 2.3s",
                       }}
                     >
-                      Boutique Luxury Yacht Charter &middot; Est. U.S.A. &middot; Operating from Athens
+                      <span
+                        style={{
+                          display: "inline-block",
+                          letterSpacing: "0.3em",
+                          marginInlineEnd: "-0.3em",
+                        }}
+                      >
+                        Boutique Luxury Yacht Charter &middot; Est. U.S.A. &middot; Operating from Athens
+                      </span>
                     </p>
 
                     {/* Seasonal Message (retimed for Move #1) */}
