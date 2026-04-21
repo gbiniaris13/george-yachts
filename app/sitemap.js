@@ -23,12 +23,9 @@ const staticRoutes = [
   { path: "/blog", priority: 0.9, changeFrequency: "daily" },
   { path: "/yacht-itineraries-greece", priority: 0.8, changeFrequency: "monthly" },
 
-  // Destinations
-  { path: "/destinations", priority: 0.85, changeFrequency: "monthly" },
-  { path: "/destinations/cyclades", priority: 0.85, changeFrequency: "monthly" },
-  { path: "/destinations/ionian", priority: 0.85, changeFrequency: "monthly" },
-  { path: "/destinations/saronic", priority: 0.85, changeFrequency: "monthly" },
-  { path: "/destinations/sporades", priority: 0.85, changeFrequency: "monthly" },
+  // Destinations pages removed 2026-04-21 — only the home-page
+  // GreekWatersMap kept as a visual anchor. Paths redirect in
+  // next.config.mjs so legacy bookmarks still land somewhere valid.
 
   // Services
   { path: "/yachts-for-sale", priority: 0.8, changeFrequency: "weekly" },

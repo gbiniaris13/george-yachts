@@ -47,7 +47,9 @@ const navSections = [
     labelKey: "nav.explore",
     fallback: "Explore Greece",
     links: [
-      { nameKey: "nav.islandGuides", fallback: "Destinations", href: "/destinations/" },
+      // Destinations pages removed 2026-04-21 — the photo-per-island
+      // flow became a rabbit hole with no clean ending; pulled the
+      // whole /destinations/* route family out of the site.
       { nameKey: "nav.itineraries", fallback: "Curated Itineraries", href: "/yacht-itineraries-greece/" },
       { nameKey: "nav.islandQuiz", fallback: "Island Quiz", href: "/island-quiz/" },
       { nameKey: "nav.buildItinerary", fallback: "Build My Itinerary", href: "/itinerary-builder/" },

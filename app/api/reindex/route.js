@@ -208,8 +208,6 @@ function getRevalidationPaths(type, slug) {
     paths.push(`/blog/${slug}`, "/blog", "/llms.txt");
   } else if (type === "yacht") {
     paths.push(`/yachts/${slug}`, "/private-fleet", "/explorer-fleet");
-  } else if (type === "destination") {
-    paths.push(`/destinations/${slug}`, "/destinations");
   } else if (type === "itinerary") {
     paths.push(`/yacht-itineraries-greece/${slug}`, "/yacht-itineraries-greece");
   } else if (type === "teamMember") {
@@ -235,7 +233,8 @@ function buildUrl(type, slug) {
   const routes = {
     post: `/blog/${slug}`,
     yacht: `/yachts/${slug}`,
-    destination: `/destinations/${slug}`,
+    // destination route retired 2026-04-21 — if Sanity still
+    // sends destination docs they'll just no-op (path = null)
     itinerary: `/yacht-itineraries-greece/${slug}`,
     teamMember: `/team/${slug}`,
   };

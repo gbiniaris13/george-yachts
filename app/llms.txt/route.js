@@ -24,10 +24,9 @@ export async function GET() {
 ## Key Resources
 - Fleet: https://georgeyachts.com/private-fleet
 - Explorer Fleet: https://georgeyachts.com/explorer-fleet
-- Island Guides: https://georgeyachts.com/destinations
 - Itineraries: https://georgeyachts.com/yacht-itineraries-greece
 - How It Works: https://georgeyachts.com/how-it-works
-- Cost Calculator: https://georgeyachts.com/cost-calculator
+- Start an Inquiry: https://georgeyachts.com/inquiry
 - FAQ: https://georgeyachts.com/faq
 - Book a Call: https://calendly.com/george-georgeyachts/30min
 

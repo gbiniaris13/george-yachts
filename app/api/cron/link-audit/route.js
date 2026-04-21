@@ -11,16 +11,17 @@ export async function GET(req) {
   }
 
   try {
-    // 1. Fetch all published URLs from Sanity
+    // 1. Fetch all published URLs from Sanity. "destination" doc type
+    // removed 2026-04-21 — the /destinations/* routes no longer exist.
     const allContent = await sanityClient.fetch(`
-      *[_type in ["post", "destination", "yacht"] && defined(slug.current)]{
+      *[_type in ["post", "yacht"] && defined(slug.current)]{
         _type,
         "slug": slug.current
       }
     `);
 
     const allUrls = allContent.map((doc) => {
-      const prefix = doc._type === "post" ? "/blog" : doc._type === "yacht" ? "/yachts" : "/destinations";
+      const prefix = doc._type === "post" ? "/blog" : "/yachts";
       return `https://georgeyachts.com${prefix}/${doc.slug}`;
     });
 

@@ -89,6 +89,20 @@ const nextConfig = {
         destination: "/inquiry",
         permanent: true,
       },
+      // Destinations section retired 2026-04-21. Legacy bookmarks
+      // land on the inquiry flow so nothing 404s, and the SEO weight
+      // transfers to the new primary conversion page. The home
+      // page's GreekWatersMap still surfaces each region visually.
+      {
+        source: "/destinations",
+        destination: "/inquiry",
+        permanent: true,
+      },
+      {
+        source: "/destinations/:path*",
+        destination: "/inquiry",
+        permanent: true,
+      },
     ];
   },
 };

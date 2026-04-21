@@ -16,8 +16,8 @@
 // floating cards — the tapped region shows its info inline below
 // the map instead.
 //
-// All links target the existing /destinations/<region>/ routes —
-// no routing change needed.
+// 2026-04-21: /destinations/* routes were retired; every region on
+// the map now funnels directly into /inquiry for conversion.
 
 import { useState } from "react";
 import Link from "next/link";
@@ -28,8 +28,12 @@ const REGIONS = [
     name: "Ionian",
     tagline: "Emerald water, sailing monohulls, the softest cruising in Greece.",
     stats: "16 islands  ·  West coast  ·  Calm waters",
-    href: "/destinations/ionian",
+    // Destinations pages were removed 2026-04-21; regions on the
+    // map now funnel straight into the inquiry flow.
+    href: "/inquiry",
     // Cluster of islands down the west coast of Greece.
+    // (each region sends visitors to /inquiry since the dedicated
+    // destination pages were retired 2026-04-21)
     islands: [
       { cx: 180, cy: 270, r: 14, name: "Corfu" },
       { cx: 200, cy: 330, r: 9, name: "Paxos" },
@@ -44,7 +48,7 @@ const REGIONS = [
     name: "Saronic",
     tagline: "One hour from Athens. Hydra at sunrise, Spetses at sunset.",
     stats: "8 islands  ·  Near Athens  ·  Weekend gateway",
-    href: "/destinations/saronic",
+    href: "/inquiry",
     islands: [
       { cx: 475, cy: 455, r: 9, name: "Aegina" },
       { cx: 510, cy: 480, r: 7, name: "Poros" },
@@ -57,7 +61,7 @@ const REGIONS = [
     name: "Cyclades",
     tagline: "Whitewashed villages, sun-blasted stone, the Greece you imagined.",
     stats: "24 islands  ·  Central Aegean  ·  Flagship destination",
-    href: "/destinations/cyclades",
+    href: "/inquiry",
     islands: [
       { cx: 620, cy: 425, r: 6, name: "Kea" },
       { cx: 660, cy: 460, r: 6, name: "Kythnos" },
@@ -78,7 +82,7 @@ const REGIONS = [
     name: "Sporades",
     tagline: "Pine forests to the waterline. Mamma Mia's coast in real life.",
     stats: "4 islands  ·  Northeast Aegean  ·  Untamed coast",
-    href: "/destinations/sporades",
+    href: "/inquiry",
     islands: [
       { cx: 565, cy: 245, r: 8, name: "Skiathos" },
       { cx: 600, cy: 230, r: 10, name: "Skopelos" },
