@@ -32,13 +32,16 @@ export async function generateMetadata({ params }) {
 
   const title = `${yacht.name} | ${yacht.subtitle} | Luxury Yacht Charter Greece`;
   const description = `Charter ${yacht.name}, a ${yacht.length} ${yacht.subtitle} accommodating ${yacht.sleeps} guests in Greek waters. ${yacht.weeklyRatePrice}`;
+  const canonical = `https://georgeyachts.com/yachts/${slug}`;
 
   return {
     title,
     description,
+    alternates: { canonical },
     openGraph: {
       title,
       description,
+      url: canonical,
       images: yacht.imageUrl ? [{ url: yacht.imageUrl }] : [],
       type: 'website',
     },
@@ -50,8 +53,22 @@ export async function generateMetadata({ params }) {
   };
 }
 
+// Extract the lowest numeric EUR value from a free-text price string
+// like "From €150,000/week" or "€150,000 — €220,000" → 150000. Used to
+// populate schema.org Offer.price so Google can render rich results
+// with a starting price. Returns null when no number is parseable.
+function extractLowPrice(raw) {
+  if (!raw || typeof raw !== 'string') return null;
+  const matches = raw.match(/[\d][\d.,]*/g);
+  if (!matches) return null;
+  const nums = matches
+    .map(m => Number(m.replace(/[.,]/g, '')))
+    .filter(n => Number.isFinite(n) && n >= 1000);
+  return nums.length ? Math.min(...nums) : null;
+}
+
 // Product Schema for GEO — Complete
-function YachtSchema({ yacht, imageUrl }) {
+function YachtSchema({ yacht, imageUrl, slug }) {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -63,20 +80,40 @@ function YachtSchema({ yacht, imageUrl }) {
     },
     category: 'Luxury Motor Yacht Charter',
     image: imageUrl,
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'EUR',
-      availability: 'https://schema.org/InStock',
-      areaServed: {
-        '@type': 'Place',
-        name: yacht.cruisingRegion || 'Greece',
-      },
-      seller: {
-        '@type': 'Organization',
-        name: 'George Yachts Brokerage House',
-        url: 'https://georgeyachts.com',
-      },
-    },
+    url: `https://georgeyachts.com/yachts/${slug}`,
+    offers: (() => {
+      const low = extractLowPrice(yacht.weeklyRatePrice);
+      const base = {
+        '@type': 'Offer',
+        priceCurrency: 'EUR',
+        availability: 'https://schema.org/InStock',
+        url: `https://georgeyachts.com/yachts/${slug}`,
+        areaServed: {
+          '@type': 'Place',
+          name: yacht.cruisingRegion || 'Greece',
+        },
+        seller: {
+          '@type': 'Organization',
+          name: 'George Yachts Brokerage House',
+          url: 'https://georgeyachts.com',
+        },
+      };
+      if (low) {
+        base.price = String(low);
+        base.priceSpecification = {
+          '@type': 'UnitPriceSpecification',
+          price: String(low),
+          priceCurrency: 'EUR',
+          unitText: 'week',
+          referenceQuantity: {
+            '@type': 'QuantitativeValue',
+            value: 7,
+            unitCode: 'DAY',
+          },
+        };
+      }
+      return base;
+    })(),
     additionalProperty: [
       { '@type': 'PropertyValue', name: 'Length', value: yacht.length },
       { '@type': 'PropertyValue', name: 'Guests', value: yacht.sleeps },
@@ -158,7 +195,7 @@ export default async function YachtPage({ params }) {
 
   return (
     <>
-      <YachtSchema yacht={yacht} imageUrl={heroImage?.url} />
+      <YachtSchema yacht={yacht} imageUrl={heroImage?.url} slug={slug} />
       <BreadcrumbSchema items={breadcrumbs} />
       <YachtPageContent
         yacht={{

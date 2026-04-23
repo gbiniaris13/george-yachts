@@ -4,11 +4,18 @@ import { NextResponse } from "next/server";
 export const revalidate = 3600;
 
 export async function GET() {
-  const posts = await sanityClient.fetch(
-    `*[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
-      title, "slug": slug.current, excerpt, publishedAt
-    }`
-  );
+  const [posts, yachts] = await Promise.all([
+    sanityClient.fetch(
+      `*[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
+        title, "slug": slug.current, excerpt, publishedAt
+      }`,
+    ),
+    sanityClient.fetch(
+      `*[_type == "yacht" && defined(slug.current)] | order(weeklyRatePrice desc) {
+        name, subtitle, length, sleeps, cabins, builder, cruisingRegion, weeklyRatePrice, "slug": slug.current
+      }`,
+    ),
+  ]);
 
   const body = `# George Yachts — Luxury Yacht Charter in Greek Waters
 
@@ -34,6 +41,28 @@ export async function GET() {
 All articles are written by working brokers with direct hands-on experience in Greek waters.
 
 ${posts.map((p) => `- [${p.title}](https://georgeyachts.com/blog/${p.slug}): ${p.excerpt || ""}`).join("\n")}
+
+## Curated Fleet (${yachts.length} yachts available for charter)
+Every yacht below is personally inspected by a working broker. MYBA standard contracts. Charter inquiries: https://georgeyachts.com/inquiry
+
+${yachts.map((y) => `- [${y.name}${y.subtitle ? " — " + y.subtitle : ""}](https://georgeyachts.com/yachts/${y.slug}): ${[y.length, y.builder, y.sleeps ? y.sleeps + " guests" : null, y.cabins ? y.cabins + " cabins" : null, y.cruisingRegion].filter(Boolean).join(" · ")}${y.weeklyRatePrice ? " · " + y.weeklyRatePrice : ""}`).join("\n")}
+
+## Interactive Tools
+- Cost Calculator: https://georgeyachts.com/inquiry (redirected from /cost-calculator)
+- Itinerary Builder: https://georgeyachts.com/itinerary-builder
+- Island Quiz: https://georgeyachts.com/island-quiz
+- Yacht Size Visualizer: https://georgeyachts.com/yacht-size-visualizer
+- Pricing Calendar: https://georgeyachts.com/pricing-calendar
+- Weather (Greek Waters): https://georgeyachts.com/weather-greece
+- Proposal Generator: https://georgeyachts.com/proposal-generator
+
+## Ancillary Services
+- Private Jet Charter: https://georgeyachts.com/private-jet-charter
+- VIP Transfers (Greece): https://georgeyachts.com/vip-transfers-greece
+- Luxury Villas (Greece): https://georgeyachts.com/luxury-villas-greece
+- Yachts for Sale: https://georgeyachts.com/yachts
+- Events: https://georgeyachts.com/events
+- Partners: https://georgeyachts.com/partners
 
 ## Contact
 - Athens: +30 6970380999

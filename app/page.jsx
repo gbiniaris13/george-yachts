@@ -172,9 +172,11 @@ export default async function HomePage() {
 
   return (
     <>
-      <head>
-        <link rel="preload" href="/images/hero-poster.jpg" as="image" fetchPriority="high" />
-      </head>
+      {/* <head> inside a page.jsx is ignored by the App Router — preload
+          hints need to live in root layout or be emitted via the
+          Metadata API. The previous attempted preload was dead code.
+          If hero-poster.jpg ever becomes LCP again, add via
+          `metadata.other` or a Next `<link>` emitted via `generateMetadata`. */}
       <WebSiteSchema />
       <HomeClient
         yachtCount={yachtCount}

@@ -11,13 +11,18 @@ const staticRoutes = [
   { path: "/how-it-works", priority: 0.85, changeFrequency: "monthly" },
   { path: "/charter-timeline", priority: 0.8, changeFrequency: "monthly" },
 
-  // Interactive tools
-  { path: "/yacht-finder", priority: 0.85, changeFrequency: "weekly" },
-  { path: "/cost-calculator", priority: 0.85, changeFrequency: "monthly" },
+  // Primary conversion page
+  { path: "/inquiry", priority: 0.95, changeFrequency: "weekly" },
+
+  // Interactive tools (note: /yacht-finder + /cost-calculator are
+  // 301-redirected to /inquiry in next.config.mjs — do NOT list them
+  // here or Google flags the sitemap for permanent-redirect entries.)
   { path: "/itinerary-builder", priority: 0.85, changeFrequency: "monthly" },
   { path: "/island-quiz", priority: 0.8, changeFrequency: "monthly" },
   { path: "/yacht-size-visualizer", priority: 0.8, changeFrequency: "monthly" },
   { path: "/proposal-generator", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/pricing-calendar", priority: 0.8, changeFrequency: "weekly" },
+  { path: "/weather-greece", priority: 0.75, changeFrequency: "daily" },
 
   // Content
   { path: "/blog", priority: 0.9, changeFrequency: "daily" },
@@ -47,7 +52,10 @@ const staticRoutes = [
   { path: "/team/chris-daskalopoulos", priority: 0.5, changeFrequency: "monthly" },
   { path: "/team/valleria-karvouni", priority: 0.5, changeFrequency: "monthly" },
   { path: "/team/manos-kourmoulakis", priority: 0.5, changeFrequency: "monthly" },
-  { path: "/team/nemesis", priority: 0.3, changeFrequency: "monthly" },
+  // Removed /team/nemesis (placeholder). Re-add when it becomes a real page.
+
+  // Accessibility statement
+  { path: "/accessibility", priority: 0.3, changeFrequency: "yearly" },
 
   // Legal
   { path: "/terms-of-service", priority: 0.2, changeFrequency: "yearly" },

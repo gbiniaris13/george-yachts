@@ -50,8 +50,96 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+// Site-wide defaults every page inherits. Individual pages override via
+// their own `export const metadata` or `generateMetadata`. Audited
+// 2026-04-24: without these defaults, any page missing its own metadata
+// was shipping blank OG / Twitter / robots / icons to crawlers.
 export const metadata = {
   metadataBase: new URL("https://georgeyachts.com"),
+  title: {
+    default: "George Yachts | Luxury Yacht Charter Greece | Boutique Brokerage",
+    template: "%s | George Yachts",
+  },
+  description:
+    "George Yachts Brokerage House — boutique luxury yacht charter in Greek waters. 50+ curated yachts, IYBA member broker, 360° services. Cyclades, Ionian, Saronic, Sporades. Personal service from Athens.",
+  applicationName: "George Yachts",
+  authors: [{ name: "George P. Biniaris", url: "https://georgeyachts.com" }],
+  generator: "Next.js",
+  keywords: [
+    "yacht charter greece",
+    "luxury yacht charter",
+    "crewed yacht charter",
+    "cyclades yacht charter",
+    "ionian yacht charter",
+    "saronic yacht charter",
+    "greek islands yacht",
+    "MYBA charter",
+    "catamaran charter greece",
+    "motor yacht charter greece",
+    "sailing yacht charter greece",
+  ],
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+  openGraph: {
+    type: "website",
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
+    url: "https://georgeyachts.com",
+    title: "George Yachts | Luxury Yacht Charter Greece",
+    description:
+      "Boutique yacht brokerage specializing exclusively in Greek waters. 50+ curated yachts, personal broker relationship, 360° luxury services.",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "George Yachts Brokerage House — Luxury Yacht Charter in Greek Waters",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@georgeyachts",
+    creator: "@georgeyachts",
+    title: "George Yachts | Luxury Yacht Charter Greece",
+    description:
+      "Boutique yacht brokerage in Greek waters. Personal service, curated fleet, 360° luxury.",
+    images: ["/opengraph-image"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  alternates: {
+    canonical: "https://georgeyachts.com",
+    types: {
+      "application/rss+xml": "https://georgeyachts.com/feed.xml",
+    },
+  },
+  category: "Travel",
+};
+
+// Next 15 viewport export — used to be under metadata.viewport, now a
+// separate export. Themes the PWA install surface and sets initial
+// zoom behavior correctly.
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#000000",
+  colorScheme: "dark light",
 };
 
 export default function RootLayout({ children }) {
@@ -60,10 +148,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <meta name="theme-color" content="#000000" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
+        {/* theme-color + apple-mobile-web-app-* now emitted by Next's
+            Metadata API (see `export const viewport` + `metadata.icons`
+            above). `mobile-web-app-capable` is the non-deprecated
+            successor to Apple's proprietary meta and is emitted via the
+            manifest.json. */}
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        {/* Changed strategy to afterInteractive to fix the synchronous blocking error */}
         <Script
           id="Cookiebot"
           src="https://consent.cookiebot.com/uc.js"
