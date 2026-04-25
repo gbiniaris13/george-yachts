@@ -1,5 +1,7 @@
 import React from "react";
 import GeorgeKatrantzosClient from "./GeorgeKatrantzosClient";
+import { generatePersonSchema } from "@/lib/teamSchema";
+import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 
 export const metadata = {
   title: "George Katrantzos - U.S. Partner | George Yachts",
@@ -10,8 +12,27 @@ export const metadata = {
   },
 };
 
+const personSchema = generatePersonSchema("george-katrantzos");
+
 const GeorgeKatrantzosPage = () => {
-  return <GeorgeKatrantzosClient />;
+  return (
+    <>
+      {personSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
+      )}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://georgeyachts.com" },
+          { name: "Team", url: "https://georgeyachts.com/team" },
+          { name: "George Katrantzos", url: "https://georgeyachts.com/team/george-katrantzos" },
+        ]}
+      />
+      <GeorgeKatrantzosClient />
+    </>
+  );
 };
 
 export default GeorgeKatrantzosPage;

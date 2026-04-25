@@ -1,5 +1,7 @@
 import React from "react";
 import ChrisDaskalopoulosClient from "./ChrisDaskalopoulosClient";
+import { generatePersonSchema } from "@/lib/teamSchema";
+import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 
 export const metadata = {
   title: "Chris Daskalopoulos - Marine Insurance & ISO Advisor | George Yachts",
@@ -10,8 +12,27 @@ export const metadata = {
   },
 };
 
+const personSchema = generatePersonSchema("chris-daskalopoulos");
+
 const ChrisDaskalopoulosPage = () => {
-  return <ChrisDaskalopoulosClient />;
+  return (
+    <>
+      {personSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
+      )}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://georgeyachts.com" },
+          { name: "Team", url: "https://georgeyachts.com/team" },
+          { name: "Chris Daskalopoulos", url: "https://georgeyachts.com/team/chris-daskalopoulos" },
+        ]}
+      />
+      <ChrisDaskalopoulosClient />
+    </>
+  );
 };
 
 export default ChrisDaskalopoulosPage;

@@ -1,5 +1,7 @@
 import React from "react";
 import ElleanaKarvouniClient from "./ElleanaKarvouniClient";
+import { generatePersonSchema } from "@/lib/teamSchema";
+import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 
 export const metadata = {
   title: "Elleana Karvouni - Operations & Finance | George Yachts",
@@ -10,8 +12,27 @@ export const metadata = {
   },
 };
 
+const personSchema = generatePersonSchema("elleana-karvouni");
+
 const ElleanaKarvouniPage = () => {
-  return <ElleanaKarvouniClient />;
+  return (
+    <>
+      {personSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
+      )}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://georgeyachts.com" },
+          { name: "Team", url: "https://georgeyachts.com/team" },
+          { name: "Elleana Karvouni", url: "https://georgeyachts.com/team/elleana-karvouni" },
+        ]}
+      />
+      <ElleanaKarvouniClient />
+    </>
+  );
 };
 
 export default ElleanaKarvouniPage;
