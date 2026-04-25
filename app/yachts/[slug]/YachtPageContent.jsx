@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useI18n } from '@/lib/i18n/I18nProvider';
 import { PortableText } from '@portabletext/react';
 import Image from 'next/image';
@@ -10,6 +11,23 @@ import WhatsAppEnquiry from '@/app/components/WhatsAppEnquiry';
 
 export default function YachtPageContent({ yacht, heroImage, description }) {
   const { t } = useI18n();
+
+  // GA4 yacht_view event — fires once per yacht detail mount.
+  // Powers "most-viewed yacht" reports and yacht-level CTR attribution.
+  // Cookiebot-aware: silent if gtag stub missing pre-consent.
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;
+    try {
+      window.gtag('event', 'yacht_view', {
+        yacht_name: yacht?.name,
+        yacht_slug: yacht?.slug?.current,
+        cruising_region: yacht?.cruisingRegion,
+        weekly_rate: yacht?.weeklyRatePrice,
+        builder: yacht?.builder,
+        sleeps: yacht?.sleeps,
+      });
+    } catch {}
+  }, [yacht?.name, yacht?.slug?.current]);
 
   return (
     <>

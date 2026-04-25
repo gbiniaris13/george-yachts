@@ -128,6 +128,13 @@ export default function YourBroker() {
             href="https://calendly.com/george-georgeyachts/30min"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              if (typeof window !== "undefined" && typeof window.gtag === "function") {
+                try {
+                  window.gtag("event", "calendly_click", { click_location: "your_broker_section" });
+                } catch {}
+              }
+            }}
             style={{
               display: "inline-block",
               fontFamily: "'Montserrat', sans-serif",
