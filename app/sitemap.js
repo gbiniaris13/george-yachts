@@ -14,6 +14,15 @@ const staticRoutes = [
   // Primary conversion page
   { path: "/inquiry", priority: 0.95, changeFrequency: "weekly" },
 
+  // Side-by-side comparison hub (NEW 2026-04-25). Both the index
+  // and the 3 broker-curated comparison URLs are sitemap'd so
+  // Google indexes the high-value comparison-query pages directly.
+  { path: "/contact", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/compare", priority: 0.8, changeFrequency: "weekly" },
+  { path: "/compare?yachts=genny,altaia", priority: 0.7, changeFrequency: "weekly" },
+  { path: "/compare?yachts=la-pellegrina,filotimo", priority: 0.7, changeFrequency: "weekly" },
+  { path: "/compare?yachts=genny,filotimo", priority: 0.7, changeFrequency: "weekly" },
+
   // Interactive tools (note: /yacht-finder + /cost-calculator are
   // 301-redirected to /inquiry in next.config.mjs — do NOT list them
   // here or Google flags the sitemap for permanent-redirect entries.)
