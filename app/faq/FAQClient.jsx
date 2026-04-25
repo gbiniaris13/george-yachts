@@ -222,7 +222,7 @@ export default function FAQClient() {
           <p className="svc-cta__eyebrow">Still Have Questions?</p>
           <h2 className="svc-cta__title">Let&apos;s Talk</h2>
           <p className="svc-cta__text">Can&apos;t find what you&apos;re looking for? Get in touch and we&apos;ll answer personally.</p>
-          <a href="https://calendly.com/george-georgeyachts/30min" target="_blank" rel="noopener noreferrer" className="svc-cta__button">Book a Free Consultation</a>
+          <a href="https://calendly.com/george-georgeyachts/30min" target="_blank" rel="noopener noreferrer" onClick={() => { if (typeof window !== "undefined" && typeof window.gtag === "function") { try { window.gtag("event", "calendly_click", { click_location: "faq_page" }); } catch {} } }} className="svc-cta__button">Book a Free Consultation</a>
         </Reveal>
       </section>
 

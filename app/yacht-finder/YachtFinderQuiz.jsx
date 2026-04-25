@@ -304,6 +304,11 @@ export default function YachtFinderQuiz({ fleet: FLEET = [] }) {
               href="https://calendly.com/george-georgeyachts/30min"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                if (typeof window !== "undefined" && typeof window.gtag === "function") {
+                  try { window.gtag("event", "calendly_click", { click_location: "yacht_finder_result" }); } catch {}
+                }
+              }}
               style={{
                 display: 'inline-block',
                 background: 'none',

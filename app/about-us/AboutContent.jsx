@@ -324,6 +324,11 @@ export default function AboutContent() {
             href="https://calendly.com/george-georgeyachts/30min"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              if (typeof window !== "undefined" && typeof window.gtag === "function") {
+                try { window.gtag("event", "calendly_click", { click_location: "about_us" }); } catch {}
+              }
+            }}
             className="about-cta__button"
           >
             Book a Free Consultation

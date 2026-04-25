@@ -598,6 +598,11 @@ export default function PartnersClient() {
                 href="/partnership-deck.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => {
+                  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+                    try { window.gtag("event", "pdf_download", { file_name: "partnership-deck.pdf", file_kind: "partnership_deck", source: "partners_page" }); } catch {}
+                  }
+                }}
                 style={{
                   display: "inline-block",
                   padding: "10px 22px",

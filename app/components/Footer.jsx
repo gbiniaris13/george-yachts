@@ -163,6 +163,11 @@ const Footer = () => {
                 href="https://calendly.com/george-georgeyachts/30min"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => {
+                  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+                    try { window.gtag("event", "calendly_click", { click_location: "footer" }); } catch {}
+                  }
+                }}
                 className="inline-block px-6 py-3 text-center border border-[#DAA520]/30 hover:border-[#DAA520] text-[#DAA520] hover:bg-[#DAA520]/5 transition-all duration-500"
                 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, textDecoration: "none" }}
                 data-cursor="Book"
