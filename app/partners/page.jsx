@@ -1,5 +1,6 @@
 import PartnersClient from "./PartnersClient";
 import Footer from "@/app/components/Footer";
+import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 
 export const metadata = {
   title: "Partner With George Yachts | White-Label Yacht Charter for Travel Professionals",
@@ -20,6 +21,12 @@ export const metadata = {
 export default function PartnersPage() {
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://georgeyachts.com" },
+          { name: "Partners", url: "https://georgeyachts.com/partners" },
+        ]}
+      />
       <PartnersClient />
       <Footer />
     </>

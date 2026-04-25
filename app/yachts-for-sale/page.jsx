@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import { ServiceParallax, Reveal } from "@/components/ServiceParallax";
 import Image from "next/image";
+import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import "@/styles/service-page.css";
 
 export const metadata = {
@@ -36,6 +37,12 @@ export default function BuyYachtPage() {
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
       <PageSchema />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://georgeyachts.com" },
+          { name: "Yachts for Sale", url: "https://georgeyachts.com/yachts-for-sale" },
+        ]}
+      />
       <ServiceParallax />
 
       <section className="svc-hero">

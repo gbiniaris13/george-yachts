@@ -1,5 +1,6 @@
 import { sanityClient } from "@/lib/sanity";
 import ExplorerFleetClient from "./ExplorerFleetClient";
+import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 
 export const revalidate = 3600;
 
@@ -110,6 +111,12 @@ export default async function ExplorerFleetPage() {
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://georgeyachts.com" },
+          { name: "Explorer Fleet", url: "https://georgeyachts.com/explorer-fleet" },
+        ]}
+      />
       <ExplorerFleetSchema lowestPerPerson={displayLowest} />
       <ExplorerFleetClient yachts={displayYachts} lowestPerPerson={displayLowest} highestPerPerson={displayHighest} />
     </>

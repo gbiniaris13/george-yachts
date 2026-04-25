@@ -50,6 +50,67 @@ function WebSiteSchema() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
 
+// Homepage FAQ schema — answers the 6 highest-volume questions about
+// crewed charter in Greece. Plays in answer-box queries on Google +
+// Perplexity / ChatGPT / Claude. Keep answers tight, factual, AI-citable.
+function HomepageFaqSchema() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "How much does a crewed yacht charter in Greece cost in 2026?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Crewed yacht charter rates in Greece typically range from €13,000/week for entry-level catamarans up to €500,000+/week for 50m+ motor yachts. The base weekly rate covers the yacht and crew; an APA (Advance Provisioning Allowance) of 25–35% on top covers fuel, food, dockage, and consumables. VAT in Greece is 12% on the charter fee for itineraries that begin in Greek waters.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "When is the best time to charter a yacht in Greece?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "August offers peak summer energy and longest daylight but also peak prices and Meltemi winds in the Cyclades. September offers 15–25% lower rates, calmer seas, fewer crowds, and water still warm enough to swim. June and July are ideal for the Ionian; May and October work best for the Saronic Gulf and Sporades.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What is APA in a yacht charter?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "APA stands for Advance Provisioning Allowance. It is a deposit paid before boarding (typically 25–35% of the charter fee) that the captain uses to pay for fuel, food, drinks, dockage fees, and any guest-requested provisioning during the charter. Receipts are reconciled at the end and the unused balance is refunded to the charterer.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do I need a broker to charter a yacht in Greece?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Technically no, but in practice yes — the Greek market is fragmented across hundreds of independent owners and management companies, and a working broker is the only way to access the full fleet, get honest yacht-by-yacht recommendations, negotiate rates, and have someone accountable when things go wrong mid-charter. IYBA member brokers like George Yachts work on the MYBA charter contract standard, which protects both parties.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Which Greek islands are best for yachting?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "The Cyclades (Mykonos, Santorini, Paros, Milos) are best for energy and iconic scenery but require weather-aware planning around the Meltemi. The Ionian (Corfu, Lefkada, Kefalonia) is calmer and more family-friendly. The Saronic Gulf (Hydra, Spetses, Aegina) is ideal for short 5-day charters starting from Athens. The Sporades (Skiathos, Skopelos, Alonissos) offer pine-forested anchorages and a quieter atmosphere.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How far in advance should I book a yacht charter in Greece?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "For peak August on the most-requested yachts, 6–9 months ahead — by March of the same year you should be confirming. For shoulder months (June, September), 3–4 months is usually fine. Last-minute charters are possible (sometimes at lower rates) but limit you to whatever yacht remains available rather than the right yacht for your group.",
+        },
+      },
+    ],
+  };
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
+}
+
 export default async function HomePage() {
   let yachtCount = 60;
   let privateRange = { low: 13000, high: 180000 };
@@ -178,6 +239,7 @@ export default async function HomePage() {
           If hero-poster.jpg ever becomes LCP again, add via
           `metadata.other` or a Next `<link>` emitted via `generateMetadata`. */}
       <WebSiteSchema />
+      <HomepageFaqSchema />
       <HomeClient
         yachtCount={yachtCount}
         privateRange={privateRange}

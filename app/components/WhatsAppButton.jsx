@@ -123,7 +123,16 @@ export default function WhatsAppButton() {
               href={buildHref(WA_QUICK_MSG)}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={markGreeted}
+              onClick={(e) => {
+                markGreeted();
+                if (typeof window !== "undefined" && typeof window.gtag === "function") {
+                  try {
+                    window.gtag("event", "whatsapp_click", {
+                      click_location: e?.currentTarget?.dataset?.gyLoc || "whatsapp_button",
+                    });
+                  } catch {}
+                }
+              }}
               className="inline-flex items-center gap-2 hover:opacity-100 transition-opacity duration-300"
               style={{
                 fontFamily: "'Montserrat', sans-serif",
@@ -154,7 +163,16 @@ export default function WhatsAppButton() {
 
             {/* Dismiss × */}
             <button
-              onClick={markGreeted}
+              onClick={(e) => {
+                markGreeted();
+                if (typeof window !== "undefined" && typeof window.gtag === "function") {
+                  try {
+                    window.gtag("event", "whatsapp_click", {
+                      click_location: e?.currentTarget?.dataset?.gyLoc || "whatsapp_button",
+                    });
+                  } catch {}
+                }
+              }}
               aria-label="Dismiss greeting"
               className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center text-white/40 hover:text-[#DAA520] transition-colors duration-300"
               style={{ background: "transparent", border: 0, cursor: "pointer" }}

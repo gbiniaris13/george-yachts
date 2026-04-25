@@ -2,6 +2,7 @@ import { sanityClient } from "@/lib/sanity";
 import Image from "next/image";
 import Link from "next/link";
 import PrivateFleetClient from "./PrivateFleetClient";
+import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 
 export const revalidate = 3600;
 
@@ -87,6 +88,12 @@ export default async function PrivateFleetPage() {
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://georgeyachts.com" },
+          { name: "Private Fleet", url: "https://georgeyachts.com/private-fleet" },
+        ]}
+      />
       <PrivateFleetSchema lowestPrice={lowestPrice} highestPrice={highestPrice} count={displayYachts.length} />
       <PrivateFleetClient yachts={displayYachts} lowestPrice={lowestPrice} highestPrice={highestPrice} />
     </>

@@ -207,6 +207,21 @@ export default function InquiryClient() {
         }),
       });
       setDone(true);
+      // GA4 conversion event — primary funnel completion. Tracks
+      // region, fleet tier, party size, budget band so we can analyze
+      // conversion rate by traffic segment.
+      if (typeof window !== "undefined" && typeof window.gtag === "function") {
+        try {
+          window.gtag("event", "inquiry_submit", {
+            charter_region: answers.region || null,
+            fleet_tier: answers.fleet || null,
+            party_size: answers.guests || null,
+            budget_band: answers.budget || null,
+            charter_when: answers.when || null,
+            duration: answers.duration || null,
+          });
+        } catch {}
+      }
     } catch {
       setError("Network hiccup. Please try again — if it keeps failing, WhatsApp george@georgeyachts.com directly.");
     } finally {

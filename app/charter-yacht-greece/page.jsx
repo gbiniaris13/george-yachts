@@ -3,6 +3,7 @@ import { sanityClient } from "@/lib/sanity";
 import Footer from "@/components/Footer";
 import FleetGrid from "./FleetGrid";
 import Image from "next/image";
+import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import "./fleet-page.css";
 
 // ISR - revalidate every hour
@@ -90,6 +91,12 @@ export default async function CharterFleetPage() {
         fontFamily: "'Montserrat', 'Helvetica Neue', sans-serif",
       }}
     >
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://georgeyachts.com" },
+          { name: "Charter Yachts Greece", url: "https://georgeyachts.com/charter-yacht-greece" },
+        ]}
+      />
       {/* JSON-LD Schema */}
       <script
         type="application/ld+json"
