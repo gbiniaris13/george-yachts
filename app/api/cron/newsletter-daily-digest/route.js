@@ -18,6 +18,11 @@
 import { NextResponse } from "next/server";
 import { kvScard, kvSmembers, kvGet, kvSet } from "@/lib/kv";
 import { seasonOneliner } from "@/lib/newsletter/season";
+import {
+  getDailyCount,
+  getMonthlyCount,
+  MONTHLY_HARD_CAP,
+} from "@/lib/newsletter/quota";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -71,20 +76,16 @@ async function getDraftsPending() {
 }
 
 async function getResendUsageThisMonth() {
-  // Resend's free-tier limit is 3000/month. We don't have an aggregate
-  // counter yet (Phase 6 will wire usage tracking on every send). For
-  // now: count the issues marked `sent` this month from KV. Approximate.
-  const month = todayAthens().slice(0, 7);
+  // 2026-04-29 fix: previously read `digest:resend_usage:<month>` which
+  // was never populated — the real counter is `monthly_resend_count:<month>`
+  // maintained by lib/newsletter/quota.js recordSend() on every successful
+  // Resend send. The digest was always reporting 0/3000 even after live
+  // sends went out. Use the canonical helper so there's one source of truth.
   try {
-    const raw = await kvGet(`digest:resend_usage:${month}`);
-    if (raw) {
-      const n = Number(raw);
-      return Number.isFinite(n) ? n : 0;
-    }
+    return await getMonthlyCount();
   } catch {
-    // ignore
+    return 0;
   }
-  return 0;
 }
 
 async function getLastError24h() {
@@ -140,14 +141,22 @@ export async function GET(request) {
   const today = todayAthens();
   const yesterday = yesterdayAthens();
 
-  const [currentCounts, prevSnapshotRaw, draftsPending, resendUsage, lastError] =
-    await Promise.all([
-      getCounts(),
-      kvGet(`digest:last:${yesterday}`),
-      getDraftsPending(),
-      getResendUsageThisMonth(),
-      getLastError24h(),
-    ]);
+  const [
+    currentCounts,
+    prevSnapshotRaw,
+    draftsPending,
+    resendUsage,
+    dailyUsage,
+    lastError,
+  ] = await Promise.all([
+    getCounts(),
+    kvGet(`digest:last:${yesterday}`),
+    getDraftsPending(),
+    getResendUsageThisMonth(),
+    getDailyCount().catch(() => 0),
+    getLastError24h(),
+  ]);
+  const monthlyPct = ((resendUsage / MONTHLY_HARD_CAP) * 100).toFixed(1);
 
   let prev = null;
   if (prevSnapshotRaw) {
@@ -169,7 +178,7 @@ export async function GET(request) {
     "",
     `<b>Today</b>`,
     `· Drafts pending: ${draftsPending}`,
-    `· Resend usage this month: ${resendUsage} / 3000 (${Math.round((resendUsage / 30) * 100)}%)`,
+    `· Resend usage this month: ${resendUsage} / ${MONTHLY_HARD_CAP} (${monthlyPct}%) · today: ${dailyUsage}`,
     `· Last error (24h): ${
       lastError ? `🚨 ${(lastError.component ?? "—")}: ${lastError.message ?? ""}` : "none"
     }`,
