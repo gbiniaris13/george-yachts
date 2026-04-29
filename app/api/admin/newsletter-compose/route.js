@@ -160,20 +160,53 @@ async function buildOneDraft({
   await kvSadd("draft:active", draftId).catch(() => {});
 
   // Telegram approval card. If validator blocked, fire a different
-  // card explaining WHY without action buttons.
+  // card explaining WHY (with evidence) without action buttons.
   let tg;
   if (!validation.ok) {
+    // Build per-violation lines with evidence so George knows EXACTLY
+    // which sentence/phrase tripped the rule. Without this he has to
+    // guess, which is the diagnostic gap that surfaced 2026-04-29.
+    const escapeTg = (s) =>
+      String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const evidenceFor = (v) => {
+      if (!v.evidence) return null;
+      if (typeof v.evidence === "string") return v.evidence.slice(0, 200);
+      if (Array.isArray(v.evidence)) {
+        return v.evidence.map(String).join(", ").slice(0, 200);
+      }
+      try {
+        return JSON.stringify(v.evidence).slice(0, 200);
+      } catch {
+        return null;
+      }
+    };
+    const violationLines = validation.violations.flatMap((v) => {
+      const ev = evidenceFor(v);
+      const lines = [`• ${v.rule}`];
+      if (ev) lines.push(`  ↳ <i>${escapeTg(ev)}</i>`);
+      return lines;
+    });
+    // Help text varies by content type so the operator knows what to
+    // edit. Stories are wholly hand-written; announces lean on Sanity
+    // record + angle; offers/intel use the angle field.
+    const helpText =
+      content_type === "story"
+        ? "Edit your story body and try again. Common fix: split a sentence with two em-dashes into two sentences with commas."
+        : content_type === "announcement"
+          ? "Either fix the offending Sanity field on this yacht, or rewrite your angle, and try again."
+          : "Adjust the angle / signal text and try again.";
+
     tg = await sendTelegramText(
       [
         `🛑 <b>DRAFT BLOCKED — ${stream} · ${content_type}</b>`,
         ``,
-        `<b>Subject:</b> ${built.subject}`,
+        `<b>Subject:</b> ${escapeTg(built.subject)}`,
         `<b>Audience:</b> ${audienceSize} subscribers (${stream})`,
         ``,
         `<b>Violations:</b>`,
-        ...validation.violations.map((v) => `• ${v.rule}`),
+        ...violationLines,
         ``,
-        `Body was generated but rejected by §13 validator. Adjust the angle / signal text and try again.`,
+        helpText,
       ].join("\n"),
     );
   } else {
