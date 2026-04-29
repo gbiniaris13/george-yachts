@@ -267,6 +267,18 @@ export async function GET(request) {
     await kvSet(`draft:${draftId}`, JSON.stringify(draft));
     if (fullyDone) {
       await kvSrem("draft:active", draftId).catch(() => {});
+      // Update 3 §1 — record per-stream last_send_at so the auto-cron
+      // cadence gate can read it next Thursday. Set even on
+      // sent_with_failures (the cadence is about elapsed time, not
+      // delivery quality).
+      try {
+        await kvSet(
+          `last_send_at:${draft.stream}`,
+          new Date().toISOString(),
+        );
+      } catch {
+        // best-effort
+      }
     }
 
     // Update the original Telegram card → final state.

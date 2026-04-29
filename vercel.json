@@ -35,6 +35,10 @@
     {
       "path": "/api/cron/newsletter-flush-queue",
       "schedule": "30 0 * * *"
+    },
+    {
+      "path": "/api/cron/newsletter-bridge-auto",
+      "schedule": "0 6 * * 4"
     }
   ],
   "headers": [
