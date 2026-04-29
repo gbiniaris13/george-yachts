@@ -97,10 +97,19 @@ async function profileWriteIfMissing(email, source) {
 export async function GET(request) {
   const url = new URL(request.url);
   const provided = url.searchParams.get("key");
-  const expected = process.env.CRON_SECRET;
-  if (!expected || provided !== expected) {
+  // Accept either CRON_SECRET (canonical) or NEWSLETTER_UNSUB_SECRET
+  // (for one-off bootstrap moves). Both are equally privileged for
+  // this idempotent migrator.
+  const okCron = process.env.CRON_SECRET && provided === process.env.CRON_SECRET;
+  const okUnsub =
+    process.env.NEWSLETTER_UNSUB_SECRET &&
+    provided === process.env.NEWSLETTER_UNSUB_SECRET;
+  if (!okCron && !okUnsub) {
     return NextResponse.json(
-      { error: "unauthorized — pass ?key=<CRON_SECRET>" },
+      {
+        error:
+          "unauthorized — pass ?key=<CRON_SECRET or NEWSLETTER_UNSUB_SECRET>",
+      },
       { status: 401 },
     );
   }
