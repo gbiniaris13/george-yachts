@@ -17,12 +17,13 @@
 
 import { NextResponse } from "next/server";
 import { kvScard, kvSmembers, kvGet, kvSet } from "@/lib/kv";
-import { seasonOneliner } from "@/lib/newsletter/season";
+import { seasonOneliner, getCurrentSeason } from "@/lib/newsletter/season";
 import {
   getDailyCount,
   getMonthlyCount,
   MONTHLY_HARD_CAP,
 } from "@/lib/newsletter/quota";
+import { getLastSendAt } from "@/lib/newsletter/auto-bridge";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -122,6 +123,81 @@ async function notifyTelegram(text) {
   }
 }
 
+// Update 3 §5 — watchdog thresholds. Days since last send on a stream
+// beyond which we surface an alert in the daily digest body. Bridge
+// threshold varies by season: weekly cadence in Nov-Jun gets a tighter
+// 8-day window; biweekly cadence in Jul-Oct gets 15 days.
+function bridgeWatchdogThresholdDays(seasonPhase) {
+  if (
+    seasonPhase === "deep_winter" ||
+    seasonPhase === "spring_lift" ||
+    seasonPhase === "season_open"
+  ) {
+    return 8;
+  }
+  return 15;
+}
+const WATCHDOG_THRESHOLDS = {
+  // bridge: dynamic — see bridgeWatchdogThresholdDays
+  wake: 32,
+  compass: 65,
+};
+
+function daysBetween(isoA, isoB = new Date()) {
+  if (!isoA) return Infinity; // never sent → infinite age
+  const a = Date.parse(isoA);
+  if (Number.isNaN(a)) return Infinity;
+  const b = isoB instanceof Date ? isoB.getTime() : Date.parse(isoB);
+  return Math.max(0, (b - a) / (24 * 3600 * 1000));
+}
+
+async function buildWatchdogLines() {
+  const season = getCurrentSeason();
+  const [bridgeLast, wakeLast, compassLast] = await Promise.all([
+    getLastSendAt("bridge"),
+    getLastSendAt("wake"),
+    getLastSendAt("compass"),
+  ]);
+
+  const checks = [
+    {
+      stream: "Bridge",
+      lastIso: bridgeLast,
+      threshold: bridgeWatchdogThresholdDays(season.phase),
+    },
+    { stream: "Wake", lastIso: wakeLast, threshold: WATCHDOG_THRESHOLDS.wake },
+    {
+      stream: "Compass",
+      lastIso: compassLast,
+      threshold: WATCHDOG_THRESHOLDS.compass,
+    },
+  ];
+
+  const breaches = [];
+  for (const c of checks) {
+    const days = daysBetween(c.lastIso);
+    if (days >= c.threshold) {
+      breaches.push({
+        stream: c.stream,
+        last: c.lastIso ?? "never",
+        days_overdue:
+          days === Infinity ? "never sent" : `${Math.round(days)} days`,
+        threshold: c.threshold,
+      });
+    }
+  }
+
+  if (breaches.length === 0) return [];
+  return [
+    "",
+    `<b>⚠️ WATCHDOG</b>`,
+    ...breaches.map(
+      (b) =>
+        `· ${b.stream} — last sent ${b.last === "never" ? "<i>never</i>" : b.last.slice(0, 10)}; ${b.days_overdue} (threshold ${b.threshold}d)`,
+    ),
+  ];
+}
+
 function delta(current, previous) {
   if (previous === undefined || previous === null) return "—";
   const d = current - previous;
@@ -158,6 +234,11 @@ export async function GET(request) {
   ]);
   const monthlyPct = ((resendUsage / MONTHLY_HARD_CAP) * 100).toFixed(1);
 
+  // Update 3 §5 — fold watchdog into this digest instead of a separate
+  // Telegram alert. Reduces notification noise — George reads the
+  // digest end-of-day anyway.
+  const watchdogLines = await buildWatchdogLines();
+
   let prev = null;
   if (prevSnapshotRaw) {
     try {
@@ -182,6 +263,7 @@ export async function GET(request) {
     `· Last error (24h): ${
       lastError ? `🚨 ${(lastError.component ?? "—")}: ${lastError.message ?? ""}` : "none"
     }`,
+    ...watchdogLines,
     "",
     `${seasonOneliner()}`,
   ];
