@@ -17,6 +17,7 @@
 import { NextResponse } from "next/server";
 import crypto from "node:crypto";
 import { kvSadd, kvSrem } from "@/lib/kv";
+import { markEvent } from "@/lib/newsletter/engagement";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -126,7 +127,22 @@ async function handleEvent(evt) {
     return { type, action: "suppressed-complaint", email };
   }
 
-  // DELIVERED / OPENED / CLICKED — log but no action for v1.
+  // Phase 5.1 — engagement tracking. Per-recipient KV record updated
+  // on every send / open / click so we can compute opens-rate and
+  // identify re-engagement candidates (Phase 5.3+).
+  if (type === "email.delivered" || type === "email.sent") {
+    await markEvent({ email, event: "send", at: evt?.created_at }).catch(() => {});
+    return { type, action: "engagement-recorded", recipient: email };
+  }
+  if (type === "email.opened") {
+    await markEvent({ email, event: "open", at: evt?.created_at }).catch(() => {});
+    return { type, action: "engagement-recorded", recipient: email };
+  }
+  if (type === "email.clicked") {
+    await markEvent({ email, event: "click", at: evt?.created_at }).catch(() => {});
+    return { type, action: "engagement-recorded", recipient: email };
+  }
+
   return { type, action: "logged" };
 }
 
