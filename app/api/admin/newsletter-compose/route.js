@@ -154,6 +154,10 @@ async function buildOneDraft({
     composer_meta: {
       yacht_slug: yacht?.slug ?? null,
       post_slug: post?.title ? payload.post_slug : null,
+      // Update 3 §2 — when this draft was created from a Wake/Compass
+      // intel queue entry, the cron passes the entry coordinates so
+      // the audit trail (and any future state-tracking) survives.
+      queue_entry: payload.queue_entry ?? null,
     },
   };
 
