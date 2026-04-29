@@ -46,6 +46,7 @@ import {
 import {
   getYachtForNewsletter,
   getPostForNewsletter,
+  slugFromBlogUrl,
 } from "@/lib/newsletter/sanity-yachts";
 import { assembleBody } from "@/lib/newsletter/body-assembler";
 import { validateNewsletterContent } from "@/lib/newsletter/validator";
@@ -315,15 +316,36 @@ export async function POST(request) {
       );
     }
   } else if (content_type === "blog") {
-    if (!payload.post_slug) {
+    // Accept either:
+    //   payload.post_url  — full or relative blog URL (preferred path)
+    //   payload.post_slug — bare slug from the dropdown
+    let resolvedSlug = null;
+    if (payload.post_url) {
+      resolvedSlug = slugFromBlogUrl(payload.post_url);
+      if (!resolvedSlug) {
+        return NextResponse.json(
+          {
+            error:
+              "post_url not recognized. Use a full URL like " +
+              "https://georgeyachts.com/blog/<slug> or just the slug.",
+          },
+          { status: 400 },
+        );
+      }
+    } else if (payload.post_slug) {
+      resolvedSlug = payload.post_slug;
+    } else {
       return NextResponse.json(
-        { error: "post_slug required for blog" },
+        { error: "post_url or post_slug required for blog" },
         { status: 400 },
       );
     }
-    const r = await getPostForNewsletter(payload.post_slug);
+    const r = await getPostForNewsletter(resolvedSlug);
     if (!r.ok) {
-      return NextResponse.json({ error: r.error }, { status: 404 });
+      return NextResponse.json(
+        { error: `${r.error} (resolved slug: ${resolvedSlug})` },
+        { status: 404 },
+      );
     }
     post = r.post;
   } else if (content_type === "story") {
