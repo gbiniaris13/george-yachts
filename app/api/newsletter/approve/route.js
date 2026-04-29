@@ -18,7 +18,7 @@
 // "sending" is a no-op + reminds the user.
 
 import { NextResponse } from "next/server";
-import { kvGet, kvSet, kvSrem, kvSmembers } from "@/lib/kv";
+import { kvGet, kvSet, kvSrem, kvSmembers, kvSadd, kvSismember } from "@/lib/kv";
 import {
   verifyApprovalToken,
   editTelegramText,
@@ -185,6 +185,22 @@ export async function GET(request) {
         suppressed += 1;
         continue;
       }
+      // Per-issue dedup — never re-deliver the same issue to the same
+      // address even if a later send is re-fired.
+      const issueSentKey = `issue_sent:${r.stream}:${draft.issue_number ?? 1}`;
+      try {
+        const already = await kvSismember(issueSentKey, r.email);
+        if (already === 1 || already === "1") {
+          // Already received this issue — skip silently and don't
+          // count as failed. Bumps `suppressed` so George sees it
+          // in the summary, with a clear-enough label.
+          suppressed += 1;
+          continue;
+        }
+      } catch {
+        // best-effort dedup; if KV check fails we still send.
+      }
+
       const result = await sendNewsletterEmail({
         to: r.email,
         subject: built.subject,
@@ -196,8 +212,11 @@ export async function GET(request) {
           { name: "issue", value: String(draft.issue_number ?? 1) },
         ],
       });
-      if (result.ok) sent += 1;
-      else if (result.suppressed) suppressed += 1;
+      if (result.ok) {
+        sent += 1;
+        // Record this email as having received this issue.
+        await kvSadd(issueSentKey, r.email).catch(() => {});
+      } else if (result.suppressed) suppressed += 1;
       else {
         failed += 1;
         failures.push({ email: r.email, error: result.error });
