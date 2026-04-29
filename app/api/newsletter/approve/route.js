@@ -126,6 +126,15 @@ export async function GET(request) {
       { status: 410, headers: { "Content-Type": "text/html; charset=utf-8" } },
     );
   }
+  if (draft.status === "blocked") {
+    return new NextResponse(
+      page(
+        "Draft blocked by validator",
+        `<p>The composer flagged §13 violations on this draft. It cannot be sent. Adjust the angle / signal text in the Composer and try again.</p><ul>${(draft.voice_violations ?? []).map((v) => `<li>${v.rule ?? v}</li>`).join("")}</ul>`,
+      ),
+      { status: 422, headers: { "Content-Type": "text/html; charset=utf-8" } },
+    );
+  }
 
   // Defensive re-validation in case the body changed since prepare.
   const validation = validateNewsletterContent({
