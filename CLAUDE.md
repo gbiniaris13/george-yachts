@@ -78,6 +78,35 @@ implications and the boardroom signed off on what's encoded above.
   draft creation. If the draft is aborted the entry is "lost" — re-add
   via CRM Queues tab.
 
+## Resend webhook setup runbook (Phase 5)
+
+The endpoint at `/api/webhooks/resend` is built and verifies Svix
+signatures, but it only does anything when Resend is actually
+configured to POST to it. One-time setup steps:
+
+1. Generate a strong random string for `RESEND_WEBHOOK_SECRET` (any
+   ≥32 chars). Set it in Vercel env vars on `george-yachts` (apply
+   to Production, Preview, Development).
+2. Resend dashboard → Webhooks → Add endpoint:
+     URL:    https://georgeyachts.com/api/webhooks/resend
+     Secret: paste the same string from step 1
+     Events: subscribe to all of:
+       email.delivered    (drives engagement.last_send + sends_total)
+       email.opened       (engagement.last_open + opens_total)
+       email.clicked      (engagement.last_click + clicks_total)
+       email.bounced      (auto-suppression on hard bounce)
+       email.complained   (auto-suppression on spam mark)
+       email.delivery_delayed   (alerts only on hard variant)
+3. Test the endpoint with Resend's "Send test event" button. Any
+   payload that verifies should return `{ ok: true, result: …}`.
+
+Without this setup the engagement tracker falls back to `markEvent`
+calls inside `lib/newsletter/resend.js` — every successful 2xx Resend
+response records a "send" event. Opens + clicks won't track until
+the webhook is wired. Re-engagement candidate detection still works
+on the send-only baseline (it just thinks everyone is a candidate
+after 90+ days, which is conservative).
+
 ## Repo layout for newsletter
 
 ```
