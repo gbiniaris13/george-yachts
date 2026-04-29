@@ -210,7 +210,8 @@
     "perWeek": "per week",
     "charterRate": "charter rate",
     "yachtsAvailable": "yachts available at this budget",
-    "viewAllYachts": "View all yachts"
+    "viewAllYachts": "View all yachts",
+    "heroSecondaryHint": "Take the 60-second quiz · or browse the entire collection"
   },
   "seasonal": {
     "winter": "Summer 2026 bookings are open — secure your preferred dates",

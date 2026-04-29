@@ -69,8 +69,13 @@ const VideoSection = () => {
     {
       id: 1,
       imageUrl: "/videos/yacht-cruising-new.mp4",
-      href: "/yacht-finder",
-      buttonText: t('common.findYourYacht'),
+      // Primary: guided 60-second quiz
+      primaryHref: "/yacht-finder",
+      primaryText: t('common.findYourYacht'),
+      // Secondary (George 2026-04-29): jump straight to the full fleet
+      // page for visitors who already know what they're looking for.
+      secondaryHref: "/charter-yacht-greece",
+      secondaryText: t('common.exploreFleet'),
     },
   ];
 
@@ -103,15 +108,20 @@ const VideoSection = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20"></div>
                 </div>
 
-                {/* Hero Content — explicit max-width + mx-auto on the inner
-                    stack so every child is centered on the same horizontal
-                    axis regardless of its own natural width. Prior build
-                    let the inner block size to its widest child (the H1),
-                    which made small lines like the eyebrow, season copy,
-                    and the sub-tagline read as off-axis on narrow viewports. */}
+                {/* Hero Content — flex column on the inner wrapper so EVERY
+                    child element (H1, eyebrow, gold dashes, sub-tagline, CTAs)
+                    aligns on the same vertical axis regardless of its own
+                    intrinsic width. text-align:center alone wasn't enough
+                    because letter-spaced lines drag a phantom trailing
+                    space that shifts the visible glyphs off-center
+                    (George 2026-04-29 feedback: "χρυσά γράμματα προς τα
+                    δεξιά, μικρά αριστερά"). flex+items-center force-centers
+                    each block on its own axis, so the eyebrow, BROKERAGE
+                    HOUSE LLC, sub-tagline and seasonal italic ALL line up
+                    dead-on with the H1. */}
                 <div className="relative z-10 flex items-center justify-center h-full text-center px-6 md:px-8">
                   <div
-                    className={`w-full max-w-[1200px] mx-auto ${
+                    className={`w-full max-w-[1200px] mx-auto flex flex-col items-center ${
                       isActive && heroVisible ? "opacity-100" : "opacity-0"
                     }`}
                     style={{ textAlign: "center", transition: "opacity 800ms ease" }}
@@ -321,24 +331,78 @@ const VideoSection = () => {
                       })()}
                     </p>
 
-                    {/* Single CTA — 'Find Your Yacht in 60 Seconds' (original).
-                        The fleet choice lives in Move #2's split-screen
-                        immediately below; this button is the guided quiz
-                        for visitors who don't yet know which tier fits. */}
+                    {/* Dual CTA pair (George 2026-04-29):
+                        ① Primary  — guided 60-second quiz for undecided
+                          visitors (white-bordered ghost, hovers gold).
+                        ② Secondary — direct fleet entry for visitors who
+                          already know what they want; gold-filled to read
+                          as "the action with the strongest commercial
+                          intent" without overwhelming the primary.
+                        Mobile: stacks vertical with even gap.
+                        Desktop: side-by-side, equal min-width so the row
+                        reads as a single confident statement.            */}
                     <div
                       style={{
                         opacity: heroVisible ? 1 : 0,
                         transform: heroVisible ? "translateY(0)" : "translateY(10px)",
                         transition: "opacity 0.9s ease 2.8s, transform 0.9s ease 2.8s",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "14px",
+                        alignItems: "center",
+                        width: "100%",
                       }}
                     >
-                      <MagneticButton
-                        href={slide.href}
-                        dataCursor="Explore"
-                        className="inline-block px-10 md:px-14 py-4 md:py-5 text-white text-[10px] tracking-[0.35em] uppercase font-semibold border border-white/20 hover:border-[#DAA520] hover:text-[#DAA520] transition-colors duration-500 backdrop-blur-sm bg-white/[0.03]"
+                      <div
+                        className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto"
                       >
-                        {slide.buttonText}
-                      </MagneticButton>
+                        {/* ① Primary — quiz */}
+                        <MagneticButton
+                          href={slide.primaryHref}
+                          dataCursor="Explore"
+                          className="inline-flex items-center justify-center px-10 md:px-14 py-4 md:py-5 text-white text-[10px] tracking-[0.35em] uppercase font-semibold border border-white/25 hover:border-[#DAA520] hover:text-[#DAA520] transition-colors duration-500 backdrop-blur-sm bg-white/[0.03] min-w-[260px] sm:min-w-[300px]"
+                        >
+                          {slide.primaryText}
+                        </MagneticButton>
+
+                        {/* ② Secondary — straight to the fleet */}
+                        <MagneticButton
+                          href={slide.secondaryHref}
+                          dataCursor="View"
+                          className="inline-flex items-center justify-center px-10 md:px-14 py-4 md:py-5 text-[10px] tracking-[0.35em] uppercase font-semibold transition-all duration-500 min-w-[260px] sm:min-w-[300px]"
+                          style={{
+                            background:
+                              "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
+                            color: "#0a1a2f",
+                            border: "1px solid rgba(218,165,32,0.6)",
+                            boxShadow:
+                              "0 10px 30px -10px rgba(218,165,32,0.45), inset 0 1px 0 rgba(255,255,255,0.25)",
+                          }}
+                        >
+                          {slide.secondaryText}
+                        </MagneticButton>
+                      </div>
+
+                      {/* Whisper hint under the CTAs — sells the choice */}
+                      <p
+                        style={{
+                          fontFamily: "'Montserrat', sans-serif",
+                          fontSize: "9px",
+                          letterSpacing: "0.3em",
+                          textTransform: "uppercase",
+                          color: "rgba(255,255,255,0.35)",
+                          marginTop: "6px",
+                        }}
+                      >
+                        <span
+                          style={{
+                            display: "inline-block",
+                            marginInlineEnd: "-0.3em",
+                          }}
+                        >
+                          {t('common.heroSecondaryHint')}
+                        </span>
+                      </p>
                     </div>
                   </div>
                 </div>
