@@ -206,7 +206,57 @@ const PrivacyPolicy = () => {
           </ul>
         </Section>
 
-        <Section number={7} title="VII. CORPORATE COMPLIANCE CONTACT">
+        <Section number={7} title="VII. NEWSLETTER & DIRECT CORRESPONDENCE">
+          <p>
+            When you subscribe to one of our journals (The Bridge, The Wake,
+            The Compass, or Από την Ελλάδα) we collect a minimal data
+            footprint to deliver and audit those communications:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 mt-4">
+            <li>Your email address</li>
+            <li>The journal(s) you actively subscribed to</li>
+            <li>The date and method of subscription (form, re-engagement, or hand-added invitation)</li>
+            <li>Engagement signals — whether each issue was opened or whether links were clicked</li>
+          </ul>
+          <p className="mt-6">
+            <strong>Legal basis:</strong> explicit consent for self-served
+            signups; legitimate interest for prior business contacts engaged
+            within the last twelve months and given a clear, frictionless
+            opt-out at every touchpoint.
+          </p>
+          <p className="mt-4">
+            <strong>Service providers.</strong> We rely on{" "}
+            <a
+              href="https://resend.com"
+              className="text-[#DAA520] hover:underline"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Resend
+            </a>{" "}
+            for email delivery; Resend is GDPR-compliant and operates under
+            EU/US Standard Contractual Clauses, retaining engagement metadata
+            for up to thirty (30) days. We do not share newsletter data with
+            any party other than Resend.
+          </p>
+          <p className="mt-4">
+            <strong>Retention.</strong> Active subscribers' data is retained
+            while their subscription is active. Unsubscribed addresses are
+            kept on a suppression list to prevent re-mailing. Subscribers
+            who do not open any issue for twenty-four (24) months are
+            automatically pruned.
+          </p>
+          <p className="mt-4">
+            <strong>Your rights.</strong> Every email contains a one-click
+            unsubscribe link. You may request data export or deletion by
+            writing to{" "}
+            <ObfuscatedEmail className="text-[#DAA520] hover:underline" />.
+            Tracking pixels for opens and clicks are server-side only — no
+            cookies are placed on subscribers' devices via newsletter emails.
+          </p>
+        </Section>
+
+        <Section number={8} title="VIII. CORPORATE COMPLIANCE CONTACT">
           <p>
             For the execution of Data Subject Rights, formal inquiries
             concerning our privacy posture, or to update your records, please
@@ -233,7 +283,7 @@ const PrivacyPolicy = () => {
         <div className="mt-32 pt-16 text-center" style={{ borderTop: "1px solid rgba(218,165,32,0.1)" }}>
           <div className="w-8 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #DAA520, transparent)" }} />
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.3em", color: "rgba(255,255,255,0.2)", textTransform: "uppercase" }}>
-            Last Updated: February 2026
+            Last Updated: April 2026
           </p>
         </div>
       </div>

@@ -1,11 +1,22 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { checkRateLimit } from "@/lib/rateLimit";
-import { kvSadd } from "@/lib/kv";
+import { kvSadd, kvGet, kvSet } from "@/lib/kv";
 
-// KV set key that holds the authoritative subscriber list.
-// Consumed by /api/cron/weekly-newsletter to build each broadcast.
-const SUBSCRIBERS_SET = "newsletter:subscribers";
+// Legacy KV set key — kept writing to it during the transition so the
+// old weekly-newsletter cron keeps working until cut-over.
+const LEGACY_SET = "newsletter:subscribers";
+
+// Brief §9 — four-stream subscriber model. Default new signups land
+// in `bridge` (the public-facing UHNW journal). Other streams are
+// reserved for the re-engagement campaign or curated invites.
+const STREAM_SETS = {
+  bridge: "subscribers:bridge",
+  wake: "subscribers:wake",
+  compass: "subscribers:compass",
+  greece: "subscribers:greece",
+};
+const VALID_STREAMS = new Set(Object.keys(STREAM_SETS));
 
 export const dynamic = "force-dynamic";
 
@@ -79,11 +90,68 @@ export async function POST(request) {
       );
     }
 
-    // 0. Persist the subscriber in KV (set — naturally de-duped).
+    // 0. Persist the subscriber across all the right KV sets.
     //    Normalized to lowercase so "George@X" and "george@x" resolve
     //    to a single row. Non-blocking if KV is unreachable.
     const normalized = email.trim().toLowerCase();
-    kvSadd(SUBSCRIBERS_SET, normalized).catch(() => {});
+
+    // Determine which streams the subscriber is opting into. Body may
+    // contain `lists: ["bridge", "wake"]` from the new 4-stream picker.
+    // Anything missing/invalid → default ["bridge"] so the old
+    // single-field footer signup still works unchanged.
+    const requested = Array.isArray(body.lists) && body.lists.length > 0
+      ? body.lists.map((s) => String(s).toLowerCase()).filter((s) => VALID_STREAMS.has(s))
+      : ["bridge"];
+
+    // Always write the legacy set during transition.
+    kvSadd(LEGACY_SET, normalized).catch(() => {});
+    // Plus each requested per-stream set.
+    for (const stream of requested) {
+      const setKey = STREAM_SETS[stream];
+      if (setKey) await kvSadd(setKey, normalized).catch(() => {});
+    }
+
+    // Write or merge the profile hash (Brief §9.2).
+    try {
+      const existingRaw = await kvGet(`profile:${normalized}`);
+      const existing = existingRaw
+        ? typeof existingRaw === "string"
+          ? JSON.parse(existingRaw)
+          : existingRaw
+        : null;
+      const prevLists = existing?.lists ?? [];
+      const mergedLists = Array.from(new Set([...prevLists, ...requested]));
+      const profile = existing
+        ? {
+            ...existing,
+            lists: mergedLists,
+            last_engaged_at: new Date().toISOString(),
+            newsletter_opt_out: false,
+          }
+        : {
+            email: normalized,
+            lists: requested,
+            source: "website",
+            subscribed_at: new Date().toISOString(),
+            last_engaged_at: new Date().toISOString(),
+            unsubscribed_lists: [],
+            language: "en",
+            notes: "",
+            gy_command_contact_id: null,
+            consent_record: [
+              {
+                list: requested.join(","),
+                method: "single_opt_in",
+                timestamp: new Date().toISOString(),
+                ip_address: null,
+                user_agent: request.headers.get("user-agent") ?? null,
+              },
+            ],
+          };
+      await kvSet(`profile:${normalized}`, JSON.stringify(profile)).catch(() => {});
+    } catch {
+      // best-effort — don't block signup on profile write
+    }
 
     // 1. Notify George about the new subscriber
     await transporter.sendMail({
