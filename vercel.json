@@ -19,6 +19,14 @@
     {
       "path": "/api/cron/weekly-newsletter",
       "schedule": "0 7 * * 1"
+    },
+    {
+      "path": "/api/cron/cleanup-expired-drafts",
+      "schedule": "0 23 * * *"
+    },
+    {
+      "path": "/api/cron/newsletter-health",
+      "schedule": "0 8 * * *"
     }
   ],
   "headers": [
