@@ -18,6 +18,10 @@ import { NextResponse } from "next/server";
 import crypto from "node:crypto";
 import { kvSadd, kvSrem } from "@/lib/kv";
 import { markEvent } from "@/lib/newsletter/engagement";
+import {
+  recordIssueEvent,
+  tagsToStreamIssue,
+} from "@/lib/newsletter/issue-stats";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -99,11 +103,31 @@ async function handleEvent(evt) {
     .toLowerCase();
   if (!email) return { type, action: "no-email" };
 
+  // Phase 6.2 — extract stream + issue from tags so we can route
+  // counter increments to the per-issue stats store. Returns null if
+  // tags are absent (e.g. test event from Resend dashboard); we still
+  // process the per-recipient engagement update below.
+  const tagInfo = tagsToStreamIssue(evt?.data?.tags);
+
   // HARD BOUNCE — immediate suppression + remove from all streams.
   if (type === "email.bounced" || type === "email.delivery_delayed") {
     const isHard =
       String(evt?.data?.bounce?.type || "").toLowerCase() === "hard" ||
       type === "email.bounced";
+    if (tagInfo) {
+      await recordIssueEvent({
+        ...tagInfo,
+        event: isHard ? "bounced_hard" : "bounced_soft",
+        email,
+      }).catch(() => {});
+      // Soft bounces also bump delivery_delayed for visibility.
+      if (!isHard) {
+        await recordIssueEvent({
+          ...tagInfo,
+          event: "delivery_delayed",
+        }).catch(() => {});
+      }
+    }
     if (!isHard) return { type, action: "soft-bounce-noted" };
     await kvSadd(SUPPRESSION_SET, email).catch(() => {});
     for (const set of STREAM_SETS) {
@@ -117,6 +141,13 @@ async function handleEvent(evt) {
 
   // COMPLAINT — immediate suppression. Spam-marked is the strictest signal.
   if (type === "email.complained") {
+    if (tagInfo) {
+      await recordIssueEvent({
+        ...tagInfo,
+        event: "complained",
+        email,
+      }).catch(() => {});
+    }
     await kvSadd(SUPPRESSION_SET, email).catch(() => {});
     for (const set of STREAM_SETS) {
       await kvSrem(set, email).catch(() => {});
@@ -127,19 +158,34 @@ async function handleEvent(evt) {
     return { type, action: "suppressed-complaint", email };
   }
 
-  // Phase 5.1 — engagement tracking. Per-recipient KV record updated
-  // on every send / open / click so we can compute opens-rate and
-  // identify re-engagement candidates (Phase 5.3+).
+  // Phase 5.1 — per-recipient engagement record (engagement:<email>)
+  // Phase 6.2 — also route to per-issue stats counters when tags
+  //             carry stream + issue.
   if (type === "email.delivered" || type === "email.sent") {
     await markEvent({ email, event: "send", at: evt?.created_at }).catch(() => {});
+    if (tagInfo) {
+      await recordIssueEvent({ ...tagInfo, event: "delivered", email }).catch(
+        () => {},
+      );
+    }
     return { type, action: "engagement-recorded", recipient: email };
   }
   if (type === "email.opened") {
     await markEvent({ email, event: "open", at: evt?.created_at }).catch(() => {});
+    if (tagInfo) {
+      await recordIssueEvent({ ...tagInfo, event: "opened", email }).catch(
+        () => {},
+      );
+    }
     return { type, action: "engagement-recorded", recipient: email };
   }
   if (type === "email.clicked") {
     await markEvent({ email, event: "click", at: evt?.created_at }).catch(() => {});
+    if (tagInfo) {
+      await recordIssueEvent({ ...tagInfo, event: "clicked", email }).catch(
+        () => {},
+      );
+    }
     return { type, action: "engagement-recorded", recipient: email };
   }
 

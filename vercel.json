@@ -51,6 +51,10 @@
     {
       "path": "/api/cron/newsletter-reengage-followup",
       "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/newsletter-issue-pings",
+      "schedule": "5 * * * *"
     }
   ],
   "headers": [

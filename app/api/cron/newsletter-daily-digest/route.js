@@ -233,6 +233,18 @@ export async function GET(request) {
     getLastError24h(),
   ]);
   const monthlyPct = ((resendUsage / MONTHLY_HARD_CAP) * 100).toFixed(1);
+  // Phase 6.3 — traffic-light indicator for the monthly cap. Mirrors
+  // the alert thresholds (80/90/95%). Same numeric source so digest
+  // and Telegram alerts can never disagree about where we are.
+  const monthlyPctNum = (resendUsage / MONTHLY_HARD_CAP) * 100;
+  const quotaTrafficLight =
+    monthlyPctNum >= 95
+      ? "🚨"
+      : monthlyPctNum >= 90
+        ? "⚠️"
+        : monthlyPctNum >= 80
+          ? "📊"
+          : "✅";
 
   // Update 3 §5 — fold watchdog into this digest instead of a separate
   // Telegram alert. Reduces notification noise — George reads the
@@ -259,7 +271,7 @@ export async function GET(request) {
     "",
     `<b>Today</b>`,
     `· Drafts pending: ${draftsPending}`,
-    `· Resend usage this month: ${resendUsage} / ${MONTHLY_HARD_CAP} (${monthlyPct}%) · today: ${dailyUsage}`,
+    `· Resend usage this month: ${quotaTrafficLight} ${resendUsage} / ${MONTHLY_HARD_CAP} (${monthlyPct}%) · today: ${dailyUsage}`,
     `· Last error (24h): ${
       lastError ? `🚨 ${(lastError.component ?? "—")}: ${lastError.message ?? ""}` : "none"
     }`,

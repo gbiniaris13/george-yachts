@@ -279,6 +279,10 @@ export async function GET(request) {
       } catch {
         // best-effort
       }
+      // Phase 6.5 — index into recent_sends so the issue-pings cron
+      // (1h + 24h) has something to walk. Entries are auto-trimmed
+      // after ~30h by that cron.
+      await kvSadd("recent_sends", draftId).catch(() => {});
     }
 
     // Update the original Telegram card → final state.

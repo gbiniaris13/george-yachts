@@ -93,6 +93,7 @@ async function flushOneDraft(draftId, headroom) {
           `last_send_at:${draft.stream}`,
           new Date().toISOString(),
         );
+        await kvSadd("recent_sends", draftId);
       } catch {
         // best-effort
       }

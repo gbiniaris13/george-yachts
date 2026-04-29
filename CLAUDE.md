@@ -107,6 +107,42 @@ the webhook is wired. Re-engagement candidate detection still works
 on the send-only baseline (it just thinks everyone is a candidate
 after 90+ days, which is conservative).
 
+## Phase 6 — Analytics + alerts (post-send observability)
+
+Per-issue counters: `issue_stats:<stream>:<num>` (JSON aggregate) +
+`issue_opens:<stream>:<num>` + `issue_clicks:<stream>:<num>` (Sets
+for unique-recipient counts). Updated by:
+  - `lib/newsletter/resend.js` sendNewsletterEmail → bumps `sent`
+    on every successful 2xx (works without webhook).
+  - `app/api/webhooks/resend` → bumps `delivered` / `opened` /
+    `clicked` / `bounced_hard|soft` / `complained` per Resend events
+    (needs webhook wired — see runbook above).
+
+The Resend tags `[{name: "stream"}, {name: "issue"}]` are set on every
+outgoing email and echoed back in webhook events. That's how counters
+route to the right issue.
+
+**Quota alerts.** `lib/newsletter/quota-alerts.js` fires Telegram on
+the FIRST send each month that crosses 80% / 90% / 95% of
+MONTHLY_HARD_CAP. Once-per-month flags
+`quota_alert:<YYYY-MM>:<pct>` make this idempotent.
+
+**Bounce-rate guardian.** Folded into the 1h post-send ping
+(`/api/cron/newsletter-issue-pings`). If the bounce rate of an issue
+is > 3% one hour after send, the ping turns into a 🚨 alert. The
+issue-pings cron runs hourly at :05, walks the `recent_sends` Set,
+fires a 1h ping (0.5–6h after sent_at) and a 24h ping (23–28h after
+sent_at). Per-draft idempotency via `issue_pings:<draftId>` flags.
+
+**Admin endpoint.** `GET /api/admin/newsletter-issue-stats?stream=
+bridge[&issue=N|&limit=10]` — single-issue lookup or recent-N list.
+Returns counters, unique opens/clicks, computed open_rate /
+click_rate / bounce_rate / complaint_rate. Read-only.
+
+**Daily digest enhancement.** The Resend usage line now carries a
+traffic-light icon (`✅` < 80%, `📊` 80–89%, `⚠️` 90–94%, `🚨` ≥ 95%)
+mirroring the alert thresholds.
+
 ## Repo layout for newsletter
 
 ```
