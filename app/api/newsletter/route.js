@@ -28,18 +28,27 @@ const transporter = nodemailer.createTransport({
   auth: { user: GMAIL_USER, pass: GMAIL_PASS },
 });
 
-// Notify George via Telegram
-async function notifyTelegram(email) {
+// Notify George via Telegram. Welcome flow status is folded in so a
+// silent welcome failure never goes unnoticed.
+async function notifyTelegram(email, welcomeResult) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) return;
+
+  const welcomeLine = welcomeResult
+    ? welcomeResult.ok
+      ? `✅ Issue #1 sent automatically as welcome (Resend id: ${welcomeResult.message_id ?? "n/a"})`
+      : welcomeResult.suppressed
+        ? `⚠️ Welcome NOT sent — address is on the suppression list`
+        : `🚨 Welcome failed — ${String(welcomeResult.error ?? "unknown").slice(0, 200)}`
+    : `(welcome flow skipped — non-bridge stream)`;
 
   const text = [
     `📬 *New Newsletter Subscriber!*`,
     ``,
     `📧 ${email}`,
     ``,
-    `_Added to The George Yachts Journal._`,
+    welcomeLine,
   ].join("\n");
 
   try {
@@ -153,6 +162,45 @@ export async function POST(request) {
       // best-effort — don't block signup on profile write
     }
 
+    // 0b. Welcome flow (Brief §17.6) — every new signup receives
+    //     Issue #1 as their first email, automatically, within 5 min.
+    //     Sent via Resend (newsletter@send.georgeyachts.com) — same
+    //     channel as future newsletters so the visual identity is
+    //     identical from day one. Suppression-list aware. Best-effort:
+    //     a Resend hiccup never blocks the signup itself.
+    let welcomeResult = null;
+    try {
+      if (requested.includes("bridge")) {
+        const { sendNewsletterFromTemplate } = await import(
+          "@/lib/newsletter/resend"
+        );
+        const {
+          ISSUE_1_SUBJECT,
+          ISSUE_1_PREHEADER,
+          ISSUE_1_BODY_TEXT,
+          ISSUE_1_HERO_IMAGE_URL,
+        } = await import("@/lib/newsletter/issue-1");
+        welcomeResult = await sendNewsletterFromTemplate({
+          to: normalized,
+          stream: "bridge",
+          subject: ISSUE_1_SUBJECT,
+          preheader: ISSUE_1_PREHEADER,
+          body_text: ISSUE_1_BODY_TEXT,
+          hero_image_url: ISSUE_1_HERO_IMAGE_URL,
+          tags: [
+            { name: "stream", value: "bridge" },
+            { name: "kind", value: "welcome" },
+            { name: "issue", value: "1" },
+          ],
+        });
+      }
+    } catch (err) {
+      welcomeResult = {
+        ok: false,
+        error: err instanceof Error ? err.message : "welcome import failed",
+      };
+    }
+
     // 1. Notify George about the new subscriber
     await transporter.sendMail({
       from: GMAIL_USER,
@@ -168,55 +216,14 @@ export async function POST(request) {
       `,
     });
 
-    // 2. Send welcome email to subscriber
-    await transporter.sendMail({
-      from: `"George Yachts" <${GMAIL_USER}>`,
-      to: email,
-      subject: "Welcome to The George Yachts Journal",
-      html: `
-        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #0D1B2A;">
-          <div style="text-align: center; padding: 40px 20px; background: #0D1B2A;">
-            <h1 style="font-family: Georgia, serif; font-size: 24px; font-weight: 300; color: #fff; letter-spacing: 0.1em; margin: 0;">
-              THE GEORGE YACHTS JOURNAL
-            </h1>
-            <p style="font-size: 10px; letter-spacing: 0.3em; color: #C9A84C; margin-top: 8px;">
-              MARKET INSIGHTS &middot; NEW ARRIVALS &middot; CHARTER OPPORTUNITIES
-            </p>
-          </div>
+    // 2. (legacy Gmail welcome email removed) — Issue #1 already
+    //    fired via Resend in step 0b, so we don't double-message the
+    //    new subscriber. The Issue #1 letter IS the welcome from now
+    //    on: same template, same Wyoming footer, same per-recipient
+    //    one-click unsubscribe.
 
-          <div style="padding: 40px 30px; background: #F8F5F0;">
-            <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
-              Thank you for subscribing.
-            </p>
-            <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
-              You&rsquo;ll receive curated updates on new yacht arrivals, exclusive charter
-              opportunities, and insider insights from Greek waters &mdash; delivered
-              discreetly and never more than once a week.
-            </p>
-            <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
-              In the meantime, feel free to explore our
-              <a href="https://georgeyachts.com/charter-yacht-greece" style="color: #C9A84C;">curated fleet</a> or
-              <a href="https://calendly.com/george-georgeyachts/30min" style="color: #C9A84C;">book a personal consultation</a>.
-            </p>
-            <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A; margin-top: 24px;">
-              Fair winds,<br>
-              <strong>George P. Biniaris</strong><br>
-              <span style="font-size: 13px; color: #6B7B8D;">Managing Broker &middot; George Yachts</span>
-            </p>
-          </div>
-
-          <div style="text-align: center; padding: 16px; background: #0D1B2A;">
-            <p style="font-size: 9px; letter-spacing: 0.15em; color: rgba(255,255,255,0.3); margin: 0;">
-              <a href="https://georgeyachts.com" style="color: rgba(255,255,255,0.3);">georgeyachts.com</a> &middot;
-              Unsubscribe by replying to this email.
-            </p>
-          </div>
-        </div>
-      `,
-    });
-
-    // 3. Telegram notification (non-blocking)
-    notifyTelegram(email).catch(() => {});
+    // 3. Telegram notification (non-blocking) — include welcome status
+    notifyTelegram(email, welcomeResult).catch(() => {});
 
     return NextResponse.json(
       { message: "Subscribed successfully!" },
