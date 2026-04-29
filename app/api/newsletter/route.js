@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { checkRateLimit } from "@/lib/rateLimit";
-import { kvSadd, kvGet, kvSet } from "@/lib/kv";
+import { kvSadd, kvGet, kvSet, kvSismember } from "@/lib/kv";
 
 // Legacy KV set key — kept writing to it during the transition so the
 // old weekly-newsletter cron keeps working until cut-over.
@@ -164,35 +164,56 @@ export async function POST(request) {
 
     // 0b. Welcome flow (Brief §17.6) — every new signup receives
     //     Issue #1 as their first email, automatically, within 5 min.
-    //     Sent via Resend (newsletter@send.georgeyachts.com) — same
-    //     channel as future newsletters so the visual identity is
-    //     identical from day one. Suppression-list aware. Best-effort:
-    //     a Resend hiccup never blocks the signup itself.
+    //     Sent via Resend (newsletter@georgeyachts.com) — same channel
+    //     as future newsletters so the visual identity is identical
+    //     from day one. Suppression-list aware. Best-effort: a Resend
+    //     hiccup never blocks the signup itself.
+    //
+    //     CRITICAL — per-issue dedup. Before sending, check if this
+    //     address is already in `issue_sent:bridge:1`. If yes, the
+    //     subscriber already received Issue #1 (via a previous tap-✅,
+    //     topup, or earlier welcome) and we SKIP this send. Same
+    //     primitive protects /approve and topup. Together they make
+    //     it structurally impossible to double-send the same issue
+    //     to the same address — no matter what entry point fires.
     let welcomeResult = null;
     try {
       if (requested.includes("bridge")) {
-        const { sendNewsletterFromTemplate } = await import(
-          "@/lib/newsletter/resend"
-        );
-        const {
-          ISSUE_1_SUBJECT,
-          ISSUE_1_PREHEADER,
-          ISSUE_1_BODY_TEXT,
-          ISSUE_1_HERO_IMAGE_URL,
-        } = await import("@/lib/newsletter/issue-1");
-        welcomeResult = await sendNewsletterFromTemplate({
-          to: normalized,
-          stream: "bridge",
-          subject: ISSUE_1_SUBJECT,
-          preheader: ISSUE_1_PREHEADER,
-          body_text: ISSUE_1_BODY_TEXT,
-          hero_image_url: ISSUE_1_HERO_IMAGE_URL,
-          tags: [
-            { name: "stream", value: "bridge" },
-            { name: "kind", value: "welcome" },
-            { name: "issue", value: "1" },
-          ],
-        });
+        const ISSUE_KEY = "issue_sent:bridge:1";
+        const already = await kvSismember(ISSUE_KEY, normalized).catch(() => 0);
+        if (already === 1 || already === "1") {
+          welcomeResult = {
+            ok: true,
+            skipped: "already_received_issue_1",
+            message_id: null,
+          };
+        } else {
+          const { sendNewsletterFromTemplate } = await import(
+            "@/lib/newsletter/resend"
+          );
+          const {
+            ISSUE_1_SUBJECT,
+            ISSUE_1_PREHEADER,
+            ISSUE_1_BODY_TEXT,
+            ISSUE_1_HERO_IMAGE_URL,
+          } = await import("@/lib/newsletter/issue-1");
+          welcomeResult = await sendNewsletterFromTemplate({
+            to: normalized,
+            stream: "bridge",
+            subject: ISSUE_1_SUBJECT,
+            preheader: ISSUE_1_PREHEADER,
+            body_text: ISSUE_1_BODY_TEXT,
+            hero_image_url: ISSUE_1_HERO_IMAGE_URL,
+            tags: [
+              { name: "stream", value: "bridge" },
+              { name: "kind", value: "welcome" },
+              { name: "issue", value: "1" },
+            ],
+          });
+          if (welcomeResult.ok) {
+            await kvSadd(ISSUE_KEY, normalized).catch(() => {});
+          }
+        }
       }
     } catch (err) {
       welcomeResult = {
