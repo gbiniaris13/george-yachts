@@ -83,6 +83,19 @@ async function flushOneDraft(draftId, headroom) {
       draft.sent_at = new Date().toISOString();
       await kvSet(`draft:${draftId}`, JSON.stringify(draft));
       await kvSrem("draft:active", draftId).catch(() => {});
+      // 2026-04-29 — write last_send_at:<stream> so the Bridge/Wake/
+      // Compass auto-crons see the multi-day-drained draft as a real
+      // send, not "never sent". Without this, tomorrow's auto-cron
+      // would try to fire a new menu for the next issue while the
+      // current one is still being delivered to late recipients.
+      try {
+        await kvSet(
+          `last_send_at:${draft.stream}`,
+          new Date().toISOString(),
+        );
+      } catch {
+        // best-effort
+      }
     }
     return { draftId, sent: 0, remaining: 0, skipped: "queue-empty" };
   }
@@ -165,6 +178,16 @@ async function flushOneDraft(draftId, headroom) {
     draft.sent_at = new Date().toISOString();
     await markFlushed(draftId);
     await kvSrem("draft:active", draftId).catch(() => {});
+    // 2026-04-29 — same last_send_at fix as the queue-empty branch.
+    // The cadence gate in auto-crons reads this key.
+    try {
+      await kvSet(
+        `last_send_at:${draft.stream}`,
+        new Date().toISOString(),
+      );
+    } catch {
+      // best-effort
+    }
   }
   await kvSet(`draft:${draftId}`, JSON.stringify(draft));
 

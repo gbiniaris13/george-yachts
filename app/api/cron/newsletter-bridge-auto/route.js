@@ -37,6 +37,41 @@ import {
   sendTelegramWithUrlButtons,
   autoBridgePickUrl,
 } from "@/lib/newsletter/telegram";
+import { kvSmembers, kvGet } from "@/lib/kv";
+
+/**
+ * 2026-04-29 safety gate — refuse to nudge for a NEW Bridge issue
+ * while the previous one is still being delivered to late recipients.
+ *
+ * Scenario this prevents: Issue #1 hit the Resend daily cap (95/day
+ * free tier), late recipients are queued in pending_sends:<draftId>,
+ * the flush cron is multi-day draining them. If the auto-cron fires
+ * a menu for Issue #2 in the middle of that, George could approve a
+ * second issue before some subscribers have even received the first.
+ *
+ * The check: walk every draft_in_flight entry, parse, see if any are
+ * Bridge stream and not yet finalised. If yes, abort the menu and
+ * Telegram a clear status note instead.
+ */
+async function bridgeStillFlushing() {
+  const inflight = (await kvSmembers("draft_in_flight")) ?? [];
+  if (!Array.isArray(inflight) || inflight.length === 0) return null;
+  for (const draftId of inflight) {
+    try {
+      const raw = await kvGet(`draft:${draftId}`);
+      if (!raw) continue;
+      const d = typeof raw === "string" ? JSON.parse(raw) : raw;
+      if (d?.stream !== "bridge") continue;
+      if (d?.status === "sent" || d?.status === "aborted") continue;
+      // Anything else (sending_paused, sending, pending) means we're
+      // still mid-issue. Refuse to push a new menu.
+      return { draftId, status: d.status, issue_number: d.issue_number ?? "?" };
+    } catch {
+      // skip malformed
+    }
+  }
+  return null;
+}
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -82,7 +117,35 @@ export async function GET(request) {
     });
   }
 
-  // Gate 2 — cadence + last_send_at. Skip silently with debug ping.
+  // Gate 2 — in-flight check. If a previous Bridge issue is still
+  // being drained by the flush cron, never push a new menu. Telegram
+  // a status note so George knows why he didn't get the usual menu
+  // this Thursday.
+  const stillFlushing = await bridgeStillFlushing();
+  if (stillFlushing) {
+    await sendTelegramText(
+      [
+        `⏳ <b>Bridge auto-cron deferred — previous issue still drained</b>`,
+        ``,
+        `Issue #${stillFlushing.issue_number} is in <code>${stillFlushing.status}</code> state`,
+        `(draft <code>${stillFlushing.draftId}</code>) and the flush cron is still`,
+        `delivering it to late recipients (free-tier 95/day cap).`,
+        ``,
+        `No menu sent this Thursday. Next auto-cron will check again`,
+        `next Thursday — by then the flush cron will have caught up.`,
+        ``,
+        `Daily flush runs 00:30 UTC.`,
+      ].join("\n"),
+    ).catch(() => {});
+    return NextResponse.json({
+      ok: true,
+      action: "deferred_in_flight",
+      still_flushing: stillFlushing,
+      fire_id: fireId,
+    });
+  }
+
+  // Gate 3 — cadence + last_send_at. Skip silently with debug ping.
   const lastSent = await getLastSendAt("bridge");
   const decision = shouldFireBridgeToday(lastSent, now);
   if (!decision.fire) {
