@@ -32,6 +32,7 @@ import {
   unsubscribeUrlFor,
   isSuppressed,
 } from "@/lib/newsletter/resend";
+import { queueRemaining } from "@/lib/newsletter/quota";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -166,12 +167,15 @@ export async function GET(request) {
   let sent = 0;
   let suppressed = 0;
   let failed = 0;
+  let queued = 0;
   const failures = [];
+  const remainingForQueue = [];
 
   try {
     recipients = await resolveAudience(finalAudienceLists);
 
-    for (const r of recipients) {
+    for (let idx = 0; idx < recipients.length; idx += 1) {
+      const r = recipients[idx];
       const unsubUrl = unsubscribeUrlFor(r.email, { list: r.stream });
       const built = buildNewsletterEmail({
         stream: r.stream,
@@ -217,35 +221,74 @@ export async function GET(request) {
         // Record this email as having received this issue.
         await kvSadd(issueSentKey, r.email).catch(() => {});
       } else if (result.suppressed) suppressed += 1;
-      else {
+      else if (result.rate_limited) {
+        // Resend daily/monthly cap reached — queue the rest of the
+        // audience into this draft's pending set; the daily flush
+        // cron at 00:30 UTC will pick up where we left off, and so
+        // on for as many days as it takes to drain the queue.
+        for (let j = idx; j < recipients.length; j += 1) {
+          remainingForQueue.push(recipients[j].email);
+        }
+        break;
+      } else {
         failed += 1;
         failures.push({ email: r.email, error: result.error });
       }
-      // Crude pacing — Resend free tier is 100/day, we're tiny so this
-      // doesn't matter, but keeps us friendly to sender reputation.
+      // Crude pacing — friendly to sender reputation.
       await new Promise((r) => setTimeout(r, 250));
     }
 
-    draft.status = failed > 0 ? "sent_with_failures" : "sent";
-    draft.sent_at = new Date().toISOString();
+    if (remainingForQueue.length > 0) {
+      queued = await queueRemaining(draftId, remainingForQueue);
+    }
+
+    const fullyDone = remainingForQueue.length === 0;
+    draft.status = fullyDone
+      ? failed > 0
+        ? "sent_with_failures"
+        : "sent"
+      : "sending_paused";
+    draft.sent_at = fullyDone ? new Date().toISOString() : null;
     draft.recipient_count = recipients.length;
-    draft.sent_count = sent;
-    draft.suppressed_count = suppressed;
-    draft.failed_count = failed;
+    draft.sent_count = (draft.sent_count ?? 0) + sent;
+    draft.suppressed_count = (draft.suppressed_count ?? 0) + suppressed;
+    draft.failed_count = (draft.failed_count ?? 0) + failed;
+    draft.queued_count = queued;
     draft.failure_log = failures.slice(0, 10);
     await kvSet(`draft:${draftId}`, JSON.stringify(draft));
-    await kvSrem("draft:active", draftId).catch(() => {});
+    if (fullyDone) {
+      await kvSrem("draft:active", draftId).catch(() => {});
+    }
 
     // Update the original Telegram card → final state.
     if (draft.telegram_message_id) {
-      await editTelegramText(
-        draft.telegram_message_id,
-        `✅ <b>Sent — ${draft.stream} Issue #${draft.issue_number ?? "?"}</b>\nSubject: ${escapeHtml(draft.subject)}\nRecipients: ${recipients.length}\nDelivered: ${sent}\nSuppressed: ${suppressed}\nFailed: ${failed}\nAt: ${draft.sent_at}`,
-      ).catch(() => {});
+      const cardText = fullyDone
+        ? `✅ <b>Sent — ${draft.stream} Issue #${draft.issue_number ?? "?"}</b>\nSubject: ${escapeHtml(draft.subject)}\nRecipients: ${recipients.length}\nDelivered: ${draft.sent_count}\nSuppressed: ${draft.suppressed_count}\nFailed: ${draft.failed_count}\nAt: ${draft.sent_at}`
+        : `⏸ <b>Sending paused — daily Resend cap reached</b>\n${draft.stream} Issue #${draft.issue_number ?? "?"}\nDelivered today: ${sent}\nQueued for tomorrow's 00:30 UTC flush: ${queued}\nThe queue resumes automatically — no action needed.`;
+      await editTelegramText(draft.telegram_message_id, cardText).catch(() => {});
     }
-    await sendTelegramText(
-      `📨 <b>Issue #${draft.issue_number ?? "?"} — sent</b>\nStream: ${draft.stream}\nDelivered: ${sent} / ${recipients.length}\nSuppressed: ${suppressed}\nFailed: ${failed}${failures.length > 0 ? "\n\n" + failures.slice(0, 5).map((f) => `• ${escapeHtml(f.email)}: ${escapeHtml(f.error)}`).join("\n") : ""}`,
-    ).catch(() => {});
+    const summaryLines = [
+      `📨 <b>Issue #${draft.issue_number ?? "?"} — ${remainingForQueue.length === 0 ? "sent" : "paused"}</b>`,
+      `Stream: ${draft.stream}`,
+      `Delivered now: ${sent} / ${recipients.length}`,
+      `Suppressed: ${suppressed}`,
+      `Failed: ${failed}`,
+    ];
+    if (queued > 0) {
+      summaryLines.push("");
+      summaryLines.push(
+        `⏸ <b>Queued ${queued}</b> for the daily flush (Resend free-tier cap of 100/day kicked in). The flush cron at 00:30 UTC will pick up automatically — no action needed.`,
+      );
+    }
+    if (failures.length > 0) {
+      summaryLines.push("");
+      summaryLines.push(
+        ...failures
+          .slice(0, 5)
+          .map((f) => `• ${escapeHtml(f.email)}: ${escapeHtml(f.error)}`),
+      );
+    }
+    await sendTelegramText(summaryLines.join("\n")).catch(() => {});
   } catch (e) {
     draft.status = "send_crashed";
     draft.crash_error = String(e?.message ?? e).slice(0, 500);
@@ -257,12 +300,17 @@ export async function GET(request) {
     await releaseLock();
   }
 
+  const fullyDoneOut = remainingForQueue.length === 0;
   return new NextResponse(
     page(
-      "Sent",
-      `<p>Issue #${draft.issue_number ?? "?"} of <strong>${escapeHtml(draft.stream)}</strong> went out.</p>
-       <p>Recipients: ${recipients.length} · Delivered: ${sent} · Suppressed: ${suppressed} · Failed: ${failed}</p>
-       <p>You'll get a follow-up Telegram with delivery + open analytics.</p>`,
+      fullyDoneOut ? "Sent" : "Sending paused — daily cap reached",
+      fullyDoneOut
+        ? `<p>Issue #${draft.issue_number ?? "?"} of <strong>${escapeHtml(draft.stream)}</strong> went out.</p>
+           <p>Recipients: ${recipients.length} · Delivered: ${sent} · Suppressed: ${suppressed} · Failed: ${failed}</p>
+           <p>You'll get a follow-up Telegram with delivery + open analytics.</p>`
+        : `<p>Issue #${draft.issue_number ?? "?"} delivered to <strong>${sent}</strong> of <strong>${recipients.length}</strong> recipients today, then hit Resend's daily free-tier cap of 100.</p>
+           <p>The remaining <strong>${queued}</strong> are queued. The daily flush cron resumes automatically at 00:30 UTC tomorrow and continues until the queue is drained. Telegram updates every day.</p>
+           <p>No action needed from you.</p>`,
     ),
     { status: 200, headers: { "Content-Type": "text/html; charset=utf-8" } },
   );

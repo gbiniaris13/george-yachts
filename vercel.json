@@ -31,6 +31,10 @@
     {
       "path": "/api/cron/newsletter-daily-digest",
       "schedule": "0 16 * * *"
+    },
+    {
+      "path": "/api/cron/newsletter-flush-queue",
+      "schedule": "30 0 * * *"
     }
   ],
   "headers": [
