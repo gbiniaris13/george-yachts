@@ -5,7 +5,17 @@
 
 import { NextResponse } from "next/server";
 import crypto from "node:crypto";
-import { kvSet, kvScard, kvIncr, kvSadd } from "@/lib/kv";
+import { kvSet, kvScard, kvIncr, kvSadd, kvDel, kvSmembers, kvSrem, kvGet } from "@/lib/kv";
+
+async function kvGetSafe(key) {
+  const raw = await kvGet(key);
+  if (!raw) return null;
+  try {
+    return typeof raw === "string" ? JSON.parse(raw) : raw;
+  } catch {
+    return null;
+  }
+}
 import {
   ISSUE_1_SUBJECT,
   ISSUE_1_PREHEADER,
@@ -48,6 +58,25 @@ export async function GET(request) {
       },
       { status: 422 },
     );
+  }
+
+  // Optional fresh-start: if `?reset=1` is passed, drop any in-flight
+  // bridge drafts (status=pending) and reset the issue counter so this
+  // run produces Issue #1. Only safe to use BEFORE the first real send.
+  if (url.searchParams.get("reset") === "1") {
+    const active = (await kvSmembers("draft:active")) ?? [];
+    for (const id of active) {
+      try {
+        const raw = await kvGetSafe(`draft:${id}`);
+        if (raw && raw.status === "pending" && raw.stream === "bridge") {
+          await kvDel(`draft:${id}`);
+          await kvSrem("draft:active", id);
+        }
+      } catch {
+        // best-effort
+      }
+    }
+    await kvSet("counter:bridge:issue_num", "0");
   }
 
   const audienceSize = (await kvScard("subscribers:bridge")) ?? 0;
