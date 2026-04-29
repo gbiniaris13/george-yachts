@@ -98,6 +98,9 @@ async function buildOneDraft({
     hero_image_url: payload.hero_image_url,
     posture: payload.posture,
     link_label: payload.link_label,
+    // Update 2 caveat #1 — captain credentials only when George
+    // ticks the box in the Composer UI.
+    include_captain_credentials: payload.include_captain_credentials === true,
   });
 
   // §13 validator gate
@@ -186,6 +189,9 @@ async function buildOneDraft({
       reading_time_min: rt,
       voice_violations: validation.violations,
       voice_warnings: validation.warnings,
+      // Update 2 — per-yacht "what NOT to say" guidance shows up in
+      // the approval card so George sees it at review time.
+      voice_notes: yacht?.voice_notes ?? null,
     });
   }
 
