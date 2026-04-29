@@ -52,6 +52,35 @@ export async function GET(request) {
     subscribers = Array.isArray(members)
       ? members.map((s) => String(s)).sort()
       : [];
+    // 2026-04-29 — George flagged that the dashboard showed 79
+    // "Bridge" but in reality most of those are Wake travel-advisor
+    // entries. Root cause: the bulk-add endpoint writes to BOTH the
+    // legacy `newsletter:subscribers` Set AND the per-stream Set, so
+    // legacy has the union. Reading legacy and labelling it "Bridge"
+    // was always wrong. Now we ALSO return per-stream counts so the
+    // CRM dashboard can show 4 honest numbers.
+    var streamCounts = {
+      bridge: 0,
+      wake: 0,
+      compass: 0,
+      greece: 0,
+    };
+    try {
+      const [b, w, c, g] = await Promise.all([
+        kvScard("subscribers:bridge").catch(() => 0),
+        kvScard("subscribers:wake").catch(() => 0),
+        kvScard("subscribers:compass").catch(() => 0),
+        kvScard("subscribers:greece").catch(() => 0),
+      ]);
+      streamCounts = {
+        bridge: Number(b) || 0,
+        wake: Number(w) || 0,
+        compass: Number(c) || 0,
+        greece: Number(g) || 0,
+      };
+    } catch {
+      // best-effort — falls back to zeros
+    }
   } catch (e) {
     return NextResponse.json({
       ok: true,
@@ -88,6 +117,7 @@ export async function GET(request) {
     ok: true,
     flag,
     subscriber_count: count,
+    counts: streamCounts,
     subscribers_by_domain: domainCounts,
     subscribers_masked: maskedSubscribers,
     subscribers: showFullEmails ? subscribers : undefined,
