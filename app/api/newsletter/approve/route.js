@@ -300,10 +300,27 @@ export async function GET(request) {
       `Failed: ${failed}`,
     ];
     if (queued > 0) {
+      // Estimate days to fully drain — assume the daily soft cap as the
+      // worst-case daily throughput. (In practice headroom can vary if
+      // other drafts are also queued.)
+      const DAILY_PACE = 95;
+      const daysToDrain = Math.max(1, Math.ceil(queued / DAILY_PACE));
+      const ymd = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
       summaryLines.push("");
       summaryLines.push(
-        `⏸ <b>Queued ${queued}</b> for the daily flush (Resend free-tier cap of 100/day kicked in). The flush cron at 00:30 UTC will pick up automatically — no action needed.`,
+        `⏸ <b>Σήμερα έφυγαν ${sent} · Αύριο θα φύγουν ${Math.min(queued, DAILY_PACE)}</b>`,
       );
+      summaryLines.push(
+        `Resend free-tier cap = 100/day (we soft-cap at 95). Όσα δεν χώρεσαν περιμένουν στο queue.`,
+      );
+      summaryLines.push(
+        `📅 Auto-resume: ${ymd} 00:30 UTC (≈ 03:30 Athens). Δεν χρειάζεται να κάνεις τίποτα.`,
+      );
+      if (daysToDrain > 1) {
+        summaryLines.push(
+          `⏳ ETA fully delivered: ${daysToDrain} ημέρες (${queued} total queued at ${DAILY_PACE}/day).`,
+        );
+      }
     }
     if (failures.length > 0) {
       summaryLines.push("");

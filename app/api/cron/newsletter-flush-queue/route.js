@@ -55,6 +55,10 @@ async function notifyTelegram(text) {
   }
 }
 
+function todayUtc() {
+  return new Date().toISOString().slice(0, 10);
+}
+
 async function loadDraft(draftId) {
   const raw = await kvGet(`draft:${draftId}`);
   if (!raw) return null;
@@ -219,17 +223,39 @@ export async function GET(request) {
     results.push(r);
   }
 
-  // Telegram summary.
+  // Telegram summary — per-draft breakdown + ETA so George knows
+  // exactly what landed today vs what's still pending tomorrow.
   const totalSent = results.reduce((s, r) => s + (r.sent ?? 0), 0);
   const totalRemaining = results.reduce((s, r) => s + Math.max(0, r.remaining ?? 0), 0);
   const lines = [
-    `🔁 <b>Daily queue flush</b>`,
-    `Drafts in flight: ${inflight.length}`,
-    `Sent today: ${totalSent}`,
-    totalRemaining > 0
-      ? `Still queued for tomorrow: ${totalRemaining}`
-      : `All queues drained — every issue fully delivered.`,
+    `🔁 <b>Daily queue flush — ${todayUtc()}</b>`,
+    `Σήμερα έφυγαν: ${totalSent} email${totalSent === 1 ? "" : "s"}`,
   ];
+  // Per-draft breakdown — read each draft for stream + issue label.
+  for (const r of results) {
+    if (r.skipped === "queue-empty" || r.skipped === "draft-missing") continue;
+    const draft = await loadDraft(r.draftId);
+    const label = draft
+      ? `${draft.stream ?? "?"} #${draft.issue_number ?? "?"}`
+      : r.draftId.slice(0, 8);
+    if ((r.remaining ?? 0) === 0) {
+      lines.push(`  ✅ ${label}: ${r.sent ?? 0} sent today, fully delivered`);
+    } else {
+      lines.push(
+        `  ⏳ ${label}: ${r.sent ?? 0} sent today, ${r.remaining} for tomorrow`,
+      );
+    }
+  }
+  if (totalRemaining > 0) {
+    const daysToDrain = Math.max(1, Math.ceil(totalRemaining / DAILY_SOFT_CAP));
+    lines.push("");
+    lines.push(`📦 Total still queued: ${totalRemaining}`);
+    lines.push(`⏳ ETA fully delivered: ~${daysToDrain} more day${daysToDrain === 1 ? "" : "s"}.`);
+    lines.push(`Auto-resume αύριο 00:30 UTC.`);
+  } else {
+    lines.push("");
+    lines.push(`🎉 All queues drained — every issue fully delivered.`);
+  }
   await notifyTelegram(lines.join("\n"));
 
   return NextResponse.json({
