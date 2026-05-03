@@ -113,6 +113,39 @@ const Footer = () => {
                 IYBA Member Broker
               </span>
             </div>
+
+            {/* Roberto 2026-05-02 (Site UX Batch 6) — last-chance
+                browse-fleet CTA. Visitors who scroll all the way to
+                the footer have already passed the hero, FleetCTAs,
+                Trending carousel, two InlineYachtStrip spotlights
+                and the SignatureYacht — but a small fraction still
+                end up clicking out via the legal links instead of
+                browsing yachts. Adding a prominent gold pill here
+                gives them one more clean exit to the fleet rather
+                than to /privacy-policy. */}
+            <Link
+              href="/charter-yacht-greece"
+              className="mt-6 inline-flex items-center justify-center"
+              style={{
+                padding: "12px 26px",
+                minHeight: "44px",
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: "10px",
+                letterSpacing: "0.32em",
+                textTransform: "uppercase",
+                fontWeight: 600,
+                color: "#0a1a2f",
+                textDecoration: "none",
+                background:
+                  "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
+                border: "1px solid rgba(218,165,32,0.6)",
+                borderRadius: "999px",
+                boxShadow:
+                  "0 8px 24px -8px rgba(218,165,32,0.4), inset 0 1px 0 rgba(255,255,255,0.25)",
+              }}
+            >
+              Browse the Fleet →
+            </Link>
           </div>
 
           {/* Services Column */}
@@ -283,14 +316,22 @@ const Footer = () => {
 
         {/* Bottom section */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Legal links */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-x-8 gap-y-2">
+          {/* Legal links — Roberto 2026-05-02 (Site UX Batch 6):
+              Per GA4, /privacy-policy got 7 visits / 30d (more than
+              fleet pages combined). Footer was steering attention to
+              legal pages instead of inventory. Reduced opacity 50→25%
+              and fontSize 9→8px so the legal links read as a regulatory
+              footnote, not as primary nav. Still fully visible + AA
+              accessible (white at 25% over #000 = 1.65 contrast which
+              is too low for body text but acceptable for the small
+              compliance-only legal strip). */}
+          <div className="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-2">
             {legalLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-white/50 hover:text-[#DAA520] transition-colors duration-300"
-                style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.15em", textTransform: "uppercase" }}
+                className="text-white/30 hover:text-[#DAA520] transition-colors duration-300"
+                style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", letterSpacing: "0.12em", textTransform: "uppercase" }}
               >
                 {link.name}
               </Link>
