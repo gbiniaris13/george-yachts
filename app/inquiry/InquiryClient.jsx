@@ -41,6 +41,20 @@ const STEPS = [
     ],
   },
   {
+    // Roberto 2026-05-02 (Site UX Batch 5) — Yacht selector step.
+    // GA4 showed visitors hitting /inquiry without ever visiting a
+    // fleet page (27 inquiry visits / 30d, 4 fleet-page visits same
+    // window). This step forces yacht-name visibility into the
+    // funnel: the dropdown is populated from /api/fleet at runtime
+    // and includes a free-form "I'm flexible" escape option so the
+    // step never blocks completion. The answer is stored under
+    // meta.yacht_of_interest and routes to the same Telegram + CRM
+    // payload as everything else in the inquiry.
+    key: "yacht_of_interest",
+    label: "Did any specific yacht catch your eye?",
+    type: "yacht-choice",
+  },
+  {
     key: "region",
     label: "Which waters call you?",
     type: "choice",
@@ -141,6 +155,28 @@ export default function InquiryClient() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const inputRef = useRef(null);
+  // Roberto 2026-05-02 — yacht options for the new "yacht_of_interest"
+  // step. Populated once on mount from /api/fleet so the visitor
+  // sees real yacht names (forces inventory exposure even when they
+  // skipped the fleet page on the way here).
+  const [yachtOptions, setYachtOptions] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+    fetch("/api/fleet")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (!active) return;
+        const list = Array.isArray(d?.yachts) ? d.yachts : [];
+        setYachtOptions(
+          list.map((y) => ({ value: y.slug || y.name, label: y.name })),
+        );
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const step = STEPS[idx];
   const progress = ((idx + 1) / TOTAL) * 100;
@@ -196,6 +232,8 @@ export default function InquiryClient() {
           phone: (answers.phone || "").trim(),
           meta: {
             fleet: answers.fleet || null,
+            // Roberto 2026-05-02 — UX Batch 5
+            yacht_of_interest: answers.yacht_of_interest || null,
             region: answers.region || null,
             guests: answers.guests || null,
             when: answers.when || null,
@@ -302,6 +340,58 @@ export default function InquiryClient() {
                   {opt.label}
                 </button>
               ))}
+            </div>
+          )}
+
+          {step.type === "yacht-choice" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {/* Native select — single tap on mobile, opens system
+                  picker. We append a "flexible" sentinel so the step
+                  never feels like a hard gate. */}
+              <select
+                value={answers[step.key] || ""}
+                onChange={(e) => setValue(e.target.value)}
+                style={{
+                  ...textInput,
+                  appearance: "none",
+                  WebkitAppearance: "none",
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))",
+                  paddingRight: 36,
+                  cursor: "pointer",
+                }}
+              >
+                <option value="" disabled>
+                  Pick one or "I'm flexible" below
+                </option>
+                <option value="flexible">
+                  I'm flexible — show me what fits
+                </option>
+                {yachtOptions.length === 0 ? (
+                  <option value="" disabled>
+                    Loading the fleet…
+                  </option>
+                ) : (
+                  yachtOptions.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))
+                )}
+              </select>
+              <p
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: 11,
+                  letterSpacing: "0.05em",
+                  color: "rgba(255,255,255,0.45)",
+                  margin: "4px 2px 0",
+                }}
+              >
+                {yachtOptions.length > 0
+                  ? `${yachtOptions.length} yachts in our 2026 fleet — pick the one you've been thinking about, or stay flexible.`
+                  : "Loading the fleet…"}
+              </p>
             </div>
           )}
 
