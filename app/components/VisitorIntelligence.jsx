@@ -14,18 +14,33 @@ import { useState, useCallback } from 'react';
 import VisitorTracker from './VisitorTracker';
 import LeadCapturePopup from './LeadCapturePopup';
 import HotLeadIGPopup from './HotLeadIGPopup';
+import {
+  canShow,
+  markActive,
+  markInactive,
+  markCaptured,
+} from '@/lib/popup-coordinator';
 
 export default function VisitorIntelligence() {
   const [showPopup, setShowPopup] = useState(false);
   const [hotLeadData, setHotLeadData] = useState(null);
 
   const handleHotLead = useCallback((data) => {
-    // Check if already captured
+    // Already captured (any prior session, this device) → skip.
     if (typeof window !== 'undefined') {
       if (localStorage.getItem('gy-lead-captured')) return;
     }
+    // Coordinator gate — skip if another popup is open or we're
+    // inside the cooldown window after one was already shown.
+    if (!canShow()) return;
+    markActive();
     setHotLeadData(data);
     setShowPopup(true);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setShowPopup(false);
+    markInactive();
   }, []);
 
   return (
@@ -33,7 +48,8 @@ export default function VisitorIntelligence() {
       <VisitorTracker onHotLead={handleHotLead} />
       <LeadCapturePopup
         isOpen={showPopup}
-        onClose={() => setShowPopup(false)}
+        onClose={handleClose}
+        onCaptured={markCaptured}
         hotLeadData={hotLeadData}
       />
       <HotLeadIGPopup />

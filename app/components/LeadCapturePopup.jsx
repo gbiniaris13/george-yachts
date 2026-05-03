@@ -9,7 +9,7 @@ import { useState, useEffect, useRef } from 'react';
 const GOLD = '#DAA520';
 const LEAD_CAPTURED_KEY = 'gy-lead-captured';
 
-export default function LeadCapturePopup({ isOpen, onClose, hotLeadData }) {
+export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadData }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -71,6 +71,8 @@ export default function LeadCapturePopup({ isOpen, onClose, hotLeadData }) {
       }));
 
       setSubmitted(true);
+      // Mark coordinator as captured so no more popups fire this session.
+      onCaptured?.();
     } catch (err) {
       console.error('Lead capture error:', err);
     } finally {

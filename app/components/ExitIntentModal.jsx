@@ -24,17 +24,26 @@
 // per session to capture the email.
 
 import { useEffect, useState, useRef } from "react";
+import {
+  canShow,
+  markActive,
+  markInactive,
+  markCaptured,
+} from "@/lib/popup-coordinator";
 
 const SESSION_KEY = "gy_exit_intent_seen";
 const SUBSCRIBED_KEY = "gy_exit_intent_subscribed";
-// George 2026-04-21: modal was firing within the first minute — felt
-// like a siege. Now the mobile time-based trigger needs 2 min of
-// viewing time, and the desktop cursor-leave trigger ignores mouseouts
-// that happen before DESKTOP_MIN_TIME_MS too. No visitor sees this
-// modal in the first 45 s of their visit.
-const MOBILE_DELAY_MS = 120_000;
+// Roberto 2026-05-02 (popup orchestration):
+//   • Desktop minimum dwell raised 45s → 60s so we don't pounce on
+//     fresh visitors who haven't seen the fleet yet.
+//   • Mobile time-based trigger DROPPED. Mobile gets one trigger
+//     only: 80% scroll. Time-based on mobile was firing for visitors
+//     who put the phone down briefly — a frustrated gesture, not
+//     genuine exit intent.
+//   • Coordinator gate prevents this modal from ever stacking on top
+//     of HotLeadIGPopup or LeadCapturePopup.
 const MOBILE_SCROLL_THRESHOLD = 0.8;
-const DESKTOP_MIN_TIME_MS = 45_000;
+const DESKTOP_MIN_TIME_MS = 60_000;
 
 export default function ExitIntentModal() {
   const [open, setOpen] = useState(false);
@@ -59,10 +68,14 @@ export default function ExitIntentModal() {
     const mountedAt = Date.now();
     const trigger = () => {
       if (firedRef.current) return;
-      // Honour the desktop minimum dwell time — don't surprise
-      // someone who bounces off the site in the first 45 s.
+      // Honour the minimum dwell time — don't surprise someone who
+      // bounces off the site in the first 60 s.
       if (Date.now() - mountedAt < DESKTOP_MIN_TIME_MS) return;
+      // Coordinator gate: skip if another popup is open or we're
+      // still inside the post-popup cooldown window.
+      if (!canShow()) return;
       firedRef.current = true;
+      markActive();
       setOpen(true);
     };
 
@@ -78,11 +91,11 @@ export default function ExitIntentModal() {
       window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
 
     let scrollHandler = null;
-    let mobileTimer = null;
 
     if (isTouch) {
-      mobileTimer = setTimeout(trigger, MOBILE_DELAY_MS);
-
+      // Mobile gets one trigger only: scroll past 80%. Drop the
+      // 2-minute timer — it was firing for visitors who briefly put
+      // the phone down, which isn't real exit intent.
       scrollHandler = () => {
         const scrolled =
           (window.scrollY + window.innerHeight) /
@@ -97,7 +110,6 @@ export default function ExitIntentModal() {
     return () => {
       document.removeEventListener("mouseout", onMouseOut);
       if (scrollHandler) window.removeEventListener("scroll", scrollHandler);
-      if (mobileTimer) clearTimeout(mobileTimer);
     };
   }, []);
 
@@ -117,7 +129,10 @@ export default function ExitIntentModal() {
   useEffect(() => {
     if (!open) return;
     const onKey = (e) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        markInactive();
+      }
     };
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -128,7 +143,10 @@ export default function ExitIntentModal() {
     };
   }, [open]);
 
-  const close = () => setOpen(false);
+  const close = () => {
+    setOpen(false);
+    markInactive();
+  };
 
   const submit = async (e) => {
     e?.preventDefault?.();
@@ -158,8 +176,13 @@ export default function ExitIntentModal() {
       } catch {
         /* ignore */
       }
+      // Mark coordinator captured so no further popups fire this session.
+      markCaptured();
       // Auto-close after a beat so the success note has time to land
-      setTimeout(() => setOpen(false), 2600);
+      setTimeout(() => {
+        setOpen(false);
+        markInactive();
+      }, 2600);
     } catch (err) {
       setStatus("error");
       setErrorMsg(err.message || "Please try again in a moment.");

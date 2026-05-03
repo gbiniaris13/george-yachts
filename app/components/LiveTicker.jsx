@@ -108,14 +108,16 @@ export default function LiveTicker() {
           setVisible(false);
           setAnimating(false);
 
-          // Stop after 6 messages per session
-          if (countRef.current >= 6) return;
+          // Stop after 4 messages per session (was 6) — ticker is
+          // social proof, not a stream. Roberto 2026-05-02.
+          if (countRef.current >= 4) return;
 
-          // Next message in 45-90 seconds (realistic interval)
-          // George 2026-04-21: 45-90 s felt relentless stacked with
-          // the other popups. Widened to 90-180 s so the ticker is
-          // an occasional whisper, not a constant notification.
-          const nextDelay = 90000 + Math.random() * 90000;
+          // Next message in 2-4 minutes (was 90-180 s). The ticker
+          // should be an occasional whisper that confirms momentum,
+          // not a constant notification stream — especially with the
+          // new StickyFleetCTA + WhatsApp greeting now in the bottom
+          // viewport area.
+          const nextDelay = 120000 + Math.random() * 120000;
           timerRef.current = setTimeout(showMessage, nextDelay);
         }, 300);
       }, 6000);
@@ -123,9 +125,10 @@ export default function LiveTicker() {
   }, []);
 
   useEffect(() => {
-    // First message after 60-90s (was 15-25s). Visitor gets to
-    // actually see the site before the first social-proof toast.
-    const initialDelay = 60000 + Math.random() * 30000;
+    // First message after 90-150s (was 60-90s). Visitor gets to
+    // actually see the site + at least one yacht section before
+    // any social-proof toast. Roberto 2026-05-02.
+    const initialDelay = 90000 + Math.random() * 60000;
     timerRef.current = setTimeout(showMessage, initialDelay);
 
     return () => {

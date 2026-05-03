@@ -17,6 +17,12 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import {
+  canShow,
+  markActive,
+  markInactive,
+  markCaptured,
+} from '@/lib/popup-coordinator';
 
 const GOLD = '#DAA520';
 const HOT_LEAD_IG_KEY = 'gy-hot-lead-ig-captured';
@@ -56,17 +62,23 @@ export default function HotLeadIGPopup() {
   const [submitted, setSubmitted] = useState(false);
   const [closing, setClosing] = useState(false);
 
-  // Arm the 30s timer when the visitor lands on a premium path.
+  // Arm the timer when the visitor lands on a premium path.
   useEffect(() => {
     if (!isPremiumPath(pathname)) return;
 
-    // Don't show if already captured
+    // Don't show if already captured (this device, any session)
     try {
       if (localStorage.getItem(HOT_LEAD_IG_KEY)) return;
       if (localStorage.getItem(LEAD_CAPTURED_KEY)) return;
     } catch {}
 
-    const timer = setTimeout(() => setIsOpen(true), TRIGGER_DELAY_MS);
+    const timer = setTimeout(() => {
+      // Coordinator gate: skip if another popup is open or the
+      // session has already shown one within the cooldown window.
+      if (!canShow()) return;
+      markActive();
+      setIsOpen(true);
+    }, TRIGGER_DELAY_MS);
     return () => clearTimeout(timer);
   }, [pathname]);
 
@@ -84,6 +96,7 @@ export default function HotLeadIGPopup() {
     setTimeout(() => {
       setIsOpen(false);
       setClosing(false);
+      markInactive();
     }, 400);
   };
 
@@ -147,6 +160,7 @@ export default function HotLeadIGPopup() {
         HOT_LEAD_IG_KEY,
         JSON.stringify({ handle, date: new Date().toISOString() })
       );
+      markCaptured();
       setSubmitted(true);
     } catch (err) {
       console.error('HotLeadIGPopup submit error:', err);

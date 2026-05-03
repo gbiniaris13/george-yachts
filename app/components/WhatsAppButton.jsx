@@ -25,11 +25,12 @@ const STORAGE_KEY = "gy_wa_greeted";
 // again for a week. Returning visitors shouldn't feel sieged.
 const DISMISS_KEY = "gy_wa_dismissed_at";
 const DISMISS_LOCK_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
-// George 2026-04-21: bubble was firing 10 s into the visit alongside
-// the cookie banner + hot-lead popup → felt like a siege. Pushed to
-// 60 s so the visitor has breathing room to actually look at the site
-// before a message surfaces.
-const GREETING_DELAY_MS = 60_000;
+// Roberto 2026-05-02: pushed greeting from 60s → 90s. With LiveTicker's
+// first toast also retimed to 90-150s, the WhatsApp bubble now lands
+// before the social-proof stream so visitors see the live human option
+// first, then the social proof reinforces it. Also gated by the popup
+// coordinator so it doesn't surface while a capture modal is open.
+const GREETING_DELAY_MS = 90_000;
 
 export default function WhatsAppButton() {
   const [hovered, setHovered] = useState(false);
@@ -46,7 +47,21 @@ export default function WhatsAppButton() {
     } catch {
       /* private browsing — just continue without the guards */
     }
-    const t = setTimeout(() => setGreetOpen(true), GREETING_DELAY_MS);
+    const t = setTimeout(() => {
+      // Skip if a capture popup is currently mounted — we don't
+      // want the WA bubble peeking out from behind the modal. The
+      // bubble itself isn't a coordinator-controlled popup (it's a
+      // passive FAB greeting), so we read the flag directly via
+      // sessionStorage rather than calling canShow() — that way we
+      // don't burn the cooldown on a small bubble that doesn't
+      // really compete for the modal slot.
+      try {
+        if (window.sessionStorage.getItem("gy_popup_active")) return;
+      } catch {
+        /* ignore */
+      }
+      setGreetOpen(true);
+    }, GREETING_DELAY_MS);
     return () => clearTimeout(t);
   }, []);
 
