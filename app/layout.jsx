@@ -5,6 +5,7 @@ import NavDrawerSystem from "./components/NavDrawerSystem";
 import GlobalEffects from "./components/GlobalEffects";
 import CustomCursor from "./components/CustomCursor";
 import WhatsAppButton from "./components/WhatsAppButton";
+import StickyFleetCTA from "./components/StickyFleetCTA";
 import GoldCurtain from "./components/GoldCurtain";
 import ExitIntentModal from "./components/ExitIntentModal";
 import AmbientScroll from "./components/AmbientScroll";
@@ -209,6 +210,13 @@ export default function RootLayout({ children }) {
             strip — cleaner placement, no floating pill clashing with
             social icons or the hero content. */}
         <WhatsAppButton />
+        {/* Roberto 2026-05-02 — sticky bottom CTA so the fleet is one
+            tap from anywhere on the site (auto-hides on fleet/yacht
+            routes). yachtCount left undefined here at the layout
+            level since we don't have it server-side without an extra
+            Sanity round-trip on every route; the component falls
+            back to "View All Yachts" when count is missing. */}
+        <StickyFleetCTA />
         {/* D2 — Exit-intent capture, one shot per session */}
         <ExitIntentModal />
         <VisitorBeacon />
