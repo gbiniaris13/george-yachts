@@ -86,16 +86,22 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
         } – ${highFleet > 0 ? fmtK(highFleet) : "€235K"}/week · Crewed`
       : null;
 
+  // The button styling renders the FIRST button as a ghost
+  // (white-bordered, subtle) and the SECOND button as a solid GOLD
+  // pill — the gold one carries the visual weight, so it must
+  // contain the action we most want visitors to take. Per the GA4
+  // dive, that's the direct fleet grid (/charter-yacht-greece) —
+  // not the quiz. Hence: ghost = quiz (demoted), gold = fleet.
   const slideData = [
     {
       id: 1,
       imageUrl: "/videos/yacht-cruising-new.mp4",
-      // Primary: zero-friction direct fleet grid
-      primaryHref: "/charter-yacht-greece",
-      primaryText: t('common.exploreFleet'),
-      // Secondary: guided quiz for visitors who want help narrowing down
-      secondaryHref: "/yacht-finder",
-      secondaryText: t('common.findYourYacht'),
+      // Slot 1 → ghost button (subtle): demoted quiz route
+      primaryHref: "/yacht-finder",
+      primaryText: t('common.findYourYacht'),
+      // Slot 2 → gold button (primary visual weight): direct fleet grid
+      secondaryHref: "/charter-yacht-greece",
+      secondaryText: t('common.exploreFleet'),
     },
   ];
 
