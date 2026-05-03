@@ -263,8 +263,12 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                 {t('yacht.whatsappInquiry', 'Inquire on WhatsApp')}
               </a>
 
+              {/* Roberto 2026-05-02 — was /#contact (homepage anchor),
+                  visitors landed on the homepage instead of the
+                  inquiry form. Fixed to the real /inquiry route +
+                  pre-select this yacht in the dropdown via ?yacht=. */}
               <a
-                href="/#contact"
+                href={`/inquiry?yacht=${encodeURIComponent(yacht.slug)}`}
                 className="btn-secondary"
               >
                 {t('yacht.submitInquiry', 'Submit an Inquiry')}

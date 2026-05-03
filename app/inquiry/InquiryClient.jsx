@@ -171,6 +171,20 @@ export default function InquiryClient() {
         setYachtOptions(
           list.map((y) => ({ value: y.slug || y.name, label: y.name })),
         );
+        // Roberto 2026-05-02 — Pre-select a yacht when the visitor
+        // arrived via the yacht detail page's "Submit an Inquiry"
+        // button (URL shape: /inquiry?yacht=<slug>). Falls through
+        // silently if the slug doesn't match anything in the fleet
+        // (e.g. yacht just removed from Sanity).
+        try {
+          const sp = new URLSearchParams(window.location.search);
+          const preselect = sp.get("yacht");
+          if (preselect && list.some((y) => (y.slug || y.name) === preselect)) {
+            setAnswers((a) => ({ ...a, yacht_of_interest: preselect }));
+          }
+        } catch {
+          /* SSR or no URL — ignore */
+        }
       })
       .catch(() => {});
     return () => {
