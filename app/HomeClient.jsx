@@ -9,6 +9,7 @@ import HomeStats from "./components/HomeStats";
 import Footer from "./components/Footer";
 import StickyMiniNav from "./components/StickyMiniNav";
 import TrendingYachts from "./components/TrendingYachts";
+import InlineYachtStrip from "./components/InlineYachtStrip";
 
 // Dynamic imports for below-fold components — reduces initial JS bundle.
 // 2026-04-21 declutter: the following were removed from the home tree
@@ -91,6 +92,23 @@ const HomeClient = ({
         <YourBroker />
       </section>
 
+      {/* Roberto 2026-05-02 Batch 4 — yacht spotlight #1 between
+          editorial sections so visitors who scroll past fleet still
+          see yachts every couple of sections. Different yacht than
+          the carousel + signature so we're not repeating the same
+          card three times. */}
+      {trendingYachts && trendingYachts.length > 6 ? (
+        <InlineYachtStrip
+          yacht={trendingYachts[6]}
+          eyebrow="Skipper's Pick"
+        />
+      ) : trendingYachts && trendingYachts.length > 0 ? (
+        <InlineYachtStrip
+          yacht={trendingYachts[trendingYachts.length - 1]}
+          eyebrow="Skipper's Pick"
+        />
+      ) : null}
+
       {/* Interactive Greek waters map (statement piece) */}
       <section id="map">
         <GreekWatersMap />
@@ -99,6 +117,16 @@ const HomeClient = ({
       <section id="filotimo">
         <Filotimon filotimoImage={filotimoImage} />
       </section>
+
+      {/* Roberto 2026-05-02 Batch 4 — yacht spotlight #2 right
+          before testimonials. Picks a different yacht so consecutive
+          spotlights don't repeat. */}
+      {trendingYachts && trendingYachts.length > 7 ? (
+        <InlineYachtStrip
+          yacht={trendingYachts[7]}
+          eyebrow="Editor's Pick"
+        />
+      ) : null}
 
       <BrokerTestimonials />
 

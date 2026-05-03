@@ -211,12 +211,14 @@ export default async function HomePage() {
 
     filotimoImage = filotimoEditorial?.url ?? null;
 
-    // Trending Yachts carousel — pick 6 yachts, rotated weekly so
-    // visitors who come back see different cards without us doing
-    // anything manual. Uses the same week-of-year offset trick as
-    // SignatureYacht to keep rotations spread out.
+    // Trending Yachts carousel + 2 InlineYachtStrip spotlights —
+    // pick 8 yachts (carousel uses [0..5], spotlights use [6] and
+    // [7]), rotated weekly so visitors who come back see different
+    // cards without us doing anything manual. Uses the same week-
+    // of-year offset trick as SignatureYacht to keep rotations
+    // spread out.
     if (Array.isArray(trendingPool) && trendingPool.length > 0) {
-      const N = Math.min(6, trendingPool.length);
+      const N = Math.min(8, trendingPool.length);
       const start = (weekOfYear * 2) % trendingPool.length;
       for (let k = 0; k < N; k++) {
         trendingYachts.push(trendingPool[(start + k) % trendingPool.length]);

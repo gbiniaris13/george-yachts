@@ -41,7 +41,10 @@ function formatPrice(weeklyRatePrice) {
 export default function TrendingYachts({ yachts }) {
   const scrollerRef = useRef(null);
 
-  const list = Array.isArray(yachts) ? yachts.filter((y) => y && y.slug) : [];
+  // Carousel shows the first 6. The home page passes up to 8 so
+  // entries 6 and 7 are reserved for the InlineYachtStrip spotlights
+  // — keeping carousel + spotlight from showing the same yacht twice.
+  const list = (Array.isArray(yachts) ? yachts.filter((y) => y && y.slug) : []).slice(0, 6);
   if (list.length < 3) return null;
 
   return (
