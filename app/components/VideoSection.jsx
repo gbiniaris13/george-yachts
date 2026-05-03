@@ -48,7 +48,7 @@ const BackgroundVideo = ({ src, poster }) => {
   );
 };
 
-const VideoSection = () => {
+const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
   const { t } = useI18n();
   const HEIGHT_CLASSES = "h-[100dvh]";
   const isVideo = (url) => url && url.toLowerCase().endsWith(".mp4");
@@ -59,23 +59,43 @@ const VideoSection = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // CTA hierarchy — George 2026-04-20 post-Move-#2 cleanup:
-  // The split-screen fleet showcase (Move #2) sits immediately
-  // below the hero, so the Private / Explorer choice is already
-  // unmissable on the next scroll. Duplicating the fleet buttons
-  // inside the hero became visual noise — reverted to the original
-  // single 'Find Your Yacht in 60 Seconds' CTA.
+  // CTA hierarchy — Roberto 2026-05-02 (per analytics deep dive):
+  // GA4 shows 1.5% of homepage visitors reach a fleet page and 0%
+  // reach a yacht detail page. The previous primary CTA pointed at
+  // /yacht-finder (a 60-second QUIZ) — high friction for cold
+  // outreach traffic that has 27s avg session and just wants to
+  // SEE yachts. We flip:
+  //   • Primary  → /charter-yacht-greece  (full fleet grid, no friction)
+  //   • Secondary → /yacht-finder         (quiz, demoted)
+  // Plus a badge above the CTAs anchors the promise in concrete
+  // numbers: "X yachts · €Y–€Z/week · Crewed". Specificity raises
+  // CTR vs generic taglines.
+  const fmtK = (n) => (n >= 1000 ? `€${Math.round(n / 1000)}K` : `€${n}`);
+  const lowFleet = Math.min(
+    privateRange?.low ?? Infinity,
+    explorerRange?.low ?? Infinity,
+  );
+  const highFleet = Math.max(
+    privateRange?.high ?? 0,
+    explorerRange?.high ?? 0,
+  );
+  const fleetBadge =
+    yachtCount && yachtCount > 0
+      ? `${yachtCount} yachts · ${
+          isFinite(lowFleet) ? fmtK(lowFleet) : "€7K"
+        } – ${highFleet > 0 ? fmtK(highFleet) : "€235K"}/week · Crewed`
+      : null;
+
   const slideData = [
     {
       id: 1,
       imageUrl: "/videos/yacht-cruising-new.mp4",
-      // Primary: guided 60-second quiz
-      primaryHref: "/yacht-finder",
-      primaryText: t('common.findYourYacht'),
-      // Secondary (George 2026-04-29): jump straight to the full fleet
-      // page for visitors who already know what they're looking for.
-      secondaryHref: "/charter-yacht-greece",
-      secondaryText: t('common.exploreFleet'),
+      // Primary: zero-friction direct fleet grid
+      primaryHref: "/charter-yacht-greece",
+      primaryText: t('common.exploreFleet'),
+      // Secondary: guided quiz for visitors who want help narrowing down
+      secondaryHref: "/yacht-finder",
+      secondaryText: t('common.findYourYacht'),
     },
   ];
 
@@ -330,6 +350,42 @@ const VideoSection = () => {
                         return t('seasonal.autumn');
                       })()}
                     </p>
+
+                    {/* Concrete-numbers badge (Roberto 2026-05-02):
+                        Replaces the abstract "exclusively Greek waters"
+                        promise with a specific count + price range so
+                        the visitor knows what they'll find on click.
+                        Per analytics, only 1.5% of homepage visitors
+                        reach a fleet page — anchoring numbers in the
+                        hero is the cheapest fix. Hidden when the count
+                        prop hasn't loaded yet so we never flash a stale
+                        placeholder. */}
+                    {fleetBadge && (
+                      <p
+                        style={{
+                          fontFamily: "'Montserrat', sans-serif",
+                          fontSize: "11px",
+                          letterSpacing: "0.18em",
+                          textTransform: "uppercase",
+                          color: "rgba(255,255,255,0.85)",
+                          fontWeight: 500,
+                          margin: "0 0 22px 0",
+                          padding: "8px 18px",
+                          border: "1px solid rgba(218,165,32,0.45)",
+                          borderRadius: "999px",
+                          background: "rgba(0,0,0,0.32)",
+                          backdropFilter: "blur(4px)",
+                          textAlign: "center",
+                          opacity: heroVisible ? 1 : 0,
+                          transform: heroVisible ? "translateY(0)" : "translateY(8px)",
+                          transition:
+                            "opacity 0.9s ease 2.6s, transform 0.9s ease 2.6s",
+                        }}
+                        aria-label={`Fleet snapshot: ${fleetBadge}`}
+                      >
+                        {fleetBadge}
+                      </p>
+                    )}
 
                     {/* Dual CTA pair (George 2026-04-29):
                         ① Primary  — guided 60-second quiz for undecided

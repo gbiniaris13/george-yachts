@@ -43,13 +43,20 @@ const HomeClient = ({
       {/* Sticky mini-nav surfaces after the hero (>600px) */}
       <StickyMiniNav />
 
-      <VideoSection />
+      {/* Hero now knows about the fleet so its CTA + badge can show
+          the live yacht count and price floor instead of a generic
+          tagline (Roberto 2026-05-02 conversion fix). */}
+      <VideoSection
+        yachtCount={yachtCount}
+        privateRange={privateRange}
+        explorerRange={explorerRange}
+      />
 
-      {/* Signature Yacht slot (weekly auto-rotating feature) */}
-      <section id="signature">
-        <SignatureYacht yacht={signatureYacht} />
-      </section>
-
+      {/* 2026-05-02 reorder: Fleet split-screen now sits IMMEDIATELY
+          below the hero so the Private / Explorer choice is the
+          first thing visitors see on scroll. Per GA4 (last 30d) only
+          4 / 267 = 1.5% of homepage visitors reached a fleet page;
+          moving fleet up + SignatureYacht down should multiply that. */}
       <section id="fleet">
         <FleetCTAs
           privateRange={privateRange}
@@ -59,6 +66,11 @@ const HomeClient = ({
           privateCount={privateCount}
           explorerCount={explorerCount}
         />
+      </section>
+
+      {/* Signature Yacht slot (weekly auto-rotating feature) */}
+      <section id="signature">
+        <SignatureYacht yacht={signatureYacht} />
       </section>
 
       {/* Proof = Stats + Credentials merged (Proposal A) */}
