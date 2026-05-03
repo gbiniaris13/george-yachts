@@ -8,6 +8,7 @@ import FleetCTAs from "./components/FleetCTAs";
 import HomeStats from "./components/HomeStats";
 import Footer from "./components/Footer";
 import StickyMiniNav from "./components/StickyMiniNav";
+import TrendingYachts from "./components/TrendingYachts";
 
 // Dynamic imports for below-fold components — reduces initial JS bundle.
 // 2026-04-21 declutter: the following were removed from the home tree
@@ -37,6 +38,7 @@ const HomeClient = ({
   explorerCount,
   signatureYacht,
   filotimoImage,
+  trendingYachts,
 }) => {
   return (
     <div className="min-h-screen bg-black font-sans">
@@ -51,6 +53,14 @@ const HomeClient = ({
         privateRange={privateRange}
         explorerRange={explorerRange}
       />
+
+      {/* Trending Yachts carousel (Roberto 2026-05-02 — Batch 3).
+          Real yacht cards immediately below the hero, before the
+          split-screen "pick a category" step. Cold-outreach traffic
+          who just wants to SEE yachts gets a one-tap path to a
+          yacht detail page without choosing between Private/Explorer
+          first. Renders nothing if the pool is empty. */}
+      <TrendingYachts yachts={trendingYachts} />
 
       {/* 2026-05-02 reorder: Fleet split-screen now sits IMMEDIATELY
           below the hero so the Private / Explorer choice is the

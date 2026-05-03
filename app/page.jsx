@@ -124,8 +124,13 @@ export default async function HomePage() {
 
   let filotimoImage = null;
 
+  // Roberto 2026-05-02 — Trending Yachts carousel data. Filled
+  // inside the try below from `trendingPool`. Defaulted here so
+  // the JSX render is unconditional even if Sanity errors.
+  let trendingYachts = [];
+
   try {
-    const [count, privateYachts, explorerYachts, allYachts, privateHero, explorerHero, signaturePool, filotimoEditorial] = await Promise.all([
+    const [count, privateYachts, explorerYachts, allYachts, privateHero, explorerHero, signaturePool, filotimoEditorial, trendingPool] = await Promise.all([
       sanityClient.fetch(`count(*[_type == "yacht"])`),
       sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["private", "both"]]{ weeklyRatePrice }`),
       sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"]]{ weeklyRatePrice, sleeps }`),
@@ -168,6 +173,14 @@ export default async function HomePage() {
         | order(count(images) desc) [0] {
           "url": images[5].asset->url
         }`),
+      // Roberto 2026-05-02 — Trending Yachts carousel pool. Pulls
+      // every yacht with at least one image, ordered by name. The
+      // client picks 6 to display, rotated weekly so the carousel
+      // refreshes without manual work.
+      sanityClient.fetch(`*[_type == "yacht" && count(images) > 0]{
+        name, "slug": slug.current, weeklyRatePrice, sleeps, length,
+        "image": images[0].asset->url
+      } | order(name asc)`),
     ]);
     yachtCount = count;
     privateHeroImage = privateHero?.url ?? null;
@@ -197,6 +210,18 @@ export default async function HomePage() {
     }
 
     filotimoImage = filotimoEditorial?.url ?? null;
+
+    // Trending Yachts carousel — pick 6 yachts, rotated weekly so
+    // visitors who come back see different cards without us doing
+    // anything manual. Uses the same week-of-year offset trick as
+    // SignatureYacht to keep rotations spread out.
+    if (Array.isArray(trendingPool) && trendingPool.length > 0) {
+      const N = Math.min(6, trendingPool.length);
+      const start = (weekOfYear * 2) % trendingPool.length;
+      for (let k = 0; k < N; k++) {
+        trendingYachts.push(trendingPool[(start + k) % trendingPool.length]);
+      }
+    }
 
     privateCount = privateYachts.length;
     explorerCount = explorerYachts.length;
@@ -251,6 +276,7 @@ export default async function HomePage() {
         explorerCount={explorerCount}
         signatureYacht={signatureYacht}
         filotimoImage={filotimoImage}
+        trendingYachts={trendingYachts}
       />
     </>
   );
