@@ -20,6 +20,7 @@
 import { NextResponse } from "next/server";
 import { sendTelegram } from "@/lib/telegram";
 import { checkRateLimit } from "@/lib/rateLimit";
+import { bumpKpi } from "@/lib/kpis";
 
 export const dynamic = "force-dynamic";
 
@@ -126,6 +127,9 @@ export async function POST(req) {
     lines.push(`⏱ _Reply within 24h_`);
 
     await sendTelegram(lines.join("\n"));
+
+    // N.3 — bump KPI counter
+    bumpKpi("inquiry").catch(() => {});
 
     return NextResponse.json({ ok: true });
   } catch (err) {

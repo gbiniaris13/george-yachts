@@ -13,6 +13,7 @@
 
 import { sanityClient } from "@/lib/sanity";
 import { sendTelegram } from "@/lib/telegram";
+import { bumpKpi } from "@/lib/kpis";
 
 const RESEND_API = "https://api.resend.com";
 const RESEND_FROM =
@@ -169,6 +170,9 @@ ${yachts.map((y) => y.name).join(" · ")}
       console.error("[proposal-generate] email failed", err);
     }
   }
+
+  // N.3 — bump KPI counter (best-effort)
+  bumpKpi("proposal_generated").catch(() => {});
 
   // Always return the PDF inline as a base64 data URL so the client
   // can offer immediate download even if the email is delayed.

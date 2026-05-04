@@ -10,6 +10,7 @@
 
 import { sendTelegram } from "@/lib/telegram";
 import { sendNewsletterEmail } from "@/lib/newsletter/resend";
+import { bumpKpi } from "@/lib/kpis";
 
 export const runtime = "nodejs";
 
@@ -68,5 +69,6 @@ ${message ? `<p style="background:#fafafa;padding:12px 16px;border-left:3px soli
     }).catch(() => {});
   } catch {}
 
+  bumpKpi("itinerary_saved").catch(() => {});
   return Response.json({ ok: true });
 }

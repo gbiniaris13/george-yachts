@@ -6,6 +6,7 @@
 // obligations that need human review.
 
 import { sendTelegram } from "@/lib/telegram";
+import { bumpKpi } from "@/lib/kpis";
 
 export const runtime = "nodejs";
 
@@ -64,5 +65,6 @@ export async function POST(req) {
     } catch {}
   }
 
+  bumpKpi("privacy_deletion").catch(() => {});
   return Response.json({ ok: true });
 }
