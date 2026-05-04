@@ -135,6 +135,12 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                   {/* Cinematic overlay */}
                   <div className="absolute inset-0 bg-black/40"></div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20"></div>
+                  {/* P.3 (Roberto brief) — slow-cinema film grain.
+                      Pure CSS-pseudo via the .gy-film-grain class
+                      defined in globals.css. ~5% opacity multiplied
+                      over the video so the texture reads only at the
+                      edges of the frame, not as visible noise. */}
+                  <div className="absolute inset-0 gy-film-grain pointer-events-none" aria-hidden="true"></div>
                 </div>
 
                 {/* Hero Content — flex column on the inner wrapper so EVERY
