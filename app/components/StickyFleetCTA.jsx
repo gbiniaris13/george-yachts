@@ -112,10 +112,13 @@ export default function StickyFleetCTA({ yachtCount: yachtCountProp } = {}) {
     return null;
   }
 
+  // B.7 (Roberto brief): UHNW reads emoji-prefixed CTAs as TikTok-vibe.
+  // Drop the eye emoji; let the label speak. The count anchors the
+  // promise without needing decoration.
   const label =
     resolvedCount && resolvedCount > 0
-      ? `View All ${resolvedCount} Yachts`
-      : "View All Yachts";
+      ? `See This Week's Selection · ${resolvedCount} yachts`
+      : "See This Week's Selection";
 
   return (
     <div
@@ -180,9 +183,8 @@ export default function StickyFleetCTA({ yachtCount: yachtCountProp } = {}) {
             e.currentTarget.style.transform = "translateY(0)";
           }}
         >
-          <span aria-hidden="true">👁</span>
           {label}
-          <span aria-hidden="true" style={{ fontSize: "13px", opacity: 0.7 }}>
+          <span aria-hidden="true" style={{ fontSize: "13px", opacity: 0.8 }}>
             →
           </span>
         </a>

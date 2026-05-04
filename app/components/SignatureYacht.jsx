@@ -27,6 +27,27 @@ function SignatureEmpty() {
   return null;
 }
 
+// B.5 — clean truncation helper. Cuts at the last sentence-ending
+// punctuation (. ! ? — ;) found after 60% of maxLen, or at the last
+// space if no punctuation falls in that window. Never mid-word.
+function cleanTruncate(text, maxLen = 320) {
+  if (!text || text.length <= maxLen) return text || "";
+  const window = text.slice(0, maxLen);
+  const minStop = Math.floor(maxLen * 0.6);
+  const punct = /[.!?—;](?=\s|$)/g;
+  let lastPunct = -1;
+  let match;
+  while ((match = punct.exec(window)) !== null) {
+    if (match.index >= minStop) lastPunct = match.index;
+  }
+  if (lastPunct !== -1) return text.slice(0, lastPunct + 1);
+  // Fall back to last whitespace before maxLen.
+  const lastSpace = window.lastIndexOf(" ");
+  if (lastSpace > minStop) return text.slice(0, lastSpace).trimEnd() + "…";
+  // Ultra-last-ditch: hard cut + ellipsis.
+  return window.trimEnd() + "…";
+}
+
 export default function SignatureYacht({ yacht }) {
   const sectionRef = useRef(null);
   const [parallaxY, setParallaxY] = useState(0);
@@ -77,7 +98,14 @@ export default function SignatureYacht({ yacht }) {
 
   const yachtHref = yacht.slug ? `/yachts/${yacht.slug}` : null;
   const insider = (yacht.georgeInsiderTip || "").trim();
-  const insiderTrim = insider.length > 320 ? insider.slice(0, 317).trimEnd() + "…" : insider;
+
+  // B.5 (Roberto brief): the previous .slice(0, 317) cut quotes
+  // mid-word ("...it's bigger than most Athens…"). cleanTruncate
+  // walks back from the hard limit to the last sentence-ending
+  // punctuation OR the last whole word, so quotes always close
+  // gracefully. If the original is short enough, it returns
+  // unchanged.
+  const insiderTrim = cleanTruncate(insider, 320);
 
   return (
     <section

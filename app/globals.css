@@ -9,6 +9,55 @@ html {
   overflow-x: hidden;
 }
 
+/* A.12 (Roberto brief): every anchored section gets enough scroll
+   offset so the sticky mini-nav (≈140px tall on desktop) does not
+   hide the section title when smooth-scrolling to an anchor link.
+   `scroll-margin-top` is the canonical way to do this — works with
+   `scroll-behavior: smooth` and `<a href="#section">` jumps. */
+section[id], main[id], div[id^="section-"] {
+  scroll-margin-top: 140px;
+}
+@media (max-width: 768px) {
+  section[id], main[id], div[id^="section-"] {
+    scroll-margin-top: 88px;
+  }
+}
+
+/* Tier 1.1 (Forbes integration brief, May 2026): when the Forbes
+   feature bar is rendering at the top of the viewport, push body
+   content down so the fixed bar doesn't crop the hero. Once
+   visitors dismiss the bar, the `gy-with-forbes-bar` class is
+   removed server-side on the next render and the offset returns
+   to zero. Anchor scroll-margins also bump up to keep them clear
+   of the bar.
+
+   Also publishes a CSS custom property `--gy-top-offset` so any
+   other top-anchored sticky element (yacht-detail sticky CTA,
+   StickyMiniNav, etc.) can read the same value and stack below
+   the Forbes bar instead of getting hidden behind it. */
+body {
+  --gy-top-offset: 0px;
+}
+body.gy-with-forbes-bar {
+  --gy-top-offset: 36px;
+  padding-top: var(--gy-top-offset);
+}
+body.gy-with-forbes-bar section[id],
+body.gy-with-forbes-bar main[id],
+body.gy-with-forbes-bar div[id^="section-"] {
+  scroll-margin-top: 176px;
+}
+@media (max-width: 700px) {
+  body.gy-with-forbes-bar {
+    --gy-top-offset: 32px;
+  }
+  body.gy-with-forbes-bar section[id],
+  body.gy-with-forbes-bar main[id],
+  body.gy-with-forbes-bar div[id^="section-"] {
+    scroll-margin-top: 120px;
+  }
+}
+
 body {
   overflow-x: hidden;
   max-width: 100vw;

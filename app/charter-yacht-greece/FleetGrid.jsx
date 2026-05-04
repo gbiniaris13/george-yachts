@@ -241,7 +241,10 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
   return (
     <div
       className="fleet-card"
-      style={{ '--stagger': `${Math.min(index * 0.06, 0.6)}s` }}
+      // A.14 (Roberto brief): max stagger 50ms × min(index, 6) = 300ms
+      // total. Was 600ms × index, capping at 600ms — too long when
+      // user scrolls quickly through the grid.
+      style={{ '--stagger': `${Math.min(index * 0.05, 0.3)}s` }}
     >
       {/* Image */}
       <Link href={`/yachts/${slug}`} className="fleet-card__image-link">

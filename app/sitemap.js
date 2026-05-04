@@ -60,6 +60,11 @@ const staticRoutes = [
   { path: "/faq", priority: 0.85, changeFrequency: "monthly" },
   { path: "/partners", priority: 0.8, changeFrequency: "monthly" },
   { path: "/events", priority: 0.7, changeFrequency: "monthly" },
+  // Tier 2.4 (Forbes integration brief, May 2026) — /press lives
+  // here so Google indexes the Forbes feature credential alongside
+  // the rest of the company pages. Priority 0.7 per brief: lower
+  // than homepage, higher than yacht detail pages.
+  { path: "/press", priority: 0.7, changeFrequency: "monthly" },
 
   // Team members
   { path: "/team/george-biniaris", priority: 0.6, changeFrequency: "monthly" },

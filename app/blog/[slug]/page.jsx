@@ -11,6 +11,7 @@ import JsonLd from "../../components/JsonLd";
 import { generateArticleSchema } from "@/lib/articleSchema";
 import RelatedArticles from "@/components/RelatedArticles";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import BlogPostFooter from "@/components/BlogPostFooter";
 import { autoLinkPortableText } from "@/lib/auto-link-content";
 
 // Non-CDN client for real-time content fetching
@@ -30,6 +31,10 @@ export async function generateStaticParams() {
 }
 
 async function getPost(slug) {
+  // F.1 — pull `relatedYachts` (refs) so the BlogPostFooter can
+  // render up to 3 yacht cards. Each ref expands to the fields the
+  // PriceBlock/sanityImg helpers need. When the field is missing in
+  // Sanity, the result is null — front-end hides the block.
   const query = `*[_type == "post" && slug.current == $slug][0]{
     title,
     "imageUrl": mainImage.asset->url,
@@ -40,7 +45,12 @@ async function getPost(slug) {
     author,
     body,
     excerpt,
-    mainImage
+    mainImage,
+    "relatedYachts": relatedYachts[]->{
+      name, "slug": slug.current, length, sleeps,
+      weeklyRatePrice, fleetTier, priceModel,
+      "image": images[0].asset->url
+    }
   }`;
   return freshClient.fetch(query, { slug });
 }
@@ -327,6 +337,11 @@ const ArticlePage = async ({ params }) => {
           </div>
         </div>
       </section>
+
+      {/* F.1 + F.2 — Yachts to consider + author bio. Sits BEFORE
+          related articles so the highest-conversion path (yacht
+          inquiry) is offered first. */}
+      <BlogPostFooter relatedYachts={post.relatedYachts} />
 
       <RelatedArticles posts={relatedPosts} />
       <ContactFormSection />

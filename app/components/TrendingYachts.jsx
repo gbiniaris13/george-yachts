@@ -23,6 +23,8 @@
 
 import Link from "next/link";
 import { useRef } from "react";
+import { priceUnitBadge, isPerPerson, sortAllFleet } from "@/lib/pricing";
+import { sanityCardImg } from "@/lib/sanity-image";
 
 const GOLD = "#DAA520";
 
@@ -44,7 +46,14 @@ export default function TrendingYachts({ yachts }) {
   // Carousel shows the first 6. The home page passes up to 8 so
   // entries 6 and 7 are reserved for the InlineYachtStrip spotlights
   // — keeping carousel + spotlight from showing the same yacht twice.
-  const list = (Array.isArray(yachts) ? yachts.filter((y) => y && y.slug) : []).slice(0, 6);
+  //
+  // B.3 (Roberto brief): sort the carousel so per-yacht cards group
+  // first, then per-person — never alternating. UHNW reads "€235K"
+  // adjacent to "€420" as price chaos unless explicit unit context.
+  const list = (Array.isArray(yachts) ? yachts.filter((y) => y && y.slug) : [])
+    .slice()
+    .sort(sortAllFleet)
+    .slice(0, 6);
   if (list.length < 3) return null;
 
   return (
@@ -83,8 +92,11 @@ export default function TrendingYachts({ yachts }) {
               margin: "0 0 8px 0",
             }}
           >
-            Trending Now
+            Curated by George
           </p>
+          {/* B.3 (Roberto brief): "Trending Now" reads consumer-app to
+              UHNW. Replaced with the editorial "This Week's Selection"
+              — same content, the right register for the audience. */}
           <h2
             style={{
               fontFamily: "'Cormorant Garamond', Georgia, serif",
@@ -95,7 +107,7 @@ export default function TrendingYachts({ yachts }) {
               lineHeight: 1.05,
             }}
           >
-            See What&rsquo;s Sailing
+            This Week&rsquo;s Selection
           </h2>
         </div>
         <Link
@@ -163,13 +175,16 @@ export default function TrendingYachts({ yachts }) {
                 e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
               }}
             >
-              {/* Image */}
+              {/* Image — A.11: served through the Sanity image helper
+                  so we get WebP at the actual rendered width (640w
+                  retina-safe for a 320px card), not the raw 2000+px
+                  source. */}
               <div
                 style={{
                   width: "100%",
                   aspectRatio: "4 / 3",
                   background: y.image
-                    ? `#0a0a0a url(${y.image}) center/cover no-repeat`
+                    ? `#0a0a0a url(${sanityCardImg(y.image, 640)}) center/cover no-repeat`
                     : "#0a0a0a",
                 }}
                 aria-hidden={!y.image}
@@ -203,18 +218,36 @@ export default function TrendingYachts({ yachts }) {
                   </p>
                 )}
                 {price && (
-                  <p
-                    style={{
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "12px",
-                      color: GOLD,
-                      margin: 0,
-                      fontWeight: 600,
-                      letterSpacing: "0.08em",
-                    }}
-                  >
-                    {price}
-                  </p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                    {/* B.3 + 0.7: unit badge above every price. Without
+                        this, per-yacht (€235K) and per-person (€420)
+                        prices read as inconsistent within the same
+                        carousel even when the values are correct. */}
+                    <span
+                      style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: "8px",
+                        letterSpacing: "0.3em",
+                        textTransform: "uppercase",
+                        color: isPerPerson(y) ? "rgba(255,255,255,0.65)" : GOLD,
+                        fontWeight: 600,
+                      }}
+                    >
+                      {priceUnitBadge(y)}
+                    </span>
+                    <p
+                      style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: "12px",
+                        color: GOLD,
+                        margin: 0,
+                        fontWeight: 600,
+                        letterSpacing: "0.08em",
+                      }}
+                    >
+                      {price}
+                    </p>
+                  </div>
                 )}
               </div>
             </Link>

@@ -1,0 +1,87 @@
+// Section 0.7 (Roberto brief, May 2026) — PriceBlock component.
+//
+// The single source of truth for how a yacht price is rendered
+// anywhere on the site. Unit badge sits ABOVE the price line, in
+// gold uppercase Montserrat at 9px tracking 0.3em — small enough
+// not to compete with the price, big enough that no visitor can
+// claim "I didn't see it".
+//
+// Used in:
+//   • Yacht detail hero price block
+//   • Fleet card
+//   • Trending Yachts carousel cards
+//   • Inline yacht spotlights
+//   • SignatureYacht card
+//
+// Server component (no hooks, no client APIs) so it works in any
+// SSR context without bloating the client bundle.
+
+import React from "react";
+import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
+
+export default function PriceBlock({
+  yacht,
+  size = "md",
+  showApaNote = false,
+  className = "",
+}) {
+  if (!yacht) return null;
+
+  const badge = priceUnitBadge(yacht);
+  const price = yacht.weeklyRatePrice || "On Request";
+  const showApa = showApaNote && yacht.weeklyRatePrice;
+
+  // Three sizes — keeps callers from re-implementing typography.
+  const sizes = {
+    sm: { badge: "8px", price: "13px", note: "9px", gap: "6px" },
+    md: { badge: "9px", price: "18px", note: "10px", gap: "8px" },
+    lg: { badge: "10px", price: "26px", note: "11px", gap: "10px" },
+  };
+  const s = sizes[size] || sizes.md;
+
+  return (
+    <div className={className} style={{ display: "flex", flexDirection: "column", gap: s.gap }}>
+      <span
+        aria-label={`Pricing unit: ${badge}`}
+        style={{
+          fontFamily: "'Montserrat', sans-serif",
+          fontSize: s.badge,
+          letterSpacing: "0.3em",
+          textTransform: "uppercase",
+          color: "#DAA520",
+          fontWeight: 600,
+        }}
+      >
+        {badge}
+      </span>
+      <span
+        style={{
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: s.price,
+          fontWeight: 400,
+          color: "#fff",
+          letterSpacing: "0.01em",
+          lineHeight: 1.2,
+        }}
+      >
+        {price}
+      </span>
+      {showApa && (
+        <span
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: s.note,
+            color: "rgba(255,255,255,0.65)",
+            letterSpacing: "0.04em",
+            lineHeight: 1.6,
+            maxWidth: "32ch",
+          }}
+        >
+          {isPerPerson(yacht)
+            ? "All-in per person · APA + VAT included"
+            : "Plus 12% VAT (Greek itineraries) + APA 25–35%"}
+        </span>
+      )}
+    </div>
+  );
+}

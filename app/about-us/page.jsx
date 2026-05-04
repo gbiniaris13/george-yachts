@@ -8,7 +8,7 @@ import "./about-us.css";
 export const metadata = {
   title: "About George Yachts | Boutique Yacht Brokerage | Greek Waters",
   description:
-    "George Yachts Brokerage House — a boutique yacht brokerage specializing exclusively in Greek waters. IYBA member, 360° luxury services, personal broker relationship. Founded by George P. Biniaris.",
+    "George Yachts Brokerage House — a boutique yacht brokerage specializing exclusively in Greek waters. IYBA Member Broker, 360° luxury services, personal broker relationship. Led by George P. Biniaris, Managing Broker.",
   alternates: {
     canonical: "https://georgeyachts.com/about-us",
   },

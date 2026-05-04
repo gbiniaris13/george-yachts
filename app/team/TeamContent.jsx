@@ -83,13 +83,9 @@ const teamMembers = [
     instagram: "",
     profileUrl: "/team/manos-kourmoulakis",
   },
-  {
-    name: "Nemesis",
-    title: "Director of Internal Justice & Loyalty Enforcement",
-    imageUrl: "/images/nemesis.jpg",
-    instagram: "",
-    profileUrl: "/team/nemesis",
-  },
+  // I.1 (Roberto brief, May 2026) — "Nemesis" entry removed from
+  // public team page. Internal-only joke that doesn't read well to
+  // UHNW visitors. Re-add only if Boss explicitly asks.
 ];
 
 /* ─── Team Card ─── */

@@ -27,6 +27,8 @@ import { organizationSchema } from "@/lib/organizationSchema";
 import VisitorIntelligence from "./components/VisitorIntelligence";
 import EnhancedAnalytics from "./components/EnhancedAnalytics";
 import MicrosoftClarity from "./components/MicrosoftClarity";
+import ForbesTopBar from "./components/ForbesTopBar";
+import { cookies } from "next/headers";
 // Swiper CSS moved to individual Swiper components to avoid loading on non-Swiper pages
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -143,8 +145,16 @@ export const viewport = {
   colorScheme: "dark light",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
   const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
+  // Tier 1.1 — When the Forbes bar is present, push the body 36px
+  // (32px on mobile) so the fixed bar doesn't crop the hero. Once
+  // dismissed (cookie set), padding returns to 0 and the page
+  // reclaims that strip. Read server-side so the very first paint
+  // already has the correct offset — no layout shift after hydration.
+  const forbesDismissed =
+    (await cookies()).get("gy_forbes_bar_dismissed")?.value === "true";
 
   return (
     <html lang="en">
@@ -167,7 +177,7 @@ export default function RootLayout({ children }) {
       </head>
 
       <body
-        className={`${geistSans.variable} ${marcellus.variable} ${cormorant.variable} ${montserrat.variable} antialiased`}
+        className={`${geistSans.variable} ${marcellus.variable} ${cormorant.variable} ${montserrat.variable} antialiased${forbesDismissed ? "" : " gy-with-forbes-bar"}`}
       >
         {/* Skip to main content — accessibility */}
         <a
@@ -176,6 +186,11 @@ export default function RootLayout({ children }) {
         >
           Skip to main content
         </a>
+
+        {/* Tier 1.1 — Forbes feature bar (sitewide, server-rendered).
+            George Yachts featured in Forbes, 1 May 2026. The bar sits
+            above all other UI; cookie-dismissible for 90 days. */}
+        <ForbesTopBar />
 
         {/* E1 — Gold curtain opens once per session, first thing visitors see */}
         <GoldCurtain />

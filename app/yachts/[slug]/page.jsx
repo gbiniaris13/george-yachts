@@ -156,6 +156,14 @@ export default async function YachtPage({ params }) {
       features,
       toys,
       idealFor,
+      "slug": slug.current,
+      // 0.7 (Roberto brief) — fleetTier + priceModel power the
+      // unit badge logic in PriceBlock + sticky CTA. Both are
+      // optional in Sanity; the front-end falls back to
+      // fleetTier-based inference when priceModel is missing,
+      // and to "per_yacht_week" if neither is set.
+      fleetTier,
+      priceModel,
       "images": images[]{
         "url": asset->url,
         "alt": alt

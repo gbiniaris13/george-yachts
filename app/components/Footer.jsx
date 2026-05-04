@@ -5,6 +5,7 @@ import { Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 import Image from "next/image";
+import PressStrip from "./PressStrip";
 
 const WhatsappIcon = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -44,6 +45,11 @@ const Footer = () => {
 
   return (
     <footer className="relative w-full bg-black text-white overflow-hidden">
+      {/* A.5 — Press strip with trust signals (IYBA + MYBA-standard
+          + U.S. Registered). Forbes intentionally omitted until the
+          article is actually published. */}
+      <PressStrip />
+
       {/* Gold line top */}
       <div className="w-full h-px bg-gradient-to-r from-transparent via-[#DAA520]/20 to-transparent" />
 
@@ -344,8 +350,34 @@ const Footer = () => {
           </span>
         </div>
 
-        {/* Disclaimer */}
-        <p className="mt-10 text-center" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.45)", letterSpacing: "0.05em", lineHeight: 1.8, maxWidth: "800px", margin: "40px auto 0" }}>
+        {/* A.8 — Anti-fraud notice (Roberto brief, May 2026).
+            Wire-fraud impersonation attacks targeting brokerage clients
+            have grown rapidly in 2025/2026; surfacing the legitimate-
+            payment protocol on every page protects clients from
+            phishing emails posing as us. Linked from FAQ. */}
+        <p
+          className="mt-12 text-center"
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: "9px",
+            color: "rgba(255,255,255,0.55)",
+            letterSpacing: "0.05em",
+            lineHeight: 1.8,
+            maxWidth: "820px",
+            margin: "48px auto 0",
+            border: "1px solid rgba(218,165,32,0.18)",
+            padding: "16px 22px",
+            background: "rgba(218,165,32,0.025)",
+          }}
+        >
+          <strong style={{ color: "#DAA520", letterSpacing: "0.12em", textTransform: "uppercase", fontSize: "8px", display: "block", marginBottom: "8px" }}>
+            A note on payments
+          </strong>
+          <span className="notranslate">George Yachts</span> will only ever request payment via signed MYBA-standard charter agreement, with bank details provided directly by our company in writing. We will never request wire transfers via email, messaging app, or unverified channels. If you receive any communication asking for payment that does not match this protocol, contact us immediately to verify.
+        </p>
+
+        {/* Standard informational disclaimer */}
+        <p className="mt-6 text-center" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.45)", letterSpacing: "0.05em", lineHeight: 1.8, maxWidth: "800px", margin: "24px auto 0" }}>
           All yacht specifications, images, and pricing are provided for informational purposes only. <span className="notranslate">George Yachts Brokerage House LLC</span> offers the details of these vessels in good faith but cannot guarantee the accuracy of this information or the condition of the vessels. All information is subject to change without notice and is not contractual.
         </p>
       </div>

@@ -89,7 +89,11 @@ export default function StickyMiniNav() {
       aria-label="Section navigation"
       className="fixed left-0 right-0 z-40"
       style={{
-        top: "72px", // sits right under the main nav's collapsed height
+        // Tier 1.1 (Forbes brief): when the Forbes top bar is present,
+        // it adds 36px (32px mobile) at the top via --gy-top-offset.
+        // We sit 72px below that so the mini-nav stacks correctly
+        // under both the main nav and the Forbes ribbon.
+        top: "calc(72px + var(--gy-top-offset, 0px))",
         transform: visible ? "translateY(0)" : "translateY(-100%)",
         opacity: visible ? 1 : 0,
         pointerEvents: visible ? "auto" : "none",

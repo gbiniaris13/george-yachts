@@ -60,6 +60,24 @@ const nextConfig = {
         destination: "/charter-yacht-greece",
         permanent: true,
       },
+      // A.3 (Roberto brief): /yachts (without slug) used to 404. People
+      // type it directly + external links may use it. Redirect to the
+      // canonical fleet listing. Note: /yachts/[slug] still routes to
+      // the yacht detail page (different segment, has its own folder).
+      {
+        source: "/yachts",
+        destination: "/charter-yacht-greece",
+        permanent: true,
+      },
+      // Some legacy links / blog posts may point at
+      // /charter-yacht-greece/[slug] but that route does not exist —
+      // canonical yacht detail is /yachts/[slug]. Send anyone landing
+      // there to the right URL so we never 404 on a real yacht.
+      {
+        source: "/charter-yacht-greece/:slug([a-z0-9-]+)",
+        destination: "/yachts/:slug",
+        permanent: true,
+      },
       {
         source: "/aviation-charter",
         destination: "/private-jet-charter",

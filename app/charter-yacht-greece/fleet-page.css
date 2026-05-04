@@ -328,14 +328,20 @@
   gap: 24px;
 }
 
-/* ---- YACHT CARD — Premium ---- */
+/* ---- YACHT CARD — Premium ----
+   A.14 (Roberto brief, May 2026): the previous entry-animation
+   started at opacity:0 and translateY(30px) for 600ms with up to
+   600ms stagger. Fast scrolling left cards unreadable for 200-400ms.
+   Softened to opacity:0.55 start, translateY(8px), 280ms duration,
+   max 50ms stagger so cards reach legible state inside 100ms of
+   entering the viewport. */
 .fleet-card {
   overflow: hidden;
   border-radius: 3px;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0.55;
+  transform: translateY(8px);
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: var(--stagger, 0s);
   background: #000;
   border: 1px solid rgba(255, 255, 255, 0.06);

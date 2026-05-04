@@ -85,12 +85,11 @@ export async function GET() {
 
 - Legal name: George Yachts Brokerage House LLC
 - Trade name: George Yachts
-- Founded: 2024
 - Managing Broker: George P. Biniaris
 - HQ: Athens, Greece
 - Registered: Sheridan, WY, USA (LLC)
 - Member: International Yacht Brokers Association (IYBA)
-- Contract standard: MYBA Charter Agreement
+- Contract standard: MYBA-standard charter contracts
 - Specialty: Crewed motor yacht, sailing yacht, catamaran charters in Greek waters
 - Cruising regions: Cyclades, Ionian, Saronic, Sporades, Dodecanese
 - Price range (weekly charter): EUR 10,000 → EUR 500,000+

@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import StickyMiniNav from "./components/StickyMiniNav";
 import TrendingYachts from "./components/TrendingYachts";
 import InlineYachtStrip from "./components/InlineYachtStrip";
+import HomeForbesQuote from "./components/HomeForbesQuote";
 
 // Dynamic imports for below-fold components — reduces initial JS bundle.
 // 2026-04-21 declutter: the following were removed from the home tree
@@ -19,11 +20,22 @@ import InlineYachtStrip from "./components/InlineYachtStrip";
 //   • BudgetSlider       — low intent on home; tool kept standalone
 //   • InteractiveTools   — duplicates the hamburger menu
 //   • ContactBar         — one-line banner absorbed into ContactFormSection
-const YourBroker = dynamic(() => import("./components/YourBroker"), { ssr: false });
-const Filotimon = dynamic(() => import("./components/Filotimon"), { ssr: false });
-const GreekWatersMap = dynamic(() => import("./components/GreekWatersMap"), { ssr: false });
-const BrokerTestimonials = dynamic(() => import("./components/BrokerTestimonials"), { ssr: false });
-const ContactFormSection = dynamic(() => import("./components/ContactFormSection"), { ssr: false });
+//
+// A.10 (Roberto brief, May 2026): we used to pass `{ ssr: false }` on
+// every below-fold dynamic import. That made the entire bottom half
+// of the homepage invisible to Googlebot + AI crawlers + no-JS first
+// paint — the Filotimo manifesto, the regions map, and the contact
+// form all shipped as empty placeholders. Removed `ssr: false` so the
+// HTML now contains the full editorial copy. Bundle hit is minor —
+// these components are still code-split via `dynamic()`, but they
+// SSR on the server and hydrate on the client (the standard Next 15
+// pattern for non-interactive components).
+const YourBroker = dynamic(() => import("./components/YourBroker"));
+const Filotimon = dynamic(() => import("./components/Filotimon"));
+const GreekWatersMap = dynamic(() => import("./components/GreekWatersMap"));
+const BrokerTestimonials = dynamic(() => import("./components/BrokerTestimonials"));
+const ContactFormSection = dynamic(() => import("./components/ContactFormSection"));
+const HomeJournalTeaser = dynamic(() => import("./components/HomeJournalTeaser"));
 
 const HomeClient = ({
   yachtCount,
@@ -40,6 +52,8 @@ const HomeClient = ({
   signatureYacht,
   filotimoImage,
   trendingYachts,
+  // B.6 — three most-recent blog posts for the homepage Journal teaser
+  latestPosts,
 }) => {
   return (
     <div className="min-h-screen bg-black font-sans">
@@ -114,6 +128,15 @@ const HomeClient = ({
         <GreekWatersMap />
       </section>
 
+      {/* Tier 1.3 (Forbes integration brief, May 2026) — Forbes
+          pull-quote section. Sits BETWEEN the vessel showcase /
+          map and the Filotimo brand storytelling, exactly where
+          the brief specifies. Server-rendered: the quote +
+          attribution appear in the initial HTML response so
+          Googlebot, ChatGPT, Perplexity, Claude, Gemini all see
+          the Forbes credential without JS. */}
+      <HomeForbesQuote />
+
       <section id="filotimo">
         <Filotimon filotimoImage={filotimoImage} />
       </section>
@@ -129,6 +152,11 @@ const HomeClient = ({
       ) : null}
 
       <BrokerTestimonials />
+
+      {/* B.6 (Roberto brief, May 2026) — Journal teaser surfaces the
+          3 most-recent blog posts so visitors see the editorial
+          flywheel. Hidden when no posts are available. */}
+      <HomeJournalTeaser posts={latestPosts} />
 
       {/* ContactBar absorbed into ContactFormSection (Proposal D) */}
       <section id="contact">

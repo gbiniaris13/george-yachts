@@ -53,13 +53,7 @@ const teamMembers = [
     instagram: "",
     profileUrl: "/team/manos-kourmoulakis", // No link
   },
-  {
-    name: "Nemesis",
-    title: "Director of Internal Justice & Loyalty Enforcement",
-    imageUrl: "/images/nemesis.jpg",
-    instagram: "",
-    profileUrl: "/team/nemesis", // No link
-  },
+  // I.1 — "Nemesis" entry removed (May 2026 master rebuild).
 ];
 
 // Component for a single team card

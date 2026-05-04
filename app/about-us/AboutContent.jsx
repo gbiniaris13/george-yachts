@@ -106,6 +106,94 @@ export default function AboutContent() {
         </RevealSection>
       </section>
 
+      {/* ═══════ TIER 2.1 — FORBES MENTION ═══════
+          Roberto Forbes integration brief, May 2026. Small
+          typographic addition that sits beneath the existing intro
+          philosophy and above the stats section. Brand-equality
+          rule respected: "Forbes" rendered as a text wordmark in
+          regular weight, never larger than the page-level G/Y mark.
+          NOT a rewrite — purely additive.
+      */}
+      <section
+        aria-label="Featured in Forbes — May 2026"
+        style={{
+          padding: "60px 24px 70px",
+          textAlign: "center",
+          background: "transparent",
+        }}
+      >
+        <RevealSection style={{ maxWidth: "720px", margin: "0 auto" }}>
+          <div
+            aria-hidden="true"
+            style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: 18,
+              color: "rgba(201,168,76,0.55)",
+              letterSpacing: "0.18em",
+              marginBottom: 22,
+            }}
+          >
+            ────────  ⊹  ────────
+          </div>
+          <p
+            style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontStyle: "italic",
+              fontSize: 22,
+              fontWeight: 300,
+              color: "#fff",
+              margin: "0 0 8px",
+              letterSpacing: "0.01em",
+              lineHeight: 1.45,
+            }}
+          >
+            Featured in{" "}
+            <span
+              style={{
+                fontFamily: "'Times New Roman', Times, serif",
+                fontStyle: "normal",
+                fontWeight: 700,
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Forbes
+            </span>{" "}
+            — 1 May 2026
+          </p>
+          <p
+            style={{
+              fontFamily: "'Lato', 'Montserrat', sans-serif",
+              fontSize: 14,
+              color: "rgba(255,255,255,0.65)",
+              fontWeight: 300,
+              margin: "0 0 24px",
+              lineHeight: 1.6,
+            }}
+          >
+            on the wealth-relocation patterns reshaping Greek waters charters.
+          </p>
+          <a
+            href="https://www.forbes.com/sites/jacquesledbetter/2026/05/01/how-the-wealthy-are-hedging-for-instability/"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cursor="Read"
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+              fontSize: 11,
+              letterSpacing: "0.32em",
+              textTransform: "uppercase",
+              color: "#C9A84C",
+              fontWeight: 600,
+              textDecoration: "none",
+              borderBottom: "1px solid rgba(201,168,76,0.5)",
+              paddingBottom: 2,
+            }}
+          >
+            Read on Forbes →
+          </a>
+        </RevealSection>
+      </section>
+
       {/* ═══════ STATS ═══════ */}
       <section className="about-stats">
         <div className="about-stats__grid">
@@ -190,7 +278,7 @@ export default function AboutContent() {
               I studied shipping. I became a skipper in Corfu. I earned my motor yacht licence. I managed charters across the Ionian and the Cyclades &mdash; briefing captains, building itineraries, solving problems at midnight.
             </p>
             <p style={{ fontFamily: "'Lato', sans-serif", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(255,255,255,0.55)", marginBottom: "20px" }}>
-              I started George Yachts because I wanted to do this properly. Not as another name on a platform. Not as a cold transaction. But as someone who knows these waters first-hand, who has untangled an anchor under pressure in Paxos, and who has watched a family of twelve cry at disembarkation &mdash; not because something went wrong, but because they didn&apos;t want it to end.
+              I built George Yachts because I wanted to do this properly. Not as another name on a platform. Not as a cold transaction. But as someone who knows these waters first-hand, who has untangled an anchor under pressure in Paxos, and who has watched a family of twelve cry at disembarkation &mdash; not because something went wrong, but because they didn&apos;t want it to end.
             </p>
             <p style={{ fontFamily: "'Lato', sans-serif", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(255,255,255,0.55)", marginBottom: "20px" }}>
               That moment &mdash; when your clients hold you and tell you this was unlike anything they&apos;ve ever experienced &mdash; that is why I do this.

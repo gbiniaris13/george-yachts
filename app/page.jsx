@@ -128,9 +128,13 @@ export default async function HomePage() {
   // inside the try below from `trendingPool`. Defaulted here so
   // the JSX render is unconditional even if Sanity errors.
   let trendingYachts = [];
+  // B.6 (Roberto brief): the 3 most recent blog posts so the
+  // homepage surfaces the editorial flywheel instead of letting
+  // 19 articles hide behind /blog.
+  let latestPosts = [];
 
   try {
-    const [count, privateYachts, explorerYachts, allYachts, privateHero, explorerHero, signaturePool, filotimoEditorial, trendingPool] = await Promise.all([
+    const [count, privateYachts, explorerYachts, allYachts, privateHero, explorerHero, signaturePool, filotimoEditorial, trendingPool, recentPosts] = await Promise.all([
       sanityClient.fetch(`count(*[_type == "yacht"])`),
       sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["private", "both"]]{ weeklyRatePrice }`),
       sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"]]{ weeklyRatePrice, sleeps }`),
@@ -177,10 +181,24 @@ export default async function HomePage() {
       // every yacht with at least one image, ordered by name. The
       // client picks 6 to display, rotated weekly so the carousel
       // refreshes without manual work.
+      //
+      // 0.7 (Master rebuild brief): also pull `fleetTier` + the new
+      // `priceModel` field so the carousel can render the correct
+      // unit badge per card and never mix per-yacht / per-person
+      // prices without context. `priceModel` is optional in Sanity —
+      // the front-end falls back to fleetTier inference when missing.
       sanityClient.fetch(`*[_type == "yacht" && count(images) > 0]{
         name, "slug": slug.current, weeklyRatePrice, sleeps, length,
+        fleetTier, priceModel,
         "image": images[0].asset->url
       } | order(name asc)`),
+      // B.6 — three most recent blog posts for the homepage Journal
+      // teaser. Defensive: returns [] when no posts exist.
+      sanityClient.fetch(`*[_type == "post" && defined(slug.current)]
+        | order(publishedAt desc)[0...3]{
+          title, "slug": slug.current, excerpt, publishedAt,
+          "imageUrl": mainImage.asset->url
+        }`),
     ]);
     yachtCount = count;
     privateHeroImage = privateHero?.url ?? null;
@@ -224,6 +242,9 @@ export default async function HomePage() {
         trendingYachts.push(trendingPool[(start + k) % trendingPool.length]);
       }
     }
+
+    // B.6 — recent posts for the homepage Journal teaser.
+    if (Array.isArray(recentPosts)) latestPosts = recentPosts;
 
     privateCount = privateYachts.length;
     explorerCount = explorerYachts.length;
@@ -279,6 +300,7 @@ export default async function HomePage() {
         signatureYacht={signatureYacht}
         filotimoImage={filotimoImage}
         trendingYachts={trendingYachts}
+        latestPosts={latestPosts}
       />
     </>
   );

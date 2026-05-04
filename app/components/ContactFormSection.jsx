@@ -136,11 +136,14 @@ const ContactFormSection = () => {
     }
   };
 
+  // A.13 contrast pass: placeholder bumped /30 → /60 so the form is
+  // readable for 50+ visitors on dark BG. Border bumped /15 → /25 to
+  // make the input affordance visible without focus.
   const inputBase =
-    "w-full bg-transparent text-white border-b border-white/15 px-0 py-4 text-base focus:outline-none focus:border-[#DAA520] transition-all duration-500 placeholder:text-white/30 placeholder:font-light placeholder:text-sm rounded-none";
+    "w-full bg-transparent text-white border-b border-white/25 px-0 py-4 text-base focus:outline-none focus:border-[#DAA520] transition-all duration-500 placeholder:text-white/60 placeholder:font-light placeholder:text-sm rounded-none";
 
   const selectBase =
-    "w-full bg-transparent text-white border-b border-white/15 px-0 py-4 text-base focus:outline-none focus:border-[#DAA520] transition-all duration-500 rounded-none appearance-none cursor-pointer";
+    "w-full bg-transparent text-white border-b border-white/25 px-0 py-4 text-base focus:outline-none focus:border-[#DAA520] transition-all duration-500 rounded-none appearance-none cursor-pointer";
 
   // Success state
   if (status === "success") {
@@ -225,7 +228,7 @@ const ContactFormSection = () => {
           >
             {t('contact.title')}
           </h2>
-          <p className="mt-6 text-white/40 text-sm md:text-base font-light max-w-xl mx-auto leading-relaxed">
+          <p className="mt-6 text-white/75 text-sm md:text-base font-light max-w-xl mx-auto leading-relaxed">
             {t('contact.subtitle')}
           </p>
 

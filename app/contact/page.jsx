@@ -256,11 +256,11 @@ export default function ContactPage() {
                 <h2 className="font-cormorant text-3xl mb-4 text-[#DAA520]">
                   Credentials
                 </h2>
-                <ul className="space-y-2 text-sm text-white/70">
-                  <li>· IYBA member broker (International Yacht Brokers Association)</li>
-                  <li>· MYBA Charter Agreement standard</li>
+                <ul className="space-y-2 text-sm text-white/85">
+                  <li>· IYBA Member Broker (International Yacht Brokers Association)</li>
+                  <li>· MYBA-standard charter contracts</li>
                   <li>· Managing Broker: George P. Biniaris</li>
-                  <li>· Founded 2025 in Athens, Greece</li>
+                  <li>· Operating from Athens, Greece</li>
                 </ul>
               </div>
             </div>
