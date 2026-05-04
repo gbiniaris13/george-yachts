@@ -171,6 +171,14 @@ export default async function YachtPage({ params }) {
         totalDistance,
         days[]{ day, distance, from, to, narrative }
       },
+      // D.8 (Roberto brief) — typed crew roster with photos. Optional;
+      // skipped when empty. Legacy free-text "crew" field stays as the
+      // count display in yacht-specs, this drives the rich row.
+      crewProfiles[]{
+        role,
+        oneLineBio,
+        "photoUrl": photoOptional.asset->url
+      },
       "images": images[]{
         "url": asset->url,
         "alt": alt
@@ -230,6 +238,7 @@ export default async function YachtPage({ params }) {
           toys: yacht.toys,
           idealFor: yacht.idealFor,
           sampleItinerary: yacht.sampleItinerary,
+          crewProfiles: yacht.crewProfiles,
           images: yacht.images,
         }}
         heroImage={heroImage}
