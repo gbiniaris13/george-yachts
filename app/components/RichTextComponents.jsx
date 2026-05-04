@@ -165,6 +165,7 @@ export const RichTextComponents = {
           <Link
             href={`/yachts/${slug}`}
             data-cursor="View"
+            className="yacht-callout-card"
             style={{
               display: "flex",
               gap: 18,
@@ -176,14 +177,6 @@ export const RichTextComponents = {
               textDecoration: "none",
               color: "inherit",
               transition: "border-color 0.3s ease, background 0.3s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "#DAA520";
-              e.currentTarget.style.background = "rgba(218,165,32,0.12)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(218,165,32,0.35)";
-              e.currentTarget.style.background = "rgba(218,165,32,0.06)";
             }}
           >
             {y.image && (

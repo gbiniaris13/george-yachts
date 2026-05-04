@@ -697,3 +697,9 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
   clip: auto;
   white-space: normal;
 }
+
+/* F.3 — yachtCallout hover (replaces inline JS handlers that broke Server Component). */
+.yacht-callout-card:hover {
+  border-color: #DAA520 !important;
+  background: rgba(218,165,32,0.12) !important;
+}
