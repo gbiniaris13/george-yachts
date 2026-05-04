@@ -24,6 +24,17 @@ export default function MapboxRouteMap({
   const popupRef = useRef(null);
   const markersRef = useRef(new Map()); // island.id → marker
   const [ready, setReady] = useState(false);
+  // L.2 (Roberto brief, May 2026) — 2D ⇄ 3D toggle. 3D mode pitches
+  // the camera to ~55°, enables Mapbox terrain DEM (1.5× exag), and
+  // adds a soft sky layer. The toggle persists per-session via
+  // sessionStorage so the user's preference survives re-renders but
+  // doesn't carry across visits. Brief was cautious about Cesium
+  // ("advanced phase") — Mapbox terrain piggy-backs on the existing
+  // L.1.2 token and ships zero extra payload weight.
+  const [is3D, setIs3D] = useState(() => {
+    if (typeof window === "undefined") return false;
+    try { return sessionStorage.getItem("gy-itinerary-3d") === "1"; } catch { return false; }
+  });
 
   // Init map once
   useEffect(() => {
@@ -76,6 +87,30 @@ export default function MapboxRouteMap({
             "line-opacity": 0.85,
           },
         });
+        // L.2 — terrain DEM source (used by the 3D toggle). Always
+        // registered so flipping in/out of 3D doesn't re-fetch.
+        try {
+          if (!mapInstance.getSource("mapbox-dem")) {
+            mapInstance.addSource("mapbox-dem", {
+              type: "raster-dem",
+              url: "mapbox://mapbox.mapbox-terrain-dem-v1",
+              tileSize: 512,
+              maxzoom: 14,
+            });
+          }
+          // Sky layer for atmospheric 3D look
+          if (!mapInstance.getLayer("gy-sky")) {
+            mapInstance.addLayer({
+              id: "gy-sky",
+              type: "sky",
+              paint: {
+                "sky-type": "atmosphere",
+                "sky-atmosphere-sun": [0.0, 90.0],
+                "sky-atmosphere-sun-intensity": 5,
+              },
+            });
+          }
+        } catch {}
         setReady(true);
       });
 
@@ -211,18 +246,92 @@ export default function MapboxRouteMap({
     }
   }, [ready, selected, islands]);
 
+  // L.2 — apply 2D ⇄ 3D state to the running map.
+  useEffect(() => {
+    if (!ready || !mapRef.current) return;
+    const map = mapRef.current;
+    try { sessionStorage.setItem("gy-itinerary-3d", is3D ? "1" : "0"); } catch {}
+    if (is3D) {
+      try { map.setTerrain({ source: "mapbox-dem", exaggeration: 1.5 }); } catch {}
+      map.easeTo({ pitch: 55, bearing: -15, duration: 800 });
+      try {
+        const sky = map.getLayer("gy-sky");
+        if (sky) map.setLayoutProperty("gy-sky", "visibility", "visible");
+      } catch {}
+    } else {
+      try { map.setTerrain(null); } catch {}
+      map.easeTo({ pitch: 0, bearing: 0, duration: 800 });
+      try {
+        const sky = map.getLayer("gy-sky");
+        if (sky) map.setLayoutProperty("gy-sky", "visibility", "none");
+      } catch {}
+    }
+  }, [is3D, ready]);
+
   return (
-    <div
-      ref={ref}
-      style={{
-        width: "100%",
-        height: "100%",
-        minHeight: 420,
-        background: "#0a0a0a",
-        borderRadius: 4,
-      }}
-      role="application"
-      aria-label="Interactive Greek-islands route map"
-    />
+    <div style={{ width: "100%", height: "100%", minHeight: 420, position: "relative" }}>
+      <div
+        ref={ref}
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "#0a0a0a",
+          borderRadius: 4,
+        }}
+        role="application"
+        aria-label="Interactive Greek-islands route map"
+      />
+      {/* L.2 — 2D ⇄ 3D toggle. Sits top-left so it doesn't clash with
+          the NavigationControl (top-right). Hidden until the map is
+          ready so users don't see a non-functional button. */}
+      {ready && (
+        <div
+          style={{
+            position: "absolute",
+            top: 12,
+            left: 12,
+            zIndex: 5,
+            display: "flex",
+            background: "rgba(10,10,10,0.85)",
+            border: "1px solid rgba(218,165,32,0.35)",
+            borderRadius: 4,
+            backdropFilter: "blur(8px)",
+            overflow: "hidden",
+          }}
+          role="group"
+          aria-label="Map view mode"
+        >
+          {[
+            { key: false, label: "2D" },
+            { key: true, label: "3D" },
+          ].map((opt) => {
+            const active = is3D === opt.key;
+            return (
+              <button
+                key={opt.label}
+                type="button"
+                onClick={() => setIs3D(opt.key)}
+                aria-pressed={active}
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: 10,
+                  letterSpacing: "0.32em",
+                  textTransform: "uppercase",
+                  fontWeight: 700,
+                  padding: "8px 14px",
+                  background: active ? "rgba(218,165,32,0.22)" : "transparent",
+                  color: active ? GOLD_BRIGHT : "rgba(255,255,255,0.65)",
+                  border: "none",
+                  cursor: "pointer",
+                  transition: "background 0.18s ease, color 0.18s ease",
+                }}
+              >
+                {opt.label}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
   );
 }
