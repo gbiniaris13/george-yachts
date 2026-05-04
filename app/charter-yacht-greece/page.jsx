@@ -46,6 +46,11 @@ const FLEET_QUERY = `*[_type == "yacht" && defined(slug.current)] {
   cruisingRegion,
   fleetTier,
   priceModel,
+  // C.6 (Roberto master rebuild brief) — UHNW filter fields
+  yearRefit,
+  waterToys,
+  masterCabinDeck,
+  maxCruisingSpeed,
   "imageUrl": images[0].asset->url,
   "imageAlt": images[0].alt,
   "hoverImages": images[1...4].asset->url
