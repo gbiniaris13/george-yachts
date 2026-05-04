@@ -6,6 +6,7 @@ import GlobalEffects from "./components/GlobalEffects";
 import CustomCursor from "./components/CustomCursor";
 import WhatsAppButton from "./components/WhatsAppButton";
 import StickyFleetCTA from "./components/StickyFleetCTA";
+import AskGeorgeWidget from "./components/AskGeorgeWidget";
 import GoldCurtain from "./components/GoldCurtain";
 import ExitIntentModal from "./components/ExitIntentModal";
 import AmbientScroll from "./components/AmbientScroll";
@@ -226,6 +227,10 @@ export default async function RootLayout({ children }) {
             strip — cleaner placement, no floating pill clashing with
             social icons or the hero content. */}
         <WhatsAppButton />
+        {/* H.1 — Ask George AI Concierge (sitewide). Sits ABOVE the
+            WhatsApp button at bottom-right. Widget is fully client-side;
+            graceful fallback when AI_API_KEY env vars aren't configured. */}
+        <AskGeorgeWidget />
         {/* Roberto 2026-05-02 — sticky bottom CTA so the fleet is one
             tap from anywhere on the site (auto-hides on fleet/yacht
             routes). yachtCount left undefined here at the layout
