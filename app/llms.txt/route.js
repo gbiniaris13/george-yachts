@@ -1,4 +1,6 @@
 import { sanityClient } from "@/lib/sanity";
+import { JOURNAL_CLUSTERS } from "@/lib/journal-clusters";
+import { ISLANDS } from "@/lib/islands";
 import { NextResponse } from "next/server";
 
 export const revalidate = 3600;
@@ -47,14 +49,22 @@ Every yacht below is personally inspected by a working broker. MYBA standard con
 
 ${yachts.map((y) => `- [${y.name}${y.subtitle ? " — " + y.subtitle : ""}](https://georgeyachts.com/yachts/${y.slug}): ${[y.length, y.builder, y.sleeps ? y.sleeps + " guests" : null, y.cabins ? y.cabins + " cabins" : null, y.cruisingRegion].filter(Boolean).join(" · ")}${y.weeklyRatePrice ? " · " + y.weeklyRatePrice : ""}`).join("\n")}
 
+## Per-Island Charter Pages (high-intent regional landing pages)
+${ISLANDS.map((i) => `- Yacht Charter ${i.name}: https://georgeyachts.com/yacht-charter-${i.slug}`).join("\n")}
+
+## Editorial Topic Clusters
+${JOURNAL_CLUSTERS.map((c) => `- ${c.title}: https://georgeyachts.com/journal/${c.slug}`).join("\n")}
+
 ## Interactive Tools
-- Cost Calculator: https://georgeyachts.com/inquiry (redirected from /cost-calculator)
-- Itinerary Builder: https://georgeyachts.com/itinerary-builder
+- Smart Match Quiz (5 questions, 90 seconds): https://georgeyachts.com/yacht-finder
+- Cost Calculator: https://georgeyachts.com/cost-calculator
+- Itinerary Builder (with Mapbox 2D/3D): https://georgeyachts.com/itinerary-builder
+- Smart Proposal Generator (PDF, up to 5 yachts): https://georgeyachts.com/proposal-generator
 - Island Quiz: https://georgeyachts.com/island-quiz
 - Yacht Size Visualizer: https://georgeyachts.com/yacht-size-visualizer
 - Pricing Calendar: https://georgeyachts.com/pricing-calendar
 - Weather (Greek Waters): https://georgeyachts.com/weather-greece
-- Proposal Generator: https://georgeyachts.com/proposal-generator
+- Ask George (AI concierge): floating widget on every page
 
 ## Ancillary Services
 - Private Jet Charter: https://georgeyachts.com/private-jet-charter
