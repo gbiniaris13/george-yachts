@@ -33,6 +33,251 @@ import PriceBlock from '@/app/components/PriceBlock';
 import ExpressInquiryModal from '@/app/components/ExpressInquiryModal';
 import { isPerPerson } from '@/lib/pricing';
 
+// D.5 — Interactive deck plans. Tabs across decks; each tab shows the
+// deck illustration with absolute-positioned hotspot pins. Click a pin
+// to open a modal showing the cabin photo + name. Stays out of the way
+// (placed between gallery and features); skipped when empty.
+function DeckPlansSection({ decks, yachtName }) {
+  const valid = (decks || []).filter((d) => d && d.imageUrl);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [openHotspot, setOpenHotspot] = useState(null);
+
+  useEffect(() => {
+    if (!openHotspot) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setOpenHotspot(null);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [openHotspot]);
+
+  if (valid.length === 0) return null;
+  const active = valid[activeIdx] || valid[0];
+
+  return (
+    <section className="yacht-deckplans reveal" style={{ background: '#0a0a0a', padding: '64px 24px' }}>
+      <div className="container" style={{ maxWidth: 1080, margin: '0 auto' }}>
+        <p
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: 9,
+            letterSpacing: '0.42em',
+            textTransform: 'uppercase',
+            color: '#DAA520',
+            fontWeight: 600,
+            marginBottom: 14,
+            textAlign: 'center',
+          }}
+        >
+          Interactive Deck Plans
+        </p>
+        <h2
+          style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontWeight: 300,
+            fontSize: 'clamp(28px, 4vw, 40px)',
+            color: '#fff',
+            textAlign: 'center',
+            margin: '0 0 28px',
+            lineHeight: 1.15,
+          }}
+        >
+          Where you sleep, eat, and relax aboard <em style={{ color: '#DAA520', fontStyle: 'italic' }}>{yachtName}</em>
+        </h2>
+
+        {valid.length > 1 && (
+          <div
+            role="tablist"
+            aria-label="Deck plans"
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: 8,
+              marginBottom: 24,
+            }}
+          >
+            {valid.map((d, i) => {
+              const selected = i === activeIdx;
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  role="tab"
+                  aria-selected={selected}
+                  onClick={() => setActiveIdx(i)}
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: 10,
+                    letterSpacing: '0.32em',
+                    textTransform: 'uppercase',
+                    fontWeight: 600,
+                    padding: '10px 18px',
+                    background: selected ? 'rgba(218,165,32,0.18)' : 'transparent',
+                    color: selected ? '#DAA520' : 'rgba(255,255,255,0.6)',
+                    border: `1px solid ${selected ? '#DAA520' : 'rgba(255,255,255,0.18)'}`,
+                    cursor: 'pointer',
+                    transition: 'background 0.2s ease, color 0.2s ease, border-color 0.2s ease',
+                  }}
+                >
+                  {d.deck || `Deck ${i + 1}`}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        <div
+          style={{
+            position: 'relative',
+            width: '100%',
+            border: '1px solid rgba(218,165,32,0.3)',
+            background: '#0d1b2a',
+          }}
+        >
+          <img
+            src={`${active.imageUrl}?w=1600&fit=max&auto=format`}
+            alt={`${active.deck || 'Deck'} plan of ${yachtName}`}
+            style={{ display: 'block', width: '100%', height: 'auto' }}
+          />
+          {(active.hotspots || [])
+            .filter((h) => typeof h?.x === 'number' && typeof h?.y === 'number')
+            .map((h, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setOpenHotspot(h)}
+                aria-label={`Open photo of ${h.cabinName || 'cabin'}`}
+                style={{
+                  position: 'absolute',
+                  left: `${h.x}%`,
+                  top: `${h.y}%`,
+                  transform: 'translate(-50%, -50%)',
+                  width: 28,
+                  height: 28,
+                  borderRadius: '50%',
+                  background: '#DAA520',
+                  border: '3px solid #fff',
+                  boxShadow: '0 0 0 6px rgba(218,165,32,0.25)',
+                  cursor: 'pointer',
+                  padding: 0,
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  color: '#0a0a0a',
+                  animation: 'd5HotspotPulse 2.4s ease-in-out infinite',
+                }}
+                className="d5-hotspot"
+              >
+                {i + 1}
+              </button>
+            ))}
+        </div>
+
+        <p
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: 11,
+            color: 'rgba(255,255,255,0.55)',
+            textAlign: 'center',
+            margin: '20px 0 0',
+            fontStyle: 'italic',
+          }}
+        >
+          Click any gold pin to see a photo of that cabin or area.
+        </p>
+      </div>
+
+      {openHotspot && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={openHotspot.cabinName || 'Cabin photo'}
+          onClick={() => setOpenHotspot(null)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.85)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 24,
+            zIndex: 1000,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: 'relative',
+              maxWidth: 920,
+              width: '100%',
+              background: '#0a0a0a',
+              border: '1px solid rgba(218,165,32,0.4)',
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setOpenHotspot(null)}
+              aria-label="Close cabin photo"
+              style={{
+                position: 'absolute',
+                top: 12,
+                right: 12,
+                width: 36,
+                height: 36,
+                background: 'rgba(0,0,0,0.6)',
+                color: '#fff',
+                border: '1px solid rgba(255,255,255,0.3)',
+                cursor: 'pointer',
+                fontSize: 16,
+                lineHeight: 1,
+                zIndex: 2,
+              }}
+            >
+              ✕
+            </button>
+            {openHotspot.photoUrl ? (
+              <img
+                src={`${openHotspot.photoUrl}?w=1600&fit=max&auto=format`}
+                alt={openHotspot.cabinName || 'Cabin'}
+                style={{ display: 'block', width: '100%', height: 'auto' }}
+              />
+            ) : (
+              <div
+                style={{
+                  padding: '64px 24px',
+                  textAlign: 'center',
+                  color: 'rgba(255,255,255,0.6)',
+                  fontFamily: "'Lato', 'Montserrat', sans-serif",
+                  fontSize: 14,
+                }}
+              >
+                Photo coming soon.
+              </div>
+            )}
+            {openHotspot.cabinName && (
+              <p
+                style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: 22,
+                  fontWeight: 400,
+                  color: '#fff',
+                  margin: 0,
+                  padding: '14px 18px',
+                  borderTop: '1px solid rgba(218,165,32,0.3)',
+                  background: '#0a0a0a',
+                }}
+              >
+                {openHotspot.cabinName}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
 // D.6 — Matterport 3D tour. Click-to-load: the heavy Matterport bundle
 // only ships when the visitor explicitly opts in via the CTA. Saves
 // ~1-2MB initial weight on every yacht page that has a tour configured.
@@ -312,6 +557,11 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
               />
             </div>
           </section>
+        )}
+
+        {/* D.5 — INTERACTIVE DECK PLANS */}
+        {Array.isArray(yacht.deckPlans) && yacht.deckPlans.length > 0 && (
+          <DeckPlansSection decks={yacht.deckPlans} yachtName={yacht.name} />
         )}
 
         {/* D.6 — MATTERPORT 3D TOUR (lazy / click-to-load) */}

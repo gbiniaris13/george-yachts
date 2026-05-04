@@ -736,3 +736,17 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
   border-color: #DAA520 !important;
   background: linear-gradient(135deg, rgba(218,165,32,0.14) 0%, rgba(13,27,42,0.85) 100%) !important;
 }
+
+/* D.5 — Deck plan hotspot subtle pulse + hover. */
+@keyframes d5HotspotPulse {
+  0%, 100% { box-shadow: 0 0 0 6px rgba(218,165,32,0.25); }
+  50%      { box-shadow: 0 0 0 10px rgba(218,165,32,0.0); }
+}
+.d5-hotspot:hover {
+  transform: translate(-50%, -50%) scale(1.18) !important;
+  transition: transform 0.18s ease;
+}
+.d5-hotspot:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}

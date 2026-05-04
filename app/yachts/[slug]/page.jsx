@@ -176,6 +176,18 @@ export default async function YachtPage({ params }) {
       // so the heavy Matterport bundle never ships unless the visitor
       // explicitly opts in.
       matterportEmbedUrl,
+      // D.5 (Roberto brief) — interactive deck plans. Tabbed view per
+      // deck; each plan has an illustration image and hotspot pins (x/y
+      // % coords) that open a modal with the cabin photo + name. Optional;
+      // when array is empty the front-end skips the section.
+      deckPlans[]{
+        deck,
+        "imageUrl": image.asset->url,
+        hotspots[]{
+          x, y, cabinName,
+          "photoUrl": photo.asset->url
+        }
+      },
       // D.8 (Roberto brief) — typed crew roster with photos. Optional;
       // skipped when empty. Legacy free-text "crew" field stays as the
       // count display in yacht-specs, this drives the rich row.
@@ -245,6 +257,7 @@ export default async function YachtPage({ params }) {
           sampleItinerary: yacht.sampleItinerary,
           crewProfiles: yacht.crewProfiles,
           matterportEmbedUrl: yacht.matterportEmbedUrl,
+          deckPlans: yacht.deckPlans,
           images: yacht.images,
         }}
         heroImage={heroImage}
