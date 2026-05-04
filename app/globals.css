@@ -730,3 +730,9 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
   background: rgba(218,165,32,0.12) !important;
   border-color: #DAA520 !important;
 }
+
+/* D.6 — Matterport trigger card hover (click-to-load placeholder). */
+.d6-matterport-trigger:hover {
+  border-color: #DAA520 !important;
+  background: linear-gradient(135deg, rgba(218,165,32,0.14) 0%, rgba(13,27,42,0.85) 100%) !important;
+}

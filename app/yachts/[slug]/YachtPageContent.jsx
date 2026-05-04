@@ -33,6 +33,126 @@ import PriceBlock from '@/app/components/PriceBlock';
 import ExpressInquiryModal from '@/app/components/ExpressInquiryModal';
 import { isPerPerson } from '@/lib/pricing';
 
+// D.6 — Matterport 3D tour. Click-to-load: the heavy Matterport bundle
+// only ships when the visitor explicitly opts in via the CTA. Saves
+// ~1-2MB initial weight on every yacht page that has a tour configured.
+function MatterportSection({ url, yachtName }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <section className="yacht-matterport reveal" style={{ background: '#0a0a0a', padding: '64px 24px' }}>
+      <div className="container" style={{ maxWidth: 1080, margin: '0 auto' }}>
+        <p
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: 9,
+            letterSpacing: '0.42em',
+            textTransform: 'uppercase',
+            color: '#DAA520',
+            fontWeight: 600,
+            marginBottom: 14,
+            textAlign: 'center',
+          }}
+        >
+          Walk the yacht in 3D
+        </p>
+        <h2
+          style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontWeight: 300,
+            fontSize: 'clamp(28px, 4vw, 40px)',
+            color: '#fff',
+            textAlign: 'center',
+            margin: '0 0 28px',
+            lineHeight: 1.15,
+          }}
+        >
+          Step aboard <em style={{ color: '#DAA520', fontStyle: 'italic' }}>{yachtName}</em> from anywhere
+        </h2>
+
+        {!open ? (
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label={`Open the 360° interactive 3D tour of ${yachtName}`}
+            style={{
+              display: 'block',
+              width: '100%',
+              minHeight: 320,
+              cursor: 'pointer',
+              border: '1px solid rgba(218,165,32,0.45)',
+              background:
+                'linear-gradient(135deg, rgba(218,165,32,0.08) 0%, rgba(13,27,42,0.85) 100%)',
+              padding: '64px 24px',
+              transition: 'border-color 0.3s ease, background 0.3s ease',
+            }}
+            className="d6-matterport-trigger"
+          >
+            <div style={{ textAlign: 'center', maxWidth: 480, margin: '0 auto' }}>
+              <span
+                aria-hidden="true"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 64,
+                  height: 64,
+                  borderRadius: '50%',
+                  border: '1px solid rgba(218,165,32,0.6)',
+                  marginBottom: 18,
+                  fontSize: 26,
+                  color: '#DAA520',
+                }}
+              >
+                ▶
+              </span>
+              <p
+                style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: 22,
+                  fontWeight: 400,
+                  color: '#fff',
+                  margin: '0 0 12px',
+                }}
+              >
+                Take a 3D Tour →
+              </p>
+              <p
+                style={{
+                  fontFamily: "'Lato', 'Montserrat', sans-serif",
+                  fontSize: 13,
+                  lineHeight: 1.6,
+                  color: 'rgba(255,255,255,0.65)',
+                  margin: 0,
+                }}
+              >
+                A full 360° walkthrough of every cabin, salon, and deck — powered by Matterport. Loads on click to keep the page fast.
+              </p>
+            </div>
+          </button>
+        ) : (
+          <div style={{ position: 'relative', paddingTop: '56.25%', overflow: 'hidden' }}>
+            <iframe
+              src={url}
+              title={`3D Matterport tour of ${yachtName}`}
+              loading="lazy"
+              allow="xr-spatial-tracking; fullscreen"
+              allowFullScreen
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                border: '1px solid rgba(218,165,32,0.35)',
+              }}
+            />
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export default function YachtPageContent({ yacht, heroImage, description }) {
   const { t } = useI18n();
   const [modalOpen, setModalOpen] = useState(false);
@@ -192,6 +312,11 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
               />
             </div>
           </section>
+        )}
+
+        {/* D.6 — MATTERPORT 3D TOUR (lazy / click-to-load) */}
+        {yacht.matterportEmbedUrl && (
+          <MatterportSection url={yacht.matterportEmbedUrl} yachtName={yacht.name} />
         )}
 
         {/* KEY FEATURES */}

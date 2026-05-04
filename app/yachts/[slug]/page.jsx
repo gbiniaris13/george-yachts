@@ -171,6 +171,11 @@ export default async function YachtPage({ params }) {
         totalDistance,
         days[]{ day, distance, from, to, narrative }
       },
+      // D.6 (Roberto brief) — optional Matterport 3D tour embed URL.
+      // Front-end shows the section + iframe only when set; click-to-load
+      // so the heavy Matterport bundle never ships unless the visitor
+      // explicitly opts in.
+      matterportEmbedUrl,
       // D.8 (Roberto brief) — typed crew roster with photos. Optional;
       // skipped when empty. Legacy free-text "crew" field stays as the
       // count display in yacht-specs, this drives the rich row.
@@ -239,6 +244,7 @@ export default async function YachtPage({ params }) {
           idealFor: yacht.idealFor,
           sampleItinerary: yacht.sampleItinerary,
           crewProfiles: yacht.crewProfiles,
+          matterportEmbedUrl: yacht.matterportEmbedUrl,
           images: yacht.images,
         }}
         heroImage={heroImage}
