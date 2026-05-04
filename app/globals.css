@@ -755,3 +755,8 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
 .f4-article-card:hover, .f4-yacht-card:hover {
   border-color: rgba(218,165,32,0.5) !important;
 }
+
+/* G.1 — Island page yacht-card hover. */
+.g1-yacht-card:hover {
+  border-color: rgba(218,165,32,0.5) !important;
+}
