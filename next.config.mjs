@@ -103,6 +103,28 @@ const nextConfig = {
         destination: "/inquiry",
         permanent: true,
       },
+      // 2026-05-04 link audit fix — 3 broken outgoing links inside
+      // blog/airport-hell-2026 pointed at posts that exist as drafts
+      // in Sanity but were never published. Send the ghost URLs to
+      // /blog so visitors land somewhere coherent, and so the audit
+      // stops flagging the parent post as broken. Marked
+      // `permanent: false` (307) so we can publish the real posts at
+      // these slugs later without a stuck redirect.
+      {
+        source: "/blog/last-cabin-standing-book-crewed-yacht-greece-summer-2026",
+        destination: "/blog",
+        permanent: false,
+      },
+      {
+        source: "/blog/oil-spike-smart-money-yacht-charter-greece",
+        destination: "/blog",
+        permanent: false,
+      },
+      {
+        source: "/blog/dubai-exodus-yacht-charter-greece-2026",
+        destination: "/blog",
+        permanent: false,
+      },
     ];
   },
 };
