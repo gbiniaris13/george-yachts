@@ -164,6 +164,13 @@ export default async function YachtPage({ params }) {
       // and to "per_yacht_week" if neither is set.
       fleetTier,
       priceModel,
+      // D.7 (Roberto brief) — sample 7-day itinerary surfaces a concrete
+      // route on the yacht detail page. Optional; the front-end skips
+      // the section entirely when no `days` are populated.
+      sampleItinerary{
+        totalDistance,
+        days[]{ day, distance, from, to, narrative }
+      },
       "images": images[]{
         "url": asset->url,
         "alt": alt
@@ -222,6 +229,7 @@ export default async function YachtPage({ params }) {
           features: yacht.features,
           toys: yacht.toys,
           idealFor: yacht.idealFor,
+          sampleItinerary: yacht.sampleItinerary,
           images: yacht.images,
         }}
         heroImage={heroImage}
