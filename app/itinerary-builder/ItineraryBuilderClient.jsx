@@ -1,6 +1,14 @@
 'use client';
 
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import dynamic from 'next/dynamic';
+
+// L.1 phase 2 — Mapbox GL upgrade. Dynamically imported so the
+// ~1 MB mapbox-gl bundle never ships on routes that don't use it.
+// Activates only when NEXT_PUBLIC_MAPBOX_TOKEN is set; otherwise the
+// existing SVG map renders unchanged.
+const MapboxRouteMap = dynamic(() => import('./MapboxRouteMap'), { ssr: false });
+const HAS_MAPBOX = typeof process !== 'undefined' && !!process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 import { useI18n } from '@/lib/i18n/I18nProvider';
 
 const GOLD = '#DAA520';
@@ -224,6 +232,13 @@ export default function ItineraryBuilderClient() {
       >
         {/* MAP */}
         <div style={{ position: 'relative', background: '#060d1f', border: '1px solid rgba(218,165,32,0.12)', borderRadius: 16, overflow: 'hidden', aspectRatio: '5/4', boxShadow: 'inset 0 0 80px rgba(0,0,0,0.5), 0 8px 32px rgba(0,0,0,0.4)' }}>
+          {HAS_MAPBOX ? (
+            <MapboxRouteMap
+              islands={ISLANDS}
+              selected={selected.map((s) => s.id)}
+              onToggleIsland={(island) => toggleIsland(island)}
+            />
+          ) : (
           <svg ref={svgRef} viewBox={currentViewBox} style={{ width: '100%', height: '100%', transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }}>
             <defs>
               {/* Deep ocean gradient */}
@@ -418,6 +433,7 @@ export default function ItineraryBuilderClient() {
               );
             })}
           </svg>
+          )}
 
           {/* Hover tooltip */}
           {hoveredIsland && (
