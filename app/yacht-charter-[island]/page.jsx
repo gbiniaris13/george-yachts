@@ -18,6 +18,7 @@ import { ISLANDS, getIslandBySlug } from "@/lib/islands";
 import { sanityCardImg, sanityHeroImg } from "@/lib/sanity-image";
 import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import IslandPageTracker from "./IslandPageTracker";
 
 export const revalidate = 3600;
 
@@ -117,6 +118,7 @@ export default async function IslandPage({ params }) {
       <PlaceJsonLd island={island} />
       <FaqJsonLd island={island} />
       <BreadcrumbSchema items={breadcrumbs} />
+      <IslandPageTracker slug={island.slug} name={island.name} />
 
       <article style={{ background: "#000", minHeight: "100vh" }}>
         {/* HERO */}

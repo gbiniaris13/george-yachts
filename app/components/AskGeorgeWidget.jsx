@@ -63,7 +63,7 @@ export default function AskGeorgeWidget() {
     setMessages(next);
     setInput("");
     setSending(true);
-    gtagEvent("ask_george_message_sent", { length: trimmed.length });
+    gtagEvent("ai_concierge_message_sent", { length: trimmed.length });
 
     try {
       const res = await fetch("/api/ask-george", {
@@ -131,7 +131,7 @@ export default function AskGeorgeWidget() {
           path: typeof window !== "undefined" ? window.location.pathname : "",
         }),
       });
-      gtagEvent("ask_george_follow_up_saved", {});
+      gtagEvent("ai_concierge_email_captured", {});
       setFollowSent(true);
     } catch {
       setFollowSent(true);
@@ -147,7 +147,7 @@ export default function AskGeorgeWidget() {
         onClick={() => {
           const next = !open;
           setOpen(next);
-          if (next) gtagEvent("ask_george_opened", {});
+          if (next) gtagEvent("ai_concierge_opened", {});
         }}
         style={{
           position: "fixed",

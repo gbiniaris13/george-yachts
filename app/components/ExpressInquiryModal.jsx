@@ -57,6 +57,10 @@ export default function ExpressInquiryModal({
       if (e.key === "Escape") onClose?.();
     };
     window.addEventListener("keydown", onKey);
+    try {
+      // N.1 — yacht_inquiry_started fires once per modal open
+      window.gtag?.("event", "yacht_inquiry_started", {});
+    } catch {}
     return () => {
       document.body.style.overflow = prev;
       window.removeEventListener("keydown", onKey);
@@ -120,6 +124,15 @@ export default function ExpressInquiryModal({
           yacht_slug: yachtSlug || undefined,
           channel,
         });
+        // N.1 — favorites-specific aliases
+        if (source === "favorites_auto_prompt") {
+          window.gtag?.("event", "favorites_email_captured", { channel });
+        } else if (source === "favorites_send_to_george" || source === "favorites_shortlist") {
+          window.gtag?.("event", "favorites_sent_to_george", {
+            channel,
+            count: Array.isArray(window.__gyShortlistCount) ? undefined : undefined,
+          });
+        }
       } catch {}
       setTimeout(() => {
         setDone(false);

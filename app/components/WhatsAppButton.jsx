@@ -142,7 +142,7 @@ export default function WhatsAppButton() {
                 markGreeted();
                 if (typeof window !== "undefined" && typeof window.gtag === "function") {
                   try {
-                    window.gtag("event", "whatsapp_click", {
+                    window.gtag("event", "whatsapp_button_clicked", {
                       click_location: e?.currentTarget?.dataset?.gyLoc || "whatsapp_button",
                     });
                   } catch {}
@@ -182,7 +182,7 @@ export default function WhatsAppButton() {
                 markGreeted();
                 if (typeof window !== "undefined" && typeof window.gtag === "function") {
                   try {
-                    window.gtag("event", "whatsapp_click", {
+                    window.gtag("event", "whatsapp_button_clicked", {
                       click_location: e?.currentTarget?.dataset?.gyLoc || "whatsapp_button",
                     });
                   } catch {}

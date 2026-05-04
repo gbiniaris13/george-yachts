@@ -139,6 +139,8 @@ export default function PartnersClient() {
     } catch {}
     try {
       localStorage.setItem(GATE_KEY, "1");
+      // N.1 — partner_form_submitted
+      window.gtag?.("event", "partner_form_submitted", {});
     } catch {}
     setGateSubmitting(false);
     setUnlocked(true);
@@ -703,6 +705,7 @@ export default function PartnersClient() {
               target="_blank"
               rel="noopener noreferrer"
               className="underline hover:text-[#C9A84C] transition-colors"
+              onClick={() => { try { window.gtag?.("event", "partner_calendly_clicked", {}); } catch {} }}
             >
               book a call
             </a>
