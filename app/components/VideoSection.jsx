@@ -421,19 +421,35 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                       <div
                         className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto"
                       >
-                        {/* ① Primary — quiz */}
+                        {/* ① Ghost — browse-fleet escape hatch */}
                         <MagneticButton
                           href={slide.primaryHref}
                           dataCursor="Explore"
+                          onClick={() => {
+                            // N.1 — hero_browse_clicked
+                            try {
+                              window.gtag?.('event', 'hero_browse_clicked', {
+                                yacht_count: yachtCount,
+                              });
+                            } catch {}
+                          }}
                           className="inline-flex items-center justify-center px-10 md:px-14 py-4 md:py-5 text-white text-[10px] tracking-[0.35em] uppercase font-semibold border border-white/25 hover:border-[#DAA520] hover:text-[#DAA520] transition-colors duration-500 backdrop-blur-sm bg-white/[0.03] min-w-[260px] sm:min-w-[300px]"
                         >
                           {slide.primaryText}
                         </MagneticButton>
 
-                        {/* ② Secondary — straight to the fleet */}
+                        {/* ② Primary — Smart Match Quiz (B.2) */}
                         <MagneticButton
                           href={slide.secondaryHref}
-                          dataCursor="View"
+                          dataCursor="Match"
+                          onClick={() => {
+                            // N.1 — hero_quiz_clicked
+                            try {
+                              window.gtag?.('event', 'hero_quiz_clicked', {
+                                source: 'hero_primary_cta',
+                              });
+                            } catch {}
+                          }}
                           className="inline-flex items-center justify-center px-10 md:px-14 py-4 md:py-5 text-[10px] tracking-[0.35em] uppercase font-semibold transition-all duration-500 min-w-[260px] sm:min-w-[300px]"
                           style={{
                             background:

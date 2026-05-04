@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 import TranslateWidget from "./TranslateWidget";
+import NavSearch from "./NavSearch";
 
 const WhatsappIcon = (props) => (
   <svg
@@ -171,11 +172,17 @@ const NavDrawerSystem = () => {
             />
           </Link>
 
-          {/* --- 3. RIGHT — Language selector + Social Icons --- */}
+          {/* --- 3. RIGHT — Search + Language selector + Social Icons --- */}
           <div className="flex items-center gap-1 justify-end">
-            {/* Language pill sits first so it reads left-to-right as
-                "choose language, then jump to our channels". Same 44×44
-                footprint as the icons so the row stays rhythmic. */}
+            {/* A.2 (Roberto master rebuild brief): magnifier sits at
+                the start of the right cluster — UHNW + travel agents
+                expect search top-right. Click expands an inline
+                overlay with autocomplete across yacht names, builders,
+                regions. */}
+            <NavSearch />
+            {/* Language pill — choose language, then jump to channels.
+                Same 44×44 footprint as the icons so the row stays
+                rhythmic. */}
             <TranslateWidget variant="inline" />
             <a
               href="https://www.instagram.com/georgeyachts"

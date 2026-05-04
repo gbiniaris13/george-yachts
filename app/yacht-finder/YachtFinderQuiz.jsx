@@ -216,6 +216,20 @@ export default function YachtFinderQuiz({ fleet = [] }) {
     sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, [step, done]);
 
+  // N.1 — quiz_started fires once on first Q1 mount; quiz_step_view
+  // fires on every step change so abandonment can be measured per Q.
+  useEffect(() => {
+    if (step === 0 && !done) {
+      try {
+        window.gtag?.('event', 'quiz_started', { source: 'smart_match_quiz' });
+      } catch {}
+    }
+    try {
+      window.gtag?.('event', 'quiz_step_view', { step: step + 1 });
+    } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, done]);
+
   const handleAnswer = (qid, value) => {
     setAnswers((p) => ({ ...p, [qid]: value }));
     setStep((s) => s + 1);

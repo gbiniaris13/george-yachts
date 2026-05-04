@@ -252,7 +252,20 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
       style={{ '--stagger': `${Math.min(index * 0.05, 0.3)}s` }}
     >
       {/* Image */}
-      <Link href={`/yachts/${slug}`} className="fleet-card__image-link">
+      <Link
+        href={`/yachts/${slug}`}
+        className="fleet-card__image-link"
+        onClick={() => {
+          // N.1 — fleet_card_clicked
+          try {
+            window.gtag?.('event', 'fleet_card_clicked', {
+              yacht_slug: slug,
+              yacht_name: name,
+              position: index + 1,
+            });
+          } catch {}
+        }}
+      >
         <div className="fleet-card__image-wrap">
           {/* Skeleton loader */}
           {!imgLoaded && imageUrl && (
