@@ -1,506 +1,526 @@
 "use client";
 
-import { useState, useRef } from "react";
+// Q.1 (Roberto brief, May 2026) — Smart Proposal Generator.
+//
+// Multi-yacht checkbox UI (up to 5), sticky bottom action bar, form
+// modal (name + email + dates + notes), POST /api/proposal-generate
+// which returns a PDF data URL + sends the same PDF to the user's
+// email with George BCC'd. Telegram fires server-side.
+//
+// Replaces the previous single-yacht hot-lead flow. The lead-gate is
+// folded into the form modal — submitting the form is itself the
+// gate signal.
+
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useI18n } from "@/lib/i18n/I18nProvider";
+import { sanityCardImg } from "@/lib/sanity-image";
+import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
 
+const MAX_YACHTS = 5;
 const GOLD = "#DAA520";
-const DARK = "#000";
 
-function parsePrice(priceStr) {
-  if (!priceStr) return { low: 0, high: 0 };
-  const nums = priceStr.match(/[\d,.]+/g);
-  if (!nums) return { low: 0, high: 0 };
-  const clean = nums.map((n) => parseInt(n.replace(/[,.]/g, "")));
-  return { low: clean[0] || 0, high: clean[1] || clean[0] || 0 };
+function gtagEvent(name, payload) {
+  try {
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      window.gtag("event", name, payload || {});
+    }
+  } catch {}
 }
 
-const REGIONS = ["Cyclades", "Saronic Gulf", "Ionian Islands", "Sporades", "Dodecanese"];
-const SEASONS = [
-  { key: "low", label: "Low Season (Oct–Apr)", factor: 1.0 },
-  { key: "mid", label: "Mid Season (May, Sep)", factor: 1.15 },
-  { key: "high", label: "High Season (Jun–Aug)", factor: 1.35 },
-];
-
-export default function ProposalClient({ yachts }) {
+export default function ProposalClient({ yachts = [] }) {
   const { t } = useI18n();
-  const [step, setStep] = useState(1); // 1=select, 2=customize, 3=preview
-  const [selectedYacht, setSelectedYacht] = useState(null);
-  const [formData, setFormData] = useState({
-    clientName: "",
-    clientSurname: "",
-    clientEmail: "",
-    clientPhone: "",
-    season: "mid",
-    region: "Cyclades",
-    startDate: "",
-    endDate: "",
-    guests: 6,
-    specialRequests: "",
-  });
-  const [leadError, setLeadError] = useState("");
-  const [leadSubmitting, setLeadSubmitting] = useState(false);
-  const proposalRef = useRef(null);
+  const [picked, setPicked] = useState([]); // array of slugs in selection order
+  const [region, setRegion] = useState("all");
+  const [tier, setTier] = useState("all");
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [dates, setDates] = useState("");
+  const [notes, setNotes] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [result, setResult] = useState(null); // { dataUrl, filename, emailSent }
 
-  // Gate: we require name + surname + email + phone before we reveal the
-  // full proposal. The details are posted to /api/hot-lead (already on
-  // the site) so George gets the contact in Telegram + Gmail instantly.
-  const generateProposal = async () => {
-    setLeadError("");
-    const { clientName, clientSurname, clientEmail, clientPhone } = formData;
-    if (!clientName.trim() || !clientSurname.trim()) {
-      setLeadError("Please add your first and last name to continue.");
+  const regions = useMemo(() => {
+    const set = new Set();
+    yachts.forEach((y) => {
+      if (y.cruisingRegion) {
+        // Bucket loose names into the canonical 4
+        const r = String(y.cruisingRegion).toLowerCase();
+        if (r.includes("cyclad")) set.add("Cyclades");
+        else if (r.includes("ionian")) set.add("Ionian");
+        else if (r.includes("saronic")) set.add("Saronic");
+        else if (r.includes("dodecan")) set.add("Dodecanese");
+        else if (r.includes("sporad")) set.add("Sporades");
+      }
+    });
+    return ["all", ...Array.from(set).sort()];
+  }, [yachts]);
+
+  const filtered = useMemo(() => {
+    return yachts.filter((y) => {
+      if (tier !== "all" && y.fleetTier !== tier) return false;
+      if (region !== "all") {
+        const r = String(y.cruisingRegion || "").toLowerCase();
+        if (region === "Cyclades" && !r.includes("cyclad")) return false;
+        if (region === "Ionian" && !r.includes("ionian")) return false;
+        if (region === "Saronic" && !r.includes("saronic")) return false;
+        if (region === "Dodecanese" && !r.includes("dodecan")) return false;
+        if (region === "Sporades" && !r.includes("sporad")) return false;
+      }
+      return true;
+    });
+  }, [yachts, region, tier]);
+
+  function togglePick(slug) {
+    setPicked((prev) => {
+      if (prev.includes(slug)) return prev.filter((s) => s !== slug);
+      if (prev.length >= MAX_YACHTS) return prev;
+      gtagEvent("proposal_yacht_picked", { yacht_slug: slug, count: prev.length + 1 });
+      return [...prev, slug];
+    });
+  }
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => {
+      if (e.key === "Escape" && !submitting) setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open, submitting]);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (submitting) return;
+    setError("");
+    if (!name.trim() || !email.includes("@")) {
+      setError("Please enter your name and a valid email.");
       return;
     }
-    if (!clientEmail.includes("@") || clientEmail.length < 5) {
-      setLeadError("Please enter a valid email address.");
+    if (picked.length === 0) {
+      setError("Pick at least one yacht.");
       return;
     }
-    if (clientPhone.replace(/\D/g, "").length < 7) {
-      setLeadError("Please enter a valid phone number (with country code).");
-      return;
-    }
-    setLeadSubmitting(true);
+    setSubmitting(true);
     try {
-      await fetch("/api/lead-gate", {
+      const res = await fetch("/api/proposal-generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          source: "proposal-generator",
-          name: `${clientName.trim()} ${clientSurname.trim()}`.trim(),
-          email: clientEmail.trim(),
-          phone: clientPhone.trim(),
-          meta: {
-            yacht: yacht?.name || null,
-            yachtSlug: yacht?.slug || null,
-            region: formData.region,
-            season: formData.season,
-            guests: formData.guests,
-            startDate: formData.startDate,
-            endDate: formData.endDate,
-            specialRequests: formData.specialRequests,
-          },
+          name: name.trim(),
+          email: email.trim(),
+          dates: dates.trim(),
+          notes: notes.trim(),
+          yachtSlugs: picked,
         }),
-      }).catch(() => {});
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || !json?.ok) {
+        setError(json?.error || "Something went wrong. Please write to George at /inquiry.");
+        setSubmitting(false);
+        return;
+      }
+      setResult({
+        dataUrl: json.dataUrl,
+        filename: json.filename,
+        emailSent: !!json.emailSent,
+      });
+      gtagEvent("proposal_generated", {
+        yacht_count: picked.length,
+        email_sent: !!json.emailSent,
+      });
+      setSubmitting(false);
     } catch {
-      /* silent — if the notifier is down we still let the user see
-         their proposal. Their contact details are captured in state
-         and re-sent when they hit "Send to George" on step 3. */
+      setError("Network error. Please try again.");
+      setSubmitting(false);
     }
-    setLeadSubmitting(false);
-    setStep(3);
-  };
-
-  const yacht = selectedYacht;
-  const prices = yacht ? parsePrice(yacht.weeklyRatePrice) : { low: 0, high: 0 };
-  const seasonFactor = SEASONS.find((s) => s.key === formData.season)?.factor || 1;
-  const charterRate = Math.round(formData.season === "low" ? prices.low : formData.season === "high" ? prices.high : (prices.low + prices.high) / 2);
-  const apa = Math.round(charterRate * 0.3);
-  const vat = Math.round((charterRate + apa) * 0.12);
-  const total = charterRate + apa + vat;
-  const perPerson = formData.guests > 0 ? Math.round(total / formData.guests) : 0;
-
-  const handlePrint = () => {
-    window.print();
-  };
-
-  const handleWhatsApp = () => {
-    const msg = `Hello George, I generated a charter proposal on your website:\n\nYacht: ${yacht?.name}\nRegion: ${formData.region}\nSeason: ${SEASONS.find(s => s.key === formData.season)?.label}\nGuests: ${formData.guests}\nEstimated Total: €${total.toLocaleString()}\n\nI'd like to discuss this further.`;
-    window.open(`https://wa.me/17867988798?text=${encodeURIComponent(msg)}`, "_blank");
-  };
-
-  // STEP 1: Select Yacht
-  if (step === 1) {
-    return (
-      <div style={{ minHeight: "100vh", background: DARK, padding: "160px 24px 80px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.4em", color: `${GOLD}99`, textTransform: "uppercase", marginBottom: 16 }}>
-            Instant Charter Proposal
-          </p>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", color: "#fff", fontWeight: 300, margin: "0 0 16px" }}>
-            Generate Your Proposal
-          </h1>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.4)", marginBottom: 48, lineHeight: 1.7 }}>
-            Select a yacht below and we'll create a complete charter proposal in seconds — with pricing, specs, and everything you need.
-          </p>
-
-          {/* Yacht Grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: 16, textAlign: "left" }}>
-            {yachts.map((y) => {
-              const p = parsePrice(y.weeklyRatePrice);
-              return (
-                <div
-                  key={y._id}
-                  onClick={() => { setSelectedYacht(y); setStep(2); }}
-                  style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: `1px solid rgba(218,165,32,${selectedYacht?._id === y._id ? 0.6 : 0.1})`,
-                    padding: 0, cursor: "pointer",
-                    transition: "all 0.3s ease",
-                    overflow: "hidden",
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.borderColor = `rgba(218,165,32,0.4)`}
-                  onMouseLeave={(e) => e.currentTarget.style.borderColor = `rgba(218,165,32,0.1)`}
-                >
-                  {y.imageUrl && (
-                    <div style={{ position: "relative", height: 160, overflow: "hidden" }}>
-                      <Image src={`${y.imageUrl}?w=500&h=320&fit=crop&auto=format`} alt={y.name} fill style={{ objectFit: "cover" }} sizes="250px" />
-                    </div>
-                  )}
-                  <div style={{ padding: "16px 20px" }}>
-                    <p className="notranslate" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: "#fff", margin: "0 0 4px" }}>{y.name}</p>
-                    <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em" }}>
-                      {y.length} · {y.sleeps} guests · {y.cabins} cabins
-                    </p>
-                    {p.low > 0 && (
-                      <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: GOLD, marginTop: 8 }}>
-                        From €{p.low.toLocaleString()}/week
-                      </p>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    );
   }
 
-  // STEP 2: Customize
-  if (step === 2) {
-    return (
-      <div style={{ minHeight: "100vh", background: DARK, padding: "160px 24px 80px" }}>
-        <div style={{ maxWidth: 600, margin: "0 auto" }}>
-          <button onClick={() => setStep(1)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", fontFamily: "'Montserrat', sans-serif", fontSize: 12, cursor: "pointer", marginBottom: 32, letterSpacing: "0.1em" }}>
-            ← Back to yacht selection
-          </button>
+  // ─── RENDER ───
+  return (
+    <div style={{ minHeight: "100vh", background: "#000", color: "#fff", paddingBottom: 120 }}>
+      {/* HEADER */}
+      <header style={{ padding: "120px 24px 40px", textAlign: "center" }}>
+        <p style={{
+          fontFamily: "'Montserrat', sans-serif", fontSize: 9,
+          letterSpacing: "0.42em", textTransform: "uppercase",
+          color: GOLD, fontWeight: 600, margin: "0 0 18px",
+        }}>
+          Smart Proposal Generator
+        </p>
+        <h1 style={{
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: "clamp(36px, 6vw, 56px)", fontWeight: 300,
+          color: "#fff", margin: "0 0 16px", lineHeight: 1.1,
+        }}>
+          Pick up to 5 yachts. Get a magazine-grade PDF in your inbox.
+        </h1>
+        <p style={{
+          fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 16,
+          lineHeight: 1.7, color: "rgba(255,255,255,0.7)",
+          maxWidth: 640, margin: "0 auto",
+        }}>
+          Each page in the proposal is a real yacht from the live fleet — hero photo, specs, price, and
+          George&rsquo;s insider note. Submit and you&rsquo;ll receive the PDF by email plus a written
+          quote within the day.
+        </p>
+      </header>
 
-          <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <p className="notranslate" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, color: "#fff", fontWeight: 300 }}>{yacht?.name}</p>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: GOLD, letterSpacing: "0.15em", marginTop: 8 }}>Customize Your Proposal</p>
-          </div>
+      {/* FILTERS */}
+      <div style={{
+        display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap",
+        padding: "0 24px 24px", maxWidth: 1100, margin: "0 auto",
+      }}>
+        <FilterGroup
+          label="Region"
+          options={regions.map((r) => ({ value: r, label: r === "all" ? "All regions" : r }))}
+          value={region} onChange={setRegion}
+        />
+        <FilterGroup
+          label="Fleet"
+          options={[
+            { value: "all", label: "Both fleets" },
+            { value: "private", label: "Private (per yacht/wk)" },
+            { value: "explorer", label: "Explorer (per person/wk)" },
+          ]}
+          value={tier} onChange={setTier}
+        />
+      </div>
 
-          {/* Lead gate — George 2026-04-20: "gia na doun h na paroun pdf
-              thelw mail onoma eponimo kai tilefwno ipoxrewtika". First
-              name, last name, email and phone are all required before
-              we unlock the proposal preview and the Save-as-PDF button. */}
+      {/* GRID */}
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+        gap: 16, padding: "8px 24px 40px",
+        maxWidth: 1280, margin: "0 auto",
+      }}>
+        {filtered.map((y) => {
+          const checked = picked.includes(y.slug);
+          const disabled = !checked && picked.length >= MAX_YACHTS;
+          return (
+            <div
+              key={y.slug}
+              role="button"
+              tabIndex={0}
+              aria-pressed={checked}
+              aria-disabled={disabled}
+              onClick={() => !disabled && togglePick(y.slug)}
+              onKeyDown={(e) => {
+                if ((e.key === "Enter" || e.key === " ") && !disabled) {
+                  e.preventDefault();
+                  togglePick(y.slug);
+                }
+              }}
+              style={{
+                position: "relative",
+                background: "rgba(255,255,255,0.03)",
+                border: `1px solid ${checked ? GOLD : "rgba(255,255,255,0.08)"}`,
+                cursor: disabled ? "not-allowed" : "pointer",
+                opacity: disabled ? 0.45 : 1,
+                transition: "border-color 0.25s ease, opacity 0.25s ease",
+                outline: "none",
+              }}
+              className="proposal-card"
+            >
+              <div style={{
+                width: "100%", aspectRatio: "4 / 3",
+                background: y.imageUrl
+                  ? `#0a0a0a url(${sanityCardImg(y.imageUrl, 600)}) center/cover no-repeat`
+                  : "#0a0a0a",
+              }} aria-hidden={!y.imageUrl} />
+              <div style={{ padding: "14px 16px 16px" }}>
+                <p style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: 18, fontWeight: 400, color: "#fff", margin: "0 0 4px",
+                }}>
+                  {y.name}
+                </p>
+                {(y.length || y.sleeps) && (
+                  <p style={{
+                    fontFamily: "'Montserrat', sans-serif", fontSize: 10,
+                    letterSpacing: "0.16em", textTransform: "uppercase",
+                    color: "rgba(255,255,255,0.55)", margin: "0 0 6px",
+                  }}>
+                    {[y.length, y.sleeps && `${y.sleeps} guests`].filter(Boolean).join(" · ")}
+                  </p>
+                )}
+                {y.weeklyRatePrice && (
+                  <p style={{
+                    fontFamily: "'Montserrat', sans-serif", fontSize: 11,
+                    color: GOLD, fontWeight: 600, margin: 0,
+                  }}>
+                    <span style={{ fontSize: 8, letterSpacing: "0.3em", color: isPerPerson(y) ? "rgba(255,255,255,0.6)" : GOLD, marginRight: 6 }}>
+                      {priceUnitBadge(y)}
+                    </span>
+                    {y.weeklyRatePrice}
+                  </p>
+                )}
+              </div>
+              {/* checkmark */}
+              <span
+                aria-hidden="true"
+                style={{
+                  position: "absolute", top: 10, right: 10,
+                  width: 28, height: 28, borderRadius: "50%",
+                  background: checked ? GOLD : "rgba(0,0,0,0.55)",
+                  border: `1px solid ${checked ? GOLD : "rgba(255,255,255,0.4)"}`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  color: checked ? "#0a1a2f" : "transparent",
+                  fontWeight: 700, fontSize: 14,
+                  transition: "all 0.2s ease",
+                }}
+              >
+                ✓
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* STICKY BOTTOM BAR */}
+      <div style={{
+        position: "fixed", bottom: 0, left: 0, right: 0,
+        background: "linear-gradient(180deg, rgba(0,0,0,0.6), #000)",
+        borderTop: `1px solid ${GOLD}55`,
+        padding: "16px 24px",
+        display: "flex", justifyContent: "center", gap: 12,
+        alignItems: "center", flexWrap: "wrap",
+        zIndex: 50,
+      }}>
+        <span style={{
+          fontFamily: "'Montserrat', sans-serif", fontSize: 11,
+          letterSpacing: "0.2em", textTransform: "uppercase",
+          color: "rgba(255,255,255,0.7)",
+        }}>
+          {picked.length === 0
+            ? "Pick up to 5 yachts to start"
+            : `${picked.length} of ${MAX_YACHTS} selected`}
+        </span>
+        <button
+          type="button"
+          disabled={picked.length === 0}
+          onClick={() => {
+            setOpen(true);
+            gtagEvent("proposal_form_opened", { count: picked.length });
+          }}
+          style={{
+            fontFamily: "'Montserrat', sans-serif", fontSize: 11,
+            letterSpacing: "0.28em", textTransform: "uppercase",
+            fontWeight: 700, padding: "12px 22px",
+            background: picked.length === 0
+              ? "rgba(218,165,32,0.25)"
+              : `linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)`,
+            color: picked.length === 0 ? "rgba(0,0,0,0.45)" : "#0a1a2f",
+            border: "none",
+            cursor: picked.length === 0 ? "default" : "pointer",
+          }}
+        >
+          {picked.length === 0
+            ? "Generate proposal →"
+            : `Generate proposal (${picked.length}) →`}
+        </button>
+      </div>
+
+      {/* MODAL */}
+      {open && (
+        <div
+          role="dialog" aria-modal="true" aria-label="Generate proposal"
+          onClick={() => !submitting && setOpen(false)}
+          style={{
+            position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            padding: 24, zIndex: 1000,
+          }}
+        >
           <div
+            onClick={(e) => e.stopPropagation()}
             style={{
-              marginBottom: 28,
-              padding: "18px 20px",
-              border: "1px solid rgba(218,165,32,0.25)",
-              background: "rgba(218,165,32,0.03)",
+              maxWidth: 480, width: "100%", background: "#0a0a0a",
+              border: `1px solid ${GOLD}66`, padding: "28px 28px 24px",
             }}
           >
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: "0.35em", color: GOLD, textTransform: "uppercase", marginBottom: 6, fontWeight: 600 }}>
-              Your details
-            </p>
-            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.55, margin: 0, fontStyle: "italic" }}>
-              We use these only to send you the proposal and, if you wish, follow up personally.
-            </p>
-          </div>
-
-          {/* Form */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-              <div>
-                <label htmlFor="proposal-name" style={labelStyle}>First Name <span style={{ color: GOLD }}>*</span></label>
-                <input id="proposal-name" type="text" required value={formData.clientName} onChange={(e) => setFormData({ ...formData, clientName: e.target.value })} placeholder="First name" style={inputStyle} />
+            {!result ? (
+              <>
+                <p style={{
+                  fontFamily: "'Montserrat', sans-serif", fontSize: 9,
+                  letterSpacing: "0.42em", textTransform: "uppercase",
+                  color: GOLD, fontWeight: 600, margin: "0 0 12px",
+                }}>
+                  Last step
+                </p>
+                <h3 style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: 24, fontWeight: 400, color: "#fff",
+                  margin: "0 0 6px", lineHeight: 1.2,
+                }}>
+                  Where should we send the PDF?
+                </h3>
+                <p style={{
+                  fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 13,
+                  lineHeight: 1.6, color: "rgba(255,255,255,0.7)", margin: "0 0 18px",
+                }}>
+                  We&apos;ll generate the proposal, email it to you, and George will write back within the day with availability.
+                </p>
+                <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  <input
+                    type="text" placeholder="Your name" required
+                    value={name} onChange={(e) => setName(e.target.value)}
+                    style={inputStyle}
+                  />
+                  <input
+                    type="email" placeholder="Your email" required
+                    value={email} onChange={(e) => setEmail(e.target.value)}
+                    style={inputStyle}
+                  />
+                  <input
+                    type="text" placeholder="Dates (optional, e.g. 12–19 July)"
+                    value={dates} onChange={(e) => setDates(e.target.value)}
+                    style={inputStyle}
+                  />
+                  <textarea
+                    placeholder="Anything George should know? (group size, vibe, special requests)"
+                    value={notes} onChange={(e) => setNotes(e.target.value)} rows={3}
+                    style={{ ...inputStyle, fontFamily: "'Lato', 'Montserrat', sans-serif", resize: "vertical" }}
+                  />
+                  {error && (
+                    <p style={{
+                      fontFamily: "'Montserrat', sans-serif", fontSize: 12,
+                      color: "#ff8a8a", margin: 0,
+                    }}>
+                      {error}
+                    </p>
+                  )}
+                  <div style={{ display: "flex", gap: 8, marginTop: 4 }}>
+                    <button
+                      type="submit" disabled={submitting}
+                      style={{
+                        flex: 1, padding: "12px 0",
+                        fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700,
+                        letterSpacing: "0.18em", textTransform: "uppercase",
+                        color: "#0a1a2f",
+                        background: submitting
+                          ? `${GOLD}66`
+                          : `linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)`,
+                        border: "none", cursor: submitting ? "default" : "pointer",
+                      }}
+                    >
+                      {submitting ? "Generating PDF…" : `Generate proposal (${picked.length})`}
+                    </button>
+                    <button
+                      type="button" onClick={() => setOpen(false)} disabled={submitting}
+                      style={{
+                        padding: "12px 16px",
+                        fontFamily: "'Montserrat', sans-serif", fontSize: 10,
+                        color: "rgba(255,255,255,0.5)",
+                        background: "none",
+                        border: "1px solid rgba(255,255,255,0.18)",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </>
+            ) : (
+              <div style={{ textAlign: "center", padding: "8px 0 4px" }}>
+                <p style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: 30, fontWeight: 400, color: "#fff", margin: "0 0 10px",
+                }}>
+                  Done.
+                </p>
+                <p style={{
+                  fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 14,
+                  lineHeight: 1.6, color: "rgba(255,255,255,0.78)", margin: "0 0 22px",
+                }}>
+                  {result.emailSent
+                    ? `The PDF is on its way to ${email}. George will reach out within the day.`
+                    : `Your PDF is ready below. (Email delivery wasn't available right now — George has been notified separately.)`}
+                </p>
+                <a
+                  href={result.dataUrl} download={result.filename}
+                  style={{
+                    display: "inline-block",
+                    padding: "12px 24px",
+                    fontFamily: "'Montserrat', sans-serif", fontSize: 10,
+                    fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase",
+                    color: "#0a1a2f",
+                    background: `linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)`,
+                    textDecoration: "none",
+                  }}
+                >
+                  Download PDF
+                </a>
+                <p style={{ marginTop: 16 }}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setResult(null); setOpen(false);
+                      setName(""); setEmail(""); setDates(""); setNotes("");
+                      setPicked([]);
+                    }}
+                    style={{
+                      fontFamily: "'Montserrat', sans-serif", fontSize: 9,
+                      letterSpacing: "0.32em", textTransform: "uppercase",
+                      color: "rgba(255,255,255,0.5)",
+                      background: "none", border: "none", cursor: "pointer",
+                    }}
+                  >
+                    Start a new proposal
+                  </button>
+                </p>
               </div>
-              <div>
-                <label htmlFor="proposal-surname" style={labelStyle}>Last Name <span style={{ color: GOLD }}>*</span></label>
-                <input id="proposal-surname" type="text" required value={formData.clientSurname} onChange={(e) => setFormData({ ...formData, clientSurname: e.target.value })} placeholder="Last name" style={inputStyle} />
-              </div>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-              <div>
-                <label htmlFor="proposal-email" style={labelStyle}>Email <span style={{ color: GOLD }}>*</span></label>
-                <input id="proposal-email" type="email" required value={formData.clientEmail} onChange={(e) => setFormData({ ...formData, clientEmail: e.target.value })} placeholder="you@example.com" style={inputStyle} />
-              </div>
-              <div>
-                <label htmlFor="proposal-phone" style={labelStyle}>Phone <span style={{ color: GOLD }}>*</span></label>
-                <input id="proposal-phone" type="tel" required value={formData.clientPhone} onChange={(e) => setFormData({ ...formData, clientPhone: e.target.value })} placeholder="+30 210 000 0000" style={inputStyle} />
-              </div>
-            </div>
-            <div>
-              <label htmlFor="proposal-season" style={labelStyle}>Season</label>
-              <select id="proposal-season" value={formData.season} onChange={(e) => setFormData({ ...formData, season: e.target.value })} style={inputStyle}>
-                {SEASONS.map((s) => <option key={s.key} value={s.key}>{s.label}</option>)}
-              </select>
-            </div>
-            <div>
-              <label htmlFor="proposal-region" style={labelStyle}>Preferred Region</label>
-              <select id="proposal-region" value={formData.region} onChange={(e) => setFormData({ ...formData, region: e.target.value })} style={inputStyle}>
-                {REGIONS.map((r) => <option key={r} value={r}>{r}</option>)}
-              </select>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-              <div>
-                <label htmlFor="proposal-start" style={labelStyle}>Start Date</label>
-                <input id="proposal-start" type="date" value={formData.startDate} onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} style={inputStyle} />
-              </div>
-              <div>
-                <label htmlFor="proposal-end" style={labelStyle}>End Date</label>
-                <input id="proposal-end" type="date" value={formData.endDate} onChange={(e) => setFormData({ ...formData, endDate: e.target.value })} style={inputStyle} />
-              </div>
-            </div>
-            <div>
-              <label htmlFor="proposal-guests" style={labelStyle}>Number of Guests</label>
-              <input id="proposal-guests" type="number" min={1} max={parseInt(yacht?.sleeps) || 12} value={formData.guests} onChange={(e) => setFormData({ ...formData, guests: parseInt(e.target.value) || 1 })} style={inputStyle} />
-            </div>
-            <div>
-              <label htmlFor="proposal-requests" style={labelStyle}>Special Requests (optional)</label>
-              <textarea id="proposal-requests" value={formData.specialRequests} onChange={(e) => setFormData({ ...formData, specialRequests: e.target.value })} placeholder="Birthday celebration, dietary requirements, specific islands..." rows={3} style={{ ...inputStyle, resize: "vertical" }} />
-            </div>
-          </div>
-
-          {leadError && (
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: "#ff9b9b", letterSpacing: "0.05em", marginTop: 18 }}>
-              {leadError}
-            </p>
-          )}
-          <button
-            onClick={generateProposal}
-            disabled={leadSubmitting}
-            style={{ width: "100%", marginTop: 32, padding: "18px 0", background: `linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)`, color: "#000", fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: leadSubmitting ? "wait" : "pointer", opacity: leadSubmitting ? 0.7 : 1 }}
-          >
-            {leadSubmitting ? "Preparing…" : "Generate Proposal →"}
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // STEP 3: Proposal Preview (printable)
-  return (
-    <div style={{ minHeight: "100vh", background: DARK }}>
-      {/* Action bar (hidden in print) */}
-      <div className="no-print" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(0,0,0,0.95)", borderBottom: "1px solid rgba(218,165,32,0.15)", padding: "12px 24px", display: "flex", justifyContent: "center", gap: 16, alignItems: "center" }}>
-        <button onClick={() => setStep(2)} style={actionBtnStyle}>← Edit</button>
-        <button onClick={handlePrint} style={{ ...actionBtnStyle, background: `linear-gradient(90deg, #E6C77A, #C9A24D)`, color: "#000", fontWeight: 700 }}>
-          📄 Save as PDF
-        </button>
-        <button onClick={handleWhatsApp} style={{ ...actionBtnStyle, background: "none", border: `1px solid ${GOLD}40`, color: GOLD }}>
-          💬 Send to George
-        </button>
-      </div>
-
-      {/* PROPOSAL DOCUMENT */}
-      <div ref={proposalRef} id="proposal-document" style={{ maxWidth: 800, margin: "0 auto", padding: "100px 40px 80px", background: "#fff", color: "#1a1a1a", minHeight: "100vh" }}>
-        {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: 48, paddingBottom: 32, borderBottom: "2px solid #DAA520" }}>
-          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, fontWeight: 400, letterSpacing: "0.1em", color: "#1a1a1a", margin: "0 0 4px" }} className="notranslate">
-            GEORGE YACHTS
-          </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: "0.3em", color: "#888", textTransform: "uppercase" }} className="notranslate">
-            BROKERAGE HOUSE LLC
-          </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: "#aaa", marginTop: 16, letterSpacing: "0.1em" }}>
-            CHARTER PROPOSAL
-          </p>
-        </div>
-
-        {/* Client & Date */}
-        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 40, fontSize: 12, fontFamily: "'Montserrat', sans-serif", color: "#666" }}>
-          <div>
-            {formData.clientName && <p style={{ margin: 0 }}>Prepared for: <strong style={{ color: "#1a1a1a" }}>{formData.clientName}</strong></p>}
-            <p style={{ margin: "4px 0 0" }}>Region: {formData.region}</p>
-          </div>
-          <div style={{ textAlign: "right" }}>
-            <p style={{ margin: 0 }}>Date: {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</p>
-            {formData.startDate && <p style={{ margin: "4px 0 0" }}>Charter: {formData.startDate} → {formData.endDate}</p>}
+            )}
           </div>
         </div>
-
-        {/* Yacht Hero */}
-        {yacht?.imageUrl && (
-          <div style={{ position: "relative", width: "100%", height: 350, marginBottom: 32, overflow: "hidden" }}>
-            <img src={`${yacht.imageUrl}?w=1200&h=700&fit=crop&auto=format`} alt={yacht.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          </div>
-        )}
-
-        {/* Yacht Name */}
-        <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <h1 className="notranslate" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 36, fontWeight: 300, color: "#1a1a1a", margin: "0 0 8px" }}>
-            {yacht?.name}
-          </h1>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: "#888", letterSpacing: "0.15em" }}>
-            {yacht?.builder} · {yacht?.length} · {yacht?.sleeps} Guests · {yacht?.cabins} Cabins
-          </p>
-        </div>
-
-        {/* Specs Grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1, background: "#eee", marginBottom: 40 }}>
-          {[
-            { label: "Length", value: yacht?.length },
-            { label: "Builder", value: yacht?.builder },
-            { label: "Guests", value: yacht?.sleeps },
-            { label: "Cabins", value: yacht?.cabins },
-          ].map((spec, i) => (
-            <div key={i} style={{ background: "#fff", padding: 20, textAlign: "center" }}>
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: "0.15em", color: "#999", textTransform: "uppercase", margin: "0 0 8px" }}>{spec.label}</p>
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: "#1a1a1a", margin: 0 }}>{spec.value || "—"}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Crew */}
-        {yacht?.crew && (
-          <div style={{ marginBottom: 40 }}>
-            <h3 style={sectionTitleStyle}>Crew</h3>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: "#555", lineHeight: 1.8 }}>{yacht.crew}</p>
-          </div>
-        )}
-
-        {/* George's Tip */}
-        {yacht?.georgeInsiderTip && (
-          <div style={{ marginBottom: 40, padding: 32, background: "#f8f6f1", borderLeft: "4px solid #DAA520" }}>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.2em", color: "#DAA520", textTransform: "uppercase", margin: "0 0 12px" }}>George's Inside Info</p>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: "#444", lineHeight: 1.8, fontStyle: "italic", margin: 0 }}>
-              "{yacht.georgeInsiderTip}"
-            </p>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: "#999", textAlign: "right", marginTop: 12 }} className="notranslate">
-              — George P. Biniaris, Managing Broker
-            </p>
-          </div>
-        )}
-
-        {/* PRICING TABLE */}
-        <div style={{ marginBottom: 40 }}>
-          <h3 style={sectionTitleStyle}>Estimated Pricing — {SEASONS.find((s) => s.key === formData.season)?.label}</h3>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "'Montserrat', sans-serif", fontSize: 13 }}>
-            <tbody>
-              <tr style={rowStyle}>
-                <td style={cellStyle}>Charter Rate (1 week)</td>
-                <td style={{ ...cellStyle, textAlign: "right", fontWeight: 600 }}>€{charterRate.toLocaleString()}</td>
-              </tr>
-              <tr style={rowStyle}>
-                <td style={cellStyle}>APA — Advanced Provisioning (est. 30%)</td>
-                <td style={{ ...cellStyle, textAlign: "right" }}>€{apa.toLocaleString()}</td>
-              </tr>
-              <tr style={rowStyle}>
-                <td style={cellStyle}>VAT (12%)</td>
-                <td style={{ ...cellStyle, textAlign: "right" }}>€{vat.toLocaleString()}</td>
-              </tr>
-              <tr style={{ ...rowStyle, background: "#f8f6f1" }}>
-                <td style={{ ...cellStyle, fontWeight: 700, fontSize: 14 }}>Estimated Total (all-inclusive)</td>
-                <td style={{ ...cellStyle, textAlign: "right", fontWeight: 700, fontSize: 16, color: "#DAA520" }}>€{total.toLocaleString()}</td>
-              </tr>
-              <tr style={rowStyle}>
-                <td style={cellStyle}>Per person ({formData.guests} guests)</td>
-                <td style={{ ...cellStyle, textAlign: "right", color: "#DAA520" }}>€{perPerson.toLocaleString()} / person / week</td>
-              </tr>
-            </tbody>
-          </table>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: "#999", marginTop: 12, lineHeight: 1.6 }}>
-            * All prices are estimates. Final pricing confirmed upon booking. Charter rates subject to yacht availability and exact dates. MYBA-standard charter contract applies.
-          </p>
-        </div>
-
-        {/* Features */}
-        {yacht?.features && yacht.features.length > 0 && (
-          <div style={{ marginBottom: 40 }}>
-            <h3 style={sectionTitleStyle}>Key Features</h3>
-            <ul style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: "#555", lineHeight: 2, paddingLeft: 20 }}>
-              {yacht.features.slice(0, 8).map((f, i) => <li key={i}>{f}</li>)}
-            </ul>
-          </div>
-        )}
-
-        {/* Water Toys */}
-        {yacht?.toys && yacht.toys.length > 0 && (
-          <div style={{ marginBottom: 40 }}>
-            <h3 style={sectionTitleStyle}>Water Toys & Tenders</h3>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: "#555", lineHeight: 2 }}>
-              {yacht.toys.join(" · ")}
-            </p>
-          </div>
-        )}
-
-        {/* Special Requests */}
-        {formData.specialRequests && (
-          <div style={{ marginBottom: 40 }}>
-            <h3 style={sectionTitleStyle}>Your Special Requests</h3>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: "#555", lineHeight: 1.8, fontStyle: "italic" }}>
-              "{formData.specialRequests}"
-            </p>
-          </div>
-        )}
-
-        {/* Footer */}
-        <div style={{ borderTop: "2px solid #DAA520", paddingTop: 32, marginTop: 48, textAlign: "center" }}>
-          <p className="notranslate" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: "#1a1a1a", margin: "0 0 8px" }}>
-            George Yachts Brokerage House LLC
-          </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: "#999", margin: "0 0 4px", letterSpacing: "0.1em" }}>
-            U.S. Registered · Operating from Athens, Greece · IYBA Member
-          </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: "#666", margin: "16px 0 0" }}>
-            📞 +30 6970 380 999 · 💬 +1 786 798 8798 · ✉ george@georgeyachts.com
-          </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: "#bbb", marginTop: 16 }}>
-            georgeyachts.com
-          </p>
-        </div>
-      </div>
-
-      {/* Print styles */}
-      <style jsx global>{`
-        @media print {
-          .no-print, nav, footer, .whatsapp-btn, .mobile-sticky { display: none !important; }
-          body { background: white !important; }
-          #proposal-document { padding: 40px !important; margin: 0 !important; max-width: 100% !important; box-shadow: none !important; }
-        }
-      `}</style>
+      )}
     </div>
   );
 }
 
-const labelStyle = {
-  display: "block",
-  fontFamily: "'Montserrat', sans-serif",
-  fontSize: 10,
-  letterSpacing: "0.15em",
-  textTransform: "uppercase",
-  color: "rgba(255,255,255,0.4)",
-  marginBottom: 8,
-};
-
 const inputStyle = {
-  width: "100%",
-  padding: "14px 16px",
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(218,165,32,0.15)",
-  color: "#fff",
-  fontFamily: "'Montserrat', sans-serif",
-  fontSize: 14,
-  outline: "none",
-  transition: "border-color 0.3s ease",
+  padding: "10px 12px",
+  fontFamily: "'Montserrat', sans-serif", fontSize: 13,
+  background: "rgba(255,255,255,0.06)",
+  border: "1px solid rgba(255,255,255,0.18)",
+  color: "#fff", outline: "none",
 };
 
-const actionBtnStyle = {
-  padding: "10px 20px",
-  fontFamily: "'Montserrat', sans-serif",
-  fontSize: 11,
-  letterSpacing: "0.1em",
-  textTransform: "uppercase",
-  border: "none",
-  cursor: "pointer",
-  color: "#fff",
-  background: "rgba(255,255,255,0.08)",
-};
-
-const sectionTitleStyle = {
-  fontFamily: "'Montserrat', sans-serif",
-  fontSize: 10,
-  letterSpacing: "0.2em",
-  textTransform: "uppercase",
-  color: "#DAA520",
-  marginBottom: 16,
-  paddingBottom: 8,
-  borderBottom: "1px solid #eee",
-};
-
-const rowStyle = { borderBottom: "1px solid #eee" };
-const cellStyle = { padding: "14px 8px", color: "#444" };
+function FilterGroup({ label, options, value, onChange }) {
+  return (
+    <div>
+      <p style={{
+        fontFamily: "'Montserrat', sans-serif", fontSize: 9,
+        letterSpacing: "0.32em", textTransform: "uppercase",
+        color: "rgba(255,255,255,0.5)", margin: "0 0 8px", textAlign: "center",
+      }}>
+        {label}
+      </p>
+      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "center" }}>
+        {options.map((o) => {
+          const active = value === o.value;
+          return (
+            <button
+              key={o.value} type="button"
+              onClick={() => onChange(o.value)}
+              style={{
+                fontFamily: "'Montserrat', sans-serif", fontSize: 10,
+                letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600,
+                padding: "8px 12px",
+                background: active ? "rgba(218,165,32,0.16)" : "transparent",
+                color: active ? GOLD : "rgba(255,255,255,0.55)",
+                border: `1px solid ${active ? GOLD : "rgba(255,255,255,0.15)"}`,
+                cursor: "pointer",
+              }}
+            >
+              {o.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
