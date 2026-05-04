@@ -230,6 +230,25 @@ export default function YachtFinderQuiz({ fleet = [] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, done]);
 
+  // N.1 — quiz_abandoned_qN fires when the visitor leaves the page mid-quiz.
+  // Skip when done=true (they completed). Use sendBeacon-friendly gtag event.
+  useEffect(() => {
+    const onLeave = () => {
+      if (done) return;
+      if (step === 0) return; // didn't engage past Q1 view
+      try {
+        window.gtag?.('event', `quiz_abandoned_q${step + 1}`, { step: step + 1 });
+        window.gtag?.('event', 'quiz_abandoned', { step: step + 1 });
+      } catch {}
+    };
+    window.addEventListener('beforeunload', onLeave);
+    window.addEventListener('pagehide', onLeave);
+    return () => {
+      window.removeEventListener('beforeunload', onLeave);
+      window.removeEventListener('pagehide', onLeave);
+    };
+  }, [step, done]);
+
   const handleAnswer = (qid, value) => {
     setAnswers((p) => ({ ...p, [qid]: value }));
     setStep((s) => s + 1);

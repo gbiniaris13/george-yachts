@@ -319,7 +319,19 @@ export default function ExpressInquiryModal({
                     <button
                       key={c.id}
                       type="button"
-                      onClick={() => setChannel(c.id)}
+                      onClick={() => {
+                        setChannel(c.id);
+                        // N.1 — telegram_button_clicked fires when the
+                        // user picks Telegram as their preferred channel
+                        // (the site's only Telegram-as-CTA surface).
+                        if (c.id === "telegram") {
+                          try {
+                            window.gtag?.("event", "telegram_button_clicked", {
+                              click_location: "express_inquiry_channel",
+                            });
+                          } catch {}
+                        }
+                      }}
                       style={{
                         padding: "9px 14px",
                         fontSize: "10px",
