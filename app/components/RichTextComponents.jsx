@@ -1,6 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import { urlFor } from "../../lib/sanity";
+import { sanityCardImg } from "@/lib/sanity-image";
+import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
+
+const FORBES_ARTICLE_URL =
+  "https://www.forbes.com/sites/jacquesledbetter/2026/05/01/how-the-wealthy-are-hedging-for-instability/";
 
 const INTERNAL_HOSTS = ["georgeyachts.com", "www.georgeyachts.com"];
 
@@ -138,6 +143,245 @@ export const RichTextComponents = {
             </p>
           )}
         </div>
+      );
+    },
+
+    // F.3 (Roberto master rebuild brief, May 2026) — Inline yacht
+    // callout. Editor inserts this Sanity block mid-article with a
+    // reference to a yacht; the renderer dereferences it (the post
+    // GROQ expands `yacht->{...}`) and shows a quote-styled yacht
+    // card with thumbnail + name + length·guests + unit-aware price
+    // + "View this yacht →".
+    yachtCallout: ({ value }) => {
+      const y = value?.yacht;
+      if (!y || !y.slug) return null;
+      const slug = typeof y.slug === "object" ? y.slug.current : y.slug;
+      const leadIn = value?.leadIn;
+      return (
+        <aside
+          className="my-12 not-prose"
+          aria-label={`Yacht callout: ${y.name || slug}`}
+        >
+          <Link
+            href={`/yachts/${slug}`}
+            data-cursor="View"
+            style={{
+              display: "flex",
+              gap: 18,
+              alignItems: "stretch",
+              padding: 18,
+              background: "rgba(218,165,32,0.06)",
+              border: "1px solid rgba(218,165,32,0.35)",
+              borderRadius: 0,
+              textDecoration: "none",
+              color: "inherit",
+              transition: "border-color 0.3s ease, background 0.3s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "#DAA520";
+              e.currentTarget.style.background = "rgba(218,165,32,0.12)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "rgba(218,165,32,0.35)";
+              e.currentTarget.style.background = "rgba(218,165,32,0.06)";
+            }}
+          >
+            {y.image && (
+              <div
+                style={{
+                  flex: "0 0 auto",
+                  width: 130,
+                  minHeight: 100,
+                  background: `#0a0a0a url(${sanityCardImg(y.image, 320)}) center/cover no-repeat`,
+                }}
+                aria-hidden="true"
+              />
+            )}
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: 6 }}>
+              {leadIn && (
+                <span
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: 9,
+                    letterSpacing: "0.32em",
+                    textTransform: "uppercase",
+                    color: "#DAA520",
+                    fontWeight: 600,
+                  }}
+                >
+                  {leadIn}
+                </span>
+              )}
+              <p
+                style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: 22,
+                  fontWeight: 400,
+                  color: "#fff",
+                  margin: 0,
+                  lineHeight: 1.2,
+                }}
+              >
+                {y.name}
+              </p>
+              {(y.length || y.sleeps) && (
+                <p
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: 10,
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,0.6)",
+                    margin: 0,
+                  }}
+                >
+                  {[y.length, y.sleeps && `${y.sleeps} guests`].filter(Boolean).join(" · ")}
+                </p>
+              )}
+              {y.weeklyRatePrice && (
+                <div style={{ marginTop: 4 }}>
+                  <span
+                    style={{
+                      display: "inline-block",
+                      marginRight: 8,
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontSize: 8,
+                      letterSpacing: "0.3em",
+                      textTransform: "uppercase",
+                      color: isPerPerson(y) ? "rgba(255,255,255,0.7)" : "#DAA520",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {priceUnitBadge(y)}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontSize: 12,
+                      color: "#DAA520",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {y.weeklyRatePrice}
+                  </span>
+                </div>
+              )}
+              <span
+                style={{
+                  marginTop: 6,
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: 10,
+                  letterSpacing: "0.32em",
+                  textTransform: "uppercase",
+                  color: "#DAA520",
+                  fontWeight: 600,
+                }}
+              >
+                View this yacht →
+              </span>
+            </div>
+          </Link>
+        </aside>
+      );
+    },
+
+    // Forbes Tier 3.2 — Inline Forbes citation block. Hard-coded
+    // wordmark + byline + date so the editor only fills the quote.
+    // Wraps to a Forbes article opened in a new tab.
+    forbesCitationBlock: ({ value }) => {
+      const { quote, leadIn } = value || {};
+      if (!quote) return null;
+      return (
+        <aside
+          className="my-12 not-prose"
+          aria-label="Forbes citation"
+          style={{
+            padding: "28px 32px",
+            background: "rgba(13,27,42,0.6)",
+            borderTop: "1px solid rgba(201,168,76,0.45)",
+            borderBottom: "1px solid rgba(201,168,76,0.45)",
+          }}
+        >
+          <p
+            aria-label="Forbes"
+            style={{
+              fontFamily: "'Times New Roman', Times, serif",
+              fontWeight: 700,
+              fontSize: 26,
+              letterSpacing: "-0.02em",
+              color: "#F8F5F0",
+              margin: "0 0 14px",
+              lineHeight: 1,
+            }}
+          >
+            Forbes
+          </p>
+          {leadIn && (
+            <p
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: 11,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "#C9A84C",
+                fontWeight: 600,
+                margin: "0 0 12px",
+              }}
+            >
+              {leadIn}
+            </p>
+          )}
+          <blockquote
+            cite={FORBES_ARTICLE_URL}
+            style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontStyle: "italic",
+              fontSize: 22,
+              lineHeight: 1.5,
+              color: "#fff",
+              margin: "0 0 16px",
+              padding: "0 0 0 18px",
+              borderLeft: "3px solid #C9A84C",
+              fontWeight: 300,
+            }}
+          >
+            &ldquo;{quote}&rdquo;
+          </blockquote>
+          <p
+            style={{
+              fontFamily: "'Lato', 'Montserrat', sans-serif",
+              fontSize: 13,
+              color: "rgba(248,245,240,0.75)",
+              margin: 0,
+              fontWeight: 300,
+            }}
+          >
+            — George P. Biniaris in{" "}
+            <a
+              href={FORBES_ARTICLE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: "#C9A84C",
+                textDecoration: "underline",
+                fontFamily: "'Times New Roman', Times, serif",
+                fontWeight: 700,
+                letterSpacing: "-0.01em",
+              }}
+            >
+              Forbes
+            </a>{" "}
+            &middot; 1 May 2026 &middot;{" "}
+            <a
+              href={FORBES_ARTICLE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#C9A84C", textDecoration: "underline" }}
+            >
+              Read the full piece →
+            </a>
+          </p>
+        </aside>
       );
     },
   },

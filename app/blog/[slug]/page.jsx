@@ -32,9 +32,13 @@ export async function generateStaticParams() {
 
 async function getPost(slug) {
   // F.1 — pull `relatedYachts` (refs) so the BlogPostFooter can
-  // render up to 3 yacht cards. Each ref expands to the fields the
-  // PriceBlock/sanityImg helpers need. When the field is missing in
-  // Sanity, the result is null — front-end hides the block.
+  // render up to 3 yacht cards.
+  //
+  // F.3 — when an editor inserts a `yachtCallout` block inside the
+  // post body, we dereference its `yacht` ref *inline* in the GROQ
+  // result so RichTextComponents can render the callout without an
+  // extra fetch. The portable-text walker keeps every other block
+  // type intact via the `..` spread.
   const query = `*[_type == "post" && slug.current == $slug][0]{
     title,
     "imageUrl": mainImage.asset->url,
@@ -43,9 +47,19 @@ async function getPost(slug) {
     _createdAt,
     _updatedAt,
     author,
-    body,
     excerpt,
     mainImage,
+    body[]{
+      ...,
+      _type == "yachtCallout" => {
+        ...,
+        "yacht": yacht->{
+          name, "slug": slug.current, length, sleeps,
+          weeklyRatePrice, fleetTier, priceModel,
+          "image": images[0].asset->url
+        }
+      }
+    },
     "relatedYachts": relatedYachts[]->{
       name, "slug": slug.current, length, sleeps,
       weeklyRatePrice, fleetTier, priceModel,
