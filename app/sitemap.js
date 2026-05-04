@@ -1,4 +1,6 @@
 import { sanityClient } from "@/lib/sanity";
+import { JOURNAL_CLUSTERS } from "@/lib/journal-clusters";
+import { ISLANDS } from "@/lib/islands";
 
 const BASE_URL = "https://georgeyachts.com";
 
@@ -80,6 +82,10 @@ const staticRoutes = [
   { path: "/team/manos-kourmoulakis", priority: 0.5, changeFrequency: "monthly" },
   // Removed /team/nemesis (placeholder). Re-add when it becomes a real page.
 
+  // O.2 (Roberto brief, May 2026) — GDPR data deletion request page.
+  // Indexable: it's the user's right to find this surface.
+  { path: "/privacy/delete", priority: 0.4, changeFrequency: "yearly" },
+
   // Accessibility statement
   { path: "/accessibility", priority: 0.3, changeFrequency: "yearly" },
 
@@ -113,6 +119,24 @@ export default async function sitemap() {
     console.error("Sitemap: failed to fetch blog posts", error);
   }
 
+  // F.4 (Roberto brief) — topic-cluster landing pages.
+  const journalClusterEntries = JOURNAL_CLUSTERS.map((c) => ({
+    url: `${BASE_URL}/journal/${c.slug}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "weekly",
+    priority: 0.8,
+  }));
+
+  // G.1 (Roberto brief) — per-island programmatic SEO landing pages.
+  // Higher priority than the regional pages since "[island] yacht
+  // charter" is the high-intent UHNW search.
+  const islandEntries = ISLANDS.map((i) => ({
+    url: `${BASE_URL}/yacht-charter-${i.slug}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "weekly",
+    priority: 0.92,
+  }));
+
   let yachtEntries = [];
   try {
     const yachts = await sanityClient.fetch(
@@ -128,5 +152,11 @@ export default async function sitemap() {
     console.error("Sitemap: failed to fetch yachts", error);
   }
 
-  return [...staticEntries, ...blogEntries, ...yachtEntries];
+  return [
+    ...staticEntries,
+    ...journalClusterEntries,
+    ...islandEntries,
+    ...blogEntries,
+    ...yachtEntries,
+  ];
 }
