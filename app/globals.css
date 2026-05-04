@@ -750,3 +750,8 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
   outline: 2px solid #fff;
   outline-offset: 4px;
 }
+
+/* F.4 — Topic-cluster card hover. */
+.f4-article-card:hover, .f4-yacht-card:hover {
+  border-color: rgba(218,165,32,0.5) !important;
+}
