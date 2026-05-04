@@ -703,3 +703,30 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
   border-color: #DAA520 !important;
   background: rgba(218,165,32,0.12) !important;
 }
+
+/* D.8 — Crew bio is hover-only on devices that support hover (desktop).
+   On touch / mobile devices, always visible (no hover affordance). */
+.crew-card .crew-bio {
+  margin-top: 8px;
+}
+@media (hover: hover) {
+  .crew-card .crew-bio {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(4px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
+  }
+  .crew-card:hover .crew-bio,
+  .crew-card:focus-within .crew-bio {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0s;
+  }
+}
+
+/* D.7 — Build-a-custom-itinerary CTA hover. */
+.d7-build-cta:hover {
+  background: rgba(218,165,32,0.12) !important;
+  border-color: #DAA520 !important;
+}

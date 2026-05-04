@@ -325,11 +325,13 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                 {yacht.crewProfiles.map((member, i) => (
                   <li
                     key={i}
+                    className="crew-card"
                     style={{
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
                       textAlign: 'center',
+                      position: 'relative',
                     }}
                   >
                     <div
@@ -389,13 +391,14 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                     </div>
                     {member.oneLineBio && (
                       <p
+                        className="crew-bio"
                         style={{
                           fontFamily: "'Lato', 'Montserrat', sans-serif",
                           fontSize: 13,
                           lineHeight: 1.55,
-                          color: 'rgba(255,255,255,0.72)',
+                          color: 'rgba(255,255,255,0.85)',
                           margin: 0,
-                          maxWidth: 200,
+                          maxWidth: 220,
                         }}
                       >
                         {member.oneLineBio}
@@ -404,6 +407,19 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   </li>
                 ))}
               </ul>
+              <p
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: 11,
+                  letterSpacing: '0.18em',
+                  color: 'rgba(255,255,255,0.55)',
+                  textAlign: 'center',
+                  margin: '40px 0 0',
+                  fontStyle: 'italic',
+                }}
+              >
+                Full crew profiles included with your personalized proposal.
+              </p>
             </div>
           </section>
         )}
@@ -454,6 +470,67 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   Total: {yacht.sampleItinerary.totalDistance}
                 </p>
               )}
+
+              {/* D.7 — Stylized route SVG. Generic per-yacht: N dots
+                  (one per day) connected by a flowing gold line. Works
+                  for any itinerary length, no per-yacht coordinates
+                  needed. Aria-hidden because the timeline below is the
+                  authoritative content. */}
+              <svg
+                viewBox={`0 0 ${Math.max(yacht.sampleItinerary.days.length * 90, 540)} 80`}
+                preserveAspectRatio="xMidYMid meet"
+                aria-hidden="true"
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  maxWidth: 720,
+                  height: 'auto',
+                  margin: '8px auto 0',
+                }}
+              >
+                {(() => {
+                  const n = yacht.sampleItinerary.days.length;
+                  const w = Math.max(n * 90, 540);
+                  const padX = 30;
+                  const innerW = w - padX * 2;
+                  const stepX = n > 1 ? innerW / (n - 1) : 0;
+                  const cy = 40;
+                  const points = Array.from({ length: n }, (_, i) => ({
+                    x: padX + i * stepX,
+                    y: cy + (i % 2 === 0 ? -10 : 10),
+                  }));
+                  const pathD = points
+                    .map((p, i) => {
+                      if (i === 0) return `M ${p.x} ${p.y}`;
+                      const prev = points[i - 1];
+                      const cx1 = prev.x + stepX / 2;
+                      const cx2 = p.x - stepX / 2;
+                      return `C ${cx1} ${prev.y} ${cx2} ${p.y} ${p.x} ${p.y}`;
+                    })
+                    .join(' ');
+                  return (
+                    <>
+                      <path d={pathD} stroke="#DAA520" strokeWidth="1.2" fill="none" opacity="0.7" />
+                      {points.map((p, i) => (
+                        <g key={i}>
+                          <circle cx={p.x} cy={p.y} r="5" fill="#0a0a0a" stroke="#DAA520" strokeWidth="1.5" />
+                          <text
+                            x={p.x}
+                            y={p.y + (i % 2 === 0 ? -14 : 22)}
+                            textAnchor="middle"
+                            fill="rgba(255,255,255,0.55)"
+                            fontFamily="'Montserrat', sans-serif"
+                            fontSize="9"
+                            letterSpacing="0.18em"
+                          >
+                            D{yacht.sampleItinerary.days[i].day || i + 1}
+                          </text>
+                        </g>
+                      ))}
+                    </>
+                  );
+                })()}
+              </svg>
 
               <ol
                 style={{
@@ -544,12 +621,35 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   fontSize: 11,
                   color: 'rgba(255,255,255,0.55)',
                   textAlign: 'center',
-                  margin: '32px 0 0',
+                  margin: '32px 0 24px',
                   fontStyle: 'italic',
                 }}
               >
                 Indicative only — every charter is shaped around your group, the wind, and the season.
               </p>
+
+              {/* D.7 brief — CTA below the timeline */}
+              <div style={{ textAlign: 'center', marginTop: 12 }}>
+                <Link
+                  href="/itinerary-builder"
+                  style={{
+                    display: 'inline-block',
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: 11,
+                    letterSpacing: '0.32em',
+                    textTransform: 'uppercase',
+                    color: '#DAA520',
+                    fontWeight: 600,
+                    padding: '14px 28px',
+                    border: '1px solid rgba(218,165,32,0.55)',
+                    textDecoration: 'none',
+                    transition: 'background 0.3s ease, border-color 0.3s ease',
+                  }}
+                  className="d7-build-cta"
+                >
+                  Build a fully custom itinerary →
+                </Link>
+              </div>
             </div>
           </section>
         )}
