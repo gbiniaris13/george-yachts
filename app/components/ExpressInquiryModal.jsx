@@ -79,17 +79,36 @@ export default function ExpressInquiryModal({
     setSubmitting(true);
     setError("");
 
-    // O.1 — wait for reCAPTCHA token before submitting. The layout
-    // loads `recaptcha/enterprise.js` lazily, so on a fast click we
-    // may not yet have `window.grecaptcha`. We poll up to 4s.
+    // O.1 (Roberto brief, May 2026) — wait for reCAPTCHA token
+    // before submitting. The layout loads `recaptcha/enterprise.js`
+    // lazily, so on a fast click we may not yet have
+    // `window.grecaptcha`. Poll up to 4s; if still missing, block
+    // submit with a friendly error rather than letting through an
+    // un-verified payload.
     let recaptchaToken = "";
     const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-    if (siteKey && typeof window !== "undefined" && window.grecaptcha?.enterprise) {
+    if (siteKey && typeof window !== "undefined") {
+      // Poll grecaptcha availability
+      const start = Date.now();
+      while (!window.grecaptcha?.enterprise?.execute && Date.now() - start < 4000) {
+        // eslint-disable-next-line no-await-in-loop
+        await new Promise((r) => setTimeout(r, 100));
+      }
+      if (!window.grecaptcha?.enterprise?.execute) {
+        setError("Please wait a moment — security check loading.");
+        setSubmitting(false);
+        return;
+      }
       try {
         recaptchaToken = await window.grecaptcha.enterprise.execute(siteKey, {
           action: "express_inquiry",
         });
       } catch {}
+      if (!recaptchaToken) {
+        setError("Please wait a moment — security check loading.");
+        setSubmitting(false);
+        return;
+      }
     }
 
     try {
