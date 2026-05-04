@@ -27,7 +27,10 @@ export const metadata = {
   },
 };
 
-// Fetch fresh data from Sanity - 1 image per yacht
+// Fetch fresh data from Sanity. C.4 (Roberto master rebuild brief)
+// pulls up to 4 image URLs per yacht so cards can cycle 2-3 photos
+// on hover without an extra fetch. fleetTier + priceModel feed the
+// PriceBlock unit-badge logic (Section 0.7).
 const FLEET_QUERY = `*[_type == "yacht" && defined(slug.current)] {
   _id,
   "slug": slug.current,
@@ -41,8 +44,11 @@ const FLEET_QUERY = `*[_type == "yacht" && defined(slug.current)] {
   builder,
   weeklyRatePrice,
   cruisingRegion,
+  fleetTier,
+  priceModel,
   "imageUrl": images[0].asset->url,
-  "imageAlt": images[0].alt
+  "imageAlt": images[0].alt,
+  "hoverImages": images[1...4].asset->url
 }`;
 
 // Schema for SEO

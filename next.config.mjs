@@ -84,29 +84,15 @@ const nextConfig = {
         permanent: true,
       },
       // Proposal F (George 2026-04-21): collapse three overlapping
-      // lead-capture tools into the single /inquiry flow so visitors
-      // stop having to pick between quiz / calculator / form. The
-      // old routes permanent-redirect so SEO juice transfers cleanly.
-      {
-        source: "/yacht-finder",
-        destination: "/inquiry",
-        permanent: true,
-      },
-      {
-        source: "/yacht-finder/:path*",
-        destination: "/inquiry",
-        permanent: true,
-      },
-      {
-        source: "/cost-calculator",
-        destination: "/inquiry",
-        permanent: true,
-      },
-      {
-        source: "/cost-calculator/:path*",
-        destination: "/inquiry",
-        permanent: true,
-      },
+      // lead-capture tools into the single /inquiry flow.
+      //
+      // E.3 + B.2 (Roberto master rebuild brief, May 2026):
+      // /cost-calculator and /yacht-finder are NO LONGER redirected.
+      // /cost-calculator now serves the real interactive calculator,
+      // and /yacht-finder serves the new Smart Match Quiz (5 quick
+      // questions). Both are real conversion-driving pages now —
+      // not blockages that funneled cold traffic into a 12-question
+      // form.
       // Destinations section retired 2026-04-21. Legacy bookmarks
       // land on the inquiry flow so nothing 404s, and the SEO weight
       // transfers to the new primary conversion page. The home

@@ -82,7 +82,14 @@ export default function PartnersClient() {
   //    business email + company. Submission also seeds the newsletter
   //    set + fires Telegram + Gmail through /api/lead-gate so George
   //    learns about every travel pro who even peeks at the page.
-  const [unlocked, setUnlocked] = useState(false);
+  // J.1 (Roberto master rebuild brief, May 2026): travel advisors
+  // were abandoning at the upfront 6-field gate before they could
+  // see the partnership value. Brief instructs: open the landing,
+  // move the form to the bottom. Default unlocked = true; the
+  // locked-view branch below is dead code now (kept for reference
+  // in case Boss reverses the decision — flip the default back to
+  // `useState(false)` to re-gate).
+  const [unlocked, setUnlocked] = useState(true);
   const [gate, setGate] = useState({
     firstName: "",
     lastName: "",

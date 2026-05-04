@@ -161,17 +161,35 @@
   height: 20px;
 }
 
-/* ---- STICKY FILTER BAR — Glass-morphism ---- */
+/* ---- STICKY FILTER BAR — Glass-morphism ----
+   C.5 (Roberto master rebuild brief): pinned to the top of the
+   viewport once the user scrolls past the page hero. `top` reads
+   the global --gy-top-offset CSS variable so when the Forbes
+   feature bar is also visible, the filter bar stacks below it
+   instead of getting hidden underneath. Once the user dismisses
+   the Forbes bar, the offset returns to 0 automatically. */
 .fleet-filters {
   position: sticky;
-  top: 0;
+  top: var(--gy-top-offset, 0px);
   z-index: 40;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(218, 165, 32, 0.15);
+  border-bottom: 1px solid rgba(218, 165, 32, 0.18);
   padding: 0 24px;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+}
+/* When the bar is in its sticky-collapsed state (added via JS
+   IntersectionObserver — see FleetGrid useEffect below), tighten
+   vertical padding so it takes up less viewport real estate. */
+.fleet-filters--compact {
+  box-shadow: 0 8px 24px -16px rgba(0, 0, 0, 0.6);
+}
+.fleet-filters--compact .fleet-filters__tabs {
+  padding-top: 8px !important;
+}
+.fleet-filters--compact .fleet-filters__row {
+  padding-bottom: 8px !important;
 }
 
 .fleet-filters__tabs {
@@ -393,6 +411,42 @@
 
 .fleet-card__img--loaded {
   opacity: 1;
+}
+
+/* C.4 (Roberto master rebuild brief) — hover preview 3-photo cycle.
+   Three additional photos sit absolute-positioned over the hero,
+   opacity 0 by default. On card hover (or focus-within for keyboard
+   nav), each fades 0→1→0 in a 4.8s loop offset by 1.2s — so cards
+   show 4 photos rotating in sequence. Pure CSS, GPU-accelerated. */
+.fleet-card__img-hover {
+  position: absolute !important;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+.fleet-card:hover .fleet-card__img-hover,
+.fleet-card:focus-within .fleet-card__img-hover {
+  animation: gy-card-cycle 4.8s ease-in-out infinite;
+}
+.fleet-card:hover .gy-card-cycle--0,
+.fleet-card:focus-within .gy-card-cycle--0 { animation-delay: 1.2s; }
+.fleet-card:hover .gy-card-cycle--1,
+.fleet-card:focus-within .gy-card-cycle--1 { animation-delay: 2.4s; }
+.fleet-card:hover .gy-card-cycle--2,
+.fleet-card:focus-within .gy-card-cycle--2 { animation-delay: 3.6s; }
+@keyframes gy-card-cycle {
+  0%   { opacity: 0; }
+  10%  { opacity: 1; }
+  25%  { opacity: 1; }
+  35%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fleet-card__img-hover { animation: none !important; opacity: 0 !important; }
 }
 
 .fleet-card:hover .fleet-card__img {

@@ -28,6 +28,7 @@ import VisitorIntelligence from "./components/VisitorIntelligence";
 import EnhancedAnalytics from "./components/EnhancedAnalytics";
 import MicrosoftClarity from "./components/MicrosoftClarity";
 import ForbesTopBar from "./components/ForbesTopBar";
+import FavoritesEmailPrompt from "./components/FavoritesEmailPrompt";
 import { cookies } from "next/headers";
 // Swiper CSS moved to individual Swiper components to avoid loading on non-Swiper pages
 
@@ -234,6 +235,10 @@ export default async function RootLayout({ children }) {
         <StickyFleetCTA />
         {/* D2 — Exit-intent capture, one shot per session */}
         <ExitIntentModal />
+        {/* K.1 (Roberto master rebuild) — favorites auto-prompt at
+            count = 2 (and again at 3 if dismissed). Mounted inside
+            WishlistProvider so it can read the live count. */}
+        <FavoritesEmailPrompt />
         <VisitorBeacon />
         </WishlistProvider>
         </I18nProvider>

@@ -59,15 +59,14 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
     return () => clearTimeout(timer);
   }, []);
 
-  // CTA hierarchy — Roberto 2026-05-02 (per analytics deep dive):
-  // GA4 shows 1.5% of homepage visitors reach a fleet page and 0%
-  // reach a yacht detail page. The previous primary CTA pointed at
-  // /yacht-finder (a 60-second QUIZ) — high friction for cold
-  // outreach traffic that has 27s avg session and just wants to
-  // SEE yachts. We flip:
-  //   • Primary  → /charter-yacht-greece  (full fleet grid, no friction)
-  //   • Secondary → /yacht-finder         (quiz, demoted)
-  // Plus a badge above the CTAs anchors the promise in concrete
+  // CTA hierarchy — B.1 (Roberto master rebuild brief, May 2026).
+  // Earlier today (2026-05-02) we had quiz=ghost, fleet=gold because
+  // the old /yacht-finder was a 12-question slog that bled the cold-
+  // outreach traffic. With B.2 now shipped (5 quick questions, 90
+  // seconds to result screen), we flip back:
+  //   • Primary  → /yacht-finder ("Match me to 3 yachts in 90s")
+  //   • Secondary ghost → /charter-yacht-greece ("or explore all N")
+  // The fleet badge above the CTAs anchors the offer in concrete
   // numbers: "X yachts · €Y–€Z/week · Crewed". Specificity raises
   // CTR vs generic taglines.
   const fmtK = (n) => (n >= 1000 ? `€${Math.round(n / 1000)}K` : `€${n}`);
@@ -96,12 +95,16 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
     {
       id: 1,
       imageUrl: "/videos/yacht-cruising-new.mp4",
-      // Slot 1 → ghost button (subtle): demoted quiz route
-      primaryHref: "/yacht-finder",
-      primaryText: t('common.findYourYacht'),
-      // Slot 2 → gold button (primary visual weight): direct fleet grid
-      secondaryHref: "/charter-yacht-greece",
-      secondaryText: t('common.exploreFleet'),
+      // Slot 1 → ghost button (subtle): browse-fleet path for visitors
+      // who already know what they want
+      primaryHref: "/charter-yacht-greece",
+      primaryText: yachtCount && yachtCount > 0
+        ? `or explore all ${yachtCount} yachts`
+        : "or explore all yachts",
+      // Slot 2 → gold button (primary visual weight): the new 90-second
+      // Smart Match Quiz (B.2). Promises a concrete time-bound result.
+      secondaryHref: "/yacht-finder",
+      secondaryText: "Match me to 3 yachts in 90s",
     },
   ];
 

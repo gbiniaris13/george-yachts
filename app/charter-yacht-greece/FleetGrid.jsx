@@ -8,6 +8,11 @@ import dynamic from 'next/dynamic';
 // actually ticks the compare checkbox on two yachts. Lazy-loaded to
 // keep the /charter-yacht-greece first-load bundle ~12 KB smaller.
 const CompareYachts = dynamic(() => import('./CompareYachts'), { ssr: false });
+// C.8 (Roberto master rebuild brief, May 2026) — Express inquiry
+// modal lifted to the FleetGrid level so a single modal serves
+// every card. Lazy-loaded so the listing page first-paint stays
+// light; loads on first card click.
+const ExpressInquiryModal = dynamic(() => import('../components/ExpressInquiryModal'), { ssr: false });
 import { useWishlist } from '../components/WishlistProvider';
 import { useI18n } from '@/lib/i18n/I18nProvider';
 
@@ -199,7 +204,7 @@ function useScrollReveal() {
   return gridRef;
 }
 
-function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t }) {
+function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t, onInquireClick }) {
   const [imgLoaded, setImgLoaded] = useState(false);
   const { toggle: toggleWishlist, has: hasWishlist } = useWishlist();
   const slug = yacht.slug;
@@ -254,15 +259,36 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
             <div className="fleet-card__skeleton" />
           )}
           {imageUrl ? (
-            <Image
-              src={`${imageUrl}?w=600&h=400&fit=crop&auto=format`}
-              alt={yacht.imageAlt || `${name} — charter yacht in Greece`}
-              width={600}
-              height={400}
-              loading={index < 6 ? 'eager' : 'lazy'}
-              className={`fleet-card__img ${imgLoaded ? 'fleet-card__img--loaded' : ''}`}
-              onLoad={() => setImgLoaded(true)}
-            />
+            <>
+              <Image
+                src={`${imageUrl}?w=600&h=400&fit=crop&auto=format`}
+                alt={yacht.imageAlt || `${name} — charter yacht in Greece`}
+                width={600}
+                height={400}
+                loading={index < 6 ? 'eager' : 'lazy'}
+                className={`fleet-card__img ${imgLoaded ? 'fleet-card__img--loaded' : ''}`}
+                onLoad={() => setImgLoaded(true)}
+              />
+              {/* C.4 (Roberto master rebuild) — hover preview cycle.
+                  Up to 3 additional photos overlay the hero on hover,
+                  fading 0→1→0 at 1.2s offsets via the gy-card-cycle
+                  CSS animation. Pure CSS — no JS state, no extra
+                  network on cards that aren't hovered. Mobile: tap
+                  highlight triggers same animation via :focus-within. */}
+              {Array.isArray(yacht.hoverImages) &&
+                yacht.hoverImages.filter(Boolean).slice(0, 3).map((u, k) => (
+                  <Image
+                    key={u}
+                    src={`${u}?w=600&h=400&fit=crop&auto=format`}
+                    alt=""
+                    aria-hidden="true"
+                    width={600}
+                    height={400}
+                    loading="lazy"
+                    className={`fleet-card__img-hover gy-card-cycle gy-card-cycle--${k}`}
+                  />
+                ))}
+            </>
           ) : (
             <div className="fleet-card__placeholder">
               <span>No Image</span>
@@ -351,15 +377,43 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
             <Link href={`/yachts/${slug}`} className="fleet-card__btn fleet-card__btn--details">
               <span>{t('fleet.details', 'Details')}</span>
             </Link>
-            <a
-              href={`https://wa.me/17867988798?text=${encodeURIComponent(`Hi, I'm interested in chartering ${name} — could you share availability and rates?`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
+            {/* C.8 (Roberto master rebuild brief): "Inquire" now opens
+                the express inquiry modal (3 fields + channel picker)
+                instead of jumping straight to WhatsApp. WhatsApp stays
+                available — it's the channel selector inside the modal,
+                or the secondary link below. */}
+            <button
+              type="button"
+              onClick={() => onInquireClick?.({ slug, name, weeklyRatePrice: price })}
               className="fleet-card__btn fleet-card__btn--inquire"
+              data-cursor="Inquire"
+              style={{ cursor: 'pointer' }}
             >
               <span>{t('fleet.inquire', 'Inquire')}</span>
-            </a>
+            </button>
           </div>
+          {/* Secondary direct WhatsApp link for visitors who only want
+              the messaging-app channel (skips the modal entirely). */}
+          <a
+            href={`https://wa.me/17867988798?text=${encodeURIComponent(`Hi, I'm interested in chartering ${name} — could you share availability and rates?`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cursor="WhatsApp"
+            style={{
+              display: 'block',
+              textAlign: 'center',
+              marginTop: 6,
+              fontSize: 9,
+              letterSpacing: '0.3em',
+              textTransform: 'uppercase',
+              color: 'rgba(255,255,255,0.45)',
+              textDecoration: 'none',
+              fontFamily: "'Montserrat', sans-serif",
+              fontWeight: 500,
+            }}
+          >
+            or message George directly →
+          </a>
           {/* Compare toggle */}
           <button
             onClick={(e) => { e.stopPropagation(); onToggleCompare(); }}
@@ -397,6 +451,10 @@ export default function FleetGrid({ yachts }) {
   const [priceRange, setPriceRange] = useState('all');
   const [sortBy, setSortBy] = useState('recommended');
   const [compareList, setCompareList] = useState([]);
+  // C.8 — One inquiry modal at the FleetGrid level. Cards push their
+  // yacht context up via `onInquireClick`; the modal reads the value
+  // and pre-fills the form. Closing clears the value.
+  const [inquiryYacht, setInquiryYacht] = useState(null);
   const gridRef = useScrollReveal();
   useHeroParallax();
 
@@ -536,10 +594,143 @@ export default function FleetGrid({ yachts }) {
     setSortBy('recommended');
   }, []);
 
+  // C.5 — collapse the filter bar into compact mode once the
+  // visitor scrolls past the hero. IntersectionObserver on a tiny
+  // sentinel element above the bar; when it leaves the viewport,
+  // the bar is sticky → add the .fleet-filters--compact class.
+  const sentinelRef = useRef(null);
+  const filterBarRef = useRef(null);
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    const bar = filterBarRef.current;
+    if (!sentinel || !bar) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          bar.classList.remove('fleet-filters--compact');
+        } else {
+          bar.classList.add('fleet-filters--compact');
+        }
+      },
+      { threshold: 0 }
+    );
+    obs.observe(sentinel);
+    return () => obs.disconnect();
+  }, []);
+
+  // C.7 — Saved view chips. One-click presets that snap the
+  // filters to common UHNW shopping intents. Each preset writes
+  // a stable URL query so visitors can bookmark/share.
+  const PRESETS = [
+    {
+      id: 'family-cat',
+      label: 'Family-friendly catamaran · 8–10 guests',
+      apply: () => {
+        setActiveCategory('sailing-catamarans');
+        setGuestFilter('10');
+        setLengthRange('all');
+        setCabinFilter('all');
+        setPriceRange('all');
+      },
+    },
+    {
+      id: 'couple',
+      label: "Couple's escape · ≤6 guests · sailing yacht",
+      apply: () => {
+        setActiveCategory('sailing-monohulls');
+        setGuestFilter('6');
+        setLengthRange('all');
+        setCabinFilter('all');
+        setPriceRange('all');
+      },
+    },
+    {
+      id: 'group-of-10',
+      label: 'Group of 10 · ≤€25K/week',
+      apply: () => {
+        setActiveCategory('all');
+        setGuestFilter('10');
+        setPriceRange('under-25');
+        setLengthRange('all');
+        setCabinFilter('all');
+      },
+    },
+    {
+      id: 'superyacht',
+      label: 'Superyacht · 12 guests · 35m+',
+      apply: () => {
+        setActiveCategory('motor-yachts');
+        setGuestFilter('12');
+        setLengthRange('large');
+        setCabinFilter('all');
+        setPriceRange('all');
+      },
+    },
+  ];
+
   return (
     <>
+      {/* C.5 — sentinel for sticky-collapse trigger */}
+      <div ref={sentinelRef} aria-hidden="true" style={{ height: 1 }} />
+
+      {/* C.7 — Saved view preset chips. One-click filters for the
+          shopping intents UHNW visitors actually have. */}
+      <div
+        style={{
+          display: 'flex',
+          gap: 10,
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          padding: '24px 24px 8px',
+          background: 'rgba(0,0,0,0.85)',
+        }}
+      >
+        {PRESETS.map((preset) => (
+          <button
+            key={preset.id}
+            type="button"
+            onClick={() => {
+              preset.apply();
+              try {
+                window.gtag?.('event', 'fleet_preset_applied', {
+                  preset: preset.id,
+                });
+              } catch {}
+            }}
+            data-cursor="Filter"
+            style={{
+              padding: '8px 16px',
+              background: 'transparent',
+              color: 'rgba(248,245,240,0.85)',
+              border: '1px solid rgba(218,165,32,0.45)',
+              borderRadius: '999px',
+              fontFamily: "'Montserrat', sans-serif",
+              fontSize: 10,
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              fontWeight: 500,
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              whiteSpace: 'nowrap',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(218,165,32,0.15)';
+              e.currentTarget.style.color = '#DAA520';
+              e.currentTarget.style.borderColor = '#DAA520';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.color = 'rgba(248,245,240,0.85)';
+              e.currentTarget.style.borderColor = 'rgba(218,165,32,0.45)';
+            }}
+          >
+            {preset.label}
+          </button>
+        ))}
+      </div>
+
       {/* FILTER BAR — Glass-morphism */}
-      <div className="fleet-filters">
+      <div ref={filterBarRef} className="fleet-filters">
         {/* Category tabs */}
         <div className="fleet-filters__tabs">
           {categories.map((cat) => (
@@ -643,6 +834,7 @@ export default function FleetGrid({ yachts }) {
             onToggleCompare={() => toggleCompare(yacht)}
             compareCount={compareList.length}
             t={t}
+            onInquireClick={setInquiryYacht}
           />
         ))}
       </div>
@@ -652,6 +844,16 @@ export default function FleetGrid({ yachts }) {
         compareList={compareList}
         onRemove={(slug) => setCompareList((prev) => prev.filter((y) => y.slug !== slug))}
         onClear={() => setCompareList([])}
+      />
+
+      {/* C.8 — Express inquiry modal (one instance, pre-filled with the
+          yacht context the user clicked on). */}
+      <ExpressInquiryModal
+        open={!!inquiryYacht}
+        onClose={() => setInquiryYacht(null)}
+        yachtSlug={inquiryYacht?.slug}
+        yachtName={inquiryYacht?.name}
+        source="fleet_card_express"
       />
 
       {/* EMPTY STATE — Elegant */}

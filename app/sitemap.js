@@ -30,9 +30,14 @@ const staticRoutes = [
   { path: "/yacht-charter/saronic", priority: 0.9, changeFrequency: "weekly" },
   { path: "/yacht-charter/sporades", priority: 0.9, changeFrequency: "weekly" },
 
-  // Interactive tools (note: /yacht-finder + /cost-calculator are
-  // 301-redirected to /inquiry in next.config.mjs — do NOT list them
-  // here or Google flags the sitemap for permanent-redirect entries.)
+  // Interactive tools.
+  // E.3 (Roberto master rebuild brief, May 2026): /cost-calculator
+  // is back as a real interactive page (no longer a redirect to
+  // /inquiry). Listed here at high priority — UHNW Google searches
+  // for "yacht charter cost Greece" land directly. /yacht-finder
+  // still 301-redirects to /inquiry until the Smart Match Quiz
+  // ships at /yacht-finder.
+  { path: "/cost-calculator", priority: 0.9, changeFrequency: "weekly" },
   { path: "/itinerary-builder", priority: 0.85, changeFrequency: "monthly" },
   { path: "/island-quiz", priority: 0.8, changeFrequency: "monthly" },
   { path: "/yacht-size-visualizer", priority: 0.8, changeFrequency: "monthly" },
