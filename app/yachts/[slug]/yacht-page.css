@@ -210,61 +210,84 @@
   background: var(--gy-navy);
 }
 
+/* Phase 25 (luxury rebuild, 2026-05-05) — Insider Tip section. This
+   is George's PERSONAL voice on the yacht — the moment a Forbes-tier
+   visitor reads "what George actually thinks". Reframed from a
+   utility callout box to an editorial pull-quote treatment: gold
+   rules top + bottom, no border-left bracket, italic Cormorant body
+   at scale, signature in Cinzel small caps. Reads like Robb Report
+   "Editor's Note" instead of "tooltip card". */
 .yacht-insider__card {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-left: 4px solid var(--gy-gold);
-  padding: 40px;
-  border-radius: 0 8px 8px 0;
-  transition: all 0.5s ease;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: none;
+  border-top: 1px solid rgba(218, 165, 32, 0.42);
+  border-bottom: 1px solid rgba(218, 165, 32, 0.42);
+  padding: clamp(40px, 6vw, 80px) clamp(32px, 5vw, 64px);
+  border-radius: 0;
+  transition: background 0.5s ease;
+  text-align: center;
 }
 
 .yacht-insider__card:hover {
-  background: rgba(0, 0, 0, 0.5);
-  border-color: rgba(218, 165, 32, 0.3);
-  border-left-color: var(--gy-gold);
-  transform: translateY(-2px);
+  background: rgba(0, 0, 0, 0.55);
 }
 
 .yacht-insider__header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 28px;
 }
 
 .yacht-insider__icon {
-  font-size: 2rem;
+  display: none; /* removed — replaced by gold-rule ornament below title */
 }
 
 .yacht-insider__title {
-  font-family: var(--font-marcellus), 'Marcellus', serif;
-  font-size: 1.5rem;
-  font-weight: 400;
+  font-family: var(--font-cinzel), 'Cinzel', 'Trajan Pro', serif;
+  font-size: clamp(10px, 1.2vw, 12px);
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--gy-gold);
+  letter-spacing: 0.42em;
+  color: #C9A84C;
   margin: 0;
+  position: relative;
+}
+.yacht-insider__title::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 1px;
+  background: rgba(201, 168, 76, 0.5);
+  margin: 14px auto 0;
 }
 
 .yacht-insider__quote {
-  font-size: 1.125rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(20px, 2.4vw, 28px);
   font-style: italic;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.85);
-  margin: 0 0 24px 0;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #F8F5F0;
+  margin: 0 auto 28px;
   padding: 0;
   border: none;
+  max-width: 64ch;
+  letter-spacing: 0.005em;
 }
 
 .yacht-insider__signature {
-  font-size: 0.875rem;
+  font-family: var(--font-cinzel), 'Cinzel', 'Trajan Pro', serif;
+  font-size: 11px;
   font-weight: 500;
-  color: var(--gy-gold);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #C9A84C;
   margin: 0;
-  text-align: right;
+  text-align: center;
   letter-spacing: 0.1em;
 }
 

@@ -1361,17 +1361,24 @@ a.gy-fancy-link:hover {
   margin-inline: 18px;
 }
 .gy-divider-star span {
-  width: 6px;
-  height: 6px;
-  background: #C9A84C;
-  border-radius: 50%;
-  box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.2),
-              0 0 0 8px rgba(201, 168, 76, 0.08);
+  /* Phase 25 (luxury rebuild, 2026-05-05) — Roman/classical detail.
+     Replaced the dot ornament with a delta-triangle (▲), the
+     Greek/Roman classical inscription mark used on temple
+     architraves. Same gold breath animation; reads as more
+     dignified than a generic dot. */
+  width: 0;
+  height: 0;
+  background: transparent;
+  border-radius: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 8px solid #C9A84C;
+  filter: drop-shadow(0 0 4px rgba(201, 168, 76, 0.42));
   animation: gyStarBreath 3.6s ease-in-out infinite;
 }
 @keyframes gyStarBreath {
-  0%, 100% { box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.20), 0 0 0 8px rgba(201, 168, 76, 0.08); }
-  50%      { box-shadow: 0 0 0 6px rgba(201, 168, 76, 0.10), 0 0 0 14px rgba(201, 168, 76, 0.0); }
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(201, 168, 76, 0.42)); opacity: 1; }
+  50%      { filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.65)); opacity: 0.85; }
 }
 
 /* Reduced motion — gold standard accessibility. */
