@@ -269,49 +269,82 @@
 }
 
 /* ---- Specifications ---- */
+/* Phase 9 (luxury rebuild) — yacht specs reframed as a magazine
+   stat-block. Big gold serif numbers, small uppercase Montserrat
+   labels above each. Each item gets a subtle gold-rule underline
+   that lights up on hover. */
 .yacht-specs {
-  padding: 80px 0;
+  padding: clamp(72px, 10vw, 140px) 0;
   background: var(--gy-black);
 }
 
 .yacht-specs__title {
-  font-family: var(--font-marcellus), 'Marcellus', serif;
-  font-size: 2rem;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  text-transform: none;
   color: var(--gy-white);
   text-align: center;
-  margin: 0 0 48px 0;
+  margin: 0 0 56px 0;
+  line-height: 1.1;
 }
 
 .yacht-specs__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: clamp(20px, 3vw, 36px);
 }
 
 .yacht-specs__item {
   text-align: center;
-  padding: 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 28px 20px;
+  border: 0;
+  position: relative;
+}
+
+.yacht-specs__item::after {
+  content: "";
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(218, 165, 32, 0.4), transparent);
+  transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              right 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.5s ease;
+}
+
+.yacht-specs__item:hover::after {
+  left: 8%;
+  right: 8%;
+  background: linear-gradient(90deg, transparent, rgba(218, 165, 32, 0.85), transparent);
 }
 
 .yacht-specs__label {
   display: block;
-  font-size: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9px;
   font-weight: 600;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.42em;
   text-transform: uppercase;
   color: var(--gy-gold);
-  margin-bottom: 8px;
+  margin-bottom: 14px;
 }
 
 .yacht-specs__value {
   display: block;
-  font-family: var(--font-marcellus), 'Marcellus', serif;
-  font-size: 1.5rem;
-  color: var(--gy-white);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  background: linear-gradient(135deg, #F8F5F0 0%, #E6C77A 60%, #C9A24D 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
   font-variant-numeric: tabular-nums;
 }
 

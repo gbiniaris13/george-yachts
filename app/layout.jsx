@@ -8,6 +8,7 @@ import WhatsAppButton from "./components/WhatsAppButton";
 import ContactDrawer from "./components/ContactDrawer";
 import VisitorGreeting from "./components/VisitorGreeting";
 import AmbientPlayer from "./components/AmbientPlayer";
+import BrokerStatus from "./components/BrokerStatus";
 import StickyFleetCTA from "./components/StickyFleetCTA";
 import AskGeorgeWidget from "./components/AskGeorgeWidget";
 import GoldCurtain from "./components/GoldCurtain";
@@ -260,6 +261,11 @@ export default async function RootLayout({ children }) {
             Synthesised via Web Audio API, no MP3 / licensing. Mute by
             default; tiny gold pill top-right, opt-in via click. */}
         <AmbientPlayer />
+        {/* Phase 9 (luxury rebuild, 2026-05-05) — boutique presence
+            indicator. "On the desk in Athens" / "Dockside — replies
+            within the hour" / "Off the desk — replies within 12 hours"
+            based on real Athens local time. Never lies — no fake feeds. */}
+        <BrokerStatus />
         {/* H.1 — Ask George AI Concierge (sitewide). Sits ABOVE the
             WhatsApp button at bottom-right. Widget is fully client-side;
             graceful fallback when AI_API_KEY env vars aren't configured. */}
