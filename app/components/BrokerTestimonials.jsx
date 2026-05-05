@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const testimonials = [
   {
@@ -18,6 +19,7 @@ const testimonials = [
 ];
 
 const BrokerTestimonials = () => {
+  const { t } = useI18n();
   const sectionRef = useRef(null);
 
   return (
@@ -44,13 +46,13 @@ const BrokerTestimonials = () => {
             wordSpacing: "0.15em",
           }}
         >
-          What the industry says
+          {t("testimonials.eyebrow", "What the industry says")}
         </p>
       </div>
 
       {/* Testimonials */}
       <div className="max-w-4xl mx-auto px-6 md:px-12">
-        {testimonials.map((t, i) => (
+        {testimonials.map((quote, i) => (
           <div key={i}>
             {/* Quote */}
             <blockquote className="text-center mb-6">
@@ -66,7 +68,7 @@ const BrokerTestimonials = () => {
                   margin: "0 auto",
                 }}
               >
-                &ldquo;{t.quote}&rdquo;
+                &ldquo;{t(`testimonials.q${i + 1}.quote`, quote.quote)}&rdquo;
               </p>
             </blockquote>
 
@@ -82,7 +84,7 @@ const BrokerTestimonials = () => {
                 color: "#C9A84C",
               }}
             >
-              — {t.role} · {t.locations}
+              — {t(`testimonials.q${i + 1}.role`, quote.role)} · {t(`testimonials.q${i + 1}.locations`, quote.locations)}
             </p>
 
             {/* Gold Divider between quotes */}

@@ -504,5 +504,36 @@
     "designWeek": "Let's Design Your Perfect Week",
     "designDesc": "These routes are starting points. Every charter is personally tailored by George — your preferences, your pace, your islands. Tell us your dream and we'll design your perfect week in Greek waters.",
     "startPlanning": "Start Planning"
+  },
+  "forbesQuote": {
+    "date": "May 2026",
+    "quote": "“That’s the geopolitical shift playing out in real time on my desk.”",
+    "attribution": "— George P. Biniaris, Managing Broker",
+    "context": "in conversation with Forbes · 1 May 2026",
+    "cta": "Read the full article →"
+  },
+  "trending": {
+    "eyebrow": "Curated by George",
+    "title": "This Week’s Selection",
+    "viewAll": "View All →"
+  },
+  "journal": {
+    "eyebrow": "The Journal",
+    "title": "Maritime Intelligence",
+    "subtitle": "Curated stories from Greek waters",
+    "cta": "View the full Journal →"
+  },
+  "testimonials": {
+    "eyebrow": "What the industry says",
+    "q1": {
+      "quote": "The collaboration was smooth and highly professional. George was incredibly responsive and efficient in all communications. His professionalism and knowledge of the charter process made the experience both seamless and enjoyable.",
+      "role": "Superyacht Charter Broker",
+      "locations": "Dubai, Monaco & London"
+    },
+    "q2": {
+      "quote": "Extremely helpful and very professional through all our communication. I look forward to working with him again in the future.",
+      "role": "Senior Charter Broker",
+      "locations": "London"
+    }
   }
 }

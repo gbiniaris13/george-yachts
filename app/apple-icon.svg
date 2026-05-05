@@ -1,19 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
-  <rect width="180" height="180" fill="#000000"/>
   <defs>
-    <linearGradient id="ag" x1="0%" y1="0%" x2="100%" y2="0%">
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#F7DA6F"/>
-      <stop offset="45%" stop-color="#DAA520"/>
+      <stop offset="40%" stop-color="#E6C77A"/>
+      <stop offset="70%" stop-color="#C9A24D"/>
       <stop offset="100%" stop-color="#A67C2E"/>
     </linearGradient>
-    <linearGradient id="as" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#C8C8C8"/>
-      <stop offset="50%" stop-color="#A8A8A8"/>
-      <stop offset="100%" stop-color="#888888"/>
+    <linearGradient id="goldSubtle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E6C77A" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#A67C2E" stop-opacity="0.25"/>
     </linearGradient>
   </defs>
-  <path d="M20 100 C28 96, 50 72, 72 60 C88 54, 106 50, 118 56 C128 62, 134 70, 146 76" stroke="url(#ag)" stroke-width="8" stroke-linecap="round" fill="none"/>
-  <path d="M35 112 C46 104, 66 82, 88 72 C104 66, 122 62, 140 70" stroke="url(#ag)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.65"/>
-  <path d="M78 110 C92 104, 112 92, 132 86 C144 82, 156 84, 162 90 C158 100, 148 108, 136 112 C120 116, 94 116, 78 110Z" fill="url(#as)" opacity="0.8"/>
-  <path d="M95 106 C110 100, 128 92, 148 88 C156 86, 160 88, 162 90 C158 96, 148 102, 136 106 C120 108, 100 108, 95 106Z" fill="#D8D8D8" opacity="0.25"/>
+
+  <rect width="180" height="180" rx="32" fill="#050505"/>
+  <rect x="9" y="9" width="162" height="162" rx="26" fill="none"
+        stroke="url(#goldSubtle)" stroke-width="2.4"/>
+
+  <path
+    d="M 90 34
+       C 60 34, 38 55, 38 90
+       C 38 125, 60 146, 90 146
+       C 107 146, 121 140, 132 132
+       L 132 92
+       L 92 92
+       L 92 106
+       L 115 106
+       L 115 124
+       C 109 128, 100 131, 92 131
+       C 70 131, 58 115, 58 90
+       C 58 65, 70 49, 92 49
+       C 106 49, 117 55, 126 65
+       L 132 53
+       C 121 41, 107 34, 90 34 Z"
+    fill="url(#gold)"/>
+
+  <line x1="78" y1="158" x2="102" y2="158" stroke="url(#gold)"
+        stroke-width="2.2" stroke-linecap="round" opacity="0.6"/>
 </svg>

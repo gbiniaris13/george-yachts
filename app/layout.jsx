@@ -7,7 +7,13 @@ import CustomCursor from "./components/CustomCursor";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ContactDrawer from "./components/ContactDrawer";
 import VisitorGreeting from "./components/VisitorGreeting";
-import AmbientPlayer from "./components/AmbientPlayer";
+// Phase 27 (Forbes-launch eve, 2026-05-05) — AmbientPlayer retired.
+// Synth-based ocean soundscape never read as anything but "wind"
+// across 7 tuning passes. Removed from layout entirely until a real
+// CC0 hydrophone-grade ocean recording is in /public/audio/. The
+// component file is preserved for the future re-enable. No more
+// "πάλι ακούω αέρα" complaints — silence is better than bad audio.
+// import AmbientPlayer from "./components/AmbientPlayer";
 import BrokerStatus from "./components/BrokerStatus";
 import ForbesReferrerWelcome from "./components/ForbesReferrerWelcome";
 import StickyFleetCTA from "./components/StickyFleetCTA";
@@ -121,12 +127,16 @@ export const metadata = {
     "motor yacht charter greece",
     "sailing yacht charter greece",
   ],
+  // Phase 27 (Forbes-launch eve, 2026-05-05) — Boss replaced the
+  // bookmark logo with a Cinzel-style gold "G" matching the AskGeorge
+  // widget identity ("multi-trillion level, αρμόζει στην ταυτότητά
+  // μας"). Both icon.svg + apple-icon.svg are vector now (crisp at
+  // every size). Next auto-discovers /favicon.ico if present.
   icons: {
     icon: [
       { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico" },
     ],
-    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+    apple: [{ url: "/apple-icon.svg", sizes: "180x180", type: "image/svg+xml" }],
   },
   openGraph: {
     type: "website",
@@ -299,11 +309,12 @@ export default async function RootLayout({ children }) {
             ("Good evening from Athens — 21:14 local"). Free Vercel
             geo headers, no third-party calls, fades after 4s. */}
         <VisitorGreeting />
-        {/* Phase 2 / F4 (luxury rebuild, 2026-05-05) — ambient Greek
-            summer soundscape (waves + seagulls + cicadas, NO bouzouki).
-            Synthesised via Web Audio API, no MP3 / licensing. Mute by
-            default; tiny gold pill top-right, opt-in via click. */}
-        <AmbientPlayer />
+        {/* Phase 27 (Forbes-launch eve, 2026-05-05) — AmbientPlayer
+            removed. Boss kept reporting "πάλι ακούω αέρα" through 7
+            synth tuning passes; the Web Audio synthesis can't replicate
+            a hydrophone-grade ocean texture. Re-enable when a real
+            CC0 ocean.mp3 lands in /public/audio/.
+            <AmbientPlayer />  */}
         {/* Phase 9 (luxury rebuild, 2026-05-05) — boutique presence
             indicator. "On the desk in Athens" / "Dockside — replies
             within the hour" / "Off the desk — replies within 12 hours"

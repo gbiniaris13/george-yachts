@@ -25,6 +25,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { priceUnitBadge, isPerPerson, sortAllFleet } from "@/lib/pricing";
 import { sanityCardImg } from "@/lib/sanity-image";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const GOLD = "#DAA520";
 
@@ -41,6 +42,7 @@ function formatPrice(weeklyRatePrice) {
 }
 
 export default function TrendingYachts({ yachts }) {
+  const { t } = useI18n();
   const scrollerRef = useRef(null);
 
   // Carousel shows the first 6. The home page passes up to 8 so
@@ -92,7 +94,7 @@ export default function TrendingYachts({ yachts }) {
               margin: "0 0 8px 0",
             }}
           >
-            Curated by George
+            {t("trending.eyebrow", "Curated by George")}
           </p>
           {/* B.3 (Roberto brief): "Trending Now" reads consumer-app to
               UHNW. Replaced with the editorial "This Week's Selection"
@@ -107,7 +109,7 @@ export default function TrendingYachts({ yachts }) {
               lineHeight: 1.05,
             }}
           >
-            This Week&rsquo;s Selection
+            {t("trending.title", "This Week’s Selection")}
           </h2>
         </div>
         <Link
@@ -124,7 +126,7 @@ export default function TrendingYachts({ yachts }) {
             borderBottom: `1px solid ${GOLD}`,
           }}
         >
-          View All →
+          {t("trending.viewAll", "View All →")}
         </Link>
       </div>
 

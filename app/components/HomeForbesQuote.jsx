@@ -14,12 +14,23 @@
 // strip, same size as the Cormorant body italic. The full-page
 // George Yachts header logo is larger, so the brand stays first.
 
+"use client";
+
+// Phase 27 (Forbes-launch eve, 2026-05-05) — Boss flagged that not
+// all sections translate. Converted from server component to client
+// component so it can use the i18n t() function. SSR still hits via
+// the default English fallback (the t() function returns the second
+// arg if no translation exists), so SEO/AI crawlers still see the
+// English quote in the initial HTML response.
+
 import Link from "next/link";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const ARTICLE_URL =
   "https://www.forbes.com/sites/jacquesledbetter/2026/05/01/how-the-wealthy-are-hedging-for-instability/";
 
 export default function HomeForbesQuote() {
+  const { t } = useI18n();
   return (
     <section
       aria-label="George Yachts featured in Forbes, May 2026"
@@ -85,7 +96,7 @@ export default function HomeForbesQuote() {
               fontWeight: 600,
             }}
           >
-            May 2026
+            {t("forbesQuote.date", "May 2026")}
           </span>
         </div>
 
@@ -121,8 +132,10 @@ export default function HomeForbesQuote() {
               letterSpacing: "0.005em",
             }}
           >
-            &ldquo;That&rsquo;s the geopolitical shift playing out in real time
-            on my desk.&rdquo;
+            {t(
+              "forbesQuote.quote",
+              "“That’s the geopolitical shift playing out in real time on my desk.”"
+            )}
           </p>
         </blockquote>
 
@@ -137,7 +150,7 @@ export default function HomeForbesQuote() {
               letterSpacing: "0.04em",
             }}
           >
-            — George P. Biniaris, Managing Broker
+            {t("forbesQuote.attribution", "— George P. Biniaris, Managing Broker")}
           </span>
           <span
             style={{
@@ -148,7 +161,7 @@ export default function HomeForbesQuote() {
               letterSpacing: "0.04em",
             }}
           >
-            in conversation with Forbes &middot; 1 May 2026
+            {t("forbesQuote.context", "in conversation with Forbes · 1 May 2026")}
           </span>
         </div>
 
@@ -178,7 +191,7 @@ export default function HomeForbesQuote() {
           }}
           className="gy-forbes-quote-cta"
         >
-          Read the full article →
+          {t("forbesQuote.cta", "Read the full article →")}
         </span>
       </Link>
 

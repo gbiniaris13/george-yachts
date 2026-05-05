@@ -1,19 +1,20 @@
+"use client";
+
+// Phase 27 (Forbes-launch eve, 2026-05-05) — converted to client so
+// it can use the i18n t() function. SSR fallback returns the English
+// strings (the t() helper returns the second arg if locale lacks the
+// key), so SEO/AI crawlers still see the editorial copy.
+//
 // B.6 (Roberto brief, May 2026) — Homepage blog teaser.
-//
-// 19 published articles ranking and pulling traffic, but the
-// homepage didn't surface them. Returning visitors had no signal
-// that we publish. This block sits between Filotimo and the
-// contact form, surfacing the 3 most recent posts.
-//
-// Server component — receives `posts` from the home page's
-// server-side Sanity fetch.
 
 import Link from "next/link";
 import { sanityCardImg } from "@/lib/sanity-image";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const GOLD = "#DAA520";
 
 export default function HomeJournalTeaser({ posts = [] }) {
+  const { t } = useI18n();
   const list = Array.isArray(posts)
     ? posts.filter((p) => p && p.slug).slice(0, 3)
     : [];
@@ -46,7 +47,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
               margin: "0 0 12px",
             }}
           >
-            The Journal
+            {t("journal.eyebrow", "The Journal")}
           </p>
           <h2
             style={{
@@ -58,7 +59,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
               lineHeight: 1.1,
             }}
           >
-            Maritime Intelligence
+            {t("journal.title", "Maritime Intelligence")}
           </h2>
           <p
             style={{
@@ -69,7 +70,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
               margin: 0,
             }}
           >
-            Curated stories from Greek waters
+            {t("journal.subtitle", "Curated stories from Greek waters")}
           </p>
         </div>
 
@@ -194,7 +195,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
               paddingBottom: 2,
             }}
           >
-            View the full Journal →
+            {t("journal.cta", "View the full Journal →")}
           </Link>
         </p>
       </div>
