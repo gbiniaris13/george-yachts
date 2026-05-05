@@ -314,12 +314,14 @@ export default function MapboxFlyover() {
           Click any island for the yachts that work that itinerary best —
           or message George directly to brief a custom route.
         </p>
-        <Link
-          href="/inquiry"
-          className="gy-link-editorial"
-        >
-          Brief George →
-        </Link>
+        <div style={{ display: "flex", gap: 28, flexWrap: "wrap" }}>
+          <Link href="/greece-by-yacht" className="gy-link-editorial">
+            Read the ten stops →
+          </Link>
+          <Link href="/inquiry" className="gy-link-editorial" style={{ color: "rgba(248,245,240,0.55)" }}>
+            Brief George →
+          </Link>
+        </div>
       </div>
 
       <style jsx global>{`

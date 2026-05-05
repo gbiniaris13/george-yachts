@@ -50,6 +50,10 @@ const staticRoutes = [
   // Content
   { path: "/blog", priority: 0.9, changeFrequency: "daily" },
   { path: "/yacht-itineraries-greece", priority: 0.8, changeFrequency: "monthly" },
+  // Phase 3 / E1 (luxury rebuild, 2026-05-05) — cinematic 10-stop
+  // editorial page. High priority — UHNW buyer-shortlist reading
+  // surface that doubles as the strongest brand touchpoint.
+  { path: "/greece-by-yacht", priority: 0.92, changeFrequency: "weekly" },
 
   // Destinations pages removed 2026-04-21 — only the home-page
   // GreekWatersMap kept as a visual anchor. Paths redirect in
