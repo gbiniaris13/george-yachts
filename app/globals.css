@@ -1111,38 +1111,11 @@ footer h4 {
   .gy-fab-desktop-only { display: none !important; }
 }
 
-/* Phase 27b/c (Forbes-launch eve, 2026-05-05) — PRESENCE STRIP near
-   logo on desktop. Boss flagged the strip wasn't activating on his
-   split-screen Chrome (~950px) and that the icons were overlapping
-   the logo. Two fixes:
-     1. Lowered breakpoint 1024 → 900 so split-screen desktops + most
-        13" laptops trigger the rule.
-     2. Added max-width:46% on each pill so they can't bleed into
-        the centered logo column even at the new lower breakpoint.
-   Mobile (<900px) keeps the pills at their bottom-left fallback
-   (where they're also already hidden via their own component CSS
-   media queries at <=700px). */
-@media (min-width: 900px) {
-  .gy-broker-status {
-    bottom: auto !important;
-    left: 50% !important;
-    top: calc(168px + 10px) !important;       /* nav-rest height + gap */
-    transform: translateX(calc(-50% - 130px)) !important; /* ~130px LEFT of center */
-    max-width: 46% !important;
-  }
-  .gy-ambient-pill {
-    bottom: auto !important;
-    left: 50% !important;
-    top: calc(168px + 10px) !important;
-    transform: translateX(calc(-50% + 130px)) !important; /* ~130px RIGHT of center */
-    max-width: 46% !important;
-  }
-  /* When the page is scrolled the nav collapses to 92px — track that. */
-  body.gy-nav-scrolled .gy-broker-status,
-  body.gy-nav-scrolled .gy-ambient-pill {
-    top: calc(92px + 10px) !important;
-  }
-}
+/* Phase 27d (Forbes-launch eve, 2026-05-05) — presence strip retired.
+   BrokerStatus removed entirely; AmbientPlayer relocated to a 32×32
+   icon in the top-right band (positioned via its own component CSS).
+   The previous .gy-broker-status / .gy-ambient-pill desktop overrides
+   are obsolete and have been removed. */
 
 /* Phase 27 — kill Safari iOS auto-hyphenation everywhere in our nav
    strips. iOS aggressively hyphenates UPPERCASE letter-spaced text in

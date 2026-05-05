@@ -8,7 +8,13 @@ import WhatsAppButton from "./components/WhatsAppButton";
 import ContactDrawer from "./components/ContactDrawer";
 import VisitorGreeting from "./components/VisitorGreeting";
 import AmbientPlayer from "./components/AmbientPlayer";
-import BrokerStatus from "./components/BrokerStatus";
+// Phase 27d (Forbes-launch eve, 2026-05-05) — BrokerStatus pill
+// (the green "Dockside — replies within the hour" indicator) removed
+// from the layout per Boss explicit instruction: "το πράσινο που
+// λέει τώρα dockside διέγραψέ το τελείως, βγάλ' το". The component
+// file is preserved on disk in case the presence concept comes back
+// in a different form, but it no longer mounts.
+// import BrokerStatus from "./components/BrokerStatus";
 import ForbesReferrerWelcome from "./components/ForbesReferrerWelcome";
 import StickyFleetCTA from "./components/StickyFleetCTA";
 import AskGeorgeWidget from "./components/AskGeorgeWidget";
@@ -334,11 +340,9 @@ export default async function RootLayout({ children }) {
             load, plays only after the explicit gesture. Sound
             quality fix tracked separately. */}
         <AmbientPlayer />
-        {/* Phase 9 (luxury rebuild, 2026-05-05) — boutique presence
-            indicator. "On the desk in Athens" / "Dockside — replies
-            within the hour" / "Off the desk — replies within 12 hours"
-            based on real Athens local time. Never lies — no fake feeds. */}
-        <BrokerStatus />
+        {/* Phase 27d (2026-05-05) — BrokerStatus retired per Boss
+            instruction. The pill was breaking the hero composition.
+            <BrokerStatus />  */}
         {/* Phase 21 — Forbes referrer welcome card. Detects ?ref=forbes
             or referrer containing forbes.com, slides in once per session,
             offers a direct path to Brief George. */}

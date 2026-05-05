@@ -108,6 +108,14 @@ export default function AmbientPlayer() {
 
   if (suppressed) return null;
 
+  // Phase 27d (Forbes-launch eve, 2026-05-05) — Boss directive:
+  // "κρύψε τελείως το εικονίδιο ή κάνε το μικρό κάπου πάνω δεξιά
+  // εκεί που έχουμε τις σημαίες, εκεί που τα νομίσματα". Sound
+  // functionality stays — only the visible affordance shrinks. The
+  // pill becomes a 32×32 icon-only square that lives in the same
+  // top-right band as the currency / language / social icons. Three
+  // tiny equaliser bars indicate state (gold pulsing when playing,
+  // dim ivory when off). No text label.
   return (
     <button
       type="button"
@@ -120,39 +128,45 @@ export default function AmbientPlayer() {
       className="gy-ambient-pill"
       style={{
         position: "fixed",
-        bottom: 24,
-        left: 24,
-        zIndex: 70,
-        height: 30,
-        padding: "0 14px",
-        background: hovered ? "rgba(218,165,32,0.18)" : "rgba(0,0,0,0.6)",
-        backdropFilter: "blur(8px)",
-        WebkitBackdropFilter: "blur(8px)",
-        border: `1px solid ${playing || hovered ? "rgba(218,165,32,0.55)" : "rgba(218,165,32,0.22)"}`,
-        color: playing || hovered ? "#DAA520" : "rgba(218,165,32,0.7)",
-        fontFamily: "'Montserrat', sans-serif",
-        fontSize: 9,
-        fontWeight: 600,
-        letterSpacing: "0.18em",
-        textTransform: "uppercase",
+        // Sit in the top-right band aligned with the nav-header icon
+        // row. --gy-top-offset accounts for the Forbes ribbon (36/32px).
+        top: "calc(var(--gy-top-offset, 0px) + 38px)",
+        right: 18,
+        zIndex: 60,
+        width: 32,
+        height: 32,
+        padding: 0,
+        background: "transparent",
+        border: `1px solid ${
+          playing
+            ? "rgba(218,165,32,0.55)"
+            : hovered
+            ? "rgba(218,165,32,0.4)"
+            : "rgba(255,255,255,0.06)"
+        }`,
+        color: playing
+          ? "#DAA520"
+          : hovered
+          ? "rgba(218,165,32,0.85)"
+          : "rgba(218,165,32,0.45)",
         cursor: "pointer",
         display: "inline-flex",
         alignItems: "center",
-        gap: 8,
+        justifyContent: "center",
         transition: "all 0.32s cubic-bezier(0.2, 0.8, 0.2, 1)",
       }}
     >
-      <span aria-hidden="true" style={{ display: "inline-flex", gap: 2 }}>
+      <span aria-hidden="true" style={{ display: "inline-flex", gap: 2, alignItems: "flex-end" }}>
         {[0, 1, 2].map((i) => (
           <span
             key={i}
             style={{
               display: "inline-block",
               width: 2,
-              height: 10,
+              height: 11,
               background: "currentColor",
               borderRadius: 1,
-              opacity: playing ? 0.85 : 0.35,
+              opacity: playing ? 0.9 : 0.45,
               transformOrigin: "bottom",
               animation: playing ? `gy-eq-bar ${0.7 + i * 0.18}s ease-in-out infinite` : "none",
               animationDelay: playing ? `${i * 0.12}s` : undefined,
@@ -160,7 +174,6 @@ export default function AmbientPlayer() {
           />
         ))}
       </span>
-      <span>{playing ? "Greek Summer" : "Ambient Sound"}</span>
       <style jsx global>{`
         @keyframes gy-eq-bar {
           0%, 100% { transform: scaleY(0.35); }
@@ -169,19 +182,9 @@ export default function AmbientPlayer() {
         @media (prefers-reduced-motion: reduce) {
           [aria-pressed="true"] [aria-hidden="true"] span { animation: none !important; }
         }
-        @media (max-width: 700px) {
-          button[aria-label*="ambient sound"] > span:last-of-type {
-            display: none !important;
-          }
-        }
-        /* Phase 27 (mobile audit) — the StickyFleetCTA full-width bar
-           sits at bottom:0 on every non-fleet route and covers anything
-           in the bottom-left below 76px. Cleaner to hide the ambient
-           pill entirely on mobile (it's optional decoration; the FAB
-           stack on the right is what visitors actually use). */
-        @media (max-width: 700px) {
-          button[aria-label*="ambient sound"] { display: none !important; }
-        }
+        /* Phase 27d — keep the icon visible on mobile too (since it's
+           tiny now). It sits in the top-right corner, same band as
+           the nav search icon, so it doesn't interfere with content. */
       `}</style>
     </button>
   );
