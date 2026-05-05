@@ -60,31 +60,22 @@ export default function AmbientPlayer() {
     return ok;
   };
 
-  // Auto-start on first user gesture.
-  useEffect(() => {
-    if (suppressed) return;
-    if (typeof window === "undefined") return;
-    try { localStorage.removeItem(LEGACY_KEY); } catch {}
-    let muted = false;
-    try { muted = sessionStorage.getItem(SESSION_MUTE_KEY) === "1"; } catch {}
-    if (muted) return;
-
-    let started = false;
-    const events = ["pointerdown", "pointermove", "mousemove", "keydown",
-                    "scroll", "touchstart", "wheel", "click"];
-    const start = (e) => {
-      if (started) return;
-      started = true;
-      console.log("[GY-AUDIO] gesture", { type: e?.type });
-      const ok = buildAndPlay();
-      if (ok) setPlaying(true);
-      events.forEach((evt) => window.removeEventListener(evt, start));
-    };
-    events.forEach((evt) =>
-      window.addEventListener(evt, start, { passive: true })
-    );
-    return () => events.forEach((evt) => window.removeEventListener(evt, start));
-  }, [suppressed]);
+  // Phase 17d (luxury rebuild, 2026-05-05) — autoplay path retired.
+  //
+  // Two compounding realities forced this:
+  //   1. Browser autoplay policy: Chrome/Safari/Firefox require an
+  //      ACTIVE click / tap / keydown gesture before audio can play.
+  //      Mousemove + scroll + wheel do NOT satisfy the autoplay gate.
+  //      No site on the planet autoplays audio on first visit.
+  //   2. The Web-Audio-synthesised soundscape (regardless of how many
+  //      passes I tuned it) doesn't read as real ocean — Boss's
+  //      tester literally said "από το διάστημα" (sounds like outer
+  //      space). Synthesis can't fake hydrophone-grade ocean.
+  //
+  // Plan when assets land: drop a real CC0 ocean recording into
+  // /public/audio/, switch to HTML5 <audio src loop>, trigger play()
+  // from the pill onClick. For now the pill stays as the explicit
+  // opt-in. No pre-emptive listeners.
 
   // Cleanup on unmount.
   useEffect(() => {
