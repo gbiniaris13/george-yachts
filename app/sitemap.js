@@ -97,11 +97,31 @@ const staticRoutes = [
 ];
 
 export default async function sitemap() {
+  // R (Roberto brief, May 2026) — locale alternates per entry.
+  // Mirrors the alternates: { languages: { ... } } in app/layout.jsx
+  // so search engines see consistent hreflang signals from both the
+  // <head> and the sitemap.
+  const SUPPORTED_LANG_QUERIES = {
+    en: "",
+    el: "?lang=el",
+    ru: "?lang=ru",
+    ar: "?lang=ar",
+    he: "?lang=he",
+  };
+  function altLangsFor(path) {
+    const out = { "x-default": `${BASE_URL}${path}` };
+    for (const [code, suffix] of Object.entries(SUPPORTED_LANG_QUERIES)) {
+      out[code] = `${BASE_URL}${path}${suffix}`;
+    }
+    return out;
+  }
+
   const staticEntries = staticRoutes.map((route) => ({
     url: `${BASE_URL}${route.path}`,
     lastModified: new Date().toISOString(),
     changeFrequency: route.changeFrequency,
     priority: route.priority,
+    alternates: { languages: altLangsFor(route.path) },
   }));
 
   let blogEntries = [];

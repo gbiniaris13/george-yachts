@@ -130,6 +130,19 @@ export const metadata = {
   },
   alternates: {
     canonical: "https://georgeyachts.com",
+    // R (Roberto brief, May 2026) — hreflang signals for the 5
+    // languages the I18nProvider can render. Translations swap
+    // client-side via the gy-locale cookie / ?lang= query param;
+    // the URLs below give Google a stable, deterministic per-locale
+    // entry point that works without server-side i18n routing.
+    languages: {
+      "x-default": "https://georgeyachts.com",
+      en: "https://georgeyachts.com",
+      el: "https://georgeyachts.com/?lang=el",
+      ru: "https://georgeyachts.com/?lang=ru",
+      ar: "https://georgeyachts.com/?lang=ar",
+      he: "https://georgeyachts.com/?lang=he",
+    },
     types: {
       "application/rss+xml": "https://georgeyachts.com/feed.xml",
     },
