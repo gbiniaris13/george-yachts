@@ -138,22 +138,29 @@
 }
 
 .yacht-hero__title {
-  font-family: var(--font-marcellus), 'Marcellus', serif;
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  margin: 0 0 16px 0;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  /* Phase 7 (luxury rebuild) — switched from Marcellus uppercase to
+     Cormorant Garamond title-case at Vogue scale. UHNW visitors arrive
+     here from cold outreach + curated shortlists; the yacht name is
+     the protagonist of the page, not a label. Negative letter-spacing
+     plus bigger type makes it read like a Robb Report cover. */
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(56px, 10vw, 140px);
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  text-transform: none;
+  line-height: 0.92;
+  margin: 0 0 18px 0;
+  text-shadow: 0 6px 32px rgba(0, 0, 0, 0.55);
 }
 
 .yacht-hero__subtitle {
-  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
-  font-weight: 300;
+  font-size: clamp(11px, 1.5vw, 13px);
+  font-weight: 600;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--gy-gold);
   margin: 0;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* ---- Container ---- */
@@ -519,27 +526,31 @@
   text-align: center;
 }
 
-/* Buttons */
+/* Buttons — Phase 7 (luxury rebuild) gold-gradient pill matches the
+   gy-shimmer-cta utility used elsewhere on the site. */
 .btn-primary {
   display: inline-block;
-  background: white;
-  color: black;
-  font-weight: bold;
+  background: linear-gradient(135deg, #E6C77A 0%, #C9A84C 100%);
+  color: #0a0a0a;
+  font-weight: 700;
   font-size: 0.75rem;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
-  padding: 16px 48px;
-  transition: all 0.5s ease;
+  padding: 18px 48px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
   text-decoration: none;
-  border: none;
+  border: 1px solid #DAA520;
   cursor: pointer;
+  box-shadow: 0 6px 20px rgba(218, 165, 32, 0.18);
 }
 
 .btn-primary:hover {
-  background: var(--gy-gold);
-  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(218, 165, 32, 0.32),
+              0 0 0 1px rgba(218, 165, 32, 0.6) inset;
 }
 
 .btn-secondary {

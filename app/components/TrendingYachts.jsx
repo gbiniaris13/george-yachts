@@ -259,6 +259,30 @@ export default function TrendingYachts({ yachts }) {
         .gy-trending-scroller::-webkit-scrollbar {
           display: none;
         }
+        /* Phase 7 (luxury rebuild) — TrendingYachts cards inherit the F5
+           3D tilt + gold border lift on hover, so the homepage carousel
+           reads as cinematic instead of catalog. Skipped on touch +
+           reduced-motion. */
+        .gy-trending-card {
+          transform-style: preserve-3d;
+          perspective: 1200px;
+          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                      box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                      border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+          will-change: transform;
+        }
+        @media (hover: hover) and (min-width: 700px) {
+          .gy-trending-card:hover {
+            transform: perspective(1200px) rotateX(2deg) rotateY(-3deg) translateY(-6px);
+            box-shadow:
+              0 28px 60px rgba(0, 0, 0, 0.55),
+              0 0 0 1px rgba(218, 165, 32, 0.32) inset;
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .gy-trending-card,
+          .gy-trending-card:hover { transform: none !important; }
+        }
       `}</style>
     </section>
   );
