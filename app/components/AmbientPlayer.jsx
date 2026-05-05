@@ -85,6 +85,31 @@ export default function AmbientPlayer() {
       const start = () => {
         if (started) return;
         started = true;
+        // Boss bug fix (sixth pass, 2026-05-05): the icon was flipping
+        // to "playing" but no audio came out. Root cause was React 18
+        // state batching — setPlaying(true) deferred the AudioContext
+        // creation to React's commit phase, which fired AFTER this
+        // gesture handler had returned. Browsers then created the
+        // AudioContext outside the user-activation window and kept it
+        // suspended.
+        //
+        // Fix: create the AudioContext SYNCHRONOUSLY inside this very
+        // gesture handler, store it in the ref, AND call resume() now
+        // while the user-activation flag is still hot. The audio-graph
+        // useEffect then detects the existing ref and reuses it instead
+        // of creating a fresh suspended context.
+        try {
+          if (!ctxRef.current) {
+            const Ctx = window.AudioContext || window.webkitAudioContext;
+            if (Ctx) {
+              const ctx = new Ctx();
+              ctxRef.current = ctx;
+              if (ctx.state === "suspended") {
+                ctx.resume().catch(() => {});
+              }
+            }
+          }
+        } catch {}
         setPlaying(true);
         try { localStorage.setItem(STORAGE_KEY, "on"); } catch {}
         eventNames.forEach((evt) => window.removeEventListener(evt, start));
@@ -138,23 +163,21 @@ export default function AmbientPlayer() {
       return;
     }
 
-    // Build the graph.
+    // Build the graph. Reuse the AudioContext that the gesture handler
+    // pre-created (sixth-pass fix) when available — that one is inside
+    // the user-activation window and not suspended. Only create a new
+    // context if none exists yet (e.g. user toggled via the button
+    // without the auto-start listener firing first, or after teardown).
     const Ctx = window.AudioContext || window.webkitAudioContext;
     if (!Ctx) {
       setPlaying(false);
       return;
     }
-    const ctx = new Ctx();
-    ctxRef.current = ctx;
-    // Boss feedback (fifth pass): icon flipped to play but no sound.
-    // Root cause hypothesis — AudioContext stays suspended in some
-    // browser engines until resume() resolves; meanwhile we scheduled
-    // the master gain ramp against ctx.currentTime which was frozen at
-    // 0. By the time the context resumed, the ramp had already passed.
-    //
-    // Fix: resume() AND, regardless of whether resume succeeds, set
-    // the master gain to TARGET_VOLUME immediately (no ramp). Cheap
-    // immediacy beats a clever fade if the fade is silent.
+    let ctx = ctxRef.current;
+    if (!ctx || ctx.state === "closed") {
+      ctx = new Ctx();
+      ctxRef.current = ctx;
+    }
     if (ctx.state === "suspended") {
       ctx.resume().catch(() => {});
     }
