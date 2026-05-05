@@ -28,7 +28,15 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
-const STORAGE_KEY = "gy_ambient_pref";
+// Boss directive 2026-05-05 (seventh pass): EVERY visit must default
+// to ON. The prior localStorage check was persisting "off" forever once
+// the button was clicked once, which silently nuked autoplay on every
+// subsequent return. New rule: localStorage stores nothing for autoplay
+// — autoplay always tries on first gesture. sessionStorage stores the
+// in-session mute so the pill click silences for the current tab only.
+// Reload/return → autoplay tries again.
+const SESSION_MUTE_KEY = "gy_ambient_session_muted";
+const LEGACY_KEY = "gy_ambient_pref"; // cleaned on every mount
 const SUPPRESSED_PREFIXES = [
   "/admin",
   "/partner-portal",
@@ -73,8 +81,12 @@ export default function AmbientPlayer() {
     if (suppressed) return;
     if (typeof window === "undefined") return;
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved === "off") return;
+      // Wipe any legacy localStorage flag — it was the source of the
+      // "stuck off" bug. From now on we only honour the session-scoped
+      // mute, which clears on tab close / reload.
+      try { localStorage.removeItem(LEGACY_KEY); } catch {}
+      const sessionMuted = sessionStorage.getItem(SESSION_MUTE_KEY) === "1";
+      if (sessionMuted) return;
 
       let started = false;
       const eventNames = [
@@ -111,7 +123,7 @@ export default function AmbientPlayer() {
           }
         } catch {}
         setPlaying(true);
-        try { localStorage.setItem(STORAGE_KEY, "on"); } catch {}
+        // No localStorage write — autoplay defaults to on every visit.
         eventNames.forEach((evt) => window.removeEventListener(evt, start));
         document.removeEventListener("visibilitychange", visTrigger);
       };
@@ -526,12 +538,16 @@ export default function AmbientPlayer() {
     return teardown;
   }, [playing, suppressed]);
 
-  // Toggle handler
+  // Toggle handler — session-only mute so reload always starts on.
   const onToggle = () => {
     setPlaying((v) => {
       const next = !v;
       try {
-        localStorage.setItem(STORAGE_KEY, next ? "on" : "off");
+        if (next) {
+          sessionStorage.removeItem(SESSION_MUTE_KEY);
+        } else {
+          sessionStorage.setItem(SESSION_MUTE_KEY, "1");
+        }
       } catch {}
       try {
         if (typeof window !== "undefined" && typeof window.gtag === "function") {
