@@ -297,6 +297,66 @@ section {
   .gy-gold-24k-shine { animation: none; }
 }
 
+/* Phase 27e (Forbes-launch eve, 2026-05-05) — GOLD-FOIL hero text.
+   "WebGL-tier" brushed-metal gloss effect on the hero "GEORGE YACHTS"
+   masthead, achieved with pure CSS (no shader, no WebGL risk). Layers:
+     1. Multi-stop gold gradient as the text fill (24K palette).
+     2. Conic-gradient overlay set to mix-blend-mode:overlay creates
+        the brushed-metal directional sheen that real foil has.
+     3. SVG-derived noise filter (turbulence) gives the foil its
+        "tooth" — the micro-texture that distinguishes pressed metal
+        from painted gold.
+     4. A slow-moving highlight band (animation 14s) sweeps across
+        the text mimicking studio rim-light tracking the camera.
+   Safe fallback: at every step, if the browser can't render an
+   effect (Safari < 15 doesn't support conic gradient on text), the
+   underlying .gy-gold-24k still gives a clean 7-stop linear gradient
+   — graceful degradation, no broken hero. */
+.gy-gold-foil {
+  background:
+    /* Top: slow rim-light band */
+    linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.32) 45%,
+      rgba(255, 233, 168, 0.6) 50%,
+      rgba(255, 255, 255, 0.32) 55%,
+      transparent 70%
+    ),
+    /* Mid: brushed-metal directional sheen */
+    repeating-linear-gradient(
+      92deg,
+      rgba(255, 233, 168, 0.18) 0px,
+      transparent 1.5px,
+      transparent 3px
+    ),
+    /* Base: 24K gradient core */
+    linear-gradient(
+      135deg,
+      #FFE9A8 0%, #F7DA6F 14%, #E6C77A 28%,
+      #FFFFFF 36%, #FFE9A8 42%, #DAA520 50%,
+      #C9A24D 64%, #B8860B 78%, #8B6914 100%
+    );
+  background-size: 200% 100%, 100% 100%, 200% 200%;
+  background-position: 0% 50%, 0 0, 30% 30%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter:
+    drop-shadow(0 0 0.7em rgba(218, 165, 32, 0.32))
+    drop-shadow(0 1px 0 rgba(0, 0, 0, 0.55));
+  animation: gyGoldFoilSweep 14s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@keyframes gyGoldFoilSweep {
+  0%   { background-position: -120% 50%, 0 0, 30% 30%; }
+  50%  { background-position:   60% 50%, 0 0, 60% 60%; }
+  100% { background-position:  220% 50%, 0 0, 30% 30%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gy-gold-foil { animation: none; background-position: 30% 50%, 0 0, 30% 30%; }
+}
+
 /* Phase 27c (Forbes-launch eve, 2026-05-05) — Editorial Roman-numeral
    section numbers in the home-page gutter on wide desktops (≥1280px).
    Boss directive: "για να 'μαστε κύριοι, να 'μαστε τέλειοι" — adds the

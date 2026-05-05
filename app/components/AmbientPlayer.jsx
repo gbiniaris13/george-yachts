@@ -22,6 +22,74 @@ const SESSION_MUTE_KEY = "gy_ambient_session_muted";
 const LEGACY_KEY = "gy_ambient_pref";
 const SUPPRESSED_PREFIXES = ["/admin", "/partner-portal", "/privacy/delete", "/api/"];
 
+// Phase 27e (Forbes-launch eve, 2026-05-05) — MP3 fallback chain.
+// Boss complained 7+ times that the synth ambient sounds like wind
+// not ocean. Solution that doesn't require ripping out the synth: at
+// click time, FIRST try to play a real CC0 ocean recording from
+// /public/audio/ocean.mp3 (HTML5 <audio>, looped). If the file doesn't
+// exist or fails to decode, fall back to the existing Web Audio synth.
+// George just drops a CC0 ocean.mp3 into /public/audio/ and the site
+// auto-upgrades on next deploy. Three free CC0 sources documented in
+// /public/audio/README.md.
+const OCEAN_MP3 = "/audio/ocean.mp3";
+const TRY_MP3_TIMEOUT_MS = 1500;
+
+async function tryMp3(audioRef, masterGainRef) {
+  try {
+    if (!audioRef.current) {
+      audioRef.current = new Audio(OCEAN_MP3);
+      audioRef.current.loop = true;
+      audioRef.current.preload = "auto";
+      audioRef.current.crossOrigin = "anonymous";
+    }
+    const a = audioRef.current;
+    a.volume = 0;
+    // Wait for the file to be decodable. If 404 / decode error, throw.
+    await new Promise((resolve, reject) => {
+      const t = setTimeout(() => reject(new Error("mp3 timeout")), TRY_MP3_TIMEOUT_MS);
+      const onCanPlay = () => { clearTimeout(t); a.removeEventListener("canplay", onCanPlay); resolve(); };
+      const onError = (e) => { clearTimeout(t); a.removeEventListener("error", onError); reject(e); };
+      a.addEventListener("canplay", onCanPlay, { once: true });
+      a.addEventListener("error", onError, { once: true });
+      // load() is required to actually fetch the file
+      try { a.load(); } catch {}
+    });
+    await a.play();
+    // Fade gain in
+    const target = TARGET_VOLUME * 0.7;
+    const fadeMs = FADE_MS;
+    const startTs = performance.now();
+    const fade = () => {
+      const t = Math.min(1, (performance.now() - startTs) / fadeMs);
+      a.volume = target * t;
+      if (t < 1) requestAnimationFrame(fade);
+    };
+    fade();
+    masterGainRef.current = { source: "mp3", node: a };
+    return true;
+  } catch {
+    // Any failure (404, network, decode) → caller falls back to synth
+    return false;
+  }
+}
+
+function teardownMp3(audioRef) {
+  const a = audioRef.current;
+  if (!a) return;
+  try {
+    // Fade out then pause
+    const startVol = a.volume;
+    const startTs = performance.now();
+    const fade = () => {
+      const t = Math.min(1, (performance.now() - startTs) / FADE_MS);
+      a.volume = startVol * (1 - t);
+      if (t < 1) requestAnimationFrame(fade);
+      else { try { a.pause(); a.currentTime = 0; } catch {} }
+    };
+    fade();
+  } catch {}
+}
+
 export default function AmbientPlayer() {
   const pathname = usePathname() || "/";
   const suppressed = SUPPRESSED_PREFIXES.some((p) => pathname.startsWith(p));
@@ -32,9 +100,13 @@ export default function AmbientPlayer() {
   const ctxRef = useRef(null);
   const masterGainRef = useRef(null);
   const cleanupRef = useRef([]);
+  // Phase 27e — separate ref for the HTML5 <audio> element fallback.
+  const audioRef = useRef(null);
 
   // Tear down the graph (called on mute click + on unmount).
   const teardown = () => {
+    // Pause MP3 first if it was playing
+    teardownMp3(audioRef);
     cleanupRef.current.forEach((fn) => { try { fn(); } catch {} });
     cleanupRef.current = [];
     if (ctxRef.current) {
@@ -44,9 +116,12 @@ export default function AmbientPlayer() {
     }
   };
 
-  // Build helper — invoked from gesture and from button click.
-  const buildAndPlay = () => {
+  // Build helper — try MP3 first, fall back to synth.
+  // Returns boolean. Async because MP3 attempt awaits canplay.
+  const buildAndPlay = async () => {
     if (suppressed) return false;
+    const mp3ok = await tryMp3(audioRef, masterGainRef);
+    if (mp3ok) return true;
     const ok = buildAmbientGraph({ ctxRef, masterGainRef, cleanupRef });
     return ok;
   };
@@ -75,10 +150,17 @@ export default function AmbientPlayer() {
   }, []);
 
   // Toggle handler — manual button click.
-  const onToggle = () => {
+  const onToggle = async () => {
     if (playing) {
       // Mute: fade out, teardown, mark session-muted.
-      if (masterGainRef.current && ctxRef.current) {
+      // Phase 27e — masterGainRef may be a synth gain node OR a wrapper
+      // { source: 'mp3', node: HTMLAudioElement } when MP3 is active.
+      // teardown() handles both via teardownMp3 + ctx close.
+      if (
+        masterGainRef.current &&
+        masterGainRef.current.gain && // synth gain node has .gain
+        ctxRef.current
+      ) {
         const now = ctxRef.current.currentTime;
         try {
           masterGainRef.current.gain.cancelScheduledValues(now);
@@ -92,8 +174,9 @@ export default function AmbientPlayer() {
       try { sessionStorage.setItem(SESSION_MUTE_KEY, "1"); } catch {}
       setPlaying(false);
     } else {
-      // Unmute: build graph (this click counts as a user gesture).
-      const ok = buildAndPlay();
+      // Unmute: try MP3 first, fall back to synth (this click counts
+      // as the user gesture for both paths).
+      const ok = await buildAndPlay();
       if (ok) {
         try { sessionStorage.removeItem(SESSION_MUTE_KEY); } catch {}
         setPlaying(true);

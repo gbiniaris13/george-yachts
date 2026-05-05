@@ -611,3 +611,53 @@ This stops a future content edit from re-introducing "Founder" or
 
 **Last update:** May 2026, by Roberto for the master rebuild.
 **Source of truth:** `/Users/.../Downloads/ROBERTO_BRIEF_georgeyachts_MASTER_REBUILD.md`
+
+---
+
+## 6. Phase 27e (2026-05-05) — `review` document type for Google SERP stars
+
+The site is wired to inject Schema.org `AggregateRating` into the
+Service schema **automatically** when 3+ real reviews exist. Until
+that schema is created in Sanity Studio + populated, the rating
+block is omitted (faking ratings is a Google penalty trigger).
+
+Schema to add in Sanity Studio (`/Users/.../Desktop/gy-sanity-studio/`):
+
+```ts
+// schemaTypes/review.ts
+export default {
+  name: 'review',
+  title: 'Review',
+  type: 'document',
+  fields: [
+    { name: 'author',          title: 'Author',         type: 'string',
+      description: 'Display name e.g. "M.K., London". Initials only if anonymity needed.', validation: r => r.required() },
+    { name: 'rating',          title: 'Rating (1-5)',   type: 'number',
+      validation: r => r.required().min(1).max(5).integer() },
+    { name: 'body',            title: 'Review body',    type: 'text', rows: 4 },
+    { name: 'datePublished',   title: 'Date published', type: 'date',
+      validation: r => r.required() },
+    { name: 'publishedOnSite', title: 'Publish on site', type: 'boolean',
+      description: 'Gate so drafts never ship.', initialValue: false },
+    { name: 'yachtRef',        title: 'Yacht (optional)', type: 'reference', to: [{ type: 'yacht' }] },
+  ],
+  preview: {
+    select: { title: 'author', rating: 'rating', body: 'body' },
+    prepare: ({ title, rating, body }) => ({
+      title: `${title} — ${rating} stars`,
+      subtitle: body?.slice(0, 80),
+    }),
+  },
+};
+```
+
+The moment 3+ documents are created with `publishedOnSite: true` and
+a numeric `rating`, the homepage Service schema gains an
+`AggregateRating` block and Google starts rendering 5-star stars on
+the `georgeyachts.com` SERP (typically within 24-72h of the next
+crawl). No code deploy required — the layout fetches at request time.
+
+Code surface:
+- Helper: `/lib/reviewsAggregate.js` (fetches + threshold-gates)
+- Wiring: `/lib/serviceSchema.js` `getServiceSchemaWithReviews()`
+- Mount: `/app/layout.jsx` -> `<JsonLd data={liveServiceSchema} />`

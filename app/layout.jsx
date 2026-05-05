@@ -39,7 +39,7 @@ import { WishlistProvider } from "./components/WishlistProvider";
 import CurrencyProvider from "./components/CurrencyProvider";
 import JsonLd from "./components/JsonLd";
 import { organizationSchema } from "@/lib/organizationSchema";
-import { serviceSchema, websiteSchema } from "@/lib/serviceSchema";
+import { serviceSchema, websiteSchema, getServiceSchemaWithReviews } from "@/lib/serviceSchema";
 import VisitorIntelligence from "./components/VisitorIntelligence";
 import EnhancedAnalytics from "./components/EnhancedAnalytics";
 import MicrosoftClarity from "./components/MicrosoftClarity";
@@ -220,6 +220,18 @@ export default async function RootLayout({ children }) {
   const forbesDismissed =
     (await cookies()).get("gy_forbes_bar_dismissed")?.value === "true";
 
+  // Phase 27e (Forbes-launch eve, 2026-05-05) — fetch the Service
+  // schema WITH AggregateRating if real reviews exist in Sanity.
+  // Returns the same static schema when there are <3 reviews (which
+  // is the case today). Wraps in try/catch so a Sanity outage never
+  // breaks the layout render.
+  let liveServiceSchema = serviceSchema;
+  try {
+    liveServiceSchema = await getServiceSchemaWithReviews();
+  } catch {
+    // fall through to static schema
+  }
+
   return (
     <html lang="en">
       <head>
@@ -291,8 +303,10 @@ export default async function RootLayout({ children }) {
         <JsonLd data={organizationSchema} />
         {/* Phase 27 — Service + WebSite schema for #1 ranking on
             "yacht charter Greece" + AI-search citations + Google
-            sitelinks search box. */}
-        <JsonLd data={serviceSchema} />
+            sitelinks search box. Service schema is the live variant
+            with AggregateRating attached when 3+ real reviews exist
+            in Sanity (Phase 27e). */}
+        <JsonLd data={liveServiceSchema} />
         <JsonLd data={websiteSchema} />
         {/* 1. Critical External Scripts */}
         {recaptchaKey && (

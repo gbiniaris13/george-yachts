@@ -32,10 +32,19 @@ const BackgroundVideo = ({ src, poster }) => {
     }
   }, [src]);
 
+  // Phase 27e (Forbes-launch eve, 2026-05-05) — WebM fallback chain.
+  // Browsers prefer WebM (smaller, ~40% bandwidth saving) when both
+  // are listed first. Today we ship MP4 only; the day a WebM
+  // transcode lands in /public/videos/ alongside the MP4 (filename
+  // swapped to .webm), it auto-activates with no code change. This
+  // gives the perf win the moment the file exists.
+  const webmSrc = typeof src === "string" && src.endsWith(".mp4")
+    ? src.replace(/\.mp4$/, ".webm")
+    : null;
+
   return (
     <video
       ref={videoRef}
-      src={src}
       poster={poster}
       preload="none"
       autoPlay
@@ -44,7 +53,14 @@ const BackgroundVideo = ({ src, poster }) => {
       playsInline
       className="w-full h-full object-cover"
       style={{ objectFit: "cover", objectPosition: "center", minHeight: "100%", minWidth: "100%" }}
-    />
+    >
+      {/* WebM listed first — browsers that support it download only
+          this; browsers without WebM (older Safari) fall through to
+          the MP4. If /videos/foo.webm doesn't exist (404), browsers
+          immediately try the next <source>. */}
+      {webmSrc && <source src={webmSrc} type="video/webm" />}
+      <source src={src} type="video/mp4" />
+    </video>
   );
 };
 
@@ -220,7 +236,7 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                         letter-spaced line (eyebrow, BROKERAGE HOUSE,
                         sub-tagline). */}
                     <h1
-                      className="gy-hero-headline"
+                      className="gy-hero-headline gy-gold-foil"
                       aria-label="George Yachts"
                       style={{
                         // Phase 17 (luxury rebuild, 2026-05-05) —
