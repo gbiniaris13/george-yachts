@@ -36,8 +36,14 @@ const SUPPRESSED_PREFIXES = [
   "/api/",
 ];
 
-const TARGET_VOLUME = 0.085; // soft — never invasive
-const FADE_MS = 1400;
+// Boss feedback (fifth pass, 2026-05-05): "icon plays but I don't hear
+// it" — root cause was the prior 0.085 master ratio being so low that
+// after the per-event ~0.09-0.26 peak gains it left actual output
+// peaks under -45dB (whisper level). Bumped to 0.3 so peaks land in
+// the clearly-audible -10 to -20dB band. Still ambient, never invasive,
+// but actually heard.
+const TARGET_VOLUME = 0.3;
+const FADE_MS = 800;
 
 export default function AmbientPlayer() {
   const pathname = usePathname() || "/";
@@ -140,19 +146,20 @@ export default function AmbientPlayer() {
     }
     const ctx = new Ctx();
     ctxRef.current = ctx;
-    // Explicit resume — belt & braces against AudioContext starting in
-    // "suspended" state. Safe to call regardless; if already running,
-    // it's a no-op.
+    // Boss feedback (fifth pass): icon flipped to play but no sound.
+    // Root cause hypothesis — AudioContext stays suspended in some
+    // browser engines until resume() resolves; meanwhile we scheduled
+    // the master gain ramp against ctx.currentTime which was frozen at
+    // 0. By the time the context resumed, the ramp had already passed.
+    //
+    // Fix: resume() AND, regardless of whether resume succeeds, set
+    // the master gain to TARGET_VOLUME immediately (no ramp). Cheap
+    // immediacy beats a clever fade if the fade is silent.
     if (ctx.state === "suspended") {
       ctx.resume().catch(() => {});
     }
     const master = ctx.createGain();
-    master.gain.value = 0;
-    // Soften the entire mix with an output low-pass — Boss directive
-    // 2026-05-05 (fourth pass): "πιο γλυκά κύματα". Anything above ~3kHz
-    // reads as edgy/airy on the human ear at low volumes; a gentle
-    // shelf at 2.8kHz keeps the dolphins' click detail intact while
-    // making the wave foam sound like ASMR ocean recordings.
+    master.gain.value = TARGET_VOLUME; // unmuted immediately
     const masterLP = ctx.createBiquadFilter();
     masterLP.type = "lowpass";
     masterLP.frequency.value = 2800;
@@ -488,10 +495,10 @@ export default function AmbientPlayer() {
     }, 90000 + Math.random() * 60000);
     cleanupRef.current.push(() => clearInterval(bellInterval));
 
-    // Fade IN master gain
-    const fadeStart = ctx.currentTime;
-    master.gain.setValueAtTime(0, fadeStart);
-    master.gain.linearRampToValueAtTime(TARGET_VOLUME, fadeStart + FADE_MS / 1000);
+    // Master gain was set to TARGET_VOLUME at construction so audio is
+    // audible immediately — no fade-in dependency on ctx.currentTime
+    // advancing. The fade-OUT path (in the !playing branch above) keeps
+    // its ramp because by then the context is definitely running.
 
     return teardown;
   }, [playing, suppressed]);
