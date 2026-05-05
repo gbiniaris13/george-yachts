@@ -22,6 +22,7 @@ import { sanityClient } from "@/lib/sanity";
 import { GREECE_STOPS } from "@/lib/greece-stops";
 import GreeceByYachtClient from "./GreeceByYachtClient";
 import LifestyleGallery from "@/app/components/LifestyleGallery";
+import ItineraryPreview from "@/app/components/ItineraryPreview";
 import Footer from "@/app/components/Footer";
 
 export const revalidate = 3600;
@@ -99,6 +100,11 @@ export default async function GreeceByYachtPage() {
   return (
     <>
       <GreeceByYachtClient stops={stops} heroBackdrop={heroBackdrop} />
+      {/* Phase 5 / H1 — AI itinerary preview (texture only, never a
+          proposal). Streams a 3-day sample week from Gemini based on
+          the visitor's brief. The real proposal always comes from a
+          human broker via /inquiry. */}
+      <ItineraryPreview />
       <LifestyleGallery />
       <Footer />
     </>
