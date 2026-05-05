@@ -9,6 +9,7 @@ import ContactDrawer from "./components/ContactDrawer";
 import VisitorGreeting from "./components/VisitorGreeting";
 import AmbientPlayer from "./components/AmbientPlayer";
 import BrokerStatus from "./components/BrokerStatus";
+import ForbesReferrerWelcome from "./components/ForbesReferrerWelcome";
 import StickyFleetCTA from "./components/StickyFleetCTA";
 import AskGeorgeWidget from "./components/AskGeorgeWidget";
 import GoldCurtain from "./components/GoldCurtain";
@@ -296,6 +297,10 @@ export default async function RootLayout({ children }) {
             within the hour" / "Off the desk — replies within 12 hours"
             based on real Athens local time. Never lies — no fake feeds. */}
         <BrokerStatus />
+        {/* Phase 21 — Forbes referrer welcome card. Detects ?ref=forbes
+            or referrer containing forbes.com, slides in once per session,
+            offers a direct path to Brief George. */}
+        <ForbesReferrerWelcome />
         {/* H.1 — Ask George AI Concierge (sitewide). Sits ABOVE the
             WhatsApp button at bottom-right. Widget is fully client-side;
             graceful fallback when AI_API_KEY env vars aren't configured. */}
