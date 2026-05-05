@@ -48,15 +48,6 @@ export default function AmbientPlayer() {
   const buildAndPlay = () => {
     if (suppressed) return false;
     const ok = buildAmbientGraph({ ctxRef, masterGainRef, cleanupRef });
-    if (ok) {
-      console.log("[GY-AUDIO] graph built", {
-        ctxState: ctxRef.current?.state,
-        sampleRate: ctxRef.current?.sampleRate,
-        masterGain: masterGainRef.current?.gain.value,
-      });
-    } else {
-      console.log("[GY-AUDIO] graph build FAILED");
-    }
     return ok;
   };
 

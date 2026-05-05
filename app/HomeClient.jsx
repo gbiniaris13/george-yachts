@@ -40,6 +40,10 @@ const MapboxFlyover = dynamic(() => import("./components/MapboxFlyover"), { ssr:
 const BrokerTestimonials = dynamic(() => import("./components/BrokerTestimonials"));
 const ContactFormSection = dynamic(() => import("./components/ContactFormSection"));
 const HomeJournalTeaser = dynamic(() => import("./components/HomeJournalTeaser"));
+// Phase 26 — AI itinerary preview surfaced on homepage too. The texture
+// tool was previously only on /greece-by-yacht; for tomorrow's Forbes
+// traffic landing on the home page, show it within the scroll path.
+const ItineraryPreview = dynamic(() => import("./components/ItineraryPreview"), { ssr: false });
 
 const HomeClient = ({
   yachtCount,
@@ -145,6 +149,15 @@ const HomeClient = ({
           appear in initial HTML for SEO/AI crawlers. */}
       <div data-gy-reveal="up">
         <HomeForbesQuote />
+      </div>
+
+      {/* Phase 26 (luxury rebuild, 2026-05-05) — AI itinerary preview
+          on homepage too. Visitors landing from Forbes see the live
+          texture-only AI tool without having to navigate to
+          /greece-by-yacht. Texture only — never a proposal, the broker
+          writes the real one (Boss directive). */}
+      <div data-gy-reveal="up">
+        <ItineraryPreview />
       </div>
 
       <section id="filotimo" data-gy-reveal="up">

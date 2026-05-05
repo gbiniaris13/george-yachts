@@ -14,6 +14,7 @@ import StickyFleetCTA from "./components/StickyFleetCTA";
 import AskGeorgeWidget from "./components/AskGeorgeWidget";
 import GoldCurtain from "./components/GoldCurtain";
 import RouteTransition from "./components/RouteTransition";
+import MouseParallax from "./components/MouseParallax";
 import ExitIntentModal from "./components/ExitIntentModal";
 import AmbientScroll from "./components/AmbientScroll";
 // Cleanup log (for anyone wondering where these went):
@@ -251,6 +252,11 @@ export default async function RootLayout({ children }) {
             mount (GoldCurtain owns the entrance) and on prefers-reduced-
             motion. */}
         <RouteTransition />
+        {/* Phase 26 — pseudo-3D mouse parallax on .gy-ken-burns
+            containers (yacht hero, /greece-by-yacht hero). Cheap
+            CSS substitute for the AI depth-map in Boss's C1 combo
+            decision. Skipped on touch + reduced-motion. */}
+        <MouseParallax />
 
         <JsonLd data={organizationSchema} />
         {/* 1. Critical External Scripts */}
