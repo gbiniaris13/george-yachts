@@ -753,6 +753,80 @@ h1[style*="font-cormorant"] {
   font-weight: 300 !important;
 }
 
+/* Phase 18 — Cinzel small caps on every button label. The same way
+   Aman / Belmond signage labels their actions ("RESERVE", "ENQUIRE",
+   "DISCOVER") in Trajan caps, our CTAs now wear the same temple-
+   inscription dignity. Applied to:
+     .gy-shimmer-cta — premium gold-fill CTAs
+     .gy-link-editorial — editorial text links
+     .btn-primary / .btn-secondary — legacy yacht-page CTAs
+   Existing Montserrat-based eyebrow / chip labels stay where they
+   are (those read as editorial credit lines, not actions). */
+.gy-shimmer-cta,
+.gy-link-editorial,
+button.btn-primary,
+a.btn-primary,
+button.btn-secondary,
+a.btn-secondary {
+  font-family: var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Montserrat', sans-serif !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.18em !important;
+}
+
+/* Phase 18 — restrained CTA palette. Real old-money brands use thin
+   gold borders with ivory text on transparent / black backgrounds, NOT
+   loud gold-gradient fills. The gradient still appears on the homepage
+   primary "Brief George" button as a deliberate accent, but everywhere
+   else we lean into the ghost-button style. */
+.gy-cta-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 36px;
+  background: transparent;
+  border: 1px solid rgba(218, 165, 32, 0.5);
+  color: #F8F5F0;
+  font-family: var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.gy-cta-ghost:hover {
+  border-color: #DAA520;
+  background: rgba(218, 165, 32, 0.08);
+  color: #DAA520;
+}
+
+/* Phase 18 — lower 3D tilt magnitude. The previous 2.5° rotateY +
+   2° rotateX combined to read as "tech-startup card hover". Old-money
+   restraint = 1° max + softer translate, so the card "lifts" rather
+   than "shows off". */
+.gy-tilt-3d {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.gy-tilt-3d:hover {
+  transform: perspective(1200px) translateY(-3px) !important;
+  box-shadow:
+    0 18px 44px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(218, 165, 32, 0.18) inset !important;
+}
+@media (hover: hover) and (min-width: 700px) {
+  .fleet-card--visible:hover,
+  .gy-trending-card:hover,
+  .team-card:hover,
+  .about-services__card:hover {
+    transform: perspective(1200px) translateY(-4px) !important;
+    box-shadow:
+      0 20px 48px rgba(0, 0, 0, 0.42),
+      0 0 0 1px rgba(218, 165, 32, 0.20) inset !important;
+  }
+}
+
 /* ══════════════════════════════════════════════════════════════
    LUXURY REBUILD F3 — Editorial typography rebellion (Phase 1, 2026-05-05).
    Boss directive: serif headlines 96-140px, asymmetric layouts,
