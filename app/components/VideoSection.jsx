@@ -571,6 +571,18 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
         />
       </div>
 
+      {/* Phase 27c (Forbes-launch eve, 2026-05-05) — Boss directive
+          "στήσε κάτι άλλο στο κινητό για να 'μαστε κύριοι". Adds a
+          luminous gold chevron below the breathing scroll line on
+          mobile only. Fades automatically once the visitor scrolls
+          past 40vh (handled in NavDrawerSystem via body.gy-scrolled).
+          Sits ABOVE the StickyFleetCTA gold bar at bottom:96 so it
+          never collides with the commercial CTA. */}
+      <div className="gy-mobile-scroll-hint" aria-hidden="true">
+        <span className="gy-mobile-scroll-hint__rule" />
+        <span className="gy-mobile-scroll-hint__chevron" />
+      </div>
+
       {/* Desktop Category Navigation */}
       <div className="hidden lg:flex absolute bottom-0 left-1/2 -translate-x-1/2 z-20 w-full max-w-[1200px] justify-center">
         <div

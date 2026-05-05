@@ -119,17 +119,23 @@ const NavDrawerSystem = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 50;
+      const y = window.scrollY;
+      const isScrolled = y > 50;
       setScrolled(isScrolled);
-      // Phase 27b — also publish state to body class so the presence
-      // strip (BrokerStatus + AmbientPlayer pills near the logo on
-      // desktop) can re-anchor as the nav collapses 168 → 92.
+      // Phase 27b/c — also publish state to body so peripheral chrome
+      // can react: presence strip re-anchors when nav collapses,
+      // mobile gold scroll-hint fades once visitor moves past hero.
       document.body.classList.toggle("gy-nav-scrolled", isScrolled);
+      document.body.classList.toggle(
+        "gy-scrolled",
+        y > Math.max(window.innerHeight * 0.4, 280),
+      );
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
       document.body.classList.remove("gy-nav-scrolled");
+      document.body.classList.remove("gy-scrolled");
     };
   }, []);
 
@@ -174,10 +180,19 @@ const NavDrawerSystem = () => {
               Lottie file, no JS state — uses two ::before/::after
               pseudo-elements with delayed transforms. ~1.4s reveal,
               fires once per visit, respects reduced-motion. */}
+          {/* Phase 27c (Forbes-launch eve, 2026-05-05) — Boss reported
+              the centered logo was rendering BEHIND the right-cluster
+              icons at narrow desktop widths (Chrome split-screen with
+              Claude app to the right). Fix: pin z-index so the logo
+              always sits above the icon row + add pointer-events:none
+              to the surrounding flex item so clicks always pass to the
+              logo even when the icons overlap visually at extreme
+              widths. */}
           <Link
             href="/"
             className="absolute left-1/2 -translate-x-1/2 shrink-0 group gy-logo-reveal"
             data-cursor="Home"
+            style={{ zIndex: 25 }}
           >
             <img
               src="/images/yacht-icon-only.svg"

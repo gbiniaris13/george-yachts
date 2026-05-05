@@ -297,6 +297,99 @@ section {
   .gy-gold-24k-shine { animation: none; }
 }
 
+/* Phase 27c (Forbes-launch eve, 2026-05-05) — Editorial Roman-numeral
+   section numbers in the home-page gutter on wide desktops (≥1280px).
+   Boss directive: "για να 'μαστε κύριοι, να 'μαστε τέλειοι" — adds the
+   Vogue/Forbes editorial signature of numbered sections. Each
+   data-gy-reveal section that's a direct child of HomeClient is
+   counted via CSS counter and given a Roman numeral pseudo-element
+   in its left gutter. Skipped under 1280px (no spare gutter) and
+   under reduced-motion. */
+@media (min-width: 1280px) {
+  body { counter-reset: gy-section; }
+  /* Target home-page reveal sections so the numbering doesn't bleed
+     into yacht detail / blog / interior pages. */
+  body main > div:has(> [data-gy-reveal]),
+  main [data-gy-reveal] {
+    counter-increment: gy-section;
+    position: relative;
+  }
+  /* Only number the first 7 — beyond that the page is contact /
+     ContactFormSection territory and the numbers feel like clutter. */
+  main [data-gy-reveal]:nth-of-type(-n + 7)::before {
+    content: counter(gy-section, upper-roman);
+    position: absolute;
+    top: 80px;
+    left: max(24px, calc((100vw - 1280px) / 2 - 6px));
+    font-family: var(--font-cinzel), 'Cinzel', 'Trajan Pro', Georgia, serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    color: rgba(218, 165, 32, 0.42);
+    text-shadow: 0 0 8px rgba(218, 165, 32, 0.25);
+    pointer-events: none;
+    z-index: 5;
+    text-transform: uppercase;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  main [data-gy-reveal]::before { display: none; }
+}
+
+/* Phase 27c — Mobile-only gold scroll indicator at the bottom of the
+   100dvh hero. Boss directive: "στήσε κάτι άλλο στο κινητό". A small
+   vertical chevron pulses gold to invite scroll, then fades after the
+   visitor scrolls past 80vh. Pure CSS, no JS — `body.gy-scrolled` is
+   set by the existing scroll listener so the indicator can dim. */
+@media (max-width: 768px) {
+  .gy-mobile-scroll-hint {
+    position: fixed;
+    bottom: 96px;       /* sits above the StickyFleetCTA gold bar */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 40;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.6s ease;
+  }
+  body.gy-scrolled .gy-mobile-scroll-hint { opacity: 0; }
+  .gy-mobile-scroll-hint__chevron {
+    display: block;
+    width: 22px;
+    height: 22px;
+    border-right: 1.5px solid rgba(218, 165, 32, 0.85);
+    border-bottom: 1.5px solid rgba(218, 165, 32, 0.85);
+    transform: rotate(45deg);
+    margin: 0 auto;
+    filter: drop-shadow(0 0 6px rgba(218, 165, 32, 0.45));
+    animation: gyScrollHint 1.8s cubic-bezier(0.55, 0, 0.1, 1) infinite;
+  }
+  .gy-mobile-scroll-hint__rule {
+    display: block;
+    width: 1px;
+    height: 22px;
+    margin: 0 auto 6px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(218, 165, 32, 0.65) 60%,
+      rgba(218, 165, 32, 0.85) 100%
+    );
+  }
+  @keyframes gyScrollHint {
+    0%   { transform: rotate(45deg) translate(-3px, -3px); opacity: 0; }
+    30%  { opacity: 1; }
+    70%  { transform: rotate(45deg) translate(3px, 3px); opacity: 1; }
+    100% { transform: rotate(45deg) translate(6px, 6px); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gy-mobile-scroll-hint__chevron { animation: none; }
+  }
+}
+@media (min-width: 769px) {
+  .gy-mobile-scroll-hint { display: none; }
+}
+
 /* Phase 27b (Forbes-launch eve, 2026-05-05) — LV-tier logo intro reveal.
    On every page first-paint the logo fades up from 0 → 1 over 1.4s
    while a gold halo radiates outward from behind it. Boss directive:
@@ -1012,31 +1105,36 @@ footer h4 {
   .gy-fab-desktop-only { display: none !important; }
 }
 
-/* Phase 27b (Forbes-launch eve, 2026-05-05) — PRESENCE STRIP near logo
-   on desktop. Boss directive: "πάνω-πάνω εκεί να υπήρχε το on the
-   desk in athens και το ambient sound — δείξε δυναμική, LV-tier".
-   Repositions BrokerStatus + AmbientPlayer pills to flank the centered
-   logo at the top of the viewport on desktop. Mobile keeps them
-   hidden (already handled in their own component CSS via media
-   queries). The existing inline `position: fixed; bottom/left` is
-   overridden with !important since inline styles win otherwise. */
-@media (min-width: 1024px) {
+/* Phase 27b/c (Forbes-launch eve, 2026-05-05) — PRESENCE STRIP near
+   logo on desktop. Boss flagged the strip wasn't activating on his
+   split-screen Chrome (~950px) and that the icons were overlapping
+   the logo. Two fixes:
+     1. Lowered breakpoint 1024 → 900 so split-screen desktops + most
+        13" laptops trigger the rule.
+     2. Added max-width:46% on each pill so they can't bleed into
+        the centered logo column even at the new lower breakpoint.
+   Mobile (<900px) keeps the pills at their bottom-left fallback
+   (where they're also already hidden via their own component CSS
+   media queries at <=700px). */
+@media (min-width: 900px) {
   .gy-broker-status {
     bottom: auto !important;
     left: 50% !important;
-    top: calc(168px + 8px) !important;       /* nav-rest height + gap */
-    transform: translateX(calc(-50% - 110px)) !important; /* sit ~110px LEFT of center */
+    top: calc(168px + 10px) !important;       /* nav-rest height + gap */
+    transform: translateX(calc(-50% - 130px)) !important; /* ~130px LEFT of center */
+    max-width: 46% !important;
   }
   .gy-ambient-pill {
     bottom: auto !important;
     left: 50% !important;
-    top: calc(168px + 8px) !important;
-    transform: translateX(calc(-50% + 110px)) !important; /* sit ~110px RIGHT of center */
+    top: calc(168px + 10px) !important;
+    transform: translateX(calc(-50% + 130px)) !important; /* ~130px RIGHT of center */
+    max-width: 46% !important;
   }
   /* When the page is scrolled the nav collapses to 92px — track that. */
   body.gy-nav-scrolled .gy-broker-status,
   body.gy-nav-scrolled .gy-ambient-pill {
-    top: calc(92px + 8px) !important;
+    top: calc(92px + 10px) !important;
   }
 }
 
