@@ -827,6 +827,39 @@ a.btn-secondary {
   }
 }
 
+/* Phase 19 — site-wide editorial label / eyebrow sweep. Every label,
+   nav item, footer section head, modal title, broker chip — calibrate
+   to Cinzel so the entire site reads as one consistent old-money
+   visual language. Selectors target classes that currently read as
+   Montserrat eyebrows / nav items / popup titles. */
+.gy-eyebrow,
+.gy-eyebrow-sm,
+[class*="eyebrow"]:not(.svc-hero__eyebrow):not(.about-hero__eyebrow):not(.team-hero__eyebrow):not(.fleet-hero__eyebrow) {
+  font-family: var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Montserrat', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+}
+
+/* Footer section heads — Cinzel small. The Services / Company /
+   Newsletter column heads now wear the same temple-caps language. */
+footer h4 {
+  font-family: var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Montserrat', sans-serif !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.32em !important;
+}
+
+/* Modal / popup titles — Cinzel. When ExitIntent / EnquirePopup /
+   LeadCapture surface, they read as "concierge invitation" not
+   "Booking.com promo". */
+[role="dialog"] h2,
+[role="dialog"] h3,
+.popup-title,
+.modal-title {
+  font-family: var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.04em !important;
+}
+
 /* ══════════════════════════════════════════════════════════════
    LUXURY REBUILD F3 — Editorial typography rebellion (Phase 1, 2026-05-05).
    Boss directive: serif headlines 96-140px, asymmetric layouts,
