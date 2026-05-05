@@ -849,11 +849,21 @@ footer h4 {
 }
 
 /* Phase 24 — fleet-badge responsive variants. Full text on tablet+,
-   short text on phones so the pill doesn't wrap to 5 lines. */
+   short text on phones so the pill doesn't wrap to 5 lines.
+   Phase 27 (mobile audit) — also tighten letter-spacing + font-size
+   on the badge wrapper at <=480px so the short copy fits one line on
+   iPhone SE (375px). */
 .gy-fleet-badge__short { display: none; }
 @media (max-width: 700px) {
   .gy-fleet-badge__full  { display: none; }
   .gy-fleet-badge__short { display: inline; }
+}
+@media (max-width: 480px) {
+  .gy-fleet-badge {
+    font-size: 9.5px !important;
+    letter-spacing: 0.08em !important;
+    padding: 6px 12px !important;
+  }
 }
 
 /* Phase 24 — F5 3D tilt on remaining card markups so the lift-on-

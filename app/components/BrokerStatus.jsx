@@ -157,11 +157,14 @@ export default function BrokerStatus() {
           to   { opacity: 1; transform: translateX(0); }
         }
         @media (max-width: 700px) {
-          /* Tighten on small viewports — keep pill compact above the
-             fold without crowding the existing top bar. */
-          [role="status"][aria-live="polite"]:first-of-type span:last-of-type {
-            display: none;
-          }
+          /* Phase 27 (mobile audit) — hide entirely on mobile. The
+             StickyFleetCTA full-width gold bar covers anything below
+             ~76px on the bottom edge anyway, so the pill was sitting
+             flush against / under it on every iPhone. The "On the
+             desk in Athens" line is editorial decoration; on mobile
+             the visitor's attention belongs on the WhatsApp / Brief
+             George FAB stack, not on a status pill. */
+          [role="status"][aria-live="polite"] { display: none !important; }
         }
         @media (prefers-reduced-motion: reduce) {
           [role="status"][aria-live="polite"] [aria-hidden="true"] {

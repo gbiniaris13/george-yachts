@@ -71,6 +71,7 @@ export default function ForbesReferrerWelcome() {
     <div
       role="status"
       aria-live="polite"
+      className="gy-forbes-welcome"
       style={{
         position: "fixed",
         bottom: 24,
@@ -220,6 +221,23 @@ export default function ForbesReferrerWelcome() {
           <line x1="10" y1="2" x2="2" y2="10" />
         </svg>
       </button>
+      {/* Phase 27 (mobile audit) — at right:92 + maxWidth(380, 100vw-48)
+          the card was clipping ~44px off the LEFT edge of a 390px
+          iPhone (it overflowed the viewport because right:92 left
+          insufficient room for a 380px-wide card). Drop it to a full-
+          bleed bottom card on phones, sitting ABOVE the StickyFleetCTA
+          so it never overlaps the gold bar. */}
+      <style jsx>{`
+        @media (max-width: 700px) {
+          :global(.gy-forbes-welcome) {
+            right: 16px !important;
+            left: 16px !important;
+            bottom: 96px !important;
+            max-width: none !important;
+            padding: 16px 18px 18px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

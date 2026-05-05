@@ -173,27 +173,27 @@ const NavDrawerSystem = () => {
             />
           </Link>
 
-          {/* --- 3. RIGHT — Search + Language selector + Social Icons --- */}
+          {/* --- 3. RIGHT — Search + Language selector + Social Icons ---
+              Phase 27 (mobile audit, 2026-05-05): the full cluster
+              (~330px) was overflowing the iPhone viewport, pushing
+              the centered logo off-axis. CurrencySwitcher + Instagram
+              + LinkedIn + Favorites now collapse below md (<768px) —
+              all four are already reachable from the drawer + footer,
+              and Favorites is reachable via the heart icon on every
+              yacht card. Search + Translate stay visible because
+              they're functional needs that can't wait for a drawer
+              tap. */}
           <div className="flex items-center gap-1 justify-end">
-            {/* A.2 (Roberto master rebuild brief): magnifier sits at
-                the start of the right cluster — UHNW + travel agents
-                expect search top-right. Click expands an inline
-                overlay with autocomplete across yacht names, builders,
-                regions. */}
             <NavSearch />
-            {/* M.1 — Currency switcher pill (€ / $ / £). Sits next to
-                the language widget so visitors can flip both display
-                axes from the same nav cluster. */}
-            <CurrencySwitcher compact={true} />
-            {/* Language pill — choose language, then jump to channels.
-                Same 44×44 footprint as the icons so the row stays
-                rhythmic. */}
+            <div className="hidden md:inline-flex">
+              <CurrencySwitcher compact={true} />
+            </div>
             <TranslateWidget variant="inline" />
             <a
               href="https://www.instagram.com/georgeyachts"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative w-11 h-11 flex items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
+              className="hidden md:flex group relative w-11 h-11 items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
               aria-label="Instagram"
               data-cursor="Instagram"
             >
@@ -203,16 +203,15 @@ const NavDrawerSystem = () => {
               href="https://www.linkedin.com/in/george-p-biniaris/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative w-11 h-11 flex items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
+              className="hidden md:flex group relative w-11 h-11 items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
               aria-label="LinkedIn"
               data-cursor="LinkedIn"
             >
               <Linkedin className="w-[14px] h-[14px] text-white/40 group-hover:text-[#DAA520] transition-colors duration-300" />
             </a>
-            {/* Favorites heart link */}
             <a
               href="/favorites"
-              className="group relative w-11 h-11 flex items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
+              className="hidden md:flex group relative w-11 h-11 items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
               aria-label="My Favorites"
               data-cursor="Favorites"
             >
@@ -299,6 +298,60 @@ const NavDrawerSystem = () => {
               </div>
             ))}
           </nav>
+
+          {/* Phase 27 (mobile audit) — surface the items that were
+              collapsed off the nav header on mobile so the drawer
+              remains the single source of truth for everything the
+              header carries on desktop. md:hidden so the drawer
+              doesn't double-up on tablets where the header still
+              shows them. */}
+          <div className="md:hidden mt-10 pt-6 border-t border-white/[0.08] flex flex-col gap-4">
+            <p
+              className="px-1 text-[10px] tracking-[0.4em] uppercase"
+              style={{
+                color: '#DAA520',
+                fontFamily: "'Montserrat', sans-serif",
+                opacity: 0.85,
+                fontWeight: 600,
+              }}
+            >
+              {t("nav.preferences", "Preferences")}
+            </p>
+            <div className="flex items-center gap-3">
+              <CurrencySwitcher compact={true} />
+              <Link
+                href="/favorites"
+                onClick={closeDrawer}
+                className="flex items-center gap-2 text-[12px] uppercase tracking-[0.2em] text-white/85 hover:text-[#DAA520] transition"
+                aria-label="My Favorites"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
+                {t("nav.favorites", "Favorites")}
+              </Link>
+            </div>
+            <div className="flex items-center gap-4">
+              <a
+                href="https://www.instagram.com/georgeyachts"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="w-10 h-10 flex items-center justify-center border border-white/[0.08] text-white/60 hover:text-[#DAA520] hover:border-[#DAA520]/40 transition"
+              >
+                <Instagram className="w-[14px] h-[14px]" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/george-p-biniaris/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="w-10 h-10 flex items-center justify-center border border-white/[0.08] text-white/60 hover:text-[#DAA520] hover:border-[#DAA520]/40 transition"
+              >
+                <Linkedin className="w-[14px] h-[14px]" />
+              </a>
+            </div>
+          </div>
 
           <div className="mt-auto pt-12 flex space-x-6">
             {legalLinks.map((link) => (

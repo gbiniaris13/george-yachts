@@ -173,6 +173,14 @@ export default function AmbientPlayer() {
             display: none !important;
           }
         }
+        /* Phase 27 (mobile audit) — the StickyFleetCTA full-width bar
+           sits at bottom:0 on every non-fleet route and covers anything
+           in the bottom-left below 76px. Cleaner to hide the ambient
+           pill entirely on mobile (it's optional decoration; the FAB
+           stack on the right is what visitors actually use). */
+        @media (max-width: 700px) {
+          button[aria-label*="ambient sound"] { display: none !important; }
+        }
       `}</style>
     </button>
   );

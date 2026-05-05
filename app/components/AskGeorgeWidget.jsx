@@ -152,7 +152,10 @@ export default function AskGeorgeWidget() {
         style={{
           position: "fixed",
           right: 24,
-          bottom: 96, // sits above the WhatsApp button (which is at ~24)
+          // Stacks ABOVE WhatsApp (88) + ContactDrawer FAB (152) so the
+          // three bottom-right circles don't overlap on mobile (was
+          // colliding with WhatsApp at bottom:88 — same-axis, both 56px).
+          bottom: 216,
           width: 56,
           height: 56,
           borderRadius: "50%",
@@ -196,7 +199,7 @@ export default function AskGeorgeWidget() {
           style={{
             position: "fixed",
             right: 24,
-            bottom: 160,
+            bottom: 280,
             width: "min(380px, calc(100vw - 48px))",
             maxHeight: "min(640px, calc(100vh - 200px))",
             background: "#0a0a0a",

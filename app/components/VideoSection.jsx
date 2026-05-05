@@ -82,13 +82,15 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
           privateHigh ? fmtK(privateHigh) : "€180K"
         }/week`
       : null;
+  // Phase 27 (mobile audit, 2026-05-05) — the prior "short" variant
+  // was barely shorter than full and still wrapped to 4–5 lines on a
+  // 390px iPhone. Truly compact form: just numbers + count. The full
+  // sentence stays for tablet+ where there's horizontal room.
   const fleetBadgeShort =
     yachtCount && yachtCount > 0
-      ? `${yachtCount} yachts · Explorer from ${
+      ? `${yachtCount} yachts · ${
           explorerLow ? fmtK(explorerLow) : "€420"
-        }/guest · Private to ${
-          privateHigh ? fmtK(privateHigh) : "€180K"
-        }/week`
+        }/guest – ${privateHigh ? fmtK(privateHigh) : "€180K"}/week`
       : null;
   // Default to full text — the JSX renders both with CSS class
   // toggles so we get the right one per viewport.
