@@ -218,17 +218,22 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                         // White-space: nowrap forces single line; the
                         // 9.5vw clamp scales the type so it fits at
                         // every viewport without overflow.
-                        fontFamily: "var(--font-bodoni), 'Bodoni Moda', 'Didot', 'Cormorant Garamond', Georgia, serif",
-                        fontSize: "clamp(40px, 9.5vw, 132px)",
-                        fontWeight: 400,
+                        // Phase 17b — Boss flagged 400-weight as
+                        // "kindergarten". Bumped to 900 + UPPERCASE +
+                        // tighter tracking. That's the actual Vogue /
+                        // Harper's Bazaar masthead treatment — heavy
+                        // black serif caps, magazine-cover authority.
+                        fontFamily: "var(--font-bodoni), 'Bodoni Moda', 'Didot', Georgia, serif",
+                        fontSize: "clamp(40px, 10.5vw, 152px)",
+                        fontWeight: 900,
                         fontStyle: "normal",
-                        lineHeight: 1.0,
-                        letterSpacing: "0.005em",
+                        lineHeight: 0.95,
+                        letterSpacing: "-0.01em",
                         color: "#F8F5F0",
-                        textTransform: "none",
+                        textTransform: "uppercase",
                         margin: "0 0 24px 0",
                         textAlign: "center",
-                        textShadow: "0 8px 40px rgba(0, 0, 0, 0.55)",
+                        textShadow: "0 10px 48px rgba(0, 0, 0, 0.6)",
                         whiteSpace: "nowrap",
                       }}
                     >
@@ -236,11 +241,11 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                         className="gy-hero-letters-wrap"
                         style={{
                           display: "inline-block",
-                          letterSpacing: "0.005em",
+                          letterSpacing: "-0.01em",
                           marginInlineEnd: 0,
                         }}
                       >
-                        {"George\u00A0Yachts".split("").map((ch, i) => (
+                        {"GEORGE\u00A0YACHTS".split("").map((ch, i) => (
                           <span
                             key={i}
                             className="gy-hero-letter"
