@@ -78,6 +78,27 @@ export default function GlobalEffects() {
       }
     });
 
+    // ═══════ 3b. Phase 14 (luxury rebuild) — explicit [data-gy-reveal]
+    //          opt-in observer. Components mark themselves with the
+    //          data attribute and we cross-fade them in when they
+    //          enter the viewport. Cross-browser (works on Safari +
+    //          Firefox), fallback for animation-timeline-only CSS. ═══════
+    const gyRevealEls = document.querySelectorAll("[data-gy-reveal]:not(.gy-revealed)");
+    if (gyRevealEls.length > 0) {
+      const gyRevealObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("gy-revealed");
+              gyRevealObs.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -10% 0px" }
+      );
+      gyRevealEls.forEach((el) => gyRevealObs.observe(el));
+    }
+
     // ═══════ 4. BUTTON PRESS ANIMATION ═══════
     const buttons = document.querySelectorAll("a, button");
     const onPointerDown = (e) => {

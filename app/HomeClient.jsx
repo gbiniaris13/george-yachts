@@ -98,15 +98,17 @@ const HomeClient = ({
       </section>
 
       {/* Signature Yacht slot (weekly auto-rotating feature) */}
-      <section id="signature">
+      <section id="signature" data-gy-reveal="up">
         <SignatureYacht yacht={signatureYacht} />
       </section>
 
       {/* Proof = Stats + Credentials merged (Proposal A) */}
-      <HomeStats yachtCount={yachtCount} />
+      <div data-gy-reveal="up">
+        <HomeStats yachtCount={yachtCount} />
+      </div>
 
       {/* Meet George + how we work, merged into one section (Proposal B) */}
-      <section id="how">
+      <section id="how" data-gy-reveal="up">
         <YourBroker />
       </section>
 
@@ -128,26 +130,24 @@ const HomeClient = ({
       ) : null}
 
       {/* Phase 2 / E2 — Cinematic 3D Mapbox flyover (statement piece). */}
-      <section id="flyover" aria-label="3D flyover of the Greek waters">
+      <section id="flyover" aria-label="3D flyover of the Greek waters" data-gy-reveal="blur">
         <MapboxFlyover />
       </section>
 
       {/* Editorial illustrated map (still here as a tactile,
           reduced-motion-friendly counterpart to the cinematic flyover). */}
-      <section id="map">
+      <section id="map" data-gy-reveal="up">
         <GreekWatersMap />
       </section>
 
       {/* Tier 1.3 (Forbes integration brief, May 2026) — Forbes
-          pull-quote section. Sits BETWEEN the vessel showcase /
-          map and the Filotimo brand storytelling, exactly where
-          the brief specifies. Server-rendered: the quote +
-          attribution appear in the initial HTML response so
-          Googlebot, ChatGPT, Perplexity, Claude, Gemini all see
-          the Forbes credential without JS. */}
-      <HomeForbesQuote />
+          pull-quote section. Server-rendered: quote + attribution
+          appear in initial HTML for SEO/AI crawlers. */}
+      <div data-gy-reveal="up">
+        <HomeForbesQuote />
+      </div>
 
-      <section id="filotimo">
+      <section id="filotimo" data-gy-reveal="up">
         <Filotimon filotimoImage={filotimoImage} />
       </section>
 
@@ -161,15 +161,19 @@ const HomeClient = ({
         />
       ) : null}
 
-      <BrokerTestimonials />
+      <div data-gy-reveal="up">
+        <BrokerTestimonials />
+      </div>
 
       {/* B.6 (Roberto brief, May 2026) — Journal teaser surfaces the
           3 most-recent blog posts so visitors see the editorial
           flywheel. Hidden when no posts are available. */}
-      <HomeJournalTeaser posts={latestPosts} />
+      <div data-gy-reveal="up">
+        <HomeJournalTeaser posts={latestPosts} />
+      </div>
 
       {/* ContactBar absorbed into ContactFormSection (Proposal D) */}
-      <section id="contact">
+      <section id="contact" data-gy-reveal="up">
         <ContactFormSection />
       </section>
 

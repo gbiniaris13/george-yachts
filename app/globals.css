@@ -1054,29 +1054,38 @@ a.gy-fancy-link:hover {
   to   { transform: translateY(12px);  }
 }
 
-/* Scroll-reveal fade-up — opt-in via data-gy-reveal="up" / "left" / "right".
-   Uses scroll-driven timeline where supported, falls back to JS-detected
-   .is-visible class set elsewhere (existing reveal classes). */
-@supports (animation-timeline: view()) {
-  [data-gy-reveal="up"] {
-    animation: gyRevealUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 65%;
-  }
-  [data-gy-reveal="left"] {
-    animation: gyRevealLeft 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 65%;
-  }
-  [data-gy-reveal="right"] {
-    animation: gyRevealRight 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 65%;
-  }
-  [data-gy-reveal="blur"] {
-    animation: gyRevealBlur 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 75%;
+/* Scroll-reveal fade-up — opt-in via data-gy-reveal="up" / "left" / "right" / "blur".
+   Hybrid implementation:
+     1. JS-driven (Phase 14): GlobalEffects.jsx adds .gy-revealed class
+        via IntersectionObserver — works everywhere (Safari, Firefox,
+        Chrome, mobile).
+     2. CSS scroll-driven (animation-timeline) is now disabled because
+        it caused double-firing in Chrome where elements would animate
+        once via the keyframes and then again via the JS class. */
+[data-gy-reveal] {
+  opacity: 0;
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+[data-gy-reveal="up"]    { transform: translateY(36px); }
+[data-gy-reveal="left"]  { transform: translateX(-36px); }
+[data-gy-reveal="right"] { transform: translateX(36px); }
+[data-gy-reveal="blur"]  { transform: scale(0.98); filter: blur(10px); }
+
+[data-gy-reveal].gy-revealed {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-gy-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
   }
 }
 @keyframes gyRevealUp    { from { opacity:0; transform: translateY(36px); } to { opacity:1; transform: translateY(0); } }
