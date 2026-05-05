@@ -11,16 +11,16 @@ import "./fleet-page.css";
 export const revalidate = 3600;
 
 export const metadata = {
-  title: "Luxury Yacht Charter Fleet Greece | 50+ Yachts | George Yachts",
+  title: "Luxury Yacht Charter Fleet Greece | 66 Curated Yachts | George Yachts",
   description:
-    "Browse our curated fleet of 50+ luxury charter yachts in Greek waters. Motor yachts, sailing catamarans, and monohulls. Cyclades, Ionian, Saronic, Sporades. IYBA member broker.",
+    "Browse our curated fleet of 66 yachts in Greek waters. Private Fleet (full crew) + Explorer Fleet (skippered). Motor yachts, sailing catamarans, monohulls. Cyclades, Ionian, Saronic, Sporades. IYBA Charter Active Member.",
   alternates: {
     canonical: "https://georgeyachts.com/charter-yacht-greece",
   },
   openGraph: {
     title: "Charter Fleet | George Yachts Brokerage House",
     description:
-      "50+ curated luxury yachts for charter in Greek waters. From 14m sailing catamarans to 64m superyachts.",
+      "66 curated yachts for charter in Greek waters. From 14m sailing catamarans to 64m superyachts.",
     url: "https://georgeyachts.com/charter-yacht-greece",
     images: [
       "https://cdn.sanity.io/images/ecqr94ey/production/5a1d2f46e69d3e21c61aa3950deb11085e725b9d-1024x768.jpg",
@@ -64,7 +64,7 @@ function generateFleetSchema(yachts) {
     "@type": "ItemList",
     name: "George Yachts Charter Fleet Greece",
     description:
-      "Curated fleet of 50+ luxury yachts for charter in Greek waters",
+      "Curated fleet of 66 luxury yachts for charter in Greek waters",
     numberOfItems: yachts.length,
     itemListElement: yachts.slice(0, 20).map((yacht, index) => ({
       "@type": "ListItem",

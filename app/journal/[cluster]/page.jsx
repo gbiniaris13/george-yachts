@@ -413,7 +413,7 @@ export default async function ClusterPage({ params }) {
                 textDecoration: "none",
               }}
             >
-              Match me to 3 yachts in 90s →
+              Brief George — reply within 24h →
             </Link>
             <Link
               href="/inquiry"

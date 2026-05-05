@@ -59,30 +59,26 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
     return () => clearTimeout(timer);
   }, []);
 
-  // CTA hierarchy — B.1 (Roberto master rebuild brief, May 2026).
-  // Earlier today (2026-05-02) we had quiz=ghost, fleet=gold because
-  // the old /yacht-finder was a 12-question slog that bled the cold-
-  // outreach traffic. With B.2 now shipped (5 quick questions, 90
-  // seconds to result screen), we flip back:
-  //   • Primary  → /yacht-finder ("Match me to 3 yachts in 90s")
-  //   • Secondary ghost → /charter-yacht-greece ("or explore all N")
-  // The fleet badge above the CTAs anchors the offer in concrete
-  // numbers: "X yachts · €Y–€Z/week · Crewed". Specificity raises
-  // CTR vs generic taglines.
+  // Phase 20 (luxury rebuild, 2026-05-05) — Boss directive: the prior
+  // badge was LYING. It said "€420 – €180k/week · CREWED" but:
+  //   • €420 is per-PERSON (Explorer Fleet, with skipper) — not per
+  //     yacht/week
+  //   • €180k IS per yacht/week (Private Fleet, full crew)
+  //   • The Explorer Fleet sails with a skipper, NOT full crew, so
+  //     blanket "Crewed" misrepresents half of the fleet
+  // Forbes feature drops tomorrow + heavy social-media push — the site
+  // CANNOT have an inaccurate banner the moment those readers land.
+  // New badge surfaces both fleet tiers on their own terms.
   const fmtK = (n) => (n >= 1000 ? `€${Math.round(n / 1000)}K` : `€${n}`);
-  const lowFleet = Math.min(
-    privateRange?.low ?? Infinity,
-    explorerRange?.low ?? Infinity,
-  );
-  const highFleet = Math.max(
-    privateRange?.high ?? 0,
-    explorerRange?.high ?? 0,
-  );
+  const explorerLow = explorerRange?.low;
+  const privateHigh = privateRange?.high;
   const fleetBadge =
     yachtCount && yachtCount > 0
-      ? `${yachtCount} yachts · ${
-          isFinite(lowFleet) ? fmtK(lowFleet) : "€7K"
-        } – ${highFleet > 0 ? fmtK(highFleet) : "€235K"}/week · Crewed`
+      ? `${yachtCount} yachts · Explorer Fleet (skippered) from ${
+          explorerLow ? fmtK(explorerLow) : "€420"
+        }/guest · Private Fleet (full crew) to ${
+          privateHigh ? fmtK(privateHigh) : "€180K"
+        }/week`
       : null;
 
   // The button styling renders the FIRST button as a ghost
@@ -101,10 +97,13 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
       primaryText: yachtCount && yachtCount > 0
         ? `or explore all ${yachtCount} yachts`
         : "or explore all yachts",
-      // Slot 2 → gold button (primary visual weight): the new 90-second
-      // Smart Match Quiz (B.2). Promises a concrete time-bound result.
-      secondaryHref: "/yacht-finder",
-      secondaryText: "Match me to 3 yachts in 90s",
+      // Phase 20 (luxury rebuild, 2026-05-05) — Forbes launch tomorrow.
+      // The prior "Match me to 3 yachts in 90s" copy reads as
+      // tech-startup quiz, not Forbes-tier broker. Old-money UHNW
+      // visitors brief, they don't quiz. Updated to "Brief George".
+      // Same /yacht-finder destination (the structured form is fine).
+      secondaryHref: "/inquiry",
+      secondaryText: "Brief George — reply within 24h",
     },
   ];
 

@@ -9,15 +9,15 @@ import { sanityClient } from "@/lib/sanity";
 export const revalidate = 3600;
 
 export const metadata = {
-  title: "George Yachts | Luxury Yacht Charter Greece | Boutique Brokerage",
+  title: "George Yachts | Featured in Forbes · Luxury Yacht Charter Greece",
   description:
-    "George Yachts Brokerage House — boutique luxury yacht charter in Greek waters. 50+ curated yachts, IYBA member broker, 360° services. Cyclades, Ionian, Saronic, Sporades. Personal service from Athens.",
+    "Featured in Forbes (May 2026). George Yachts Brokerage House — boutique luxury yacht charter in Greek waters. 66 curated yachts. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Cyclades, Ionian, Saronic, Sporades, Dodecanese. Personal broker service from Athens.",
   alternates: {
     canonical: "https://georgeyachts.com",
   },
   openGraph: {
-    title: "George Yachts | Luxury Yacht Charter Greece",
-    description: "Boutique yacht brokerage specializing exclusively in Greek waters. 50+ curated yachts, personal broker relationship, 360° luxury services.",
+    title: "George Yachts | Featured in Forbes · Luxury Yacht Charter Greece",
+    description: "Featured in Forbes (May 2026). 66 curated yachts in Greek waters. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Personal broker service from Athens.",
     url: "https://georgeyachts.com",
     type: "website",
     siteName: "George Yachts Brokerage House",

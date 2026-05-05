@@ -97,11 +97,11 @@ const italiana = Italiana({
 export const metadata = {
   metadataBase: new URL("https://georgeyachts.com"),
   title: {
-    default: "George Yachts | Luxury Yacht Charter Greece | Boutique Brokerage",
+    default: "George Yachts | Featured in Forbes · Luxury Yacht Charter Greece",
     template: "%s | George Yachts",
   },
   description:
-    "George Yachts Brokerage House — boutique luxury yacht charter in Greek waters. 50+ curated yachts, IYBA member broker, 360° services. Cyclades, Ionian, Saronic, Sporades. Personal service from Athens.",
+    "Featured in Forbes (May 2026). George Yachts Brokerage House — boutique luxury yacht charter in Greek waters. 66 curated yachts. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Cyclades, Ionian, Saronic, Sporades. Personal broker service from Athens.",
   applicationName: "George Yachts",
   authors: [{ name: "George P. Biniaris", url: "https://georgeyachts.com" }],
   generator: "Next.js",
@@ -130,15 +130,15 @@ export const metadata = {
     siteName: "George Yachts Brokerage House",
     locale: "en_US",
     url: "https://georgeyachts.com",
-    title: "George Yachts | Luxury Yacht Charter Greece",
+    title: "George Yachts | Featured in Forbes · Luxury Yacht Charter Greece",
     description:
-      "Boutique yacht brokerage specializing exclusively in Greek waters. 50+ curated yachts, personal broker relationship, 360° luxury services.",
+      "Featured in Forbes (May 2026). 66 curated yachts in Greek waters. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Personal broker service from Athens.",
     images: [
       {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "George Yachts Brokerage House — Luxury Yacht Charter in Greek Waters",
+        alt: "George Yachts — Featured in Forbes · Luxury Yacht Charter Greece",
       },
     ],
   },
@@ -146,9 +146,9 @@ export const metadata = {
     card: "summary_large_image",
     site: "@georgeyachts",
     creator: "@georgeyachts",
-    title: "George Yachts | Luxury Yacht Charter Greece",
+    title: "George Yachts | Featured in Forbes · Greek Waters",
     description:
-      "Boutique yacht brokerage in Greek waters. Personal service, curated fleet, 360° luxury.",
+      "Featured in Forbes (May 2026). 66 yachts. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Member.",
     images: ["/opengraph-image"],
   },
   robots: {
