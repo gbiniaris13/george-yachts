@@ -228,14 +228,21 @@ export default function AboutContent() {
                 />
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%", background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)" }} />
               </div>
-              {/* IYBA Badge under photo */}
-              <div style={{ marginTop: "20px", display: "flex", alignItems: "center", gap: "12px", padding: "16px", border: "1px solid rgba(218,165,32,0.15)", background: "rgba(218,165,32,0.03)" }}>
-                <img src="/images/iyba.png" alt="IYBA Member — International Yacht Brokers Association" style={{ height: "36px", width: "auto", opacity: 0.8 }} />
+              {/* IYBA Badge under photo — official logo, link to iyba.org
+                  per legal directive §3 backlink-required clause. */}
+              <a
+                href="https://iyba.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="International Yacht Brokers Association"
+                style={{ textDecoration: "none", marginTop: "20px", display: "flex", alignItems: "center", gap: "12px", padding: "16px", border: "1px solid rgba(218,165,32,0.15)", background: "rgba(218,165,32,0.03)" }}
+              >
+                <img src="/images/iyba-official-white.png" alt="IYBA — International Yacht Brokers Association" style={{ height: "32px", width: "auto", opacity: 0.85 }} />
                 <div>
-                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", margin: 0 }}>Member of</p>
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", margin: 0 }}>Charter Active Member</p>
                   <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.1em", color: "#DAA520", margin: 0 }}>International Yacht Brokers Association</p>
                 </div>
-              </div>
+              </a>
             </RevealSection>
 
             <RevealSection className="about-george__text-col" delay={0.2}>

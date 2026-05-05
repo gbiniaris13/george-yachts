@@ -703,3 +703,144 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
   border-color: #DAA520 !important;
   background: rgba(218,165,32,0.12) !important;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   LUXURY REBUILD F3 — Editorial typography rebellion (Phase 1, 2026-05-05).
+   Boss directive: serif headlines 96-140px, asymmetric layouts,
+   generous whitespace. UHNW visitors notice typography first; this is
+   the foundation everything else sits on.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Editorial display headlines — Vogue/Robb Report scale.
+   Use for hero titles, section openers, and key brand statements.
+   Negative letter-spacing tightens the serif at large sizes. */
+.gy-display-xl {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(56px, 9vw, 140px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: #F8F5F0;
+}
+.gy-display-lg {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(44px, 7vw, 96px);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: #F8F5F0;
+}
+.gy-display-md {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(34px, 5.5vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #F8F5F0;
+}
+
+/* Editorial body — for pull quotes, lead paragraphs, intro text. */
+.gy-lede {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(20px, 2.4vw, 28px);
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: rgba(248, 245, 240, 0.85);
+  max-width: 56ch;
+}
+
+/* Eyebrows — small, all-caps, gold. Sit ABOVE display headlines. */
+.gy-eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: #C9A84C;
+  margin-bottom: 18px;
+  display: inline-block;
+}
+.gy-eyebrow-sm {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #C9A84C;
+}
+
+/* Asymmetric editorial grid — 12-column with intentional misalignment.
+   Use `.gy-grid-editorial` on a section container, then position
+   children with grid-column declarations for that magazine feel
+   (text left half, image bleeds to right edge, etc.). */
+.gy-grid-editorial {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(20px, 3vw, 40px);
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: clamp(24px, 5vw, 80px);
+}
+
+/* Helper column spans for asymmetric layouts */
+.gy-col-text       { grid-column: 2 / span 5; }
+.gy-col-image      { grid-column: 7 / span 6; }
+.gy-col-text-wide  { grid-column: 2 / span 7; }
+.gy-col-image-narrow { grid-column: 9 / span 4; }
+.gy-col-full       { grid-column: 1 / -1; }
+.gy-col-center     { grid-column: 3 / span 8; }
+
+@media (max-width: 900px) {
+  .gy-col-text, .gy-col-image, .gy-col-text-wide,
+  .gy-col-image-narrow, .gy-col-center {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Generous whitespace tokens — luxury sites use space as a status symbol. */
+.gy-pad-section-xl { padding-block: clamp(96px, 14vw, 200px); }
+.gy-pad-section-lg { padding-block: clamp(72px, 10vw, 140px); }
+.gy-pad-section-md { padding-block: clamp(48px, 7vw, 96px); }
+
+/* Decorative gold rule — used between editorial blocks. */
+.gy-rule-gold {
+  display: block;
+  width: clamp(40px, 6vw, 80px);
+  height: 1px;
+  background: rgba(201, 168, 76, 0.5);
+  margin-block: clamp(20px, 3vw, 32px);
+}
+.gy-rule-gold-center {
+  margin-inline: auto;
+}
+
+/* Hover-reveal underline — for editorial CTAs (no buttons, just text). */
+.gy-link-editorial {
+  position: relative;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #C9A84C;
+  font-weight: 600;
+  text-decoration: none;
+  padding-bottom: 4px;
+}
+.gy-link-editorial::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: #C9A84C;
+  transform-origin: left center;
+  transform: scaleX(0.3);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.gy-link-editorial:hover::after {
+  transform: scaleX(1);
+}
+

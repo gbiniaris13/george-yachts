@@ -1,15 +1,24 @@
-// A.5 + Tier 2.2 (Roberto Forbes integration brief, May 2026) —
-// Footer press strip with Forbes wordmark.
+// Tier 2.2 (Roberto legal directive, 4 May 2026) —
+// Footer trust strip with three slots, fully legal-compliant.
 //
-// Now that the Forbes article is published (1 May 2026), the strip
-// includes the Forbes wordmark alongside IYBA + MYBA-standard. Each
-// mark is monochrome ivory at 60% opacity, hovers to 100%. Forbes
-// gets a small "AS FEATURED" gold caption above it (Montserrat 9px
-// uppercase) per brief 2.2.
+//   Slot 1: Forbes — text-based wordmark in Times Bold, with caption
+//           "AS FEATURED · MAY 2026", linked to the article URL with
+//           target="_blank" rel="noopener noreferrer".
+//   Slot 2: IYBA — official IYBA member logo (downloaded unmodified
+//           from the IYBA member portal CDN). Linked to https://iyba.org
+//           per the IYBA backlink-required clause. Until logo arrives,
+//           directive requires text-only "IYBA Charter Active Member"
+//           — we now have the official file so we render the image.
+//   Slot 3: MYBA — PLAIN TEXT ONLY. No logo, no graphic, no badge.
+//           Exact phrasing per directive: "Charter contracts based on
+//           the MYBA standard". No link.
 //
-// Critical rule (brief 2.2): "MYBA-Standard Contracts" — NOT "MYBA
-// Member". George is IYBA member. He uses MYBA-standard contracts.
-// These are different things; never conflate.
+// Rules from directive:
+//   • No image file with "myba" in the filename anywhere in deployed
+//     assets.
+//   • No "MYBA Member" / "MYBA Approved" / any membership-implying
+//     phrasing.
+//   • No Forbes logo image — text wordmark only.
 //
 // Server component — no JS payload.
 
@@ -59,15 +68,17 @@ export default function PressStrip() {
         <div
           style={{
             display: "flex",
-            alignItems: "flex-start",
+            alignItems: "center",
             justifyContent: "center",
             gap: "56px",
             flexWrap: "wrap",
           }}
         >
-          {/* Forbes — As Featured */}
-          <Link
-            href="/press"
+          {/* Slot 1 — Forbes (text wordmark, As Featured caption) */}
+          <a
+            href={FORBES_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             data-cursor="Read"
             style={{
               display: "flex",
@@ -75,7 +86,7 @@ export default function PressStrip() {
               alignItems: "center",
               gap: 4,
               textDecoration: "none",
-              opacity: 0.6,
+              opacity: 0.7,
               transition: "opacity 0.3s ease",
             }}
             className="gy-press-strip-link"
@@ -90,7 +101,7 @@ export default function PressStrip() {
                 fontWeight: 600,
               }}
             >
-              As Featured
+              As Featured · May 2026
             </span>
             <span
               aria-label="Forbes"
@@ -105,20 +116,22 @@ export default function PressStrip() {
             >
               Forbes
             </span>
-          </Link>
+          </a>
 
-          {/* IYBA Member */}
+          {/* Slot 2 — IYBA Charter Active Member (official logo, link
+              to iyba.org per backlink-required clause) */}
           <a
-            href="https://www.iyba.pro/"
+            href="https://iyba.org"
             target="_blank"
             rel="noopener noreferrer"
+            title="International Yacht Brokers Association"
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: 4,
+              gap: 6,
               textDecoration: "none",
-              opacity: 0.6,
+              opacity: 0.7,
               transition: "opacity 0.3s ease",
             }}
             className="gy-press-strip-link"
@@ -133,31 +146,29 @@ export default function PressStrip() {
                 fontWeight: 500,
               }}
             >
-              Member
+              Charter Active Member
             </span>
             <Image
-              src="/images/iyba.png"
+              src="/images/iyba-official-white.png"
               alt="IYBA — International Yacht Brokers Association"
-              width={70}
-              height={26}
-              style={{ height: "26px", width: "auto" }}
+              width={120}
+              height={28}
+              style={{ height: "28px", width: "auto" }}
+              priority={false}
             />
           </a>
 
-          {/* MYBA-Standard Contracts (NOT "Member" — see brief 2.2) */}
-          <Link
-            href="/faq"
-            data-cursor="Learn"
+          {/* Slot 3 — MYBA standards (PLAIN TEXT ONLY per legal directive
+              §2: no logo, no badge, no link). Exact phrasing required. */}
+          <div
+            aria-label="Charter contracts based on the MYBA standard"
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               gap: 4,
-              textDecoration: "none",
-              opacity: 0.6,
-              transition: "opacity 0.3s ease",
+              opacity: 0.7,
             }}
-            className="gy-press-strip-link"
           >
             <span
               style={{
@@ -169,22 +180,23 @@ export default function PressStrip() {
                 fontWeight: 500,
               }}
             >
-              We use
+              Contracts
             </span>
             <span
-              aria-label="MYBA-Standard Contracts"
               style={{
-                fontFamily: "'Montserrat', sans-serif",
-                fontSize: 13,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "#F8F5F0",
-                fontWeight: 600,
+                fontFamily: "'Lato', 'Montserrat', sans-serif",
+                fontSize: 12,
+                letterSpacing: "0.04em",
+                color: "rgba(248,245,240,0.85)",
+                fontWeight: 400,
+                lineHeight: 1.3,
+                textAlign: "center",
+                maxWidth: "200px",
               }}
             >
-              MYBA-Standard Contracts
+              Based on the MYBA standard
             </span>
-          </Link>
+          </div>
         </div>
       </div>
 

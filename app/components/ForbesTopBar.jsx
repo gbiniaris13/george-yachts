@@ -140,7 +140,24 @@ export default async function ForbesTopBar() {
         </span>
 
         <span
-          aria-label="Read on Forbes"
+          aria-label="Read the feature on Forbes"
+          className="gy-forbes-bar__desktop"
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: 11,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: "#C9A84C",
+            fontWeight: 600,
+            marginLeft: 6,
+            whiteSpace: "nowrap",
+          }}
+        >
+          Read the feature →
+        </span>
+        <span
+          aria-hidden="true"
+          className="gy-forbes-bar__mobile"
           style={{
             fontFamily: "'Montserrat', sans-serif",
             fontSize: 12,

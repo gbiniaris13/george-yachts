@@ -106,19 +106,27 @@ const Footer = () => {
               </a>
             </div>
 
-            {/* IYBA */}
-            <div className="flex items-center gap-3">
+            {/* IYBA — official logo, link to iyba.org per legal directive
+                §3 backlink-required clause. */}
+            <a
+              href="https://iyba.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="International Yacht Brokers Association"
+              className="flex items-center gap-3"
+              style={{ textDecoration: "none" }}
+            >
               <Image
-                src="/images/iyba.png"
-                alt="IYBA Member - International Yacht Brokers Association"
-                width={80}
-                height={24}
-                className="h-6 w-auto opacity-60 hover:opacity-100 transition-opacity duration-500"
+                src="/images/iyba-official-white.png"
+                alt="IYBA — International Yacht Brokers Association"
+                width={120}
+                height={28}
+                className="h-7 w-auto opacity-60 hover:opacity-100 transition-opacity duration-500"
               />
               <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", letterSpacing: "0.15em", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", maxWidth: "140px", lineHeight: 1.5 }}>
-                IYBA Member Broker
+                Charter Active Member
               </span>
-            </div>
+            </a>
 
             {/* Roberto 2026-05-02 (Site UX Batch 6) — last-chance
                 browse-fleet CTA. Visitors who scroll all the way to

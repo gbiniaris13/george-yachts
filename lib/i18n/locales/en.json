@@ -128,8 +128,8 @@
     "guests": "Number of Guests",
     "budget": "Budget Range",
     "message": "Tell us about your dream charter",
-    "submit": "Send Inquiry",
-    "success": "Thank you. George will personally review your inquiry and respond within 24 hours.",
+    "submit": "Brief George",
+    "success": "Thank you. George will personally review your brief and respond within 24 hours.",
     "secure": "256-bit encrypted · Your data is protected"
   },
   "footer": {
@@ -182,7 +182,7 @@
     "experience": "Experience",
     "ctaText": "Ready to explore the Greek islands aboard this magnificent vessel? Choose how you'd like to connect.",
     "bookVideo": "Book a Video Consultation",
-    "submitInquiry": "Submit an Inquiry",
+    "submitInquiry": "Brief George",
     "servicePromise": "Personal service · No obligation · Response within 24 hours",
     "viewAllYachts": "View All Charter Yachts"
   },
@@ -334,7 +334,7 @@
     "headingLine2": "QUESTIONS",
     "heroParagraph": "Clear answers about chartering a yacht in Greece with George Yachts.",
     "title": "YACHT CHARTER ESSENTIALS",
-    "subtitle": "Find clear answers to the most common questions regarding booking, costs, and life onboard."
+    "subtitle": "Find clear answers to the most common questions regarding booking, costs, and life aboard."
   },
   "blog": {
     "editorial": "George Yachts Editorial",

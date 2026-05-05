@@ -166,7 +166,7 @@ export default async function YachtPage({ params }) {
       priceModel,
       // D.7 (Roberto brief) — sample 7-day itinerary surfaces a concrete
       // route on the yacht detail page. Optional; the front-end skips
-      // the section entirely when no `days` are populated.
+      // the section entirely when no days are populated.
       sampleItinerary{
         totalDistance,
         days[]{ day, distance, from, to, narrative }

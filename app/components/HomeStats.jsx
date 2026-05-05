@@ -104,11 +104,12 @@ export default function HomeStats({ yachtCount = 66 }) {
             {
               icon: (
                 <Image
-                  src="/images/iyba.png"
-                  alt="IYBA Member Broker — International Yacht Brokers Association"
-                  width={44}
-                  height={44}
+                  src="/images/iyba-official-white.png"
+                  alt="IYBA — International Yacht Brokers Association"
+                  width={120}
+                  height={28}
                   className="opacity-75 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ height: 28, width: "auto" }}
                 />
               ),
               label: "IYBA Member Broker",

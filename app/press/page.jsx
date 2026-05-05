@@ -537,6 +537,37 @@ export default function PressPage() {
         </p>
       </section>
 
+      {/* Mandatory legal disclaimer per Roberto legal directive §1 (4 May 2026).
+          Exact text required — do not paraphrase. Lato Light 9px, color #888,
+          single-line, centered. Frames Forbes / MYBA / IYBA references on this
+          page as nominative fair use, not endorsement. */}
+      <section
+        aria-label="Editorial citation disclaimer"
+        style={{
+          padding: "0 24px 40px",
+          textAlign: "center",
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "'Lato', 'Montserrat', sans-serif",
+            fontWeight: 300,
+            fontSize: 9,
+            color: "#888",
+            margin: 0,
+            lineHeight: 1.6,
+            maxWidth: "880px",
+            marginInline: "auto",
+            fontStyle: "italic",
+          }}
+        >
+          Forbes, MYBA, and IYBA references on this page are made under nominative
+          fair use principles for factual identification of editorial coverage,
+          contract standards, and membership status. Editorial mentions do not
+          constitute endorsement.
+        </p>
+      </section>
+
       <Footer />
     </div>
   );

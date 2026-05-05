@@ -190,7 +190,7 @@ const ContactFormSection = () => {
             onClick={() => setStatus("")}
             className="mt-12 text-[#DAA520] text-xs tracking-[0.2em] uppercase border-b border-[#DAA520]/30 pb-1 hover:border-[#DAA520] transition-all duration-300"
           >
-            Submit Another Inquiry
+            Send Another Brief
           </button>
         </div>
       </section>

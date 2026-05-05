@@ -5,6 +5,8 @@ import NavDrawerSystem from "./components/NavDrawerSystem";
 import GlobalEffects from "./components/GlobalEffects";
 import CustomCursor from "./components/CustomCursor";
 import WhatsAppButton from "./components/WhatsAppButton";
+import ContactDrawer from "./components/ContactDrawer";
+import VisitorGreeting from "./components/VisitorGreeting";
 import StickyFleetCTA from "./components/StickyFleetCTA";
 import GoldCurtain from "./components/GoldCurtain";
 import ExitIntentModal from "./components/ExitIntentModal";
@@ -226,6 +228,16 @@ export default async function RootLayout({ children }) {
             strip — cleaner placement, no floating pill clashing with
             social icons or the hero content. */}
         <WhatsAppButton />
+        {/* Phase 1 / B2 (luxury rebuild, 2026-05-05) — multi-channel
+            contact drawer (WhatsApp / iMessage / Signal / direct call).
+            Sits above the WhatsApp FAB; one tap surfaces every channel
+            UHNW guests use. Personal reply, never an autoresponder. */}
+        <ContactDrawer />
+        {/* Phase 1 / G2 (luxury rebuild, 2026-05-05) — first-visit
+            subtle greeting that reads visitor's IP city + local time
+            ("Good evening from Athens — 21:14 local"). Free Vercel
+            geo headers, no third-party calls, fades after 4s. */}
+        <VisitorGreeting />
         {/* Roberto 2026-05-02 — sticky bottom CTA so the fleet is one
             tap from anywhere on the site (auto-hides on fleet/yacht
             routes). yachtCount left undefined here at the layout
