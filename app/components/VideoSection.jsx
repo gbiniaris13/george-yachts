@@ -210,13 +210,20 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                       aria-label="George Yachts"
                       style={{
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
-                        fontSize: "clamp(34px, 9vw, 110px)",
+                        // Phase 13 (luxury rebuild) — homepage hero
+                        // bumped to match every other page hero on the
+                        // site. 56-150px Vogue scale. Light weight 200
+                        // with negative tracking reads as Robb Report
+                        // cover at any breakpoint.
+                        fontSize: "clamp(56px, 11vw, 150px)",
                         fontWeight: 200,
-                        lineHeight: 0.95,
-                        color: "#fff",
+                        lineHeight: 0.92,
+                        letterSpacing: "0.04em",
+                        color: "#F8F5F0",
                         textTransform: "uppercase",
                         margin: "0 0 24px 0",
                         textAlign: "center",
+                        textShadow: "0 8px 40px rgba(0, 0, 0, 0.55)",
                       }}
                     >
                       <span
