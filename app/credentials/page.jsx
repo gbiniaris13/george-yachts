@@ -449,10 +449,29 @@ export default function CredentialsPage() {
                     }}
                   >
                     Wyoming, United States — registered LLC. Charter agreements
-                    are written and signed under U.S. company law,
-                    giving non-Greek guests the legal recourse they expect from
-                    a U.S. counterparty.
+                    are written and signed under U.S. company law, giving
+                    non-Greek guests the legal recourse they expect from a
+                    U.S. counterparty.
                   </p>
+                  <address
+                    style={{
+                      fontStyle: "normal",
+                      fontFamily: "'Lato', 'Montserrat', sans-serif",
+                      fontSize: 13,
+                      lineHeight: 1.6,
+                      color: "rgba(248,245,240,0.85)",
+                      letterSpacing: "0.02em",
+                      marginTop: 18,
+                      paddingTop: 16,
+                      borderTop: "1px solid rgba(201,168,76,0.25)",
+                      maxWidth: "32ch",
+                    }}
+                  >
+                    George Yachts Brokerage House LLC<br />
+                    30 N Gould St, STE R<br />
+                    Sheridan, WY 82801<br />
+                    United States
+                  </address>
                 </div>
 
                 <div>
@@ -491,22 +510,6 @@ export default function CredentialsPage() {
                 </div>
               </div>
 
-              <p
-                style={{
-                  fontFamily: "'Lato', 'Montserrat', sans-serif",
-                  fontSize: 13,
-                  lineHeight: 1.65,
-                  color: "rgba(248,245,240,0.5)",
-                  fontStyle: "italic",
-                  fontWeight: 300,
-                  margin: "40px 0 0",
-                  maxWidth: "60ch",
-                }}
-              >
-                Full registered address available on request — we don't publish
-                it on the marketing site to keep mailroom traffic away from
-                the brokerage operations.
-              </p>
             </div>
           </div>
         </section>
