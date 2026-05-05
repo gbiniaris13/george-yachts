@@ -71,7 +71,7 @@ export default function BriefGeorgeBanner() {
               lineHeight: 1.55,
             }}
           >
-            Six quick questions — when, who, where, your style, your budget,
+            A short brief — when, who, where, your style, your budget,
             any special occasion. We'll come back with the three yachts our
             brokers would actually pick for your week. No AI proposals —
             just real human curation from inside the Greek charter network.

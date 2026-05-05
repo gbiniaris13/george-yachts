@@ -13,6 +13,7 @@ import ForbesReferrerWelcome from "./components/ForbesReferrerWelcome";
 import StickyFleetCTA from "./components/StickyFleetCTA";
 import AskGeorgeWidget from "./components/AskGeorgeWidget";
 import GoldCurtain from "./components/GoldCurtain";
+import RouteTransition from "./components/RouteTransition";
 import ExitIntentModal from "./components/ExitIntentModal";
 import AmbientScroll from "./components/AmbientScroll";
 // Cleanup log (for anyone wondering where these went):
@@ -245,6 +246,11 @@ export default async function RootLayout({ children }) {
 
         {/* E1 — Gold curtain opens once per session, first thing visitors see */}
         <GoldCurtain />
+        {/* Phase 22 (luxury rebuild) — Hermes/Bottega-style gold sweep
+            on every route change. 360ms ribbon wipe. Skipped on first
+            mount (GoldCurtain owns the entrance) and on prefers-reduced-
+            motion. */}
+        <RouteTransition />
 
         <JsonLd data={organizationSchema} />
         {/* 1. Critical External Scripts */}
