@@ -188,6 +188,21 @@ export default async function YachtPage({ params }) {
           "photoUrl": photo.asset->url
         }
       },
+      // D.5 auto-fallback (Boss directive 2026-05-05): structured
+      // deck plans aren't populated yet, but layout / "plan" images
+      // are scattered in the regular gallery on many yachts (alt
+      // text "layout plan", "Deck Layout", etc). Surface those as a
+      // simpler "Deck layout" section so visitors get something
+      // useful even before Boss seeds the rich deckPlans field.
+      "layoutImages": images[
+        alt match "*layout*" ||
+        alt match "*Layout*" ||
+        alt match "*plan*" ||
+        alt match "*Plan*"
+      ]{
+        "url": asset->url,
+        alt
+      },
       // D.8 (Roberto brief) — typed crew roster with photos. Optional;
       // skipped when empty. Legacy free-text "crew" field stays as the
       // count display in yacht-specs, this drives the rich row.
@@ -258,6 +273,7 @@ export default async function YachtPage({ params }) {
           crewProfiles: yacht.crewProfiles,
           matterportEmbedUrl: yacht.matterportEmbedUrl,
           deckPlans: yacht.deckPlans,
+          layoutImages: yacht.layoutImages,
           images: yacht.images,
         }}
         heroImage={heroImage}

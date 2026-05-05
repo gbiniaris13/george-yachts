@@ -33,6 +33,61 @@ import PriceBlock from '@/app/components/PriceBlock';
 import ExpressInquiryModal from '@/app/components/ExpressInquiryModal';
 import { isPerPerson } from '@/lib/pricing';
 
+// D.5 fallback (Boss directive 2026-05-05) — many yachts already
+// have a layout/floor-plan illustration in the regular gallery
+// (alt text "layout plan", "Deck Layout", etc) but not yet in the
+// structured deckPlans field. This renders that image as a clean
+// "Deck layout" panel so visitors still see something useful.
+// When Boss seeds the rich deckPlans field, the rich tabbed UI
+// takes over and this fallback never fires.
+function DeckLayoutFallback({ images, yachtName }) {
+  const valid = (images || []).filter((i) => i && i.url);
+  if (valid.length === 0) return null;
+  return (
+    <section className="yacht-deckplans reveal" style={{ background: '#0a0a0a', padding: '64px 24px' }}>
+      <div className="container" style={{ maxWidth: 980, margin: '0 auto' }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.42em', textTransform: 'uppercase', color: '#DAA520', fontWeight: 600, marginBottom: 14, textAlign: 'center' }}>
+          Deck layout
+        </p>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: 'clamp(28px, 4vw, 40px)', color: '#fff', textAlign: 'center', margin: '0 0 28px', lineHeight: 1.15 }}>
+          Where you sleep, eat, and relax aboard <em style={{ color: '#DAA520', fontStyle: 'italic' }}>{yachtName}</em>
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: valid.length === 1 ? '1fr' : 'repeat(auto-fit, minmax(360px, 1fr))', gap: 16 }}>
+          {valid.slice(0, 4).map((img, i) => (
+            <div
+              key={i}
+              style={{
+                position: 'relative',
+                background: '#0d1b2a',
+                border: '1px solid rgba(218,165,32,0.3)',
+              }}
+            >
+              <img
+                src={`${img.url}?w=1400&fit=max&auto=format`}
+                alt={img.alt || `${yachtName} deck layout`}
+                loading="lazy"
+                style={{ display: 'block', width: '100%', height: 'auto' }}
+              />
+            </div>
+          ))}
+        </div>
+        <p
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: 11,
+            color: 'rgba(255,255,255,0.55)',
+            textAlign: 'center',
+            margin: '20px 0 0',
+            fontStyle: 'italic',
+          }}
+        >
+          Cabin-by-cabin photos included with your personalized proposal.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 // D.5 — Interactive deck plans. Tabs across decks; each tab shows the
 // deck illustration with absolute-positioned hotspot pins. Click a pin
 // to open a modal showing the cabin photo + name. Stays out of the way
@@ -559,9 +614,16 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </section>
         )}
 
-        {/* D.5 — INTERACTIVE DECK PLANS */}
-        {Array.isArray(yacht.deckPlans) && yacht.deckPlans.length > 0 && (
+        {/* D.5 — INTERACTIVE DECK PLANS (rich) when populated, else
+            simpler layout-image fallback drawn from existing gallery
+            images whose alt text flags them as a deck layout (per
+            Boss directive 2026-05-05). */}
+        {Array.isArray(yacht.deckPlans) && yacht.deckPlans.length > 0 ? (
           <DeckPlansSection decks={yacht.deckPlans} yachtName={yacht.name} />
+        ) : (
+          Array.isArray(yacht.layoutImages) && yacht.layoutImages.length > 0 && (
+            <DeckLayoutFallback images={yacht.layoutImages} yachtName={yacht.name} />
+          )
         )}
 
         {/* D.6 — MATTERPORT 3D TOUR (lazy / click-to-load) */}
