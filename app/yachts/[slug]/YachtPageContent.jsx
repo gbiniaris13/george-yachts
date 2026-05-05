@@ -656,148 +656,17 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </section>
         )}
 
-        {/* D.8 — CREW PROFILES ROW */}
-        {Array.isArray(yacht.crewProfiles) && yacht.crewProfiles.length > 0 && (
-          <section className="yacht-crew reveal" style={{ padding: '64px 24px' }}>
-            <div className="container" style={{ maxWidth: 1080, margin: '0 auto' }}>
-              <p
-                style={{
-                  fontFamily: "'Montserrat', sans-serif",
-                  fontSize: 9,
-                  letterSpacing: '0.42em',
-                  textTransform: 'uppercase',
-                  color: '#DAA520',
-                  fontWeight: 600,
-                  marginBottom: 14,
-                  textAlign: 'center',
-                }}
-              >
-                Meet the Crew
-              </p>
-              <h2
-                style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  fontWeight: 300,
-                  fontSize: 'clamp(28px, 4vw, 40px)',
-                  color: '#fff',
-                  textAlign: 'center',
-                  margin: '0 0 36px',
-                  lineHeight: 1.15,
-                }}
-              >
-                The team behind <em style={{ color: '#DAA520', fontStyle: 'italic' }}>{yacht.name}</em>
-              </h2>
-              <ul
-                style={{
-                  listStyle: 'none',
-                  padding: 0,
-                  margin: 0,
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-                  gap: 28,
-                }}
-              >
-                {yacht.crewProfiles.map((member, i) => (
-                  <li
-                    key={i}
-                    className="crew-card"
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                      position: 'relative',
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: 132,
-                        height: 132,
-                        borderRadius: '50%',
-                        overflow: 'hidden',
-                        background: '#1a1a1a',
-                        border: '1px solid rgba(218,165,32,0.4)',
-                        marginBottom: 14,
-                        position: 'relative',
-                      }}
-                    >
-                      {member.photoUrl ? (
-                        <img
-                          src={`${member.photoUrl}?w=400&h=400&fit=crop&crop=focalpoint&auto=format`}
-                          alt={`${member.role || 'Crew member'} aboard ${yacht.name}`}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            display: 'block',
-                          }}
-                        />
-                      ) : (
-                        <span
-                          aria-hidden="true"
-                          style={{
-                            position: 'absolute',
-                            inset: 0,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontFamily: "'Cormorant Garamond', Georgia, serif",
-                            fontSize: 38,
-                            fontWeight: 300,
-                            color: '#DAA520',
-                          }}
-                        >
-                          {(member.role || '?').charAt(0).toUpperCase()}
-                        </span>
-                      )}
-                    </div>
-                    <div
-                      style={{
-                        fontFamily: "'Montserrat', sans-serif",
-                        fontSize: 10,
-                        letterSpacing: '0.32em',
-                        textTransform: 'uppercase',
-                        color: '#DAA520',
-                        fontWeight: 600,
-                        marginBottom: 6,
-                      }}
-                    >
-                      {member.role || 'Crew'}
-                    </div>
-                    {member.oneLineBio && (
-                      <p
-                        className="crew-bio"
-                        style={{
-                          fontFamily: "'Lato', 'Montserrat', sans-serif",
-                          fontSize: 13,
-                          lineHeight: 1.55,
-                          color: 'rgba(255,255,255,0.85)',
-                          margin: 0,
-                          maxWidth: 220,
-                        }}
-                      >
-                        {member.oneLineBio}
-                      </p>
-                    )}
-                  </li>
-                ))}
-              </ul>
-              <p
-                style={{
-                  fontFamily: "'Montserrat', sans-serif",
-                  fontSize: 11,
-                  letterSpacing: '0.18em',
-                  color: 'rgba(255,255,255,0.55)',
-                  textAlign: 'center',
-                  margin: '40px 0 0',
-                  fontStyle: 'italic',
-                }}
-              >
-                Full crew profiles included with your personalized proposal.
-              </p>
-            </div>
-          </section>
-        )}
+        {/* D.8 (Roberto brief, May 2026) — Crew profiles section
+            REMOVED per Boss directive 2026-05-05. Yacht owners can
+            change crew without notifying us; if we surface specific
+            people on the public yacht page we expose ourselves to
+            client disappointment when an introduced captain or chef
+            isn't actually onboard. The legacy free-text `crew` field
+            in the specs row ("6 — Captain, Chef, 2 Stewardesses, 2
+            Deckhands") stays — that's count-of-roles, no individuals,
+            which is safe to publish. The crewProfiles Sanity field
+            stays for now (it's optional + harmless empty); future
+            cleanup can drop the schema field too. */}
 
         {/* D.7 — SAMPLE 7-DAY ROUTE */}
         {yacht.sampleItinerary && Array.isArray(yacht.sampleItinerary.days) && yacht.sampleItinerary.days.length > 0 && (
