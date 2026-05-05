@@ -83,6 +83,21 @@ export default function GlobalEffects() {
     //          data attribute and we cross-fade them in when they
     //          enter the viewport. Cross-browser (works on Safari +
     //          Firefox), fallback for animation-timeline-only CSS. ═══════
+    // Phase 27 (mobile audit, 2026-05-05) — George reported blank
+    // panels mid-page on iPhone ("σκορά​ρω και βλέπω σε πολλά πλαίσια
+    // βλέπω μόνο"). Root cause: threshold:0.12 + rootMargin:-10% was
+    // too strict — on mobile, mid-page sections with tall dynamic
+    // children sometimes never crossed the 12% visibility floor at
+    // scroll speed, leaving them stuck at opacity:0. Loosened the
+    // trigger AND added a hard 1.6s safety net that force-reveals
+    // anything still hidden so a slow chunk or tall section can
+    // never make a panel disappear before Forbes traffic.
+    const revealAll = () => {
+      document
+        .querySelectorAll("[data-gy-reveal]:not(.gy-revealed)")
+        .forEach((el) => el.classList.add("gy-revealed"));
+    };
+
     const gyRevealEls = document.querySelectorAll("[data-gy-reveal]:not(.gy-revealed)");
     if (gyRevealEls.length > 0) {
       const gyRevealObs = new IntersectionObserver(
@@ -94,10 +109,23 @@ export default function GlobalEffects() {
             }
           });
         },
-        { threshold: 0.12, rootMargin: "0px 0px -10% 0px" }
+        // Trigger as soon as the element pre-enters the viewport so
+        // mobile scroll doesn't outrun the threshold.
+        { threshold: 0.01, rootMargin: "0px 0px 200px 0px" }
       );
       gyRevealEls.forEach((el) => gyRevealObs.observe(el));
     }
+
+    // Hard safety net — if anything is still hidden 1.6s after mount
+    // (chunk load delay, observer race, anything), force-reveal so the
+    // visitor never sees an empty pane.
+    const safetyNet = setTimeout(revealAll, 1600);
+    // Also re-run reveal sweep on first scroll, in case dynamic
+    // components mounted AFTER the initial observer query (the
+    // observer query is once-per-mount; new wrappers added by
+    // late-hydrating dynamic imports wouldn't be caught otherwise).
+    const onFirstScroll = () => { revealAll(); window.removeEventListener("scroll", onFirstScroll); };
+    window.addEventListener("scroll", onFirstScroll, { passive: true, once: true });
 
     // ═══════ 4. BUTTON PRESS ANIMATION ═══════
     const buttons = document.querySelectorAll("a, button");
@@ -143,6 +171,8 @@ export default function GlobalEffects() {
     // Cleanup
     return () => {
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", onFirstScroll);
+      clearTimeout(safetyNet);
       document.removeEventListener("touchstart", onTouchStart);
       document.removeEventListener("click", onClick);
       buttons.forEach((btn) => {

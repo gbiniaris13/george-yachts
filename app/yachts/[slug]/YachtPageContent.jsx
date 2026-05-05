@@ -540,7 +540,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
               {yacht.yearBuiltRefit && <Spec label={t('common.year', 'Year')} value={yacht.yearBuiltRefit} />}
               {yacht.sleeps && <Spec label={t('common.guests', 'Guests')} value={yacht.sleeps} />}
               {yacht.cabins && <Spec label={t('common.cabins', 'Cabins')} value={yacht.cabins} />}
-              {yacht.crew && <Spec label={t('common.crew', 'Crew')} value={yacht.crew} />}
+              {yacht.crew && <CrewSpec label={t('common.crew', 'Crew')} value={yacht.crew} />}
               {yacht.cruiseSpeed && <Spec label={t('common.cruiseSpeed', 'Cruise Speed')} value={yacht.cruiseSpeed} />}
               {yacht.maxSpeed && <Spec label={t('common.maxSpeed', 'Max Speed')} value={yacht.maxSpeed} />}
             </div>
@@ -1110,6 +1110,69 @@ function Spec({ label, value }) {
     <div className="yacht-specs__item">
       <span className="yacht-specs__label">{label}</span>
       <span className="yacht-specs__value">{value}</span>
+    </div>
+  );
+}
+
+// Phase 27 (Forbes-launch eve, 2026-05-05) — "5 — Captain, Chef, Chief
+// Stewardess, 2 Deckhand" reads as a CSV from a spreadsheet. Boss flagged
+// it as πρόχειρο ("for the audience we serve, this looks careless").
+// Format the raw Sanity crew string into a count + role list with the
+// roles arranged as small caps and the headcount lifted as a number,
+// matching the existing Length / Guests / Cabins typography rhythm.
+function formatCrewString(raw) {
+  if (!raw) return { count: null, roles: [] };
+  const str = String(raw).trim();
+  // Match an optional leading total ("5", "5 —", "5 -", "5:", "5 crew —")
+  const lead = str.match(/^\s*(\d+)\s*(?:crew\s*)?[—\-:·•]\s*(.*)$/i);
+  let countNum = null;
+  let rest = str;
+  if (lead) {
+    countNum = parseInt(lead[1], 10);
+    rest = lead[2].trim();
+  } else {
+    const onlyNum = str.match(/^\s*(\d+)\s*$/);
+    if (onlyNum) {
+      return { count: parseInt(onlyNum[1], 10), roles: [] };
+    }
+  }
+  // Split roles by comma / "and" / "&" / "/" / "+" — keep order.
+  const roles = rest
+    .split(/\s*(?:,|\band\b|&|\/|\+)\s*/i)
+    .map((r) => r.trim())
+    .filter(Boolean)
+    .map((role) => {
+      // Pluralise where needed: "2 Deckhand" → "2 Deckhands"
+      const m = role.match(/^(\d+)\s+(.+)$/);
+      if (m) {
+        const [, n, name] = m;
+        const cleaned = name.replace(/s$/i, "");
+        return `${n} ${cleaned}${parseInt(n, 10) > 1 ? "s" : ""}`;
+      }
+      return role;
+    });
+  return { count: countNum, roles };
+}
+
+function CrewSpec({ label, value }) {
+  const { count, roles } = formatCrewString(value);
+  if (!count && roles.length === 0) {
+    return <Spec label={label} value={value} />;
+  }
+  return (
+    <div className="yacht-specs__item">
+      <span className="yacht-specs__label">{label}</span>
+      <span className="yacht-specs__value">
+        {count != null ? count : null}
+        {count != null && roles.length > 0 ? (
+          <span className="yacht-specs__crew-roles" aria-hidden="true">
+            <span className="yacht-specs__crew-rule" />
+            {roles.join(" · ")}
+          </span>
+        ) : roles.length > 0 ? (
+          roles.join(" · ")
+        ) : null}
+      </span>
     </div>
   );
 }

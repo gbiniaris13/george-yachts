@@ -371,6 +371,44 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Phase 27 (Forbes-launch eve, 2026-05-05) — Crew spec gets a count
+   number in the same Cormorant scale as Length / Guests, then a thin
+   gold rule + a small-caps role list underneath. Matches the
+   "headline number + supporting eyebrow" rhythm of every other Spec
+   tile rather than dumping a long CSV string into the gold gradient
+   text (which read as πρόχειρο per Boss feedback). */
+.yacht-specs__crew-roles {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Montserrat', sans-serif;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.65;
+  color: rgba(248, 245, 240, 0.62);
+  -webkit-text-fill-color: currentColor;
+  background: none;
+  text-align: center;
+  max-width: 28ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.yacht-specs__crew-rule {
+  display: block;
+  width: 28px;
+  height: 1px;
+  margin: 0 auto 10px;
+  background: rgba(218, 165, 32, 0.55);
+}
+@media (max-width: 640px) {
+  .yacht-specs__crew-roles {
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    line-height: 1.55;
+  }
+}
+
 /* ---- Ideal For ---- */
 .yacht-ideal {
   padding: 60px 0;

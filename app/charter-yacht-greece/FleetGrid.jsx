@@ -162,6 +162,21 @@ function parseLengthMeters(lengthStr) {
   return numMatch ? parseFloat(numMatch[1]) : 0;
 }
 
+// Phase 27 (Forbes-launch eve, 2026-05-05) — yacht "sleeps" / "cabins"
+// fields in Sanity sometimes arrive as strings ("8", "Up to 10", "8-10
+// guests"). Number(x) on those non-numeric forms yields NaN → 0, which
+// silently kicks the yacht out of every guest-cap filter. Extract the
+// first integer in the value so the filter actually has something to
+// compare against.
+function parseGuestCount(raw) {
+  if (raw === null || raw === undefined) return 0;
+  if (typeof raw === "number") return raw;
+  const m = String(raw).match(/(\d+)/g);
+  if (!m || m.length === 0) return 0;
+  // For ranges like "8-10" prefer the higher number (sleeping capacity).
+  return Math.max(...m.map((n) => parseInt(n, 10)).filter(Number.isFinite));
+}
+
 // Parse price string to number for sorting (extracts first number)
 function parsePriceNum(priceStr) {
   if (!priceStr || priceStr === 'On Request') return Infinity;
@@ -584,7 +599,7 @@ export default function FleetGrid({ yachts }) {
       const priceStr = y.weeklyRatePrice || override.price || 'On Request';
       const priceNum = parsePriceNum(priceStr);
       const isFlagship = slug === 'la-pellegrina-1';
-      return { ...y, lengthM, guestsNum: Number(guests) || 0, cabinsNum: Number(cabs) || 0, priceNum, isFlagship };
+      return { ...y, lengthM, guestsNum: parseGuestCount(guests), cabinsNum: parseGuestCount(cabs), priceNum, isFlagship };
     });
 
     // Category filter
@@ -618,28 +633,36 @@ export default function FleetGrid({ yachts }) {
       result = result.filter((y) => typeof y.yearRefit === 'number' && y.yearRefit >= minYear);
     }
     // C.6 — Water toys (AND across selected — yacht must offer ALL chosen).
-    // Bug fix 2026-05-05: most yachts in Sanity haven't been migrated
-    // from the legacy free-text `toys` field to the new structured
-    // `waterToys` array, so the filter was returning 0 results for
-    // every selection. Falls back to case-insensitive substring match
-    // against the legacy text field so the chips actually filter
-    // something today instead of waiting on a Sanity backfill.
+    // Phase 27 (Forbes-launch eve, 2026-05-05): the previous fallback
+    // only handled `y.toys` as a STRING — but in Sanity it's actually
+    // a string ARRAY (yacht detail page maps over yacht.toys). Result:
+    // every chip returned 0 yachts. Now we coerce both shapes to a
+    // single lowercase haystack and substring-match against the
+    // synonyms list, so the filter works regardless of how each
+    // yacht stores its toys (structured array, free-text string, or
+    // free-text array).
     if (toysFilter.length > 0) {
       const TOY_TEXT_SYNONYMS = {
-        jet_ski: ["jet ski", "jetski", "jet-ski"],
+        jet_ski: ["jet ski", "jetski", "jet-ski", "waverunner"],
         seabob: ["seabob", "sea bob", "sea-bob"],
         efoil: ["efoil", "e-foil", "e foil", "hydrofoil"],
-        wakeboard: ["wakeboard", "wake board"],
-        paddleboard: ["paddleboard", "paddle board", "sup", "stand-up paddle"],
-        inflatable_slide: ["inflatable slide", "slide", "water slide"],
-        diving_equipment: ["diving", "scuba", "snorkel", "dive gear", "diving equipment", "diving gear"],
+        wakeboard: ["wakeboard", "wake board", "waterski", "water ski"],
+        paddleboard: ["paddleboard", "paddle board", "sup", "stand-up paddle", "stand up paddle"],
+        inflatable_slide: ["inflatable slide", "slide", "water slide", "inflatable"],
+        diving_equipment: ["diving", "scuba", "snorkel", "snorkelling", "snorkeling", "dive gear", "diving equipment", "diving gear"],
+      };
+      const toHaystack = (raw) => {
+        if (!raw) return "";
+        if (Array.isArray(raw)) return raw.join(" ").toLowerCase();
+        if (typeof raw === "string") return raw.toLowerCase();
+        return "";
       };
       result = result.filter((y) => {
         const structuredSet = new Set(Array.isArray(y.waterToys) ? y.waterToys : []);
-        const legacyText = (typeof y.toys === "string" ? y.toys : "").toLowerCase();
+        const legacyText = toHaystack(y.toys);
         return toysFilter.every((tid) => {
           if (structuredSet.has(tid)) return true;
-          const synonyms = TOY_TEXT_SYNONYMS[tid] || [tid];
+          const synonyms = TOY_TEXT_SYNONYMS[tid] || [tid.replace(/_/g, " ")];
           return synonyms.some((s) => legacyText.includes(s));
         });
       });
@@ -751,19 +774,30 @@ export default function FleetGrid({ yachts }) {
       },
     },
     {
+      // Phase 27 (Forbes-launch, 2026-05-05) — preset previously
+      // wrote priceRange:'under-25' which has NO matching branch in
+      // the price filter (valid IDs are under20 / 20to50 / 50to100 /
+      // over100). Result: chip silently did nothing on price, but
+      // the misleading "≤€25K" label set wrong expectations. Snap to
+      // the real Under-€20K bucket so the chip semantically matches
+      // the filter behaviour.
       id: 'group-of-10',
-      label: 'Group of 10 · ≤€25K/week',
+      label: 'Group of 10 · under €20K/week',
       apply: () => {
         setActiveCategory('all');
         setGuestFilter('10');
-        setPriceRange('under-25');
+        setPriceRange('under20');
         setLengthRange('all');
         setCabinFilter('all');
       },
     },
     {
+      // Phase 27 — label said "35m+" but applied lengthRange:'large'
+      // which is "40m+" (LENGTH_RANGES has small <20m / medium 20–40m
+      // / large >40m). Yachts at 35–40m were silently excluded.
+      // Aligned label to the bucket so the chip never lies.
       id: 'superyacht',
-      label: 'Superyacht · 12 guests · 35m+',
+      label: 'Superyacht · 12 guests · 40m+',
       apply: () => {
         setActiveCategory('motor-yachts');
         setGuestFilter('12');
