@@ -16,6 +16,13 @@ const staticRoutes = [
   // Primary conversion page
   { path: "/inquiry", priority: 0.95, changeFrequency: "weekly" },
 
+  // Phase 27b (Forbes-launch eve, 2026-05-05) — AI Research Hub.
+  // Engineered specifically for ChatGPT / Perplexity / Claude /
+  // Gemini / Bing AI to cite when users ask about yacht charter
+  // Greece. Single-source-of-truth page with structured data,
+  // direct first-paragraph answers, and per-section deep links.
+  { path: "/ai-research", priority: 0.92, changeFrequency: "weekly" },
+
   // Side-by-side comparison hub (NEW 2026-04-25). Both the index
   // and the 3 broker-curated comparison URLs are sitemap'd so
   // Google indexes the high-value comparison-query pages directly.

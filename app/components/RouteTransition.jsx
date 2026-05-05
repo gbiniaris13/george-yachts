@@ -1,27 +1,33 @@
 "use client";
 
-// Phase 22 (luxury rebuild, 2026-05-05) — Hermès-style page-transition
-// gold sweep. Every navigation between routes fires a 360ms gold ribbon
-// that wipes left-to-right across the viewport. The destination page
-// composes underneath the wipe and is revealed as the ribbon clears.
+// Phase 27b (Forbes-launch eve, 2026-05-05) — VELVET CURTAIN page
+// transition. Replaces the previous Hermès gold-sweep ribbon with a
+// pair of black velvet curtains that meet in the middle with a thin
+// gold seam, hold briefly, then part outward to reveal the new page.
 //
-// This is the kind of detail UHNW visitors notice without realising —
-// it's what makes "click navigation" read as "considered transition".
-// Reference: Hermès, Bottega Veneta, Bulgari sites.
+// Reference: real-world theatre velvet, Bulgari/Bottega launch reels.
+// Why velvet over a flat sweep: the holding pause creates the
+// "ceremonial reveal" UHNW visitors associate with old-money venues
+// — galleries, opera houses, vintage hotels. A horizontal sweep
+// reads as a click-through; a curtain reads as a presentation.
 //
 // Implementation:
-//   • usePathname triggers on route change.
-//   • A fixed-position overlay element animates a gold gradient from
-//     translateX(-100%) → translateX(0) → translateX(100%) over 360ms.
-//   • z-index 9000 — above everything except the GoldCurtain first-paint.
-//   • Suppressed on initial mount (first pathname) so the GoldCurtain
-//     stays the only entrance animation; we only sweep on subsequent
-//     navigations.
+//   • Two fixed half-screen panels (left + right) with a vertical
+//     gold seam between them.
+//   • Phase 1 (0–280ms): both panels slide IN from off-screen.
+//   • Phase 2 (280–400ms): hold + faint vertical gold shimmer at seam.
+//   • Phase 3 (400–760ms): both panels slide OUT to their respective
+//     viewport edges, revealing the new page underneath.
+//   • Skipped on initial mount (let GoldCurtain own the entrance).
+//   • Skipped under prefers-reduced-motion.
 
 import { useEffect, useState, useRef } from "react";
 import { usePathname } from "next/navigation";
 
-const SWEEP_MS = 360;
+const PHASE_IN = 280;
+const HOLD = 120;
+const PHASE_OUT = 360;
+const TOTAL = PHASE_IN + HOLD + PHASE_OUT; // 760ms
 
 export default function RouteTransition() {
   const pathname = usePathname();
@@ -30,7 +36,6 @@ export default function RouteTransition() {
   const lastPath = useRef(pathname);
 
   useEffect(() => {
-    // Skip first mount — let GoldCurtain own the entrance.
     if (isFirstPath.current) {
       isFirstPath.current = false;
       lastPath.current = pathname;
@@ -40,11 +45,26 @@ export default function RouteTransition() {
     lastPath.current = pathname;
 
     setActive(true);
-    const t = setTimeout(() => setActive(false), SWEEP_MS + 40);
+    const t = setTimeout(() => setActive(false), TOTAL + 40);
     return () => clearTimeout(t);
   }, [pathname]);
 
   if (!active) return null;
+
+  // Velvet panel — radial gradient from center-darker to edge-lighter
+  // mimics the way real velvet catches light at folds. The diagonal
+  // overlay adds the subtle vertical "fold lines" that give cloth its
+  // identity (vs flat black paint).
+  const velvetBg = `
+    radial-gradient(ellipse at 50% 40%, #0a0a0a 0%, #050505 60%, #000 100%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.02) 0,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 14px
+    )
+  `;
 
   return (
     <span
@@ -57,24 +77,84 @@ export default function RouteTransition() {
         overflow: "hidden",
       }}
     >
+      {/* Left curtain */}
       <span
+        className="gy-velvet-curtain gy-velvet-left"
         style={{
           position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(105deg, transparent 25%, rgba(218,165,32,0.42) 48%, rgba(218,165,32,0.62) 50%, rgba(218,165,32,0.42) 52%, transparent 75%)",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          width: "50%",
+          background: velvetBg,
           transform: "translateX(-100%)",
-          animation: `gy-route-sweep ${SWEEP_MS}ms cubic-bezier(0.7, 0, 0.3, 1) forwards`,
+          boxShadow: "inset -16px 0 32px rgba(0, 0, 0, 0.85)",
+        }}
+      />
+      {/* Right curtain */}
+      <span
+        className="gy-velvet-curtain gy-velvet-right"
+        style={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          right: 0,
+          width: "50%",
+          background: velvetBg,
+          transform: "translateX(100%)",
+          boxShadow: "inset 16px 0 32px rgba(0, 0, 0, 0.85)",
+        }}
+      />
+      {/* Gold seam — appears at the meeting line */}
+      <span
+        className="gy-velvet-seam"
+        style={{
+          position: "absolute",
+          top: "10%",
+          bottom: "10%",
+          left: "50%",
+          width: "1px",
+          transform: "translateX(-50%) scaleY(0)",
+          background:
+            "linear-gradient(180deg, transparent 0%, rgba(218,165,32,0.85) 25%, #FFE9A8 50%, rgba(218,165,32,0.85) 75%, transparent 100%)",
+          boxShadow:
+            "0 0 16px rgba(218,165,32,0.6), 0 0 32px rgba(218,165,32,0.3)",
         }}
       />
       <style jsx global>{`
-        @keyframes gy-route-sweep {
-          0%   { transform: translateX(-100%); }
-          50%  { transform: translateX(0); }
-          100% { transform: translateX(110%); }
+        @keyframes gyVelvetIn {
+          0%   { transform: translateX(var(--from)); }
+          100% { transform: translateX(0); }
+        }
+        @keyframes gyVelvetOut {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(var(--to)); }
+        }
+        @keyframes gyVelvetSeam {
+          0%   { transform: translateX(-50%) scaleY(0); opacity: 0; }
+          25%  { transform: translateX(-50%) scaleY(1); opacity: 1; }
+          75%  { transform: translateX(-50%) scaleY(1); opacity: 1; }
+          100% { transform: translateX(-50%) scaleY(0); opacity: 0; }
+        }
+        .gy-velvet-left {
+          --from: -100%;
+          --to:   -110%;
+          animation:
+            gyVelvetIn  ${PHASE_IN}ms cubic-bezier(0.16, 1, 0.3, 1) forwards,
+            gyVelvetOut ${PHASE_OUT}ms cubic-bezier(0.7, 0, 0.3, 1) ${PHASE_IN + HOLD}ms forwards;
+        }
+        .gy-velvet-right {
+          --from: 100%;
+          --to:   110%;
+          animation:
+            gyVelvetIn  ${PHASE_IN}ms cubic-bezier(0.16, 1, 0.3, 1) forwards,
+            gyVelvetOut ${PHASE_OUT}ms cubic-bezier(0.7, 0, 0.3, 1) ${PHASE_IN + HOLD}ms forwards;
+        }
+        .gy-velvet-seam {
+          animation: gyVelvetSeam ${TOTAL}ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         @media (prefers-reduced-motion: reduce) {
-          [aria-hidden="true"] > [style*="gy-route-sweep"] { display: none; }
+          .gy-velvet-curtain, .gy-velvet-seam { display: none; }
         }
       `}</style>
     </span>

@@ -297,6 +297,64 @@ section {
   .gy-gold-24k-shine { animation: none; }
 }
 
+/* Phase 27b (Forbes-launch eve, 2026-05-05) — LV-tier logo intro reveal.
+   On every page first-paint the logo fades up from 0 → 1 over 1.4s
+   while a gold halo radiates outward from behind it. Boss directive:
+   "Louis Vuitton θα το είχε αποκλείεται τόσο" — adds the missing
+   ceremonial introduction. */
+.gy-logo-reveal {
+  position: relative;
+  isolation: isolate;
+  animation: gyLogoFade 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.gy-logo-reveal img {
+  animation: gyLogoLift 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.gy-logo-reveal::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  transform: translate(-50%, -50%) scale(0.4);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(218, 165, 32, 0.55) 0%,
+    rgba(218, 165, 32, 0.18) 25%,
+    rgba(218, 165, 32, 0) 60%
+  );
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+  animation: gyLogoHalo 2.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  filter: blur(8px);
+}
+@keyframes gyLogoFade {
+  0%   { opacity: 0; }
+  30%  { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+@keyframes gyLogoLift {
+  0%   { transform: translateY(8px) scale(0.96); filter: brightness(0.7); }
+  60%  { transform: translateY(0)   scale(1.02); filter: brightness(1.15); }
+  100% { transform: translateY(0)   scale(1);    filter: brightness(1); }
+}
+@keyframes gyLogoHalo {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+  35%  { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gy-logo-reveal,
+  .gy-logo-reveal img,
+  .gy-logo-reveal::before {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Phase 27 — global luminance pass. Every gold uppercase eyebrow on a
    black bg gets a soft halo so it reads as luminous gold, not painted
    tan. Restricted to letter-spaced uppercase text (eyebrows / chips /
@@ -952,6 +1010,34 @@ footer h4 {
    sticky CTA remain — that's enough for billionaire-tier UX. */
 @media (max-width: 700px) {
   .gy-fab-desktop-only { display: none !important; }
+}
+
+/* Phase 27b (Forbes-launch eve, 2026-05-05) — PRESENCE STRIP near logo
+   on desktop. Boss directive: "πάνω-πάνω εκεί να υπήρχε το on the
+   desk in athens και το ambient sound — δείξε δυναμική, LV-tier".
+   Repositions BrokerStatus + AmbientPlayer pills to flank the centered
+   logo at the top of the viewport on desktop. Mobile keeps them
+   hidden (already handled in their own component CSS via media
+   queries). The existing inline `position: fixed; bottom/left` is
+   overridden with !important since inline styles win otherwise. */
+@media (min-width: 1024px) {
+  .gy-broker-status {
+    bottom: auto !important;
+    left: 50% !important;
+    top: calc(168px + 8px) !important;       /* nav-rest height + gap */
+    transform: translateX(calc(-50% - 110px)) !important; /* sit ~110px LEFT of center */
+  }
+  .gy-ambient-pill {
+    bottom: auto !important;
+    left: 50% !important;
+    top: calc(168px + 8px) !important;
+    transform: translateX(calc(-50% + 110px)) !important; /* sit ~110px RIGHT of center */
+  }
+  /* When the page is scrolled the nav collapses to 92px — track that. */
+  body.gy-nav-scrolled .gy-broker-status,
+  body.gy-nav-scrolled .gy-ambient-pill {
+    top: calc(92px + 8px) !important;
+  }
 }
 
 /* Phase 27 — kill Safari iOS auto-hyphenation everywhere in our nav

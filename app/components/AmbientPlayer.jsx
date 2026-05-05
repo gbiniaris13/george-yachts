@@ -117,6 +117,7 @@ export default function AmbientPlayer() {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       data-cursor={playing ? "Mute" : "Listen"}
+      className="gy-ambient-pill"
       style={{
         position: "fixed",
         bottom: 24,

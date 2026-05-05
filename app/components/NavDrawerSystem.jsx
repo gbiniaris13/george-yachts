@@ -119,11 +119,17 @@ const NavDrawerSystem = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      const isScrolled = window.scrollY > 50;
+      setScrolled(isScrolled);
+      // Phase 27b — also publish state to body class so the presence
+      // strip (BrokerStatus + AmbientPlayer pills near the logo on
+      // desktop) can re-anchor as the nav collapses 168 → 92.
+      document.body.classList.toggle("gy-nav-scrolled", isScrolled);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      document.body.classList.remove("gy-nav-scrolled");
     };
   }, []);
 
@@ -161,14 +167,18 @@ const NavDrawerSystem = () => {
             </button>
           </div>
 
-          {/* --- 2. CENTER — Logo (shrinks on scroll).
-              Phase 27 (Forbes-launch eve, 2026-05-05) — Boss directive:
-              "μεγάλωσέ το, να δείξουμε δυναμική, LV-tier δεν θα το είχε
-              τόσο μικρό". Bumped from clamp(70, 12vw, 110)→
-              clamp(96, 14vw, 156) at rest, and from 40→56 when scrolled.
-              The nav header height also stretches to 168/96 to keep
-              the logo from clipping the top edge. */}
-          <Link href="/" className="absolute left-1/2 -translate-x-1/2 shrink-0 group" data-cursor="Home">
+          {/* --- 2. CENTER — Logo with gold-particle intro reveal.
+              Phase 27b (Forbes-launch eve, 2026-05-05) — adds an LV-tier
+              gold-particle reveal on first paint: the logo fades up
+              while a soft gold halo radiates outward. Pure CSS, no
+              Lottie file, no JS state — uses two ::before/::after
+              pseudo-elements with delayed transforms. ~1.4s reveal,
+              fires once per visit, respects reduced-motion. */}
+          <Link
+            href="/"
+            className="absolute left-1/2 -translate-x-1/2 shrink-0 group gy-logo-reveal"
+            data-cursor="Home"
+          >
             <img
               src="/images/yacht-icon-only.svg"
               alt="George Yachts Brokerage House"

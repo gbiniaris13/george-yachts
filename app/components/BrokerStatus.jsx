@@ -104,6 +104,7 @@ export default function BrokerStatus() {
     <div
       role="status"
       aria-live="polite"
+      className="gy-broker-status"
       style={{
         position: "fixed",
         // Boss bug fix (third pass, 2026-05-05): top-left was covering
