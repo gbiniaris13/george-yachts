@@ -234,17 +234,32 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Newsletter Section */}
-        <div className="border-t border-b border-white/[0.04] py-12 my-8">
-          <div className="max-w-xl mx-auto text-center">
-            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#DAA520", fontWeight: 600, marginBottom: "12px" }}>
+        {/* Newsletter Section — Phase 23 (luxury rebuild, 2026-05-05).
+            Reframed as an editorial moment: gold rule, Cinzel eyebrow,
+            larger Cormorant headline, dignified body copy. The
+            subscribe is now an "invitation" instead of a generic
+            footer signup. */}
+        <div
+          className="my-12"
+          style={{
+            borderTop: "1px solid rgba(218,165,32,0.18)",
+            borderBottom: "1px solid rgba(218,165,32,0.18)",
+            padding: "clamp(48px, 6vw, 72px) 24px",
+            background: "linear-gradient(135deg, rgba(218,165,32,0.03) 0%, rgba(13,27,42,0.4) 100%)",
+          }}
+        >
+          <div className="max-w-2xl mx-auto text-center">
+            <span aria-hidden="true" className="gy-divider-star" style={{ marginBottom: 24 }}>
+              <span />
+            </span>
+            <h4 style={{ fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', sans-serif", fontSize: "10px", letterSpacing: "0.42em", textTransform: "uppercase", color: "#C9A84C", fontWeight: 500, marginBottom: "16px" }}>
               {t('footer.newsletter')}
             </h4>
-            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", fontWeight: 300, color: "#fff", marginBottom: "8px" }}>
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 300, color: "#F8F5F0", marginBottom: "12px", lineHeight: 1.15, letterSpacing: "-0.015em" }}>
               The George Yachts Journal
             </p>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.3)", marginBottom: "28px", lineHeight: 1.7 }}>
-              Market insights, new yacht arrivals, and curated charter opportunities — delivered discreetly.
+            <p style={{ fontFamily: "'Lato', 'Montserrat', sans-serif", fontStyle: "italic", fontSize: "15px", color: "rgba(248,245,240,0.65)", marginBottom: "32px", lineHeight: 1.65, fontWeight: 300, maxWidth: "44ch", marginInline: "auto" }}>
+              An invitation, not a list. Market intelligence and curated charter opportunities, delivered the day they matter — never more often.
             </p>
             {subscribed ? (
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", color: "#DAA520", letterSpacing: "0.15em" }}>
