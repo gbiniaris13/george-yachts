@@ -617,11 +617,31 @@ export default function FleetGrid({ yachts }) {
       const minYear = parseInt(refitFilter, 10);
       result = result.filter((y) => typeof y.yearRefit === 'number' && y.yearRefit >= minYear);
     }
-    // C.6 — Water toys (AND across selected — yacht must offer ALL chosen)
+    // C.6 — Water toys (AND across selected — yacht must offer ALL chosen).
+    // Bug fix 2026-05-05: most yachts in Sanity haven't been migrated
+    // from the legacy free-text `toys` field to the new structured
+    // `waterToys` array, so the filter was returning 0 results for
+    // every selection. Falls back to case-insensitive substring match
+    // against the legacy text field so the chips actually filter
+    // something today instead of waiting on a Sanity backfill.
     if (toysFilter.length > 0) {
+      const TOY_TEXT_SYNONYMS = {
+        jet_ski: ["jet ski", "jetski", "jet-ski"],
+        seabob: ["seabob", "sea bob", "sea-bob"],
+        efoil: ["efoil", "e-foil", "e foil", "hydrofoil"],
+        wakeboard: ["wakeboard", "wake board"],
+        paddleboard: ["paddleboard", "paddle board", "sup", "stand-up paddle"],
+        inflatable_slide: ["inflatable slide", "slide", "water slide"],
+        diving_equipment: ["diving", "scuba", "snorkel", "dive gear", "diving equipment", "diving gear"],
+      };
       result = result.filter((y) => {
-        const set = new Set(Array.isArray(y.waterToys) ? y.waterToys : []);
-        return toysFilter.every((tid) => set.has(tid));
+        const structuredSet = new Set(Array.isArray(y.waterToys) ? y.waterToys : []);
+        const legacyText = (typeof y.toys === "string" ? y.toys : "").toLowerCase();
+        return toysFilter.every((tid) => {
+          if (structuredSet.has(tid)) return true;
+          const synonyms = TOY_TEXT_SYNONYMS[tid] || [tid];
+          return synonyms.some((s) => legacyText.includes(s));
+        });
       });
     }
     // C.6 — Master cabin deck
