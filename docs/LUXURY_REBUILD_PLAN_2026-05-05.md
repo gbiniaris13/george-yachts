@@ -186,7 +186,9 @@ Content-heavy, χρειάζεται τα assets σου.
 
 ---
 
-## 6. Open technical questions (Claude → Boss)
+## 6. Boss decisions (resolved 2026-05-05)
+
+> ✅ **All resolved.** Below are the questions + Boss's answers, kept for archival.
 
 ### 6.1 — C1 cinematic reveal: which path;
 
@@ -202,6 +204,8 @@ Content-heavy, χρειάζεται τα assets σου.
 
 **Boss decision: ποιο/πόσα από #1, #2, #4;**
 
+> ✅ **Boss answered:** Combo #1 + #2 (Ken Burns parallax + AI depth-map 3D parallax). **NO paid options** (#4 rejected). Free tier only. Με προτεραιότητα στα σκάφη που έχουν τις καλύτερες photos.
+
 ### 6.2 — F5 3D effects: πόσο "πολύ" είναι "πολύ";
 
 Όταν λες "πολύ εφέ + 3D", υπάρχουν επίπεδα:
@@ -211,6 +215,8 @@ Content-heavy, χρειάζεται τα assets σου.
 - **Heavy:** WebGL backgrounds, shader effects, 3D yacht models στο hero. **Risk:** φαίνεται tacky αν δεν γίνει σωστά (ξέρεις τα tech-startup websites με particle backgrounds).
 
 **Recommendation:** Medium tier σε όλο το site, Heavy μόνο σε hero ίσως. **Boss decision needed.**
+
+> ✅ **Boss answered:** "Whatever you recommend." → **Medium tier site-wide, Heavy reserved for hero.** Συγκεκριμένα: card hover tilt 8°, parallax 5px σε sections, scroll-triggered animations, fade transitions. Hero gets WebGL/3D depth για wow factor. Όλα free tier (CSS transforms + GSAP free + Three.js).
 
 ### 6.3 — Sound (F4): playlist;
 
@@ -222,6 +228,8 @@ Content-heavy, χρειάζεται τα assets σου.
 
 **Recommendation:** Mix κύματα + γλάροι + cicadas, χωρίς bouzouki. **Boss decision.**
 
+> ✅ **Boss answered:** Χωρίς bouzouki. **Final mix: κύματα + γλάροι + cicadas.** Free CC-licensed assets από freesound.org, μέγεθος compressed για fast load.
+
 ### 6.4 — B1 "Brief George" form: ποιες ερωτήσεις;
 
 Πρότασή μου, 4 fields:
@@ -231,6 +239,16 @@ Content-heavy, χρειάζεται τα assets σου.
 4. **What excites you** — 1-line free-text
 
 Πρέπει να προσθέσω 5ο field; (π.χ. budget range, special occasions, dietary). **Boss decision.**
+
+> ✅ **Boss answered:** Add 2 more fields → **6 total**:
+> 1. **When** — date range
+> 2. **Who** — group size + ages of children
+> 3. **Where** — multi-select region
+> 4. **What excites you** — 1-line free-text
+> 5. **Budget range** — €30k–€50k / €50k–€100k / €100k–€250k / €250k+ / "Discuss with George"
+> 6. **Special occasion** — Birthday / Anniversary / Honeymoon / Family reunion / Corporate / Other / None
+>
+> Submission → email + Telegram alert to George + assigned broker. **No AI in the response loop** — broker writes the personal proposal.
 
 ---
 
