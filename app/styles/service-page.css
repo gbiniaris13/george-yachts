@@ -75,13 +75,17 @@
 
 .svc-hero__title {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(36px, 7vw, 72px);
+  /* Phase 8 (luxury rebuild) — Vogue scale matching all other page
+     heroes (about-us, team, fleet, yacht detail). */
+  font-size: clamp(56px, 10vw, 130px);
   font-weight: 300;
-  letter-spacing: 0.03em;
-  color: #fff;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  color: #F8F5F0;
   margin: 0 0 28px;
   opacity: 0;
   animation: svcHeroTitle 0.9s ease-out 0.6s forwards;
+  text-shadow: 0 6px 32px rgba(0, 0, 0, 0.55);
 }
 
 .svc-hero__line {
