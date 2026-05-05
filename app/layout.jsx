@@ -1,4 +1,4 @@
-import { Geist, Marcellus, Cormorant_Garamond, Montserrat } from "next/font/google";
+import { Geist, Marcellus, Cormorant_Garamond, Montserrat, Bodoni_Moda, Italiana } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import NavDrawerSystem from "./components/NavDrawerSystem";
@@ -57,6 +57,32 @@ const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-montserrat",
+  display: "swap",
+});
+
+// Phase 17 (luxury rebuild, 2026-05-05) — premium serif fonts.
+// Boss directive: "ta poio akriva gramata xwris na plirwsw" — most
+// expensive-looking serifs available free.
+//
+// Bodoni Moda — high-fashion magazine display (Vogue / Harper's
+//   Bazaar typography). High contrast: ultra-thin verticals, thick
+//   horizontals. The most "expensive" free serif on Google Fonts.
+//   Loaded for hero + key brand statements.
+//
+// Italiana — ultra-thin Bodoni descendant. The most refined display
+//   serif in the Google library. Used for italic accents and signature
+//   moments.
+const bodoniModa = Bodoni_Moda({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+  variable: "--font-bodoni",
+  display: "swap",
+});
+const italiana = Italiana({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-italiana",
   display: "swap",
 });
 
@@ -197,7 +223,7 @@ export default async function RootLayout({ children }) {
       </head>
 
       <body
-        className={`${geistSans.variable} ${marcellus.variable} ${cormorant.variable} ${montserrat.variable} antialiased${forbesDismissed ? "" : " gy-with-forbes-bar"}`}
+        className={`${geistSans.variable} ${marcellus.variable} ${cormorant.variable} ${montserrat.variable} ${bodoniModa.variable} ${italiana.variable} antialiased${forbesDismissed ? "" : " gy-with-forbes-bar"}`}
       >
         {/* Skip to main content — accessibility */}
         <a

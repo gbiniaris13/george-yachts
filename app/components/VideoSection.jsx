@@ -209,32 +209,38 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                       className="gy-hero-headline"
                       aria-label="George Yachts"
                       style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
-                        // Phase 13 (luxury rebuild) — homepage hero
-                        // bumped to match every other page hero on the
-                        // site. 56-150px Vogue scale. Light weight 200
-                        // with negative tracking reads as Robb Report
-                        // cover at any breakpoint.
-                        fontSize: "clamp(56px, 11vw, 150px)",
-                        fontWeight: 200,
-                        lineHeight: 0.92,
-                        letterSpacing: "0.04em",
+                        // Phase 17 (luxury rebuild, 2026-05-05) —
+                        // Bodoni Moda for the homepage hero. The most
+                        // "expensive" free serif on Google Fonts —
+                        // Vogue / Harper's Bazaar high-contrast cut
+                        // with thin verticals + thick horizontals.
+                        // Boss directive: "ta poio akriva gramata".
+                        // White-space: nowrap forces single line; the
+                        // 9.5vw clamp scales the type so it fits at
+                        // every viewport without overflow.
+                        fontFamily: "var(--font-bodoni), 'Bodoni Moda', 'Didot', 'Cormorant Garamond', Georgia, serif",
+                        fontSize: "clamp(40px, 9.5vw, 132px)",
+                        fontWeight: 400,
+                        fontStyle: "normal",
+                        lineHeight: 1.0,
+                        letterSpacing: "0.005em",
                         color: "#F8F5F0",
-                        textTransform: "uppercase",
+                        textTransform: "none",
                         margin: "0 0 24px 0",
                         textAlign: "center",
                         textShadow: "0 8px 40px rgba(0, 0, 0, 0.55)",
+                        whiteSpace: "nowrap",
                       }}
                     >
                       <span
                         className="gy-hero-letters-wrap"
                         style={{
                           display: "inline-block",
-                          letterSpacing: "clamp(0.06em, 0.15vw, 0.15em)",
-                          marginInlineEnd: "calc(-1 * clamp(0.06em, 0.15vw, 0.15em))",
+                          letterSpacing: "0.005em",
+                          marginInlineEnd: 0,
                         }}
                       >
-                        {"GEORGE\u00A0YACHTS".split("").map((ch, i) => (
+                        {"George\u00A0Yachts".split("").map((ch, i) => (
                           <span
                             key={i}
                             className="gy-hero-letter"
