@@ -72,7 +72,9 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
   const fmtK = (n) => (n >= 1000 ? `€${Math.round(n / 1000)}K` : `€${n}`);
   const explorerLow = explorerRange?.low;
   const privateHigh = privateRange?.high;
-  const fleetBadge =
+  // Phase 24 — desktop / mobile variants. Mobile keeps it tight so
+  // the badge doesn't wrap to 5+ lines on 375px phones.
+  const fleetBadgeFull =
     yachtCount && yachtCount > 0
       ? `${yachtCount} yachts · Explorer Fleet (skippered) from ${
           explorerLow ? fmtK(explorerLow) : "€420"
@@ -80,6 +82,17 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
           privateHigh ? fmtK(privateHigh) : "€180K"
         }/week`
       : null;
+  const fleetBadgeShort =
+    yachtCount && yachtCount > 0
+      ? `${yachtCount} yachts · Explorer from ${
+          explorerLow ? fmtK(explorerLow) : "€420"
+        }/guest · Private to ${
+          privateHigh ? fmtK(privateHigh) : "€180K"
+        }/week`
+      : null;
+  // Default to full text — the JSX renders both with CSS class
+  // toggles so we get the right one per viewport.
+  const fleetBadge = fleetBadgeFull;
 
   // The button styling renders the FIRST button as a ghost
   // (white-bordered, subtle) and the SECOND button as a solid GOLD
@@ -398,6 +411,7 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                         placeholder. */}
                     {fleetBadge && (
                       <p
+                        className="gy-fleet-badge"
                         style={{
                           fontFamily: "'Montserrat', sans-serif",
                           fontSize: "11px",
@@ -419,7 +433,8 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                         }}
                         aria-label={`Fleet snapshot: ${fleetBadge}`}
                       >
-                        {fleetBadge}
+                        <span className="gy-fleet-badge__full">{fleetBadgeFull}</span>
+                        <span className="gy-fleet-badge__short">{fleetBadgeShort}</span>
                       </p>
                     )}
 

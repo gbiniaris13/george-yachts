@@ -848,6 +848,14 @@ footer h4 {
   letter-spacing: 0.32em !important;
 }
 
+/* Phase 24 — fleet-badge responsive variants. Full text on tablet+,
+   short text on phones so the pill doesn't wrap to 5 lines. */
+.gy-fleet-badge__short { display: none; }
+@media (max-width: 700px) {
+  .gy-fleet-badge__full  { display: none; }
+  .gy-fleet-badge__short { display: inline; }
+}
+
 /* Phase 24 — F5 3D tilt on remaining card markups so the lift-on-
    hover language is consistent across every grid surface. Now applied
    to: SignatureYacht weekly hero, BrokerTestimonials quote frame,
