@@ -1,4 +1,4 @@
-import { Geist, Marcellus, Cormorant_Garamond, Montserrat, Bodoni_Moda, Italiana } from "next/font/google";
+import { Geist, Marcellus, Cormorant_Garamond, Montserrat, Bodoni_Moda, Italiana, Cinzel } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import NavDrawerSystem from "./components/NavDrawerSystem";
@@ -60,18 +60,22 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-// Phase 17 (luxury rebuild, 2026-05-05) — premium serif fonts.
-// Boss directive: "ta poio akriva gramata xwris na plirwsw" — most
-// expensive-looking serifs available free.
+// Phase 17c (luxury rebuild, 2026-05-05) — old-money billionaire-tier
+// typography research. Boss directive: "Trajan Pro / Cinzel — what
+// Aman, Belmond, Bulgari, Four Seasons, Le Bristol Paris, the Carlyle
+// NYC use. Old money. Roman temple inscription dignity." Cinzel is
+// the free Trajan derivative on Google Fonts — same proportions, same
+// mood. Weight 500 (medium), UPPERCASE only — never bold, never
+// kindergarten. This is the wordmark / hero font for the entire site.
 //
-// Bodoni Moda — high-fashion magazine display (Vogue / Harper's
-//   Bazaar typography). High contrast: ultra-thin verticals, thick
-//   horizontals. The most "expensive" free serif on Google Fonts.
-//   Loaded for hero + key brand statements.
-//
-// Italiana — ultra-thin Bodoni descendant. The most refined display
-//   serif in the Google library. Used for italic accents and signature
-//   moments.
+// Bodoni Moda + Italiana stay loaded for editorial accents (pull
+// quotes, magazine-style display) but the masthead is now Cinzel.
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cinzel",
+  display: "swap",
+});
 const bodoniModa = Bodoni_Moda({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
@@ -223,7 +227,7 @@ export default async function RootLayout({ children }) {
       </head>
 
       <body
-        className={`${geistSans.variable} ${marcellus.variable} ${cormorant.variable} ${montserrat.variable} ${bodoniModa.variable} ${italiana.variable} antialiased${forbesDismissed ? "" : " gy-with-forbes-bar"}`}
+        className={`${geistSans.variable} ${marcellus.variable} ${cormorant.variable} ${montserrat.variable} ${cinzel.variable} ${bodoniModa.variable} ${italiana.variable} antialiased${forbesDismissed ? "" : " gy-with-forbes-bar"}`}
       >
         {/* Skip to main content — accessibility */}
         <a

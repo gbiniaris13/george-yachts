@@ -705,6 +705,55 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
 }
 
 /* ══════════════════════════════════════════════════════════════
+   PHASE 17c — OLD-MONEY billionaire wordmark typography across the
+   entire site (luxury rebuild, 2026-05-05). Boss directive: "what
+   the wealthy are used to seeing — make them feel at home". The
+   answer isn't bold magazine-cover Bodoni. It's CINZEL — the free
+   Trajan Pro derivative that Aman, Belmond, Bulgari, Four Seasons,
+   Le Bristol Paris, and The Carlyle (NYC) all use as their wordmark
+   font. Roman temple inscription proportions, refined medium weight,
+   never aggressive. UPPERCASE only — Trajan was UPPERCASE-only in
+   the Imperial Forum, that's what makes it read as "old money".
+
+   Selectors below cover every per-page hero h1 class. For pages
+   whose hero uses inline style={}, see the matching JSX edits in
+   the same commit.
+   ══════════════════════════════════════════════════════════════ */
+.fleet-hero__title,
+.about-hero__title,
+.team-hero__title,
+.yacht-hero__title,
+.svc-hero__title,
+.blog-hero__title,
+.gy-hero-headline,
+.gy-display-xl,
+.gy-display-lg,
+/* Catch-all: any h1 whose inline style references Cormorant — these
+   are the page heroes I previously sized to Vogue scale via inline
+   style={}. Swapping them all to Cinzel here keeps the rule in one
+   place instead of editing 15 files. Specificity wins because
+   inline-style font-family doesn't carry !important. */
+h1[style*="Cormorant Garamond"],
+h1[style*="cormorant"],
+h1[style*="font-cormorant"] {
+  font-family: var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 500 !important;
+  font-style: normal !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  line-height: 1.05 !important;
+}
+
+/* Editorial body display — keeps Cormorant Garamond italic for the
+   pull-quote / sub-headline tier so we don't flatten the entire site
+   to a single voice. Cinzel for masthead, Cormorant for editorial. */
+.gy-display-md,
+.gy-lede {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 300 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
    LUXURY REBUILD F3 — Editorial typography rebellion (Phase 1, 2026-05-05).
    Boss directive: serif headlines 96-140px, asymmetric layouts,
    generous whitespace. UHNW visitors notice typography first; this is

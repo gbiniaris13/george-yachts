@@ -218,17 +218,21 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                         // White-space: nowrap forces single line; the
                         // 9.5vw clamp scales the type so it fits at
                         // every viewport without overflow.
-                        // Phase 17b — Boss flagged 400-weight as
-                        // "kindergarten". Bumped to 900 + UPPERCASE +
-                        // tighter tracking. That's the actual Vogue /
-                        // Harper's Bazaar masthead treatment — heavy
-                        // black serif caps, magazine-cover authority.
-                        fontFamily: "var(--font-bodoni), 'Bodoni Moda', 'Didot', Georgia, serif",
-                        fontSize: "clamp(40px, 10.5vw, 152px)",
-                        fontWeight: 900,
+                        // Phase 17c — switched from heavy Bodoni (which
+                        // Boss flagged as "afisa cinema / Forbes Vogue
+                        // bold") to CINZEL — the Trajan Pro derivative
+                        // used by Aman, Belmond, Bulgari, Four Seasons,
+                        // Le Bristol, and The Carlyle. Old-money
+                        // Roman-inscription dignity. Medium weight
+                        // (500), never bold. Slightly OPEN tracking
+                        // (0.04em) — Roman caps want to breathe, that's
+                        // what makes them read as monumental.
+                        fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', Georgia, serif",
+                        fontSize: "clamp(40px, 10vw, 144px)",
+                        fontWeight: 500,
                         fontStyle: "normal",
-                        lineHeight: 0.95,
-                        letterSpacing: "-0.01em",
+                        lineHeight: 1.05,
+                        letterSpacing: "0.04em",
                         color: "#F8F5F0",
                         textTransform: "uppercase",
                         margin: "0 0 24px 0",
@@ -241,8 +245,8 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                         className="gy-hero-letters-wrap"
                         style={{
                           display: "inline-block",
-                          letterSpacing: "-0.01em",
-                          marginInlineEnd: 0,
+                          letterSpacing: "0.04em",
+                          marginInlineEnd: "calc(-1 * 0.04em)",
                         }}
                       >
                         {"GEORGE\u00A0YACHTS".split("").map((ch, i) => (
