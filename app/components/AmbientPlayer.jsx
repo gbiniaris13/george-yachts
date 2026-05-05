@@ -240,7 +240,11 @@ export default function AmbientPlayer() {
       data-cursor={playing ? "Mute" : "Listen"}
       style={{
         position: "fixed",
-        top: 16,
+        // Bug fix: Forbes top bar (36px desktop / 32px mobile) sits at
+        // top:0 with z-index 80. Anchor below it via the --gy-top-offset
+        // CSS var that body.gy-with-forbes-bar sets. Auto-collapses to
+        // 12px when the bar is dismissed.
+        top: "calc(var(--gy-top-offset, 0px) + 12px)",
         right: 124,
         zIndex: 70,
         height: 30,

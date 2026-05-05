@@ -169,12 +169,31 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
         </div>
       </Link>
 
-      {/* Stack on narrow screens */}
+      {/* Stack on narrow screens + Phase 11 (luxury rebuild) 3D tilt */}
       <style jsx>{`
         @media (max-width: 720px) {
           :global(.gy-inline-yacht-strip) {
             grid-template-columns: 1fr !important;
           }
+        }
+        :global(.gy-inline-yacht-strip) {
+          transform-style: preserve-3d;
+          perspective: 1200px;
+          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                      box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+          will-change: transform;
+        }
+        @media (hover: hover) and (min-width: 720px) {
+          :global(.gy-inline-yacht-strip:hover) {
+            transform: perspective(1200px) rotateX(1.5deg) rotateY(-1.5deg) translateY(-4px);
+            box-shadow:
+              0 32px 72px rgba(0, 0, 0, 0.55),
+              0 0 0 1px rgba(218, 165, 32, 0.22) inset;
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          :global(.gy-inline-yacht-strip),
+          :global(.gy-inline-yacht-strip:hover) { transform: none !important; }
         }
       `}</style>
     </section>

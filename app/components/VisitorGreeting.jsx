@@ -120,7 +120,11 @@ export default function VisitorGreeting() {
       onClick={() => setPhase("hidden")}
       style={{
         position: "fixed",
-        top: 84,
+        // Bug fix: anchor under the Forbes top bar via --gy-top-offset
+        // (36px desktop / 32px mobile when the bar is visible, 0 when
+        // dismissed). Lands ~70px under the bar in either case so it
+        // doesn't crash into the AmbientPlayer pill on its left.
+        top: "calc(var(--gy-top-offset, 0px) + 60px)",
         right: 24,
         zIndex: 70,
         display: "flex",

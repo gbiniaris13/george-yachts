@@ -308,7 +308,18 @@ const ArticlePage = async ({ params }) => {
             <span className="hidden md:block w-8 h-px bg-[#DAA520]" />
           </div>
 
-          <h1 className="font-marcellus text-white uppercase leading-[1.08] tracking-tight text-3xl md:text-4xl lg:text-5xl max-w-3xl">
+          <h1
+            className="font-cormorant max-w-4xl"
+            style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: "clamp(40px, 7.5vw, 96px)",
+              fontWeight: 300,
+              color: "#F8F5F0",
+              lineHeight: 0.98,
+              letterSpacing: "-0.03em",
+              textShadow: "0 6px 32px rgba(0,0,0,0.55)",
+            }}
+          >
             {post.title}
           </h1>
 

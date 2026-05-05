@@ -536,3 +536,99 @@
     aspect-ratio: 3/2;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   PHASE 11 — Blog post editorial reading mode (luxury rebuild,
+   2026-05-05). UHNW guests who reach a /blog/[slug] page came for
+   the read. The body should feel like a New Yorker / Robb Report
+   feature, not a standard tailwind p-mb-10 stack.
+   ══════════════════════════════════════════════════════════════ */
+
+/* New Yorker drop cap on the FIRST paragraph of the article body. */
+.editorial-content > p:first-of-type::first-letter {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(72px, 9vw, 124px);
+  font-weight: 400;
+  line-height: 0.85;
+  float: left;
+  margin: 6px 14px -8px 0;
+  padding: 0;
+  background: linear-gradient(135deg, #E6C77A 0%, #C9A24D 60%, #8E6F2A 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  letter-spacing: -0.04em;
+}
+
+/* Article pull-quote treatment. */
+.editorial-content blockquote {
+  border-left: 0;
+  border-top: 1px solid rgba(201, 168, 76, 0.4);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.4);
+  padding: 28px 0;
+  margin: 48px 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height: 1.4;
+  color: #F8F5F0;
+  text-align: center;
+  letter-spacing: 0.005em;
+}
+
+/* Inline links inside the body — gold underline that draws from left. */
+.editorial-content a {
+  color: #DAA520;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.editorial-content a:hover {
+  background-size: 100% 1px;
+}
+
+/* Headings inside the article body — Vogue-aligned scale. */
+.editorial-content h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(28px, 4vw, 40px);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: #F8F5F0;
+  margin: 56px 0 18px;
+}
+.editorial-content h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(22px, 3vw, 28px);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: #F8F5F0;
+  margin: 40px 0 14px;
+}
+
+/* Article images — subtle hover lift. */
+.editorial-content img {
+  display: block;
+  margin: 36px auto;
+  max-width: 100%;
+  height: auto;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.editorial-content img:hover {
+  transform: scale(1.01);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .editorial-content a,
+  .editorial-content img,
+  .editorial-content img:hover {
+    transition: none !important;
+    transform: none !important;
+  }
+}
