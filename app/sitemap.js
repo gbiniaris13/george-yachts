@@ -76,6 +76,10 @@ const staticRoutes = [
   // the rest of the company pages. Priority 0.7 per brief: lower
   // than homepage, higher than yacht detail pages.
   { path: "/press", priority: 0.7, changeFrequency: "monthly" },
+  // Phase 4 / D1 (luxury rebuild, 2026-05-05) — credentials editorial
+  // page consolidating Forbes / IYBA / MYBA-standard / Wyoming-Athens
+  // dual residency. UHNW pre-deposit verification surface.
+  { path: "/credentials", priority: 0.85, changeFrequency: "monthly" },
 
   // Team members
   { path: "/team/george-biniaris", priority: 0.6, changeFrequency: "monthly" },

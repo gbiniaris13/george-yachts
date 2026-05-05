@@ -32,6 +32,8 @@ const Footer = () => {
   const companyLinks = [
     { name: "About Us", href: "/about-us/" },
     { name: "Our Team", href: "/team/" },
+    { name: "Credentials", href: "/credentials" },
+    { name: "Greece by Yacht", href: "/greece-by-yacht" },
     { name: "The Journal", href: "/blog" },
     { name: "FAQ", href: "/faq" },
   ];
