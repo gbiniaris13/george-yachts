@@ -364,7 +364,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                             style={{ objectFit: "cover" }}
                           />
                         ) : (
-                          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #0a1a2f, #050505)" }} />
+                          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #000000, #050505)" }} />
                         )}
                         <div
                           style={{
@@ -441,7 +441,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
           padding: "clamp(96px, 12vw, 160px) 24px",
           textAlign: "center",
           borderTop: "1px solid rgba(248,245,240,0.08)",
-          background: "linear-gradient(180deg, #050505 0%, #0a1a2f 100%)",
+          background: "linear-gradient(180deg, #050505 0%, #000000 100%)",
         }}
       >
         <p className="gy-eyebrow" style={{ color: "#C9A84C" }}>
@@ -560,7 +560,7 @@ function StopBackdrop({ stop }) {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(135deg, #0a1a2f 0%, #050505 100%)",
+            background: "linear-gradient(135deg, #000000 0%, #050505 100%)",
           }}
         />
       )}

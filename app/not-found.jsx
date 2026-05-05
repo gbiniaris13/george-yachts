@@ -15,7 +15,7 @@ export default function NotFound() {
     <main
       style={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #050505 0%, #0a1a2f 100%)",
+        background: "linear-gradient(135deg, #050505 0%, #000000 100%)",
         color: "#F8F5F0",
         display: "flex",
         flexDirection: "column",

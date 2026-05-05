@@ -95,7 +95,7 @@ export default function LoginForm() {
           fontWeight: 700,
           letterSpacing: "0.24em",
           textTransform: "uppercase",
-          color: "#0a1a2f",
+          color: "#000000",
           background: submitting
             ? `${GOLD}66`
             : `linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)`,

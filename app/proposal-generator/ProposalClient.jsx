@@ -269,7 +269,7 @@ export default function ProposalClient({ yachts = [] }) {
                   background: checked ? GOLD : "rgba(0,0,0,0.55)",
                   border: `1px solid ${checked ? GOLD : "rgba(255,255,255,0.4)"}`,
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  color: checked ? "#0a1a2f" : "transparent",
+                  color: checked ? "#000000" : "transparent",
                   fontWeight: 700, fontSize: 14,
                   transition: "all 0.2s ease",
                 }}
@@ -314,7 +314,7 @@ export default function ProposalClient({ yachts = [] }) {
             background: picked.length === 0
               ? "rgba(218,165,32,0.25)"
               : `linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)`,
-            color: picked.length === 0 ? "rgba(0,0,0,0.45)" : "#0a1a2f",
+            color: picked.length === 0 ? "rgba(0,0,0,0.45)" : "#000000",
             border: "none",
             cursor: picked.length === 0 ? "default" : "pointer",
           }}
@@ -401,7 +401,7 @@ export default function ProposalClient({ yachts = [] }) {
                         flex: 1, padding: "12px 0",
                         fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700,
                         letterSpacing: "0.18em", textTransform: "uppercase",
-                        color: "#0a1a2f",
+                        color: "#000000",
                         background: submitting
                           ? `${GOLD}66`
                           : `linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)`,
@@ -449,7 +449,7 @@ export default function ProposalClient({ yachts = [] }) {
                     padding: "12px 24px",
                     fontFamily: "'Montserrat', sans-serif", fontSize: 10,
                     fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase",
-                    color: "#0a1a2f",
+                    color: "#000000",
                     background: `linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)`,
                     textDecoration: "none",
                   }}

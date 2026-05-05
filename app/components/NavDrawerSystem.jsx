@@ -140,7 +140,9 @@ const NavDrawerSystem = () => {
         style={{
           backgroundColor: navBackground,
           transition: "background-color 0.5s ease, height 0.5s cubic-bezier(0.16, 1, 0.3, 1), padding 0.5s ease",
-          height: scrolled ? "72px" : "140px",
+          // Phase 27 — taller header to accommodate bigger logo (per
+          // Boss "δείξε δυναμική" directive). Was 72/140 → now 92/168.
+          height: scrolled ? "92px" : "168px",
           paddingTop: scrolled ? "0px" : "12px",
         }}
       >
@@ -159,16 +161,23 @@ const NavDrawerSystem = () => {
             </button>
           </div>
 
-          {/* --- 2. CENTER — Logo (shrinks on scroll) --- */}
+          {/* --- 2. CENTER — Logo (shrinks on scroll).
+              Phase 27 (Forbes-launch eve, 2026-05-05) — Boss directive:
+              "μεγάλωσέ το, να δείξουμε δυναμική, LV-tier δεν θα το είχε
+              τόσο μικρό". Bumped from clamp(70, 12vw, 110)→
+              clamp(96, 14vw, 156) at rest, and from 40→56 when scrolled.
+              The nav header height also stretches to 168/96 to keep
+              the logo from clipping the top edge. */}
           <Link href="/" className="absolute left-1/2 -translate-x-1/2 shrink-0 group" data-cursor="Home">
             <img
               src="/images/yacht-icon-only.svg"
               alt="George Yachts Brokerage House"
               className="group-hover:opacity-80"
               style={{
-                height: scrolled ? "40px" : "clamp(70px, 12vw, 110px)",
+                height: scrolled ? "56px" : "clamp(96px, 14vw, 156px)",
                 width: "auto",
                 transition: "height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
+                filter: "drop-shadow(0 4px 18px rgba(218,165,32,0.18))",
               }}
             />
           </Link>

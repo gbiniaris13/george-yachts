@@ -224,14 +224,108 @@ section {
   to { opacity: 1; filter: blur(0); transform: translateY(0); }
 }
 
-/* Gold shimmer text effect */
-.text-shimmer {
-  background: linear-gradient(90deg, #E6C77A 0%, #fff 20%, #C9A24D 40%, #fff 60%, #A67C2E 80%, #E6C77A 100%);
+/* Phase 27 (Forbes-launch eve, 2026-05-05) — 24K LUXURY GOLD palette.
+   Boss directive: "θέλω full luxury 24K gold transparent glowing".
+   Adds:
+     • A richer 7-stop gradient with whites at the highlights and a
+       deeper bronze at the shadows (reads as polished metal, not paint).
+     • A glow halo so gold glyphs read as luminous on a black ground.
+     • A "shimmer" version that animates the highlight slowly across.
+
+   .gy-gold-24k       — apply on text or icons that should read as
+                         polished, deep gold with a subtle glow.
+   .gy-gold-24k-shine — same but with the slow shimmer animation
+                         baked in (use sparingly: H1 on-load, single
+                         editorial accent per section).
+   .gy-gold-24k-glow  — adds a soft outer halo without changing the
+                         fill (useful on solid #DAA520 captions). */
+.gy-gold-24k {
+  background: linear-gradient(
+    135deg,
+    #FFE9A8 0%,    /* highlight */
+    #F7DA6F 14%,
+    #E6C77A 30%,
+    #DAA520 48%,   /* core 24K */
+    #C9A24D 66%,
+    #A67C2E 84%,
+    #8B6914 100%   /* deep bronze shadow */
+  );
+  background-size: 200% 200%;
+  background-position: 30% 30%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 0.6em rgba(218, 165, 32, 0.28))
+          drop-shadow(0 1px 0 rgba(0, 0, 0, 0.45));
+}
+.gy-gold-24k-shine {
+  background: linear-gradient(
+    100deg,
+    #DAA520 0%,
+    #E6C77A 18%,
+    #FFE9A8 28%,
+    #FFFFFF 33%,   /* sweeping white highlight */
+    #FFE9A8 38%,
+    #E6C77A 48%,
+    #DAA520 60%,
+    #A67C2E 80%,
+    #8B6914 100%
+  );
   background-size: 300% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: textShimmerAnim 6s ease-in-out infinite;
+  color: transparent;
+  filter: drop-shadow(0 0 0.8em rgba(218, 165, 32, 0.32))
+          drop-shadow(0 1px 0 rgba(0, 0, 0, 0.5));
+  animation: gy24kShine 8s ease-in-out infinite;
+}
+@keyframes gy24kShine {
+  0%   { background-position: 0%   center; }
+  50%  { background-position: 100% center; }
+  100% { background-position: 0%   center; }
+}
+.gy-gold-24k-glow {
+  color: #DAA520;
+  text-shadow:
+    0 0 12px rgba(218, 165, 32, 0.45),
+    0 0 28px rgba(218, 165, 32, 0.25),
+    0 1px 0 rgba(0, 0, 0, 0.5);
+}
+@media (prefers-reduced-motion: reduce) {
+  .gy-gold-24k-shine { animation: none; }
+}
+
+/* Phase 27 — global luminance pass. Every gold uppercase eyebrow on a
+   black bg gets a soft halo so it reads as luminous gold, not painted
+   tan. Restricted to letter-spaced uppercase text (eyebrows / chips /
+   captions) so it doesn't touch body copy or button fills. The text-
+   shadow is feather-light (0 0 8px) — visible against black, invisible
+   in print, doesn't add weight. */
+.gy-gold-glow,
+[class*="eyebrow"][style*="DAA520"],
+[class*="eyebrow"][style*="C9A84C"] {
+  text-shadow:
+    0 0 10px rgba(218, 165, 32, 0.32),
+    0 0 22px rgba(218, 165, 32, 0.14),
+    0 1px 0 rgba(0, 0, 0, 0.45);
+}
+
+/* Legacy text-shimmer kept for backwards compatibility — points to
+   the 24K mix so any existing usage upgrades automatically. */
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    #E6C77A 0%, #FFFFFF 18%, #FFE9A8 28%, #DAA520 50%,
+    #C9A24D 68%, #A67C2E 82%, #E6C77A 100%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 0.6em rgba(218, 165, 32, 0.28));
+  animation: textShimmerAnim 8s ease-in-out infinite;
 }
 
 @keyframes textShimmerAnim {
@@ -642,12 +736,14 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
   color: #4A4A4A; /* Tested against #F8F5F0 ivory: 8.2:1 (AAA) */
 }
 
-/* Gold on navy — brand-safe contrast */
+/* Phase 27 (Forbes-launch eve, 2026-05-05) — palette restricted to
+   black / gold / white only. .gold-on-navy class is preserved (callers
+   already exist) but the background is now pure black. C9A84C on
+   #000000 = 7.6:1 (AAA) — even higher contrast than navy. */
 .gold-on-navy {
   color: #C9A84C;
-  background: #0D1B2A;
+  background: #000000;
 }
-/* #C9A84C on #0D1B2A = 6.2:1 (AA-Large) */
 
 /* ─── Skip-link styling (accessibility - already in layout, style it) ─── */
 .skip-link {
@@ -666,7 +762,7 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
   width: auto;
   height: auto;
   padding: 0.75rem 1.25rem;
-  background: #0D1B2A;
+  background: #000000;
   color: #F8F5F0;
   border: 2px solid #C9A84C;
   border-radius: 4px;

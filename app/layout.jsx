@@ -7,13 +7,7 @@ import CustomCursor from "./components/CustomCursor";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ContactDrawer from "./components/ContactDrawer";
 import VisitorGreeting from "./components/VisitorGreeting";
-// Phase 27 (Forbes-launch eve, 2026-05-05) — AmbientPlayer retired.
-// Synth-based ocean soundscape never read as anything but "wind"
-// across 7 tuning passes. Removed from layout entirely until a real
-// CC0 hydrophone-grade ocean recording is in /public/audio/. The
-// component file is preserved for the future re-enable. No more
-// "πάλι ακούω αέρα" complaints — silence is better than bad audio.
-// import AmbientPlayer from "./components/AmbientPlayer";
+import AmbientPlayer from "./components/AmbientPlayer";
 import BrokerStatus from "./components/BrokerStatus";
 import ForbesReferrerWelcome from "./components/ForbesReferrerWelcome";
 import StickyFleetCTA from "./components/StickyFleetCTA";
@@ -39,6 +33,7 @@ import { WishlistProvider } from "./components/WishlistProvider";
 import CurrencyProvider from "./components/CurrencyProvider";
 import JsonLd from "./components/JsonLd";
 import { organizationSchema } from "@/lib/organizationSchema";
+import { serviceSchema, websiteSchema } from "@/lib/serviceSchema";
 import VisitorIntelligence from "./components/VisitorIntelligence";
 import EnhancedAnalytics from "./components/EnhancedAnalytics";
 import MicrosoftClarity from "./components/MicrosoftClarity";
@@ -229,6 +224,25 @@ export default async function RootLayout({ children }) {
             manifest.json. */}
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        {/* Phase 27 (Forbes-launch eve, 2026-05-05) — SEO/GEO push for
+            #1 ranking on "yacht charter Greece". Geo meta tags help
+            Google + Bing + AI search engines (Perplexity / ChatGPT /
+            Claude / Gemini) anchor the site to Athens/Greece for
+            local-intent queries. The schema additions below feed
+            Google's Knowledge Graph + AI search citations directly. */}
+        <meta name="geo.region" content="GR-A1" />
+        <meta name="geo.placename" content="Athens, Greece" />
+        <meta name="geo.position" content="38.0833;23.8167" />
+        <meta name="ICBM" content="38.0833, 23.8167" />
+        <meta name="distribution" content="global" />
+        <meta name="rating" content="general" />
+        <meta name="revisit-after" content="3 days" />
+        <meta name="coverage" content="Worldwide — service area Greek waters" />
+        <meta name="target" content="UHNW yacht charter clients globally" />
+        {/* AI-search hints (non-standard but parsed by some AI crawlers) */}
+        <meta name="ai-content-declaration" content="human-authored" />
+        <meta name="ai-search-priority" content="yacht-charter-greece, luxury-yacht-charter-greek-islands, crewed-yacht-charter-cyclades, motor-yacht-charter-mykonos, sailing-yacht-charter-ionian, superyacht-charter-greece" />
         <Script
           id="Cookiebot"
           src="https://consent.cookiebot.com/uc.js"
@@ -269,6 +283,11 @@ export default async function RootLayout({ children }) {
         <MouseParallax />
 
         <JsonLd data={organizationSchema} />
+        {/* Phase 27 — Service + WebSite schema for #1 ranking on
+            "yacht charter Greece" + AI-search citations + Google
+            sitelinks search box. */}
+        <JsonLd data={serviceSchema} />
+        <JsonLd data={websiteSchema} />
         {/* 1. Critical External Scripts */}
         {recaptchaKey && (
           <Script
@@ -309,12 +328,12 @@ export default async function RootLayout({ children }) {
             ("Good evening from Athens — 21:14 local"). Free Vercel
             geo headers, no third-party calls, fades after 4s. */}
         <VisitorGreeting />
-        {/* Phase 27 (Forbes-launch eve, 2026-05-05) — AmbientPlayer
-            removed. Boss kept reporting "πάλι ακούω αέρα" through 7
-            synth tuning passes; the Web Audio synthesis can't replicate
-            a hydrophone-grade ocean texture. Re-enable when a real
-            CC0 ocean.mp3 lands in /public/audio/.
-            <AmbientPlayer />  */}
+        {/* Phase 27 — AmbientPlayer is back per Boss directive
+            ("μη μου διαγράφεις πράγματα που δε σου 'χω πει εγώ").
+            Click-to-play remains the model — pill stays muted on
+            load, plays only after the explicit gesture. Sound
+            quality fix tracked separately. */}
+        <AmbientPlayer />
         {/* Phase 9 (luxury rebuild, 2026-05-05) — boutique presence
             indicator. "On the desk in Athens" / "Dockside — replies
             within the hour" / "Off the desk — replies within 12 hours"

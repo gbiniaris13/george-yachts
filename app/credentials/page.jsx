@@ -528,7 +528,7 @@ export default function CredentialsPage() {
             padding:
               "clamp(72px, 10vw, 140px) clamp(24px, 6vw, 96px) clamp(96px, 12vw, 160px)",
             textAlign: "center",
-            background: "linear-gradient(180deg, #050505 0%, #0a1a2f 100%)",
+            background: "linear-gradient(180deg, #050505 0%, #000000 100%)",
             borderTop: "1px solid rgba(248,245,240,0.06)",
           }}
         >

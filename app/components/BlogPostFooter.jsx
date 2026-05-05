@@ -305,7 +305,7 @@ const btnGold = {
   fontWeight: 700,
   padding: "10px 18px",
   background: "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
-  color: "#0a1a2f",
+  color: "#000000",
   border: "1px solid rgba(218,165,32,0.6)",
   textDecoration: "none",
 };

@@ -13,7 +13,10 @@
 
   /* Backgrounds */
   --gy-black: #0a0a0a;
-  --gy-navy: #020617;
+  /* Phase 27 (Forbes-launch eve, 2026-05-05) — Boss palette directive:
+     site is BLACK / GOLD / WHITE only, no blue/navy. Variable name
+     kept for backwards compatibility but value is pure black. */
+  --gy-navy: #000000;
 
   /* Text */
   --gy-white: #ffffff;

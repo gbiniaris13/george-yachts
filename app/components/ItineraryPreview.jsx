@@ -146,7 +146,7 @@ export default function ItineraryPreview() {
     <section
       aria-label="AI itinerary preview"
       style={{
-        background: "linear-gradient(180deg, #0a0a0a 0%, #0d1b2a 100%)",
+        background: "linear-gradient(180deg, #0a0a0a 0%, #000000 100%)",
         padding: "clamp(72px, 10vw, 140px) clamp(24px, 5vw, 64px)",
         borderTop: "1px solid rgba(218,165,32,0.12)",
         borderBottom: "1px solid rgba(218,165,32,0.12)",

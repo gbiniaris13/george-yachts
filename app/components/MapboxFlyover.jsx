@@ -251,7 +251,7 @@ export default function MapboxFlyover() {
           width: "100%",
           height: "clamp(420px, 62vh, 720px)",
           background: skipMap
-            ? "linear-gradient(155deg, #0a1a2f 0%, #0a0a0a 100%)"
+            ? "linear-gradient(155deg, #0a0a0a 0%, #000000 100%)"
             : "transparent",
           position: "relative",
         }}

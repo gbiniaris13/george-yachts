@@ -68,7 +68,7 @@ export async function GET(request) {
           display: "flex",
           flexDirection: "column",
           background:
-            "linear-gradient(135deg, #050505 0%, #0a1a2f 60%, #0d2a4a 100%)",
+            "linear-gradient(135deg, #050505 0%, #000000 60%, #0d2a4a 100%)",
           position: "relative",
           fontFamily: "serif",
           padding: "70px 80px",

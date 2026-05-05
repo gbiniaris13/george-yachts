@@ -77,7 +77,7 @@ export default function NewsletterSignupClient({ streams }) {
             fontWeight: 300,
             fontSize: 32,
             margin: "16px 0 12px 0",
-            color: "#0D1B2A",
+            color: "#000000",
           }}
         >
           Welcome aboard.
@@ -115,7 +115,7 @@ export default function NewsletterSignupClient({ streams }) {
             fontSize: 10,
             letterSpacing: "0.32em",
             textTransform: "uppercase",
-            color: "#0D1B2A",
+            color: "#000000",
             textDecoration: "none",
             border: "1px solid rgba(13,27,42,0.4)",
           }}
@@ -163,7 +163,7 @@ export default function NewsletterSignupClient({ streams }) {
                   position: "relative",
                   transition: "all 200ms ease",
                   fontFamily: "Georgia, serif",
-                  color: "#0D1B2A",
+                  color: "#000000",
                 }}
               >
                 {s.recommended && !isOn && (
@@ -172,7 +172,7 @@ export default function NewsletterSignupClient({ streams }) {
                       position: "absolute",
                       top: -10,
                       left: 18,
-                      background: "#0D1B2A",
+                      background: "#000000",
                       color: "#C9A84C",
                       padding: "3px 10px",
                       fontFamily: "'Montserrat', sans-serif",
@@ -315,7 +315,7 @@ export default function NewsletterSignupClient({ streams }) {
               fontSize: 16,
               fontFamily: "Georgia, serif",
               background: "#fff",
-              color: "#0D1B2A",
+              color: "#000000",
               border: "1px solid rgba(13,27,42,0.2)",
               borderRadius: 2,
               outline: "none",
@@ -340,7 +340,7 @@ export default function NewsletterSignupClient({ streams }) {
               padding: "14px 22px",
               background:
                 "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
-              color: "#0D1B2A",
+              color: "#000000",
               border: "1px solid rgba(218,165,32,0.6)",
               fontFamily: "'Montserrat', sans-serif",
               fontSize: 11,

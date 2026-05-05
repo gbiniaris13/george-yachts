@@ -163,7 +163,7 @@ export default function AskGeorgeWidget() {
           height: 56,
           borderRadius: "50%",
           background: "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
-          color: "#0a1a2f",
+          color: "#000000",
           border: "none",
           cursor: "pointer",
           boxShadow: "0 6px 24px rgba(0,0,0,0.4)",
@@ -379,7 +379,7 @@ export default function AskGeorgeWidget() {
                   fontWeight: 700,
                   padding: "6px 10px",
                   background: "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
-                  color: "#0a1a2f",
+                  color: "#000000",
                   border: "none",
                   cursor: "pointer",
                 }}
@@ -425,7 +425,7 @@ export default function AskGeorgeWidget() {
                   fontWeight: 700,
                   padding: "9px 12px",
                   background: "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
-                  color: "#0a1a2f",
+                  color: "#000000",
                   border: "none",
                   cursor: "pointer",
                 }}
@@ -496,7 +496,7 @@ export default function AskGeorgeWidget() {
                   sending || !input.trim()
                     ? "rgba(218,165,32,0.3)"
                     : "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
-                color: "#0a1a2f",
+                color: "#000000",
                 border: "none",
                 cursor: sending || !input.trim() ? "default" : "pointer",
               }}

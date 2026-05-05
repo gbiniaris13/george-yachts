@@ -179,7 +179,7 @@ export default function MapboxRouteMap({
             popupRef.current
               .setLngLat([island.lng, island.lat])
               .setHTML(
-                `<div style="font-family:'Montserrat',sans-serif;font-size:11px;color:#0a1a2f;padding:2px 4px"><strong>${island.name}</strong><br/><span style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:#888">${island.region || ""}</span></div>`
+                `<div style="font-family:'Montserrat',sans-serif;font-size:11px;color:#000000;padding:2px 4px"><strong>${island.name}</strong><br/><span style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:#888">${island.region || ""}</span></div>`
               )
               .addTo(map);
           });

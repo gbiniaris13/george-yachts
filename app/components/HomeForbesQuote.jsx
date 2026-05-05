@@ -35,7 +35,9 @@ export default function HomeForbesQuote() {
     <section
       aria-label="George Yachts featured in Forbes, May 2026"
       style={{
-        background: "#0D1B2A",
+        // Phase 27 (Forbes-launch eve, 2026-05-05) — Boss palette
+        // directive: black/gold/white only. Was #000000 navy.
+        background: "#000000",
         position: "relative",
         padding: "64px 24px",
         borderTop: "1px solid rgba(201,168,76,0.4)",

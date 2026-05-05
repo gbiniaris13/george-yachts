@@ -309,8 +309,14 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                       </span>
                     </p>
 
-                    {/* Subtitle — BROKERAGE HOUSE LLC */}
+                    {/* Subtitle — BROKERAGE HOUSE LLC.
+                        Phase 27 (Forbes-launch eve, 2026-05-05) —
+                        upgraded to 24K luxury glowing gold via the new
+                        .gy-gold-24k-shine class. Slow shimmer + drop-
+                        shadow halo so the line reads as polished metal,
+                        not flat paint. */}
                     <p
+                      className="gy-gold-24k-shine"
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
                         fontSize: "clamp(10px, 1.8vw, 16px)",
@@ -318,11 +324,6 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                         textTransform: "uppercase",
                         margin: "0 0 28px 0",
                         textAlign: "center",
-                        background: "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
-                        WebkitBackgroundClip: "text",
-                        backgroundClip: "text",
-                        color: "transparent",
-                        WebkitTextFillColor: "transparent",
                         opacity: heroVisible ? 1 : 0,
                         transform: heroVisible ? "translateY(0)" : "translateY(12px)",
                         transition: "opacity 1s ease 1.9s, transform 1s ease 1.9s",
@@ -498,7 +499,7 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                           style={{
                             background:
                               "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
-                            color: "#0a1a2f",
+                            color: "#000000",
                             border: "1px solid rgba(218,165,32,0.6)",
                             boxShadow:
                               "0 10px 30px -10px rgba(218,165,32,0.45), inset 0 1px 0 rgba(255,255,255,0.25)",

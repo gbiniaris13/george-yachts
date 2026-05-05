@@ -9,7 +9,7 @@
 // the brand language stays consistent automatically.
 //
 // Visual spec from brief:
-//   • Background: Deep Navy #0D1B2A
+//   • Background: Deep Navy #000000
 //   • Top-left: small "GEORGE YACHTS" wordmark in ivory
 //   • Center: "Forbes" wordmark large (Times Bold)
 //   • Below Forbes: "AS FEATURED · 1 MAY 2026" gold uppercase
@@ -30,7 +30,7 @@ export default async function Image() {
         style={{
           width: "100%",
           height: "100%",
-          background: "#0D1B2A",
+          background: "#000000",
           display: "flex",
           flexDirection: "column",
           padding: "56px 64px",

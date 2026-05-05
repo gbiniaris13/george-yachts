@@ -354,7 +354,7 @@ export default function PressPage() {
                 padding: "14px 30px",
                 background:
                   "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
-                color: "#0a1a2f",
+                color: "#000000",
                 fontFamily: "'Montserrat', sans-serif",
                 fontSize: 11,
                 letterSpacing: "0.32em",

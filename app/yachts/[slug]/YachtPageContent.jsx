@@ -58,7 +58,7 @@ function DeckLayoutFallback({ images, yachtName }) {
               key={i}
               style={{
                 position: 'relative',
-                background: '#0d1b2a',
+                background: '#000000',
                 border: '1px solid rgba(218,165,32,0.3)',
               }}
             >
@@ -187,7 +187,7 @@ function DeckPlansSection({ decks, yachtName }) {
             position: 'relative',
             width: '100%',
             border: '1px solid rgba(218,165,32,0.3)',
-            background: '#0d1b2a',
+            background: '#000000',
           }}
         >
           <img
@@ -566,7 +566,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   style={{
                     padding: '14px 32px',
                     background: 'linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)',
-                    color: '#0a1a2f',
+                    color: '#000000',
                     border: '1px solid rgba(218,165,32,0.6)',
                     fontFamily: "'Montserrat', sans-serif",
                     fontSize: '11px',
@@ -1077,7 +1077,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
               flex: '0 0 auto',
               padding: '10px 22px',
               background: 'linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)',
-              color: '#0a1a2f',
+              color: '#000000',
               border: '1px solid rgba(218,165,32,0.6)',
               fontSize: 10,
               letterSpacing: '0.28em',
