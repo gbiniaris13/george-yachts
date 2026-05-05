@@ -97,9 +97,12 @@ export default function NewsletterPage() {
           style={{
             fontFamily: "'Cormorant Garamond', Georgia, 'Times New Roman', serif",
             fontWeight: 300,
-            fontSize: "clamp(36px, 6vw, 64px)",
+            fontSize: "clamp(56px, 10vw, 130px)",
             margin: "16px 0 8px 0",
-            letterSpacing: "0.02em",
+            letterSpacing: "-0.035em",
+            lineHeight: 0.95,
+            color: "#F8F5F0",
+            textShadow: "0 6px 32px rgba(0,0,0,0.55)",
           }}
         >
           The Journals

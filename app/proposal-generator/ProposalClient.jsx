@@ -152,8 +152,10 @@ export default function ProposalClient({ yachts = [] }) {
         </p>
         <h1 style={{
           fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: "clamp(36px, 6vw, 56px)", fontWeight: 300,
-          color: "#fff", margin: "0 0 16px", lineHeight: 1.1,
+          fontSize: "clamp(48px, 8vw, 96px)", fontWeight: 300,
+          color: "#F8F5F0", margin: "0 0 18px",
+          lineHeight: 0.98, letterSpacing: "-0.03em",
+          textShadow: "0 6px 32px rgba(0,0,0,0.55)",
         }}>
           Pick up to 5 yachts. Get a magazine-grade PDF in your inbox.
         </h1>

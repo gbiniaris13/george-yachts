@@ -213,7 +213,16 @@ export default async function RegionPage({ params }) {
             <p className="text-[#DAA520] text-sm tracking-[0.3em] uppercase mb-4">
               Greek Waters · Region Guide
             </p>
-            <h1 className="font-cormorant text-5xl md:text-6xl font-light leading-tight">
+            <h1
+              className="font-cormorant font-light"
+              style={{
+                fontSize: "clamp(56px, 10vw, 130px)",
+                lineHeight: 0.95,
+                letterSpacing: "-0.035em",
+                color: "#F8F5F0",
+                textShadow: "0 6px 32px rgba(0,0,0,0.55)",
+              }}
+            >
               {data.h1}
             </h1>
             <p className="mt-6 text-lg text-white/70 max-w-3xl leading-relaxed">
