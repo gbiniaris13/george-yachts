@@ -50,25 +50,36 @@ export default function AmbientPlayer() {
   const masterGainRef = useRef(null);
   const cleanupRef = useRef([]);
 
-  // Restore stored preference but DON'T autoplay — modern browsers
-  // require a user gesture. We only show the "on" state if the visitor
-  // explicitly turned it on before, which still requires another gesture
-  // to actually start. We toggle on first interaction.
+  // Boss directive 2026-05-05: ambient sound should default to ON for
+  // new visitors. They can mute if they want — but the Greek summer
+  // soundscape is the first impression, not a hidden feature. Browser
+  // autoplay policy still requires a user gesture, so we wait for the
+  // first pointerdown / keydown / scroll / touchstart anywhere on the
+  // page and start the audio graph then.
   useEffect(() => {
     if (suppressed) return;
     if (typeof window === "undefined") return;
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved === "on") {
-        // Wait for any interaction to autoresume — autoplay policy.
-        const start = () => {
-          setPlaying(true);
-          window.removeEventListener("pointerdown", start);
-          window.removeEventListener("keydown", start);
-        };
-        window.addEventListener("pointerdown", start, { once: true });
-        window.addEventListener("keydown", start, { once: true });
-      }
+      // Treat null (first visit) AND "on" the same way — both should
+      // attempt autoplay on first gesture. Only "off" (user explicitly
+      // muted) skips the listener.
+      if (saved === "off") return;
+      const start = () => {
+        setPlaying(true);
+        if (saved === null) {
+          // First visit — write "on" so subsequent navigations remember.
+          try { localStorage.setItem(STORAGE_KEY, "on"); } catch {}
+        }
+        window.removeEventListener("pointerdown", start);
+        window.removeEventListener("keydown", start);
+        window.removeEventListener("scroll", start);
+        window.removeEventListener("touchstart", start);
+      };
+      window.addEventListener("pointerdown", start, { once: true, passive: true });
+      window.addEventListener("keydown", start, { once: true, passive: true });
+      window.addEventListener("scroll", start, { once: true, passive: true });
+      window.addEventListener("touchstart", start, { once: true, passive: true });
     } catch {}
   }, [suppressed]);
 
@@ -115,45 +126,93 @@ export default function AmbientPlayer() {
     master.connect(ctx.destination);
     masterGainRef.current = master;
 
-    // ── 1. Wave bed (filtered pink-ish noise + slow swell)
-    const noiseBuffer = ctx.createBuffer(2, ctx.sampleRate * 4, ctx.sampleRate);
+    // ── 1. Deep ocean rumble — brown-noise bed, heavily low-passed.
+    // Boss feedback (2026-05-05): the prior pink-noise version sounded
+    // like wind, which makes UHNW guests imagine bad weather. Brown
+    // noise (Brownian / random-walk integration) has a -6dB/oct slope
+    // vs pink's -3dB/oct, so the spectrum is dominated by the deep
+    // bass that real ocean rumble carries.
+    const noiseBuffer = ctx.createBuffer(2, ctx.sampleRate * 6, ctx.sampleRate);
     for (let ch = 0; ch < 2; ch++) {
       const data = noiseBuffer.getChannelData(ch);
-      let lastOut = 0;
+      let last = 0;
       for (let i = 0; i < data.length; i++) {
         const white = Math.random() * 2 - 1;
-        // Low-pass IIR for "pink-ish" noise (ocean reads as warm noise).
-        lastOut = (lastOut + 0.02 * white) / 1.02;
-        data[i] = lastOut * 8;
+        // Brown noise: random walk with leakage.
+        last = (last + 0.018 * white) * 0.998;
+        data[i] = last * 16;
       }
     }
-    const waveSrc = ctx.createBufferSource();
-    waveSrc.buffer = noiseBuffer;
-    waveSrc.loop = true;
+    const oceanSrc = ctx.createBufferSource();
+    oceanSrc.buffer = noiseBuffer;
+    oceanSrc.loop = true;
 
-    const waveLP = ctx.createBiquadFilter();
-    waveLP.type = "lowpass";
-    waveLP.frequency.value = 420;
-    waveLP.Q.value = 0.7;
+    const oceanLP = ctx.createBiquadFilter();
+    oceanLP.type = "lowpass";
+    oceanLP.frequency.value = 220; // tight cut so no airy hiss
+    oceanLP.Q.value = 0.5;
 
-    const waveGain = ctx.createGain();
-    waveGain.gain.value = 0.62;
+    const oceanGain = ctx.createGain();
+    oceanGain.gain.value = 0.45;
+    oceanSrc.connect(oceanLP).connect(oceanGain).connect(master);
+    oceanSrc.start();
+    cleanupRef.current.push(() => { try { oceanSrc.stop(); } catch {} });
 
-    // Swell LFO modulating waveGain
-    const swellLFO = ctx.createOscillator();
-    swellLFO.type = "sine";
-    swellLFO.frequency.value = 0.10; // 10s period
-    const swellDepth = ctx.createGain();
-    swellDepth.gain.value = 0.18;
-    swellLFO.connect(swellDepth).connect(waveGain.gain);
+    // ── 2. Wave crashes — separate noise source, mid-band filter,
+    //     fired in shaped envelopes every 4-7 seconds. This is what
+    //     makes the bed sound like *waves* instead of *static*.
+    const crashScheduler = () => {
+      if (!ctxRef.current) return;
+      const now = ctx.currentTime;
+      // Pull a chunk of the existing noise buffer
+      const src = ctx.createBufferSource();
+      src.buffer = noiseBuffer;
+      src.loop = false;
 
-    waveSrc.connect(waveLP).connect(waveGain).connect(master);
-    waveSrc.start();
-    swellLFO.start();
-    cleanupRef.current.push(() => { try { waveSrc.stop(); } catch {} });
-    cleanupRef.current.push(() => { try { swellLFO.stop(); } catch {} });
+      const bp = ctx.createBiquadFilter();
+      bp.type = "bandpass";
+      bp.frequency.value = 600 + Math.random() * 400; // mid-band "wash"
+      bp.Q.value = 0.8;
 
-    // ── 2. Seagull — sparse pitch-sweeping triangle bursts
+      const lp2 = ctx.createBiquadFilter();
+      lp2.type = "lowpass";
+      lp2.frequency.value = 1500;
+
+      const g = ctx.createGain();
+      const peak = 0.18 + Math.random() * 0.12;
+      // Wave envelope: gentle build (~0.6s), peak crash, slow tail (~3.5s)
+      g.gain.setValueAtTime(0, now);
+      g.gain.linearRampToValueAtTime(peak * 0.5, now + 0.55);
+      g.gain.linearRampToValueAtTime(peak, now + 0.85);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + 4.2);
+
+      src.connect(bp).connect(lp2).connect(g).connect(master);
+      const offset = Math.random() * (noiseBuffer.duration - 5);
+      src.start(now, offset);
+      src.stop(now + 4.5);
+    };
+    // First crash kicks in immediately so the visitor hears a wave
+    // within the first second — Boss directive: "first 3 seconds".
+    setTimeout(crashScheduler, 250);
+    setTimeout(crashScheduler, 1800);
+    const crashInterval = setInterval(crashScheduler, 4500 + Math.random() * 2500);
+    cleanupRef.current.push(() => clearInterval(crashInterval));
+
+    // ── 3. Slow ocean breath — sub-audible bass swell that rides
+    //     under the crashes giving the mix "lungs". 0.06 Hz period.
+    const breathOsc = ctx.createOscillator();
+    breathOsc.type = "sine";
+    breathOsc.frequency.value = 0.07;
+    const breathAmp = ctx.createGain();
+    breathAmp.gain.value = 0.12;
+    breathOsc.connect(breathAmp).connect(oceanGain.gain);
+    breathOsc.start();
+    cleanupRef.current.push(() => { try { breathOsc.stop(); } catch {} });
+
+    // ── 4. Seagulls — pitch-sweeping triangle bursts. More frequent
+    //     than the prior version (every 8-15s) so the ear has more
+    //     "place markers" telling it: this is the Greek coast, not
+    //     a beach machine.
     const seagullScheduler = () => {
       if (!ctxRef.current) return;
       const now = ctx.currentTime;
@@ -163,7 +222,7 @@ export default function AmbientPlayer() {
       osc.frequency.exponentialRampToValueAtTime(420 + Math.random() * 200, now + 0.45);
       const g = ctx.createGain();
       g.gain.setValueAtTime(0, now);
-      g.gain.linearRampToValueAtTime(0.06, now + 0.06);
+      g.gain.linearRampToValueAtTime(0.05, now + 0.06);
       g.gain.exponentialRampToValueAtTime(0.0001, now + 0.55);
       const bp = ctx.createBiquadFilter();
       bp.type = "bandpass";
@@ -172,41 +231,131 @@ export default function AmbientPlayer() {
       osc.start(now);
       osc.stop(now + 0.6);
     };
-    // Trigger every 10–24 s
+    setTimeout(seagullScheduler, 2200);
     const seagullInterval = setInterval(() => {
-      if (Math.random() < 0.55) seagullScheduler();
-    }, 12000 + Math.random() * 12000);
+      if (Math.random() < 0.7) seagullScheduler();
+    }, 8000 + Math.random() * 7000);
     cleanupRef.current.push(() => clearInterval(seagullInterval));
-    setTimeout(seagullScheduler, 4500);
 
-    // ── 3. Cicada — band-passed gated noise, very faint
-    const cicadaSrc = ctx.createBufferSource();
-    cicadaSrc.buffer = noiseBuffer;
-    cicadaSrc.loop = true;
-    const cicadaBP = ctx.createBiquadFilter();
-    cicadaBP.type = "bandpass";
-    cicadaBP.frequency.value = 5200;
-    cicadaBP.Q.value = 14;
-    const cicadaGain = ctx.createGain();
-    cicadaGain.gain.value = 0.025;
-    // Fast tremolo gate to fake the buzz cadence
-    const cicadaLFO = ctx.createOscillator();
-    cicadaLFO.type = "sine";
-    cicadaLFO.frequency.value = 22; // 22 Hz tremolo
-    const cicadaLFOAmp = ctx.createGain();
-    cicadaLFOAmp.gain.value = 0.018;
-    cicadaLFO.connect(cicadaLFOAmp).connect(cicadaGain.gain);
+    // ── 5. Dolphin whistles & clicks — sparse, magical, Mediterranean.
+    //     Boss directive 2026-05-05 (second pass): "delphinia ... kati
+    //     elliniko edition alla oxi laiko ... gia ploysious". Dolphins
+    //     are the Mediterranean equivalent of nightingales — heard
+    //     rarely but unforgettably from a yacht deck.
+    const dolphinScheduler = () => {
+      if (!ctxRef.current) return;
+      const now = ctx.currentTime;
+      // Whistle: a curved high-frequency sine sweep, ~0.5s.
+      const whistle = ctx.createOscillator();
+      whistle.type = "sine";
+      const startF = 2400 + Math.random() * 1800;
+      const peakF = startF + 1400 + Math.random() * 1200;
+      const endF = startF - 200;
+      whistle.frequency.setValueAtTime(startF, now);
+      whistle.frequency.exponentialRampToValueAtTime(peakF, now + 0.22);
+      whistle.frequency.exponentialRampToValueAtTime(endF, now + 0.55);
+      const wg = ctx.createGain();
+      wg.gain.setValueAtTime(0, now);
+      wg.gain.linearRampToValueAtTime(0.04, now + 0.08);
+      wg.gain.exponentialRampToValueAtTime(0.0001, now + 0.6);
+      whistle.connect(wg).connect(master);
+      whistle.start(now);
+      whistle.stop(now + 0.7);
 
-    cicadaSrc.connect(cicadaBP).connect(cicadaGain).connect(master);
-    cicadaSrc.start();
-    cicadaLFO.start();
-    cleanupRef.current.push(() => { try { cicadaSrc.stop(); } catch {} });
-    cleanupRef.current.push(() => { try { cicadaLFO.stop(); } catch {} });
+      // Optional click pair — short rapid pulses ~200ms after the whistle.
+      if (Math.random() < 0.55) {
+        for (let i = 0; i < 2 + Math.floor(Math.random() * 2); i++) {
+          const t = now + 0.65 + i * 0.06;
+          const click = ctx.createOscillator();
+          click.type = "square";
+          click.frequency.value = 6400 + Math.random() * 800;
+          const cg = ctx.createGain();
+          cg.gain.setValueAtTime(0, t);
+          cg.gain.linearRampToValueAtTime(0.018, t + 0.005);
+          cg.gain.exponentialRampToValueAtTime(0.0001, t + 0.04);
+          const cbp = ctx.createBiquadFilter();
+          cbp.type = "highpass";
+          cbp.frequency.value = 4000;
+          click.connect(cbp).connect(cg).connect(master);
+          click.start(t);
+          click.stop(t + 0.06);
+        }
+      }
+    };
+    // First dolphin call lands ~9s in — magical "this place is alive".
+    setTimeout(dolphinScheduler, 9000);
+    const dolphinInterval = setInterval(() => {
+      if (Math.random() < 0.5) dolphinScheduler();
+    }, 24000 + Math.random() * 18000); // every 24-42s, ~50% fire rate
+    cleanupRef.current.push(() => clearInterval(dolphinInterval));
+
+    // ── 6. Aspirational harmonic pad — three sustained pure-sine
+    //     intervals (root + perfect fifth + octave) at C2/G2/C3 with
+    //     extremely soft mix. This is what gives the soundscape its
+    //     "movie soundtrack" emotional warmth without sounding folk.
+    //     Slow LFO swells the pad in and out so it never feels static.
+    const padFreqs = [65.41, 98.00, 130.81, 196.00]; // C2, G2, C3, G3
+    const padGain = ctx.createGain();
+    padGain.gain.value = 0.0;
+    padGain.connect(master);
+    padFreqs.forEach((f, i) => {
+      const osc = ctx.createOscillator();
+      osc.type = "sine";
+      osc.frequency.value = f;
+      // Slight detune per voice for richness.
+      osc.detune.value = (i - 1.5) * 4;
+      const g = ctx.createGain();
+      g.gain.value = 0.022 / (i * 0.5 + 1);
+      osc.connect(g).connect(padGain);
+      osc.start();
+      cleanupRef.current.push(() => { try { osc.stop(); } catch {} });
+    });
+    // Pad LFO — 0.05Hz so the pad breathes over ~20s.
+    const padLFO = ctx.createOscillator();
+    padLFO.type = "sine";
+    padLFO.frequency.value = 0.045;
+    const padLFOAmp = ctx.createGain();
+    padLFOAmp.gain.value = 0.5;
+    const padBaseDC = ctx.createConstantSource();
+    padBaseDC.offset.value = 0.6;
+    padBaseDC.start();
+    padLFO.connect(padLFOAmp);
+    padBaseDC.connect(padGain.gain);
+    padLFOAmp.connect(padGain.gain);
+    padLFO.start();
+    cleanupRef.current.push(() => { try { padLFO.stop(); } catch {} });
+    cleanupRef.current.push(() => { try { padBaseDC.stop(); } catch {} });
+
+    // ── 7. Distant temple bell — very rare antiquity touch.
+    //     Plucked harmonic stack with long decay. Fires every 90-150s
+    //     so it's noticed once, never habituated to.
+    const bellScheduler = () => {
+      if (!ctxRef.current) return;
+      const now = ctx.currentTime;
+      const fundamentals = [392, 587]; // G4 + D5 — clean fifth, antique
+      fundamentals.forEach((f, i) => {
+        const osc = ctx.createOscillator();
+        osc.type = "sine";
+        osc.frequency.value = f;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0, now);
+        g.gain.linearRampToValueAtTime(0.025 / (i + 1), now + 0.04);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 4.5);
+        osc.connect(g).connect(master);
+        osc.start(now);
+        osc.stop(now + 4.7);
+      });
+    };
+    setTimeout(bellScheduler, 30000);
+    const bellInterval = setInterval(() => {
+      if (Math.random() < 0.6) bellScheduler();
+    }, 90000 + Math.random() * 60000);
+    cleanupRef.current.push(() => clearInterval(bellInterval));
 
     // Fade IN master gain
-    const now = ctx.currentTime;
-    master.gain.setValueAtTime(0, now);
-    master.gain.linearRampToValueAtTime(TARGET_VOLUME, now + FADE_MS / 1000);
+    const fadeStart = ctx.currentTime;
+    master.gain.setValueAtTime(0, fadeStart);
+    master.gain.linearRampToValueAtTime(TARGET_VOLUME, fadeStart + FADE_MS / 1000);
 
     return teardown;
   }, [playing, suppressed]);
@@ -240,12 +389,13 @@ export default function AmbientPlayer() {
       data-cursor={playing ? "Mute" : "Listen"}
       style={{
         position: "fixed",
-        // Bug fix: Forbes top bar (36px desktop / 32px mobile) sits at
-        // top:0 with z-index 80. Anchor below it via the --gy-top-offset
-        // CSS var that body.gy-with-forbes-bar sets. Auto-collapses to
-        // 12px when the bar is dismissed.
-        top: "calc(var(--gy-top-offset, 0px) + 12px)",
-        right: 124,
+        // Boss bug fix (2026-05-05 second pass): the top-right area is
+        // already crowded by the language switcher, currency switcher,
+        // search and hamburger icons. Move the ambient pill to the
+        // BOTTOM-LEFT, where nothing else lives, so it's discoverable
+        // without crashing into existing nav.
+        bottom: 24,
+        left: 24,
         zIndex: 70,
         height: 30,
         padding: "0 14px",
@@ -297,9 +447,10 @@ export default function AmbientPlayer() {
           [aria-pressed="true"] [aria-hidden="true"] span { animation: none !important; }
         }
         @media (max-width: 700px) {
-          /* Hide the ambient pill on phones — adds clutter; rebroadcast
-             via NavDrawer settings later if Boss wants it surfaceable. */
-          button[aria-label*="ambient sound"] {
+          /* Phones: keep the pill visible (now bottom-left, no clutter
+             at the top anymore). Compact the label to just the icon
+             to keep the footprint tiny. */
+          button[aria-label*="ambient sound"] > span:last-of-type {
             display: none !important;
           }
         }
