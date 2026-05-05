@@ -1001,3 +1001,193 @@ a.gy-fancy-link:hover {
 @media (prefers-reduced-motion: reduce) {
   .gy-film-grain { opacity: 0; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   LUXURY REBUILD F5 — Site-wide 3D effects + animations (Phase 2,
+   2026-05-05). Boss decision: Medium tier site-wide, Heavy on hero.
+   • card-tilt 8° on hover (3D perspective + parallax depth)
+   • parallax 5px scroll micro-shift
+   • scroll-triggered fade-up for any [data-gy-reveal] element
+   • shimmer sweep on premium CTAs
+   ══════════════════════════════════════════════════════════════ */
+
+/* 3D card tilt — applies to any element with .gy-tilt-3d.
+   Uses CSS perspective + transform on hover for the magazine-cover
+   feel UHNW expect. The tilt direction is uniform (subtle "lift toward
+   the cursor" — implemented in pure CSS, no JS handler). For per-cursor
+   directional tilt, use the optional [data-gy-tilt-cursor] attribute
+   and a few lines of JS in GlobalEffects (already present in repo). */
+.gy-tilt-3d {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.gy-tilt-3d:hover {
+  transform: perspective(1200px) rotateX(2.5deg) rotateY(-3deg) translateY(-4px);
+  box-shadow:
+    0 24px 56px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(218, 165, 32, 0.18) inset;
+}
+
+/* Subtle "depth" shadow used as the resting state for tilt cards. */
+.gy-depth-card {
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.32),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+/* Magnetic / floating image — slow parallax drift on scroll. Hook
+   into existing scroll-driven animation timeline so it's free of
+   IntersectionObserver overhead on supporting browsers. */
+@supports (animation-timeline: view()) {
+  .gy-parallax-slow {
+    animation: gyParallaxDrift 1.2s linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+    will-change: transform;
+  }
+}
+@keyframes gyParallaxDrift {
+  from { transform: translateY(-12px); }
+  to   { transform: translateY(12px);  }
+}
+
+/* Scroll-reveal fade-up — opt-in via data-gy-reveal="up" / "left" / "right".
+   Uses scroll-driven timeline where supported, falls back to JS-detected
+   .is-visible class set elsewhere (existing reveal classes). */
+@supports (animation-timeline: view()) {
+  [data-gy-reveal="up"] {
+    animation: gyRevealUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 65%;
+  }
+  [data-gy-reveal="left"] {
+    animation: gyRevealLeft 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 65%;
+  }
+  [data-gy-reveal="right"] {
+    animation: gyRevealRight 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 65%;
+  }
+  [data-gy-reveal="blur"] {
+    animation: gyRevealBlur 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 75%;
+  }
+}
+@keyframes gyRevealUp    { from { opacity:0; transform: translateY(36px); } to { opacity:1; transform: translateY(0); } }
+@keyframes gyRevealLeft  { from { opacity:0; transform: translateX(-36px); } to { opacity:1; transform: translateX(0); } }
+@keyframes gyRevealRight { from { opacity:0; transform: translateX(36px);  } to { opacity:1; transform: translateX(0); } }
+@keyframes gyRevealBlur  { from { opacity:0; filter: blur(10px); transform: scale(0.98); } to { opacity:1; filter: blur(0); transform: scale(1); } }
+
+/* Premium CTA shimmer — gold sheen sweeps left-to-right on hover.
+   Apply via .gy-shimmer-cta on buttons or anchors. */
+.gy-shimmer-cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.gy-shimmer-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(218, 165, 32, 0.25) 50%,
+    transparent 65%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+  pointer-events: none;
+}
+.gy-shimmer-cta:hover::before {
+  transform: translateX(130%);
+}
+
+/* Sectional divider — radial gradient gold star that breathes very
+   slowly. For use as a section break. */
+.gy-divider-star {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-block: clamp(40px, 6vw, 72px);
+}
+.gy-divider-star::before,
+.gy-divider-star::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.4), transparent);
+  max-width: 280px;
+  margin-inline: 18px;
+}
+.gy-divider-star span {
+  width: 6px;
+  height: 6px;
+  background: #C9A84C;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.2),
+              0 0 0 8px rgba(201, 168, 76, 0.08);
+  animation: gyStarBreath 3.6s ease-in-out infinite;
+}
+@keyframes gyStarBreath {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.20), 0 0 0 8px rgba(201, 168, 76, 0.08); }
+  50%      { box-shadow: 0 0 0 6px rgba(201, 168, 76, 0.10), 0 0 0 14px rgba(201, 168, 76, 0.0); }
+}
+
+/* Reduced motion — gold standard accessibility. */
+@media (prefers-reduced-motion: reduce) {
+  .gy-tilt-3d,
+  .gy-tilt-3d:hover,
+  .gy-shimmer-cta::before,
+  .gy-parallax-slow {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .gy-divider-star span { animation: none !important; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PHASE 2 / C1 — Ken Burns parallax (Boss directive 2026-05-05).
+   Slow zoom + pan on hero photography to give every yacht detail page
+   an automatic cinematic reveal. CSS-only, no JS, no Three.js for
+   this first iteration. The AI depth-map 3D parallax follow-up will
+   layer on top in a later phase.
+   ══════════════════════════════════════════════════════════════ */
+.gy-ken-burns {
+  position: relative;
+  overflow: hidden;
+}
+.gy-ken-burns > img,
+.gy-ken-burns > video,
+.gy-ken-burns picture > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: center center;
+  animation: gyKenBurns 22s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes gyKenBurns {
+  0%   { transform: scale(1.06) translate3d(-1.5%,  0.5%, 0); }
+  50%  { transform: scale(1.12) translate3d( 1.0%, -0.8%, 0); }
+  100% { transform: scale(1.06) translate3d(-0.5%,  1.0%, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gy-ken-burns > img,
+  .gy-ken-burns > video,
+  .gy-ken-burns picture > img {
+    animation: none !important;
+    transform: scale(1.04) !important;
+  }
+}
+

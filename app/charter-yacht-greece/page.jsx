@@ -2,6 +2,7 @@ import React from "react";
 import { sanityClient } from "@/lib/sanity";
 import Footer from "@/components/Footer";
 import FleetGrid from "./FleetGrid";
+import BriefGeorgeBanner from "@/app/components/BriefGeorgeBanner";
 import Image from "next/image";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import "./fleet-page.css";
@@ -143,6 +144,10 @@ export default async function CharterFleetPage() {
       </section>
 
       {/* FLEET GRID (Client Component) */}
+      {/* Phase 2 / B1 (luxury rebuild) — Brief George banner sitting
+          alongside filters. Boutique alternative path for guests who
+          don't want to filter through 60+ yachts. */}
+      <BriefGeorgeBanner />
       <FleetGrid yachts={yachts} />
 
       {/* TRUST / CTA SECTION */}

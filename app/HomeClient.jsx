@@ -33,6 +33,10 @@ import HomeForbesQuote from "./components/HomeForbesQuote";
 const YourBroker = dynamic(() => import("./components/YourBroker"));
 const Filotimon = dynamic(() => import("./components/Filotimon"));
 const GreekWatersMap = dynamic(() => import("./components/GreekWatersMap"));
+// Phase 2 / E2 (luxury rebuild) — 3D Mapbox flyover. Lives ABOVE the
+// editorial GreekWatersMap so the cinematic version reads first; the
+// SVG illustration stays as the no-JS / reduced-motion fallback story.
+const MapboxFlyover = dynamic(() => import("./components/MapboxFlyover"), { ssr: false });
 const BrokerTestimonials = dynamic(() => import("./components/BrokerTestimonials"));
 const ContactFormSection = dynamic(() => import("./components/ContactFormSection"));
 const HomeJournalTeaser = dynamic(() => import("./components/HomeJournalTeaser"));
@@ -123,7 +127,13 @@ const HomeClient = ({
         />
       ) : null}
 
-      {/* Interactive Greek waters map (statement piece) */}
+      {/* Phase 2 / E2 — Cinematic 3D Mapbox flyover (statement piece). */}
+      <section id="flyover" aria-label="3D flyover of the Greek waters">
+        <MapboxFlyover />
+      </section>
+
+      {/* Editorial illustrated map (still here as a tactile,
+          reduced-motion-friendly counterpart to the cinematic flyover). */}
       <section id="map">
         <GreekWatersMap />
       </section>

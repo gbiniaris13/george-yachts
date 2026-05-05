@@ -117,6 +117,25 @@ const STEPS = [
     type: "text",
     placeholder: "e.g. quiet, romantic, remote",
   },
+  // Phase 2 / B1 (Boss luxury rebuild brief, 2026-05-05) —
+  // 6th field per Boss spec: Special Occasion. Guides the broker
+  // toward bespoke touches (cake on the swim platform, anniversary
+  // playlist, kids' welcome packs, etc.) without putting the burden
+  // on the guest to spell them out unprompted.
+  {
+    key: "occasion",
+    label: "Is there a special occasion?",
+    type: "choice",
+    options: [
+      { value: "none",        label: "Just a wonderful week" },
+      { value: "anniversary", label: "Anniversary" },
+      { value: "birthday",    label: "Birthday" },
+      { value: "honeymoon",   label: "Honeymoon" },
+      { value: "family",      label: "Family reunion" },
+      { value: "corporate",   label: "Corporate / private group" },
+      { value: "other",       label: "Other — we'll tell George" },
+    ],
+  },
   {
     key: "name",
     label: "What's your name?",

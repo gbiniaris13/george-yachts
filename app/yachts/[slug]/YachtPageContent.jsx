@@ -503,7 +503,10 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
         {/* HERO SECTION */}
         <section className="yacht-hero">
           {heroImage && (
-            <div className="yacht-hero__image-container">
+            <div className="yacht-hero__image-container gy-ken-burns">
+              {/* Phase 2 / C1 (luxury rebuild) — Ken Burns parallax. CSS-only
+                  cinematic zoom/pan reveal applied to the yacht hero image so
+                  every detail page opens like a film, not a catalog page. */}
               <Image
                 src={heroImage.url}
                 alt={heroImage.alt || `${yacht.name} ${yacht.subtitle} — luxury yacht charter Greece`}

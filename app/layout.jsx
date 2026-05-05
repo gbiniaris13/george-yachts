@@ -7,6 +7,7 @@ import CustomCursor from "./components/CustomCursor";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ContactDrawer from "./components/ContactDrawer";
 import VisitorGreeting from "./components/VisitorGreeting";
+import AmbientPlayer from "./components/AmbientPlayer";
 import StickyFleetCTA from "./components/StickyFleetCTA";
 import AskGeorgeWidget from "./components/AskGeorgeWidget";
 import GoldCurtain from "./components/GoldCurtain";
@@ -254,6 +255,11 @@ export default async function RootLayout({ children }) {
             ("Good evening from Athens — 21:14 local"). Free Vercel
             geo headers, no third-party calls, fades after 4s. */}
         <VisitorGreeting />
+        {/* Phase 2 / F4 (luxury rebuild, 2026-05-05) — ambient Greek
+            summer soundscape (waves + seagulls + cicadas, NO bouzouki).
+            Synthesised via Web Audio API, no MP3 / licensing. Mute by
+            default; tiny gold pill top-right, opt-in via click. */}
+        <AmbientPlayer />
         {/* H.1 — Ask George AI Concierge (sitewide). Sits ABOVE the
             WhatsApp button at bottom-right. Widget is fully client-side;
             graceful fallback when AI_API_KEY env vars aren't configured. */}
