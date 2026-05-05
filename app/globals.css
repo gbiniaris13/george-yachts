@@ -848,6 +848,41 @@ footer h4 {
   letter-spacing: 0.32em !important;
 }
 
+/* Phase 24 — F5 3D tilt on remaining card markups so the lift-on-
+   hover language is consistent across every grid surface. Now applied
+   to: SignatureYacht weekly hero, BrokerTestimonials quote frame,
+   HomeJournalTeaser blog cards, /blog list cards. Mild +3px lift,
+   0.15em gold inset border, no rotation — same restrained pattern
+   as the rest of the site (Phase 18). */
+.signature-yacht-card,
+.broker-testimonial-card,
+.home-journal-card,
+.blog-card {
+  transform-style: preserve-3d;
+  perspective: 1200px;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.6s ease;
+  will-change: transform;
+}
+@media (hover: hover) and (min-width: 700px) {
+  .signature-yacht-card:hover,
+  .broker-testimonial-card:hover,
+  .home-journal-card:hover,
+  .blog-card:hover {
+    transform: perspective(1200px) translateY(-4px);
+    box-shadow:
+      0 20px 48px rgba(0, 0, 0, 0.42),
+      0 0 0 1px rgba(218, 165, 32, 0.20) inset;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .signature-yacht-card:hover,
+  .broker-testimonial-card:hover,
+  .home-journal-card:hover,
+  .blog-card:hover { transform: none !important; }
+}
+
 /* Phase 23 — yacht detail page section titles. Every yacht page
    has 7-8 section headings (specs, gallery, features, toys, ideal,
    pricing, insider, story). They were rendering as plain Cormorant

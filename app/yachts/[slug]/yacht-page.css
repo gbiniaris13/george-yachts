@@ -476,15 +476,58 @@
   position: relative;
   aspect-ratio: 3/2;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 0;
   opacity: 0;
   transform: scale(0.95);
-  transition: all 0.6s ease;
+  transition: opacity 0.6s ease, transform 0.6s ease,
+              box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
 }
 
 .yacht-gallery__item.visible {
   opacity: 1;
   transform: scale(1);
+}
+
+/* Phase 24 (luxury rebuild) — gallery item hover lift, gold inset
+   border, and slow Ken Burns drift on the inner image. The lift is
+   the same 4px restraint pattern used across the site (Phase 18). */
+@media (hover: hover) and (min-width: 700px) {
+  .yacht-gallery__item.visible:hover {
+    transform: scale(1) translateY(-4px);
+    box-shadow:
+      0 22px 52px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(218, 165, 32, 0.32) inset;
+    border-color: rgba(218, 165, 32, 0.32);
+  }
+}
+
+.yacht-gallery__item .yacht-gallery__image,
+.yacht-gallery__item img {
+  transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.yacht-gallery__item.visible:hover .yacht-gallery__image,
+.yacht-gallery__item.visible:hover img {
+  transform: scale(1.06) !important;
+}
+
+/* Gallery caption strip (gold rule) — fades up on hover */
+.yacht-gallery__item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.yacht-gallery__item.visible:hover::after {
+  opacity: 1;
 }
 
 /* Stagger delay */

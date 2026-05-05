@@ -29,51 +29,15 @@ import { useEffect, useRef, useState } from "react";
 const GOLD = "#DAA520";
 
 /* ─── Question set ─────────────────────────────────────────────── */
+// Phase 24 (luxury rebuild, 2026-05-05) — Boss spec: SIX brief fields
+// only, plus contact. The earlier 13-step funnel had grown over time
+// to capture every conversion micro-signal; for the Forbes-launch
+// audience that's overkill — UHNW guests brief in six lines, not
+// thirteen. Removed: fleet (broker asks), yacht_of_interest (broker
+// asks if visitor came from a yacht page), duration (broker infers
+// from "when"). Kept the six Boss-confirmed fields:
+//   1. When · 2. Who · 3. Where · 4. What excites · 5. Budget · 6. Special
 const STEPS = [
-  {
-    key: "fleet",
-    label: "What kind of charter are you drawn to?",
-    type: "choice",
-    options: [
-      { value: "private", label: "Private Fleet — full crew, absolute discretion" },
-      { value: "explorer", label: "Explorer Fleet — more islands, lighter crew" },
-      { value: "unsure", label: "I'm not sure yet — advise me" },
-    ],
-  },
-  {
-    // Roberto 2026-05-02 (Site UX Batch 5) — Yacht selector step.
-    // GA4 showed visitors hitting /inquiry without ever visiting a
-    // fleet page (27 inquiry visits / 30d, 4 fleet-page visits same
-    // window). This step forces yacht-name visibility into the
-    // funnel: the dropdown is populated from /api/fleet at runtime
-    // and includes a free-form "I'm flexible" escape option so the
-    // step never blocks completion. The answer is stored under
-    // meta.yacht_of_interest and routes to the same Telegram + CRM
-    // payload as everything else in the inquiry.
-    key: "yacht_of_interest",
-    label: "Did any specific yacht catch your eye?",
-    type: "yacht-choice",
-  },
-  {
-    key: "region",
-    label: "Which waters call you?",
-    type: "choice",
-    options: [
-      { value: "cyclades", label: "Cyclades — Mykonos, Santorini, Paros" },
-      { value: "ionian", label: "Ionian — Corfu, Lefkada, Kefalonia" },
-      { value: "sporades", label: "Sporades — Skiathos, Alonissos" },
-      { value: "saronic", label: "Saronic Gulf — Hydra, Spetses" },
-      { value: "mix", label: "A mix / I'd like a recommendation" },
-    ],
-  },
-  {
-    key: "guests",
-    label: "How many guests on board?",
-    type: "number",
-    min: 2,
-    max: 30,
-    placeholder: "e.g. 6",
-  },
   {
     key: "when",
     label: "Roughly when would you like to sail?",
@@ -89,39 +53,45 @@ const STEPS = [
     ],
   },
   {
-    key: "duration",
-    label: "How many days at sea?",
+    key: "guests",
+    label: "How many guests on board?",
+    type: "number",
+    min: 2,
+    max: 30,
+    placeholder: "e.g. 6",
+  },
+  {
+    key: "region",
+    label: "Which waters call you?",
     type: "choice",
     options: [
-      { value: "weekend", label: "A weekend (2–3 days)" },
-      { value: "week", label: "About a week" },
-      { value: "two-weeks", label: "Two weeks" },
-      { value: "longer", label: "Longer / open-ended" },
+      { value: "cyclades", label: "Cyclades — Mykonos, Santorini, Paros" },
+      { value: "ionian", label: "Ionian — Corfu, Lefkada, Kefalonia" },
+      { value: "sporades", label: "Sporades — Skiathos, Alonissos" },
+      { value: "saronic", label: "Saronic Gulf — Hydra, Spetses" },
+      { value: "dodecanese", label: "Dodecanese — Symi, Patmos, Rhodes" },
+      { value: "mix", label: "A mix / I'd like a recommendation" },
     ],
+  },
+  {
+    key: "style",
+    label: "Describe this charter in three words.",
+    type: "text",
+    placeholder: "e.g. quiet, scenic, unhurried",
   },
   {
     key: "budget",
     label: "What's the comfortable weekly budget?",
     type: "choice",
     options: [
-      { value: "under-30k", label: "Under €30,000 / week" },
-      { value: "30-60k", label: "€30,000 – €60,000" },
-      { value: "60-120k", label: "€60,000 – €120,000" },
-      { value: "120k-plus", label: "€120,000+" },
+      { value: "under-30k",  label: "Under €30,000 / week" },
+      { value: "30-60k",     label: "€30,000 – €60,000" },
+      { value: "60-120k",    label: "€60,000 – €120,000" },
+      { value: "120k-plus",  label: "€120,000+" },
       { value: "per-person", label: "I think per person (Explorer Fleet)" },
+      { value: "discuss",    label: "I'd rather discuss with George" },
     ],
   },
-  {
-    key: "style",
-    label: "Describe this trip in three words.",
-    type: "text",
-    placeholder: "e.g. quiet, romantic, remote",
-  },
-  // Phase 2 / B1 (Boss luxury rebuild brief, 2026-05-05) —
-  // 6th field per Boss spec: Special Occasion. Guides the broker
-  // toward bespoke touches (cake on the swim platform, anniversary
-  // playlist, kids' welcome packs, etc.) without putting the burden
-  // on the guest to spell them out unprompted.
   {
     key: "occasion",
     label: "Is there a special occasion?",

@@ -138,31 +138,32 @@ export default function Filotimon({ filotimoImage = null }) {
         {/* ── RIGHT — editorial long-form text ── */}
         <div className="relative flex items-start justify-center px-8 md:px-16 lg:px-24 py-20 lg:py-32">
           <article className="max-w-[680px] w-full">
-            {/* Eyebrow */}
+            {/* Eyebrow — Phase 24 Cinzel temple-caps */}
             <p
               className="text-[#DAA520] mb-10"
               style={{
-                fontFamily: "'Montserrat', sans-serif",
-                fontSize: "9px",
-                letterSpacing: "0.55em",
+                fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Montserrat', sans-serif",
+                fontSize: "10px",
+                letterSpacing: "0.42em",
                 textTransform: "uppercase",
-                fontWeight: 600,
+                fontWeight: 500,
               }}
             >
               {t("filotimo.label")}
             </p>
 
-            {/* Signature line */}
+            {/* Signature line — Phase 24 polish: bumped scale + tighter
+                tracking for editorial presence. The brand-philosophy
+                section deserves the same masthead gravitas as the rest
+                of the site. */}
             <h2
               className="text-white mb-12"
               style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: "clamp(26px, 3.8vw, 56px)",
-                fontWeight: 200,
-                // Bumped from 1.1 → 1.2 so the headline doesn't break
-                // into cramped ligatures on 320 px devices.
-                lineHeight: 1.2,
-                letterSpacing: "0.005em",
+                fontSize: "clamp(32px, 4.5vw, 72px)",
+                fontWeight: 300,
+                lineHeight: 1.1,
+                letterSpacing: "-0.015em",
               }}
             >
               A word that does not translate cleanly
