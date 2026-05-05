@@ -394,9 +394,15 @@ section {
    On every page first-paint the logo fades up from 0 → 1 over 1.4s
    while a gold halo radiates outward from behind it. Boss directive:
    "Louis Vuitton θα το είχε αποκλείεται τόσο" — adds the missing
-   ceremonial introduction. */
+   ceremonial introduction.
+
+   Phase 27d (Boss bug 2026-05-05 evening) — REMOVED `position: relative`
+   from this class. The Link uses Tailwind's `absolute left-1/2
+   -translate-x-1/2` to center under the nav; my `position: relative`
+   was overriding that and shifting the logo right, ending up BEHIND
+   the currency pill. The `::before` halo still anchors correctly
+   because `position: absolute` is itself a positioning context. */
 .gy-logo-reveal {
-  position: relative;
   isolation: isolate;
   animation: gyLogoFade 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
