@@ -1,8 +1,28 @@
 # Sanity Studio — schema changes required by the May 2026 master rebuild
 
+> ## ✅ DEPLOYED — 2026-05-04
+>
+> All schemas in this document are LIVE at
+> **https://the-george-yachts-brokerage.sanity.studio/**
+>
+> - **Studio source repo (local)**: `/Users/.../Desktop/gy-sanity-studio/`
+> - **Sanity project ID**: `ecqr94ey` · **dataset**: `production`
+> - **Deployed Studio app ID**: `ah7zlve2ptbcgaetmx1nw0ej`
+> - **`priceModel` backfilled**: 66/66 yachts (48 per_yacht_week, 18 per_person_week)
+> - **`crew` field rename**: existing string `crew` preserved as-is; new
+>   array of crew profiles is at `crewProfiles` (rename from doc to avoid
+>   schema collision — front-end mapping below).
+>
+> ### To redeploy after future edits
+> ```bash
+> cd ~/Desktop/gy-sanity-studio
+> npx sanity deploy
+> ```
+> (Login is cached. If it expires: `npx sanity login` → choose Google →
+> pick `george@georgeyachts.com` (Administrator member of the project).)
+
 **Audience:** the developer / admin who maintains the Sanity Studio
-project (the schema files live in the Studio repo, not in this Next.js
-project). This file is the contract between the public site and the
+project. This file is the contract between the public site and the
 Studio so the two stay in sync.
 
 The front-end code in this repo is already written to **gracefully
@@ -12,6 +32,21 @@ visible until the schema lands.
 
 Add each field as **optional**, then backfill from Studio at George's
 pace. Re-deploy Studio after editing each schema file.
+
+---
+
+## ⚠️ Field name mapping (front-end ↔ Studio)
+
+The Studio crew field renamed from `crew` (originally proposed) to
+`crewProfiles` so it doesn't collide with the existing string field
+`crew` (which holds the count-of-crew display). The front-end
+documentation below references both clearly. **When implementing
+front-end consumers, use:**
+
+| Schema field | Type | Purpose |
+|---|---|---|
+| `crew` | string | Existing — count-of-crew display ("4 crew") |
+| `crewProfiles` | array of crewMember | NEW — D.8 rich crew list |
 
 ---
 

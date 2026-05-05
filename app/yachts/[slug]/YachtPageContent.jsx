@@ -281,6 +281,152 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </section>
         )}
 
+        {/* D.7 — SAMPLE 7-DAY ROUTE */}
+        {yacht.sampleItinerary && Array.isArray(yacht.sampleItinerary.days) && yacht.sampleItinerary.days.length > 0 && (
+          <section className="yacht-itinerary reveal" style={{ background: '#0a0a0a', padding: '64px 24px' }}>
+            <div className="container" style={{ maxWidth: 880, margin: '0 auto' }}>
+              <p
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: 9,
+                  letterSpacing: '0.42em',
+                  textTransform: 'uppercase',
+                  color: '#DAA520',
+                  fontWeight: 600,
+                  marginBottom: 14,
+                  textAlign: 'center',
+                }}
+              >
+                A Sample 7-Day Route
+              </p>
+              <h2
+                style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontWeight: 300,
+                  fontSize: 'clamp(28px, 4vw, 40px)',
+                  color: '#fff',
+                  textAlign: 'center',
+                  margin: '0 0 8px',
+                  lineHeight: 1.15,
+                }}
+              >
+                What a week aboard <em style={{ color: '#DAA520', fontStyle: 'italic' }}>{yacht.name}</em> can look like
+              </h2>
+              {yacht.sampleItinerary.totalDistance && (
+                <p
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: 11,
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,0.55)',
+                    textAlign: 'center',
+                    margin: '0 0 36px',
+                  }}
+                >
+                  Total: {yacht.sampleItinerary.totalDistance}
+                </p>
+              )}
+
+              <ol
+                style={{
+                  listStyle: 'none',
+                  padding: 0,
+                  margin: '40px 0 0',
+                  borderLeft: '1px solid rgba(218,165,32,0.3)',
+                }}
+              >
+                {yacht.sampleItinerary.days.map((leg, i) => (
+                  <li
+                    key={i}
+                    style={{
+                      position: 'relative',
+                      padding: '0 0 36px 28px',
+                    }}
+                  >
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        position: 'absolute',
+                        left: -7,
+                        top: 6,
+                        width: 13,
+                        height: 13,
+                        borderRadius: '50%',
+                        background: '#0a0a0a',
+                        border: '2px solid #DAA520',
+                      }}
+                    />
+                    <div
+                      style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: 9,
+                        letterSpacing: '0.32em',
+                        textTransform: 'uppercase',
+                        color: '#DAA520',
+                        fontWeight: 600,
+                        marginBottom: 6,
+                      }}
+                    >
+                      Day {leg.day}
+                      {leg.distance && (
+                        <span style={{ marginLeft: 12, color: 'rgba(255,255,255,0.55)' }}>
+                          · {leg.distance}
+                        </span>
+                      )}
+                    </div>
+                    {(leg.from || leg.to) && (
+                      <h3
+                        style={{
+                          fontFamily: "'Cormorant Garamond', Georgia, serif",
+                          fontWeight: 400,
+                          fontSize: 22,
+                          color: '#fff',
+                          margin: '0 0 8px',
+                          lineHeight: 1.25,
+                        }}
+                      >
+                        {leg.from}
+                        {leg.from && leg.to && (
+                          <span style={{ color: '#DAA520', margin: '0 10px', fontWeight: 300 }}>→</span>
+                        )}
+                        {leg.to}
+                      </h3>
+                    )}
+                    {leg.narrative && (
+                      <p
+                        style={{
+                          fontFamily: "'Lato', 'Montserrat', sans-serif",
+                          fontSize: 14,
+                          lineHeight: 1.65,
+                          color: 'rgba(255,255,255,0.72)',
+                          margin: 0,
+                          maxWidth: 640,
+                        }}
+                      >
+                        {leg.narrative}
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ol>
+
+              <p
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: 11,
+                  color: 'rgba(255,255,255,0.55)',
+                  textAlign: 'center',
+                  margin: '32px 0 0',
+                  fontStyle: 'italic',
+                }}
+              >
+                Indicative only — every charter is shaped around your group, the wind, and the season.
+              </p>
+            </div>
+          </section>
+        )}
+
         {/* CTA SECTION */}
         <section className="yacht-cta reveal">
           <div className="container">
