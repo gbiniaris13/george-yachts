@@ -23,6 +23,7 @@ import VisitorBeacon from "./components/VisitorBeacon";
 // Removed: VoiceSearch (nobody uses voice on yacht sites)
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { WishlistProvider } from "./components/WishlistProvider";
+import CurrencyProvider from "./components/CurrencyProvider";
 import JsonLd from "./components/JsonLd";
 import { organizationSchema } from "@/lib/organizationSchema";
 import VisitorIntelligence from "./components/VisitorIntelligence";
@@ -215,6 +216,7 @@ export default async function RootLayout({ children }) {
         {/* 2. Page Content */}
         <I18nProvider>
         <WishlistProvider>
+        <CurrencyProvider>
         <NavDrawerSystem />
         <main id="main-content">
         {children}
@@ -245,6 +247,7 @@ export default async function RootLayout({ children }) {
             WishlistProvider so it can read the live count. */}
         <FavoritesEmailPrompt />
         <VisitorBeacon />
+        </CurrencyProvider>
         </WishlistProvider>
         </I18nProvider>
 

@@ -18,6 +18,7 @@
 
 import React from "react";
 import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
+import PriceBlockFx from "./PriceBlockFx";
 
 export default function PriceBlock({
   yacht,
@@ -66,6 +67,9 @@ export default function PriceBlock({
       >
         {price}
       </span>
+      {/* M.1 — converted secondary line, only renders client-side
+          when the visitor has switched away from EUR. */}
+      <PriceBlockFx eurDisplay={price} size={size} />
       {showApa && (
         <span
           style={{

@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 import TranslateWidget from "./TranslateWidget";
 import NavSearch from "./NavSearch";
+import CurrencySwitcher from "./CurrencySwitcher";
 
 const WhatsappIcon = (props) => (
   <svg
@@ -180,6 +181,10 @@ const NavDrawerSystem = () => {
                 overlay with autocomplete across yacht names, builders,
                 regions. */}
             <NavSearch />
+            {/* M.1 — Currency switcher pill (€ / $ / £). Sits next to
+                the language widget so visitors can flip both display
+                axes from the same nav cluster. */}
+            <CurrencySwitcher compact={true} />
             {/* Language pill — choose language, then jump to channels.
                 Same 44×44 footprint as the icons so the row stays
                 rhythmic. */}
