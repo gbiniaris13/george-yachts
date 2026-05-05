@@ -120,6 +120,40 @@ const SORT_OPTIONS = [
   { id: 'guests', label: 'Most Guests' },
 ];
 
+// C.6 (Roberto master rebuild brief) — UHNW filter expansion.
+const REFIT_OPTIONS = [
+  { id: 'all', label: 'Any year' },
+  { id: '2020', label: '2020 or newer' },
+  { id: '2022', label: '2022 or newer' },
+  { id: '2024', label: '2024 or newer' },
+  { id: '2025', label: '2025+' },
+];
+
+const TOY_OPTIONS = [
+  { id: 'jet_ski', label: 'Jet Ski' },
+  { id: 'seabob', label: 'SeaBob' },
+  { id: 'efoil', label: 'e-Foil' },
+  { id: 'wakeboard', label: 'Wakeboard' },
+  { id: 'paddleboard', label: 'Paddleboard' },
+  { id: 'inflatable_slide', label: 'Inflatable Slide' },
+  { id: 'diving_equipment', label: 'Diving Gear' },
+];
+
+const MASTER_DECK_OPTIONS = [
+  { id: 'all', label: 'Any deck' },
+  { id: 'main', label: 'Main deck' },
+  { id: 'upper', label: 'Upper deck' },
+  { id: 'lower', label: 'Lower deck' },
+];
+
+const SPEED_OPTIONS = [
+  { id: 'all', label: 'Any speed' },
+  { id: 'sail', label: 'Sailing-paced (≤10 kn)' },
+  { id: 'to15', label: 'Up to 15 kn' },
+  { id: '15to25', label: '15–25 kn' },
+  { id: 'over25', label: '25 kn+' },
+];
+
 function parseLengthMeters(lengthStr) {
   if (!lengthStr) return 0;
   const match = String(lengthStr).match(/([\d.]+)\s*m/i);
@@ -463,6 +497,11 @@ export default function FleetGrid({ yachts }) {
   const [cabinFilter, setCabinFilter] = useState('all');
   const [priceRange, setPriceRange] = useState('all');
   const [sortBy, setSortBy] = useState('recommended');
+  // C.6 — UHNW advanced filters
+  const [refitFilter, setRefitFilter] = useState('all');
+  const [toysFilter, setToysFilter] = useState([]); // multi-select array of toy ids
+  const [masterDeckFilter, setMasterDeckFilter] = useState('all');
+  const [speedFilter, setSpeedFilter] = useState('all');
   const [compareList, setCompareList] = useState([]);
   // C.8 — One inquiry modal at the FleetGrid level. Cards push their
   // yacht context up via `onInquireClick`; the modal reads the value
@@ -573,6 +612,35 @@ export default function FleetGrid({ yachts }) {
     if (priceRange === '50to100') result = result.filter((y) => y.priceNum >= 50000 && y.priceNum <= 100000);
     if (priceRange === 'over100') result = result.filter((y) => y.priceNum > 100000);
 
+    // C.6 — Year of refit
+    if (refitFilter !== 'all') {
+      const minYear = parseInt(refitFilter, 10);
+      result = result.filter((y) => typeof y.yearRefit === 'number' && y.yearRefit >= minYear);
+    }
+    // C.6 — Water toys (AND across selected — yacht must offer ALL chosen)
+    if (toysFilter.length > 0) {
+      result = result.filter((y) => {
+        const set = new Set(Array.isArray(y.waterToys) ? y.waterToys : []);
+        return toysFilter.every((tid) => set.has(tid));
+      });
+    }
+    // C.6 — Master cabin deck
+    if (masterDeckFilter !== 'all') {
+      result = result.filter((y) => y.masterCabinDeck === masterDeckFilter);
+    }
+    // C.6 — Cruising speed (knots)
+    if (speedFilter !== 'all') {
+      result = result.filter((y) => {
+        const s = typeof y.maxCruisingSpeed === 'number' ? y.maxCruisingSpeed : null;
+        if (s === null) return false;
+        if (speedFilter === 'sail') return s <= 10;
+        if (speedFilter === 'to15') return s > 0 && s <= 15;
+        if (speedFilter === '15to25') return s > 15 && s <= 25;
+        if (speedFilter === 'over25') return s > 25;
+        return true;
+      });
+    }
+
     // Sort
     if (sortBy === 'recommended') {
       // Flagship first, then price ascending
@@ -594,7 +662,7 @@ export default function FleetGrid({ yachts }) {
     if (sortBy === 'guests') result.sort((a, b) => b.guestsNum - a.guestsNum);
 
     return result;
-  }, [yachts, activeCategory, lengthRange, guestFilter, cabinFilter, priceRange, sortBy]);
+  }, [yachts, activeCategory, lengthRange, guestFilter, cabinFilter, priceRange, sortBy, refitFilter, toysFilter, masterDeckFilter, speedFilter]);
 
   const activeCatLabel = categories.find((c) => c.id === activeCategory)?.label || '';
 
@@ -605,6 +673,11 @@ export default function FleetGrid({ yachts }) {
     setCabinFilter('all');
     setPriceRange('all');
     setSortBy('recommended');
+    // C.6 — also reset the UHNW filters
+    setRefitFilter('all');
+    setToysFilter([]);
+    setMasterDeckFilter('all');
+    setSpeedFilter('all');
   }, []);
 
   // C.5 — collapse the filter bar into compact mode once the
@@ -800,6 +873,57 @@ export default function FleetGrid({ yachts }) {
               ))}
             </select>
           </div>
+        </div>
+
+        {/* C.6 — UHNW advanced filters: refit year, master deck, cruising speed (toys below as chips) */}
+        <div className="fleet-filters__row fleet-filters__row--advanced">
+          <div className="fleet-filters__select-group">
+            <label htmlFor="filter-refit" className="fleet-filters__label">Refit year</label>
+            <select id="filter-refit" value={refitFilter} onChange={(e) => setRefitFilter(e.target.value)} className="fleet-filters__select">
+              {REFIT_OPTIONS.map((opt) => (
+                <option key={opt.id} value={opt.id}>{opt.label}</option>
+              ))}
+            </select>
+          </div>
+          <div className="fleet-filters__select-group">
+            <label htmlFor="filter-master-deck" className="fleet-filters__label">Master cabin</label>
+            <select id="filter-master-deck" value={masterDeckFilter} onChange={(e) => setMasterDeckFilter(e.target.value)} className="fleet-filters__select">
+              {MASTER_DECK_OPTIONS.map((opt) => (
+                <option key={opt.id} value={opt.id}>{opt.label}</option>
+              ))}
+            </select>
+          </div>
+          <div className="fleet-filters__select-group">
+            <label htmlFor="filter-speed" className="fleet-filters__label">Cruising speed</label>
+            <select id="filter-speed" value={speedFilter} onChange={(e) => setSpeedFilter(e.target.value)} className="fleet-filters__select">
+              {SPEED_OPTIONS.map((opt) => (
+                <option key={opt.id} value={opt.id}>{opt.label}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* C.6 — Water toys multi-select chip row */}
+        <div className="fleet-filters__toys" role="group" aria-label="Water toys">
+          <span className="fleet-filters__label fleet-filters__label--inline">Toys:</span>
+          {TOY_OPTIONS.map((opt) => {
+            const active = toysFilter.includes(opt.id);
+            return (
+              <button
+                key={opt.id}
+                type="button"
+                onClick={() => {
+                  setToysFilter((prev) => (
+                    prev.includes(opt.id) ? prev.filter((x) => x !== opt.id) : [...prev, opt.id]
+                  ));
+                }}
+                className={`fleet-filters__toy-chip ${active ? 'fleet-filters__toy-chip--active' : ''}`}
+                aria-pressed={active}
+              >
+                {opt.label}
+              </button>
+            );
+          })}
         </div>
       </div>
 

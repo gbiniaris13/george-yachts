@@ -28,6 +28,10 @@ export default function Lightbox({ images, yachtName }) {
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setIsOpen(true);
+    try {
+      // N.1 — yacht_gallery_opened
+      window.gtag?.("event", "yacht_gallery_opened", { yacht: yachtName, image_index: index });
+    } catch {}
   };
 
   return (

@@ -166,10 +166,50 @@ export default async function YachtPage({ params }) {
       priceModel,
       // D.7 (Roberto brief) — sample 7-day itinerary surfaces a concrete
       // route on the yacht detail page. Optional; the front-end skips
-      // the section entirely when no days are populated.
+      // the section entirely when days array is empty or unset.
       sampleItinerary{
         totalDistance,
         days[]{ day, distance, from, to, narrative }
+      },
+      // D.6 (Roberto brief) — optional Matterport 3D tour embed URL.
+      // Front-end shows the section + iframe only when set; click-to-load
+      // so the heavy Matterport bundle never ships unless the visitor
+      // explicitly opts in.
+      matterportEmbedUrl,
+      // D.5 (Roberto brief) — interactive deck plans. Tabbed view per
+      // deck; each plan has an illustration image and hotspot pins (x/y
+      // % coords) that open a modal with the cabin photo + name. Optional;
+      // when array is empty the front-end skips the section.
+      deckPlans[]{
+        deck,
+        "imageUrl": image.asset->url,
+        hotspots[]{
+          x, y, cabinName,
+          "photoUrl": photo.asset->url
+        }
+      },
+      // D.5 auto-fallback (Boss directive 2026-05-05): structured
+      // deck plans aren't populated yet, but layout / "plan" images
+      // are scattered in the regular gallery on many yachts (alt
+      // text "layout plan", "Deck Layout", etc). Surface those as a
+      // simpler "Deck layout" section so visitors get something
+      // useful even before Boss seeds the rich deckPlans field.
+      "layoutImages": images[
+        alt match "*layout*" ||
+        alt match "*Layout*" ||
+        alt match "*plan*" ||
+        alt match "*Plan*"
+      ]{
+        "url": asset->url,
+        alt
+      },
+      // D.8 (Roberto brief) — typed crew roster with photos. Optional;
+      // skipped when empty. Legacy free-text "crew" field stays as the
+      // count display in yacht-specs, this drives the rich row.
+      crewProfiles[]{
+        role,
+        oneLineBio,
+        "photoUrl": photoOptional.asset->url
       },
       "images": images[]{
         "url": asset->url,
@@ -230,6 +270,10 @@ export default async function YachtPage({ params }) {
           toys: yacht.toys,
           idealFor: yacht.idealFor,
           sampleItinerary: yacht.sampleItinerary,
+          crewProfiles: yacht.crewProfiles,
+          matterportEmbedUrl: yacht.matterportEmbedUrl,
+          deckPlans: yacht.deckPlans,
+          layoutImages: yacht.layoutImages,
           images: yacht.images,
         }}
         heroImage={heroImage}

@@ -1,6 +1,14 @@
 'use client';
 
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import dynamic from 'next/dynamic';
+
+// L.1 phase 2 — Mapbox GL upgrade. Dynamically imported so the
+// ~1 MB mapbox-gl bundle never ships on routes that don't use it.
+// Activates only when NEXT_PUBLIC_MAPBOX_TOKEN is set; otherwise the
+// existing SVG map renders unchanged.
+const MapboxRouteMap = dynamic(() => import('./MapboxRouteMap'), { ssr: false });
+const HAS_MAPBOX = typeof process !== 'undefined' && !!process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 import { useI18n } from '@/lib/i18n/I18nProvider';
 
 const GOLD = '#DAA520';
@@ -87,6 +95,14 @@ export default function ItineraryBuilderClient() {
   const [selected, setSelected] = useState(athensIsland ? [athensIsland] : []);
   const [hoveredIsland, setHoveredIsland] = useState(null);
   const [activeRegion, setActiveRegion] = useState('all');
+  // L.1 — save-route modal state
+  const [saveOpen, setSaveOpen] = useState(false);
+  const [saveName, setSaveName] = useState('');
+  const [saveEmail, setSaveEmail] = useState('');
+  const [saveMessage, setSaveMessage] = useState('');
+  const [saveSubmitting, setSaveSubmitting] = useState(false);
+  const [saveDone, setSaveDone] = useState(false);
+  const [saveError, setSaveError] = useState('');
   const svgRef = useRef(null);
 
   // Region zoom viewBoxes
@@ -216,6 +232,13 @@ export default function ItineraryBuilderClient() {
       >
         {/* MAP */}
         <div style={{ position: 'relative', background: '#060d1f', border: '1px solid rgba(218,165,32,0.12)', borderRadius: 16, overflow: 'hidden', aspectRatio: '5/4', boxShadow: 'inset 0 0 80px rgba(0,0,0,0.5), 0 8px 32px rgba(0,0,0,0.4)' }}>
+          {HAS_MAPBOX ? (
+            <MapboxRouteMap
+              islands={ISLANDS}
+              selected={selected.map((s) => s.id)}
+              onToggleIsland={(island) => toggleIsland(island)}
+            />
+          ) : (
           <svg ref={svgRef} viewBox={currentViewBox} style={{ width: '100%', height: '100%', transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }}>
             <defs>
               {/* Deep ocean gradient */}
@@ -410,6 +433,7 @@ export default function ItineraryBuilderClient() {
               );
             })}
           </svg>
+          )}
 
           {/* Hover tooltip */}
           {hoveredIsland && (
@@ -538,7 +562,7 @@ export default function ItineraryBuilderClient() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {selected.length >= 2 && (
               <button
-                onClick={handleSendToGeorge}
+                onClick={() => setSaveOpen(true)}
                 style={{
                   width: '100%', padding: '14px 0',
                   fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 600,
@@ -548,7 +572,21 @@ export default function ItineraryBuilderClient() {
                   transition: 'all 0.3s ease',
                 }}
               >
-                {t('builder.sendToGeorge', 'Send Route to George')}
+                {t('builder.saveRoute', 'Save my itinerary')}
+              </button>
+            )}
+            {selected.length >= 2 && (
+              <button
+                onClick={handleSendToGeorge}
+                style={{
+                  width: '100%', padding: '11px 0',
+                  fontFamily: "'Montserrat', sans-serif", fontSize: 10,
+                  color: 'rgba(255,255,255,0.65)', background: 'none',
+                  border: '1px solid rgba(218,165,32,0.35)', borderRadius: 4, cursor: 'pointer',
+                  letterSpacing: '0.15em', textTransform: 'uppercase',
+                }}
+              >
+                {t('builder.sendToGeorgeWa', 'Send to George via WhatsApp')}
               </button>
             )}
             {selected.length > 0 && (
@@ -581,6 +619,176 @@ export default function ItineraryBuilderClient() {
           to { stroke-dashoffset: 0; opacity: 0.6; }
         }
       `}</style>
+
+      {/* L.1 — Save-route modal */}
+      {saveOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Save your itinerary"
+          onClick={() => !saveSubmitting && setSaveOpen(false)}
+          style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: 24, zIndex: 1000,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: 460, width: '100%', background: '#0a0a0a',
+              border: `1px solid ${GOLD}66`, padding: '28px 28px 24px',
+              position: 'relative',
+            }}
+          >
+            {!saveDone ? (
+              <>
+                <p style={{
+                  fontFamily: "'Montserrat', sans-serif", fontSize: 9,
+                  letterSpacing: '0.42em', textTransform: 'uppercase',
+                  color: GOLD, fontWeight: 600, margin: '0 0 12px',
+                }}>
+                  Save your itinerary
+                </p>
+                <h3 style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: 24, fontWeight: 400, color: '#fff',
+                  margin: '0 0 6px', lineHeight: 1.2,
+                }}>
+                  Your route, in your inbox + on George&apos;s desk
+                </h3>
+                <p style={{
+                  fontFamily: "'Lato', 'Montserrat', sans-serif",
+                  fontSize: 13, lineHeight: 1.6,
+                  color: 'rgba(255,255,255,0.7)', margin: '0 0 18px',
+                }}>
+                  We&apos;ll email you a copy of this route and George will come back within 24 hours with the yachts that fit it.
+                </p>
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    if (saveSubmitting) return;
+                    if (!saveName.trim() || !saveEmail.includes('@')) {
+                      setSaveError('Please enter your name and a valid email.');
+                      return;
+                    }
+                    setSaveError('');
+                    setSaveSubmitting(true);
+                    try {
+                      const res = await fetch('/api/itinerary-save', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          name: saveName.trim(),
+                          email: saveEmail.trim(),
+                          message: saveMessage.trim(),
+                          route: selected.map((s) => s.name),
+                          totalNM: routeStats.totalNM,
+                          hours: routeStats.hours,
+                        }),
+                      });
+                      const json = await res.json().catch(() => ({}));
+                      if (!res.ok || !json?.ok) {
+                        setSaveError(json?.error || 'Something went wrong. Try again or write to George at /inquiry.');
+                        setSaveSubmitting(false);
+                        return;
+                      }
+                      setSaveDone(true);
+                      try { window.gtag?.('event', 'itinerary_saved', { route_length: selected.length }); } catch {}
+                    } catch {
+                      setSaveError('Network error. Please try again.');
+                      setSaveSubmitting(false);
+                    }
+                  }}
+                  style={{ display: 'flex', flexDirection: 'column', gap: 10 }}
+                >
+                  <input
+                    type="text" placeholder="Your name" required
+                    value={saveName} onChange={(e) => setSaveName(e.target.value)}
+                    style={modalInput}
+                  />
+                  <input
+                    type="email" placeholder="Your email" required
+                    value={saveEmail} onChange={(e) => setSaveEmail(e.target.value)}
+                    style={modalInput}
+                  />
+                  <textarea
+                    placeholder="Anything George should know? (group size, dates, vibe — optional)"
+                    value={saveMessage} onChange={(e) => setSaveMessage(e.target.value)}
+                    rows={3}
+                    style={{ ...modalInput, fontFamily: "'Lato', 'Montserrat', sans-serif", resize: 'vertical' }}
+                  />
+                  {saveError && (
+                    <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: '#ff8a8a', margin: 0 }}>
+                      {saveError}
+                    </p>
+                  )}
+                  <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
+                    <button
+                      type="submit" disabled={saveSubmitting}
+                      style={{
+                        flex: 1, padding: '12px 0',
+                        fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700,
+                        letterSpacing: '0.18em', textTransform: 'uppercase',
+                        color: '#000', background: saveSubmitting ? `${GOLD}66` : `linear-gradient(90deg, ${GOLD}, #8B6914)`,
+                        border: 'none', cursor: saveSubmitting ? 'default' : 'pointer',
+                      }}
+                    >
+                      {saveSubmitting ? 'Saving…' : 'Save my itinerary'}
+                    </button>
+                    <button
+                      type="button" onClick={() => setSaveOpen(false)} disabled={saveSubmitting}
+                      style={{
+                        padding: '12px 16px', fontFamily: "'Montserrat', sans-serif",
+                        fontSize: 10, color: 'rgba(255,255,255,0.5)',
+                        background: 'none', border: '1px solid rgba(255,255,255,0.18)', cursor: 'pointer',
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </>
+            ) : (
+              <div style={{ textAlign: 'center', padding: '8px 0 4px' }}>
+                <p style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: 26, fontWeight: 400, color: '#fff',
+                  margin: '0 0 10px',
+                }}>
+                  Saved.
+                </p>
+                <p style={{
+                  fontFamily: "'Lato', 'Montserrat', sans-serif",
+                  fontSize: 14, lineHeight: 1.6,
+                  color: 'rgba(255,255,255,0.78)', margin: '0 0 22px',
+                }}>
+                  A copy is on its way to {saveEmail || 'your inbox'}. George will reach out within 24 hours with two yachts that fit this route.
+                </p>
+                <button
+                  type="button" onClick={() => setSaveOpen(false)}
+                  style={{
+                    padding: '12px 24px', fontFamily: "'Montserrat', sans-serif",
+                    fontSize: 10, fontWeight: 700, letterSpacing: '0.24em', textTransform: 'uppercase',
+                    color: '#000', background: `linear-gradient(90deg, ${GOLD}, #8B6914)`,
+                    border: 'none', cursor: 'pointer',
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
+const modalInput = {
+  padding: '10px 12px',
+  fontFamily: "'Montserrat', sans-serif", fontSize: 13,
+  background: 'rgba(255,255,255,0.06)',
+  border: '1px solid rgba(255,255,255,0.18)',
+  color: '#fff', outline: 'none',
+};

@@ -21,6 +21,8 @@ async function getYachts() {
     crew,
     weeklyRatePrice,
     cruisingRegion,
+    fleetTier,
+    priceModel,
     idealFor,
     features,
     toys,

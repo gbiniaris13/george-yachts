@@ -8,6 +8,7 @@ import WhatsAppButton from "./components/WhatsAppButton";
 import ContactDrawer from "./components/ContactDrawer";
 import VisitorGreeting from "./components/VisitorGreeting";
 import StickyFleetCTA from "./components/StickyFleetCTA";
+import AskGeorgeWidget from "./components/AskGeorgeWidget";
 import GoldCurtain from "./components/GoldCurtain";
 import ExitIntentModal from "./components/ExitIntentModal";
 import AmbientScroll from "./components/AmbientScroll";
@@ -24,6 +25,7 @@ import VisitorBeacon from "./components/VisitorBeacon";
 // Removed: VoiceSearch (nobody uses voice on yacht sites)
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { WishlistProvider } from "./components/WishlistProvider";
+import CurrencyProvider from "./components/CurrencyProvider";
 import JsonLd from "./components/JsonLd";
 import { organizationSchema } from "@/lib/organizationSchema";
 import VisitorIntelligence from "./components/VisitorIntelligence";
@@ -130,6 +132,19 @@ export const metadata = {
   },
   alternates: {
     canonical: "https://georgeyachts.com",
+    // R (Roberto brief, May 2026) — hreflang signals for the 5
+    // languages the I18nProvider can render. Translations swap
+    // client-side via the gy-locale cookie / ?lang= query param;
+    // the URLs below give Google a stable, deterministic per-locale
+    // entry point that works without server-side i18n routing.
+    languages: {
+      "x-default": "https://georgeyachts.com",
+      en: "https://georgeyachts.com",
+      el: "https://georgeyachts.com/?lang=el",
+      ru: "https://georgeyachts.com/?lang=ru",
+      ar: "https://georgeyachts.com/?lang=ar",
+      he: "https://georgeyachts.com/?lang=he",
+    },
     types: {
       "application/rss+xml": "https://georgeyachts.com/feed.xml",
     },
@@ -216,6 +231,7 @@ export default async function RootLayout({ children }) {
         {/* 2. Page Content */}
         <I18nProvider>
         <WishlistProvider>
+        <CurrencyProvider>
         <NavDrawerSystem />
         <main id="main-content">
         {children}
@@ -238,6 +254,10 @@ export default async function RootLayout({ children }) {
             ("Good evening from Athens — 21:14 local"). Free Vercel
             geo headers, no third-party calls, fades after 4s. */}
         <VisitorGreeting />
+        {/* H.1 — Ask George AI Concierge (sitewide). Sits ABOVE the
+            WhatsApp button at bottom-right. Widget is fully client-side;
+            graceful fallback when AI_API_KEY env vars aren't configured. */}
+        <AskGeorgeWidget />
         {/* Roberto 2026-05-02 — sticky bottom CTA so the fleet is one
             tap from anywhere on the site (auto-hides on fleet/yacht
             routes). yachtCount left undefined here at the layout
@@ -252,6 +272,7 @@ export default async function RootLayout({ children }) {
             WishlistProvider so it can read the live count. */}
         <FavoritesEmailPrompt />
         <VisitorBeacon />
+        </CurrencyProvider>
         </WishlistProvider>
         </I18nProvider>
 

@@ -16,12 +16,29 @@ export function I18nProvider({ children }) {
   const [locale, setLocaleState] = useState('en');
 
   useEffect(() => {
-    // Check localStorage for saved language
-    const saved = typeof window !== 'undefined' && localStorage.getItem('gy-locale');
-    if (saved && locales[saved]) {
-      setLocaleState(saved);
-      document.documentElement.lang = locales[saved].meta.lang;
-      document.documentElement.dir = locales[saved].meta.dir;
+    // R (Roberto brief, May 2026) — locale resolution priority:
+    //   1. ?lang= query parameter (highest priority, overrides
+    //      stored preference for that visit + writes back to
+    //      localStorage so subsequent pages remember).
+    //   2. localStorage gy-locale.
+    //   3. en (default).
+    let resolved = null;
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const queryLocale = params.get('lang');
+      if (queryLocale && locales[queryLocale]) {
+        resolved = queryLocale;
+        localStorage.setItem('gy-locale', resolved);
+      }
+    } catch {}
+    if (!resolved) {
+      const saved = typeof window !== 'undefined' && localStorage.getItem('gy-locale');
+      if (saved && locales[saved]) resolved = saved;
+    }
+    if (resolved) {
+      setLocaleState(resolved);
+      document.documentElement.lang = locales[resolved].meta.lang;
+      document.documentElement.dir = locales[resolved].meta.dir;
     }
 
     // Listen for locale change events from WelcomeLanguagePopup

@@ -69,6 +69,32 @@ async function getPost(slug) {
   return freshClient.fetch(query, { slug });
 }
 
+// F.1 fallback — when a post has no editor-curated `relatedYachts`, we
+// still need to render the "Yachts to consider" block on every article
+// (brief acceptance: "Every blog post displays this section"). Pulls a
+// compact projection of every fleet yacht once per ISR window; the page
+// then deterministically picks 3 keyed off the post slug so the same
+// article always shows the same fallback trio (predictable + varied
+// across the 19+ articles).
+async function getFleetForFallback() {
+  const query = `*[_type == "yacht" && defined(slug.current)] | order(name asc){
+    name, "slug": slug.current, length, sleeps,
+    weeklyRatePrice, fleetTier, priceModel,
+    "image": images[0].asset->url
+  }`;
+  return freshClient.fetch(query).catch(() => []);
+}
+
+function pickFallbackYachts(slug, fleet) {
+  if (!Array.isArray(fleet) || fleet.length === 0) return [];
+  // Stable hash of the slug — sum of char codes mod fleet length picks
+  // the starting offset. Take 3 consecutive yachts wrapping around.
+  let h = 0;
+  for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) >>> 0;
+  const offset = h % fleet.length;
+  return [0, 1, 2].map((k) => fleet[(offset + k) % fleet.length]);
+}
+
 async function getRelatedPosts(currentSlug) {
   const query = `*[_type == "post" && slug.current != $currentSlug && defined(slug.current)] | order(publishedAt desc)[0...3]{
     _id,
@@ -162,9 +188,10 @@ export async function generateMetadata({ params }) {
 
 const ArticlePage = async ({ params }) => {
   const { slug } = await params;
-  const [post, relatedPosts] = await Promise.all([
+  const [post, relatedPosts, fleetPool] = await Promise.all([
     getPost(slug),
     getRelatedPosts(slug),
+    getFleetForFallback(),
   ]);
 
   if (!post) {
@@ -355,7 +382,13 @@ const ArticlePage = async ({ params }) => {
       {/* F.1 + F.2 — Yachts to consider + author bio. Sits BEFORE
           related articles so the highest-conversion path (yacht
           inquiry) is offered first. */}
-      <BlogPostFooter relatedYachts={post.relatedYachts} />
+      <BlogPostFooter
+        relatedYachts={
+          Array.isArray(post.relatedYachts) && post.relatedYachts.length > 0
+            ? post.relatedYachts
+            : pickFallbackYachts(slug, fleetPool)
+        }
+      />
 
       <RelatedArticles posts={relatedPosts} />
       <ContactFormSection />

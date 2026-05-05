@@ -57,6 +57,10 @@ export default function ExpressInquiryModal({
       if (e.key === "Escape") onClose?.();
     };
     window.addEventListener("keydown", onKey);
+    try {
+      // N.1 — yacht_inquiry_started fires once per modal open
+      window.gtag?.("event", "yacht_inquiry_started", {});
+    } catch {}
     return () => {
       document.body.style.overflow = prev;
       window.removeEventListener("keydown", onKey);
@@ -75,17 +79,36 @@ export default function ExpressInquiryModal({
     setSubmitting(true);
     setError("");
 
-    // O.1 — wait for reCAPTCHA token before submitting. The layout
-    // loads `recaptcha/enterprise.js` lazily, so on a fast click we
-    // may not yet have `window.grecaptcha`. We poll up to 4s.
+    // O.1 (Roberto brief, May 2026) — wait for reCAPTCHA token
+    // before submitting. The layout loads `recaptcha/enterprise.js`
+    // lazily, so on a fast click we may not yet have
+    // `window.grecaptcha`. Poll up to 4s; if still missing, block
+    // submit with a friendly error rather than letting through an
+    // un-verified payload.
     let recaptchaToken = "";
     const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-    if (siteKey && typeof window !== "undefined" && window.grecaptcha?.enterprise) {
+    if (siteKey && typeof window !== "undefined") {
+      // Poll grecaptcha availability
+      const start = Date.now();
+      while (!window.grecaptcha?.enterprise?.execute && Date.now() - start < 4000) {
+        // eslint-disable-next-line no-await-in-loop
+        await new Promise((r) => setTimeout(r, 100));
+      }
+      if (!window.grecaptcha?.enterprise?.execute) {
+        setError("Please wait a moment — security check loading.");
+        setSubmitting(false);
+        return;
+      }
       try {
         recaptchaToken = await window.grecaptcha.enterprise.execute(siteKey, {
           action: "express_inquiry",
         });
       } catch {}
+      if (!recaptchaToken) {
+        setError("Please wait a moment — security check loading.");
+        setSubmitting(false);
+        return;
+      }
     }
 
     try {
@@ -120,6 +143,15 @@ export default function ExpressInquiryModal({
           yacht_slug: yachtSlug || undefined,
           channel,
         });
+        // N.1 — favorites-specific aliases
+        if (source === "favorites_auto_prompt") {
+          window.gtag?.("event", "favorites_email_captured", { channel });
+        } else if (source === "favorites_send_to_george" || source === "favorites_shortlist") {
+          window.gtag?.("event", "favorites_sent_to_george", {
+            channel,
+            count: Array.isArray(window.__gyShortlistCount) ? undefined : undefined,
+          });
+        }
       } catch {}
       setTimeout(() => {
         setDone(false);
@@ -287,7 +319,19 @@ export default function ExpressInquiryModal({
                     <button
                       key={c.id}
                       type="button"
-                      onClick={() => setChannel(c.id)}
+                      onClick={() => {
+                        setChannel(c.id);
+                        // N.1 — telegram_button_clicked fires when the
+                        // user picks Telegram as their preferred channel
+                        // (the site's only Telegram-as-CTA surface).
+                        if (c.id === "telegram") {
+                          try {
+                            window.gtag?.("event", "telegram_button_clicked", {
+                              click_location: "express_inquiry_channel",
+                            });
+                          } catch {}
+                        }
+                      }}
                       style={{
                         padding: "9px 14px",
                         fontSize: "10px",

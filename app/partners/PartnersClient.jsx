@@ -139,6 +139,8 @@ export default function PartnersClient() {
     } catch {}
     try {
       localStorage.setItem(GATE_KEY, "1");
+      // N.1 — partner_form_submitted
+      window.gtag?.("event", "partner_form_submitted", {});
     } catch {}
     setGateSubmitting(false);
     setUnlocked(true);
@@ -520,6 +522,73 @@ export default function PartnersClient() {
         </div>
       </section>
 
+      {/* ═══════ J.1 — PARTNERS FAQ ═══════ */}
+      <section className="py-20 md:py-28 px-6" style={{ backgroundColor: "#000000" }}>
+        <div className="max-w-3xl mx-auto">
+          <p className="text-center mb-16" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.45em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
+            F R E Q U E N T L Y &nbsp; A S K E D
+          </p>
+          <div className="space-y-3">
+            {[
+              {
+                q: "What's the typical commission split?",
+                a: "We work to a fair, market-respecting split that depends on the size of the charter, whether you bring the relationship or just the introduction, and whether you want us to white-label everything or co-brand. The headline answer: meaningful, paid promptly, and never quibbled. Exact percentages on the call.",
+              },
+              {
+                q: "How fast is payment?",
+                a: "Within 7-10 days of the signed MYBA-standard contract — not after the charter, not after the season, not after a clearing cycle. Payment by SEPA or international wire in EUR. We send you a written confirmation the day the contract is signed so you know it's coming.",
+              },
+              {
+                q: "Can I co-broker on a deal?",
+                a: "Yes. Many of our best charters are co-brokered with another agency that brings the relationship while we handle the boat-side. Standard MYBA co-broker terms apply; we sign both sides on every contract so there's no question about who's owed what.",
+              },
+              {
+                q: "Do I need a partnership agreement before sending a client?",
+                a: "No. We've structured the programme so a first introduction can happen instantly — you write to George with the brief, we come back with a curated proposal, the commission is documented at proposal time. The formal partnership programme exists for partners who want priority allocation, white-label assets, and direct WhatsApp/Telegram channel.",
+              },
+              {
+                q: "What happens if my client doesn't book?",
+                a: "Nothing happens. No fees, no penalty, no awkward conversation. We treat every introduction with the same care — if it doesn't close this season, we keep the relationship warm for next year. About 35% of our partner introductions convert; the rest become future deals or long-term referral relationships.",
+              },
+            ].map((f, i) => (
+              <details
+                key={i}
+                style={{
+                  border: "1px solid rgba(201, 168, 76, 0.18)",
+                  padding: "16px 22px",
+                  background: "rgba(201, 168, 76, 0.02)",
+                }}
+              >
+                <summary
+                  style={{
+                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontSize: 19,
+                    color: "#fff",
+                    cursor: "pointer",
+                    listStyle: "none",
+                    fontWeight: 400,
+                  }}
+                >
+                  {f.q}
+                </summary>
+                <p
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: 13.5,
+                    fontWeight: 300,
+                    lineHeight: 1.75,
+                    color: "rgba(255,255,255,0.7)",
+                    margin: "12px 0 0",
+                  }}
+                >
+                  {f.a}
+                </p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ═══════ CTA — REQUEST PROGRAMME ═══════ */}
       <section className="py-20 md:py-28 px-6" style={{ backgroundColor: "#F8F5F0" }}>
         <div className="max-w-xl mx-auto text-center">
@@ -636,6 +705,7 @@ export default function PartnersClient() {
               target="_blank"
               rel="noopener noreferrer"
               className="underline hover:text-[#C9A84C] transition-colors"
+              onClick={() => { try { window.gtag?.("event", "partner_calendly_clicked", {}); } catch {} }}
             >
               book a call
             </a>

@@ -384,6 +384,27 @@ const Footer = () => {
           <span className="notranslate">George Yachts</span> will only ever request payment via signed MYBA-standard charter agreement, with bank details provided directly by our company in writing. We will never request wire transfers via email, messaging app, or unverified channels. If you receive any communication asking for payment that does not match this protocol, contact us immediately to verify.
         </p>
 
+        {/* O.2 — GDPR data residency + deletion line. Reinforces the
+            cookie/privacy posture set by Cookiebot + the privacy
+            policy page. Linked deletion form lives at /privacy/delete. */}
+        <p
+          className="mt-6 text-center"
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: "8px",
+            color: "rgba(255,255,255,0.45)",
+            letterSpacing: "0.05em",
+            lineHeight: 1.8,
+            maxWidth: "800px",
+            margin: "24px auto 0",
+          }}
+        >
+          Data stored in EU-based servers (Vercel EU regions where applicable). All inquiries handled with discretion.{" "}
+          <Link href="/privacy/delete" style={{ color: "rgba(218,165,32,0.6)", textDecoration: "underline" }}>
+            Request data deletion →
+          </Link>
+        </p>
+
         {/* Standard informational disclaimer */}
         <p className="mt-6 text-center" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.45)", letterSpacing: "0.05em", lineHeight: 1.8, maxWidth: "800px", margin: "24px auto 0" }}>
           All yacht specifications, images, and pricing are provided for informational purposes only. <span className="notranslate">George Yachts Brokerage House LLC</span> offers the details of these vessels in good faith but cannot guarantee the accuracy of this information or the condition of the vessels. All information is subject to change without notice and is not contractual.

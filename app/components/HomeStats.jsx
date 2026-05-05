@@ -59,9 +59,12 @@ export default function HomeStats({ yachtCount = 66 }) {
             key={i}
             className="text-center"
             style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(20px)",
-              transition: `opacity 0.6s ease ${i * 0.15}s, transform 0.6s ease ${i * 0.15}s`,
+              // A.14 (Roberto brief): start at opacity 0.5, 8px
+              // translate, 280ms duration, ≤50ms stagger so counters
+              // stay legible during fast scroll.
+              opacity: visible ? 1 : 0.5,
+              transform: visible ? "translateY(0)" : "translateY(8px)",
+              transition: `opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.05}s, transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.05}s`,
             }}
           >
             <div

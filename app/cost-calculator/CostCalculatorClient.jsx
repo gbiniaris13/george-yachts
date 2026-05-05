@@ -1,8 +1,20 @@
 'use client';
 
 import { useI18n } from '@/lib/i18n/I18nProvider';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import Link from 'next/link';
+
+// N.1 — debounced GA4 event when calculator inputs change. Fires
+// at most once per 800ms so we don't flood with every slider tick.
+function gtagEventDebounced(name, payload, delay = 800) {
+  if (typeof window === 'undefined') return;
+  if (typeof window.gtag !== 'function') return;
+  const key = `__gy_debounce_${name}`;
+  if (window[key]) clearTimeout(window[key]);
+  window[key] = setTimeout(() => {
+    try { window.gtag('event', name, payload || {}); } catch {}
+  }, delay);
+}
 
 const GOLD = '#DAA520';
 
@@ -30,6 +42,19 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
   const [guestCount, setGuestCount] = useState(8);
   const [transfer, setTransfer] = useState('none');
   const [weeks, setWeeks] = useState(1);
+
+  // N.1 — fire cost_calculator_used (debounced) on every input change
+  // once a yacht has been selected (otherwise nothing meaningful to log).
+  useEffect(() => {
+    if (!selectedYacht) return;
+    gtagEventDebounced('cost_calculator_used', {
+      yacht_slug: selectedYacht,
+      season,
+      guests: guestCount,
+      transfer,
+      weeks,
+    });
+  }, [selectedYacht, season, guestCount, transfer, weeks]);
 
   const breakdown = useMemo(() => {
     if (!selectedYacht) return null;
@@ -314,18 +339,27 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
 
               {/* CTAs */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <a
-                  href={`https://wa.me/17867988798?text=${encodeURIComponent(`Hi George, I used the cost calculator for ${breakdown.yacht.name}:\n\n${breakdown.guests} guests, ${breakdown.weeks} week(s), ${SEASONS.find(s => s.id === season)?.label}\nCharter all-in: ${fmt(breakdown.charterTotal)} (${fmt(breakdown.perPersonWeek)}/person/week)\nIncludes charter + VAT 12% + APA 30%\n\nCan we discuss availability?`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                {/* N.1 / brief E.3 — primary CTA links to Smart Match Quiz */}
+                <Link
+                  href={`/yacht-finder?from=cost-calculator&yacht=${encodeURIComponent(breakdown.yacht.slug)}`}
+                  onClick={() => {
+                    try {
+                      window.gtag?.('event', 'cost_calculator_cta_clicked', {
+                        target: 'yacht_finder',
+                        yacht_slug: breakdown.yacht.slug,
+                        guests: breakdown.guests,
+                        season,
+                      });
+                    } catch {}
+                  }}
                   style={{
                     display: 'block',
                     textAlign: 'center',
                     padding: '14px',
                     fontFamily: "'Montserrat', sans-serif",
                     fontSize: 11,
-                    fontWeight: 600,
-                    letterSpacing: '0.15em',
+                    fontWeight: 700,
+                    letterSpacing: '0.18em',
                     textTransform: 'uppercase',
                     background: `linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)`,
                     color: '#000',
@@ -334,7 +368,38 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                     transition: 'all 0.3s ease',
                   }}
                 >
-                  {t('calculator.discussEstimate', 'Discuss This Estimate with George')}
+                  Get exact pricing →
+                </Link>
+                <a
+                  href={`https://wa.me/17867988798?text=${encodeURIComponent(`Hi George, I used the cost calculator for ${breakdown.yacht.name}:\n\n${breakdown.guests} guests, ${breakdown.weeks} week(s), ${SEASONS.find(s => s.id === season)?.label}\nCharter all-in: ${fmt(breakdown.charterTotal)} (${fmt(breakdown.perPersonWeek)}/person/week)\nIncludes charter + VAT 12% + APA 30%\n\nCan we discuss availability?`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => {
+                    try {
+                      window.gtag?.('event', 'whatsapp_button_clicked', {
+                        click_location: 'cost_calculator',
+                        yacht_slug: breakdown.yacht.slug,
+                      });
+                    } catch {}
+                  }}
+                  style={{
+                    display: 'block',
+                    textAlign: 'center',
+                    padding: '12px',
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: 10,
+                    fontWeight: 600,
+                    letterSpacing: '0.15em',
+                    textTransform: 'uppercase',
+                    background: 'transparent',
+                    color: 'rgba(255,255,255,0.85)',
+                    border: '1px solid rgba(255,255,255,0.25)',
+                    borderRadius: 6,
+                    textDecoration: 'none',
+                    transition: 'all 0.3s ease',
+                  }}
+                >
+                  {t('calculator.discussEstimate', 'Or discuss with George on WhatsApp')}
                 </a>
                 <Link
                   href={`/yachts/${breakdown.yacht.slug}`}

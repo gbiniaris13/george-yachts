@@ -38,13 +38,23 @@ function RevealSection({ children, className = "", delay = 0 }) {
   );
 }
 
-/* ─── Team Data ─── */
+/* ─── Team Data ───
+ * I.3 (Roberto brief, May 2026 — Boss directive 2026-05-05):
+ *   • George B: Instagram + business email + real LinkedIn
+ *   • Eleanna: Instagram + business email (eleanna@georgeyachts.com)
+ *   • Everyone else: Instagram only
+ * Per Boss, broadcasting business emails / LinkedIn for the rest of
+ * the team isn't desired. Instagram is the only channel they each
+ * use publicly.
+ */
 const teamMembers = [
   {
     name: "George P. Biniaris",
     title: "Managing Broker",
     imageUrl: "/images/george.jpg",
     instagram: "george_p.biniaris",
+    email: "george@georgeyachts.com",
+    linkedin: "https://www.linkedin.com/in/george-p-biniaris/",
     profileUrl: "/team/george-biniaris",
     lead: true,
   },
@@ -60,6 +70,7 @@ const teamMembers = [
     title: "Head of Business Operations & Finance",
     imageUrl: "/images/elleanna.jpg",
     instagram: "eleanna_karvoun",
+    email: "eleanna@georgeyachts.com",
     profileUrl: "/team/elleana-karvouni",
   },
   {
@@ -92,6 +103,8 @@ const teamMembers = [
 function TeamCard({ member, index }) {
   const [ref, visible] = useReveal(0.1);
   const hasInstagram = member.instagram && member.instagram.length > 0;
+  const hasEmail = member.email && member.email.length > 0;
+  const hasLinkedin = member.linkedin && member.linkedin.length > 0;
 
   return (
     <div
@@ -123,6 +136,36 @@ function TeamCard({ member, index }) {
               <span className="team-card__instagram">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                 @{member.instagram}
+              </span>
+            )}
+
+            {/* I.3 — public business email + LinkedIn (per brief). Icons
+                stop the link bubbling up to the team-card profileUrl. */}
+            {(hasEmail || hasLinkedin) && (
+              <span className="team-card__contacts" style={{ display: 'inline-flex', gap: 10, marginTop: 6 }}>
+                {hasEmail && (
+                  <a
+                    href={`mailto:${member.email}`}
+                    onClick={(e) => e.stopPropagation()}
+                    aria-label={`Email ${member.name}`}
+                    title={member.email}
+                    style={{ color: 'inherit', display: 'inline-flex', alignItems: 'center' }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  </a>
+                )}
+                {hasLinkedin && (
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    aria-label={`${member.name} on LinkedIn`}
+                    style={{ color: 'inherit', display: 'inline-flex', alignItems: 'center' }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                  </a>
+                )}
               </span>
             )}
 

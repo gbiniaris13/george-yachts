@@ -33,6 +33,426 @@ import PriceBlock from '@/app/components/PriceBlock';
 import ExpressInquiryModal from '@/app/components/ExpressInquiryModal';
 import { isPerPerson } from '@/lib/pricing';
 
+// D.5 fallback (Boss directive 2026-05-05) — many yachts already
+// have a layout/floor-plan illustration in the regular gallery
+// (alt text "layout plan", "Deck Layout", etc) but not yet in the
+// structured deckPlans field. This renders that image as a clean
+// "Deck layout" panel so visitors still see something useful.
+// When Boss seeds the rich deckPlans field, the rich tabbed UI
+// takes over and this fallback never fires.
+function DeckLayoutFallback({ images, yachtName }) {
+  const valid = (images || []).filter((i) => i && i.url);
+  if (valid.length === 0) return null;
+  return (
+    <section className="yacht-deckplans reveal" style={{ background: '#0a0a0a', padding: '64px 24px' }}>
+      <div className="container" style={{ maxWidth: 980, margin: '0 auto' }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.42em', textTransform: 'uppercase', color: '#DAA520', fontWeight: 600, marginBottom: 14, textAlign: 'center' }}>
+          Deck layout
+        </p>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: 'clamp(28px, 4vw, 40px)', color: '#fff', textAlign: 'center', margin: '0 0 28px', lineHeight: 1.15 }}>
+          Where you sleep, eat, and relax aboard <em style={{ color: '#DAA520', fontStyle: 'italic' }}>{yachtName}</em>
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: valid.length === 1 ? '1fr' : 'repeat(auto-fit, minmax(360px, 1fr))', gap: 16 }}>
+          {valid.slice(0, 4).map((img, i) => (
+            <div
+              key={i}
+              style={{
+                position: 'relative',
+                background: '#0d1b2a',
+                border: '1px solid rgba(218,165,32,0.3)',
+              }}
+            >
+              <img
+                src={`${img.url}?w=1400&fit=max&auto=format`}
+                alt={img.alt || `${yachtName} deck layout`}
+                loading="lazy"
+                style={{ display: 'block', width: '100%', height: 'auto' }}
+              />
+            </div>
+          ))}
+        </div>
+        <p
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: 11,
+            color: 'rgba(255,255,255,0.55)',
+            textAlign: 'center',
+            margin: '20px 0 0',
+            fontStyle: 'italic',
+          }}
+        >
+          Cabin-by-cabin photos included with your personalized proposal.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// D.5 — Interactive deck plans. Tabs across decks; each tab shows the
+// deck illustration with absolute-positioned hotspot pins. Click a pin
+// to open a modal showing the cabin photo + name. Stays out of the way
+// (placed between gallery and features); skipped when empty.
+function DeckPlansSection({ decks, yachtName }) {
+  const valid = (decks || []).filter((d) => d && d.imageUrl);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [openHotspot, setOpenHotspot] = useState(null);
+
+  useEffect(() => {
+    if (!openHotspot) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setOpenHotspot(null);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [openHotspot]);
+
+  if (valid.length === 0) return null;
+  const active = valid[activeIdx] || valid[0];
+
+  return (
+    <section className="yacht-deckplans reveal" style={{ background: '#0a0a0a', padding: '64px 24px' }}>
+      <div className="container" style={{ maxWidth: 1080, margin: '0 auto' }}>
+        <p
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: 9,
+            letterSpacing: '0.42em',
+            textTransform: 'uppercase',
+            color: '#DAA520',
+            fontWeight: 600,
+            marginBottom: 14,
+            textAlign: 'center',
+          }}
+        >
+          Interactive Deck Plans
+        </p>
+        <h2
+          style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontWeight: 300,
+            fontSize: 'clamp(28px, 4vw, 40px)',
+            color: '#fff',
+            textAlign: 'center',
+            margin: '0 0 28px',
+            lineHeight: 1.15,
+          }}
+        >
+          Where you sleep, eat, and relax aboard <em style={{ color: '#DAA520', fontStyle: 'italic' }}>{yachtName}</em>
+        </h2>
+
+        {valid.length > 1 && (
+          <div
+            role="tablist"
+            aria-label="Deck plans"
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: 8,
+              marginBottom: 24,
+            }}
+          >
+            {valid.map((d, i) => {
+              const selected = i === activeIdx;
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  role="tab"
+                  aria-selected={selected}
+                  onClick={() => setActiveIdx(i)}
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: 10,
+                    letterSpacing: '0.32em',
+                    textTransform: 'uppercase',
+                    fontWeight: 600,
+                    padding: '10px 18px',
+                    background: selected ? 'rgba(218,165,32,0.18)' : 'transparent',
+                    color: selected ? '#DAA520' : 'rgba(255,255,255,0.6)',
+                    border: `1px solid ${selected ? '#DAA520' : 'rgba(255,255,255,0.18)'}`,
+                    cursor: 'pointer',
+                    transition: 'background 0.2s ease, color 0.2s ease, border-color 0.2s ease',
+                  }}
+                >
+                  {d.deck || `Deck ${i + 1}`}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        <div
+          style={{
+            position: 'relative',
+            width: '100%',
+            border: '1px solid rgba(218,165,32,0.3)',
+            background: '#0d1b2a',
+          }}
+        >
+          <img
+            src={`${active.imageUrl}?w=1600&fit=max&auto=format`}
+            alt={`${active.deck || 'Deck'} plan of ${yachtName}`}
+            style={{ display: 'block', width: '100%', height: 'auto' }}
+          />
+          {(active.hotspots || [])
+            .filter((h) => typeof h?.x === 'number' && typeof h?.y === 'number')
+            .map((h, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setOpenHotspot(h)}
+                aria-label={`Open photo of ${h.cabinName || 'cabin'}`}
+                style={{
+                  position: 'absolute',
+                  left: `${h.x}%`,
+                  top: `${h.y}%`,
+                  transform: 'translate(-50%, -50%)',
+                  width: 28,
+                  height: 28,
+                  borderRadius: '50%',
+                  background: '#DAA520',
+                  border: '3px solid #fff',
+                  boxShadow: '0 0 0 6px rgba(218,165,32,0.25)',
+                  cursor: 'pointer',
+                  padding: 0,
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  color: '#0a0a0a',
+                  animation: 'd5HotspotPulse 2.4s ease-in-out infinite',
+                }}
+                className="d5-hotspot"
+              >
+                {i + 1}
+              </button>
+            ))}
+        </div>
+
+        <p
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: 11,
+            color: 'rgba(255,255,255,0.55)',
+            textAlign: 'center',
+            margin: '20px 0 0',
+            fontStyle: 'italic',
+          }}
+        >
+          Click any gold pin to see a photo of that cabin or area.
+        </p>
+      </div>
+
+      {openHotspot && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={openHotspot.cabinName || 'Cabin photo'}
+          onClick={() => setOpenHotspot(null)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.85)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 24,
+            zIndex: 1000,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: 'relative',
+              maxWidth: 920,
+              width: '100%',
+              background: '#0a0a0a',
+              border: '1px solid rgba(218,165,32,0.4)',
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setOpenHotspot(null)}
+              aria-label="Close cabin photo"
+              style={{
+                position: 'absolute',
+                top: 12,
+                right: 12,
+                width: 36,
+                height: 36,
+                background: 'rgba(0,0,0,0.6)',
+                color: '#fff',
+                border: '1px solid rgba(255,255,255,0.3)',
+                cursor: 'pointer',
+                fontSize: 16,
+                lineHeight: 1,
+                zIndex: 2,
+              }}
+            >
+              ✕
+            </button>
+            {openHotspot.photoUrl ? (
+              <img
+                src={`${openHotspot.photoUrl}?w=1600&fit=max&auto=format`}
+                alt={openHotspot.cabinName || 'Cabin'}
+                style={{ display: 'block', width: '100%', height: 'auto' }}
+              />
+            ) : (
+              <div
+                style={{
+                  padding: '64px 24px',
+                  textAlign: 'center',
+                  color: 'rgba(255,255,255,0.6)',
+                  fontFamily: "'Lato', 'Montserrat', sans-serif",
+                  fontSize: 14,
+                }}
+              >
+                Photo coming soon.
+              </div>
+            )}
+            {openHotspot.cabinName && (
+              <p
+                style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: 22,
+                  fontWeight: 400,
+                  color: '#fff',
+                  margin: 0,
+                  padding: '14px 18px',
+                  borderTop: '1px solid rgba(218,165,32,0.3)',
+                  background: '#0a0a0a',
+                }}
+              >
+                {openHotspot.cabinName}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+// D.6 — Matterport 3D tour. Click-to-load: the heavy Matterport bundle
+// only ships when the visitor explicitly opts in via the CTA. Saves
+// ~1-2MB initial weight on every yacht page that has a tour configured.
+function MatterportSection({ url, yachtName }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <section className="yacht-matterport reveal" style={{ background: '#0a0a0a', padding: '64px 24px' }}>
+      <div className="container" style={{ maxWidth: 1080, margin: '0 auto' }}>
+        <p
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: 9,
+            letterSpacing: '0.42em',
+            textTransform: 'uppercase',
+            color: '#DAA520',
+            fontWeight: 600,
+            marginBottom: 14,
+            textAlign: 'center',
+          }}
+        >
+          Walk the yacht in 3D
+        </p>
+        <h2
+          style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontWeight: 300,
+            fontSize: 'clamp(28px, 4vw, 40px)',
+            color: '#fff',
+            textAlign: 'center',
+            margin: '0 0 28px',
+            lineHeight: 1.15,
+          }}
+        >
+          Step aboard <em style={{ color: '#DAA520', fontStyle: 'italic' }}>{yachtName}</em> from anywhere
+        </h2>
+
+        {!open ? (
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label={`Open the 360° interactive 3D tour of ${yachtName}`}
+            style={{
+              display: 'block',
+              width: '100%',
+              minHeight: 320,
+              cursor: 'pointer',
+              border: '1px solid rgba(218,165,32,0.45)',
+              background:
+                'linear-gradient(135deg, rgba(218,165,32,0.08) 0%, rgba(13,27,42,0.85) 100%)',
+              padding: '64px 24px',
+              transition: 'border-color 0.3s ease, background 0.3s ease',
+            }}
+            className="d6-matterport-trigger"
+          >
+            <div style={{ textAlign: 'center', maxWidth: 480, margin: '0 auto' }}>
+              <span
+                aria-hidden="true"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 64,
+                  height: 64,
+                  borderRadius: '50%',
+                  border: '1px solid rgba(218,165,32,0.6)',
+                  marginBottom: 18,
+                  fontSize: 26,
+                  color: '#DAA520',
+                }}
+              >
+                ▶
+              </span>
+              <p
+                style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: 22,
+                  fontWeight: 400,
+                  color: '#fff',
+                  margin: '0 0 12px',
+                }}
+              >
+                Take a 3D Tour →
+              </p>
+              <p
+                style={{
+                  fontFamily: "'Lato', 'Montserrat', sans-serif",
+                  fontSize: 13,
+                  lineHeight: 1.6,
+                  color: 'rgba(255,255,255,0.65)',
+                  margin: 0,
+                }}
+              >
+                A full 360° walkthrough of every cabin, salon, and deck — powered by Matterport. Loads on click to keep the page fast.
+              </p>
+            </div>
+          </button>
+        ) : (
+          <div style={{ position: 'relative', paddingTop: '56.25%', overflow: 'hidden' }}>
+            <iframe
+              src={url}
+              title={`3D Matterport tour of ${yachtName}`}
+              loading="lazy"
+              allow="xr-spatial-tracking; fullscreen"
+              allowFullScreen
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                border: '1px solid rgba(218,165,32,0.35)',
+              }}
+            />
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export default function YachtPageContent({ yacht, heroImage, description }) {
   const { t } = useI18n();
   const [modalOpen, setModalOpen] = useState(false);
@@ -194,6 +614,23 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </section>
         )}
 
+        {/* D.5 — INTERACTIVE DECK PLANS (rich) when populated, else
+            simpler layout-image fallback drawn from existing gallery
+            images whose alt text flags them as a deck layout (per
+            Boss directive 2026-05-05). */}
+        {Array.isArray(yacht.deckPlans) && yacht.deckPlans.length > 0 ? (
+          <DeckPlansSection decks={yacht.deckPlans} yachtName={yacht.name} />
+        ) : (
+          Array.isArray(yacht.layoutImages) && yacht.layoutImages.length > 0 && (
+            <DeckLayoutFallback images={yacht.layoutImages} yachtName={yacht.name} />
+          )
+        )}
+
+        {/* D.6 — MATTERPORT 3D TOUR (lazy / click-to-load) */}
+        {yacht.matterportEmbedUrl && (
+          <MatterportSection url={yacht.matterportEmbedUrl} yachtName={yacht.name} />
+        )}
+
         {/* KEY FEATURES */}
         {yacht.features && yacht.features.length > 0 && (
           <section className="yacht-features reveal">
@@ -281,6 +718,15 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </section>
         )}
 
+        {/* D.8 (Roberto brief, May 2026) — Crew profiles section
+            REMOVED per Boss directive 2026-05-05. Yacht owners can
+            change crew without notifying us; if we surface specific
+            people on the public yacht page we expose ourselves to
+            client disappointment when an introduced captain or chef
+            isn't actually onboard. The legacy free-text crew field
+            in the specs row stays — that's count-of-roles, no individuals,
+            which is safe to publish. */}
+
         {/* D.7 — SAMPLE 7-DAY ROUTE */}
         {yacht.sampleItinerary && Array.isArray(yacht.sampleItinerary.days) && yacht.sampleItinerary.days.length > 0 && (
           <section className="yacht-itinerary reveal" style={{ background: '#0a0a0a', padding: '64px 24px' }}>
@@ -327,6 +773,67 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   Total: {yacht.sampleItinerary.totalDistance}
                 </p>
               )}
+
+              {/* D.7 — Stylized route SVG. Generic per-yacht: N dots
+                  (one per day) connected by a flowing gold line. Works
+                  for any itinerary length, no per-yacht coordinates
+                  needed. Aria-hidden because the timeline below is the
+                  authoritative content. */}
+              <svg
+                viewBox={`0 0 ${Math.max(yacht.sampleItinerary.days.length * 90, 540)} 80`}
+                preserveAspectRatio="xMidYMid meet"
+                aria-hidden="true"
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  maxWidth: 720,
+                  height: 'auto',
+                  margin: '8px auto 0',
+                }}
+              >
+                {(() => {
+                  const n = yacht.sampleItinerary.days.length;
+                  const w = Math.max(n * 90, 540);
+                  const padX = 30;
+                  const innerW = w - padX * 2;
+                  const stepX = n > 1 ? innerW / (n - 1) : 0;
+                  const cy = 40;
+                  const points = Array.from({ length: n }, (_, i) => ({
+                    x: padX + i * stepX,
+                    y: cy + (i % 2 === 0 ? -10 : 10),
+                  }));
+                  const pathD = points
+                    .map((p, i) => {
+                      if (i === 0) return `M ${p.x} ${p.y}`;
+                      const prev = points[i - 1];
+                      const cx1 = prev.x + stepX / 2;
+                      const cx2 = p.x - stepX / 2;
+                      return `C ${cx1} ${prev.y} ${cx2} ${p.y} ${p.x} ${p.y}`;
+                    })
+                    .join(' ');
+                  return (
+                    <>
+                      <path d={pathD} stroke="#DAA520" strokeWidth="1.2" fill="none" opacity="0.7" />
+                      {points.map((p, i) => (
+                        <g key={i}>
+                          <circle cx={p.x} cy={p.y} r="5" fill="#0a0a0a" stroke="#DAA520" strokeWidth="1.5" />
+                          <text
+                            x={p.x}
+                            y={p.y + (i % 2 === 0 ? -14 : 22)}
+                            textAnchor="middle"
+                            fill="rgba(255,255,255,0.55)"
+                            fontFamily="'Montserrat', sans-serif"
+                            fontSize="9"
+                            letterSpacing="0.18em"
+                          >
+                            D{yacht.sampleItinerary.days[i].day || i + 1}
+                          </text>
+                        </g>
+                      ))}
+                    </>
+                  );
+                })()}
+              </svg>
 
               <ol
                 style={{
@@ -417,12 +924,35 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   fontSize: 11,
                   color: 'rgba(255,255,255,0.55)',
                   textAlign: 'center',
-                  margin: '32px 0 0',
+                  margin: '32px 0 24px',
                   fontStyle: 'italic',
                 }}
               >
                 Indicative only — every charter is shaped around your group, the wind, and the season.
               </p>
+
+              {/* D.7 brief — CTA below the timeline */}
+              <div style={{ textAlign: 'center', marginTop: 12 }}>
+                <Link
+                  href="/itinerary-builder"
+                  style={{
+                    display: 'inline-block',
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: 11,
+                    letterSpacing: '0.32em',
+                    textTransform: 'uppercase',
+                    color: '#DAA520',
+                    fontWeight: 600,
+                    padding: '14px 28px',
+                    border: '1px solid rgba(218,165,32,0.55)',
+                    textDecoration: 'none',
+                    transition: 'background 0.3s ease, border-color 0.3s ease',
+                  }}
+                  className="d7-build-cta"
+                >
+                  Build a fully custom itinerary →
+                </Link>
+              </div>
             </div>
           </section>
         )}
