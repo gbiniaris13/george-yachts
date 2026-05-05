@@ -186,7 +186,16 @@ export default async function ComparePage({ searchParams }) {
             <p className="text-[#DAA520] text-sm tracking-[0.3em] uppercase mb-4">
               Side-by-side
             </p>
-            <h1 className="font-cormorant text-5xl md:text-6xl font-light leading-tight">
+            <h1
+              className="font-cormorant font-light"
+              style={{
+                fontSize: "clamp(56px, 10vw, 130px)",
+                lineHeight: 0.95,
+                letterSpacing: "-0.035em",
+                color: "#F8F5F0",
+                textShadow: "0 6px 32px rgba(0,0,0,0.55)",
+              }}
+            >
               {yachtsByOrder.length > 0
                 ? yachtsByOrder.map((y) => y.name).join(" vs ")
                 : "Compare yachts head-to-head"}

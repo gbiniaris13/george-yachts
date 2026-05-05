@@ -93,11 +93,13 @@ export default async function ClusterPage({ params }) {
           <h1
             style={{
               fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: "clamp(36px, 6vw, 64px)",
+              fontSize: "clamp(56px, 10vw, 130px)",
               fontWeight: 300,
-              color: "#fff",
+              color: "#F8F5F0",
               margin: "0 0 28px",
-              lineHeight: 1.1,
+              lineHeight: 0.95,
+              letterSpacing: "-0.035em",
+              textShadow: "0 6px 32px rgba(0,0,0,0.55)",
             }}
           >
             {cluster.title}

@@ -192,12 +192,13 @@ export default function PartnersClient() {
             <h1
               style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: "clamp(30px, 5vw, 54px)",
+                fontSize: "clamp(56px, 10vw, 120px)",
                 fontWeight: 300,
-                lineHeight: 1.1,
-                color: "#fff",
+                lineHeight: 0.95,
+                color: "#F8F5F0",
                 marginBottom: "18px",
-                letterSpacing: "0.02em",
+                letterSpacing: "-0.035em",
+                textShadow: "0 6px 32px rgba(0,0,0,0.55)",
               }}
             >
               For travel professionals only.

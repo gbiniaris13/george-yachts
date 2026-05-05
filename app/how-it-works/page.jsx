@@ -96,7 +96,7 @@ export default function HowItWorksPage() {
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#DAA520", marginBottom: "24px", textTransform: "uppercase" }}>
             Your Charter Journey
           </p>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#fff", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "24px" }}>
+          <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(56px, 10vw, 130px)", fontWeight: 300, color: "#F8F5F0", letterSpacing: "-0.035em", lineHeight: 0.95, marginBottom: "24px", textShadow: "0 6px 32px rgba(0,0,0,0.55)" }}>
             How It Works
           </h1>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "15px", lineHeight: 1.9, color: "rgba(255,255,255,0.45)", maxWidth: "600px", margin: "0 auto" }}>

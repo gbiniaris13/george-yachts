@@ -24,7 +24,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.5em", color: "#DAA520", textTransform: "uppercase", marginBottom: 24 }}>
             George Yachts Brokerage House
           </p>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(3rem, 7vw, 5rem)", fontWeight: 300, color: "#fff", margin: "0 0 16px 0", letterSpacing: "0.02em" }}>
+          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(56px, 10vw, 130px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 18px 0", letterSpacing: "-0.035em", lineHeight: 0.95, textShadow: "0 6px 32px rgba(0,0,0,0.55)" }}>
             Explorer Fleet
           </h1>
           <div style={{ width: 60, height: 1, background: "linear-gradient(90deg, transparent, #DAA520, transparent)", margin: "0 auto 24px" }} />
