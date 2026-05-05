@@ -50,36 +50,52 @@ export default function AmbientPlayer() {
   const masterGainRef = useRef(null);
   const cleanupRef = useRef([]);
 
-  // Boss directive 2026-05-05: ambient sound should default to ON for
-  // new visitors. They can mute if they want — but the Greek summer
-  // soundscape is the first impression, not a hidden feature. Browser
-  // autoplay policy still requires a user gesture, so we wait for the
-  // first pointerdown / keydown / scroll / touchstart anywhere on the
-  // page and start the audio graph then.
+  // Boss directive 2026-05-05 (third pass): autoplay must be IMMEDIATE.
+  // Modern browsers gate AudioContext on user gesture, but we can:
+  //   1. Try immediately on mount (works for returning visitors / Chrome
+  //      "high engagement" / Safari with media-autoplay allowed).
+  //   2. Listen for the FIRST move of any pointer (mousemove fires inside
+  //      milliseconds of arrival), plus scroll/key/touch as backups.
+  //   3. Once started, write "on" to localStorage so the next visit
+  //      auto-starts even if mousemove is briefly absent.
   useEffect(() => {
     if (suppressed) return;
     if (typeof window === "undefined") return;
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      // Treat null (first visit) AND "on" the same way — both should
-      // attempt autoplay on first gesture. Only "off" (user explicitly
-      // muted) skips the listener.
       if (saved === "off") return;
+
+      let started = false;
       const start = () => {
+        if (started) return;
+        started = true;
         setPlaying(true);
-        if (saved === null) {
-          // First visit — write "on" so subsequent navigations remember.
-          try { localStorage.setItem(STORAGE_KEY, "on"); } catch {}
-        }
-        window.removeEventListener("pointerdown", start);
-        window.removeEventListener("keydown", start);
-        window.removeEventListener("scroll", start);
-        window.removeEventListener("touchstart", start);
+        try { localStorage.setItem(STORAGE_KEY, "on"); } catch {}
+        ["pointerdown", "pointermove", "mousemove", "keydown", "scroll", "touchstart", "wheel"]
+          .forEach((evt) => window.removeEventListener(evt, start));
+        document.removeEventListener("visibilitychange", visTrigger);
       };
-      window.addEventListener("pointerdown", start, { once: true, passive: true });
-      window.addEventListener("keydown", start, { once: true, passive: true });
-      window.addEventListener("scroll", start, { once: true, passive: true });
-      window.addEventListener("touchstart", start, { once: true, passive: true });
+      const visTrigger = () => {
+        if (!document.hidden) start();
+      };
+
+      // Optimistic immediate attempt — if the browser accepts (returning
+      // visitor, high engagement), audio starts right now without waiting.
+      // Safari is most permissive; Chrome may suspend until first gesture
+      // anyway, in which case our listeners catch it.
+      const optimisticStart = setTimeout(() => start(), 0);
+
+      // Defense-in-depth listeners — first event wins.
+      ["pointerdown", "pointermove", "mousemove", "keydown", "scroll", "touchstart", "wheel"]
+        .forEach((evt) => window.addEventListener(evt, start, { passive: true, once: true }));
+      document.addEventListener("visibilitychange", visTrigger);
+
+      return () => {
+        clearTimeout(optimisticStart);
+        ["pointerdown", "pointermove", "mousemove", "keydown", "scroll", "touchstart", "wheel"]
+          .forEach((evt) => window.removeEventListener(evt, start));
+        document.removeEventListener("visibilitychange", visTrigger);
+      };
     } catch {}
   }, [suppressed]);
 
@@ -126,88 +142,181 @@ export default function AmbientPlayer() {
     master.connect(ctx.destination);
     masterGainRef.current = master;
 
-    // ── 1. Deep ocean rumble — brown-noise bed, heavily low-passed.
-    // Boss feedback (2026-05-05): the prior pink-noise version sounded
-    // like wind, which makes UHNW guests imagine bad weather. Brown
-    // noise (Brownian / random-walk integration) has a -6dB/oct slope
-    // vs pink's -3dB/oct, so the spectrum is dominated by the deep
-    // bass that real ocean rumble carries.
+    // ── 1. Pre-render a noise buffer used by all wave events. NO
+    //     continuous bed plays — Boss directive 2026-05-05 (third
+    //     pass): the prior brown-noise rumble was perceived as wind,
+    //     which makes UHNW guests imagine the boat rocking — exactly
+    //     the wrong subconscious cue. The mix now consists of
+    //     DISCRETE wave events (build → crash → wash → silence)
+    //     plus dolphins / seagulls / harmonic pad / distant chatter.
+    //     Real Cyclades / Ionian beach recordings are mostly silence
+    //     punctuated by waves, not continuous hiss.
     const noiseBuffer = ctx.createBuffer(2, ctx.sampleRate * 6, ctx.sampleRate);
     for (let ch = 0; ch < 2; ch++) {
       const data = noiseBuffer.getChannelData(ch);
       let last = 0;
       for (let i = 0; i < data.length; i++) {
         const white = Math.random() * 2 - 1;
-        // Brown noise: random walk with leakage.
         last = (last + 0.018 * white) * 0.998;
         data[i] = last * 16;
       }
     }
-    const oceanSrc = ctx.createBufferSource();
-    oceanSrc.buffer = noiseBuffer;
-    oceanSrc.loop = true;
 
-    const oceanLP = ctx.createBiquadFilter();
-    oceanLP.type = "lowpass";
-    oceanLP.frequency.value = 220; // tight cut so no airy hiss
-    oceanLP.Q.value = 0.5;
-
-    const oceanGain = ctx.createGain();
-    oceanGain.gain.value = 0.45;
-    oceanSrc.connect(oceanLP).connect(oceanGain).connect(master);
-    oceanSrc.start();
-    cleanupRef.current.push(() => { try { oceanSrc.stop(); } catch {} });
-
-    // ── 2. Wave crashes — separate noise source, mid-band filter,
-    //     fired in shaped envelopes every 4-7 seconds. This is what
-    //     makes the bed sound like *waves* instead of *static*.
-    const crashScheduler = () => {
+    // ── 2. Wave events — each one is a 3-stage envelope simulating
+    //     a real wave coming in: build (rolling water rises), crash
+    //     (low-mid impact), wash (high-band hiss receding), silence.
+    //     Two voices per event: a low-mid body + a high-band foam.
+    const waveScheduler = (sizeOverride) => {
       if (!ctxRef.current) return;
       const now = ctx.currentTime;
-      // Pull a chunk of the existing noise buffer
-      const src = ctx.createBufferSource();
-      src.buffer = noiseBuffer;
-      src.loop = false;
+      // Wave size: 0=small chop, 1=mid wave, 2=big breaker.
+      const size = sizeOverride !== undefined
+        ? sizeOverride
+        : Math.random() < 0.2 ? 2 : Math.random() < 0.55 ? 1 : 0;
 
-      const bp = ctx.createBiquadFilter();
-      bp.type = "bandpass";
-      bp.frequency.value = 600 + Math.random() * 400; // mid-band "wash"
-      bp.Q.value = 0.8;
+      // Body: low-mid noise filtered to "rolling water" frequencies.
+      const body = ctx.createBufferSource();
+      body.buffer = noiseBuffer;
+      body.loop = false;
+      const bodyLP = ctx.createBiquadFilter();
+      bodyLP.type = "lowpass";
+      bodyLP.frequency.value = size === 2 ? 480 : size === 1 ? 380 : 320;
+      bodyLP.Q.value = 0.6;
+      const bodyHP = ctx.createBiquadFilter();
+      bodyHP.type = "highpass";
+      bodyHP.frequency.value = 80;
+      const bodyGain = ctx.createGain();
+      const bodyPeak = size === 2 ? 0.42 : size === 1 ? 0.28 : 0.16;
+      const bodyAttack = size === 2 ? 1.4 : size === 1 ? 1.0 : 0.6;
+      const bodyDecay = size === 2 ? 3.2 : size === 1 ? 2.4 : 1.4;
+      bodyGain.gain.setValueAtTime(0, now);
+      bodyGain.gain.linearRampToValueAtTime(bodyPeak * 0.4, now + bodyAttack * 0.55);
+      bodyGain.gain.linearRampToValueAtTime(bodyPeak, now + bodyAttack);
+      bodyGain.gain.exponentialRampToValueAtTime(0.0001, now + bodyAttack + bodyDecay);
 
-      const lp2 = ctx.createBiquadFilter();
-      lp2.type = "lowpass";
-      lp2.frequency.value = 1500;
+      // Stereo placement — wide stage for big waves, mono for small.
+      const bodyPan = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+      if (bodyPan) {
+        bodyPan.pan.value = (Math.random() - 0.5) * (size === 2 ? 0.7 : 0.4);
+        body.connect(bodyHP).connect(bodyLP).connect(bodyGain).connect(bodyPan).connect(master);
+      } else {
+        body.connect(bodyHP).connect(bodyLP).connect(bodyGain).connect(master);
+      }
+      const offset1 = Math.random() * (noiseBuffer.duration - bodyAttack - bodyDecay - 0.5);
+      body.start(now, offset1);
+      body.stop(now + bodyAttack + bodyDecay + 0.1);
 
-      const g = ctx.createGain();
-      const peak = 0.18 + Math.random() * 0.12;
-      // Wave envelope: gentle build (~0.6s), peak crash, slow tail (~3.5s)
-      g.gain.setValueAtTime(0, now);
-      g.gain.linearRampToValueAtTime(peak * 0.5, now + 0.55);
-      g.gain.linearRampToValueAtTime(peak, now + 0.85);
-      g.gain.exponentialRampToValueAtTime(0.0001, now + 4.2);
+      // Foam: high-band hiss that lags 0.3s behind the body, decays
+      // faster — this is the "wash" you hear as the wave recedes.
+      const foamDelay = size === 2 ? 0.6 : size === 1 ? 0.45 : 0.3;
+      const foam = ctx.createBufferSource();
+      foam.buffer = noiseBuffer;
+      const foamBP = ctx.createBiquadFilter();
+      foamBP.type = "bandpass";
+      foamBP.frequency.value = size === 2 ? 1800 : 2400;
+      foamBP.Q.value = 0.9;
+      const foamGain = ctx.createGain();
+      const foamPeak = size === 2 ? 0.16 : size === 1 ? 0.10 : 0.06;
+      const foamStart = now + foamDelay;
+      foamGain.gain.setValueAtTime(0, foamStart);
+      foamGain.gain.linearRampToValueAtTime(foamPeak, foamStart + 0.3);
+      foamGain.gain.exponentialRampToValueAtTime(0.0001, foamStart + 2.4);
 
-      src.connect(bp).connect(lp2).connect(g).connect(master);
-      const offset = Math.random() * (noiseBuffer.duration - 5);
-      src.start(now, offset);
-      src.stop(now + 4.5);
+      const foamPan = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+      if (foamPan) {
+        foamPan.pan.value = bodyPan ? bodyPan.pan.value : 0;
+        foam.connect(foamBP).connect(foamGain).connect(foamPan).connect(master);
+      } else {
+        foam.connect(foamBP).connect(foamGain).connect(master);
+      }
+      const offset2 = Math.random() * (noiseBuffer.duration - 3);
+      foam.start(foamStart, offset2);
+      foam.stop(foamStart + 2.6);
     };
-    // First crash kicks in immediately so the visitor hears a wave
-    // within the first second — Boss directive: "first 3 seconds".
-    setTimeout(crashScheduler, 250);
-    setTimeout(crashScheduler, 1800);
-    const crashInterval = setInterval(crashScheduler, 4500 + Math.random() * 2500);
-    cleanupRef.current.push(() => clearInterval(crashInterval));
 
-    // ── 3. Slow ocean breath — sub-audible bass swell that rides
-    //     under the crashes giving the mix "lungs". 0.06 Hz period.
-    const breathOsc = ctx.createOscillator();
-    breathOsc.type = "sine";
-    breathOsc.frequency.value = 0.07;
-    const breathAmp = ctx.createGain();
-    breathAmp.gain.value = 0.12;
-    breathOsc.connect(breathAmp).connect(oceanGain.gain);
-    breathOsc.start();
-    cleanupRef.current.push(() => { try { breathOsc.stop(); } catch {} });
+    // FIRST WAVE within 80ms of start so the very first thing the
+    // visitor hears is a real wave, not silence or noise.
+    setTimeout(() => waveScheduler(1), 80);
+    // Second wave shortly after to establish the rhythm.
+    setTimeout(() => waveScheduler(0), 1600);
+    setTimeout(() => waveScheduler(2), 4200);
+    // Then natural rolling pattern — average ~3.8s between waves with
+    // randomness so it never feels metronomic. Real Cycladic shores
+    // average 8-12 wave events per minute.
+    const waveScheduleNext = () => {
+      const next = 2800 + Math.random() * 2400;
+      setTimeout(() => {
+        if (!ctxRef.current) return;
+        waveScheduler();
+        waveScheduleNext();
+      }, next);
+    };
+    setTimeout(waveScheduleNext, 6500);
+
+    // ── 2b. Distant Greek voices — formant-shaped noise bursts that
+    //     read as "people talking far away" without ever being words.
+    //     Two-formant approximation (vocal tract resonances at ~700Hz
+    //     and ~1800Hz for vowel-ish content) with a slow gate that
+    //     mimics speech rhythm. Heavy stereo placement + lots of
+    //     reverb-style decay so it sounds like overheard from across
+    //     a bay or out of a taverna.
+    const voiceScheduler = () => {
+      if (!ctxRef.current) return;
+      const now = ctx.currentTime;
+      // Random utterance length 1.4-3.2s
+      const duration = 1.4 + Math.random() * 1.8;
+      const numSyllables = 3 + Math.floor(Math.random() * 4);
+      const syllableDuration = duration / numSyllables;
+
+      const voiceMaster = ctx.createGain();
+      voiceMaster.gain.value = 0;
+      const voicePan = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+      if (voicePan) {
+        voicePan.pan.value = (Math.random() - 0.5) * 1.6;
+        voiceMaster.connect(voicePan).connect(master);
+      } else {
+        voiceMaster.connect(master);
+      }
+      // Overall envelope: fade in, hold, fade out
+      voiceMaster.gain.setValueAtTime(0, now);
+      voiceMaster.gain.linearRampToValueAtTime(0.013, now + 0.5);
+      voiceMaster.gain.linearRampToValueAtTime(0.013, now + duration - 0.4);
+      voiceMaster.gain.linearRampToValueAtTime(0, now + duration);
+
+      // Per-syllable formant bursts.
+      for (let s = 0; s < numSyllables; s++) {
+        const sStart = now + s * syllableDuration;
+        const src = ctx.createBufferSource();
+        src.buffer = noiseBuffer;
+        // Two parallel formant filters.
+        const f1 = ctx.createBiquadFilter();
+        f1.type = "bandpass";
+        f1.frequency.value = 600 + Math.random() * 350;
+        f1.Q.value = 8;
+        const f2 = ctx.createBiquadFilter();
+        f2.type = "bandpass";
+        f2.frequency.value = 1500 + Math.random() * 800;
+        f2.Q.value = 6;
+        const sg = ctx.createGain();
+        sg.gain.setValueAtTime(0, sStart);
+        sg.gain.linearRampToValueAtTime(0.5, sStart + syllableDuration * 0.3);
+        sg.gain.exponentialRampToValueAtTime(0.0001, sStart + syllableDuration * 0.92);
+
+        // Combine the two formants by routing the source through both.
+        src.connect(f1).connect(sg);
+        src.connect(f2).connect(sg);
+        sg.connect(voiceMaster);
+        const o = Math.random() * (noiseBuffer.duration - syllableDuration - 0.1);
+        src.start(sStart, o);
+        src.stop(sStart + syllableDuration);
+      }
+    };
+    // First voice ~16s in (after waves are established).
+    setTimeout(voiceScheduler, 16000);
+    const voiceInterval = setInterval(() => {
+      if (Math.random() < 0.42) voiceScheduler();
+    }, 22000 + Math.random() * 18000);
+    cleanupRef.current.push(() => clearInterval(voiceInterval));
 
     // ── 4. Seagulls — pitch-sweeping triangle bursts. More frequent
     //     than the prior version (every 8-15s) so the ear has more

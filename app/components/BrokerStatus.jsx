@@ -106,12 +106,12 @@ export default function BrokerStatus() {
       aria-live="polite"
       style={{
         position: "fixed",
-        // Phase 9 bug fix: Forbes top bar (36px desktop / 32px mobile)
-        // sits at top:0 with z-index 80. Anchor below it via the
-        // --gy-top-offset CSS var that body.gy-with-forbes-bar sets in
-        // globals.css. Auto-collapses to 12px when the bar is dismissed.
-        top: "calc(var(--gy-top-offset, 0px) + 12px)",
-        left: 16,
+        // Boss bug fix (third pass, 2026-05-05): top-left was covering
+        // the hamburger menu trigger inside NavDrawerSystem (which sits
+        // at top: 0, left: ~16, height 72-140px). Move to BOTTOM-LEFT,
+        // stacked above the AmbientPlayer pill (which lives at bottom:24).
+        bottom: 76,
+        left: 24,
         zIndex: 70,
         display: "inline-flex",
         alignItems: "center",
