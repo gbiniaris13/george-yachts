@@ -140,9 +140,15 @@ export default function AskGeorgeWidget() {
 
   return (
     <>
-      {/* Floating button — bottom-right, sits above the existing WhatsApp btn */}
+      {/* Floating button — bottom-right, sits above the existing WhatsApp btn.
+          Phase 27 (Forbes-launch eve, 2026-05-05): hidden on mobile via the
+          .gy-fab-desktop-only class — three FABs covered editorial copy on
+          every iPhone screen George tested. WhatsApp + the gold sticky CTA
+          are the only mobile actions the visitor needs; the AI concierge
+          stays as a desktop affordance only. */}
       <button
         type="button"
+        className="gy-fab-desktop-only"
         aria-label={open ? "Close Ask George" : "Open Ask George AI concierge"}
         onClick={() => {
           const next = !open;
@@ -152,9 +158,6 @@ export default function AskGeorgeWidget() {
         style={{
           position: "fixed",
           right: 24,
-          // Stacks ABOVE WhatsApp (88) + ContactDrawer FAB (152) so the
-          // three bottom-right circles don't overlap on mobile (was
-          // colliding with WhatsApp at bottom:88 — same-axis, both 56px).
           bottom: 216,
           width: 56,
           height: 56,

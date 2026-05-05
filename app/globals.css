@@ -848,6 +848,26 @@ footer h4 {
   letter-spacing: 0.32em !important;
 }
 
+/* Phase 27 (Forbes-launch eve, 2026-05-05) — single-source mobile FAB
+   declutter. AskGeorge ("G") + ContactDrawer ("Speak") squares were
+   overlapping editorial copy on iPhone — three FABs in a column meant
+   the middle of every viewport had a stack of buttons covering text.
+   Hide both on mobile so only the WhatsApp circle + the bottom gold
+   sticky CTA remain — that's enough for billionaire-tier UX. */
+@media (max-width: 700px) {
+  .gy-fab-desktop-only { display: none !important; }
+}
+
+/* Phase 27 — kill Safari iOS auto-hyphenation everywhere in our nav
+   strips. iOS aggressively hyphenates UPPERCASE letter-spaced text in
+   flex containers, producing "SIG-NA-TURE" / "FILO-TIMO" on iPhone. */
+.gy-mini-nav-scroll,
+.gy-mini-nav-scroll * {
+  hyphens: none !important;
+  -webkit-hyphens: none !important;
+  word-break: keep-all !important;
+}
+
 /* Phase 24 — fleet-badge responsive variants. Full text on tablet+,
    short text on phones so the pill doesn't wrap to 5 lines.
    Phase 27 (mobile audit) — also tighten letter-spacing + font-size

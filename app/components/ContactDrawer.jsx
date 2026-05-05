@@ -129,9 +129,15 @@ export default function ContactDrawer() {
 
   return (
     <>
-      {/* Sticky trigger button — sits above existing WhatsApp FAB */}
+      {/* Sticky trigger button — sits above existing WhatsApp FAB.
+          Phase 27 (Forbes-launch eve, 2026-05-05): hidden on mobile via
+          .gy-fab-desktop-only — the SPEAK square was overlapping editorial
+          copy across nearly every iPhone screen. WhatsApp + bottom sticky
+          CTA cover the mobile contact paths; this multi-channel drawer is
+          a desktop affordance only. */}
       <button
         type="button"
+        className="gy-fab-desktop-only"
         aria-label="Speak to George — multi-channel"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}

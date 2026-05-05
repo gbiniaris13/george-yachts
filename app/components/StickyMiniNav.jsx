@@ -106,15 +106,24 @@ export default function StickyMiniNav() {
         borderBottom: "1px solid rgba(218,165,32,0.28)",
       }}
     >
+      {/* Phase 27 (Forbes-launch eve, 2026-05-05) — Boss flagged the
+          mini-nav was rendering with broken hyphenation on iPhone:
+          "SIG-NA-TURE", "FILO-TIMO", "WA-TERS". Root cause: flex
+          children default to flex-shrink:1, so on a 390px iPhone the
+          row's natural width (>700px with letter-spacing 0.28em) was
+          being squeezed and Safari iOS hyphens kicked in. Fix: pin
+          each item with shrink-0 + min-width:max-content so the row
+          stays at its natural width and overflow-x:auto handles the
+          horizontal scroll on small screens. */}
       <nav
-        className="max-w-[1200px] mx-auto px-4 md:px-8 overflow-x-auto"
+        className="max-w-[1200px] mx-auto px-4 md:px-8 overflow-x-auto gy-mini-nav-scroll"
         style={{ scrollbarWidth: "none" }}
       >
-        <ul className="flex items-center gap-1 md:gap-2 py-2 md:justify-center whitespace-nowrap">
+        <ul className="flex items-center gap-2 md:gap-2 py-2 md:justify-center">
           {SECTIONS.map((s) => {
             const isActive = active === s.id;
             return (
-              <li key={s.id}>
+              <li key={s.id} style={{ flexShrink: 0 }}>
                 <a
                   href={`#${s.id}`}
                   onClick={jumpTo(s.id)}
@@ -122,7 +131,7 @@ export default function StickyMiniNav() {
                   style={{
                     fontFamily: "'Montserrat', sans-serif",
                     fontSize: "10px",
-                    letterSpacing: "0.28em",
+                    letterSpacing: "0.24em",
                     textTransform: "uppercase",
                     fontWeight: 500,
                     color: isActive
@@ -132,6 +141,9 @@ export default function StickyMiniNav() {
                       isActive ? "#DAA520" : "transparent"
                     }`,
                     cursor: "pointer",
+                    whiteSpace: "nowrap",
+                    hyphens: "none",
+                    WebkitHyphens: "none",
                   }}
                 >
                   {s.label}
@@ -145,6 +157,15 @@ export default function StickyMiniNav() {
       <style jsx>{`
         nav::-webkit-scrollbar {
           display: none;
+        }
+        /* Mobile: tighten letter-spacing further so the row reads as a
+           single deliberate horizontal scroll instead of squeezed text. */
+        @media (max-width: 480px) {
+          .gy-mini-nav-scroll a {
+            letter-spacing: 0.18em !important;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+          }
         }
       `}</style>
     </div>
