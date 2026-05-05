@@ -91,6 +91,7 @@ export default function CredentialsPage() {
         {/* FORBES */}
         <section
           aria-label="Forbes feature credential"
+          data-gy-reveal="up"
           style={{
             padding: "clamp(56px, 8vw, 120px) clamp(24px, 6vw, 96px)",
             maxWidth: 1280,
@@ -215,6 +216,7 @@ export default function CredentialsPage() {
         {/* IYBA */}
         <section
           aria-label="IYBA Charter Active Member credential"
+          data-gy-reveal="up"
           style={{
             padding: "clamp(56px, 8vw, 120px) clamp(24px, 6vw, 96px)",
             maxWidth: 1280,
@@ -329,6 +331,7 @@ export default function CredentialsPage() {
         {/* MYBA — text only per legal directive */}
         <section
           aria-label="MYBA-standard charter contracts"
+          data-gy-reveal="up"
           style={{
             padding: "clamp(56px, 8vw, 120px) clamp(24px, 6vw, 96px)",
             maxWidth: 1280,
@@ -390,6 +393,7 @@ export default function CredentialsPage() {
         {/* US / GREEK DUAL RESIDENCY */}
         <section
           aria-label="US legal entity, Greek operations"
+          data-gy-reveal="up"
           style={{
             padding: "clamp(56px, 8vw, 120px) clamp(24px, 6vw, 96px)",
             maxWidth: 1280,

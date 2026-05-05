@@ -199,6 +199,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
           id={`stop-${stop.slug}`}
           ref={(el) => (sectionsRef.current[i] = el)}
           aria-label={`Stop ${i + 1}: ${stop.name}`}
+          data-gy-reveal="up"
           style={{
             position: "relative",
             minHeight: "100vh",
