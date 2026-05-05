@@ -39,12 +39,13 @@ function RevealSection({ children, className = "", delay = 0 }) {
 }
 
 /* ─── Team Data ───
- * I.3 (Roberto brief, May 2026) — each team member gets optional
- * email + linkedin fields. The brief specifically calls out that
- * George Katrantzos needs a public business email — travel
- * advisors won't search Instagram handles. Fields render
- * conditionally; empty values just hide the icon. Boss fills in
- * the unconfirmed addresses as he confirms them with each person.
+ * I.3 (Roberto brief, May 2026 — Boss directive 2026-05-05):
+ *   • George B: Instagram + business email + real LinkedIn
+ *   • Eleanna: Instagram + business email (eleanna@georgeyachts.com)
+ *   • Everyone else: Instagram only
+ * Per Boss, broadcasting business emails / LinkedIn for the rest of
+ * the team isn't desired. Instagram is the only channel they each
+ * use publicly.
  */
 const teamMembers = [
   {
@@ -62,9 +63,6 @@ const teamMembers = [
     title: "Luxury Travel Liaison & Strategic Associate (U.S.)",
     imageUrl: "/images/george-katrantzos.jpg",
     instagram: "helllo.gk",
-    // I.3 — Boss to confirm public business email + LinkedIn URL.
-    email: "",
-    linkedin: "",
     profileUrl: "/team/george-katrantzos",
   },
   {
@@ -72,8 +70,7 @@ const teamMembers = [
     title: "Head of Business Operations & Finance",
     imageUrl: "/images/elleanna.jpg",
     instagram: "eleanna_karvoun",
-    email: "",
-    linkedin: "",
+    email: "eleanna@georgeyachts.com",
     profileUrl: "/team/elleana-karvouni",
   },
   {
@@ -81,8 +78,6 @@ const teamMembers = [
     title: "Marine Insurance & ISO Maritime Compliance Advisor",
     imageUrl: "/images/chris.jpg",
     instagram: "dask15",
-    email: "",
-    linkedin: "",
     profileUrl: "/team/chris-daskalopoulos",
   },
   {
@@ -90,8 +85,6 @@ const teamMembers = [
     title: "Administrative & Charter Logistics Coordinator",
     imageUrl: "/images/valeria.jpg",
     instagram: "valeria_karv",
-    email: "",
-    linkedin: "",
     profileUrl: "/team/valleria-karvouni",
   },
   {
@@ -99,8 +92,6 @@ const teamMembers = [
     title: "Aviation & Private Travel Advisor",
     imageUrl: "/images/manos-new.jpg",
     instagram: "",
-    email: "",
-    linkedin: "",
     profileUrl: "/team/manos-kourmoulakis",
   },
   // I.1 (Roberto brief, May 2026) — "Nemesis" entry removed from
