@@ -50,14 +50,19 @@ export default function AmbientPlayer() {
   const masterGainRef = useRef(null);
   const cleanupRef = useRef([]);
 
-  // Boss directive 2026-05-05 (third pass): autoplay must be IMMEDIATE.
-  // Modern browsers gate AudioContext on user gesture, but we can:
-  //   1. Try immediately on mount (works for returning visitors / Chrome
-  //      "high engagement" / Safari with media-autoplay allowed).
-  //   2. Listen for the FIRST move of any pointer (mousemove fires inside
-  //      milliseconds of arrival), plus scroll/key/touch as backups.
-  //   3. Once started, write "on" to localStorage so the next visit
-  //      auto-starts even if mousemove is briefly absent.
+  // Boss directive 2026-05-05 (fourth pass): autoplay MUST work the
+  // moment the visitor enters. Prior attempts failed because we were
+  // creating the AudioContext outside a user gesture — browsers create
+  // it in "suspended" state and silence stays even after we set
+  // playing=true.
+  //
+  // Fix: setPlaying(true) only inside the gesture handler. The audio-
+  // graph effect (below) creates the AudioContext at that point — i.e.
+  // INSIDE the gesture stack frame — and the browser allows it to run.
+  // We also explicitly call ctx.resume() in the graph effect for belt
+  // & braces. Listeners are aggressive (mousemove + scroll + wheel +
+  // touchstart + visibilitychange) so the first ms of cursor movement
+  // is enough.
   useEffect(() => {
     if (suppressed) return;
     if (typeof window === "undefined") return;
@@ -66,34 +71,32 @@ export default function AmbientPlayer() {
       if (saved === "off") return;
 
       let started = false;
+      const eventNames = [
+        "pointerdown", "pointermove", "mousemove",
+        "keydown", "scroll", "touchstart", "wheel",
+        "click",
+      ];
       const start = () => {
         if (started) return;
         started = true;
         setPlaying(true);
         try { localStorage.setItem(STORAGE_KEY, "on"); } catch {}
-        ["pointerdown", "pointermove", "mousemove", "keydown", "scroll", "touchstart", "wheel"]
-          .forEach((evt) => window.removeEventListener(evt, start));
+        eventNames.forEach((evt) => window.removeEventListener(evt, start));
         document.removeEventListener("visibilitychange", visTrigger);
       };
       const visTrigger = () => {
         if (!document.hidden) start();
       };
 
-      // Optimistic immediate attempt — if the browser accepts (returning
-      // visitor, high engagement), audio starts right now without waiting.
-      // Safari is most permissive; Chrome may suspend until first gesture
-      // anyway, in which case our listeners catch it.
-      const optimisticStart = setTimeout(() => start(), 0);
-
-      // Defense-in-depth listeners — first event wins.
-      ["pointerdown", "pointermove", "mousemove", "keydown", "scroll", "touchstart", "wheel"]
-        .forEach((evt) => window.addEventListener(evt, start, { passive: true, once: true }));
+      // Aggressive listeners — first gesture wins, audio context is
+      // created inside that gesture handler so browsers permit playback.
+      eventNames.forEach((evt) =>
+        window.addEventListener(evt, start, { passive: true })
+      );
       document.addEventListener("visibilitychange", visTrigger);
 
       return () => {
-        clearTimeout(optimisticStart);
-        ["pointerdown", "pointermove", "mousemove", "keydown", "scroll", "touchstart", "wheel"]
-          .forEach((evt) => window.removeEventListener(evt, start));
+        eventNames.forEach((evt) => window.removeEventListener(evt, start));
         document.removeEventListener("visibilitychange", visTrigger);
       };
     } catch {}
@@ -137,9 +140,24 @@ export default function AmbientPlayer() {
     }
     const ctx = new Ctx();
     ctxRef.current = ctx;
+    // Explicit resume — belt & braces against AudioContext starting in
+    // "suspended" state. Safe to call regardless; if already running,
+    // it's a no-op.
+    if (ctx.state === "suspended") {
+      ctx.resume().catch(() => {});
+    }
     const master = ctx.createGain();
     master.gain.value = 0;
-    master.connect(ctx.destination);
+    // Soften the entire mix with an output low-pass — Boss directive
+    // 2026-05-05 (fourth pass): "πιο γλυκά κύματα". Anything above ~3kHz
+    // reads as edgy/airy on the human ear at low volumes; a gentle
+    // shelf at 2.8kHz keeps the dolphins' click detail intact while
+    // making the wave foam sound like ASMR ocean recordings.
+    const masterLP = ctx.createBiquadFilter();
+    masterLP.type = "lowpass";
+    masterLP.frequency.value = 2800;
+    masterLP.Q.value = 0.5;
+    master.connect(masterLP).connect(ctx.destination);
     masterGainRef.current = master;
 
     // ── 1. Pre-render a noise buffer used by all wave events. NO
@@ -163,32 +181,39 @@ export default function AmbientPlayer() {
     }
 
     // ── 2. Wave events — each one is a 3-stage envelope simulating
-    //     a real wave coming in: build (rolling water rises), crash
-    //     (low-mid impact), wash (high-band hiss receding), silence.
-    //     Two voices per event: a low-mid body + a high-band foam.
+    //     a real wave coming in: gentle build (rolling water rises),
+    //     soft "klats" (low-mid impact), wash (high-band hiss receding),
+    //     silence. Boss directive 2026-05-05 (fourth pass): waves should
+    //     read as ASMR ocean — sweet "klats klats klats", not
+    //     dramatic crashes. Tighter filters, longer attacks, ~40%
+    //     lower peaks, weighted toward small waves.
     const waveScheduler = (sizeOverride) => {
       if (!ctxRef.current) return;
       const now = ctx.currentTime;
-      // Wave size: 0=small chop, 1=mid wave, 2=big breaker.
+      // Wave size distribution: 80% small chop, 18% mid wave, 2% big
+      // (was 60/35/5). Boss said "klats klats klats" = small repeated.
       const size = sizeOverride !== undefined
         ? sizeOverride
-        : Math.random() < 0.2 ? 2 : Math.random() < 0.55 ? 1 : 0;
+        : Math.random() < 0.02 ? 2 : Math.random() < 0.20 ? 1 : 0;
 
       // Body: low-mid noise filtered to "rolling water" frequencies.
+      // Tighter filter cutoffs so the body is rounder, less harsh.
       const body = ctx.createBufferSource();
       body.buffer = noiseBuffer;
       body.loop = false;
       const bodyLP = ctx.createBiquadFilter();
       bodyLP.type = "lowpass";
-      bodyLP.frequency.value = size === 2 ? 480 : size === 1 ? 380 : 320;
-      bodyLP.Q.value = 0.6;
+      bodyLP.frequency.value = size === 2 ? 380 : size === 1 ? 300 : 240;
+      bodyLP.Q.value = 0.5;
       const bodyHP = ctx.createBiquadFilter();
       bodyHP.type = "highpass";
-      bodyHP.frequency.value = 80;
+      bodyHP.frequency.value = 90;
       const bodyGain = ctx.createGain();
-      const bodyPeak = size === 2 ? 0.42 : size === 1 ? 0.28 : 0.16;
-      const bodyAttack = size === 2 ? 1.4 : size === 1 ? 1.0 : 0.6;
-      const bodyDecay = size === 2 ? 3.2 : size === 1 ? 2.4 : 1.4;
+      // ~40% lower peaks for the sweeter ASMR feel.
+      const bodyPeak = size === 2 ? 0.26 : size === 1 ? 0.16 : 0.09;
+      // Slower attacks = gentler builds.
+      const bodyAttack = size === 2 ? 1.8 : size === 1 ? 1.3 : 0.85;
+      const bodyDecay = size === 2 ? 3.2 : size === 1 ? 2.4 : 1.6;
       bodyGain.gain.setValueAtTime(0, now);
       bodyGain.gain.linearRampToValueAtTime(bodyPeak * 0.4, now + bodyAttack * 0.55);
       bodyGain.gain.linearRampToValueAtTime(bodyPeak, now + bodyAttack);
@@ -206,17 +231,19 @@ export default function AmbientPlayer() {
       body.start(now, offset1);
       body.stop(now + bodyAttack + bodyDecay + 0.1);
 
-      // Foam: high-band hiss that lags 0.3s behind the body, decays
-      // faster — this is the "wash" you hear as the wave recedes.
-      const foamDelay = size === 2 ? 0.6 : size === 1 ? 0.45 : 0.3;
+      // Foam: high-band hiss that lags behind the body — softer, lower
+      // band so it reads as gentle wash not airy hiss.
+      const foamDelay = size === 2 ? 0.7 : size === 1 ? 0.5 : 0.32;
       const foam = ctx.createBufferSource();
       foam.buffer = noiseBuffer;
       const foamBP = ctx.createBiquadFilter();
       foamBP.type = "bandpass";
-      foamBP.frequency.value = size === 2 ? 1800 : 2400;
-      foamBP.Q.value = 0.9;
+      // Lower foam centre (was 1800-2400) → gentler "wash" tone.
+      foamBP.frequency.value = size === 2 ? 1400 : 1700;
+      foamBP.Q.value = 0.8;
       const foamGain = ctx.createGain();
-      const foamPeak = size === 2 ? 0.16 : size === 1 ? 0.10 : 0.06;
+      // ~40% lower foam peaks too.
+      const foamPeak = size === 2 ? 0.10 : size === 1 ? 0.06 : 0.035;
       const foamStart = now + foamDelay;
       foamGain.gain.setValueAtTime(0, foamStart);
       foamGain.gain.linearRampToValueAtTime(foamPeak, foamStart + 0.3);
