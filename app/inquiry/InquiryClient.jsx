@@ -309,24 +309,91 @@ export default function InquiryClient() {
 
   /* ─── Render ───────────────────────────────────────────────── */
   if (done) {
+    // Phase 6 / H3 (luxury rebuild) — generative editorial cover with
+    // the visitor's name + chosen region. Server-rendered via /api/cover
+    // (Next.js ImageResponse) so it costs nothing per visit and gets
+    // cached at the edge for 24h.
+    const regionMap = {
+      cyclades: "Cyclades",
+      ionian: "Ionian",
+      sporades: "Sporades",
+      saronic: "Saronic",
+      mix: "Greek Waters",
+    };
+    const friendlyRegion = regionMap[answers.region] || "Greek Waters";
+    const coverParams = new URLSearchParams({
+      name: answers.name || "",
+      destination: friendlyRegion,
+      ...(answers.yacht_of_interest && answers.yacht_of_interest !== "flexible"
+        ? { yacht: answers.yacht_of_interest }
+        : {}),
+    }).toString();
+    const coverUrl = `/api/cover?${coverParams}`;
+
     return (
       <div style={wrap}>
         <div style={{ ...card, textAlign: "center" }}>
           <p style={eyebrow}>Inquiry received</p>
           <h1 style={{ ...question, marginBottom: 18 }}>Thank you.</h1>
           <p style={subtext}>
-            George reads every inquiry personally. You'll hear back within 24 hours — usually much sooner.
+            George reads every brief personally. You'll hear back within 24 hours — usually much sooner.
           </p>
-          <div style={{ marginTop: 36 }}>
+
+          {/* Generative editorial cover */}
+          <figure
+            style={{
+              margin: "40px auto 0",
+              maxWidth: 720,
+              border: "1px solid rgba(218,165,32,0.32)",
+              boxShadow: "0 24px 56px rgba(0,0,0,0.45)",
+              background: "#0a0a0a",
+              animation: "gy-cover-reveal 0.9s cubic-bezier(0.2, 0.8, 0.2, 1)",
+            }}
+          >
+            {/* Using a plain <img> so the response loads instantly without
+                Next/Image's loader pipeline — this is a one-shot render. */}
+            <img
+              src={coverUrl}
+              alt={`Editorial cover for ${answers.name || "your"} ${friendlyRegion} brief`}
+              style={{ display: "block", width: "100%", height: "auto" }}
+              width={1200}
+              height={630}
+            />
+            <figcaption
+              style={{
+                fontFamily: "'Lato', 'Montserrat', sans-serif",
+                fontSize: 11,
+                letterSpacing: "0.32em",
+                textTransform: "uppercase",
+                color: "#C9A84C",
+                fontWeight: 600,
+                padding: "14px 0",
+              }}
+            >
+              Drafted just now · save it, share it, or wait for George
+            </figcaption>
+          </figure>
+
+          <div style={{ marginTop: 36, display: "flex", justifyContent: "center", gap: 18, flexWrap: "wrap" }}>
+            <a href={coverUrl} download="george-yachts-cover.png" style={ctaPrimary}>
+              Save the cover
+            </a>
             <a
               href="https://wa.me/17867988798?text=Hi%20George%20%E2%80%94%20I%20just%20submitted%20an%20inquiry%20on%20the%20site."
               target="_blank"
               rel="noopener noreferrer"
-              style={ctaPrimary}
+              style={{ ...ctaPrimary, background: "transparent", border: "1px solid rgba(218,165,32,0.55)", color: "#DAA520" }}
             >
-              Or message on WhatsApp now
+              Message on WhatsApp now
             </a>
           </div>
+
+          <style jsx global>{`
+            @keyframes gy-cover-reveal {
+              0%   { opacity: 0; transform: translateY(16px) scale(0.97); }
+              100% { opacity: 1; transform: translateY(0)    scale(1);    }
+            }
+          `}</style>
         </div>
       </div>
     );
