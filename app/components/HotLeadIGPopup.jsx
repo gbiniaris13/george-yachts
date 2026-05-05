@@ -273,7 +273,7 @@ export default function HotLeadIGPopup() {
                   background: 'rgba(255,255,255,0.05)',
                   border: '1px solid rgba(255,255,255,0.1)',
                   borderRadius: 10, color: '#fff',
-                  fontSize: 14, outline: 'none',
+                  fontSize: 16, outline: 'none',
                   fontFamily: 'inherit',
                 }}
               />
@@ -288,7 +288,7 @@ export default function HotLeadIGPopup() {
                   background: 'rgba(255,255,255,0.05)',
                   border: `1px solid ${GOLD}40`,
                   borderRadius: 10, color: '#fff',
-                  fontSize: 14, outline: 'none',
+                  fontSize: 16, outline: 'none',
                   fontFamily: 'inherit',
                 }}
               />
@@ -302,7 +302,7 @@ export default function HotLeadIGPopup() {
                   background: 'rgba(255,255,255,0.05)',
                   border: '1px solid rgba(255,255,255,0.1)',
                   borderRadius: 10, color: '#fff',
-                  fontSize: 14, outline: 'none',
+                  fontSize: 16, outline: 'none',
                   fontFamily: 'inherit',
                 }}
               />
@@ -314,7 +314,7 @@ export default function HotLeadIGPopup() {
                   background: 'rgba(255,255,255,0.05)',
                   border: '1px solid rgba(255,255,255,0.1)',
                   borderRadius: 10, color: '#fff',
-                  fontSize: 14, outline: 'none',
+                  fontSize: 16, outline: 'none',
                   fontFamily: 'inherit',
                 }}
               >

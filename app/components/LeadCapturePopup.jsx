@@ -277,6 +277,7 @@ export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadD
   );
 }
 
+// Phase 27 — bumped 13→16px to prevent iOS Safari auto-zoom on focus.
 const inputStyle = {
   padding: '13px 16px',
   background: 'rgba(255,255,255,0.06)',
@@ -284,7 +285,7 @@ const inputStyle = {
   borderRadius: 10,
   color: '#fff',
   fontFamily: "'Montserrat', sans-serif",
-  fontSize: 13,
+  fontSize: 16,
   outline: 'none',
   transition: 'border-color 0.3s ease',
   letterSpacing: '0.02em',

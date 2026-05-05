@@ -540,10 +540,14 @@ export default function InquiryClient() {
 }
 
 /* ─── Inline styles — avoids a fight with global Tailwind ─────── */
+// Phase 27 (Forbes-launch eve, 2026-05-05) — 140px top padding wasted
+// the entire above-the-fold on iPhone SE (375×667) — visitor saw ONLY
+// black before the form even started. Use clamp so desktop keeps its
+// breathing room while mobile lands the question card immediately.
 const wrap = {
   minHeight: "100vh",
   background: "#000",
-  padding: "140px 24px 80px",
+  padding: "clamp(80px, 12vw, 140px) 24px 80px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -596,15 +600,21 @@ const subtext = {
   fontWeight: 300,
   margin: 0,
 };
+// Phase 27 — fontSize MUST be ≥16px on inputs to prevent iOS Safari
+// from auto-zooming when the field is focused. The previous Cormorant
+// 18px worked numerically but Cormorant's x-height is small enough
+// that iOS sometimes mis-measured and zoomed anyway. Switched to
+// Montserrat 16px which is iOS-safe AND keeps the input legible
+// without the keyboard pushing the form off-screen.
 const textInput = {
   width: "100%",
   padding: "14px 16px",
   background: "#000",
   border: "1px solid rgba(218,165,32,0.25)",
   color: "#fff",
-  fontFamily: "'Cormorant Garamond', Georgia, serif",
-  fontSize: 18,
-  fontWeight: 300,
+  fontFamily: "'Montserrat', sans-serif",
+  fontSize: 16,
+  fontWeight: 400,
   outline: "none",
   letterSpacing: "0.01em",
 };

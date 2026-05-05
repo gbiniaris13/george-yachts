@@ -420,7 +420,7 @@ function TextField({ label, value, onChange, placeholder }) {
           border: "1px solid rgba(218,165,32,0.25)",
           color: "#F8F5F0",
           fontFamily: "'Montserrat', sans-serif",
-          fontSize: 13,
+          fontSize: 16,
           letterSpacing: "0.02em",
         }}
       />

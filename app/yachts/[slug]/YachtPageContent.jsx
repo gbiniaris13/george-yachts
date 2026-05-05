@@ -1035,7 +1035,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+          <div className="gy-yacht-stickybar__title" style={{ display: 'flex', flexDirection: 'column', minWidth: 0, flex: 1 }}>
             <span
               style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
@@ -1051,6 +1051,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             </span>
             {yacht.weeklyRatePrice && (
               <span
+                className="gy-yacht-stickybar__price"
                 style={{
                   fontSize: 9,
                   letterSpacing: '0.28em',
@@ -1071,6 +1072,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             type="button"
             onClick={openModal}
             data-cursor="Inquire"
+            className="gy-yacht-stickybar__cta"
             style={{
               flex: '0 0 auto',
               padding: '10px 22px',
@@ -1087,6 +1089,28 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           >
             Request proposal →
           </button>
+          {/* Phase 27 (Forbes-launch eve, 2026-05-05) — at 375px the sticky
+              bar's 18px Cormorant yacht name + 9px gold price line truncated
+              to 1–2 chars on the left while the gold "Request proposal" CTA
+              took the right half. Defeats the whole purpose of the bar.
+              At <=480px: shrink the CTA to icon-only "→ INQUIRE" and tighten
+              the title block so the yacht name actually reads. */}
+          <style jsx>{`
+            @media (max-width: 480px) {
+              :global(.gy-yacht-stickybar__cta) {
+                padding: 8px 14px !important;
+                font-size: 9px !important;
+                letter-spacing: 0.18em !important;
+              }
+              :global(.gy-yacht-stickybar__title span:first-child) {
+                font-size: 15px !important;
+              }
+              :global(.gy-yacht-stickybar__price) {
+                font-size: 8px !important;
+                letter-spacing: 0.18em !important;
+              }
+            }
+          `}</style>
         </div>
       )}
 

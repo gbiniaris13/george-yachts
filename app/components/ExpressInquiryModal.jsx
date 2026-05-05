@@ -449,6 +449,8 @@ export default function ExpressInquiryModal({
 }
 
 function FormField({ label, type = "text", value, onChange, required, multiline, placeholder }) {
+  // Phase 27 (Forbes-launch eve, 2026-05-05) — bumped from 14→16px so
+  // iOS Safari doesn't auto-zoom on focus and push the modal off-screen.
   const inputStyle = {
     width: "100%",
     background: "transparent",
@@ -456,7 +458,7 @@ function FormField({ label, type = "text", value, onChange, required, multiline,
     borderBottom: "1px solid rgba(255,255,255,0.25)",
     color: "#fff",
     padding: "10px 0",
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: "'Montserrat', sans-serif",
     outline: "none",
     transition: "border-color 0.3s ease",

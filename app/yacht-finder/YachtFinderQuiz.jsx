@@ -751,7 +751,7 @@ function ResultScreen({ matches, answers }) {
                   style={{ objectFit: 'cover', flex: '0 0 auto' }}
                 />
               )}
-              <div style={{ flex: 1, minWidth: 240 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
                 <p
                   style={{
                     fontFamily: "'Cormorant Garamond', Georgia, serif",

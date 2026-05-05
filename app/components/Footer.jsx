@@ -311,7 +311,9 @@ const Footer = () => {
                     color: "#fff",
                     padding: "14px 16px",
                     fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "11px",
+                    /* Phase 27 (mobile audit) — was 11px which triggered
+                       iOS Safari auto-zoom on focus. Bumped to 16px. */
+                    fontSize: "16px",
                     outline: "none",
                   }}
                 />

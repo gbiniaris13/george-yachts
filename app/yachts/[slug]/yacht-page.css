@@ -318,6 +318,17 @@
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: clamp(20px, 3vw, 36px);
 }
+/* Phase 27 (Forbes-launch eve, 2026-05-05) — at 375px viewport with
+   24px page padding, minmax(180px,1fr) tried to fit two 180px columns
+   + a 20px gap (~380px) and overflowed the viewport horizontally.
+   Force single-column at <=480px so specs stack cleanly on iPhone. */
+@media (max-width: 480px) {
+  .yacht-specs__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .yacht-specs__item { padding: 18px 10px; }
+}
 
 .yacht-specs__item {
   text-align: center;

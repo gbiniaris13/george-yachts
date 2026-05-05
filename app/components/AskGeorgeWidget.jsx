@@ -478,7 +478,7 @@ export default function AskGeorgeWidget() {
                 color: "#fff",
                 padding: "10px 12px",
                 fontFamily: "'Lato', 'Montserrat', sans-serif",
-                fontSize: 13.5,
+                fontSize: 16,
                 outline: "none",
               }}
             />
@@ -510,12 +510,15 @@ export default function AskGeorgeWidget() {
   );
 }
 
+// Phase 27 (Forbes-launch eve, 2026-05-05) — bumped 13→16px so iOS
+// Safari doesn't auto-zoom on focus. The widget IS hidden on mobile
+// now, but tablets at 768px still see it and were affected.
 const inputStyle = {
   background: "rgba(255,255,255,0.06)",
   border: "1px solid rgba(255,255,255,0.15)",
   color: "#fff",
   padding: "9px 12px",
   fontFamily: "'Lato', 'Montserrat', sans-serif",
-  fontSize: 13,
+  fontSize: 16,
   outline: "none",
 };
