@@ -848,6 +848,29 @@ footer h4 {
   letter-spacing: 0.32em !important;
 }
 
+/* Phase 23 — yacht detail page section titles. Every yacht page
+   has 7-8 section headings (specs, gallery, features, toys, ideal,
+   pricing, insider, story). They were rendering as plain Cormorant
+   Garamond italic — fine, but mixing their voice with the Cinzel
+   masthead. Now Cormorant kept BUT serif (not italic) at heavier
+   400 weight + tracking-aware tighter letter-spacing for editorial
+   gravitas. */
+.yacht-specs__title,
+.yacht-ideal__title,
+.yacht-features__title,
+.yacht-toys__title,
+.yacht-gallery__title,
+.yacht-pricing__title,
+.yacht-insider__title,
+.yacht-story__title {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  letter-spacing: -0.015em !important;
+  text-transform: none !important;
+  line-height: 1.1 !important;
+}
+
 /* Modal / popup titles — Cinzel. When ExitIntent / EnquirePopup /
    LeadCapture surface, they read as "concierge invitation" not
    "Booking.com promo". */
