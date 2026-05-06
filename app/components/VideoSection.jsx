@@ -293,20 +293,26 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                           marginInlineEnd: "calc(-1 * 0.04em)",
                         }}
                       >
-                        {"GEORGE\u00A0YACHTS".split("").map((ch, i) => (
-                          <span
-                            key={i}
-                            className="gy-hero-letter"
-                            aria-hidden="true"
-                            style={{
-                              display: "inline-block",
-                              opacity: heroVisible ? undefined : 0,
-                              animationDelay: heroVisible ? `${900 + i * 55}ms` : "0ms",
-                            }}
-                          >
-                            {ch === " " ? "\u00A0" : ch}
-                          </span>
-                        ))}
+                        {/* Phase 27e fix (Forbes-launch day, 2026-05-06):
+                            removed per-letter reveal animation \u2014 it
+                            was stuck at opacity:0 because the parent's
+                            .gy-gold-24k-shine infinite shimmer was
+                            triggering style recalcs that reset each
+                            letter's gy-hero-letter-in animation. Boss
+                            reported the headline was missing entirely
+                            from the live homepage. The 24K gold
+                            shimmer alone is enough luxury \u2014 no need
+                            for letter-by-letter choreography. */}
+                        <span
+                          style={{
+                            display: "inline-block",
+                            opacity: heroVisible ? 1 : 0,
+                            transition: "opacity 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.6s",
+                          }}
+                          aria-hidden="true"
+                        >
+                          GEORGE&nbsp;YACHTS
+                        </span>
                       </span>
                       <span className="sr-only"> — Luxury Yacht Charter Greece</span>
                     </h1>
