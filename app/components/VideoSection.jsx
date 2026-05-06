@@ -249,8 +249,16 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                         uses and renders correctly. Cinzel + uppercase
                         + 24K gold gradient + slow shimmer — same
                         luxurious feel without the rendering risk. */}
+                    {/* Phase 27f (Forbes-launch day, 2026-05-06) — Boss
+                        flagged the 24k yellow gold as "μουσταρδί". New
+                        .gy-luxe-enter class: starts ivory white, then
+                        cross-fades over 1.8s into a muted champagne-
+                        gold gradient (cool highlights + warm bronze
+                        shadows, NOT saturated yellow). Plus a barely-
+                        noticeable 18s shimmer for that "light catching
+                        polished metal" feel. */}
                     <h1
-                      className="gy-hero-headline gy-gold-24k-shine"
+                      className="gy-hero-headline gy-luxe-enter"
                       aria-label="George Yachts"
                       style={{
                         // Phase 17 (luxury rebuild, 2026-05-05) —

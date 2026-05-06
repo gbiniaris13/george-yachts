@@ -297,6 +297,82 @@ section {
   .gy-gold-24k-shine { animation: none; }
 }
 
+/* Phase 27f (Forbes-launch day, 2026-05-06) — LUXE COLOR-SHIFT REVEAL.
+   Boss directive: "δεν θέλω να φαίνεται σα μουσταρδί ή κίτρινο, βάλ' του
+   κάποιο εφέ όταν μπαίνω στο site, λίγο να έχει, τέλεια αλλάζει χρώμα".
+   Real luxury gold is NEVER pure yellow — it's champagne / platinum
+   blends with cool highlights and warm bronze shadows. (Aman, Bulgari,
+   Bottega all use desaturated gold.)
+
+   The reveal:
+     • t=0–1.2s: pristine IVORY (#F8F5F0) — looks like polished ivory
+     • t=1.2–3s: cross-fades into a MUTED CHAMPAGNE-GOLD gradient
+       (much less yellow saturation than 24k — reads as platinum-with-
+       warm-undertones, not lemon)
+     • t=3s+: slow shimmer (15s loop) — barely-noticeable warm light
+       moving across the surface
+
+   Visual signature: sophisticated, restrained, NEVER mustard. */
+.gy-luxe-enter {
+  /* Stage 1 — pristine ivory text fill while cross-fade preps. */
+  color: #F8F5F0;
+  -webkit-text-fill-color: #F8F5F0;
+  /* The gradient is layered behind. Stage 2 tweens the text fill to
+     transparent so the gradient shows through. */
+  background: linear-gradient(
+    100deg,
+    /* Cool champagne highlights instead of saturated yellow */
+    #F5EFDA 0%,
+    #E8DCC0 14%,
+    #D9C9A0 28%,
+    #FFFFFF 36%,    /* white sweep highlight */
+    #E8DCC0 44%,
+    #C9B98A 60%,
+    #B59E66 76%,
+    #8B7B58 100%    /* warm bronze shadow */
+  );
+  background-size: 320% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation:
+    gy-luxe-enter-fade 1.8s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards,
+    gy-luxe-shine 18s ease-in-out 3s infinite;
+  filter: drop-shadow(0 0 0.7em rgba(218, 165, 32, 0.18))
+          drop-shadow(0 1px 0 rgba(0, 0, 0, 0.55));
+}
+@keyframes gy-luxe-enter-fade {
+  /* Cross-fade the solid-color fill into the gradient by tweening
+     -webkit-text-fill-color from ivory to transparent. The browser
+     interpolates color over the duration so the headline literally
+     SHIFTS from ivory to champagne gold as you watch. */
+  from {
+    -webkit-text-fill-color: #F8F5F0;
+    color: #F8F5F0;
+    background-position: 0% 50%;
+  }
+  to {
+    -webkit-text-fill-color: rgba(0, 0, 0, 0);
+    color: transparent;
+    background-position: 30% 50%;
+  }
+}
+@keyframes gy-luxe-shine {
+  /* Very slow, gentle highlight movement — 18s round-trip. So subtle
+     it reads as light catching the metal at different angles, not
+     as animation. */
+  0%   { background-position: 30% 50%; }
+  50%  { background-position: 70% 50%; }
+  100% { background-position: 30% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gy-luxe-enter {
+    -webkit-text-fill-color: rgba(0, 0, 0, 0) !important;
+    color: transparent !important;
+    background-position: 30% 50% !important;
+    animation: none !important;
+  }
+}
+
 /* Phase 27e (Forbes-launch eve, 2026-05-05) — GOLD-FOIL hero text.
    "WebGL-tier" brushed-metal gloss effect on the hero "GEORGE YACHTS"
    masthead, achieved with pure CSS (no shader, no WebGL risk). Layers:

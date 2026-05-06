@@ -91,18 +91,34 @@ export default function MapboxFlyover() {
     let cancelled = false;
     let cleanupFns = [];
 
-    (async () => {
-      const mapboxgl = (await import("mapbox-gl")).default;
-      // CSS only loaded when we need the map — saves bytes on no-map pages.
-      if (!document.getElementById("mapbox-gl-css")) {
-        const link = document.createElement("link");
-        link.id = "mapbox-gl-css";
-        link.rel = "stylesheet";
-        link.href = "https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css";
-        document.head.appendChild(link);
+    // Phase 27f (Forbes-launch day, 2026-05-06) — Boss reported the map
+    // section showed nothing. Two failure modes both led to a black
+    // box: (1) MAPBOX_TOKEN missing → existing skipMap branch, (2)
+    // token present but tiles never load (rate-limit / 401 / network).
+    // This timeout guarantees that if mapbox-gl hasn't fired its
+    // 'load' event within 5 seconds (or 'error' fires), we flip
+    // skipMap=true so the rich image-based fallback renders instead.
+    const tilesTimeout = setTimeout(() => {
+      if (!cancelled && mapRef.current && !mapRef.current.loaded?.()) {
+        try { mapRef.current.remove(); } catch {}
+        setSkipMap(true);
       }
-      if (cancelled) return;
-      mapboxgl.accessToken = MAPBOX_TOKEN;
+    }, 5000);
+    cleanupFns.push(() => clearTimeout(tilesTimeout));
+
+    (async () => {
+      try {
+        const mapboxgl = (await import("mapbox-gl")).default;
+        // CSS only loaded when we need the map — saves bytes on no-map pages.
+        if (!document.getElementById("mapbox-gl-css")) {
+          const link = document.createElement("link");
+          link.id = "mapbox-gl-css";
+          link.rel = "stylesheet";
+          link.href = "https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css";
+          document.head.appendChild(link);
+        }
+        if (cancelled) return;
+        mapboxgl.accessToken = MAPBOX_TOKEN;
 
       const map = new mapboxgl.Map({
         container: containerRef.current,
@@ -190,9 +206,16 @@ export default function MapboxFlyover() {
         cleanupFns.push(() => clearTimeout(first));
       });
 
-      cleanupFns.push(() => {
-        try { map.remove(); } catch {}
-      });
+        cleanupFns.push(() => {
+          try { map.remove(); } catch {}
+        });
+      } catch (err) {
+        // Any failure during mapbox-gl load / map init → flip to the
+        // rich fallback so the section never shows an empty black
+        // box. Common causes: token missing/expired, CSP block,
+        // network failure on tile fetch.
+        if (!cancelled) setSkipMap(true);
+      }
     })();
 
     return () => {
@@ -243,46 +266,146 @@ export default function MapboxFlyover() {
         </h2>
       </div>
 
-      {/* The map container — lazy mounted */}
+      {/* The map container — lazy mounted.
+          Phase 27f (Forbes-launch day, 2026-05-06) — when skipMap is
+          true (no token / load failure / 5s timeout), we now render a
+          rich image-based fallback instead of a black gradient: an
+          aerial Aegean photo with a gold overlay grid + 5 region
+          chips for Cyclades / Ionian / Saronic / Sporades / Dodecanese.
+          Each chip is a click-through to the relevant itinerary. So
+          even if Mapbox is permanently down, the section reads as an
+          editorial map rather than a void. */}
       <div
         ref={containerRef}
-        aria-hidden="true"
+        aria-hidden={skipMap ? "false" : "true"}
         style={{
           width: "100%",
           height: "clamp(420px, 62vh, 720px)",
           background: skipMap
-            ? "linear-gradient(155deg, #0a0a0a 0%, #000000 100%)"
+            ? "linear-gradient(155deg, #0a0a0a 0%, #000 100%)"
             : "transparent",
           position: "relative",
+          overflow: "hidden",
         }}
       >
         {skipMap && (
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 12,
-              padding: 24,
-              textAlign: "center",
-            }}
-          >
-            <p
-              className="gy-eyebrow-sm"
-              style={{ color: "#C9A84C", margin: 0 }}
+          <>
+            {/* Background hero image — aerial Aegean coastline. We
+                reuse the existing hero-poster as a known-good asset
+                already in /public. */}
+            <img
+              src="/images/hero-poster.jpg"
+              alt="Aerial view of Greek waters"
+              loading="lazy"
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: "center",
+                opacity: 0.42,
+                filter: "saturate(0.85) contrast(1.05)",
+                pointerEvents: "none",
+              }}
+            />
+            {/* Vignette + bottom gradient so editorial copy reads cleanly */}
+            <div
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.55) 75%), linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.7) 100%)",
+                pointerEvents: "none",
+              }}
+            />
+            {/* Editorial copy + region chips */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 24,
+                padding: "clamp(24px, 5vw, 56px)",
+                textAlign: "center",
+              }}
             >
-              The Greek waters
-            </p>
-            <p
-              className="gy-lede"
-              style={{ margin: 0, color: "rgba(248,245,240,0.7)", maxWidth: "32ch" }}
-            >
-              Cyclades · Saronic · Ionian · Sporades · Dodecanese — every charter shaped around the waters that suit you best.
-            </p>
-          </div>
+              <p
+                className="gy-eyebrow-sm"
+                style={{ color: "#C9A84C", margin: 0, letterSpacing: "0.32em" }}
+              >
+                The Greek waters
+              </p>
+              <p
+                className="gy-lede"
+                style={{
+                  margin: 0,
+                  color: "rgba(248,245,240,0.85)",
+                  maxWidth: "38ch",
+                  fontSize: "clamp(18px, 2vw, 24px)",
+                }}
+              >
+                Five regions, hundreds of anchorages — every charter
+                shaped around the waters that suit you best.
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 10,
+                  justifyContent: "center",
+                  marginTop: 8,
+                }}
+              >
+                {[
+                  { name: "Cyclades", href: "/yacht-charter/cyclades" },
+                  { name: "Ionian", href: "/yacht-charter/ionian" },
+                  { name: "Saronic", href: "/yacht-charter/saronic" },
+                  { name: "Sporades", href: "/yacht-charter/sporades" },
+                  { name: "Dodecanese", href: "/yacht-itineraries-greece" },
+                ].map((r) => (
+                  <Link
+                    key={r.name}
+                    href={r.href}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "10px 18px",
+                      background: "rgba(0,0,0,0.55)",
+                      border: "1px solid rgba(218,165,32,0.45)",
+                      color: "#F8F5F0",
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontSize: 11,
+                      letterSpacing: "0.28em",
+                      textTransform: "uppercase",
+                      textDecoration: "none",
+                      fontWeight: 500,
+                      backdropFilter: "blur(6px)",
+                      transition: "all 0.32s cubic-bezier(0.2, 0.8, 0.2, 1)",
+                    }}
+                  >
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        display: "inline-block",
+                        width: 6,
+                        height: 6,
+                        borderRadius: 999,
+                        background: "#DAA520",
+                        boxShadow: "0 0 8px rgba(218,165,32,0.6)",
+                      }}
+                    />
+                    {r.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </>
         )}
       </div>
 
