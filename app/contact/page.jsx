@@ -122,27 +122,75 @@ export default function ContactPage() {
 
       <main className="bg-black text-white min-h-screen">
         <section className="max-w-6xl mx-auto px-6 py-24">
-          <header className="mb-16">
-            <p className="text-[#DAA520] text-sm tracking-[0.3em] uppercase mb-4">
-              Get in touch
-            </p>
-            <h1
-              className="font-cormorant font-light"
+          {/* Phase 27g (Forbes-launch day) — masthead upgraded to brand
+              standard. Cinzel + .gy-luxe-enter via inline style + gold
+              rules + italic Cormorant lede, matching homepage hero +
+              region pages. */}
+          <header className="mb-16" style={{ textAlign: "center" }}>
+            <span
+              aria-hidden="true"
               style={{
-                fontSize: "clamp(56px, 10vw, 130px)",
-                lineHeight: 0.95,
-                letterSpacing: "-0.035em",
-                color: "#F8F5F0",
-                textShadow: "0 6px 32px rgba(0,0,0,0.55)",
+                display: "block",
+                width: "min(280px, 30vw)",
+                height: 1,
+                margin: "0 auto 24px",
+                background:
+                  "linear-gradient(90deg, transparent, rgba(218,165,32,0.7), transparent)",
+              }}
+            />
+            <p
+              className="gy-gold-glow"
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: 11,
+                letterSpacing: "0.42em",
+                textTransform: "uppercase",
+                color: "#C9A84C",
+                fontWeight: 600,
+                margin: "0 0 22px",
               }}
             >
-              Speak to a working broker — not a call center
+              Get in touch · Direct broker line
+            </p>
+            <h1
+              className="gy-luxe-enter"
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: "clamp(34px, 6.5vw, 84px)",
+                fontWeight: 500,
+                lineHeight: 1.05,
+                letterSpacing: "0.04em",
+                margin: "0 0 28px",
+              }}
+            >
+              Speak to a working broker
             </h1>
-            <p className="mt-6 text-lg text-white/70 max-w-2xl leading-relaxed">
+            <span
+              aria-hidden="true"
+              style={{
+                display: "block",
+                width: 60,
+                height: 1,
+                margin: "0 auto 28px",
+                background: "rgba(218,165,32,0.55)",
+              }}
+            />
+            <p
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontStyle: "italic",
+                fontSize: "clamp(17px, 1.7vw, 22px)",
+                lineHeight: 1.7,
+                color: "rgba(248,245,240,0.78)",
+                fontWeight: 300,
+                margin: "0 auto",
+                maxWidth: "62ch",
+              }}
+            >
               George Yachts is a boutique IYBA-member brokerage based in
-              Athens. Every inquiry lands in front of a working broker who
-              knows the Greek waters firsthand. Pick the channel that suits
-              you — we answer all of them personally.
+              Athens. Every inquiry lands in front of a working broker
+              who knows the Greek waters firsthand. Pick the channel
+              that suits you — we answer all of them personally.
             </p>
           </header>
 

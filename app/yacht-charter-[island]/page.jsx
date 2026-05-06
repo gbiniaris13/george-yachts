@@ -144,16 +144,22 @@ export default async function IslandPage({ params }) {
             >
               {island.region} · George Yachts
             </p>
+            {/* Phase 27g (Forbes-launch day, 2026-05-06) — added the
+                .gy-luxe-enter class so the per-island H1 gets the
+                same ivory→champagne gold reveal as the homepage hero.
+                Global CSS catch-all already converts Cormorant H1s
+                to Cinzel uppercase, and .gy-luxe-enter handles the
+                color-shift on top. Boss directive on the regional
+                page applies equally to per-island pages. */}
             <h1
+              className="gy-luxe-enter"
               style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: "clamp(56px, 10vw, 130px)",
                 fontWeight: 300,
-                color: "#F8F5F0",
                 margin: "0 0 18px",
                 lineHeight: 0.95,
                 letterSpacing: "-0.035em",
-                textShadow: "0 6px 32px rgba(0,0,0,0.55)",
               }}
             >
               Yacht Charter {island.name}

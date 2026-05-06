@@ -182,25 +182,74 @@ export default async function ComparePage({ searchParams }) {
 
       <main className="bg-black text-white min-h-screen">
         <section className="max-w-6xl mx-auto px-6 py-24">
-          <header className="mb-16">
-            <p className="text-[#DAA520] text-sm tracking-[0.3em] uppercase mb-4">
-              Side-by-side
+          {/* Phase 27g (Forbes-launch day, 2026-05-06) — masthead
+              upgraded to brand standard: Cinzel uppercase via inline-
+              style catch-all + .gy-luxe-enter ivory→champagne reveal +
+              gold rules above + below. Italic Cormorant lede. Same
+              vocabulary as the homepage hero + region pages. */}
+          <header className="mb-16" style={{ textAlign: "center" }}>
+            <span
+              aria-hidden="true"
+              style={{
+                display: "block",
+                width: "min(280px, 30vw)",
+                height: 1,
+                margin: "0 auto 24px",
+                background:
+                  "linear-gradient(90deg, transparent, rgba(218,165,32,0.7), transparent)",
+              }}
+            />
+            <p
+              className="gy-gold-glow"
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: 11,
+                letterSpacing: "0.42em",
+                textTransform: "uppercase",
+                color: "#C9A84C",
+                fontWeight: 600,
+                margin: "0 0 22px",
+              }}
+            >
+              Side-by-side · Broker comparison
             </p>
             <h1
-              className="font-cormorant font-light"
+              className="gy-luxe-enter"
               style={{
-                fontSize: "clamp(56px, 10vw, 130px)",
-                lineHeight: 0.95,
-                letterSpacing: "-0.035em",
-                color: "#F8F5F0",
-                textShadow: "0 6px 32px rgba(0,0,0,0.55)",
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: "clamp(38px, 7vw, 92px)",
+                fontWeight: 500,
+                lineHeight: 1.05,
+                letterSpacing: "0.04em",
+                margin: "0 0 28px",
               }}
             >
               {yachtsByOrder.length > 0
                 ? yachtsByOrder.map((y) => y.name).join(" vs ")
                 : "Compare yachts head-to-head"}
             </h1>
-            <p className="mt-6 text-lg text-white/70 max-w-2xl leading-relaxed">
+            <span
+              aria-hidden="true"
+              style={{
+                display: "block",
+                width: 60,
+                height: 1,
+                margin: "0 auto 28px",
+                background: "rgba(218,165,32,0.55)",
+              }}
+            />
+            <p
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontStyle: "italic",
+                fontSize: "clamp(17px, 1.7vw, 22px)",
+                lineHeight: 1.7,
+                color: "rgba(248,245,240,0.78)",
+                fontWeight: 300,
+                margin: "0 auto",
+                maxWidth: "62ch",
+              }}
+            >
               {yachtsByOrder.length > 0
                 ? `Honest specs comparison built by working IYBA brokers — no marketing copy, just the numbers and notes that matter for ${yachtsByOrder.length === 2 ? "either" : "any"} charter in Greek waters.`
                 : "Compare any 2-4 yachts in our curated fleet on weekly rate, capacity, region, builder, and toys. Start with one of the broker-curated comparisons below or build your own."}
@@ -216,7 +265,7 @@ export default async function ComparePage({ searchParams }) {
                 <div />
                 {yachtsByOrder.map((y) => (
                   <Link key={y._id} href={`/yachts/${y.slug}`} className="group">
-                    <div className="aspect-[4/3] relative rounded-lg overflow-hidden bg-white/5 mb-3">
+                    <div className="aspect-[4/3] relative overflow-hidden bg-white/5 mb-3" style={{ border: "1px solid rgba(218,165,32,0.2)" }}>
                       {y.imageUrl ? (
                         <Image
                           src={y.imageUrl}
@@ -236,7 +285,7 @@ export default async function ComparePage({ searchParams }) {
               </div>
 
               {/* Spec rows */}
-              <div className="border border-white/10 rounded-lg overflow-hidden">
+              <div className="overflow-hidden" style={{ border: "1px solid rgba(218,165,32,0.22)" }}>
                 <table className="w-full">
                   <tbody>
                     {SPEC_ROWS.map((row, idx) => (
@@ -261,19 +310,38 @@ export default async function ComparePage({ searchParams }) {
                 </table>
               </div>
 
-              {/* CTA strip */}
-              <div className="mt-12 grid gap-4 sm:grid-cols-2">
+              {/* CTA strip — brand-standard pair (gold-fill primary +
+                  ghost secondary) matching homepage hero. Phase 27g. */}
+              <div className="mt-12" style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center" }}>
                 <Link
                   href="/inquiry"
-                  className="text-center bg-[#DAA520] text-black font-semibold uppercase tracking-widest text-sm py-4 px-8 rounded hover:bg-[#C9A24D] transition"
+                  className="gy-shimmer-cta"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 10,
+                    padding: "18px 36px",
+                    minHeight: 52,
+                    background: "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
+                    color: "#000",
+                    fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Montserrat', sans-serif",
+                    fontSize: 12,
+                    letterSpacing: "0.28em",
+                    textTransform: "uppercase",
+                    fontWeight: 500,
+                    textDecoration: "none",
+                    border: "1px solid rgba(218,165,32,0.7)",
+                    boxShadow: "0 14px 35px -10px rgba(218,165,32,0.5), inset 0 1px 0 rgba(255,255,255,0.3)",
+                  }}
                 >
-                  Start an inquiry →
+                  Brief George — reply within 24h →
                 </Link>
                 <a
                   href="https://calendly.com/george-georgeyachts/30min"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-center border border-[#DAA520] text-[#DAA520] font-semibold uppercase tracking-widest text-sm py-4 px-8 rounded hover:bg-[#DAA520]/10 transition"
+                  className="gy-cta-ghost"
                 >
                   Book a 30-min call
                 </a>
