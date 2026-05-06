@@ -207,83 +207,318 @@ export default async function RegionPage({ params }) {
       />
       <ServiceSchema region={region} data={data} yachtCount={yachts.length || 60} />
 
+      {/*
+        Phase 27g (Forbes-launch day, 2026-05-06) — Boss flagged
+        "άσχημο, φτιάξ' το". Old layout used plain Cormorant + raw
+        Tailwind cards with rounded corners. Rewritten to match the
+        rest of the site's editorial language:
+          • Cinzel uppercase + 24K champagne-gold .gy-luxe-enter h1
+          • Gold rules (top + bottom) framing the masthead
+          • Sharp-cornered cards with gold inset border (Aman/Bulgari)
+          • Lato/Cormorant editorial body
+          • Generous whitespace
+          • Premium CTA pair (ghost + gold-fill) matching home hero
+      */}
       <main className="bg-black text-white min-h-screen">
-        <section className="max-w-6xl mx-auto px-6 py-24">
-          <header className="mb-12">
-            <p className="text-[#DAA520] text-sm tracking-[0.3em] uppercase mb-4">
+        {/* Hero band — full editorial masthead with gold rules */}
+        <section
+          style={{
+            paddingTop: "clamp(120px, 14vw, 200px)",
+            paddingBottom: "clamp(48px, 6vw, 80px)",
+            position: "relative",
+            overflow: "hidden",
+            background:
+              "radial-gradient(ellipse at top, rgba(218,165,32,0.06) 0%, transparent 60%), #000",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: "1100px",
+              margin: "0 auto",
+              padding: "0 clamp(20px, 4vw, 56px)",
+              textAlign: "center",
+            }}
+          >
+            {/* Top gold rule */}
+            <span
+              aria-hidden="true"
+              style={{
+                display: "block",
+                width: "clamp(120px, 30vw, 280px)",
+                height: 1,
+                margin: "0 auto 28px",
+                background:
+                  "linear-gradient(90deg, transparent, rgba(218,165,32,0.7), transparent)",
+              }}
+            />
+            <p
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: 11,
+                letterSpacing: "0.42em",
+                textTransform: "uppercase",
+                color: "#C9A84C",
+                fontWeight: 600,
+                margin: "0 0 22px",
+                textShadow: "0 0 10px rgba(218,165,32,0.32)",
+              }}
+            >
               Greek Waters · Region Guide
             </p>
             <h1
-              className="font-cormorant font-light"
+              className="gy-luxe-enter"
               style={{
-                fontSize: "clamp(56px, 10vw, 130px)",
-                lineHeight: 0.95,
-                letterSpacing: "-0.035em",
-                color: "#F8F5F0",
-                textShadow: "0 6px 32px rgba(0,0,0,0.55)",
+                fontFamily:
+                  "var(--font-cinzel), 'Cinzel', 'Trajan Pro', Georgia, serif",
+                fontSize: "clamp(38px, 7vw, 92px)",
+                fontWeight: 500,
+                fontStyle: "normal",
+                lineHeight: 1.05,
+                letterSpacing: "0.04em",
+                textTransform: "uppercase",
+                margin: "0 0 32px",
               }}
             >
               {data.h1}
             </h1>
-            <p className="mt-6 text-lg text-white/70 max-w-3xl leading-relaxed">
+            {/* Bottom gold rule */}
+            <span
+              aria-hidden="true"
+              style={{
+                display: "block",
+                width: 60,
+                height: 1,
+                margin: "0 auto 32px",
+                background: "rgba(218,165,32,0.55)",
+              }}
+            />
+            <p
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontStyle: "italic",
+                fontSize: "clamp(17px, 1.7vw, 22px)",
+                lineHeight: 1.7,
+                color: "rgba(248,245,240,0.78)",
+                fontWeight: 300,
+                margin: "0 auto",
+                maxWidth: "62ch",
+              }}
+            >
               {data.intro}
             </p>
-          </header>
-
-          {/* Best for / Weather note */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
-            <div className="border border-white/10 rounded-lg p-6">
-              <h2 className="font-cormorant text-2xl text-[#DAA520] mb-3">
-                Best fit
-              </h2>
-              <p className="text-white/80 leading-relaxed text-sm">
-                {data.bestFor}
-              </p>
-            </div>
-            <div className="border border-white/10 rounded-lg p-6">
-              <h2 className="font-cormorant text-2xl text-[#DAA520] mb-3">
-                Weather note
-              </h2>
-              <p className="text-white/80 leading-relaxed text-sm">
-                {data.weatherNote}
-              </p>
-            </div>
           </div>
+        </section>
 
-          {/* Yachts in this region */}
-          {yachts.length > 0 && (
-            <section className="mb-16">
-              <h2 className="font-cormorant text-3xl mb-6">
-                Yachts available for {data.h1.replace("Yacht Charter — ", "")} charter
+        {/* Best fit / Weather — editorial pair */}
+        <section
+          style={{
+            padding: "clamp(40px, 6vw, 72px) clamp(20px, 4vw, 56px)",
+            background: "#050505",
+            borderTop: "1px solid rgba(218,165,32,0.18)",
+            borderBottom: "1px solid rgba(218,165,32,0.18)",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: "1100px",
+              margin: "0 auto",
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: "clamp(20px, 3vw, 40px)",
+            }}
+          >
+            {[
+              { label: "Best fit", body: data.bestFor },
+              { label: "Weather note", body: data.weatherNote },
+            ].map((card) => (
+              <article
+                key={card.label}
+                style={{
+                  padding: "clamp(28px, 4vw, 44px)",
+                  background: "rgba(255,255,255,0.02)",
+                  border: "1px solid rgba(218,165,32,0.22)",
+                  position: "relative",
+                }}
+              >
+                {/* Gold inset accent — top-left corner mark */}
+                <span
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    top: 14,
+                    left: 14,
+                    width: 22,
+                    height: 22,
+                    borderTop: "1px solid rgba(218,165,32,0.55)",
+                    borderLeft: "1px solid rgba(218,165,32,0.55)",
+                  }}
+                />
+                <p
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: 10,
+                    letterSpacing: "0.42em",
+                    textTransform: "uppercase",
+                    color: "#C9A84C",
+                    fontWeight: 600,
+                    margin: "0 0 18px",
+                  }}
+                >
+                  {card.label}
+                </p>
+                <p
+                  style={{
+                    fontFamily: "'Lato', 'Montserrat', sans-serif",
+                    fontSize: 15,
+                    lineHeight: 1.75,
+                    color: "rgba(248,245,240,0.82)",
+                    fontWeight: 300,
+                    margin: 0,
+                  }}
+                >
+                  {card.body}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* Yachts in this region */}
+        {yachts.length > 0 && (
+          <section
+            style={{
+              padding: "clamp(56px, 8vw, 96px) clamp(20px, 4vw, 56px)",
+            }}
+          >
+            <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+              <p
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontSize: 10,
+                  letterSpacing: "0.42em",
+                  textTransform: "uppercase",
+                  color: "#C9A84C",
+                  fontWeight: 600,
+                  margin: "0 0 14px",
+                  textAlign: "center",
+                }}
+              >
+                The fleet — {data.h1.replace("Yacht Charter — ", "")}
+              </p>
+              <h2
+                style={{
+                  fontFamily:
+                    "var(--font-cinzel), 'Cinzel', 'Trajan Pro', Georgia, serif",
+                  fontSize: "clamp(26px, 4vw, 42px)",
+                  fontWeight: 500,
+                  letterSpacing: "0.04em",
+                  textTransform: "uppercase",
+                  textAlign: "center",
+                  color: "#F8F5F0",
+                  margin: "0 0 56px",
+                }}
+              >
+                Selected yachts in these waters
               </h2>
-              <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns:
+                    "repeat(auto-fit, minmax(280px, 1fr))",
+                  gap: "clamp(18px, 2.5vw, 28px)",
+                }}
+              >
                 {yachts.map((y) => (
                   <Link
                     key={y._id}
                     href={`/yachts/${y.slug}`}
-                    className="block group border border-white/10 rounded-lg overflow-hidden hover:border-[#DAA520] transition"
+                    className="group"
+                    style={{
+                      display: "block",
+                      background: "#0a0a0a",
+                      border: "1px solid rgba(255,255,255,0.06)",
+                      textDecoration: "none",
+                      transition:
+                        "border-color 0.5s ease, transform 0.5s ease",
+                    }}
                   >
                     {y.imageUrl && (
-                      <div className="aspect-[4/3] relative bg-white/5">
+                      <div
+                        style={{
+                          aspectRatio: "4 / 3",
+                          position: "relative",
+                          overflow: "hidden",
+                        }}
+                      >
                         <Image
                           src={y.imageUrl}
                           alt={`${y.name} yacht charter ${data.h1.replace("Yacht Charter — ", "")}`}
                           fill
                           sizes="(max-width: 768px) 50vw, 33vw"
-                          className="object-cover group-hover:scale-105 transition"
+                          style={{
+                            objectFit: "cover",
+                            transition: "transform 0.8s cubic-bezier(0.16,1,0.3,1)",
+                          }}
+                          className="group-hover:scale-105"
                         />
                       </div>
                     )}
-                    <div className="p-4">
-                      <h3 className="font-cormorant text-xl text-white group-hover:text-[#DAA520] transition">
+                    <div style={{ padding: "20px 22px 22px" }}>
+                      <h3
+                        style={{
+                          fontFamily:
+                            "'Cormorant Garamond', Georgia, serif",
+                          fontSize: 22,
+                          fontWeight: 400,
+                          color: "#F8F5F0",
+                          margin: "0 0 6px",
+                          letterSpacing: "0.005em",
+                        }}
+                      >
                         {y.name}
                       </h3>
-                      <p className="text-xs text-white/50 mt-1 mb-2">{y.subtitle}</p>
-                      <div className="text-xs text-white/60 space-y-1">
+                      {y.subtitle && (
+                        <p
+                          style={{
+                            fontFamily: "'Montserrat', sans-serif",
+                            fontSize: 9,
+                            letterSpacing: "0.28em",
+                            textTransform: "uppercase",
+                            color: "rgba(255,255,255,0.45)",
+                            margin: "0 0 12px",
+                            fontWeight: 500,
+                          }}
+                        >
+                          {y.subtitle}
+                        </p>
+                      )}
+                      <div
+                        style={{
+                          fontFamily: "'Lato', 'Montserrat', sans-serif",
+                          fontSize: 12,
+                          color: "rgba(255,255,255,0.6)",
+                          lineHeight: 1.7,
+                        }}
+                      >
                         {y.length && <div>{y.length}</div>}
-                        {y.sleeps && <div>Sleeps {y.sleeps}{y.cabins ? ` · ${y.cabins} cabins` : ""}</div>}
+                        {y.sleeps && (
+                          <div>
+                            Sleeps {y.sleeps}
+                            {y.cabins ? ` · ${y.cabins} cabins` : ""}
+                          </div>
+                        )}
                         {y.weeklyRatePrice && (
-                          <div className="text-[#DAA520] font-semibold mt-2">
+                          <div
+                            style={{
+                              fontFamily: "'Montserrat', sans-serif",
+                              fontSize: 11,
+                              letterSpacing: "0.18em",
+                              textTransform: "uppercase",
+                              color: "#DAA520",
+                              fontWeight: 600,
+                              marginTop: 12,
+                            }}
+                          >
                             {y.weeklyRatePrice}
                           </div>
                         )}
@@ -292,43 +527,136 @@ export default async function RegionPage({ params }) {
                   </Link>
                 ))}
               </div>
-            </section>
-          )}
+            </div>
+          </section>
+        )}
 
-          {/* High-intent query crosslink */}
-          <section className="mb-16">
-            <h2 className="font-cormorant text-3xl mb-6">Common questions</h2>
-            <div className="grid md:grid-cols-2 gap-4">
+        {/* Common questions — editorial chips */}
+        <section
+          style={{
+            padding: "clamp(40px, 6vw, 72px) clamp(20px, 4vw, 56px)",
+            background: "#050505",
+            borderTop: "1px solid rgba(218,165,32,0.18)",
+          }}
+        >
+          <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+            <h2
+              style={{
+                fontFamily:
+                  "var(--font-cinzel), 'Cinzel', 'Trajan Pro', Georgia, serif",
+                fontSize: "clamp(24px, 3.4vw, 36px)",
+                fontWeight: 500,
+                letterSpacing: "0.04em",
+                textTransform: "uppercase",
+                textAlign: "center",
+                color: "#F8F5F0",
+                margin: "0 0 36px",
+              }}
+            >
+              Common questions
+            </h2>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns:
+                  "repeat(auto-fit, minmax(260px, 1fr))",
+                gap: 14,
+              }}
+            >
               {data.queries.map((q) => (
                 <Link
                   key={q}
                   href="/inquiry"
-                  className="border border-white/10 rounded-lg p-4 text-sm text-white/70 hover:border-[#DAA520] hover:text-[#DAA520] transition"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 12,
+                    padding: "18px 22px",
+                    background: "transparent",
+                    border: "1px solid rgba(218,165,32,0.22)",
+                    color: "rgba(248,245,240,0.82)",
+                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontSize: 17,
+                    fontStyle: "italic",
+                    textDecoration: "none",
+                    transition: "border-color 0.4s ease, color 0.4s ease",
+                  }}
                 >
-                  {q} →
+                  <span>{q}</span>
+                  <span style={{ color: "#DAA520", fontWeight: 600 }}>→</span>
                 </Link>
               ))}
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* CTA */}
-          <div className="grid sm:grid-cols-2 gap-4">
+        {/* CTA pair — ghost + gold-fill, same as homepage hero */}
+        <section
+          style={{
+            padding: "clamp(56px, 8vw, 96px) clamp(20px, 4vw, 56px)",
+            textAlign: "center",
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontStyle: "italic",
+              fontSize: "clamp(20px, 2.4vw, 28px)",
+              color: "rgba(248,245,240,0.78)",
+              fontWeight: 300,
+              margin: "0 auto 36px",
+              maxWidth: "44ch",
+            }}
+          >
+            Tell George what you have in mind. A reply within 24 hours.
+          </p>
+          <div
+            style={{
+              display: "flex",
+              gap: 16,
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
             <Link
               href="/inquiry"
-              className="text-center bg-[#DAA520] text-black font-semibold uppercase tracking-widest text-sm py-4 px-8 rounded hover:bg-[#C9A24D] transition"
+              className="gy-shimmer-cta"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 10,
+                padding: "18px 36px",
+                minHeight: 52,
+                background:
+                  "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
+                color: "#000",
+                fontFamily:
+                  "var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Montserrat', sans-serif",
+                fontSize: 12,
+                letterSpacing: "0.28em",
+                textTransform: "uppercase",
+                fontWeight: 500,
+                textDecoration: "none",
+                border: "1px solid rgba(218,165,32,0.7)",
+                boxShadow:
+                  "0 14px 35px -10px rgba(218,165,32,0.5), inset 0 1px 0 rgba(255,255,255,0.3)",
+              }}
             >
-              Start an inquiry →
+              Brief George — reply within 24h →
             </Link>
             <a
               href="https://calendly.com/george-georgeyachts/30min"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-center border border-[#DAA520] text-[#DAA520] font-semibold uppercase tracking-widest text-sm py-4 px-8 rounded hover:bg-[#DAA520]/10 transition"
+              className="gy-cta-ghost"
             >
               Book a 30-min call
             </a>
           </div>
         </section>
+
         <Footer />
       </main>
     </>
