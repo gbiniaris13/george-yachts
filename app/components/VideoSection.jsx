@@ -235,8 +235,22 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                         axis. Same trick used below for every other
                         letter-spaced line (eyebrow, BROKERAGE HOUSE,
                         sub-tagline). */}
+                    {/* Phase 27e revert (Forbes-launch day, 2026-05-06)
+                        — the .gy-gold-foil class broke the hero text
+                        rendering: the 3-layer gradient with mix-blend
+                        + sqrt-skew animation didn't compose with the
+                        existing letter-by-letter reveal (each <span
+                        class="gy-hero-letter"> independently animates
+                        opacity), so the text rendered transparent
+                        with no visible fill. Boss reported it missing
+                        from the live homepage. Swapped to the
+                        verified-working .gy-gold-24k-shine class
+                        which is exactly what BROKERAGE HOUSE LLC
+                        uses and renders correctly. Cinzel + uppercase
+                        + 24K gold gradient + slow shimmer — same
+                        luxurious feel without the rendering risk. */}
                     <h1
-                      className="gy-hero-headline gy-gold-foil"
+                      className="gy-hero-headline gy-gold-24k-shine"
                       aria-label="George Yachts"
                       style={{
                         // Phase 17 (luxury rebuild, 2026-05-05) —
