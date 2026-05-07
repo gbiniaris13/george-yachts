@@ -92,10 +92,11 @@ export default function StarField3D() {
       }}
     >
       <Canvas
-        // 'demand' keeps the GPU idle when nothing changed; we still
-        // useFrame so it advances each tick, but compositing pauses
-        // automatically when the canvas is offscreen.
+        // R3F pauses the render loop automatically when the canvas
+        // leaves the viewport. We still useFrame so motion advances
+        // when on-screen, but the GPU stays cool when scrolled past.
         frameloop="always"
+        performance={{ min: 0.4 }}
         gl={{ antialias: false, alpha: true, powerPreference: "low-power" }}
         camera={{ position: [0, 0, 5], fov: 60 }}
         dpr={[1, 1.5]}

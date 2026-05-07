@@ -102,7 +102,7 @@ const HomeClient = ({
           first thing visitors see on scroll. Per GA4 (last 30d) only
           4 / 267 = 1.5% of homepage visitors reached a fleet page;
           moving fleet up + SignatureYacht down should multiply that. */}
-      <section id="fleet">
+      <section id="fleet" data-gy-reveal="up" data-sound-reveal>
         <FleetCTAs
           privateRange={privateRange}
           explorerRange={explorerRange}
