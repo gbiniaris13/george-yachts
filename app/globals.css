@@ -2858,3 +2858,34 @@ a.gy-fancy-link:hover {
     animation: none !important;
   }
 }
+
+/* Phase 27i.7 (2026-05-07) — region pin hover refinement.
+   On hover the dot brightens to ivory + grows + spawns an
+   expanding gold halo (CSS-only @keyframes). Reads as "this region
+   is selectable / responsive" without overpowering the pin name. */
+.gy-region-pin-dot::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(218, 165, 32, 0);
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: none;
+  transition: opacity 360ms ease, transform 480ms cubic-bezier(0.16, 1, 0.3, 1), border-color 360ms ease;
+  opacity: 0;
+}
+.gy-region-pin-dot {
+  position: relative;
+}
+.gy-region-pin:hover .gy-region-pin-dot {
+  background: #F5EFE1;
+  transform: scale(1.18);
+}
+.gy-region-pin:hover .gy-region-pin-dot::after {
+  border-color: rgba(218, 165, 32, 0.65);
+  transform: translate(-50%, -50%) scale(3.4);
+  opacity: 1;
+}
