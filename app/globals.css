@@ -373,6 +373,73 @@ section {
   }
 }
 
+/* Phase 27h (Forbes-launch day, 2026-05-07) — .gy-pearl-white.
+   Boss feedback: champagne gold on the homepage hero H1 read as
+   warm-coloured; he wants pure white OR white with a restrained
+   luxury effect that signals old-money / billionaire-tier (Aman,
+   Belmond, Bulgari, Tiffany — porcelain + polished platinum, NOT
+   gold leaf). Visual signature: ivory-white base + a barely-
+   noticeable specular sweep that reads as light catching polished
+   marble. Zero yellow saturation — the hue moves only between
+   neutral-warm pearl and cool platinum white. */
+.gy-pearl-white {
+  /* Stage 1 — pristine white text fill while cross-fade preps. */
+  color: #FFFFFF;
+  -webkit-text-fill-color: #FFFFFF;
+  /* Stage 2 tweens the text fill to transparent so the gradient
+     shows through. Every stop sits within a hair's breadth of pure
+     white — the eye always reads "white" — and the gradient is
+     designed so any visible window includes a #FFFFFF peak. The
+     pearl-warm and platinum-cool tints are barely perceptible
+     (ΔE < 4 from white), but the slow-moving highlight gives the
+     surface depth so the headline reads as polished marble, not
+     painted-on plastic. */
+  background: linear-gradient(
+    100deg,
+    #FFFFFF 0%,    /* white at far edge — always safe */
+    #F4F7FB 22%,   /* faint platinum-cool */
+    #FFFFFF 50%,   /* pure white peak */
+    #FAF5EA 78%,   /* faint pearl-warm */
+    #FFFFFF 100%   /* white at near edge — always safe */
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation:
+    gy-pearl-enter-fade 1.6s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards,
+    gy-pearl-shine 22s ease-in-out 3s infinite;
+  filter: drop-shadow(0 0 0.7em rgba(255, 255, 255, 0.20))
+          drop-shadow(0 1px 0 rgba(0, 0, 0, 0.55));
+}
+@keyframes gy-pearl-enter-fade {
+  from {
+    -webkit-text-fill-color: #FFFFFF;
+    color: #FFFFFF;
+    background-position: 0% 50%;
+  }
+  to {
+    -webkit-text-fill-color: rgba(0, 0, 0, 0);
+    color: transparent;
+    background-position: 35% 50%;
+  }
+}
+@keyframes gy-pearl-shine {
+  /* 22-second round-trip — even slower than the gold version so
+     the white-on-white shimmer never reads as motion, only as
+     light. */
+  0%   { background-position: 30% 50%; }
+  50%  { background-position: 70% 50%; }
+  100% { background-position: 30% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gy-pearl-white {
+    -webkit-text-fill-color: #FFFFFF !important;
+    color: #FFFFFF !important;
+    background: none !important;
+    animation: none !important;
+  }
+}
+
 /* Phase 27e (Forbes-launch eve, 2026-05-05) — GOLD-FOIL hero text.
    "WebGL-tier" brushed-metal gloss effect on the hero "GEORGE YACHTS"
    masthead, achieved with pure CSS (no shader, no WebGL risk). Layers:

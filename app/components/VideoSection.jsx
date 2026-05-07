@@ -257,8 +257,14 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                         shadows, NOT saturated yellow). Plus a barely-
                         noticeable 18s shimmer for that "light catching
                         polished metal" feel. */}
+                    {/* Phase 27h (2026-05-07) — Boss feedback: champagne
+                        gold read warm-coloured. Switched to .gy-pearl-
+                        white: pure white base + barely-perceptible
+                        platinum/pearl shimmer (no yellow). Reads as
+                        polished marble at the Aman / Belmond / Tiffany
+                        tier — old-money restraint, not new-money gold. */}
                     <h1
-                      className="gy-hero-headline gy-luxe-enter"
+                      className="gy-hero-headline gy-pearl-white"
                       aria-label="George Yachts"
                       style={{
                         // Phase 17 (luxury rebuild, 2026-05-05) —
@@ -386,10 +392,13 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
 
                     {/* Secondary inline gold dash (between brand block and
                         descriptor block). Narrower than the top curtain so
-                        it reads as a separator, not another hero element. */}
+                        it reads as a separator, not another hero element.
+                        2026-05-07 — desktop-only. Mobile hero declutter
+                        per Boss directive: too many lines on mobile, the
+                        separator is a desktop nice-to-have. */}
                     <div
                       aria-hidden="true"
-                      className="h-px mx-auto mb-8"
+                      className="h-px mx-auto mb-8 hidden md:block"
                       style={{
                         background:
                           "linear-gradient(90deg, transparent, rgba(218,165,32,0.45), transparent)",
@@ -398,8 +407,13 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                       }}
                     />
 
-                    {/* Sub-tagline — descriptor block */}
+                    {/* Sub-tagline — descriptor block.
+                        2026-05-07 — desktop-only. Mobile already shows
+                        eyebrow + BROKERAGE HOUSE LLC + CTAs; this third
+                        descriptor line was the main mobile-clutter
+                        complaint. */}
                     <p
+                      className="hidden md:block"
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
                         fontSize: "10px",
@@ -423,8 +437,12 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                       </span>
                     </p>
 
-                    {/* Seasonal Message (retimed for Move #1) */}
+                    {/* Seasonal Message (retimed for Move #1).
+                        2026-05-07 — desktop-only. The italic seasonal
+                        line is editorial flourish; on mobile it pushes
+                        the CTAs below the fold. */}
                     <p
+                      className="hidden md:block"
                       style={{
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
                         fontSize: "clamp(12px, 2vw, 16px)",
@@ -458,7 +476,7 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                         placeholder. */}
                     {fleetBadge && (
                       <p
-                        className="gy-fleet-badge"
+                        className="gy-fleet-badge hidden md:block"
                         style={{
                           fontFamily: "'Montserrat', sans-serif",
                           fontSize: "11px",
