@@ -465,43 +465,14 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                       })()}
                     </p>
 
-                    {/* Concrete-numbers badge (Roberto 2026-05-02):
-                        Replaces the abstract "exclusively Greek waters"
-                        promise with a specific count + price range so
-                        the visitor knows what they'll find on click.
-                        Per analytics, only 1.5% of homepage visitors
-                        reach a fleet page — anchoring numbers in the
-                        hero is the cheapest fix. Hidden when the count
-                        prop hasn't loaded yet so we never flash a stale
-                        placeholder. */}
-                    {fleetBadge && (
-                      <p
-                        className="gy-fleet-badge hidden md:block"
-                        style={{
-                          fontFamily: "'Montserrat', sans-serif",
-                          fontSize: "11px",
-                          letterSpacing: "0.18em",
-                          textTransform: "uppercase",
-                          color: "rgba(255,255,255,0.85)",
-                          fontWeight: 500,
-                          margin: "0 0 22px 0",
-                          padding: "8px 18px",
-                          border: "1px solid rgba(218,165,32,0.45)",
-                          borderRadius: "999px",
-                          background: "rgba(0,0,0,0.32)",
-                          backdropFilter: "blur(4px)",
-                          textAlign: "center",
-                          opacity: heroVisible ? 1 : 0,
-                          transform: heroVisible ? "translateY(0)" : "translateY(8px)",
-                          transition:
-                            "opacity 0.9s ease 2.6s, transform 0.9s ease 2.6s",
-                        }}
-                        aria-label={`Fleet snapshot: ${fleetBadge}`}
-                      >
-                        <span className="gy-fleet-badge__full">{fleetBadgeFull}</span>
-                        <span className="gy-fleet-badge__short">{fleetBadgeShort}</span>
-                      </p>
-                    )}
+                    {/* "66 yachts · €420/guest · €180k/week" fleet-snapshot
+                        badge removed 2026-05-07 per Boss directive. The
+                        priced rounded-pill panel was reading as a price
+                        sticker in front of the hero — wrong tone for the
+                        Forbes-tier audience the redesign is built for.
+                        Real fleet snapshot lives one scroll down in
+                        FleetCTAs (Private vs Explorer split) and on the
+                        Forbes pull-quote section that follows. */}
 
                     {/* Dual CTA pair (George 2026-04-29):
                         ① Primary  — guided 60-second quiz for undecided

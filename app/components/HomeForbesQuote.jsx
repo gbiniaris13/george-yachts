@@ -1,27 +1,19 @@
-// Tier 1.3 (Roberto Forbes integration brief, May 2026) —
-// Homepage Forbes pull-quote section.
-//
-// Sits BETWEEN "This Week's Selection" yacht strip and Filotimo /
-// brand storytelling. Full-width band, dark navy background, gold
-// accent rules top + bottom. Entire section clickable — opens the
-// Forbes article in a new tab.
-//
-// Constraint from brief: server-rendered. The quote and attribution
-// MUST appear in the initial HTML response so AI crawlers and
-// Googlebot read the Forbes credential without JS.
-//
-// Brand-equality rule: the Forbes wordmark sits at 18px on this
-// strip, same size as the Cormorant body italic. The full-page
-// George Yachts header logo is larger, so the brand stays first.
-
 "use client";
 
-// Phase 27 (Forbes-launch eve, 2026-05-05) — Boss flagged that not
-// all sections translate. Converted from server component to client
-// component so it can use the i18n t() function. SSR still hits via
-// the default English fallback (the t() function returns the second
-// arg if no translation exists), so SEO/AI crawlers still see the
-// English quote in the initial HTML response.
+// Phase 27i (2026-05-07) — Boss directive: "Forbes section needs a
+// different background and a lot of effects, things should catch the
+// eye immediately, things should move, like the most expensive thing
+// possible." Restraint-first old-money interpretation: deep navy
+// gradient with a top-centre champagne spotlight, hand-drawn gold
+// rules that draw open on scroll-into-view, FORBES wordmark in
+// brand-consistent Cinzel 700 (matching the @georgeyachts post + the
+// homepage hero), and a slow champagne-dust drift that reads as
+// "light catching polished metal", not as motion.
+//
+// All animations are CSS-driven so the component stays server-render-
+// friendly (the quote text appears in initial HTML for SEO + AI
+// crawlers). Reduced-motion: every animated element falls back to a
+// static state via a single @media query in globals.css.
 
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
@@ -34,172 +26,69 @@ export default function HomeForbesQuote() {
   return (
     <section
       aria-label="George Yachts featured in Forbes, May 2026"
-      style={{
-        // Phase 27 (Forbes-launch eve, 2026-05-05) — Boss palette
-        // directive: black/gold/white only. Was #000000 navy.
-        background: "#000000",
-        position: "relative",
-        padding: "64px 24px",
-        borderTop: "1px solid rgba(201,168,76,0.4)",
-        borderBottom: "1px solid rgba(201,168,76,0.4)",
-      }}
+      className="gy-forbes-section"
     >
+      {/* Background layers — pure decoration, behind the link.
+          Three layers: paper-grain noise (CSS data URI), top-centre
+          champagne spotlight, and 6 drifting gold dust motes. */}
+      <div className="gy-forbes-grain" aria-hidden="true" />
+      <div className="gy-forbes-spotlight" aria-hidden="true" />
+      <div className="gy-forbes-dust" aria-hidden="true">
+        <span /><span /><span /><span /><span /><span />
+      </div>
+
       <Link
         href={ARTICLE_URL}
         target="_blank"
         rel="noopener noreferrer"
         prefetch={false}
         data-cursor="Read"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 18,
-          textDecoration: "none",
-          color: "inherit",
-          maxWidth: "880px",
-          margin: "0 auto",
-          textAlign: "center",
-        }}
+        className="gy-forbes-link"
       >
-        {/* Forbes wordmark + date row */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 14,
-            flexWrap: "wrap",
-          }}
-        >
-          <span
-            aria-label="Forbes"
-            style={{
-              fontFamily: "'Times New Roman', Times, serif",
-              fontWeight: 700,
-              fontSize: 18,
-              letterSpacing: "-0.02em",
-              color: "#F8F5F0",
-              lineHeight: 1,
-            }}
-          >
-            Forbes
-          </span>
-          <span aria-hidden="true" style={{ color: "#C9A84C" }}>
-            ·
-          </span>
-          <span
-            style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontSize: 11,
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "#C9A84C",
-              fontWeight: 600,
-            }}
-          >
-            {t("forbesQuote.date", "May 2026")}
-          </span>
-        </div>
+        {/* Eyebrow */}
+        <span className="gy-forbes-eyebrow">
+          {t("forbesQuote.eyebrow", "As Featured In")}
+        </span>
 
-        {/* Decorative top rule */}
-        <span
-          aria-hidden="true"
-          style={{
-            display: "block",
-            width: 80,
-            height: 1,
-            background: "rgba(201,168,76,0.5)",
-          }}
-        />
+        {/* FORBES wordmark — Cinzel 700, brand-consistent with the
+            @georgeyachts IG post + the homepage hero. */}
+        <h2 className="gy-forbes-wordmark" aria-label="Forbes">
+          Forbes
+        </h2>
+
+        {/* Date line */}
+        <span className="gy-forbes-date">
+          {t("forbesQuote.date", "1 May · 2026")}
+        </span>
+
+        {/* Animated gold rule — draws open on scroll-into-view */}
+        <span className="gy-forbes-rule" aria-hidden="true" />
 
         {/* The pull quote (server-rendered for SEO/AI) */}
-        <blockquote
-          cite={ARTICLE_URL}
-          style={{
-            margin: 0,
-            padding: 0,
-            border: "none",
-          }}
-        >
-          <p
-            style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontStyle: "italic",
-              fontSize: "clamp(22px, 3vw, 32px)",
-              lineHeight: 1.4,
-              color: "#F8F5F0",
-              margin: 0,
-              fontWeight: 300,
-              letterSpacing: "0.005em",
-            }}
-          >
-            {t(
-              "forbesQuote.quote",
-              "“That’s the geopolitical shift playing out in real time on my desk.”"
-            )}
-          </p>
+        <blockquote cite={ARTICLE_URL} className="gy-forbes-quote">
+          {t(
+            "forbesQuote.quote",
+            "“That’s the geopolitical shift playing out in real time on my desk.”",
+          )}
         </blockquote>
 
         {/* Attribution block */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-          <span
-            style={{
-              fontFamily: "'Lato', 'Montserrat', sans-serif",
-              fontWeight: 300,
-              fontSize: 14,
-              color: "rgba(248,245,240,0.7)",
-              letterSpacing: "0.04em",
-            }}
-          >
-            {t("forbesQuote.attribution", "— George P. Biniaris, Managing Broker")}
-          </span>
-          <span
-            style={{
-              fontFamily: "'Lato', 'Montserrat', sans-serif",
-              fontWeight: 300,
-              fontSize: 13,
-              color: "rgba(248,245,240,0.55)",
-              letterSpacing: "0.04em",
-            }}
-          >
-            {t("forbesQuote.context", "in conversation with Forbes · 1 May 2026")}
-          </span>
-        </div>
+        <span className="gy-forbes-attribution">
+          {t("forbesQuote.attribution", "George P. Biniaris, Managing Broker")}
+        </span>
+        <span className="gy-forbes-context">
+          {t("forbesQuote.context", "in conversation with Forbes · 1 May 2026")}
+        </span>
 
-        {/* Decorative bottom rule */}
-        <span
-          aria-hidden="true"
-          style={{
-            display: "block",
-            width: 80,
-            height: 1,
-            background: "rgba(201,168,76,0.5)",
-          }}
-        />
+        {/* Animated gold rule — symmetric with the top one */}
+        <span className="gy-forbes-rule" aria-hidden="true" />
 
-        {/* CTA */}
-        <span
-          style={{
-            fontFamily: "'Montserrat', sans-serif",
-            fontSize: 12,
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: "#C9A84C",
-            fontWeight: 600,
-            paddingBottom: 2,
-            borderBottom: "1px solid transparent",
-            transition: "border-color 0.3s ease",
-          }}
-          className="gy-forbes-quote-cta"
-        >
-          {t("forbesQuote.cta", "Read the full article →")}
+        {/* CTA — gold border on hover, subtle right-arrow shift */}
+        <span className="gy-forbes-cta">
+          {t("forbesQuote.cta", "Read the full article")}
+          <span aria-hidden="true" className="gy-forbes-cta-arrow">&rarr;</span>
         </span>
       </Link>
-
-      <style>{`
-        .gy-forbes-quote-cta:hover { border-bottom-color: #C9A84C !important; }
-      `}</style>
     </section>
   );
 }

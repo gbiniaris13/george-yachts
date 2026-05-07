@@ -77,13 +77,12 @@ const HomeClient = ({
         explorerRange={explorerRange}
       />
 
-      {/* Trending Yachts carousel (Roberto 2026-05-02 — Batch 3).
-          Real yacht cards immediately below the hero, before the
-          split-screen "pick a category" step. Cold-outreach traffic
-          who just wants to SEE yachts gets a one-tap path to a
-          yacht detail page without choosing between Private/Explorer
-          first. Renders nothing if the pool is empty. */}
-      <TrendingYachts yachts={trendingYachts} />
+      {/* TrendingYachts ("This Week's Selection") removed 2026-05-07
+          per Boss directive — the homepage was reading like a travel-
+          agency carousel of bestsellers. Yacht discovery surface lives
+          in FleetCTAs + SignatureYacht below; weekly rotation is now
+          visible on @georgeyachts (yacht-first IG feed, see gy-command
+          PLAYBOOKS §9). */}
 
       {/* 2026-05-02 reorder: Fleet split-screen now sits IMMEDIATELY
           below the hero so the Private / Explorer choice is the
@@ -116,33 +115,24 @@ const HomeClient = ({
         <YourBroker />
       </section>
 
-      {/* Roberto 2026-05-02 Batch 4 — yacht spotlight #1 between
-          editorial sections so visitors who scroll past fleet still
-          see yachts every couple of sections. Different yacht than
-          the carousel + signature so we're not repeating the same
-          card three times. */}
-      {trendingYachts && trendingYachts.length > 6 ? (
-        <InlineYachtStrip
-          yacht={trendingYachts[6]}
-          eyebrow="Skipper's Pick"
-        />
-      ) : trendingYachts && trendingYachts.length > 0 ? (
-        <InlineYachtStrip
-          yacht={trendingYachts[trendingYachts.length - 1]}
-          eyebrow="Skipper's Pick"
-        />
-      ) : null}
+      {/* Skipper's Pick spotlight removed 2026-05-07 per Boss
+          directive (along with TrendingYachts + Editor's Pick) —
+          eliminates the "shopping carousel" feel from the homepage. */}
 
       {/* Phase 2 / E2 — Cinematic 3D Mapbox flyover (statement piece). */}
       <section id="flyover" aria-label="3D flyover of the Greek waters" data-gy-reveal="blur">
         <MapboxFlyover />
       </section>
 
-      {/* Editorial illustrated map (still here as a tactile,
-          reduced-motion-friendly counterpart to the cinematic flyover). */}
-      <section id="map" data-gy-reveal="up">
-        <GreekWatersMap />
-      </section>
+      {/* GreekWatersMap ("Greek Waters · Four Regions" + "A week in
+          the Aegean rearranges what you think a holiday can be") was
+          removed 2026-05-07 per Boss directive. The illustrated-map
+          editorial copy was reading travel-magazine; replaced in the
+          next iteration by a fleet-positioning map that pulls real
+          yacht locations from Sanity (cruisingRegion field) and pins
+          them per region (Cyclades / Ionian / Saronic / Sporades),
+          falling back to Athens for yachts without a region. Pending
+          Boss-curated regional photography. */}
 
       {/* Tier 1.3 (Forbes integration brief, May 2026) — Forbes
           pull-quote section. Server-rendered: quote + attribution
@@ -164,15 +154,10 @@ const HomeClient = ({
         <Filotimon filotimoImage={filotimoImage} />
       </section>
 
-      {/* Roberto 2026-05-02 Batch 4 — yacht spotlight #2 right
-          before testimonials. Picks a different yacht so consecutive
-          spotlights don't repeat. */}
-      {trendingYachts && trendingYachts.length > 7 ? (
-        <InlineYachtStrip
-          yacht={trendingYachts[7]}
-          eyebrow="Editor's Pick"
-        />
-      ) : null}
+      {/* Editor's Pick spotlight removed 2026-05-07 per Boss
+          directive — same rationale as the Skipper's Pick removal
+          above (yacht-discovery surface lives in FleetCTAs + the IG
+          feed, not in inline shopping spots on the homepage). */}
 
       <div data-gy-reveal="up">
         <BrokerTestimonials />

@@ -1,108 +1,131 @@
 "use client";
 
-// Phase 27b (Forbes-launch eve, 2026-05-05) — added liquid gold trail.
-// 5 trailing particles that lag behind the cursor with increasing
-// dampening, creating a "comet of gold" effect. Each particle uses a
-// progressively softer blur + lower opacity so the trail reads as
-// luminous gold dust, not a solid line. Desktop only (existing gate).
+// Phase 27i (2026-05-07) — Boss feedback: previous cursor (CustomCursor
+// with 5-particle liquid-gold trail) felt laggy. Trail particles + per-
+// frame React state updates were causing renders during mouse-move,
+// stuttering on lower-end hardware.
+//
+// New cursor — minimal DOM (one dot + one ring), pure transforms,
+// zero React state mutations during movement. Hover/text/label state
+// changes are pushed to the DOM via direct class toggles instead of
+// React setState, so a fast user motion never queues a render.
+//
+// States (toggled by data attribute on the ring element):
+//   default        — small ivory dot + thin gold ring (60% opacity)
+//   interactive    — ring expands and fills with a gold radial gradient
+//   text           — ring collapses to a vertical I-beam line
+//   labelled       — adds a small gold label to the right of the ring
+//                    (uses data-cursor attribute on the hovered element)
+//
+// Visual signature: polished platinum + champagne gold, the same Aman
+// / Belmond / Bulgari restraint the homepage hero now reads at.
 
-import { useEffect, useRef, useState } from "react";
-
-const TRAIL_COUNT = 5;
+import { useEffect, useRef } from "react";
 
 export default function CustomCursor() {
   const dotRef = useRef(null);
-  const glowRef = useRef(null);
-  const trailRefs = useRef([...Array(TRAIL_COUNT)].map(() => ({ x: -100, y: -100, el: null })));
-  const [isHovering, setIsHovering] = useState(false);
-  const [cursorText, setCursorText] = useState("");
-  const [isVisible, setIsVisible] = useState(true);
-  const mouse = useRef({ x: -100, y: -100 });
-  const glowPos = useRef({ x: -100, y: -100 });
-  const rafRef = useRef(null);
+  const ringRef = useRef(null);
+  const labelRef = useRef(null);
 
   useEffect(() => {
-    // Desktop only — no touch
     if (typeof window === "undefined") return;
     if (window.innerWidth < 1024) return;
     if ("ontouchstart" in window) return;
+    if (window.matchMedia?.("(pointer: coarse)").matches) return;
 
-    // Hide default cursor
     document.documentElement.style.cursor = "none";
     const styleEl = document.createElement("style");
-    styleEl.textContent = "*, *::before, *::after { cursor: none !important; }";
+    styleEl.textContent = `*, *::before, *::after { cursor: none !important; }`;
     document.head.appendChild(styleEl);
 
     const dot = dotRef.current;
-    const glow = glowRef.current;
-    if (!dot || !glow) return;
+    const ring = ringRef.current;
+    const label = labelRef.current;
+    if (!dot || !ring || !label) return;
 
-    // Show elements
-    dot.style.display = "block";
-    glow.style.display = "flex";
+    let mouseX = -100;
+    let mouseY = -100;
+    let ringX = -100;
+    let ringY = -100;
+    let raf = 0;
+    let isVisible = true;
 
-    const onMouseMove = (e) => {
-      mouse.current.x = e.clientX;
-      mouse.current.y = e.clientY;
-      dot.style.left = `${e.clientX}px`;
-      dot.style.top = `${e.clientY}px`;
+    // Pre-detect text-input vs interactive selectors. Cheaper than
+    // re-querying on every move event.
+    const TEXT_SEL = "input:not([type='button']):not([type='submit']):not([type='checkbox']):not([type='radio']), textarea, [contenteditable='true']";
+    const INTER_SEL = "a, button, [role='button'], [data-cursor], select, label[for], summary";
+
+    const onMove = (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      // Dot tracks 1:1 with no lag.
+      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+      if (!isVisible) {
+        isVisible = true;
+        dot.style.opacity = "1";
+        ring.style.opacity = "1";
+      }
     };
 
     const animate = () => {
-      glowPos.current.x += (mouse.current.x - glowPos.current.x) * 0.1;
-      glowPos.current.y += (mouse.current.y - glowPos.current.y) * 0.1;
-      glow.style.left = `${glowPos.current.x}px`;
-      glow.style.top = `${glowPos.current.y}px`;
-      // Liquid gold trail — each particle chases the previous one
-      // with progressively heavier dampening, creating a comet tail
-      // that catches up but lingers when the cursor stops.
-      let prevX = mouse.current.x;
-      let prevY = mouse.current.y;
-      for (let i = 0; i < TRAIL_COUNT; i++) {
-        const t = trailRefs.current[i];
-        const damp = 0.18 - i * 0.025; // 0.18 → 0.08
-        t.x += (prevX - t.x) * damp;
-        t.y += (prevY - t.y) * damp;
-        if (t.el) {
-          t.el.style.left = `${t.x}px`;
-          t.el.style.top = `${t.y}px`;
-        }
-        prevX = t.x;
-        prevY = t.y;
-      }
-      rafRef.current = requestAnimationFrame(animate);
+      // Ring lerps behind by 22% — fast enough to feel responsive,
+      // slow enough to read as a soft companion. Single trailing
+      // element (vs 5 in the old impl) keeps the GPU happy.
+      ringX += (mouseX - ringX) * 0.22;
+      ringY += (mouseY - ringY) * 0.22;
+      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      raf = requestAnimationFrame(animate);
     };
 
     const onEnter = (e) => {
-      const target = e.target.closest("a, button, [data-cursor], input, select, textarea");
-      if (target) {
-        setIsHovering(true);
-        setCursorText(target.getAttribute("data-cursor") || "");
+      const target = e.target?.closest?.(`${INTER_SEL}, ${TEXT_SEL}`);
+      if (!target) return;
+
+      const isText = target.matches(TEXT_SEL);
+      const labelText = target.getAttribute("data-cursor") || "";
+
+      if (isText) {
+        ring.dataset.state = "text";
+      } else if (labelText) {
+        ring.dataset.state = "labelled";
+        label.textContent = labelText;
+      } else {
+        ring.dataset.state = "interactive";
       }
     };
 
     const onLeave = (e) => {
-      const target = e.target.closest("a, button, [data-cursor], input, select, textarea");
-      if (target) { setIsHovering(false); setCursorText(""); }
+      const target = e.target?.closest?.(`${INTER_SEL}, ${TEXT_SEL}`);
+      if (!target) return;
+      ring.dataset.state = "default";
+      label.textContent = "";
     };
 
-    const onOut = () => setIsVisible(false);
-    const onOver = () => setIsVisible(true);
+    const onMouseLeaveDocument = () => {
+      isVisible = false;
+      dot.style.opacity = "0";
+      ring.style.opacity = "0";
+    };
+    const onMouseEnterDocument = () => {
+      isVisible = true;
+      dot.style.opacity = "1";
+      ring.style.opacity = "1";
+    };
 
-    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mousemove", onMove, { passive: true });
     document.addEventListener("mouseover", onEnter, true);
     document.addEventListener("mouseout", onLeave, true);
-    document.documentElement.addEventListener("mouseleave", onOut);
-    document.documentElement.addEventListener("mouseenter", onOver);
-    rafRef.current = requestAnimationFrame(animate);
+    document.documentElement.addEventListener("mouseleave", onMouseLeaveDocument);
+    document.documentElement.addEventListener("mouseenter", onMouseEnterDocument);
+    raf = requestAnimationFrame(animate);
 
     return () => {
-      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseover", onEnter, true);
       document.removeEventListener("mouseout", onLeave, true);
-      document.documentElement.removeEventListener("mouseleave", onOut);
-      document.documentElement.removeEventListener("mouseenter", onOver);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      document.documentElement.removeEventListener("mouseleave", onMouseLeaveDocument);
+      document.documentElement.removeEventListener("mouseenter", onMouseEnterDocument);
+      if (raf) cancelAnimationFrame(raf);
       document.documentElement.style.cursor = "";
       styleEl.remove();
     };
@@ -110,104 +133,45 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Liquid gold trail — 5 particles, each smaller + softer than
-          the previous, creating a comet tail. Sits BEHIND the dot. */}
-      {[...Array(TRAIL_COUNT)].map((_, i) => {
-        const size = 5 - i * 0.7;     // 5 → 2.2 px
-        const opacity = 0.85 - i * 0.15; // 0.85 → 0.25
-        const blur = 1 + i * 1.5;      // 1 → 7 px blur
-        return (
-          <div
-            key={i}
-            ref={(el) => { if (trailRefs.current[i]) trailRefs.current[i].el = el; }}
-            aria-hidden="true"
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: `${size}px`,
-              height: `${size}px`,
-              borderRadius: "50%",
-              background: "radial-gradient(circle, #FFE9A8 0%, #DAA520 50%, #A67C2E 100%)",
-              filter: `blur(${blur}px)`,
-              boxShadow: "0 0 12px rgba(218,165,32,0.6)",
-              opacity: isVisible ? opacity : 0,
-              transform: "translate(-50%, -50%)",
-              pointerEvents: "none",
-              zIndex: 99997,
-              transition: "opacity 0.2s ease",
-              willChange: "left, top",
-            }}
-          />
-        );
-      })}
-
-      {/* Gold dot */}
+      {/* Crisp central dot — tracks the pointer 1:1, no lag. */}
       <div
         ref={dotRef}
+        aria-hidden="true"
         style={{
-          display: "none",
           position: "fixed",
           top: 0,
           left: 0,
-          width: isHovering ? "10px" : "6px",
-          height: isHovering ? "10px" : "6px",
-          background: "#DAA520",
+          width: "6px",
+          height: "6px",
           borderRadius: "50%",
+          background: "#F5EFE1",
+          boxShadow:
+            "0 0 0.5px rgba(0,0,0,0.6), 0 0 6px rgba(218,165,32,0.55)",
           pointerEvents: "none",
-          zIndex: 99999,
-          transform: "translate(-50%, -50%)",
-          transition: "width 0.3s ease, height 0.3s ease, opacity 0.2s ease, box-shadow 0.3s ease",
-          opacity: isVisible ? 1 : 0,
-          mixBlendMode: "difference",
-          boxShadow: isHovering
-            ? "0 0 20px rgba(218,165,32,0.6), 0 0 40px rgba(218,165,32,0.2)"
-            : "0 0 6px rgba(218,165,32,0.3)",
+          zIndex: 9999,
+          willChange: "transform",
+          transition: "opacity 200ms ease",
         }}
       />
 
-      {/* Glow circle */}
+      {/* Ring — soft companion, follows with 22% lerp. State switches
+          via data attribute so the CSS in globals.css handles the
+          look without any React re-render. */}
       <div
-        ref={glowRef}
+        ref={ringRef}
+        data-state="default"
+        aria-hidden="true"
+        className="gy-luxe-cursor-ring"
         style={{
-          display: "none",
           position: "fixed",
           top: 0,
           left: 0,
-          width: isHovering ? "80px" : "42px",
-          height: isHovering ? "80px" : "42px",
-          border: `1px solid rgba(218, 165, 32, ${isHovering ? 0.5 : 0.18})`,
-          borderRadius: "50%",
           pointerEvents: "none",
-          zIndex: 99998,
-          transform: "translate(-50%, -50%)",
-          transition: "width 0.5s cubic-bezier(0.16, 1, 0.3, 1), height 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background 0.3s ease, opacity 0.2s ease, box-shadow 0.4s ease",
-          opacity: isVisible ? 1 : 0,
-          alignItems: "center",
-          justifyContent: "center",
-          background: isHovering ? "rgba(218, 165, 32, 0.04)" : "transparent",
-          boxShadow: isHovering
-            ? "0 0 30px rgba(218,165,32,0.08), inset 0 0 20px rgba(218,165,32,0.03)"
-            : "none",
-          backdropFilter: isHovering ? "blur(2px)" : "none",
+          zIndex: 9998,
+          willChange: "transform",
         }}
       >
-        {cursorText && (
-          <span
-            style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontSize: "7px",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "#DAA520",
-              whiteSpace: "nowrap",
-              opacity: isHovering ? 1 : 0,
-              transition: "opacity 0.3s ease",
-            }}
-          >
-            {cursorText}
-          </span>
-        )}
+        <span ref={labelRef} className="gy-luxe-cursor-label" />
       </div>
     </>
   );
