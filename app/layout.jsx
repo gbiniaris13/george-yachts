@@ -11,6 +11,7 @@ import CustomCursor from "./components/CustomCursor";
 import SmoothScroll from "./components/SmoothScroll";
 import ScrollProgress from "./components/ScrollProgress";
 import SoundFx from "./components/SoundFx";
+import ScrollToTop from "./components/ScrollToTop";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ContactDrawer from "./components/ContactDrawer";
 import VisitorGreeting from "./components/VisitorGreeting";
@@ -334,6 +335,7 @@ export default async function RootLayout({ children }) {
         <SmoothScroll />
         <ScrollProgress />
         <SoundFx />
+        <ScrollToTop />
         {/* A4 — Ambient scroll parallax driver (publishes CSS vars) */}
         <AmbientScroll />
         {/* 2. Page Content */}
