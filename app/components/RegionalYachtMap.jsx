@@ -142,73 +142,127 @@ export default function RegionalYachtMap({ yachts = [] }) {
         </div>
       </div>
 
-      {/* Region detail modal — photo cover + yacht list */}
+      {/* Region detail modal — photo carousel cover + yacht list */}
       {activeRegion && (
-        <div
-          className="gy-region-modal-backdrop"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="gy-region-modal-title"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setActiveSlug(null);
-          }}
-        >
-          <div className="gy-region-modal">
-            <button
-              type="button"
-              className="gy-region-modal-close"
-              onClick={() => setActiveSlug(null)}
-              aria-label="Close"
-              data-cursor="Close"
-            >
-              ×
-            </button>
-
-            <div
-              className="gy-region-modal-cover"
-              style={{ backgroundImage: `url(${activeRegion.photo})` }}
-              aria-hidden="true"
-            >
-              <div className="gy-region-modal-cover-shade" />
-              <div className="gy-region-modal-cover-text">
-                <p className="gy-region-modal-eyebrow">Greek Waters</p>
-                <h3 id="gy-region-modal-title" className="gy-region-modal-name">
-                  {activeRegion.name}
-                </h3>
-                <p className="gy-region-modal-subtitle">
-                  {activeRegion.subtitle}
-                </p>
-              </div>
-            </div>
-
-            <div className="gy-region-modal-body">
-              <p className="gy-region-modal-blurb">{activeRegion.blurb}</p>
-
-              <p className="gy-region-modal-count">
-                {activeYachts.length === 0
-                  ? "No yachts currently pinned here."
-                  : `${activeYachts.length} yacht${
-                      activeYachts.length === 1 ? "" : "s"
-                    } pinned here`}
-              </p>
-
-              {activeYachts.length > 0 && (
-                <div className="gy-region-yacht-list">
-                  {activeYachts.slice(0, 12).map((y) => (
-                    <YachtRow key={y?.slug?.current ?? y?.slug} yacht={y} />
-                  ))}
-                  {activeYachts.length > 12 && (
-                    <p className="gy-region-yacht-more">
-                      + {activeYachts.length - 12} more —{" "}
-                      <Link href="/charter-yacht-greece">browse the fleet</Link>
-                    </p>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+        <RegionModal
+          region={activeRegion}
+          yachts={activeYachts}
+          onClose={() => setActiveSlug(null)}
+        />
       )}
     </section>
+  );
+}
+
+/**
+ * Modal — crossfade carousel (auto-rotates through region.photos)
+ * + yacht list. Pulled out of the main component so the carousel
+ * state lives in its own React tree and resets when a different
+ * region opens.
+ */
+function RegionModal({ region, yachts, onClose }) {
+  const photos = Array.isArray(region.photos) && region.photos.length > 0
+    ? region.photos
+    : [];
+  const [photoIdx, setPhotoIdx] = useState(0);
+
+  // Auto-rotate every 5.5s. Reduced-motion users get a static cover.
+  useEffect(() => {
+    if (photos.length <= 1) return;
+    if (typeof window !== "undefined" &&
+        window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+    const t = setInterval(() => {
+      setPhotoIdx((i) => (i + 1) % photos.length);
+    }, 5500);
+    return () => clearInterval(t);
+  }, [photos.length]);
+
+  return (
+    <div
+      className="gy-region-modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="gy-region-modal-title"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className="gy-region-modal">
+        <button
+          type="button"
+          className="gy-region-modal-close"
+          onClick={onClose}
+          aria-label="Close"
+          data-cursor="Close"
+        >
+          ×
+        </button>
+
+        {/* Carousel cover — all 4 photos stacked, the active one at
+            full opacity, others at 0. CSS handles the crossfade. */}
+        <div className="gy-region-modal-cover" aria-hidden="true">
+          {photos.map((src, i) => (
+            <div
+              key={src}
+              className="gy-region-modal-cover-photo"
+              style={{
+                backgroundImage: `url(${src})`,
+                opacity: i === photoIdx ? 1 : 0,
+              }}
+            />
+          ))}
+          <div className="gy-region-modal-cover-shade" />
+          <div className="gy-region-modal-cover-text">
+            <p className="gy-region-modal-eyebrow">Greek Waters</p>
+            <h3 id="gy-region-modal-title" className="gy-region-modal-name">
+              {region.name}
+            </h3>
+            <p className="gy-region-modal-subtitle">{region.subtitle}</p>
+          </div>
+
+          {/* Dot indicators — clickable, manual nav for users who
+              don't want to wait for the auto-rotation. */}
+          {photos.length > 1 && (
+            <div className="gy-region-modal-dots">
+              {photos.map((src, i) => (
+                <button
+                  key={src}
+                  type="button"
+                  aria-label={`Photo ${i + 1} of ${photos.length}`}
+                  className={i === photoIdx ? "is-active" : ""}
+                  onClick={() => setPhotoIdx(i)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="gy-region-modal-body">
+          <p className="gy-region-modal-blurb">{region.blurb}</p>
+
+          <p className="gy-region-modal-count">
+            {yachts.length === 0
+              ? "No yachts currently pinned here."
+              : `${yachts.length} yacht${yachts.length === 1 ? "" : "s"} pinned here`}
+          </p>
+
+          {yachts.length > 0 && (
+            <div className="gy-region-yacht-list">
+              {yachts.slice(0, 12).map((y) => (
+                <YachtRow key={y?.slug?.current ?? y?.slug} yacht={y} />
+              ))}
+              {yachts.length > 12 && (
+                <p className="gy-region-yacht-more">
+                  + {yachts.length - 12} more —{" "}
+                  <Link href="/charter-yacht-greece">browse the fleet</Link>
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
