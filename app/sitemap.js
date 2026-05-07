@@ -131,13 +131,22 @@ export default async function sitemap() {
 
   let blogEntries = [];
   try {
-    // 2026-05-07 SEO fix — added `defined(publishedAt)` filter so the
-    // sitemap excludes drafts and the 3 ghost slugs that are 307'd
-    // to /blog in next.config.mjs (last-cabin-standing-…, oil-spike-…,
-    // dubai-exodus-…). Ahrefs was flagging those as "3XX redirect in
-    // sitemap" criticals.
+    // 2026-05-07 SEO fix — exclude (a) drafts (no publishedAt) and
+    // (b) the 3 retired slugs that next.config.mjs 307s to /blog.
+    // Ahrefs was flagging those as "3XX redirect in sitemap"
+    // criticals. The retired slugs DO have publishedAt set in
+    // Sanity (they were published then retired), so the
+    // defined(publishedAt) filter alone wasn't enough — they need
+    // an explicit exclude list. Keep this list in sync with the
+    // matching `source` entries in next.config.mjs.
+    const RETIRED_SLUGS = [
+      "dubai-exodus-yacht-charter-greece-2026",
+      "last-cabin-standing-book-crewed-yacht-greece-summer-2026",
+      "oil-spike-smart-money-yacht-charter-greece",
+    ];
     const posts = await sanityClient.fetch(
-      `*[_type == "post" && defined(slug.current) && defined(publishedAt)]{ "slug": slug.current, _updatedAt }`
+      `*[_type == "post" && defined(slug.current) && defined(publishedAt) && !(slug.current in $retired)]{ "slug": slug.current, _updatedAt }`,
+      { retired: RETIRED_SLUGS }
     );
     blogEntries = posts.map((post) => ({
       url: `${BASE_URL}/blog/${post.slug}`,
