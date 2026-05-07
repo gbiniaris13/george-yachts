@@ -112,37 +112,32 @@ const staticRoutes = [
 ];
 
 export default async function sitemap() {
-  // R (Roberto brief, May 2026) — locale alternates per entry.
-  // Mirrors the alternates: { languages: { ... } } in app/layout.jsx
-  // so search engines see consistent hreflang signals from both the
-  // <head> and the sitemap.
-  const SUPPORTED_LANG_QUERIES = {
-    en: "",
-    el: "?lang=el",
-    ru: "?lang=ru",
-    ar: "?lang=ar",
-    he: "?lang=he",
-  };
-  function altLangsFor(path) {
-    const out = { "x-default": `${BASE_URL}${path}` };
-    for (const [code, suffix] of Object.entries(SUPPORTED_LANG_QUERIES)) {
-      out[code] = `${BASE_URL}${path}${suffix}`;
-    }
-    return out;
-  }
-
+  // 2026-05-07 SEO fix — DROPPED the per-entry hreflang alternates.
+  // Ahrefs flagged 37 "Hreflang to non-canonical" + 15 "Missing
+  // reciprocal hreflang" criticals because the alternates pointed
+  // at `?lang=xx` URLs whose canonical was the bare URL (i18n is
+  // client-side only — same canonical page, content swapped via
+  // I18nProvider). Google ignores hreflang when the alternate
+  // resolves to a different canonical. Cleanest signal: declare
+  // English as the only canonical and let on-page UX handle locale
+  // switching. If we ever move to directory-based i18n (/el/...,
+  // /ru/...) we'll re-add hreflang at that point.
   const staticEntries = staticRoutes.map((route) => ({
     url: `${BASE_URL}${route.path}`,
     lastModified: new Date().toISOString(),
     changeFrequency: route.changeFrequency,
     priority: route.priority,
-    alternates: { languages: altLangsFor(route.path) },
   }));
 
   let blogEntries = [];
   try {
+    // 2026-05-07 SEO fix — added `defined(publishedAt)` filter so the
+    // sitemap excludes drafts and the 3 ghost slugs that are 307'd
+    // to /blog in next.config.mjs (last-cabin-standing-…, oil-spike-…,
+    // dubai-exodus-…). Ahrefs was flagging those as "3XX redirect in
+    // sitemap" criticals.
     const posts = await sanityClient.fetch(
-      `*[_type == "post" && defined(slug.current)]{ "slug": slug.current, _updatedAt }`
+      `*[_type == "post" && defined(slug.current) && defined(publishedAt)]{ "slug": slug.current, _updatedAt }`
     );
     blogEntries = posts.map((post) => ({
       url: `${BASE_URL}/blog/${post.slug}`,

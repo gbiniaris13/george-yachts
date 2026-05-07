@@ -60,6 +60,21 @@ const nextConfig = {
         destination: "/charter-yacht-greece",
         permanent: true,
       },
+      // 2026-05-07 SEO fix — Ahrefs found 8 incoming external links
+      // hitting /yacht-charter and /charter-yacht (without -greece
+      // suffix) that 404'd. Both are obvious typos of our canonical
+      // /charter-yacht-greece — catch them here so external link
+      // equity transfers instead of bouncing.
+      {
+        source: "/yacht-charter",
+        destination: "/charter-yacht-greece",
+        permanent: true,
+      },
+      {
+        source: "/charter-yacht",
+        destination: "/charter-yacht-greece",
+        permanent: true,
+      },
       // A.3 (Roberto brief): /yachts (without slug) used to 404. People
       // type it directly + external links may use it. Redirect to the
       // canonical fleet listing. Note: /yachts/[slug] still routes to
