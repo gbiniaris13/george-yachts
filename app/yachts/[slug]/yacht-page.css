@@ -756,3 +756,109 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Phase 27i.10 (2026-05-07) — yacht detail Diamond Journey tour.
+   Slow scroll-driven photo cycle pinned to viewport. Each photo
+   crossfades into the next as the user scrolls, with a Ken Burns
+   scale on the active photo. */
+.gy-yacht-tour {
+  background: #000;
+}
+.gy-yacht-tour-pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+.gy-yacht-tour-photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-color: #050a14;
+  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+  transform-origin: center center;
+  /* Slight desaturation + subtle vignette via filter so the
+     photos read as "editorial / cinema" not "catalog". */
+  filter: saturate(0.92) brightness(0.92) contrast(1.05);
+}
+.gy-yacht-tour-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.18) 0%,
+    rgba(0, 0, 0, 0) 25%,
+    rgba(0, 0, 0, 0) 70%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+.gy-yacht-tour-overlay {
+  position: absolute;
+  z-index: 4;
+  bottom: 64px;
+  left: 48px;
+  right: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+  color: #F5EFE1;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+.gy-yacht-tour-eyebrow {
+  font-family: "Cinzel", serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  margin: 0;
+  margin-inline-end: -0.5em;
+  color: rgba(218, 165, 32, 0.85);
+}
+.gy-yacht-tour-counter {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 300;
+  font-size: 38px;
+  margin: 0;
+  letter-spacing: 0.04em;
+}
+.gy-yacht-tour-counter span {
+  font-size: 18px;
+  color: rgba(218, 165, 32, 0.65);
+}
+.gy-yacht-tour-progress {
+  position: absolute;
+  z-index: 4;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(218, 165, 32, 0.08);
+  overflow: hidden;
+}
+.gy-yacht-tour-progress-bar {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(218, 165, 32, 0.6) 0%,
+    rgba(245, 235, 210, 0.95) 50%,
+    rgba(218, 165, 32, 0.6) 100%
+  );
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 120ms linear;
+  box-shadow: 0 0 8px rgba(218, 165, 32, 0.4);
+}
+
+@media (max-width: 768px) {
+  .gy-yacht-tour-overlay { bottom: 32px; left: 20px; right: 20px; }
+  .gy-yacht-tour-counter { font-size: 28px; }
+  .gy-yacht-tour-counter span { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gy-yacht-tour-photo { transition: none !important; transform: scale(1) !important; }
+}

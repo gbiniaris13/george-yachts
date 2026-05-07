@@ -26,6 +26,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ScrollReveal from './ScrollReveal';
 import Lightbox from './Lightbox';
+import YachtCinematicTour from './YachtCinematicTour';
 import WhatsAppEnquiry from '@/app/components/WhatsAppEnquiry';
 import Breadcrumbs from '@/app/components/Breadcrumbs';
 import BreadcrumbSchema from '@/app/components/BreadcrumbSchema';
@@ -525,6 +526,17 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             </p>
           </div>
         </section>
+
+        {/* Phase 27i.10 (2026-05-07) — Diamond Journey scroll-driven
+            cinematic tour. Pinned for ~250 vh, fades through the
+            yacht's hero + 3-4 supporting photos with Ken Burns scale
+            on the active one. Renders only when ≥2 photos exist. */}
+        {Array.isArray(yacht.images) && yacht.images.length >= 2 && (
+          <YachtCinematicTour
+            images={yacht.images.map((img) => img?.url).filter(Boolean)}
+            yachtName={yacht.name}
+          />
+        )}
 
         {/* A.6 — Breadcrumb (sits below hero) */}
         <Breadcrumbs items={breadcrumbItems.map(b => ({ name: b.name, url: b.url ? new URL(b.url).pathname : undefined }))} />
