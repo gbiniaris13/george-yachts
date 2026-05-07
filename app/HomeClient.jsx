@@ -180,6 +180,12 @@ const HomeClient = ({
           above (yacht-discovery surface lives in FleetCTAs + the IG
           feed, not in inline shopping spots on the homepage). */}
 
+      {/* Second Aegean horizon — bridges Filotimon's manifesto into
+          the social-proof block so the cadence reads as continuous
+          surf rather than stacked sections. Lower intensity than the
+          map→Forbes one to keep the testimonials primary. */}
+      <WaveDivider height={56} intensity={0.65} />
+
       <div data-gy-reveal="up">
         <BrokerTestimonials />
       </div>
