@@ -31,6 +31,7 @@
 
 import React from "react";
 import { useI18n } from "@/lib/i18n/I18nProvider";
+import ConstellationBackdrop from "./ConstellationBackdrop";
 
 export default function Filotimon({ filotimoImage = null }) {
   const { t } = useI18n();
@@ -65,6 +66,12 @@ export default function Filotimon({ filotimoImage = null }) {
           willChange: "transform",
         }}
       />
+
+      {/* Phase 27i.6 (2026-05-07) — constellation backdrop. Faint
+          gold star pattern + connecting lines, drifts very slowly,
+          stars twinkle on independent timing. Adds the night-sky
+          register the philosophy section was missing. */}
+      <ConstellationBackdrop intensity={0.55} />
 
       <div className="relative grid grid-cols-1 lg:grid-cols-[40%_60%]">
         {/* ── LEFT — editorial image, sticky on desktop so it frames
