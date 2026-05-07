@@ -199,12 +199,16 @@ export default function AmbientPlayer() {
 
   // Phase 27d (Forbes-launch eve, 2026-05-05) — Boss directive:
   // "κρύψε τελείως το εικονίδιο ή κάνε το μικρό κάπου πάνω δεξιά
-  // εκεί που έχουμε τις σημαίες, εκεί που τα νομίσματα". Sound
-  // functionality stays — only the visible affordance shrinks. The
-  // pill becomes a 32×32 icon-only square that lives in the same
-  // top-right band as the currency / language / social icons. Three
-  // tiny equaliser bars indicate state (gold pulsing when playing,
-  // dim ivory when off). No text label.
+  // εκεί που έχουμε τις σημαίες". The pill became a 32×32 icon-only
+  // square. Three tiny equaliser bars indicate state (gold pulsing
+  // when playing, dim ivory when off).
+  //
+  // Phase 27i (2026-05-07) — Boss flagged that the pill was overlapping
+  // the wishlist/heart icon by ~18 px horizontally and 32 px vertically
+  // (top-right was already crowded with search + currency + flag +
+  // Instagram + LinkedIn + heart). Moved to BOTTOM-LEFT so it lives
+  // alone and never collides with anything. Same 32×32 size, same
+  // gold equaliser bars, same single-tap mute toggle.
   return (
     <button
       type="button"
@@ -217,10 +221,10 @@ export default function AmbientPlayer() {
       className="gy-ambient-pill"
       style={{
         position: "fixed",
-        // Sit in the top-right band aligned with the nav-header icon
-        // row. --gy-top-offset accounts for the Forbes ribbon (36/32px).
-        top: "calc(var(--gy-top-offset, 0px) + 38px)",
-        right: 18,
+        // Bottom-left, well clear of the right-side floating column
+        // (G / SPEAK / WhatsApp) and the top-right nav icon strip.
+        bottom: 24,
+        left: 24,
         zIndex: 60,
         width: 32,
         height: 32,
