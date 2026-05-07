@@ -157,12 +157,15 @@ export const RichTextComponents = {
       if (!y || !y.slug) return null;
       const slug = typeof y.slug === "object" ? y.slug.current : y.slug;
       const leadIn = value?.leadIn;
+      // 2026-05-07 — plain <a> (not next/link) to avoid the Next 15
+      // Server→Client onClick boundary error that 500'd /blog/[slug]
+      // when this callout (or any internal auto-link) rendered.
       return (
         <aside
           className="my-12 not-prose"
           aria-label={`Yacht callout: ${y.name || slug}`}
         >
-          <Link
+          <a
             href={`/yachts/${slug}`}
             data-cursor="View"
             className="yacht-callout-card"
@@ -273,7 +276,7 @@ export const RichTextComponents = {
                 View this yacht →
               </span>
             </div>
-          </Link>
+          </a>
         </aside>
       );
     },
@@ -407,13 +410,17 @@ export const RichTextComponents = {
       const href = value?.href || "#";
       const { isInternal, isOwnProperty, isTrustedAuthority } = classifyLink(href);
 
-      // Internal link — Next.js Link for SPA navigation + prefetching
+      // Internal link — plain <a> (not next/link). Next 15 + Server-
+      // Component-rendered <Link> injects an internal onClick that
+      // crashes the Server→Client serialization. Loses prefetch but
+      // keeps /blog/[slug] alive. Same root-cause + fix as
+      // yachtCallout above (2026-05-07).
       if (isInternal) {
         const path = href.replace(/^https?:\/\/(www\.)?georgeyachts\.com/, "") || "/";
         return (
-          <Link href={path} className={linkStyle}>
+          <a href={path} className={linkStyle}>
             {children}
-          </Link>
+          </a>
         );
       }
 

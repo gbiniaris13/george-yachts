@@ -73,7 +73,13 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
               }}
             >
               {yachts.map((y) => (
-                <Link
+                // 2026-05-07 — plain <a> + dropped inline onClick. The
+                // explicit onClick AND any next/link inside this Server
+                // Component renderer crashed /blog/[slug] with the
+                // "Event handlers cannot be passed to Client Component
+                // props" error. gtag tracking of this specific click
+                // can be re-added later via a tiny Client wrapper.
+                <a
                   key={y.slug}
                   href={`/yachts/${y.slug}`}
                   data-cursor="View"
@@ -85,13 +91,6 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
                     border: "1px solid rgba(255,255,255,0.08)",
                     overflow: "hidden",
                     transition: "transform 0.4s ease, border-color 0.4s ease",
-                  }}
-                  onClick={() => {
-                    try {
-                      window.gtag?.("event", "blog_to_yacht_click", {
-                        yacht_slug: y.slug,
-                      });
-                    } catch {}
                   }}
                 >
                   <div
@@ -161,11 +160,11 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
                       </div>
                     )}
                   </div>
-                </Link>
+                </a>
               ))}
             </div>
             <p style={{ textAlign: "center", marginTop: 28 }}>
-              <Link
+              <a
                 href="/charter-yacht-greece"
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
@@ -180,7 +179,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
                 }}
               >
                 Or browse all yachts →
-              </Link>
+              </a>
             </p>
           </div>
         </section>
