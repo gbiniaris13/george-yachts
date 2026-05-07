@@ -128,6 +128,9 @@ export default async function HomePage() {
   // inside the try below from `trendingPool`. Defaulted here so
   // the JSX render is unconditional even if Sanity errors.
   let trendingYachts = [];
+  // 2026-05-07 (Phase 2 yacht map) — full fleet pool, lifted to outer
+  // scope so the regional map gets every yacht (Sanity error → empty).
+  let fleetForMap = [];
   // B.6 (Roberto brief): the 3 most recent blog posts so the
   // homepage surfaces the editorial flywheel instead of letting
   // 19 articles hide behind /blog.
@@ -189,7 +192,7 @@ export default async function HomePage() {
       // the front-end falls back to fleetTier inference when missing.
       sanityClient.fetch(`*[_type == "yacht" && count(images) > 0]{
         name, "slug": slug.current, weeklyRatePrice, sleeps, length,
-        fleetTier, priceModel,
+        fleetTier, priceModel, cruisingRegion,
         "image": images[0].asset->url
       } | order(name asc)`),
       // B.6 — three most recent blog posts for the homepage Journal
@@ -241,6 +244,9 @@ export default async function HomePage() {
       for (let k = 0; k < N; k++) {
         trendingYachts.push(trendingPool[(start + k) % trendingPool.length]);
       }
+      // 2026-05-07 — full pool flows to RegionalYachtMap so the
+      // map clusters every yacht, not just the 8 the carousel rotates.
+      fleetForMap = trendingPool;
     }
 
     // B.6 — recent posts for the homepage Journal teaser.
@@ -300,6 +306,7 @@ export default async function HomePage() {
         signatureYacht={signatureYacht}
         filotimoImage={filotimoImage}
         trendingYachts={trendingYachts}
+        fleetForMap={fleetForMap}
         latestPosts={latestPosts}
       />
     </>

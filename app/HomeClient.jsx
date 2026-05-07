@@ -33,6 +33,13 @@ import HomeForbesQuote from "./components/HomeForbesQuote";
 const YourBroker = dynamic(() => import("./components/YourBroker"));
 const Filotimon = dynamic(() => import("./components/Filotimon"));
 const GreekWatersMap = dynamic(() => import("./components/GreekWatersMap"));
+// Phase 27i.5 (2026-05-07) — Regional Yacht Map. Replaces
+// GreekWatersMap below in the JSX. Pulls every yacht in the fleet
+// and clusters them by Sanity cruisingRegion into 5 ports
+// (Athens hub + Cyclades / Ionian / Saronic / Sporades). Click a
+// region → modal with cover photo + yacht list. Photos are Pexels
+// CC0 placeholders pending Boss-curated regional photography.
+const RegionalYachtMap = dynamic(() => import("./components/RegionalYachtMap"));
 // Phase 2 / E2 (luxury rebuild) — 3D Mapbox flyover. Lives ABOVE the
 // editorial GreekWatersMap so the cinematic version reads first; the
 // SVG illustration stays as the no-JS / reduced-motion fallback story.
@@ -60,9 +67,15 @@ const HomeClient = ({
   signatureYacht,
   filotimoImage,
   trendingYachts,
+  // 2026-05-07 — full fleet (with cruisingRegion) for the new
+  // RegionalYachtMap. Falls back to trendingYachts if not provided.
+  fleetForMap,
   // B.6 — three most-recent blog posts for the homepage Journal teaser
   latestPosts,
 }) => {
+  const fleet = Array.isArray(fleetForMap) && fleetForMap.length > 0
+    ? fleetForMap
+    : (trendingYachts ?? []);
   return (
     <div className="min-h-screen bg-black font-sans">
       {/* Sticky mini-nav surfaces after the hero (>600px) */}
@@ -124,15 +137,16 @@ const HomeClient = ({
         <MapboxFlyover />
       </section>
 
-      {/* GreekWatersMap ("Greek Waters · Four Regions" + "A week in
-          the Aegean rearranges what you think a holiday can be") was
-          removed 2026-05-07 per Boss directive. The illustrated-map
-          editorial copy was reading travel-magazine; replaced in the
-          next iteration by a fleet-positioning map that pulls real
-          yacht locations from Sanity (cruisingRegion field) and pins
-          them per region (Cyclades / Ionian / Saronic / Sporades),
-          falling back to Athens for yachts without a region. Pending
-          Boss-curated regional photography. */}
+      {/* 2026-05-07 (Phase 27i.5) — Regional Yacht Map. Replaces
+          GreekWatersMap. Pulls cruisingRegion from Sanity and
+          clusters every yacht into 5 ports (Athens hub + 4 sea
+          regions). Click a region → modal with cover photo +
+          yachts pinned there. Photos are Pexels placeholders pending
+          Boss-curated regional photography (1 hero photo per region,
+          to swap in via /public/images/regions/<slug>.jpg). */}
+      <section id="map" data-gy-reveal="up">
+        <RegionalYachtMap yachts={fleet} />
+      </section>
 
       {/* Tier 1.3 (Forbes integration brief, May 2026) — Forbes
           pull-quote section. Server-rendered: quote + attribution

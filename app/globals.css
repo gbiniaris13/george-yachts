@@ -2404,3 +2404,342 @@ a.gy-fancy-link:hover {
     width: 140px !important;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────
+   Phase 27i.5 (2026-05-07) — Regional Yacht Map.
+   Replaces the deferred GreekWatersMap. 5 region clusters on a
+   stylised Aegean canvas, each cluster shows a 3D yacht mesh
+   (R3F) + 2D HTML pin with count, click → modal with cover photo
+   + yacht list. Boss directive: "yachts for charter" framing, not
+   travel-agency-Greek-beauty.
+   ───────────────────────────────────────────────────────────────── */
+
+.gy-region-map-section {
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 100%, #0e2238 0%, #061121 55%, #030911 100%),
+    #030911;
+  padding: clamp(80px, 10vw, 130px) 24px clamp(60px, 8vw, 100px);
+  overflow: hidden;
+  border-top: 1px solid rgba(218, 165, 32, 0.16);
+  border-bottom: 1px solid rgba(218, 165, 32, 0.16);
+}
+
+.gy-region-map-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto clamp(40px, 6vw, 70px);
+  position: relative;
+  z-index: 2;
+}
+.gy-region-map-eyebrow {
+  font-family: "Cinzel", serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.55em;
+  text-transform: uppercase;
+  color: rgba(218, 165, 32, 0.85);
+  margin: 0 0 18px;
+  margin-inline-end: -0.55em;
+}
+.gy-region-map-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(32px, 5vw, 56px);
+  color: #F5EFE1;
+  line-height: 1.1;
+  letter-spacing: -0.005em;
+  margin: 0 0 18px;
+}
+.gy-region-map-blurb {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(15px, 1.5vw, 18px);
+  color: rgba(218, 165, 32, 0.7);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* Map canvas — fixed aspect ratio to keep regional positions
+   readable across viewports. R3F canvas + HTML pin overlay are
+   both absolutely positioned within this. */
+.gy-region-map-canvas {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  aspect-ratio: 1.6 / 1;
+  border: 1px solid rgba(218, 165, 32, 0.12);
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(20, 40, 63, 0.6) 0%, rgba(6, 17, 33, 0) 70%),
+    radial-gradient(circle at 30% 35%, rgba(218, 165, 32, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 70% 65%, rgba(218, 165, 32, 0.04) 0%, transparent 50%);
+  z-index: 1;
+}
+
+/* HTML pin overlay — buttons positioned by inline left/top % so
+   they sit on top of the 3D layer. */
+.gy-region-pins {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.gy-region-pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 14px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  white-space: nowrap;
+  transition: transform 320ms cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+.gy-region-pin:hover {
+  transform: translate(-50%, -50%) scale(1.06);
+}
+.gy-region-pin-dot {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #DAA520;
+  box-shadow:
+    0 0 0 2px rgba(218, 165, 32, 0.18),
+    0 0 18px rgba(218, 165, 32, 0.55);
+  margin-bottom: 4px;
+  animation: gyRegionPinPulse 2.6s ease-in-out infinite;
+}
+@keyframes gyRegionPinPulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(218, 165, 32, 0.18), 0 0 18px rgba(218, 165, 32, 0.55); }
+  50%      { box-shadow: 0 0 0 4px rgba(218, 165, 32, 0.30), 0 0 28px rgba(218, 165, 32, 0.75); }
+}
+.gy-region-pin-name {
+  font-family: "Cinzel", serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #F5EFE1;
+  margin-inline-end: -0.32em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+}
+.gy-region-pin-count {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 14px;
+  color: rgba(218, 165, 32, 0.85);
+  letter-spacing: 0.03em;
+}
+.gy-region-pin:hover .gy-region-pin-dot {
+  background: #F5EFE1;
+}
+
+/* Modal — full-screen backdrop + centred card */
+.gy-region-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 9, 17, 0.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  animation: gyRegionModalFade 280ms ease forwards;
+}
+@keyframes gyRegionModalFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.gy-region-modal {
+  position: relative;
+  width: 100%;
+  max-width: 920px;
+  max-height: 88vh;
+  overflow-y: auto;
+  background: #06121e;
+  border: 1px solid rgba(218, 165, 32, 0.32);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7);
+}
+.gy-region-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(245, 239, 225, 0.3);
+  color: #F5EFE1;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 200ms ease, border-color 200ms ease;
+}
+.gy-region-modal-close:hover {
+  background: rgba(218, 165, 32, 0.2);
+  border-color: #DAA520;
+}
+.gy-region-modal-cover {
+  position: relative;
+  height: clamp(220px, 30vw, 360px);
+  background-size: cover;
+  background-position: center;
+  background-color: #0a1929;
+}
+.gy-region-modal-cover-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(3, 9, 17, 0.2) 0%,
+    rgba(3, 9, 17, 0.55) 60%,
+    rgba(3, 9, 17, 0.92) 100%
+  );
+}
+.gy-region-modal-cover-text {
+  position: absolute;
+  bottom: 24px;
+  left: 32px;
+  right: 32px;
+  z-index: 1;
+}
+.gy-region-modal-eyebrow {
+  font-family: "Cinzel", serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: rgba(218, 165, 32, 0.85);
+  margin: 0 0 8px;
+  margin-inline-end: -0.5em;
+  display: inline-block;
+}
+.gy-region-modal-name {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 56px);
+  color: #F5EFE1;
+  line-height: 0.98;
+  margin: 0 0 6px;
+}
+.gy-region-modal-subtitle {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(14px, 1.5vw, 17px);
+  color: rgba(218, 165, 32, 0.85);
+  margin: 0;
+  letter-spacing: 0.025em;
+}
+.gy-region-modal-body {
+  padding: 28px 32px 32px;
+}
+.gy-region-modal-blurb {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.55;
+  color: rgba(245, 239, 225, 0.78);
+  margin: 0 0 22px;
+}
+.gy-region-modal-count {
+  font-family: "Cinzel", serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(218, 165, 32, 0.85);
+  margin: 0 0 16px;
+  margin-inline-end: -0.32em;
+}
+
+.gy-region-yacht-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.gy-region-yacht-row {
+  display: grid;
+  grid-template-columns: 84px 1fr auto;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.015);
+  text-decoration: none;
+  color: inherit;
+  transition: background 200ms ease, border-color 200ms ease;
+}
+.gy-region-yacht-row:hover {
+  background: rgba(218, 165, 32, 0.06);
+  border-color: rgba(218, 165, 32, 0.45);
+}
+.gy-region-yacht-thumb {
+  width: 84px;
+  height: 56px;
+  background-size: cover;
+  background-position: center;
+  background-color: #0a1929;
+  border-radius: 2px;
+}
+.gy-region-yacht-name {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 19px;
+  font-weight: 400;
+  color: #F5EFE1;
+  margin: 0;
+  line-height: 1.15;
+}
+.gy-region-yacht-spec {
+  font-family: "Montserrat", sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(218, 165, 32, 0.7);
+  margin: 4px 0 0;
+}
+.gy-region-yacht-cta {
+  font-family: "Cinzel", serif;
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #DAA520;
+  margin-inline-end: -0.32em;
+}
+.gy-region-yacht-more {
+  margin: 12px 0 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 14px;
+  color: rgba(245, 239, 225, 0.6);
+  text-align: center;
+}
+.gy-region-yacht-more a {
+  color: #DAA520;
+  text-decoration: underline;
+}
+
+@media (max-width: 700px) {
+  .gy-region-pin-name { font-size: 11px; letter-spacing: 0.26em; }
+  .gy-region-pin-count { font-size: 12px; }
+  .gy-region-yacht-row { grid-template-columns: 64px 1fr auto; }
+  .gy-region-yacht-thumb { width: 64px; height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gy-region-pin-dot { animation: none !important; }
+  .gy-region-modal-backdrop { animation: none !important; opacity: 1; }
+}
