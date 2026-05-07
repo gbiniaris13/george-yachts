@@ -2204,19 +2204,20 @@ a.gy-fancy-link:hover {
   animation: gyForbesFadeUp 1.2s ease 0.1s forwards;
 }
 
-/* The hero wordmark — same Cinzel 700 cap-locked treatment as the
-   @georgeyachts IG post + the homepage hero, so the brand reads
-   as one consistent voice across every surface. */
+/* The hero wordmark — Boss directive 2026-05-07: use the SAME font
+   as the small "Forbes" mark in ForbesTopBar (Times New Roman Bold,
+   tight tracking). That treatment IS the authentic Forbes wordmark
+   style — capital F + lowercase, heavy serif. Keep this section's
+   size statement-piece huge but match the typeface so every Forbes
+   reference on the site reads as one consistent voice. */
 .gy-forbes-wordmark {
-  font-family: "Cinzel", "Trajan Pro", serif;
+  font-family: "Times New Roman", Times, serif;
   font-weight: 700;
-  font-size: clamp(64px, 9vw, 116px);
+  font-size: clamp(72px, 10vw, 132px);
   line-height: 0.96;
   color: #FFFFFF;
-  letter-spacing: 0.012em;
-  text-transform: uppercase;
-  margin: 0 0 0 0;
-  margin-inline-end: -0.012em;
+  letter-spacing: -0.02em;
+  margin: 0;
   text-shadow:
     0 1px 0 rgba(0, 0, 0, 0.55),
     0 14px 40px rgba(0, 0, 0, 0.5);

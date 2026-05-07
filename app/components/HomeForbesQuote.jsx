@@ -6,17 +6,27 @@
 // possible." Restraint-first old-money interpretation: deep navy
 // gradient with a top-centre champagne spotlight, hand-drawn gold
 // rules that draw open on scroll-into-view, FORBES wordmark in
-// brand-consistent Cinzel 700 (matching the @georgeyachts post + the
-// homepage hero), and a slow champagne-dust drift that reads as
-// "light catching polished metal", not as motion.
+// brand-consistent Times New Roman Bold (matching the small Forbes
+// mark in ForbesTopBar — one consistent voice for every Forbes
+// reference on the site), and a slow champagne-dust drift.
 //
-// All animations are CSS-driven so the component stays server-render-
-// friendly (the quote text appears in initial HTML for SEO + AI
-// crawlers). Reduced-motion: every animated element falls back to a
-// static state via a single @media query in globals.css.
+// Phase 27i.4 — added an R3F starfield as the deepest background
+// layer. Three.js Points cloud rotating ~0.7°/sec on Y axis. Reads
+// as a polished-glass window into a Mediterranean night sky behind
+// the editorial copy. Loaded as a separate client component so the
+// SSR HTML still carries the full quote+attribution for SEO/AI.
+//
+// All other animations are CSS-driven so the component stays server-
+// render-friendly. Reduced-motion: every animated element falls back
+// to a static state via a single @media query in globals.css.
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
+
+// Lazy-load the 3D layer — desktop-only, decorative, must not block
+// hydration of the editorial copy underneath.
+const StarField3D = dynamic(() => import("./StarField3D"), { ssr: false });
 
 const ARTICLE_URL =
   "https://www.forbes.com/sites/jacquesledbetter/2026/05/01/how-the-wealthy-are-hedging-for-instability/";
@@ -27,10 +37,12 @@ export default function HomeForbesQuote() {
     <section
       aria-label="George Yachts featured in Forbes, May 2026"
       className="gy-forbes-section"
+      data-sound-reveal
     >
-      {/* Background layers — pure decoration, behind the link.
-          Three layers: paper-grain noise (CSS data URI), top-centre
-          champagne spotlight, and 6 drifting gold dust motes. */}
+      {/* Background layers (deepest → nearest). 3D starfield first,
+          then the CSS-only paper-grain noise, top-centre champagne
+          spotlight, and 6 drifting gold dust motes. */}
+      <StarField3D />
       <div className="gy-forbes-grain" aria-hidden="true" />
       <div className="gy-forbes-spotlight" aria-hidden="true" />
       <div className="gy-forbes-dust" aria-hidden="true">

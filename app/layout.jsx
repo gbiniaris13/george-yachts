@@ -4,6 +4,13 @@ import Script from "next/script";
 import NavDrawerSystem from "./components/NavDrawerSystem";
 import GlobalEffects from "./components/GlobalEffects";
 import CustomCursor from "./components/CustomCursor";
+// Phase 27i (2026-05-07) — cinematic layer: smooth scroll, scroll
+// progress indicator, Web-Audio-synth SFX. All three are no-render
+// utility components mounted globally; each one early-returns on
+// reduced-motion / coarse pointer / mute as appropriate.
+import SmoothScroll from "./components/SmoothScroll";
+import ScrollProgress from "./components/ScrollProgress";
+import SoundFx from "./components/SoundFx";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ContactDrawer from "./components/ContactDrawer";
 import VisitorGreeting from "./components/VisitorGreeting";
@@ -315,6 +322,18 @@ export default async function RootLayout({ children }) {
         {/* Global Effects + Custom Cursor — all pages */}
         <GlobalEffects />
         <CustomCursor />
+        {/* Phase 27i (2026-05-07) — cinematic layer.
+            SmoothScroll: Lenis-driven interpolated scrolling, the
+              page glides instead of snapping.
+            ScrollProgress: gold thin line at the top, 1st cinematic
+              cue on every page.
+            SoundFx: Web-Audio-synthesised hover chime + click bell +
+              section-reveal tone. Zero audio files. Mute shares the
+              AmbientPlayer's session-key, so one toggle covers all
+              sound on the site. */}
+        <SmoothScroll />
+        <ScrollProgress />
+        <SoundFx />
         {/* A4 — Ambient scroll parallax driver (publishes CSS vars) */}
         <AmbientScroll />
         {/* 2. Page Content */}

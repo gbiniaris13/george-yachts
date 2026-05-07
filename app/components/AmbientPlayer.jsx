@@ -173,6 +173,11 @@ export default function AmbientPlayer() {
       }
       try { sessionStorage.setItem(SESSION_MUTE_KEY, "1"); } catch {}
       setPlaying(false);
+      // Phase 27i (2026-05-07) — broadcast mute change so the SFX
+      // layer (SoundFx.jsx) silences in lockstep with the ambient
+      // pill. Single user-facing mute toggle, every sound on the
+      // site obeys it.
+      try { window.dispatchEvent(new CustomEvent("gy:ambient-mute-changed")); } catch {}
     } else {
       // Unmute: try MP3 first, fall back to synth (this click counts
       // as the user gesture for both paths).
@@ -180,6 +185,7 @@ export default function AmbientPlayer() {
       if (ok) {
         try { sessionStorage.removeItem(SESSION_MUTE_KEY); } catch {}
         setPlaying(true);
+        try { window.dispatchEvent(new CustomEvent("gy:ambient-mute-changed")); } catch {}
       }
     }
     try {
