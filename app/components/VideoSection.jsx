@@ -286,7 +286,12 @@ const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
                         // (0.04em) — Roman caps want to breathe, that's
                         // what makes them read as monumental.
                         fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', Georgia, serif",
-                        fontSize: "clamp(40px, 10vw, 144px)",
+                        // 2026-05-07 — narrowed the lower clamp from 40px
+                        // (10vw) to 34px (9vw). On 375 px iPhone SE the
+                        // wider clamp pushed "GEORGE YACHTS" past the
+                        // viewport edge under whiteSpace: nowrap;
+                        // 34/9vw fits comfortably with the section padding.
+                        fontSize: "clamp(34px, 9vw, 144px)",
                         fontWeight: 500,
                         fontStyle: "normal",
                         lineHeight: 1.05,
