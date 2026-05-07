@@ -31,7 +31,16 @@ export default function YachtCinematicTour({ images = [], yachtName = "" }) {
   const [localProgress, setLocalProgress] = useState(0); // 0..1 within active
 
   // Cap to 5 photos — beyond that the tour gets too long to scroll.
-  const tourImages = (images || []).slice(0, 5).filter(Boolean);
+  // Each entry can be either a string (URL) or { url, alt } object;
+  // we normalise to { url, alt }. Empty/null entries get filtered.
+  const tourImages = (images || [])
+    .slice(0, 5)
+    .map((img) => {
+      if (!img) return null;
+      if (typeof img === "string") return { url: img, alt: "" };
+      return { url: img.url || img.imageUrl, alt: img.alt || "" };
+    })
+    .filter((img) => img && img.url);
   const count = tourImages.length;
 
   useEffect(() => {
@@ -84,16 +93,16 @@ export default function YachtCinematicTour({ images = [], yachtName = "" }) {
       style={{ height: `${SECTION_HEIGHT_VH}vh`, position: "relative" }}
     >
       <div className="gy-yacht-tour-pin">
-        {tourImages.map((src, i) => {
+        {tourImages.map((img, i) => {
           const isActive = i === activeIdx;
           // Ken Burns scale: 1.04 → 1.10 across the active slot
           const scale = isActive ? 1.04 + localProgress * 0.06 : 1.04;
           return (
             <div
-              key={src}
+              key={img.url}
               className="gy-yacht-tour-photo"
               style={{
-                backgroundImage: `url(${src}?w=1800&fit=crop&auto=format)`,
+                backgroundImage: `url(${img.url}?w=1800&fit=crop&auto=format)`,
                 opacity: isActive ? 1 : 0,
                 transform: `scale(${scale})`,
                 zIndex: isActive ? 2 : 1,
@@ -107,11 +116,18 @@ export default function YachtCinematicTour({ images = [], yachtName = "" }) {
             top reads against the photo. */}
         <div className="gy-yacht-tour-shade" aria-hidden="true" />
 
-        {/* Eyebrow + counter + caption (caption is just the index;
-            yachts can later carry real captions per image via
-            Sanity if Boss wants). */}
+        {/* Eyebrow + caption + counter. Caption is the active
+            image's `alt` text from Sanity when present, else a
+            generic step label. */}
         <div className="gy-yacht-tour-overlay">
-          <p className="gy-yacht-tour-eyebrow">A Closer Look</p>
+          <div className="gy-yacht-tour-overlay-text">
+            <p className="gy-yacht-tour-eyebrow">A Closer Look</p>
+            {tourImages[activeIdx]?.alt && (
+              <p className="gy-yacht-tour-caption">
+                {tourImages[activeIdx].alt}
+              </p>
+            )}
+          </div>
           <p className="gy-yacht-tour-counter">
             {String(activeIdx + 1).padStart(2, "0")}
             <span> / {String(count).padStart(2, "0")}</span>

@@ -533,7 +533,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             on the active one. Renders only when ≥2 photos exist. */}
         {Array.isArray(yacht.images) && yacht.images.length >= 2 && (
           <YachtCinematicTour
-            images={yacht.images.map((img) => img?.url).filter(Boolean)}
+            images={yacht.images}
             yachtName={yacht.name}
           />
         )}

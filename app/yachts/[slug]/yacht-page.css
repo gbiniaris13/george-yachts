@@ -862,3 +862,26 @@
 @media (prefers-reduced-motion: reduce) {
   .gy-yacht-tour-photo { transition: none !important; transform: scale(1) !important; }
 }
+
+/* Phase 27i.10b — caption layout in cinematic tour overlay. */
+.gy-yacht-tour-overlay-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 60%;
+}
+.gy-yacht-tour-caption {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.3;
+  color: rgba(245, 235, 210, 0.85);
+  margin: 0;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+@media (max-width: 768px) {
+  .gy-yacht-tour-overlay-text { max-width: 70%; }
+  .gy-yacht-tour-caption { font-size: 14px; }
+}
