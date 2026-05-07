@@ -2790,3 +2790,15 @@ a.gy-fancy-link:hover {
   transform: scale(1.18);
   box-shadow: 0 0 12px rgba(218, 165, 32, 0.6);
 }
+
+/* Phase 27i.5c (2026-05-07) — SVG Greek-coast backdrop replaces
+   the R3F yacht meshes Boss flagged as "Christmas baubles". */
+.gy-region-map-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.85;
+}

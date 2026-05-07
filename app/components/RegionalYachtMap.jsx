@@ -21,16 +21,14 @@
 // fleet count, anchors on charter, ends with a region invitation.
 
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { REGIONS, bucketYachtsByRegion } from "@/lib/regions";
 import { sanityCardImg } from "@/lib/sanity-image";
 
-// Lazy-load the R3F yacht-mesh layer (desktop-only optimisation,
-// keeps the bundle off the mobile critical path).
-const RegionalYachtMap3D = dynamic(() => import("./RegionalYachtMap3D"), {
-  ssr: false,
-});
+// 2026-05-07 — Boss flagged the R3F yacht meshes as "χριστουγεννιάτικα
+// μπαλάκια άσπρες". Replaced the 3D layer with a hand-drawn SVG of
+// Greece (mainland + Crete + island clusters) under the region pins.
+// Cleaner, geographic, no fake yacht-baubles.
 
 const GOLD = "#DAA520";
 const GOLD_SOFT = "rgba(218, 165, 32, 0.35)";
@@ -38,6 +36,133 @@ const GOLD_SOFT = "rgba(218, 165, 32, 0.35)";
 /**
  * Yacht-list row shown inside the region modal.
  */
+/**
+ * Hand-drawn SVG silhouette of Greece. Five rough shapes (mainland +
+ * Crete + Cyclades cluster + Sporades cluster + Ionian cluster +
+ * Saronic cluster) over a horizon-line wave pattern. All paths are
+ * artistic stylisations, not cartographic — the goal is "this
+ * looks like Greek waters" not "this is OS-grade geography".
+ *
+ * 2026-05-07 — replaces the R3F yacht-mesh layer Boss flagged as
+ * "Christmas baubles". Pure SVG, zero JS, zero 3D.
+ */
+function GreekMapBackdrop() {
+  return (
+    <svg
+      className="gy-region-map-backdrop"
+      viewBox="0 0 1000 600"
+      preserveAspectRatio="xMidYMid slice"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <defs>
+        {/* Sea — slow horizontal stripes that simulate a wave grain. */}
+        <pattern id="seaWave" x="0" y="0" width="60" height="14" patternUnits="userSpaceOnUse">
+          <path
+            d="M 0 7 Q 15 0 30 7 T 60 7"
+            stroke="rgba(218, 165, 32, 0.06)"
+            strokeWidth="0.6"
+            fill="none"
+          />
+        </pattern>
+        {/* Land fill — a subtle paper-coloured wash. */}
+        <linearGradient id="landFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(245, 235, 210, 0.06)" />
+          <stop offset="100%" stopColor="rgba(218, 165, 32, 0.04)" />
+        </linearGradient>
+      </defs>
+
+      {/* Sea wave texture — full canvas */}
+      <rect width="1000" height="600" fill="url(#seaWave)" />
+
+      {/* Greek mainland — Peloponnese + central Greece + Halkidiki. */}
+      <path
+        d="
+          M 460 110
+          Q 520 96 600 110
+          T 720 145
+          Q 760 175 740 220
+          L 705 250
+          Q 660 260 640 290
+          L 620 340
+          Q 590 380 555 410
+          L 510 440
+          Q 480 460 470 490
+          L 440 510
+          Q 400 510 390 480
+          L 380 440
+          Q 410 410 400 380
+          L 380 360
+          Q 360 380 340 365
+          L 350 335
+          Q 380 315 410 300
+          L 405 270
+          Q 380 250 380 220
+          L 410 195
+          Q 440 175 445 145
+          Z
+        "
+        fill="url(#landFill)"
+        stroke="rgba(218, 165, 32, 0.32)"
+        strokeWidth="0.8"
+      />
+
+      {/* Crete — elongated south island */}
+      <path
+        d="M 540 555 Q 620 540 700 545 T 820 555 Q 850 565 835 580 T 720 590 T 600 585 T 540 575 Z"
+        fill="url(#landFill)"
+        stroke="rgba(218, 165, 32, 0.32)"
+        strokeWidth="0.8"
+      />
+
+      {/* Ionian islands cluster (west) — 4 small lobes */}
+      <g fill="url(#landFill)" stroke="rgba(218, 165, 32, 0.28)" strokeWidth="0.6">
+        <ellipse cx="240" cy="170" rx="22" ry="14" />
+        <ellipse cx="225" cy="240" rx="18" ry="28" />
+        <ellipse cx="245" cy="310" rx="14" ry="20" />
+        <ellipse cx="270" cy="370" rx="11" ry="18" />
+      </g>
+
+      {/* Sporades cluster (north Aegean) — 3 small dots */}
+      <g fill="url(#landFill)" stroke="rgba(218, 165, 32, 0.28)" strokeWidth="0.6">
+        <ellipse cx="700" cy="100" rx="14" ry="9" />
+        <ellipse cx="745" cy="115" rx="11" ry="7" />
+        <ellipse cx="780" cy="105" rx="9" ry="6" />
+      </g>
+
+      {/* Cyclades cluster (centre Aegean) — scattered dots */}
+      <g fill="url(#landFill)" stroke="rgba(218, 165, 32, 0.28)" strokeWidth="0.6">
+        <circle cx="780" cy="370" r="9" />
+        <circle cx="820" cy="395" r="11" />
+        <circle cx="800" cy="430" r="8" />
+        <circle cx="850" cy="445" r="9" />
+        <circle cx="775" cy="465" r="7" />
+        <circle cx="830" cy="490" r="10" />
+      </g>
+
+      {/* Saronic gulf islands — small, tight to mainland */}
+      <g fill="url(#landFill)" stroke="rgba(218, 165, 32, 0.28)" strokeWidth="0.6">
+        <ellipse cx="555" cy="475" rx="9" ry="6" />
+        <ellipse cx="585" cy="495" rx="8" ry="5" />
+        <ellipse cx="615" cy="510" rx="7" ry="5" />
+      </g>
+
+      {/* Faint constellation lines — Athens hub → each region */}
+      <g
+        stroke="rgba(218, 165, 32, 0.20)"
+        strokeWidth="0.7"
+        fill="none"
+        strokeDasharray="2 6"
+      >
+        <line x1="540" y1="430" x2="245" y2="240" />
+        <line x1="540" y1="430" x2="745" y2="115" />
+        <line x1="540" y1="430" x2="585" y2="495" />
+        <line x1="540" y1="430" x2="820" y2="430" />
+      </g>
+    </svg>
+  );
+}
+
 function YachtRow({ yacht }) {
   const slug = yacht?.slug?.current ?? yacht?.slug;
   const img = yacht?.image
@@ -105,15 +230,12 @@ export default function RegionalYachtMap({ yachts = [] }) {
       </div>
 
       <div className="gy-region-map-canvas">
-        <RegionalYachtMap3D
-          regions={REGIONS}
-          buckets={buckets}
-          onRegionClick={setActiveSlug}
-        />
+        {/* Greek silhouette backdrop — hand-drawn SVG, faint gold
+            outline against the navy sea. Pure decoration. */}
+        <GreekMapBackdrop />
 
-        {/* Region labels + counts as a 2D HTML overlay so they stay
-            readable even when the 3D layer is suspended (mobile,
-            reduced-motion). Each one mirrors a region cluster. */}
+        {/* Region labels + counts as a 2D HTML overlay sitting on
+            top of the SVG. Each one mirrors a region cluster. */}
         <div className="gy-region-pins" aria-hidden="false">
           {REGIONS.map((region) => {
             const count = buckets[region.slug]?.length ?? 0;
