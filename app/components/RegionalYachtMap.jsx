@@ -71,6 +71,11 @@ function YachtRow({ yacht }) {
 
 export default function RegionalYachtMap({ yachts = [] }) {
   const [activeSlug, setActiveSlug] = useState(null);
+  // 2026-05-07 (Phase 27i.5e) — "Diamond Journey" zoom hint. When a
+  // pin is clicked the map briefly scales + translates toward that
+  // region before the modal opens. 480 ms hold, then modal reveal.
+  // CSS-only, no JS animation library.
+  const [zoomingTo, setZoomingTo] = useState(null);
 
   const buckets = bucketYachtsByRegion(yachts);
 
@@ -92,6 +97,23 @@ export default function RegionalYachtMap({ yachts = [] }) {
     }
     return out;
   }, []);
+
+  // Click handler — sets the "zooming to this region" state, holds
+  // for 480 ms while the canvas glides toward the pin, THEN opens
+  // the modal. Result: the user feels the map actively focus on
+  // their chosen region instead of an instant modal pop.
+  const onPinClick = (slug) => {
+    if (typeof window !== "undefined" &&
+        window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+      setActiveSlug(slug);
+      return;
+    }
+    setZoomingTo(slug);
+    setTimeout(() => {
+      setActiveSlug(slug);
+      setZoomingTo(null);
+    }, 480);
+  };
 
   // Close modal on Escape
   useEffect(() => {
@@ -125,9 +147,18 @@ export default function RegionalYachtMap({ yachts = [] }) {
         </p>
       </div>
 
-      <div className="gy-region-map-canvas">
-        {/* Greek silhouette backdrop — hand-drawn SVG, faint gold
-            outline against the navy sea. Pure decoration. */}
+      <div
+        className={`gy-region-map-canvas ${zoomingTo ? "is-zooming" : ""}`}
+        style={
+          zoomingTo
+            ? {
+                "--gy-zoom-x": `${pinPositions[zoomingTo]?.leftPct ?? 50}%`,
+                "--gy-zoom-y": `${pinPositions[zoomingTo]?.topPct ?? 50}%`,
+              }
+            : undefined
+        }
+      >
+        {/* Real Natural Earth Greek coastline (Phase 27i.5d). */}
         <GreekMapBackdrop />
 
         {/* Region labels + counts as a 2D HTML overlay sitting on
@@ -141,7 +172,7 @@ export default function RegionalYachtMap({ yachts = [] }) {
                 type="button"
                 className="gy-region-pin"
                 data-cursor="View"
-                onClick={() => setActiveSlug(region.slug)}
+                onClick={() => onPinClick(region.slug)}
                 aria-label={`${region.name} — ${count} yacht${count === 1 ? "" : "s"}`}
                 style={{
                   // Projected geographic position so the pin sits on

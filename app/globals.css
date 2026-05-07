@@ -2802,3 +2802,26 @@ a.gy-fancy-link:hover {
   pointer-events: none;
   opacity: 0.85;
 }
+
+/* Phase 27i.5e (2026-05-07) — region zoom-in hint.
+   When a pin is clicked, the map canvas briefly scales (1.06×) and
+   translates toward the chosen pin coordinates before the modal
+   opens. CSS variables --gy-zoom-x / --gy-zoom-y carry the target
+   centre; transform-origin maps them to a translation that keeps
+   the rest of the map visible without overflowing. */
+.gy-region-map-canvas.is-zooming {
+  /* The transition runs the moment .is-zooming is added. We pull
+     the canvas toward the pin so the user feels the map "focus" on
+     their chosen region. Magnitude small (1.06×) so it reads as
+     subtle camera dolly, not a pop. */
+  transform-origin: var(--gy-zoom-x, 50%) var(--gy-zoom-y, 50%);
+  transform: scale(1.06);
+  transition:
+    transform 480ms cubic-bezier(0.2, 0.85, 0.25, 1),
+    transform-origin 0ms;
+}
+.gy-region-map-canvas {
+  transform: scale(1);
+  transform-origin: 50% 50%;
+  transition: transform 320ms cubic-bezier(0.2, 0.85, 0.25, 1);
+}
