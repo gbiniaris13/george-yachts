@@ -3038,3 +3038,39 @@ a.gy-fancy-link:hover {
 @media (prefers-reduced-motion: reduce) {
   .gy-scroll-to-top { transition: opacity 200ms ease; transform: none !important; }
 }
+
+/* Phase 27i.13 (2026-05-07) — Aegean wave SVG divider.
+   Two layered sine waves drifting in opposite directions, tinted
+   gold + ivory. Subtle horizon line between sections. */
+.gy-wave-divider {
+  position: relative;
+  width: 100%;
+  background: #000;
+  overflow: hidden;
+}
+.gy-wave-divider svg {
+  width: 200%;
+  height: 100%;
+  display: block;
+}
+.gy-wave-divider-line {
+  transform-origin: center center;
+  will-change: transform;
+}
+.gy-wave-divider-line--1 {
+  animation: gyWaveDividerDrift1 18s linear infinite;
+}
+.gy-wave-divider-line--2 {
+  animation: gyWaveDividerDrift2 26s linear infinite;
+}
+@keyframes gyWaveDividerDrift1 {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes gyWaveDividerDrift2 {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gy-wave-divider-line { animation: none !important; }
+}

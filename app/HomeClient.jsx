@@ -40,6 +40,7 @@ const GreekWatersMap = dynamic(() => import("./components/GreekWatersMap"));
 // region → modal with cover photo + yacht list. Photos are Pexels
 // CC0 placeholders pending Boss-curated regional photography.
 const RegionalYachtMap = dynamic(() => import("./components/RegionalYachtMap"));
+const WaveDivider = dynamic(() => import("./components/WaveDivider"));
 // Phase 2 / E2 (luxury rebuild) — 3D Mapbox flyover. Lives ABOVE the
 // editorial GreekWatersMap so the cinematic version reads first; the
 // SVG illustration stays as the no-JS / reduced-motion fallback story.
@@ -147,6 +148,12 @@ const HomeClient = ({
       <section id="map" data-gy-reveal="up">
         <RegionalYachtMap yachts={fleet} />
       </section>
+
+      {/* Aegean wave divider — gold + ivory sine waves drifting in
+          opposite directions, bridges the regional map (deep navy)
+          into the Forbes section (also deep navy) so the transition
+          reads as horizon, not as a hard edit. */}
+      <WaveDivider height={64} intensity={0.85} />
 
       {/* Tier 1.3 (Forbes integration brief, May 2026) — Forbes
           pull-quote section. Server-rendered: quote + attribution
