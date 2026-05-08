@@ -3,7 +3,9 @@ import { sanityClient } from "@/lib/sanity";
 import Footer from "@/components/Footer";
 import FleetGrid from "./FleetGrid";
 import BriefGeorgeBanner from "@/app/components/BriefGeorgeBanner";
-import Image from "next/image";
+// next/image import removed 2026-05-08 — fleet hero now uses a
+// <video> tag (Boss-curated catamaran concat) instead of next/image
+// for the background, and no other Image instances live in this file.
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import "./fleet-page.css";
 
@@ -116,16 +118,38 @@ export default async function CharterFleetPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
       />
 
-      {/* HERO — Grayscale + Staggered Animation */}
+      {/* HERO — Chapter 01 (2026-05-08): Boss-curated catamaran video
+          replaces the static Sanity image. Two clips concatenated:
+          14413577 (top-down catamaran on emerald shallows, 17 s) →
+          19714235 (catamaran with lone swimmer near reef, 59 s).
+          Total 76 s loop. Encoded WebM 1300 kbps / MP4 1900 kbps
+          2-pass → 12 MB WebM (Chrome/Firefox/Edge primary) +
+          17 MB MP4 (Safari fallback). Different feel from the
+          homepage hero (motor yacht) — fleet header now leads with
+          sailing-cat texture so the visitor immediately reads
+          "we cover both sides of the brokerage". */}
       <section className="fleet-hero">
-        <Image
-          src="https://cdn.sanity.io/images/ecqr94ey/production/5a1d2f46e69d3e21c61aa3950deb11085e725b9d-1024x768.jpg?w=1920&h=900&fit=crop&auto=format"
-          alt="George Yachts Charter Fleet Greece - luxury yachts in Greek waters"
-          fill
-          priority
+        <video
           className="fleet-hero__bg"
-          sizes="100vw"
-        />
+          poster="https://cdn.sanity.io/images/ecqr94ey/production/5a1d2f46e69d3e21c61aa3950deb11085e725b9d-1024x768.jpg?w=1920&h=900&fit=crop&auto=format"
+          preload="metadata"
+          autoPlay
+          loop
+          muted
+          playsInline
+          aria-label="George Yachts Charter Fleet Greece — catamarans in Greek waters"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+          }}
+        >
+          <source src="/videos/fleet-catamarans.webm" type="video/webm" />
+          <source src="/videos/fleet-catamarans.mp4" type="video/mp4" />
+        </video>
         <div className="fleet-hero__gradient" />
         <div className="fleet-hero__content">
           <div className="fleet-hero__eyebrow">Exclusively Greek Waters</div>
