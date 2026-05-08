@@ -104,9 +104,16 @@ const navLabelStyle = {
 // reveal via :hover on .gy-nav-item — no React state per hover, so
 // the trigger is instant and the dropdown stays open while the
 // cursor traverses the gap between trigger and panel.
-function NavItem({ section, color = "rgba(255,255,255,0.85)" }) {
+//
+// `anchor` decides which edge of the trigger the dropdown is pinned
+// to: "left" for items on the left half of the nav (CHARTER,
+// EXPLORE GREECE), "right" for the items on the right half
+// (ABOUT). Stops the panel from clipping off the viewport when the
+// trigger sits near an edge — Boss flagged the CHARTER dropdown
+// going off-screen on the left under the original centered anchor.
+function NavItem({ section, color = "rgba(255,255,255,0.85)", anchor = "left" }) {
   return (
-    <div className="gy-nav-item relative">
+    <div className={`gy-nav-item gy-nav-item--anchor-${anchor} relative`}>
       <button
         className="gy-nav-item__trigger"
         aria-haspopup="true"
@@ -188,8 +195,17 @@ export default function NavDrawerSystem() {
   return (
     <>
       <nav
-        className="gy-nav fixed top-0 left-0 w-full px-4 sm:px-6 lg:px-8"
+        className="gy-nav fixed left-0 w-full px-4 sm:px-6 lg:px-8"
         style={{
+          // 2026-05-08 follow-up — pin the nav below the Forbes top
+          // bar via the existing --gy-top-offset variable
+          // (set to 36 px on desktop / 32 px on mobile when
+          // body.gy-with-forbes-bar is active, 0 px otherwise).
+          // Without this the fixed nav would render at viewport
+          // top:0 BEHIND the Forbes bar, and the currency switcher
+          // pinned at top:3 of the nav was bleeding into the
+          // Forbes bar's right-side padding gap.
+          top: "var(--gy-top-offset, 0px)",
           backgroundColor: navBackground,
           transition: "background-color 0.5s ease, height 0.5s cubic-bezier(0.16, 1, 0.3, 1), padding 0.5s ease",
           height: `${navHeight}px`,
@@ -212,8 +228,8 @@ export default function NavDrawerSystem() {
 
           {/* DESKTOP — left cluster: CHARTER + EXPLORE GREECE */}
           <div className="hidden md:flex items-center gap-10">
-            <NavItem section={NAV_SECTIONS[0]} />
-            <NavItem section={NAV_SECTIONS[1]} />
+            <NavItem section={NAV_SECTIONS[0]} anchor="left" />
+            <NavItem section={NAV_SECTIONS[1]} anchor="left" />
           </div>
 
           {/* CENTER — logo */}
@@ -238,7 +254,7 @@ export default function NavDrawerSystem() {
 
           {/* DESKTOP — right cluster: ABOUT + BRIEF GEORGE CTA */}
           <div className="hidden md:flex items-center gap-10">
-            <NavItem section={NAV_SECTIONS[2]} />
+            <NavItem section={NAV_SECTIONS[2]} anchor="right" />
             <Link
               href={BRIEF_GEORGE.href}
               className="gy-nav-cta"
@@ -378,14 +394,15 @@ export default function NavDrawerSystem() {
       <style jsx global>{`
         /* Chapter 02 — desktop hover dropdown.
            The trigger has bottom padding so the cursor crosses the
-           panel without unhovering. The panel slides in from
-           translateY(-4px) over 220 ms when its parent .gy-nav-item
-           is hovered or focus-within. */
+           panel without unhovering. Anchor flips to LEFT for items
+           on the left half of the masthead (CHARTER, EXPLORE
+           GREECE) and RIGHT for items on the right half (ABOUT) so
+           panels never clip off the viewport edge. Boss flagged
+           the original centered anchor pushing the CHARTER panel
+           negative-x at narrow widths. */
         .gy-nav-item__panel {
           position: absolute;
           top: calc(100% + 4px);
-          left: 50%;
-          transform: translateX(-50%) translateY(-4px);
           min-width: 220px;
           padding: 18px 24px;
           background: rgba(8, 14, 24, 0.94);
@@ -399,12 +416,15 @@ export default function NavDrawerSystem() {
           flex-direction: column;
           gap: 10px;
           z-index: 40;
+          transform: translateY(-4px);
         }
+        .gy-nav-item--anchor-left  .gy-nav-item__panel { left: 0; right: auto; }
+        .gy-nav-item--anchor-right .gy-nav-item__panel { right: 0; left: auto; }
         .gy-nav-item:hover .gy-nav-item__panel,
         .gy-nav-item:focus-within .gy-nav-item__panel {
           opacity: 1;
           pointer-events: auto;
-          transform: translateX(-50%) translateY(0);
+          transform: translateY(0);
         }
         .gy-nav-item__link {
           color: rgba(255, 255, 255, 0.78);
@@ -425,7 +445,7 @@ export default function NavDrawerSystem() {
           color: #ffffff !important;
         }
         @media (prefers-reduced-motion: reduce) {
-          .gy-nav-item__panel { transition: opacity 120ms ease; transform: translateX(-50%) translateY(0); }
+          .gy-nav-item__panel { transition: opacity 120ms ease; transform: translateY(0); }
         }
       `}</style>
     </>
