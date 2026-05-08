@@ -1,193 +1,218 @@
 "use client";
 
+// Chapter 02 (Boss-spec nav rebuild, 2026-05-08) — full rewrite.
+//
+// Replaces the prior 4-bucket / 18-link hamburger drawer + 5-icon
+// right cluster (search / currency / language / Instagram / LinkedIn
+// / favorites) with a Burgess/Aman-tier 4-item top nav:
+//
+//   CHARTER          (dropdown: Private Fleet · Explorer Fleet · View All)
+//   EXPLORE GREECE   (dropdown: Cyclades · Ionian · Saronic · Sporades · Itineraries)
+//   ABOUT            (dropdown: About George · How It Works · FAQ)
+//   BRIEF GEORGE →   (no dropdown — primary CTA, gold, direct link to /inquiry)
+//
+// Plus a tiny 11 px €/$ currency icon in the top-right corner.
+//
+// Items dropped from the nav surface (Boss directive — they belong
+// in the footer where the UHNW visitor will find them when they
+// need them):
+//   • Buy a Yacht                  (footer)
+//   • Fly Private                  (footer)
+//   • VIP Transfers                (footer)
+//   • Luxury Villas                (footer)
+//   • The Journal / Blog           (footer)
+//   • Meet the Team                (footer)
+//   • For Partners                 (footer)
+//   • Credentials                  (footer)
+//
+// Right-cluster icons (search / language / Instagram / LinkedIn /
+// favorites) also dropped from the nav. Search/lang are reachable
+// via the browser's own affordances; the rest live in the footer.
+//
+// Desktop layout:
+//   [CHARTER  EXPLORE GREECE]   [LOGO]   [ABOUT  BRIEF GEORGE →]   ↗ [€/$]
+//   2-2 split around the centered logo gives the masthead the
+//   ceremonial / old-money symmetry Boss flagged in the Aman/Belmond
+//   reference set. Currency icon floats top-right corner, kept small
+//   so it never competes with the masthead.
+//
+// Mobile layout:
+//   [☰]                           [LOGO]                          [€/$]
+//   Tap ☰ → full-screen overlay with the 4 items centered vertically,
+//   BRIEF GEORGE pinned at bottom in larger gold per spec.
+//
+// Typography: every nav text element lands on var(--gy-font-ui)
+// (the Phase 28 UI tier — Switzer) at 11 px ALL CAPS,
+// letter-spacing 0.15 em, weight 400 per Boss spec.
+
 import React, { useState, useEffect, useCallback } from "react";
-import { Menu, Instagram, Linkedin, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useI18n } from "@/lib/i18n/I18nProvider";
-import TranslateWidget from "./TranslateWidget";
-import NavSearch from "./NavSearch";
 import CurrencySwitcher from "./CurrencySwitcher";
 
-const WhatsappIcon = (props) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    {...props}
-  >
-    <path d="M12.031 0.725C5.741 0.725 0.547 5.926 0.547 12.215C0.547 14.39 1.155 16.42 2.22 18.15L0.63 23.36l5.352-1.55c1.674 0.99 3.593 1.516 5.619 1.516c6.29 0 11.484-5.201 11.484-11.491C23.595 5.926 18.4 0.725 12.031 0.725zM17.476 15.655c-0.198 0.505-1.127 0.99-1.523 1.054c-0.342 0.054-0.695 0.078-1.574-0.373c-1.028-0.543-2.607-1.583-3.804-2.78c-1.197-1.197-2.237-2.776-2.78-3.804c-0.45-0.879-0.426-1.232-0.373-1.574c0.064-0.396 0.549-1.325 1.054-1.523c0.426-0.165 0.879-0.276 1.197-0.276c0.231 0 0.426 0.015 0.639 0.45l0.58 1.417c0.078 0.165 0.124 0.358 0.046 0.569c-0.078 0.21-0.26 0.45-0.45 0.639c-0.183 0.183-0.33 0.358-0.441 0.569c-0.111 0.21-0.26 0.385-0.137 0.609c0.124 0.223 0.639 1.152 1.518 2.031c0.879 0.879 1.808 1.455 2.031 1.518c0.223 0.124 0.398-0.023 0.609-0.137c0.21-0.111 0.385-0.26 0.569-0.441c0.183-0.183 0.426-0.375 0.639-0.45c0.21-0.078 0.403-0.032 0.569 0.046l1.417 0.58c0.435 0.211 0.546 0.665 0.373 1.197z" />
-  </svg>
-);
-
-// --- 1. MAIN NAVLINKS ---
-// George 2026-04-20: "to hamburger menu pou einai se katigories thelw
-// na ftiaxtoun poli kalitera kai na einai poli user friendly". Rebuilt
-// into 4 intuitive buckets — Charter-first (revenue), then Explore
-// Greece, then Other Services, then the company pages. The old
-// 5-bucket layout buried high-converting pages (Instant Proposal,
-// Find Your Yacht) inside a generic "Tools" group; now everything
-// charter-related lives in one place at the top. Each link carries a
-// fallback label so the drawer never blanks out when an i18n key is
-// missing.
-const navSections = [
+// Top-level nav items + their dropdowns. Order matters — the spec
+// puts CHARTER first (revenue), EXPLORE GREECE second (intent
+// builder), ABOUT third (trust). BRIEF GEORGE is rendered separately
+// because it's a CTA, not a category.
+const NAV_SECTIONS = [
   {
-    labelKey: "nav.charter",
-    fallback: "Charter",
-    links: [
-      { nameKey: "nav.allFleet", fallback: "View All Yachts", href: "/charter-yacht-greece/" },
-      { nameKey: "nav.privateFleet", fallback: "Private Fleet", href: "/private-fleet/" },
-      { nameKey: "nav.explorerFleet", fallback: "Explorer Fleet", href: "/explorer-fleet/" },
-      // Collapsed 2026-04-21 (Proposal F): Find Your Yacht + Cost
-      // Calculator both redirect to /inquiry — removed their links
-      // so the menu stops offering three routes to the same flow.
-      { nameKey: "nav.startInquiry", fallback: "Start an Inquiry", href: "/inquiry/" },
-      { nameKey: "nav.instantProposal", fallback: "Instant Proposal", href: "/proposal-generator/" },
+    label: "Charter",
+    items: [
+      { label: "Private Fleet", href: "/private-fleet" },
+      { label: "Explorer Fleet", href: "/explorer-fleet" },
+      { label: "View All", href: "/charter-yacht-greece" },
     ],
   },
   {
-    labelKey: "nav.explore",
-    fallback: "Explore Greece",
-    links: [
-      // Destinations pages removed 2026-04-21 — the photo-per-island
-      // flow became a rabbit hole with no clean ending; pulled the
-      // whole /destinations/* route family out of the site.
-      { nameKey: "nav.itineraries", fallback: "Curated Itineraries", href: "/yacht-itineraries-greece/" },
-      { nameKey: "nav.islandQuiz", fallback: "Island Quiz", href: "/island-quiz/" },
-      { nameKey: "nav.buildItinerary", fallback: "Build My Itinerary", href: "/itinerary-builder/" },
-      { nameKey: "nav.blog", fallback: "Journal", href: "/blog" },
+    label: "Explore Greece",
+    items: [
+      { label: "Cyclades", href: "/yacht-charter-cyclades" },
+      { label: "Ionian", href: "/yacht-charter-ionian" },
+      { label: "Saronic", href: "/yacht-charter-saronic" },
+      { label: "Sporades", href: "/yacht-charter-sporades" },
+      { label: "Itineraries", href: "/yacht-itineraries-greece" },
     ],
   },
   {
-    labelKey: "nav.services",
-    fallback: "Other Services",
-    links: [
-      { nameKey: "nav.buyYacht", fallback: "Yachts for Sale", href: "/yachts-for-sale/" },
-      { nameKey: "nav.villas", fallback: "Luxury Villas", href: "/luxury-villas-greece/" },
-      { nameKey: "nav.flyPrivate", fallback: "Private Jet", href: "/private-jet-charter/" },
-      { nameKey: "nav.vipTransfers", fallback: "VIP Transfers", href: "/vip-transfers-greece/" },
-    ],
-  },
-  {
-    labelKey: "nav.company",
-    fallback: "George Yachts",
-    links: [
-      { nameKey: "nav.howItWorks", fallback: "How It Works", href: "/how-it-works/" },
-      { nameKey: "nav.aboutUs", fallback: "About Us", href: "/about-us/" },
-      { nameKey: "nav.team", fallback: "Meet the Team", href: "/team/" },
-      { nameKey: "nav.forPartners", fallback: "For Partners", href: "/partners" },
-      { nameKey: "nav.faq", fallback: "FAQ", href: "/faq" },
+    label: "About",
+    items: [
+      { label: "About George", href: "/about-us" },
+      { label: "How It Works", href: "/how-it-works" },
+      { label: "FAQ", href: "/faq" },
     ],
   },
 ];
 
-// --- 2. LEGAL LINKS ---
-const legalLinks = [
-  { nameKey: "footer.terms", fallback: "Terms of Service", href: "/terms-of-service" },
-  { nameKey: "footer.cookies", fallback: "Cookie Policy", href: "/cookie-policy" },
-  { nameKey: "footer.privacy", fallback: "Privacy Policy", href: "/privacy-policy" },
-];
+const BRIEF_GEORGE = { label: "Brief George", href: "/inquiry" };
 
-const NavDrawerSystem = () => {
-  const { t } = useI18n();
+// Shared text style for every nav label — Switzer 11 px ALL CAPS
+// 0.15em tracking per Boss spec.
+const navLabelStyle = {
+  fontFamily: "var(--gy-font-ui)",
+  fontSize: "11px",
+  fontWeight: 400,
+  letterSpacing: "0.15em",
+  textTransform: "uppercase",
+};
+
+// Single nav item with optional hover dropdown. Pure-CSS hover
+// reveal via :hover on .gy-nav-item — no React state per hover, so
+// the trigger is instant and the dropdown stays open while the
+// cursor traverses the gap between trigger and panel.
+function NavItem({ section, color = "rgba(255,255,255,0.85)" }) {
+  return (
+    <div className="gy-nav-item relative">
+      <button
+        className="gy-nav-item__trigger"
+        aria-haspopup="true"
+        style={{ ...navLabelStyle, color, cursor: "pointer", background: "transparent", border: 0, padding: "10px 4px" }}
+        data-cursor="Menu"
+      >
+        {section.label}
+      </button>
+      <div className="gy-nav-item__panel" role="menu">
+        {section.items.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            role="menuitem"
+            className="gy-nav-item__link"
+            style={navLabelStyle}
+            data-cursor="View"
+          >
+            {item.label}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function NavDrawerSystem() {
   const [scrolled, setScrolled] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [openSection, setOpenSection] = useState(null);
   const pathname = usePathname();
 
-  // Close drawer when route changes (fixes the double-tap bug)
+  // Close mobile overlay on route change (otherwise tapping a link
+  // would navigate but leave the overlay visible until next paint).
   useEffect(() => {
-    setIsDrawerOpen(false);
+    setMobileOpen(false);
+    setOpenSection(null);
   }, [pathname]);
 
-  const toggleDrawer = useCallback(() => {
-    setIsDrawerOpen((prev) => !prev);
-  }, []);
-
-  const closeDrawer = useCallback(() => {
-    setIsDrawerOpen(false);
-  }, []);
-
-  // Lock body scroll when drawer is open
+  // Lock body scroll while the mobile overlay is open.
   useEffect(() => {
-    if (isDrawerOpen) {
+    if (mobileOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
     return () => { document.body.style.overflow = ""; };
-  }, [isDrawerOpen]);
+  }, [mobileOpen]);
 
+  // Scroll-state for the masthead (transparent → solid black on scroll).
   useEffect(() => {
-    const handleScroll = () => {
+    const onScroll = () => {
       const y = window.scrollY;
       const isScrolled = y > 50;
       setScrolled(isScrolled);
-      // Phase 27b/c — also publish state to body so peripheral chrome
-      // can react: presence strip re-anchors when nav collapses,
-      // mobile gold scroll-hint fades once visitor moves past hero.
       document.body.classList.toggle("gy-nav-scrolled", isScrolled);
       document.body.classList.toggle(
         "gy-scrolled",
         y > Math.max(window.innerHeight * 0.4, 280),
       );
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", onScroll);
       document.body.classList.remove("gy-nav-scrolled");
       document.body.classList.remove("gy-scrolled");
     };
   }, []);
 
-  // UPDATED: Always white text, whether transparent or scrolled (black)
-  const currentTextColor = "text-white";
-
-  // UPDATED: Background logic (Transparent -> Black)
   const navBackground = scrolled ? "#000000" : "transparent";
+  const navHeight = scrolled ? 92 : 168;
+  const logoHeight = scrolled ? 56 : "clamp(96px, 14vw, 156px)";
+
+  const toggleMobile = useCallback(() => setMobileOpen((p) => !p), []);
+  const closeMobile = useCallback(() => setMobileOpen(false), []);
+  const closeOpenSection = useCallback(() => setOpenSection(null), []);
 
   return (
     <>
       <nav
-        className="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 lg:px-8"
+        className="gy-nav fixed top-0 left-0 w-full px-4 sm:px-6 lg:px-8"
         style={{
           backgroundColor: navBackground,
           transition: "background-color 0.5s ease, height 0.5s cubic-bezier(0.16, 1, 0.3, 1), padding 0.5s ease",
-          // Phase 27 — taller header to accommodate bigger logo (per
-          // Boss "δείξε δυναμική" directive). Was 72/140 → now 92/168.
-          height: scrolled ? "92px" : "168px",
+          height: `${navHeight}px`,
           paddingTop: scrolled ? "0px" : "12px",
+          zIndex: 50,
         }}
       >
         <div className="flex items-center justify-between h-full relative">
-          {/* --- 1. LEFT — Menu Button --- */}
-          <div className="flex items-center w-20">
-            <button
-              onClick={toggleDrawer}
-              className={`p-3 ${currentTextColor} hover:text-[#DAA520] cursor-pointer focus:outline-none focus-visible:outline-2 focus-visible:outline-[#DAA520] focus-visible:outline-offset-2 transition duration-300 active:scale-95`}
-              aria-label={isDrawerOpen ? "Close navigation menu" : "Open navigation menu"}
-              aria-expanded={isDrawerOpen}
-              data-cursor="Menu"
-              style={{ touchAction: "manipulation" }}
-            >
-              <Menu className="w-5 h-5" />
-            </button>
+          {/* MOBILE HAMBURGER — left, only ≤ md */}
+          <button
+            type="button"
+            onClick={toggleMobile}
+            className="md:hidden p-3 text-white hover:text-[#C9A84C] transition-colors"
+            aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
+            aria-expanded={mobileOpen}
+            data-cursor="Menu"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+
+          {/* DESKTOP — left cluster: CHARTER + EXPLORE GREECE */}
+          <div className="hidden md:flex items-center gap-10">
+            <NavItem section={NAV_SECTIONS[0]} />
+            <NavItem section={NAV_SECTIONS[1]} />
           </div>
 
-          {/* --- 2. CENTER — Logo with gold-particle intro reveal.
-              Phase 27b (Forbes-launch eve, 2026-05-05) — adds an LV-tier
-              gold-particle reveal on first paint: the logo fades up
-              while a soft gold halo radiates outward. Pure CSS, no
-              Lottie file, no JS state — uses two ::before/::after
-              pseudo-elements with delayed transforms. ~1.4s reveal,
-              fires once per visit, respects reduced-motion. */}
-          {/* Phase 27c (Forbes-launch eve, 2026-05-05) — Boss reported
-              the centered logo was rendering BEHIND the right-cluster
-              icons at narrow desktop widths (Chrome split-screen with
-              Claude app to the right). Fix: pin z-index so the logo
-              always sits above the icon row + add pointer-events:none
-              to the surrounding flex item so clicks always pass to the
-              logo even when the icons overlap visually at extreme
-              widths. */}
+          {/* CENTER — logo */}
           <Link
             href="/"
             className="absolute left-1/2 -translate-x-1/2 shrink-0 group gy-logo-reveal"
@@ -199,7 +224,7 @@ const NavDrawerSystem = () => {
               alt="George Yachts Brokerage House"
               className="group-hover:opacity-80"
               style={{
-                height: scrolled ? "56px" : "clamp(96px, 14vw, 156px)",
+                height: logoHeight,
                 width: "auto",
                 transition: "height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
                 filter: "drop-shadow(0 4px 18px rgba(218,165,32,0.18))",
@@ -207,205 +232,198 @@ const NavDrawerSystem = () => {
             />
           </Link>
 
-          {/* --- 3. RIGHT — Search + Language selector + Social Icons ---
-              Phase 27 (mobile audit, 2026-05-05): the full cluster
-              (~330px) was overflowing the iPhone viewport, pushing
-              the centered logo off-axis. CurrencySwitcher + Instagram
-              + LinkedIn + Favorites now collapse below md (<768px) —
-              all four are already reachable from the drawer + footer,
-              and Favorites is reachable via the heart icon on every
-              yacht card. Search + Translate stay visible because
-              they're functional needs that can't wait for a drawer
-              tap. */}
-          <div className="flex items-center gap-1 justify-end">
-            <NavSearch />
-            <div className="hidden md:inline-flex">
-              <CurrencySwitcher compact={true} />
-            </div>
-            <TranslateWidget variant="inline" />
-            <a
-              href="https://www.instagram.com/georgeyachts"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden md:flex group relative w-11 h-11 items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
-              aria-label="Instagram"
-              data-cursor="Instagram"
+          {/* DESKTOP — right cluster: ABOUT + BRIEF GEORGE CTA */}
+          <div className="hidden md:flex items-center gap-10">
+            <NavItem section={NAV_SECTIONS[2]} />
+            <Link
+              href={BRIEF_GEORGE.href}
+              className="gy-nav-cta"
+              style={{
+                ...navLabelStyle,
+                fontWeight: 500,
+                color: "#C9A84C",
+                textDecoration: "none",
+                padding: "10px 4px",
+                whiteSpace: "nowrap",
+              }}
+              data-cursor="Brief"
             >
-              <Instagram className="w-[14px] h-[14px] text-white/40 group-hover:text-[#DAA520] transition-colors duration-300" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/george-p-biniaris/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden md:flex group relative w-11 h-11 items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
-              aria-label="LinkedIn"
-              data-cursor="LinkedIn"
-            >
-              <Linkedin className="w-[14px] h-[14px] text-white/40 group-hover:text-[#DAA520] transition-colors duration-300" />
-            </a>
-            <a
-              href="/favorites"
-              className="hidden md:flex group relative w-11 h-11 items-center justify-center border border-white/[0.06] hover:border-[#DAA520]/30 transition-all duration-500"
-              aria-label="My Favorites"
-              data-cursor="Favorites"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/40 group-hover:text-[#DAA520] transition-colors duration-300">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-              </svg>
-            </a>
+              {BRIEF_GEORGE.label} →
+            </Link>
           </div>
+
+          {/* RIGHT — currency switcher (tiny corner pip) */}
+          <div className="absolute right-3 top-3 md:right-4 md:top-3" style={{ zIndex: 30 }}>
+            <CurrencySwitcher compact={true} />
+          </div>
+
+          {/* MOBILE-only spacer to balance the hamburger on the left
+              so the centered logo stays optically centred. */}
+          <div className="md:hidden w-11" aria-hidden="true" />
         </div>
       </nav>
 
-      {/* --- DRAWER --- */}
+      {/* MOBILE FULL-SCREEN OVERLAY ─────────────────────────────────
+          Boss spec: dark navy background, 4 items centered vertically,
+          BRIEF GEORGE at bottom in larger gold. Inline-expandable
+          sub-items per section (tap → reveal sub-items).
+      ──────────────────────────────────────────────────────────── */}
       <div
-        className={`fixed inset-0 bg-black transition-opacity duration-300 z-40 ${
-          isDrawerOpen
-            ? "opacity-60 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
+        className={`gy-nav-overlay fixed inset-0 z-[60] transition-opacity duration-300 md:hidden ${
+          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
-        onClick={closeDrawer}
-        onTouchEnd={(e) => { e.preventDefault(); closeDrawer(); }}
-        style={{ touchAction: "manipulation" }}
-        aria-hidden={!isDrawerOpen}
-      ></div>
-
-      <div
-        className={`fixed top-0 left-0 h-full w-full sm:w-[370px] xl:w-[700px] max-w-[calc(100vw-16px)] bg-black shadow-2xl z-50 transform transition-transform duration-300 ease-in-out
-          ${isDrawerOpen ? "translate-x-0" : "-translate-x-full"}`}
+        style={{
+          background: "linear-gradient(180deg, #050a14 0%, #0a1628 100%)",
+        }}
         role="dialog"
         aria-modal="true"
-        aria-label="Navigation drawer"
+        aria-label="Navigation"
       >
-        <div className="p-8 h-full flex flex-col overflow-y-auto">
-          <div className="flex justify-between items-center pb-6 ">
-            {/* Logo in drawer — original yacht icon + text */}
-            <Link href="/" className="flex items-center gap-4" onClick={closeDrawer}>
+        <div className="h-full w-full flex flex-col">
+          {/* Header — close button + tiny logo */}
+          <div className="flex items-center justify-between p-5 border-b border-white/[0.06]">
+            <Link href="/" onClick={closeMobile} aria-label="Home">
               <img
                 src="/images/yacht-icon-only.svg"
                 alt="George Yachts"
-                style={{ height: "36px", width: "auto" }}
+                style={{ height: 40, width: "auto" }}
               />
-              <div className="flex flex-col">
-                <span className="notranslate" style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "17px", fontWeight: 300, letterSpacing: "0.1em", color: "#fff", lineHeight: 1 }}>
-                  GEORGE YACHTS
-                </span>
-                <span className="notranslate" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "6px", letterSpacing: "0.25em", color: "rgba(218,165,32,0.5)", marginTop: "4px" }}>
-                  BROKERAGE HOUSE LLC
-                </span>
-              </div>
             </Link>
             <button
-              onClick={closeDrawer}
-              className="p-2 rounded-full text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 active:scale-95 "
-              aria-label="Close menu"
+              type="button"
+              onClick={closeMobile}
+              className="p-3 text-white hover:text-[#C9A84C] transition-colors"
+              aria-label="Close navigation"
+              data-cursor="Close"
             >
               <X className="w-6 h-6" />
             </button>
           </div>
 
-          <nav className="mt-6 space-y-7 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
-            {navSections.map((section) => (
-              <div key={section.labelKey}>
-                <p
-                  className="px-1 mb-3 text-[10px] tracking-[0.4em] uppercase"
-                  style={{
-                    color: '#DAA520',
-                    fontFamily: "'Montserrat', sans-serif",
-                    opacity: 0.85,
-                    fontWeight: 600,
-                  }}
-                >
-                  {t(section.labelKey, section.fallback)}
-                </p>
-                {section.links.map((link) => (
-                  <Link
-                    key={link.nameKey}
-                    href={link.href || "#"}
-                    onClick={closeDrawer}
-                    className="block w-full py-3 px-1 border-b border-white/[0.06] text-[13px] font-medium uppercase text-white/85 hover:text-[#DAA520] hover:pl-2 transition-all duration-200 active:text-[#DAA520]"
-                    style={{ WebkitTapHighlightColor: "transparent", touchAction: "manipulation", fontFamily: "'Montserrat', sans-serif", letterSpacing: 'clamp(0.05em, 0.4vw, 0.12em)' }}
+          {/* Centered nav items */}
+          <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6">
+            {NAV_SECTIONS.map((section) => {
+              const expanded = openSection === section.label;
+              return (
+                <div key={section.label} className="w-full max-w-md text-center">
+                  <button
+                    type="button"
+                    onClick={() => setOpenSection(expanded ? null : section.label)}
+                    className="block w-full text-white hover:text-[#C9A84C] transition-colors"
+                    style={{
+                      ...navLabelStyle,
+                      fontSize: "16px",
+                      letterSpacing: "0.22em",
+                      padding: "14px 0",
+                    }}
+                    aria-expanded={expanded}
                   >
-                    {t(link.nameKey, link.fallback)}
-                  </Link>
-                ))}
-              </div>
-            ))}
-          </nav>
-
-          {/* Phase 27 (mobile audit) — surface the items that were
-              collapsed off the nav header on mobile so the drawer
-              remains the single source of truth for everything the
-              header carries on desktop. md:hidden so the drawer
-              doesn't double-up on tablets where the header still
-              shows them. */}
-          <div className="md:hidden mt-10 pt-6 border-t border-white/[0.08] flex flex-col gap-4">
-            <p
-              className="px-1 text-[10px] tracking-[0.4em] uppercase"
-              style={{
-                color: '#DAA520',
-                fontFamily: "'Montserrat', sans-serif",
-                opacity: 0.85,
-                fontWeight: 600,
-              }}
-            >
-              {t("nav.preferences", "Preferences")}
-            </p>
-            <div className="flex items-center gap-3">
-              <CurrencySwitcher compact={true} />
-              <Link
-                href="/favorites"
-                onClick={closeDrawer}
-                className="flex items-center gap-2 text-[12px] uppercase tracking-[0.2em] text-white/85 hover:text-[#DAA520] transition"
-                aria-label="My Favorites"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                </svg>
-                {t("nav.favorites", "Favorites")}
-              </Link>
-            </div>
-            <div className="flex items-center gap-4">
-              <a
-                href="https://www.instagram.com/georgeyachts"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="w-10 h-10 flex items-center justify-center border border-white/[0.08] text-white/60 hover:text-[#DAA520] hover:border-[#DAA520]/40 transition"
-              >
-                <Instagram className="w-[14px] h-[14px]" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/george-p-biniaris/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="w-10 h-10 flex items-center justify-center border border-white/[0.08] text-white/60 hover:text-[#DAA520] hover:border-[#DAA520]/40 transition"
-              >
-                <Linkedin className="w-[14px] h-[14px]" />
-              </a>
-            </div>
+                    {section.label}
+                  </button>
+                  {expanded && (
+                    <div className="flex flex-col items-center gap-4 pt-3 pb-4">
+                      {section.items.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={closeMobile}
+                          className="text-white/70 hover:text-[#C9A84C] transition-colors"
+                          style={{
+                            fontFamily: "var(--gy-font-ui)",
+                            fontSize: "12px",
+                            letterSpacing: "0.18em",
+                            textTransform: "uppercase",
+                            fontWeight: 300,
+                          }}
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
-          <div className="mt-auto pt-12 flex space-x-6">
-            {legalLinks.map((link) => (
-              <Link
-                key={link.nameKey}
-                href={link.href}
-                onClick={closeDrawer}
-                className="text-xs text-gray-500 hover:text-gray-300 transition duration-200"
-              >
-                {t(link.nameKey, link.fallback)}
-              </Link>
-            ))}
-            <span className="text-xs text-gray-500">
-              © {new Date().getFullYear()} George Yachts
-            </span>
+          {/* BRIEF GEORGE — bottom, gold, larger per Boss spec */}
+          <div className="px-6 pb-10 pt-6 border-t border-white/[0.06]">
+            <Link
+              href={BRIEF_GEORGE.href}
+              onClick={closeMobile}
+              className="block w-full text-center"
+              style={{
+                fontFamily: "var(--gy-font-ui)",
+                fontSize: "18px",
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                fontWeight: 500,
+                color: "#C9A84C",
+                padding: "18px",
+                border: "1px solid #C9A84C",
+                textDecoration: "none",
+              }}
+              data-cursor="Brief"
+            >
+              {BRIEF_GEORGE.label} →
+            </Link>
           </div>
         </div>
       </div>
+
+      <style jsx global>{`
+        /* Chapter 02 — desktop hover dropdown.
+           The trigger has bottom padding so the cursor crosses the
+           panel without unhovering. The panel slides in from
+           translateY(-4px) over 220 ms when its parent .gy-nav-item
+           is hovered or focus-within. */
+        .gy-nav-item__panel {
+          position: absolute;
+          top: calc(100% + 4px);
+          left: 50%;
+          transform: translateX(-50%) translateY(-4px);
+          min-width: 220px;
+          padding: 18px 24px;
+          background: rgba(8, 14, 24, 0.94);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          border: 1px solid rgba(201, 168, 76, 0.18);
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 220ms ease, transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          z-index: 40;
+        }
+        .gy-nav-item:hover .gy-nav-item__panel,
+        .gy-nav-item:focus-within .gy-nav-item__panel {
+          opacity: 1;
+          pointer-events: auto;
+          transform: translateX(-50%) translateY(0);
+        }
+        .gy-nav-item__link {
+          color: rgba(255, 255, 255, 0.78);
+          padding: 4px 0;
+          white-space: nowrap;
+          text-decoration: none;
+          transition: color 200ms ease, padding-left 200ms ease;
+        }
+        .gy-nav-item__link:hover {
+          color: #C9A84C;
+          padding-left: 6px;
+        }
+        .gy-nav-item__trigger:hover,
+        .gy-nav-item:hover .gy-nav-item__trigger {
+          color: #C9A84C !important;
+        }
+        .gy-nav-cta:hover {
+          color: #ffffff !important;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .gy-nav-item__panel { transition: opacity 120ms ease; transform: translateX(-50%) translateY(0); }
+        }
+      `}</style>
     </>
   );
-};
-
-export default NavDrawerSystem;
+}
