@@ -129,7 +129,7 @@ export default function GeorgesSelection() {
           text-align: center;
         }
         .gy-selection-eyebrow {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-size: 11px;
           font-weight: 500;
           letter-spacing: 0.15em;
@@ -138,7 +138,7 @@ export default function GeorgesSelection() {
           margin: 0 0 18px;
         }
         .gy-selection-title {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--gy-font-editorial);
           font-weight: 300;
           font-size: clamp(24px, 3.4vw, 36px);
           line-height: 1.2;
@@ -185,7 +185,7 @@ export default function GeorgesSelection() {
           top: 24px;
           left: 24px;
           z-index: 2;
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-size: 10px;
           font-weight: 500;
           letter-spacing: 0.15em;
@@ -205,7 +205,7 @@ export default function GeorgesSelection() {
           gap: 8px;
         }
         .gy-selection-card__name {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--gy-font-editorial);
           font-weight: 300;
           font-size: 32px;
           color: #F8F5F0;
@@ -215,7 +215,7 @@ export default function GeorgesSelection() {
           text-shadow: 0 4px 18px rgba(13, 27, 42, 0.55);
         }
         .gy-selection-card__specs {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-weight: 300;
           font-size: 11px;
           letter-spacing: 0.10em;
@@ -224,14 +224,14 @@ export default function GeorgesSelection() {
           margin: 0;
         }
         .gy-selection-card__price {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-weight: 300;
           font-size: 13px;
           color: rgba(248, 245, 240, 0.75);
           margin: 0 0 6px;
         }
         .gy-selection-card__note {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--gy-font-editorial);
           font-style: italic;
           font-weight: 300;
           font-size: 16px;
@@ -247,7 +247,7 @@ export default function GeorgesSelection() {
         }
         .gy-selection-card__cta {
           display: inline-block;
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-size: 11px;
           font-weight: 500;
           letter-spacing: 0.12em;
@@ -271,7 +271,7 @@ export default function GeorgesSelection() {
           padding: 0 24px;
         }
         .gy-selection-footnote-link {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-weight: 300;
           font-size: 13px;
           color: rgba(248, 245, 240, 0.55);

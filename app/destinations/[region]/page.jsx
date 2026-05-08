@@ -179,7 +179,7 @@ export default async function DestinationPage({ params }) {
           padding: 0 24px;
         }
         .gy-dest-hero__label {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-weight: 400;
           font-size: 10px;
           letter-spacing: 0.18em;
@@ -188,7 +188,7 @@ export default async function DestinationPage({ params }) {
           margin: 0 0 24px;
         }
         .gy-dest-hero__title {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--gy-font-editorial);
           font-weight: 300;
           font-size: 56px;
           line-height: 1.05;
@@ -198,7 +198,7 @@ export default async function DestinationPage({ params }) {
           text-shadow: 0 8px 40px rgba(13, 27, 42, 0.55);
         }
         .gy-dest-hero__tagline {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-weight: 300;
           font-size: 15px;
           line-height: 1.5;
@@ -217,7 +217,7 @@ export default async function DestinationPage({ params }) {
           padding: 96px 24px 80px;
         }
         .gy-dest-editorial__p {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-weight: 300;
           font-size: 17px;
           line-height: 1.75;
@@ -240,7 +240,7 @@ export default async function DestinationPage({ params }) {
           margin: 0 auto;
         }
         .gy-dest-picks__label {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-weight: 400;
           font-size: 10px;
           letter-spacing: 0.15em;
@@ -250,7 +250,7 @@ export default async function DestinationPage({ params }) {
           margin: 0 0 18px;
         }
         .gy-dest-picks__subline {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--gy-font-editorial);
           font-style: italic;
           font-weight: 300;
           font-size: 22px;
@@ -271,7 +271,7 @@ export default async function DestinationPage({ params }) {
         }
         .gy-dest-pick:last-child { margin-bottom: 0; }
         .gy-dest-pick__name {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-weight: 500;
           font-size: 13px;
           letter-spacing: 0.08em;
@@ -281,7 +281,7 @@ export default async function DestinationPage({ params }) {
           line-height: 1.3;
         }
         .gy-dest-pick__desc {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-weight: 300;
           font-size: 15px;
           line-height: 1.7;
@@ -300,7 +300,7 @@ export default async function DestinationPage({ params }) {
           text-align: center;
         }
         .gy-dest-cta__headline {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--gy-font-editorial);
           font-weight: 300;
           font-size: 38px;
           line-height: 1.15;
@@ -324,7 +324,7 @@ export default async function DestinationPage({ params }) {
           align-items: center;
           justify-content: center;
           padding: 16px 32px;
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-weight: 500;
           font-size: 12px;
           letter-spacing: 0.18em;
@@ -341,7 +341,7 @@ export default async function DestinationPage({ params }) {
           color: #0D1B2A;
         }
         .gy-dest-cta__secondary {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-weight: 300;
           font-size: 13px;
           letter-spacing: 0.04em;

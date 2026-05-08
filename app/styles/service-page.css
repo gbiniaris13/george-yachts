@@ -62,7 +62,7 @@
 }
 
 .svc-hero__eyebrow {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
@@ -74,7 +74,7 @@
 }
 
 .svc-hero__title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   /* Phase 8 (luxury rebuild) — Vogue scale matching all other page
      heroes (about-us, team, fleet, yacht detail). */
   font-size: clamp(56px, 10vw, 130px);
@@ -97,7 +97,7 @@
 }
 
 .svc-hero__subtitle {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 13px;
   color: rgba(248, 245, 240,0.5);
   max-width: 500px;
@@ -121,7 +121,7 @@
 }
 
 .svc-intro__eyebrow {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
@@ -130,7 +130,7 @@
 }
 
 .svc-intro__title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-size: clamp(26px, 3.5vw, 40px);
   font-weight: 300;
   color: #F8F5F0;
@@ -146,7 +146,7 @@
 }
 
 .svc-intro__text {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 14px;
   color: rgba(248, 245, 240,0.45);
   line-height: 1.9;
@@ -171,7 +171,7 @@
 }
 
 .svc-features__title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-size: clamp(26px, 3.5vw, 40px);
   font-weight: 300;
   color: #F8F5F0;
@@ -207,7 +207,7 @@
 }
 
 .svc-features__card-title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-size: 20px;
   font-weight: 500;
   color: #F8F5F0;
@@ -215,7 +215,7 @@
 }
 
 .svc-features__card-desc {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 12px;
   color: rgba(248, 245, 240,0.35);
   line-height: 1.7;
@@ -235,7 +235,7 @@
 }
 
 .svc-checklist__title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-size: clamp(24px, 3vw, 36px);
   font-weight: 300;
   color: #F8F5F0;
@@ -264,7 +264,7 @@
 }
 
 .svc-checklist__text {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 13px;
   color: rgba(248, 245, 240,0.5);
   line-height: 1.6;
@@ -280,7 +280,7 @@
 }
 
 .svc-cta__eyebrow {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
@@ -289,7 +289,7 @@
 }
 
 .svc-cta__title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-size: clamp(28px, 4vw, 48px);
   font-weight: 300;
   color: #F8F5F0;
@@ -297,7 +297,7 @@
 }
 
 .svc-cta__text {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 14px;
   color: rgba(248, 245, 240,0.4);
   line-height: 1.7;
@@ -312,7 +312,7 @@
   background-size: 200% 100%;
   color: #0D1B2A;
   padding: 16px 48px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -347,7 +347,7 @@
 }
 
 .faq-category__title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-size: 24px;
   font-weight: 500;
   color: #F8F5F0;
@@ -378,7 +378,7 @@
 }
 
 .faq-item__question {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 14px;
   font-weight: 400;
   color: rgba(248, 245, 240,0.6);
@@ -422,7 +422,7 @@
 }
 
 .faq-item__answer-text {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 13px;
   color: rgba(248, 245, 240,0.4);
   line-height: 1.8;

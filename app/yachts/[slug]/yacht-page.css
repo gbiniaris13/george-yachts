@@ -151,7 +151,7 @@
      here from cold outreach + curated shortlists; the yacht name is
      the protagonist of the page, not a label. Negative letter-spacing
      plus bigger type makes it read like a Robb Report cover. */
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-size: clamp(56px, 10vw, 140px);
   font-weight: 300;
   letter-spacing: -0.035em;
@@ -168,7 +168,7 @@
   text-transform: uppercase;
   color: var(--gy-gold);
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
 }
 
 /* ---- Container ---- */
@@ -274,7 +274,7 @@
 }
 
 .yacht-insider__quote {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-size: clamp(20px, 2.4vw, 28px);
   font-style: italic;
   font-weight: 300;
@@ -310,7 +310,7 @@
 }
 
 .yacht-specs__title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-size: clamp(28px, 4vw, 44px);
   font-weight: 300;
   letter-spacing: -0.02em;
@@ -366,7 +366,7 @@
 
 .yacht-specs__label {
   display: block;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.42em;
@@ -377,7 +377,7 @@
 
 .yacht-specs__value {
   display: block;
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-size: clamp(36px, 5vw, 56px);
   font-weight: 300;
   line-height: 1;
@@ -658,7 +658,7 @@
 }
 
 .yacht-pricing__per-person {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 1rem;
   color: var(--gy-gold);
   margin-top: 16px;
@@ -666,7 +666,7 @@
   font-weight: 400;
 }
 .yacht-pricing__per-person-note {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 0.65rem;
   color: rgba(248, 245, 240,0.25);
   margin-top: 6px;
@@ -815,7 +815,7 @@
   text-shadow: 0 2px 8px rgba(13, 27, 42, 0.6);
 }
 .gy-yacht-tour-eyebrow {
-  font-family: "Cinzel", serif;
+  font-family: var(--gy-font-display);
   font-weight: 500;
   font-size: 11px;
   letter-spacing: 0.5em;
@@ -825,7 +825,7 @@
   color: rgba(201, 168, 76, 0.85);
 }
 .gy-yacht-tour-counter {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-weight: 300;
   font-size: 38px;
   margin: 0;
@@ -876,7 +876,7 @@
   max-width: 60%;
 }
 .gy-yacht-tour-caption {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-style: italic;
   font-weight: 300;
   font-size: 18px;

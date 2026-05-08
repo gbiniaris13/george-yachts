@@ -1,4 +1,11 @@
-import { Geist, Marcellus, Cormorant_Garamond, Montserrat, Bodoni_Moda, Italiana, Cinzel, Fraunces } from "next/font/google";
+// 2026-05-08 (Boss directive — full-site Phase 28 sweep): only
+// load the four free tier faces. The legacy paid-style fonts
+// (Cormorant Garamond / Montserrat / Cinzel / Bodoni Moda /
+// Italiana / Marcellus) are NOT loaded anymore — every
+// `var(--font-cormorant)` etc. now resolves to the Phase 28 tier
+// stack via globals.css :root re-mapping. Stops paid-look font
+// downloads and trims the first-paint payload.
+import { Geist, Fraunces } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import NavDrawerSystem from "./components/NavDrawerSystem";
@@ -59,56 +66,14 @@ import { cookies } from "next/headers";
 // Swiper CSS moved to individual Swiper components to avoid loading on non-Swiper pages
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-// Removed: Geist_Mono (zero uses anywhere in the tree) and Barlow
-// (used in a single legacy `.the` rule in globals.css — replaced with
-// system sans). Saves ~33 KB of font payload on every first paint.
-const marcellus = Marcellus({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-marcellus",
-});
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-cormorant",
-  display: "swap",
-});
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-montserrat",
-  display: "swap",
-});
-
-// Phase 17c (luxury rebuild, 2026-05-05) — old-money billionaire-tier
-// typography research. Boss directive: "Trajan Pro / Cinzel — what
-// Aman, Belmond, Bulgari, Four Seasons, Le Bristol Paris, the Carlyle
-// NYC use. Old money. Roman temple inscription dignity." Cinzel is
-// the free Trajan derivative on Google Fonts — same proportions, same
-// mood. Weight 500 (medium), UPPERCASE only — never bold, never
-// kindergarten. This is the wordmark / hero font for the entire site.
-//
-// Bodoni Moda + Italiana stay loaded for editorial accents (pull
-// quotes, magazine-style display) but the masthead is now Cinzel.
-const cinzel = Cinzel({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-cinzel",
-  display: "swap",
-});
-const bodoniModa = Bodoni_Moda({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  style: ["normal", "italic"],
-  variable: "--font-bodoni",
-  display: "swap",
-});
-const italiana = Italiana({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-italiana",
-  display: "swap",
-});
+// Phase 28 sweep — Marcellus / Cormorant Garamond / Montserrat /
+// Cinzel / Bodoni Moda / Italiana imports removed. The legacy
+// CSS variables (--font-cormorant / --font-cinzel / --font-montserrat
+// / --font-bodoni / --font-italiana / --font-marcellus) are now
+// aliased in globals.css :root to the Phase 28 tier stacks
+// (Sentient / Fraunces / Switzer). Every inline `var(--font-…)`
+// reference across the codebase falls through automatically. No
+// extra font payload, no paid-style faces.
 
 // Phase 28 (typography overhaul, 2026-05-08) — Boss-approved 5-tier
 // system migration. Mapping (paid → free, all four FREE for
@@ -338,7 +303,7 @@ export default async function RootLayout({ children }) {
       </head>
 
       <body
-        className={`${geistSans.variable} ${marcellus.variable} ${cormorant.variable} ${montserrat.variable} ${cinzel.variable} ${bodoniModa.variable} ${italiana.variable} ${fraunces.variable} antialiased${forbesDismissed ? "" : " gy-with-forbes-bar"}`}
+        className={`${geistSans.variable} ${fraunces.variable} antialiased${forbesDismissed ? "" : " gy-with-forbes-bar"}`}
       >
         {/* Skip to main content — accessibility */}
         <a

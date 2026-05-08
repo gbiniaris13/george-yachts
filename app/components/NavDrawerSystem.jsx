@@ -545,7 +545,7 @@ export default function NavDrawerSystem() {
           margin: 0 0 6px;
         }
         .gy-nav-item__rich-title {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--gy-font-editorial);
           font-weight: 300;
           font-size: 22px;
           line-height: 1.15;

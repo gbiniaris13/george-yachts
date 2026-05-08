@@ -102,7 +102,7 @@ export default function ThreeGreekWorlds() {
           text-align: center;
         }
         .gy-three-worlds__eyebrow {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-size: 11px;
           font-weight: 500;
           letter-spacing: 0.15em;
@@ -111,7 +111,7 @@ export default function ThreeGreekWorlds() {
           margin: 0 0 18px;
         }
         .gy-three-worlds__title {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--gy-font-editorial);
           font-weight: 300;
           font-size: clamp(28px, 4vw, 42px);
           line-height: 1.15;
@@ -149,7 +149,7 @@ export default function ThreeGreekWorlds() {
         @media (max-width: 600px)  { .gy-world-card { height: 260px; } }
 
         .gy-world-card__label {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-size: 10px;
           font-weight: 500;
           letter-spacing: 0.18em;
@@ -158,7 +158,7 @@ export default function ThreeGreekWorlds() {
           margin: 0 0 14px;
         }
         .gy-world-card__title {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--gy-font-editorial);
           font-weight: 300;
           font-size: clamp(28px, 3.2vw, 38px);
           color: #F8F5F0;
@@ -168,7 +168,7 @@ export default function ThreeGreekWorlds() {
           text-shadow: 0 4px 20px rgba(13, 27, 42, 0.55);
         }
         .gy-world-card__subline {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-weight: 300;
           font-size: 13px;
           line-height: 1.6;
@@ -177,7 +177,7 @@ export default function ThreeGreekWorlds() {
           margin: 0 0 28px;
         }
         .gy-world-card__cta {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-size: 11px;
           font-weight: 500;
           letter-spacing: 0.12em;
@@ -198,7 +198,7 @@ export default function ThreeGreekWorlds() {
           max-width: 600px;
           margin: 56px auto 0;
           padding: 0 24px;
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-weight: 300;
           font-size: 12px;
           line-height: 1.7;

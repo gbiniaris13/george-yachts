@@ -466,7 +466,7 @@ export default function MapboxFlyover() {
           animation: gy-pin-pulse 2.4s ease-in-out infinite;
         }
         .gy-mapbox-pin__label {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--gy-font-ui);
           font-size: 10px;
           letter-spacing: 0.18em;
           text-transform: uppercase;

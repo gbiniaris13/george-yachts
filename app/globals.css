@@ -17,10 +17,25 @@
    for the few hundred ms it takes Fraunces/Sentient/etc. to load,
    then swap once ready. */
 :root {
-  --gy-font-display:   "Fraunces", "Cormorant Garamond", Georgia, serif;
-  --gy-font-editorial: "Sentient", "Cormorant Garamond", Georgia, serif;
+  --gy-font-display:   "Fraunces", Georgia, serif;
+  --gy-font-editorial: "Sentient", Georgia, serif;
   --gy-font-body:      "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --gy-font-ui:        "Switzer", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Phase 28 Pass 4 (2026-05-08) — Boss full-site sweep. The legacy
+     paid-style font CSS variables alias to the Phase 28 free-tier
+     stacks. Every inline `fontFamily: "var(--font-cinzel)"` /
+     `var(--font-cormorant)` / etc. reference across the codebase
+     resolves to the free tier face automatically — zero component
+     edits required. The next/font loaders for the legacy faces
+     have been pulled, so Cormorant / Montserrat / Cinzel / Bodoni
+     / Italiana / Marcellus stop downloading from Google. */
+  --font-cormorant: var(--gy-font-editorial);
+  --font-cinzel:    var(--gy-font-display);
+  --font-montserrat: var(--gy-font-ui);
+  --font-bodoni:    var(--gy-font-editorial);
+  --font-italiana:  var(--gy-font-editorial);
+  --font-marcellus: var(--gy-font-display);
 
   /* Chapter 05 (palette audit, 2026-05-08) — canonical 6-colour
      scheme Boss locked in. Use these CSS variables in any new
@@ -947,7 +962,7 @@ section {
 }
 
 .george-yachts {
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--gy-font-editorial);
 }
 
 /* Base style for ALL dots (make them bigger and set the inactive color) */
@@ -1251,7 +1266,7 @@ h1[style*="font-cormorant"] {
    to a single voice. Cinzel for masthead, Cormorant for editorial. */
 .gy-display-md,
 .gy-lede {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-family: var(--gy-font-editorial);
   font-weight: 300 !important;
 }
 
@@ -1444,7 +1459,7 @@ footer h4 {
 .yacht-pricing__title,
 .yacht-insider__title,
 .yacht-story__title {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-family: var(--gy-font-editorial);
   font-weight: 400 !important;
   font-style: normal !important;
   letter-spacing: -0.015em !important;
@@ -1475,7 +1490,7 @@ footer h4 {
    Use for hero titles, section openers, and key brand statements.
    Negative letter-spacing tightens the serif at large sizes. */
 .gy-display-xl {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-weight: 300;
   font-size: clamp(56px, 9vw, 140px);
   line-height: 0.95;
@@ -1483,7 +1498,7 @@ footer h4 {
   color: #F8F5F0;
 }
 .gy-display-lg {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-weight: 300;
   font-size: clamp(44px, 7vw, 96px);
   line-height: 1.0;
@@ -1491,7 +1506,7 @@ footer h4 {
   color: #F8F5F0;
 }
 .gy-display-md {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-weight: 300;
   font-size: clamp(34px, 5.5vw, 72px);
   line-height: 1.05;
@@ -1501,7 +1516,7 @@ footer h4 {
 
 /* Editorial body — for pull quotes, lead paragraphs, intro text. */
 .gy-lede {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-weight: 300;
   font-style: italic;
   font-size: clamp(20px, 2.4vw, 28px);
@@ -1513,7 +1528,7 @@ footer h4 {
 
 /* Eyebrows — small, all-caps, gold. Sit ABOVE display headlines. */
 .gy-eyebrow {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-weight: 600;
   font-size: 10px;
   letter-spacing: 0.42em;
@@ -1523,7 +1538,7 @@ footer h4 {
   display: inline-block;
 }
 .gy-eyebrow-sm {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-weight: 600;
   font-size: 9px;
   letter-spacing: 0.32em;
@@ -1579,7 +1594,7 @@ footer h4 {
 /* Hover-reveal underline — for editorial CTAs (no buttons, just text). */
 .gy-link-editorial {
   position: relative;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 12px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -2203,7 +2218,7 @@ a.gy-fancy-link:hover {
 }
 
 .gy-forbes-eyebrow {
-  font-family: "Cinzel", serif;
+  font-family: var(--gy-font-display);
   font-weight: 500;
   font-size: 13px;
   letter-spacing: 0.55em;
@@ -2266,7 +2281,7 @@ a.gy-fancy-link:hover {
 }
 
 .gy-forbes-date {
-  font-family: "Cinzel", serif;
+  font-family: var(--gy-font-display);
   font-weight: 500;
   font-size: 12px;
   letter-spacing: 0.50em;
@@ -2306,7 +2321,7 @@ a.gy-fancy-link:hover {
   margin: 0;
   padding: 0 clamp(8px, 3vw, 24px);
   border: 0;
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-style: italic;
   font-weight: 300;
   font-size: clamp(26px, 3.6vw, 42px);
@@ -2320,7 +2335,7 @@ a.gy-fancy-link:hover {
 }
 
 .gy-forbes-attribution {
-  font-family: "Cinzel", serif;
+  font-family: var(--gy-font-display);
   font-weight: 500;
   font-size: 12px;
   letter-spacing: 0.32em;
@@ -2333,7 +2348,7 @@ a.gy-fancy-link:hover {
 }
 
 .gy-forbes-context {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-style: italic;
   font-weight: 300;
   font-size: 16px;
@@ -2345,7 +2360,7 @@ a.gy-fancy-link:hover {
 
 .gy-forbes-cta {
   margin-top: 18px;
-  font-family: "Cinzel", serif;
+  font-family: var(--gy-font-display);
   font-weight: 500;
   font-size: 11px;
   letter-spacing: 0.42em;
@@ -2367,7 +2382,7 @@ a.gy-fancy-link:hover {
   animation: gyForbesFadeUp 1s ease 1.85s forwards;
 }
 .gy-forbes-cta-arrow {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-style: italic;
   font-weight: 400;
   font-size: 18px;
@@ -2444,7 +2459,7 @@ a.gy-fancy-link:hover {
   z-index: 2;
 }
 .gy-region-map-eyebrow {
-  font-family: "Cinzel", serif;
+  font-family: var(--gy-font-display);
   font-weight: 500;
   font-size: 11px;
   letter-spacing: 0.55em;
@@ -2454,7 +2469,7 @@ a.gy-fancy-link:hover {
   margin-inline-end: -0.55em;
 }
 .gy-region-map-title {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-weight: 300;
   font-size: clamp(32px, 5vw, 56px);
   color: #F8F5F0;
@@ -2463,7 +2478,7 @@ a.gy-fancy-link:hover {
   margin: 0 0 18px;
 }
 .gy-region-map-blurb {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-style: italic;
   font-weight: 300;
   font-size: clamp(15px, 1.5vw, 18px);
@@ -2480,7 +2495,7 @@ a.gy-fancy-link:hover {
   max-width: 640px;
   margin: 28px auto 0;
   padding: 0 24px;
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-weight: 300;
   font-size: clamp(12px, 1.05vw, 13px);
   line-height: 1.6;
@@ -2553,7 +2568,7 @@ a.gy-fancy-link:hover {
   50%      { box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.30), 0 0 28px rgba(201, 168, 76, 0.75); }
 }
 .gy-region-pin-name {
-  font-family: "Cinzel", serif;
+  font-family: var(--gy-font-display);
   font-weight: 500;
   font-size: 13px;
   letter-spacing: 0.32em;
@@ -2563,7 +2578,7 @@ a.gy-fancy-link:hover {
   text-shadow: 0 1px 2px rgba(13, 27, 42, 0.7);
 }
 .gy-region-pin-count {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-style: italic;
   font-weight: 300;
   font-size: 14px;
@@ -2649,7 +2664,7 @@ a.gy-fancy-link:hover {
     background 220ms ease,
     border-color 220ms ease,
     transform 220ms ease;
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-weight: 300;
   padding-bottom: 4px; /* visually centres the chevron glyph */
 }
@@ -2709,7 +2724,7 @@ a.gy-fancy-link:hover {
   z-index: 1;
 }
 .gy-region-modal-eyebrow {
-  font-family: "Cinzel", serif;
+  font-family: var(--gy-font-display);
   font-weight: 500;
   font-size: 11px;
   letter-spacing: 0.5em;
@@ -2720,7 +2735,7 @@ a.gy-fancy-link:hover {
   display: inline-block;
 }
 .gy-region-modal-name {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-weight: 400;
   font-size: clamp(36px, 5vw, 56px);
   color: #F8F5F0;
@@ -2728,7 +2743,7 @@ a.gy-fancy-link:hover {
   margin: 0 0 6px;
 }
 .gy-region-modal-subtitle {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-style: italic;
   font-weight: 300;
   font-size: clamp(14px, 1.5vw, 17px);
@@ -2740,7 +2755,7 @@ a.gy-fancy-link:hover {
   padding: 28px 32px 32px;
 }
 .gy-region-modal-blurb {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-weight: 300;
   font-size: 17px;
   line-height: 1.55;
@@ -2748,7 +2763,7 @@ a.gy-fancy-link:hover {
   margin: 0 0 22px;
 }
 .gy-region-modal-count {
-  font-family: "Cinzel", serif;
+  font-family: var(--gy-font-display);
   font-weight: 500;
   font-size: 11px;
   letter-spacing: 0.32em;
@@ -2788,7 +2803,7 @@ a.gy-fancy-link:hover {
   border-radius: 2px;
 }
 .gy-region-yacht-name {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-size: 19px;
   font-weight: 400;
   color: #F8F5F0;
@@ -2796,7 +2811,7 @@ a.gy-fancy-link:hover {
   line-height: 1.15;
 }
 .gy-region-yacht-spec {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -2804,7 +2819,7 @@ a.gy-fancy-link:hover {
   margin: 4px 0 0;
 }
 .gy-region-yacht-cta {
-  font-family: "Cinzel", serif;
+  font-family: var(--gy-font-display);
   font-weight: 500;
   font-size: 10px;
   letter-spacing: 0.32em;
@@ -2814,7 +2829,7 @@ a.gy-fancy-link:hover {
 }
 .gy-region-yacht-more {
   margin: 12px 0 0;
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-style: italic;
   font-size: 14px;
   color: rgba(248, 245, 240, 0.6);

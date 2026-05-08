@@ -438,7 +438,7 @@ export default function Filotimon({ filotimoImage = null }) {
             margin-bottom: 8px;
           }
           .gy-filotimo-strand__body {
-            font-family: 'Montserrat', sans-serif !important;
+            font-family: var(--gy-font-ui);
             font-size: 15px !important;
             line-height: 1.75 !important;
           }

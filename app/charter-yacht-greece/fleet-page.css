@@ -106,7 +106,7 @@
 }
 
 .fleet-hero__eyebrow {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
@@ -118,7 +118,7 @@
 }
 
 .fleet-hero__title {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   /* Phase 6 (luxury rebuild) — bumped from clamp(36, 6vw, 64) to
      clamp(56, 9vw, 120) so the headline reads at Vogue scale.
      Negative letter-spacing tightens the serif at the larger size. */
@@ -142,7 +142,7 @@
 }
 
 .fleet-hero__desc {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 13px;
   color: rgba(248, 245, 240, 0.6);
   max-width: 540px;
@@ -215,7 +215,7 @@
   color: rgba(248, 245, 240, 0.45);
   padding: 10px 20px;
   cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 10px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -273,7 +273,7 @@
 }
 
 .fleet-filters__label {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -286,7 +286,7 @@
   border: 1px solid rgba(201, 168, 76, 0.15);
   color: rgba(248, 245, 240, 0.85);
   padding: 7px 30px 7px 12px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 11px;
   cursor: pointer;
   appearance: none;
@@ -326,7 +326,7 @@
 }
 
 .fleet-results__count {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 11px;
   color: rgba(248, 245, 240, 0.4);
   letter-spacing: 0.1em;
@@ -338,7 +338,7 @@
 }
 
 .fleet-results__note {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 10px;
   color: rgba(248, 245, 240, 0.25);
   letter-spacing: 0.1em;
@@ -497,7 +497,7 @@
   align-items: center;
   justify-content: center;
   color: rgba(248, 245, 240, 0.15);
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -508,7 +508,7 @@
   position: absolute;
   top: 16px;
   padding: 5px 14px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -557,7 +557,7 @@
 }
 
 .fleet-card__name {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-size: 22px;
   font-weight: 600;
   color: #F8F5F0;
@@ -567,7 +567,7 @@
 }
 
 .fleet-card__builder {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 10px;
   color: #C9A84C;
   letter-spacing: 0.12em;
@@ -596,7 +596,7 @@
 
 .fleet-card__spec-label {
   display: block;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 8px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -606,7 +606,7 @@
 
 .fleet-card__spec-value {
   display: block;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--gy-font-editorial);
   font-size: 16px;
   color: #F8F5F0;
   font-weight: 500;
@@ -627,7 +627,7 @@
 }
 
 .fleet-card__price-label {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 8px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -636,7 +636,7 @@
 }
 
 .fleet-card__price {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--gy-font-editorial);
   font-size: 22px;
   color: #C9A84C;
   font-weight: 600;
@@ -644,7 +644,7 @@
 }
 
 .fleet-card__per-person {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 11px;
   letter-spacing: 0.04em;
   color: rgba(201,168,76,0.45);
@@ -691,7 +691,7 @@
   justify-content: center;
   flex: 1;
   padding: 12px 16px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -772,14 +772,14 @@
 }
 
 .fleet-empty__text {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--gy-font-editorial);
   font-size: 28px;
   color: rgba(248, 245, 240, 0.35);
   margin: 0 0 8px;
 }
 
 .fleet-empty__subtext {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 12px;
   color: rgba(248, 245, 240, 0.2);
   letter-spacing: 0.05em;
@@ -792,7 +792,7 @@
   color: #C9A84C;
   padding: 12px 32px;
   cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 10px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -812,7 +812,7 @@
 }
 
 .fleet-trust__eyebrow {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 10px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -828,7 +828,7 @@
   align-items: center;
   color: rgba(248, 245, 240, 0.35);
   font-size: 12px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   letter-spacing: 0.1em;
 }
 
@@ -844,7 +844,7 @@
   background-size: 200% 100%;
   color: #0D1B2A;
   padding: 16px 48px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -863,7 +863,7 @@
   margin-top: 20px;
   font-size: 11px;
   color: rgba(248, 245, 240, 0.25);
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
 }
 
 /* ---- RESPONSIVE ---- */
@@ -998,11 +998,11 @@
   display: flex;
   align-items: baseline;
   gap: 12px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   color: rgba(248, 245, 240, 0.55);
 }
 .fleet-count__n {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--gy-font-editorial);
   font-size: 28px;
   font-weight: 300;
   color: #C9A84C;
@@ -1021,7 +1021,7 @@
   background: transparent;
   border: 1px solid rgba(201, 168, 76, 0.35);
   color: rgba(201, 168, 76, 0.9);
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -1072,7 +1072,7 @@
   font-weight: 600;
 }
 .fleet-filters__toy-chip {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--gy-font-ui);
   font-size: 9.5px;
   font-weight: 600;
   letter-spacing: 0.16em;
