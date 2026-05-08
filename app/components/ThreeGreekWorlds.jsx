@@ -143,7 +143,10 @@ export default function ThreeGreekWorlds() {
           color: #F8F5F0;
         }
         @media (max-width: 1024px) { .gy-world-card { height: 380px; } }
-        @media (max-width: 768px)  { .gy-world-card { height: 280px; } }
+        /* Mobile (≤ 600 px) — Boss spec: 260 px height. CTA stays
+           always visible (not hover-gated) and the whole card is
+           wrapped in <Link> so any tap navigates. */
+        @media (max-width: 600px)  { .gy-world-card { height: 260px; } }
 
         .gy-world-card__label {
           font-family: 'Montserrat', sans-serif;

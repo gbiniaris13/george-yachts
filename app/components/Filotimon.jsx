@@ -270,11 +270,11 @@ export default function Filotimon({ filotimoImage = null }) {
               Three strands, one word
             </p>
 
-            <ol className="space-y-10 mb-16 list-none p-0">
+            <ol className="gy-filotimo-strands space-y-10 mb-16 list-none p-0">
               {pillars.map((p, i) => (
-                <li key={i} className="flex gap-6">
+                <li key={i} className="gy-filotimo-strand flex gap-6">
                   <span
-                    className="text-[#C9A84C] shrink-0"
+                    className="gy-filotimo-strand__num text-[#C9A84C] shrink-0"
                     style={{
                       fontFamily: "'Cormorant Garamond', Georgia, serif",
                       fontSize: "clamp(32px, 3.5vw, 48px)",
@@ -299,7 +299,7 @@ export default function Filotimon({ filotimoImage = null }) {
                       {p.title}
                     </h3>
                     <p
-                      className="text-white/60"
+                      className="gy-filotimo-strand__body text-white/60"
                       style={{
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
                         fontSize: "clamp(15px, 1.3vw, 17px)",
@@ -420,6 +420,29 @@ export default function Filotimon({ filotimoImage = null }) {
 
       <style jsx global>{`
         * { border-radius: 0 !important; }
+
+        /* Mobile (≤ 600 px) — Boss spec: each strand becomes a
+           full-width card with border-left 2 px gold + 1 rem padding.
+           Number kept as decorative top-line, not the leading column. */
+        @media (max-width: 600px) {
+          .gy-filotimo-strands { display: flex; flex-direction: column; gap: 1rem; }
+          .gy-filotimo-strand {
+            display: block;
+            border-left: 2px solid #C9A84C;
+            padding: 1rem;
+            margin: 0;
+            background: rgba(248, 245, 240, 0.02);
+          }
+          .gy-filotimo-strand__num {
+            display: block;
+            margin-bottom: 8px;
+          }
+          .gy-filotimo-strand__body {
+            font-family: 'Montserrat', sans-serif !important;
+            font-size: 15px !important;
+            line-height: 1.75 !important;
+          }
+        }
       `}</style>
     </section>
   );

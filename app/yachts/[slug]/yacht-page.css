@@ -93,6 +93,11 @@
   justify-content: center;
   padding-bottom: 80px;
 }
+/* Mobile (≤ 600 px) — Boss spec: 50 vh so the copy below the hero
+   gets the screen real estate it needs. */
+@media (max-width: 600px) {
+  .yacht-hero { height: 50vh; min-height: 360px; padding-bottom: 40px; }
+}
 
 .yacht-hero__image-container {
   position: absolute;

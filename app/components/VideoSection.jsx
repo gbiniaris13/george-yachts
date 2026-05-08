@@ -150,7 +150,7 @@ export default function VideoSection() {
     <section
       className="gy-hero relative w-full overflow-hidden bg-black"
       aria-label="George Yachts — Greek waters charter"
-      style={{ height: "100dvh", marginTop: 0, paddingTop: 0 }}
+      style={{ height: "100svh", marginTop: 0, paddingTop: 0 }}
     >
       {/* Video background */}
       <HeroBackgroundVideo />
@@ -198,7 +198,7 @@ export default function VideoSection() {
           <h1
             className="gy-hero-headline gy-pearl-white"
             style={{
-              fontSize: "clamp(40px, 6.4vw, 84px)",
+              fontSize: "clamp(32px, 6.4vw, 84px)",
               lineHeight: 1.05,
               letterSpacing: "-0.02em",
               color: "#F8F5F0",
@@ -212,8 +212,11 @@ export default function VideoSection() {
 
           {/* Subline — Boss-spec: 1 line, Switzer Light 300, 16 px,
               tracking 0.04em, ivory white at 70 % opacity. Lands on
-              the Phase 28 UI tier via inline font-family. */}
+              the Phase 28 UI tier via inline font-family. Hidden on
+              ≤ 600 px (mobile) per Boss directive — at that width it
+              wraps to 3+ lines and crowds the CTAs. */}
           <p
+            className="gy-hero-subline"
             style={{
               marginTop: "32px",
               fontFamily: "var(--gy-font-ui)",
@@ -229,10 +232,11 @@ export default function VideoSection() {
 
           {/* CTA pair — primary (gold-bordered transparent) + secondary
               (text-only with underline on hover). 16 px gap on desktop,
-              stacks on mobile with the same gap. */}
+              stacks on mobile full-width with 12 px gap and 52 px min
+              height per Boss mobile spec. */}
           <div
-            className="flex flex-col items-center sm:flex-row sm:items-center"
-            style={{ marginTop: "44px", gap: "16px" }}
+            className="gy-hero-cta-row"
+            style={{ marginTop: "44px" }}
           >
             <a
               href="/charter-yacht-greece"
@@ -315,6 +319,45 @@ export default function VideoSection() {
            Secondary CTA on hover keeps the text white but reveals an
            underline (no border, just the underline cue Boss specified).
            Chevron pulses opacity 0.4 → 0.7 over 2 s. */
+        .gy-hero-cta-row {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+        }
+        /* Mobile (≤ 600 px) — full-width stacked CTAs, 52 px min
+           height, 12 px gap, primary first per Boss spec. Subline
+           hides because it wraps to 3+ lines at this width. Chevron
+           also hides — swipe is the natural gesture. */
+        @media (max-width: 600px) {
+          .gy-hero-headline {
+            font-size: 38px !important;
+            letter-spacing: -0.01em !important;
+          }
+          .gy-hero-subline {
+            display: none !important;
+          }
+          .gy-hero-cta-row {
+            flex-direction: column;
+            gap: 12px !important;
+            width: 100%;
+            max-width: 320px;
+          }
+          .gy-hero-cta-row > a {
+            width: 100%;
+            min-height: 52px;
+            padding: 16px 24px !important;
+          }
+          .gy-hero-chevron {
+            display: none !important;
+          }
+        }
+        @media (max-width: 374px) {
+          .gy-hero-headline {
+            font-size: 32px !important;
+          }
+        }
         .gy-hero-cta-primary:hover {
           background: #C9A84C;
           color: #0D1B2A;

@@ -217,16 +217,26 @@ export default function NavDrawerSystem() {
         }}
       >
         <div className="flex items-center justify-between h-full relative">
-          {/* MOBILE HAMBURGER — left, only ≤ md */}
+          {/* MOBILE HAMBURGER — right, only ≤ md. Boss mobile spec
+              relocates the hamburger to top-right; logo stays centered.
+              Gold #C9A84C, 22 px stroke. The 44 × 44 hit area exceeds
+              the WCAG touch-target minimum even though the icon itself
+              is 22 px. */}
           <button
             type="button"
             onClick={toggleMobile}
-            className="md:hidden p-3 text-white hover:text-[#C9A84C] transition-colors"
+            className="md:hidden absolute top-3 right-3 transition-colors flex items-center justify-center"
+            style={{
+              width: 44,
+              height: 44,
+              color: "#C9A84C",
+              zIndex: 35,
+            }}
             aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
             aria-expanded={mobileOpen}
             data-cursor="Menu"
           >
-            <Menu className="w-5 h-5" />
+            <Menu style={{ width: 22, height: 22 }} />
           </button>
 
           {/* DESKTOP — left cluster: CHARTER + EXPLORE GREECE */}
@@ -285,56 +295,56 @@ export default function NavDrawerSystem() {
             </Link>
           </div>
 
-          {/* RIGHT — currency switcher (tiny corner pip) */}
-          <div className="absolute right-3 top-3 md:right-4 md:top-3" style={{ zIndex: 30 }}>
+          {/* RIGHT — currency switcher (tiny corner pip). Hidden on
+              mobile per Boss spec — the mobile overlay carries its own
+              €/$/£ row instead so the masthead stays uncluttered next
+              to the hamburger. */}
+          <div className="hidden md:block absolute right-3 top-3 md:right-4 md:top-3" style={{ zIndex: 30 }}>
             <CurrencySwitcher compact={true} />
           </div>
-
-          {/* MOBILE-only spacer to balance the hamburger on the left
-              so the centered logo stays optically centred. */}
-          <div className="md:hidden w-11" aria-hidden="true" />
         </div>
       </nav>
 
       {/* MOBILE FULL-SCREEN OVERLAY ─────────────────────────────────
-          Boss spec: dark navy background, 4 items centered vertically,
-          BRIEF GEORGE at bottom in larger gold. Inline-expandable
-          sub-items per section (tap → reveal sub-items).
+          Boss mobile spec: slide in from right, navy background, 4
+          theatrical Cormorant items centered, BRIEF GEORGE 36 px gold
+          at bottom, currency row (€/$/£) below the items.
       ──────────────────────────────────────────────────────────── */}
       <div
-        className={`gy-nav-overlay fixed inset-0 z-[60] transition-opacity duration-300 md:hidden ${
-          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        className={`gy-nav-overlay fixed inset-0 z-[60] md:hidden ${
+          mobileOpen ? "gy-nav-overlay--open" : ""
         }`}
         style={{
-          background: "linear-gradient(180deg, #0D1B2A 0%, #0D1B2A 100%)",
+          background: "#0D1B2A",
         }}
         role="dialog"
         aria-modal="true"
         aria-label="Navigation"
       >
         <div className="h-full w-full flex flex-col">
-          {/* Header — close button + tiny logo */}
-          <div className="flex items-center justify-between p-5 border-b border-white/[0.06]">
+          {/* Header — close × top-right, logo centered top */}
+          <div className="relative flex items-center justify-center pt-6 pb-4">
             <Link href="/" onClick={closeMobile} aria-label="Home">
               <img
                 src="/images/yacht-icon-only.svg"
                 alt="George Yachts"
-                style={{ height: 40, width: "auto" }}
+                style={{ height: 56, width: "auto" }}
               />
             </Link>
             <button
               type="button"
               onClick={closeMobile}
-              className="p-3 text-white hover:text-[#C9A84C] transition-colors"
+              className="absolute top-3 right-3 transition-colors flex items-center justify-center"
+              style={{ width: 44, height: 44, color: "#C9A84C" }}
               aria-label="Close navigation"
               data-cursor="Close"
             >
-              <X className="w-6 h-6" />
+              <X style={{ width: 22, height: 22 }} />
             </button>
           </div>
 
-          {/* Centered nav items */}
-          <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6">
+          {/* Centered nav items — Cormorant Light 32 px theatrical */}
+          <div className="flex-1 flex flex-col items-center justify-center gap-2 px-6">
             {NAV_SECTIONS.map((section) => {
               const expanded = openSection === section.label;
               return (
@@ -342,31 +352,39 @@ export default function NavDrawerSystem() {
                   <button
                     type="button"
                     onClick={() => setOpenSection(expanded ? null : section.label)}
-                    className="block w-full text-white hover:text-[#C9A84C] transition-colors"
+                    className="block w-full transition-colors"
                     style={{
-                      ...navLabelStyle,
-                      fontSize: "16px",
-                      letterSpacing: "0.22em",
+                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontWeight: 300,
+                      fontSize: "32px",
+                      letterSpacing: "-0.005em",
+                      color: expanded ? "#C9A84C" : "#FFFFFF",
                       padding: "14px 0",
+                      minHeight: 56,
                     }}
                     aria-expanded={expanded}
                   >
                     {section.label}
                   </button>
                   {expanded && (
-                    <div className="flex flex-col items-center gap-4 pt-3 pb-4">
+                    <div className="flex flex-col items-center gap-4 pt-1 pb-3">
                       {section.items.map((item) => (
                         <Link
                           key={item.href}
                           href={item.href}
                           onClick={closeMobile}
-                          className="text-white/70 hover:text-[#C9A84C] transition-colors"
+                          className="transition-colors"
                           style={{
                             fontFamily: "var(--gy-font-ui)",
                             fontSize: "12px",
                             letterSpacing: "0.18em",
                             textTransform: "uppercase",
                             fontWeight: 300,
+                            color: "rgba(248,245,240,0.7)",
+                            padding: "8px 0",
+                            minHeight: 44,
+                            display: "inline-flex",
+                            alignItems: "center",
                           }}
                         >
                           {item.label}
@@ -379,32 +397,56 @@ export default function NavDrawerSystem() {
             })}
           </div>
 
-          {/* BRIEF GEORGE — bottom, gold, larger per Boss spec */}
-          <div className="px-6 pb-10 pt-6 border-t border-white/[0.06]">
+          {/* BRIEF GEORGE — gold, 36 px Cormorant per Boss spec */}
+          <div className="px-6 pb-6 pt-4">
             <Link
               href={BRIEF_GEORGE.href}
               onClick={closeMobile}
-              className="block w-full text-center"
+              className="block w-full text-center transition-colors"
               style={{
-                fontFamily: "var(--gy-font-ui)",
-                fontSize: "18px",
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-                fontWeight: 500,
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontWeight: 300,
+                fontSize: "36px",
+                letterSpacing: "-0.005em",
                 color: "#C9A84C",
-                padding: "18px",
-                border: "1px solid #C9A84C",
+                padding: "16px",
                 textDecoration: "none",
+                minHeight: 56,
               }}
               data-cursor="Brief"
             >
               {BRIEF_GEORGE.label} →
             </Link>
           </div>
+
+          {/* Currency switcher row — 3 buttons (€/$/£) Montserrat 11 px,
+              centered, sits below the BRIEF GEORGE CTA per Boss spec. */}
+          <div className="px-6 pb-10 pt-2 flex justify-center">
+            <CurrencySwitcher />
+          </div>
         </div>
       </div>
 
       <style jsx global>{`
+        /* Mobile overlay — slide-in from right per Boss spec. */
+        .gy-nav-overlay {
+          transform: translateX(100%);
+          opacity: 0;
+          pointer-events: none;
+          transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .gy-nav-overlay--open {
+          transform: translateX(0);
+          opacity: 1;
+          pointer-events: auto;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .gy-nav-overlay {
+            transition: opacity 0.2s ease;
+            transform: none;
+          }
+        }
+
         /* Chapter 02 — desktop hover dropdown.
            The trigger has bottom padding so the cursor crosses the
            panel without unhovering. Anchor flips to LEFT for items

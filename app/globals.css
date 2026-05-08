@@ -3669,3 +3669,28 @@ figcaption,
 }
 
 /* End Chapter 06 mobile polish */
+
+/* ───────────────────────────────────────────────────────────────────
+   Boss mobile-audit pass (2026-05-08)
+   Globally enforce 44 × 44 px minimum touch targets on common
+   interactive elements at ≤ 600 px viewports. Per WCAG 2.5.5 +
+   Apple HIG. Components that already render their own larger hit
+   areas keep them; this only kicks in where a smaller default
+   exists.
+   ─────────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  a[role='button'],
+  button:not([aria-label='']),
+  [role='menuitem'],
+  .gy-touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  /* Inline links inside paragraphs aren't touch-targets per se —
+     keep them at their natural inline size. */
+  p a, li a, h1 a, h2 a, h3 a {
+    min-height: 0;
+    min-width: 0;
+  }
+}
+

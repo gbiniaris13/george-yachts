@@ -166,7 +166,19 @@ export default function GeorgesSelection() {
           height: 480px;
           color: #F8F5F0;
         }
-        @media (max-width: 768px) { .gy-selection-card { height: 360px; } }
+        /* Mobile (≤ 600 px) — Boss spec: 320 px height; collection
+           label hidden (the card hierarchy already establishes
+           Private vs Explorer); George's italic note hidden because
+           it lives on the yacht page. Yacht name + specs + price +
+           CTA stay. */
+        @media (max-width: 600px) {
+          .gy-selection-card { height: 320px; }
+          .gy-selection-card__label { display: none !important; }
+          .gy-selection-card__note { display: none !important; }
+          .gy-selection-card__name { font-size: 28px !important; }
+          .gy-selection-card__specs { font-size: 11px !important; }
+        }
+        @media (min-width: 601px) and (max-width: 768px) { .gy-selection-card { height: 360px; } }
 
         .gy-selection-card__label {
           position: absolute;
