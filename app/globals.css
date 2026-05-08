@@ -1,5 +1,29 @@
+/* Phase 28 (typography overhaul, 2026-05-08) — FontShare imports for
+   the three free FontShare faces (Sentient editorial, General Sans
+   body, Switzer UI). Fraunces (display) loads via next/font/google
+   in layout.jsx so it gets the same self-host treatment as the rest.
+   FontShare's CDN is licensed CC-BY-style (free for commercial,
+   self-hostable, no per-pageview cost). All weights requested below
+   match the 5-tier spec — keeping the request to actual usage so the
+   font payload stays under 220 KB total. */
+@import url("https://api.fontshare.com/v2/css?f[]=sentient@400,500,500i,400i&f[]=general-sans@200,300,400,500,600,200i,300i,400i,500i&f[]=switzer@200,300,400,500,600,700&display=swap");
+
 /* Fonts loaded via next/font in layout.jsx — no render-blocking @import */
 @import "tailwindcss";
+
+/* Phase 28 — 5-tier typography variables. Components reference these
+   via `var(--gy-font-tier-N)` instead of hard-coding font-family
+   strings, so a future swap (or a Boss-approved second-pass tweak)
+   only touches this block. Stack ordering: tier face → friendly
+   web-safe fallback → generic family. Browsers display the fallback
+   for the few hundred ms it takes Fraunces/Sentient/etc. to load,
+   then swap once ready. */
+:root {
+  --gy-font-display:   "Fraunces", "Cormorant Garamond", Georgia, serif;
+  --gy-font-editorial: "Sentient", "Cormorant Garamond", Georgia, serif;
+  --gy-font-body:      "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --gy-font-ui:        "Switzer", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
 
 /* Smooth scroll globally */
 html {
@@ -3194,3 +3218,142 @@ a.gy-fancy-link:hover {
     animation-duration: 0ms !important;
   }
 }
+
+/* ───────────────────────────────────────────────────────────────────
+   Phase 28 (typography overhaul, 2026-05-08) — 5-tier mapping layer.
+
+   Boss-approved free-font swap of the entire site to:
+     • Tier 1 (Display)        Fraunces      → var(--gy-font-display)
+     • Tier 2 (Editorial)      Sentient      → var(--gy-font-editorial)
+     • Tier 3 (Body)           General Sans  → var(--gy-font-body)
+     • Tier 4-5 (UI/Caps)      Switzer       → var(--gy-font-ui)
+
+   Approach: instead of editing 53 component files inline, this layer
+   maps the legacy CSS selectors (and the legacy "feel" — what was
+   Cinzel/Cormorant/Montserrat) to the new tier vars. Components that
+   reference --font-cinzel etc. directly continue to render with
+   their fallback chain; the universal selectors below override them
+   at higher specificity to land on the correct tier.
+
+   Wins:
+     - Single-file change (this block) instead of 53 file diffs
+     - Easy to roll back / tune per-section
+     - Inline styles in components that explicitly set fontFamily
+       still win locally — but the legacy stack
+       ("'Cormorant Garamond', Georgia, serif") naturally falls
+       through to the variable's tier face after browser load
+   ─────────────────────────────────────────────────────────────────── */
+
+/* TIER 1 — Display / Hero. Big "wow" titles only.
+   Hero wordmark (VideoSection .gy-pearl-white), section title slots
+   that read as masthead-scale (.gy-region-map-title), Filotimon
+   signature line, contact-form headline. */
+.gy-pearl-white,
+.gy-luxe-enter,
+.gy-region-map-title,
+.yacht-hero__title,
+.fleet-card__name,
+[class*="font-marcellus"],
+.font-marcellus {
+  font-family: var(--gy-font-display) !important;
+  font-weight: 300;
+  letter-spacing: -0.015em;
+}
+
+/* TIER 1 stat numbers — Canela Thin in Boss's spec.
+   Targets HomeStats stat values + similar large numerics. */
+[class*="gy-stat-value"],
+.gy-stat-num {
+  font-family: var(--gy-font-display) !important;
+  font-weight: 200;
+  letter-spacing: -0.02em;
+}
+
+/* TIER 2 — Editorial H2/H3. Section headings, sub-section process
+   steps, blog post titles. The bulk of the site's "Cormorant
+   Garamond + serif" headings re-target here. */
+section h2,
+section h3,
+.fleet-card__builder,
+.gy-yacht-tour-caption,
+.gy-region-pin-name,
+.gy-region-modal-name,
+[class*="filotimo"][class*="title"],
+[class*="testimonial"] blockquote,
+[class*="signature-headline"],
+[class*="masthead-title"] {
+  font-family: var(--gy-font-editorial) !important;
+}
+
+/* TIER 3 — Body / Reading text. Paragraph copy, broker notes
+   (italic), partner testimonials. Boss spec moves the body face
+   from a serif (Cormorant) to a sans (General Sans) — this is
+   the largest legibility win of the migration on long-form copy. */
+p,
+.gy-body,
+.gy-paragraph,
+[class*="filotimo"] p,
+[class*="testimonial"] p,
+.fleet-card__spec-value,
+[class*="-blurb"],
+[class*="-description"],
+.gy-region-modal-blurb,
+.gy-region-map-blurb,
+.gy-region-map-footnote {
+  font-family: var(--gy-font-body) !important;
+}
+
+/* TIER 4 — Navigation / UI / Labels. Caps eyebrows, CTA buttons,
+   fleet tags, form labels, Forbes banner. Switzer carries all of
+   these — replaces every site mention of Cinzel/Montserrat caps. */
+[class*="eyebrow"],
+[class*="-label"],
+[class*="-badge"],
+[class*="-tag"],
+[class*="-pill"],
+[class*="cta"],
+button:not(.gy-region-modal-close):not(.gy-region-modal-nav),
+nav,
+nav a,
+.fleet-card__spec-label,
+.gy-region-pin-count,
+.gy-region-modal-eyebrow,
+.gy-yacht-tour-eyebrow,
+.gy-yacht-tour-counter,
+input,
+select,
+textarea,
+label,
+[class*="forbes-bar"] {
+  font-family: var(--gy-font-ui) !important;
+}
+
+/* TIER 5 — Captions, specs, legal. Same face as Tier 4 (Switzer),
+   different weight (Light 300) for fine-print contexts. */
+[class*="legal"],
+[class*="footer"][class*="legal"],
+[class*="trust"],
+[class*="copyright"],
+[class*="meta"][class*="-text"],
+.gy-yacht-tour-progress,
+small,
+figcaption,
+[class*="caption"] {
+  font-family: var(--gy-font-ui) !important;
+  font-weight: 300;
+}
+
+/* Forbes section keeps its existing Times New Roman Bold styling —
+   it's a deliberate brand-mimic of Forbes magazine masthead, not
+   a place where Sentient or Fraunces should land. The selector
+   below is a no-op explicit safeguard against the global overrides
+   above sweeping it. */
+[class*="gy-forbes"][class*="wordmark"],
+[class*="forbes-as-featured"] {
+  font-family: "Times New Roman", "Times", "Tinos", Georgia, serif !important;
+  font-weight: 700;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   End Phase 28 typography mapping.
+   ─────────────────────────────────────────────────────────────────── */

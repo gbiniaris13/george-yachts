@@ -1,4 +1,4 @@
-import { Geist, Marcellus, Cormorant_Garamond, Montserrat, Bodoni_Moda, Italiana, Cinzel } from "next/font/google";
+import { Geist, Marcellus, Cormorant_Garamond, Montserrat, Bodoni_Moda, Italiana, Cinzel, Fraunces } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import NavDrawerSystem from "./components/NavDrawerSystem";
@@ -105,6 +105,40 @@ const italiana = Italiana({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-italiana",
+  display: "swap",
+});
+
+// Phase 28 (typography overhaul, 2026-05-08) — Boss-approved 5-tier
+// system migration. Mapping (paid → free, all four FREE for
+// commercial use, self-hosted via next/font + FontShare CDN @import):
+//
+//   Tier 1 (Display / Hero)        Canela        →  Fraunces       (Google)
+//   Tier 2 (Editorial H2/H3)       Tiempos       →  Sentient       (FontShare)
+//   Tier 3 (Body / Reading)        Graphik       →  General Sans   (FontShare)
+//   Tier 4–5 (UI / Captions)       NHG           →  Switzer        (FontShare)
+//
+// Fraunces loads here via next/font/google. The three FontShare
+// faces load via @import in globals.css (api.fontshare.com is the
+// official free CDN, identical pattern to fonts.googleapis.com,
+// CC-BY-style license — Boss verified, no procurement needed).
+//
+// CSS variables exposed for the tier mapping:
+//   --gy-font-display    (Fraunces)
+//   --gy-font-editorial  (Sentient)
+//   --gy-font-body       (General Sans)
+//   --gy-font-ui         (Switzer)
+//
+// The legacy --font-cinzel / --font-cormorant / --font-montserrat
+// vars stay for now — they're referenced in dozens of inline styles
+// across components. Migration happens progressively: components
+// either get refactored to the new tier vars or fall back to the
+// legacy var (which keeps rendering with its current font). No
+// component breaks during the rollout.
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--gy-font-display",
   display: "swap",
 });
 
@@ -275,7 +309,7 @@ export default async function RootLayout({ children }) {
       </head>
 
       <body
-        className={`${geistSans.variable} ${marcellus.variable} ${cormorant.variable} ${montserrat.variable} ${cinzel.variable} ${bodoniModa.variable} ${italiana.variable} antialiased${forbesDismissed ? "" : " gy-with-forbes-bar"}`}
+        className={`${geistSans.variable} ${marcellus.variable} ${cormorant.variable} ${montserrat.variable} ${cinzel.variable} ${bodoniModa.variable} ${italiana.variable} ${fraunces.variable} antialiased${forbesDismissed ? "" : " gy-with-forbes-bar"}`}
       >
         {/* Skip to main content — accessibility */}
         <a
