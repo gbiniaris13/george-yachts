@@ -32,7 +32,7 @@ export default function BudgetSlider({ yachts = [] }) {
   const range = sliderMax - sliderMin || 1;
 
   return (
-    <section style={{ padding: '80px 24px', background: '#000', borderTop: '1px solid rgba(201,168,76,0.06)' }}>
+    <section style={{ padding: '80px 24px', background: '#0D1B2A', borderTop: '1px solid rgba(201,168,76,0.06)' }}>
       <div style={{ maxWidth: 800, margin: '0 auto' }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 40 }}>

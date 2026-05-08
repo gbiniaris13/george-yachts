@@ -53,7 +53,7 @@ export default function KpisPage() {
   }
 
   return (
-    <main style={{ background: "#000", color: "#fff", minHeight: "100vh", padding: "120px 24px 80px" }}>
+    <main style={{ background: "#0D1B2A", color: "#fff", minHeight: "100vh", padding: "120px 24px 80px" }}>
       <div style={{ maxWidth: 980, margin: "0 auto" }}>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 12px" }}>
           Internal · George Yachts

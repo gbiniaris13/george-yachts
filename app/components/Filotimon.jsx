@@ -58,7 +58,7 @@ export default function Filotimon({ filotimoImage = null }) {
   return (
     <section
       className="relative w-full overflow-hidden"
-      style={{ background: "#000000" }}
+      style={{ background: "#0D1B2A" }}
       aria-label="Filotimo — the Greek philosophy that shapes George Yachts"
     >
       {/* Ambient gold wash — drifts slowly on scroll (A4 ambient parallax) */}

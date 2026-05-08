@@ -67,7 +67,7 @@ export default async function ClusterPage({ params }) {
   const { articles, yachts } = await loadClusterData(cluster);
 
   return (
-    <article style={{ background: "#000", minHeight: "100vh" }}>
+    <article style={{ background: "#0D1B2A", minHeight: "100vh" }}>
       {/* HEADER */}
       <header
         style={{

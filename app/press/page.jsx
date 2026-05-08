@@ -156,7 +156,7 @@ function PressFaqSchema() {
 
 export default function PressPage() {
   return (
-    <div style={{ background: "#000", color: "#F8F5F0", minHeight: "100vh" }}>
+    <div style={{ background: "#0D1B2A", color: "#F8F5F0", minHeight: "100vh" }}>
       <CollectionPageSchema />
       <PressFaqSchema />
 

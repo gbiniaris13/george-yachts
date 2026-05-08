@@ -102,7 +102,7 @@ export const RichTextComponents = {
             >
               {headerData && (
                 <thead>
-                  <tr style={{ backgroundColor: "#000000" }}>
+                  <tr style={{ backgroundColor: "#0D1B2A" }}>
                     {(headerData.cells || []).map((cell, i) => (
                       <th key={i} style={cellStyle(true)}>
                         {cell}

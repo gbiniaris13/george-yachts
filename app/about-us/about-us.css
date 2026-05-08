@@ -129,7 +129,7 @@
 /* ── PHILOSOPHY ── */
 .about-philosophy {
   padding: 120px 24px;
-  background: #000;
+  background: #0D1B2A;
 }
 
 .about-philosophy__inner {
@@ -177,7 +177,7 @@
 /* ── STATS ── */
 .about-stats {
   padding: 80px 24px;
-  background: #000;
+  background: #0D1B2A;
   border-top: 1px solid rgba(201,168,76,0.08);
   border-bottom: 1px solid rgba(201,168,76,0.08);
 }
@@ -218,7 +218,7 @@
 /* ── GEORGE'S STORY ── */
 .about-george {
   padding: 120px 24px;
-  background: #000;
+  background: #0D1B2A;
 }
 
 .about-george__inner {
@@ -289,7 +289,7 @@
 /* ── SERVICES ── */
 .about-services {
   padding: 120px 24px;
-  background: #000;
+  background: #0D1B2A;
   border-top: 1px solid rgba(201,168,76,0.08);
 }
 
@@ -330,7 +330,7 @@
 }
 
 .about-services__card {
-  background: #000;
+  background: #0D1B2A;
   padding: 48px 32px;
   text-align: center;
   /* Phase 16 (luxury rebuild) — F5 3D tilt on the about-us service
@@ -388,7 +388,7 @@
 /* ── CREDENTIALS ── */
 .about-credentials {
   padding: 80px 24px;
-  background: #000;
+  background: #0D1B2A;
   border-top: 1px solid rgba(201,168,76,0.08);
 }
 
@@ -443,7 +443,7 @@
 /* ── CTA ── */
 .about-cta {
   padding: 120px 24px;
-  background: #000;
+  background: #0D1B2A;
   border-top: 1px solid rgba(201,168,76,0.08);
 }
 

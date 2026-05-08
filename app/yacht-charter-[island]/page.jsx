@@ -120,7 +120,7 @@ export default async function IslandPage({ params }) {
       <BreadcrumbSchema items={breadcrumbs} />
       <IslandPageTracker slug={island.slug} name={island.name} />
 
-      <article style={{ background: "#000", minHeight: "100vh" }}>
+      <article style={{ background: "#0D1B2A", minHeight: "100vh" }}>
         {/* HERO */}
         <header
           style={{

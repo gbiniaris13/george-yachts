@@ -28,7 +28,7 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <article style={{ background: "#000", minHeight: "100vh", paddingBottom: 80 }}>
+      <article style={{ background: "#0D1B2A", minHeight: "100vh", paddingBottom: 80 }}>
         <header
           style={{
             padding: "100px 24px 36px",

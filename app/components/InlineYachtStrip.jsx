@@ -37,7 +37,7 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
   return (
     <section
       style={{
-        background: "#000",
+        background: "#0D1B2A",
         padding: "44px 24px",
       }}
     >

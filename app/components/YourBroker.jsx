@@ -29,7 +29,7 @@ export default function YourBroker() {
       ref={ref}
       style={{
         padding: "120px 24px",
-        background: "#000",
+        background: "#0D1B2A",
         borderTop: "1px solid rgba(201,168,76,0.08)",
         borderBottom: "1px solid rgba(201,168,76,0.08)",
       }}

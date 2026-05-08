@@ -29,7 +29,7 @@ export default function DeletionPage() {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <article style={{ background: "#000", minHeight: "100vh", paddingBottom: 60 }}>
+      <article style={{ background: "#0D1B2A", minHeight: "100vh", paddingBottom: 60 }}>
         <header
           style={{
             padding: "120px 24px 48px",

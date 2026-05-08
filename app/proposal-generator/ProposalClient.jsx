@@ -140,7 +140,7 @@ export default function ProposalClient({ yachts = [] }) {
 
   // ─── RENDER ───
   return (
-    <div style={{ minHeight: "100vh", background: "#000", color: "#fff", paddingBottom: 120 }}>
+    <div style={{ minHeight: "100vh", background: "#0D1B2A", color: "#fff", paddingBottom: 120 }}>
       {/* HEADER */}
       <header style={{ padding: "120px 24px 40px", textAlign: "center" }}>
         <p style={{

@@ -35,7 +35,7 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
   const maxLen = 55; // max scale for the bars
 
   return (
-    <div style={{ minHeight: '100vh', background: '#000' }}>
+    <div style={{ minHeight: '100vh', background: '#0D1B2A' }}>
       {/* Hero */}
       <div style={{ padding: '160px 24px 40px', textAlign: 'center' }}>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>

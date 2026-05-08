@@ -546,7 +546,7 @@ export default function InquiryClient() {
 // breathing room while mobile lands the question card immediately.
 const wrap = {
   minHeight: "100vh",
-  background: "#000",
+  background: "#0D1B2A",
   padding: "clamp(80px, 12vw, 140px) 24px 80px",
   display: "flex",
   flexDirection: "column",
@@ -609,7 +609,7 @@ const subtext = {
 const textInput = {
   width: "100%",
   padding: "14px 16px",
-  background: "#000",
+  background: "#0D1B2A",
   border: "1px solid rgba(201,168,76,0.25)",
   color: "#fff",
   fontFamily: "'Montserrat', sans-serif",

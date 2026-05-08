@@ -63,7 +63,7 @@ function FleetPanel({
           backgroundImage: image
             ? `url(${image})`
             : gradientFallback,
-          backgroundColor: "#000000",
+          backgroundColor: "#0D1B2A",
         }}
       />
 

@@ -25,7 +25,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
     <section
       aria-label="Latest from The Journal"
       style={{
-        background: "#000",
+        background: "#0D1B2A",
         padding: "80px 24px",
         borderTop: "1px solid rgba(255,255,255,0.04)",
         position: "relative",

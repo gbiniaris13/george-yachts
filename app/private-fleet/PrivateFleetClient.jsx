@@ -8,7 +8,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
   const { t } = useI18n();
 
   return (
-    <div style={{ minHeight: "100vh", background: "#000" }}>
+    <div style={{ minHeight: "100vh", background: "#0D1B2A" }}>
       {/* Back Button */}
       <div style={{ position: "fixed", top: 100, left: 24, zIndex: 9999 }}>
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", fontFamily: "'Montserrat', sans-serif", fontSize: 11, letterSpacing: "0.15em", color: "rgba(255,255,255,0.5)", padding: "12px 20px", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)", borderRadius: 4, border: "1px solid rgba(201,168,76,0.2)" }}>
@@ -44,7 +44,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
       </section>
 
       {/* Price Range */}
-      <section style={{ padding: "80px 24px", background: "#000", textAlign: "center" }}>
+      <section style={{ padding: "80px 24px", background: "#0D1B2A", textAlign: "center" }}>
         <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 40px", border: "1px solid rgba(201,168,76,0.15)", borderRadius: 4 }}>
           <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.6rem, 4vw, 2.4rem)", color: "#C9A84C", margin: "0 0 16px 0" }}>
             From €{lowestPrice.toLocaleString()} to €{highestPrice.toLocaleString()} / week
@@ -56,7 +56,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
       </section>
 
       {/* Value Props */}
-      <section style={{ padding: "100px 24px", background: "#000" }}>
+      <section style={{ padding: "100px 24px", background: "#0D1B2A" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 40 }}>
           {[
             { icon: "👨‍✈️", title: "Full Crew", desc: "Captain, chef, stewardess. Your comfort is their profession." },
@@ -73,7 +73,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
       </section>
 
       {/* Yacht Grid */}
-      <section style={{ padding: "80px 24px", background: "#000" }}>
+      <section style={{ padding: "80px 24px", background: "#0D1B2A" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 60 }}>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.4em", color: "#C9A84C", textTransform: "uppercase", marginBottom: 16 }}>
@@ -142,7 +142,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
       </section>
 
       {/* George Section */}
-      <section style={{ padding: "100px 24px", background: "#000", borderTop: "1px solid rgba(201,168,76,0.08)" }}>
+      <section style={{ padding: "100px 24px", background: "#0D1B2A", borderTop: "1px solid rgba(201,168,76,0.08)" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", display: "flex", alignItems: "center", gap: 40, flexWrap: "wrap", justifyContent: "center" }}>
           <div style={{ position: "relative", width: 180, height: 180, borderRadius: "50%", overflow: "hidden", flexShrink: 0 }}>
             <Image src="/images/george.jpg" alt="George P. Biniaris" fill style={{ objectFit: "cover" }} sizes="180px" />
@@ -158,7 +158,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "100px 24px", background: "#000", textAlign: "center" }}>
+      <section style={{ padding: "100px 24px", background: "#0D1B2A", textAlign: "center" }}>
         <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#fff", marginBottom: 24 }}>
           Begin Your Private Charter
         </h2>

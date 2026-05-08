@@ -138,7 +138,7 @@ export default async function BlogPage() {
         <section
           aria-label="Browse the fleet"
           style={{
-            background: "#000",
+            background: "#0D1B2A",
             padding: "72px 24px",
             borderTop: "1px solid rgba(201,168,76,0.12)",
           }}

@@ -189,7 +189,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
       <section
         aria-label="About the author"
         style={{
-          background: "#000",
+          background: "#0D1B2A",
           padding: "56px 24px",
           borderBottom: "1px solid rgba(255,255,255,0.05)",
         }}

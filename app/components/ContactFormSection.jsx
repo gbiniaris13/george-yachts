@@ -567,7 +567,7 @@ const ContactFormSection = () => {
           -webkit-box-shadow: 0 0 0px 1000px #000000 inset;
           transition: background-color 5000s ease-in-out 0s;
         }
-        select option { background: #000 !important; color: #fff !important; }
+        select option { background: #0D1B2A !important; color: #fff !important; }
         select:invalid { color: rgba(255,255,255,0.3); }
         .date-input::-webkit-calendar-picker-indicator {
           filter: invert(0.7) sepia(1) saturate(3) hue-rotate(15deg);

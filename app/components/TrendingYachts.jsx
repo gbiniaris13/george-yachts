@@ -63,7 +63,7 @@ export default function TrendingYachts({ yachts }) {
       aria-label="Trending yachts"
       style={{
         position: "relative",
-        background: "#000",
+        background: "#0D1B2A",
         padding: "60px 0 70px",
         borderTop: "1px solid rgba(201,168,76,0.12)",
         borderBottom: "1px solid rgba(201,168,76,0.12)",

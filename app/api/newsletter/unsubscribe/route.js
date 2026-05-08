@@ -56,7 +56,7 @@ function page({ title, body }) {
   <meta name="robots" content="noindex" />
   <title>${title}</title>
 </head>
-<body style="margin:0; padding:0; background:#000; color:#fff; font-family:Georgia, serif; min-height:100vh; display:flex; align-items:center; justify-content:center;">
+<body style="margin:0; padding:0; background: #0D1B2A; color:#fff; font-family:Georgia, serif; min-height:100vh; display:flex; align-items:center; justify-content:center;">
   <div style="max-width:520px; margin:0 auto; padding:48px 32px; text-align:center; border:1px solid rgba(201,168,76,0.25);">
     <p style="margin:0 0 14px; font-family:'Montserrat',Arial,sans-serif; font-size:9px; letter-spacing:0.55em; text-transform:uppercase; color:#C9A84C; font-weight:600;">
       George Yachts Journal

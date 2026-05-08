@@ -4,7 +4,7 @@ export default function Error({ error, reset }) {
   return (
     <div
       className="min-h-screen flex items-center justify-center px-6"
-      style={{ background: "#000", fontFamily: "'Montserrat', sans-serif" }}
+      style={{ background: "#0D1B2A", fontFamily: "'Montserrat', sans-serif" }}
     >
       <div className="text-center max-w-lg">
         <p

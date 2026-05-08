@@ -128,7 +128,7 @@ export default function AIResearchHub() {
   return (
     <main
       style={{
-        background: "#000",
+        background: "#0D1B2A",
         color: "#F8F5F0",
         minHeight: "100vh",
         padding: "clamp(120px, 14vw, 200px) 24px 96px",

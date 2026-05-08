@@ -30,7 +30,7 @@ export default async function Image() {
         style={{
           width: "100%",
           height: "100%",
-          background: "#000000",
+          background: "#0D1B2A",
           display: "flex",
           flexDirection: "column",
           padding: "56px 64px",

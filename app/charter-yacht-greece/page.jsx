@@ -101,7 +101,7 @@ export default async function CharterFleetPage() {
     <div
       style={{
         minHeight: "100vh",
-        background: "#000000",
+        background: "#0D1B2A",
         color: "#fff",
         fontFamily: "'Montserrat', 'Helvetica Neue', sans-serif",
       }}
@@ -221,7 +221,7 @@ export default async function CharterFleetPage() {
       </section>
 
       {/* FROM THE JOURNAL — Cross-linking */}
-      <section style={{ padding: "80px 24px", background: "#000", borderTop: "1px solid rgba(201,168,76,0.06)" }}>
+      <section style={{ padding: "80px 24px", background: "#0D1B2A", borderTop: "1px solid rgba(201,168,76,0.06)" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "40px" }}>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", fontWeight: 600, marginBottom: "12px" }}>Expert Insights</p>
@@ -236,7 +236,7 @@ export default async function CharterFleetPage() {
               <a
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                style={{ background: "#000", padding: "28px 24px", textDecoration: "none", display: "block", transition: "background 0.3s ease" }}
+                style={{ background: "#0D1B2A", padding: "28px 24px", textDecoration: "none", display: "block", transition: "background 0.3s ease" }}
               >
                 <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "17px", fontWeight: 400, color: "#fff", lineHeight: 1.4, margin: "0 0 12px" }}>{post.title}</p>
                 <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#C9A84C" }}>Read Article &rarr;</span>

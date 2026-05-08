@@ -212,7 +212,7 @@ export default function WaterShaderHorizon({ height = 220 }) {
       style={{
         width: "100%",
         height,
-        background: "#000",
+        background: "#0D1B2A",
         position: "relative",
       }}
     >

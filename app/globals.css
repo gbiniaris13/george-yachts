@@ -1141,7 +1141,7 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
    #000000 = 7.6:1 (AAA) — even higher contrast than navy. */
 .gold-on-navy {
   color: #C9A84C;
-  background: #000000;
+  background: #0D1B2A;
 }
 
 /* ─── Skip-link styling (accessibility - already in layout, style it) ─── */
@@ -1161,7 +1161,7 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
   width: auto;
   height: auto;
   padding: 0.75rem 1.25rem;
-  background: #000000;
+  background: #0D1B2A;
   color: #F8F5F0;
   border: 2px solid #C9A84C;
   border-radius: 4px;
@@ -3173,7 +3173,7 @@ a.gy-fancy-link:hover {
 .gy-wave-divider {
   position: relative;
   width: 100%;
-  background: #000;
+  background: #0D1B2A;
   overflow: hidden;
 }
 .gy-wave-divider svg {
@@ -3478,4 +3478,76 @@ figcaption,
    border stays intact (it's one of the 4 allowed gold uses). */
 .yacht-insider__card {
   border-left-color: var(--gy-gold, #C9A84C) !important;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   Chapter 05 Pass 3 — full palette enforcement (Boss directive,
+   2026-05-08).
+
+   Boss locked the canonical 6-colour palette and asked for it to
+   be applied EVERYWHERE — not just to gold. This block enforces
+   the rest of the palette via class-level overrides, which catch
+   every Tailwind .bg-black / .text-white in the codebase without
+   touching 200+ component files individually.
+
+       --gy-navy   #0D1B2A → primary dark bg (was #000)
+       --gy-ivory  #F8F5F0 → text on dark   (was #FFFFFF / text-white)
+       --gy-card   #142233 → card surfaces  (NEW)
+       --gy-muted  #9CA3AF → secondary text on dark
+       --gy-white  #FFFFFF → ONLY for light sections
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Tailwind .bg-black / .bg-[#000] / .bg-[#000000] → navy.
+   These selectors hit every component using Tailwind's black
+   background utility (86 occurrences in the codebase) and remap
+   them to the deep-navy primary background in one step. */
+.bg-black,
+[class*="bg-[#000]"],
+[class*="bg-[#000000]"] {
+  background-color: var(--gy-navy, #0D1B2A) !important;
+}
+
+/* Tailwind .text-white → ivory. 217 occurrences in the codebase
+   become editorial-ivory in one step. The pure #FFFFFF utility is
+   reserved for genuine "light section" needs, which use a
+   light-section wrapper class explicitly. */
+.text-white,
+.text-\[\#fff\],
+.text-\[\#FFFFFF\] {
+  color: var(--gy-ivory, #F8F5F0) !important;
+}
+
+/* Tailwind translucent-white text utilities (text-white/60, /70 etc.)
+   Tailwind generates these as `color: rgba(255,255,255,0.6)`. Map
+   to the ivory-tinted equivalent so secondary copy on dark bg
+   matches the brand palette. */
+[class*="text-white\\/"] {
+  color: rgba(248, 245, 240, 0.7) !important;
+}
+
+/* Card-surface helper class — opt in via className="gy-card-bg" on
+   any component that wants the slightly-lighter-than-navy panel
+   bg per Boss spec. */
+.gy-card-bg {
+  background-color: var(--gy-card, #142233) !important;
+}
+
+/* Light-section helper class — explicit opt-in for sections that
+   should switch to the pure-white background (BrokerTestimonials
+   already does this via inline style, but new light sections can
+   adopt this class to mark themselves and inherit the matching
+   navy text colour for readability). */
+.gy-light-section {
+  background-color: var(--gy-white, #FFFFFF) !important;
+  color: var(--gy-navy, #0D1B2A);
+}
+.gy-light-section .gy-muted {
+  color: var(--gy-muted, #9CA3AF);
+}
+
+/* Forbes top bar — explicitly stays on a deeper black so it reads
+   as a separate band above the masthead (the navy of the rest of
+   the site would blend into it). The bar is brand-safe at #0A0A0A. */
+.gy-forbes-bar {
+  background-color: #0A0A0A !important;
 }

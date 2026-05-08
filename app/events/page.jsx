@@ -72,7 +72,7 @@ export default function EventsPage() {
       </section>
 
       {/* Intro */}
-      <section style={{ padding: "100px 24px", background: "#000" }}>
+      <section style={{ padding: "100px 24px", background: "#0D1B2A" }}>
         <Reveal className="text-center" style={{ maxWidth: "700px", margin: "0 auto" }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "24px" }}>2026 Calendar</p>
           <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 300, color: "#fff", margin: "0 0 32px" }}>
@@ -86,7 +86,7 @@ export default function EventsPage() {
       </section>
 
       {/* Events List */}
-      <section style={{ padding: "0 24px 100px", background: "#000" }}>
+      <section style={{ padding: "0 24px 100px", background: "#0D1B2A" }}>
         <div style={{ maxWidth: "800px", margin: "0 auto" }}>
           {events.map((event, i) => (
             <Reveal key={i} delay={i * 0.08}>
@@ -111,7 +111,7 @@ export default function EventsPage() {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "100px 24px", background: "#000", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.08)" }}>
+      <section style={{ padding: "100px 24px", background: "#0D1B2A", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.08)" }}>
         <Reveal>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "16px" }}>Attending a Show?</p>
           <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 300, color: "#fff", margin: "0 0 16px" }}>Let&apos;s Meet in Person</h2>

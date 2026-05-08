@@ -111,7 +111,7 @@
 /* ── INTRO SECTION ── */
 .svc-intro {
   padding: 100px 24px;
-  background: #000;
+  background: #0D1B2A;
 }
 
 .svc-intro__inner {
@@ -166,7 +166,7 @@
 /* ── FEATURES GRID ── */
 .svc-features {
   padding: 100px 24px;
-  background: #000;
+  background: #0D1B2A;
   border-top: 1px solid rgba(201,168,76,0.08);
 }
 
@@ -189,7 +189,7 @@
 }
 
 .svc-features__card {
-  background: #000;
+  background: #0D1B2A;
   padding: 48px 28px;
   text-align: center;
   transition: background 0.5s ease;
@@ -225,7 +225,7 @@
 /* ── CHECKLIST ── */
 .svc-checklist {
   padding: 80px 24px;
-  background: #000;
+  background: #0D1B2A;
   border-top: 1px solid rgba(201,168,76,0.08);
 }
 
@@ -274,7 +274,7 @@
 /* ── CTA ── */
 .svc-cta {
   padding: 100px 24px;
-  background: #000;
+  background: #0D1B2A;
   text-align: center;
   border-top: 1px solid rgba(201,168,76,0.08);
 }
@@ -330,7 +330,7 @@
 /* ── FAQ STYLES ── */
 .faq-section {
   padding: 100px 24px;
-  background: #000;
+  background: #0D1B2A;
 }
 
 .faq-section__inner {

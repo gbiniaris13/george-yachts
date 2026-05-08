@@ -11,7 +11,7 @@ export default function SimilarYachts({ items = [] }) {
   return (
     <section
       style={{
-        background: "#000",
+        background: "#0D1B2A",
         padding: "100px 24px",
         borderTop: "1px solid rgba(201,168,76,0.1)",
       }}

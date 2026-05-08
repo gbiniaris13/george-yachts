@@ -223,7 +223,7 @@ export default function ItinerariesContent() {
   return (
     <>
       {/* Intro */}
-      <section style={{ padding: "100px 24px", background: "#000" }}>
+      <section style={{ padding: "100px 24px", background: "#0D1B2A" }}>
         <Reveal>
           <div style={{ maxWidth: "750px", margin: "0 auto", textAlign: "center" }}>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "24px" }}>Curated by George</p>
@@ -239,14 +239,14 @@ export default function ItinerariesContent() {
       </section>
 
       {/* Itineraries */}
-      <section style={{ padding: "0 24px 80px", background: "#000", maxWidth: "900px", margin: "0 auto" }}>
+      <section style={{ padding: "0 24px 80px", background: "#0D1B2A", maxWidth: "900px", margin: "0 auto" }}>
         {itineraries.map((itin, i) => (
           <ItineraryCard key={itin.id} itin={itin} index={i} />
         ))}
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "100px 24px", background: "#000", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.08)" }}>
+      <section style={{ padding: "100px 24px", background: "#0D1B2A", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.08)" }}>
         <Reveal>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "16px" }}>Your Itinerary, Your Way</p>
           <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 300, color: "#fff", margin: "0 0 16px" }}>

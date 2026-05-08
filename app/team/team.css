@@ -109,7 +109,7 @@
 /* ── INTRO ── */
 .team-intro {
   padding: 100px 24px;
-  background: #000;
+  background: #0D1B2A;
 }
 
 .team-intro__inner {
@@ -154,7 +154,7 @@
 /* ── TEAM GRID ── */
 .team-grid-section {
   padding: 0 24px 100px;
-  background: #000;
+  background: #0D1B2A;
 }
 
 .team-grid {
@@ -168,7 +168,7 @@
 
 /* ── TEAM CARD ── */
 .team-card {
-  background: #000;
+  background: #0D1B2A;
   overflow: hidden;
   /* Phase 8 (luxury rebuild) — F5 3D tilt on broker cards so the team
      page reads as cinematic instead of catalog. Skipped on touch +
@@ -314,7 +314,7 @@
 /* ── VALUES ── */
 .team-values {
   padding: 100px 24px;
-  background: #000;
+  background: #0D1B2A;
   border-top: 1px solid rgba(201, 168, 76, 0.08);
 }
 
@@ -337,7 +337,7 @@
 }
 
 .team-values__card {
-  background: #000;
+  background: #0D1B2A;
   padding: 48px 28px;
   text-align: center;
   transition: background 0.5s ease;

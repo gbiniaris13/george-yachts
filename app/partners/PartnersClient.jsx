@@ -170,7 +170,7 @@ export default function PartnersClient() {
   // ── Locked view: a single branded screen with the gate form ──
   if (!unlocked) {
     return (
-      <main className="font-sans" style={{ background: "#000000", minHeight: "100vh" }}>
+      <main className="font-sans" style={{ background: "#0D1B2A", minHeight: "100vh" }}>
         <section
           className="relative flex items-center justify-center text-center px-6"
           style={{ minHeight: "100vh", paddingTop: "140px", paddingBottom: "80px" }}
@@ -348,7 +348,7 @@ export default function PartnersClient() {
       <section
         className="relative flex items-center justify-center text-center px-6"
         style={{
-          backgroundColor: "#000000",
+          backgroundColor: "#0D1B2A",
           minHeight: "70vh",
           paddingTop: "140px",
           paddingBottom: "80px",
@@ -442,7 +442,7 @@ export default function PartnersClient() {
       </section>
 
       {/* ═══════ WHY PARTNERS CHOOSE US ═══════ */}
-      <section className="py-20 md:py-28 px-6" style={{ backgroundColor: "#000000" }}>
+      <section className="py-20 md:py-28 px-6" style={{ backgroundColor: "#0D1B2A" }}>
         <div className="max-w-5xl mx-auto">
           <p className="text-center mb-16" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.45em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
             W H Y &nbsp; P A R T N E R S &nbsp; C H O O S E &nbsp; U S
@@ -497,7 +497,7 @@ export default function PartnersClient() {
       </section>
 
       {/* ═══════ FLEET OVERVIEW ═══════ */}
-      <section className="py-20 md:py-28 px-6" style={{ backgroundColor: "#000000" }}>
+      <section className="py-20 md:py-28 px-6" style={{ backgroundColor: "#0D1B2A" }}>
         <div className="max-w-5xl mx-auto">
           <p className="text-center mb-16" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.45em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
             O U R &nbsp; F L E E T
@@ -524,7 +524,7 @@ export default function PartnersClient() {
       </section>
 
       {/* ═══════ J.1 — PARTNERS FAQ ═══════ */}
-      <section className="py-20 md:py-28 px-6" style={{ backgroundColor: "#000000" }}>
+      <section className="py-20 md:py-28 px-6" style={{ backgroundColor: "#0D1B2A" }}>
         <div className="max-w-3xl mx-auto">
           <p className="text-center mb-16" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.45em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
             F R E Q U E N T L Y &nbsp; A S K E D
@@ -715,7 +715,7 @@ export default function PartnersClient() {
       </section>
 
       {/* ═══════ CREDENTIALS FOOTER ═══════ */}
-      <section className="py-8 px-6" style={{ backgroundColor: "#000000" }}>
+      <section className="py-8 px-6" style={{ backgroundColor: "#0D1B2A" }}>
         <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-6 md:gap-10">
           {credentials.map((c, i) => (
             <span

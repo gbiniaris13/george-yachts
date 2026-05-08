@@ -172,7 +172,7 @@ export default function NewsletterSignupClient({ streams }) {
                       position: "absolute",
                       top: -10,
                       left: 18,
-                      background: "#000000",
+                      background: "#0D1B2A",
                       color: "#C9A84C",
                       padding: "3px 10px",
                       fontFamily: "'Montserrat', sans-serif",

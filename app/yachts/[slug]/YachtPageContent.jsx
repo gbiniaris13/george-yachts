@@ -108,7 +108,7 @@ function DeckLayoutFallback({ images, yachtName }) {
               key={i}
               style={{
                 position: 'relative',
-                background: '#000000',
+                background: '#0D1B2A',
                 border: '1px solid rgba(201,168,76,0.3)',
               }}
             >
@@ -237,7 +237,7 @@ function DeckPlansSection({ decks, yachtName }) {
             position: 'relative',
             width: '100%',
             border: '1px solid rgba(201,168,76,0.3)',
-            background: '#000000',
+            background: '#0D1B2A',
           }}
         >
           <img
