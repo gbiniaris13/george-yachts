@@ -50,6 +50,7 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import CurrencySwitcher from "./CurrencySwitcher";
+import { DESTINATIONS } from "@/lib/destinations";
 
 // Top-level nav items + their dropdowns. Order matters — the spec
 // puts CHARTER first (revenue), EXPLORE GREECE second (intent
@@ -111,8 +112,9 @@ const navLabelStyle = {
 // trigger sits near an edge — Boss flagged the CHARTER dropdown
 // going off-screen on the left under the original centered anchor.
 function NavItem({ section, color = "rgba(248, 245, 240,0.85)", anchor = "left" }) {
+  const isExplore = section.label === "Explore Greece";
   return (
-    <div className={`gy-nav-item gy-nav-item--anchor-${anchor} relative`}>
+    <div className={`gy-nav-item gy-nav-item--anchor-${anchor} ${isExplore ? "gy-nav-item--rich" : ""} relative`}>
       <button
         className="gy-nav-item__trigger"
         aria-haspopup="true"
@@ -122,18 +124,45 @@ function NavItem({ section, color = "rgba(248, 245, 240,0.85)", anchor = "left" 
         {section.label}
       </button>
       <div className="gy-nav-item__panel" role="menu">
-        {section.items.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            role="menuitem"
-            className="gy-nav-item__link"
-            style={navLabelStyle}
-            data-cursor="View"
-          >
-            {item.label}
-          </Link>
-        ))}
+        {section.items.map((item) => {
+          // Boss directive (2026-05-08): the Explore Greece dropdown
+          // pulls its copy from DESTINATIONS so the nav surfaces the
+          // same editorial language as the homepage Three Greek
+          // Worlds section. The "Itineraries" item has no destination
+          // record — render it as a plain link.
+          const dest =
+            isExplore && item.href.startsWith("/yacht-charter/")
+              ? DESTINATIONS[item.href.split("/").pop()]
+              : null;
+          if (dest) {
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                role="menuitem"
+                className="gy-nav-item__rich-link"
+                data-cursor="Discover"
+              >
+                <p className="gy-nav-item__rich-eyebrow">{dest.label.toUpperCase()}</p>
+                <p className="gy-nav-item__rich-title">{dest.cardTitle}</p>
+                <p className="gy-nav-item__rich-subline">{dest.cardSubline}</p>
+                <span className="gy-nav-item__rich-cta">Discover the {dest.label} →</span>
+              </Link>
+            );
+          }
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              role="menuitem"
+              className="gy-nav-item__link"
+              style={navLabelStyle}
+              data-cursor="View"
+            >
+              {item.label}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
@@ -491,6 +520,66 @@ export default function NavDrawerSystem() {
         .gy-nav-item__link:hover {
           color: #C9A84C;
           padding-left: 6px;
+        }
+
+        /* Explore Greece dropdown — rich editorial cards using
+           DESTINATIONS data so the nav surfaces the same copy as
+           the homepage Three Greek Worlds section. Wider panel,
+           per-item gap, vertical layout per card. */
+        .gy-nav-item--rich .gy-nav-item__panel {
+          min-width: 360px;
+          padding: 22px 24px;
+          gap: 18px;
+        }
+        .gy-nav-item__rich-link {
+          display: block;
+          padding: 12px 4px;
+          text-decoration: none;
+          border-top: 1px solid rgba(201, 168, 76, 0.10);
+          transition: padding-left 220ms ease;
+        }
+        .gy-nav-item__rich-link:first-child {
+          border-top: 0;
+        }
+        .gy-nav-item__rich-link:hover {
+          padding-left: 6px;
+        }
+        .gy-nav-item__rich-eyebrow {
+          font-family: var(--gy-font-ui);
+          font-size: 9px;
+          font-weight: 500;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: #C9A84C;
+          margin: 0 0 6px;
+        }
+        .gy-nav-item__rich-title {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-weight: 300;
+          font-size: 22px;
+          line-height: 1.15;
+          color: #F8F5F0;
+          margin: 0 0 6px;
+          letter-spacing: -0.005em;
+        }
+        .gy-nav-item__rich-subline {
+          font-family: var(--gy-font-ui);
+          font-weight: 300;
+          font-size: 12px;
+          line-height: 1.5;
+          color: rgba(248, 245, 240, 0.6);
+          margin: 0 0 10px;
+        }
+        .gy-nav-item__rich-cta {
+          font-family: var(--gy-font-ui);
+          font-size: 10px;
+          font-weight: 500;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: #C9A84C;
+        }
+        .gy-nav-item__rich-link:hover .gy-nav-item__rich-cta {
+          color: #F8F5F0;
         }
         .gy-nav-item__trigger:hover,
         .gy-nav-item:hover .gy-nav-item__trigger {

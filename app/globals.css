@@ -3694,3 +3694,77 @@ figcaption,
   }
 }
 
+
+/* ───────────────────────────────────────────────────────────────────
+   Phase 28 Pass 2 — sitewide font tier rollout (2026-05-08)
+   Boss directive: the homepage uses the new free-tier fonts
+   (Fraunces / Sentient / General Sans / Switzer); roll them out
+   across every page the same way the colour palette was rolled
+   out — uniformly, no exceptions.
+
+   Strategy: attribute-substring selectors on inline `style="…"`
+   declarations let one CSS rule re-route every hardcoded
+   font-family across the codebase to the right tier variable.
+   This is the minimal-risk equivalent of touching all 160+
+   components — each declaration still resolves to the original
+   font as a fallback inside the tier var stack, so nothing
+   ever shows blank.
+
+   Mapping rationale (paid → free, all CC-OK for commercial use):
+     • Cormorant Garamond / Italiana / Bodoni Moda → editorial tier
+       (Sentient — Tiempos cousin)
+     • Cinzel / Trajan Pro                          → display tier
+       (Fraunces 100/200 — Canela cousin)
+     • Montserrat / Times New Roman / Helvetica     → UI tier
+       (Switzer — NHG cousin)
+   ─────────────────────────────────────────────────────────────── */
+
+/* Default cascade — body inherits the body tier; headings inherit
+   display by default, h2/h3 take editorial. Anything that needs a
+   different face overrides at the component level. */
+body {
+  font-family: var(--gy-font-body);
+}
+h1, .gy-h1 {
+  font-family: var(--gy-font-display);
+}
+h2, h3, .gy-h2, .gy-h3 {
+  font-family: var(--gy-font-editorial);
+}
+h4, h5, h6, button, input, select, textarea, label {
+  font-family: var(--gy-font-ui);
+}
+
+/* Inline-style override map. Hardcoded font-family declarations
+   across legacy components funnel into the tier variables here. */
+[style*="Cormorant Garamond"],
+[style*="'Cormorant Garamond'"],
+[style*="\"Cormorant Garamond\""] {
+  font-family: var(--gy-font-editorial) !important;
+}
+[style*="Italiana"],
+[style*="'Italiana'"],
+[style*="Bodoni Moda"],
+[style*="'Bodoni Moda'"] {
+  font-family: var(--gy-font-editorial) !important;
+}
+[style*="Cinzel"],
+[style*="'Cinzel'"],
+[style*="Trajan Pro"],
+[style*="'Trajan Pro'"] {
+  font-family: var(--gy-font-display) !important;
+}
+[style*="Montserrat"],
+[style*="'Montserrat'"] {
+  font-family: var(--gy-font-ui) !important;
+}
+/* "Times New Roman" stays Times — it's only used in the Forbes
+   wordmark where the wordmark itself IS the typographic statement.
+   Same for Helvetica Neue / system sans utility classes. */
+
+/* Components that explicitly opt in via the tier var are already
+   correct — no override needed. The legacy --font-cormorant /
+   --font-montserrat / --font-cinzel CSS variables stay in place
+   for any inline style that references them; they now resolve
+   through next/font, then fall through to the tier face if the
+   original Google file fails to load. */
