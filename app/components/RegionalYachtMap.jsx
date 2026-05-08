@@ -76,6 +76,13 @@ export default function RegionalYachtMap({ yachts = [] }) {
   // region before the modal opens. 480 ms hold, then modal reveal.
   // CSS-only, no JS animation library.
   const [zoomingTo, setZoomingTo] = useState(null);
+  // 2026-05-08 (Phase 27i.15) — region-to-region fly-through. While
+  // the modal is open the user can click the prev/next arrows to
+  // glide to a neighbouring region. We hold a brief flag that fades
+  // the modal cover during the 480 ms camera glide so the photo
+  // swap between regions reads as a single cinematic motion rather
+  // than a hard cut.
+  const [flying, setFlying] = useState(false);
 
   const buckets = bucketYachtsByRegion(yachts);
 
@@ -115,20 +122,56 @@ export default function RegionalYachtMap({ yachts = [] }) {
     }, 480);
   };
 
-  // Close modal on Escape
+  // Region-to-region fly-through. Glides the camera to the
+  // neighbouring slug in REGIONS order (cycles). The map's
+  // .is-zooming class stays on for the duration so the underlying
+  // canvas glides smoothly between zoom origins via the existing
+  // 480 ms cubic-bezier transition on transform-origin / transform.
+  const flyToNeighbour = (direction) => {
+    if (!activeSlug) return;
+    const idx = REGIONS.findIndex((r) => r.slug === activeSlug);
+    if (idx < 0) return;
+    const nextIdx =
+      direction === "next"
+        ? (idx + 1) % REGIONS.length
+        : (idx - 1 + REGIONS.length) % REGIONS.length;
+    const nextSlug = REGIONS[nextIdx].slug;
+    setFlying(true);
+    setZoomingTo(nextSlug);    // canvas glides to new pin centre
+    setActiveSlug(nextSlug);    // modal swaps to new region content
+    setTimeout(() => {
+      setFlying(false);
+      setZoomingTo(null);
+    }, 520);
+  };
+
+  // Close modal on Escape, navigate with ←/→
   useEffect(() => {
     if (!activeSlug) return;
     const onKey = (e) => {
-      if (e.key === "Escape") setActiveSlug(null);
+      if (e.key === "Escape") {
+        setActiveSlug(null);
+        setZoomingTo(null);
+      } else if (e.key === "ArrowRight") {
+        flyToNeighbour("next");
+      } else if (e.key === "ArrowLeft") {
+        flyToNeighbour("prev");
+      }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeSlug]);
 
   const activeRegion = activeSlug
     ? REGIONS.find((r) => r.slug === activeSlug)
     : null;
   const activeYachts = activeSlug ? buckets[activeSlug] : [];
+
+  // While the modal is open we keep the canvas focused on the active
+  // region — that way the prev/next arrows glide smoothly between
+  // regions rather than snapping back through 50% / 50%.
+  const focusedSlug = zoomingTo ?? activeSlug;
 
   return (
     <section
@@ -148,12 +191,12 @@ export default function RegionalYachtMap({ yachts = [] }) {
       </div>
 
       <div
-        className={`gy-region-map-canvas ${zoomingTo ? "is-zooming" : ""}`}
+        className={`gy-region-map-canvas ${focusedSlug ? "is-zooming" : ""}`}
         style={
-          zoomingTo
+          focusedSlug
             ? {
-                "--gy-zoom-x": `${pinPositions[zoomingTo]?.leftPct ?? 50}%`,
-                "--gy-zoom-y": `${pinPositions[zoomingTo]?.topPct ?? 50}%`,
+                "--gy-zoom-x": `${pinPositions[focusedSlug]?.leftPct ?? 50}%`,
+                "--gy-zoom-y": `${pinPositions[focusedSlug]?.topPct ?? 50}%`,
               }
             : undefined
         }
@@ -192,12 +235,22 @@ export default function RegionalYachtMap({ yachts = [] }) {
         </div>
       </div>
 
-      {/* Region detail modal — photo carousel cover + yacht list */}
+      {/* Region detail modal — photo carousel cover + yacht list.
+          key={region.slug} so the modal remounts on fly-through →
+          photoIdx resets to 0 → cover photos start their fade fresh
+          for the new region. */}
       {activeRegion && (
         <RegionModal
+          key={activeRegion.slug}
           region={activeRegion}
           yachts={activeYachts}
-          onClose={() => setActiveSlug(null)}
+          flying={flying}
+          onClose={() => {
+            setActiveSlug(null);
+            setZoomingTo(null);
+          }}
+          onPrev={() => flyToNeighbour("prev")}
+          onNext={() => flyToNeighbour("next")}
         />
       )}
     </section>
@@ -210,7 +263,7 @@ export default function RegionalYachtMap({ yachts = [] }) {
  * state lives in its own React tree and resets when a different
  * region opens.
  */
-function RegionModal({ region, yachts, onClose }) {
+function RegionModal({ region, yachts, flying = false, onClose, onPrev, onNext }) {
   const photos = Array.isArray(region.photos) && region.photos.length > 0
     ? region.photos
     : [];
@@ -239,7 +292,7 @@ function RegionModal({ region, yachts, onClose }) {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="gy-region-modal">
+      <div className={`gy-region-modal ${flying ? "is-flying" : ""}`}>
         <button
           type="button"
           className="gy-region-modal-close"
@@ -249,6 +302,34 @@ function RegionModal({ region, yachts, onClose }) {
         >
           ×
         </button>
+
+        {/* Phase 27i.15 (2026-05-08) — region-to-region fly-through.
+            Prev/next arrows glide the camera (the underlying SVG
+            map zoom origin transitions over 480 ms) AND swap the
+            modal contents to the neighbouring region. Keyboard:
+            ←/→ also navigate. */}
+        {onPrev && (
+          <button
+            type="button"
+            className="gy-region-modal-nav gy-region-modal-nav--prev"
+            onClick={onPrev}
+            aria-label="Previous region"
+            data-cursor="Prev"
+          >
+            ‹
+          </button>
+        )}
+        {onNext && (
+          <button
+            type="button"
+            className="gy-region-modal-nav gy-region-modal-nav--next"
+            onClick={onNext}
+            aria-label="Next region"
+            data-cursor="Next"
+          >
+            ›
+          </button>
+        )}
 
         {/* Carousel cover — all 4 photos stacked, the active one at
             full opacity, others at 0. CSS handles the crossfade. */}

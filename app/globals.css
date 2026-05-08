@@ -2591,6 +2591,66 @@ a.gy-fancy-link:hover {
   background: rgba(218, 165, 32, 0.2);
   border-color: #DAA520;
 }
+
+/* Phase 27i.15 (2026-05-08) — region-to-region fly-through arrows.
+   Sit vertically centred on the cover, restrained gold ring + ivory
+   chevron. While flying, the modal cover dims briefly so the camera
+   glide between regions reads as a continuous beat. */
+.gy-region-modal-nav {
+  position: absolute;
+  top: clamp(110px, 15vw, 180px); /* roughly centred on the cover */
+  width: 44px;
+  height: 44px;
+  border-radius: 0;
+  background: rgba(6, 18, 30, 0.65);
+  border: 1px solid rgba(218, 165, 32, 0.45);
+  color: #F5EFE1;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 220ms ease,
+    border-color 220ms ease,
+    transform 220ms ease;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 300;
+  padding-bottom: 4px; /* visually centres the chevron glyph */
+}
+.gy-region-modal-nav--prev { left: 14px; }
+.gy-region-modal-nav--next { right: 14px; }
+.gy-region-modal-nav:hover {
+  background: rgba(218, 165, 32, 0.18);
+  border-color: #DAA520;
+  transform: scale(1.06);
+}
+.gy-region-modal.is-flying .gy-region-modal-cover {
+  /* During the 480 ms camera glide we dim the cover slightly so the
+     change of region photos doesn't read as a hard cut. The modal
+     remounts on slug change → a fresh fade-in starts immediately. */
+  opacity: 0.55;
+  filter: blur(2px);
+  transition: opacity 360ms ease, filter 360ms ease;
+}
+@media (max-width: 640px) {
+  .gy-region-modal-nav {
+    top: auto;
+    bottom: 14px;
+    width: 38px;
+    height: 38px;
+    font-size: 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gy-region-modal-nav { transition: none !important; }
+  .gy-region-modal.is-flying .gy-region-modal-cover {
+    opacity: 1; filter: none; transition: none;
+  }
+}
+
 .gy-region-modal-cover {
   position: relative;
   height: clamp(220px, 30vw, 360px);
