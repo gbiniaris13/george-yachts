@@ -185,8 +185,12 @@ export default function NavDrawerSystem() {
   }, []);
 
   const navBackground = scrolled ? "#0D1B2A" : "transparent";
-  const navHeight = scrolled ? 92 : 168;
-  const logoHeight = scrolled ? 56 : "clamp(96px, 14vw, 156px)";
+  // 2026-05-08 (Chapter 06.6) — Boss flagged the wordmark reading
+  // small + blurry over the moving hero video. Bumped masthead
+  // height + logo size; the matching shadow tightening lives on
+  // the <img> below.
+  const navHeight = scrolled ? 104 : 196;
+  const logoHeight = scrolled ? 72 : "clamp(140px, 16.5vw, 220px)";
 
   const toggleMobile = useCallback(() => setMobileOpen((p) => !p), []);
   const closeMobile = useCallback(() => setMobileOpen(false), []);
@@ -247,7 +251,17 @@ export default function NavDrawerSystem() {
                 height: logoHeight,
                 width: "auto",
                 transition: "height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
-                filter: "drop-shadow(0 4px 18px rgba(201,168,76,0.18))",
+                // 2026-05-08 (Chapter 06.6) — sharper logo against
+                // the moving video. Two stacked drop-shadows: a
+                // 4 px navy contact shadow gives the wordmark a
+                // crisp dark silhouette (no fuzzy halo); a 22 px
+                // navy diffuse shadow underneath separates it from
+                // the bright water highlights when the trio video
+                // hits its sunlit moments. The previous gold halo
+                // was actually blurring the wordmark edges into
+                // the video.
+                filter:
+                  "drop-shadow(0 1px 2px rgba(13,27,42,0.85)) drop-shadow(0 8px 22px rgba(13,27,42,0.55))",
               }}
             />
           </Link>
