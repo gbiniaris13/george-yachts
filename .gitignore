@@ -65,3 +65,4 @@ scripts/DOMINGO-OMKAR-INSTRUCTIONS.md
 scripts/OUTREACH-SETUP.md
 scripts/outreach-automation*.gs
 .claude/
+ffmpeg2pass-*.log*
