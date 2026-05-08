@@ -67,10 +67,14 @@ const NAV_SECTIONS = [
   {
     label: "Explore Greece",
     items: [
-      { label: "Cyclades", href: "/yacht-charter-cyclades" },
-      { label: "Ionian", href: "/yacht-charter-ionian" },
-      { label: "Saronic", href: "/yacht-charter-saronic" },
-      { label: "Sporades", href: "/yacht-charter-sporades" },
+      // Region pages live at /yacht-charter/[region] (slash, NOT
+      // dash — that's the per-island route, /yacht-charter-mykonos
+      // etc.). Boss spec asks for the four cruising regions, all
+      // resolve via this dynamic route.
+      { label: "Cyclades", href: "/yacht-charter/cyclades" },
+      { label: "Ionian", href: "/yacht-charter/ionian" },
+      { label: "Saronic", href: "/yacht-charter/saronic" },
+      { label: "Sporades", href: "/yacht-charter/sporades" },
       { label: "Itineraries", href: "/yacht-itineraries-greece" },
     ],
   },
