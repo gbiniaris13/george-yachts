@@ -124,7 +124,7 @@ export default async function IslandPage({ params }) {
         {/* HERO */}
         <header
           style={{
-            background: "linear-gradient(180deg, #0D1B2A 0%, #000 100%)",
+            background: "linear-gradient(180deg, #0D1B2A 0%, #0D1B2A 100%)",
             padding: "120px 24px 64px",
             borderBottom: "1px solid rgba(201,168,76,0.15)",
             textAlign: "center",
@@ -240,7 +240,7 @@ export default async function IslandPage({ params }) {
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontSize: "clamp(28px, 4vw, 40px)",
                   fontWeight: 300,
-                  color: "#fff",
+                  color: "#F8F5F0",
                   margin: "0 0 36px",
                   textAlign: "center",
                 }}
@@ -286,7 +286,7 @@ export default async function IslandPage({ params }) {
                           fontFamily: "'Cormorant Garamond', Georgia, serif",
                           fontSize: 20,
                           fontWeight: 400,
-                          color: "#fff",
+                          color: "#F8F5F0",
                           margin: "0 0 4px",
                         }}
                       >
@@ -365,7 +365,7 @@ export default async function IslandPage({ params }) {
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontSize: "clamp(28px, 4vw, 40px)",
                   fontWeight: 300,
-                  color: "#fff",
+                  color: "#F8F5F0",
                   margin: "0 0 36px",
                   textAlign: "center",
                 }}
@@ -399,7 +399,7 @@ export default async function IslandPage({ params }) {
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
                         fontSize: 22,
                         fontWeight: 400,
-                        color: "#fff",
+                        color: "#F8F5F0",
                         margin: "0 0 14px",
                       }}
                     >
@@ -408,7 +408,7 @@ export default async function IslandPage({ params }) {
                     <ol style={{ margin: 0, padding: "0 0 0 20px", color: "rgba(255,255,255,0.78)", fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 14, lineHeight: 1.7 }}>
                       {(y.sampleItinerary?.days || []).map((d, i) => (
                         <li key={i}>
-                          <strong style={{ color: "#fff" }}>Day {d.day}</strong> · {d.distance ? `${d.distance} · ` : ""}{d.from} → {d.to}
+                          <strong style={{ color: "#F8F5F0" }}>Day {d.day}</strong> · {d.distance ? `${d.distance} · ` : ""}{d.from} → {d.to}
                         </li>
                       ))}
                     </ol>
@@ -468,7 +468,7 @@ export default async function IslandPage({ params }) {
                 color: "rgba(255,255,255,0.82)",
                 margin: 0,
               }}
-              dangerouslySetInnerHTML={{ __html: island.seasonality.replace(/\*\*(.+?)\*\*/g, '<strong style="color:#fff">$1</strong>') }}
+              dangerouslySetInnerHTML={{ __html: island.seasonality.replace(/\*\*(.+?)\*\*/g, '<strong style="color:#F8F5F0">$1</strong>') }}
             />
           </div>
         </section>
@@ -543,7 +543,7 @@ export default async function IslandPage({ params }) {
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: "clamp(28px, 4vw, 40px)",
                 fontWeight: 300,
-                color: "#fff",
+                color: "#F8F5F0",
                 margin: "0 0 36px",
                 textAlign: "center",
               }}
@@ -563,7 +563,7 @@ export default async function IslandPage({ params }) {
                     style={{
                       fontFamily: "'Cormorant Garamond', Georgia, serif",
                       fontSize: 18,
-                      color: "#fff",
+                      color: "#F8F5F0",
                       cursor: "pointer",
                       listStyle: "none",
                       fontWeight: 400,
@@ -596,7 +596,7 @@ export default async function IslandPage({ params }) {
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: "clamp(28px, 4vw, 40px)",
                 fontWeight: 300,
-                color: "#fff",
+                color: "#F8F5F0",
                 margin: "0 0 32px",
                 lineHeight: 1.2,
               }}
@@ -614,7 +614,7 @@ export default async function IslandPage({ params }) {
                   textTransform: "uppercase",
                   fontWeight: 700,
                   padding: "14px 26px",
-                  background: "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
+                  background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
                   color: "#0D1B2A",
                   border: "1px solid rgba(201,168,76,0.6)",
                   textDecoration: "none",

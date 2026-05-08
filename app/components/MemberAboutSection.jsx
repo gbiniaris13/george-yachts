@@ -13,7 +13,7 @@ const GreekFlag = () => (
     <path
       fill="none"
       strokeWidth="2"
-      stroke="#FFF"
+      stroke="#F8F5F0"
       d="M5 0v11M0 5h10m0-2h17M10 7h17M0 11h27M0 15h27"
     />
   </svg>
@@ -30,7 +30,7 @@ const MemberAboutSection = ({
   bgColor = "bg-white",
   headingColor = "text-black",
   textColor = "text-[#9CA3AF]",
-  accentColor = "text-[#7a6200]",
+  accentColor = "text-[#C9A84C]",
 }) => {
   return (
     <section className={`w-full ${bgColor} py-16 lg:py-20`}>
@@ -67,7 +67,7 @@ const MemberAboutSection = ({
               href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`text-black hover:text-black transition-colors duration-300 bg-[#7a6200] p-2.5 rounded-full`}
+              className={`text-black hover:text-black transition-colors duration-300 bg-[#C9A84C] p-2.5 rounded-full`}
             >
               <Instagram className="w-8 h-8" />
             </a>

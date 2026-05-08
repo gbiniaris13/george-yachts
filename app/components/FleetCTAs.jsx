@@ -197,7 +197,7 @@ export default function FleetCTAs({
           descriptor="Full crew, total discretion. A private world at sea."
           footer={privateCount > 0 ? `${privateCount} Yachts · Motor, Sailing, Catamaran` : null}
           image={privateHeroImage}
-          gradientFallback="linear-gradient(135deg, #000 0%, #0D1B2A 100%)"
+          gradientFallback="linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)"
           ctaLabel="View the Fleet"
         />
 
@@ -212,7 +212,7 @@ export default function FleetCTAs({
           descriptor="Skippered or lightly crewed. More islands, more adventure."
           footer={explorerCount > 0 ? `${explorerCount} Yachts · Sailing & Power Cats` : null}
           image={explorerHeroImage}
-          gradientFallback="linear-gradient(135deg, #0D1B2A 0%, #000 100%)"
+          gradientFallback="linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)"
           ctaLabel="View the Fleet"
         />
       </div>
@@ -227,7 +227,7 @@ export default function FleetCTAs({
         className="relative flex items-center justify-center py-6 md:py-8"
         style={{
           background:
-            "linear-gradient(to bottom, #000 0%, #0D1B2A 100%)",
+            "linear-gradient(to bottom, #0D1B2A 0%, #0D1B2A 100%)",
           borderTop: "1px solid rgba(201,168,76,0.35)",
           borderBottom: "1px solid rgba(201,168,76,0.15)",
         }}
@@ -255,7 +255,7 @@ export default function FleetCTAs({
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "clamp(18px, 2vw, 24px)",
               fontWeight: 300,
-              color: "#fff",
+              color: "#F8F5F0",
               letterSpacing: "0.04em",
               borderBottom: "1px solid rgba(201,168,76,0.5)",
               paddingBottom: "3px",

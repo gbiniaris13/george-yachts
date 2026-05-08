@@ -233,7 +233,7 @@ export async function POST(request) {
         <p><strong>Source:</strong> The George Yachts Journal (footer signup)</p>
         <p><strong>Time:</strong> ${new Date().toISOString()}</p>
         <hr>
-        <p style="font-size: 12px; color: #888;">Add this email to your mailing list.</p>
+        <p style="font-size: 12px; color: #9CA3AF;">Add this email to your mailing list.</p>
       `,
     });
 

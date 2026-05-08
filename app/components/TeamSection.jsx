@@ -6,7 +6,7 @@ import Link from "next/link"; // Added for internal navigation
 const CARD_DIMENSIONS = { width: "372px", height: "400px" };
 const IMAGE_PLACEHOLDER_URL =
   "https://placehold.co/372x400/02132d/2fd5c3?text=TEAM";
-const GOLD_HEX = "#7a6200";
+const GOLD_HEX = "#C9A84C";
 
 // --- Team Data ---
 const teamMembers = [
@@ -110,7 +110,7 @@ const TeamCard = ({ member }) => {
         {hasProfileUrl && (
           <Link
             href={member.profileUrl}
-            className="w-full py-2 border border-white text-sm font-semibold rounded-full bg-transparent hover:bg-white hover:text-[#02132d] transition duration-300 active:scale-[0.98] cursor-pointer text-center"
+            className="w-full py-2 border border-white text-sm font-semibold rounded-full bg-transparent hover:bg-white hover:text-[#0D1B2A] transition duration-300 active:scale-[0.98] cursor-pointer text-center"
           >
             View Profile
           </Link>
@@ -129,7 +129,7 @@ const TeamSection = () => {
     <section className="py-16 bg-white">
       <div className="max-w-[1530px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* 1. Services List (Colored) - NOW FIRST IN ORDER */}
-        <h2 className="text-2xl md:text-3xl font-normal text-center text-[#02132d] mb-8">
+        <h2 className="text-2xl md:text-3xl font-normal text-center text-[#0D1B2A] mb-8">
           {serviceParts.map((part, index) => (
             <React.Fragment key={index}>
               {/* Color the service text in gold */}
@@ -144,7 +144,7 @@ const TeamSection = () => {
         </h2>
 
         {/* 2. OUR TEAM Header (Text Hierarchy) - NOW SECOND IN ORDER */}
-        <h2 className="text-4xl font-bold text-center text-[#02132d] my-12 uppercase">
+        <h2 className="text-4xl font-bold text-center text-[#0D1B2A] my-12 uppercase">
           Meet the People <br></br>
           <span style={{ color: GOLD_HEX }}>Behind Your Voyage</span>
         </h2>

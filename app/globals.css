@@ -194,7 +194,7 @@ section {
 /* Selection color */
 ::selection {
   background: #C9A84C;
-  color: #000;
+  color: #0D1B2A;
 }
 
 /* Focus-visible — accessible keyboard focus ring (brand gold) */
@@ -281,13 +281,13 @@ section {
 .gy-gold-24k {
   background: linear-gradient(
     135deg,
-    #FFE9A8 0%,    /* highlight */
-    #F7DA6F 14%,
-    #E6C77A 30%,
+    #C9A84C 0%,    /* highlight */
+    #C9A84C 14%,
+    #C9A84C 30%,
     #C9A84C 48%,   /* core 24K */
-    #C9A24D 66%,
-    #A67C2E 84%,
-    #8B6914 100%   /* deep bronze shadow */
+    #C9A84C 66%,
+    #C9A84C 84%,
+    #C9A84C 100%   /* deep bronze shadow */
   );
   background-size: 200% 200%;
   background-position: 30% 30%;
@@ -302,14 +302,14 @@ section {
   background: linear-gradient(
     100deg,
     #C9A84C 0%,
-    #E6C77A 18%,
-    #FFE9A8 28%,
+    #C9A84C 18%,
+    #C9A84C 28%,
     #FFFFFF 33%,   /* sweeping white highlight */
-    #FFE9A8 38%,
-    #E6C77A 48%,
+    #C9A84C 38%,
+    #C9A84C 48%,
     #C9A84C 60%,
-    #A67C2E 80%,
-    #8B6914 100%
+    #C9A84C 80%,
+    #C9A84C 100%
   );
   background-size: 300% 100%;
   -webkit-background-clip: text;
@@ -362,10 +362,10 @@ section {
     100deg,
     /* Cool champagne highlights instead of saturated yellow */
     #F5EFDA 0%,
-    #E8DCC0 14%,
+    #F8F5F0 14%,
     #D9C9A0 28%,
     #FFFFFF 36%,    /* white sweep highlight */
-    #E8DCC0 44%,
+    #F8F5F0 44%,
     #C9B98A 60%,
     #B59E66 76%,
     #8B7B58 100%    /* warm bronze shadow */
@@ -438,7 +438,7 @@ section {
     #FFFFFF 0%,    /* white at far edge — always safe */
     #F4F7FB 22%,   /* faint platinum-cool */
     #FFFFFF 50%,   /* pure white peak */
-    #FAF5EA 78%,   /* faint pearl-warm */
+    #F8F5F0 78%,   /* faint pearl-warm */
     #FFFFFF 100%   /* white at near edge — always safe */
   );
   background-size: 220% 100%;
@@ -515,9 +515,9 @@ section {
     /* Base: 24K gradient core */
     linear-gradient(
       135deg,
-      #FFE9A8 0%, #F7DA6F 14%, #E6C77A 28%,
-      #FFFFFF 36%, #FFE9A8 42%, #C9A84C 50%,
-      #C9A24D 64%, #B8860B 78%, #8B6914 100%
+      #C9A84C 0%, #C9A84C 14%, #C9A84C 28%,
+      #FFFFFF 36%, #C9A84C 42%, #C9A84C 50%,
+      #C9A84C 64%, #B8860B 78%, #C9A84C 100%
     );
   background-size: 200% 100%, 100% 100%, 200% 200%;
   background-position: 0% 50%, 0 0, 30% 30%;
@@ -716,8 +716,8 @@ section {
 .text-shimmer {
   background: linear-gradient(
     90deg,
-    #E6C77A 0%, #FFFFFF 18%, #FFE9A8 28%, #C9A84C 50%,
-    #C9A24D 68%, #A67C2E 82%, #E6C77A 100%
+    #C9A84C 0%, #FFFFFF 18%, #C9A84C 28%, #C9A84C 50%,
+    #C9A84C 68%, #C9A84C 82%, #C9A84C 100%
   );
   background-size: 300% 100%;
   -webkit-background-clip: text;
@@ -754,7 +754,7 @@ section {
   left: 0;
   width: 0;
   height: 1px;
-  background: linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E);
+  background: linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C);
   transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .gold-underline:hover::after {
@@ -890,7 +890,7 @@ section {
 
 /* Gradient text animation — flowing gold */
 .text-flow {
-  background: linear-gradient(90deg, #A67C2E, #E6C77A, #C9A84C, #E6C77A, #A67C2E);
+  background: linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C, #C9A84C, #C9A84C);
   background-size: 400% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -947,7 +947,7 @@ section {
 .yacht-swiper .swiper-pagination-bullet {
   width: 12px !important; /* Makes dots bigger (e.g., 12px) */
   height: 12px !important;
-  background-color: #fff !important; /* Example: Dark Gray for inactive dot */
+  background-color: #F8F5F0 !important; /* Example: Dark Gray for inactive dot */
   opacity: 0.7 !important;
   margin: 0 6px !important;
   border-radius: 50% !important; /* Ensure they remain circles */
@@ -956,7 +956,7 @@ section {
 
 /* Style for the ACTIVE dot (make it the gold color) */
 .yacht-swiper .swiper-pagination-bullet-active {
-  background-color: #7a6200 !important; /* Gold color for the active dot */
+  background-color: #C9A84C !important; /* Gold color for the active dot */
   opacity: 1 !important;
 }
 
@@ -968,12 +968,12 @@ section {
 
 /* 1. For Backgrounds (Buttons, Sections) */
 .bg-luxury {
-  background: linear-gradient(90deg, #e6c77a 0%, #c9a24d 45%, #a67c2e 100%);
+  background: linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%);
 }
 
 /* 2. For Text (Headings, Spans) */
 .text-luxury {
-  background: linear-gradient(90deg, #e6c77a 0%, #c9a24d 45%, #a67c2e 100%);
+  background: linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -986,7 +986,7 @@ section {
 .border-luxury {
   border-width: 1px;
   border-style: solid;
-  border-image: linear-gradient(90deg, #e6c77a 0%, #c9a24d 45%, #a67c2e 100%) 1;
+  border-image: linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%) 1;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1640,7 +1640,7 @@ footer h4 {
   transition: transform 0.18s ease;
 }
 .d5-hotspot:focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid #F8F5F0;
   outline-offset: 4px;
 }
 
@@ -2084,7 +2084,7 @@ a.gy-fancy-link:hover {
   font-size: 9px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: #F5EFE1;
+  color: #F8F5F0;
   white-space: nowrap;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
   opacity: 0;
@@ -2134,7 +2134,7 @@ a.gy-fancy-link:hover {
   padding: clamp(80px, 12vw, 140px) 24px;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 50% 100%, #0e2238 0%, #061121 55%, #0D1B2A 100%),
+    radial-gradient(ellipse at 50% 100%, #0D1B2A 0%, #0D1B2A 55%, #0D1B2A 100%),
     #0D1B2A;
   border-top: 1px solid rgba(201, 168, 76, 0.18);
   border-bottom: 1px solid rgba(201, 168, 76, 0.18);
@@ -2339,7 +2339,7 @@ a.gy-fancy-link:hover {
   font-weight: 300;
   font-size: clamp(26px, 3.6vw, 42px);
   line-height: 1.32;
-  color: #F5EFE1;
+  color: #F8F5F0;
   letter-spacing: 0.005em;
   max-width: 860px;
   opacity: 0;
@@ -2353,7 +2353,7 @@ a.gy-fancy-link:hover {
   font-size: 12px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: #F5EFE1;
+  color: #F8F5F0;
   margin-inline-end: -0.32em;
   opacity: 0;
   animation: gyForbesFadeUp 1s ease 1.5s forwards;
@@ -2378,7 +2378,7 @@ a.gy-fancy-link:hover {
   font-size: 11px;
   letter-spacing: 0.42em;
   text-transform: uppercase;
-  color: #F5EFE1;
+  color: #F8F5F0;
   padding: 14px 28px 14px 30px;
   border: 1px solid rgba(201, 168, 76, 0.5);
   background: rgba(201, 168, 76, 0.06);
@@ -2456,7 +2456,7 @@ a.gy-fancy-link:hover {
 .gy-region-map-section {
   position: relative;
   background:
-    radial-gradient(ellipse at 50% 100%, #0e2238 0%, #061121 55%, #0D1B2A 100%),
+    radial-gradient(ellipse at 50% 100%, #0D1B2A 0%, #0D1B2A 55%, #0D1B2A 100%),
     #0D1B2A;
   padding: clamp(80px, 10vw, 130px) 24px clamp(60px, 8vw, 100px);
   overflow: hidden;
@@ -2485,7 +2485,7 @@ a.gy-fancy-link:hover {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 300;
   font-size: clamp(32px, 5vw, 56px);
-  color: #F5EFE1;
+  color: #F8F5F0;
   line-height: 1.1;
   letter-spacing: -0.005em;
   margin: 0 0 18px;
@@ -2586,7 +2586,7 @@ a.gy-fancy-link:hover {
   font-size: 13px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: #F5EFE1;
+  color: #F8F5F0;
   margin-inline-end: -0.32em;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
 }
@@ -2599,7 +2599,7 @@ a.gy-fancy-link:hover {
   letter-spacing: 0.03em;
 }
 .gy-region-pin:hover .gy-region-pin-dot {
-  background: #F5EFE1;
+  background: #F8F5F0;
 }
 
 /* Modal — full-screen backdrop + centred card */
@@ -2638,7 +2638,7 @@ a.gy-fancy-link:hover {
   height: 36px;
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(245, 239, 225, 0.3);
-  color: #F5EFE1;
+  color: #F8F5F0;
   font-size: 22px;
   line-height: 1;
   cursor: pointer;
@@ -2665,7 +2665,7 @@ a.gy-fancy-link:hover {
   border-radius: 0;
   background: rgba(6, 18, 30, 0.65);
   border: 1px solid rgba(201, 168, 76, 0.45);
-  color: #F5EFE1;
+  color: #F8F5F0;
   font-size: 30px;
   line-height: 1;
   cursor: pointer;
@@ -2717,7 +2717,7 @@ a.gy-fancy-link:hover {
   height: clamp(220px, 30vw, 360px);
   background-size: cover;
   background-position: center;
-  background-color: #0a1929;
+  background-color: #0D1B2A;
 }
 .gy-region-modal-cover-shade {
   position: absolute;
@@ -2751,7 +2751,7 @@ a.gy-fancy-link:hover {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 400;
   font-size: clamp(36px, 5vw, 56px);
-  color: #F5EFE1;
+  color: #F8F5F0;
   line-height: 0.98;
   margin: 0 0 6px;
 }
@@ -2812,14 +2812,14 @@ a.gy-fancy-link:hover {
   height: 56px;
   background-size: cover;
   background-position: center;
-  background-color: #0a1929;
+  background-color: #0D1B2A;
   border-radius: 2px;
 }
 .gy-region-yacht-name {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 19px;
   font-weight: 400;
-  color: #F5EFE1;
+  color: #F8F5F0;
   margin: 0;
   line-height: 1.15;
 }
@@ -2879,7 +2879,7 @@ a.gy-fancy-link:hover {
   inset: 0;
   background-size: cover;
   background-position: center;
-  background-color: #0a1929;
+  background-color: #0D1B2A;
   transition: opacity 1200ms cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
@@ -3002,7 +3002,7 @@ a.gy-fancy-link:hover {
   position: relative;
 }
 .gy-region-pin:hover .gy-region-pin-dot {
-  background: #F5EFE1;
+  background: #F8F5F0;
   transform: scale(1.18);
 }
 .gy-region-pin:hover .gy-region-pin-dot::after {
@@ -3123,7 +3123,7 @@ a.gy-fancy-link:hover {
   background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  color: #F5EFE1;
+  color: #F8F5F0;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -3490,19 +3490,19 @@ figcaption,
    every Tailwind .bg-black / .text-white in the codebase without
    touching 200+ component files individually.
 
-       --gy-navy   #0D1B2A → primary dark bg (was #000)
+       --gy-navy   #0D1B2A → primary dark bg (was #0D1B2A)
        --gy-ivory  #F8F5F0 → text on dark   (was #FFFFFF / text-white)
        --gy-card   #142233 → card surfaces  (NEW)
        --gy-muted  #9CA3AF → secondary text on dark
        --gy-white  #FFFFFF → ONLY for light sections
    ─────────────────────────────────────────────────────────────────── */
 
-/* Tailwind .bg-black / .bg-[#000] / .bg-[#0D1B2A] → navy.
+/* Tailwind .bg-black / .bg-[#0D1B2A] / .bg-[#0D1B2A] → navy.
    These selectors hit every component using Tailwind's black
    background utility (86 occurrences in the codebase) and remap
    them to the deep-navy primary background in one step. */
 .bg-black,
-[class*="bg-[#000]"],
+[class*="bg-[#0D1B2A]"],
 [class*="bg-[#0D1B2A]"] {
   background-color: var(--gy-navy, #0D1B2A) !important;
 }
@@ -3512,7 +3512,7 @@ figcaption,
    reserved for genuine "light section" needs, which use a
    light-section wrapper class explicitly. */
 .text-white,
-.text-\[\#fff\],
+.text-\[\#F8F5F0\],
 .text-\[\#FFFFFF\] {
   color: var(--gy-ivory, #F8F5F0) !important;
 }

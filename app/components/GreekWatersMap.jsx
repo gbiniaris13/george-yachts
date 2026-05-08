@@ -163,7 +163,7 @@ export default function GreekWatersMap() {
               className="italic transition-colors duration-500"
               style={{
                 background:
-                  "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
+                  "linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
@@ -339,7 +339,7 @@ export default function GreekWatersMap() {
                 background: "rgba(0, 0, 0, 0.9)",
                 backdropFilter: "blur(14px)",
                 border: "1px solid rgba(201,168,76,0.35)",
-                color: "#fff",
+                color: "#F8F5F0",
               }}
             >
               <p

@@ -91,7 +91,7 @@
 .team-hero__line {
   width: 0;
   height: 1px;
-  background: linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E);
+  background: linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C);
   margin: 0 auto 28px;
   animation: goldLine 1.2s ease-out 1s forwards;
 }
@@ -131,7 +131,7 @@
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: clamp(28px, 4vw, 44px);
   font-weight: 300;
-  color: #fff;
+  color: #F8F5F0;
   line-height: 1.3;
   margin: 0 0 32px;
 }
@@ -139,7 +139,7 @@
 .team-intro__line {
   width: 60px;
   height: 1px;
-  background: linear-gradient(90deg, #E6C77A, #A67C2E);
+  background: linear-gradient(90deg, #C9A84C, #C9A84C);
   margin: 0 auto 32px;
 }
 
@@ -254,7 +254,7 @@
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 22px;
   font-weight: 600;
-  color: #fff;
+  color: #F8F5F0;
   margin: 0 0 6px;
   letter-spacing: 0.02em;
 }
@@ -351,7 +351,7 @@
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 22px;
   font-weight: 500;
-  color: #fff;
+  color: #F8F5F0;
   margin: 0 0 12px;
 }
 

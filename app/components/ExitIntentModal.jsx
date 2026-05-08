@@ -274,7 +274,7 @@ export default function ExitIntentModal() {
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "clamp(26px, 3.2vw, 38px)",
               fontWeight: 200,
-              color: "#fff",
+              color: "#F8F5F0",
               lineHeight: 1.15,
               letterSpacing: "0.005em",
               marginBottom: "14px",
@@ -285,7 +285,7 @@ export default function ExitIntentModal() {
               className="italic"
               style={{
                 background:
-                  "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
+                  "linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
@@ -357,7 +357,7 @@ export default function ExitIntentModal() {
                   style={{
                     background: "rgba(0,0,0,0.5)",
                     border: "1px solid rgba(201,168,76,0.25)",
-                    color: "#fff",
+                    color: "#F8F5F0",
                     fontFamily: "'Cormorant Garamond', Georgia, serif",
                     fontSize: "16px",
                     fontWeight: 300,
@@ -370,7 +370,7 @@ export default function ExitIntentModal() {
                   className="px-6 py-3 transition-all duration-400 hover:brightness-110 disabled:opacity-60 disabled:cursor-not-allowed"
                   style={{
                     background:
-                      "linear-gradient(135deg, #C9A24D 0%, #A67C2E 100%)",
+                      "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)",
                     color: "#0D1B2A",
                     fontFamily: "'Montserrat', sans-serif",
                     fontSize: "10px",

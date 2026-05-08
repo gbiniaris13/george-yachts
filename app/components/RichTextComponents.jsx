@@ -116,7 +116,7 @@ export const RichTextComponents = {
                   <tr
                     key={bodyIdx}
                     style={{
-                      backgroundColor: bodyIdx % 2 === 0 ? "#ffffff" : "#f9f9f9",
+                      backgroundColor: bodyIdx % 2 === 0 ? "#ffffff" : "#F8F5F0",
                     }}
                   >
                     {(row.cells || []).map((cell, i) => (
@@ -213,7 +213,7 @@ export const RichTextComponents = {
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontSize: 22,
                   fontWeight: 400,
-                  color: "#fff",
+                  color: "#F8F5F0",
                   margin: 0,
                   lineHeight: 1.2,
                 }}
@@ -334,7 +334,7 @@ export const RichTextComponents = {
               fontStyle: "italic",
               fontSize: 22,
               lineHeight: 1.5,
-              color: "#fff",
+              color: "#F8F5F0",
               margin: "0 0 16px",
               padding: "0 0 0 18px",
               borderLeft: "3px solid #C9A84C",

@@ -163,7 +163,7 @@ export default async function BlogPage() {
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontSize: "clamp(28px, 4vw, 44px)",
                   fontWeight: 300,
-                  color: "#fff",
+                  color: "#F8F5F0",
                   margin: "0 0 8px",
                   lineHeight: 1.05,
                 }}
@@ -219,7 +219,7 @@ export default async function BlogPage() {
                       style={{
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
                         fontSize: 15,
-                        color: "#fff",
+                        color: "#F8F5F0",
                         margin: 0,
                         lineHeight: 1.2,
                       }}

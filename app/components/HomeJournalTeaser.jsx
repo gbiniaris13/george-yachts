@@ -63,7 +63,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "clamp(28px, 4vw, 44px)",
               fontWeight: 300,
-              color: "#fff",
+              color: "#F8F5F0",
               margin: "0 0 8px",
               lineHeight: 1.1,
             }}
@@ -151,7 +151,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
                       fontFamily: "'Cormorant Garamond', Georgia, serif",
                       fontSize: 22,
                       lineHeight: 1.25,
-                      color: "#fff",
+                      color: "#F8F5F0",
                       margin: "0 0 10px",
                       fontWeight: 400,
                     }}

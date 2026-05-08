@@ -53,7 +53,7 @@ export default function KpisPage() {
   }
 
   return (
-    <main style={{ background: "#0D1B2A", color: "#fff", minHeight: "100vh", padding: "120px 24px 80px" }}>
+    <main style={{ background: "#0D1B2A", color: "#F8F5F0", minHeight: "100vh", padding: "120px 24px 80px" }}>
       <div style={{ maxWidth: 980, margin: "0 auto" }}>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 12px" }}>
           Internal · George Yachts
@@ -87,7 +87,7 @@ export default function KpisPage() {
               fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700,
               letterSpacing: "0.18em", textTransform: "uppercase",
               color: "#0D1B2A",
-              background: loading ? `${GOLD}66` : `linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)`,
+              background: loading ? `${GOLD}66` : `linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)`,
               border: "none", cursor: loading || !key.trim() ? "default" : "pointer",
             }}
           >
@@ -118,7 +118,7 @@ export default function KpisPage() {
                   <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: "0.32em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 6px" }}>
                     {LABELS[event] || event}
                   </p>
-                  <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 36, fontWeight: 400, color: "#fff", margin: "0 0 14px", lineHeight: 1 }}>
+                  <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 36, fontWeight: 400, color: "#F8F5F0", margin: "0 0 14px", lineHeight: 1 }}>
                     {total}
                   </p>
                   <div style={{ display: "flex", alignItems: "flex-end", gap: 3, height: 40 }}>
@@ -153,7 +153,7 @@ const inputStyle = {
   fontFamily: "'Montserrat', sans-serif", fontSize: 13,
   background: "rgba(255,255,255,0.06)",
   border: "1px solid rgba(255,255,255,0.18)",
-  color: "#fff", outline: "none",
+  color: "#F8F5F0", outline: "none",
   flex: "1 1 220px",
   minWidth: 180,
 };

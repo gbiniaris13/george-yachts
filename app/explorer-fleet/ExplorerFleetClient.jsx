@@ -35,7 +35,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
             href="https://wa.me/17867988798?text=Hello%20George%20%E2%80%94%20I%27m%20exploring%20the%20Explorer%20Fleet%20for%20a%20Greek%20charter.%20Can%20we%20plan%20an%20adventure%3F"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#000", background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)", padding: "16px 48px", textDecoration: "none" }}
+            style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#0D1B2A", background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)", padding: "16px 48px", textDecoration: "none" }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487 2.981 1.287 2.981.858 3.52.802.537-.056 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" /></svg>
             Plan Your Adventure on WhatsApp
@@ -65,7 +65,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
           ].map((item, i) => (
             <div key={i} style={{ textAlign: "center", padding: 40, border: "1px solid rgba(255,255,255,0.06)", borderRadius: 4 }}>
               <div style={{ fontSize: 32, marginBottom: 20 }}>{item.icon}</div>
-              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.3rem", color: "#fff", marginBottom: 12 }}>{item.title}</h3>
+              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.3rem", color: "#F8F5F0", marginBottom: 12 }}>{item.title}</h3>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 1.8 }}>{item.desc}</p>
             </div>
           ))}
@@ -74,7 +74,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
 
       {/* Perfect For */}
       <section style={{ padding: "80px 24px", background: "#0D1B2A", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.06)" }}>
-        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2rem", color: "#fff", marginBottom: 40 }}>Perfect For</h2>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2rem", color: "#F8F5F0", marginBottom: 40 }}>Perfect For</h2>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16, maxWidth: 800, margin: "0 auto" }}>
           {["Friend reunions", "Milestone birthdays", "Bachelor & bachelorette trips", "Multi-generational family holidays", "Small corporate retreats"].map((item, i) => (
             <span key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: "rgba(255,255,255,0.5)", padding: "12px 24px", border: "1px solid rgba(201,168,76,0.15)", borderRadius: 24, letterSpacing: "0.1em" }}>
@@ -91,7 +91,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.4em", color: "#C9A84C", textTransform: "uppercase", marginBottom: 16 }}>
               {yachts.length} Vessels
             </p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#fff" }}>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#F8F5F0" }}>
               Our Explorer Fleet
             </h2>
           </div>
@@ -129,7 +129,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
                     )}
                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%)" }} />
                     <div style={{ position: "absolute", bottom: 16, left: 16, right: 16 }}>
-                      <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.4rem", color: "#fff", margin: 0 }}>{yacht.name}</h3>
+                      <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.4rem", color: "#F8F5F0", margin: 0 }}>{yacht.name}</h3>
                       <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: "rgba(255,255,255,0.5)", letterSpacing: "0.1em", marginTop: 4 }}>
                         {yacht.builder} · {yacht.length} · {yacht.sleeps} guests
                       </p>
@@ -170,7 +170,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
             <Image src="/images/george.jpg" alt="George P. Biniaris" fill style={{ objectFit: "cover" }} sizes="180px" />
           </div>
           <div style={{ textAlign: "center", flex: 1, minWidth: 250 }}>
-            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", color: "#fff", marginBottom: 8 }}>Your Broker: George</h3>
+            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", color: "#F8F5F0", marginBottom: 8 }}>Your Broker: George</h3>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: "#C9A84C", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16 }}>Managing Broker · IYBA Member</p>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 1.8, fontStyle: "italic" }}>
               "Same care. Same service. Whatever your budget."
@@ -181,14 +181,14 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
 
       {/* CTA */}
       <section style={{ padding: "100px 24px", background: "#0D1B2A", textAlign: "center" }}>
-        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#fff", marginBottom: 24 }}>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#F8F5F0", marginBottom: 24 }}>
           Plan Your Adventure
         </h2>
         <a
           href="https://wa.me/17867988798?text=Hello%20George%20%E2%80%94%20I%27d%20like%20to%20plan%20a%20Greek%20Explorer%20charter.%20What%27s%20available%20and%20what%20do%20you%20recommend%3F"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ display: "inline-flex", alignItems: "center", gap: 12, fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#000", background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)", padding: "18px 56px", textDecoration: "none" }}
+          style={{ display: "inline-flex", alignItems: "center", gap: 12, fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#0D1B2A", background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)", padding: "18px 56px", textDecoration: "none" }}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487 2.981 1.287 2.981.858 3.52.802.537-.056 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" /></svg>
           Message George on WhatsApp

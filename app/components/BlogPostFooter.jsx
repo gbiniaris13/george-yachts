@@ -57,7 +57,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: "clamp(26px, 3vw, 36px)",
                 fontWeight: 300,
-                color: "#fff",
+                color: "#F8F5F0",
                 margin: "0 0 36px",
                 textAlign: "center",
                 lineHeight: 1.2,
@@ -109,7 +109,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
                         fontSize: 20,
                         fontWeight: 400,
-                        color: "#fff",
+                        color: "#F8F5F0",
                         margin: "0 0 4px",
                       }}
                     >
@@ -228,7 +228,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
               style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: 22,
-                color: "#fff",
+                color: "#F8F5F0",
                 margin: "0 0 4px",
                 fontWeight: 400,
               }}
@@ -303,7 +303,7 @@ const btnGold = {
   textTransform: "uppercase",
   fontWeight: 700,
   padding: "10px 18px",
-  background: "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
+  background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
   color: "#0D1B2A",
   border: "1px solid rgba(201,168,76,0.6)",
   textDecoration: "none",

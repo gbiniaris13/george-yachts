@@ -142,7 +142,7 @@ export async function POST(request) {
             replyTo: email,
             subject: `${headline}: ${name || email}`,
             html: `
-              <div style="font-family:Arial,Helvetica,sans-serif;max-width:600px;color:#111;">
+              <div style="font-family:Arial,Helvetica,sans-serif;max-width:600px;color:#0D1B2A;">
                 <h2 style="margin:0 0 8px;">${headline.replace(/\*/g, "")}</h2>
                 <p style="margin:0 0 4px;"><strong>Name:</strong> ${name || "—"}</p>
                 <p style="margin:0 0 4px;"><strong>Email:</strong> ${email}</p>
@@ -161,7 +161,7 @@ export async function POST(request) {
                 )}</pre>`
                     : ""
                 }
-                <p style="font-size:11px;color:#888;margin-top:24px;">You can reply directly to this email to reach the lead.</p>
+                <p style="font-size:11px;color:#9CA3AF;margin-top:24px;">You can reply directly to this email to reach the lead.</p>
               </div>
             `,
           })

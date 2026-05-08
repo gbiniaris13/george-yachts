@@ -69,7 +69,7 @@ export default function BlogSlugError({ error, reset }) {
             letterSpacing: "0.32em",
             textTransform: "uppercase",
             fontWeight: 600,
-            color: "#000",
+            color: "#0D1B2A",
             background: "#C9A84C",
             border: 0,
             cursor: "pointer",

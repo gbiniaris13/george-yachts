@@ -69,7 +69,7 @@ export default function InteractiveTools() {
           </p>
           <h2 style={{
             fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
-            color: '#fff', fontWeight: 300, margin: 0,
+            color: '#F8F5F0', fontWeight: 300, margin: 0,
           }}>
             {t('tools.title')}
           </h2>
@@ -84,8 +84,8 @@ export default function InteractiveTools() {
               style={{
                 display: 'block',
                 padding: '32px 28px',
-                background: '#111',
-                border: '1px solid #222',
+                background: '#0D1B2A',
+                border: '1px solid #0D1B2A',
                 borderRadius: 8,
                 textDecoration: 'none',
                 transition: 'all 0.4s ease',
@@ -95,14 +95,14 @@ export default function InteractiveTools() {
                 e.currentTarget.style.background = '#0D1B2A';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = '#222';
-                e.currentTarget.style.background = '#111';
+                e.currentTarget.style.borderColor = '#0D1B2A';
+                e.currentTarget.style.background = '#0D1B2A';
               }}
             >
               <div style={{ marginBottom: 20, opacity: 0.8 }}>{tool.icon}</div>
               <h3 style={{
                 fontFamily: "'Cormorant Garamond', serif", fontSize: 20,
-                color: '#fff', margin: '0 0 8px 0', fontWeight: 400,
+                color: '#F8F5F0', margin: '0 0 8px 0', fontWeight: 400,
               }}>
                 {tool.title}
               </h3>

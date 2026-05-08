@@ -53,7 +53,7 @@ export default function NotFound() {
             textAlign: "center",
             letterSpacing: "-0.06em",
             lineHeight: 0.85,
-            background: "linear-gradient(135deg, #E6C77A 0%, #C9A84C 50%, #8E6F2A 100%)",
+            background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
             WebkitBackgroundClip: "text",
             backgroundClip: "text",
             WebkitTextFillColor: "transparent",

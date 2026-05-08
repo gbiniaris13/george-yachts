@@ -25,8 +25,8 @@ import {
 
 // ─── Brand palette ───
 const NAVY = "#0a1a2f";
-const GOLD = "#C9A24D";
-const GOLD_LIGHT = "#E6C77A";
+const GOLD = "#C9A84C";
+const GOLD_LIGHT = "#C9A84C";
 const INK = "#0D1B2A";
 const MUTED = "#6b6b6b";
 const PAPER = "#fafaf6";
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   // Cover
   cover: {
     backgroundColor: NAVY,
-    color: "#fff",
+    color: "#F8F5F0",
     padding: 56,
     flex: 1,
     justifyContent: "space-between",
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     fontFamily: "Cormorant",
     fontSize: 56,
     fontWeight: 400,
-    color: "#fff",
+    color: "#F8F5F0",
     letterSpacing: 1,
     marginTop: 28,
   },
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   coverFooterValue: {
     fontFamily: "Cormorant",
     fontSize: 16,
-    color: "#fff",
+    color: "#F8F5F0",
     marginTop: 4,
   },
 
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   },
   priceBlock: {
     backgroundColor: NAVY,
-    color: "#fff",
+    color: "#F8F5F0",
     padding: "16px 18px",
     marginBottom: 16,
   },
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   priceValue: {
     fontFamily: "Cormorant",
     fontSize: 22,
-    color: "#fff",
+    color: "#F8F5F0",
   },
   insiderBlock: {
     borderLeft: `3px solid ${GOLD}`,
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
   // Final page
   finalPage: {
     backgroundColor: NAVY,
-    color: "#fff",
+    color: "#F8F5F0",
     padding: 56,
     flex: 1,
     justifyContent: "space-between",
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
   finalHeading: {
     fontFamily: "Cormorant",
     fontSize: 36,
-    color: "#fff",
+    color: "#F8F5F0",
     marginBottom: 12,
   },
   finalParagraph: {
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
   finalRowValue: {
     fontFamily: "Cormorant",
     fontSize: 14,
-    color: "#fff",
+    color: "#F8F5F0",
   },
   pageFooter: {
     fontFamily: "Montserrat",

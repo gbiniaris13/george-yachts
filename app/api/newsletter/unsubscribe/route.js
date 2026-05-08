@@ -56,12 +56,12 @@ function page({ title, body }) {
   <meta name="robots" content="noindex" />
   <title>${title}</title>
 </head>
-<body style="margin:0; padding:0; background: #0D1B2A; color:#fff; font-family:Georgia, serif; min-height:100vh; display:flex; align-items:center; justify-content:center;">
+<body style="margin:0; padding:0; background: #0D1B2A; color:#F8F5F0; font-family:Georgia, serif; min-height:100vh; display:flex; align-items:center; justify-content:center;">
   <div style="max-width:520px; margin:0 auto; padding:48px 32px; text-align:center; border:1px solid rgba(201,168,76,0.25);">
     <p style="margin:0 0 14px; font-family:'Montserrat',Arial,sans-serif; font-size:9px; letter-spacing:0.55em; text-transform:uppercase; color:#C9A84C; font-weight:600;">
       George Yachts Journal
     </p>
-    <h1 style="margin:0 0 18px; font-family:Georgia,serif; font-size:30px; font-weight:300; letter-spacing:0.01em; color:#fff;">
+    <h1 style="margin:0 0 18px; font-family:Georgia,serif; font-size:30px; font-weight:300; letter-spacing:0.01em; color:#F8F5F0;">
       ${title}
     </h1>
     <p style="margin:0 0 28px; font-family:Georgia,serif; font-size:16px; line-height:1.7; color:rgba(255,255,255,0.7); font-weight:300;">

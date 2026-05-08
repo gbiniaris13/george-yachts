@@ -228,7 +228,7 @@ export default async function RegionPage({ params }) {
             position: "relative",
             overflow: "hidden",
             background:
-              "radial-gradient(ellipse at top, rgba(201,168,76,0.06) 0%, transparent 60%), #000",
+              "radial-gradient(ellipse at top, rgba(201,168,76,0.06) 0%, transparent 60%), #0D1B2A",
           }}
         >
           <div
@@ -630,8 +630,8 @@ export default async function RegionPage({ params }) {
                 padding: "18px 36px",
                 minHeight: 52,
                 background:
-                  "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
-                color: "#000",
+                  "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
+                color: "#0D1B2A",
                 fontFamily:
                   "var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Montserrat', sans-serif",
                 fontSize: 12,

@@ -16,7 +16,7 @@ export default function AccessibilityPage() {
   const lastUpdated = "April 2026";
 
   return (
-    <div className="min-h-screen bg-[#000] font-sans selection:bg-[#C9A84C] selection:text-black">
+    <div className="min-h-screen bg-[#0D1B2A] font-sans selection:bg-[#C9A84C] selection:text-black">
       {/* Hero */}
       <section className="relative w-full px-8 md:px-20 pt-32 pb-20">
         <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C9A84C]/30 to-transparent mb-16" />
@@ -45,7 +45,7 @@ export default function AccessibilityPage() {
       </section>
 
       {/* Content */}
-      <section className="relative z-10 bg-[#000] px-6 pb-20 md:pb-32">
+      <section className="relative z-10 bg-[#0D1B2A] px-6 pb-20 md:pb-32">
         <div className="max-w-[720px] mx-auto">
           <div className="flex items-center space-x-6 mb-16">
             <span className="block w-6 h-px bg-[#C9A84C]/50" />

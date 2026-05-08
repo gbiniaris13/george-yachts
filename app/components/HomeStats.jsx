@@ -79,7 +79,7 @@ export default function HomeStats({ yachtCount = 66 }) {
               className="text-5xl md:text-6xl lg:text-7xl font-light mb-3"
               style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
-                background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)",
+                background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",

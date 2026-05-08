@@ -27,7 +27,7 @@ const GeorgeBiniarisClient = () => {
         instagramUrl="https://instagram.com/george_p.biniaris"
         bgColor="bg-black"
         textColor="text-white"
-        accentColor="text-[#7a6200]"
+        accentColor="text-[#C9A84C]"
       />
 
       {/* 2. The New Detailed "About" Section */}

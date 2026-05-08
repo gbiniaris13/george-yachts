@@ -68,7 +68,7 @@ export default function HowItWorks() {
             <div key={i} className="text-center group">
               {/* Number */}
               <div className="text-5xl font-marcellus mb-6" style={{
-                backgroundImage: "linear-gradient(180deg, #C9A84C 0%, #8B6914 100%)",
+                backgroundImage: "linear-gradient(180deg, #C9A84C 0%, #C9A84C 100%)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 color: "transparent",

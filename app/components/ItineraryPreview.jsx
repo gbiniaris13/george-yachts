@@ -217,7 +217,7 @@ export default function ItineraryPreview() {
               color: streaming ? "#F8F5F0" : "#0D1B2A",
               background: streaming
                 ? "rgba(0,0,0,0.7)"
-                : "linear-gradient(135deg, #E6C77A 0%, #C9A84C 100%)",
+                : "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)",
               border: streaming ? "1px solid #C9A84C" : "1px solid #C9A84C",
               boxShadow: streaming
                 ? "none"

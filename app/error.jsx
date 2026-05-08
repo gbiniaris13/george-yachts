@@ -24,7 +24,7 @@ export default function Error({ error, reset }) {
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: "48px",
             fontWeight: 200,
-            color: "#fff",
+            color: "#F8F5F0",
             margin: "0 0 24px",
           }}
         >
@@ -34,7 +34,7 @@ export default function Error({ error, reset }) {
           style={{
             width: "60px",
             height: "1px",
-            background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)",
+            background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
             margin: "0 auto 32px",
           }}
         />
@@ -55,8 +55,8 @@ export default function Error({ error, reset }) {
             onClick={() => reset()}
             style={{
               padding: "14px 36px",
-              background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)",
-              color: "#000",
+              background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
+              color: "#0D1B2A",
               fontSize: "10px",
               letterSpacing: "0.2em",
               textTransform: "uppercase",

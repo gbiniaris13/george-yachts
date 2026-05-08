@@ -39,7 +39,7 @@ export default function BudgetSlider({ yachts = [] }) {
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}80`, textTransform: 'uppercase', marginBottom: 12 }}>
             {t('budget.label')}
           </p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#fff', fontWeight: 300, margin: '0 0 8px' }}>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 8px' }}>
             {t('budget.title')}
           </h2>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(255,255,255,0.3)', margin: 0 }}>
@@ -70,7 +70,7 @@ export default function BudgetSlider({ yachts = [] }) {
               width: '100%',
               height: 4,
               borderRadius: 2,
-              background: `linear-gradient(90deg, ${GOLD} 0%, ${GOLD} ${((budget - sliderMin) / range) * 100}%, #222 ${((budget - sliderMin) / range) * 100}%, #222 100%)`,
+              background: `linear-gradient(90deg, ${GOLD} 0%, ${GOLD} ${((budget - sliderMin) / range) * 100}%, #0D1B2A ${((budget - sliderMin) / range) * 100}%, #0D1B2A 100%)`,
               outline: 'none',
               appearance: 'none',
               WebkitAppearance: 'none',
@@ -108,7 +108,7 @@ export default function BudgetSlider({ yachts = [] }) {
                   transition: 'all 0.3s ease',
                 }}
               >
-                <h3 className="notranslate" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: '#fff', margin: '0 0 6px', fontWeight: 400 }}>
+                <h3 className="notranslate" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: '#F8F5F0', margin: '0 0 6px', fontWeight: 400 }}>
                   {yacht.name}
                 </h3>
                 <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(255,255,255,0.3)', margin: '0 0 8px', letterSpacing: '0.1em' }}>

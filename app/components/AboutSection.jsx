@@ -1,6 +1,6 @@
 import React from "react";
 
-const GOLD_HEX = "#7a6200";
+const GOLD_HEX = "#C9A84C";
 
 const AboutSection = ({
   paragraphs = [
@@ -13,7 +13,7 @@ const AboutSection = ({
   return (
     <section className="py-16 bg-white">
       <div className="max-w-[1530px] mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl font-bold text-center text-[#02132d] mb-12">
+        <h2 className="text-4xl font-bold text-center text-[#0D1B2A] mb-12">
           <span style={{ color: GOLD_HEX }}>ABOUT</span>
           <br></br> GEORGE YACHTS
         </h2>

@@ -141,7 +141,7 @@ export default function AboutContent() {
               fontStyle: "italic",
               fontSize: 22,
               fontWeight: 300,
-              color: "#fff",
+              color: "#F8F5F0",
               margin: "0 0 8px",
               letterSpacing: "0.01em",
               lineHeight: 1.45,
@@ -304,7 +304,7 @@ export default function AboutContent() {
       <section style={{ padding: "100px 24px", background: "rgba(201,168,76,0.02)", borderTop: "1px solid rgba(201,168,76,0.08)", borderBottom: "1px solid rgba(201,168,76,0.08)" }}>
         <RevealSection className="text-center" style={{ maxWidth: "800px", margin: "0 auto" }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.4em", color: "#C9A84C", textTransform: "uppercase", marginBottom: "24px" }}>The Difference</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 300, color: "#fff", marginBottom: "40px", lineHeight: 1.3 }}>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 300, color: "#F8F5F0", marginBottom: "40px", lineHeight: 1.3 }}>
             Why Choose a Boutique Broker?
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "32px", textAlign: "left" }}>

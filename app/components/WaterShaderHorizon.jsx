@@ -98,7 +98,7 @@ const FRAG = /* glsl */ `
     // Caustic light — gold tint at higher y, ivory tint near bottom
     // ripples to read like moonlit water.
     vec3 goldHi = vec3(0.854, 0.647, 0.125);     // #C9A84C
-    vec3 ivoryHi = vec3(0.961, 0.937, 0.882);    // #F5EFE1
+    vec3 ivoryHi = vec3(0.961, 0.937, 0.882);    // #F8F5F0
     vec3 highlight = mix(ivoryHi, goldHi, yFall);
 
     vec3 col = base + highlight * caustic * 0.45;
@@ -199,7 +199,7 @@ export default function WaterShaderHorizon({ height = 220 }) {
           width: "100%",
           height,
           background:
-            "linear-gradient(to bottom, #000 0%, #0a1929 35%, #1a2845 65%, #0a1929 100%)",
+            "linear-gradient(to bottom, #0D1B2A 0%, #0D1B2A 35%, #1a2845 65%, #0D1B2A 100%)",
         }}
       />
     );

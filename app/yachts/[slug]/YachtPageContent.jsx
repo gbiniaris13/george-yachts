@@ -99,7 +99,7 @@ function DeckLayoutFallback({ images, yachtName }) {
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.42em', textTransform: 'uppercase', color: '#C9A84C', fontWeight: 600, marginBottom: 14, textAlign: 'center' }}>
           Deck layout
         </p>
-        <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: 'clamp(28px, 4vw, 40px)', color: '#fff', textAlign: 'center', margin: '0 0 28px', lineHeight: 1.15 }}>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: 'clamp(28px, 4vw, 40px)', color: '#F8F5F0', textAlign: 'center', margin: '0 0 28px', lineHeight: 1.15 }}>
           Where you sleep, eat, and relax aboard <em style={{ color: '#C9A84C', fontStyle: 'italic' }}>{yachtName}</em>
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: valid.length === 1 ? '1fr' : 'repeat(auto-fit, minmax(360px, 1fr))', gap: 16 }}>
@@ -181,7 +181,7 @@ function DeckPlansSection({ decks, yachtName }) {
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontWeight: 300,
             fontSize: 'clamp(28px, 4vw, 40px)',
-            color: '#fff',
+            color: '#F8F5F0',
             textAlign: 'center',
             margin: '0 0 28px',
             lineHeight: 1.15,
@@ -262,7 +262,7 @@ function DeckPlansSection({ decks, yachtName }) {
                   height: 28,
                   borderRadius: '50%',
                   background: '#C9A84C',
-                  border: '3px solid #fff',
+                  border: '3px solid #F8F5F0',
                   boxShadow: '0 0 0 6px rgba(201,168,76,0.25)',
                   cursor: 'pointer',
                   padding: 0,
@@ -331,7 +331,7 @@ function DeckPlansSection({ decks, yachtName }) {
                 width: 36,
                 height: 36,
                 background: 'rgba(0,0,0,0.6)',
-                color: '#fff',
+                color: '#F8F5F0',
                 border: '1px solid rgba(255,255,255,0.3)',
                 cursor: 'pointer',
                 fontSize: 16,
@@ -366,7 +366,7 @@ function DeckPlansSection({ decks, yachtName }) {
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontSize: 22,
                   fontWeight: 400,
-                  color: '#fff',
+                  color: '#F8F5F0',
                   margin: 0,
                   padding: '14px 18px',
                   borderTop: '1px solid rgba(201,168,76,0.3)',
@@ -410,7 +410,7 @@ function MatterportSection({ url, yachtName }) {
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontWeight: 300,
             fontSize: 'clamp(28px, 4vw, 40px)',
-            color: '#fff',
+            color: '#F8F5F0',
             textAlign: 'center',
             margin: '0 0 28px',
             lineHeight: 1.15,
@@ -460,7 +460,7 @@ function MatterportSection({ url, yachtName }) {
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontSize: 22,
                   fontWeight: 400,
-                  color: '#fff',
+                  color: '#F8F5F0',
                   margin: '0 0 12px',
                 }}
               >
@@ -633,7 +633,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   data-cursor="Inquire"
                   style={{
                     padding: '14px 32px',
-                    background: 'linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)',
+                    background: 'linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)',
                     color: '#0D1B2A',
                     border: '1px solid rgba(201,168,76,0.6)',
                     fontFamily: "'Montserrat', sans-serif",
@@ -654,7 +654,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   style={{
                     padding: '14px 32px',
                     background: 'transparent',
-                    color: '#fff',
+                    color: '#F8F5F0',
                     border: '1px solid rgba(255,255,255,0.3)',
                     fontFamily: "'Montserrat', sans-serif",
                     fontSize: '11px',
@@ -826,7 +826,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontWeight: 300,
                   fontSize: 'clamp(28px, 4vw, 40px)',
-                  color: '#fff',
+                  color: '#F8F5F0',
                   textAlign: 'center',
                   margin: '0 0 8px',
                   lineHeight: 1.15,
@@ -964,7 +964,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                           fontFamily: "'Cormorant Garamond', Georgia, serif",
                           fontWeight: 400,
                           fontSize: 22,
-                          color: '#fff',
+                          color: '#F8F5F0',
                           margin: '0 0 8px',
                           lineHeight: 1.25,
                         }}
@@ -1113,7 +1113,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
               style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: 18,
-                color: '#fff',
+                color: '#F8F5F0',
                 letterSpacing: '0.02em',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
@@ -1149,7 +1149,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             style={{
               flex: '0 0 auto',
               padding: '10px 22px',
-              background: 'linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)',
+              background: 'linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)',
               color: '#0D1B2A',
               border: '1px solid rgba(201,168,76,0.6)',
               fontSize: 10,

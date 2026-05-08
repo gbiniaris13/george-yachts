@@ -163,7 +163,7 @@ const ContactFormSection = () => {
             className="text-4xl md:text-5xl mb-6"
             style={{
               fontFamily: "'Cormorant Garamond', Georgia, serif",
-              backgroundImage: "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
+              backgroundImage: "linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%)",
               WebkitBackgroundClip: "text", backgroundClip: "text",
               color: "transparent", WebkitTextFillColor: "transparent",
             }}
@@ -229,7 +229,7 @@ const ContactFormSection = () => {
               // broke awkwardly. Clamped to a fluid scale that hits
               // the same 7xl peak on desktop.
               fontSize: "clamp(32px, 7vw, 80px)",
-              backgroundImage: "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
+              backgroundImage: "linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%)",
               WebkitBackgroundClip: "text", backgroundClip: "text",
               color: "transparent", WebkitTextFillColor: "transparent",
               lineHeight: "1.2",
@@ -532,7 +532,7 @@ const ContactFormSection = () => {
                 disabled={status === "Submitting..."}
                 className="group relative w-full max-w-md py-5 overflow-hidden transition-all duration-500"
                 style={{
-                  background: 'linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)',
+                  background: 'linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%)',
                 }}
               >
                 <span className="relative z-10 flex items-center justify-center gap-3 text-black font-bold text-sm tracking-[0.3em] uppercase">
@@ -567,7 +567,7 @@ const ContactFormSection = () => {
           -webkit-box-shadow: 0 0 0px 1000px #0D1B2A inset;
           transition: background-color 5000s ease-in-out 0s;
         }
-        select option { background: #0D1B2A !important; color: #fff !important; }
+        select option { background: #0D1B2A !important; color: #F8F5F0 !important; }
         select:invalid { color: rgba(255,255,255,0.3); }
         .date-input::-webkit-calendar-picker-indicator {
           filter: invert(0.7) sepia(1) saturate(3) hue-rotate(15deg);

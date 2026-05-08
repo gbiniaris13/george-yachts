@@ -184,7 +184,7 @@ const DiagonalWipePanel = ({ item, index, total }) => {
               <span
                 className="block italic font-light mt-2"
                 style={{
-                  backgroundImage: "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
+                  backgroundImage: "linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%)",
                   WebkitBackgroundClip: "text",
                   backgroundClip: "text",
                   color: "transparent",
@@ -246,7 +246,7 @@ const DiagonalWipePanel = ({ item, index, total }) => {
 const TwoColumnLayout = () => {
   const features = useFeatures();
   return (
-    <section className="relative w-full bg-[#000]">
+    <section className="relative w-full bg-[#0D1B2A]">
       {features.map((item, index) => (
         <DiagonalWipePanel
           key={index}

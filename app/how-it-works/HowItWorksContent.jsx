@@ -68,7 +68,7 @@ function Step({ number, icon, title, description, detail, delay = 0 }) {
         <div style={{ color: "#C9A84C", marginBottom: "16px" }}>{icon}</div>
         <h3 style={{
           fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: "1.6rem", fontWeight: 400, color: "#fff",
+          fontSize: "1.6rem", fontWeight: 400, color: "#F8F5F0",
           marginBottom: "16px",
         }}>
           {title}
@@ -186,8 +186,8 @@ export default function HowItWorksContent() {
             display: "inline-block",
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "11px", fontWeight: 600, letterSpacing: "0.2em",
-            textTransform: "uppercase", color: "#000",
-            background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)",
+            textTransform: "uppercase", color: "#0D1B2A",
+            background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
             padding: "16px 48px", textDecoration: "none",
           }}
         >

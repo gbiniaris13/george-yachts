@@ -75,10 +75,10 @@ export default function EventsPage() {
       <section style={{ padding: "100px 24px", background: "#0D1B2A" }}>
         <Reveal className="text-center" style={{ maxWidth: "700px", margin: "0 auto" }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "24px" }}>2026 Calendar</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 300, color: "#fff", margin: "0 0 32px" }}>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 32px" }}>
             Where Can You Meet George Yachts This Year?
           </h2>
-          <div style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, #E6C77A, #A67C2E)", margin: "0 auto 32px" }} />
+          <div style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, #C9A84C, #C9A84C)", margin: "0 auto 32px" }} />
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.4)", lineHeight: 1.9, fontWeight: 300 }}>
             We attend the most important yacht shows globally to stay connected with owners, captains, and industry leaders. If you&apos;re attending any of these events, we&apos;d welcome the opportunity to meet in person.
           </p>
@@ -97,7 +97,7 @@ export default function EventsPage() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
-                    <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", fontWeight: 500, color: "#fff", margin: 0 }}>{event.name}</h3>
+                    <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", fontWeight: 500, color: "#F8F5F0", margin: 0 }}>{event.name}</h3>
                     <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "7px", letterSpacing: "0.15em", textTransform: "uppercase", padding: "3px 10px", border: `1px solid ${event.status === "confirmed" ? "rgba(201,168,76,0.4)" : "rgba(255,255,255,0.1)"}`, color: event.status === "confirmed" ? "#C9A84C" : "rgba(255,255,255,0.3)" }}>
                       {event.status === "confirmed" ? "Confirmed" : "To Be Confirmed"}
                     </span>
@@ -114,11 +114,11 @@ export default function EventsPage() {
       <section style={{ padding: "100px 24px", background: "#0D1B2A", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.08)" }}>
         <Reveal>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "16px" }}>Attending a Show?</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 300, color: "#fff", margin: "0 0 16px" }}>Let&apos;s Meet in Person</h2>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 16px" }}>Let&apos;s Meet in Person</h2>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.4)", lineHeight: 1.7, fontWeight: 300, maxWidth: "500px", margin: "0 auto 40px" }}>
             Schedule a private meeting at any upcoming show. We&apos;ll arrange viewings and discuss your charter plans.
           </p>
-          <a href="https://calendly.com/george-georgeyachts/30min" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)", color: "#000", padding: "16px 48px", fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none", fontWeight: 700 }}>
+          <a href="https://calendly.com/george-georgeyachts/30min" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)", color: "#0D1B2A", padding: "16px 48px", fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none", fontWeight: 700 }}>
             Schedule a Meeting
           </a>
         </Reveal>

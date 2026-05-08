@@ -116,7 +116,7 @@ export default function TimelineClient() {
               <div style={{
                 width: 16, height: 16, borderRadius: '50%',
                 background: activeStep === i ? GOLD : 'transparent',
-                border: `2px solid ${activeStep === i ? GOLD : '#333'}`,
+                border: `2px solid ${activeStep === i ? GOLD : '#9CA3AF'}`,
                 marginTop: 24,
                 transition: 'all 0.3s ease',
                 boxShadow: activeStep === i ? `0 0 12px ${GOLD}40` : 'none',
@@ -125,7 +125,7 @@ export default function TimelineClient() {
               {i < STEPS.length - 1 && (
                 <div style={{
                   width: 1, flex: 1,
-                  background: i < activeStep ? `${GOLD}40` : '#222',
+                  background: i < activeStep ? `${GOLD}40` : '#0D1B2A',
                   transition: 'background 0.3s ease',
                 }} />
               )}
@@ -143,7 +143,7 @@ export default function TimelineClient() {
               <h3 style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 fontSize: activeStep === i ? 22 : 18,
-                color: activeStep === i ? '#fff' : 'rgba(255,255,255,0.5)',
+                color: activeStep === i ? '#F8F5F0' : 'rgba(255,255,255,0.5)',
                 fontWeight: 400,
                 margin: '0 0 8px',
                 transition: 'all 0.3s ease',

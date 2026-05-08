@@ -19,7 +19,7 @@ export default function RelatedArticles({ posts }) {
   if (!posts || posts.length === 0) return null;
 
   return (
-    <section className="relative z-10 bg-[#000] px-6 pb-20 md:pb-28">
+    <section className="relative z-10 bg-[#0D1B2A] px-6 pb-20 md:pb-28">
       <div className="max-w-[720px] mx-auto">
         {/* Section header */}
         <div className="flex items-center space-x-6 mb-12">

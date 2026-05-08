@@ -567,7 +567,7 @@ export default function CredentialsPage() {
               fontWeight: 700,
               color: "#0D1B2A",
               textDecoration: "none",
-              background: "linear-gradient(135deg, #E6C77A 0%, #C9A84C 100%)",
+              background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)",
               border: "1px solid #C9A84C",
               boxShadow: "0 12px 32px rgba(201,168,76,0.22)",
             }}
@@ -591,7 +591,7 @@ export default function CredentialsPage() {
               fontFamily: "'Lato', 'Montserrat', sans-serif",
               fontWeight: 300,
               fontSize: 9,
-              color: "#888",
+              color: "#9CA3AF",
               margin: 0,
               lineHeight: 1.6,
               maxWidth: 880,

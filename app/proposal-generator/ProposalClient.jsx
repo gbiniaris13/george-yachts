@@ -140,7 +140,7 @@ export default function ProposalClient({ yachts = [] }) {
 
   // ─── RENDER ───
   return (
-    <div style={{ minHeight: "100vh", background: "#0D1B2A", color: "#fff", paddingBottom: 120 }}>
+    <div style={{ minHeight: "100vh", background: "#0D1B2A", color: "#F8F5F0", paddingBottom: 120 }}>
       {/* HEADER */}
       <header style={{ padding: "120px 24px 40px", textAlign: "center" }}>
         <p style={{
@@ -235,7 +235,7 @@ export default function ProposalClient({ yachts = [] }) {
               <div style={{ padding: "14px 16px 16px" }}>
                 <p style={{
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  fontSize: 18, fontWeight: 400, color: "#fff", margin: "0 0 4px",
+                  fontSize: 18, fontWeight: 400, color: "#F8F5F0", margin: "0 0 4px",
                 }}>
                   {y.name}
                 </p>
@@ -284,7 +284,7 @@ export default function ProposalClient({ yachts = [] }) {
       {/* STICKY BOTTOM BAR */}
       <div style={{
         position: "fixed", bottom: 0, left: 0, right: 0,
-        background: "linear-gradient(180deg, rgba(0,0,0,0.6), #000)",
+        background: "linear-gradient(180deg, rgba(0,0,0,0.6), #0D1B2A)",
         borderTop: `1px solid ${GOLD}55`,
         padding: "16px 24px",
         display: "flex", justifyContent: "center", gap: 12,
@@ -313,7 +313,7 @@ export default function ProposalClient({ yachts = [] }) {
             fontWeight: 700, padding: "12px 22px",
             background: picked.length === 0
               ? "rgba(201,168,76,0.25)"
-              : `linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)`,
+              : `linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)`,
             color: picked.length === 0 ? "rgba(0,0,0,0.45)" : "#0D1B2A",
             border: "none",
             cursor: picked.length === 0 ? "default" : "pointer",
@@ -354,7 +354,7 @@ export default function ProposalClient({ yachts = [] }) {
                 </p>
                 <h3 style={{
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  fontSize: 24, fontWeight: 400, color: "#fff",
+                  fontSize: 24, fontWeight: 400, color: "#F8F5F0",
                   margin: "0 0 6px", lineHeight: 1.2,
                 }}>
                   Where should we send the PDF?
@@ -404,7 +404,7 @@ export default function ProposalClient({ yachts = [] }) {
                         color: "#0D1B2A",
                         background: submitting
                           ? `${GOLD}66`
-                          : `linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)`,
+                          : `linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)`,
                         border: "none", cursor: submitting ? "default" : "pointer",
                       }}
                     >
@@ -430,7 +430,7 @@ export default function ProposalClient({ yachts = [] }) {
               <div style={{ textAlign: "center", padding: "8px 0 4px" }}>
                 <p style={{
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  fontSize: 30, fontWeight: 400, color: "#fff", margin: "0 0 10px",
+                  fontSize: 30, fontWeight: 400, color: "#F8F5F0", margin: "0 0 10px",
                 }}>
                   Done.
                 </p>
@@ -450,7 +450,7 @@ export default function ProposalClient({ yachts = [] }) {
                     fontFamily: "'Montserrat', sans-serif", fontSize: 10,
                     fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase",
                     color: "#0D1B2A",
-                    background: `linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)`,
+                    background: `linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)`,
                     textDecoration: "none",
                   }}
                 >
@@ -488,7 +488,7 @@ const inputStyle = {
   fontFamily: "'Montserrat', sans-serif", fontSize: 13,
   background: "rgba(255,255,255,0.06)",
   border: "1px solid rgba(255,255,255,0.18)",
-  color: "#fff", outline: "none",
+  color: "#F8F5F0", outline: "none",
 };
 
 function FilterGroup({ label, options, value, onChange }) {

@@ -10,9 +10,9 @@ const GOLD = '#C9A84C';
 const inputStyle = {
   padding: '12px 16px',
   background: '#0D1B2A',
-  border: '1px solid #333',
+  border: '1px solid #9CA3AF',
   borderRadius: 4,
-  color: '#fff',
+  color: '#F8F5F0',
   fontFamily: "'Montserrat', sans-serif",
   fontSize: 13,
   outline: 'none',
@@ -112,7 +112,7 @@ export default function FavoritesContent() {
     return (
       <div style={{ minHeight: '100vh', background: '#0D1B2A', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '160px 24px', textAlign: 'center' }}>
         <div style={{ fontSize: 48, marginBottom: 24, opacity: 0.3 }}>♡</div>
-        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#fff', fontWeight: 300, margin: '0 0 16px 0' }}>
+        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 16px 0' }}>
           {t('favorites.empty', 'No Favorites Yet')}
         </h1>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(255,255,255,0.35)', maxWidth: 400, marginBottom: 32 }}>
@@ -128,8 +128,8 @@ export default function FavoritesContent() {
             fontWeight: 600,
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
-            color: '#000',
-            background: `linear-gradient(90deg, ${GOLD}, #8B6914)`,
+            color: '#0D1B2A',
+            background: `linear-gradient(90deg, ${GOLD}, #C9A84C)`,
             textDecoration: 'none',
             borderRadius: 4,
           }}
@@ -148,7 +148,7 @@ export default function FavoritesContent() {
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
             {t('favorites.label', 'Your Selection')}
           </p>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#fff', fontWeight: 300, margin: '0 0 12px 0' }}>
+          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 12px 0' }}>
             {items.length} {t('favorites.saved', 'Favorites Saved')}
           </h1>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.35)' }}>
@@ -166,8 +166,8 @@ export default function FavoritesContent() {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 padding: '20px 24px',
-                background: '#111',
-                border: '1px solid #222',
+                background: '#0D1B2A',
+                border: '1px solid #0D1B2A',
                 borderRadius: 8,
                 opacity: 0,
                 animation: `fadeInUp 0.4s ease ${i * 0.08}s forwards`,
@@ -176,7 +176,7 @@ export default function FavoritesContent() {
               <div>
                 <Link
                   href={`/yachts/${yacht.slug}`}
-                  style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: '#fff', textDecoration: 'none' }}
+                  style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: '#F8F5F0', textDecoration: 'none' }}
                 >
                   {yacht.name}
                 </Link>
@@ -206,8 +206,8 @@ export default function FavoritesContent() {
 
         {/* Send to George section */}
         {!sent ? (
-          <div style={{ background: '#111', border: `1px solid ${GOLD}20`, borderRadius: 8, padding: 32, textAlign: 'center' }}>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, color: '#fff', fontWeight: 300, margin: '0 0 8px 0' }}>
+          <div style={{ background: '#0D1B2A', border: `1px solid ${GOLD}20`, borderRadius: 8, padding: 32, textAlign: 'center' }}>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, color: '#F8F5F0', fontWeight: 300, margin: '0 0 8px 0' }}>
               {t('favorites.sendToGeorge', 'Send to George')}
             </h2>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(255,255,255,0.35)', marginBottom: 24 }}>
@@ -281,8 +281,8 @@ export default function FavoritesContent() {
                   fontWeight: 600,
                   letterSpacing: '0.15em',
                   textTransform: 'uppercase',
-                  color: (!name || !email) ? '#666' : '#000',
-                  background: (!name || !email) ? '#333' : `linear-gradient(90deg, ${GOLD}, #8B6914)`,
+                  color: (!name || !email) ? '#9CA3AF' : '#0D1B2A',
+                  background: (!name || !email) ? '#9CA3AF' : `linear-gradient(90deg, ${GOLD}, #C9A84C)`,
                   border: 'none',
                   borderRadius: 4,
                   cursor: (!name || !email) ? 'default' : 'pointer',
@@ -301,7 +301,7 @@ export default function FavoritesContent() {
                   fontWeight: 600,
                   letterSpacing: '0.22em',
                   textTransform: 'uppercase',
-                  color: copyStatus === 'copied' ? '#000' : `${GOLD}cc`,
+                  color: copyStatus === 'copied' ? '#0D1B2A' : `${GOLD}cc`,
                   background: copyStatus === 'copied' ? GOLD : 'transparent',
                   border: `1px solid ${GOLD}60`,
                   borderRadius: 4,
@@ -314,7 +314,7 @@ export default function FavoritesContent() {
             </div>
           </div>
         ) : (
-          <div style={{ background: '#111', border: `1px solid ${GOLD}40`, borderRadius: 8, padding: 32, textAlign: 'center' }}>
+          <div style={{ background: '#0D1B2A', border: `1px solid ${GOLD}40`, borderRadius: 8, padding: 32, textAlign: 'center' }}>
             <div style={{ fontSize: 32, marginBottom: 16 }}>✓</div>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, color: GOLD, fontWeight: 300, margin: '0 0 12px 0' }}>
               {t('favorites.sentToGeorge', 'Sent to George')}

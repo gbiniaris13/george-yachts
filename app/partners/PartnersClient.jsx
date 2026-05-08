@@ -307,8 +307,8 @@ export default function PartnersClient() {
                   width: "100%",
                   marginTop: 22,
                   padding: "14px 0",
-                  background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)",
-                  color: "#000",
+                  background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
+                  color: "#0D1B2A",
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: 11,
                   fontWeight: 700,
@@ -375,7 +375,7 @@ export default function PartnersClient() {
               fontWeight: 300,
               letterSpacing: "0.08em",
               lineHeight: 1.1,
-              color: "#fff",
+              color: "#F8F5F0",
               marginBottom: "24px",
             }}
           >
@@ -455,7 +455,7 @@ export default function PartnersClient() {
                     fontFamily: "'Cormorant Garamond', Georgia, serif",
                     fontSize: "24px",
                     fontWeight: 500,
-                    color: "#fff",
+                    color: "#F8F5F0",
                     marginBottom: "8px",
                   }}
                 >
@@ -505,7 +505,7 @@ export default function PartnersClient() {
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {fleets.map((f, i) => (
               <div key={i} className="text-center p-8" style={{ border: "1px solid rgba(201, 168, 76, 0.2)", borderRadius: "2px" }}>
-                <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "26px", fontWeight: 500, color: "#fff", marginBottom: "8px" }}>
+                <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "26px", fontWeight: 500, color: "#F8F5F0", marginBottom: "8px" }}>
                   {f.name}
                 </h3>
                 <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", fontWeight: 600, color: "#C9A84C", marginBottom: "4px" }}>
@@ -564,7 +564,7 @@ export default function PartnersClient() {
                   style={{
                     fontFamily: "'Cormorant Garamond', Georgia, serif",
                     fontSize: 19,
-                    color: "#fff",
+                    color: "#F8F5F0",
                     cursor: "pointer",
                     listStyle: "none",
                     fontWeight: 400,
@@ -643,7 +643,7 @@ export default function PartnersClient() {
                   borderColor: "rgba(13, 27, 42, 0.15)",
                   borderRadius: "2px",
                   color: "#0D1B2A",
-                  backgroundColor: "#fff",
+                  backgroundColor: "#F8F5F0",
                 }}
               />
               <button
@@ -769,7 +769,7 @@ function FieldInput({ label, value, onChange, placeholder, type = "text", requir
           padding: "11px 14px",
           background: "rgba(0,0,0,0.6)",
           border: "1px solid rgba(201,168,76,0.28)",
-          color: "#fff",
+          color: "#F8F5F0",
           fontFamily: "'Montserrat', sans-serif",
           fontSize: 13,
           outline: "none",

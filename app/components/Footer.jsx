@@ -204,7 +204,7 @@ const Footer = () => {
                 color: "#0D1B2A",
                 textDecoration: "none",
                 background:
-                  "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
+                  "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
                 border: "1px solid rgba(201,168,76,0.6)",
                 borderRadius: "999px",
                 boxShadow:
@@ -359,7 +359,7 @@ const Footer = () => {
                     background: "rgba(255,255,255,0.03)",
                     border: "1px solid rgba(255,255,255,0.1)",
                     borderRight: "none",
-                    color: "#fff",
+                    color: "#F8F5F0",
                     padding: "14px 16px",
                     fontFamily: "'Montserrat', sans-serif",
                     /* Phase 27 (mobile audit) — was 11px which triggered
@@ -371,8 +371,8 @@ const Footer = () => {
                 <button
                   type="submit"
                   style={{
-                    background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)",
-                    color: "#000",
+                    background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
+                    color: "#0D1B2A",
                     padding: "14px 24px",
                     fontFamily: "'Montserrat', sans-serif",
                     fontSize: "9px",
@@ -406,7 +406,7 @@ const Footer = () => {
               legal pages instead of inventory. Reduced opacity 50→25%
               and fontSize 9→8px so the legal links read as a regulatory
               footnote, not as primary nav. Still fully visible + AA
-              accessible (white at 25% over #000 = 1.65 contrast which
+              accessible (white at 25% over #0D1B2A = 1.65 contrast which
               is too low for body text but acceptable for the small
               compliance-only legal strip). */}
           <div className="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-2">

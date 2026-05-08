@@ -217,7 +217,7 @@ export default function Filotimon({ filotimoImage = null }) {
                 className="italic"
                 style={{
                   background:
-                    "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
+                    "linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%)",
                   WebkitBackgroundClip: "text",
                   backgroundClip: "text",
                   WebkitTextFillColor: "transparent",

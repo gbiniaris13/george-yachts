@@ -35,7 +35,7 @@ export async function POST(req) {
       // Send the magic link via Resend (or fall back to Telegram for diagnostics).
       if (process.env.RESEND_API_KEY) {
         const html = `
-<div style="font-family:'Lato','Montserrat',sans-serif;font-size:14px;line-height:1.7;color:#222">
+<div style="font-family:'Lato','Montserrat',sans-serif;font-size:14px;line-height:1.7;color:#0D1B2A">
 <p>Hello,</p>
 <p>You can sign in to the George Yachts partner portal using the link below. It expires in 15 minutes.</p>
 <p style="margin:24px 0">
@@ -43,7 +43,7 @@ export async function POST(req) {
     Open partner portal →
   </a>
 </p>
-<p style="font-size:12px;color:#888">If you didn't request this, ignore this email.</p>
+<p style="font-size:12px;color:#9CA3AF">If you didn't request this, ignore this email.</p>
 <p style="margin-top:20px">— George Yachts Brokerage House</p>
 </div>`.trim();
 

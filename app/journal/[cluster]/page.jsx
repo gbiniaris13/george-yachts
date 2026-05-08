@@ -71,7 +71,7 @@ export default async function ClusterPage({ params }) {
       {/* HEADER */}
       <header
         style={{
-          background: "linear-gradient(180deg, #0D1B2A 0%, #000 100%)",
+          background: "linear-gradient(180deg, #0D1B2A 0%, #0D1B2A 100%)",
           padding: "120px 24px 64px",
           borderBottom: "1px solid rgba(201,168,76,0.15)",
         }}
@@ -141,7 +141,7 @@ export default async function ClusterPage({ params }) {
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: "clamp(28px, 4vw, 40px)",
                 fontWeight: 300,
-                color: "#fff",
+                color: "#F8F5F0",
                 margin: "0 0 36px",
                 textAlign: "center",
               }}
@@ -191,7 +191,7 @@ export default async function ClusterPage({ params }) {
                           fontFamily: "'Cormorant Garamond', Georgia, serif",
                           fontSize: 20,
                           fontWeight: 400,
-                          color: "#fff",
+                          color: "#F8F5F0",
                           margin: "0 0 8px",
                           lineHeight: 1.3,
                         }}
@@ -250,7 +250,7 @@ export default async function ClusterPage({ params }) {
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: "clamp(28px, 4vw, 40px)",
                 fontWeight: 300,
-                color: "#fff",
+                color: "#F8F5F0",
                 margin: "0 0 36px",
                 textAlign: "center",
               }}
@@ -296,7 +296,7 @@ export default async function ClusterPage({ params }) {
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
                         fontSize: 20,
                         fontWeight: 400,
-                        color: "#fff",
+                        color: "#F8F5F0",
                         margin: "0 0 4px",
                       }}
                     >
@@ -378,7 +378,7 @@ export default async function ClusterPage({ params }) {
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "clamp(28px, 4vw, 40px)",
               fontWeight: 300,
-              color: "#fff",
+              color: "#F8F5F0",
               margin: "0 0 18px",
               lineHeight: 1.2,
             }}
@@ -407,7 +407,7 @@ export default async function ClusterPage({ params }) {
                 textTransform: "uppercase",
                 fontWeight: 700,
                 padding: "14px 26px",
-                background: "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
+                background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
                 color: "#0D1B2A",
                 border: "1px solid rgba(201,168,76,0.6)",
                 textDecoration: "none",

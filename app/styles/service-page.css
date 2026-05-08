@@ -91,7 +91,7 @@
 .svc-hero__line {
   width: 0;
   height: 1px;
-  background: linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E);
+  background: linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C);
   margin: 0 auto 28px;
   animation: svcGoldLine 1.2s ease-out 1s forwards;
 }
@@ -133,7 +133,7 @@
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: clamp(26px, 3.5vw, 40px);
   font-weight: 300;
-  color: #fff;
+  color: #F8F5F0;
   line-height: 1.35;
   margin: 0 0 32px;
 }
@@ -141,7 +141,7 @@
 .svc-intro__line {
   width: 60px;
   height: 1px;
-  background: linear-gradient(90deg, #E6C77A, #A67C2E);
+  background: linear-gradient(90deg, #C9A84C, #C9A84C);
   margin: 0 auto 32px;
 }
 
@@ -174,7 +174,7 @@
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: clamp(26px, 3.5vw, 40px);
   font-weight: 300;
-  color: #fff;
+  color: #F8F5F0;
   text-align: center;
   margin: 0 0 56px;
 }
@@ -210,7 +210,7 @@
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 20px;
   font-weight: 500;
-  color: #fff;
+  color: #F8F5F0;
   margin: 0 0 12px;
 }
 
@@ -238,7 +238,7 @@
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: clamp(24px, 3vw, 36px);
   font-weight: 300;
-  color: #fff;
+  color: #F8F5F0;
   text-align: center;
   margin: 0 0 48px;
 }
@@ -292,7 +292,7 @@
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: clamp(28px, 4vw, 48px);
   font-weight: 300;
-  color: #fff;
+  color: #F8F5F0;
   margin: 0 0 16px;
 }
 
@@ -308,9 +308,9 @@
 
 .svc-cta__button {
   display: inline-block;
-  background: linear-gradient(90deg, #E6C77A 0%, #C9A24D 25%, #A67C2E 50%, #C9A24D 75%, #E6C77A 100%);
+  background: linear-gradient(90deg, #C9A84C 0%, #C9A84C 25%, #C9A84C 50%, #C9A84C 75%, #C9A84C 100%);
   background-size: 200% 100%;
-  color: #000;
+  color: #0D1B2A;
   padding: 16px 48px;
   font-family: 'Montserrat', sans-serif;
   font-size: 11px;
@@ -350,7 +350,7 @@
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 24px;
   font-weight: 500;
-  color: #fff;
+  color: #F8F5F0;
   margin: 0 0 24px;
   padding-bottom: 12px;
   border-bottom: 1px solid rgba(201,168,76,0.2);

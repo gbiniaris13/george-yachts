@@ -47,18 +47,18 @@ export async function POST(req) {
   // Confirmation email to user (best-effort; failures don't block).
   try {
     const html = `
-<div style="font-family:'Lato','Montserrat',sans-serif;font-size:14px;line-height:1.7;color:#222">
+<div style="font-family:'Lato','Montserrat',sans-serif;font-size:14px;line-height:1.7;color:#0D1B2A">
 <p>Dear ${name.split(" ")[0] || "friend"},</p>
 <p>Thank you — I've saved the Greek-island route you designed on the website. Here it is for your records:</p>
 <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;color:#0a1a2f;margin:18px 0">
 <strong>${routeStr}</strong><br/>
-<span style="color:#888">${totalNM || ""} NM · ~${hours || ""} sailing hours</span>
+<span style="color:#9CA3AF">${totalNM || ""} NM · ~${hours || ""} sailing hours</span>
 </p>
 ${message ? `<p style="background:#fafafa;padding:12px 16px;border-left:3px solid #C9A84C;font-style:italic">${message.replace(/</g, "&lt;")}</p>` : ""}
 <p>I'll come back to you within 24 hours with two yachts that fit this route at the time of year you're looking at, plus one alternative I think you haven't considered.</p>
 <p>If anything's urgent, the fastest channel is WhatsApp: <a href="https://wa.me/17867988798">+1 786 798 8798</a>.</p>
 <p style="margin-top:24px">— George<br/>
-<span style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#888">George P. Biniaris · Managing Broker</span></p>
+<span style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#9CA3AF">George P. Biniaris · Managing Broker</span></p>
 </div>`.trim();
     await sendNewsletterEmail({
       to: email,

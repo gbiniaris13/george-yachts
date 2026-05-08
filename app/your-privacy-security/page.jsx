@@ -14,7 +14,7 @@ export const metadata = {
 const Card = ({ icon, title, description }) => (
   <div className="p-8 md:p-10" style={{ background: "rgba(201,168,76,0.03)", border: "1px solid rgba(201,168,76,0.1)" }}>
     <div className="text-[#C9A84C] mb-6">{icon}</div>
-    <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.4rem", fontWeight: 400, color: "#fff", marginBottom: "16px" }}>
+    <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.4rem", fontWeight: 400, color: "#F8F5F0", marginBottom: "16px" }}>
       {title}
     </h3>
     <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", lineHeight: 2, color: "rgba(255,255,255,0.5)" }}>
@@ -38,7 +38,7 @@ export default function YourPrivacySecurity() {
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#C9A84C", marginBottom: "24px", textTransform: "uppercase" }}>
             Your Trust Matters
           </p>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#fff", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "24px" }}>
+          <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#F8F5F0", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "24px" }}>
             How We Protect Your Information
           </h1>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "15px", lineHeight: 1.9, color: "rgba(255,255,255,0.45)", maxWidth: "600px", margin: "0 auto" }}>
@@ -105,7 +105,7 @@ export default function YourPrivacySecurity() {
 
         {/* Your Rights */}
         <div className="mb-24">
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "2rem", fontWeight: 300, color: "#fff", textAlign: "center", marginBottom: "40px" }}>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "2rem", fontWeight: 300, color: "#F8F5F0", textAlign: "center", marginBottom: "40px" }}>
             Your Rights — In Plain Language
           </h2>
           <div className="space-y-6 max-w-2xl mx-auto">
@@ -121,7 +121,7 @@ export default function YourPrivacySecurity() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", fontWeight: 600, color: "#fff", letterSpacing: "0.05em", marginBottom: "6px" }}>
+                  <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", fontWeight: 600, color: "#F8F5F0", letterSpacing: "0.05em", marginBottom: "6px" }}>
                     {item.right}
                   </h4>
                   <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", lineHeight: 1.8, color: "rgba(255,255,255,0.45)" }}>
@@ -135,7 +135,7 @@ export default function YourPrivacySecurity() {
 
         {/* Contact */}
         <div className="text-center">
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.5rem", fontWeight: 300, color: "#fff", marginBottom: "16px" }}>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.5rem", fontWeight: 300, color: "#F8F5F0", marginBottom: "16px" }}>
             Questions About Your Data?
           </h2>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.4)", marginBottom: "32px" }}>

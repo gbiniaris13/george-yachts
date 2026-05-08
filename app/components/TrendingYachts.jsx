@@ -104,7 +104,7 @@ export default function TrendingYachts({ yachts }) {
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "clamp(28px, 4vw, 44px)",
               fontWeight: 300,
-              color: "#fff",
+              color: "#F8F5F0",
               margin: 0,
               lineHeight: 1.05,
             }}
@@ -197,7 +197,7 @@ export default function TrendingYachts({ yachts }) {
                   style={{
                     fontFamily: "'Cormorant Garamond', Georgia, serif",
                     fontSize: "20px",
-                    color: "#fff",
+                    color: "#F8F5F0",
                     margin: "0 0 6px",
                     fontWeight: 400,
                     lineHeight: 1.15,

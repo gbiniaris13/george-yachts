@@ -214,7 +214,7 @@ export default function NewsletterSignupClient({ streams }) {
                       display: "inline-flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      color: "#fff",
+                      color: "#F8F5F0",
                       fontSize: 12,
                       fontWeight: 700,
                     }}
@@ -314,7 +314,7 @@ export default function NewsletterSignupClient({ streams }) {
               padding: "14px 16px",
               fontSize: 16,
               fontFamily: "Georgia, serif",
-              background: "#fff",
+              background: "#F8F5F0",
               color: "#0D1B2A",
               border: "1px solid rgba(13,27,42,0.2)",
               borderRadius: 2,
@@ -326,7 +326,7 @@ export default function NewsletterSignupClient({ streams }) {
               style={{
                 margin: 0,
                 fontSize: 13,
-                color: "#A22",
+                color: "#0D1B2A",
                 fontFamily: "Georgia, serif",
               }}
             >
@@ -339,7 +339,7 @@ export default function NewsletterSignupClient({ streams }) {
             style={{
               padding: "14px 22px",
               background:
-                "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
+                "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
               color: "#0D1B2A",
               border: "1px solid rgba(201,168,76,0.6)",
               fontFamily: "'Montserrat', sans-serif",

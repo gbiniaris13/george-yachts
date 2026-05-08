@@ -47,7 +47,7 @@ const WEEKS_2026 = [
 const TIER_COLORS = {
   1: { bg: '#0D4D2B', text: '#2ECC71', label: 'Best Value', desc: 'Lowest rates, quiet islands, perfect weather starting', multiplier: '1×' },
   2: { bg: '#2D5A1E', text: '#82E06C', label: 'Great Value', desc: 'Warm weather, few crowds, excellent rates', multiplier: '1.2×' },
-  3: { bg: '#5A5A1E', text: '#E6C77A', label: 'Mid Season', desc: 'Perfect conditions, moderate demand', multiplier: '1.5×' },
+  3: { bg: '#5A5A1E', text: '#C9A84C', label: 'Mid Season', desc: 'Perfect conditions, moderate demand', multiplier: '1.5×' },
   4: { bg: '#5A3A1E', text: '#E6A23C', label: 'High Season', desc: 'Peak summer, busy islands, premium rates', multiplier: '1.8×' },
   5: { bg: '#5A1E1E', text: '#E74C3C', label: 'Peak Season', desc: 'Highest demand, book 6+ months ahead', multiplier: '2×' },
 };
@@ -88,7 +88,7 @@ export default function PricingCalendarClient() {
         {/* Calendar grid */}
         {months.map(month => (
           <div key={month} style={{ marginBottom: 24 }}>
-            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: '#fff', fontWeight: 300, marginBottom: 12, paddingLeft: 4 }}>
+            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: '#F8F5F0', fontWeight: 300, marginBottom: 12, paddingLeft: 4 }}>
               {month}
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 8 }}>
@@ -110,7 +110,7 @@ export default function PricingCalendarClient() {
                       transform: isHovered ? 'scale(1.03)' : 'scale(1)',
                     }}
                   >
-                    <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: '#fff', marginBottom: 6, fontWeight: 500 }}>
+                    <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: '#F8F5F0', marginBottom: 6, fontWeight: 500 }}>
                       {w.week}
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

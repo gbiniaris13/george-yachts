@@ -22,7 +22,7 @@ export default async function Image() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 60%, #0d2a4a 100%)",
+          background: "linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 60%, #0D1B2A 100%)",
           fontFamily: "serif",
           padding: "60px",
           position: "relative",
@@ -97,7 +97,7 @@ export default async function Image() {
           style={{
             width: 120,
             height: 1,
-            background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)",
+            background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
             margin: "26px 0",
           }}
         />

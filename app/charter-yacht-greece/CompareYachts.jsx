@@ -110,7 +110,7 @@ export default function CompareYachts({ compareList = [], onRemove, onClear }) {
             gap: 10,
             padding: isMobile ? '14px 22px' : '16px 28px',
             backgroundColor: GOLD,
-            color: '#000',
+            color: '#0D1B2A',
             border: 'none',
             borderRadius: 50,
             cursor: 'pointer',

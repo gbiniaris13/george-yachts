@@ -144,7 +144,7 @@ export default function CustomCursor() {
           width: "6px",
           height: "6px",
           borderRadius: "50%",
-          background: "#F5EFE1",
+          background: "#F8F5F0",
           boxShadow:
             "0 0 0.5px rgba(0,0,0,0.6), 0 0 6px rgba(201,168,76,0.55)",
           pointerEvents: "none",

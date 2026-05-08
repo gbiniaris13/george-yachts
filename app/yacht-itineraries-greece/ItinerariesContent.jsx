@@ -155,7 +155,7 @@ function ItineraryCard({ itin, index }) {
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.25em", textTransform: "uppercase", color: "#C9A84C", fontWeight: 600, marginBottom: "12px" }}>
               {itin.duration} &middot; {itin.days.reduce((sum, d) => sum + parseInt(d.nm) || 0, 0)} NM Total &middot; {itin.season}
             </p>
-            <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 400, color: "#fff", margin: "0 0 6px", lineHeight: 1.2 }}>
+            <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 400, color: "#F8F5F0", margin: "0 0 6px", lineHeight: 1.2 }}>
               {itin.title}
             </h3>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.35)", letterSpacing: "0.05em" }}>
@@ -182,7 +182,7 @@ function ItineraryCard({ itin, index }) {
                     <span style={{ display: "block", fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.2)", letterSpacing: "0.1em", marginTop: "4px" }}>{day.nm}</span>
                   </div>
                   <div>
-                    <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", fontWeight: 500, color: "#fff", marginBottom: "6px" }}>{day.title}</p>
+                    <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", fontWeight: 500, color: "#F8F5F0", marginBottom: "6px" }}>{day.title}</p>
                     <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.4)", lineHeight: 1.7, fontWeight: 300 }}>{day.desc}</p>
                   </div>
                 </div>
@@ -228,10 +228,10 @@ export default function ItinerariesContent() {
         <Reveal>
           <div style={{ maxWidth: "750px", margin: "0 auto", textAlign: "center" }}>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "24px" }}>{t('itin.curatedBy', 'Curated by George')}</p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 300, color: "#fff", lineHeight: 1.35, margin: "0 0 32px" }}>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 300, color: "#F8F5F0", lineHeight: 1.35, margin: "0 0 32px" }}>
               {t('itin.whyTrust', 'Why Trust These Itineraries?')}
             </h2>
-            <div style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, #E6C77A, #A67C2E)", margin: "0 auto 32px" }} />
+            <div style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, #C9A84C, #C9A84C)", margin: "0 auto 32px" }} />
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.45)", lineHeight: 1.9, fontWeight: 300 }}>
               {t('itin.whyTrustDesc', 'Every route below has been personally sailed and refined by George Biniaris — drawing on deep local knowledge of Greek waters. These are not generic suggestions. They are tested, trusted, and designed to deliver the best possible week aboard.')}
             </p>
@@ -250,13 +250,13 @@ export default function ItinerariesContent() {
       <section style={{ padding: "100px 24px", background: "#0D1B2A", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.08)" }}>
         <Reveal>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "16px" }}>{t('itin.yourWay', 'Your Itinerary, Your Way')}</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 300, color: "#fff", margin: "0 0 16px" }}>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 16px" }}>
             {t('itin.designWeek', "Let's Design Your Perfect Week")}
           </h2>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.4)", lineHeight: 1.7, fontWeight: 300, maxWidth: "550px", margin: "0 auto 40px" }}>
             {t('itin.designDesc', "These routes are starting points. Every charter is personally tailored by George — your preferences, your pace, your islands. Tell us your dream and we'll design your perfect week in Greek waters.")}
           </p>
-          <a href="#contact" style={{ display: "inline-block", background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)", color: "#000", padding: "16px 48px", fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none", fontWeight: 700 }}>
+          <a href="#contact" style={{ display: "inline-block", background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)", color: "#0D1B2A", padding: "16px 48px", fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none", fontWeight: 700 }}>
             {t('itin.startPlanning', 'Start Planning')}
           </a>
         </Reveal>

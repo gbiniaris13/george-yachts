@@ -81,7 +81,7 @@ export default function YourBroker() {
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
             fontWeight: 300,
-            color: "#fff",
+            color: "#F8F5F0",
             lineHeight: 1.2,
             marginBottom: "24px",
           }}>
@@ -142,8 +142,8 @@ export default function YourBroker() {
               fontWeight: 600,
               letterSpacing: "0.2em",
               textTransform: "uppercase",
-              color: "#000",
-              background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)",
+              color: "#0D1B2A",
+              background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
               padding: "16px 40px",
               textDecoration: "none",
               transition: "all 0.4s ease",
@@ -257,7 +257,7 @@ export default function YourBroker() {
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontSize: 20,
                   fontWeight: 400,
-                  color: "#fff",
+                  color: "#F8F5F0",
                   margin: "0 0 8px",
                   letterSpacing: "0.01em",
                 }}

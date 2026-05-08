@@ -51,10 +51,10 @@ export default function Testimonials() {
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.4em", textTransform: "uppercase", color: "#C9A84C", fontWeight: 600, marginBottom: "16px" }}>
               Guest Experiences
             </p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 300, color: "#fff", margin: "0 0 16px" }}>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 16px" }}>
               What Our Guests Say
             </h2>
-            <div style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)", margin: "0 auto" }} />
+            <div style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)", margin: "0 auto" }} />
           </div>
         </Reveal>
 

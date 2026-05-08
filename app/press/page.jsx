@@ -194,7 +194,7 @@ export default function PressPage() {
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: "clamp(40px, 7vw, 88px)",
             fontWeight: 300,
-            color: "#fff",
+            color: "#F8F5F0",
             margin: "0 0 16px",
             lineHeight: 1.05,
             letterSpacing: "0.005em",
@@ -271,7 +271,7 @@ export default function PressPage() {
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "clamp(28px, 4vw, 48px)",
               fontWeight: 300,
-              color: "#fff",
+              color: "#F8F5F0",
               margin: "0 0 14px",
               lineHeight: 1.18,
               letterSpacing: "0.005em",
@@ -308,7 +308,7 @@ export default function PressPage() {
                 fontStyle: "italic",
                 fontSize: "clamp(20px, 2.4vw, 28px)",
                 lineHeight: 1.5,
-                color: "#fff",
+                color: "#F8F5F0",
                 margin: "0 0 12px",
                 fontWeight: 300,
               }}
@@ -353,7 +353,7 @@ export default function PressPage() {
                 display: "inline-block",
                 padding: "14px 30px",
                 background:
-                  "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
+                  "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
                 color: "#0D1B2A",
                 fontFamily: "'Montserrat', sans-serif",
                 fontSize: 11,
@@ -436,7 +436,7 @@ export default function PressPage() {
                 fontStyle: "italic",
                 fontSize: "clamp(20px, 2.4vw, 26px)",
                 fontWeight: 400,
-                color: "#fff",
+                color: "#F8F5F0",
                 margin: "0 0 14px",
                 lineHeight: 1.35,
                 letterSpacing: "0.005em",
@@ -511,7 +511,7 @@ export default function PressPage() {
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: "clamp(26px, 3vw, 36px)",
             fontWeight: 300,
-            color: "#fff",
+            color: "#F8F5F0",
             margin: "0 0 20px",
           }}
         >
@@ -538,7 +538,7 @@ export default function PressPage() {
       </section>
 
       {/* Mandatory legal disclaimer per Roberto legal directive §1 (4 May 2026).
-          Exact text required — do not paraphrase. Lato Light 9px, color #888,
+          Exact text required — do not paraphrase. Lato Light 9px, color #9CA3AF,
           single-line, centered. Frames Forbes / MYBA / IYBA references on this
           page as nominative fair use, not endorsement. */}
       <section
@@ -553,7 +553,7 @@ export default function PressPage() {
             fontFamily: "'Lato', 'Montserrat', sans-serif",
             fontWeight: 300,
             fontSize: 9,
-            color: "#888",
+            color: "#9CA3AF",
             margin: 0,
             lineHeight: 1.6,
             maxWidth: "880px",

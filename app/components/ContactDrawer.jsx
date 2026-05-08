@@ -154,7 +154,7 @@ export default function ContactDrawer() {
           borderRadius: 0,
           background: hovered
             ? "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)"
-            : "linear-gradient(135deg, #0D1B2A 0%, #000 100%)",
+            : "linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)",
           border: `1px solid ${hovered ? "#C9A84C" : "rgba(201,168,76,0.35)"}`,
           color: hovered ? "#0D1B2A" : "#C9A84C",
           fontFamily: "'Montserrat', sans-serif",

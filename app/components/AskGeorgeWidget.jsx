@@ -162,7 +162,7 @@ export default function AskGeorgeWidget() {
           width: 56,
           height: 56,
           borderRadius: "50%",
-          background: "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
+          background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
           color: "#0D1B2A",
           border: "none",
           cursor: "pointer",
@@ -185,8 +185,8 @@ export default function AskGeorgeWidget() {
               width: 10,
               height: 10,
               borderRadius: "50%",
-              background: "#fff",
-              border: "2px solid #C9A24D",
+              background: "#F8F5F0",
+              border: "2px solid #C9A84C",
               animation: "askGeorgePulse 2s ease-in-out infinite",
             }}
           />
@@ -228,7 +228,7 @@ export default function AskGeorgeWidget() {
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontSize: 20,
                   fontWeight: 400,
-                  color: "#fff",
+                  color: "#F8F5F0",
                   margin: 0,
                   lineHeight: 1.1,
                 }}
@@ -342,7 +342,7 @@ export default function AskGeorgeWidget() {
                   fontFamily: "'Lato', 'Montserrat', sans-serif",
                   fontSize: 13.5,
                   lineHeight: 1.55,
-                  color: m.role === "user" ? "#fff" : "rgba(255,255,255,0.88)",
+                  color: m.role === "user" ? "#F8F5F0" : "rgba(255,255,255,0.88)",
                   whiteSpace: "pre-wrap",
                 }}
               >
@@ -378,7 +378,7 @@ export default function AskGeorgeWidget() {
                   textTransform: "uppercase",
                   fontWeight: 700,
                   padding: "6px 10px",
-                  background: "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
+                  background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
                   color: "#0D1B2A",
                   border: "none",
                   cursor: "pointer",
@@ -424,7 +424,7 @@ export default function AskGeorgeWidget() {
                   textTransform: "uppercase",
                   fontWeight: 700,
                   padding: "9px 12px",
-                  background: "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
+                  background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
                   color: "#0D1B2A",
                   border: "none",
                   cursor: "pointer",
@@ -475,7 +475,7 @@ export default function AskGeorgeWidget() {
                 flex: 1,
                 background: "rgba(255,255,255,0.06)",
                 border: "1px solid rgba(255,255,255,0.15)",
-                color: "#fff",
+                color: "#F8F5F0",
                 padding: "10px 12px",
                 fontFamily: "'Lato', 'Montserrat', sans-serif",
                 fontSize: 16,
@@ -495,7 +495,7 @@ export default function AskGeorgeWidget() {
                 background:
                   sending || !input.trim()
                     ? "rgba(201,168,76,0.3)"
-                    : "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
+                    : "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
                 color: "#0D1B2A",
                 border: "none",
                 cursor: sending || !input.trim() ? "default" : "pointer",
@@ -516,7 +516,7 @@ export default function AskGeorgeWidget() {
 const inputStyle = {
   background: "rgba(255,255,255,0.06)",
   border: "1px solid rgba(255,255,255,0.15)",
-  color: "#fff",
+  color: "#F8F5F0",
   padding: "9px 12px",
   fontFamily: "'Lato', 'Montserrat', sans-serif",
   fontSize: 16,

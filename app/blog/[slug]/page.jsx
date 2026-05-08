@@ -196,7 +196,7 @@ const ArticlePage = async ({ params }) => {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-[#000] flex items-center justify-center">
+      <div className="min-h-screen bg-[#0D1B2A] flex items-center justify-center">
         <h1 className="text-white font-marcellus text-3xl">
           Article Not Found
         </h1>
@@ -231,7 +231,7 @@ const ArticlePage = async ({ params }) => {
   });
 
   return (
-    <div className="min-h-screen bg-[#000] font-sans selection:bg-[#C9A84C] selection:text-black">
+    <div className="min-h-screen bg-[#0D1B2A] font-sans selection:bg-[#C9A84C] selection:text-black">
       <JsonLd data={articleSchema} />
       {faqSchema && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
@@ -339,7 +339,7 @@ const ArticlePage = async ({ params }) => {
       {/* FULL-WIDTH EDITORIAL IMAGE — contain, no crop */}
       {post.imageUrl && (
         <section className="w-full px-8 md:px-20">
-          <div className="relative w-full bg-[#000]">
+          <div className="relative w-full bg-[#0D1B2A]">
             <img
               src={`${post.imageUrl}?w=1400&fm=webp&q=75`}
               alt={post.imageAlt || post.title}
@@ -347,13 +347,13 @@ const ArticlePage = async ({ params }) => {
               style={{ filter: "brightness(0.85) saturate(0.9)" }}
               fetchPriority="high"
             />
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#000] to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0D1B2A] to-transparent" />
           </div>
         </section>
       )}
 
       {/* EDITORIAL BODY */}
-      <section className="relative z-10 bg-[#000] px-6 py-20 md:py-32">
+      <section className="relative z-10 bg-[#0D1B2A] px-6 py-20 md:py-32">
         <div className="max-w-[720px] mx-auto">
           <div className="flex items-center space-x-6 mb-16">
             <span className="block w-6 h-px bg-[#C9A84C]/50" />

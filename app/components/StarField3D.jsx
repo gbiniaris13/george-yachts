@@ -56,7 +56,7 @@ function Stars({ count = 800 }) {
         />
       </bufferGeometry>
       <pointsMaterial
-        color={new THREE.Color("#F5EFE1")}
+        color={new THREE.Color("#F8F5F0")}
         size={0.06}
         sizeAttenuation
         transparent

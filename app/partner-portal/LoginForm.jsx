@@ -37,7 +37,7 @@ export default function LoginForm() {
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: 28,
             fontWeight: 400,
-            color: "#fff",
+            color: "#F8F5F0",
             margin: "0 0 12px",
           }}
         >
@@ -81,7 +81,7 @@ export default function LoginForm() {
           fontSize: 13,
           background: "rgba(255,255,255,0.06)",
           border: "1px solid rgba(255,255,255,0.18)",
-          color: "#fff",
+          color: "#F8F5F0",
           outline: "none",
         }}
       />
@@ -98,7 +98,7 @@ export default function LoginForm() {
           color: "#0D1B2A",
           background: submitting
             ? `${GOLD}66`
-            : `linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)`,
+            : `linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)`,
           border: "none",
           cursor: submitting ? "default" : "pointer",
         }}

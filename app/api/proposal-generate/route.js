@@ -124,7 +124,7 @@ export async function POST(req) {
   if (process.env.RESEND_API_KEY) {
     try {
       const html = `
-<div style="font-family:'Lato','Montserrat',sans-serif;font-size:14px;line-height:1.7;color:#222">
+<div style="font-family:'Lato','Montserrat',sans-serif;font-size:14px;line-height:1.7;color:#0D1B2A">
 <p>Dear ${name.split(" ")[0] || "friend"},</p>
 <p>Attached is your personalized George Yachts proposal — ${yachts.length} yacht${yachts.length === 1 ? "" : "s"} drawn from the live fleet, with George's insider note on each.</p>
 <p style="background:#fafaf6;padding:14px 16px;border-left:3px solid #C9A84C;font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;margin:18px 0">
@@ -133,7 +133,7 @@ ${yachts.map((y) => y.name).join(" · ")}
 <p>The numbers in the proposal are honest ranges. The exact figure for your dates lands in a written quote with availability — usually within the day.</p>
 <p>If anything's urgent, the fastest channel is WhatsApp: <a href="https://wa.me/17867988798">+1 786 798 8798</a>. To book a 30-minute call: <a href="https://calendly.com/george-georgeyachts/30min">calendly.com/george-georgeyachts/30min</a>.</p>
 <p style="margin-top:24px">— George<br/>
-<span style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#888">George P. Biniaris · Managing Broker</span></p>
+<span style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#9CA3AF">George P. Biniaris · Managing Broker</span></p>
 </div>`.trim();
 
       const res = await fetch(`${RESEND_API}/emails`, {

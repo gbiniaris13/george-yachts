@@ -253,7 +253,7 @@ const YachtSwiper = ({ yachtData }) => {
               className="w-full text-black py-5 text-xs font-sans font-bold tracking-[0.4em] uppercase shadow-[0_0_30px_rgba(201,168,76,0.2)] hover:shadow-[0_0_50px_rgba(255,255,255,0.2)] hover:brightness-110 transition-all duration-300"
               style={{
                 background:
-                  "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
+                  "linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%)",
               }}
             >
               Plan this charter

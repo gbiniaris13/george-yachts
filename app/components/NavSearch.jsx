@@ -198,7 +198,7 @@ export default function NavSearch() {
                   flex: 1,
                   background: "transparent",
                   border: "none",
-                  color: "#fff",
+                  color: "#F8F5F0",
                   fontSize: 16,
                   outline: "none",
                   fontFamily: "'Montserrat', sans-serif",
@@ -310,7 +310,7 @@ export default function NavSearch() {
                             style={{
                               fontFamily: "'Cormorant Garamond', Georgia, serif",
                               fontSize: 18,
-                              color: "#fff",
+                              color: "#F8F5F0",
                               margin: "0 0 2px",
                               fontWeight: 400,
                             }}

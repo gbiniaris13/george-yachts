@@ -63,7 +63,7 @@
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: clamp(52px, 10vw, 120px);
   font-weight: 300;
-  color: #fff;
+  color: #F8F5F0;
   letter-spacing: -0.02em;
   line-height: 0.9;
   margin: 0 0 32px;
@@ -74,7 +74,7 @@
 .blog-hero__line {
   width: 0;
   height: 1px;
-  background: linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E);
+  background: linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C);
   margin: 0 auto 24px;
   animation: blogHeroLine 1s ease-out 0.9s forwards;
 }
@@ -167,8 +167,8 @@
   font-size: 8px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #000;
-  background: linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E);
+  color: #0D1B2A;
+  background: linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C);
   padding: 5px 14px;
   font-weight: 700;
   z-index: 5;
@@ -212,7 +212,7 @@
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: clamp(24px, 3vw, 36px);
   font-weight: 400;
-  color: #fff;
+  color: #F8F5F0;
   line-height: 1.2;
   margin: 0 0 16px;
   transition: color 0.4s ease;
@@ -414,7 +414,7 @@
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 22px;
   font-weight: 400;
-  color: #fff;
+  color: #F8F5F0;
   line-height: 1.25;
   margin: 0 0 12px;
   transition: color 0.4s ease;
@@ -553,7 +553,7 @@
   float: left;
   margin: 6px 14px -8px 0;
   padding: 0;
-  background: linear-gradient(135deg, #E6C77A 0%, #C9A24D 60%, #8E6F2A 100%);
+  background: linear-gradient(135deg, #C9A84C 0%, #C9A84C 60%, #C9A84C 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;

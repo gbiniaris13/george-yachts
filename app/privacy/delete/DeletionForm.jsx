@@ -46,7 +46,7 @@ export default function DeletionForm() {
         <p
           style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: 28, fontWeight: 400, color: "#fff", margin: "0 0 12px",
+            fontSize: 28, fontWeight: 400, color: "#F8F5F0", margin: "0 0 12px",
           }}
         >
           Request received.
@@ -103,7 +103,7 @@ export default function DeletionForm() {
           color: "#0D1B2A",
           background: submitting
             ? `${GOLD}66`
-            : `linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)`,
+            : `linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)`,
           border: "none",
           cursor: submitting ? "default" : "pointer",
         }}
@@ -130,5 +130,5 @@ const inputStyle = {
   fontFamily: "'Montserrat', sans-serif", fontSize: 13,
   background: "rgba(255,255,255,0.06)",
   border: "1px solid rgba(255,255,255,0.18)",
-  color: "#fff", outline: "none",
+  color: "#F8F5F0", outline: "none",
 };

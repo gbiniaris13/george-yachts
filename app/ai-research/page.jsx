@@ -442,7 +442,7 @@ function Section({ eyebrow, title, body }) {
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           fontSize: "clamp(22px, 2.6vw, 32px)",
           fontWeight: 300,
-          color: "#fff",
+          color: "#F8F5F0",
           margin: "0 0 16px",
           lineHeight: 1.2,
         }}

@@ -404,7 +404,7 @@ export default function InquiryClient() {
                         ? GOLD
                         : "rgba(201,168,76,0.22)",
                     color:
-                      answers[step.key] === opt.value ? GOLD : "#fff",
+                      answers[step.key] === opt.value ? GOLD : "#F8F5F0",
                   }}
                 >
                   {opt.label}
@@ -563,7 +563,7 @@ const progressTrack = {
 };
 const progressFill = {
   height: "100%",
-  background: `linear-gradient(90deg, ${GOLD}, #8B6914)`,
+  background: `linear-gradient(90deg, ${GOLD}, #C9A84C)`,
   transition: "width 0.35s cubic-bezier(0.2,0.8,0.2,1)",
 };
 const card = {
@@ -587,7 +587,7 @@ const question = {
   fontFamily: "'Cormorant Garamond', Georgia, serif",
   fontSize: "clamp(24px, 3.4vw, 36px)",
   fontWeight: 300,
-  color: "#fff",
+  color: "#F8F5F0",
   lineHeight: 1.2,
   margin: 0,
   letterSpacing: "0.005em",
@@ -611,7 +611,7 @@ const textInput = {
   padding: "14px 16px",
   background: "#0D1B2A",
   border: "1px solid rgba(201,168,76,0.25)",
-  color: "#fff",
+  color: "#F8F5F0",
   fontFamily: "'Montserrat', sans-serif",
   fontSize: 16,
   fontWeight: 400,
@@ -622,7 +622,7 @@ const choiceBtn = {
   padding: "14px 18px",
   background: "rgba(0,0,0,0.5)",
   border: "1px solid rgba(201,168,76,0.22)",
-  color: "#fff",
+  color: "#F8F5F0",
   fontFamily: "'Montserrat', sans-serif",
   fontSize: 13,
   letterSpacing: "0.03em",
@@ -643,8 +643,8 @@ const navBtn = {
 const ctaPrimary = {
   display: "inline-block",
   padding: "14px 34px",
-  background: `linear-gradient(90deg, #E6C77A, #C9A24D, #A67C2E)`,
-  color: "#000",
+  background: `linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)`,
+  color: "#0D1B2A",
   fontFamily: "'Montserrat', sans-serif",
   fontSize: 11,
   fontWeight: 700,

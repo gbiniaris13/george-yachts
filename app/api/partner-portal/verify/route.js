@@ -12,7 +12,7 @@ export async function GET(req) {
   if (!email) {
     return new Response(
       `<!doctype html><meta charset="utf-8"><title>Link expired</title>
-       <body style="font-family:sans-serif;background:#0D1B2A;color:#fff;display:flex;min-height:100vh;align-items:center;justify-content:center">
+       <body style="font-family:sans-serif;background:#0D1B2A;color:#F8F5F0;display:flex;min-height:100vh;align-items:center;justify-content:center">
          <div style="text-align:center;max-width:420px;padding:24px">
            <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;font-size:36px;margin:0 0 12px">Link expired</h1>
            <p style="color:rgba(255,255,255,0.7);margin:0 0 22px">Magic links are good for 15 minutes. Request a new one from the portal.</p>

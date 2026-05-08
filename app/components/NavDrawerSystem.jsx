@@ -293,7 +293,7 @@ export default function NavDrawerSystem() {
           mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         style={{
-          background: "linear-gradient(180deg, #0D1B2A 0%, #0a1628 100%)",
+          background: "linear-gradient(180deg, #0D1B2A 0%, #0D1B2A 100%)",
         }}
         role="dialog"
         aria-modal="true"

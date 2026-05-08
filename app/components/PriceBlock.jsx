@@ -60,7 +60,7 @@ export default function PriceBlock({
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           fontSize: s.price,
           fontWeight: 400,
-          color: "#fff",
+          color: "#F8F5F0",
           letterSpacing: "0.01em",
           lineHeight: 1.2,
         }}

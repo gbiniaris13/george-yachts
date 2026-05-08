@@ -36,7 +36,7 @@ export default function SimilarYachts({ items = [] }) {
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "clamp(26px, 3vw, 38px)",
               fontWeight: 300,
-              color: "#fff",
+              color: "#F8F5F0",
               margin: 0,
               letterSpacing: "0.01em",
             }}
@@ -71,7 +71,7 @@ export default function SimilarYachts({ items = [] }) {
                   position: "relative",
                   aspectRatio: "4 / 3",
                   background:
-                    "linear-gradient(135deg, #000 0%, #0D1B2A 50%, #000 100%)",
+                    "linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 50%, #0D1B2A 100%)",
                   overflow: "hidden",
                 }}
               >
@@ -117,7 +117,7 @@ export default function SimilarYachts({ items = [] }) {
                     fontFamily: "'Cormorant Garamond', Georgia, serif",
                     fontSize: 22,
                     fontWeight: 400,
-                    color: "#fff",
+                    color: "#F8F5F0",
                     margin: "0 0 6px",
                     letterSpacing: "0.02em",
                   }}

@@ -223,7 +223,7 @@ export default function HotLeadIGPopup() {
             <div style={{ fontSize: 48, marginBottom: 16 }}>{'\u2693'}</div>
             <h3 style={{
               fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 26, color: '#fff', margin: '0 0 12px',
+              fontSize: 26, color: '#F8F5F0', margin: '0 0 12px',
               fontWeight: 400,
             }}>
               Catch you on Instagram.
@@ -248,7 +248,7 @@ export default function HotLeadIGPopup() {
               </div>
               <h3 style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: 24, color: '#fff', margin: '0 0 10px',
+                fontSize: 24, color: '#F8F5F0', margin: '0 0 10px',
                 fontWeight: 400, lineHeight: 1.25,
               }}>
                 Talk to George personally
@@ -272,7 +272,7 @@ export default function HotLeadIGPopup() {
                   padding: '12px 14px',
                   background: 'rgba(255,255,255,0.05)',
                   border: '1px solid rgba(255,255,255,0.1)',
-                  borderRadius: 10, color: '#fff',
+                  borderRadius: 10, color: '#F8F5F0',
                   fontSize: 16, outline: 'none',
                   fontFamily: 'inherit',
                 }}
@@ -287,7 +287,7 @@ export default function HotLeadIGPopup() {
                   padding: '12px 14px',
                   background: 'rgba(255,255,255,0.05)',
                   border: `1px solid ${GOLD}40`,
-                  borderRadius: 10, color: '#fff',
+                  borderRadius: 10, color: '#F8F5F0',
                   fontSize: 16, outline: 'none',
                   fontFamily: 'inherit',
                 }}
@@ -301,7 +301,7 @@ export default function HotLeadIGPopup() {
                   padding: '12px 14px',
                   background: 'rgba(255,255,255,0.05)',
                   border: '1px solid rgba(255,255,255,0.1)',
-                  borderRadius: 10, color: '#fff',
+                  borderRadius: 10, color: '#F8F5F0',
                   fontSize: 16, outline: 'none',
                   fontFamily: 'inherit',
                 }}
@@ -313,7 +313,7 @@ export default function HotLeadIGPopup() {
                   padding: '12px 14px',
                   background: 'rgba(255,255,255,0.05)',
                   border: '1px solid rgba(255,255,255,0.1)',
-                  borderRadius: 10, color: '#fff',
+                  borderRadius: 10, color: '#F8F5F0',
                   fontSize: 16, outline: 'none',
                   fontFamily: 'inherit',
                 }}

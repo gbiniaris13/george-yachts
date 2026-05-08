@@ -180,7 +180,7 @@ export default function ForbesReferrerWelcome() {
           alignItems: "center",
           gap: 10,
           padding: "14px 24px",
-          background: "linear-gradient(135deg, #E6C77A 0%, #C9A84C 100%)",
+          background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)",
           border: "1px solid #C9A84C",
           color: "#0D1B2A",
           fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', sans-serif",

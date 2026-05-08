@@ -242,7 +242,7 @@ export default function ExpressInquiryModal({
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: "28px",
                 fontWeight: 300,
-                color: "#fff",
+                color: "#F8F5F0",
                 margin: "0 0 8px",
                 lineHeight: 1.2,
               }}
@@ -373,7 +373,7 @@ export default function ExpressInquiryModal({
                   width: "100%",
                   padding: "16px",
                   background:
-                    "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
+                    "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
                   color: "#0D1B2A",
                   border: "1px solid rgba(201,168,76,0.6)",
                   fontSize: "11px",
@@ -424,7 +424,7 @@ export default function ExpressInquiryModal({
               style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: 26,
-                color: "#fff",
+                color: "#F8F5F0",
                 fontWeight: 300,
                 margin: "0 0 10px",
               }}
@@ -456,7 +456,7 @@ function FormField({ label, type = "text", value, onChange, required, multiline,
     background: "transparent",
     border: "none",
     borderBottom: "1px solid rgba(255,255,255,0.25)",
-    color: "#fff",
+    color: "#F8F5F0",
     padding: "10px 0",
     fontSize: 16,
     fontFamily: "'Montserrat', sans-serif",

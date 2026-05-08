@@ -55,7 +55,7 @@ export default function DeletionPage() {
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "clamp(34px, 5vw, 52px)",
               fontWeight: 300,
-              color: "#fff",
+              color: "#F8F5F0",
               margin: "0 0 16px",
               lineHeight: 1.1,
             }}

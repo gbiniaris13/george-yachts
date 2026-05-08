@@ -126,7 +126,7 @@ export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadD
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             transition: 'color 0.2s',
           }}
-          onMouseEnter={(e) => e.target.style.color = '#fff'}
+          onMouseEnter={(e) => e.target.style.color = '#F8F5F0'}
           onMouseLeave={(e) => e.target.style.color = 'rgba(255,255,255,0.4)'}
           aria-label="Close"
         >
@@ -139,7 +139,7 @@ export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadD
             <div style={{ fontSize: 48, marginBottom: 16 }}>{'\u2693'}</div>
             <h3 style={{
               fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 26, color: '#fff', margin: '0 0 12px',
+              fontSize: 26, color: '#F8F5F0', margin: '0 0 12px',
               fontWeight: 400,
             }}>
               Thank You!
@@ -176,7 +176,7 @@ export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadD
 
             <h3 style={{
               fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 26, color: '#fff', margin: '0 0 8px',
+              fontSize: 26, color: '#F8F5F0', margin: '0 0 8px',
               fontWeight: 400, textAlign: 'center', lineHeight: 1.3,
             }}>
               Unlock Exclusive Pricing
@@ -246,7 +246,7 @@ export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadD
                   marginTop: 4,
                   padding: '14px 24px',
                   background: submitting ? `${GOLD}60` : GOLD,
-                  color: '#000',
+                  color: '#0D1B2A',
                   border: 'none',
                   borderRadius: 10,
                   fontFamily: "'Montserrat', sans-serif",
@@ -283,7 +283,7 @@ const inputStyle = {
   background: 'rgba(255,255,255,0.06)',
   border: '1px solid rgba(255,255,255,0.12)',
   borderRadius: 10,
-  color: '#fff',
+  color: '#F8F5F0',
   fontFamily: "'Montserrat', sans-serif",
   fontSize: 16,
   outline: 'none',

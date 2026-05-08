@@ -105,7 +105,7 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
             style={{
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "clamp(22px, 3.3vw, 32px)",
-              color: "#fff",
+              color: "#F8F5F0",
               margin: 0,
               fontWeight: 300,
               lineHeight: 1.1,
@@ -157,7 +157,7 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
                 fontSize: "11px",
                 letterSpacing: "0.32em",
                 textTransform: "uppercase",
-                color: "#fff",
+                color: "#F8F5F0",
                 fontWeight: 600,
                 paddingBottom: "2px",
                 borderBottom: "1px solid rgba(255,255,255,0.4)",

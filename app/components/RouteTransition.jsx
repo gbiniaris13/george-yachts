@@ -56,7 +56,7 @@ export default function RouteTransition() {
   // overlay adds the subtle vertical "fold lines" that give cloth its
   // identity (vs flat black paint).
   const velvetBg = `
-    radial-gradient(ellipse at 50% 40%, #0D1B2A 0%, #0D1B2A 60%, #000 100%),
+    radial-gradient(ellipse at 50% 40%, #0D1B2A 0%, #0D1B2A 60%, #0D1B2A 100%),
     repeating-linear-gradient(
       90deg,
       rgba(255, 255, 255, 0.02) 0,
@@ -116,7 +116,7 @@ export default function RouteTransition() {
           width: "1px",
           transform: "translateX(-50%) scaleY(0)",
           background:
-            "linear-gradient(180deg, transparent 0%, rgba(201,168,76,0.85) 25%, #FFE9A8 50%, rgba(201,168,76,0.85) 75%, transparent 100%)",
+            "linear-gradient(180deg, transparent 0%, rgba(201,168,76,0.85) 25%, #C9A84C 50%, rgba(201,168,76,0.85) 75%, transparent 100%)",
           boxShadow:
             "0 0 16px rgba(201,168,76,0.6), 0 0 32px rgba(201,168,76,0.3)",
         }}

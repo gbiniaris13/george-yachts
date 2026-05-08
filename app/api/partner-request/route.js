@@ -102,7 +102,7 @@ export async function POST(request) {
       html: `
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #0D1B2A;">
           <div style="text-align: center; padding: 40px 20px; background: #0D1B2A;">
-            <h1 style="font-family: Georgia, serif; font-size: 28px; font-weight: 300; color: #fff; letter-spacing: 0.1em; margin: 0;">
+            <h1 style="font-family: Georgia, serif; font-size: 28px; font-weight: 300; color: #F8F5F0; letter-spacing: 0.1em; margin: 0;">
               GEORGE YACHTS
             </h1>
             <p style="font-size: 11px; letter-spacing: 0.3em; color: #C9A84C; margin-top: 8px;">

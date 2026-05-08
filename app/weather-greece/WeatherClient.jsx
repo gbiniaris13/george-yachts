@@ -53,7 +53,7 @@ export default function WeatherClient() {
                 fontFamily: "'Montserrat', sans-serif",
                 fontSize: 11,
                 letterSpacing: '0.1em',
-                border: `1px solid ${selectedMonth.month === m.month ? GOLD : '#333'}`,
+                border: `1px solid ${selectedMonth.month === m.month ? GOLD : '#9CA3AF'}`,
                 background: selectedMonth.month === m.month ? `${GOLD}15` : 'transparent',
                 color: selectedMonth.month === m.month ? GOLD : 'rgba(255,255,255,0.4)',
                 borderRadius: 8,
@@ -69,7 +69,7 @@ export default function WeatherClient() {
         {/* Selected month detail */}
         <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(201,168,76,0.12)', borderRadius: 16, padding: 32, marginBottom: 48 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 16 }}>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, color: '#fff', fontWeight: 300, margin: 0 }}>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, color: '#F8F5F0', fontWeight: 300, margin: 0 }}>
               {selectedMonth.month}
             </h2>
             <div style={{ display: 'flex', gap: 4 }}>
@@ -90,7 +90,7 @@ export default function WeatherClient() {
             ].map((stat, i) => (
               <div key={i} style={{ textAlign: 'center', padding: 16, background: 'rgba(255,255,255,0.02)', borderRadius: 8 }}>
                 <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: 6 }}>{stat.label}</div>
-                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: stat.label === 'Wind' && selectedMonth.meltemi ? '#E74C3C' : '#fff' }}>{stat.value}</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: stat.label === 'Wind' && selectedMonth.meltemi ? '#E74C3C' : '#F8F5F0' }}>{stat.value}</div>
                 {stat.sub && <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: stat.sub.includes('Meltemi') ? '#E74C3C' : 'rgba(255,255,255,0.2)', marginTop: 2 }}>{stat.sub}</div>}
               </div>
             ))}
@@ -102,7 +102,7 @@ export default function WeatherClient() {
         </div>
 
         {/* Region wind guide */}
-        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, color: '#fff', fontWeight: 300, textAlign: 'center', marginBottom: 32 }}>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, color: '#F8F5F0', fontWeight: 300, textAlign: 'center', marginBottom: 32 }}>
           Wind by Region
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 48 }}>
@@ -110,7 +110,7 @@ export default function WeatherClient() {
             <div key={i} style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid #0D1B2A', borderRadius: 12, padding: 24 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
                 <span style={{ fontSize: 24 }}>{r.icon}</span>
-                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: '#fff', fontWeight: 400, margin: 0 }}>{r.name}</h3>
+                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: '#F8F5F0', fontWeight: 400, margin: 0 }}>{r.name}</h3>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 12 }}>
                 <div>
