@@ -47,7 +47,7 @@ const contactSchema = {
     "@type": "LocalBusiness",
     "@id": "https://georgeyachts.com/#organization",
     name: "George Yachts Brokerage House",
-    image: "https://georgeyachts.com/images/yacht-icon-only.svg",
+    image: "https://georgeyachts.com/images/logo-full-light.png",
     telephone: "+30 6970380999",
     email: "george@georgeyachts.com",
     url: "https://georgeyachts.com",

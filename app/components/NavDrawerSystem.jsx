@@ -220,12 +220,14 @@ export default function NavDrawerSystem() {
   }, []);
 
   const navBackground = scrolled ? "#0D1B2A" : "transparent";
-  // 2026-05-08 (Chapter 06.6) — Boss flagged the wordmark reading
-  // small + blurry over the moving hero video. Bumped masthead
-  // height + logo size; the matching shadow tightening lives on
-  // the <img> below.
-  const navHeight = scrolled ? 104 : 196;
-  const logoHeight = scrolled ? 72 : "clamp(140px, 16.5vw, 220px)";
+  // 2026-05-08 (Boss new master logo) — heights re-spec'd. The new
+  // logo combines icon + "GEORGE YACHTS" + "Brokerage House" into a
+  // single SVG element, so the wordmark no longer needs to live in
+  // huge clamp(140-220 px) typography to read on the hero video —
+  // the icon scales up the visual presence at smaller heights.
+  // Spec: 44 px default, 36 px scrolled. Mobile 32 px.
+  const navHeight = scrolled ? 72 : 96;
+  const logoHeight = scrolled ? 36 : 44;
 
   const toggleMobile = useCallback(() => setMobileOpen((p) => !p), []);
   const closeMobile = useCallback(() => setMobileOpen(false), []);
@@ -289,24 +291,18 @@ export default function NavDrawerSystem() {
             style={{ zIndex: 25 }}
           >
             <img
-              src="/images/yacht-icon-only.svg"
+              src="/images/logo-full-light.png"
               alt="George Yachts Brokerage House"
-              className="group-hover:opacity-80"
+              className="gy-nav-logo group-hover:opacity-80"
               style={{
                 height: logoHeight,
                 width: "auto",
                 transition: "height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
-                // 2026-05-08 (Chapter 06.6) — sharper logo against
-                // the moving video. Two stacked drop-shadows: a
-                // 4 px navy contact shadow gives the wordmark a
-                // crisp dark silhouette (no fuzzy halo); a 22 px
-                // navy diffuse shadow underneath separates it from
-                // the bright water highlights when the trio video
-                // hits its sunlit moments. The previous gold halo
-                // was actually blurring the wordmark edges into
-                // the video.
-                filter:
-                  "drop-shadow(0 1px 2px rgba(13,27,42,0.85)) drop-shadow(0 8px 22px rgba(13,27,42,0.55))",
+                // Soft navy halo so the lockup reads against the
+                // moving hero video. The new logo carries its own
+                // contrast (white wordmark + gold rule) so the
+                // shadow can be lighter than the prior dual-stack.
+                filter: "drop-shadow(0 4px 14px rgba(13,27,42,0.45))",
               }}
             />
           </Link>
@@ -357,10 +353,12 @@ export default function NavDrawerSystem() {
           {/* Header — close × top-right, logo centered top */}
           <div className="relative flex items-center justify-center pt-6 pb-4">
             <Link href="/" onClick={closeMobile} aria-label="Home">
+              {/* Mobile overlay logo per Boss spec: 48 px, centered.
+                  Sits 2 rem above the first nav item. */}
               <img
-                src="/images/yacht-icon-only.svg"
-                alt="George Yachts"
-                style={{ height: 56, width: "auto" }}
+                src="/images/logo-full-light.png"
+                alt="George Yachts Brokerage House"
+                style={{ height: 48, width: "auto", marginBottom: "2rem" }}
               />
             </Link>
             <button
@@ -459,6 +457,14 @@ export default function NavDrawerSystem() {
       </div>
 
       <style jsx global>{`
+        /* Mobile masthead logo — Boss spec 32 px (overrides the 44 /
+           36 px desktop sizes that the inline style applies). */
+        @media (max-width: 768px) {
+          .gy-nav-logo {
+            height: 32px !important;
+          }
+        }
+
         /* Mobile overlay — slide-in from right per Boss spec. */
         .gy-nav-overlay {
           transform: translateX(100%);

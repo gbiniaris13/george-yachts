@@ -3,7 +3,10 @@ import "./globals.css";
 import Script from "next/script";
 import NavDrawerSystem from "./components/NavDrawerSystem";
 import GlobalEffects from "./components/GlobalEffects";
-import CustomCursor from "./components/CustomCursor";
+// CustomCursor removed 2026-05-08 (Boss directive) — the custom
+// dual-cursor implementation never quite landed and Boss preferred
+// the system default. Component file + CSS state machine kept on
+// disk for any future re-enable.
 // Phase 27i (2026-05-07) — cinematic layer: smooth scroll, scroll
 // progress indicator, Web-Audio-synth SFX. All three are no-render
 // utility components mounted globally; each one early-returns on
@@ -382,7 +385,7 @@ export default async function RootLayout({ children }) {
 
         {/* Global Effects + Custom Cursor — all pages */}
         <GlobalEffects />
-        <CustomCursor />
+        {/* CustomCursor unmounted — see import comment above. */}
         {/* Phase 27i (2026-05-07) — cinematic layer.
             SmoothScroll: Lenis-driven interpolated scrolling, the
               page glides instead of snapping.

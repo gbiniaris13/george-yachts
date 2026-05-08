@@ -1979,25 +1979,11 @@ a.gy-fancy-link:hover {
 }
 
 
-/* Boss-spec dual cursor (2026-05-08) — Bottega / Loewe / Six Senses
-   reference set. Pairs with CustomCursor.jsx.
-
-   States (data-state on the ring element):
-     default     — 32 px transparent ring, gold border 0.5α
-     interactive — over a/button/[data-cursor] without label/image:
-                   ring grows to 48 px, border 0.9α; dot fades out
-     labelled    — over [data-cursor="…"] with a custom label:
-                   ring 64 px, label rendered INSIDE the ring,
-                   gold Switzer 9 px ALL CAPS letter-spacing 0.15em
-     magnetic    — over hero video + yacht card images
-                   ([data-cursor-magnetic]): same geometry as
-                   labelled, label text "VIEW"
-     text        — over text inputs: ring collapses to a vertical
-                   gold I-beam line.
-
-   The dot lives in its own element — its opacity is driven directly
-   from CustomCursor.jsx so there's no CSS dependency between the
-   two. */
+/* CustomCursor removed 2026-05-08 (Boss directive — the custom
+   cursor never quite read right; reverted to the system default).
+   The .gy-luxe-cursor-* rules below are kept dormant — they only
+   match if CustomCursor.jsx ever remounts the dot/ring elements,
+   which currently it does not. Safe to delete in a follow-up. */
 
 .gy-luxe-cursor-ring {
   width: 32px;
