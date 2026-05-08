@@ -3,7 +3,11 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import VideoSection from "./components/VideoSection";
-import SignatureYacht from "./components/SignatureYacht";
+// Chapter 08 (2026-05-08) — SignatureYacht "Featured This Week"
+// retired in favour of the new <GeorgesSelection /> 2-card pair
+// (La Pellegrina 1 + Errant Vagabond). The SignatureYacht component
+// file stays on disk for any future use.
+import GeorgesSelection from "./components/GeorgesSelection";
 import FleetCTAs from "./components/FleetCTAs";
 import HomeStats from "./components/HomeStats";
 import Footer from "./components/Footer";
@@ -136,9 +140,14 @@ const HomeClient = ({
         />
       </section>
 
-      {/* Signature Yacht slot (weekly auto-rotating feature) */}
-      <section id="signature" data-gy-reveal="up">
-        <SignatureYacht yacht={signatureYacht} />
+      {/* Chapter 08 (2026-05-08) — George's Selection. Replaces the
+          prior Signature Yacht "Featured This Week" rotation slot
+          with two Boss-curated cards: La Pellegrina 1 (Private
+          Fleet flagship) + Errant Vagabond (Explorer Fleet
+          flagship). No auto-rotation, no Sanity weekly pull —
+          this is the broker's hand-picked pair. */}
+      <section id="selection" data-gy-reveal="up">
+        <GeorgesSelection />
       </section>
 
       {/* Proof = Stats + Credentials merged (Proposal A) */}
