@@ -121,7 +121,7 @@ const Footer = () => {
                   wordmark beside the icon is no longer needed.
                   Footer height per Boss spec: 52 px. */}
               <img
-                src="/images/logo-full-light.png"
+                src="/images/logo-full-light.svg"
                 alt="George Yachts Brokerage House"
                 style={{ height: "52px", width: "auto" }}
               />

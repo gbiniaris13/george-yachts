@@ -3733,3 +3733,99 @@ h4, h5, h6, button, input, select, textarea, label {
    for any inline style that references them; they now resolve
    through next/font, then fall through to the tier face if the
    original Google file fails to load. */
+
+
+/* ───────────────────────────────────────────────────────────────────
+   Phase 28 Pass 3 — sitewide typography + palette finalisation
+   (2026-05-08 — Boss directive, full-site sweep).
+
+   "Όλα μέσω των CSS variables — κανένα hardcoded hex value και
+   κανένα hardcoded font-family". Pass 2 caught every inline
+   font-family on legacy components. Pass 3 closes the remaining
+   loopholes:
+
+     1. Tailwind utility classes (`font-cormorant`, `font-montserrat`,
+        `font-cinzel`, `font-serif`, `font-sans`) → tier variables.
+     2. Class-based font declarations from CSS modules → tier vars.
+     3. Off-palette Tailwind colour classes (text-white, text-black,
+        bg-black, text-gray-N) → canonical 6-colour tokens so a
+        stray `bg-black` never paints a true #000 next to the
+        navy body, and `text-white` resolves to the brand ivory
+        rather than #FFFFFF.
+
+   Specificity strategy: rules below use `!important` because the
+   inline-styled and Tailwind-emitted utility declarations would
+   otherwise win. The override layer sits at the very end of the
+   stylesheet so it's the last word in the cascade.
+   ─────────────────────────────────────────────────────────────── */
+
+/* Tailwind / CSS-module font utility classes funnel into the tier
+   variables. Components that already use var(--gy-font-*) inline
+   are unaffected. */
+.font-cormorant,
+.font-cormorant-garamond,
+.font-serif {
+  font-family: var(--gy-font-editorial) !important;
+}
+.font-cinzel,
+.font-trajan,
+.font-display {
+  font-family: var(--gy-font-display) !important;
+}
+.font-montserrat,
+.font-switzer,
+.font-sans,
+.font-body {
+  font-family: var(--gy-font-ui) !important;
+}
+
+/* Some legacy components reference `var(--font-cormorant)` /
+   `var(--font-montserrat)` / `var(--font-cinzel)` — these still
+   resolve through next/font (Google CDN). We don't override them;
+   they render the same face that the Phase 28 mapping points at,
+   just via the legacy variable name. Listed here as documentation
+   only — no rule to write. */
+
+/* ──────────────────────────────────────────────────────────────────
+   Palette tokens — sitewide off-palette catcher
+   ────────────────────────────────────────────────────────────────── */
+
+/* Pure black anywhere → brand navy. The site uses a single
+   navy bg; #000 next to #0D1B2A reads as a different surface
+   and breaks the editorial calm. */
+.bg-black { background-color: var(--gy-navy) !important; }
+.text-black { color: var(--gy-navy) !important; }
+
+/* Pure white text → brand ivory so headlines on dark bg don't
+   read clinical. White backgrounds are intentional in the few
+   light sections that exist (legal pages) — we keep `bg-white`
+   as #FFFFFF and only re-route `text-white`. */
+.text-white { color: var(--gy-ivory) !important; }
+
+/* Tailwind grayscale on dark backgrounds maps to the muted
+   token so secondary text reads as silver-on-navy, not as
+   stock Tailwind grey. Range covers the most-used 400-700
+   bucket; lighter (50-300) and darker (800-950) keep their
+   defaults so light-bg pages still have contrast latitude. */
+.text-gray-400, .text-gray-500, .text-gray-600,
+.text-slate-400, .text-slate-500, .text-slate-600,
+.text-zinc-400, .text-zinc-500, .text-zinc-600,
+.text-neutral-400, .text-neutral-500, .text-neutral-600 {
+  color: var(--gy-muted) !important;
+}
+
+/* Card surface — any Tailwind dark grey that's used as a card
+   background gets unified to the brand card colour. */
+.bg-gray-900, .bg-slate-900, .bg-zinc-900, .bg-neutral-900 {
+  background-color: var(--gy-card) !important;
+}
+
+/* Editor's reminder — these tokens are the canonical references
+   for any new code:
+     --gy-navy   #0D1B2A   primary bg
+     --gy-card   #142233   card / panel bg
+     --gy-gold   #C9A84C   accents only (rules, hover, CTA borders)
+     --gy-ivory  #F8F5F0   text on dark
+     --gy-white  #FFFFFF   light-section bg
+     --gy-muted  #9CA3AF   secondary text on dark
+   Use these via `color: var(--gy-ivory)` rather than `color: white`. */

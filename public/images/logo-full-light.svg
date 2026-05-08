@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" preserveAspectRatio="xMidYMid meet" role="img" aria-label="George Yachts Brokerage House">
+  <title>George Yachts Brokerage House</title>
+
+  <!-- Yacht icon — two flowing strokes (gold + silver) reading as a stylised hull + wake. -->
+  <g transform="translate(180 20)">
+    <!-- Gold wave (upper) -->
+    <path d="M 8 56 C 70 8, 140 -2, 220 22 C 165 28, 110 38, 60 56 Z"
+          fill="#C9A84C" opacity="0.95"/>
+    <path d="M 30 64 C 90 28, 160 22, 232 38 C 175 50, 115 60, 50 70 Z"
+          fill="#C9A84C" opacity="0.55"/>
+    <!-- Silver / ivory hull -->
+    <path d="M 0 78 C 80 64, 175 64, 240 80 L 220 96 C 165 86, 95 86, 18 92 Z"
+          fill="#F8F5F0" opacity="0.95"/>
+    <path d="M 18 92 C 95 86, 165 86, 220 96 L 196 108 C 145 100, 90 100, 36 102 Z"
+          fill="#F8F5F0" opacity="0.5"/>
+  </g>
+
+  <!-- "GEORGE YACHTS" wordmark — Cormorant / serif tier -->
+  <text x="300" y="170"
+        text-anchor="middle"
+        fill="#F8F5F0"
+        font-family="'Cormorant Garamond','Sentient',Georgia,serif"
+        font-weight="400"
+        font-size="46"
+        letter-spacing="1.5">
+    GEORGE YACHTS
+  </text>
+
+  <!-- Gold divider rule -->
+  <line x1="220" y1="190" x2="380" y2="190"
+        stroke="#C9A84C" stroke-width="1" opacity="0.85"/>
+
+  <!-- "BROKERAGE HOUSE" — UI tier, spaced caps -->
+  <text x="300" y="218"
+        text-anchor="middle"
+        fill="#F8F5F0" opacity="0.7"
+        font-family="'Switzer','Montserrat',sans-serif"
+        font-weight="400"
+        font-size="14"
+        letter-spacing="6">
+    BROKERAGE HOUSE
+  </text>
+</svg>

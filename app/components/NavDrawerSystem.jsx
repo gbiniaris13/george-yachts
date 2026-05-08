@@ -291,7 +291,7 @@ export default function NavDrawerSystem() {
             style={{ zIndex: 25 }}
           >
             <img
-              src="/images/logo-full-light.png"
+              src="/images/logo-full-light.svg"
               alt="George Yachts Brokerage House"
               className="gy-nav-logo group-hover:opacity-80"
               style={{
@@ -356,7 +356,7 @@ export default function NavDrawerSystem() {
               {/* Mobile overlay logo per Boss spec: 48 px, centered.
                   Sits 2 rem above the first nav item. */}
               <img
-                src="/images/logo-full-light.png"
+                src="/images/logo-full-light.svg"
                 alt="George Yachts Brokerage House"
                 style={{ height: 48, width: "auto", marginBottom: "2rem" }}
               />
