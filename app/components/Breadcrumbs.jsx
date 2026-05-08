@@ -12,7 +12,7 @@ export default function Breadcrumbs({ items }) {
     <nav
       aria-label="Breadcrumb"
       className="px-8 md:px-20 py-4 text-[10px] tracking-[0.32em] uppercase"
-      style={{ fontFamily: "'Montserrat', sans-serif" }}
+      style={{ fontFamily: "var(--gy-font-ui)" }}
     >
       {items.map((item, i) => (
         <span key={i}>

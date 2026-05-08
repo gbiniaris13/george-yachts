@@ -379,7 +379,7 @@ export default function MapboxFlyover() {
                       background: "rgba(13, 27, 42, 0.55)",
                       border: "1px solid rgba(201,168,76,0.45)",
                       color: "#F8F5F0",
-                      fontFamily: "'Montserrat', sans-serif",
+                      fontFamily: "var(--gy-font-ui)",
                       fontSize: 11,
                       letterSpacing: "0.28em",
                       textTransform: "uppercase",
@@ -425,7 +425,7 @@ export default function MapboxFlyover() {
       >
         <p
           style={{
-            fontFamily: "'Lato', 'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 13,
             color: "rgba(248,245,240,0.62)",
             fontWeight: 300,

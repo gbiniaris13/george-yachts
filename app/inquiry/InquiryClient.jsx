@@ -328,7 +328,7 @@ export default function InquiryClient() {
             />
             <figcaption
               style={{
-                fontFamily: "'Lato', 'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 11,
                 letterSpacing: "0.32em",
                 textTransform: "uppercase",
@@ -448,7 +448,7 @@ export default function InquiryClient() {
               </select>
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 11,
                   letterSpacing: "0.05em",
                   color: "rgba(248, 245, 240,0.45)",
@@ -501,7 +501,7 @@ export default function InquiryClient() {
         </div>
 
         {error && (
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: "#ff9b9b", marginTop: 14 }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, color: "#ff9b9b", marginTop: 14 }}>
             {error}
           </p>
         )}
@@ -572,7 +572,7 @@ const card = {
   animation: "fade-in 0.25s ease both",
 };
 const eyebrow = {
-  fontFamily: "'Montserrat', sans-serif",
+  fontFamily: "var(--gy-font-ui)",
   fontSize: 9,
   letterSpacing: "0.4em",
   textTransform: "uppercase",
@@ -581,7 +581,7 @@ const eyebrow = {
   fontWeight: 600,
 };
 const question = {
-  fontFamily: "'Cormorant Garamond', Georgia, serif",
+  fontFamily: "var(--gy-font-editorial)",
   fontSize: "clamp(24px, 3.4vw, 36px)",
   fontWeight: 300,
   color: "#F8F5F0",
@@ -590,7 +590,7 @@ const question = {
   letterSpacing: "0.005em",
 };
 const subtext = {
-  fontFamily: "'Cormorant Garamond', Georgia, serif",
+  fontFamily: "var(--gy-font-editorial)",
   fontSize: 17,
   lineHeight: 1.6,
   color: "rgba(248, 245, 240,0.65)",
@@ -609,7 +609,7 @@ const textInput = {
   background: "#0D1B2A",
   border: "1px solid rgba(201,168,76,0.25)",
   color: "#F8F5F0",
-  fontFamily: "'Montserrat', sans-serif",
+  fontFamily: "var(--gy-font-ui)",
   fontSize: 16,
   fontWeight: 400,
   outline: "none",
@@ -620,7 +620,7 @@ const choiceBtn = {
   background: "rgba(13, 27, 42, 0.5)",
   border: "1px solid rgba(201,168,76,0.22)",
   color: "#F8F5F0",
-  fontFamily: "'Montserrat', sans-serif",
+  fontFamily: "var(--gy-font-ui)",
   fontSize: 13,
   letterSpacing: "0.03em",
   textAlign: "left",
@@ -631,7 +631,7 @@ const navBtn = {
   background: "none",
   border: "none",
   color: "rgba(248, 245, 240,0.5)",
-  fontFamily: "'Montserrat', sans-serif",
+  fontFamily: "var(--gy-font-ui)",
   fontSize: 11,
   letterSpacing: "0.18em",
   textTransform: "uppercase",
@@ -642,7 +642,7 @@ const ctaPrimary = {
   padding: "14px 34px",
   background: `linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)`,
   color: "#0D1B2A",
-  fontFamily: "'Montserrat', sans-serif",
+  fontFamily: "var(--gy-font-ui)",
   fontSize: 11,
   fontWeight: 700,
   letterSpacing: "0.2em",

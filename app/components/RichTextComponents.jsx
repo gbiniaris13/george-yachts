@@ -197,7 +197,7 @@ export const RichTextComponents = {
               {leadIn && (
                 <span
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 9,
                     letterSpacing: "0.32em",
                     textTransform: "uppercase",
@@ -210,7 +210,7 @@ export const RichTextComponents = {
               )}
               <p
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: 22,
                   fontWeight: 400,
                   color: "#F8F5F0",
@@ -223,7 +223,7 @@ export const RichTextComponents = {
               {(y.length || y.sleeps) && (
                 <p
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 10,
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
@@ -240,7 +240,7 @@ export const RichTextComponents = {
                     style={{
                       display: "inline-block",
                       marginRight: 8,
-                      fontFamily: "'Montserrat', sans-serif",
+                      fontFamily: "var(--gy-font-ui)",
                       fontSize: 8,
                       letterSpacing: "0.3em",
                       textTransform: "uppercase",
@@ -252,7 +252,7 @@ export const RichTextComponents = {
                   </span>
                   <span
                     style={{
-                      fontFamily: "'Montserrat', sans-serif",
+                      fontFamily: "var(--gy-font-ui)",
                       fontSize: 12,
                       color: "#C9A84C",
                       fontWeight: 600,
@@ -265,7 +265,7 @@ export const RichTextComponents = {
               <span
                 style={{
                   marginTop: 6,
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 10,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
@@ -315,7 +315,7 @@ export const RichTextComponents = {
           {leadIn && (
             <p
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 11,
                 letterSpacing: "0.18em",
                 textTransform: "uppercase",
@@ -330,7 +330,7 @@ export const RichTextComponents = {
           <blockquote
             cite={FORBES_ARTICLE_URL}
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontStyle: "italic",
               fontSize: 22,
               lineHeight: 1.5,
@@ -345,7 +345,7 @@ export const RichTextComponents = {
           </blockquote>
           <p
             style={{
-              fontFamily: "'Lato', 'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 13,
               color: "rgba(248,245,240,0.75)",
               margin: 0,

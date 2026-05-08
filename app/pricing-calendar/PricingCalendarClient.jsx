@@ -61,13 +61,13 @@ export default function PricingCalendarClient() {
     <div style={{ minHeight: '100vh', background: '#0D1B2A' }}>
       {/* Hero */}
       <div style={{ padding: '160px 24px 60px', textAlign: 'center' }}>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
           Smart Planning
         </p>
-        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(13, 27, 42,0.55)' }}>
+        <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(13, 27, 42,0.55)' }}>
           When Is the Best Time to Charter?
         </h1>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.4)', maxWidth: 500, margin: '0 auto', lineHeight: 1.8 }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.4)', maxWidth: 500, margin: '0 auto', lineHeight: 1.8 }}>
           Green = best value. Red = peak pricing. Choose your week wisely.
         </p>
       </div>
@@ -78,7 +78,7 @@ export default function PricingCalendarClient() {
           {Object.entries(TIER_COLORS).map(([tier, info]) => (
             <div key={tier} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <div style={{ width: 16, height: 16, borderRadius: 4, background: info.bg, border: `1px solid ${info.text}30` }} />
-              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(248, 245, 240,0.4)', letterSpacing: '0.1em' }}>
+              <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.4)', letterSpacing: '0.1em' }}>
                 {info.label}
               </span>
             </div>
@@ -88,7 +88,7 @@ export default function PricingCalendarClient() {
         {/* Calendar grid */}
         {months.map(month => (
           <div key={month} style={{ marginBottom: 24 }}>
-            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: '#F8F5F0', fontWeight: 300, marginBottom: 12, paddingLeft: 4 }}>
+            <h3 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 18, color: '#F8F5F0', fontWeight: 300, marginBottom: 12, paddingLeft: 4 }}>
               {month}
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 8 }}>
@@ -110,19 +110,19 @@ export default function PricingCalendarClient() {
                       transform: isHovered ? 'scale(1.03)' : 'scale(1)',
                     }}
                   >
-                    <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: '#F8F5F0', marginBottom: 6, fontWeight: 500 }}>
+                    <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, color: '#F8F5F0', marginBottom: 6, fontWeight: 500 }}>
                       {w.week}
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: tier.text, letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 600 }}>
+                      <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: tier.text, letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 600 }}>
                         {tier.label}
                       </span>
-                      <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(248, 245, 240,0.3)' }}>
+                      <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, color: 'rgba(248, 245, 240,0.3)' }}>
                         {tier.multiplier} rate
                       </span>
                     </div>
                     {isHovered && (
-                      <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(248, 245, 240,0.4)', margin: '8px 0 0', lineHeight: 1.5 }}>
+                      <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.4)', margin: '8px 0 0', lineHeight: 1.5 }}>
                         {tier.desc}
                       </p>
                     )}
@@ -135,11 +135,11 @@ export default function PricingCalendarClient() {
 
         {/* George's tip */}
         <div style={{ marginTop: 40, borderLeft: `3px solid ${GOLD}`, paddingLeft: 24, paddingTop: 8, paddingBottom: 8 }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: GOLD, marginBottom: 8 }}>George's Tip</p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.5)', lineHeight: 1.8, margin: '0 0 4px', fontStyle: 'italic' }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: GOLD, marginBottom: 8 }}>George's Tip</p>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.5)', lineHeight: 1.8, margin: '0 0 4px', fontStyle: 'italic' }}>
             "The sweet spots are late May, early June, and September. You get perfect weather, warm sea, empty islands — and save 30-50% compared to July and August. If your dates are flexible, these weeks deliver the best experience at the best price."
           </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: `${GOLD}60`, margin: 0 }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, color: `${GOLD}60`, margin: 0 }}>
             — George P. Biniaris, Managing Broker
           </p>
         </div>

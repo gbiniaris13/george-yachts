@@ -20,7 +20,7 @@ export default function SimilarYachts({ items = [] }) {
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <p
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 10,
               letterSpacing: "0.4em",
               color: "rgba(201,168,76,0.85)",
@@ -33,7 +33,7 @@ export default function SimilarYachts({ items = [] }) {
           </p>
           <h2
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(26px, 3vw, 38px)",
               fontWeight: 300,
               color: "#F8F5F0",
@@ -101,7 +101,7 @@ export default function SimilarYachts({ items = [] }) {
               <div style={{ padding: "18px 20px 20px" }}>
                 <p
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 9,
                     letterSpacing: "0.28em",
                     textTransform: "uppercase",
@@ -114,7 +114,7 @@ export default function SimilarYachts({ items = [] }) {
                 </p>
                 <h3
                   style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--gy-font-editorial)",
                     fontSize: 22,
                     fontWeight: 400,
                     color: "#F8F5F0",
@@ -126,7 +126,7 @@ export default function SimilarYachts({ items = [] }) {
                 </h3>
                 <p
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 11,
                     color: "rgba(248, 245, 240,0.48)",
                     lineHeight: 1.5,
@@ -141,7 +141,7 @@ export default function SimilarYachts({ items = [] }) {
                   <p
                     style={{
                       marginTop: 10,
-                      fontFamily: "'Montserrat', sans-serif",
+                      fontFamily: "var(--gy-font-ui)",
                       fontSize: 11,
                       letterSpacing: "0.14em",
                       color: "rgba(201,168,76,0.9)",

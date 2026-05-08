@@ -157,7 +157,7 @@ export default function ContactDrawer() {
             : "linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)",
           border: `1px solid ${hovered ? "#C9A84C" : "rgba(201,168,76,0.35)"}`,
           color: hovered ? "#0D1B2A" : "#C9A84C",
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: 9,
           fontWeight: 700,
           letterSpacing: "0.22em",
@@ -222,7 +222,7 @@ export default function ContactDrawer() {
             <div style={{ marginBottom: 18 }}>
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 9,
                   letterSpacing: "0.42em",
                   textTransform: "uppercase",
@@ -235,7 +235,7 @@ export default function ContactDrawer() {
               </p>
               <p
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: 22,
                   fontStyle: "italic",
                   color: "rgba(248,245,240,0.92)",
@@ -288,7 +288,7 @@ export default function ContactDrawer() {
                     <span
                       style={{
                         display: "block",
-                        fontFamily: "'Montserrat', sans-serif",
+                        fontFamily: "var(--gy-font-ui)",
                         fontSize: 12,
                         letterSpacing: "0.08em",
                         color: "#F8F5F0",
@@ -300,7 +300,7 @@ export default function ContactDrawer() {
                     <span
                       style={{
                         display: "block",
-                        fontFamily: "'Lato', 'Montserrat', sans-serif",
+                        fontFamily: "var(--gy-font-ui)",
                         fontSize: 11,
                         color: "rgba(248,245,240,0.55)",
                         fontWeight: 300,
@@ -327,7 +327,7 @@ export default function ContactDrawer() {
             {/* Foot note */}
             <p
               style={{
-                fontFamily: "'Lato', 'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 10,
                 letterSpacing: "0.04em",
                 color: "rgba(248,245,240,0.45)",

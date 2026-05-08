@@ -31,7 +31,7 @@ const WhatsAppEnquiry = ({ yachtName }) => {
         style={{
           backgroundColor: "#C9A84C",
           color: "#0D1B2A",
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: "12px",
           fontWeight: 600,
           letterSpacing: "0.15em",
@@ -56,7 +56,7 @@ const WhatsAppEnquiry = ({ yachtName }) => {
           style={{
             backgroundColor: "#C9A84C",
             color: "#0D1B2A",
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: "12px",
             fontWeight: 600,
             letterSpacing: "0.15em",

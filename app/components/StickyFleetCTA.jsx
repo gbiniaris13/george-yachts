@@ -161,7 +161,7 @@ export default function StickyFleetCTA({ yachtCount: yachtCountProp } = {}) {
             gap: "10px",
             padding: "14px 32px",
             minHeight: "48px",
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: "11px",
             letterSpacing: "0.32em",
             textTransform: "uppercase",

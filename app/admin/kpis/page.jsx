@@ -55,13 +55,13 @@ export default function KpisPage() {
   return (
     <main style={{ background: "#0D1B2A", color: "#F8F5F0", minHeight: "100vh", padding: "120px 24px 80px" }}>
       <div style={{ maxWidth: 980, margin: "0 auto" }}>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 12px" }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 12px" }}>
           Internal · George Yachts
         </p>
-        <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(32px, 5vw, 44px)", fontWeight: 300, margin: "0 0 8px" }}>
+        <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(32px, 5vw, 44px)", fontWeight: 300, margin: "0 0 8px" }}>
           Conversion-funnel KPIs
         </h1>
-        <p style={{ fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 14, color: "rgba(248, 245, 240,0.65)", margin: "0 0 32px", maxWidth: 640 }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248, 245, 240,0.65)", margin: "0 0 32px", maxWidth: 640 }}>
           Last {days} days, sourced from our own KV counters. Looker Studio (linked to GA4) remains the canonical
           place for the full Monday review. Paste the KPI admin key to unlock this view — it&rsquo;s never stored.
         </p>
@@ -84,7 +84,7 @@ export default function KpisPage() {
             disabled={!key.trim() || loading}
             style={{
               padding: "10px 18px",
-              fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700,
+              fontFamily: "var(--gy-font-ui)", fontSize: 11, fontWeight: 700,
               letterSpacing: "0.18em", textTransform: "uppercase",
               color: "#0D1B2A",
               background: loading ? `${GOLD}66` : `linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)`,
@@ -96,7 +96,7 @@ export default function KpisPage() {
         </form>
 
         {error && (
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: "#ff8a8a" }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, color: "#ff8a8a" }}>
             {error}
           </p>
         )}
@@ -115,10 +115,10 @@ export default function KpisPage() {
                     padding: "20px 22px",
                   }}
                 >
-                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: "0.32em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 6px" }}>
+                  <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.32em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 6px" }}>
                     {LABELS[event] || event}
                   </p>
-                  <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 36, fontWeight: 400, color: "#F8F5F0", margin: "0 0 14px", lineHeight: 1 }}>
+                  <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 36, fontWeight: 400, color: "#F8F5F0", margin: "0 0 14px", lineHeight: 1 }}>
                     {total}
                   </p>
                   <div style={{ display: "flex", alignItems: "flex-end", gap: 3, height: 40 }}>
@@ -150,7 +150,7 @@ export default function KpisPage() {
 
 const inputStyle = {
   padding: "10px 12px",
-  fontFamily: "'Montserrat', sans-serif", fontSize: 13,
+  fontFamily: "var(--gy-font-ui)", fontSize: 13,
   background: "rgba(248, 245, 240,0.06)",
   border: "1px solid rgba(248, 245, 240,0.18)",
   color: "#F8F5F0", outline: "none",

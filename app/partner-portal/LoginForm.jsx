@@ -34,7 +34,7 @@ export default function LoginForm() {
       >
         <p
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontSize: 28,
             fontWeight: 400,
             color: "#F8F5F0",
@@ -45,7 +45,7 @@ export default function LoginForm() {
         </p>
         <p
           style={{
-            fontFamily: "'Lato', 'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 14,
             lineHeight: 1.6,
             color: "rgba(248, 245, 240,0.78)",
@@ -77,7 +77,7 @@ export default function LoginForm() {
         onChange={(e) => setEmail(e.target.value)}
         style={{
           padding: "11px 13px",
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: 13,
           background: "rgba(248, 245, 240,0.06)",
           border: "1px solid rgba(248, 245, 240,0.18)",
@@ -90,7 +90,7 @@ export default function LoginForm() {
         disabled={submitting}
         style={{
           padding: "14px 0",
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: 11,
           fontWeight: 700,
           letterSpacing: "0.24em",

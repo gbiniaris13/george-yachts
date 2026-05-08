@@ -313,7 +313,7 @@ export default function MapboxRouteMap({
                 onClick={() => setIs3D(opt.key)}
                 aria-pressed={active}
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 10,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",

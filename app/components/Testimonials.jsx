@@ -48,10 +48,10 @@ export default function Testimonials() {
       <div className="relative z-10 max-w-[1100px] mx-auto px-6 md:px-12">
         <Reveal>
           <div className="text-center mb-16">
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.4em", textTransform: "uppercase", color: "#C9A84C", fontWeight: 600, marginBottom: "16px" }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.4em", textTransform: "uppercase", color: "#C9A84C", fontWeight: 600, marginBottom: "16px" }}>
               Guest Experiences
             </p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 16px" }}>
+            <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 16px" }}>
               What Our Guests Say
             </h2>
             <div style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)", margin: "0 auto" }} />
@@ -68,14 +68,14 @@ export default function Testimonials() {
                 </div>
 
                 {/* Quote */}
-                <blockquote style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "16px", fontStyle: "italic", color: "rgba(248, 245, 240,0.6)", lineHeight: 1.8, margin: "0 0 24px", flex: 1 }}>
+                <blockquote style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "16px", fontStyle: "italic", color: "rgba(248, 245, 240,0.6)", lineHeight: 1.8, margin: "0 0 24px", flex: 1 }}>
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
 
                 {/* Attribution */}
                 <div>
                   <div style={{ width: "24px", height: "1px", background: "rgba(201,168,76,0.3)", marginBottom: "12px" }} />
-                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", color: "#C9A84C", letterSpacing: "0.15em", textTransform: "uppercase" }}>
+                  <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", color: "#C9A84C", letterSpacing: "0.15em", textTransform: "uppercase" }}>
                     {t.attribution}
                   </p>
                 </div>

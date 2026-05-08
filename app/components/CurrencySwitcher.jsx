@@ -35,7 +35,7 @@ export default function CurrencySwitcher({ compact = true }) {
             aria-label={`Switch to ${code}`}
             title={code}
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: compact ? 11 : 12,
               fontWeight: 700,
               letterSpacing: "0.06em",

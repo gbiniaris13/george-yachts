@@ -85,7 +85,7 @@ export default function TrendingYachts({ yachts }) {
         <div>
           <p
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: "10px",
               letterSpacing: "0.32em",
               textTransform: "uppercase",
@@ -101,7 +101,7 @@ export default function TrendingYachts({ yachts }) {
               — same content, the right register for the audience. */}
           <h2
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(28px, 4vw, 44px)",
               fontWeight: 300,
               color: "#F8F5F0",
@@ -115,7 +115,7 @@ export default function TrendingYachts({ yachts }) {
         <Link
           href="/charter-yacht-greece"
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: "11px",
             letterSpacing: "0.24em",
             textTransform: "uppercase",
@@ -195,7 +195,7 @@ export default function TrendingYachts({ yachts }) {
               <div style={{ padding: "16px 18px 20px" }}>
                 <p
                   style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--gy-font-editorial)",
                     fontSize: "20px",
                     color: "#F8F5F0",
                     margin: "0 0 6px",
@@ -208,7 +208,7 @@ export default function TrendingYachts({ yachts }) {
                 {specs && (
                   <p
                     style={{
-                      fontFamily: "'Montserrat', sans-serif",
+                      fontFamily: "var(--gy-font-ui)",
                       fontSize: "11px",
                       letterSpacing: "0.12em",
                       color: "rgba(248, 245, 240,0.55)",
@@ -227,7 +227,7 @@ export default function TrendingYachts({ yachts }) {
                         carousel even when the values are correct. */}
                     <span
                       style={{
-                        fontFamily: "'Montserrat', sans-serif",
+                        fontFamily: "var(--gy-font-ui)",
                         fontSize: "8px",
                         letterSpacing: "0.3em",
                         textTransform: "uppercase",
@@ -239,7 +239,7 @@ export default function TrendingYachts({ yachts }) {
                     </span>
                     <p
                       style={{
-                        fontFamily: "'Montserrat', sans-serif",
+                        fontFamily: "var(--gy-font-ui)",
                         fontSize: "12px",
                         color: GOLD,
                         margin: 0,

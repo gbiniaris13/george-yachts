@@ -26,7 +26,7 @@ export default function RelatedArticles({ posts }) {
           <span className="block w-6 h-px bg-[#C9A84C]/50" />
           <span
             className="text-[#C9A84C]/50 text-[8px] tracking-[0.7em] uppercase"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
+            style={{ fontFamily: "var(--gy-font-ui)" }}
           >
             Continue Reading
           </span>
@@ -35,7 +35,7 @@ export default function RelatedArticles({ posts }) {
 
         <h2
           className="text-white/80 text-2xl md:text-3xl mb-10"
-          style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300 }}
+          style={{ fontFamily: "var(--gy-font-editorial)", fontWeight: 300 }}
         >
           Related Articles
         </h2>
@@ -62,7 +62,7 @@ export default function RelatedArticles({ posts }) {
                   <div className="absolute inset-0 flex items-center justify-center">
                     <span
                       className="text-white/10 text-[9px] tracking-[0.4em] uppercase"
-                      style={{ fontFamily: "'Montserrat', sans-serif" }}
+                      style={{ fontFamily: "var(--gy-font-ui)" }}
                     >
                       Editorial
                     </span>
@@ -75,27 +75,27 @@ export default function RelatedArticles({ posts }) {
               <div className="p-4">
                 <span
                   className="text-[#C9A84C]/70 text-[8px] tracking-[0.3em] uppercase block mb-2"
-                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                  style={{ fontFamily: "var(--gy-font-ui)" }}
                 >
                   {formatDate(post.publishedAt)}
                 </span>
                 <h3
                   className="text-white/70 text-[1.05rem] leading-snug group-hover:text-[#C9A84C] transition-colors duration-500 line-clamp-2"
-                  style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+                  style={{ fontFamily: "var(--gy-font-editorial)" }}
                 >
                   {post.title}
                 </h3>
                 {post.excerpt && (
                   <p
                     className="text-white/60 text-[12px] leading-relaxed mt-2 line-clamp-2"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                    style={{ fontFamily: "var(--gy-font-ui)" }}
                   >
                     {post.excerpt}
                   </p>
                 )}
                 <span
                   className="inline-block mt-3 text-[#C9A84C]/40 text-[9px] tracking-[0.2em] uppercase group-hover:text-[#C9A84C]/70 transition-colors duration-500"
-                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                  style={{ fontFamily: "var(--gy-font-ui)" }}
                 >
                   Read Article &rarr;
                 </span>
@@ -109,7 +109,7 @@ export default function RelatedArticles({ posts }) {
           <Link
             href="/blog"
             className="text-white/50 hover:text-[#C9A84C] transition-colors duration-500 text-[9px] tracking-[0.4em] uppercase"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
+            style={{ fontFamily: "var(--gy-font-ui)" }}
           >
             View All Articles
           </Link>

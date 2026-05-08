@@ -233,7 +233,7 @@ export default async function RegionPage({ params }) {
             />
             <p
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 11,
                 letterSpacing: "0.42em",
                 textTransform: "uppercase",
@@ -274,7 +274,7 @@ export default async function RegionPage({ params }) {
             />
             <p
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontStyle: "italic",
                 fontSize: "clamp(17px, 1.7vw, 22px)",
                 lineHeight: 1.7,
@@ -335,7 +335,7 @@ export default async function RegionPage({ params }) {
                 />
                 <p
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 10,
                     letterSpacing: "0.42em",
                     textTransform: "uppercase",
@@ -348,7 +348,7 @@ export default async function RegionPage({ params }) {
                 </p>
                 <p
                   style={{
-                    fontFamily: "'Lato', 'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 15,
                     lineHeight: 1.75,
                     color: "rgba(248,245,240,0.82)",
@@ -373,7 +373,7 @@ export default async function RegionPage({ params }) {
             <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 10,
                   letterSpacing: "0.42em",
                   textTransform: "uppercase",
@@ -460,7 +460,7 @@ export default async function RegionPage({ params }) {
                       {y.subtitle && (
                         <p
                           style={{
-                            fontFamily: "'Montserrat', sans-serif",
+                            fontFamily: "var(--gy-font-ui)",
                             fontSize: 9,
                             letterSpacing: "0.28em",
                             textTransform: "uppercase",
@@ -474,7 +474,7 @@ export default async function RegionPage({ params }) {
                       )}
                       <div
                         style={{
-                          fontFamily: "'Lato', 'Montserrat', sans-serif",
+                          fontFamily: "var(--gy-font-ui)",
                           fontSize: 12,
                           color: "rgba(248, 245, 240,0.6)",
                           lineHeight: 1.7,
@@ -490,7 +490,7 @@ export default async function RegionPage({ params }) {
                         {y.weeklyRatePrice && (
                           <div
                             style={{
-                              fontFamily: "'Montserrat', sans-serif",
+                              fontFamily: "var(--gy-font-ui)",
                               fontSize: 11,
                               letterSpacing: "0.18em",
                               textTransform: "uppercase",
@@ -556,7 +556,7 @@ export default async function RegionPage({ params }) {
                     background: "transparent",
                     border: "1px solid rgba(201,168,76,0.22)",
                     color: "rgba(248,245,240,0.82)",
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--gy-font-editorial)",
                     fontSize: 17,
                     fontStyle: "italic",
                     textDecoration: "none",
@@ -580,7 +580,7 @@ export default async function RegionPage({ params }) {
         >
           <p
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontStyle: "italic",
               fontSize: "clamp(20px, 2.4vw, 28px)",
               color: "rgba(248,245,240,0.78)",

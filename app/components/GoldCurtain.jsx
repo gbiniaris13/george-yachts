@@ -146,7 +146,7 @@ export default function GoldCurtain() {
         >
           <div
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: "8px",
               letterSpacing: "0.55em",
               textTransform: "uppercase",
@@ -159,7 +159,7 @@ export default function GoldCurtain() {
           </div>
           <div
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(28px, 4.5vw, 46px)",
               fontWeight: 200,
               letterSpacing: "0.12em",

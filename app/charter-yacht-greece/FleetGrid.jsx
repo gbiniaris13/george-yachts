@@ -480,7 +480,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
               textTransform: 'uppercase',
               color: 'rgba(248, 245, 240,0.45)',
               textDecoration: 'none',
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontWeight: 500,
             }}
           >
@@ -500,7 +500,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
               fontSize: "9px",
               letterSpacing: "0.15em",
               textTransform: "uppercase",
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               cursor: !isComparing && compareCount >= 3 ? "not-allowed" : "pointer",
               opacity: !isComparing && compareCount >= 3 ? 0.3 : 1,
               transition: "all 0.3s ease",
@@ -854,7 +854,7 @@ export default function FleetGrid({ yachts }) {
               color: 'rgba(248,245,240,0.85)',
               border: '1px solid rgba(201,168,76,0.45)',
               borderRadius: '999px',
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 10,
               letterSpacing: '0.18em',
               textTransform: 'uppercase',

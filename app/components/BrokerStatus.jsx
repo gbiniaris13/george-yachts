@@ -123,7 +123,7 @@ export default function BrokerStatus() {
         WebkitBackdropFilter: "blur(8px)",
         border: `1px solid ${live ? "rgba(76, 175, 80, 0.42)" : "rgba(248,245,240,0.16)"}`,
         color: live ? "#9CA3AF" : "rgba(248,245,240,0.7)",
-        fontFamily: "'Montserrat', sans-serif",
+        fontFamily: "var(--gy-font-ui)",
         fontSize: 9,
         fontWeight: 600,
         letterSpacing: "0.22em",

@@ -25,7 +25,7 @@ export default function PartnerPortalPage() {
         >
           <p
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 9,
               letterSpacing: "0.42em",
               textTransform: "uppercase",
@@ -38,7 +38,7 @@ export default function PartnerPortalPage() {
           </p>
           <h1
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(34px, 5vw, 52px)",
               fontWeight: 300,
               color: "#F8F5F0",
@@ -50,7 +50,7 @@ export default function PartnerPortalPage() {
           </h1>
           <p
             style={{
-              fontFamily: "'Lato', 'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 16,
               lineHeight: 1.7,
               color: "rgba(248, 245, 240,0.78)",
@@ -67,7 +67,7 @@ export default function PartnerPortalPage() {
             <LoginForm />
             <p
               style={{
-                fontFamily: "'Lato', 'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 12,
                 lineHeight: 1.7,
                 color: "rgba(248, 245, 240,0.55)",

@@ -38,13 +38,13 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
     <div style={{ minHeight: '100vh', background: '#0D1B2A' }}>
       {/* Hero */}
       <div style={{ padding: '160px 24px 40px', textAlign: 'center' }}>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
           {t('tools.label', 'Interactive Tool')}
         </p>
-        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(13, 27, 42,0.55)' }}>
+        <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(13, 27, 42,0.55)' }}>
           {t('sizeViz.title', 'How Big Is Your Yacht?')}
         </h1>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.4)', maxWidth: 480, margin: '0 auto', lineHeight: 1.8 }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.4)', maxWidth: 480, margin: '0 auto', lineHeight: 1.8 }}>
           {t('sizeViz.subtitle', "Numbers on paper don't tell the story. See how each yacht compares to things you know.")}
         </p>
       </div>
@@ -58,7 +58,7 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
               onClick={() => setSelectedYacht(y)}
               style={{
                 padding: '10px 16px',
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 10,
                 letterSpacing: '0.1em',
                 border: `1px solid ${selectedYacht.slug === y.slug ? GOLD : '#9CA3AF'}`,
@@ -76,13 +76,13 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
 
         {/* Selected yacht info */}
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, color: '#F8F5F0', fontWeight: 300, margin: '0 0 8px' }}>
+          <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 32, color: '#F8F5F0', fontWeight: 300, margin: '0 0 8px' }}>
             {selectedYacht.name}
           </h2>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: `${GOLD}80`, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, color: `${GOLD}80`, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
             {selectedYacht.length}m {t('sizeViz.length', 'length')} · {selectedYacht.beam}m {t('sizeViz.beam', 'beam')} · {selectedYacht.type}
           </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(248, 245, 240,0.3)', marginTop: 8 }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: 'rgba(248, 245, 240,0.3)', marginTop: 8 }}>
             {t('sizeViz.deckArea', 'Total deck area')} ≈ {Math.round(selectedYacht.length * selectedYacht.beam * 0.7)}m² ({Math.round(selectedYacht.length * selectedYacht.beam * 0.7 * 10.76)} sq ft)
           </p>
         </div>
@@ -91,7 +91,7 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           {/* Yacht bar */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <div style={{ width: 100, textAlign: 'right', fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: GOLD, fontWeight: 600 }}>
+            <div style={{ width: 100, textAlign: 'right', fontFamily: "var(--gy-font-ui)", fontSize: 11, color: GOLD, fontWeight: 600 }}>
               {t('sizeViz.yourYacht', 'Your Yacht')}
             </div>
             <div style={{ flex: 1, position: 'relative', height: 40, background: 'rgba(248, 245, 240,0.02)', borderRadius: 4, overflow: 'hidden' }}>
@@ -106,7 +106,7 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
                 justifyContent: 'flex-end',
                 paddingRight: 12,
               }}>
-                <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: '#0D1B2A', fontWeight: 700 }}>
+                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, color: '#0D1B2A', fontWeight: 700 }}>
                   {selectedYacht.length}m
                 </span>
               </div>
@@ -116,7 +116,7 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
           {/* Comparison bars */}
           {comparisons.map((c, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-              <div style={{ width: 100, textAlign: 'right', fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(248, 245, 240,0.4)' }}>
+              <div style={{ width: 100, textAlign: 'right', fontFamily: "var(--gy-font-ui)", fontSize: 10, color: 'rgba(248, 245, 240,0.4)' }}>
                 {c.icon} {t(`sizeViz.${c.key}`, c.name)}
               </div>
               <div style={{ flex: 1, position: 'relative', height: 28, background: 'rgba(248, 245, 240,0.02)', borderRadius: 4, overflow: 'hidden' }}>
@@ -131,12 +131,12 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
                   justifyContent: 'flex-end',
                   paddingRight: 8,
                 }}>
-                  <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(248, 245, 240,0.5)' }}>
+                  <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.5)' }}>
                     {c.length}m
                   </span>
                 </div>
               </div>
-              <div style={{ width: 120, fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: c.ratio >= 1 ? GOLD : 'rgba(248, 245, 240,0.3)' }}>
+              <div style={{ width: 120, fontFamily: "var(--gy-font-ui)", fontSize: 10, color: c.ratio >= 1 ? GOLD : 'rgba(248, 245, 240,0.3)' }}>
                 {c.display}
               </div>
             </div>
@@ -145,10 +145,10 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
 
         {/* Fun facts */}
         <div style={{ marginTop: 48, padding: 24, background: 'rgba(201,168,76,0.03)', border: `1px solid ${GOLD}15`, borderRadius: 12, textAlign: 'center' }}>
-          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: '#F8F5F0', fontStyle: 'italic', margin: '0 0 8px' }}>
+          <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 18, color: '#F8F5F0', fontStyle: 'italic', margin: '0 0 8px' }}>
             "{selectedYacht.name} {t('sizeViz.asLongAs', 'is as long as')} {fmt(selectedYacht.length / 11.23)} {t('sizeViz.londonBusesEndToEnd', 'London buses parked end to end')}"
           </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(248, 245, 240,0.25)', margin: 0, letterSpacing: '0.1em' }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, color: 'rgba(248, 245, 240,0.25)', margin: 0, letterSpacing: '0.1em' }}>
             {t('sizeViz.or', 'Or')} {Math.round(selectedYacht.length / 6)} {t('sizeViz.nycStudiosInRow', 'NYC studio apartments laid in a row')}
           </p>
         </div>
@@ -160,7 +160,7 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
             style={{
               display: 'inline-block',
               padding: '16px 40px',
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 11,
               fontWeight: 600,
               letterSpacing: '0.15em',

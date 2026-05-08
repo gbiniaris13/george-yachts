@@ -371,7 +371,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
       {q.eyebrow && (
         <p
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 10,
             letterSpacing: '0.42em',
             textTransform: 'uppercase',
@@ -386,7 +386,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
       {q.intro && (
         <p
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontStyle: 'italic',
             fontSize: 18,
             color: 'rgba(248,245,240,0.78)',
@@ -399,7 +399,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
       )}
       <h1
         style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--gy-font-editorial)",
           fontSize: 'clamp(28px, 4.4vw, 44px)',
           fontWeight: 300,
           color: '#F8F5F0',
@@ -413,7 +413,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
       {q.sub && (
         <p
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontStyle: 'italic',
             fontSize: 16,
             color: 'rgba(248,245,240,0.65)',
@@ -438,7 +438,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
               border: '1px solid rgba(248, 245, 240,0.18)',
               color: '#F8F5F0',
               padding: '16px 18px',
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 14,
               outline: 'none',
               borderRadius: 0,
@@ -474,7 +474,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
                 background: 'transparent',
                 border: '1px solid rgba(248, 245, 240,0.15)',
                 color: '#F8F5F0',
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: 18,
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
@@ -492,7 +492,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
               {opt.sub && (
                 <div
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontStyle: 'normal',
                     fontSize: 11,
                     color: 'rgba(248,245,240,0.55)',
@@ -516,7 +516,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
             background: 'transparent',
             border: 'none',
             color: 'rgba(248, 245, 240,0.55)',
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
             letterSpacing: '0.32em',
             textTransform: 'uppercase',
@@ -537,7 +537,7 @@ function ContactStep({ contact, setContact, onBack, onSubmit, submitting, error,
     <form onSubmit={onSubmit}>
       <p
         style={{
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: 10,
           letterSpacing: '0.42em',
           textTransform: 'uppercase',
@@ -550,7 +550,7 @@ function ContactStep({ contact, setContact, onBack, onSubmit, submitting, error,
       </p>
       <h2
         style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--gy-font-editorial)",
           fontSize: 'clamp(28px, 4.4vw, 44px)',
           fontWeight: 300,
           color: '#F8F5F0',
@@ -562,7 +562,7 @@ function ContactStep({ contact, setContact, onBack, onSubmit, submitting, error,
       </h2>
       <p
         style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--gy-font-editorial)",
           fontStyle: 'italic',
           fontSize: 16,
           color: 'rgba(248,245,240,0.7)',
@@ -609,7 +609,7 @@ function ContactStep({ contact, setContact, onBack, onSubmit, submitting, error,
         <span
           style={{
             display: 'block',
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 9,
             letterSpacing: '0.32em',
             textTransform: 'uppercase',
@@ -635,7 +635,7 @@ function ContactStep({ contact, setContact, onBack, onSubmit, submitting, error,
                 background: contact.channel === c ? 'rgba(201,168,76,0.12)' : 'transparent',
                 color: contact.channel === c ? GOLD : 'rgba(248, 245, 240,0.75)',
                 cursor: 'pointer',
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
               }}
             >
               {c}
@@ -661,7 +661,7 @@ function ContactStep({ contact, setContact, onBack, onSubmit, submitting, error,
 
       <p
         style={{
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: 9,
           letterSpacing: '0.18em',
           textTransform: 'uppercase',
@@ -680,7 +680,7 @@ function ResultScreen({ matches, answers }) {
     <div>
       <p
         style={{
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: 10,
           letterSpacing: '0.42em',
           textTransform: 'uppercase',
@@ -693,7 +693,7 @@ function ResultScreen({ matches, answers }) {
       </p>
       <h2
         style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--gy-font-editorial)",
           fontSize: 'clamp(30px, 4.5vw, 48px)',
           fontWeight: 300,
           color: '#F8F5F0',
@@ -705,7 +705,7 @@ function ResultScreen({ matches, answers }) {
       </h2>
       <p
         style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--gy-font-editorial)",
           fontStyle: 'italic',
           fontSize: 16,
           color: 'rgba(248,245,240,0.78)',
@@ -749,7 +749,7 @@ function ResultScreen({ matches, answers }) {
               <div style={{ flex: 1, minWidth: 0 }}>
                 <p
                   style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--gy-font-editorial)",
                     fontSize: 22,
                     color: '#F8F5F0',
                     margin: '0 0 4px',
@@ -760,7 +760,7 @@ function ResultScreen({ matches, answers }) {
                 </p>
                 <p
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 11,
                     color: 'rgba(248,245,240,0.65)',
                     letterSpacing: '0.12em',
@@ -772,7 +772,7 @@ function ResultScreen({ matches, answers }) {
                 </p>
                 <p
                   style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--gy-font-editorial)",
                     fontStyle: 'italic',
                     fontSize: 14,
                     color: 'rgba(248,245,240,0.75)',
@@ -785,7 +785,7 @@ function ResultScreen({ matches, answers }) {
                 <Link
                   href={`/yachts/${y.slug}`}
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 10,
                     letterSpacing: '0.32em',
                     textTransform: 'uppercase',
@@ -814,7 +814,7 @@ function ResultScreen({ matches, answers }) {
       >
         <p
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontStyle: 'italic',
             fontSize: 16,
             color: 'rgba(248,245,240,0.85)',
@@ -835,7 +835,7 @@ function Field({ label, type = 'text', value, onChange, required }) {
       <span
         style={{
           display: 'block',
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: 9,
           letterSpacing: '0.32em',
           textTransform: 'uppercase',
@@ -860,7 +860,7 @@ function Field({ label, type = 'text', value, onChange, required }) {
           color: '#F8F5F0',
           padding: '10px 0',
           fontSize: 14,
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           outline: 'none',
           transition: 'border-color 0.3s ease',
           borderRadius: 0,
@@ -877,7 +877,7 @@ const primaryBtnStyle = {
   background: 'linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)',
   color: '#0D1B2A',
   border: '1px solid rgba(201,168,76,0.6)',
-  fontFamily: "'Montserrat', sans-serif",
+  fontFamily: "var(--gy-font-ui)",
   fontSize: 11,
   letterSpacing: '0.32em',
   textTransform: 'uppercase',
@@ -890,7 +890,7 @@ const ghostBtnStyle = {
   background: 'transparent',
   color: 'rgba(248, 245, 240,0.85)',
   border: '1px solid rgba(248, 245, 240,0.25)',
-  fontFamily: "'Montserrat', sans-serif",
+  fontFamily: "var(--gy-font-ui)",
   fontSize: 11,
   letterSpacing: '0.32em',
   textTransform: 'uppercase',

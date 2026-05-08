@@ -108,7 +108,7 @@ export default async function BlogPage() {
   const jsonLdSchema = BlogListSchema(posts);
 
   return (
-    <div className="min-h-screen bg-black selection:bg-[#C9A84C] selection:text-black" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+    <div className="min-h-screen bg-black selection:bg-[#C9A84C] selection:text-black" style={{ fontFamily: "var(--gy-font-ui)" }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }} />
 
       {/* HERO */}
@@ -147,7 +147,7 @@ export default async function BlogPage() {
             <div style={{ textAlign: "center", marginBottom: 36 }}>
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 10,
                   letterSpacing: "0.4em",
                   color: "#C9A84C",
@@ -160,7 +160,7 @@ export default async function BlogPage() {
               </p>
               <h2
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: "clamp(28px, 4vw, 44px)",
                   fontWeight: 300,
                   color: "#F8F5F0",
@@ -172,7 +172,7 @@ export default async function BlogPage() {
               </h2>
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 12,
                   color: "rgba(248, 245, 240,0.55)",
                   margin: 0,
@@ -217,7 +217,7 @@ export default async function BlogPage() {
                   <div style={{ padding: "10px 12px 14px" }}>
                     <p
                       style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                        fontFamily: "var(--gy-font-editorial)",
                         fontSize: 15,
                         color: "#F8F5F0",
                         margin: 0,
@@ -234,7 +234,7 @@ export default async function BlogPage() {
               <Link
                 href="/charter-yacht-greece"
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 11,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",

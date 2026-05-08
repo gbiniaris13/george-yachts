@@ -148,7 +148,7 @@ export default function Filotimon({ filotimoImage = null }) {
             <span
               className="uppercase hidden sm:inline-block"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 // Watermark hides on ≤ 640 px where it was overlapping
                 // copy and adding visual noise on narrow phones.
                 fontSize: "clamp(48px, 9vw, 140px)",
@@ -186,7 +186,7 @@ export default function Filotimon({ filotimoImage = null }) {
             <p
               className="text-[#C9A84C] mb-10"
               style={{
-                fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-display)",
                 fontSize: "10px",
                 letterSpacing: "0.42em",
                 textTransform: "uppercase",
@@ -203,7 +203,7 @@ export default function Filotimon({ filotimoImage = null }) {
             <h2
               className="text-white mb-12"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(32px, 4.5vw, 72px)",
                 fontWeight: 300,
                 lineHeight: 1.1,
@@ -233,7 +233,7 @@ export default function Filotimon({ filotimoImage = null }) {
             <p
               className="text-[#C9A84C]/70 mb-10"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontStyle: "italic",
                 fontSize: "clamp(15px, 1.4vw, 18px)",
                 letterSpacing: "0.04em",
@@ -247,7 +247,7 @@ export default function Filotimon({ filotimoImage = null }) {
             <p
               className="text-white/70 mb-16"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(16px, 1.4vw, 19px)",
                 lineHeight: 1.75,
                 fontWeight: 300,
@@ -260,7 +260,7 @@ export default function Filotimon({ filotimoImage = null }) {
             <p
               className="text-[#C9A84C]/70 mb-8"
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: "9px",
                 letterSpacing: "0.55em",
                 textTransform: "uppercase",
@@ -276,7 +276,7 @@ export default function Filotimon({ filotimoImage = null }) {
                   <span
                     className="gy-filotimo-strand__num text-[#C9A84C] shrink-0"
                     style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontFamily: "var(--gy-font-editorial)",
                       fontSize: "clamp(32px, 3.5vw, 48px)",
                       fontWeight: 200,
                       lineHeight: 1,
@@ -289,7 +289,7 @@ export default function Filotimon({ filotimoImage = null }) {
                     <h3
                       className="text-white mb-3"
                       style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                        fontFamily: "var(--gy-font-editorial)",
                         fontSize: "clamp(20px, 1.8vw, 26px)",
                         fontWeight: 300,
                         letterSpacing: "0.02em",
@@ -301,7 +301,7 @@ export default function Filotimon({ filotimoImage = null }) {
                     <p
                       className="gy-filotimo-strand__body text-white/60"
                       style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                        fontFamily: "var(--gy-font-editorial)",
                         fontSize: "clamp(15px, 1.3vw, 17px)",
                         lineHeight: 1.65,
                         fontWeight: 300,
@@ -328,7 +328,7 @@ export default function Filotimon({ filotimoImage = null }) {
             <p
               className="text-white/70 mb-3"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(18px, 1.6vw, 22px)",
                 lineHeight: 1.55,
                 fontWeight: 300,
@@ -339,7 +339,7 @@ export default function Filotimon({ filotimoImage = null }) {
             <p
               className="text-white mb-10"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(22px, 2.2vw, 28px)",
                 lineHeight: 1.35,
                 fontWeight: 400,
@@ -362,7 +362,7 @@ export default function Filotimon({ filotimoImage = null }) {
                   <p
                     className="text-white/70 italic"
                     style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontFamily: "var(--gy-font-editorial)",
                       fontSize: "clamp(15px, 1.3vw, 17px)",
                       lineHeight: 1.6,
                       fontWeight: 300,
@@ -388,7 +388,7 @@ export default function Filotimon({ filotimoImage = null }) {
             <blockquote
               className="text-white/80 italic mb-4"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(20px, 2vw, 28px)",
                 lineHeight: 1.45,
                 fontWeight: 300,
@@ -400,7 +400,7 @@ export default function Filotimon({ filotimoImage = null }) {
             <p
               className="text-[#C9A84C]/55"
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: "9px",
                 letterSpacing: "0.35em",
                 textTransform: "uppercase",

@@ -19,11 +19,11 @@ export default function BlogSlugError({ error, reset }) {
   return (
     <div
       className="min-h-screen bg-black flex flex-col items-center justify-center px-6"
-      style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+      style={{ fontFamily: "var(--gy-font-editorial)" }}
     >
       <p
         style={{
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: 10,
           letterSpacing: "0.5em",
           textTransform: "uppercase",
@@ -64,7 +64,7 @@ export default function BlogSlugError({ error, reset }) {
           onClick={() => reset()}
           style={{
             padding: "10px 22px",
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
             letterSpacing: "0.32em",
             textTransform: "uppercase",
@@ -81,7 +81,7 @@ export default function BlogSlugError({ error, reset }) {
           href="/blog"
           style={{
             padding: "10px 22px",
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
             letterSpacing: "0.32em",
             textTransform: "uppercase",

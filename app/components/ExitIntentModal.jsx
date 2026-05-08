@@ -219,7 +219,7 @@ export default function ExitIntentModal() {
           <h2
             id="gy-exit-title"
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(24px, 3vw, 34px)",
               fontWeight: 300,
               color: "#F8F5F0",
@@ -250,7 +250,7 @@ export default function ExitIntentModal() {
             >
               <p
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: "18px",
                   fontWeight: 300,
                   color: "#C9A84C",
@@ -261,7 +261,7 @@ export default function ExitIntentModal() {
               </p>
               <p
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: "15px",
                   lineHeight: 1.55,
                   color: "rgba(248, 245, 240,0.7)",
@@ -287,7 +287,7 @@ export default function ExitIntentModal() {
                     background: "rgba(13, 27, 42, 0.5)",
                     border: "1px solid rgba(201,168,76,0.25)",
                     color: "#F8F5F0",
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--gy-font-editorial)",
                     fontSize: "16px",
                     fontWeight: 300,
                     letterSpacing: "0.01em",
@@ -300,7 +300,7 @@ export default function ExitIntentModal() {
                   style={{
                     background: "transparent",
                     color: "#C9A84C",
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: "11px",
                     fontWeight: 500,
                     letterSpacing: "0.18em",
@@ -331,7 +331,7 @@ export default function ExitIntentModal() {
               {status === "error" && (
                 <p
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: "11px",
                     color: "#ff8a8a",
                     letterSpacing: "0.05em",

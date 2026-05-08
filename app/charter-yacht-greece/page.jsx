@@ -103,7 +103,7 @@ export default async function CharterFleetPage() {
         minHeight: "100vh",
         background: "#0D1B2A",
         color: "#F8F5F0",
-        fontFamily: "'Montserrat', 'Helvetica Neue', sans-serif",
+        fontFamily: "var(--gy-font-ui)",
       }}
     >
       <BreadcrumbSchema
@@ -224,8 +224,8 @@ export default async function CharterFleetPage() {
       <section style={{ padding: "80px 24px", background: "#0D1B2A", borderTop: "1px solid rgba(201,168,76,0.06)" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "40px" }}>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", fontWeight: 600, marginBottom: "12px" }}>Expert Insights</p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 300, color: "#F8F5F0" }}>From The Journal</h2>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", fontWeight: 600, marginBottom: "12px" }}>Expert Insights</p>
+            <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 300, color: "#F8F5F0" }}>From The Journal</h2>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1px", background: "rgba(201,168,76,0.04)" }}>
             {[
@@ -238,8 +238,8 @@ export default async function CharterFleetPage() {
                 href={`/blog/${post.slug}`}
                 style={{ background: "#0D1B2A", padding: "28px 24px", textDecoration: "none", display: "block", transition: "background 0.3s ease" }}
               >
-                <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "17px", fontWeight: 400, color: "#F8F5F0", lineHeight: 1.4, margin: "0 0 12px" }}>{post.title}</p>
-                <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#C9A84C" }}>Read Article &rarr;</span>
+                <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "17px", fontWeight: 400, color: "#F8F5F0", lineHeight: 1.4, margin: "0 0 12px" }}>{post.title}</p>
+                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#C9A84C" }}>Read Article &rarr;</span>
               </a>
             ))}
           </div>

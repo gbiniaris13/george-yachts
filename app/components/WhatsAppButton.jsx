@@ -108,7 +108,7 @@ export default function WhatsAppButton() {
           >
             <p
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: "9px",
                 letterSpacing: "0.45em",
                 textTransform: "uppercase",
@@ -121,7 +121,7 @@ export default function WhatsAppButton() {
             </p>
             <p
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "17px",
                 lineHeight: 1.45,
                 color: "rgba(248, 245, 240,0.88)",
@@ -150,7 +150,7 @@ export default function WhatsAppButton() {
               }}
               className="inline-flex items-center gap-2 hover:opacity-100 transition-opacity duration-300"
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: "10px",
                 letterSpacing: "0.3em",
                 textTransform: "uppercase",
@@ -305,7 +305,7 @@ export default function WhatsAppButton() {
               background: "rgba(13, 27, 42,0.95)",
               border: "1px solid rgba(201,168,76,0.15)",
               color: "rgba(201,168,76,0.7)",
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               backdropFilter: "blur(8px)",
             }}
           >

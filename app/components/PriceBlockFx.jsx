@@ -16,7 +16,7 @@ export default function PriceBlockFx({ eurDisplay, size = "md" }) {
   return (
     <span
       style={{
-        fontFamily: "'Montserrat', sans-serif",
+        fontFamily: "var(--gy-font-ui)",
         fontSize: fontSizes[size] || 12,
         color: "rgba(248, 245, 240,0.55)",
         letterSpacing: "0.04em",

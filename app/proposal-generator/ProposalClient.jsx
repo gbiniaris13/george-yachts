@@ -140,14 +140,14 @@ export default function ProposalClient({ yachts = [] }) {
       {/* HEADER */}
       <header style={{ padding: "120px 24px 40px", textAlign: "center" }}>
         <p style={{
-          fontFamily: "'Montserrat', sans-serif", fontSize: 9,
+          fontFamily: "var(--gy-font-ui)", fontSize: 9,
           letterSpacing: "0.42em", textTransform: "uppercase",
           color: GOLD, fontWeight: 600, margin: "0 0 18px",
         }}>
           Smart Proposal Generator
         </p>
         <h1 style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--gy-font-editorial)",
           fontSize: "clamp(48px, 8vw, 96px)", fontWeight: 300,
           color: "#F8F5F0", margin: "0 0 18px",
           lineHeight: 0.98, letterSpacing: "-0.03em",
@@ -156,7 +156,7 @@ export default function ProposalClient({ yachts = [] }) {
           Pick up to 5 yachts. Get a magazine-grade PDF in your inbox.
         </h1>
         <p style={{
-          fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 16,
+          fontFamily: "var(--gy-font-ui)", fontSize: 16,
           lineHeight: 1.7, color: "rgba(248, 245, 240,0.7)",
           maxWidth: 640, margin: "0 auto",
         }}>
@@ -230,14 +230,14 @@ export default function ProposalClient({ yachts = [] }) {
               }} aria-hidden={!y.imageUrl} />
               <div style={{ padding: "14px 16px 16px" }}>
                 <p style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: 18, fontWeight: 400, color: "#F8F5F0", margin: "0 0 4px",
                 }}>
                   {y.name}
                 </p>
                 {(y.length || y.sleeps) && (
                   <p style={{
-                    fontFamily: "'Montserrat', sans-serif", fontSize: 10,
+                    fontFamily: "var(--gy-font-ui)", fontSize: 10,
                     letterSpacing: "0.16em", textTransform: "uppercase",
                     color: "rgba(248, 245, 240,0.55)", margin: "0 0 6px",
                   }}>
@@ -246,7 +246,7 @@ export default function ProposalClient({ yachts = [] }) {
                 )}
                 {y.weeklyRatePrice && (
                   <p style={{
-                    fontFamily: "'Montserrat', sans-serif", fontSize: 11,
+                    fontFamily: "var(--gy-font-ui)", fontSize: 11,
                     color: GOLD, fontWeight: 600, margin: 0,
                   }}>
                     <span style={{ fontSize: 8, letterSpacing: "0.3em", color: isPerPerson(y) ? "rgba(248, 245, 240,0.6)" : GOLD, marginRight: 6 }}>
@@ -288,7 +288,7 @@ export default function ProposalClient({ yachts = [] }) {
         zIndex: 50,
       }}>
         <span style={{
-          fontFamily: "'Montserrat', sans-serif", fontSize: 11,
+          fontFamily: "var(--gy-font-ui)", fontSize: 11,
           letterSpacing: "0.2em", textTransform: "uppercase",
           color: "rgba(248, 245, 240,0.7)",
         }}>
@@ -304,7 +304,7 @@ export default function ProposalClient({ yachts = [] }) {
             gtagEvent("proposal_form_opened", { count: picked.length });
           }}
           style={{
-            fontFamily: "'Montserrat', sans-serif", fontSize: 11,
+            fontFamily: "var(--gy-font-ui)", fontSize: 11,
             letterSpacing: "0.28em", textTransform: "uppercase",
             fontWeight: 700, padding: "12px 22px",
             background: picked.length === 0
@@ -342,21 +342,21 @@ export default function ProposalClient({ yachts = [] }) {
             {!result ? (
               <>
                 <p style={{
-                  fontFamily: "'Montserrat', sans-serif", fontSize: 9,
+                  fontFamily: "var(--gy-font-ui)", fontSize: 9,
                   letterSpacing: "0.42em", textTransform: "uppercase",
                   color: GOLD, fontWeight: 600, margin: "0 0 12px",
                 }}>
                   Last step
                 </p>
                 <h3 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: 24, fontWeight: 400, color: "#F8F5F0",
                   margin: "0 0 6px", lineHeight: 1.2,
                 }}>
                   Where should we send the PDF?
                 </h3>
                 <p style={{
-                  fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 13,
+                  fontFamily: "var(--gy-font-ui)", fontSize: 13,
                   lineHeight: 1.6, color: "rgba(248, 245, 240,0.7)", margin: "0 0 18px",
                 }}>
                   We&apos;ll generate the proposal, email it to you, and George will write back within the day with availability.
@@ -380,11 +380,11 @@ export default function ProposalClient({ yachts = [] }) {
                   <textarea
                     placeholder="Anything George should know? (group size, vibe, special requests)"
                     value={notes} onChange={(e) => setNotes(e.target.value)} rows={3}
-                    style={{ ...inputStyle, fontFamily: "'Lato', 'Montserrat', sans-serif", resize: "vertical" }}
+                    style={{ ...inputStyle, fontFamily: "var(--gy-font-ui)", resize: "vertical" }}
                   />
                   {error && (
                     <p style={{
-                      fontFamily: "'Montserrat', sans-serif", fontSize: 12,
+                      fontFamily: "var(--gy-font-ui)", fontSize: 12,
                       color: "#ff8a8a", margin: 0,
                     }}>
                       {error}
@@ -395,7 +395,7 @@ export default function ProposalClient({ yachts = [] }) {
                       type="submit" disabled={submitting}
                       style={{
                         flex: 1, padding: "12px 0",
-                        fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700,
+                        fontFamily: "var(--gy-font-ui)", fontSize: 11, fontWeight: 700,
                         letterSpacing: "0.18em", textTransform: "uppercase",
                         color: "#0D1B2A",
                         background: submitting
@@ -410,7 +410,7 @@ export default function ProposalClient({ yachts = [] }) {
                       type="button" onClick={() => setOpen(false)} disabled={submitting}
                       style={{
                         padding: "12px 16px",
-                        fontFamily: "'Montserrat', sans-serif", fontSize: 10,
+                        fontFamily: "var(--gy-font-ui)", fontSize: 10,
                         color: "rgba(248, 245, 240,0.5)",
                         background: "none",
                         border: "1px solid rgba(248, 245, 240,0.18)",
@@ -425,13 +425,13 @@ export default function ProposalClient({ yachts = [] }) {
             ) : (
               <div style={{ textAlign: "center", padding: "8px 0 4px" }}>
                 <p style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: 30, fontWeight: 400, color: "#F8F5F0", margin: "0 0 10px",
                 }}>
                   Done.
                 </p>
                 <p style={{
-                  fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 14,
+                  fontFamily: "var(--gy-font-ui)", fontSize: 14,
                   lineHeight: 1.6, color: "rgba(248, 245, 240,0.78)", margin: "0 0 22px",
                 }}>
                   {result.emailSent
@@ -443,7 +443,7 @@ export default function ProposalClient({ yachts = [] }) {
                   style={{
                     display: "inline-block",
                     padding: "12px 24px",
-                    fontFamily: "'Montserrat', sans-serif", fontSize: 10,
+                    fontFamily: "var(--gy-font-ui)", fontSize: 10,
                     fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase",
                     color: "#0D1B2A",
                     background: `linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)`,
@@ -461,7 +461,7 @@ export default function ProposalClient({ yachts = [] }) {
                       setPicked([]);
                     }}
                     style={{
-                      fontFamily: "'Montserrat', sans-serif", fontSize: 9,
+                      fontFamily: "var(--gy-font-ui)", fontSize: 9,
                       letterSpacing: "0.32em", textTransform: "uppercase",
                       color: "rgba(248, 245, 240,0.5)",
                       background: "none", border: "none", cursor: "pointer",
@@ -481,7 +481,7 @@ export default function ProposalClient({ yachts = [] }) {
 
 const inputStyle = {
   padding: "10px 12px",
-  fontFamily: "'Montserrat', sans-serif", fontSize: 13,
+  fontFamily: "var(--gy-font-ui)", fontSize: 13,
   background: "rgba(248, 245, 240,0.06)",
   border: "1px solid rgba(248, 245, 240,0.18)",
   color: "#F8F5F0", outline: "none",
@@ -491,7 +491,7 @@ function FilterGroup({ label, options, value, onChange }) {
   return (
     <div>
       <p style={{
-        fontFamily: "'Montserrat', sans-serif", fontSize: 9,
+        fontFamily: "var(--gy-font-ui)", fontSize: 9,
         letterSpacing: "0.32em", textTransform: "uppercase",
         color: "rgba(248, 245, 240,0.5)", margin: "0 0 8px", textAlign: "center",
       }}>
@@ -505,7 +505,7 @@ function FilterGroup({ label, options, value, onChange }) {
               key={o.value} type="button"
               onClick={() => onChange(o.value)}
               style={{
-                fontFamily: "'Montserrat', sans-serif", fontSize: 10,
+                fontFamily: "var(--gy-font-ui)", fontSize: 10,
                 letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600,
                 padding: "8px 12px",
                 background: active ? "rgba(201,168,76,0.16)" : "transparent",

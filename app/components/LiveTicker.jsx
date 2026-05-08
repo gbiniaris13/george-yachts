@@ -167,7 +167,7 @@ export default function LiveTicker() {
 
         <div style={{ flex: 1, minWidth: 0 }}>
           <p className="notranslate" style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
             color: message.isBooking ? 'rgba(248, 245, 240,0.7)' : 'rgba(248, 245, 240,0.45)',
             margin: '0 0 3px',
@@ -176,7 +176,7 @@ export default function LiveTicker() {
             {message.text}
           </p>
           <p style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 8,
             color: 'rgba(248, 245, 240,0.5)',
             margin: 0,

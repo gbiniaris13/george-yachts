@@ -27,10 +27,10 @@ export default function ContactBar() {
         >
           <PhoneIcon />
           <div>
-            <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(248, 245, 240,0.25)", display: "block" }}>
+            <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "8px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(248, 245, 240,0.25)", display: "block" }}>
               Athens Office
             </span>
-            <span className="group-hover:text-white transition-colors duration-300" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", color: "rgba(248, 245, 240,0.4)", letterSpacing: "0.05em" }}>
+            <span className="group-hover:text-white transition-colors duration-300" style={{ fontFamily: "var(--gy-font-ui)", fontSize: "13px", color: "rgba(248, 245, 240,0.4)", letterSpacing: "0.05em" }}>
               +30 697 038 0999
             </span>
           </div>
@@ -47,10 +47,10 @@ export default function ContactBar() {
         >
           <WhatsAppIcon />
           <div>
-            <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(248, 245, 240,0.25)", display: "block" }}>
+            <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "8px", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(248, 245, 240,0.25)", display: "block" }}>
               WhatsApp
             </span>
-            <span className="group-hover:text-white transition-colors duration-300" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", color: "rgba(248, 245, 240,0.4)", letterSpacing: "0.05em" }}>
+            <span className="group-hover:text-white transition-colors duration-300" style={{ fontFamily: "var(--gy-font-ui)", fontSize: "13px", color: "rgba(248, 245, 240,0.4)", letterSpacing: "0.05em" }}>
               +1 786 798 8798
             </span>
           </div>

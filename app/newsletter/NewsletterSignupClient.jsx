@@ -61,7 +61,7 @@ export default function NewsletterSignupClient({ streams }) {
       >
         <p
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 10,
             letterSpacing: "0.45em",
             color: "#C9A84C",
@@ -73,7 +73,7 @@ export default function NewsletterSignupClient({ streams }) {
         </p>
         <h2
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontWeight: 300,
             fontSize: 32,
             margin: "16px 0 12px 0",
@@ -111,7 +111,7 @@ export default function NewsletterSignupClient({ streams }) {
             display: "inline-block",
             marginTop: 12,
             padding: "12px 26px",
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 10,
             letterSpacing: "0.32em",
             textTransform: "uppercase",
@@ -175,7 +175,7 @@ export default function NewsletterSignupClient({ streams }) {
                       background: "#0D1B2A",
                       color: "#C9A84C",
                       padding: "3px 10px",
-                      fontFamily: "'Montserrat', sans-serif",
+                      fontFamily: "var(--gy-font-ui)",
                       fontSize: 9,
                       letterSpacing: "0.28em",
                       textTransform: "uppercase",
@@ -195,7 +195,7 @@ export default function NewsletterSignupClient({ streams }) {
                   <h3
                     style={{
                       margin: 0,
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontFamily: "var(--gy-font-editorial)",
                       fontWeight: 400,
                       fontSize: 22,
                       letterSpacing: "0.02em",
@@ -225,7 +225,7 @@ export default function NewsletterSignupClient({ streams }) {
                 <p
                   style={{
                     margin: "0 0 10px 0",
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 10,
                     letterSpacing: "0.28em",
                     textTransform: "uppercase",
@@ -248,7 +248,7 @@ export default function NewsletterSignupClient({ streams }) {
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 10,
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
@@ -293,7 +293,7 @@ export default function NewsletterSignupClient({ streams }) {
           <label
             htmlFor="email"
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 10,
               letterSpacing: "0.32em",
               textTransform: "uppercase",
@@ -342,7 +342,7 @@ export default function NewsletterSignupClient({ streams }) {
                 "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
               color: "#0D1B2A",
               border: "1px solid rgba(201,168,76,0.6)",
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 11,
               letterSpacing: "0.35em",
               textTransform: "uppercase",
@@ -360,7 +360,7 @@ export default function NewsletterSignupClient({ streams }) {
               margin: "8px 0 0 0",
               fontSize: 11,
               lineHeight: 1.7,
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               color: "rgba(13,27,42,0.5)",
               textAlign: "center",
             }}

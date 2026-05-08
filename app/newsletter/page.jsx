@@ -83,7 +83,7 @@ export default function NewsletterPage() {
       >
         <p
           style={{
-            fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 10,
             letterSpacing: "0.45em",
             color: "#C9A84C",
@@ -95,7 +95,7 @@ export default function NewsletterPage() {
         </p>
         <h1
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, 'Times New Roman', serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontWeight: 300,
             fontSize: "clamp(56px, 10vw, 130px)",
             margin: "16px 0 8px 0",
@@ -138,7 +138,7 @@ export default function NewsletterPage() {
         style={{
           textAlign: "center",
           padding: "32px 24px 64px 24px",
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: 11,
           color: "rgba(13,27,42,0.45)",
           lineHeight: 1.7,

@@ -125,7 +125,7 @@ export default function CredentialsPage() {
               </h2>
               <p
                 style={{
-                  fontFamily: "'Lato', 'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 15,
                   lineHeight: 1.7,
                   color: "rgba(248,245,240,0.82)",
@@ -147,7 +147,7 @@ export default function CredentialsPage() {
                   margin: "32px 0 0",
                   padding: "24px 0 0",
                   borderTop: "1px solid rgba(201,168,76,0.4)",
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontStyle: "italic",
                   fontSize: "clamp(22px, 2.6vw, 32px)",
                   fontWeight: 300,
@@ -160,7 +160,7 @@ export default function CredentialsPage() {
                 time on my desk.&rdquo;
                 <footer
                   style={{
-                    fontFamily: "'Lato', 'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontStyle: "normal",
                     fontSize: 13,
                     fontWeight: 300,
@@ -236,7 +236,7 @@ export default function CredentialsPage() {
               </h2>
               <p
                 style={{
-                  fontFamily: "'Lato', 'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 15,
                   lineHeight: 1.7,
                   color: "rgba(248,245,240,0.82)",
@@ -252,7 +252,7 @@ export default function CredentialsPage() {
               </p>
               <p
                 style={{
-                  fontFamily: "'Lato', 'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 14,
                   lineHeight: 1.65,
                   color: "rgba(248,245,240,0.6)",
@@ -351,7 +351,7 @@ export default function CredentialsPage() {
               </h2>
               <p
                 style={{
-                  fontFamily: "'Lato', 'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 15,
                   lineHeight: 1.7,
                   color: "rgba(248,245,240,0.82)",
@@ -368,7 +368,7 @@ export default function CredentialsPage() {
               </p>
               <p
                 style={{
-                  fontFamily: "'Lato', 'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 14,
                   lineHeight: 1.65,
                   color: "rgba(248,245,240,0.6)",
@@ -433,7 +433,7 @@ export default function CredentialsPage() {
                   </p>
                   <p
                     style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontFamily: "var(--gy-font-editorial)",
                       fontSize: 26,
                       fontWeight: 400,
                       color: "#F8F5F0",
@@ -445,7 +445,7 @@ export default function CredentialsPage() {
                   </p>
                   <p
                     style={{
-                      fontFamily: "'Lato', 'Montserrat', sans-serif",
+                      fontFamily: "var(--gy-font-ui)",
                       fontSize: 14,
                       lineHeight: 1.7,
                       color: "rgba(248,245,240,0.72)",
@@ -460,7 +460,7 @@ export default function CredentialsPage() {
                   <address
                     style={{
                       fontStyle: "normal",
-                      fontFamily: "'Lato', 'Montserrat', sans-serif",
+                      fontFamily: "var(--gy-font-ui)",
                       fontSize: 13,
                       lineHeight: 1.6,
                       color: "rgba(248,245,240,0.85)",
@@ -487,7 +487,7 @@ export default function CredentialsPage() {
                   </p>
                   <p
                     style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontFamily: "var(--gy-font-editorial)",
                       fontSize: 26,
                       fontWeight: 400,
                       color: "#F8F5F0",
@@ -499,7 +499,7 @@ export default function CredentialsPage() {
                   </p>
                   <p
                     style={{
-                      fontFamily: "'Lato', 'Montserrat', sans-serif",
+                      fontFamily: "var(--gy-font-ui)",
                       fontSize: 14,
                       lineHeight: 1.7,
                       color: "rgba(248,245,240,0.72)",
@@ -560,7 +560,7 @@ export default function CredentialsPage() {
               alignItems: "center",
               gap: 12,
               padding: "20px 40px",
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 12,
               letterSpacing: "0.32em",
               textTransform: "uppercase",
@@ -588,7 +588,7 @@ export default function CredentialsPage() {
         >
           <p
             style={{
-              fontFamily: "'Lato', 'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontWeight: 300,
               fontSize: 9,
               color: "#9CA3AF",

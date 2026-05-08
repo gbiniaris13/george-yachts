@@ -139,7 +139,7 @@ export default function GreekWatersMap() {
           <p
             className="text-[#C9A84C]/80 mb-4"
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: "9px",
               letterSpacing: "0.55em",
               textTransform: "uppercase",
@@ -151,7 +151,7 @@ export default function GreekWatersMap() {
           <h2
             className="text-white"
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(32px, 4.5vw, 64px)",
               fontWeight: 200,
               letterSpacing: "0.03em",
@@ -345,7 +345,7 @@ export default function GreekWatersMap() {
               <p
                 className="text-[#C9A84C] mb-3"
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: "8px",
                   letterSpacing: "0.5em",
                   textTransform: "uppercase",
@@ -357,7 +357,7 @@ export default function GreekWatersMap() {
               <p
                 className="text-white mb-3"
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: "36px",
                   fontWeight: 300,
                   letterSpacing: "0.04em",
@@ -369,7 +369,7 @@ export default function GreekWatersMap() {
               <p
                 className="text-white/70 italic mb-4"
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: "16px",
                   lineHeight: 1.5,
                 }}
@@ -379,7 +379,7 @@ export default function GreekWatersMap() {
               <p
                 className="text-[#C9A84C]/70"
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: "10px",
                   letterSpacing: "0.2em",
                   textTransform: "uppercase",
@@ -391,7 +391,7 @@ export default function GreekWatersMap() {
               <p
                 className="text-white/50 mt-6"
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: "9px",
                   letterSpacing: "0.35em",
                   textTransform: "uppercase",
@@ -422,7 +422,7 @@ export default function GreekWatersMap() {
               <p
                 className="text-[#C9A84C] mb-2"
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: "9px",
                   letterSpacing: "0.5em",
                   textTransform: "uppercase",
@@ -434,7 +434,7 @@ export default function GreekWatersMap() {
               <p
                 className="text-white/70 italic mb-3 group-hover:text-white transition-colors duration-500"
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: "15px",
                   lineHeight: 1.4,
                 }}
@@ -444,7 +444,7 @@ export default function GreekWatersMap() {
               <p
                 className="text-white/40 group-hover:text-[#C9A84C] transition-colors duration-500"
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: "9px",
                   letterSpacing: "0.25em",
                   textTransform: "uppercase",

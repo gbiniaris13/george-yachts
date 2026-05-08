@@ -40,7 +40,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
           <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
             <p
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 9,
                 letterSpacing: "0.42em",
                 textTransform: "uppercase",
@@ -54,7 +54,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
             </p>
             <h3
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(26px, 3vw, 36px)",
                 fontWeight: 300,
                 color: "#F8F5F0",
@@ -106,7 +106,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
                   <div style={{ padding: "16px 18px 20px" }}>
                     <p
                       style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                        fontFamily: "var(--gy-font-editorial)",
                         fontSize: 20,
                         fontWeight: 400,
                         color: "#F8F5F0",
@@ -118,7 +118,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
                     {(y.length || y.sleeps) && (
                       <p
                         style={{
-                          fontFamily: "'Montserrat', sans-serif",
+                          fontFamily: "var(--gy-font-ui)",
                           fontSize: 11,
                           letterSpacing: "0.12em",
                           color: "rgba(248, 245, 240,0.65)",
@@ -148,7 +148,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
                         </span>
                         <span
                           style={{
-                            fontFamily: "'Montserrat', sans-serif",
+                            fontFamily: "var(--gy-font-ui)",
                             fontSize: 12,
                             color: GOLD,
                             fontWeight: 600,
@@ -167,7 +167,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
               <a
                 href="/charter-yacht-greece"
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 11,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
@@ -226,7 +226,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
           <div style={{ flex: 1, minWidth: 220 }}>
             <p
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: 22,
                 color: "#F8F5F0",
                 margin: "0 0 4px",
@@ -237,7 +237,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
             </p>
             <p
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 10,
                 letterSpacing: "0.32em",
                 textTransform: "uppercase",
@@ -250,7 +250,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
             </p>
             <p
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: 16,
                 color: "rgba(248, 245, 240,0.85)",
                 margin: "0 0 18px",
@@ -297,7 +297,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
 }
 
 const btnGold = {
-  fontFamily: "'Montserrat', sans-serif",
+  fontFamily: "var(--gy-font-ui)",
   fontSize: 10,
   letterSpacing: "0.24em",
   textTransform: "uppercase",
@@ -310,7 +310,7 @@ const btnGold = {
 };
 
 const btnGhost = {
-  fontFamily: "'Montserrat', sans-serif",
+  fontFamily: "var(--gy-font-ui)",
   fontSize: 10,
   letterSpacing: "0.24em",
   textTransform: "uppercase",

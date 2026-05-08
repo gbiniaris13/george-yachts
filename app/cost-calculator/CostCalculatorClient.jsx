@@ -94,7 +94,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
   const inputStyle = {
     width: '100%',
     padding: '14px 16px',
-    fontFamily: "'Montserrat', sans-serif",
+    fontFamily: "var(--gy-font-ui)",
     fontSize: 13,
     background: 'rgba(248, 245, 240,0.03)',
     border: '1px solid rgba(201,168,76,0.15)',
@@ -107,7 +107,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
 
   const labelStyle = {
     display: 'block',
-    fontFamily: "'Montserrat', sans-serif",
+    fontFamily: "var(--gy-font-ui)",
     fontSize: 9,
     letterSpacing: '0.2em',
     textTransform: 'uppercase',
@@ -119,13 +119,13 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
     <div style={{ minHeight: '100vh', background: '#0D1B2A' }}>
       {/* Hero */}
       <div style={{ padding: '160px 24px 60px', textAlign: 'center' }}>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
           {t('calculator.tagline', 'Complete Transparency')}
         </p>
-        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(13, 27, 42,0.55)' }}>
+        <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(13, 27, 42,0.55)' }}>
           {t('calculator.title', 'Charter Cost Calculator')}
         </h1>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.4)', maxWidth: 500, margin: '0 auto', lineHeight: 1.8 }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.4)', maxWidth: 500, margin: '0 auto', lineHeight: 1.8 }}>
           {t('calculator.subtitle', 'See exactly what your yacht charter will cost. No hidden fees. No surprises. Complete breakdown including APA, VAT, and transfers.')}
         </p>
       </div>
@@ -165,7 +165,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                   style={{
                     flex: 1,
                     padding: '12px 8px',
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 10,
                     letterSpacing: '0.1em',
                     textTransform: 'uppercase',
@@ -195,7 +195,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
               onChange={(e) => setGuestCount(parseInt(e.target.value))}
               style={{ width: '100%', accentColor: GOLD }}
             />
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'rgba(248, 245, 240,0.2)', fontFamily: "'Montserrat', sans-serif", marginTop: 4 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'rgba(248, 245, 240,0.2)', fontFamily: "var(--gy-font-ui)", marginTop: 4 }}>
               <span>2</span>
               <span>{selectedYacht ? YACHT_DATA.find(y => y.slug === selectedYacht)?.guests || 12 : 12}</span>
             </div>
@@ -212,7 +212,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                   style={{
                     flex: 1,
                     padding: '12px',
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 11,
                     border: `1px solid ${weeks === w ? GOLD : '#9CA3AF'}`,
                     background: weeks === w ? `${GOLD}15` : 'transparent',
@@ -256,10 +256,10 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
               position: 'sticky',
               top: 120,
             }}>
-              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, color: '#F8F5F0', fontWeight: 300, marginBottom: 8 }}>
+              <h3 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 24, color: '#F8F5F0', fontWeight: 300, marginBottom: 8 }}>
                 {breakdown.yacht.name}
               </h3>
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(248, 245, 240,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 32 }}>
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, color: 'rgba(248, 245, 240,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 32 }}>
                 {breakdown.guests} {t('calculator.guestsLabel', 'guests')} · {weeks} {weeks === 1 ? t('calculator.week', 'Week').toLowerCase() : t('calculator.weeks', 'Weeks').toLowerCase()} · {t(`calculator.season${season.charAt(0).toUpperCase() + season.slice(1)}`, SEASONS.find(s => s.id === season)?.label)}
               </p>
 
@@ -272,10 +272,10 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                 ].map((item, i) => (
                   <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingBottom: 16, borderBottom: '1px solid rgba(248, 245, 240,0.05)' }}>
                     <div>
-                      <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(248, 245, 240,0.6)' }}>{item.label}</div>
-                      <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(248, 245, 240,0.2)', marginTop: 2 }}>{item.note}</div>
+                      <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: 'rgba(248, 245, 240,0.6)' }}>{item.label}</div>
+                      <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.2)', marginTop: 2 }}>{item.note}</div>
                     </div>
-                    <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: '#F8F5F0', fontWeight: 500 }}>
+                    <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: '#F8F5F0', fontWeight: 500 }}>
                       {fmt(item.value)}
                     </div>
                   </div>
@@ -291,22 +291,22 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                 textAlign: 'center',
                 marginBottom: 8,
               }}>
-                <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: `${GOLD}99`, marginBottom: 8 }}>
+                <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: `${GOLD}99`, marginBottom: 8 }}>
                   {t('calculator.charterTotal', 'Charter Total (All-In)')}
                 </div>
-                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 36, color: GOLD, fontWeight: 400 }}>
+                <div style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 36, color: GOLD, fontWeight: 400 }}>
                   {fmt(breakdown.charterTotal)}
                 </div>
-                <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(248, 245, 240,0.25)', marginTop: 4, letterSpacing: '0.1em' }}>
+                <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.25)', marginTop: 4, letterSpacing: '0.1em' }}>
                   {t('calculator.charterTotalNote', 'Charter + VAT + APA · Final price · No hidden fees')}
                 </div>
               </div>
 
               {/* Per person per week */}
               <div style={{ textAlign: 'center', padding: 20, background: 'rgba(248, 245, 240,0.02)', borderRadius: 8, marginBottom: 24 }}>
-                <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.3)', marginBottom: 6 }}>{t('calculator.perPersonWeek', 'Per Person / Week (All-In)')}</div>
-                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, color: '#F8F5F0' }}>{fmt(breakdown.perPersonWeek)}</div>
-                <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 8, color: 'rgba(248, 245, 240,0.2)', marginTop: 4 }}>
+                <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.3)', marginBottom: 6 }}>{t('calculator.perPersonWeek', 'Per Person / Week (All-In)')}</div>
+                <div style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 28, color: '#F8F5F0' }}>{fmt(breakdown.perPersonWeek)}</div>
+                <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 8, color: 'rgba(248, 245, 240,0.2)', marginTop: 4 }}>
                   {breakdown.guests} {t('calculator.guestsLabel', 'guests')} · {breakdown.weeks} {breakdown.weeks === 1 ? t('calculator.week', 'Week').toLowerCase() : t('calculator.weeks', 'Weeks').toLowerCase()} · {t('calculator.inclApaVat', 'incl. APA & VAT')}
                 </div>
               </div>
@@ -315,10 +315,10 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
               {breakdown.totalTransfer > 0 && (
                 <div style={{ padding: 16, background: 'rgba(248, 245, 240,0.02)', border: '1px solid rgba(248, 245, 240,0.05)', borderRadius: 8, marginBottom: 24 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                    <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: 'rgba(248, 245, 240,0.5)' }}>{t('calculator.airportTransfer', 'Airport Transfer')}</div>
-                    <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: '#F8F5F0', fontWeight: 500 }}>{fmt(breakdown.totalTransfer)}</div>
+                    <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, color: 'rgba(248, 245, 240,0.5)' }}>{t('calculator.airportTransfer', 'Airport Transfer')}</div>
+                    <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, color: '#F8F5F0', fontWeight: 500 }}>{fmt(breakdown.totalTransfer)}</div>
                   </div>
-                  <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(248, 245, 240,0.2)' }}>
+                  <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.2)' }}>
                     {fmt(breakdown.transferCostPP)}/{t('calculator.person', 'person')} × {breakdown.guests} {t('calculator.guestsLabel', 'guests')} — {t('calculator.separateFromCharter', 'separate from charter cost')}
                   </div>
                 </div>
@@ -327,13 +327,13 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
               {/* Grand total with transfer */}
               {breakdown.totalTransfer > 0 && (
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', marginBottom: 24, borderTop: '1px solid rgba(248, 245, 240,0.05)' }}>
-                  <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(248, 245, 240,0.4)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{t('calculator.totalInclTransfer', 'Total incl. Transfer')}</div>
-                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: '#F8F5F0' }}>{fmt(breakdown.grandTotal)}</div>
+                  <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, color: 'rgba(248, 245, 240,0.4)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{t('calculator.totalInclTransfer', 'Total incl. Transfer')}</div>
+                  <div style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 22, color: '#F8F5F0' }}>{fmt(breakdown.grandTotal)}</div>
                 </div>
               )}
 
               {/* Disclaimer */}
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(248, 245, 240,0.2)', lineHeight: 1.8, marginBottom: 24 }}>
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.2)', lineHeight: 1.8, marginBottom: 24 }}>
                 * {t('calculator.disclaimer', 'Estimates based on standard rates. Actual APA may vary by itinerary. VAT applies to Greek-flagged vessels. Final pricing confirmed in your charter agreement.')}
               </p>
 
@@ -356,7 +356,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                     display: 'block',
                     textAlign: 'center',
                     padding: '14px',
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 11,
                     fontWeight: 700,
                     letterSpacing: '0.18em',
@@ -386,7 +386,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                     display: 'block',
                     textAlign: 'center',
                     padding: '12px',
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 10,
                     fontWeight: 600,
                     letterSpacing: '0.15em',
@@ -407,7 +407,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                     display: 'block',
                     textAlign: 'center',
                     padding: '12px',
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 10,
                     letterSpacing: '0.15em',
                     textTransform: 'uppercase',
@@ -433,10 +433,10 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
               top: 120,
             }}>
               <div style={{ fontSize: 48, marginBottom: 16, opacity: 0.2 }}>⚓</div>
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: 'rgba(248, 245, 240,0.3)', marginBottom: 8 }}>
+              <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 20, color: 'rgba(248, 245, 240,0.3)', marginBottom: 8 }}>
                 {t('calculator.selectToBegin', 'Select a yacht to begin')}
               </p>
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: 'rgba(248, 245, 240,0.15)', lineHeight: 1.8 }}>
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, color: 'rgba(248, 245, 240,0.15)', lineHeight: 1.8 }}>
                 {t('calculator.selectToBeginDesc', 'Choose your yacht, season, and group size to see a complete cost breakdown.')}
               </p>
             </div>

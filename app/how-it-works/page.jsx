@@ -77,7 +77,7 @@ export const metadata = {
 
 export default function HowItWorksPage() {
   return (
-    <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+    <div className="min-h-screen bg-black text-white" style={{ fontFamily: "var(--gy-font-ui)" }}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
@@ -93,13 +93,13 @@ export default function HowItWorksPage() {
       <div className="relative pt-44 pb-24 px-6 md:px-12" style={{ borderBottom: "1px solid rgba(201,168,76,0.1)" }}>
         <div className="container mx-auto max-w-4xl text-center">
           <div className="w-16 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#C9A84C", marginBottom: "24px", textTransform: "uppercase" }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#C9A84C", marginBottom: "24px", textTransform: "uppercase" }}>
             Your Charter Journey
           </p>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(56px, 10vw, 130px)", fontWeight: 300, color: "#F8F5F0", letterSpacing: "-0.035em", lineHeight: 0.95, marginBottom: "24px", textShadow: "0 6px 32px rgba(13, 27, 42,0.55)" }}>
+          <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(56px, 10vw, 130px)", fontWeight: 300, color: "#F8F5F0", letterSpacing: "-0.035em", lineHeight: 0.95, marginBottom: "24px", textShadow: "0 6px 32px rgba(13, 27, 42,0.55)" }}>
             How It Works
           </h1>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "15px", lineHeight: 1.9, color: "rgba(248, 245, 240,0.45)", maxWidth: "600px", margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "15px", lineHeight: 1.9, color: "rgba(248, 245, 240,0.45)", maxWidth: "600px", margin: "0 auto" }}>
             From first conversation to boarding day — five steps, one point of contact, zero stress.
           </p>
           <div className="w-16 h-px mx-auto mt-10" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />

@@ -173,7 +173,7 @@ const Footer = () => {
                 height={28}
                 className="h-7 w-auto opacity-60 hover:opacity-100 transition-opacity duration-500"
               />
-              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", letterSpacing: "0.15em", color: "rgba(248, 245, 240,0.25)", textTransform: "uppercase", maxWidth: "140px", lineHeight: 1.5 }}>
+              <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "8px", letterSpacing: "0.15em", color: "rgba(248, 245, 240,0.25)", textTransform: "uppercase", maxWidth: "140px", lineHeight: 1.5 }}>
                 Charter Active Member
               </span>
             </a>
@@ -193,7 +193,7 @@ const Footer = () => {
               style={{
                 padding: "12px 26px",
                 minHeight: "44px",
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: "10px",
                 letterSpacing: "0.32em",
                 textTransform: "uppercase",
@@ -214,7 +214,7 @@ const Footer = () => {
 
           {/* Services Column */}
           <div className="flex flex-col items-center lg:items-start">
-            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#F8F5F0", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
+            <h4 style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.3em", color: "#F8F5F0", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
               {t('footer.servicesTitle')}
             </h4>
             <nav className="flex flex-col gap-3">
@@ -223,7 +223,7 @@ const Footer = () => {
                   key={link.name}
                   href={link.href}
                   className="text-white/60 hover:text-white transition-colors duration-300"
-                  style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", letterSpacing: "0.05em" }}
+                  style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", letterSpacing: "0.05em" }}
                 >
                   {link.name}
                 </Link>
@@ -233,7 +233,7 @@ const Footer = () => {
 
           {/* Company Column */}
           <div className="flex flex-col items-center lg:items-start">
-            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#F8F5F0", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
+            <h4 style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.3em", color: "#F8F5F0", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
               {t('footer.companyTitle')}
             </h4>
             <nav className="flex flex-col gap-3">
@@ -242,7 +242,7 @@ const Footer = () => {
                   key={link.name}
                   href={link.href}
                   className="text-white/60 hover:text-white transition-colors duration-300"
-                  style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", letterSpacing: "0.05em" }}
+                  style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", letterSpacing: "0.05em" }}
                 >
                   {link.name}
                 </Link>
@@ -252,7 +252,7 @@ const Footer = () => {
 
           {/* Contact Column */}
           <div className="flex flex-col items-center lg:items-start">
-            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#F8F5F0", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
+            <h4 style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.3em", color: "#F8F5F0", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
               {t('footer.contactTitle')}
             </h4>
             <div className="flex flex-col gap-4 text-center lg:text-left">
@@ -266,12 +266,12 @@ const Footer = () => {
                   }
                 }}
                 className="inline-block px-6 py-3 text-center border border-[#C9A84C]/30 hover:border-[#C9A84C] text-[#C9A84C] hover:bg-[#C9A84C]/5 transition-all duration-500"
-                style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, textDecoration: "none" }}
+                style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, textDecoration: "none" }}
                 data-cursor="Book"
               >
                 Book a Consultation
               </a>
-              <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", color: "rgba(248, 245, 240,0.3)", lineHeight: 1.8 }}>
+              <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", color: "rgba(248, 245, 240,0.3)", lineHeight: 1.8 }}>
                 <span className="block" style={{ fontWeight: 500, color: "rgba(248, 245, 240,0.5)", letterSpacing: "0.1em", textTransform: "uppercase", fontSize: "9px", marginBottom: "8px" }}>
                   <span className="notranslate">George Yachts Brokerage House LLC</span>
                 </span>
@@ -300,17 +300,17 @@ const Footer = () => {
             <span aria-hidden="true" className="gy-divider-star" style={{ marginBottom: 24 }}>
               <span />
             </span>
-            <h4 style={{ fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', sans-serif", fontSize: "10px", letterSpacing: "0.42em", textTransform: "uppercase", color: "#F8F5F0", fontWeight: 500, marginBottom: "16px" }}>
+            <h4 style={{ fontFamily: "var(--gy-font-display)", fontSize: "10px", letterSpacing: "0.42em", textTransform: "uppercase", color: "#F8F5F0", fontWeight: 500, marginBottom: "16px" }}>
               {t('footer.newsletter')}
             </h4>
-            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 300, color: "#F8F5F0", marginBottom: "12px", lineHeight: 1.15, letterSpacing: "-0.015em" }}>
+            <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 300, color: "#F8F5F0", marginBottom: "12px", lineHeight: 1.15, letterSpacing: "-0.015em" }}>
               The George Yachts Journal
             </p>
-            <p style={{ fontFamily: "'Lato', 'Montserrat', sans-serif", fontStyle: "italic", fontSize: "15px", color: "rgba(248,245,240,0.65)", marginBottom: "32px", lineHeight: 1.65, fontWeight: 300, maxWidth: "44ch", marginInline: "auto" }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontStyle: "italic", fontSize: "15px", color: "rgba(248,245,240,0.65)", marginBottom: "32px", lineHeight: 1.65, fontWeight: 300, maxWidth: "44ch", marginInline: "auto" }}>
               An invitation, not a list. Market intelligence and curated charter opportunities, delivered the day they matter — never more often.
             </p>
             {subscribed ? (
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", color: "#F8F5F0", letterSpacing: "0.15em" }}>
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", color: "#F8F5F0", letterSpacing: "0.15em" }}>
                 Thank you. You&apos;re on the list.
               </p>
             ) : (
@@ -358,7 +358,7 @@ const Footer = () => {
                     borderRight: "none",
                     color: "#F8F5F0",
                     padding: "14px 16px",
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     /* Phase 27 (mobile audit) — was 11px which triggered
                        iOS Safari auto-zoom on focus. Bumped to 16px. */
                     fontSize: "16px",
@@ -371,7 +371,7 @@ const Footer = () => {
                     background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
                     color: "#0D1B2A",
                     padding: "14px 24px",
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: "9px",
                     letterSpacing: "0.2em",
                     textTransform: "uppercase",
@@ -385,7 +385,7 @@ const Footer = () => {
                 </button>
               </form>
             )}
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(248, 245, 240,0.15)", marginTop: "12px", letterSpacing: "0.05em" }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "8px", color: "rgba(248, 245, 240,0.15)", marginTop: "12px", letterSpacing: "0.05em" }}>
               By subscribing you agree to receive occasional emails from <span className="notranslate">George Yachts Brokerage House LLC</span>.
               Unsubscribe anytime. See our <Link href="/privacy-policy" style={{ color: "rgba(248,245,240,0.55)", textDecoration: "underline" }}>Privacy Policy</Link>.
             </p>
@@ -412,7 +412,7 @@ const Footer = () => {
                 key={link.name}
                 href={link.href}
                 className="text-white/30 hover:text-[#C9A84C] transition-colors duration-300"
-                style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", letterSpacing: "0.12em", textTransform: "uppercase" }}
+                style={{ fontFamily: "var(--gy-font-ui)", fontSize: "8px", letterSpacing: "0.12em", textTransform: "uppercase" }}
               >
                 {link.name}
               </Link>
@@ -420,7 +420,7 @@ const Footer = () => {
           </div>
 
           {/* Copyright */}
-          <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(248, 245, 240,0.5)", textTransform: "uppercase" }}>
+          <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(248, 245, 240,0.5)", textTransform: "uppercase" }}>
             &copy; {currentYear} <span className="notranslate">George Yachts Brokerage House LLC</span>
           </span>
         </div>
@@ -433,7 +433,7 @@ const Footer = () => {
         <p
           className="mt-12 text-center"
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: "9px",
             color: "rgba(248, 245, 240,0.55)",
             letterSpacing: "0.05em",
@@ -484,7 +484,7 @@ const Footer = () => {
         <p
           className="mt-6 text-center"
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: "8px",
             color: "rgba(248, 245, 240,0.45)",
             letterSpacing: "0.05em",
@@ -500,7 +500,7 @@ const Footer = () => {
         </p>
 
         {/* Standard informational disclaimer */}
-        <p className="mt-6 text-center" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(248, 245, 240,0.45)", letterSpacing: "0.05em", lineHeight: 1.8, maxWidth: "800px", margin: "24px auto 0" }}>
+        <p className="mt-6 text-center" style={{ fontFamily: "var(--gy-font-ui)", fontSize: "8px", color: "rgba(248, 245, 240,0.45)", letterSpacing: "0.05em", lineHeight: 1.8, maxWidth: "800px", margin: "24px auto 0" }}>
           All yacht specifications, images, and pricing are provided for informational purposes only. <span className="notranslate">George Yachts Brokerage House LLC</span> offers the details of these vessels in good faith but cannot guarantee the accuracy of this information or the condition of the vessels. All information is subject to change without notice and is not contractual.
         </p>
       </div>

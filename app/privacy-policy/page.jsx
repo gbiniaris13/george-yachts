@@ -14,16 +14,16 @@ const Section = ({ number, title, children }) => (
   <div className="mb-20 group" style={{ opacity: 1 }}>
     <div className="flex items-start gap-6">
       {number && (
-        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "48px", fontWeight: 300, lineHeight: 1, color: "rgba(201,168,76,0.15)" }}>
+        <span style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "48px", fontWeight: 300, lineHeight: 1, color: "rgba(201,168,76,0.15)" }}>
           {String(number).padStart(2, "0")}
         </span>
       )}
       <div className="flex-1">
-        <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.5rem", fontWeight: 400, color: "#F8F5F0", letterSpacing: "0.05em", marginBottom: "24px" }}>
+        <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.5rem", fontWeight: 400, color: "#F8F5F0", letterSpacing: "0.05em", marginBottom: "24px" }}>
           {title}
         </h2>
         <div className="w-12 h-px mb-8" style={{ background: "linear-gradient(90deg, #C9A84C, transparent)" }} />
-        <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", lineHeight: 2.2, color: "rgba(248, 245, 240,0.55)", letterSpacing: "0.02em" }} className="space-y-4">
+        <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", lineHeight: 2.2, color: "rgba(248, 245, 240,0.55)", letterSpacing: "0.02em" }} className="space-y-4">
           {children}
         </div>
       </div>
@@ -38,13 +38,13 @@ const PrivacyPolicy = () => {
       <div className="relative pt-44 pb-24 px-6 md:px-12" style={{ borderBottom: "1px solid rgba(201,168,76,0.1)" }}>
         <div className="container mx-auto max-w-4xl text-center">
           <div className="w-16 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#C9A84C", marginBottom: "24px", textTransform: "uppercase" }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#C9A84C", marginBottom: "24px", textTransform: "uppercase" }}>
             Data Protection
           </p>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#F8F5F0", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "16px" }}>
+          <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#F8F5F0", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "16px" }}>
             Master Privacy & Data Protection Policy
           </h1>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.2em", color: "rgba(248, 245, 240,0.35)", textTransform: "uppercase", marginBottom: "32px" }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", letterSpacing: "0.2em", color: "rgba(248, 245, 240,0.35)", textTransform: "uppercase", marginBottom: "32px" }}>
             George Yachts Brokerage House LLC
           </p>
           <div className="w-16 h-px mx-auto" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
@@ -282,7 +282,7 @@ const PrivacyPolicy = () => {
 
         <div className="mt-32 pt-16 text-center" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
           <div className="w-8 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.3em", color: "rgba(248, 245, 240,0.2)", textTransform: "uppercase" }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", letterSpacing: "0.3em", color: "rgba(248, 245, 240,0.2)", textTransform: "uppercase" }}>
             Last Updated: April 2026
           </p>
         </div>

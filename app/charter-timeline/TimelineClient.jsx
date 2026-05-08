@@ -71,13 +71,13 @@ export default function TimelineClient() {
     <div style={{ minHeight: '100vh', background: '#0D1B2A' }}>
       {/* Hero */}
       <div style={{ padding: '160px 24px 60px', textAlign: 'center' }}>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
           Your Journey
         </p>
-        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(13, 27, 42,0.55)' }}>
+        <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(13, 27, 42,0.55)' }}>
           Charter Experience Timeline
         </h1>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.4)', maxWidth: 500, margin: '0 auto', lineHeight: 1.8 }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.4)', maxWidth: 500, margin: '0 auto', lineHeight: 1.8 }}>
           From first message to stepping aboard — every step, every detail, handled personally.
         </p>
       </div>
@@ -101,7 +101,7 @@ export default function TimelineClient() {
               textAlign: 'right',
               paddingRight: 20,
               paddingTop: 24,
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 9,
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
@@ -141,7 +141,7 @@ export default function TimelineClient() {
             }}>
               <div style={{ fontSize: 28, marginBottom: 8 }}>{step.icon}</div>
               <h3 style={{
-                fontFamily: "'Cormorant Garamond', serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: activeStep === i ? 22 : 18,
                 color: activeStep === i ? '#F8F5F0' : 'rgba(248, 245, 240,0.5)',
                 fontWeight: 400,
@@ -151,7 +151,7 @@ export default function TimelineClient() {
                 {step.title}
               </h3>
               <p style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 13,
                 color: activeStep === i ? 'rgba(248, 245, 240,0.5)' : 'rgba(248, 245, 240,0.2)',
                 lineHeight: 1.8,
@@ -168,7 +168,7 @@ export default function TimelineClient() {
                 <ul style={{ margin: 0, padding: '0 0 0 16px', listStyle: 'none' }}>
                   {step.details.map((d, j) => (
                     <li key={j} style={{
-                      fontFamily: "'Montserrat', sans-serif",
+                      fontFamily: "var(--gy-font-ui)",
                       fontSize: 11,
                       color: 'rgba(248, 245, 240,0.3)',
                       lineHeight: 2,

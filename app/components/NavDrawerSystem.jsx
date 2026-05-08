@@ -375,7 +375,7 @@ export default function NavDrawerSystem() {
                     onClick={() => setOpenSection(expanded ? null : section.label)}
                     className="block w-full transition-colors"
                     style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontFamily: "var(--gy-font-editorial)",
                       fontWeight: 300,
                       fontSize: "32px",
                       letterSpacing: "-0.005em",
@@ -425,7 +425,7 @@ export default function NavDrawerSystem() {
               onClick={closeMobile}
               className="block w-full text-center transition-colors"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontWeight: 300,
                 fontSize: "36px",
                 letterSpacing: "-0.005em",

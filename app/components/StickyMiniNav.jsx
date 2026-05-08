@@ -129,7 +129,7 @@ export default function StickyMiniNav() {
                   onClick={jumpTo(s.id)}
                   className="inline-block px-3 md:px-4 py-1.5 transition-colors duration-300"
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: "10px",
                     letterSpacing: "0.24em",
                     textTransform: "uppercase",

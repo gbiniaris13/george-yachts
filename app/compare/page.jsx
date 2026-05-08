@@ -202,7 +202,7 @@ export default async function ComparePage({ searchParams }) {
             <p
               className="gy-gold-glow"
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 11,
                 letterSpacing: "0.42em",
                 textTransform: "uppercase",
@@ -216,7 +216,7 @@ export default async function ComparePage({ searchParams }) {
             <h1
               className="gy-luxe-enter"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(38px, 7vw, 92px)",
                 fontWeight: 500,
                 lineHeight: 1.05,
@@ -240,7 +240,7 @@ export default async function ComparePage({ searchParams }) {
             />
             <p
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontStyle: "italic",
                 fontSize: "clamp(17px, 1.7vw, 22px)",
                 lineHeight: 1.7,
@@ -325,7 +325,7 @@ export default async function ComparePage({ searchParams }) {
                     minHeight: 52,
                     background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
                     color: "#0D1B2A",
-                    fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-display)",
                     fontSize: 12,
                     letterSpacing: "0.28em",
                     textTransform: "uppercase",

@@ -199,7 +199,7 @@ export default function ExpressInquiryModal({
           maxWidth: "520px",
           padding: "40px 32px 32px",
           position: "relative",
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           maxHeight: "calc(100vh - 48px)",
           overflowY: "auto",
         }}
@@ -242,7 +242,7 @@ export default function ExpressInquiryModal({
             <h2
               id="express-inquiry-title"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "28px",
                 fontWeight: 300,
                 color: "#F8F5F0",
@@ -255,7 +255,7 @@ export default function ExpressInquiryModal({
             {(yachtName || subtitle) && (
               <p
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontStyle: "italic",
                   fontSize: "15px",
                   color: "rgba(248, 245, 240,0.7)",
@@ -425,7 +425,7 @@ export default function ExpressInquiryModal({
             </div>
             <h3
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: 26,
                 color: "#F8F5F0",
                 fontWeight: 300,
@@ -462,7 +462,7 @@ function FormField({ label, type = "text", value, onChange, required, multiline,
     color: "#F8F5F0",
     padding: "10px 0",
     fontSize: 16,
-    fontFamily: "'Montserrat', sans-serif",
+    fontFamily: "var(--gy-font-ui)",
     outline: "none",
     transition: "border-color 0.3s ease",
   };

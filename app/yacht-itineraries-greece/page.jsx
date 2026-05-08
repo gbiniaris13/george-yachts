@@ -35,7 +35,7 @@ function PageSchema() {
 
 export default function YachtItinerariesPage() {
   return (
-    <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+    <div className="min-h-screen bg-black text-white" style={{ fontFamily: "var(--gy-font-ui)" }}>
       <PageSchema />
 
       <section className="svc-hero">

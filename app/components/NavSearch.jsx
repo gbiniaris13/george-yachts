@@ -172,7 +172,7 @@ export default function NavSearch() {
               background: "#0D1B2A",
               border: "1px solid rgba(201,168,76,0.4)",
               padding: 24,
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
             }}
           >
             <div
@@ -201,7 +201,7 @@ export default function NavSearch() {
                   color: "#F8F5F0",
                   fontSize: 16,
                   outline: "none",
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                 }}
               />
               <button
@@ -308,7 +308,7 @@ export default function NavSearch() {
                         <div style={{ flex: 1, minWidth: 0 }}>
                           <p
                             style={{
-                              fontFamily: "'Cormorant Garamond', Georgia, serif",
+                              fontFamily: "var(--gy-font-editorial)",
                               fontSize: 18,
                               color: "#F8F5F0",
                               margin: "0 0 2px",

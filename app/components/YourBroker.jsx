@@ -67,7 +67,7 @@ export default function YourBroker() {
         {/* Text */}
         <div>
           <p style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: "10px",
             letterSpacing: "0.4em",
             color: "#F8F5F0",
@@ -78,7 +78,7 @@ export default function YourBroker() {
           </p>
 
           <h2 style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
             fontWeight: 300,
             color: "#F8F5F0",
@@ -89,7 +89,7 @@ export default function YourBroker() {
           </h2>
 
           <p style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: "11px",
             letterSpacing: "0.15em",
             color: "rgba(248, 245, 240,0.35)",
@@ -105,7 +105,7 @@ export default function YourBroker() {
           }} />
 
           <p style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: "15px",
             lineHeight: 2,
             color: "rgba(248, 245, 240,0.55)",
@@ -115,7 +115,7 @@ export default function YourBroker() {
           </p>
 
           <p style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: "15px",
             lineHeight: 2,
             color: "rgba(248, 245, 240,0.55)",
@@ -137,7 +137,7 @@ export default function YourBroker() {
             }}
             style={{
               display: "inline-block",
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: "11px",
               fontWeight: 600,
               letterSpacing: "0.2em",
@@ -156,7 +156,7 @@ export default function YourBroker() {
             href="/about-us"
             style={{
               display: "inline-block",
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: "11px",
               letterSpacing: "0.15em",
               color: "rgba(248, 245, 240,0.4)",
@@ -189,7 +189,7 @@ export default function YourBroker() {
         <div style={{ textAlign: "center", marginBottom: 32 }}>
           <p
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 10,
               letterSpacing: "0.35em",
               textTransform: "uppercase",
@@ -241,7 +241,7 @@ export default function YourBroker() {
             <div key={step.num} style={{ textAlign: "center" }}>
               <p
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: 40,
                   fontWeight: 300,
                   color: "#F8F5F0",
@@ -254,7 +254,7 @@ export default function YourBroker() {
               </p>
               <h3
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: 20,
                   fontWeight: 400,
                   color: "#F8F5F0",
@@ -266,7 +266,7 @@ export default function YourBroker() {
               </h3>
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 12,
                   color: "rgba(248, 245, 240,0.48)",
                   lineHeight: 1.7,

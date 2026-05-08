@@ -36,23 +36,23 @@ export default function BudgetSlider({ yachts = [] }) {
       <div style={{ maxWidth: 800, margin: '0 auto' }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}80`, textTransform: 'uppercase', marginBottom: 12 }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}80`, textTransform: 'uppercase', marginBottom: 12 }}>
             {t('budget.label')}
           </p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 8px' }}>
+          <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 8px' }}>
             {t('budget.title')}
           </h2>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(248, 245, 240,0.3)', margin: 0 }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: 'rgba(248, 245, 240,0.3)', margin: 0 }}>
             {t('budget.subtitle')}
           </p>
         </div>
 
         {/* Budget display */}
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
-          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 48, color: GOLD, fontWeight: 300 }}>
+          <div style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 48, color: GOLD, fontWeight: 300 }}>
             €{budget.toLocaleString()}
           </div>
-          <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.25)', marginTop: 4 }}>
+          <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.25)', marginTop: 4 }}>
             per week · charter rate
           </div>
         </div>
@@ -78,14 +78,14 @@ export default function BudgetSlider({ yachts = [] }) {
             }}
           />
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-            <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(248, 245, 240,0.2)' }}>€{sliderMin.toLocaleString()}</span>
-            <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(248, 245, 240,0.2)' }}>€{sliderMax.toLocaleString()}</span>
+            <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.2)' }}>€{sliderMin.toLocaleString()}</span>
+            <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.2)' }}>€{sliderMax.toLocaleString()}</span>
           </div>
         </div>
 
         {/* Results count */}
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
-          <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: 'rgba(248, 245, 240,0.4)' }}>
+          <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, color: 'rgba(248, 245, 240,0.4)' }}>
             <span style={{ color: GOLD, fontWeight: 600 }}>{totalAvailable}</span> {totalAvailable === 1 ? 'yacht' : 'yachts'} available at this budget
           </span>
         </div>
@@ -108,20 +108,20 @@ export default function BudgetSlider({ yachts = [] }) {
                   transition: 'all 0.3s ease',
                 }}
               >
-                <h3 className="notranslate" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: '#F8F5F0', margin: '0 0 6px', fontWeight: 400 }}>
+                <h3 className="notranslate" style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 16, color: '#F8F5F0', margin: '0 0 6px', fontWeight: 400 }}>
                   {yacht.name}
                 </h3>
-                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(248, 245, 240,0.3)', margin: '0 0 8px', letterSpacing: '0.1em' }}>
+                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.3)', margin: '0 0 8px', letterSpacing: '0.1em' }}>
                   {yacht.type} · {yacht.length} · {yacht.guests} guests
                 </p>
-                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: GOLD, margin: 0, fontWeight: 500 }}>
+                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: GOLD, margin: 0, fontWeight: 500 }}>
                   €{yacht.price.toLocaleString()}/week
                 </p>
               </Link>
             ))}
           </div>
         ) : (
-          <div style={{ textAlign: 'center', padding: 40, color: 'rgba(248, 245, 240,0.2)', fontFamily: "'Montserrat', sans-serif", fontSize: 12 }}>
+          <div style={{ textAlign: 'center', padding: 40, color: 'rgba(248, 245, 240,0.2)', fontFamily: "var(--gy-font-ui)", fontSize: 12 }}>
             Slide right to discover yachts in your budget range
           </div>
         )}
@@ -131,7 +131,7 @@ export default function BudgetSlider({ yachts = [] }) {
           <Link
             href="/charter-yacht-greece"
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 10,
               letterSpacing: '0.15em',
               textTransform: 'uppercase',

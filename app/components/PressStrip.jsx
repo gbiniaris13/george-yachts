@@ -53,7 +53,7 @@ export default function PressStrip() {
         {/* Tagline */}
         <p
           style={{
-            fontFamily: "'Lato', 'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
             letterSpacing: "0.15em",
             color: "rgba(248,245,240,0.6)",
@@ -93,7 +93,7 @@ export default function PressStrip() {
           >
             <span
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 9,
                 letterSpacing: "0.32em",
                 textTransform: "uppercase",
@@ -138,7 +138,7 @@ export default function PressStrip() {
           >
             <span
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 9,
                 letterSpacing: "0.28em",
                 textTransform: "uppercase",
@@ -172,7 +172,7 @@ export default function PressStrip() {
           >
             <span
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 9,
                 letterSpacing: "0.28em",
                 textTransform: "uppercase",
@@ -184,7 +184,7 @@ export default function PressStrip() {
             </span>
             <span
               style={{
-                fontFamily: "'Lato', 'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 12,
                 letterSpacing: "0.04em",
                 color: "rgba(248,245,240,0.85)",

@@ -114,7 +114,7 @@ export default function CompareYachts({ compareList = [], onRemove, onClear }) {
             border: 'none',
             borderRadius: 50,
             cursor: 'pointer',
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontWeight: 700,
             fontSize: isMobile ? 14 : 15,
             letterSpacing: '0.05em',
@@ -182,7 +182,7 @@ export default function CompareYachts({ compareList = [], onRemove, onClear }) {
             <div>
               <h2
                 style={{
-                  fontFamily: "'Cormorant Garamond', serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: isMobile ? 22 : 32,
                   fontWeight: 400,
                   color: GOLD,
@@ -194,7 +194,7 @@ export default function CompareYachts({ compareList = [], onRemove, onClear }) {
               </h2>
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 12,
                   color: TEXT_MUTED,
                   margin: '4px 0 0 0',
@@ -219,7 +219,7 @@ export default function CompareYachts({ compareList = [], onRemove, onClear }) {
                   color: TEXT_MUTED,
                   padding: '8px 16px',
                   borderRadius: 4,
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 11,
                   fontWeight: 600,
                   letterSpacing: '0.08em',
@@ -424,7 +424,7 @@ function CompareInsights({ compareList, isMobile }) {
       >
         <p
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 10,
             fontWeight: 700,
             letterSpacing: '0.2em',
@@ -448,7 +448,7 @@ function CompareInsights({ compareList, isMobile }) {
               <span style={{ fontSize: 16, flexShrink: 0 }}>{insight.icon}</span>
               <span
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: isMobile ? 12 : 13,
                   color: TEXT_LIGHT,
                   lineHeight: 1.5,
@@ -513,7 +513,7 @@ function CompareCard({ yacht, bestValues, onRemove, isMobile, totalCards }) {
               alignItems: 'center',
               justifyContent: 'center',
               color: TEXT_MUTED,
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 13,
             }}
           >
@@ -566,7 +566,7 @@ function CompareCard({ yacht, bestValues, onRemove, isMobile, totalCards }) {
       >
         <h3
           style={{
-            fontFamily: "'Cormorant Garamond', serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontSize: isMobile ? 20 : 22,
             fontWeight: 500,
             color: '#FFFFFF',
@@ -628,7 +628,7 @@ function SpecRow({ label, value, highlighted, isMobile }) {
     >
       <span
         style={{
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: isMobile ? 11 : 12,
           fontWeight: 500,
           color: TEXT_MUTED,
@@ -640,7 +640,7 @@ function SpecRow({ label, value, highlighted, isMobile }) {
       </span>
       <span
         style={{
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: isMobile ? 13 : 14,
           fontWeight: highlighted ? 700 : 500,
           color: highlighted ? GOLD : TEXT_LIGHT,

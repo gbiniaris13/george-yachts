@@ -90,7 +90,7 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
         >
           <p
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: "10px",
               letterSpacing: "0.32em",
               textTransform: "uppercase",
@@ -103,7 +103,7 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
           </p>
           <p
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(22px, 3.3vw, 32px)",
               color: "#F8F5F0",
               margin: 0,
@@ -116,7 +116,7 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
           {specs && (
             <p
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: "11px",
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
@@ -140,7 +140,7 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
             {price && (
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: "12px",
                   color: GOLD,
                   margin: 0,
@@ -153,7 +153,7 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
             )}
             <span
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: "11px",
                 letterSpacing: "0.32em",
                 textTransform: "uppercase",

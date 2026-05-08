@@ -113,7 +113,7 @@ export default function ForbesReferrerWelcome() {
         <span style={{ color: "rgba(201,168,76,0.7)" }}>·</span>
         <span
           style={{
-            fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', sans-serif",
+            fontFamily: "var(--gy-font-display)",
             fontSize: 9,
             letterSpacing: "0.32em",
             textTransform: "uppercase",
@@ -128,7 +128,7 @@ export default function ForbesReferrerWelcome() {
       {/* Headline — Boss-spec copy (2026-05-08): warmer, less salesy. */}
       <p
         style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--gy-font-editorial)",
           fontStyle: "italic",
           fontSize: "clamp(20px, 2vw, 24px)",
           color: "rgba(248,245,240,0.92)",
@@ -143,7 +143,7 @@ export default function ForbesReferrerWelcome() {
 
       <p
         style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--gy-font-editorial)",
           fontSize: 14,
           lineHeight: 1.65,
           color: "rgba(248,245,240,0.72)",
@@ -180,7 +180,7 @@ export default function ForbesReferrerWelcome() {
           background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)",
           border: "1px solid #C9A84C",
           color: "#0D1B2A",
-          fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', sans-serif",
+          fontFamily: "var(--gy-font-display)",
           fontSize: 11,
           fontWeight: 500,
           letterSpacing: "0.24em",

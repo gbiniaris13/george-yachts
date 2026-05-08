@@ -49,7 +49,7 @@ export default function BriefGeorgeBanner() {
           </p>
           <h2
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontWeight: 300,
               fontSize: "clamp(24px, 3vw, 36px)",
               color: "#F8F5F0",
@@ -62,7 +62,7 @@ export default function BriefGeorgeBanner() {
           </h2>
           <p
             style={{
-              fontFamily: "'Lato', 'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 14,
               color: "rgba(248,245,240,0.65)",
               fontWeight: 300,
@@ -98,7 +98,7 @@ export default function BriefGeorgeBanner() {
               gap: 12,
               padding: "16px 30px",
               minHeight: 56,
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 11,
               letterSpacing: "0.32em",
               textTransform: "uppercase",
@@ -119,7 +119,7 @@ export default function BriefGeorgeBanner() {
           </Link>
           <span
             style={{
-              fontFamily: "'Lato', 'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 11,
               color: "rgba(248,245,240,0.5)",
               fontStyle: "italic",

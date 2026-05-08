@@ -167,7 +167,7 @@ export default function AskGeorgeWidget() {
           border: "none",
           cursor: "pointer",
           boxShadow: "0 6px 24px rgba(13, 27, 42,0.4)",
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--gy-font-editorial)",
           fontSize: 18,
           fontWeight: 600,
           letterSpacing: "0.04em",
@@ -225,7 +225,7 @@ export default function AskGeorgeWidget() {
             <div>
               <p
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: 20,
                   fontWeight: 400,
                   color: "#F8F5F0",
@@ -237,7 +237,7 @@ export default function AskGeorgeWidget() {
               </p>
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 9,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
@@ -281,7 +281,7 @@ export default function AskGeorgeWidget() {
             {messages.length === 0 && (
               <div
                 style={{
-                  fontFamily: "'Lato', 'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 13.5,
                   lineHeight: 1.6,
                   color: "rgba(248, 245, 240,0.78)",
@@ -292,7 +292,7 @@ export default function AskGeorgeWidget() {
                 </p>
                 <p
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 9,
                     letterSpacing: "0.3em",
                     textTransform: "uppercase",
@@ -315,7 +315,7 @@ export default function AskGeorgeWidget() {
                         color: "rgba(248, 245, 240,0.85)",
                         border: "1px solid rgba(201,168,76,0.3)",
                         cursor: "pointer",
-                        fontFamily: "'Lato', 'Montserrat', sans-serif",
+                        fontFamily: "var(--gy-font-ui)",
                         fontSize: 13,
                         lineHeight: 1.4,
                       }}
@@ -339,7 +339,7 @@ export default function AskGeorgeWidget() {
                     m.role === "user"
                       ? "1px solid rgba(201,168,76,0.4)"
                       : "1px solid rgba(248, 245, 240,0.1)",
-                  fontFamily: "'Lato', 'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 13.5,
                   lineHeight: 1.55,
                   color: m.role === "user" ? "#F8F5F0" : "rgba(248, 245, 240,0.88)",
@@ -358,7 +358,7 @@ export default function AskGeorgeWidget() {
                 padding: "10px 18px",
                 borderTop: "1px solid rgba(201,168,76,0.25)",
                 background: "rgba(201,168,76,0.06)",
-                fontFamily: "'Lato', 'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 12.5,
                 color: "rgba(248, 245, 240,0.85)",
                 display: "flex",
@@ -372,7 +372,7 @@ export default function AskGeorgeWidget() {
                 type="button"
                 onClick={() => setFollowUp(true)}
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 9,
                   letterSpacing: "0.3em",
                   textTransform: "uppercase",
@@ -418,7 +418,7 @@ export default function AskGeorgeWidget() {
               <button
                 type="submit"
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 10,
                   letterSpacing: "0.3em",
                   textTransform: "uppercase",
@@ -439,7 +439,7 @@ export default function AskGeorgeWidget() {
               style={{
                 margin: 0,
                 padding: "12px 18px",
-                fontFamily: "'Lato', 'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 12.5,
                 color: "rgba(248, 245, 240,0.85)",
                 textAlign: "center",
@@ -477,7 +477,7 @@ export default function AskGeorgeWidget() {
                 border: "1px solid rgba(248, 245, 240,0.15)",
                 color: "#F8F5F0",
                 padding: "10px 12px",
-                fontFamily: "'Lato', 'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 16,
                 outline: "none",
               }}
@@ -486,7 +486,7 @@ export default function AskGeorgeWidget() {
               type="submit"
               disabled={sending || !input.trim()}
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 10,
                 letterSpacing: "0.28em",
                 textTransform: "uppercase",
@@ -518,7 +518,7 @@ const inputStyle = {
   border: "1px solid rgba(248, 245, 240,0.15)",
   color: "#F8F5F0",
   padding: "9px 12px",
-  fontFamily: "'Lato', 'Montserrat', sans-serif",
+  fontFamily: "var(--gy-font-ui)",
   fontSize: 16,
   outline: "none",
 };

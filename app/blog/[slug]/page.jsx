@@ -311,7 +311,7 @@ const ArticlePage = async ({ params }) => {
           <h1
             className="font-cormorant max-w-4xl"
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(40px, 7.5vw, 96px)",
               fontWeight: 300,
               color: "#F8F5F0",

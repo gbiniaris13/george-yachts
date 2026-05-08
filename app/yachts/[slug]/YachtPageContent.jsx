@@ -96,10 +96,10 @@ function DeckLayoutFallback({ images, yachtName }) {
   return (
     <section className="yacht-deckplans reveal" style={{ background: '#0D1B2A', padding: '64px 24px' }}>
       <div className="container" style={{ maxWidth: 980, margin: '0 auto' }}>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.42em', textTransform: 'uppercase', color: '#C9A84C', fontWeight: 600, marginBottom: 14, textAlign: 'center' }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: '0.42em', textTransform: 'uppercase', color: '#C9A84C', fontWeight: 600, marginBottom: 14, textAlign: 'center' }}>
           Deck layout
         </p>
-        <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 300, fontSize: 'clamp(28px, 4vw, 40px)', color: '#F8F5F0', textAlign: 'center', margin: '0 0 28px', lineHeight: 1.15 }}>
+        <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontWeight: 300, fontSize: 'clamp(28px, 4vw, 40px)', color: '#F8F5F0', textAlign: 'center', margin: '0 0 28px', lineHeight: 1.15 }}>
           Where you sleep, eat, and relax aboard <em style={{ color: '#C9A84C', fontStyle: 'italic' }}>{yachtName}</em>
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: valid.length === 1 ? '1fr' : 'repeat(auto-fit, minmax(360px, 1fr))', gap: 16 }}>
@@ -123,7 +123,7 @@ function DeckLayoutFallback({ images, yachtName }) {
         </div>
         <p
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
             color: 'rgba(248, 245, 240,0.55)',
             textAlign: 'center',
@@ -164,7 +164,7 @@ function DeckPlansSection({ decks, yachtName }) {
       <div className="container" style={{ maxWidth: 1080, margin: '0 auto' }}>
         <p
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 9,
             letterSpacing: '0.42em',
             textTransform: 'uppercase',
@@ -178,7 +178,7 @@ function DeckPlansSection({ decks, yachtName }) {
         </p>
         <h2
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontWeight: 300,
             fontSize: 'clamp(28px, 4vw, 40px)',
             color: '#F8F5F0',
@@ -212,7 +212,7 @@ function DeckPlansSection({ decks, yachtName }) {
                   aria-selected={selected}
                   onClick={() => setActiveIdx(i)}
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 10,
                     letterSpacing: '0.32em',
                     textTransform: 'uppercase',
@@ -266,7 +266,7 @@ function DeckPlansSection({ decks, yachtName }) {
                   boxShadow: '0 0 0 6px rgba(201,168,76,0.25)',
                   cursor: 'pointer',
                   padding: 0,
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 12,
                   fontWeight: 700,
                   color: '#0D1B2A',
@@ -281,7 +281,7 @@ function DeckPlansSection({ decks, yachtName }) {
 
         <p
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
             color: 'rgba(248, 245, 240,0.55)',
             textAlign: 'center',
@@ -353,7 +353,7 @@ function DeckPlansSection({ decks, yachtName }) {
                   padding: '64px 24px',
                   textAlign: 'center',
                   color: 'rgba(248, 245, 240,0.6)',
-                  fontFamily: "'Lato', 'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 14,
                 }}
               >
@@ -363,7 +363,7 @@ function DeckPlansSection({ decks, yachtName }) {
             {openHotspot.cabinName && (
               <p
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: 22,
                   fontWeight: 400,
                   color: '#F8F5F0',
@@ -393,7 +393,7 @@ function MatterportSection({ url, yachtName }) {
       <div className="container" style={{ maxWidth: 1080, margin: '0 auto' }}>
         <p
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 9,
             letterSpacing: '0.42em',
             textTransform: 'uppercase',
@@ -407,7 +407,7 @@ function MatterportSection({ url, yachtName }) {
         </p>
         <h2
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontWeight: 300,
             fontSize: 'clamp(28px, 4vw, 40px)',
             color: '#F8F5F0',
@@ -457,7 +457,7 @@ function MatterportSection({ url, yachtName }) {
               </span>
               <p
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: 22,
                   fontWeight: 400,
                   color: '#F8F5F0',
@@ -468,7 +468,7 @@ function MatterportSection({ url, yachtName }) {
               </p>
               <p
                 style={{
-                  fontFamily: "'Lato', 'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 13,
                   lineHeight: 1.6,
                   color: 'rgba(248, 245, 240,0.65)',
@@ -684,7 +684,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                     background: 'linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)',
                     color: '#0D1B2A',
                     border: '1px solid rgba(201,168,76,0.6)',
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: '11px',
                     letterSpacing: '0.32em',
                     textTransform: 'uppercase',
@@ -704,7 +704,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                     background: 'transparent',
                     color: '#F8F5F0',
                     border: '1px solid rgba(248, 245, 240,0.3)',
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: '11px',
                     letterSpacing: '0.32em',
                     textTransform: 'uppercase',
@@ -826,7 +826,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             <div className="container">
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 9,
                   letterSpacing: '0.42em',
                   textTransform: 'uppercase',
@@ -857,7 +857,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             <div className="container" style={{ maxWidth: 880, margin: '0 auto' }}>
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 9,
                   letterSpacing: '0.42em',
                   textTransform: 'uppercase',
@@ -871,7 +871,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
               </p>
               <h2
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontWeight: 300,
                   fontSize: 'clamp(28px, 4vw, 40px)',
                   color: '#F8F5F0',
@@ -885,7 +885,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
               {sampleItinerary.totalDistance && (
                 <p
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 11,
                     letterSpacing: '0.18em',
                     textTransform: 'uppercase',
@@ -990,7 +990,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                     />
                     <div
                       style={{
-                        fontFamily: "'Montserrat', sans-serif",
+                        fontFamily: "var(--gy-font-ui)",
                         fontSize: 9,
                         letterSpacing: '0.32em',
                         textTransform: 'uppercase',
@@ -1009,7 +1009,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                     {(leg.from || leg.to) && (
                       <h3
                         style={{
-                          fontFamily: "'Cormorant Garamond', Georgia, serif",
+                          fontFamily: "var(--gy-font-editorial)",
                           fontWeight: 400,
                           fontSize: 22,
                           color: '#F8F5F0',
@@ -1027,7 +1027,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                     {leg.narrative && (
                       <p
                         style={{
-                          fontFamily: "'Lato', 'Montserrat', sans-serif",
+                          fontFamily: "var(--gy-font-ui)",
                           fontSize: 14,
                           lineHeight: 1.65,
                           color: 'rgba(248, 245, 240,0.72)',
@@ -1044,7 +1044,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
 
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 11,
                   color: 'rgba(248, 245, 240,0.55)',
                   textAlign: 'center',
@@ -1061,7 +1061,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   href="/itinerary-builder"
                   style={{
                     display: 'inline-block',
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 11,
                     letterSpacing: '0.32em',
                     textTransform: 'uppercase',
@@ -1161,7 +1161,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             alignItems: 'center',
             justifyContent: 'space-between',
             gap: '14px',
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             transform: 'translateY(0)',
             transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
           }}
@@ -1169,7 +1169,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           <div className="gy-yacht-stickybar__title" style={{ display: 'flex', flexDirection: 'column', minWidth: 0, flex: 1 }}>
             <span
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: 18,
                 color: '#F8F5F0',
                 letterSpacing: '0.02em',

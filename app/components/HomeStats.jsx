@@ -78,7 +78,7 @@ export default function HomeStats({ yachtCount = 66 }) {
             <div
               className="text-5xl md:text-6xl lg:text-7xl font-light mb-3"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
@@ -89,7 +89,7 @@ export default function HomeStats({ yachtCount = 66 }) {
             </div>
             <div
               className="text-[10px] tracking-[0.3em] uppercase text-white/65 font-medium"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
+              style={{ fontFamily: "var(--gy-font-ui)" }}
             >
               {stat.label}
             </div>
@@ -173,7 +173,7 @@ export default function HomeStats({ yachtCount = 66 }) {
                 <div className="h-12 flex items-center justify-center">{cred.icon}</div>
                 <span
                   className="text-[10px] tracking-[0.2em] uppercase text-white/70 group-hover:text-white transition-colors duration-500 font-light"
-                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                  style={{ fontFamily: "var(--gy-font-ui)" }}
                 >
                   {cred.label}
                 </span>

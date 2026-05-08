@@ -35,7 +35,7 @@ const CHECK = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke
 
 export default function BuyYachtPage() {
   return (
-    <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+    <div className="min-h-screen bg-black text-white" style={{ fontFamily: "var(--gy-font-ui)" }}>
       <PageSchema />
       <BreadcrumbSchema
         items={[

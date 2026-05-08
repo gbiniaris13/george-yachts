@@ -169,7 +169,7 @@ function FleetPanel({
         <p
           className="text-[#C9A84C]/80 text-[9px] mb-8"
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             letterSpacing: "0.45em",
             textTransform: "uppercase",
             fontWeight: 600,
@@ -182,7 +182,7 @@ function FleetPanel({
         <h2
           className="text-white mb-6"
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             // Mobile: min 32 (was 40) so "Explorer Fleet" fits on
             // 320px devices. maxWidth guards against edge-case long
             // builder names.
@@ -201,7 +201,7 @@ function FleetPanel({
         <p
           className="text-[#C9A84C] mb-5"
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: "clamp(11px, 1.3vw, 13px)",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
@@ -215,7 +215,7 @@ function FleetPanel({
         <p
           className="text-white/60 italic mb-12 max-w-xs"
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontSize: "clamp(14px, 1.5vw, 18px)",
             lineHeight: 1.5,
           }}
@@ -227,7 +227,7 @@ function FleetPanel({
         <span
           className="group inline-flex items-center gap-3 text-white/70 group-hover:text-[#C9A84C] transition-colors duration-500 pb-1 border-b border-white/20 group-hover:border-[#C9A84C]"
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: "11px",
             letterSpacing: "0.4em",
             textTransform: "uppercase",
@@ -243,7 +243,7 @@ function FleetPanel({
           <p
             className="absolute bottom-10 text-white/35"
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: "9px",
               letterSpacing: "0.35em",
               textTransform: "uppercase",
@@ -340,7 +340,7 @@ export default function FleetCTAs({
         >
           <span
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: "9px",
               letterSpacing: "0.45em",
               textTransform: "uppercase",
@@ -353,7 +353,7 @@ export default function FleetCTAs({
           <span
             className="relative transition-colors duration-500 group-hover:text-[#C9A84C]"
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(18px, 2vw, 24px)",
               fontWeight: 300,
               color: "#F8F5F0",

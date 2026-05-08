@@ -50,7 +50,7 @@ export default function ForbesTopBar() {
         color: "#F8F5F0",
         display: "flex",
         alignItems: "center",
-        fontFamily: "'Montserrat', sans-serif",
+        fontFamily: "var(--gy-font-ui)",
       }}
       className="gy-forbes-bar"
     >
@@ -112,7 +112,7 @@ export default function ForbesTopBar() {
         <span
           className="gy-forbes-bar__desktop"
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontStyle: "italic",
             fontSize: 13,
             color: "#F8F5F0",
@@ -140,7 +140,7 @@ export default function ForbesTopBar() {
           aria-label="Read the feature on Forbes"
           className="gy-forbes-bar__desktop"
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
             letterSpacing: "0.18em",
             textTransform: "uppercase",
@@ -156,7 +156,7 @@ export default function ForbesTopBar() {
           aria-hidden="true"
           className="gy-forbes-bar__mobile"
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 12,
             color: "#C9A84C",
             fontWeight: 600,

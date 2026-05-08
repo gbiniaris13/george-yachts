@@ -44,7 +44,7 @@ export default async function Image() {
           style={{
             display: "flex",
             alignItems: "center",
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 18,
             letterSpacing: "0.32em",
             textTransform: "uppercase",
@@ -80,7 +80,7 @@ export default async function Image() {
           </div>
           <div
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 22,
               letterSpacing: "0.4em",
               textTransform: "uppercase",
@@ -134,7 +134,7 @@ export default async function Image() {
           />
           <div
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 16,
               letterSpacing: "0.24em",
               textTransform: "uppercase",

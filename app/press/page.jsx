@@ -178,7 +178,7 @@ export default function PressPage() {
       >
         <p
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 10,
             letterSpacing: "0.42em",
             textTransform: "uppercase",
@@ -191,7 +191,7 @@ export default function PressPage() {
         </p>
         <h1
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontSize: "clamp(40px, 7vw, 88px)",
             fontWeight: 300,
             color: "#F8F5F0",
@@ -204,7 +204,7 @@ export default function PressPage() {
         </h1>
         <p
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontStyle: "italic",
             fontSize: "clamp(16px, 1.8vw, 22px)",
             color: "rgba(248,245,240,0.8)",
@@ -254,7 +254,7 @@ export default function PressPage() {
 
           <p
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 11,
               letterSpacing: "0.32em",
               textTransform: "uppercase",
@@ -268,7 +268,7 @@ export default function PressPage() {
 
           <h2
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(28px, 4vw, 48px)",
               fontWeight: 300,
               color: "#F8F5F0",
@@ -282,7 +282,7 @@ export default function PressPage() {
 
           <p
             style={{
-              fontFamily: "'Lato', 'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontWeight: 300,
               fontSize: 14,
               color: "rgba(248,245,240,0.7)",
@@ -304,7 +304,7 @@ export default function PressPage() {
           >
             <p
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontStyle: "italic",
                 fontSize: "clamp(20px, 2.4vw, 28px)",
                 lineHeight: 1.5,
@@ -317,7 +317,7 @@ export default function PressPage() {
             </p>
             <cite
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontStyle: "normal",
                 fontSize: 11,
                 letterSpacing: "0.22em",
@@ -332,7 +332,7 @@ export default function PressPage() {
 
           <p
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(16px, 1.4vw, 19px)",
               lineHeight: 1.75,
               color: "rgba(248,245,240,0.85)",
@@ -355,7 +355,7 @@ export default function PressPage() {
                 background:
                   "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
                 color: "#0D1B2A",
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 11,
                 letterSpacing: "0.32em",
                 textTransform: "uppercase",
@@ -394,7 +394,7 @@ export default function PressPage() {
         />
         <p
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 10,
             letterSpacing: "0.42em",
             textTransform: "uppercase",
@@ -432,7 +432,7 @@ export default function PressPage() {
           >
             <h3
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontStyle: "italic",
                 fontSize: "clamp(20px, 2.4vw, 26px)",
                 fontWeight: 400,
@@ -446,7 +446,7 @@ export default function PressPage() {
             </h3>
             <p
               style={{
-                fontFamily: "'Lato', 'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 16,
                 lineHeight: 1.7,
                 color: "rgba(248,245,240,0.85)",
@@ -470,7 +470,7 @@ export default function PressPage() {
       >
         <p
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 10,
             letterSpacing: "0.32em",
             textTransform: "uppercase",
@@ -495,7 +495,7 @@ export default function PressPage() {
       >
         <p
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 10,
             letterSpacing: "0.42em",
             textTransform: "uppercase",
@@ -508,7 +508,7 @@ export default function PressPage() {
         </p>
         <h2
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontSize: "clamp(26px, 3vw, 36px)",
             fontWeight: 300,
             color: "#F8F5F0",
@@ -521,7 +521,7 @@ export default function PressPage() {
           <Link
             href="mailto:george@georgeyachts.com?subject=Press%20enquiry"
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 12,
               letterSpacing: "0.24em",
               textTransform: "uppercase",
@@ -550,7 +550,7 @@ export default function PressPage() {
       >
         <p
           style={{
-            fontFamily: "'Lato', 'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontWeight: 300,
             fontSize: 9,
             color: "#9CA3AF",

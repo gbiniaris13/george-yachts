@@ -68,16 +68,38 @@
   z-index: 100;
 }
 
-/* ---- Scroll Reveal ---- */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
+/* ---- Scroll Reveal ----
+   2026-05-08 (Boss flagged the "huge black gap on every yacht page"
+   between gallery and breadcrumb/specs section). Root cause: every
+   yacht-page section carried `.reveal` which started at opacity 0
+   and waited for an IntersectionObserver to add `.visible`. If the
+   observer missed a section (rootMargin / threshold edge cases
+   reproduced reliably on yachts with few sections, on back-nav, on
+   slower devices), thousands of pixels of content stayed invisible
+   while still occupying layout — reading as a navy-on-navy void.
 
-.reveal.visible {
+   Fix: invert the default. `.reveal` is fully visible at rest, and
+   the IntersectionObserver still animates it in via `.visible` if
+   JS is fast enough. If JS never fires, content shows immediately.
+   Zero black gaps regardless of observer state. */
+.reveal {
   opacity: 1;
   transform: translateY(0);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Optional fade-in only for visitors who haven't requested
+     reduced motion. The ScrollReveal observer toggles
+     `.reveal--anim` on mount; if the toggle never fires (failed
+     observer), the style above already shows the section fully. */
+  .reveal--anim:not(.visible) {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .reveal--anim.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ---- Hero Section ---- */

@@ -213,7 +213,7 @@ export default function ItineraryPreview() {
               gap: 12,
               padding: "16px 32px",
               minHeight: 52,
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 11,
               letterSpacing: "0.32em",
               textTransform: "uppercase",
@@ -236,7 +236,7 @@ export default function ItineraryPreview() {
           {error && (
             <span
               style={{
-                fontFamily: "'Lato', 'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 13,
                 color: "rgba(255,180,180,0.85)",
                 fontStyle: "italic",
@@ -269,7 +269,7 @@ export default function ItineraryPreview() {
             </p>
             <div
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(16px, 1.5vw, 19px)",
                 lineHeight: 1.7,
                 color: "rgba(248,245,240,0.92)",
@@ -297,7 +297,7 @@ export default function ItineraryPreview() {
             {closing && (
               <p
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontStyle: "italic",
                   fontSize: "clamp(18px, 1.7vw, 22px)",
                   color: "#C9A84C",
@@ -338,7 +338,7 @@ export default function ItineraryPreview() {
                     background: "transparent",
                     border: 0,
                     color: "rgba(248,245,240,0.45)",
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 11,
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
@@ -380,7 +380,7 @@ function SelectField({ label, value, onChange, options }) {
           background: "rgba(13, 27, 42, 0.55)",
           border: "1px solid rgba(201,168,76,0.25)",
           color: "#F8F5F0",
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: 13,
           letterSpacing: "0.02em",
           cursor: "pointer",
@@ -423,7 +423,7 @@ function TextField({ label, value, onChange, placeholder }) {
           background: "rgba(13, 27, 42, 0.55)",
           border: "1px solid rgba(201,168,76,0.25)",
           color: "#F8F5F0",
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: 16,
           letterSpacing: "0.02em",
         }}

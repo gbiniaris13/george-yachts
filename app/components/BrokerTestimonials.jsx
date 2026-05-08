@@ -32,7 +32,7 @@ const BrokerTestimonials = () => {
       <div className="text-center mb-16 md:mb-20">
         <p
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: "11px",
             fontWeight: 300,
             // Mobile audit 2026-04-20: was 0.45em + manually-spaced
@@ -58,7 +58,7 @@ const BrokerTestimonials = () => {
             <blockquote className="text-center mb-6">
               <p
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontStyle: "italic",
                   fontSize: "clamp(18px, 2.2vw, 24px)",
                   fontWeight: 400,
@@ -76,7 +76,7 @@ const BrokerTestimonials = () => {
             <p
               className="text-center"
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: "12px",
                 fontWeight: 600,
                 letterSpacing: "0.2em",

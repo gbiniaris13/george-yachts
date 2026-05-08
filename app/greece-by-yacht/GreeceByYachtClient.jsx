@@ -166,7 +166,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
           >
             <span
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 9,
                 letterSpacing: "0.22em",
                 textTransform: "uppercase",
@@ -246,7 +246,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
               </h2>
               <p
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontStyle: "italic",
                   fontSize: "clamp(18px, 1.7vw, 22px)",
                   color: "rgba(248,245,240,0.7)",
@@ -273,7 +273,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                     style={{
                       position: "relative",
                       paddingLeft: 26,
-                      fontFamily: "'Lato', 'Montserrat', sans-serif",
+                      fontFamily: "var(--gy-font-ui)",
                       fontSize: 15,
                       lineHeight: 1.65,
                       color: "rgba(248,245,240,0.86)",
@@ -303,7 +303,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                     margin: "36px 0 0",
                     padding: "18px 0 0",
                     borderTop: "1px solid rgba(201,168,76,0.35)",
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--gy-font-editorial)",
                     fontStyle: "italic",
                     fontSize: "clamp(20px, 2vw, 26px)",
                     color: "#F8F5F0",
@@ -377,7 +377,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                       <div style={{ padding: "16px 18px 18px" }}>
                         <p
                           style={{
-                            fontFamily: "'Cormorant Garamond', Georgia, serif",
+                            fontFamily: "var(--gy-font-editorial)",
                             fontSize: 22,
                             fontWeight: 400,
                             color: "#F8F5F0",
@@ -389,7 +389,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                         </p>
                         <p
                           style={{
-                            fontFamily: "'Montserrat', sans-serif",
+                            fontFamily: "var(--gy-font-ui)",
                             fontSize: 10,
                             letterSpacing: "0.22em",
                             textTransform: "uppercase",
@@ -402,7 +402,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                         {y.weeklyRatePrice && (
                           <p
                             style={{
-                              fontFamily: "'Cormorant Garamond', Georgia, serif",
+                              fontFamily: "var(--gy-font-editorial)",
                               fontStyle: "italic",
                               fontSize: 14,
                               color: "#C9A84C",
@@ -413,7 +413,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                             <span
                               style={{
                                 marginLeft: 8,
-                                fontFamily: "'Montserrat', sans-serif",
+                                fontFamily: "var(--gy-font-ui)",
                                 fontSize: 8,
                                 letterSpacing: "0.32em",
                                 textTransform: "uppercase",
@@ -473,7 +473,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
             alignItems: "center",
             gap: 12,
             padding: "20px 40px",
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 12,
             letterSpacing: "0.32em",
             textTransform: "uppercase",

@@ -28,13 +28,13 @@ export default function WeatherClient() {
     <div style={{ minHeight: '100vh', background: '#0D1B2A' }}>
       {/* Hero */}
       <div style={{ padding: '160px 24px 60px', textAlign: 'center' }}>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
           Seasonal Intelligence
         </p>
-        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(13, 27, 42,0.55)' }}>
+        <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(13, 27, 42,0.55)' }}>
           When to Charter in Greece
         </h1>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.4)', maxWidth: 500, margin: '0 auto', lineHeight: 1.8 }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.4)', maxWidth: 500, margin: '0 auto', lineHeight: 1.8 }}>
           Wind, weather, crowds, and pricing — month by month. Know exactly when to go.
         </p>
       </div>
@@ -48,7 +48,7 @@ export default function WeatherClient() {
               onClick={() => setSelectedMonth(m)}
               style={{
                 padding: '12px 16px',
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 11,
                 letterSpacing: '0.1em',
                 border: `1px solid ${selectedMonth.month === m.month ? GOLD : '#9CA3AF'}`,
@@ -67,7 +67,7 @@ export default function WeatherClient() {
         {/* Selected month detail */}
         <div style={{ background: 'rgba(248, 245, 240,0.02)', border: '1px solid rgba(201,168,76,0.12)', borderRadius: 16, padding: 32, marginBottom: 48 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 16 }}>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, color: '#F8F5F0', fontWeight: 300, margin: 0 }}>
+            <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 28, color: '#F8F5F0', fontWeight: 300, margin: 0 }}>
               {selectedMonth.month}
             </h2>
             <div style={{ display: 'flex', gap: 4 }}>
@@ -87,20 +87,20 @@ export default function WeatherClient() {
               { label: 'Pricing', value: selectedMonth.pricing },
             ].map((stat, i) => (
               <div key={i} style={{ textAlign: 'center', padding: 16, background: 'rgba(248, 245, 240,0.02)', borderRadius: 8 }}>
-                <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.3)', marginBottom: 6 }}>{stat.label}</div>
-                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: stat.label === 'Wind' && selectedMonth.meltemi ? '#E74C3C' : '#F8F5F0' }}>{stat.value}</div>
-                {stat.sub && <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: stat.sub.includes('Meltemi') ? '#E74C3C' : 'rgba(248, 245, 240,0.2)', marginTop: 2 }}>{stat.sub}</div>}
+                <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.3)', marginBottom: 6 }}>{stat.label}</div>
+                <div style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 20, color: stat.label === 'Wind' && selectedMonth.meltemi ? '#E74C3C' : '#F8F5F0' }}>{stat.value}</div>
+                {stat.sub && <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: stat.sub.includes('Meltemi') ? '#E74C3C' : 'rgba(248, 245, 240,0.2)', marginTop: 2 }}>{stat.sub}</div>}
               </div>
             ))}
           </div>
 
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.5)', lineHeight: 1.9, margin: 0 }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.5)', lineHeight: 1.9, margin: 0 }}>
             {selectedMonth.desc}
           </p>
         </div>
 
         {/* Region wind guide */}
-        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, color: '#F8F5F0', fontWeight: 300, textAlign: 'center', marginBottom: 32 }}>
+        <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 24, color: '#F8F5F0', fontWeight: 300, textAlign: 'center', marginBottom: 32 }}>
           Wind by Region
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 48 }}>
@@ -108,19 +108,19 @@ export default function WeatherClient() {
             <div key={i} style={{ background: 'rgba(248, 245, 240,0.02)', border: '1px solid #0D1B2A', borderRadius: 12, padding: 24 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
                 <span style={{ fontSize: 24 }}>{r.icon}</span>
-                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: '#F8F5F0', fontWeight: 400, margin: 0 }}>{r.name}</h3>
+                <h3 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 20, color: '#F8F5F0', fontWeight: 400, margin: 0 }}>{r.name}</h3>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 12 }}>
                 <div>
-                  <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 8, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.25)', marginBottom: 4 }}>Typical Wind</div>
-                  <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(248, 245, 240,0.6)' }}>{r.wind}</div>
+                  <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 8, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.25)', marginBottom: 4 }}>Typical Wind</div>
+                  <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: 'rgba(248, 245, 240,0.6)' }}>{r.wind}</div>
                 </div>
                 <div>
-                  <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 8, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.25)', marginBottom: 4 }}>Best Months</div>
-                  <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: GOLD }}>{r.best}</div>
+                  <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 8, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.25)', marginBottom: 4 }}>Best Months</div>
+                  <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: GOLD }}>{r.best}</div>
                 </div>
               </div>
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(248, 245, 240,0.35)', lineHeight: 1.7, margin: 0 }}>
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: 'rgba(248, 245, 240,0.35)', lineHeight: 1.7, margin: 0 }}>
                 {r.note}
               </p>
             </div>
@@ -129,11 +129,11 @@ export default function WeatherClient() {
 
         {/* George's tip */}
         <div style={{ background: 'rgba(201,168,76,0.05)', borderLeft: `3px solid ${GOLD}`, borderRadius: '0 12px 12px 0', padding: 24 }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: GOLD, marginBottom: 8 }}>George's Tip</p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.6)', lineHeight: 1.8, margin: '0 0 8px', fontStyle: 'italic' }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: GOLD, marginBottom: 8 }}>George's Tip</p>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.6)', lineHeight: 1.8, margin: '0 0 8px', fontStyle: 'italic' }}>
             "If I had to choose one month to charter in Greece, it would be June or September. June gives you long days and warm seas before the Meltemi arrives. September gives you the warmest water of the year after the crowds have gone. Both offer mid-season pricing — significantly less than July and August."
           </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: `${GOLD}80`, margin: 0 }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, color: `${GOLD}80`, margin: 0 }}>
             — George P. Biniaris, Managing Broker
           </p>
         </div>

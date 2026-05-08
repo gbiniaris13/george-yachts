@@ -133,7 +133,7 @@ export default async function IslandPage({ params }) {
           <div style={{ maxWidth: 880, margin: "0 auto" }}>
             <p
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 9,
                 letterSpacing: "0.42em",
                 textTransform: "uppercase",
@@ -154,7 +154,7 @@ export default async function IslandPage({ params }) {
             <h1
               className="gy-luxe-enter"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(56px, 10vw, 130px)",
                 fontWeight: 300,
                 margin: "0 0 18px",
@@ -166,7 +166,7 @@ export default async function IslandPage({ params }) {
             </h1>
             <p
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(18px, 2.4vw, 22px)",
                 fontWeight: 300,
                 fontStyle: "italic",
@@ -185,7 +185,7 @@ export default async function IslandPage({ params }) {
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
             <p
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 9,
                 letterSpacing: "0.42em",
                 textTransform: "uppercase",
@@ -198,7 +198,7 @@ export default async function IslandPage({ params }) {
             </p>
             <p
               style={{
-                fontFamily: "'Lato', 'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 17,
                 lineHeight: 1.75,
                 color: "rgba(248, 245, 240,0.82)",
@@ -223,7 +223,7 @@ export default async function IslandPage({ params }) {
             <div style={{ maxWidth: 1180, margin: "0 auto" }}>
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 9,
                   letterSpacing: "0.42em",
                   textTransform: "uppercase",
@@ -237,7 +237,7 @@ export default async function IslandPage({ params }) {
               </p>
               <h2
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: "clamp(28px, 4vw, 40px)",
                   fontWeight: 300,
                   color: "#F8F5F0",
@@ -283,7 +283,7 @@ export default async function IslandPage({ params }) {
                     <div style={{ padding: "16px 18px 20px" }}>
                       <p
                         style={{
-                          fontFamily: "'Cormorant Garamond', Georgia, serif",
+                          fontFamily: "var(--gy-font-editorial)",
                           fontSize: 20,
                           fontWeight: 400,
                           color: "#F8F5F0",
@@ -295,7 +295,7 @@ export default async function IslandPage({ params }) {
                       {(y.length || y.sleeps) && (
                         <p
                           style={{
-                            fontFamily: "'Montserrat', sans-serif",
+                            fontFamily: "var(--gy-font-ui)",
                             fontSize: 11,
                             letterSpacing: "0.12em",
                             color: "rgba(248, 245, 240,0.65)",
@@ -323,7 +323,7 @@ export default async function IslandPage({ params }) {
                           </span>
                           <span
                             style={{
-                              fontFamily: "'Montserrat', sans-serif",
+                              fontFamily: "var(--gy-font-ui)",
                               fontSize: 12,
                               color: GOLD,
                               fontWeight: 600,
@@ -348,7 +348,7 @@ export default async function IslandPage({ params }) {
             <div style={{ maxWidth: 980, margin: "0 auto" }}>
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 9,
                   letterSpacing: "0.42em",
                   textTransform: "uppercase",
@@ -362,7 +362,7 @@ export default async function IslandPage({ params }) {
               </p>
               <h2
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: "clamp(28px, 4vw, 40px)",
                   fontWeight: 300,
                   color: "#F8F5F0",
@@ -383,7 +383,7 @@ export default async function IslandPage({ params }) {
                   >
                     <p
                       style={{
-                        fontFamily: "'Montserrat', sans-serif",
+                        fontFamily: "var(--gy-font-ui)",
                         fontSize: 9,
                         letterSpacing: "0.32em",
                         textTransform: "uppercase",
@@ -396,7 +396,7 @@ export default async function IslandPage({ params }) {
                     </p>
                     <h3
                       style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                        fontFamily: "var(--gy-font-editorial)",
                         fontSize: 22,
                         fontWeight: 400,
                         color: "#F8F5F0",
@@ -405,7 +405,7 @@ export default async function IslandPage({ params }) {
                     >
                       {(y.sampleItinerary?.days || []).map((d) => d.to).filter(Boolean).slice(0, 3).join(" → ")} →&nbsp;…
                     </h3>
-                    <ol style={{ margin: 0, padding: "0 0 0 20px", color: "rgba(248, 245, 240,0.78)", fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 14, lineHeight: 1.7 }}>
+                    <ol style={{ margin: 0, padding: "0 0 0 20px", color: "rgba(248, 245, 240,0.78)", fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7 }}>
                       {(y.sampleItinerary?.days || []).map((d, i) => (
                         <li key={i}>
                           <strong style={{ color: "#F8F5F0" }}>Day {d.day}</strong> · {d.distance ? `${d.distance} · ` : ""}{d.from} → {d.to}
@@ -416,7 +416,7 @@ export default async function IslandPage({ params }) {
                       <Link
                         href={`/yachts/${y.slug}`}
                         style={{
-                          fontFamily: "'Montserrat', sans-serif",
+                          fontFamily: "var(--gy-font-ui)",
                           fontSize: 10,
                           letterSpacing: "0.32em",
                           textTransform: "uppercase",
@@ -449,7 +449,7 @@ export default async function IslandPage({ params }) {
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
             <p
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 9,
                 letterSpacing: "0.42em",
                 textTransform: "uppercase",
@@ -462,7 +462,7 @@ export default async function IslandPage({ params }) {
             </p>
             <p
               style={{
-                fontFamily: "'Lato', 'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 16,
                 lineHeight: 1.75,
                 color: "rgba(248, 245, 240,0.82)",
@@ -478,7 +478,7 @@ export default async function IslandPage({ params }) {
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
             <p
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 9,
                 letterSpacing: "0.42em",
                 textTransform: "uppercase",
@@ -494,7 +494,7 @@ export default async function IslandPage({ params }) {
                 <li
                   key={i}
                   style={{
-                    fontFamily: "'Lato', 'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: 15,
                     lineHeight: 1.65,
                     color: "rgba(248, 245, 240,0.82)",
@@ -526,7 +526,7 @@ export default async function IslandPage({ params }) {
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
             <p
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 9,
                 letterSpacing: "0.42em",
                 textTransform: "uppercase",
@@ -540,7 +540,7 @@ export default async function IslandPage({ params }) {
             </p>
             <h2
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(28px, 4vw, 40px)",
                 fontWeight: 300,
                 color: "#F8F5F0",
@@ -561,7 +561,7 @@ export default async function IslandPage({ params }) {
                 >
                   <summary
                     style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontFamily: "var(--gy-font-editorial)",
                       fontSize: 18,
                       color: "#F8F5F0",
                       cursor: "pointer",
@@ -573,7 +573,7 @@ export default async function IslandPage({ params }) {
                   </summary>
                   <p
                     style={{
-                      fontFamily: "'Lato', 'Montserrat', sans-serif",
+                      fontFamily: "var(--gy-font-ui)",
                       fontSize: 14,
                       lineHeight: 1.7,
                       color: "rgba(248, 245, 240,0.78)",
@@ -593,7 +593,7 @@ export default async function IslandPage({ params }) {
           <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
             <h2
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(28px, 4vw, 40px)",
                 fontWeight: 300,
                 color: "#F8F5F0",
@@ -608,7 +608,7 @@ export default async function IslandPage({ params }) {
                 href={`/yacht-finder?region=${encodeURIComponent(island.region)}`}
                 style={{
                   display: "inline-block",
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 11,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
@@ -626,7 +626,7 @@ export default async function IslandPage({ params }) {
                 href="/inquiry"
                 style={{
                   display: "inline-block",
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 11,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",

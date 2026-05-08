@@ -49,7 +49,7 @@ function Step({ number, icon, title, description, detail, delay = 0 }) {
           marginBottom: "16px",
         }}>
           <span style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontSize: "24px", fontWeight: 300, color: "#C9A84C",
           }}>
             {number}
@@ -67,14 +67,14 @@ function Step({ number, icon, title, description, detail, delay = 0 }) {
       <div style={{ paddingTop: "12px" }}>
         <div style={{ color: "#C9A84C", marginBottom: "16px" }}>{icon}</div>
         <h3 style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--gy-font-editorial)",
           fontSize: "1.6rem", fontWeight: 400, color: "#F8F5F0",
           marginBottom: "16px",
         }}>
           {title}
         </h3>
         <p style={{
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: "14px", lineHeight: 2, color: "rgba(248, 245, 240,0.5)",
           marginBottom: "12px",
         }}>
@@ -82,7 +82,7 @@ function Step({ number, icon, title, description, detail, delay = 0 }) {
         </p>
         {detail && (
           <p style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: "12px", lineHeight: 1.8, color: "rgba(248, 245, 240,0.3)",
             fontStyle: "italic",
           }}>
@@ -174,7 +174,7 @@ export default function HowItWorksContent() {
         borderTop: "1px solid rgba(201,168,76,0.1)",
       }}>
         <p style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--gy-font-editorial)",
           fontSize: "1.5rem", fontWeight: 300, color: "rgba(248, 245, 240,0.7)",
           fontStyle: "italic", lineHeight: 1.8, marginBottom: "32px",
         }}>
@@ -184,7 +184,7 @@ export default function HowItWorksContent() {
           href="#contact"
           style={{
             display: "inline-block",
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: "11px", fontWeight: 600, letterSpacing: "0.2em",
             textTransform: "uppercase", color: "#0D1B2A",
             background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",

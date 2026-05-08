@@ -4,7 +4,7 @@ export default function Error({ error, reset }) {
   return (
     <div
       className="min-h-screen flex items-center justify-center px-6"
-      style={{ background: "#0D1B2A", fontFamily: "'Montserrat', sans-serif" }}
+      style={{ background: "#0D1B2A", fontFamily: "var(--gy-font-ui)" }}
     >
       <div className="text-center max-w-lg">
         <p
@@ -21,7 +21,7 @@ export default function Error({ error, reset }) {
         </p>
         <h1
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontSize: "48px",
             fontWeight: 200,
             color: "#F8F5F0",

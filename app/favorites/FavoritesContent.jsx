@@ -13,7 +13,7 @@ const inputStyle = {
   border: '1px solid #9CA3AF',
   borderRadius: 4,
   color: '#F8F5F0',
-  fontFamily: "'Montserrat', sans-serif",
+  fontFamily: "var(--gy-font-ui)",
   fontSize: 13,
   outline: 'none',
 };
@@ -112,10 +112,10 @@ export default function FavoritesContent() {
     return (
       <div style={{ minHeight: '100vh', background: '#0D1B2A', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '160px 24px', textAlign: 'center' }}>
         <div style={{ fontSize: 48, marginBottom: 24, opacity: 0.3 }}>♡</div>
-        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 16px 0' }}>
+        <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 16px 0' }}>
           {t('favorites.empty', 'No Favorites Yet')}
         </h1>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.35)', maxWidth: 400, marginBottom: 32 }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.35)', maxWidth: 400, marginBottom: 32 }}>
           {t('favorites.emptyDesc', 'Browse our fleet and tap the heart icon on any yacht that catches your eye. Your favorites will appear here.')}
         </p>
         <Link
@@ -123,7 +123,7 @@ export default function FavoritesContent() {
           style={{
             display: 'inline-block',
             padding: '14px 32px',
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
             fontWeight: 600,
             letterSpacing: '0.15em',
@@ -145,13 +145,13 @@ export default function FavoritesContent() {
       <div style={{ maxWidth: 800, margin: '0 auto' }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
             {t('favorites.label', 'Your Selection')}
           </p>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 12px 0' }}>
+          <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 12px 0' }}>
             {items.length} {t('favorites.saved', 'Favorites Saved')}
           </h1>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: 'rgba(248, 245, 240,0.35)' }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, color: 'rgba(248, 245, 240,0.35)' }}>
             {t('favorites.reviewDesc', 'Review your selection and send them to George for a personalized proposal.')}
           </p>
         </div>
@@ -176,11 +176,11 @@ export default function FavoritesContent() {
               <div>
                 <Link
                   href={`/yachts/${yacht.slug}`}
-                  style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: '#F8F5F0', textDecoration: 'none' }}
+                  style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 20, color: '#F8F5F0', textDecoration: 'none' }}
                 >
                   {yacht.name}
                 </Link>
-                <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: 'rgba(248, 245, 240,0.3)', marginTop: 4 }}>
+                <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, color: 'rgba(248, 245, 240,0.3)', marginTop: 4 }}>
                   {yacht.builder && `${yacht.builder} · `}{yacht.guests && `${yacht.guests} guests · `}{yacht.price || ''}
                 </div>
               </div>
@@ -207,10 +207,10 @@ export default function FavoritesContent() {
         {/* Send to George section */}
         {!sent ? (
           <div style={{ background: '#0D1B2A', border: `1px solid ${GOLD}20`, borderRadius: 8, padding: 32, textAlign: 'center' }}>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, color: '#F8F5F0', fontWeight: 300, margin: '0 0 8px 0' }}>
+            <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 24, color: '#F8F5F0', fontWeight: 300, margin: '0 0 8px 0' }}>
               {t('favorites.sendToGeorge', 'Send to George')}
             </h2>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(248, 245, 240,0.35)', marginBottom: 24 }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: 'rgba(248, 245, 240,0.35)', marginBottom: 24 }}>
               {t('favorites.sendDesc', 'Share your favorites and receive a personalized proposal within 24 hours.')}
             </p>
 
@@ -245,7 +245,7 @@ export default function FavoritesContent() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 8,
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 11,
                 color: 'rgba(248, 245, 240,0.55)',
                 cursor: 'pointer',
@@ -265,7 +265,7 @@ export default function FavoritesContent() {
             </label>
 
             {error && (
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: '#ff9b9b', marginBottom: 14 }}>
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, color: '#ff9b9b', marginBottom: 14 }}>
                 {error}
               </p>
             )}
@@ -276,7 +276,7 @@ export default function FavoritesContent() {
                 disabled={!name || !email || sending}
                 style={{
                   padding: '14px 40px',
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 11,
                   fontWeight: 600,
                   letterSpacing: '0.15em',
@@ -296,7 +296,7 @@ export default function FavoritesContent() {
                 onClick={handleCopyShare}
                 style={{
                   padding: '14px 28px',
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 10,
                   fontWeight: 600,
                   letterSpacing: '0.22em',
@@ -316,10 +316,10 @@ export default function FavoritesContent() {
         ) : (
           <div style={{ background: '#0D1B2A', border: `1px solid ${GOLD}40`, borderRadius: 8, padding: 32, textAlign: 'center' }}>
             <div style={{ fontSize: 32, marginBottom: 16 }}>✓</div>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, color: GOLD, fontWeight: 300, margin: '0 0 12px 0' }}>
+            <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 24, color: GOLD, fontWeight: 300, margin: '0 0 12px 0' }}>
               {t('favorites.sentToGeorge', 'Sent to George')}
             </h2>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: 'rgba(248, 245, 240,0.4)' }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, color: 'rgba(248, 245, 240,0.4)' }}>
               {t('favorites.sentDesc', 'George will personally review your selection and respond within 24 hours.')}
             </p>
           </div>
@@ -333,7 +333,7 @@ export default function FavoritesContent() {
               background: 'none',
               border: 'none',
               color: 'rgba(248, 245, 240,0.25)',
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 11,
               cursor: 'pointer',
               letterSpacing: '0.1em',

@@ -9,7 +9,7 @@ export default function LogoutButton() {
       type="button"
       onClick={logout}
       style={{
-        fontFamily: "'Montserrat', sans-serif",
+        fontFamily: "var(--gy-font-ui)",
         fontSize: 10,
         letterSpacing: "0.24em",
         textTransform: "uppercase",

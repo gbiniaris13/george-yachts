@@ -79,7 +79,7 @@ export default async function ClusterPage({ params }) {
         <div style={{ maxWidth: 880, margin: "0 auto", textAlign: "center" }}>
           <p
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 9,
               letterSpacing: "0.42em",
               textTransform: "uppercase",
@@ -92,7 +92,7 @@ export default async function ClusterPage({ params }) {
           </p>
           <h1
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(56px, 10vw, 130px)",
               fontWeight: 300,
               color: "#F8F5F0",
@@ -106,7 +106,7 @@ export default async function ClusterPage({ params }) {
           </h1>
           <p
             style={{
-              fontFamily: "'Lato', 'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 17,
               lineHeight: 1.7,
               color: "rgba(248, 245, 240,0.78)",
@@ -124,7 +124,7 @@ export default async function ClusterPage({ params }) {
           <div style={{ maxWidth: 1080, margin: "0 auto" }}>
             <p
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 9,
                 letterSpacing: "0.42em",
                 textTransform: "uppercase",
@@ -138,7 +138,7 @@ export default async function ClusterPage({ params }) {
             </p>
             <h2
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(28px, 4vw, 40px)",
                 fontWeight: 300,
                 color: "#F8F5F0",
@@ -188,7 +188,7 @@ export default async function ClusterPage({ params }) {
                     <div style={{ padding: "18px 20px 22px" }}>
                       <h3
                         style={{
-                          fontFamily: "'Cormorant Garamond', Georgia, serif",
+                          fontFamily: "var(--gy-font-editorial)",
                           fontSize: 20,
                           fontWeight: 400,
                           color: "#F8F5F0",
@@ -201,7 +201,7 @@ export default async function ClusterPage({ params }) {
                       {a.excerpt && (
                         <p
                           style={{
-                            fontFamily: "'Lato', 'Montserrat', sans-serif",
+                            fontFamily: "var(--gy-font-ui)",
                             fontSize: 13,
                             lineHeight: 1.55,
                             color: "rgba(248, 245, 240,0.65)",
@@ -233,7 +233,7 @@ export default async function ClusterPage({ params }) {
           <div style={{ maxWidth: 1080, margin: "0 auto" }}>
             <p
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 9,
                 letterSpacing: "0.42em",
                 textTransform: "uppercase",
@@ -247,7 +247,7 @@ export default async function ClusterPage({ params }) {
             </p>
             <h2
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(28px, 4vw, 40px)",
                 fontWeight: 300,
                 color: "#F8F5F0",
@@ -293,7 +293,7 @@ export default async function ClusterPage({ params }) {
                   <div style={{ padding: "16px 18px 20px" }}>
                     <p
                       style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                        fontFamily: "var(--gy-font-editorial)",
                         fontSize: 20,
                         fontWeight: 400,
                         color: "#F8F5F0",
@@ -305,7 +305,7 @@ export default async function ClusterPage({ params }) {
                     {(y.length || y.sleeps) && (
                       <p
                         style={{
-                          fontFamily: "'Montserrat', sans-serif",
+                          fontFamily: "var(--gy-font-ui)",
                           fontSize: 11,
                           letterSpacing: "0.12em",
                           color: "rgba(248, 245, 240,0.65)",
@@ -333,7 +333,7 @@ export default async function ClusterPage({ params }) {
                         </span>
                         <span
                           style={{
-                            fontFamily: "'Montserrat', sans-serif",
+                            fontFamily: "var(--gy-font-ui)",
                             fontSize: 12,
                             color: GOLD,
                             fontWeight: 600,
@@ -352,7 +352,7 @@ export default async function ClusterPage({ params }) {
               <Link
                 href="/charter-yacht-greece"
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: 11,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
@@ -375,7 +375,7 @@ export default async function ClusterPage({ params }) {
         <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
           <h2
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(28px, 4vw, 40px)",
               fontWeight: 300,
               color: "#F8F5F0",
@@ -387,7 +387,7 @@ export default async function ClusterPage({ params }) {
           </h2>
           <p
             style={{
-              fontFamily: "'Lato', 'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 16,
               lineHeight: 1.7,
               color: "rgba(248, 245, 240,0.78)",
@@ -401,7 +401,7 @@ export default async function ClusterPage({ params }) {
               href="/yacht-finder"
               style={{
                 display: "inline-block",
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 11,
                 letterSpacing: "0.32em",
                 textTransform: "uppercase",
@@ -419,7 +419,7 @@ export default async function ClusterPage({ params }) {
               href="/inquiry"
               style={{
                 display: "inline-block",
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: 11,
                 letterSpacing: "0.32em",
                 textTransform: "uppercase",

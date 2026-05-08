@@ -45,7 +45,7 @@ export default function PriceBlock({
       <span
         aria-label={`Pricing unit: ${badge}`}
         style={{
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: s.badge,
           letterSpacing: "0.3em",
           textTransform: "uppercase",
@@ -57,7 +57,7 @@ export default function PriceBlock({
       </span>
       <span
         style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--gy-font-editorial)",
           fontSize: s.price,
           fontWeight: 400,
           color: "#F8F5F0",
@@ -73,7 +73,7 @@ export default function PriceBlock({
       {showApa && (
         <span
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: s.note,
             color: "rgba(248, 245, 240,0.65)",
             letterSpacing: "0.04em",

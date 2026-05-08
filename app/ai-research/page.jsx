@@ -131,7 +131,7 @@ export default function AIResearchHub() {
         color: "#F8F5F0",
         minHeight: "100vh",
         padding: "clamp(120px, 14vw, 200px) 24px 96px",
-        fontFamily: "'Lato', 'Montserrat', sans-serif",
+        fontFamily: "var(--gy-font-ui)",
       }}
     >
       <JsonLd data={ARTICLE_SCHEMA} />
@@ -140,7 +140,7 @@ export default function AIResearchHub() {
       <article style={{ maxWidth: 880, margin: "0 auto" }}>
         <p
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 10,
             letterSpacing: "0.42em",
             textTransform: "uppercase",
@@ -156,7 +156,7 @@ export default function AIResearchHub() {
         <h1
           className="gy-gold-24k"
           style={{
-            fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', Georgia, serif",
+            fontFamily: "var(--gy-font-display)",
             fontSize: "clamp(32px, 5vw, 56px)",
             fontWeight: 500,
             letterSpacing: "0.04em",
@@ -170,7 +170,7 @@ export default function AIResearchHub() {
 
         <p
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontStyle: "italic",
             fontSize: "clamp(18px, 2vw, 22px)",
             lineHeight: 1.55,
@@ -396,7 +396,7 @@ export default function AIResearchHub() {
 
         <p
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontStyle: "italic",
             fontSize: 17,
             color: "rgba(248,245,240,0.6)",
@@ -433,7 +433,7 @@ function Section({ eyebrow, title, body }) {
     <section style={{ marginBottom: 48 }}>
       <p
         style={{
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: 9,
           letterSpacing: "0.42em",
           textTransform: "uppercase",
@@ -447,7 +447,7 @@ function Section({ eyebrow, title, body }) {
       </p>
       <h2
         style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--gy-font-editorial)",
           fontSize: "clamp(22px, 2.6vw, 32px)",
           fontWeight: 300,
           color: "#F8F5F0",
@@ -459,7 +459,7 @@ function Section({ eyebrow, title, body }) {
       </h2>
       <div
         style={{
-          fontFamily: "'Lato', 'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: 16,
           lineHeight: 1.75,
           color: "rgba(248,245,240,0.82)",

@@ -126,7 +126,7 @@ export default function NotFound() {
         <p
           style={{
             textAlign: "center",
-            fontFamily: "'Lato', 'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 13,
             color: "rgba(248,245,240,0.45)",
             fontStyle: "italic",
@@ -174,7 +174,7 @@ function ExitCard({ href, eyebrow, title, primary }) {
       </span>
       <span
         style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--gy-font-editorial)",
           fontSize: 22,
           fontWeight: 400,
           color: "#F8F5F0",

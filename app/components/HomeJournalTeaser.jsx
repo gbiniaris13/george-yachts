@@ -47,7 +47,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
         >
           <p
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 9,
               letterSpacing: "0.42em",
               textTransform: "uppercase",
@@ -60,7 +60,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
           </p>
           <h2
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(28px, 4vw, 44px)",
               fontWeight: 300,
               color: "#F8F5F0",
@@ -72,7 +72,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
           </h2>
           <p
             style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--gy-font-editorial)",
               fontStyle: "italic",
               fontSize: "clamp(14px, 1.4vw, 18px)",
               color: "rgba(248, 245, 240,0.7)",
@@ -134,7 +134,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
                   {date && (
                     <p
                       style={{
-                        fontFamily: "'Montserrat', sans-serif",
+                        fontFamily: "var(--gy-font-ui)",
                         fontSize: 9,
                         letterSpacing: "0.32em",
                         textTransform: "uppercase",
@@ -148,7 +148,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
                   )}
                   <p
                     style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontFamily: "var(--gy-font-editorial)",
                       fontSize: 22,
                       lineHeight: 1.25,
                       color: "#F8F5F0",
@@ -161,7 +161,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
                   {p.excerpt && (
                     <p
                       style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                        fontFamily: "var(--gy-font-editorial)",
                         fontSize: 15,
                         lineHeight: 1.6,
                         color: "rgba(248, 245, 240,0.75)",
@@ -173,7 +173,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
                   )}
                   <span
                     style={{
-                      fontFamily: "'Montserrat', sans-serif",
+                      fontFamily: "var(--gy-font-ui)",
                       fontSize: 10,
                       letterSpacing: "0.32em",
                       textTransform: "uppercase",
@@ -193,7 +193,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
           <Link
             href="/blog"
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--gy-font-ui)",
               fontSize: 11,
               letterSpacing: "0.32em",
               textTransform: "uppercase",

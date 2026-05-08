@@ -136,7 +136,7 @@ export default function LifestyleGallery({ heading = "Moments aboard", showCta =
             </p>
             <p
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontStyle: "italic",
                 fontSize: "clamp(20px, 2.4vw, 28px)",
                 color: "rgba(248,245,240,0.85)",

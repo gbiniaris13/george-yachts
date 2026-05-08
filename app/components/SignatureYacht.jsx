@@ -150,7 +150,7 @@ export default function SignatureYacht({ yacht }) {
             nav zone (72px scrolled-state) plus a bit more breathing. */}
         <div
           className="absolute top-6 md:top-8 left-0 right-0 text-center z-10"
-          style={{ fontFamily: "'Montserrat', sans-serif" }}
+          style={{ fontFamily: "var(--gy-font-ui)" }}
         >
           <span
             className="inline-block text-[#C9A84C] border border-[#C9A84C]/40 px-6 py-2"
@@ -175,7 +175,7 @@ export default function SignatureYacht({ yacht }) {
             <h2
               className="text-white mb-5"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(36px, 5.5vw, 72px)",
                 fontWeight: 200,
                 letterSpacing: "0.06em",
@@ -190,7 +190,7 @@ export default function SignatureYacht({ yacht }) {
               <p
                 className="text-white/50 italic mb-8"
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--gy-font-editorial)",
                   fontSize: "clamp(14px, 1.5vw, 18px)",
                 }}
               >
@@ -203,7 +203,7 @@ export default function SignatureYacht({ yacht }) {
               <p
                 className="text-[#C9A84C]/85 mb-10"
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: "clamp(10px, 1.2vw, 12px)",
                   letterSpacing: "0.25em",
                   textTransform: "uppercase",
@@ -220,7 +220,7 @@ export default function SignatureYacht({ yacht }) {
                 <p
                   className="text-[#C9A84C]/60 mb-4"
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--gy-font-ui)",
                     fontSize: "9px",
                     letterSpacing: "0.45em",
                     textTransform: "uppercase",
@@ -232,7 +232,7 @@ export default function SignatureYacht({ yacht }) {
                 <p
                   className="text-white/75 italic"
                   style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--gy-font-editorial)",
                     fontSize: "clamp(16px, 1.8vw, 22px)",
                     lineHeight: 1.55,
                   }}
@@ -248,7 +248,7 @@ export default function SignatureYacht({ yacht }) {
                 href={yachtHref}
                 className="group inline-flex items-center gap-3 pb-2 border-b border-[#C9A84C]/50 hover:border-[#C9A84C] text-[#C9A84C] transition-colors duration-500"
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--gy-font-ui)",
                   fontSize: "11px",
                   letterSpacing: "0.4em",
                   textTransform: "uppercase",

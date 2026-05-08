@@ -66,7 +66,7 @@ export default function TranslateWidget({ variant = 'floating' }) {
           backdropFilter: 'blur(12px)',
           border: '1px solid rgba(201,168,76,0.25)',
           cursor: 'pointer',
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: '9px',
           letterSpacing: '0.18em',
           textTransform: 'uppercase',
@@ -132,7 +132,7 @@ export default function TranslateWidget({ variant = 'floating' }) {
         >
           <div style={{
             padding: '12px 16px', borderBottom: '1px solid rgba(201,168,76,0.1)',
-            fontFamily: "'Montserrat', sans-serif", fontSize: 8,
+            fontFamily: "var(--gy-font-ui)", fontSize: 8,
             letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(201,168,76,0.4)',
           }}>
             Select Language
@@ -143,7 +143,7 @@ export default function TranslateWidget({ variant = 'floating' }) {
               onClick={(e) => { e.stopPropagation(); setLocale(lang.code); setIsOpen(false); }}
               style={{
                 display: 'flex', alignItems: 'center', gap: 10, width: '100%',
-                padding: '11px 16px', fontFamily: "'Montserrat', sans-serif", fontSize: 11,
+                padding: '11px 16px', fontFamily: "var(--gy-font-ui)", fontSize: 11,
                 color: locale === lang.code ? '#C9A84C' : 'rgba(248, 245, 240,0.5)',
                 background: locale === lang.code ? 'rgba(201,168,76,0.06)' : 'transparent',
                 border: 'none', borderBottom: '1px solid rgba(248, 245, 240,0.03)',

@@ -62,13 +62,13 @@ export default function InteractiveTools() {
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <p style={{
-            fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em',
+            fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: '0.4em',
             color: `${GOLD}80`, textTransform: 'uppercase', marginBottom: 12,
           }}>
             {t('tools.label')}
           </p>
           <h2 style={{
-            fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
+            fontFamily: "var(--gy-font-editorial)", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
             color: '#F8F5F0', fontWeight: 300, margin: 0,
           }}>
             {t('tools.title')}
@@ -101,19 +101,19 @@ export default function InteractiveTools() {
             >
               <div style={{ marginBottom: 20, opacity: 0.8 }}>{tool.icon}</div>
               <h3 style={{
-                fontFamily: "'Cormorant Garamond', serif", fontSize: 20,
+                fontFamily: "var(--gy-font-editorial)", fontSize: 20,
                 color: '#F8F5F0', margin: '0 0 8px 0', fontWeight: 400,
               }}>
                 {tool.title}
               </h3>
               <p style={{
-                fontFamily: "'Montserrat', sans-serif", fontSize: 12,
+                fontFamily: "var(--gy-font-ui)", fontSize: 12,
                 color: 'rgba(248, 245, 240,0.35)', margin: '0 0 20px 0', lineHeight: 1.6,
               }}>
                 {tool.desc}
               </p>
               <span style={{
-                fontFamily: "'Montserrat', sans-serif", fontSize: 10,
+                fontFamily: "var(--gy-font-ui)", fontSize: 10,
                 letterSpacing: '0.15em', textTransform: 'uppercase',
                 color: GOLD, fontWeight: 600,
               }}>

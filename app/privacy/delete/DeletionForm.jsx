@@ -45,7 +45,7 @@ export default function DeletionForm() {
       <div style={{ textAlign: "center", padding: "32px 24px", border: "1px solid rgba(201,168,76,0.35)" }}>
         <p
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--gy-font-editorial)",
             fontSize: 28, fontWeight: 400, color: "#F8F5F0", margin: "0 0 12px",
           }}
         >
@@ -53,7 +53,7 @@ export default function DeletionForm() {
         </p>
         <p
           style={{
-            fontFamily: "'Lato', 'Montserrat', sans-serif",
+            fontFamily: "var(--gy-font-ui)",
             fontSize: 14, lineHeight: 1.6, color: "rgba(248, 245, 240,0.78)", margin: 0,
           }}
         >
@@ -86,10 +86,10 @@ export default function DeletionForm() {
       <textarea
         placeholder="Anything we should know? (optional — e.g., which channel you contacted us through)"
         value={reason} onChange={(e) => setReason(e.target.value)} rows={3}
-        style={{ ...inputStyle, fontFamily: "'Lato', 'Montserrat', sans-serif", resize: "vertical" }}
+        style={{ ...inputStyle, fontFamily: "var(--gy-font-ui)", resize: "vertical" }}
       />
       {error && (
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: "#ff8a8a", margin: 0 }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: "#ff8a8a", margin: 0 }}>
           {error}
         </p>
       )}
@@ -98,7 +98,7 @@ export default function DeletionForm() {
         disabled={submitting}
         style={{
           padding: "14px 0",
-          fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700,
+          fontFamily: "var(--gy-font-ui)", fontSize: 11, fontWeight: 700,
           letterSpacing: "0.24em", textTransform: "uppercase",
           color: "#0D1B2A",
           background: submitting
@@ -112,7 +112,7 @@ export default function DeletionForm() {
       </button>
       <p
         style={{
-          fontFamily: "'Montserrat', sans-serif", fontSize: 9,
+          fontFamily: "var(--gy-font-ui)", fontSize: 9,
           color: "rgba(248, 245, 240,0.45)", margin: "4px 0 0", lineHeight: 1.7,
           letterSpacing: "0.06em",
         }}
@@ -127,7 +127,7 @@ export default function DeletionForm() {
 
 const inputStyle = {
   padding: "11px 13px",
-  fontFamily: "'Montserrat', sans-serif", fontSize: 13,
+  fontFamily: "var(--gy-font-ui)", fontSize: 13,
   background: "rgba(248, 245, 240,0.06)",
   border: "1px solid rgba(248, 245, 240,0.18)",
   color: "#F8F5F0", outline: "none",

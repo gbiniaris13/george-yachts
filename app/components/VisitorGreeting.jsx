@@ -150,7 +150,7 @@ export default function VisitorGreeting() {
     >
       <span
         style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--gy-font-editorial)",
           fontStyle: "italic",
           fontSize: 15,
           color: "rgba(248,245,240,0.95)",
@@ -164,7 +164,7 @@ export default function VisitorGreeting() {
       </span>
       <span
         style={{
-          fontFamily: "'Montserrat', sans-serif",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: 9,
           letterSpacing: "0.32em",
           textTransform: "uppercase",
