@@ -4,6 +4,10 @@ import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+// Phase 27i.16 (2026-05-08) — cover-open transition. Wraps the
+// card image link in a View Transitions API navigation so the
+// photo morphs into the detail-page hero on click.
+import ViewTransitionLink from '../components/ViewTransitionLink';
 // CompareYachts is a heavy modal only rendered after the visitor
 // actually ticks the compare checkbox on two yachts. Lazy-loaded to
 // keep the /charter-yacht-greece first-load bundle ~12 KB smaller.
@@ -300,8 +304,12 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
       // user scrolls quickly through the grid.
       style={{ '--stagger': `${Math.min(index * 0.05, 0.3)}s` }}
     >
-      {/* Image */}
-      <Link
+      {/* Image — ViewTransitionLink so click on the cover triggers a
+          native View Transitions API morph from card thumbnail to the
+          detail-page hero. Pairing happens via `view-transition-name`
+          set on the <Image> element below + the same name on the
+          yacht-hero__image element on the detail page. */}
+      <ViewTransitionLink
         href={`/yachts/${slug}`}
         className="fleet-card__image-link"
         onClick={() => {
@@ -330,6 +338,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
                 loading={index < 6 ? 'eager' : 'lazy'}
                 className={`fleet-card__img ${imgLoaded ? 'fleet-card__img--loaded' : ''}`}
                 onLoad={() => setImgLoaded(true)}
+                style={{ viewTransitionName: `yacht-cover-${slug}` }}
               />
               {/* C.4 (Roberto master rebuild) — hover preview cycle.
                   Up to 3 additional photos overlay the hero on hover,

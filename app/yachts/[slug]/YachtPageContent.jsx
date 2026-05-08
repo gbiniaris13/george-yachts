@@ -515,6 +515,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                 priority
                 className="yacht-hero__image"
                 sizes="100vw"
+                style={{ viewTransitionName: `yacht-cover-${yacht.slug}` }}
               />
               <div className="yacht-hero__overlay" />
             </div>

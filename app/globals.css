@@ -3134,3 +3134,34 @@ a.gy-fancy-link:hover {
 @media (prefers-reduced-motion: reduce) {
   .gy-wave-divider-line { animation: none !important; }
 }
+
+/* Phase 27i.16 (2026-05-08) — yacht cover-open transition.
+   Pairs with ViewTransitionLink + view-transition-name styles on
+   the fleet-card image and the yacht-hero image. The browser
+   captures both, the morph happens automatically — these rules
+   just give the morph cinematic timing + a champagne fade for
+   any non-paired element ('root' = everything else). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 280ms;
+  animation-timing-function: cubic-bezier(0.2, 0.85, 0.25, 1);
+}
+::view-transition-group(*) {
+  /* The yacht-cover-{slug} group is the centerpiece — slow it down
+     so the cover unfolds rather than snaps into place. */
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(0.2, 0.85, 0.25, 1);
+}
+::view-transition-image-pair(*) {
+  /* Use isolation to let the cross-fade between old and new
+     images render without flicker on browsers that compose them
+     in separate layers. */
+  isolation: isolate;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-group(*) {
+    animation-duration: 0ms !important;
+  }
+}
