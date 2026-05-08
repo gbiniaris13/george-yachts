@@ -92,23 +92,33 @@ export default function Filotimon({ filotimoImage = null }) {
         {/* ── LEFT — editorial image, sticky on desktop so it frames
              the long-form text column without scrolling away ── */}
         <div className="relative min-h-[60vh] lg:min-h-[100dvh] lg:sticky lg:top-0 overflow-hidden">
-          {filotimoImage ? (
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{
-                backgroundImage: `url(${filotimoImage})`,
-                filter: "grayscale(0.15) brightness(0.8) contrast(1.06)",
-              }}
-            />
-          ) : (
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(135deg, #000 0%, #0a0a0a 50%, #000 100%)",
-              }}
-            />
-          )}
+          {/* Chapter 01 (2026-05-08) — Navagio aerial video replaces
+              the static editorial image. Boss-curated 8.4 s loop
+              (15522129_3840_2160_30fps.mp4 → encoded 1920×1080
+              VP9 3000 kbps WebM 3.0 MB / H.264 4500 kbps MP4 4.3 MB
+              2-pass). The same grayscale 0.15 / brightness 0.8 /
+              contrast 1.06 filter runs over the video so it reads
+              "philosophy / contemplation" rather than "destination
+              tourism". The static filotimoImage prop is kept as
+              the <video> poster — Sanity-supplied fallback for any
+              browser that fails the autoplay heuristic (and as the
+              first paint while the video decodes). */}
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            poster={filotimoImage || undefined}
+            preload="metadata"
+            autoPlay
+            loop
+            muted
+            playsInline
+            aria-hidden="true"
+            style={{
+              filter: "grayscale(0.15) brightness(0.8) contrast(1.06)",
+            }}
+          >
+            <source src="/videos/filotimo-navagio.webm" type="video/webm" />
+            <source src="/videos/filotimo-navagio.mp4" type="video/mp4" />
+          </video>
 
           {/* Navy→transparent vignette */}
           <div
