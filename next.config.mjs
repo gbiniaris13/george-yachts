@@ -108,19 +108,17 @@ const nextConfig = {
       // questions). Both are real conversion-driving pages now —
       // not blockages that funneled cold traffic into a 12-question
       // form.
-      // Destinations section retired 2026-04-21. Legacy bookmarks
-      // land on the inquiry flow so nothing 404s, and the SEO weight
-      // transfers to the new primary conversion page. The home
-      // page's GreekWatersMap still surfaces each region visually.
+      // Destinations section was retired 2026-04-21 then revived
+      // 2026-05-08 (Chapter 07) for the new "Three Greek Worlds"
+      // editorial pages at /destinations/{cyclades,ionian,saronic}.
+      // The legacy inquiry redirect that lived here would have
+      // hijacked every new region URL — removed. The bare
+      // /destinations index now redirects to the homepage section
+      // anchor instead, so old bookmarks land on the new section.
       {
         source: "/destinations",
-        destination: "/inquiry",
-        permanent: true,
-      },
-      {
-        source: "/destinations/:path*",
-        destination: "/inquiry",
-        permanent: true,
+        destination: "/#destinations",
+        permanent: false,
       },
       // 2026-05-04 link audit fix — 3 broken outgoing links inside
       // blog/airport-hell-2026 pointed at posts that exist as drafts
