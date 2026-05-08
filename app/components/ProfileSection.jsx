@@ -20,7 +20,7 @@ const ProfileSection = ({
 
   const colorMap = {
     "bg-black": "rgba(0, 0, 0)",
-    "bg-gray-100": "rgba(243, 244, 246)",
+    "bg-[#F8F5F0]": "rgba(243, 244, 246)",
   };
   const gradientColor = colorMap[bgColor] || "rgba(0, 0, 0)";
 

@@ -99,7 +99,7 @@ export default function WhatsAppButton() {
           <div
             className="relative p-5 pr-10"
             style={{
-              background: "linear-gradient(135deg, #0d0d1a 0%, #000 100%)",
+              background: "linear-gradient(135deg, #0D1B2A 0%, #000 100%)",
               border: "1px solid rgba(201,168,76,0.35)",
               boxShadow:
                 "0 12px 48px rgba(0,0,0,0.5), 0 0 24px rgba(201,168,76,0.08)",
@@ -246,8 +246,8 @@ export default function WhatsAppButton() {
           className="relative flex items-center justify-center w-14 h-14 rounded-full transition-all duration-500 overflow-hidden"
           style={{
             background: hovered
-              ? "linear-gradient(135deg, #1a1a2e 0%, #0d0d1a 100%)"
-              : "linear-gradient(135deg, #0d0d1a 0%, #000 100%)",
+              ? "linear-gradient(135deg, #1a1a2e 0%, #0D1B2A 100%)"
+              : "linear-gradient(135deg, #0D1B2A 0%, #000 100%)",
             border: `1px solid ${hovered ? "rgba(201,168,76,0.6)" : "rgba(201,168,76,0.2)"}`,
             boxShadow: hovered
               ? "0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(201,168,76,0.1), inset 0 1px 0 rgba(201,168,76,0.1)"

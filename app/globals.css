@@ -1138,7 +1138,7 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
 /* Phase 27 (Forbes-launch eve, 2026-05-05) — palette restricted to
    black / gold / white only. .gold-on-navy class is preserved (callers
    already exist) but the background is now pure black. C9A84C on
-   #000000 = 7.6:1 (AAA) — even higher contrast than navy. */
+   #0D1B2A = 7.6:1 (AAA) — even higher contrast than navy. */
 .gold-on-navy {
   color: #C9A84C;
   background: #0D1B2A;
@@ -2134,8 +2134,8 @@ a.gy-fancy-link:hover {
   padding: clamp(80px, 12vw, 140px) 24px;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 50% 100%, #0e2238 0%, #061121 55%, #030911 100%),
-    #030911;
+    radial-gradient(ellipse at 50% 100%, #0e2238 0%, #061121 55%, #0D1B2A 100%),
+    #0D1B2A;
   border-top: 1px solid rgba(201, 168, 76, 0.18);
   border-bottom: 1px solid rgba(201, 168, 76, 0.18);
 }
@@ -2456,8 +2456,8 @@ a.gy-fancy-link:hover {
 .gy-region-map-section {
   position: relative;
   background:
-    radial-gradient(ellipse at 50% 100%, #0e2238 0%, #061121 55%, #030911 100%),
-    #030911;
+    radial-gradient(ellipse at 50% 100%, #0e2238 0%, #061121 55%, #0D1B2A 100%),
+    #0D1B2A;
   padding: clamp(80px, 10vw, 130px) 24px clamp(60px, 8vw, 100px);
   overflow: hidden;
   border-top: 1px solid rgba(201, 168, 76, 0.16);
@@ -2626,7 +2626,7 @@ a.gy-fancy-link:hover {
   max-width: 920px;
   max-height: 88vh;
   overflow-y: auto;
-  background: #06121e;
+  background: #0D1B2A;
   border: 1px solid rgba(201, 168, 76, 0.32);
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7);
 }
@@ -3497,13 +3497,13 @@ figcaption,
        --gy-white  #FFFFFF → ONLY for light sections
    ─────────────────────────────────────────────────────────────────── */
 
-/* Tailwind .bg-black / .bg-[#000] / .bg-[#000000] → navy.
+/* Tailwind .bg-black / .bg-[#000] / .bg-[#0D1B2A] → navy.
    These selectors hit every component using Tailwind's black
    background utility (86 occurrences in the codebase) and remap
    them to the deep-navy primary background in one step. */
 .bg-black,
 [class*="bg-[#000]"],
-[class*="bg-[#000000]"] {
+[class*="bg-[#0D1B2A]"] {
   background-color: var(--gy-navy, #0D1B2A) !important;
 }
 
@@ -3547,7 +3547,7 @@ figcaption,
 
 /* Forbes top bar — explicitly stays on a deeper black so it reads
    as a separate band above the masthead (the navy of the rest of
-   the site would blend into it). The bar is brand-safe at #0A0A0A. */
+   the site would blend into it). The bar is brand-safe at #0D1B2A. */
 .gy-forbes-bar {
-  background-color: #0A0A0A !important;
+  background-color: #0D1B2A !important;
 }

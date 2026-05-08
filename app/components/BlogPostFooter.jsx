@@ -98,8 +98,8 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
                       width: "100%",
                       aspectRatio: "4 / 3",
                       background: y.image
-                        ? `#0a0a0a url(${sanityCardImg(y.image, 600)}) center/cover no-repeat`
-                        : "#0a0a0a",
+                        ? `#0D1B2A url(${sanityCardImg(y.image, 600)}) center/cover no-repeat`
+                        : "#0D1B2A",
                     }}
                     aria-hidden={!y.image}
                   />
@@ -304,7 +304,7 @@ const btnGold = {
   fontWeight: 700,
   padding: "10px 18px",
   background: "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
-  color: "#000000",
+  color: "#0D1B2A",
   border: "1px solid rgba(201,168,76,0.6)",
   textDecoration: "none",
 };

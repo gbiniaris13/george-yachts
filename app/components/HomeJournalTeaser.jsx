@@ -125,7 +125,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
                     style={{
                       width: "100%",
                       aspectRatio: "16 / 10",
-                      background: `#0a0a0a url(${sanityCardImg(p.imageUrl, 720)}) center/cover no-repeat`,
+                      background: `#0D1B2A url(${sanityCardImg(p.imageUrl, 720)}) center/cover no-repeat`,
                     }}
                     aria-hidden="true"
                   />

@@ -41,7 +41,7 @@ const GeorgeBiniarisClient = () => {
         // linkedinUrl="https://linkedin.com/in/..."
         bgColor="bg-white"
         headingColor="text-black"
-        textColor="text-gray-700"
+        textColor="text-[#9CA3AF]"
       />
 
       {/* 3. The Contact Form */}

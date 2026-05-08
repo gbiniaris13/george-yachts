@@ -145,7 +145,7 @@ function ItineraryCard({ itin, index }) {
 
   return (
     <Reveal delay={index * 0.1}>
-      <div style={{ background: "#050505", border: "1px solid rgba(201,168,76,0.06)", marginBottom: "32px" }}>
+      <div style={{ background: "#0D1B2A", border: "1px solid rgba(201,168,76,0.06)", marginBottom: "32px" }}>
         {/* Header */}
         <button
           onClick={() => setExpanded(!expanded)}

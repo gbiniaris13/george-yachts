@@ -56,7 +56,7 @@ export default function LifestyleGallery({ heading = "Moments aboard", showCta =
     <section
       aria-label={heading}
       style={{
-        background: "#050505",
+        background: "#0D1B2A",
         padding: "clamp(72px, 10vw, 140px) clamp(24px, 5vw, 64px)",
         borderTop: "1px solid rgba(248,245,240,0.05)",
       }}
@@ -189,7 +189,7 @@ export default function LifestyleGallery({ heading = "Moments aboard", showCta =
           position: relative;
           margin: 0;
           overflow: hidden;
-          background: #0a0a0a;
+          background: #0D1B2A;
           border: 1px solid rgba(255,255,255,0.04);
           transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
                       box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);

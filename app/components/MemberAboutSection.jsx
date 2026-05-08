@@ -29,7 +29,7 @@ const MemberAboutSection = ({
   twitterUrl,
   bgColor = "bg-white",
   headingColor = "text-black",
-  textColor = "text-gray-700",
+  textColor = "text-[#9CA3AF]",
   accentColor = "text-[#7a6200]",
 }) => {
   return (

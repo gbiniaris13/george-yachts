@@ -94,7 +94,7 @@ function DeckLayoutFallback({ images, yachtName }) {
   const valid = (images || []).filter((i) => i && i.url);
   if (valid.length === 0) return null;
   return (
-    <section className="yacht-deckplans reveal" style={{ background: '#0a0a0a', padding: '64px 24px' }}>
+    <section className="yacht-deckplans reveal" style={{ background: '#0D1B2A', padding: '64px 24px' }}>
       <div className="container" style={{ maxWidth: 980, margin: '0 auto' }}>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.42em', textTransform: 'uppercase', color: '#C9A84C', fontWeight: 600, marginBottom: 14, textAlign: 'center' }}>
           Deck layout
@@ -160,7 +160,7 @@ function DeckPlansSection({ decks, yachtName }) {
   const active = valid[activeIdx] || valid[0];
 
   return (
-    <section className="yacht-deckplans reveal" style={{ background: '#0a0a0a', padding: '64px 24px' }}>
+    <section className="yacht-deckplans reveal" style={{ background: '#0D1B2A', padding: '64px 24px' }}>
       <div className="container" style={{ maxWidth: 1080, margin: '0 auto' }}>
         <p
           style={{
@@ -269,7 +269,7 @@ function DeckPlansSection({ decks, yachtName }) {
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: 12,
                   fontWeight: 700,
-                  color: '#0a0a0a',
+                  color: '#0D1B2A',
                   animation: 'd5HotspotPulse 2.4s ease-in-out infinite',
                 }}
                 className="d5-hotspot"
@@ -316,7 +316,7 @@ function DeckPlansSection({ decks, yachtName }) {
               position: 'relative',
               maxWidth: 920,
               width: '100%',
-              background: '#0a0a0a',
+              background: '#0D1B2A',
               border: '1px solid rgba(201,168,76,0.4)',
             }}
           >
@@ -370,7 +370,7 @@ function DeckPlansSection({ decks, yachtName }) {
                   margin: 0,
                   padding: '14px 18px',
                   borderTop: '1px solid rgba(201,168,76,0.3)',
-                  background: '#0a0a0a',
+                  background: '#0D1B2A',
                 }}
               >
                 {openHotspot.cabinName}
@@ -389,7 +389,7 @@ function DeckPlansSection({ decks, yachtName }) {
 function MatterportSection({ url, yachtName }) {
   const [open, setOpen] = useState(false);
   return (
-    <section className="yacht-matterport reveal" style={{ background: '#0a0a0a', padding: '64px 24px' }}>
+    <section className="yacht-matterport reveal" style={{ background: '#0D1B2A', padding: '64px 24px' }}>
       <div className="container" style={{ maxWidth: 1080, margin: '0 auto' }}>
         <p
           style={{
@@ -620,7 +620,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             is answered up-front (per Camper / Burgess / Fraser
             convention). 0.7 — every price has a unit badge. */}
         {yacht.weeklyRatePrice && (
-          <section className="yacht-pricing reveal" style={{ background: '#0a0a0a', padding: '48px 24px' }}>
+          <section className="yacht-pricing reveal" style={{ background: '#0D1B2A', padding: '48px 24px' }}>
             <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
               <h2 className="yacht-pricing__title" style={{ marginBottom: 0 }}>
                 {t('yacht.pricingTitle', 'What Is the Weekly Charter Rate for')} {yacht.name}?
@@ -634,7 +634,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   style={{
                     padding: '14px 32px',
                     background: 'linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)',
-                    color: '#000000',
+                    color: '#0D1B2A',
                     border: '1px solid rgba(201,168,76,0.6)',
                     fontFamily: "'Montserrat', sans-serif",
                     fontSize: '11px',
@@ -805,7 +805,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
 
         {/* D.7 — SAMPLE 7-DAY ROUTE */}
         {sampleItinerary && Array.isArray(sampleItinerary.days) && sampleItinerary.days.length > 0 && (
-          <section className="yacht-itinerary reveal" style={{ background: '#0a0a0a', padding: '64px 24px' }}>
+          <section className="yacht-itinerary reveal" style={{ background: '#0D1B2A', padding: '64px 24px' }}>
             <div className="container" style={{ maxWidth: 880, margin: '0 auto' }}>
               <p
                 style={{
@@ -892,7 +892,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                       <path d={pathD} stroke="#C9A84C" strokeWidth="1.2" fill="none" opacity="0.7" />
                       {points.map((p, i) => (
                         <g key={i}>
-                          <circle cx={p.x} cy={p.y} r="5" fill="#0a0a0a" stroke="#C9A84C" strokeWidth="1.5" />
+                          <circle cx={p.x} cy={p.y} r="5" fill="#0D1B2A" stroke="#C9A84C" strokeWidth="1.5" />
                           <text
                             x={p.x}
                             y={p.y + (i % 2 === 0 ? -14 : 22)}
@@ -936,7 +936,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                         width: 13,
                         height: 13,
                         borderRadius: '50%',
-                        background: '#0a0a0a',
+                        background: '#0D1B2A',
                         border: '2px solid #C9A84C',
                       }}
                     />
@@ -1150,7 +1150,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
               flex: '0 0 auto',
               padding: '10px 22px',
               background: 'linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)',
-              color: '#000000',
+              color: '#0D1B2A',
               border: '1px solid rgba(201,168,76,0.6)',
               fontSize: 10,
               letterSpacing: '0.28em',

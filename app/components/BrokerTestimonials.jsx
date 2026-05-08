@@ -41,7 +41,7 @@ const BrokerTestimonials = () => {
             // clean run of text with fluid tracking.
             letterSpacing: "clamp(0.2em, 0.8vw, 0.45em)",
             textTransform: "uppercase",
-            color: "#000000",
+            color: "#0D1B2A",
             opacity: 0.5,
             wordSpacing: "0.15em",
           }}
@@ -63,7 +63,7 @@ const BrokerTestimonials = () => {
                   fontSize: "clamp(18px, 2.2vw, 24px)",
                   fontWeight: 400,
                   lineHeight: 1.8,
-                  color: "#000000",
+                  color: "#0D1B2A",
                   maxWidth: "720px",
                   margin: "0 auto",
                 }}

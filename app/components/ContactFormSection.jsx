@@ -150,7 +150,7 @@ const ContactFormSection = () => {
   if (status === "success") {
     return (
       <section id="contact" className="relative w-full min-h-screen bg-black flex items-center justify-center py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1200] via-black to-black z-0" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2A] via-black to-black z-0" />
         <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay z-10" />
 
         <div className="relative z-30 text-center px-6 max-w-2xl mx-auto">
@@ -201,7 +201,7 @@ const ContactFormSection = () => {
   return (
     <section id="contact" className="relative w-full bg-black py-28 md:py-36 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#1a1200] via-black to-black z-0" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2A] via-black to-black z-0" />
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay z-10" />
 
       {/* Phase 27i.18 (2026-05-08) — constellation backdrop. Reads
@@ -564,7 +564,7 @@ const ContactFormSection = () => {
         textarea:-webkit-autofill:hover,
         textarea:-webkit-autofill:focus {
           -webkit-text-fill-color: white;
-          -webkit-box-shadow: 0 0 0px 1000px #000000 inset;
+          -webkit-box-shadow: 0 0 0px 1000px #0D1B2A inset;
           transition: background-color 5000s ease-in-out 0s;
         }
         select option { background: #0D1B2A !important; color: #fff !important; }

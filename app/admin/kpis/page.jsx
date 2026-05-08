@@ -86,7 +86,7 @@ export default function KpisPage() {
               padding: "10px 18px",
               fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700,
               letterSpacing: "0.18em", textTransform: "uppercase",
-              color: "#000000",
+              color: "#0D1B2A",
               background: loading ? `${GOLD}66` : `linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)`,
               border: "none", cursor: loading || !key.trim() ? "default" : "pointer",
             }}

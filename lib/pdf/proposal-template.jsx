@@ -27,7 +27,7 @@ import {
 const NAVY = "#0a1a2f";
 const GOLD = "#C9A24D";
 const GOLD_LIGHT = "#E6C77A";
-const INK = "#1a1a1a";
+const INK = "#0D1B2A";
 const MUTED = "#6b6b6b";
 const PAPER = "#fafaf6";
 

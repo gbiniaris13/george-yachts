@@ -169,7 +169,7 @@ export default function NavSearch() {
             style={{
               maxWidth: 720,
               width: "100%",
-              background: "#0a0a0a",
+              background: "#0D1B2A",
               border: "1px solid rgba(201,168,76,0.4)",
               padding: 24,
               fontFamily: "'Montserrat', sans-serif",
@@ -300,7 +300,7 @@ export default function NavSearch() {
                               flex: "0 0 auto",
                               width: 64,
                               height: 48,
-                              background: `#0a0a0a url(${sanityCardImg(y.image, 200)}) center/cover no-repeat`,
+                              background: `#0D1B2A url(${sanityCardImg(y.image, 200)}) center/cover no-repeat`,
                             }}
                             aria-hidden="true"
                           />

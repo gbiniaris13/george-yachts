@@ -102,7 +102,7 @@ export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadD
     >
       <div
         style={{
-          background: 'linear-gradient(145deg, #0a0a0a, #1a1a1a)',
+          background: 'linear-gradient(145deg, #0D1B2A, #0D1B2A)',
           border: `1px solid ${GOLD}30`,
           borderRadius: 20,
           padding: '36px 32px',

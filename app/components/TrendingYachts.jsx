@@ -186,8 +186,8 @@ export default function TrendingYachts({ yachts }) {
                   width: "100%",
                   aspectRatio: "4 / 3",
                   background: y.image
-                    ? `#0a0a0a url(${sanityCardImg(y.image, 640)}) center/cover no-repeat`
-                    : "#0a0a0a",
+                    ? `#0D1B2A url(${sanityCardImg(y.image, 640)}) center/cover no-repeat`
+                    : "#0D1B2A",
                 }}
                 aria-hidden={!y.image}
               />

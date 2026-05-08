@@ -30,7 +30,7 @@ const WhatsAppEnquiry = ({ yachtName }) => {
         className="hidden md:inline-flex items-center gap-2.5 px-8 py-3.5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
         style={{
           backgroundColor: "#C9A84C",
-          color: "#000000",
+          color: "#0D1B2A",
           fontFamily: "'Montserrat', sans-serif",
           fontSize: "12px",
           fontWeight: 600,
@@ -55,7 +55,7 @@ const WhatsAppEnquiry = ({ yachtName }) => {
           className="flex items-center justify-center gap-2.5 w-full py-3.5 transition-all duration-300 active:scale-[0.98]"
           style={{
             backgroundColor: "#C9A84C",
-            color: "#000000",
+            color: "#0D1B2A",
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "12px",
             fontWeight: 600,

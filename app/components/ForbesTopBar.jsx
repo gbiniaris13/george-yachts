@@ -9,7 +9,7 @@
 //   • Server-rendered (NOT client-only) — Googlebot + ChatGPT +
 //     Perplexity + Claude must see the Forbes mention without JS.
 //   • Sticky top, 36px desktop / 32px mobile.
-//   • Background #0A0A0A, bottom border 1px solid #C9A84C @ 30%.
+//   • Background #0D1B2A, bottom border 1px solid #C9A84C @ 30%.
 //   • Forbes wordmark = text-based, Times Bold 14px, ivory.
 //   • Click anywhere → opens article in new tab (target="_blank",
 //     rel="noopener noreferrer").
@@ -45,7 +45,7 @@ export default function ForbesTopBar() {
         right: 0,
         zIndex: 80,
         height: 36,
-        background: "#0A0A0A",
+        background: "#0D1B2A",
         borderBottom: "1px solid rgba(201,168,76,0.3)",
         color: "#F8F5F0",
         display: "flex",

@@ -159,7 +159,7 @@ export default function MapboxFlyover() {
             color: "rgba(33, 22, 15, 0.5)",
             "high-color": "rgba(15, 23, 42, 0.95)",
             "horizon-blend": 0.18,
-            "space-color": "#0a0a0a",
+            "space-color": "#0D1B2A",
             "star-intensity": 0.0,
           });
         } catch {}
@@ -231,7 +231,7 @@ export default function MapboxFlyover() {
       style={{
         position: "relative",
         width: "100%",
-        background: "#0a0a0a",
+        background: "#0D1B2A",
         overflow: "hidden",
       }}
     >
@@ -282,7 +282,7 @@ export default function MapboxFlyover() {
           width: "100%",
           height: "clamp(420px, 62vh, 720px)",
           background: skipMap
-            ? "linear-gradient(155deg, #0a0a0a 0%, #000 100%)"
+            ? "linear-gradient(155deg, #0D1B2A 0%, #000 100%)"
             : "transparent",
           position: "relative",
           overflow: "hidden",
@@ -418,7 +418,7 @@ export default function MapboxFlyover() {
           gap: 16,
           alignItems: "center",
           justifyContent: "space-between",
-          background: "linear-gradient(0deg, #0a0a0a 0%, transparent 100%)",
+          background: "linear-gradient(0deg, #0D1B2A 0%, transparent 100%)",
           position: "relative",
           zIndex: 3,
         }}

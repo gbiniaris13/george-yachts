@@ -32,7 +32,7 @@ const ManosKourmoulakisClient = () => {
         ctaUrl="/contact"
         bgColor="bg-white"
         headingColor="text-black"
-        textColor="text-gray-700"
+        textColor="text-[#9CA3AF]"
       />
       <ContactFormSection />
       <Footer />

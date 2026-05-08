@@ -99,7 +99,7 @@ const TeamCard = ({ member }) => {
               href={`https://instagram.com/${member.instagram}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center text-xs text-gray-200 hover:text-white transition duration-200 cursor-pointer mb-6"
+              className="flex items-center text-xs text-[#F8F5F0]\/80 hover:text-[#F8F5F0] transition duration-200 cursor-pointer mb-6"
             >
               <Instagram className="w-4 h-4 mr-1.5" />@{member.instagram}
             </a>

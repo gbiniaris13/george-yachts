@@ -209,8 +209,8 @@ export default async function BlogPage() {
                       width: "100%",
                       aspectRatio: "4 / 3",
                       background: y.imageUrl
-                        ? `#0a0a0a url(${y.imageUrl}) center/cover no-repeat`
-                        : "#0a0a0a",
+                        ? `#0D1B2A url(${y.imageUrl}) center/cover no-repeat`
+                        : "#0D1B2A",
                     }}
                     aria-hidden={!y.imageUrl}
                   />

@@ -271,7 +271,7 @@ export default function AboutContent() {
       </section>
 
       {/* ═══════ A NOTE FROM GEORGE ═══════ */}
-      <section style={{ padding: "100px 24px", background: "#0a141f" }}>
+      <section style={{ padding: "100px 24px", background: "#0D1B2A" }}>
         <RevealSection style={{ maxWidth: "740px", margin: "0 auto" }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", fontWeight: 300, letterSpacing: "0.4em", color: "#C9A84C", textTransform: "uppercase", marginBottom: "32px", textAlign: "center" }}>
             A &nbsp; N O T E &nbsp; F R O M &nbsp; G E O R G E

@@ -184,7 +184,7 @@ export default function NavDrawerSystem() {
     };
   }, []);
 
-  const navBackground = scrolled ? "#000000" : "transparent";
+  const navBackground = scrolled ? "#0D1B2A" : "transparent";
   const navHeight = scrolled ? 92 : 168;
   const logoHeight = scrolled ? 56 : "clamp(96px, 14vw, 156px)";
 
@@ -293,7 +293,7 @@ export default function NavDrawerSystem() {
           mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         style={{
-          background: "linear-gradient(180deg, #050a14 0%, #0a1628 100%)",
+          background: "linear-gradient(180deg, #0D1B2A 0%, #0a1628 100%)",
         }}
         role="dialog"
         aria-modal="true"

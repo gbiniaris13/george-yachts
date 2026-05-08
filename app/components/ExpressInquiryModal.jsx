@@ -190,7 +190,7 @@ export default function ExpressInquiryModal({
     >
       <div
         style={{
-          background: "#0a0a0a",
+          background: "#0D1B2A",
           border: "1px solid rgba(201,168,76,0.35)",
           width: "100%",
           maxWidth: "520px",
@@ -374,7 +374,7 @@ export default function ExpressInquiryModal({
                   padding: "16px",
                   background:
                     "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
-                  color: "#000000",
+                  color: "#0D1B2A",
                   border: "1px solid rgba(201,168,76,0.6)",
                   fontSize: "11px",
                   letterSpacing: "0.32em",

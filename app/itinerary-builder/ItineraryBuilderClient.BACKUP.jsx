@@ -193,13 +193,13 @@ export default function ItineraryBuilderClient() {
         className="itinerary-layout"
       >
         {/* MAP */}
-        <div style={{ position: 'relative', background: '#0a0a1a', border: '1px solid #222', borderRadius: 12, overflow: 'hidden', aspectRatio: '5/4' }}>
+        <div style={{ position: 'relative', background: '#0D1B2A', border: '1px solid #222', borderRadius: 12, overflow: 'hidden', aspectRatio: '5/4' }}>
           <svg ref={svgRef} viewBox="100 180 750 420" style={{ width: '100%', height: '100%' }}>
             {/* Sea background gradient */}
             <defs>
               <radialGradient id="seaGlow" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stopColor="#0d1b3a" />
-                <stop offset="100%" stopColor="#050a15" />
+                <stop offset="100%" stopColor="#0D1B2A" />
               </radialGradient>
               <filter id="glow">
                 <feGaussianBlur stdDeviation="3" result="coloredBlur" />
@@ -358,7 +358,7 @@ export default function ItineraryBuilderClient() {
                 {selected.map((island, i) => (
                   <div key={island.id} style={{
                     display: 'flex', alignItems: 'center', gap: 12,
-                    padding: '10px 12px', background: '#1a1a1a', borderRadius: 6,
+                    padding: '10px 12px', background: '#0D1B2A', borderRadius: 6,
                     border: '1px solid #2a2a2a',
                   }}>
                     <div style={{
@@ -424,7 +424,7 @@ export default function ItineraryBuilderClient() {
               {routeStats.legs.map((leg, i) => (
                 <div key={i} style={{
                   display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  padding: '6px 0', borderBottom: '1px solid #1a1a1a',
+                  padding: '6px 0', borderBottom: '1px solid #0D1B2A',
                   fontFamily: "'Montserrat'", fontSize: 11,
                 }}>
                   <span style={{ color: 'rgba(255,255,255,0.5)' }}>{leg.from} → {leg.to}</span>

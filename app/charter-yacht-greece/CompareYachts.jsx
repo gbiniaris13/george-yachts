@@ -4,8 +4,8 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import Image from 'next/image';
 
 const GOLD = '#C9A84C';
-const DARK_BG = '#000000';
-const CARD_BG = '#111111';
+const DARK_BG = '#0D1B2A';
+const CARD_BG = '#0D1B2A';
 const BORDER = '#333333';
 const TEXT_MUTED = '#999999';
 const TEXT_LIGHT = '#E0E0E0';
@@ -493,7 +493,7 @@ function CompareCard({ yacht, bestValues, onRemove, isMobile, totalCards }) {
           width: '100%',
           height: isMobile ? 200 : 220,
           overflow: 'hidden',
-          backgroundColor: '#1a1a1a',
+          backgroundColor: '#0D1B2A',
         }}
       >
         {yacht.imageUrl ? (

@@ -34,7 +34,7 @@ const ChrisDaskalopoulosClient = () => {
         instagramUrl="https://instagram.com/dask15"
         bgColor="bg-white"
         headingColor="text-black"
-        textColor="text-gray-700"
+        textColor="text-[#9CA3AF]"
       />
       <ContactFormSection />
       <Footer />

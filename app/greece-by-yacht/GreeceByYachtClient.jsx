@@ -43,7 +43,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
   return (
     <main
       style={{
-        background: "#050505",
+        background: "#0D1B2A",
         color: "#F8F5F0",
         position: "relative",
       }}
@@ -57,7 +57,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
           alignItems: "flex-end",
           padding: "0 clamp(24px, 6vw, 96px) clamp(48px, 8vw, 96px)",
           overflow: "hidden",
-          background: "#0a0a0a",
+          background: "#0D1B2A",
         }}
       >
         {/* Hero backdrop — uses an existing yacht hero image until
@@ -205,7 +205,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
             minHeight: "100vh",
             padding: "clamp(80px, 10vw, 140px) clamp(24px, 6vw, 96px)",
             overflow: "hidden",
-            background: "#080808",
+            background: "#0D1B2A",
             display: "flex",
             alignItems: "center",
           }}
@@ -364,7 +364,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                             style={{ objectFit: "cover" }}
                           />
                         ) : (
-                          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #000000, #050505)" }} />
+                          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #0D1B2A, #0D1B2A)" }} />
                         )}
                         <div
                           style={{
@@ -441,7 +441,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
           padding: "clamp(96px, 12vw, 160px) 24px",
           textAlign: "center",
           borderTop: "1px solid rgba(248,245,240,0.08)",
-          background: "linear-gradient(180deg, #050505 0%, #000000 100%)",
+          background: "linear-gradient(180deg, #0D1B2A 0%, #0D1B2A 100%)",
         }}
       >
         <p className="gy-eyebrow" style={{ color: "#C9A84C" }}>
@@ -478,7 +478,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
             letterSpacing: "0.32em",
             textTransform: "uppercase",
             fontWeight: 700,
-            color: "#0a0a0a",
+            color: "#0D1B2A",
             textDecoration: "none",
             background: "linear-gradient(135deg, #E6C77A 0%, #C9A84C 100%)",
             border: "1px solid #C9A84C",
@@ -560,7 +560,7 @@ function StopBackdrop({ stop }) {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(135deg, #000000 0%, #050505 100%)",
+            background: "linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)",
           }}
         />
       )}

@@ -62,7 +62,7 @@ const LuxuryImage = ({ src, alt, priority, metadata }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className="relative w-full h-full bg-[#0a0a0a] overflow-hidden">
+    <div className="relative w-full h-full bg-[#0D1B2A] overflow-hidden">
       {/* 1. Next.js Image with Fade Logic */}
       <Image
         src={src}
@@ -84,7 +84,7 @@ const LuxuryImage = ({ src, alt, priority, metadata }) => {
       />
 
       {/* 2. Deep Gradient Overlay (Always on top) */}
-      <div className="absolute inset-0 bg-linear-to-r from-[#020617] via-transparent to-[#020617]/40 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-linear-to-r from-[#0D1B2A] via-transparent to-[#0D1B2A]/40 pointer-events-none"></div>
     </div>
   );
 };
@@ -190,7 +190,7 @@ const YachtSwiper = ({ yachtData }) => {
       </div>
 
       <div className="relative lg:absolute lg:top-1/2 lg:right-[5%] lg:lg:right-[10%] lg:-translate-y-1/2 z-30 w-full lg:max-w-[500px] px-0 lg:px-6 order-2">
-        <div className="bg-[#0a0a0a]/40 lg:bg-[#0a0a0a]/60 backdrop-blur-2xl border border-white/10 p-8 lg:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.5)] relative overflow-hidden">
+        <div className="bg-[#0D1B2A]/40 lg:bg-[#0D1B2A]/60 backdrop-blur-2xl border border-white/10 p-8 lg:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.5)] relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-[#C9A84C] via-[#8a6d21] to-transparent"></div>
 
           <button

@@ -49,7 +49,7 @@ export default function RelatedArticles({ posts }) {
               className="group block border border-white/[0.06] rounded overflow-hidden hover:border-[#C9A84C]/20 transition-colors duration-500"
             >
               {/* Image */}
-              <div className="relative aspect-[4/3] overflow-hidden bg-[#0a0a0a]">
+              <div className="relative aspect-[4/3] overflow-hidden bg-[#0D1B2A]">
                 {post.imageUrl ? (
                   <Image
                     src={`${post.imageUrl}?w=400&h=300&fit=crop&auto=format`}

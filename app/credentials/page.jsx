@@ -46,7 +46,7 @@ export default function CredentialsPage() {
     <>
       <main
         style={{
-          background: "#050505",
+          background: "#0D1B2A",
           color: "#F8F5F0",
           paddingTop: "clamp(64px, 8vw, 120px)",
         }}
@@ -528,7 +528,7 @@ export default function CredentialsPage() {
             padding:
               "clamp(72px, 10vw, 140px) clamp(24px, 6vw, 96px) clamp(96px, 12vw, 160px)",
             textAlign: "center",
-            background: "linear-gradient(180deg, #050505 0%, #000000 100%)",
+            background: "linear-gradient(180deg, #0D1B2A 0%, #0D1B2A 100%)",
             borderTop: "1px solid rgba(248,245,240,0.06)",
           }}
         >
@@ -565,7 +565,7 @@ export default function CredentialsPage() {
               letterSpacing: "0.32em",
               textTransform: "uppercase",
               fontWeight: 700,
-              color: "#0a0a0a",
+              color: "#0D1B2A",
               textDecoration: "none",
               background: "linear-gradient(135deg, #E6C77A 0%, #C9A84C 100%)",
               border: "1px solid #C9A84C",
@@ -583,7 +583,7 @@ export default function CredentialsPage() {
           style={{
             padding: "0 24px 36px",
             textAlign: "center",
-            background: "#050505",
+            background: "#0D1B2A",
           }}
         >
           <p

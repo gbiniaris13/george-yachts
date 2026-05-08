@@ -199,7 +199,7 @@ const DiagonalWipePanel = ({ item, index, total }) => {
             </h2>
 
             <p
-              className="text-sm md:text-base text-gray-300 font-light leading-loose tracking-wide font-sans text-justify opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+              className="text-sm md:text-base text-[#9CA3AF] font-light leading-loose tracking-wide font-sans text-justify opacity-80 group-hover:opacity-100 transition-opacity duration-500"
               style={{
                 opacity: hasEntered ? 0.8 : 0,
                 transform: hasEntered ? 'translateY(0)' : 'translateY(20px)',

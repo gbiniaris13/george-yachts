@@ -92,7 +92,7 @@ export default function InteractiveTools() {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = `${GOLD}40`;
-                e.currentTarget.style.background = '#141414';
+                e.currentTarget.style.background = '#0D1B2A';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = '#222';

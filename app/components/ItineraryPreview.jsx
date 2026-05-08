@@ -146,7 +146,7 @@ export default function ItineraryPreview() {
     <section
       aria-label="AI itinerary preview"
       style={{
-        background: "linear-gradient(180deg, #0a0a0a 0%, #000000 100%)",
+        background: "linear-gradient(180deg, #0D1B2A 0%, #0D1B2A 100%)",
         padding: "clamp(72px, 10vw, 140px) clamp(24px, 5vw, 64px)",
         borderTop: "1px solid rgba(201,168,76,0.12)",
         borderBottom: "1px solid rgba(201,168,76,0.12)",
@@ -214,7 +214,7 @@ export default function ItineraryPreview() {
               letterSpacing: "0.32em",
               textTransform: "uppercase",
               fontWeight: 700,
-              color: streaming ? "#F8F5F0" : "#0a0a0a",
+              color: streaming ? "#F8F5F0" : "#0D1B2A",
               background: streaming
                 ? "rgba(0,0,0,0.7)"
                 : "linear-gradient(135deg, #E6C77A 0%, #C9A84C 100%)",
@@ -390,7 +390,7 @@ function SelectField({ label, value, onChange, options }) {
         }}
       >
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value} style={{ background: "#0a0a0a", color: "#F8F5F0" }}>
+          <option key={opt.value} value={opt.value} style={{ background: "#0D1B2A", color: "#F8F5F0" }}>
             {opt.label}
           </option>
         ))}

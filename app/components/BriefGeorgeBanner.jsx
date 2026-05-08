@@ -103,7 +103,7 @@ export default function BriefGeorgeBanner() {
               letterSpacing: "0.32em",
               textTransform: "uppercase",
               fontWeight: 700,
-              color: "#0a0a0a",
+              color: "#0D1B2A",
               textDecoration: "none",
               background: "linear-gradient(135deg, #E6C77A 0%, #C9A84C 100%)",
               border: "1px solid #C9A84C",

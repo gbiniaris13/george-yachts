@@ -59,7 +59,7 @@ export default function SimilarYachts({ items = [] }) {
               style={{
                 display: "block",
                 textDecoration: "none",
-                background: "#050505",
+                background: "#0D1B2A",
                 border: "1px solid rgba(201,168,76,0.15)",
                 overflow: "hidden",
                 transition: "transform 0.5s ease, border-color 0.5s ease",
@@ -71,7 +71,7 @@ export default function SimilarYachts({ items = [] }) {
                   position: "relative",
                   aspectRatio: "4 / 3",
                   background:
-                    "linear-gradient(135deg, #000 0%, #0a0a0a 50%, #000 100%)",
+                    "linear-gradient(135deg, #000 0%, #0D1B2A 50%, #000 100%)",
                   overflow: "hidden",
                 }}
               >

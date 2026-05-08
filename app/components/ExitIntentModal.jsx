@@ -214,7 +214,7 @@ export default function ExitIntentModal() {
         className="relative w-full max-w-[540px]"
         style={{
           background:
-            "linear-gradient(145deg, #050505 0%, #0a0a0a 55%, #050505 100%)",
+            "linear-gradient(145deg, #0D1B2A 0%, #0D1B2A 55%, #0D1B2A 100%)",
           border: "1px solid rgba(201,168,76,0.35)",
           boxShadow:
             "0 30px 80px rgba(0,0,0,0.6), 0 0 40px rgba(201,168,76,0.08)",
@@ -371,7 +371,7 @@ export default function ExitIntentModal() {
                   style={{
                     background:
                       "linear-gradient(135deg, #C9A24D 0%, #A67C2E 100%)",
-                    color: "#0a0a0a",
+                    color: "#0D1B2A",
                     fontFamily: "'Montserrat', sans-serif",
                     fontSize: "10px",
                     fontWeight: 700,

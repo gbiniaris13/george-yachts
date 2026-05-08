@@ -7,7 +7,7 @@ import ContactFormSection from "@/components/ContactFormSection";
 
 const YachtItinerariesClient = () => {
   return (
-    <div className="min-h-screen bg-gray-100 font-sans">
+    <div className="min-h-screen bg-[#F8F5F0] font-sans">
       <AboutUs
         heading="YACHT"
         subtitle="ITINERARIES"

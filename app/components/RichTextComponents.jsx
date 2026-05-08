@@ -74,7 +74,7 @@ export const RichTextComponents = {
       const cellStyle = (isHeader) => ({
         padding: "12px 16px",
         textAlign: "left",
-        color: isHeader ? "#F8F5F0" : "#1a1a1a",
+        color: isHeader ? "#F8F5F0" : "#0D1B2A",
         fontFamily: isHeader
           ? "var(--font-montserrat), Montserrat, sans-serif"
           : "Lato, var(--font-sans), sans-serif",
@@ -188,7 +188,7 @@ export const RichTextComponents = {
                   flex: "0 0 auto",
                   width: 130,
                   minHeight: 100,
-                  background: `#0a0a0a url(${sanityCardImg(y.image, 320)}) center/cover no-repeat`,
+                  background: `#0D1B2A url(${sanityCardImg(y.image, 320)}) center/cover no-repeat`,
                 }}
                 aria-hidden="true"
               />

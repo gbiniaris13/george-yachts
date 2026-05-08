@@ -131,28 +131,28 @@ const VillaSwiper = ({ villaData }) => {
                 </p>
                 <div className="py-4 max-w-xl md:w-full border-b border-gray-300">
                   <div className="grid grid-cols-2 gap-y-1 text-sm">
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       Bedrooms
                     </p>
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       {villa.bedrooms}
                     </p>
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       Facilities
                     </p>
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       {villa.facilities?.join(", ")}
                     </p>
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       Availability
                     </p>
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       {villa.availability}
                     </p>
                   </div>
                 </div>
                 <div className="flex justify-between items-center pb-6">
-                  <p className="text-gray-500 text-lg font-normal py-4 pe-2">
+                  <p className="text-[#9CA3AF] text-lg font-normal py-4 pe-2">
                     Rental Rate
                   </p>
                   <p className="text-[#02132d] text-xl font-bold">

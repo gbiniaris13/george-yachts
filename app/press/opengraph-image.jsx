@@ -9,7 +9,7 @@
 // the brand language stays consistent automatically.
 //
 // Visual spec from brief:
-//   • Background: Deep Navy #000000
+//   • Background: Deep Navy #0D1B2A
 //   • Top-left: small "GEORGE YACHTS" wordmark in ivory
 //   • Center: "Forbes" wordmark large (Times Bold)
 //   • Below Forbes: "AS FEATURED · 1 MAY 2026" gold uppercase

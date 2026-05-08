@@ -400,7 +400,7 @@ export default function PartnersClient() {
       {/* ═══════ HOW IT WORKS ═══════ */}
       <section className="py-20 md:py-28 px-6" style={{ backgroundColor: "#F8F5F0" }}>
         <div className="max-w-6xl mx-auto">
-          <p className="text-center mb-16" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.45em", textTransform: "uppercase", color: "#000000", opacity: 0.5 }}>
+          <p className="text-center mb-16" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.45em", textTransform: "uppercase", color: "#0D1B2A", opacity: 0.5 }}>
             H O W &nbsp; I T &nbsp; W O R K S
           </p>
           <div className="grid md:grid-cols-3 gap-12 md:gap-8">
@@ -427,7 +427,7 @@ export default function PartnersClient() {
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
                         fontSize: "20px",
                         fontWeight: 400,
-                        color: "#000000",
+                        color: "#0D1B2A",
                         lineHeight: 1.6,
                       }}
                     >
@@ -473,13 +473,13 @@ export default function PartnersClient() {
       {/* ═══════ BROKER TESTIMONIALS ═══════ */}
       <section className="py-20 md:py-28 px-6" style={{ backgroundColor: "#F8F5F0" }}>
         <div className="max-w-4xl mx-auto">
-          <p className="text-center mb-16" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.45em", textTransform: "uppercase", color: "#000000", opacity: 0.5 }}>
+          <p className="text-center mb-16" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.45em", textTransform: "uppercase", color: "#0D1B2A", opacity: 0.5 }}>
             W H A T &nbsp; T H E &nbsp; I N D U S T R Y &nbsp; S A Y S
           </p>
           {testimonials.map((t, i) => (
             <div key={i}>
               <blockquote className="text-center mb-6">
-                <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: "italic", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 400, lineHeight: 1.8, color: "#000000", maxWidth: "680px", margin: "0 auto" }}>
+                <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: "italic", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 400, lineHeight: 1.8, color: "#0D1B2A", maxWidth: "680px", margin: "0 auto" }}>
                   &ldquo;{t.quote}&rdquo;
                 </p>
               </blockquote>
@@ -598,7 +598,7 @@ export default function PartnersClient() {
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "clamp(28px, 4vw, 44px)",
               fontWeight: 400,
-              color: "#000000",
+              color: "#0D1B2A",
               marginBottom: "12px",
             }}
           >
@@ -609,7 +609,7 @@ export default function PartnersClient() {
               fontFamily: "'Montserrat', sans-serif",
               fontSize: "14px",
               fontWeight: 300,
-              color: "#000000",
+              color: "#0D1B2A",
               opacity: 0.6,
               lineHeight: 1.7,
               marginBottom: "32px",
@@ -642,7 +642,7 @@ export default function PartnersClient() {
                   fontFamily: "'Montserrat', sans-serif",
                   borderColor: "rgba(13, 27, 42, 0.15)",
                   borderRadius: "2px",
-                  color: "#000000",
+                  color: "#0D1B2A",
                   backgroundColor: "#fff",
                 }}
               />
@@ -653,7 +653,7 @@ export default function PartnersClient() {
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
                   backgroundColor: "#C9A84C",
-                  color: "#000000",
+                  color: "#0D1B2A",
                   borderRadius: "2px",
                   border: "none",
                   cursor: loading ? "wait" : "pointer",
@@ -665,10 +665,10 @@ export default function PartnersClient() {
             </form>
           ) : (
             <div className="mb-8 p-6" style={{ backgroundColor: "rgba(201, 168, 76, 0.08)", borderRadius: "2px" }}>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", color: "#000000", marginBottom: "12px" }}>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", color: "#0D1B2A", marginBottom: "12px" }}>
                 Thank you! Check your inbox shortly.
               </p>
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", color: "#000000", opacity: 0.7, marginBottom: "16px" }}>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", color: "#0D1B2A", opacity: 0.7, marginBottom: "16px" }}>
                 Or open the Partnership Programme directly:
               </p>
               <a
@@ -688,7 +688,7 @@ export default function PartnersClient() {
                   letterSpacing: "0.22em",
                   textTransform: "uppercase",
                   fontWeight: 600,
-                  color: "#000000",
+                  color: "#0D1B2A",
                   background: "#C9A84C",
                   textDecoration: "none",
                   borderRadius: "2px",
@@ -699,7 +699,7 @@ export default function PartnersClient() {
             </div>
           )}
 
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", fontWeight: 300, color: "#000000", opacity: 0.5 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", fontWeight: 300, color: "#0D1B2A", opacity: 0.5 }}>
             Or{" "}
             <a
               href="https://calendly.com/george-georgeyachts/30min"

@@ -12,11 +12,11 @@
   --gy-gold-dark: #A67C2E;
 
   /* Backgrounds */
-  --gy-black: #0a0a0a;
+  --gy-black: #0D1B2A;
   /* Phase 27 (Forbes-launch eve, 2026-05-05) — Boss palette directive:
      site is BLACK / GOLD / WHITE only, no blue/navy. Variable name
      kept for backwards compatibility but value is pure black. */
-  --gy-navy: #000000;
+  --gy-navy: #0D1B2A;
 
   /* Text */
   --gy-white: #ffffff;
@@ -682,7 +682,7 @@
 .btn-primary {
   display: inline-block;
   background: linear-gradient(135deg, #E6C77A 0%, #C9A84C 100%);
-  color: #0a0a0a;
+  color: #0D1B2A;
   font-weight: 700;
   font-size: 0.75rem;
   letter-spacing: 0.32em;
@@ -775,7 +775,7 @@
   inset: 0;
   background-size: cover;
   background-position: center;
-  background-color: #050a14;
+  background-color: #0D1B2A;
   transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1);
   will-change: opacity, transform;
   transform-origin: center center;

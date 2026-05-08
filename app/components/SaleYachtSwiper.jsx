@@ -131,28 +131,28 @@ const SaleYachtSwiper = ({ yachtData }) => {
                 </p>
                 <div className="py-4 max-w-xl md:w-full border-b border-gray-300">
                   <div className="grid grid-cols-2 gap-y-1 text-sm">
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       Length
                     </p>
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       {yacht.length}
                     </p>
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       Year built / refit
                     </p>
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       {yacht.yearBuiltRefit}
                     </p>
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       Sleeps
                     </p>
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       {yacht.sleeps}
                     </p>
                   </div>
                 </div>
                 <div className="flex justify-between items-center pb-6">
-                  <p className="text-gray-500 text-lg font-normal py-4 pe-2">
+                  <p className="text-[#9CA3AF] text-lg font-normal py-4 pe-2">
                     Asking Price
                   </p>
                   <p className="text-[#02132d] text-xl font-bold">

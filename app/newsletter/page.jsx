@@ -68,7 +68,7 @@ export default function NewsletterPage() {
       style={{
         minHeight: "100vh",
         background: "#F8F5F0",
-        color: "#000000",
+        color: "#0D1B2A",
         padding: "0",
       }}
     >
@@ -149,7 +149,7 @@ export default function NewsletterPage() {
           share your address. Reply directly any time —{" "}
           <a
             href="mailto:george@georgeyachts.com"
-            style={{ color: "#000000", textDecoration: "underline" }}
+            style={{ color: "#0D1B2A", textDecoration: "underline" }}
           >
             george@georgeyachts.com
           </a>

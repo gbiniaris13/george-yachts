@@ -91,7 +91,7 @@ export default function GoldCurtain() {
         style={{
           width: "50%",
           background:
-            "linear-gradient(90deg, #000 0%, #050505 80%, rgba(201,168,76,0.08) 100%)",
+            "linear-gradient(90deg, #000 0%, #0D1B2A 80%, rgba(201,168,76,0.08) 100%)",
           borderRight: "1px solid rgba(201,168,76,0.35)",
           transform: opening ? "translateX(-100%)" : "translateX(0)",
           transition:
@@ -106,7 +106,7 @@ export default function GoldCurtain() {
         style={{
           width: "50%",
           background:
-            "linear-gradient(270deg, #000 0%, #050505 80%, rgba(201,168,76,0.08) 100%)",
+            "linear-gradient(270deg, #000 0%, #0D1B2A 80%, rgba(201,168,76,0.08) 100%)",
           borderLeft: "1px solid rgba(201,168,76,0.35)",
           transform: opening ? "translateX(100%)" : "translateX(0)",
           transition:

@@ -182,7 +182,7 @@ export default function ForbesReferrerWelcome() {
           padding: "14px 24px",
           background: "linear-gradient(135deg, #E6C77A 0%, #C9A84C 100%)",
           border: "1px solid #C9A84C",
-          color: "#0a0a0a",
+          color: "#0D1B2A",
           fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', sans-serif",
           fontSize: 11,
           fontWeight: 500,

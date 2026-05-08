@@ -126,7 +126,7 @@
   gap: 0;
   text-decoration: none;
   color: inherit;
-  background: #050505;
+  background: #0D1B2A;
   border: 1px solid rgba(201,168,76,0.06);
   overflow: hidden;
   transition: border-color 0.5s ease;
@@ -323,7 +323,7 @@
   position: relative;
   aspect-ratio: 4/5;
   overflow: hidden;
-  background: #050505;
+  background: #0D1B2A;
 }
 
 .blog-card__img {

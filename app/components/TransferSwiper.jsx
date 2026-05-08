@@ -134,22 +134,22 @@ const TransferSwiper = ({ transferData }) => {
                 </p>
                 <div className="py-4 max-w-xl md:w-full border-b border-gray-300">
                   <div className="grid grid-cols-2 gap-y-1 text-sm">
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       Capacity
                     </p>
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       {transfer.capacity}
                     </p>
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       Includes
                     </p>
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       {transfer.includes?.join(", ")}
                     </p>
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       Availability
                     </p>
-                    <p className="text-gray-500 font-normal text-base">
+                    <p className="text-[#9CA3AF] font-normal text-base">
                       {transfer.availability}
                     </p>
                   </div>

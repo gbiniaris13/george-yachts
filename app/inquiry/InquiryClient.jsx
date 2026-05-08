@@ -316,7 +316,7 @@ export default function InquiryClient() {
               maxWidth: 720,
               border: "1px solid rgba(201,168,76,0.32)",
               boxShadow: "0 24px 56px rgba(0,0,0,0.45)",
-              background: "#0a0a0a",
+              background: "#0D1B2A",
               animation: "gy-cover-reveal 0.9s cubic-bezier(0.2, 0.8, 0.2, 1)",
             }}
           >
@@ -570,7 +570,7 @@ const card = {
   width: "100%",
   maxWidth: 640,
   padding: "36px 28px 30px",
-  background: "#050505",
+  background: "#0D1B2A",
   border: "1px solid rgba(201,168,76,0.16)",
   animation: "fade-in 0.25s ease both",
 };

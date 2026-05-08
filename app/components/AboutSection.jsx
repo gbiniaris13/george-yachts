@@ -18,7 +18,7 @@ const AboutSection = ({
           <br></br> GEORGE YACHTS
         </h2>
 
-        <div className="max-w-3xl mx-auto text-center text-gray-700 space-y-6 text-lg md:text-2xl leading-relaxed">
+        <div className="max-w-3xl mx-auto text-center text-[#9CA3AF] space-y-6 text-lg md:text-2xl leading-relaxed">
           {paragraphs.map((text, index) => (
             <p key={index}>{text}</p>
           ))}

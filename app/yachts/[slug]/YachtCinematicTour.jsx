@@ -48,7 +48,7 @@ export default function YachtCinematicTour({ images = [], yachtName = "" }) {
   // tour. Root cause: each photo was using a CSS background-image
   // and the browser only started fetching when the photo became
   // active. On a fast scroll the next photo wasn't decoded yet, so
-  // the dark fallback background-color (#050a14) showed through
+  // the dark fallback background-color (#0D1B2A) showed through
   // for the duration of the load. Fix: preload every tour photo
   // immediately on mount so they're already in the cache by the
   // time the user scrolls to them.

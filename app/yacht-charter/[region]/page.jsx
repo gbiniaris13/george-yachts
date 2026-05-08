@@ -313,7 +313,7 @@ export default async function RegionPage({ params }) {
         <section
           style={{
             padding: "clamp(40px, 6vw, 72px) clamp(20px, 4vw, 56px)",
-            background: "#050505",
+            background: "#0D1B2A",
             borderTop: "1px solid rgba(201,168,76,0.18)",
             borderBottom: "1px solid rgba(201,168,76,0.18)",
           }}
@@ -435,7 +435,7 @@ export default async function RegionPage({ params }) {
                     className="group"
                     style={{
                       display: "block",
-                      background: "#0a0a0a",
+                      background: "#0D1B2A",
                       border: "1px solid rgba(255,255,255,0.06)",
                       textDecoration: "none",
                       transition:
@@ -535,7 +535,7 @@ export default async function RegionPage({ params }) {
         <section
           style={{
             padding: "clamp(40px, 6vw, 72px) clamp(20px, 4vw, 56px)",
-            background: "#050505",
+            background: "#0D1B2A",
             borderTop: "1px solid rgba(201,168,76,0.18)",
           }}
         >

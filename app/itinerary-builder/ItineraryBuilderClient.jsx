@@ -231,7 +231,7 @@ export default function ItineraryBuilderClient() {
         className="itinerary-layout"
       >
         {/* MAP */}
-        <div style={{ position: 'relative', background: '#060d1f', border: '1px solid rgba(201,168,76,0.12)', borderRadius: 16, overflow: 'hidden', aspectRatio: '5/4', boxShadow: 'inset 0 0 80px rgba(0,0,0,0.5), 0 8px 32px rgba(0,0,0,0.4)' }}>
+        <div style={{ position: 'relative', background: '#0D1B2A', border: '1px solid rgba(201,168,76,0.12)', borderRadius: 16, overflow: 'hidden', aspectRatio: '5/4', boxShadow: 'inset 0 0 80px rgba(0,0,0,0.5), 0 8px 32px rgba(0,0,0,0.4)' }}>
           {HAS_MAPBOX ? (
             <MapboxRouteMap
               islands={ISLANDS}
@@ -245,7 +245,7 @@ export default function ItineraryBuilderClient() {
               <radialGradient id="seaGlow" cx="45%" cy="45%" r="65%">
                 <stop offset="0%" stopColor="#0f1d3d" />
                 <stop offset="40%" stopColor="#0a1428" />
-                <stop offset="100%" stopColor="#040810" />
+                <stop offset="100%" stopColor="#0D1B2A" />
               </radialGradient>
               {/* Subtle water texture */}
               <radialGradient id="waterSheen" cx="30%" cy="30%" r="50%">
@@ -255,7 +255,7 @@ export default function ItineraryBuilderClient() {
               {/* Land gradient */}
               <linearGradient id="landGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#1a1a2e" />
-                <stop offset="100%" stopColor="#0f0f1a" />
+                <stop offset="100%" stopColor="#0D1B2A" />
               </linearGradient>
               {/* Glow filter for islands */}
               <filter id="glow">
@@ -482,7 +482,7 @@ export default function ItineraryBuilderClient() {
                 {selected.map((island, i) => (
                   <div key={island.id} style={{
                     display: 'flex', alignItems: 'center', gap: 12,
-                    padding: '10px 12px', background: '#1a1a1a', borderRadius: 6,
+                    padding: '10px 12px', background: '#0D1B2A', borderRadius: 6,
                     border: '1px solid #2a2a2a',
                   }}>
                     <div style={{
@@ -548,7 +548,7 @@ export default function ItineraryBuilderClient() {
               {routeStats.legs.map((leg, i) => (
                 <div key={i} style={{
                   display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  padding: '6px 0', borderBottom: '1px solid #1a1a1a',
+                  padding: '6px 0', borderBottom: '1px solid #0D1B2A',
                   fontFamily: "'Montserrat'", fontSize: 11,
                 }}>
                   <span style={{ color: 'rgba(255,255,255,0.5)' }}>{leg.from} → {leg.to}</span>
@@ -636,7 +636,7 @@ export default function ItineraryBuilderClient() {
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              maxWidth: 460, width: '100%', background: '#0a0a0a',
+              maxWidth: 460, width: '100%', background: '#0D1B2A',
               border: `1px solid ${GOLD}66`, padding: '28px 28px 24px',
               position: 'relative',
             }}

@@ -191,7 +191,7 @@ export default function HotLeadIGPopup() {
     >
       <div
         style={{
-          background: 'linear-gradient(145deg, #0a0a0a, #1a1a1a)',
+          background: 'linear-gradient(145deg, #0D1B2A, #0D1B2A)',
           border: `1px solid ${GOLD}30`,
           borderRadius: 20,
           padding: '36px 32px',
@@ -329,7 +329,7 @@ export default function HotLeadIGPopup() {
                   marginTop: 6,
                   padding: '14px',
                   background: submitting ? 'rgba(201,168,76,0.3)' : GOLD,
-                  color: '#0a0a0a',
+                  color: '#0D1B2A',
                   border: 'none', borderRadius: 10,
                   fontSize: 12, fontFamily: "'Montserrat', sans-serif",
                   fontWeight: 600, letterSpacing: '0.15em',

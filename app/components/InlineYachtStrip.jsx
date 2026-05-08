@@ -74,8 +74,8 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
           style={{
             minHeight: "180px",
             background: yacht.image
-              ? `#0a0a0a url(${yacht.image}) center/cover no-repeat`
-              : "#0a0a0a",
+              ? `#0D1B2A url(${yacht.image}) center/cover no-repeat`
+              : "#0D1B2A",
           }}
         />
         {/* Body */}

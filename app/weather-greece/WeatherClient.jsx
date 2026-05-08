@@ -107,7 +107,7 @@ export default function WeatherClient() {
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 48 }}>
           {REGIONS.map((r, i) => (
-            <div key={i} style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid #1a1a1a', borderRadius: 12, padding: 24 }}>
+            <div key={i} style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid #0D1B2A', borderRadius: 12, padding: 24 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
                 <span style={{ fontSize: 24 }}>{r.icon}</span>
                 <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: '#fff', fontWeight: 400, margin: 0 }}>{r.name}</h3>

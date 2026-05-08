@@ -124,7 +124,7 @@ export default async function IslandPage({ params }) {
         {/* HERO */}
         <header
           style={{
-            background: "linear-gradient(180deg, #0a0a0a 0%, #000 100%)",
+            background: "linear-gradient(180deg, #0D1B2A 0%, #000 100%)",
             padding: "120px 24px 64px",
             borderBottom: "1px solid rgba(201,168,76,0.15)",
             textAlign: "center",
@@ -275,8 +275,8 @@ export default async function IslandPage({ params }) {
                         width: "100%",
                         aspectRatio: "4 / 3",
                         background: y.image
-                          ? `#0a0a0a url(${sanityCardImg(y.image, 600)}) center/cover no-repeat`
-                          : "#0a0a0a",
+                          ? `#0D1B2A url(${sanityCardImg(y.image, 600)}) center/cover no-repeat`
+                          : "#0D1B2A",
                       }}
                       aria-hidden={!y.image}
                     />
@@ -615,7 +615,7 @@ export default async function IslandPage({ params }) {
                   fontWeight: 700,
                   padding: "14px 26px",
                   background: "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
-                  color: "#000000",
+                  color: "#0D1B2A",
                   border: "1px solid rgba(201,168,76,0.6)",
                   textDecoration: "none",
                 }}

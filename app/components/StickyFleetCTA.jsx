@@ -166,7 +166,7 @@ export default function StickyFleetCTA({ yachtCount: yachtCountProp } = {}) {
             letterSpacing: "0.32em",
             textTransform: "uppercase",
             fontWeight: 600,
-            color: "#000000",
+            color: "#0D1B2A",
             textDecoration: "none",
             background:
               "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",

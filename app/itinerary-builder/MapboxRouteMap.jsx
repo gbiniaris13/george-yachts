@@ -164,7 +164,7 @@ export default function MapboxRouteMap({
           el.setAttribute("aria-label", island.name);
           el.style.cssText = `
             width:${dotSize}px;height:${dotSize}px;border-radius:50%;
-            background:${dotColor};border:2px solid #0a0a0a;
+            background:${dotColor};border:2px solid #0D1B2A;
             cursor:pointer;padding:0;
             box-shadow:0 0 0 2px ${GOLD}55, 0 2px 6px rgba(0,0,0,0.5);
             transition:transform 0.18s ease, background 0.18s ease;
@@ -179,7 +179,7 @@ export default function MapboxRouteMap({
             popupRef.current
               .setLngLat([island.lng, island.lat])
               .setHTML(
-                `<div style="font-family:'Montserrat',sans-serif;font-size:11px;color:#000000;padding:2px 4px"><strong>${island.name}</strong><br/><span style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:#888">${island.region || ""}</span></div>`
+                `<div style="font-family:'Montserrat',sans-serif;font-size:11px;color:#0D1B2A;padding:2px 4px"><strong>${island.name}</strong><br/><span style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:#888">${island.region || ""}</span></div>`
               )
               .addTo(map);
           });
@@ -275,7 +275,7 @@ export default function MapboxRouteMap({
         style={{
           position: "absolute",
           inset: 0,
-          background: "#0a0a0a",
+          background: "#0D1B2A",
           borderRadius: 4,
         }}
         role="application"
