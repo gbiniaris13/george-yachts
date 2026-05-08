@@ -1979,72 +1979,80 @@ a.gy-fancy-link:hover {
 }
 
 
-/* Phase 27i (2026-05-07) — luxury cursor companion CSS.
-   Pairs with CustomCursor.jsx. The ring's `data-state` attribute
-   switches the look without any React re-render — pure CSS state
-   machine driven by the cursor JS.
+/* Boss-spec dual cursor (2026-05-08) — Bottega / Loewe / Six Senses
+   reference set. Pairs with CustomCursor.jsx.
 
-   States:
-     default     — thin gold outline ring around the dot (44 px)
-     interactive — ring fills with a soft champagne radial gradient
-                   (when over <a>, <button>, or [data-cursor])
-     text        — ring collapses to a 2 px × 26 px vertical I-beam
-                   (when over inputs and contenteditable)
-     labelled    — adds a small Cinzel small-caps label to the
-                   right of the ring with the data-cursor value
-                   ("Brief", "View", "Read", etc.)
+   States (data-state on the ring element):
+     default     — 32 px transparent ring, gold border 0.5α
+     interactive — over a/button/[data-cursor] without label/image:
+                   ring grows to 48 px, border 0.9α; dot fades out
+     labelled    — over [data-cursor="…"] with a custom label:
+                   ring 64 px, label rendered INSIDE the ring,
+                   gold Switzer 9 px ALL CAPS letter-spacing 0.15em
+     magnetic    — over hero video + yacht card images
+                   ([data-cursor-magnetic]): same geometry as
+                   labelled, label text "VIEW"
+     text        — over text inputs: ring collapses to a vertical
+                   gold I-beam line.
 
-   Filter / mix-blend kept conservative so the cursor reads on
-   both navy hero + on bright fleet cards without clipping. */
+   The dot lives in its own element — its opacity is driven directly
+   from CustomCursor.jsx so there's no CSS dependency between the
+   two. */
 
 .gy-luxe-cursor-ring {
-  width: 44px;
-  height: 44px;
-  margin: -22px 0 0 -22px; /* center on transform origin */
-  border: 1px solid rgba(201, 168, 76, 0.55);
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px; /* centre on transform origin */
+  border: 1px solid rgba(201, 168, 76, 0.5);
   border-radius: 50%;
   background: transparent;
-  box-shadow: 0 0 16px rgba(201, 168, 76, 0.18);
   transition:
-    width 320ms cubic-bezier(0.2, 0.9, 0.3, 1),
-    height 320ms cubic-bezier(0.2, 0.9, 0.3, 1),
-    margin 320ms cubic-bezier(0.2, 0.9, 0.3, 1),
-    background 280ms ease,
-    border-color 280ms ease,
-    border-radius 280ms ease,
-    box-shadow 320ms ease,
-    opacity 200ms ease;
+    width 0.3s ease,
+    height 0.3s ease,
+    margin 0.3s ease,
+    border-color 0.3s ease,
+    border-radius 0.3s ease,
+    background 0.3s ease,
+    opacity 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Interactive — over links / buttons / [data-cursor] without text label.
-   Ring expands and fills with a soft champagne-gold gradient, dot at
-   the center reads as "ready to click". */
+/* Interactive — over a / button / [data-cursor] without label or
+   image. Ring grows to 48 px, border darkens. The dot fades to 0
+   from the JS layer (Boss spec). */
 .gy-luxe-cursor-ring[data-state="interactive"] {
-  width: 56px;
-  height: 56px;
-  margin: -28px 0 0 -28px;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(248, 245, 240, 0.18) 0%,
-    rgba(201, 168, 76, 0.22) 45%,
-    rgba(201, 168, 76, 0.05) 80%,
-    rgba(201, 168, 76, 0) 100%
-  );
-  border-color: rgba(248, 245, 240, 0.65);
-  box-shadow:
-    0 0 24px rgba(201, 168, 76, 0.32),
-    inset 0 0 12px rgba(248, 245, 240, 0.18);
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
+  border-color: rgba(201, 168, 76, 0.9);
 }
 
-/* Text — over inputs / textareas. Ring collapses to a thin gold
-   I-beam line, like a polished serif insertion mark. */
+/* Magnetic — hero video + yacht card images. Ring grows to 64 px
+   and the label sits CENTRED inside the ring with text "VIEW"
+   (or whatever data-cursor-magnetic says). */
+.gy-luxe-cursor-ring[data-state="magnetic"] {
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  border-color: rgba(201, 168, 76, 0.9);
+}
+
+/* Labelled — same 64 px geometry as magnetic, label inside. The
+   label content is set by JS from the data-cursor attribute. */
+.gy-luxe-cursor-ring[data-state="labelled"] {
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  border-color: rgba(201, 168, 76, 0.9);
+}
+
+/* Text — collapses to a thin gold I-beam over inputs / textareas. */
 .gy-luxe-cursor-ring[data-state="text"] {
   width: 2px;
-  height: 28px;
-  margin: -14px 0 0 -1px;
+  height: 26px;
+  margin: -13px 0 0 -1px;
   border: 0;
   border-radius: 1px;
   background: linear-gradient(
@@ -2055,52 +2063,23 @@ a.gy-fancy-link:hover {
     rgba(201, 168, 76, 0.85) 82%,
     rgba(201, 168, 76, 0) 100%
   );
-  box-shadow:
-    0 0 8px rgba(201, 168, 76, 0.5),
-    0 0 1px rgba(248, 245, 240, 0.95);
-}
-
-/* Labelled — same expanded ring as interactive, plus a small
-   Cinzel small-caps label floats to the right ("Brief", "View",
-   "Read"). The label content is set by the JS from the
-   data-cursor attribute on the hovered element. */
-.gy-luxe-cursor-ring[data-state="labelled"] {
-  width: 56px;
-  height: 56px;
-  margin: -28px 0 0 -28px;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(248, 245, 240, 0.20) 0%,
-    rgba(201, 168, 76, 0.28) 45%,
-    rgba(201, 168, 76, 0.05) 80%,
-    rgba(201, 168, 76, 0) 100%
-  );
-  border-color: rgba(248, 245, 240, 0.7);
-  box-shadow:
-    0 0 28px rgba(201, 168, 76, 0.4),
-    inset 0 0 14px rgba(248, 245, 240, 0.22);
 }
 
 .gy-luxe-cursor-label {
-  position: absolute;
-  left: calc(100% + 12px);
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: "Cinzel", "Trajan Pro", Georgia, serif;
-  font-weight: 500;
+  font-family: var(--gy-font-ui);
+  font-weight: 400;
   font-size: 9px;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #F8F5F0;
+  color: #C9A84C;
   white-space: nowrap;
-  text-shadow: 0 1px 2px rgba(13, 27, 42, 0.6);
   opacity: 0;
-  transform-origin: left center;
-  transition: opacity 200ms ease 60ms;
   pointer-events: none;
+  transition: opacity 0.2s ease 60ms;
 }
 
-.gy-luxe-cursor-ring[data-state="labelled"] .gy-luxe-cursor-label {
+.gy-luxe-cursor-ring[data-state="labelled"] .gy-luxe-cursor-label,
+.gy-luxe-cursor-ring[data-state="magnetic"] .gy-luxe-cursor-label {
   opacity: 1;
 }
 

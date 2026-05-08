@@ -58,7 +58,7 @@ function SelectionCard({ slug, label, name, specs, price, note, image, overlay }
     <Link
       href={`/yachts/${slug}`}
       className="gy-selection-card group relative block overflow-hidden"
-      data-cursor="View"
+      data-cursor-magnetic="VIEW"
     >
       <div
         aria-hidden="true"

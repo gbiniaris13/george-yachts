@@ -28,7 +28,7 @@ function WorldCard({ slug, label, cardTitle, cardSubline, heroImage }) {
     <Link
       href={`/destinations/${slug}`}
       className="gy-world-card group relative block overflow-hidden"
-      data-cursor="Discover"
+      data-cursor-magnetic="DISCOVER"
     >
       <div
         className="absolute inset-0 bg-cover bg-center transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"

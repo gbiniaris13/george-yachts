@@ -119,6 +119,7 @@ function HeroBackgroundVideo() {
       playsInline
       aria-hidden="true"
       onError={() => setFailed(true)}
+      data-cursor-magnetic="VIEW"
       style={{
         position: "absolute",
         inset: 0,

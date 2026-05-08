@@ -312,6 +312,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
       <ViewTransitionLink
         href={`/yachts/${slug}`}
         className="fleet-card__image-link"
+        data-cursor-magnetic="VIEW"
         onClick={() => {
           // N.1 — fleet_card_clicked
           try {
