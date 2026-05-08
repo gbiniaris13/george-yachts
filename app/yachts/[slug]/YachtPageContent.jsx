@@ -31,6 +31,55 @@ import WhatsAppEnquiry from '@/app/components/WhatsAppEnquiry';
 import Breadcrumbs from '@/app/components/Breadcrumbs';
 import BreadcrumbSchema from '@/app/components/BreadcrumbSchema';
 import PriceBlock from '@/app/components/PriceBlock';
+// Chapter 03 (2026-05-08) — region-aware default sample itinerary
+// so every yacht detail page shows the "Sample 7-Day Route"
+// section, not just yachts whose Sanity record carries a hand-
+// curated itinerary.
+import { resolveSampleItinerary } from '@/lib/sample-itineraries';
+// Chapter 03 (2026-05-08) — feature icons. Replaces the generic
+// ✓ checkmark on every feature with a context-matched glyph
+// (wifi → WifiIcon, BBQ → FlameIcon, etc.). Falls back to the
+// gold checkmark for keywords we don't recognise.
+import {
+  Wifi, Flame, Snowflake, Droplet, Anchor, Sun, Music, Tv,
+  Utensils, Wind, Sailboat, Waves, Sparkles, Lightbulb, ShowerHead,
+  Bath, Bed, Compass, Refrigerator, ChefHat, GlassWater, Check,
+} from 'lucide-react';
+
+// Keyword-to-icon map. Matches case-insensitively against the
+// feature string. First hit wins, so order specific keywords
+// before generic ones (e.g. "watermaker" before "water").
+const FEATURE_ICON_MAP = [
+  [/wi[- ]?fi|wireless/i, Wifi],
+  [/bbq|barbecue|grill/i, Flame],
+  [/air[- ]?cond|a\.?c\.?\b|climate/i, Snowflake],
+  [/watermaker|desalin/i, Droplet],
+  [/stabili[sz]er|seakeeper|gyro/i, Waves],
+  [/anchor|mooring/i, Anchor],
+  [/sundeck|sunpad|sunbath|jacuzzi|pool/i, Sun],
+  [/sound[- ]?system|stereo|speaker|audio/i, Music],
+  [/tv|television|cinema|screen/i, Tv],
+  [/dining|table service|formal meal/i, Utensils],
+  [/water[- ]?toy|paddle|kayak|sup\b/i, Sailboat],
+  [/sail|rigging|spinnaker/i, Sailboat],
+  [/light(ing)?|led|chandelier/i, Lightbulb],
+  [/shower|rain head/i, ShowerHead],
+  [/bath|tub|spa/i, Bath],
+  [/cabin|stateroom|bedroom|berth/i, Bed],
+  [/compass|navigation|chart plotter|gps/i, Compass],
+  [/fridge|freezer|refriger/i, Refrigerator],
+  [/chef|cook|galley|kitchen/i, ChefHat],
+  [/wine|champagne|bar|cellar/i, GlassWater],
+  [/wind|breeze/i, Wind],
+  [/sparkle|polish|premium/i, Sparkles],
+];
+
+function iconForFeature(text = '') {
+  for (const [regex, Icon] of FEATURE_ICON_MAP) {
+    if (regex.test(text)) return Icon;
+  }
+  return Check;
+}
 import ExpressInquiryModal from '@/app/components/ExpressInquiryModal';
 import { isPerPerson } from '@/lib/pricing';
 
@@ -458,6 +507,12 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
   const { t } = useI18n();
   const [modalOpen, setModalOpen] = useState(false);
   const [stickyVisible, setStickyVisible] = useState(false);
+  // Chapter 03 (2026-05-08) — resolve a sample itinerary for this
+  // yacht. Sanity-curated route wins; otherwise fall back to a
+  // region-appropriate Boss-approved 7-day default. Guaranteed to
+  // return an object with .days[] for any yacht — the section will
+  // always render below.
+  const sampleItinerary = resolveSampleItinerary(yacht);
 
   // GA4 yacht_view event — fires once per yacht detail mount.
   useEffect(() => {
@@ -653,12 +708,17 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             <div className="container">
               <h2 className="yacht-features__title">{t('yacht.featuresTitle', 'What Features Make')} {yacht.name} {t('yacht.standOut', 'Stand Out')}?</h2>
               <ul className="yacht-features__list">
-                {yacht.features.map((feature, index) => (
-                  <li key={index} className="yacht-features__item">
-                    <span className="yacht-features__check">✓</span>
-                    {feature}
-                  </li>
-                ))}
+                {yacht.features.map((feature, index) => {
+                  const Icon = iconForFeature(feature);
+                  return (
+                    <li key={index} className="yacht-features__item">
+                      <span className="yacht-features__check" aria-hidden="true">
+                        <Icon width={16} height={16} strokeWidth={1.6} />
+                      </span>
+                      {feature}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </section>
@@ -744,7 +804,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             which is safe to publish. */}
 
         {/* D.7 — SAMPLE 7-DAY ROUTE */}
-        {yacht.sampleItinerary && Array.isArray(yacht.sampleItinerary.days) && yacht.sampleItinerary.days.length > 0 && (
+        {sampleItinerary && Array.isArray(sampleItinerary.days) && sampleItinerary.days.length > 0 && (
           <section className="yacht-itinerary reveal" style={{ background: '#0a0a0a', padding: '64px 24px' }}>
             <div className="container" style={{ maxWidth: 880, margin: '0 auto' }}>
               <p
@@ -774,7 +834,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
               >
                 What a week aboard <em style={{ color: '#DAA520', fontStyle: 'italic' }}>{yacht.name}</em> can look like
               </h2>
-              {yacht.sampleItinerary.totalDistance && (
+              {sampleItinerary.totalDistance && (
                 <p
                   style={{
                     fontFamily: "'Montserrat', sans-serif",
@@ -786,7 +846,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                     margin: '0 0 36px',
                   }}
                 >
-                  Total: {yacht.sampleItinerary.totalDistance}
+                  Total: {sampleItinerary.totalDistance}
                 </p>
               )}
 
@@ -796,7 +856,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   needed. Aria-hidden because the timeline below is the
                   authoritative content. */}
               <svg
-                viewBox={`0 0 ${Math.max(yacht.sampleItinerary.days.length * 90, 540)} 80`}
+                viewBox={`0 0 ${Math.max(sampleItinerary.days.length * 90, 540)} 80`}
                 preserveAspectRatio="xMidYMid meet"
                 aria-hidden="true"
                 style={{
@@ -808,7 +868,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                 }}
               >
                 {(() => {
-                  const n = yacht.sampleItinerary.days.length;
+                  const n = sampleItinerary.days.length;
                   const w = Math.max(n * 90, 540);
                   const padX = 30;
                   const innerW = w - padX * 2;
@@ -842,7 +902,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                             fontSize="9"
                             letterSpacing="0.18em"
                           >
-                            D{yacht.sampleItinerary.days[i].day || i + 1}
+                            D{sampleItinerary.days[i].day || i + 1}
                           </text>
                         </g>
                       ))}
@@ -859,7 +919,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   borderLeft: '1px solid rgba(218,165,32,0.3)',
                 }}
               >
-                {yacht.sampleItinerary.days.map((leg, i) => (
+                {sampleItinerary.days.map((leg, i) => (
                   <li
                     key={i}
                     style={{
