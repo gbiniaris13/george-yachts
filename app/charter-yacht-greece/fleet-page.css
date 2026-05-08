@@ -78,8 +78,12 @@
   height: 140%;
   object-fit: cover;
   object-position: center 40%;
-  filter: grayscale(100%) !important;
-  -webkit-filter: grayscale(100%) !important;
+  /* 2026-05-08 (Chapter 01) — Boss directive: keep natural colours.
+     The previous filter:grayscale(100%) was added back when the
+     fleet hero used a static editorial Sanity image; now that the
+     hero is a Boss-curated catamaran video on turquoise water, the
+     desaturation killed the entire reason he picked the clip.
+     Removed both the standard and -webkit-prefixed grayscale lines. */
   will-change: transform;
 }
 
