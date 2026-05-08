@@ -15,8 +15,66 @@
 // behaviour downstream is identical — it's only the entrance
 // experience that gets upgraded.
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
+
+// Chapter 06.5 (2026-05-08) — looping video backgrounds for the
+// FleetCTAs split-screen panels (Private + Explorer). Same iOS-
+// safe pattern as the homepage hero — autoplay/muted/loop/
+// playsInline plus an `onError` + `play().catch()` handler that
+// falls back to the frame-1 poster image if iOS Low Power Mode
+// (or any other policy) blocks autoplay. Pointer-events-none on
+// the video element so the entire panel still works as one
+// clickable Link.
+function PanelBackgroundVideo({ videoBase, posterSrc }) {
+  const videoRef = useRef(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    const p = v.play?.();
+    if (p && typeof p.then === "function") {
+      p.catch(() => setFailed(true));
+    }
+  }, []);
+
+  if (failed) {
+    return (
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+        style={{
+          backgroundImage: `url(${posterSrc})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundColor: "#0D1B2A",
+        }}
+      />
+    );
+  }
+
+  return (
+    <video
+      ref={videoRef}
+      poster={posterSrc}
+      preload="auto"
+      autoPlay
+      loop
+      muted
+      playsInline
+      aria-hidden="true"
+      onError={() => setFailed(true)}
+      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+      style={{ pointerEvents: "none", backgroundColor: "#0D1B2A" }}
+    >
+      <source src={`/videos/${videoBase}.webm`} type="video/webm" />
+      <source src={`/videos/${videoBase}.mp4`} type="video/mp4" />
+    </video>
+  );
+}
 
 const fmtK = (n) => (n >= 1000 ? `€${Math.round(n / 1000)}K` : `€${n.toLocaleString()}`);
 
@@ -50,25 +108,51 @@ function FleetPanel({
   image,
   gradientFallback,
   ctaLabel,
+  // Chapter 06.5 (2026-05-08) — optional Boss-curated background
+  // video. When `videoBase` is set we render <video> + overlay at
+  // `overlayOpacity` per Boss spec (0.55 Private / 0.45 Explorer).
+  // The image prop continues to work as a poster + fallback so any
+  // panel without a video stays on the original Sanity-hero path.
+  videoBase = null,
+  posterSrc = null,
+  overlayOpacity = 0.55,
 }) {
   return (
     <Link
       href={href}
       className="group gy-fleet-panel relative block flex-1 min-h-[50dvh] md:min-h-[100dvh] overflow-hidden"
     >
-      {/* Background image (or dark-tinted gradient fallback). Zoom on hover. */}
+      {/* Background — video if provided, else image, else gradient. */}
+      {videoBase ? (
+        <PanelBackgroundVideo videoBase={videoBase} posterSrc={posterSrc} />
+      ) : (
+        <div
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+          style={{
+            backgroundImage: image
+              ? `url(${image})`
+              : gradientFallback,
+            backgroundColor: "#0D1B2A",
+          }}
+        />
+      )}
+
+      {/* Dark overlay — Boss spec exact opacity per panel; lifts a touch
+          on hover to reveal the video underneath. */}
       <div
-        className="absolute inset-0 bg-cover bg-center transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+        className="absolute inset-0 transition-colors duration-700"
         style={{
-          backgroundImage: image
-            ? `url(${image})`
-            : gradientFallback,
-          backgroundColor: "#0D1B2A",
+          backgroundColor: `rgba(13, 27, 42, ${overlayOpacity})`,
         }}
       />
-
-      {/* Dark overlay — heavier by default, lifts on hover to reveal the image. */}
-      <div className="absolute inset-0 bg-[#0D1B2A]/60 group-hover:bg-[#0D1B2A]/30 transition-colors duration-700" />
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+        style={{
+          // Hover lift: drop the overlay to ~20-25% so the video reads
+          // brighter without losing text contrast.
+          backgroundColor: `rgba(13, 27, 42, ${Math.max(0.20, overlayOpacity - 0.30)})`,
+        }}
+      />
 
       {/* Subtle vertical gold glow from bottom on hover (creates depth). */}
       <div
@@ -199,6 +283,12 @@ export default function FleetCTAs({
           image={privateHeroImage}
           gradientFallback="linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)"
           ctaLabel="View the Fleet"
+          // Chapter 06.5 — Boss-curated background video for this
+          // panel. WebM 1.7 MB / MP4 2.5 MB / poster 155 KB
+          // (1080×1920 → 720×1280, 30 fps, 2-pass, audio stripped).
+          videoBase="private-fleet-bg"
+          posterSrc="/images/posters/private-fleet-bg-frame1.jpg"
+          overlayOpacity={0.55}
         />
 
         {/* Divider — diagonal gold seam on desktop, horizontal on mobile */}
@@ -214,6 +304,12 @@ export default function FleetCTAs({
           image={explorerHeroImage}
           gradientFallback="linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)"
           ctaLabel="View the Fleet"
+          // Chapter 06.5 — Explorer Fleet video pending. Boss is
+          // sending the second clip next; until then the panel falls
+          // back to its existing Sanity-supplied explorerHeroImage.
+          // overlayOpacity stays at 0.45 per spec — slightly more
+          // luminous than Private to suit the "Explorer mood".
+          overlayOpacity={0.45}
         />
       </div>
 
