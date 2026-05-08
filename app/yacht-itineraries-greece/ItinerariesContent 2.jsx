@@ -145,14 +145,14 @@ function ItineraryCard({ itin, index }) {
 
   return (
     <Reveal delay={index * 0.1}>
-      <div style={{ background: "#050505", border: "1px solid rgba(218,165,32,0.06)", marginBottom: "32px" }}>
+      <div style={{ background: "#050505", border: "1px solid rgba(201,168,76,0.06)", marginBottom: "32px" }}>
         {/* Header */}
         <button
           onClick={() => setExpanded(!expanded)}
           style={{ width: "100%", padding: "36px 32px", background: "none", border: "none", cursor: "pointer", textAlign: "left", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "24px" }}
         >
           <div>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.25em", textTransform: "uppercase", color: "#DAA520", fontWeight: 600, marginBottom: "12px" }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.25em", textTransform: "uppercase", color: "#C9A84C", fontWeight: 600, marginBottom: "12px" }}>
               {itin.duration} &middot; {itin.days.reduce((sum, d) => sum + parseInt(d.nm) || 0, 0)} NM Total &middot; {itin.season}
             </p>
             <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 400, color: "#fff", margin: "0 0 6px", lineHeight: 1.2 }}>
@@ -165,20 +165,20 @@ function ItineraryCard({ itin, index }) {
               Ideal for: {itin.idealFor}
             </p>
           </div>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={expanded ? "#DAA520" : "rgba(255,255,255,0.3)"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: expanded ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.4s ease, stroke 0.3s ease", flexShrink: 0, marginTop: "8px" }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={expanded ? "#C9A84C" : "rgba(255,255,255,0.3)"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: expanded ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.4s ease, stroke 0.3s ease", flexShrink: 0, marginTop: "8px" }}>
             <polyline points="6 9 12 15 18 9" />
           </svg>
         </button>
 
         {/* Expandable Content */}
         <div style={{ maxHeight: expanded ? "3000px" : "0", overflow: "hidden", transition: "max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1)" }}>
-          <div style={{ padding: "0 32px 36px", borderTop: "1px solid rgba(218,165,32,0.06)" }}>
+          <div style={{ padding: "0 32px 36px", borderTop: "1px solid rgba(201,168,76,0.06)" }}>
             {/* Day by day */}
             <div style={{ paddingTop: "28px" }}>
               {itin.days.map((day) => (
                 <div key={day.day} style={{ display: "flex", gap: "20px", padding: "20px 0", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
                   <div style={{ minWidth: "70px" }}>
-                    <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", fontWeight: 300, color: "#DAA520" }}>Day {day.day}</span>
+                    <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", fontWeight: 300, color: "#C9A84C" }}>Day {day.day}</span>
                     <span style={{ display: "block", fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.2)", letterSpacing: "0.1em", marginTop: "4px" }}>{day.nm}</span>
                   </div>
                   <div>
@@ -190,20 +190,20 @@ function ItineraryCard({ itin, index }) {
             </div>
 
             {/* Highlights */}
-            <div style={{ marginTop: "28px", paddingTop: "20px", borderTop: "1px solid rgba(218,165,32,0.06)" }}>
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#DAA520", marginBottom: "8px" }}>Highlights</p>
+            <div style={{ marginTop: "28px", paddingTop: "20px", borderTop: "1px solid rgba(201,168,76,0.06)" }}>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "8px" }}>Highlights</p>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.4)", fontWeight: 300 }}>{itin.highlights}</p>
             </div>
 
             {/* Recommended Yachts */}
             <div style={{ marginTop: "20px" }}>
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#DAA520", marginBottom: "10px" }}>Recommended Yachts</p>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "10px" }}>Recommended Yachts</p>
               <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
                 {itin.yachts.map((yacht) => (
                   <Link
                     key={yacht.slug}
                     href={`/yachts/${yacht.slug}`}
-                    style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", color: "rgba(255,255,255,0.4)", padding: "6px 14px", border: "1px solid rgba(218,165,32,0.15)", textDecoration: "none", letterSpacing: "0.05em", transition: "all 0.3s ease" }}
+                    style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", color: "rgba(255,255,255,0.4)", padding: "6px 14px", border: "1px solid rgba(201,168,76,0.15)", textDecoration: "none", letterSpacing: "0.05em", transition: "all 0.3s ease" }}
                   >
                     {yacht.name}
                   </Link>
@@ -226,7 +226,7 @@ export default function ItinerariesContent() {
       <section style={{ padding: "100px 24px", background: "#000" }}>
         <Reveal>
           <div style={{ maxWidth: "750px", margin: "0 auto", textAlign: "center" }}>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#DAA520", marginBottom: "24px" }}>Curated by George</p>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "24px" }}>Curated by George</p>
             <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 300, color: "#fff", lineHeight: 1.35, margin: "0 0 32px" }}>
               Why Trust These Itineraries?
             </h2>
@@ -246,9 +246,9 @@ export default function ItinerariesContent() {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "100px 24px", background: "#000", textAlign: "center", borderTop: "1px solid rgba(218,165,32,0.08)" }}>
+      <section style={{ padding: "100px 24px", background: "#000", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.08)" }}>
         <Reveal>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#DAA520", marginBottom: "16px" }}>Your Itinerary, Your Way</p>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "16px" }}>Your Itinerary, Your Way</p>
           <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 300, color: "#fff", margin: "0 0 16px" }}>
             Let&apos;s Design Your Perfect Week
           </h2>

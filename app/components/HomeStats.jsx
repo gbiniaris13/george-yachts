@@ -52,7 +52,7 @@ export default function HomeStats({ yachtCount = 66 }) {
       className="relative w-full bg-black border-y border-white/[0.04] py-16 md:py-20 overflow-hidden"
     >
       {/* Subtle gold gradient line at top */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#DAA520]/20 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/20 to-transparent" />
 
       {/* Phase 27i.18 (2026-05-08) — constellation backdrop. Same
           night-sky register as Filotimon, kept very low intensity
@@ -127,7 +127,7 @@ export default function HomeStats({ yachtCount = 66 }) {
             },
             {
               icon: (
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#DAA520]/75 group-hover:text-[#DAA520] transition-colors duration-500">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#C9A84C]/75 group-hover:text-[#C9A84C] transition-colors duration-500">
                   <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
                   <polyline points="14,2 14,8 20,8" />
                   <line x1="16" y1="13" x2="8" y2="13" />
@@ -138,7 +138,7 @@ export default function HomeStats({ yachtCount = 66 }) {
             },
             {
               icon: (
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#DAA520]/75 group-hover:text-[#DAA520] transition-colors duration-500">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#C9A84C]/75 group-hover:text-[#C9A84C] transition-colors duration-500">
                   <rect x="2" y="3" width="20" height="14" rx="2" />
                   <path d="M2 7h20" />
                   <path d="M12 21v-4" />
@@ -149,7 +149,7 @@ export default function HomeStats({ yachtCount = 66 }) {
             },
             {
               icon: (
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#DAA520]/75 group-hover:text-[#DAA520] transition-colors duration-500">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#C9A84C]/75 group-hover:text-[#C9A84C] transition-colors duration-500">
                   <circle cx="12" cy="12" r="10" />
                   <path d="M2 12h20" />
                   <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />

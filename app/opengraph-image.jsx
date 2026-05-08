@@ -168,10 +168,10 @@ export default async function Image() {
         />
 
         {/* Corner accents */}
-        <div style={{ position: "absolute", top: 24, left: 24, width: 50, height: 50, borderTop: "1px solid rgba(218,165,32,0.4)", borderLeft: "1px solid rgba(218,165,32,0.4)" }} />
-        <div style={{ position: "absolute", top: 24, right: 24, width: 50, height: 50, borderTop: "1px solid rgba(218,165,32,0.4)", borderRight: "1px solid rgba(218,165,32,0.4)" }} />
-        <div style={{ position: "absolute", bottom: 24, left: 24, width: 50, height: 50, borderBottom: "1px solid rgba(218,165,32,0.4)", borderLeft: "1px solid rgba(218,165,32,0.4)" }} />
-        <div style={{ position: "absolute", bottom: 24, right: 24, width: 50, height: 50, borderBottom: "1px solid rgba(218,165,32,0.4)", borderRight: "1px solid rgba(218,165,32,0.4)" }} />
+        <div style={{ position: "absolute", top: 24, left: 24, width: 50, height: 50, borderTop: "1px solid rgba(201,168,76,0.4)", borderLeft: "1px solid rgba(201,168,76,0.4)" }} />
+        <div style={{ position: "absolute", top: 24, right: 24, width: 50, height: 50, borderTop: "1px solid rgba(201,168,76,0.4)", borderRight: "1px solid rgba(201,168,76,0.4)" }} />
+        <div style={{ position: "absolute", bottom: 24, left: 24, width: 50, height: 50, borderBottom: "1px solid rgba(201,168,76,0.4)", borderLeft: "1px solid rgba(201,168,76,0.4)" }} />
+        <div style={{ position: "absolute", bottom: 24, right: 24, width: 50, height: 50, borderBottom: "1px solid rgba(201,168,76,0.4)", borderRight: "1px solid rgba(201,168,76,0.4)" }} />
       </div>
     ),
     { ...size }

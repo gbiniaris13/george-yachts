@@ -30,8 +30,8 @@ export default function YourBroker() {
       style={{
         padding: "120px 24px",
         background: "#000",
-        borderTop: "1px solid rgba(218,165,32,0.08)",
-        borderBottom: "1px solid rgba(218,165,32,0.08)",
+        borderTop: "1px solid rgba(201,168,76,0.08)",
+        borderBottom: "1px solid rgba(201,168,76,0.08)",
       }}
     >
       <div
@@ -70,7 +70,7 @@ export default function YourBroker() {
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "10px",
             letterSpacing: "0.4em",
-            color: "#DAA520",
+            color: "#C9A84C",
             textTransform: "uppercase",
             marginBottom: "20px",
           }}>
@@ -101,7 +101,7 @@ export default function YourBroker() {
 
           <div style={{
             width: "40px", height: "1px", marginBottom: "32px",
-            background: "linear-gradient(90deg, #DAA520, transparent)",
+            background: "linear-gradient(90deg, #C9A84C, transparent)",
           }} />
 
           <p style={{
@@ -164,7 +164,7 @@ export default function YourBroker() {
               marginLeft: "24px",
               transition: "color 0.3s ease",
             }}
-            onMouseEnter={(e) => e.target.style.color = "#DAA520"}
+            onMouseEnter={(e) => e.target.style.color = "#C9A84C"}
             onMouseLeave={(e) => e.target.style.color = "rgba(255,255,255,0.4)"}
           >
             {t('broker.learnMore')}
@@ -193,7 +193,7 @@ export default function YourBroker() {
               fontSize: 10,
               letterSpacing: "0.35em",
               textTransform: "uppercase",
-              color: "#DAA520",
+              color: "#C9A84C",
               opacity: 0.85,
               fontWeight: 600,
               marginBottom: 10,
@@ -207,7 +207,7 @@ export default function YourBroker() {
               width: 40,
               height: 1,
               margin: "0 auto",
-              background: "linear-gradient(90deg, transparent, #DAA520, transparent)",
+              background: "linear-gradient(90deg, transparent, #C9A84C, transparent)",
               opacity: 0.7,
             }}
           />
@@ -244,7 +244,7 @@ export default function YourBroker() {
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontSize: 40,
                   fontWeight: 300,
-                  color: "#DAA520",
+                  color: "#C9A84C",
                   opacity: 0.45,
                   margin: "0 0 8px",
                   lineHeight: 1,

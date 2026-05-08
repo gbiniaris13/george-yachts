@@ -91,8 +91,8 @@ export default function GoldCurtain() {
         style={{
           width: "50%",
           background:
-            "linear-gradient(90deg, #000 0%, #050505 80%, rgba(218,165,32,0.08) 100%)",
-          borderRight: "1px solid rgba(218,165,32,0.35)",
+            "linear-gradient(90deg, #000 0%, #050505 80%, rgba(201,168,76,0.08) 100%)",
+          borderRight: "1px solid rgba(201,168,76,0.35)",
           transform: opening ? "translateX(-100%)" : "translateX(0)",
           transition:
             "transform 1.25s cubic-bezier(0.76, 0, 0.24, 1) 0.55s",
@@ -106,8 +106,8 @@ export default function GoldCurtain() {
         style={{
           width: "50%",
           background:
-            "linear-gradient(270deg, #000 0%, #050505 80%, rgba(218,165,32,0.08) 100%)",
-          borderLeft: "1px solid rgba(218,165,32,0.35)",
+            "linear-gradient(270deg, #000 0%, #050505 80%, rgba(201,168,76,0.08) 100%)",
+          borderLeft: "1px solid rgba(201,168,76,0.35)",
           transform: opening ? "translateX(100%)" : "translateX(0)",
           transition:
             "transform 1.25s cubic-bezier(0.76, 0, 0.24, 1) 0.55s",
@@ -122,7 +122,7 @@ export default function GoldCurtain() {
           width: "1px",
           marginLeft: "-0.5px",
           background:
-            "linear-gradient(to bottom, transparent 0%, rgba(218,165,32,0.85) 20%, rgba(218,165,32,0.85) 80%, transparent 100%)",
+            "linear-gradient(to bottom, transparent 0%, rgba(201,168,76,0.85) 20%, rgba(201,168,76,0.85) 80%, transparent 100%)",
           transform: opening ? "scaleY(1)" : "scaleY(0)",
           transformOrigin: "50% 50%",
           transition: "transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1)",
@@ -151,7 +151,7 @@ export default function GoldCurtain() {
               letterSpacing: "0.55em",
               textTransform: "uppercase",
               fontWeight: 600,
-              color: "#DAA520",
+              color: "#C9A84C",
               marginBottom: "14px",
             }}
           >
@@ -180,7 +180,7 @@ export default function GoldCurtain() {
               height: "1px",
               margin: "18px auto 0",
               background:
-                "linear-gradient(to right, transparent, rgba(218,165,32,0.65), transparent)",
+                "linear-gradient(to right, transparent, rgba(201,168,76,0.65), transparent)",
               transform: opening ? "scaleX(0)" : "scaleX(1)",
               transition: "transform 0.5s ease 0.25s",
             }}

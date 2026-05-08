@@ -377,7 +377,7 @@ export default function MapboxFlyover() {
                       gap: 8,
                       padding: "10px 18px",
                       background: "rgba(0,0,0,0.55)",
-                      border: "1px solid rgba(218,165,32,0.45)",
+                      border: "1px solid rgba(201,168,76,0.45)",
                       color: "#F8F5F0",
                       fontFamily: "'Montserrat', sans-serif",
                       fontSize: 11,
@@ -396,8 +396,8 @@ export default function MapboxFlyover() {
                         width: 6,
                         height: 6,
                         borderRadius: 999,
-                        background: "#DAA520",
-                        boxShadow: "0 0 8px rgba(218,165,32,0.6)",
+                        background: "#C9A84C",
+                        boxShadow: "0 0 8px rgba(201,168,76,0.6)",
                       }}
                     />
                     {r.name}
@@ -459,9 +459,9 @@ export default function MapboxFlyover() {
           display: block;
           width: 10px;
           height: 10px;
-          background: #DAA520;
+          background: #C9A84C;
           border-radius: 50%;
-          box-shadow: 0 0 0 3px rgba(218,165,32,0.25),
+          box-shadow: 0 0 0 3px rgba(201,168,76,0.25),
                       0 2px 6px rgba(0,0,0,0.6);
           animation: gy-pin-pulse 2.4s ease-in-out infinite;
         }
@@ -484,8 +484,8 @@ export default function MapboxFlyover() {
           transform: translateX(0);
         }
         @keyframes gy-pin-pulse {
-          0%, 100% { box-shadow: 0 0 0 3px rgba(218,165,32,0.25), 0 2px 6px rgba(0,0,0,0.6); }
-          50%      { box-shadow: 0 0 0 8px rgba(218,165,32,0.0),  0 2px 6px rgba(0,0,0,0.6); }
+          0%, 100% { box-shadow: 0 0 0 3px rgba(201,168,76,0.25), 0 2px 6px rgba(0,0,0,0.6); }
+          50%      { box-shadow: 0 0 0 8px rgba(201,168,76,0.0),  0 2px 6px rgba(0,0,0,0.6); }
         }
         @media (prefers-reduced-motion: reduce) {
           .gy-mapbox-pin__dot { animation: none; }

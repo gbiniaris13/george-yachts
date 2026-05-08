@@ -16,7 +16,7 @@ function gtagEventDebounced(name, payload, delay = 800) {
   }, delay);
 }
 
-const GOLD = '#DAA520';
+const GOLD = '#C9A84C';
 
 const SEASONS = [
   { id: 'low', label: 'Low Season', months: 'Apr–May, Oct', desc: 'Quieter waters, cooler weather, best rates' },
@@ -97,7 +97,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
     fontFamily: "'Montserrat', sans-serif",
     fontSize: 13,
     background: 'rgba(255,255,255,0.03)',
-    border: '1px solid rgba(218,165,32,0.15)',
+    border: '1px solid rgba(201,168,76,0.15)',
     borderRadius: 8,
     color: '#fff',
     outline: 'none',
@@ -250,7 +250,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
           {breakdown ? (
             <div style={{
               background: 'rgba(255,255,255,0.02)',
-              border: '1px solid rgba(218,165,32,0.15)',
+              border: '1px solid rgba(201,168,76,0.15)',
               borderRadius: 16,
               padding: 32,
               position: 'sticky',

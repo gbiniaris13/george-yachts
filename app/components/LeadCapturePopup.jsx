@@ -6,7 +6,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 
-const GOLD = '#DAA520';
+const GOLD = '#C9A84C';
 const LEAD_CAPTURED_KEY = 'gy-lead-captured';
 
 export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadData }) {

@@ -3,7 +3,7 @@
 import { useI18n } from '@/lib/i18n/I18nProvider';
 import { useState } from 'react';
 
-const GOLD = '#DAA520';
+const GOLD = '#C9A84C';
 
 const STEPS = [
   {
@@ -134,7 +134,7 @@ export default function TimelineClient() {
             {/* Content card */}
             <div style={{
               padding: '20px 24px 40px',
-              background: activeStep === i ? 'rgba(218,165,32,0.03)' : 'transparent',
+              background: activeStep === i ? 'rgba(201,168,76,0.03)' : 'transparent',
               borderRadius: 12,
               borderLeft: activeStep === i ? `2px solid ${GOLD}30` : '2px solid transparent',
               transition: 'all 0.4s ease',

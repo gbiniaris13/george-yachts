@@ -286,8 +286,8 @@ export default function CredentialsPage() {
                 justifyContent: "center",
                 padding: "clamp(32px, 5vw, 56px)",
                 background:
-                  "linear-gradient(135deg, rgba(218,165,32,0.05) 0%, rgba(13,27,42,0.6) 100%)",
-                border: "1px solid rgba(218,165,32,0.18)",
+                  "linear-gradient(135deg, rgba(201,168,76,0.05) 0%, rgba(13,27,42,0.6) 100%)",
+                border: "1px solid rgba(201,168,76,0.18)",
               }}
             >
               <a
@@ -568,8 +568,8 @@ export default function CredentialsPage() {
               color: "#0a0a0a",
               textDecoration: "none",
               background: "linear-gradient(135deg, #E6C77A 0%, #C9A84C 100%)",
-              border: "1px solid #DAA520",
-              boxShadow: "0 12px 32px rgba(218,165,32,0.22)",
+              border: "1px solid #C9A84C",
+              boxShadow: "0 12px 32px rgba(201,168,76,0.22)",
             }}
           >
             Brief George →

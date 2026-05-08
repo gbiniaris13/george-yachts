@@ -9,7 +9,7 @@
 
 import { useState } from "react";
 
-const GOLD = "#DAA520";
+const GOLD = "#C9A84C";
 
 const LABELS = {
   inquiry: "Inquiries",
@@ -110,8 +110,8 @@ export default function KpisPage() {
                 <div
                   key={event}
                   style={{
-                    border: "1px solid rgba(218,165,32,0.2)",
-                    background: "rgba(218,165,32,0.025)",
+                    border: "1px solid rgba(201,168,76,0.2)",
+                    background: "rgba(201,168,76,0.025)",
                     padding: "20px 22px",
                   }}
                 >

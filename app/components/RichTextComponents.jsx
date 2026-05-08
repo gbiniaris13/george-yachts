@@ -47,7 +47,7 @@ function classifyLink(href) {
 }
 
 const linkStyle =
-  "text-[#DAA520] hover:text-white border-b border-[#DAA520]/30 hover:border-white transition-colors duration-300";
+  "text-[#C9A84C] hover:text-white border-b border-[#C9A84C]/30 hover:border-white transition-colors duration-300";
 
 export const RichTextComponents = {
   types: {
@@ -174,8 +174,8 @@ export const RichTextComponents = {
               gap: 18,
               alignItems: "stretch",
               padding: 18,
-              background: "rgba(218,165,32,0.06)",
-              border: "1px solid rgba(218,165,32,0.35)",
+              background: "rgba(201,168,76,0.06)",
+              border: "1px solid rgba(201,168,76,0.35)",
               borderRadius: 0,
               textDecoration: "none",
               color: "inherit",
@@ -201,7 +201,7 @@ export const RichTextComponents = {
                     fontSize: 9,
                     letterSpacing: "0.32em",
                     textTransform: "uppercase",
-                    color: "#DAA520",
+                    color: "#C9A84C",
                     fontWeight: 600,
                   }}
                 >
@@ -244,7 +244,7 @@ export const RichTextComponents = {
                       fontSize: 8,
                       letterSpacing: "0.3em",
                       textTransform: "uppercase",
-                      color: isPerPerson(y) ? "rgba(255,255,255,0.7)" : "#DAA520",
+                      color: isPerPerson(y) ? "rgba(255,255,255,0.7)" : "#C9A84C",
                       fontWeight: 600,
                     }}
                   >
@@ -254,7 +254,7 @@ export const RichTextComponents = {
                     style={{
                       fontFamily: "'Montserrat', sans-serif",
                       fontSize: 12,
-                      color: "#DAA520",
+                      color: "#C9A84C",
                       fontWeight: 600,
                     }}
                   >
@@ -269,7 +269,7 @@ export const RichTextComponents = {
                   fontSize: 10,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
-                  color: "#DAA520",
+                  color: "#C9A84C",
                   fontWeight: 600,
                 }}
               >
@@ -393,12 +393,12 @@ export const RichTextComponents = {
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-2xl md:text-3xl text-[#DAA520] font-marcellus mt-12 mb-4">
+      <h3 className="text-2xl md:text-3xl text-[#C9A84C] font-marcellus mt-12 mb-4">
         {children}
       </h3>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="border-l-2 border-[#DAA520] pl-6 md:pl-8 my-12 py-2">
+      <blockquote className="border-l-2 border-[#C9A84C] pl-6 md:pl-8 my-12 py-2">
         <p className="text-2xl md:text-3xl text-white italic font-marcellus leading-relaxed opacity-90">
           {children}
         </p>

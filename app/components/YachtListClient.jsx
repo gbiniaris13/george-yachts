@@ -58,7 +58,7 @@ const YachtListContent = ({ initialYachts }) => {
             >
               {cat.label}
               {activeTab === cat.value && (
-                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#DAA520] animate-in fade-in zoom-in duration-500"></div>
+                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#C9A84C] animate-in fade-in zoom-in duration-500"></div>
               )}
             </button>
           ))}

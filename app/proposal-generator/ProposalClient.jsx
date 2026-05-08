@@ -18,7 +18,7 @@ import { sanityCardImg } from "@/lib/sanity-image";
 import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
 
 const MAX_YACHTS = 5;
-const GOLD = "#DAA520";
+const GOLD = "#C9A84C";
 
 function gtagEvent(name, payload) {
   try {
@@ -312,7 +312,7 @@ export default function ProposalClient({ yachts = [] }) {
             letterSpacing: "0.28em", textTransform: "uppercase",
             fontWeight: 700, padding: "12px 22px",
             background: picked.length === 0
-              ? "rgba(218,165,32,0.25)"
+              ? "rgba(201,168,76,0.25)"
               : `linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)`,
             color: picked.length === 0 ? "rgba(0,0,0,0.45)" : "#000000",
             border: "none",
@@ -512,7 +512,7 @@ function FilterGroup({ label, options, value, onChange }) {
                 fontFamily: "'Montserrat', sans-serif", fontSize: 10,
                 letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600,
                 padding: "8px 12px",
-                background: active ? "rgba(218,165,32,0.16)" : "transparent",
+                background: active ? "rgba(201,168,76,0.16)" : "transparent",
                 color: active ? GOLD : "rgba(255,255,255,0.55)",
                 border: `1px solid ${active ? GOLD : "rgba(255,255,255,0.15)"}`,
                 cursor: "pointer",

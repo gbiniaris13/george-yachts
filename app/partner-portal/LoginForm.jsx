@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-const GOLD = "#DAA520";
+const GOLD = "#C9A84C";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -29,7 +29,7 @@ export default function LoginForm() {
         style={{
           textAlign: "center",
           padding: "32px 24px",
-          border: "1px solid rgba(218,165,32,0.35)",
+          border: "1px solid rgba(201,168,76,0.35)",
         }}
       >
         <p
@@ -65,7 +65,7 @@ export default function LoginForm() {
         display: "flex",
         flexDirection: "column",
         gap: 12,
-        border: "1px solid rgba(218,165,32,0.25)",
+        border: "1px solid rgba(201,168,76,0.25)",
         padding: "28px 28px 24px",
       }}
     >

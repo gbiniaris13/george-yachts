@@ -106,11 +106,11 @@ const DiagonalWipePanel = ({ item, index, total }) => {
         style={{
           background: `linear-gradient(${angle},
             transparent ${shimmerPos - 4}%,
-            rgba(218,165,32,0.0) ${shimmerPos - 2}%,
-            rgba(218,165,32,0.6) ${shimmerPos}%,
-            rgba(218,165,32,0.9) ${shimmerPos + 0.5}%,
-            rgba(218,165,32,0.6) ${shimmerPos + 1}%,
-            rgba(218,165,32,0.0) ${shimmerPos + 3}%,
+            rgba(201,168,76,0.0) ${shimmerPos - 2}%,
+            rgba(201,168,76,0.6) ${shimmerPos}%,
+            rgba(201,168,76,0.9) ${shimmerPos + 0.5}%,
+            rgba(201,168,76,0.6) ${shimmerPos + 1}%,
+            rgba(201,168,76,0.0) ${shimmerPos + 3}%,
             transparent ${shimmerPos + 5}%)`,
           opacity: wipeProgress > 0.01 && wipeProgress < 0.98 ? 1 : 0,
           transition: 'opacity 0.3s ease',
@@ -123,8 +123,8 @@ const DiagonalWipePanel = ({ item, index, total }) => {
         style={{
           background: `linear-gradient(${angle},
             transparent ${shimmerPos - 15}%,
-            rgba(218,165,32,0.04) ${shimmerPos - 5}%,
-            rgba(218,165,32,0.08) ${shimmerPos}%,
+            rgba(201,168,76,0.04) ${shimmerPos - 5}%,
+            rgba(201,168,76,0.08) ${shimmerPos}%,
             transparent ${shimmerPos + 10}%)`,
           opacity: wipeProgress > 0.01 && wipeProgress < 0.98 ? 1 : 0,
         }}
@@ -151,7 +151,7 @@ const DiagonalWipePanel = ({ item, index, total }) => {
             <div
               className="h-px mb-10 opacity-50"
               style={{
-                background: 'linear-gradient(90deg, transparent, #DAA520, transparent)',
+                background: 'linear-gradient(90deg, transparent, #C9A84C, transparent)',
                 width: `${contentReveal * 100}%`,
                 transition: 'width 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
               }}
@@ -159,7 +159,7 @@ const DiagonalWipePanel = ({ item, index, total }) => {
 
             {/* Index Counter */}
             <span
-              className="block text-[#DAA520] font-mono text-xs tracking-[0.3em] mb-4"
+              className="block text-[#C9A84C] font-mono text-xs tracking-[0.3em] mb-4"
               style={{
                 opacity: hasEntered ? 1 : 0,
                 transform: hasEntered ? 'translateX(0)' : 'translateX(-20px)',
@@ -220,8 +220,8 @@ const DiagonalWipePanel = ({ item, index, total }) => {
                 transition: 'all 0.6s ease 0.7s',
               }}
             >
-              <div className="h-px w-12 bg-white/30 group-hover/discover:bg-[#DAA520] group-hover/discover:w-16 transition-all duration-500" />
-              <span className="text-[10px] uppercase tracking-[0.4em] text-white/50 group-hover/discover:text-[#DAA520] group-hover/discover:tracking-[0.5em] transition-all duration-500">
+              <div className="h-px w-12 bg-white/30 group-hover/discover:bg-[#C9A84C] group-hover/discover:w-16 transition-all duration-500" />
+              <span className="text-[10px] uppercase tracking-[0.4em] text-white/50 group-hover/discover:text-[#C9A84C] group-hover/discover:tracking-[0.5em] transition-all duration-500">
                 Discover
               </span>
             </Link>
@@ -232,7 +232,7 @@ const DiagonalWipePanel = ({ item, index, total }) => {
       {/* Progress bar (left side) */}
       <div className="absolute left-0 top-0 bottom-0 w-1 z-30 hidden md:block">
         <div
-          className="w-full bg-[#DAA520]"
+          className="w-full bg-[#C9A84C]"
           style={{
             height: `${((index + 1) / total) * 100}%`,
             transition: 'height 0.3s ease',

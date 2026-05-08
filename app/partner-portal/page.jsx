@@ -10,7 +10,7 @@ export const metadata = {
   alternates: { canonical: "https://georgeyachts.com/partner-portal" },
 };
 
-const GOLD = "#DAA520";
+const GOLD = "#C9A84C";
 
 export default function PartnerPortalPage() {
   return (
@@ -19,7 +19,7 @@ export default function PartnerPortalPage() {
         <header
           style={{
             padding: "120px 24px 48px",
-            borderBottom: "1px solid rgba(218,165,32,0.15)",
+            borderBottom: "1px solid rgba(201,168,76,0.15)",
             textAlign: "center",
           }}
         >

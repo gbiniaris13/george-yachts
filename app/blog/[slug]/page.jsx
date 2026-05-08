@@ -231,7 +231,7 @@ const ArticlePage = async ({ params }) => {
   });
 
   return (
-    <div className="min-h-screen bg-[#000] font-sans selection:bg-[#DAA520] selection:text-black">
+    <div className="min-h-screen bg-[#000] font-sans selection:bg-[#C9A84C] selection:text-black">
       <JsonLd data={articleSchema} />
       {faqSchema && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
@@ -265,13 +265,13 @@ const ArticlePage = async ({ params }) => {
         />
 
         {/* Gold top rule */}
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#DAA520]/30 to-transparent mb-16" />
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C9A84C]/30 to-transparent mb-16" />
 
         {/* Top bar */}
         <div className="flex items-center justify-between w-full">
           <Link
             href="/blog"
-            className="inline-flex items-center text-white/50 hover:text-[#DAA520] transition-colors duration-500 text-[9px] tracking-[0.55em] uppercase font-bold group"
+            className="inline-flex items-center text-white/50 hover:text-[#C9A84C] transition-colors duration-500 text-[9px] tracking-[0.55em] uppercase font-bold group"
           >
             <ChevronLeft className="w-3 h-3 mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
             The Journal
@@ -287,7 +287,7 @@ const ArticlePage = async ({ params }) => {
             </span>
             {post._updatedAt && post.publishedAt &&
               Math.abs(new Date(post._updatedAt) - new Date(post.publishedAt)) > 24 * 60 * 60 * 1000 && (
-              <span className="text-[#DAA520]/40 text-[8px] tracking-[0.4em] uppercase">
+              <span className="text-[#C9A84C]/40 text-[8px] tracking-[0.4em] uppercase">
                 Updated: {new Date(post._updatedAt).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
@@ -301,11 +301,11 @@ const ArticlePage = async ({ params }) => {
         {/* Typographic block — left on mobile, centered on desktop */}
         <div className="flex flex-col items-start md:items-center md:text-center flex-1 justify-center mt-12 md:mt-0">
           <div className="flex items-center space-x-4 mb-8">
-            <span className="block w-8 h-px bg-[#DAA520]" />
-            <span className="text-[#DAA520] text-[9px] tracking-[0.6em] uppercase font-bold">
+            <span className="block w-8 h-px bg-[#C9A84C]" />
+            <span className="text-[#C9A84C] text-[9px] tracking-[0.6em] uppercase font-bold">
               Editorial
             </span>
-            <span className="hidden md:block w-8 h-px bg-[#DAA520]" />
+            <span className="hidden md:block w-8 h-px bg-[#C9A84C]" />
           </div>
 
           <h1
@@ -356,8 +356,8 @@ const ArticlePage = async ({ params }) => {
       <section className="relative z-10 bg-[#000] px-6 py-20 md:py-32">
         <div className="max-w-[720px] mx-auto">
           <div className="flex items-center space-x-6 mb-16">
-            <span className="block w-6 h-px bg-[#DAA520]/50" />
-            <span className="text-[#DAA520]/50 text-[8px] tracking-[0.7em] uppercase">
+            <span className="block w-6 h-px bg-[#C9A84C]/50" />
+            <span className="text-[#C9A84C]/50 text-[8px] tracking-[0.7em] uppercase">
               George Yachts &middot; Maritime Intelligence
             </span>
             <span className="block flex-1 h-px bg-white/5" />
@@ -369,7 +369,7 @@ const ArticlePage = async ({ params }) => {
 
           {/* End-of-article marker */}
           <div className="mt-20 pt-16 border-t border-white/[0.04] flex flex-col items-center space-y-5">
-            <span className="text-[#DAA520]/25 text-4xl font-marcellus select-none">
+            <span className="text-[#C9A84C]/25 text-4xl font-marcellus select-none">
               &#10022;
             </span>
             <p className="text-white/50 text-[8px] tracking-[0.7em] uppercase">
@@ -381,7 +381,7 @@ const ArticlePage = async ({ params }) => {
           <div className="mt-16 flex justify-center">
             <Link
               href="/blog"
-              className="inline-flex items-center text-white/50 hover:text-[#DAA520] transition-colors duration-500 text-[9px] tracking-[0.55em] uppercase font-bold group"
+              className="inline-flex items-center text-white/50 hover:text-[#C9A84C] transition-colors duration-500 text-[9px] tracking-[0.55em] uppercase font-bold group"
             >
               <ChevronLeft className="w-3 h-3 mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
               Return to The Journal

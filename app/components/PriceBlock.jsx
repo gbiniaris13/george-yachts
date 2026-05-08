@@ -49,7 +49,7 @@ export default function PriceBlock({
           fontSize: s.badge,
           letterSpacing: "0.3em",
           textTransform: "uppercase",
-          color: "#DAA520",
+          color: "#C9A84C",
           fontWeight: 600,
         }}
       >

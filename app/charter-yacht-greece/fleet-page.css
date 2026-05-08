@@ -1,7 +1,7 @@
 /* ============================================
    GEORGE YACHTS — Fleet Page Round 4
    BLACK + GOLD — Matching Homepage Palette
-   #000000 background, #DAA520 gold, gradient #E6C77A→#C9A24D→#A67C2E
+   #000000 background, #C9A84C gold, gradient #E6C77A→#C9A24D→#A67C2E
    ============================================ */
 
 /* ---- ANIMATIONS ---- */
@@ -46,8 +46,8 @@
 }
 
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 8px rgba(218, 165, 32, 0.3); }
-  50% { box-shadow: 0 0 20px rgba(218, 165, 32, 0.5); }
+  0%, 100% { box-shadow: 0 0 8px rgba(201, 168, 76, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(201, 168, 76, 0.5); }
 }
 
 @keyframes ctaShimmer {
@@ -110,7 +110,7 @@
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #DAA520;
+  color: #C9A84C;
   margin-bottom: 16px;
   font-weight: 500;
   opacity: 0;
@@ -183,7 +183,7 @@
   background: rgba(0, 0, 0, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(218, 165, 32, 0.18);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.18);
   padding: 0 24px;
   transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
 }
@@ -240,7 +240,7 @@
 }
 
 .fleet-filters__tab--active {
-  color: #DAA520;
+  color: #C9A84C;
 }
 
 .fleet-filters__tab--active::after {
@@ -283,7 +283,7 @@
 
 .fleet-filters__select {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(218, 165, 32, 0.15);
+  border: 1px solid rgba(201, 168, 76, 0.15);
   color: rgba(255, 255, 255, 0.85);
   padding: 7px 30px 7px 12px;
   font-family: 'Montserrat', sans-serif;
@@ -299,13 +299,13 @@
 }
 
 .fleet-filters__select:hover {
-  border-color: rgba(218, 165, 32, 0.4);
+  border-color: rgba(201, 168, 76, 0.4);
   background: rgba(255, 255, 255, 0.06);
 }
 
 .fleet-filters__select:focus {
   outline: none;
-  border-color: #DAA520;
+  border-color: #C9A84C;
 }
 
 .fleet-filters__select option {
@@ -333,7 +333,7 @@
 }
 
 .fleet-results__highlight {
-  color: #DAA520;
+  color: #C9A84C;
   font-weight: 600;
 }
 
@@ -394,8 +394,8 @@
     transform: perspective(1200px) rotateX(2deg) rotateY(-2.5deg) translateY(-6px) !important;
     box-shadow:
       0 28px 60px rgba(0, 0, 0, 0.55),
-      0 0 0 1px rgba(218, 165, 32, 0.25) inset;
-    border-color: rgba(218, 165, 32, 0.32);
+      0 0 0 1px rgba(201, 168, 76, 0.25) inset;
+    border-color: rgba(201, 168, 76, 0.32);
   }
 }
 
@@ -520,7 +520,7 @@
   left: 16px;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(8px);
-  color: #DAA520;
+  color: #C9A84C;
 }
 
 .fleet-card__badge--featured {
@@ -569,7 +569,7 @@
 .fleet-card__builder {
   font-family: 'Montserrat', sans-serif;
   font-size: 10px;
-  color: #DAA520;
+  color: #C9A84C;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin: 6px 0 0;
@@ -580,7 +580,7 @@
 .fleet-card__info {
   background: #0a0a0a;
   padding: 24px 24px 20px;
-  border-top: 1px solid rgba(218, 165, 32, 0.1);
+  border-top: 1px solid rgba(201, 168, 76, 0.1);
 }
 
 .fleet-card__specs {
@@ -614,7 +614,7 @@
 
 .fleet-card__divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(218, 165, 32, 0.12), transparent);
+  background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.12), transparent);
   margin-bottom: 20px;
 }
 
@@ -638,7 +638,7 @@
 .fleet-card__price {
   font-family: 'Cormorant Garamond', serif;
   font-size: 22px;
-  color: #DAA520;
+  color: #C9A84C;
   font-weight: 600;
   letter-spacing: 0.02em;
 }
@@ -647,7 +647,7 @@
   font-family: 'Montserrat', sans-serif;
   font-size: 11px;
   letter-spacing: 0.04em;
-  color: rgba(218,165,32,0.45);
+  color: rgba(201,168,76,0.45);
   margin-top: 8px;
   font-weight: 400;
   line-height: 1.7;
@@ -705,8 +705,8 @@
 /* Details button — gold border glow + shimmer sweep */
 .fleet-card__btn--details {
   background: transparent;
-  border: 1px solid rgba(218, 165, 32, 0.3);
-  color: #DAA520;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  color: #C9A84C;
 }
 
 .fleet-card__btn--details::after {
@@ -716,14 +716,14 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent 0%, rgba(218, 165, 32, 0.15) 40%, rgba(218, 165, 32, 0.25) 50%, rgba(218, 165, 32, 0.15) 60%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(201, 168, 76, 0.15) 40%, rgba(201, 168, 76, 0.25) 50%, rgba(201, 168, 76, 0.15) 60%, transparent 100%);
   transition: none;
 }
 
 .fleet-card__btn--details:hover {
-  border-color: #DAA520;
-  box-shadow: 0 0 16px rgba(218, 165, 32, 0.25), inset 0 0 8px rgba(218, 165, 32, 0.05);
-  background: rgba(218, 165, 32, 0.06);
+  border-color: #C9A84C;
+  box-shadow: 0 0 16px rgba(201, 168, 76, 0.25), inset 0 0 8px rgba(201, 168, 76, 0.05);
+  background: rgba(201, 168, 76, 0.06);
 }
 
 .fleet-card__btn--details:hover::after {
@@ -753,7 +753,7 @@
   background: linear-gradient(90deg, #f0d48a, #d4b25d, #b08c3e);
   animation: pulseGlow 1.5s ease-in-out infinite;
   transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(218, 165, 32, 0.4);
+  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.4);
 }
 
 .fleet-card__btn--inquire:hover::after {
@@ -788,8 +788,8 @@
 
 .fleet-empty__reset {
   background: transparent;
-  border: 1px solid rgba(218, 165, 32, 0.4);
-  color: #DAA520;
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  color: #C9A84C;
   padding: 12px 32px;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
@@ -800,13 +800,13 @@
 }
 
 .fleet-empty__reset:hover {
-  background: rgba(218, 165, 32, 0.1);
-  border-color: #DAA520;
+  background: rgba(201, 168, 76, 0.1);
+  border-color: #C9A84C;
 }
 
 /* ---- TRUST / CTA SECTION ---- */
 .fleet-trust {
-  border-top: 1px solid rgba(218, 165, 32, 0.1);
+  border-top: 1px solid rgba(201, 168, 76, 0.1);
   padding: 80px 24px;
   text-align: center;
 }
@@ -816,7 +816,7 @@
   font-size: 10px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #DAA520;
+  color: #C9A84C;
   margin-bottom: 24px;
 }
 
@@ -833,7 +833,7 @@
 }
 
 .fleet-trust__dot {
-  color: rgba(218, 165, 32, 0.3);
+  color: rgba(201, 168, 76, 0.3);
 }
 
 /* CTA Button — Gold gradient + continuous shimmer */
@@ -856,7 +856,7 @@
 
 .fleet-trust__cta:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 30px rgba(218, 165, 32, 0.35);
+  box-shadow: 0 8px 30px rgba(201, 168, 76, 0.35);
 }
 
 .fleet-trust__note {
@@ -1005,7 +1005,7 @@
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 28px;
   font-weight: 300;
-  color: #DAA520;
+  color: #C9A84C;
   letter-spacing: 0.02em;
   line-height: 1;
   transition: color 0.3s ease;
@@ -1019,8 +1019,8 @@
 .fleet-count__reset {
   margin-left: auto;
   background: transparent;
-  border: 1px solid rgba(218, 165, 32, 0.35);
-  color: rgba(218, 165, 32, 0.9);
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  color: rgba(201, 168, 76, 0.9);
   font-family: 'Montserrat', sans-serif;
   font-size: 10px;
   letter-spacing: 0.22em;
@@ -1030,9 +1030,9 @@
   transition: all 0.25s ease;
 }
 .fleet-count__reset:hover {
-  background: rgba(218, 165, 32, 0.1);
-  color: #DAA520;
-  border-color: #DAA520;
+  background: rgba(201, 168, 76, 0.1);
+  color: #C9A84C;
+  border-color: #C9A84C;
 }
 
 /* C1 — when the grid re-mounts (filter/sort change), fade the whole
@@ -1051,7 +1051,7 @@
 /* C.6 — Advanced filter row (refit, master deck, speed) */
 .fleet-filters__row--advanced {
   margin-top: 8px;
-  border-top: 1px solid rgba(218, 165, 32, 0.12);
+  border-top: 1px solid rgba(201, 168, 76, 0.12);
   padding-top: 12px;
 }
 
@@ -1085,11 +1085,11 @@
   transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 }
 .fleet-filters__toy-chip:hover {
-  border-color: rgba(218, 165, 32, 0.45);
+  border-color: rgba(201, 168, 76, 0.45);
   color: rgba(255, 255, 255, 0.85);
 }
 .fleet-filters__toy-chip--active {
-  background: rgba(218, 165, 32, 0.18);
-  color: #DAA520;
-  border-color: #DAA520;
+  background: rgba(201, 168, 76, 0.18);
+  color: #C9A84C;
+  border-color: #C9A84C;
 }

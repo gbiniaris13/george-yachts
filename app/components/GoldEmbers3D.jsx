@@ -62,7 +62,7 @@ function Embers({ count = 600 }) {
         />
       </bufferGeometry>
       <pointsMaterial
-        color={new THREE.Color("#DAA520")}
+        color={new THREE.Color("#C9A84C")}
         size={0.05}
         sizeAttenuation
         transparent

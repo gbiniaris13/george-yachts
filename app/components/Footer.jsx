@@ -104,7 +104,7 @@ const Footer = () => {
       <PressStrip />
 
       {/* Gold line top */}
-      <div className="w-full h-px bg-gradient-to-r from-transparent via-[#DAA520]/20 to-transparent" />
+      <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C9A84C]/20 to-transparent" />
 
       {/* Main footer content */}
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 pt-20 pb-16">
@@ -131,31 +131,31 @@ const Footer = () => {
                 href="https://www.instagram.com/georgeyachts"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#DAA520]/40 transition-all duration-500"
+                className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#C9A84C]/40 transition-all duration-500"
                 aria-label="Instagram"
                 data-cursor="Instagram"
               >
-                <Instagram className="w-4 h-4 text-white/50 group-hover:text-[#DAA520] transition-colors duration-300" />
+                <Instagram className="w-4 h-4 text-white/50 group-hover:text-[#C9A84C] transition-colors duration-300" />
               </a>
               <a
                 href="https://www.linkedin.com/in/george-p-biniaris/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#DAA520]/40 transition-all duration-500"
+                className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#C9A84C]/40 transition-all duration-500"
                 aria-label="LinkedIn"
                 data-cursor="LinkedIn"
               >
-                <Linkedin className="w-4 h-4 text-white/50 group-hover:text-[#DAA520] transition-colors duration-300" />
+                <Linkedin className="w-4 h-4 text-white/50 group-hover:text-[#C9A84C] transition-colors duration-300" />
               </a>
               <a
                 href="https://wa.me/17867988798"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#DAA520]/40 transition-all duration-500"
+                className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#C9A84C]/40 transition-all duration-500"
                 aria-label="WhatsApp"
                 data-cursor="WhatsApp"
               >
-                <WhatsappIcon className="w-4 h-4 text-white/50 group-hover:text-[#DAA520] transition-colors duration-300" />
+                <WhatsappIcon className="w-4 h-4 text-white/50 group-hover:text-[#C9A84C] transition-colors duration-300" />
               </a>
             </div>
 
@@ -205,10 +205,10 @@ const Footer = () => {
                 textDecoration: "none",
                 background:
                   "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
-                border: "1px solid rgba(218,165,32,0.6)",
+                border: "1px solid rgba(201,168,76,0.6)",
                 borderRadius: "999px",
                 boxShadow:
-                  "0 8px 24px -8px rgba(218,165,32,0.4), inset 0 1px 0 rgba(255,255,255,0.25)",
+                  "0 8px 24px -8px rgba(201,168,76,0.4), inset 0 1px 0 rgba(255,255,255,0.25)",
               }}
             >
               Browse the Fleet →
@@ -217,7 +217,7 @@ const Footer = () => {
 
           {/* Services Column */}
           <div className="flex flex-col items-center lg:items-start">
-            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#DAA520", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
+            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#C9A84C", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
               {t('footer.servicesTitle')}
             </h4>
             <nav className="flex flex-col gap-3">
@@ -236,7 +236,7 @@ const Footer = () => {
 
           {/* Company Column */}
           <div className="flex flex-col items-center lg:items-start">
-            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#DAA520", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
+            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#C9A84C", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
               {t('footer.companyTitle')}
             </h4>
             <nav className="flex flex-col gap-3">
@@ -255,7 +255,7 @@ const Footer = () => {
 
           {/* Contact Column */}
           <div className="flex flex-col items-center lg:items-start">
-            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#DAA520", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
+            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#C9A84C", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
               {t('footer.contactTitle')}
             </h4>
             <div className="flex flex-col gap-4 text-center lg:text-left">
@@ -268,7 +268,7 @@ const Footer = () => {
                     try { window.gtag("event", "calendly_click", { click_location: "footer" }); } catch {}
                   }
                 }}
-                className="inline-block px-6 py-3 text-center border border-[#DAA520]/30 hover:border-[#DAA520] text-[#DAA520] hover:bg-[#DAA520]/5 transition-all duration-500"
+                className="inline-block px-6 py-3 text-center border border-[#C9A84C]/30 hover:border-[#C9A84C] text-[#C9A84C] hover:bg-[#C9A84C]/5 transition-all duration-500"
                 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, textDecoration: "none" }}
                 data-cursor="Book"
               >
@@ -293,10 +293,10 @@ const Footer = () => {
         <div
           className="my-12"
           style={{
-            borderTop: "1px solid rgba(218,165,32,0.18)",
-            borderBottom: "1px solid rgba(218,165,32,0.18)",
+            borderTop: "1px solid rgba(201,168,76,0.18)",
+            borderBottom: "1px solid rgba(201,168,76,0.18)",
             padding: "clamp(48px, 6vw, 72px) 24px",
-            background: "linear-gradient(135deg, rgba(218,165,32,0.03) 0%, rgba(13,27,42,0.4) 100%)",
+            background: "linear-gradient(135deg, rgba(201,168,76,0.03) 0%, rgba(13,27,42,0.4) 100%)",
           }}
         >
           <div className="max-w-2xl mx-auto text-center">
@@ -313,7 +313,7 @@ const Footer = () => {
               An invitation, not a list. Market intelligence and curated charter opportunities, delivered the day they matter — never more often.
             </p>
             {subscribed ? (
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", color: "#DAA520", letterSpacing: "0.15em" }}>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", color: "#C9A84C", letterSpacing: "0.15em" }}>
                 Thank you. You&apos;re on the list.
               </p>
             ) : (
@@ -390,7 +390,7 @@ const Footer = () => {
             )}
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.15)", marginTop: "12px", letterSpacing: "0.05em" }}>
               By subscribing you agree to receive occasional emails from <span className="notranslate">George Yachts Brokerage House LLC</span>.
-              Unsubscribe anytime. See our <Link href="/privacy-policy" style={{ color: "rgba(218,165,32,0.4)", textDecoration: "underline" }}>Privacy Policy</Link>.
+              Unsubscribe anytime. See our <Link href="/privacy-policy" style={{ color: "rgba(201,168,76,0.4)", textDecoration: "underline" }}>Privacy Policy</Link>.
             </p>
           </div>
         </div>
@@ -414,7 +414,7 @@ const Footer = () => {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-white/30 hover:text-[#DAA520] transition-colors duration-300"
+                className="text-white/30 hover:text-[#C9A84C] transition-colors duration-300"
                 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", letterSpacing: "0.12em", textTransform: "uppercase" }}
               >
                 {link.name}
@@ -443,12 +443,12 @@ const Footer = () => {
             lineHeight: 1.8,
             maxWidth: "820px",
             margin: "48px auto 0",
-            border: "1px solid rgba(218,165,32,0.18)",
+            border: "1px solid rgba(201,168,76,0.18)",
             padding: "16px 22px",
-            background: "rgba(218,165,32,0.025)",
+            background: "rgba(201,168,76,0.025)",
           }}
         >
-          <strong style={{ color: "#DAA520", letterSpacing: "0.12em", textTransform: "uppercase", fontSize: "8px", display: "block", marginBottom: "8px" }}>
+          <strong style={{ color: "#C9A84C", letterSpacing: "0.12em", textTransform: "uppercase", fontSize: "8px", display: "block", marginBottom: "8px" }}>
             A note on payments
           </strong>
           <span className="notranslate">George Yachts</span> will only ever request payment via signed MYBA-standard charter agreement, with bank details provided directly by our company in writing. We will never request wire transfers via email, messaging app, or unverified channels. If you receive any communication asking for payment that does not match this protocol, contact us immediately to verify.
@@ -470,7 +470,7 @@ const Footer = () => {
           }}
         >
           Data stored in EU-based servers (Vercel EU regions where applicable). All inquiries handled with discretion.{" "}
-          <Link href="/privacy/delete" style={{ color: "rgba(218,165,32,0.6)", textDecoration: "underline" }}>
+          <Link href="/privacy/delete" style={{ color: "rgba(201,168,76,0.6)", textDecoration: "underline" }}>
             Request data deletion →
           </Link>
         </p>

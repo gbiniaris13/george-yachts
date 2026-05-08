@@ -75,7 +75,7 @@ function FleetPanel({
         className="absolute inset-x-0 bottom-0 h-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to top, rgba(218,165,32,0.10), transparent 70%)",
+            "linear-gradient(to top, rgba(201,168,76,0.10), transparent 70%)",
         }}
       />
 
@@ -83,7 +83,7 @@ function FleetPanel({
       <div className="relative z-10 h-full min-h-[50dvh] md:min-h-[100dvh] flex flex-col items-center justify-center px-8 py-16 text-center">
         {/* Collection label */}
         <p
-          className="text-[#DAA520]/80 text-[9px] mb-8"
+          className="text-[#C9A84C]/80 text-[9px] mb-8"
           style={{
             fontFamily: "'Montserrat', sans-serif",
             letterSpacing: "0.45em",
@@ -115,7 +115,7 @@ function FleetPanel({
 
         {/* Price line */}
         <p
-          className="text-[#DAA520] mb-5"
+          className="text-[#C9A84C] mb-5"
           style={{
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "clamp(11px, 1.3vw, 13px)",
@@ -141,7 +141,7 @@ function FleetPanel({
 
         {/* CTA — inline gold-on-hover with sliding arrow */}
         <span
-          className="group inline-flex items-center gap-3 text-white/70 group-hover:text-[#DAA520] transition-colors duration-500 pb-1 border-b border-white/20 group-hover:border-[#DAA520]"
+          className="group inline-flex items-center gap-3 text-white/70 group-hover:text-[#C9A84C] transition-colors duration-500 pb-1 border-b border-white/20 group-hover:border-[#C9A84C]"
           style={{
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "11px",
@@ -228,8 +228,8 @@ export default function FleetCTAs({
         style={{
           background:
             "linear-gradient(to bottom, #000 0%, #050505 100%)",
-          borderTop: "1px solid rgba(218,165,32,0.35)",
-          borderBottom: "1px solid rgba(218,165,32,0.15)",
+          borderTop: "1px solid rgba(201,168,76,0.35)",
+          borderBottom: "1px solid rgba(201,168,76,0.15)",
         }}
       >
         <Link
@@ -243,21 +243,21 @@ export default function FleetCTAs({
               fontSize: "9px",
               letterSpacing: "0.45em",
               textTransform: "uppercase",
-              color: "rgba(218,165,32,0.7)",
+              color: "rgba(201,168,76,0.7)",
               fontWeight: 600,
             }}
           >
             Or
           </span>
           <span
-            className="relative transition-colors duration-500 group-hover:text-[#DAA520]"
+            className="relative transition-colors duration-500 group-hover:text-[#C9A84C]"
             style={{
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "clamp(18px, 2vw, 24px)",
               fontWeight: 300,
               color: "#fff",
               letterSpacing: "0.04em",
-              borderBottom: "1px solid rgba(218,165,32,0.5)",
+              borderBottom: "1px solid rgba(201,168,76,0.5)",
               paddingBottom: "3px",
             }}
           >
@@ -268,7 +268,7 @@ export default function FleetCTAs({
             height="10"
             viewBox="0 0 22 10"
             fill="none"
-            stroke="#DAA520"
+            stroke="#C9A84C"
             strokeWidth="1.2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -302,8 +302,8 @@ export default function FleetCTAs({
           background: linear-gradient(
             to right,
             transparent,
-            rgba(218, 165, 32, 0.35) 20%,
-            rgba(218, 165, 32, 0.35) 80%,
+            rgba(201, 168, 76, 0.35) 20%,
+            rgba(201, 168, 76, 0.35) 80%,
             transparent
           );
           width: 100%;
@@ -316,8 +316,8 @@ export default function FleetCTAs({
             background: linear-gradient(
               to bottom,
               transparent,
-              rgba(218, 165, 32, 0.35) 15%,
-              rgba(218, 165, 32, 0.35) 85%,
+              rgba(201, 168, 76, 0.35) 15%,
+              rgba(201, 168, 76, 0.35) 85%,
               transparent
             );
           }

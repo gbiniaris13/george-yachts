@@ -108,7 +108,7 @@ export default async function BlogPage() {
   const jsonLdSchema = BlogListSchema(posts);
 
   return (
-    <div className="min-h-screen bg-black selection:bg-[#DAA520] selection:text-black" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+    <div className="min-h-screen bg-black selection:bg-[#C9A84C] selection:text-black" style={{ fontFamily: "'Montserrat', sans-serif" }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }} />
 
       {/* HERO */}
@@ -140,7 +140,7 @@ export default async function BlogPage() {
           style={{
             background: "#000",
             padding: "72px 24px",
-            borderTop: "1px solid rgba(218,165,32,0.12)",
+            borderTop: "1px solid rgba(201,168,76,0.12)",
           }}
         >
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
@@ -150,7 +150,7 @@ export default async function BlogPage() {
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: 10,
                   letterSpacing: "0.4em",
-                  color: "#DAA520",
+                  color: "#C9A84C",
                   textTransform: "uppercase",
                   fontWeight: 600,
                   marginBottom: 14,
@@ -239,10 +239,10 @@ export default async function BlogPage() {
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
                   fontWeight: 600,
-                  color: "#DAA520",
+                  color: "#C9A84C",
                   textDecoration: "none",
                   paddingBottom: 4,
-                  borderBottom: "1px solid #DAA520",
+                  borderBottom: "1px solid #C9A84C",
                 }}
               >
                 Browse the Full Fleet →

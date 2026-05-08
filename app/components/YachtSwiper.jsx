@@ -191,7 +191,7 @@ const YachtSwiper = ({ yachtData }) => {
 
       <div className="relative lg:absolute lg:top-1/2 lg:right-[5%] lg:lg:right-[10%] lg:-translate-y-1/2 z-30 w-full lg:max-w-[500px] px-0 lg:px-6 order-2">
         <div className="bg-[#0a0a0a]/40 lg:bg-[#0a0a0a]/60 backdrop-blur-2xl border border-white/10 p-8 lg:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.5)] relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-[#DAA520] via-[#8a6d21] to-transparent"></div>
+          <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-[#C9A84C] via-[#8a6d21] to-transparent"></div>
 
           <button
             onClick={handleShare}
@@ -203,7 +203,7 @@ const YachtSwiper = ({ yachtData }) => {
               {isCopied ? "LINK COPIED" : "SHARE"}
             </span>
             <div
-              className={`p-2 border border-white/10 rounded-full transition-all duration-300 ${isCopied ? "bg-white text-black border-white" : "text-[#DAA520] hover:border-[#DAA520]"}`}
+              className={`p-2 border border-white/10 rounded-full transition-all duration-300 ${isCopied ? "bg-white text-black border-white" : "text-[#C9A84C] hover:border-[#C9A84C]"}`}
             >
               {isCopied ? (
                 <CheckIcon className="w-3 h-3" />
@@ -217,7 +217,7 @@ const YachtSwiper = ({ yachtData }) => {
             <h2 className="text-4xl lg:text-6xl font-marcellus text-white uppercase tracking-tighter leading-none">
               {yacht.name}
             </h2>
-            <p className="text-[#DAA520] font-sans text-[10px] tracking-[0.5em] uppercase mt-4 opacity-80">
+            <p className="text-[#C9A84C] font-sans text-[10px] tracking-[0.5em] uppercase mt-4 opacity-80">
               Vessel Specification
             </p>
           </div>
@@ -250,7 +250,7 @@ const YachtSwiper = ({ yachtData }) => {
 
             <button
               onClick={() => setIsPopupOpen(true)}
-              className="w-full text-black py-5 text-xs font-sans font-bold tracking-[0.4em] uppercase shadow-[0_0_30px_rgba(218,165,32,0.2)] hover:shadow-[0_0_50px_rgba(255,255,255,0.2)] hover:brightness-110 transition-all duration-300"
+              className="w-full text-black py-5 text-xs font-sans font-bold tracking-[0.4em] uppercase shadow-[0_0_30px_rgba(201,168,76,0.2)] hover:shadow-[0_0_50px_rgba(255,255,255,0.2)] hover:brightness-110 transition-all duration-300"
               style={{
                 background:
                   "linear-gradient(90deg, #E6C77A 0%, #C9A24D 45%, #A67C2E 100%)",
@@ -262,7 +262,7 @@ const YachtSwiper = ({ yachtData }) => {
             {yacht.slug?.current && (
               <Link
                 href={`/yachts/${yacht.slug.current}`}
-                className="w-full bg-transparent border border-white/10 text-white/50 py-4 text-[10px] font-sans font-bold tracking-[0.3em] uppercase transition-all duration-300 hover:bg-white/5 hover:text-[#DAA520] hover:border-[#DAA520]/30 text-center block"
+                className="w-full bg-transparent border border-white/10 text-white/50 py-4 text-[10px] font-sans font-bold tracking-[0.3em] uppercase transition-all duration-300 hover:bg-white/5 hover:text-[#C9A84C] hover:border-[#C9A84C]/30 text-center block"
               >
                 View Full Details
               </Link>

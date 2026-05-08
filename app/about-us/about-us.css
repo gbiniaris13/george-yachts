@@ -71,7 +71,7 @@
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #DAA520;
+  color: #C9A84C;
   margin-bottom: 20px;
   font-weight: 500;
   opacity: 0;
@@ -143,7 +143,7 @@
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #DAA520;
+  color: #C9A84C;
   margin-bottom: 32px;
 }
 
@@ -178,8 +178,8 @@
 .about-stats {
   padding: 80px 24px;
   background: #000;
-  border-top: 1px solid rgba(218,165,32,0.08);
-  border-bottom: 1px solid rgba(218,165,32,0.08);
+  border-top: 1px solid rgba(201,168,76,0.08);
+  border-bottom: 1px solid rgba(201,168,76,0.08);
 }
 
 .about-stats__grid {
@@ -235,7 +235,7 @@
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #DAA520;
+  color: #C9A84C;
   margin-bottom: 20px;
 }
 
@@ -280,7 +280,7 @@
   font-style: italic;
   color: rgba(255,255,255,0.7);
   line-height: 1.7;
-  border-left: 2px solid #DAA520;
+  border-left: 2px solid #C9A84C;
   padding-left: 24px;
   margin: 40px 0 0;
   text-align: left;
@@ -290,7 +290,7 @@
 .about-services {
   padding: 120px 24px;
   background: #000;
-  border-top: 1px solid rgba(218,165,32,0.08);
+  border-top: 1px solid rgba(201,168,76,0.08);
 }
 
 .about-services__eyebrow {
@@ -298,7 +298,7 @@
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #DAA520;
+  color: #C9A84C;
   margin-bottom: 16px;
 }
 
@@ -326,7 +326,7 @@
   gap: 1px;
   max-width: 1100px;
   margin: 64px auto 0;
-  background: rgba(218,165,32,0.06);
+  background: rgba(201,168,76,0.06);
 }
 
 .about-services__card {
@@ -348,12 +348,12 @@
 
 @media (hover: hover) and (min-width: 700px) {
   .about-services__card:hover {
-    background: rgba(218,165,32,0.05);
+    background: rgba(201,168,76,0.05);
     transform: perspective(1200px) rotateX(2deg) rotateY(-2.5deg) translateY(-6px);
     box-shadow:
       0 24px 60px rgba(0, 0, 0, 0.5),
-      0 0 0 1px rgba(218, 165, 32, 0.32) inset;
-    border-color: rgba(218, 165, 32, 0.32);
+      0 0 0 1px rgba(201, 168, 76, 0.32) inset;
+    border-color: rgba(201, 168, 76, 0.32);
   }
 }
 
@@ -363,7 +363,7 @@
 }
 
 .about-services__icon {
-  color: #DAA520;
+  color: #C9A84C;
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
@@ -389,7 +389,7 @@
 .about-credentials {
   padding: 80px 24px;
   background: #000;
-  border-top: 1px solid rgba(218,165,32,0.08);
+  border-top: 1px solid rgba(201,168,76,0.08);
 }
 
 .about-credentials__inner {
@@ -403,7 +403,7 @@
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #DAA520;
+  color: #C9A84C;
   margin-bottom: 48px;
 }
 
@@ -416,12 +416,12 @@
 .about-credentials__item {
   text-align: center;
   padding: 24px 16px;
-  border: 1px solid rgba(218,165,32,0.08);
+  border: 1px solid rgba(201,168,76,0.08);
   transition: border-color 0.4s ease;
 }
 
 .about-credentials__item:hover {
-  border-color: rgba(218,165,32,0.2);
+  border-color: rgba(201,168,76,0.2);
 }
 
 .about-credentials__item-title {
@@ -444,7 +444,7 @@
 .about-cta {
   padding: 120px 24px;
   background: #000;
-  border-top: 1px solid rgba(218,165,32,0.08);
+  border-top: 1px solid rgba(201,168,76,0.08);
 }
 
 .about-cta__eyebrow {
@@ -452,7 +452,7 @@
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #DAA520;
+  color: #C9A84C;
   margin-bottom: 16px;
 }
 
@@ -492,7 +492,7 @@
 
 .about-cta__button:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 30px rgba(218,165,32,0.35);
+  box-shadow: 0 8px 30px rgba(201,168,76,0.35);
 }
 
 /* ── RESPONSIVE ── */

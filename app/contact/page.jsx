@@ -135,7 +135,7 @@ export default function ContactPage() {
                 height: 1,
                 margin: "0 auto 24px",
                 background:
-                  "linear-gradient(90deg, transparent, rgba(218,165,32,0.7), transparent)",
+                  "linear-gradient(90deg, transparent, rgba(201,168,76,0.7), transparent)",
               }}
             />
             <p
@@ -172,7 +172,7 @@ export default function ContactPage() {
                 width: 60,
                 height: 1,
                 margin: "0 auto 28px",
-                background: "rgba(218,165,32,0.55)",
+                background: "rgba(201,168,76,0.55)",
               }}
             />
             <p
@@ -198,7 +198,7 @@ export default function ContactPage() {
             {/* Contact details */}
             <div className="space-y-10">
               <div>
-                <h2 className="font-cormorant text-3xl mb-4 text-[#DAA520]">
+                <h2 className="font-cormorant text-3xl mb-4 text-[#C9A84C]">
                   Athens HQ
                 </h2>
                 <address className="not-italic text-white/80 leading-relaxed">
@@ -218,7 +218,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <h2 className="font-cormorant text-3xl mb-4 text-[#DAA520]">
+                <h2 className="font-cormorant text-3xl mb-4 text-[#C9A84C]">
                   Direct lines
                 </h2>
                 <ul className="space-y-3 text-white/80">
@@ -226,7 +226,7 @@ export default function ContactPage() {
                     <span className="text-white/50 mr-3">Athens</span>
                     <a
                       href="tel:+306970380999"
-                      className="hover:text-[#DAA520] transition"
+                      className="hover:text-[#C9A84C] transition"
                     >
                       +30 6970 380 999
                     </a>
@@ -235,7 +235,7 @@ export default function ContactPage() {
                     <span className="text-white/50 mr-3">London</span>
                     <a
                       href="tel:+442037692707"
-                      className="hover:text-[#DAA520] transition"
+                      className="hover:text-[#C9A84C] transition"
                     >
                       +44 20 3769 2707
                     </a>
@@ -244,7 +244,7 @@ export default function ContactPage() {
                     <span className="text-white/50 mr-3">Miami</span>
                     <a
                       href="tel:+17867988798"
-                      className="hover:text-[#DAA520] transition"
+                      className="hover:text-[#C9A84C] transition"
                     >
                       +1 786 798 8798
                     </a>
@@ -253,7 +253,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <h2 className="font-cormorant text-3xl mb-4 text-[#DAA520]">
+                <h2 className="font-cormorant text-3xl mb-4 text-[#C9A84C]">
                   Digital channels
                 </h2>
                 <ul className="space-y-3 text-white/80">
@@ -262,7 +262,7 @@ export default function ContactPage() {
                       href="https://wa.me/17867988798"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:text-[#DAA520] transition"
+                      className="hover:text-[#C9A84C] transition"
                     >
                       WhatsApp · +1 786 798 8798
                     </a>
@@ -270,7 +270,7 @@ export default function ContactPage() {
                   <li>
                     <a
                       href="mailto:george@georgeyachts.com"
-                      className="hover:text-[#DAA520] transition"
+                      className="hover:text-[#C9A84C] transition"
                     >
                       george@georgeyachts.com
                     </a>
@@ -280,7 +280,7 @@ export default function ContactPage() {
                       href="https://calendly.com/george-georgeyachts/30min"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:text-[#DAA520] transition"
+                      className="hover:text-[#C9A84C] transition"
                     >
                       Book a 30-min call · Calendly
                     </a>
@@ -288,7 +288,7 @@ export default function ContactPage() {
                   <li>
                     <a
                       href="/inquiry"
-                      className="hover:text-[#DAA520] transition"
+                      className="hover:text-[#C9A84C] transition"
                     >
                       Start a charter inquiry →
                     </a>
@@ -297,7 +297,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <h2 className="font-cormorant text-3xl mb-4 text-[#DAA520]">
+                <h2 className="font-cormorant text-3xl mb-4 text-[#C9A84C]">
                   Hours
                 </h2>
                 <p className="text-white/80">
@@ -310,7 +310,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <h2 className="font-cormorant text-3xl mb-4 text-[#DAA520]">
+                <h2 className="font-cormorant text-3xl mb-4 text-[#C9A84C]">
                   Credentials
                 </h2>
                 <ul className="space-y-2 text-sm text-white/85">
@@ -340,7 +340,7 @@ export default function ContactPage() {
                 href="https://www.google.com/maps/search/?api=1&query=Charilaou+Trikoupi+190A+Nea+Kifisia+14564"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block text-sm text-[#DAA520] hover:underline"
+                className="inline-block text-sm text-[#C9A84C] hover:underline"
               >
                 Open in Google Maps →
               </a>

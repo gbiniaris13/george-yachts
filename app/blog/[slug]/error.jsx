@@ -27,7 +27,7 @@ export default function BlogSlugError({ error, reset }) {
           fontSize: 10,
           letterSpacing: "0.5em",
           textTransform: "uppercase",
-          color: "#DAA520",
+          color: "#C9A84C",
           fontWeight: 600,
           marginBottom: 24,
         }}
@@ -70,7 +70,7 @@ export default function BlogSlugError({ error, reset }) {
             textTransform: "uppercase",
             fontWeight: 600,
             color: "#000",
-            background: "#DAA520",
+            background: "#C9A84C",
             border: 0,
             cursor: "pointer",
           }}
@@ -86,8 +86,8 @@ export default function BlogSlugError({ error, reset }) {
             letterSpacing: "0.32em",
             textTransform: "uppercase",
             fontWeight: 600,
-            color: "#DAA520",
-            border: "1px solid #DAA520",
+            color: "#C9A84C",
+            border: "1px solid #C9A84C",
             textDecoration: "none",
           }}
         >

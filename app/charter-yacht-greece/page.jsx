@@ -221,13 +221,13 @@ export default async function CharterFleetPage() {
       </section>
 
       {/* FROM THE JOURNAL — Cross-linking */}
-      <section style={{ padding: "80px 24px", background: "#000", borderTop: "1px solid rgba(218,165,32,0.06)" }}>
+      <section style={{ padding: "80px 24px", background: "#000", borderTop: "1px solid rgba(201,168,76,0.06)" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "40px" }}>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#DAA520", fontWeight: 600, marginBottom: "12px" }}>Expert Insights</p>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", fontWeight: 600, marginBottom: "12px" }}>Expert Insights</p>
             <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 300, color: "#fff" }}>From The Journal</h2>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1px", background: "rgba(218,165,32,0.04)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1px", background: "rgba(201,168,76,0.04)" }}>
             {[
               { title: "The First-Timer\u2019s Complete Guide to Crewed Yacht Charter in Greece", slug: "the-first-timer-s-complete-guide-to-crewed-yacht-charter-in-greece" },
               { title: "The \u20ac50,000 Mistake: What Goes Wrong Without a Broker", slug: "the-eur50-000-mistake-what-goes-wrong-when-you-book-a-yacht-charter-without-a-broker" },
@@ -239,7 +239,7 @@ export default async function CharterFleetPage() {
                 style={{ background: "#000", padding: "28px 24px", textDecoration: "none", display: "block", transition: "background 0.3s ease" }}
               >
                 <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "17px", fontWeight: 400, color: "#fff", lineHeight: 1.4, margin: "0 0 12px" }}>{post.title}</p>
-                <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#DAA520" }}>Read Article &rarr;</span>
+                <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#C9A84C" }}>Read Article &rarr;</span>
               </a>
             ))}
           </div>

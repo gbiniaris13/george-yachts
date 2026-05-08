@@ -66,7 +66,7 @@ export default function Filotimon({ filotimoImage = null }) {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at 50% 50%, rgba(218,165,32,0.05) 0%, transparent 60%)",
+            "radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 60%)",
           transform:
             "translate3d(0, calc(var(--gy-scroll-vy, 0) * -6px), 0)",
           willChange: "transform",
@@ -153,7 +153,7 @@ export default function Filotimon({ filotimoImage = null }) {
                 // copy and adding visual noise on narrow phones.
                 fontSize: "clamp(48px, 9vw, 140px)",
                 fontWeight: 200,
-                color: "rgba(218,165,32,0.25)",
+                color: "rgba(201,168,76,0.25)",
                 letterSpacing: "0.08em",
                 lineHeight: 0.9,
                 mixBlendMode: "overlay",
@@ -166,11 +166,11 @@ export default function Filotimon({ filotimoImage = null }) {
           {/* Corner accents */}
           <span
             aria-hidden="true"
-            className="absolute top-6 left-6 md:top-10 md:left-10 w-10 h-10 md:w-14 md:h-14 border-t border-l border-[#DAA520]/35 pointer-events-none"
+            className="absolute top-6 left-6 md:top-10 md:left-10 w-10 h-10 md:w-14 md:h-14 border-t border-l border-[#C9A84C]/35 pointer-events-none"
           />
           <span
             aria-hidden="true"
-            className="absolute bottom-6 left-6 md:bottom-10 md:left-10 w-10 h-10 md:w-14 md:h-14 border-b border-l border-[#DAA520]/35 pointer-events-none"
+            className="absolute bottom-6 left-6 md:bottom-10 md:left-10 w-10 h-10 md:w-14 md:h-14 border-b border-l border-[#C9A84C]/35 pointer-events-none"
           />
         </div>
 
@@ -179,7 +179,7 @@ export default function Filotimon({ filotimoImage = null }) {
           <article className="max-w-[680px] w-full">
             {/* Eyebrow — Phase 24 Cinzel temple-caps */}
             <p
-              className="text-[#DAA520] mb-10"
+              className="text-[#C9A84C] mb-10"
               style={{
                 fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Montserrat', sans-serif",
                 fontSize: "10px",
@@ -226,7 +226,7 @@ export default function Filotimon({ filotimoImage = null }) {
 
             {/* Etymology */}
             <p
-              className="text-[#DAA520]/70 mb-10"
+              className="text-[#C9A84C]/70 mb-10"
               style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontStyle: "italic",
@@ -234,8 +234,8 @@ export default function Filotimon({ filotimoImage = null }) {
                 letterSpacing: "0.04em",
               }}
             >
-              φίλο <span className="text-[#DAA520]/50">(philo)</span> — love &nbsp;·&nbsp;
-              τιμώ <span className="text-[#DAA520]/50">(timo)</span> — honour
+              φίλο <span className="text-[#C9A84C]/50">(philo)</span> — love &nbsp;·&nbsp;
+              τιμώ <span className="text-[#C9A84C]/50">(timo)</span> — honour
             </p>
 
             {/* Intro paragraph — full i18n string, long-form */}
@@ -253,7 +253,7 @@ export default function Filotimon({ filotimoImage = null }) {
 
             {/* ── Three strands of filotimo ── */}
             <p
-              className="text-[#DAA520]/70 mb-8"
+              className="text-[#C9A84C]/70 mb-8"
               style={{
                 fontFamily: "'Montserrat', sans-serif",
                 fontSize: "9px",
@@ -269,7 +269,7 @@ export default function Filotimon({ filotimoImage = null }) {
               {pillars.map((p, i) => (
                 <li key={i} className="flex gap-6">
                   <span
-                    className="text-[#DAA520] shrink-0"
+                    className="text-[#C9A84C] shrink-0"
                     style={{
                       fontFamily: "'Cormorant Garamond', Georgia, serif",
                       fontSize: "clamp(32px, 3.5vw, 48px)",
@@ -315,7 +315,7 @@ export default function Filotimon({ filotimoImage = null }) {
               className="h-px w-24 mb-12"
               style={{
                 background:
-                  "linear-gradient(to right, #DAA520, rgba(218,165,32,0.1))",
+                  "linear-gradient(to right, #C9A84C, rgba(201,168,76,0.1))",
               }}
             />
 
@@ -351,7 +351,7 @@ export default function Filotimon({ filotimoImage = null }) {
                   key={i}
                   className="pl-5 py-1"
                   style={{
-                    borderLeft: "1px solid rgba(218,165,32,0.45)",
+                    borderLeft: "1px solid rgba(201,168,76,0.45)",
                   }}
                 >
                   <p
@@ -375,7 +375,7 @@ export default function Filotimon({ filotimoImage = null }) {
               className="h-px w-16 mb-10"
               style={{
                 background:
-                  "linear-gradient(to right, #DAA520, rgba(218,165,32,0.1))",
+                  "linear-gradient(to right, #C9A84C, rgba(201,168,76,0.1))",
               }}
             />
 
@@ -393,7 +393,7 @@ export default function Filotimon({ filotimoImage = null }) {
             </blockquote>
 
             <p
-              className="text-[#DAA520]/55"
+              className="text-[#C9A84C]/55"
               style={{
                 fontFamily: "'Montserrat', sans-serif",
                 fontSize: "9px",
@@ -407,7 +407,7 @@ export default function Filotimon({ filotimoImage = null }) {
 
             {/* Signature diamond */}
             <div className="mt-16 opacity-40 hover:opacity-90 transition-opacity duration-500">
-              <div className="w-2 h-2 bg-[#DAA520] rotate-45" />
+              <div className="w-2 h-2 bg-[#C9A84C] rotate-45" />
             </div>
           </article>
         </div>

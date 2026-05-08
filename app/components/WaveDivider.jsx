@@ -25,9 +25,9 @@ export default function WaveDivider({ height = 80, intensity = 1 }) {
       >
         <defs>
           <linearGradient id="gyWaveDividerFill1" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%"  stopColor="rgba(218, 165, 32, 0)" />
-            <stop offset="50%" stopColor="rgba(218, 165, 32, 0.45)" />
-            <stop offset="100%" stopColor="rgba(218, 165, 32, 0)" />
+            <stop offset="0%"  stopColor="rgba(201, 168, 76, 0)" />
+            <stop offset="50%" stopColor="rgba(201, 168, 76, 0.45)" />
+            <stop offset="100%" stopColor="rgba(201, 168, 76, 0)" />
           </linearGradient>
           <linearGradient id="gyWaveDividerFill2" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%"  stopColor="rgba(245, 235, 210, 0)" />

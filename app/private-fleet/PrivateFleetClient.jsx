@@ -11,7 +11,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
     <div style={{ minHeight: "100vh", background: "#000" }}>
       {/* Back Button */}
       <div style={{ position: "fixed", top: 100, left: 24, zIndex: 9999 }}>
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", fontFamily: "'Montserrat', sans-serif", fontSize: 11, letterSpacing: "0.15em", color: "rgba(255,255,255,0.5)", padding: "12px 20px", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)", borderRadius: 4, border: "1px solid rgba(218,165,32,0.2)" }}>
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", fontFamily: "'Montserrat', sans-serif", fontSize: 11, letterSpacing: "0.15em", color: "rgba(255,255,255,0.5)", padding: "12px 20px", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)", borderRadius: 4, border: "1px solid rgba(201,168,76,0.2)" }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
           BACK
         </Link>
@@ -21,13 +21,13 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
         <Image src="/images/private-fleet-hero.jpg" alt="Private Fleet — luxury yacht charter Greece" fill style={{ objectFit: "cover", objectPosition: "center 40%", filter: "grayscale(100%) contrast(1.2) brightness(0.4)" }} sizes="100vw" priority />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 40%, rgba(0,0,0,0.4) 100%)" }} />
         <div style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px" }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.5em", color: "#DAA520", textTransform: "uppercase", marginBottom: 24 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.5em", color: "#C9A84C", textTransform: "uppercase", marginBottom: 24 }}>
             George Yachts Brokerage House
           </p>
           <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(56px, 10vw, 130px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 18px 0", letterSpacing: "-0.035em", lineHeight: 0.95, textShadow: "0 6px 32px rgba(0,0,0,0.55)" }}>
             Private Fleet
           </h1>
-          <div style={{ width: 60, height: 1, background: "linear-gradient(90deg, transparent, #DAA520, transparent)", margin: "0 auto 24px" }} />
+          <div style={{ width: 60, height: 1, background: "linear-gradient(90deg, transparent, #C9A84C, transparent)", margin: "0 auto 24px" }} />
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(0.8rem, 1.5vw, 1rem)", fontWeight: 300, color: "rgba(255,255,255,0.5)", letterSpacing: "0.15em", marginBottom: 40 }}>
             Your own world at sea. Full crew. Total discretion.
           </p>
@@ -45,8 +45,8 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
 
       {/* Price Range */}
       <section style={{ padding: "80px 24px", background: "#000", textAlign: "center" }}>
-        <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 40px", border: "1px solid rgba(218,165,32,0.15)", borderRadius: 4 }}>
-          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.6rem, 4vw, 2.4rem)", color: "#DAA520", margin: "0 0 16px 0" }}>
+        <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 40px", border: "1px solid rgba(201,168,76,0.15)", borderRadius: 4 }}>
+          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.6rem, 4vw, 2.4rem)", color: "#C9A84C", margin: "0 0 16px 0" }}>
             From €{lowestPrice.toLocaleString()} to €{highestPrice.toLocaleString()} / week
           </p>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.4)", lineHeight: 1.8, margin: 0, letterSpacing: "0.05em" }}>
@@ -63,7 +63,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
             { icon: "🗺️", title: "Your Itinerary", desc: "Every day shaped around your wishes. No fixed routes." },
             { icon: "🔒", title: "Absolute Privacy", desc: "Your yacht. Your pace. Complete discretion." },
           ].map((item, i) => (
-            <div key={i} style={{ textAlign: "center", padding: 40, border: "1px solid rgba(218,165,32,0.1)", borderRadius: 4 }}>
+            <div key={i} style={{ textAlign: "center", padding: 40, border: "1px solid rgba(201,168,76,0.1)", borderRadius: 4 }}>
               <div style={{ fontSize: 32, marginBottom: 20 }}>{item.icon}</div>
               <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.3rem", color: "#fff", marginBottom: 12 }}>{item.title}</h3>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 1.8 }}>{item.desc}</p>
@@ -76,7 +76,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
       <section style={{ padding: "80px 24px", background: "#000" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 60 }}>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.4em", color: "#DAA520", textTransform: "uppercase", marginBottom: 16 }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.4em", color: "#C9A84C", textTransform: "uppercase", marginBottom: 16 }}>
               {yachts.length} Vessels
             </p>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#fff" }}>
@@ -85,7 +85,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 24 }}>
             {yachts.map((yacht) => (
-              <Link key={yacht._id} href={`/yachts/${yacht.slug}`} style={{ textDecoration: "none", display: "block", border: "1px solid rgba(218,165,32,0.08)", borderRadius: 4, overflow: "hidden" }}>
+              <Link key={yacht._id} href={`/yachts/${yacht.slug}`} style={{ textDecoration: "none", display: "block", border: "1px solid rgba(201,168,76,0.08)", borderRadius: 4, overflow: "hidden" }}>
                 {/* Image */}
                 <div style={{ position: "relative", aspectRatio: "16/10", overflow: "hidden" }}>
                   {yacht.imageUrl && (
@@ -101,13 +101,13 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
                 </div>
 
                 {/* Pricing Panel */}
-                <div style={{ padding: "24px 28px", background: "rgba(8,8,8,0.98)", textAlign: "center", borderTop: "1px solid rgba(218,165,32,0.1)" }}>
+                <div style={{ padding: "24px 28px", background: "rgba(8,8,8,0.98)", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.1)" }}>
                   {/* Gold divider */}
-                  <div style={{ width: 32, height: 1, background: "linear-gradient(90deg, transparent, #DAA520, transparent)", margin: "0 auto 18px" }} />
+                  <div style={{ width: 32, height: 1, background: "linear-gradient(90deg, transparent, #C9A84C, transparent)", margin: "0 auto 18px" }} />
 
                   {yacht.weeklyRatePrice ? (
                     <>
-                      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.35rem", fontWeight: 300, color: "#DAA520", margin: "0 0 8px 0", letterSpacing: "0.03em" }}>
+                      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.35rem", fontWeight: 300, color: "#C9A84C", margin: "0 0 8px 0", letterSpacing: "0.03em" }}>
                         {yacht.weeklyRatePrice.split('|')[0].trim()}
                       </p>
                       {yacht.weeklyRatePrice.includes('|') && (
@@ -118,7 +118,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
                     </>
                   ) : (
                     <>
-                      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.2rem", fontWeight: 300, color: "#DAA520", margin: "0 0 6px 0" }}>
+                      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.2rem", fontWeight: 300, color: "#C9A84C", margin: "0 0 6px 0" }}>
                         Price on request
                       </p>
                       <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em", textTransform: "uppercase", margin: 0 }}>
@@ -128,7 +128,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
                   )}
 
                   {/* Bottom rule */}
-                  <div style={{ width: 32, height: 1, background: "linear-gradient(90deg, transparent, rgba(218,165,32,0.3), transparent)", margin: "18px auto 0" }} />
+                  <div style={{ width: 32, height: 1, background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent)", margin: "18px auto 0" }} />
                 </div>
               </Link>
             ))}
@@ -142,14 +142,14 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
       </section>
 
       {/* George Section */}
-      <section style={{ padding: "100px 24px", background: "#000", borderTop: "1px solid rgba(218,165,32,0.08)" }}>
+      <section style={{ padding: "100px 24px", background: "#000", borderTop: "1px solid rgba(201,168,76,0.08)" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", display: "flex", alignItems: "center", gap: 40, flexWrap: "wrap", justifyContent: "center" }}>
           <div style={{ position: "relative", width: 180, height: 180, borderRadius: "50%", overflow: "hidden", flexShrink: 0 }}>
             <Image src="/images/george.jpg" alt="George P. Biniaris" fill style={{ objectFit: "cover" }} sizes="180px" />
           </div>
           <div style={{ textAlign: "center", flex: 1, minWidth: 250 }}>
             <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", color: "#fff", marginBottom: 8 }}>Your Broker: George</h3>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: "#DAA520", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16 }}>Managing Broker · IYBA Member</p>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: "#C9A84C", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16 }}>Managing Broker · IYBA Member</p>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 1.8, fontStyle: "italic" }}>
               "One broker. One relationship. One standard."
             </p>

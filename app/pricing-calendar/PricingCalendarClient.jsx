@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-const GOLD = '#DAA520';
+const GOLD = '#C9A84C';
 
 // Pricing tiers by week (approximate for Greek charter market)
 // 1=low, 2=mid-low, 3=mid, 4=mid-high, 5=peak

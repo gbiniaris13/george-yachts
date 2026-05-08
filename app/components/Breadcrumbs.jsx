@@ -18,7 +18,7 @@ export default function Breadcrumbs({ items }) {
         <span key={i}>
           {i > 0 && (
             <span
-              className="mx-2 text-[#DAA520]/55"
+              className="mx-2 text-[#C9A84C]/55"
               aria-hidden="true"
             >
               ›
@@ -27,7 +27,7 @@ export default function Breadcrumbs({ items }) {
           {item.url ? (
             <Link
               href={item.url}
-              className="text-white/65 hover:text-[#DAA520] transition-colors duration-300"
+              className="text-white/65 hover:text-[#C9A84C] transition-colors duration-300"
             >
               {item.name}
             </Link>

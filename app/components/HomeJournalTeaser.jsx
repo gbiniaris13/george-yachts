@@ -12,7 +12,7 @@ import { sanityCardImg } from "@/lib/sanity-image";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 import ConstellationBackdrop from "./ConstellationBackdrop";
 
-const GOLD = "#DAA520";
+const GOLD = "#C9A84C";
 
 export default function HomeJournalTeaser({ posts = [] }) {
   const { t } = useI18n();

@@ -22,9 +22,9 @@ export default function BriefGeorgeBanner() {
       style={{
         position: "relative",
         padding: "clamp(28px, 4vw, 44px) clamp(24px, 5vw, 56px)",
-        background: "linear-gradient(135deg, rgba(218,165,32,0.06) 0%, rgba(13,27,42,0.6) 100%)",
-        borderTop: "1px solid rgba(218,165,32,0.18)",
-        borderBottom: "1px solid rgba(218,165,32,0.18)",
+        background: "linear-gradient(135deg, rgba(201,168,76,0.06) 0%, rgba(13,27,42,0.6) 100%)",
+        borderTop: "1px solid rgba(201,168,76,0.18)",
+        borderBottom: "1px solid rgba(201,168,76,0.18)",
         overflow: "hidden",
       }}
     >
@@ -106,8 +106,8 @@ export default function BriefGeorgeBanner() {
               color: "#0a0a0a",
               textDecoration: "none",
               background: "linear-gradient(135deg, #E6C77A 0%, #C9A84C 100%)",
-              border: "1px solid #DAA520",
-              boxShadow: "0 12px 32px rgba(218,165,32,0.22)",
+              border: "1px solid #C9A84C",
+              boxShadow: "0 12px 32px rgba(201,168,76,0.22)",
               transition: "transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.32s ease",
             }}
           >

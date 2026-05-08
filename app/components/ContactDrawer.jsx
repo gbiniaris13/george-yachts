@@ -153,10 +153,10 @@ export default function ContactDrawer() {
           height: 56,
           borderRadius: 0,
           background: hovered
-            ? "linear-gradient(135deg, #C9A84C 0%, #DAA520 100%)"
+            ? "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)"
             : "linear-gradient(135deg, #0d0d1a 0%, #000 100%)",
-          border: `1px solid ${hovered ? "#DAA520" : "rgba(218,165,32,0.35)"}`,
-          color: hovered ? "#0a0a0a" : "#DAA520",
+          border: `1px solid ${hovered ? "#C9A84C" : "rgba(201,168,76,0.35)"}`,
+          color: hovered ? "#0a0a0a" : "#C9A84C",
           fontFamily: "'Montserrat', sans-serif",
           fontSize: 9,
           fontWeight: 700,
@@ -169,7 +169,7 @@ export default function ContactDrawer() {
           justifyContent: "center",
           gap: 2,
           boxShadow: hovered
-            ? "0 12px 36px rgba(0,0,0,0.5), 0 0 24px rgba(218,165,32,0.18)"
+            ? "0 12px 36px rgba(0,0,0,0.5), 0 0 24px rgba(201,168,76,0.18)"
             : "0 6px 20px rgba(0,0,0,0.35)",
           transform: hovered ? "translateY(-2px)" : "translateY(0)",
           transition: "all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
@@ -212,8 +212,8 @@ export default function ContactDrawer() {
               zIndex: 101,
               width: "min(360px, calc(100vw - 48px))",
               background: "linear-gradient(155deg, rgba(13,13,26,0.98) 0%, rgba(0,0,0,0.98) 100%)",
-              border: "1px solid rgba(218,165,32,0.32)",
-              boxShadow: "0 28px 72px rgba(0,0,0,0.6), 0 0 0 1px rgba(218,165,32,0.08) inset",
+              border: "1px solid rgba(201,168,76,0.32)",
+              boxShadow: "0 28px 72px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.08) inset",
               padding: "26px 22px 22px",
               animation: "gy-drawer-in 0.42s cubic-bezier(0.2, 0.8, 0.2, 1)",
             }}
@@ -264,8 +264,8 @@ export default function ContactDrawer() {
                     alignItems: "center",
                     gap: 14,
                     padding: "14px 16px",
-                    background: "rgba(218,165,32,0.04)",
-                    border: "1px solid rgba(218,165,32,0.15)",
+                    background: "rgba(201,168,76,0.04)",
+                    border: "1px solid rgba(201,168,76,0.15)",
                     textDecoration: "none",
                     color: "rgba(248,245,240,0.92)",
                     transition: "all 0.32s cubic-bezier(0.2, 0.8, 0.2, 1)",
@@ -314,7 +314,7 @@ export default function ContactDrawer() {
                   <span
                     aria-hidden="true"
                     style={{
-                      color: "rgba(218,165,32,0.6)",
+                      color: "rgba(201,168,76,0.6)",
                       fontSize: 14,
                     }}
                   >
@@ -379,8 +379,8 @@ export default function ContactDrawer() {
           to   { opacity: 1; transform: translateY(0)    scale(1);    }
         }
         .gy-contact-row:hover {
-          background: rgba(218,165,32,0.10) !important;
-          border-color: rgba(218,165,32,0.5) !important;
+          background: rgba(201,168,76,0.10) !important;
+          border-color: rgba(201,168,76,0.5) !important;
           transform: translateX(-2px);
         }
         @media (prefers-reduced-motion: reduce) {

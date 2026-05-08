@@ -390,8 +390,8 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
             }}
           >
             <svg width="18" height="18" viewBox="0 0 24 24"
-              fill={hasWishlist(slug) ? '#DAA520' : 'none'}
-              stroke={hasWishlist(slug) ? '#DAA520' : 'rgba(255,255,255,0.6)'}
+              fill={hasWishlist(slug) ? '#C9A84C' : 'none'}
+              stroke={hasWishlist(slug) ? '#C9A84C' : 'rgba(255,255,255,0.6)'}
               strokeWidth="2"
             >
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
@@ -493,9 +493,9 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
               width: "100%",
               marginTop: "8px",
               padding: "6px",
-              background: isComparing ? "rgba(218,165,32,0.15)" : "transparent",
-              border: isComparing ? "1px solid rgba(218,165,32,0.4)" : "1px solid rgba(255,255,255,0.08)",
-              color: isComparing ? "#DAA520" : "rgba(255,255,255,0.3)",
+              background: isComparing ? "rgba(201,168,76,0.15)" : "transparent",
+              border: isComparing ? "1px solid rgba(201,168,76,0.4)" : "1px solid rgba(255,255,255,0.08)",
+              color: isComparing ? "#C9A84C" : "rgba(255,255,255,0.3)",
               fontSize: "9px",
               letterSpacing: "0.15em",
               textTransform: "uppercase",
@@ -851,7 +851,7 @@ export default function FleetGrid({ yachts }) {
               padding: '8px 16px',
               background: 'transparent',
               color: 'rgba(248,245,240,0.85)',
-              border: '1px solid rgba(218,165,32,0.45)',
+              border: '1px solid rgba(201,168,76,0.45)',
               borderRadius: '999px',
               fontFamily: "'Montserrat', sans-serif",
               fontSize: 10,
@@ -863,14 +863,14 @@ export default function FleetGrid({ yachts }) {
               whiteSpace: 'nowrap',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(218,165,32,0.15)';
-              e.currentTarget.style.color = '#DAA520';
-              e.currentTarget.style.borderColor = '#DAA520';
+              e.currentTarget.style.background = 'rgba(201,168,76,0.15)';
+              e.currentTarget.style.color = '#C9A84C';
+              e.currentTarget.style.borderColor = '#C9A84C';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = 'transparent';
               e.currentTarget.style.color = 'rgba(248,245,240,0.85)';
-              e.currentTarget.style.borderColor = 'rgba(218,165,32,0.45)';
+              e.currentTarget.style.borderColor = 'rgba(201,168,76,0.45)';
             }}
           >
             {preset.label}

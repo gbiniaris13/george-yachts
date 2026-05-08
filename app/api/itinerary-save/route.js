@@ -54,7 +54,7 @@ export async function POST(req) {
 <strong>${routeStr}</strong><br/>
 <span style="color:#888">${totalNM || ""} NM · ~${hours || ""} sailing hours</span>
 </p>
-${message ? `<p style="background:#fafafa;padding:12px 16px;border-left:3px solid #DAA520;font-style:italic">${message.replace(/</g, "&lt;")}</p>` : ""}
+${message ? `<p style="background:#fafafa;padding:12px 16px;border-left:3px solid #C9A84C;font-style:italic">${message.replace(/</g, "&lt;")}</p>` : ""}
 <p>I'll come back to you within 24 hours with two yachts that fit this route at the time of year you're looking at, plus one alternative I think you haven't considered.</p>
 <p>If anything's urgent, the fastest channel is WhatsApp: <a href="https://wa.me/17867988798">+1 786 798 8798</a>.</p>
 <p style="margin-top:24px">— George<br/>

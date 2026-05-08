@@ -63,7 +63,7 @@ async function loadIslandData(island) {
   return { yachts: yachts || [], itineraries: itineraries || [] };
 }
 
-const GOLD = "#DAA520";
+const GOLD = "#C9A84C";
 
 function PlaceJsonLd({ island }) {
   const json = {
@@ -126,7 +126,7 @@ export default async function IslandPage({ params }) {
           style={{
             background: "linear-gradient(180deg, #0a0a0a 0%, #000 100%)",
             padding: "120px 24px 64px",
-            borderBottom: "1px solid rgba(218,165,32,0.15)",
+            borderBottom: "1px solid rgba(201,168,76,0.15)",
             textAlign: "center",
           }}
         >
@@ -214,9 +214,9 @@ export default async function IslandPage({ params }) {
         {yachts.length > 0 && (
           <section
             style={{
-              background: "rgba(218,165,32,0.025)",
-              borderTop: "1px solid rgba(218,165,32,0.15)",
-              borderBottom: "1px solid rgba(218,165,32,0.15)",
+              background: "rgba(201,168,76,0.025)",
+              borderTop: "1px solid rgba(201,168,76,0.15)",
+              borderBottom: "1px solid rgba(201,168,76,0.15)",
               padding: "72px 24px",
             }}
           >
@@ -377,7 +377,7 @@ export default async function IslandPage({ params }) {
                   <div
                     key={y.slug}
                     style={{
-                      border: "1px solid rgba(218,165,32,0.18)",
+                      border: "1px solid rgba(201,168,76,0.18)",
                       padding: "28px 28px 24px",
                     }}
                   >
@@ -440,9 +440,9 @@ export default async function IslandPage({ params }) {
         {/* WHEN TO VISIT */}
         <section
           style={{
-            background: "rgba(218,165,32,0.025)",
-            borderTop: "1px solid rgba(218,165,32,0.15)",
-            borderBottom: "1px solid rgba(218,165,32,0.15)",
+            background: "rgba(201,168,76,0.025)",
+            borderTop: "1px solid rgba(201,168,76,0.15)",
+            borderBottom: "1px solid rgba(201,168,76,0.15)",
             padding: "72px 24px",
           }}
         >
@@ -518,8 +518,8 @@ export default async function IslandPage({ params }) {
         {/* FAQ */}
         <section
           style={{
-            background: "rgba(218,165,32,0.025)",
-            borderTop: "1px solid rgba(218,165,32,0.15)",
+            background: "rgba(201,168,76,0.025)",
+            borderTop: "1px solid rgba(201,168,76,0.15)",
             padding: "72px 24px",
           }}
         >
@@ -616,7 +616,7 @@ export default async function IslandPage({ params }) {
                   padding: "14px 26px",
                   background: "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
                   color: "#000000",
-                  border: "1px solid rgba(218,165,32,0.6)",
+                  border: "1px solid rgba(201,168,76,0.6)",
                   textDecoration: "none",
                 }}
               >

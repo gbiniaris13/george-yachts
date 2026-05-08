@@ -16,15 +16,15 @@ export default function AccessibilityPage() {
   const lastUpdated = "April 2026";
 
   return (
-    <div className="min-h-screen bg-[#000] font-sans selection:bg-[#DAA520] selection:text-black">
+    <div className="min-h-screen bg-[#000] font-sans selection:bg-[#C9A84C] selection:text-black">
       {/* Hero */}
       <section className="relative w-full px-8 md:px-20 pt-32 pb-20">
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#DAA520]/30 to-transparent mb-16" />
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C9A84C]/30 to-transparent mb-16" />
         <div className="max-w-[720px] mx-auto">
           <div className="flex items-center space-x-4 mb-8">
-            <span className="block w-8 h-px bg-[#DAA520]" />
+            <span className="block w-8 h-px bg-[#C9A84C]" />
             <span
-              className="text-[#DAA520] text-[9px] tracking-[0.6em] uppercase font-bold"
+              className="text-[#C9A84C] text-[9px] tracking-[0.6em] uppercase font-bold"
               style={{ fontFamily: "'Montserrat', sans-serif" }}
             >
               Commitment
@@ -48,9 +48,9 @@ export default function AccessibilityPage() {
       <section className="relative z-10 bg-[#000] px-6 pb-20 md:pb-32">
         <div className="max-w-[720px] mx-auto">
           <div className="flex items-center space-x-6 mb-16">
-            <span className="block w-6 h-px bg-[#DAA520]/50" />
+            <span className="block w-6 h-px bg-[#C9A84C]/50" />
             <span
-              className="text-[#DAA520]/50 text-[8px] tracking-[0.7em] uppercase"
+              className="text-[#C9A84C]/50 text-[8px] tracking-[0.7em] uppercase"
               style={{ fontFamily: "'Montserrat', sans-serif" }}
             >
               George Yachts Brokerage House LLC
@@ -117,13 +117,13 @@ export default function AccessibilityPage() {
             <ul>
               <li>
                 Email:{" "}
-                <ObfuscatedEmail className="text-[#DAA520] hover:text-white border-b border-[#DAA520]/30 hover:border-white transition-colors duration-300" />
+                <ObfuscatedEmail className="text-[#C9A84C] hover:text-white border-b border-[#C9A84C]/30 hover:border-white transition-colors duration-300" />
               </li>
               <li>
                 WhatsApp:{" "}
                 <a
                   href="https://wa.me/17867988798"
-                  className="text-[#DAA520] hover:text-white border-b border-[#DAA520]/30 hover:border-white transition-colors duration-300"
+                  className="text-[#C9A84C] hover:text-white border-b border-[#C9A84C]/30 hover:border-white transition-colors duration-300"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -158,7 +158,7 @@ export default function AccessibilityPage() {
           <div className="mt-16 flex justify-center">
             <Link
               href="/"
-              className="inline-flex items-center text-white/20 hover:text-[#DAA520] transition-colors duration-500 text-[9px] tracking-[0.55em] uppercase font-bold"
+              className="inline-flex items-center text-white/20 hover:text-[#C9A84C] transition-colors duration-500 text-[9px] tracking-[0.55em] uppercase font-bold"
               style={{ fontFamily: "'Montserrat', sans-serif" }}
             >
               Return to Home

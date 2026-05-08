@@ -17,7 +17,7 @@ export const metadata = {
   robots: { index: true, follow: true },
 };
 
-const GOLD = "#DAA520";
+const GOLD = "#C9A84C";
 
 export default function DeletionPage() {
   const breadcrumbs = [
@@ -33,7 +33,7 @@ export default function DeletionPage() {
         <header
           style={{
             padding: "120px 24px 48px",
-            borderBottom: "1px solid rgba(218,165,32,0.15)",
+            borderBottom: "1px solid rgba(201,168,76,0.15)",
             textAlign: "center",
           }}
         >

@@ -184,7 +184,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
               style={{
                 width: activeIdx === i ? 28 : 14,
                 height: 1,
-                background: activeIdx === i ? "#DAA520" : "rgba(248,245,240,0.45)",
+                background: activeIdx === i ? "#C9A84C" : "rgba(248,245,240,0.45)",
                 transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
             />
@@ -481,8 +481,8 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
             color: "#0a0a0a",
             textDecoration: "none",
             background: "linear-gradient(135deg, #E6C77A 0%, #C9A84C 100%)",
-            border: "1px solid #DAA520",
-            boxShadow: "0 12px 32px rgba(218,165,32,0.22)",
+            border: "1px solid #C9A84C",
+            boxShadow: "0 12px 32px rgba(201,168,76,0.22)",
           }}
         >
           Brief George →

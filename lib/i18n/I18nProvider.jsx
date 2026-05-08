@@ -112,14 +112,14 @@ export function LanguageSwitcher() {
           padding: '7px 12px',
           background: 'rgba(0,0,0,0.6)',
           backdropFilter: 'blur(8px)',
-          border: '1px solid rgba(218,165,32,0.2)',
+          border: '1px solid rgba(201,168,76,0.2)',
           borderRadius: '20px',
           cursor: 'pointer',
           fontFamily: "'Montserrat', sans-serif",
           fontSize: '9px',
           letterSpacing: '0.12em',
           textTransform: 'uppercase',
-          color: 'rgba(218,165,32,0.7)',
+          color: 'rgba(201,168,76,0.7)',
         }}
       >
         <span style={{ fontSize: '14px' }}>{flags[locale] || '🌐'}</span>
@@ -138,7 +138,7 @@ export function LanguageSwitcher() {
             marginTop: 8,
             background: 'rgba(0,0,0,0.95)',
             backdropFilter: 'blur(16px)',
-            border: '1px solid rgba(218,165,32,0.2)',
+            border: '1px solid rgba(201,168,76,0.2)',
             borderRadius: 12,
             overflow: 'hidden',
             minWidth: 160,
@@ -156,8 +156,8 @@ export function LanguageSwitcher() {
                 padding: '12px 16px',
                 fontFamily: "'Montserrat', sans-serif",
                 fontSize: 11,
-                color: locale === l.code ? '#DAA520' : 'rgba(255,255,255,0.5)',
-                background: locale === l.code ? 'rgba(218,165,32,0.08)' : 'transparent',
+                color: locale === l.code ? '#C9A84C' : 'rgba(255,255,255,0.5)',
+                background: locale === l.code ? 'rgba(201,168,76,0.08)' : 'transparent',
                 border: 'none',
                 borderBottom: '1px solid rgba(255,255,255,0.05)',
                 cursor: 'pointer',
@@ -167,7 +167,7 @@ export function LanguageSwitcher() {
             >
               <span style={{ fontSize: 16 }}>{flags[l.code] || '🌐'}</span>
               <span>{l.label}</span>
-              {locale === l.code && <span style={{ marginLeft: 'auto', fontSize: 10, color: '#DAA520' }}>✓</span>}
+              {locale === l.code && <span style={{ marginLeft: 'auto', fontSize: 10, color: '#C9A84C' }}>✓</span>}
             </button>
           ))}
         </div>

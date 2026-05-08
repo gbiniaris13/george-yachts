@@ -24,7 +24,7 @@ export default function GlobalEffects() {
       ripple.style.cssText = `
         position: fixed; left: ${x}px; top: ${y}px;
         width: 0; height: 0; border-radius: 50%;
-        background: radial-gradient(circle, rgba(218,165,32,0.25) 0%, rgba(218,165,32,0.08) 40%, transparent 70%);
+        background: radial-gradient(circle, rgba(201,168,76,0.25) 0%, rgba(201,168,76,0.08) 40%, transparent 70%);
         transform: translate(-50%, -50%);
         pointer-events: none; z-index: 99990;
         animation: touchRippleAnim 0.7s ease-out forwards;

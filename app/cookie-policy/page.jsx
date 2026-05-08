@@ -14,7 +14,7 @@ const Section = ({ number, title, children }) => (
   <div className="mb-20 group" style={{ opacity: 1 }}>
     <div className="flex items-start gap-6">
       {number && (
-        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "48px", fontWeight: 300, lineHeight: 1, color: "rgba(218,165,32,0.15)" }}>
+        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "48px", fontWeight: 300, lineHeight: 1, color: "rgba(201,168,76,0.15)" }}>
           {String(number).padStart(2, "0")}
         </span>
       )}
@@ -22,7 +22,7 @@ const Section = ({ number, title, children }) => (
         <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.5rem", fontWeight: 400, color: "#fff", letterSpacing: "0.05em", marginBottom: "24px" }}>
           {title}
         </h2>
-        <div className="w-12 h-px mb-8" style={{ background: "linear-gradient(90deg, #DAA520, transparent)" }} />
+        <div className="w-12 h-px mb-8" style={{ background: "linear-gradient(90deg, #C9A84C, transparent)" }} />
         <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", lineHeight: 2.2, color: "rgba(255,255,255,0.55)", letterSpacing: "0.02em" }} className="space-y-4">
           {children}
         </div>
@@ -35,10 +35,10 @@ const CookiePolicy = () => {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* --- HERO SECTION --- */}
-      <div className="relative pt-44 pb-24 px-6 md:px-12" style={{ borderBottom: "1px solid rgba(218,165,32,0.1)" }}>
+      <div className="relative pt-44 pb-24 px-6 md:px-12" style={{ borderBottom: "1px solid rgba(201,168,76,0.1)" }}>
         <div className="container mx-auto max-w-4xl text-center">
-          <div className="w-16 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #DAA520, transparent)" }} />
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#DAA520", marginBottom: "24px", textTransform: "uppercase" }}>
+          <div className="w-16 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#C9A84C", marginBottom: "24px", textTransform: "uppercase" }}>
             Digital Transparency
           </p>
           <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#fff", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "16px" }}>
@@ -47,9 +47,9 @@ const CookiePolicy = () => {
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", marginBottom: "32px" }}>
             George Yachts Brokerage House LLC
           </p>
-          <div className="w-16 h-px mx-auto" style={{ background: "linear-gradient(90deg, transparent, #DAA520, transparent)" }} />
+          <div className="w-16 h-px mx-auto" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
         </div>
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(218,165,32,0.04) 0%, transparent 70%)" }} />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(201,168,76,0.04) 0%, transparent 70%)" }} />
       </div>
 
       {/* --- CONTENT SECTION --- */}
@@ -112,7 +112,7 @@ const CookiePolicy = () => {
                 load balancing, and the rendering of high-resolution maritime
                 imagery.
               </p>
-              <p className="text-xs text-[#DAA520] mt-1 uppercase tracking-widest">
+              <p className="text-xs text-[#C9A84C] mt-1 uppercase tracking-widest">
                 (Legal Basis: Essential for the provision of requested digital
                 services).
               </p>
@@ -193,7 +193,7 @@ const CookiePolicy = () => {
             data subject rights (DSRs), please direct all formal correspondence
             to:
           </p>
-          <div className="mt-6 text-white space-y-2" style={{ background: "rgba(218,165,32,0.03)", border: "1px solid rgba(218,165,32,0.15)", padding: "32px" }}>
+          <div className="mt-6 text-white space-y-2" style={{ background: "rgba(201,168,76,0.03)", border: "1px solid rgba(201,168,76,0.15)", padding: "32px" }}>
             <div>
               <strong>Compliance Office</strong>
             </div>
@@ -206,7 +206,7 @@ const CookiePolicy = () => {
             </div>
             <div>
               <strong>Email:</strong>{" "}
-              <ObfuscatedEmail className="hover:text-[#DAA520] transition-colors" />
+              <ObfuscatedEmail className="hover:text-[#C9A84C] transition-colors" />
             </div>
             <div>
               <strong>Attention:</strong> Data Protection Officer (DPO)
@@ -214,8 +214,8 @@ const CookiePolicy = () => {
           </div>
         </Section>
 
-        <div className="mt-32 pt-16 text-center" style={{ borderTop: "1px solid rgba(218,165,32,0.1)" }}>
-          <div className="w-8 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #DAA520, transparent)" }} />
+        <div className="mt-32 pt-16 text-center" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
+          <div className="w-8 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.3em", color: "rgba(255,255,255,0.2)", textTransform: "uppercase" }}>
             Last Updated: February 2026
           </p>

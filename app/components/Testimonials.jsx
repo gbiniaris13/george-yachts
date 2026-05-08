@@ -18,7 +18,7 @@ const testimonials = [
 ];
 
 const GoldStar = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="#DAA520" xmlns="http://www.w3.org/2000/svg">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="#C9A84C" xmlns="http://www.w3.org/2000/svg">
     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
   </svg>
 );
@@ -43,12 +43,12 @@ function Reveal({ children, delay = 0 }) {
 export default function Testimonials() {
   return (
     <section className="relative w-full bg-black py-24 md:py-32 overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#DAA520]/15 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/15 to-transparent" />
 
       <div className="relative z-10 max-w-[1100px] mx-auto px-6 md:px-12">
         <Reveal>
           <div className="text-center mb-16">
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.4em", textTransform: "uppercase", color: "#DAA520", fontWeight: 600, marginBottom: "16px" }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.4em", textTransform: "uppercase", color: "#C9A84C", fontWeight: 600, marginBottom: "16px" }}>
               Guest Experiences
             </p>
             <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 300, color: "#fff", margin: "0 0 16px" }}>
@@ -61,7 +61,7 @@ export default function Testimonials() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((t, i) => (
             <Reveal key={i} delay={i * 0.12}>
-              <div style={{ background: "rgba(218,165,32,0.02)", border: "1px solid rgba(218,165,32,0.06)", padding: "36px 28px", height: "100%", display: "flex", flexDirection: "column" }}>
+              <div style={{ background: "rgba(201,168,76,0.02)", border: "1px solid rgba(201,168,76,0.06)", padding: "36px 28px", height: "100%", display: "flex", flexDirection: "column" }}>
                 {/* Stars */}
                 <div style={{ display: "flex", gap: "4px", marginBottom: "20px" }}>
                   {[...Array(5)].map((_, j) => <GoldStar key={j} />)}
@@ -74,8 +74,8 @@ export default function Testimonials() {
 
                 {/* Attribution */}
                 <div>
-                  <div style={{ width: "24px", height: "1px", background: "rgba(218,165,32,0.3)", marginBottom: "12px" }} />
-                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", color: "#DAA520", letterSpacing: "0.15em", textTransform: "uppercase" }}>
+                  <div style={{ width: "24px", height: "1px", background: "rgba(201,168,76,0.3)", marginBottom: "12px" }} />
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", color: "#C9A84C", letterSpacing: "0.15em", textTransform: "uppercase" }}>
                     {t.attribution}
                   </p>
                 </div>

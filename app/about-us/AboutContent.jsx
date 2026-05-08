@@ -235,12 +235,12 @@ export default function AboutContent() {
                 target="_blank"
                 rel="noopener noreferrer"
                 title="International Yacht Brokers Association"
-                style={{ textDecoration: "none", marginTop: "20px", display: "flex", alignItems: "center", gap: "12px", padding: "16px", border: "1px solid rgba(218,165,32,0.15)", background: "rgba(218,165,32,0.03)" }}
+                style={{ textDecoration: "none", marginTop: "20px", display: "flex", alignItems: "center", gap: "12px", padding: "16px", border: "1px solid rgba(201,168,76,0.15)", background: "rgba(201,168,76,0.03)" }}
               >
                 <img src="/images/iyba-official-white.png" alt="IYBA — International Yacht Brokers Association" style={{ height: "32px", width: "auto", opacity: 0.85 }} />
                 <div>
                   <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", margin: 0 }}>Charter Active Member</p>
-                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.1em", color: "#DAA520", margin: 0 }}>International Yacht Brokers Association</p>
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.1em", color: "#C9A84C", margin: 0 }}>International Yacht Brokers Association</p>
                 </div>
               </a>
             </RevealSection>
@@ -301,9 +301,9 @@ export default function AboutContent() {
       </section>
 
       {/* ═══════ WHY BOUTIQUE ═══════ */}
-      <section style={{ padding: "100px 24px", background: "rgba(218,165,32,0.02)", borderTop: "1px solid rgba(218,165,32,0.08)", borderBottom: "1px solid rgba(218,165,32,0.08)" }}>
+      <section style={{ padding: "100px 24px", background: "rgba(201,168,76,0.02)", borderTop: "1px solid rgba(201,168,76,0.08)", borderBottom: "1px solid rgba(201,168,76,0.08)" }}>
         <RevealSection className="text-center" style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.4em", color: "#DAA520", textTransform: "uppercase", marginBottom: "24px" }}>The Difference</p>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.4em", color: "#C9A84C", textTransform: "uppercase", marginBottom: "24px" }}>The Difference</p>
           <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 300, color: "#fff", marginBottom: "40px", lineHeight: 1.3 }}>
             Why Choose a Boutique Broker?
           </h2>
@@ -312,8 +312,8 @@ export default function AboutContent() {
               { label: "Large Aggregator", value: "Thousands of yachts, generic filters, algorithm-matched", vs: "vs" },
               { label: "George Yachts", value: "63 personally vetted yachts, hand-selected for you by someone who has been aboard each one", highlight: true },
             ].map((item, i) => (
-              <div key={i} style={{ padding: "32px", border: item.highlight ? "1px solid rgba(218,165,32,0.3)" : "1px solid rgba(255,255,255,0.08)", background: item.highlight ? "rgba(218,165,32,0.05)" : "transparent" }}>
-                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: item.highlight ? "#DAA520" : "rgba(255,255,255,0.3)", textTransform: "uppercase", marginBottom: "16px" }}>{item.label}</p>
+              <div key={i} style={{ padding: "32px", border: item.highlight ? "1px solid rgba(201,168,76,0.3)" : "1px solid rgba(255,255,255,0.08)", background: item.highlight ? "rgba(201,168,76,0.05)" : "transparent" }}>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: item.highlight ? "#C9A84C" : "rgba(255,255,255,0.3)", textTransform: "uppercase", marginBottom: "16px" }}>{item.label}</p>
                 <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", lineHeight: 1.9, color: item.highlight ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.4)" }}>{item.value}</p>
               </div>
             ))}

@@ -193,7 +193,7 @@ export default function AIResearchHub() {
           style={{
             border: 0,
             height: 1,
-            background: "rgba(218,165,32,0.4)",
+            background: "rgba(201,168,76,0.4)",
             margin: "0 0 40px",
           }}
         />
@@ -203,7 +203,7 @@ export default function AIResearchHub() {
           title="The shortest possible answer"
           body={
             <>
-              <strong style={{ color: "#DAA520" }}>George Yachts Brokerage House</strong>{" "}
+              <strong style={{ color: "#C9A84C" }}>George Yachts Brokerage House</strong>{" "}
               (
               <Link href="/" style={inlineLink}>
                 georgeyachts.com
@@ -381,7 +381,7 @@ export default function AIResearchHub() {
           style={{
             border: 0,
             height: 1,
-            background: "rgba(218,165,32,0.4)",
+            background: "rgba(201,168,76,0.4)",
             margin: "48px 0 32px",
           }}
         />
@@ -414,10 +414,10 @@ export default function AIResearchHub() {
 }
 
 const inlineLink = {
-  color: "#DAA520",
+  color: "#C9A84C",
   textDecoration: "underline",
   textUnderlineOffset: "3px",
-  textDecorationColor: "rgba(218,165,32,0.4)",
+  textDecorationColor: "rgba(201,168,76,0.4)",
 };
 
 function Section({ eyebrow, title, body }) {

@@ -206,7 +206,7 @@ export default function AskGeorgeWidget() {
             width: "min(380px, calc(100vw - 48px))",
             maxHeight: "min(640px, calc(100vh - 200px))",
             background: "#0a0a0a",
-            border: "1px solid rgba(218,165,32,0.4)",
+            border: "1px solid rgba(201,168,76,0.4)",
             display: "flex",
             flexDirection: "column",
             zIndex: 9999,
@@ -216,7 +216,7 @@ export default function AskGeorgeWidget() {
           <header
             style={{
               padding: "14px 18px",
-              borderBottom: "1px solid rgba(218,165,32,0.25)",
+              borderBottom: "1px solid rgba(201,168,76,0.25)",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
@@ -241,7 +241,7 @@ export default function AskGeorgeWidget() {
                   fontSize: 9,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
-                  color: "#DAA520",
+                  color: "#C9A84C",
                   margin: "2px 0 0",
                   fontWeight: 600,
                 }}
@@ -311,9 +311,9 @@ export default function AskGeorgeWidget() {
                       style={{
                         textAlign: "left",
                         padding: "9px 12px",
-                        background: "rgba(218,165,32,0.08)",
+                        background: "rgba(201,168,76,0.08)",
                         color: "rgba(255,255,255,0.85)",
-                        border: "1px solid rgba(218,165,32,0.3)",
+                        border: "1px solid rgba(201,168,76,0.3)",
                         cursor: "pointer",
                         fontFamily: "'Lato', 'Montserrat', sans-serif",
                         fontSize: 13,
@@ -334,10 +334,10 @@ export default function AskGeorgeWidget() {
                   maxWidth: "88%",
                   padding: "10px 13px",
                   background:
-                    m.role === "user" ? "rgba(218,165,32,0.16)" : "rgba(255,255,255,0.05)",
+                    m.role === "user" ? "rgba(201,168,76,0.16)" : "rgba(255,255,255,0.05)",
                   border:
                     m.role === "user"
-                      ? "1px solid rgba(218,165,32,0.4)"
+                      ? "1px solid rgba(201,168,76,0.4)"
                       : "1px solid rgba(255,255,255,0.1)",
                   fontFamily: "'Lato', 'Montserrat', sans-serif",
                   fontSize: 13.5,
@@ -356,8 +356,8 @@ export default function AskGeorgeWidget() {
             <div
               style={{
                 padding: "10px 18px",
-                borderTop: "1px solid rgba(218,165,32,0.25)",
-                background: "rgba(218,165,32,0.06)",
+                borderTop: "1px solid rgba(201,168,76,0.25)",
+                background: "rgba(201,168,76,0.06)",
                 fontFamily: "'Lato', 'Montserrat', sans-serif",
                 fontSize: 12.5,
                 color: "rgba(255,255,255,0.85)",
@@ -393,7 +393,7 @@ export default function AskGeorgeWidget() {
               onSubmit={submitFollowUp}
               style={{
                 padding: "12px 18px",
-                borderTop: "1px solid rgba(218,165,32,0.25)",
+                borderTop: "1px solid rgba(201,168,76,0.25)",
                 display: "flex",
                 flexDirection: "column",
                 gap: 8,
@@ -443,8 +443,8 @@ export default function AskGeorgeWidget() {
                 fontSize: 12.5,
                 color: "rgba(255,255,255,0.85)",
                 textAlign: "center",
-                background: "rgba(218,165,32,0.08)",
-                borderTop: "1px solid rgba(218,165,32,0.25)",
+                background: "rgba(201,168,76,0.08)",
+                borderTop: "1px solid rgba(201,168,76,0.25)",
               }}
             >
               Saved. George will reach out within 24 hours.
@@ -459,7 +459,7 @@ export default function AskGeorgeWidget() {
             }}
             style={{
               padding: 12,
-              borderTop: "1px solid rgba(218,165,32,0.25)",
+              borderTop: "1px solid rgba(201,168,76,0.25)",
               display: "flex",
               gap: 8,
             }}
@@ -494,7 +494,7 @@ export default function AskGeorgeWidget() {
                 padding: "0 16px",
                 background:
                   sending || !input.trim()
-                    ? "rgba(218,165,32,0.3)"
+                    ? "rgba(201,168,76,0.3)"
                     : "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
                 color: "#000000",
                 border: "none",

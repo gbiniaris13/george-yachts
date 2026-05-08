@@ -43,14 +43,14 @@ function Step({ number, icon, title, description, detail, delay = 0 }) {
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <div style={{
           width: "64px", height: "64px", borderRadius: "50%",
-          border: "1px solid rgba(218,165,32,0.3)",
+          border: "1px solid rgba(201,168,76,0.3)",
           display: "flex", alignItems: "center", justifyContent: "center",
-          background: "rgba(218,165,32,0.05)",
+          background: "rgba(201,168,76,0.05)",
           marginBottom: "16px",
         }}>
           <span style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: "24px", fontWeight: 300, color: "#DAA520",
+            fontSize: "24px", fontWeight: 300, color: "#C9A84C",
           }}>
             {number}
           </span>
@@ -58,14 +58,14 @@ function Step({ number, icon, title, description, detail, delay = 0 }) {
         {number < 5 && (
           <div style={{
             width: "1px", flex: 1, minHeight: "60px",
-            background: "linear-gradient(to bottom, rgba(218,165,32,0.3), transparent)",
+            background: "linear-gradient(to bottom, rgba(201,168,76,0.3), transparent)",
           }} />
         )}
       </div>
 
       {/* Content */}
       <div style={{ paddingTop: "12px" }}>
-        <div style={{ color: "#DAA520", marginBottom: "16px" }}>{icon}</div>
+        <div style={{ color: "#C9A84C", marginBottom: "16px" }}>{icon}</div>
         <h3 style={{
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           fontSize: "1.6rem", fontWeight: 400, color: "#fff",
@@ -171,7 +171,7 @@ export default function HowItWorksContent() {
       {/* Closing */}
       <div style={{
         textAlign: "center", paddingTop: "40px",
-        borderTop: "1px solid rgba(218,165,32,0.1)",
+        borderTop: "1px solid rgba(201,168,76,0.1)",
       }}>
         <p style={{
           fontFamily: "'Cormorant Garamond', Georgia, serif",

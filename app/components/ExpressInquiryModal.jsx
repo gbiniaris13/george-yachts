@@ -191,7 +191,7 @@ export default function ExpressInquiryModal({
       <div
         style={{
           background: "#0a0a0a",
-          border: "1px solid rgba(218,165,32,0.35)",
+          border: "1px solid rgba(201,168,76,0.35)",
           width: "100%",
           maxWidth: "520px",
           padding: "40px 32px 32px",
@@ -229,7 +229,7 @@ export default function ExpressInquiryModal({
                 fontSize: "9px",
                 letterSpacing: "0.42em",
                 textTransform: "uppercase",
-                color: "#DAA520",
+                color: "#C9A84C",
                 fontWeight: 600,
                 margin: "0 0 12px",
               }}
@@ -338,9 +338,9 @@ export default function ExpressInquiryModal({
                         letterSpacing: "0.18em",
                         textTransform: "uppercase",
                         fontWeight: 600,
-                        border: `1px solid ${channel === c.id ? "#DAA520" : "rgba(255,255,255,0.2)"}`,
-                        background: channel === c.id ? "rgba(218,165,32,0.12)" : "transparent",
-                        color: channel === c.id ? "#DAA520" : "rgba(255,255,255,0.75)",
+                        border: `1px solid ${channel === c.id ? "#C9A84C" : "rgba(255,255,255,0.2)"}`,
+                        background: channel === c.id ? "rgba(201,168,76,0.12)" : "transparent",
+                        color: channel === c.id ? "#C9A84C" : "rgba(255,255,255,0.75)",
                         cursor: "pointer",
                         transition: "all 0.2s ease",
                       }}
@@ -375,7 +375,7 @@ export default function ExpressInquiryModal({
                   background:
                     "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
                   color: "#000000",
-                  border: "1px solid rgba(218,165,32,0.6)",
+                  border: "1px solid rgba(201,168,76,0.6)",
                   fontSize: "11px",
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
@@ -410,13 +410,13 @@ export default function ExpressInquiryModal({
                 height: 64,
                 margin: "0 auto 20px",
                 borderRadius: "50%",
-                border: "1px solid rgba(218,165,32,0.5)",
+                border: "1px solid rgba(201,168,76,0.5)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="1.5">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="1.5">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
@@ -476,7 +476,7 @@ function FormField({ label, type = "text", value, onChange, required, multiline,
         }}
       >
         {label}
-        {required && <span style={{ color: "#DAA520" }}> *</span>}
+        {required && <span style={{ color: "#C9A84C" }}> *</span>}
       </span>
       {multiline ? (
         <textarea
@@ -485,7 +485,7 @@ function FormField({ label, type = "text", value, onChange, required, multiline,
           placeholder={placeholder}
           rows={3}
           style={{ ...inputStyle, resize: "vertical" }}
-          onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#DAA520")}
+          onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#C9A84C")}
           onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(255,255,255,0.25)")}
         />
       ) : (
@@ -497,7 +497,7 @@ function FormField({ label, type = "text", value, onChange, required, multiline,
           placeholder={placeholder}
           autoComplete={type === "email" ? "email" : "off"}
           style={inputStyle}
-          onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#DAA520")}
+          onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#C9A84C")}
           onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(255,255,255,0.25)")}
         />
       )}

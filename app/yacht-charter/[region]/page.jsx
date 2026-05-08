@@ -228,7 +228,7 @@ export default async function RegionPage({ params }) {
             position: "relative",
             overflow: "hidden",
             background:
-              "radial-gradient(ellipse at top, rgba(218,165,32,0.06) 0%, transparent 60%), #000",
+              "radial-gradient(ellipse at top, rgba(201,168,76,0.06) 0%, transparent 60%), #000",
           }}
         >
           <div
@@ -248,7 +248,7 @@ export default async function RegionPage({ params }) {
                 height: 1,
                 margin: "0 auto 28px",
                 background:
-                  "linear-gradient(90deg, transparent, rgba(218,165,32,0.7), transparent)",
+                  "linear-gradient(90deg, transparent, rgba(201,168,76,0.7), transparent)",
               }}
             />
             <p
@@ -260,7 +260,7 @@ export default async function RegionPage({ params }) {
                 color: "#C9A84C",
                 fontWeight: 600,
                 margin: "0 0 22px",
-                textShadow: "0 0 10px rgba(218,165,32,0.32)",
+                textShadow: "0 0 10px rgba(201,168,76,0.32)",
               }}
             >
               Greek Waters · Region Guide
@@ -289,7 +289,7 @@ export default async function RegionPage({ params }) {
                 width: 60,
                 height: 1,
                 margin: "0 auto 32px",
-                background: "rgba(218,165,32,0.55)",
+                background: "rgba(201,168,76,0.55)",
               }}
             />
             <p
@@ -314,8 +314,8 @@ export default async function RegionPage({ params }) {
           style={{
             padding: "clamp(40px, 6vw, 72px) clamp(20px, 4vw, 56px)",
             background: "#050505",
-            borderTop: "1px solid rgba(218,165,32,0.18)",
-            borderBottom: "1px solid rgba(218,165,32,0.18)",
+            borderTop: "1px solid rgba(201,168,76,0.18)",
+            borderBottom: "1px solid rgba(201,168,76,0.18)",
           }}
         >
           <div
@@ -336,7 +336,7 @@ export default async function RegionPage({ params }) {
                 style={{
                   padding: "clamp(28px, 4vw, 44px)",
                   background: "rgba(255,255,255,0.02)",
-                  border: "1px solid rgba(218,165,32,0.22)",
+                  border: "1px solid rgba(201,168,76,0.22)",
                   position: "relative",
                 }}
               >
@@ -349,8 +349,8 @@ export default async function RegionPage({ params }) {
                     left: 14,
                     width: 22,
                     height: 22,
-                    borderTop: "1px solid rgba(218,165,32,0.55)",
-                    borderLeft: "1px solid rgba(218,165,32,0.55)",
+                    borderTop: "1px solid rgba(201,168,76,0.55)",
+                    borderLeft: "1px solid rgba(201,168,76,0.55)",
                   }}
                 />
                 <p
@@ -514,7 +514,7 @@ export default async function RegionPage({ params }) {
                               fontSize: 11,
                               letterSpacing: "0.18em",
                               textTransform: "uppercase",
-                              color: "#DAA520",
+                              color: "#C9A84C",
                               fontWeight: 600,
                               marginTop: 12,
                             }}
@@ -536,7 +536,7 @@ export default async function RegionPage({ params }) {
           style={{
             padding: "clamp(40px, 6vw, 72px) clamp(20px, 4vw, 56px)",
             background: "#050505",
-            borderTop: "1px solid rgba(218,165,32,0.18)",
+            borderTop: "1px solid rgba(201,168,76,0.18)",
           }}
         >
           <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
@@ -574,7 +574,7 @@ export default async function RegionPage({ params }) {
                     gap: 12,
                     padding: "18px 22px",
                     background: "transparent",
-                    border: "1px solid rgba(218,165,32,0.22)",
+                    border: "1px solid rgba(201,168,76,0.22)",
                     color: "rgba(248,245,240,0.82)",
                     fontFamily: "'Cormorant Garamond', Georgia, serif",
                     fontSize: 17,
@@ -584,7 +584,7 @@ export default async function RegionPage({ params }) {
                   }}
                 >
                   <span>{q}</span>
-                  <span style={{ color: "#DAA520", fontWeight: 600 }}>→</span>
+                  <span style={{ color: "#C9A84C", fontWeight: 600 }}>→</span>
                 </Link>
               ))}
             </div>
@@ -639,9 +639,9 @@ export default async function RegionPage({ params }) {
                 textTransform: "uppercase",
                 fontWeight: 500,
                 textDecoration: "none",
-                border: "1px solid rgba(218,165,32,0.7)",
+                border: "1px solid rgba(201,168,76,0.7)",
                 boxShadow:
-                  "0 14px 35px -10px rgba(218,165,32,0.5), inset 0 1px 0 rgba(255,255,255,0.3)",
+                  "0 14px 35px -10px rgba(201,168,76,0.5), inset 0 1px 0 rgba(255,255,255,0.3)",
               }}
             >
               Brief George — reply within 24h →

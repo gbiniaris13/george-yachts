@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 
-const GOLD = '#DAA520';
+const GOLD = '#C9A84C';
 const DARK = '#000';
 
 // Greek islands with coordinates (SVG viewport 0-1000 x 0-800)
@@ -64,7 +64,7 @@ function calcNM(lat1, lng1, lat2, lng2) {
 }
 
 const REGION_COLORS = {
-  Cyclades: '#DAA520',
+  Cyclades: '#C9A84C',
   Saronic: '#8B6914',
   Ionian: '#4A90D9',
   Sporades: '#2ECC71',

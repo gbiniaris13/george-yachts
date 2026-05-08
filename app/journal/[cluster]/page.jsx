@@ -57,7 +57,7 @@ async function loadClusterData(cluster) {
   return { articles: orderedArticles, yachts: yachts || [] };
 }
 
-const GOLD = "#DAA520";
+const GOLD = "#C9A84C";
 
 export default async function ClusterPage({ params }) {
   const { cluster: clusterSlug } = await params;
@@ -73,7 +73,7 @@ export default async function ClusterPage({ params }) {
         style={{
           background: "linear-gradient(180deg, #0a0a0a 0%, #000 100%)",
           padding: "120px 24px 64px",
-          borderBottom: "1px solid rgba(218,165,32,0.15)",
+          borderBottom: "1px solid rgba(201,168,76,0.15)",
         }}
       >
         <div style={{ maxWidth: 880, margin: "0 auto", textAlign: "center" }}>
@@ -224,9 +224,9 @@ export default async function ClusterPage({ params }) {
       {yachts.length > 0 && (
         <section
           style={{
-            background: "rgba(218,165,32,0.025)",
-            borderTop: "1px solid rgba(218,165,32,0.15)",
-            borderBottom: "1px solid rgba(218,165,32,0.15)",
+            background: "rgba(201,168,76,0.025)",
+            borderTop: "1px solid rgba(201,168,76,0.15)",
+            borderBottom: "1px solid rgba(201,168,76,0.15)",
             padding: "72px 24px",
           }}
         >
@@ -409,7 +409,7 @@ export default async function ClusterPage({ params }) {
                 padding: "14px 26px",
                 background: "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
                 color: "#000000",
-                border: "1px solid rgba(218,165,32,0.6)",
+                border: "1px solid rgba(201,168,76,0.6)",
                 textDecoration: "none",
               }}
             >

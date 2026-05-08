@@ -148,8 +148,8 @@ export default function ItineraryPreview() {
       style={{
         background: "linear-gradient(180deg, #0a0a0a 0%, #000000 100%)",
         padding: "clamp(72px, 10vw, 140px) clamp(24px, 5vw, 64px)",
-        borderTop: "1px solid rgba(218,165,32,0.12)",
-        borderBottom: "1px solid rgba(218,165,32,0.12)",
+        borderTop: "1px solid rgba(201,168,76,0.12)",
+        borderBottom: "1px solid rgba(201,168,76,0.12)",
         position: "relative",
         overflow: "hidden",
       }}
@@ -218,10 +218,10 @@ export default function ItineraryPreview() {
               background: streaming
                 ? "rgba(0,0,0,0.7)"
                 : "linear-gradient(135deg, #E6C77A 0%, #C9A84C 100%)",
-              border: streaming ? "1px solid #C9A84C" : "1px solid #DAA520",
+              border: streaming ? "1px solid #C9A84C" : "1px solid #C9A84C",
               boxShadow: streaming
                 ? "none"
-                : "0 12px 32px rgba(218,165,32,0.22)",
+                : "0 12px 32px rgba(201,168,76,0.22)",
               cursor: "pointer",
               transition: "all 0.32s ease",
             }}
@@ -250,7 +250,7 @@ export default function ItineraryPreview() {
               marginTop: 36,
               padding: "clamp(28px, 4vw, 48px)",
               background: "rgba(0,0,0,0.55)",
-              border: "1px solid rgba(218,165,32,0.32)",
+              border: "1px solid rgba(201,168,76,0.32)",
               boxShadow: "0 24px 56px rgba(0,0,0,0.45)",
               minHeight: 280,
               position: "relative",
@@ -259,7 +259,7 @@ export default function ItineraryPreview() {
           >
             <p
               className="gy-eyebrow-sm"
-              style={{ color: "rgba(218,165,32,0.65)", marginBottom: 16 }}
+              style={{ color: "rgba(201,168,76,0.65)", marginBottom: 16 }}
             >
               {streaming ? "George is dictating…" : "Sample preview"}
             </p>
@@ -374,7 +374,7 @@ function SelectField({ label, value, onChange, options }) {
         style={{
           padding: "12px 14px",
           background: "rgba(0,0,0,0.55)",
-          border: "1px solid rgba(218,165,32,0.25)",
+          border: "1px solid rgba(201,168,76,0.25)",
           color: "#F8F5F0",
           fontFamily: "'Montserrat', sans-serif",
           fontSize: 13,
@@ -417,7 +417,7 @@ function TextField({ label, value, onChange, placeholder }) {
         style={{
           padding: "12px 14px",
           background: "rgba(0,0,0,0.55)",
-          border: "1px solid rgba(218,165,32,0.25)",
+          border: "1px solid rgba(201,168,76,0.25)",
           color: "#F8F5F0",
           fontFamily: "'Montserrat', sans-serif",
           fontSize: 16,

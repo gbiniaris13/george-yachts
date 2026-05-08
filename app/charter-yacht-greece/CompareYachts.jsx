@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import Image from 'next/image';
 
-const GOLD = '#DAA520';
+const GOLD = '#C9A84C';
 const DARK_BG = '#000000';
 const CARD_BG = '#111111';
 const BORDER = '#333333';
@@ -119,16 +119,16 @@ export default function CompareYachts({ compareList = [], onRemove, onClear }) {
             fontSize: isMobile ? 14 : 15,
             letterSpacing: '0.05em',
             textTransform: 'uppercase',
-            boxShadow: '0 4px 24px rgba(218, 165, 32, 0.4), 0 2px 8px rgba(0,0,0,0.5)',
+            boxShadow: '0 4px 24px rgba(201, 168, 76, 0.4), 0 2px 8px rgba(0,0,0,0.5)',
             transition: 'transform 0.2s ease, box-shadow 0.2s ease',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.05)';
-            e.currentTarget.style.boxShadow = '0 6px 32px rgba(218, 165, 32, 0.6), 0 4px 12px rgba(0,0,0,0.6)';
+            e.currentTarget.style.boxShadow = '0 6px 32px rgba(201, 168, 76, 0.6), 0 4px 12px rgba(0,0,0,0.6)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 24px rgba(218, 165, 32, 0.4), 0 2px 8px rgba(0,0,0,0.5)';
+            e.currentTarget.style.boxShadow = '0 4px 24px rgba(201, 168, 76, 0.4), 0 2px 8px rgba(0,0,0,0.5)';
           }}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -416,8 +416,8 @@ function CompareInsights({ compareList, isMobile }) {
     >
       <div
         style={{
-          background: 'rgba(218, 165, 32, 0.06)',
-          border: `1px solid rgba(218, 165, 32, 0.15)`,
+          background: 'rgba(201, 168, 76, 0.06)',
+          border: `1px solid rgba(201, 168, 76, 0.15)`,
           borderRadius: 10,
           padding: isMobile ? '16px 18px' : '20px 28px',
         }}
@@ -620,7 +620,7 @@ function SpecRow({ label, value, highlighted, isMobile }) {
         transition: 'background-color 0.2s ease',
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = 'rgba(218, 165, 32, 0.05)';
+        e.currentTarget.style.backgroundColor = 'rgba(201, 168, 76, 0.05)';
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.backgroundColor = 'transparent';

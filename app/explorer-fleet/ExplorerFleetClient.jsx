@@ -11,7 +11,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
     <div style={{ minHeight: "100vh", background: "#000" }}>
       {/* Back Button */}
       <div style={{ position: "fixed", top: 100, left: 24, zIndex: 9999 }}>
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", fontFamily: "'Montserrat', sans-serif", fontSize: 11, letterSpacing: "0.15em", color: "rgba(255,255,255,0.5)", padding: "12px 20px", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)", borderRadius: 4, border: "1px solid rgba(218,165,32,0.2)" }}>
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", fontFamily: "'Montserrat', sans-serif", fontSize: 11, letterSpacing: "0.15em", color: "rgba(255,255,255,0.5)", padding: "12px 20px", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)", borderRadius: 4, border: "1px solid rgba(201,168,76,0.2)" }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
           BACK
         </Link>
@@ -21,13 +21,13 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
         <Image src="/images/explorer-fleet-hero.jpg" alt="Explorer Fleet — group yacht charter Greece" fill style={{ objectFit: "cover", objectPosition: "center 30%", filter: "grayscale(100%) contrast(1.2) brightness(0.4)" }} sizes="100vw" priority />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 40%, rgba(0,0,0,0.4) 100%)" }} />
         <div style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px" }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.5em", color: "#DAA520", textTransform: "uppercase", marginBottom: 24 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.5em", color: "#C9A84C", textTransform: "uppercase", marginBottom: 24 }}>
             George Yachts Brokerage House
           </p>
           <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(56px, 10vw, 130px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 18px 0", letterSpacing: "-0.035em", lineHeight: 0.95, textShadow: "0 6px 32px rgba(0,0,0,0.55)" }}>
             Explorer Fleet
           </h1>
-          <div style={{ width: 60, height: 1, background: "linear-gradient(90deg, transparent, #DAA520, transparent)", margin: "0 auto 24px" }} />
+          <div style={{ width: 60, height: 1, background: "linear-gradient(90deg, transparent, #C9A84C, transparent)", margin: "0 auto 24px" }} />
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(0.8rem, 1.5vw, 1rem)", fontWeight: 300, color: "rgba(255,255,255,0.5)", letterSpacing: "0.15em", marginBottom: 40 }}>
             More islands. More adventure. The smart way to see Greece.
           </p>
@@ -45,8 +45,8 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
 
       {/* Price Anchor */}
       <section style={{ padding: "80px 24px", background: "#000", textAlign: "center" }}>
-        <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 40px", border: "1px solid rgba(218,165,32,0.15)", borderRadius: 4 }}>
-          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.6rem, 4vw, 2.4rem)", color: "#DAA520", margin: "0 0 16px 0" }}>
+        <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 40px", border: "1px solid rgba(201,168,76,0.15)", borderRadius: 4 }}>
+          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.6rem, 4vw, 2.4rem)", color: "#C9A84C", margin: "0 0 16px 0" }}>
             From €{lowestPerPerson.toLocaleString()} to €{highestPerPerson.toLocaleString()} per person
           </p>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.4)", lineHeight: 1.8, margin: 0, letterSpacing: "0.05em" }}>
@@ -73,11 +73,11 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
       </section>
 
       {/* Perfect For */}
-      <section style={{ padding: "80px 24px", background: "#000", textAlign: "center", borderTop: "1px solid rgba(218,165,32,0.06)" }}>
+      <section style={{ padding: "80px 24px", background: "#000", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.06)" }}>
         <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2rem", color: "#fff", marginBottom: 40 }}>Perfect For</h2>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16, maxWidth: 800, margin: "0 auto" }}>
           {["Friend reunions", "Milestone birthdays", "Bachelor & bachelorette trips", "Multi-generational family holidays", "Small corporate retreats"].map((item, i) => (
-            <span key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: "rgba(255,255,255,0.5)", padding: "12px 24px", border: "1px solid rgba(218,165,32,0.15)", borderRadius: 24, letterSpacing: "0.1em" }}>
+            <span key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: "rgba(255,255,255,0.5)", padding: "12px 24px", border: "1px solid rgba(201,168,76,0.15)", borderRadius: 24, letterSpacing: "0.1em" }}>
               {item}
             </span>
           ))}
@@ -88,7 +88,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
       <section style={{ padding: "80px 24px", background: "#000" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 60 }}>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.4em", color: "#DAA520", textTransform: "uppercase", marginBottom: 16 }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: "0.4em", color: "#C9A84C", textTransform: "uppercase", marginBottom: 16 }}>
               {yachts.length} Vessels
             </p>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#fff" }}>
@@ -138,7 +138,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
                   <div style={{ padding: "16px 20px", background: "rgba(10,10,10,0.95)" }}>
                     {perPerson > 0 ? (
                       <>
-                        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.3rem", color: "#DAA520", margin: "0 0 2px 0" }}>
+                        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.3rem", color: "#C9A84C", margin: "0 0 2px 0" }}>
                           From €{perPerson.toLocaleString()} / person
                         </p>
                         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: "rgba(255,255,255,0.25)", margin: 0, letterSpacing: "0.08em" }}>
@@ -146,7 +146,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
                         </p>
                       </>
                     ) : (
-                      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.2rem", color: "#DAA520", margin: 0 }}>
+                      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.2rem", color: "#C9A84C", margin: 0 }}>
                         Price on request
                       </p>
                     )}
@@ -164,14 +164,14 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
       </section>
 
       {/* George Section */}
-      <section style={{ padding: "100px 24px", background: "#000", borderTop: "1px solid rgba(218,165,32,0.08)" }}>
+      <section style={{ padding: "100px 24px", background: "#000", borderTop: "1px solid rgba(201,168,76,0.08)" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", display: "flex", alignItems: "center", gap: 40, flexWrap: "wrap", justifyContent: "center" }}>
           <div style={{ position: "relative", width: 180, height: 180, borderRadius: "50%", overflow: "hidden", flexShrink: 0 }}>
             <Image src="/images/george.jpg" alt="George P. Biniaris" fill style={{ objectFit: "cover" }} sizes="180px" />
           </div>
           <div style={{ textAlign: "center", flex: 1, minWidth: 250 }}>
             <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", color: "#fff", marginBottom: 8 }}>Your Broker: George</h3>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: "#DAA520", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16 }}>Managing Broker · IYBA Member</p>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: "#C9A84C", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16 }}>Managing Broker · IYBA Member</p>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 1.8, fontStyle: "italic" }}>
               "Same care. Same service. Whatever your budget."
             </p>

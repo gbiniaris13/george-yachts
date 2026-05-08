@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useWishlist } from '../components/WishlistProvider';
 import { useI18n } from '@/lib/i18n/I18nProvider';
 
-const GOLD = '#DAA520';
+const GOLD = '#C9A84C';
 
 const inputStyle = {
   padding: '12px 16px',

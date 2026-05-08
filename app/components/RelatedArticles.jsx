@@ -23,9 +23,9 @@ export default function RelatedArticles({ posts }) {
       <div className="max-w-[720px] mx-auto">
         {/* Section header */}
         <div className="flex items-center space-x-6 mb-12">
-          <span className="block w-6 h-px bg-[#DAA520]/50" />
+          <span className="block w-6 h-px bg-[#C9A84C]/50" />
           <span
-            className="text-[#DAA520]/50 text-[8px] tracking-[0.7em] uppercase"
+            className="text-[#C9A84C]/50 text-[8px] tracking-[0.7em] uppercase"
             style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
             Continue Reading
@@ -46,7 +46,7 @@ export default function RelatedArticles({ posts }) {
             <Link
               key={post._id}
               href={`/blog/${post.slug}`}
-              className="group block border border-white/[0.06] rounded overflow-hidden hover:border-[#DAA520]/20 transition-colors duration-500"
+              className="group block border border-white/[0.06] rounded overflow-hidden hover:border-[#C9A84C]/20 transition-colors duration-500"
             >
               {/* Image */}
               <div className="relative aspect-[4/3] overflow-hidden bg-[#0a0a0a]">
@@ -74,13 +74,13 @@ export default function RelatedArticles({ posts }) {
               {/* Content */}
               <div className="p-4">
                 <span
-                  className="text-[#DAA520]/70 text-[8px] tracking-[0.3em] uppercase block mb-2"
+                  className="text-[#C9A84C]/70 text-[8px] tracking-[0.3em] uppercase block mb-2"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
                   {formatDate(post.publishedAt)}
                 </span>
                 <h3
-                  className="text-white/70 text-[1.05rem] leading-snug group-hover:text-[#DAA520] transition-colors duration-500 line-clamp-2"
+                  className="text-white/70 text-[1.05rem] leading-snug group-hover:text-[#C9A84C] transition-colors duration-500 line-clamp-2"
                   style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
                 >
                   {post.title}
@@ -94,7 +94,7 @@ export default function RelatedArticles({ posts }) {
                   </p>
                 )}
                 <span
-                  className="inline-block mt-3 text-[#DAA520]/40 text-[9px] tracking-[0.2em] uppercase group-hover:text-[#DAA520]/70 transition-colors duration-500"
+                  className="inline-block mt-3 text-[#C9A84C]/40 text-[9px] tracking-[0.2em] uppercase group-hover:text-[#C9A84C]/70 transition-colors duration-500"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
                   Read Article &rarr;
@@ -108,7 +108,7 @@ export default function RelatedArticles({ posts }) {
         <div className="mt-10 text-center">
           <Link
             href="/blog"
-            className="text-white/50 hover:text-[#DAA520] transition-colors duration-500 text-[9px] tracking-[0.4em] uppercase"
+            className="text-white/50 hover:text-[#C9A84C] transition-colors duration-500 text-[9px] tracking-[0.4em] uppercase"
             style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
             View All Articles

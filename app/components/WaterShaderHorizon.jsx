@@ -97,7 +97,7 @@ const FRAG = /* glsl */ `
 
     // Caustic light — gold tint at higher y, ivory tint near bottom
     // ripples to read like moonlit water.
-    vec3 goldHi = vec3(0.854, 0.647, 0.125);     // #DAA520
+    vec3 goldHi = vec3(0.854, 0.647, 0.125);     // #C9A84C
     vec3 ivoryHi = vec3(0.961, 0.937, 0.882);    // #F5EFE1
     vec3 highlight = mix(ivoryHi, goldHi, yFall);
 

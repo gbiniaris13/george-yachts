@@ -160,15 +160,15 @@ function ExitCard({ href, eyebrow, title, primary }) {
         padding: "22px 24px",
         textDecoration: "none",
         background: primary
-          ? "linear-gradient(135deg, rgba(218,165,32,0.12) 0%, rgba(13,27,42,0.6) 100%)"
+          ? "linear-gradient(135deg, rgba(201,168,76,0.12) 0%, rgba(13,27,42,0.6) 100%)"
           : "rgba(0,0,0,0.55)",
-        border: `1px solid ${primary ? "rgba(218,165,32,0.55)" : "rgba(248,245,240,0.12)"}`,
+        border: `1px solid ${primary ? "rgba(201,168,76,0.55)" : "rgba(248,245,240,0.12)"}`,
         color: "#F8F5F0",
       }}
     >
       <span
         className="gy-eyebrow-sm"
-        style={{ color: primary ? "#DAA520" : "rgba(248,245,240,0.55)", margin: 0 }}
+        style={{ color: primary ? "#C9A84C" : "rgba(248,245,240,0.55)", margin: 0 }}
       >
         {eyebrow}
       </span>

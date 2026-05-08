@@ -3,7 +3,7 @@
 import { useI18n } from '@/lib/i18n/I18nProvider';
 import { useState } from 'react';
 
-const GOLD = '#DAA520';
+const GOLD = '#C9A84C';
 
 const ISLANDS = {
   mykonos: { name: 'Mykonos', emoji: '🎉', tagline: 'The Cosmopolitan Soul', desc: 'You thrive on energy, style, and being where the world gathers. Mykonos matches your love for vibrant nightlife, world-class dining, and beautiful people. You want your yacht anchored at Psarou Bay, cocktails flowing, and Little Venice glowing at sunset.', region: 'Cyclades', bestFor: 'Beach clubs, nightlife, celebrity spotting, cosmopolitan dining', yacht: "S/Y Genny or M/Y La Pellegrina 1" },
@@ -127,7 +127,7 @@ export default function IslandQuizClient() {
                   fontSize: 13,
                   color: 'rgba(255,255,255,0.7)',
                   background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(218,165,32,0.1)',
+                  border: '1px solid rgba(201,168,76,0.1)',
                   borderRadius: 12,
                   cursor: 'pointer',
                   textAlign: 'left',
@@ -140,7 +140,7 @@ export default function IslandQuizClient() {
                   e.target.style.color = '#fff';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.borderColor = 'rgba(218,165,32,0.1)';
+                  e.target.style.borderColor = 'rgba(201,168,76,0.1)';
                   e.target.style.background = 'rgba(255,255,255,0.03)';
                   e.target.style.color = 'rgba(255,255,255,0.7)';
                 }}
@@ -167,7 +167,7 @@ export default function IslandQuizClient() {
             {result.desc}
           </p>
 
-          <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(218,165,32,0.15)', borderRadius: 12, padding: 24, marginBottom: 32, textAlign: 'left' }}>
+          <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(201,168,76,0.15)', borderRadius: 12, padding: 24, marginBottom: 32, textAlign: 'left' }}>
             <div style={{ marginBottom: 16 }}>
               <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>{t('quiz.region', 'Region')}</span>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: '#fff', margin: '4px 0 0' }}>{result.region}</p>

@@ -341,7 +341,7 @@ export default function NewsletterSignupClient({ streams }) {
               background:
                 "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
               color: "#000000",
-              border: "1px solid rgba(218,165,32,0.6)",
+              border: "1px solid rgba(201,168,76,0.6)",
               fontFamily: "'Montserrat', sans-serif",
               fontSize: 11,
               letterSpacing: "0.35em",
@@ -350,7 +350,7 @@ export default function NewsletterSignupClient({ streams }) {
               cursor: submitting ? "default" : "pointer",
               opacity: submitting ? 0.7 : 1,
               boxShadow:
-                "0 10px 30px -10px rgba(218,165,32,0.45), inset 0 1px 0 rgba(255,255,255,0.25)",
+                "0 10px 30px -10px rgba(201,168,76,0.45), inset 0 1px 0 rgba(255,255,255,0.25)",
             }}
           >
             {submitting ? "Subscribing…" : "Subscribe"}

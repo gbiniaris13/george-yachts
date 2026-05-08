@@ -15,7 +15,7 @@
 
 import Link from "next/link";
 
-const GOLD = "#DAA520";
+const GOLD = "#C9A84C";
 
 function priceLabel(weeklyRatePrice) {
   if (!weeklyRatePrice) return null;
@@ -53,18 +53,18 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
           textDecoration: "none",
           color: "inherit",
           background: "rgba(255,255,255,0.02)",
-          border: "1px solid rgba(218,165,32,0.18)",
+          border: "1px solid rgba(201,168,76,0.18)",
           borderRadius: "10px",
           overflow: "hidden",
           transition: "border-color 0.4s ease, transform 0.4s ease",
         }}
         className="gy-inline-yacht-strip"
         onMouseEnter={(e) => {
-          e.currentTarget.style.borderColor = "rgba(218,165,32,0.45)";
+          e.currentTarget.style.borderColor = "rgba(201,168,76,0.45)";
           e.currentTarget.style.transform = "translateY(-2px)";
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.borderColor = "rgba(218,165,32,0.18)";
+          e.currentTarget.style.borderColor = "rgba(201,168,76,0.18)";
           e.currentTarget.style.transform = "translateY(0)";
         }}
       >
@@ -188,7 +188,7 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
             transform: perspective(1200px) rotateX(1.5deg) rotateY(-1.5deg) translateY(-4px);
             box-shadow:
               0 32px 72px rgba(0, 0, 0, 0.55),
-              0 0 0 1px rgba(218, 165, 32, 0.22) inset;
+              0 0 0 1px rgba(201, 168, 76, 0.22) inset;
           }
         }
         @media (prefers-reduced-motion: reduce) {

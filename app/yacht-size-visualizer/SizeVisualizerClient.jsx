@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useI18n } from '@/lib/i18n/I18nProvider';
 
-const GOLD = '#DAA520';
+const GOLD = '#C9A84C';
 
 const COMPARISONS = [
   { name: 'Tennis Court', key: 'tennisCourt', length: 23.77, icon: '🎾', color: '#2ECC71' },
@@ -144,7 +144,7 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
         </div>
 
         {/* Fun facts */}
-        <div style={{ marginTop: 48, padding: 24, background: 'rgba(218,165,32,0.03)', border: `1px solid ${GOLD}15`, borderRadius: 12, textAlign: 'center' }}>
+        <div style={{ marginTop: 48, padding: 24, background: 'rgba(201,168,76,0.03)', border: `1px solid ${GOLD}15`, borderRadius: 12, textAlign: 'center' }}>
           <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: '#fff', fontStyle: 'italic', margin: '0 0 8px' }}>
             "{selectedYacht.name} {t('sizeViz.asLongAs', 'is as long as')} {fmt(selectedYacht.length / 11.23)} {t('sizeViz.londonBusesEndToEnd', 'London buses parked end to end')}"
           </p>

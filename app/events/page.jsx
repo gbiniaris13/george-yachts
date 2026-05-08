@@ -74,7 +74,7 @@ export default function EventsPage() {
       {/* Intro */}
       <section style={{ padding: "100px 24px", background: "#000" }}>
         <Reveal className="text-center" style={{ maxWidth: "700px", margin: "0 auto" }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#DAA520", marginBottom: "24px" }}>2026 Calendar</p>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "24px" }}>2026 Calendar</p>
           <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 300, color: "#fff", margin: "0 0 32px" }}>
             Where Can You Meet George Yachts This Year?
           </h2>
@@ -90,15 +90,15 @@ export default function EventsPage() {
         <div style={{ maxWidth: "800px", margin: "0 auto" }}>
           {events.map((event, i) => (
             <Reveal key={i} delay={i * 0.08}>
-              <div style={{ borderBottom: "1px solid rgba(218,165,32,0.06)", padding: "40px 0", display: "flex", gap: "32px", alignItems: "flex-start", flexWrap: "wrap" }}>
+              <div style={{ borderBottom: "1px solid rgba(201,168,76,0.06)", padding: "40px 0", display: "flex", gap: "32px", alignItems: "flex-start", flexWrap: "wrap" }}>
                 <div style={{ minWidth: "140px" }}>
-                  <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "18px", color: "#DAA520", marginBottom: "4px" }}>{event.date}</p>
+                  <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "18px", color: "#C9A84C", marginBottom: "4px" }}>{event.date}</p>
                   <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>{event.location}</p>
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
                     <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", fontWeight: 500, color: "#fff", margin: 0 }}>{event.name}</h3>
-                    <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "7px", letterSpacing: "0.15em", textTransform: "uppercase", padding: "3px 10px", border: `1px solid ${event.status === "confirmed" ? "rgba(218,165,32,0.4)" : "rgba(255,255,255,0.1)"}`, color: event.status === "confirmed" ? "#DAA520" : "rgba(255,255,255,0.3)" }}>
+                    <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "7px", letterSpacing: "0.15em", textTransform: "uppercase", padding: "3px 10px", border: `1px solid ${event.status === "confirmed" ? "rgba(201,168,76,0.4)" : "rgba(255,255,255,0.1)"}`, color: event.status === "confirmed" ? "#C9A84C" : "rgba(255,255,255,0.3)" }}>
                       {event.status === "confirmed" ? "Confirmed" : "To Be Confirmed"}
                     </span>
                   </div>
@@ -111,9 +111,9 @@ export default function EventsPage() {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "100px 24px", background: "#000", textAlign: "center", borderTop: "1px solid rgba(218,165,32,0.08)" }}>
+      <section style={{ padding: "100px 24px", background: "#000", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.08)" }}>
         <Reveal>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#DAA520", marginBottom: "16px" }}>Attending a Show?</p>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "16px" }}>Attending a Show?</p>
           <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 300, color: "#fff", margin: "0 0 16px" }}>Let&apos;s Meet in Person</h2>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.4)", lineHeight: 1.7, fontWeight: 300, maxWidth: "500px", margin: "0 auto 40px" }}>
             Schedule a private meeting at any upcoming show. We&apos;ll arrange viewings and discuss your charter plans.

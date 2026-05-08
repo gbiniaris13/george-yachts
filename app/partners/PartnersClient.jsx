@@ -223,8 +223,8 @@ export default function PartnersClient() {
               style={{
                 maxWidth: 520,
                 padding: "28px 24px 26px",
-                background: "rgba(218,165,32,0.03)",
-                border: "1px solid rgba(218,165,32,0.3)",
+                background: "rgba(201,168,76,0.03)",
+                border: "1px solid rgba(201,168,76,0.3)",
               }}
             >
               {/* Honeypot */}
@@ -750,13 +750,13 @@ function FieldInput({ label, value, onChange, placeholder, type = "text", requir
           fontSize: 9,
           letterSpacing: "0.3em",
           textTransform: "uppercase",
-          color: "rgba(218,165,32,0.75)",
+          color: "rgba(201,168,76,0.75)",
           marginBottom: 6,
           fontWeight: 600,
         }}
       >
         {label}
-        {required ? <span style={{ color: "#DAA520", marginLeft: 4 }}>*</span> : null}
+        {required ? <span style={{ color: "#C9A84C", marginLeft: 4 }}>*</span> : null}
       </span>
       <input
         type={type}
@@ -768,7 +768,7 @@ function FieldInput({ label, value, onChange, placeholder, type = "text", requir
           width: "100%",
           padding: "11px 14px",
           background: "rgba(0,0,0,0.6)",
-          border: "1px solid rgba(218,165,32,0.28)",
+          border: "1px solid rgba(201,168,76,0.28)",
           color: "#fff",
           fontFamily: "'Montserrat', sans-serif",
           fontSize: 13,

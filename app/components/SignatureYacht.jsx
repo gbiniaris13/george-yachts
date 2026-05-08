@@ -153,7 +153,7 @@ export default function SignatureYacht({ yacht }) {
           style={{ fontFamily: "'Montserrat', sans-serif" }}
         >
           <span
-            className="inline-block text-[#DAA520] border border-[#DAA520]/40 px-6 py-2"
+            className="inline-block text-[#C9A84C] border border-[#C9A84C]/40 px-6 py-2"
             style={{
               fontSize: "9px",
               letterSpacing: "0.5em",
@@ -201,7 +201,7 @@ export default function SignatureYacht({ yacht }) {
             {/* Specs line */}
             {specs && (
               <p
-                className="text-[#DAA520]/85 mb-10"
+                className="text-[#C9A84C]/85 mb-10"
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: "clamp(10px, 1.2vw, 12px)",
@@ -218,7 +218,7 @@ export default function SignatureYacht({ yacht }) {
             {insiderTrim && (
               <div className="max-w-[720px] mx-auto mb-12">
                 <p
-                  className="text-[#DAA520]/60 mb-4"
+                  className="text-[#C9A84C]/60 mb-4"
                   style={{
                     fontFamily: "'Montserrat', sans-serif",
                     fontSize: "9px",
@@ -246,7 +246,7 @@ export default function SignatureYacht({ yacht }) {
             {yachtHref && (
               <Link
                 href={yachtHref}
-                className="group inline-flex items-center gap-3 pb-2 border-b border-[#DAA520]/50 hover:border-[#DAA520] text-[#DAA520] transition-colors duration-500"
+                className="group inline-flex items-center gap-3 pb-2 border-b border-[#C9A84C]/50 hover:border-[#C9A84C] text-[#C9A84C] transition-colors duration-500"
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: "11px",
@@ -278,19 +278,19 @@ export default function SignatureYacht({ yacht }) {
         {/* Gold corner-brackets — subtle frame cue, editorial feel */}
         <span
           aria-hidden="true"
-          className="absolute top-6 left-6 md:top-10 md:left-10 w-8 h-8 md:w-12 md:h-12 border-t border-l border-[#DAA520]/40 pointer-events-none"
+          className="absolute top-6 left-6 md:top-10 md:left-10 w-8 h-8 md:w-12 md:h-12 border-t border-l border-[#C9A84C]/40 pointer-events-none"
         />
         <span
           aria-hidden="true"
-          className="absolute top-6 right-6 md:top-10 md:right-10 w-8 h-8 md:w-12 md:h-12 border-t border-r border-[#DAA520]/40 pointer-events-none"
+          className="absolute top-6 right-6 md:top-10 md:right-10 w-8 h-8 md:w-12 md:h-12 border-t border-r border-[#C9A84C]/40 pointer-events-none"
         />
         <span
           aria-hidden="true"
-          className="absolute bottom-6 left-6 md:bottom-10 md:left-10 w-8 h-8 md:w-12 md:h-12 border-b border-l border-[#DAA520]/40 pointer-events-none"
+          className="absolute bottom-6 left-6 md:bottom-10 md:left-10 w-8 h-8 md:w-12 md:h-12 border-b border-l border-[#C9A84C]/40 pointer-events-none"
         />
         <span
           aria-hidden="true"
-          className="absolute bottom-6 right-6 md:bottom-10 md:right-10 w-8 h-8 md:w-12 md:h-12 border-b border-r border-[#DAA520]/40 pointer-events-none"
+          className="absolute bottom-6 right-6 md:bottom-10 md:right-10 w-8 h-8 md:w-12 md:h-12 border-b border-r border-[#C9A84C]/40 pointer-events-none"
         />
       </div>
     </section>

@@ -247,7 +247,7 @@ export default function NavDrawerSystem() {
                 height: logoHeight,
                 width: "auto",
                 transition: "height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
-                filter: "drop-shadow(0 4px 18px rgba(218,165,32,0.18))",
+                filter: "drop-shadow(0 4px 18px rgba(201,168,76,0.18))",
               }}
             />
           </Link>

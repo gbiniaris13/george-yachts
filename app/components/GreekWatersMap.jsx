@@ -129,7 +129,7 @@ export default function GreekWatersMap() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at 55% 45%, rgba(218,165,32,0.06) 0%, transparent 60%)",
+            "radial-gradient(ellipse at 55% 45%, rgba(201,168,76,0.06) 0%, transparent 60%)",
         }}
       />
 
@@ -137,7 +137,7 @@ export default function GreekWatersMap() {
         {/* Header */}
         <div className="text-center mb-12 lg:mb-16">
           <p
-            className="text-[#DAA520]/80 mb-4"
+            className="text-[#C9A84C]/80 mb-4"
             style={{
               fontFamily: "'Montserrat', sans-serif",
               fontSize: "9px",
@@ -190,25 +190,25 @@ export default function GreekWatersMap() {
             <path
               d={BACKDROP_PATHS.mainland}
               fill="rgba(255,255,255,0.025)"
-              stroke="rgba(218,165,32,0.15)"
+              stroke="rgba(201,168,76,0.15)"
               strokeWidth="1"
             />
             <path
               d={BACKDROP_PATHS.crete}
               fill="rgba(255,255,255,0.025)"
-              stroke="rgba(218,165,32,0.15)"
+              stroke="rgba(201,168,76,0.15)"
               strokeWidth="1"
             />
 
             {/* Athens marker — a small ring + label, editorial anchor */}
             <g>
-              <circle cx="430" cy="390" r="3" fill="rgba(218,165,32,0.6)" />
+              <circle cx="430" cy="390" r="3" fill="rgba(201,168,76,0.6)" />
               <circle
                 cx="430"
                 cy="390"
                 r="9"
                 fill="none"
-                stroke="rgba(218,165,32,0.35)"
+                stroke="rgba(201,168,76,0.35)"
                 strokeWidth="0.8"
               />
               <text
@@ -238,7 +238,7 @@ export default function GreekWatersMap() {
                   y={labelY}
                   textAnchor="middle"
                   fill={
-                    isActive ? "rgba(218,165,32,1)" : "rgba(255,255,255,0.48)"
+                    isActive ? "rgba(201,168,76,1)" : "rgba(255,255,255,0.48)"
                   }
                   fontFamily="'Montserrat', sans-serif"
                   fontSize="20"
@@ -271,13 +271,13 @@ export default function GreekWatersMap() {
                       r={island.r}
                       fill={
                         isActive
-                          ? "rgba(218,165,32,0.85)"
+                          ? "rgba(201,168,76,0.85)"
                           : "rgba(255,255,255,0.75)"
                       }
                       stroke={
                         isActive
                           ? "rgba(230,199,122,1)"
-                          : "rgba(218,165,32,0.4)"
+                          : "rgba(201,168,76,0.4)"
                       }
                       strokeWidth={isActive ? 1.5 : 0.8}
                       style={{ transition: "fill 500ms ease, stroke 500ms ease" }}
@@ -313,7 +313,7 @@ export default function GreekWatersMap() {
                     height={b.h}
                     fill="transparent"
                     stroke={
-                      activeId === r.id ? "rgba(218,165,32,0.3)" : "transparent"
+                      activeId === r.id ? "rgba(201,168,76,0.3)" : "transparent"
                     }
                     strokeDasharray="4 4"
                     strokeWidth="1"
@@ -338,12 +338,12 @@ export default function GreekWatersMap() {
               style={{
                 background: "rgba(0, 0, 0, 0.9)",
                 backdropFilter: "blur(14px)",
-                border: "1px solid rgba(218,165,32,0.35)",
+                border: "1px solid rgba(201,168,76,0.35)",
                 color: "#fff",
               }}
             >
               <p
-                className="text-[#DAA520] mb-3"
+                className="text-[#C9A84C] mb-3"
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: "8px",
@@ -377,7 +377,7 @@ export default function GreekWatersMap() {
                 {active.tagline}
               </p>
               <p
-                className="text-[#DAA520]/70"
+                className="text-[#C9A84C]/70"
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: "10px",
@@ -412,7 +412,7 @@ export default function GreekWatersMap() {
             <Link
               key={`list-${r.id}`}
               href={r.href}
-              className="group block border border-[#DAA520]/15 hover:border-[#DAA520]/55 p-6 transition-colors duration-500"
+              className="group block border border-[#C9A84C]/15 hover:border-[#C9A84C]/55 p-6 transition-colors duration-500"
               style={{ background: "rgba(0,0,0,0.55)" }}
               onMouseEnter={() => setActiveId(r.id)}
               onMouseLeave={() =>
@@ -420,7 +420,7 @@ export default function GreekWatersMap() {
               }
             >
               <p
-                className="text-[#DAA520] mb-2"
+                className="text-[#C9A84C] mb-2"
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: "9px",
@@ -442,7 +442,7 @@ export default function GreekWatersMap() {
                 {r.tagline}
               </p>
               <p
-                className="text-white/40 group-hover:text-[#DAA520] transition-colors duration-500"
+                className="text-white/40 group-hover:text-[#C9A84C] transition-colors duration-500"
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: "9px",

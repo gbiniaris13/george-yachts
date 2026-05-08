@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 
-const GOLD = '#DAA520';
+const GOLD = '#C9A84C';
 
 // Yacht names for random selection
 const YACHTS = [

@@ -34,7 +34,7 @@ import { useState, useMemo, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const GOLD = '#DAA520';
+const GOLD = '#C9A84C';
 
 const QUESTIONS = [
   {
@@ -485,7 +485,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
                 transition: 'all 0.3s ease',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(218,165,32,0.08)';
+                e.currentTarget.style.background = 'rgba(201,168,76,0.08)';
                 e.currentTarget.style.borderColor = GOLD;
               }}
               onMouseLeave={(e) => {
@@ -637,7 +637,7 @@ function ContactStep({ contact, setContact, onBack, onSubmit, submitting, error,
                 textTransform: 'uppercase',
                 fontWeight: 600,
                 border: `1px solid ${contact.channel === c ? GOLD : 'rgba(255,255,255,0.2)'}`,
-                background: contact.channel === c ? 'rgba(218,165,32,0.12)' : 'transparent',
+                background: contact.channel === c ? 'rgba(201,168,76,0.12)' : 'transparent',
                 color: contact.channel === c ? GOLD : 'rgba(255,255,255,0.75)',
                 cursor: 'pointer',
                 fontFamily: "'Montserrat', sans-serif",
@@ -813,8 +813,8 @@ function ResultScreen({ matches, answers }) {
         style={{
           marginTop: 36,
           padding: 24,
-          background: 'rgba(218,165,32,0.06)',
-          border: '1px solid rgba(218,165,32,0.3)',
+          background: 'rgba(201,168,76,0.06)',
+          border: '1px solid rgba(201,168,76,0.3)',
         }}
       >
         <p
@@ -881,7 +881,7 @@ const primaryBtnStyle = {
   padding: '14px 30px',
   background: 'linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)',
   color: '#000000',
-  border: '1px solid rgba(218,165,32,0.6)',
+  border: '1px solid rgba(201,168,76,0.6)',
   fontFamily: "'Montserrat', sans-serif",
   fontSize: 11,
   letterSpacing: '0.32em',

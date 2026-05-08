@@ -8,7 +8,7 @@ export default function HowItWorks() {
     {
       num: "01",
       icon: (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="1.2">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="1.2">
           <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
         </svg>
       ),
@@ -18,7 +18,7 @@ export default function HowItWorks() {
     {
       num: "02",
       icon: (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="1.2">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="1.2">
           <circle cx="12" cy="12" r="10" />
           <path d="M12 8v4l2 2" />
           <path d="M12 2v2M12 20v2M2 12h2M20 12h2" />
@@ -30,7 +30,7 @@ export default function HowItWorks() {
     {
       num: "03",
       icon: (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="1.2">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="1.2">
           <path d="M2 12c2-4 6-8 10-8s8 4 10 8c-2 4-6 8-10 8S4 16 2 12z" />
           <path d="M3 20L7 12M21 20L17 12" />
           <path d="M12 16a4 4 0 100-8 4 4 0 000 8z" />
@@ -45,13 +45,13 @@ export default function HowItWorks() {
     <section className="py-24 md:py-32 bg-black relative overflow-hidden">
       {/* Subtle background accent */}
       <div className="absolute inset-0 opacity-[0.03]" style={{
-        backgroundImage: "radial-gradient(circle at 50% 50%, #DAA520 0%, transparent 70%)"
+        backgroundImage: "radial-gradient(circle at 50% 50%, #C9A84C 0%, transparent 70%)"
       }} />
 
       <div className="max-w-5xl mx-auto px-6 relative z-10">
         {/* Header */}
         <div className="text-center mb-20">
-          <p className="text-[10px] tracking-[0.4em] uppercase text-[#DAA520]/60 mb-4 font-light">
+          <p className="text-[10px] tracking-[0.4em] uppercase text-[#C9A84C]/60 mb-4 font-light">
             {t('howItWorks.label')}
           </p>
           <h2 className="text-4xl md:text-5xl font-marcellus text-white/90 mb-6">
@@ -68,7 +68,7 @@ export default function HowItWorks() {
             <div key={i} className="text-center group">
               {/* Number */}
               <div className="text-5xl font-marcellus mb-6" style={{
-                backgroundImage: "linear-gradient(180deg, #DAA520 0%, #8B6914 100%)",
+                backgroundImage: "linear-gradient(180deg, #C9A84C 0%, #8B6914 100%)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 color: "transparent",
@@ -106,7 +106,7 @@ export default function HowItWorks() {
         <div className="text-center mt-16">
           <a
             href="/charter-yacht-greece"
-            className="inline-block px-10 py-4 text-xs tracking-[0.2em] uppercase font-medium border border-[#DAA520]/30 text-[#DAA520] hover:bg-[#DAA520]/10 transition-all duration-500 rounded-sm"
+            className="inline-block px-10 py-4 text-xs tracking-[0.2em] uppercase font-medium border border-[#C9A84C]/30 text-[#C9A84C] hover:bg-[#C9A84C]/10 transition-all duration-500 rounded-sm"
           >
             {t('howItWorks.cta')}
           </a>

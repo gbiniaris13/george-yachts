@@ -60,7 +60,7 @@ export default function GreekMapBackdrop() {
         <pattern id="seaWave" x="0" y="0" width="60" height="14" patternUnits="userSpaceOnUse">
           <path
             d="M 0 7 Q 15 0 30 7 T 60 7"
-            stroke="rgba(218, 165, 32, 0.05)"
+            stroke="rgba(201, 168, 76, 0.05)"
             strokeWidth="0.5"
             fill="none"
           />
@@ -68,7 +68,7 @@ export default function GreekMapBackdrop() {
         {/* Greece land — subtle ivory/gold gradient */}
         <linearGradient id="greekLand" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%"   stopColor="rgba(245, 235, 210, 0.10)" />
-          <stop offset="100%" stopColor="rgba(218, 165, 32, 0.06)" />
+          <stop offset="100%" stopColor="rgba(201, 168, 76, 0.06)" />
         </linearGradient>
         {/* Drop-shadow filter — subtle depth around Greece coastline */}
         <filter id="greekGlow" x="-10%" y="-10%" width="120%" height="120%">
@@ -98,7 +98,7 @@ export default function GreekMapBackdrop() {
         <path
           d={neighboursPath}
           fill="rgba(255, 255, 255, 0.012)"
-          stroke="rgba(218, 165, 32, 0.10)"
+          stroke="rgba(201, 168, 76, 0.10)"
           strokeWidth={0.5}
         />
       )}
@@ -109,7 +109,7 @@ export default function GreekMapBackdrop() {
         <path
           d={greecePath}
           fill="url(#greekLand)"
-          stroke="rgba(218, 165, 32, 0.55)"
+          stroke="rgba(201, 168, 76, 0.55)"
           strokeWidth={0.85}
           strokeLinejoin="round"
           filter="url(#greekGlow)"

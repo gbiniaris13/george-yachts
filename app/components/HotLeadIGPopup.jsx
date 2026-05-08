@@ -24,7 +24,7 @@ import {
   markCaptured,
 } from '@/lib/popup-coordinator';
 
-const GOLD = '#DAA520';
+const GOLD = '#C9A84C';
 const HOT_LEAD_IG_KEY = 'gy-hot-lead-ig-captured';
 const LEAD_CAPTURED_KEY = 'gy-lead-captured';
 // George 2026-04-21: 30 s was stacking with the WhatsApp bubble + any
@@ -328,7 +328,7 @@ export default function HotLeadIGPopup() {
                 style={{
                   marginTop: 6,
                   padding: '14px',
-                  background: submitting ? 'rgba(218,165,32,0.3)' : GOLD,
+                  background: submitting ? 'rgba(201,168,76,0.3)' : GOLD,
                   color: '#0a0a0a',
                   border: 'none', borderRadius: 10,
                   fontSize: 12, fontFamily: "'Montserrat', sans-serif",

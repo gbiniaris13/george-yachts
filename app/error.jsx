@@ -12,7 +12,7 @@ export default function Error({ error, reset }) {
             fontSize: "9px",
             letterSpacing: "0.5em",
             textTransform: "uppercase",
-            color: "#DAA520",
+            color: "#C9A84C",
             fontWeight: 600,
             marginBottom: "24px",
           }}
@@ -72,8 +72,8 @@ export default function Error({ error, reset }) {
             style={{
               display: "inline-block",
               padding: "14px 36px",
-              border: "1px solid rgba(218,165,32,0.3)",
-              color: "#DAA520",
+              border: "1px solid rgba(201,168,76,0.3)",
+              color: "#C9A84C",
               fontSize: "10px",
               letterSpacing: "0.2em",
               textTransform: "uppercase",

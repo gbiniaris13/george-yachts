@@ -78,7 +78,7 @@ function Field({ icon, delay, children }) {
         transition: `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`,
       }}
     >
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#DAA520] transition-colors duration-500">
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#C9A84C] transition-colors duration-500">
         {icon}
       </div>
       <div className="pl-8">
@@ -141,10 +141,10 @@ const ContactFormSection = () => {
   // readable for 50+ visitors on dark BG. Border bumped /15 → /25 to
   // make the input affordance visible without focus.
   const inputBase =
-    "w-full bg-transparent text-white border-b border-white/25 px-0 py-4 text-base focus:outline-none focus:border-[#DAA520] transition-all duration-500 placeholder:text-white/60 placeholder:font-light placeholder:text-sm rounded-none";
+    "w-full bg-transparent text-white border-b border-white/25 px-0 py-4 text-base focus:outline-none focus:border-[#C9A84C] transition-all duration-500 placeholder:text-white/60 placeholder:font-light placeholder:text-sm rounded-none";
 
   const selectBase =
-    "w-full bg-transparent text-white border-b border-white/25 px-0 py-4 text-base focus:outline-none focus:border-[#DAA520] transition-all duration-500 rounded-none appearance-none cursor-pointer";
+    "w-full bg-transparent text-white border-b border-white/25 px-0 py-4 text-base focus:outline-none focus:border-[#C9A84C] transition-all duration-500 rounded-none appearance-none cursor-pointer";
 
   // Success state
   if (status === "success") {
@@ -154,8 +154,8 @@ const ContactFormSection = () => {
         <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay z-10" />
 
         <div className="relative z-30 text-center px-6 max-w-2xl mx-auto">
-          <div className="mb-8 inline-flex items-center justify-center w-20 h-20 rounded-full border border-[#DAA520]/30">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <div className="mb-8 inline-flex items-center justify-center w-20 h-20 rounded-full border border-[#C9A84C]/30">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12"/>
             </svg>
           </div>
@@ -174,11 +174,11 @@ const ContactFormSection = () => {
             <img
               src="/images/george.jpg"
               alt="George P. Biniaris"
-              className="w-16 h-16 rounded-full object-cover border border-[#DAA520]/30"
+              className="w-16 h-16 rounded-full object-cover border border-[#C9A84C]/30"
             />
             <div className="text-left">
               <p className="text-white text-sm font-medium">George P. Biniaris</p>
-              <p className="text-[#DAA520]/60 text-xs tracking-wider uppercase">Managing Broker</p>
+              <p className="text-[#C9A84C]/60 text-xs tracking-wider uppercase">Managing Broker</p>
             </div>
           </div>
           <p className="text-white/60 text-lg font-light leading-relaxed mb-4">
@@ -189,7 +189,7 @@ const ContactFormSection = () => {
           </p>
           <button
             onClick={() => setStatus("")}
-            className="mt-12 text-[#DAA520] text-xs tracking-[0.2em] uppercase border-b border-[#DAA520]/30 pb-1 hover:border-[#DAA520] transition-all duration-300"
+            className="mt-12 text-[#C9A84C] text-xs tracking-[0.2em] uppercase border-b border-[#C9A84C]/30 pb-1 hover:border-[#C9A84C] transition-all duration-300"
           >
             Send Another Brief
           </button>
@@ -213,13 +213,13 @@ const ContactFormSection = () => {
       </div>
 
       {/* Decorative gold line */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent via-[#DAA520]/20 to-transparent z-20" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent via-[#C9A84C]/20 to-transparent z-20" />
 
       <div className="relative z-30 w-full max-w-5xl mx-auto px-6 md:px-12">
 
         {/* ── Header ── */}
         <div className="text-center mb-20">
-          <p className="text-[10px] tracking-[0.4em] uppercase text-[#DAA520]/70 mb-6 font-light">
+          <p className="text-[10px] tracking-[0.4em] uppercase text-[#C9A84C]/70 mb-6 font-light">
             {t('contact.label')}
           </p>
           <h2
@@ -251,7 +251,7 @@ const ContactFormSection = () => {
               className="group flex items-center gap-3 transition-colors duration-300"
               data-cursor="Call"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
               </svg>
               <div className="text-left">
@@ -264,7 +264,7 @@ const ContactFormSection = () => {
               </div>
             </a>
 
-            <span className="hidden sm:block w-px h-8" style={{ background: "rgba(218,165,32,0.12)" }} />
+            <span className="hidden sm:block w-px h-8" style={{ background: "rgba(201,168,76,0.12)" }} />
 
             <a
               href="https://wa.me/17867988798"
@@ -273,7 +273,7 @@ const ContactFormSection = () => {
               className="group flex items-center gap-3 transition-colors duration-300"
               data-cursor="Chat"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#DAA520">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C">
                 <path d="M12.031 0.725C5.741 0.725 0.547 5.926 0.547 12.215C0.547 14.39 1.155 16.42 2.22 18.15L0.63 23.36l5.352-1.55c1.674 0.99 3.593 1.516 5.619 1.516c6.29 0 11.484-5.201 11.484-11.491C23.595 5.926 18.4 0.725 12.031 0.725zM17.476 15.655c-0.198 0.505-1.127 0.99-1.523 1.054c-0.342 0.054-0.695 0.078-1.574-0.373c-1.028-0.543-2.607-1.583-3.804-2.78c-1.197-1.197-2.237-2.776-2.78-3.804c-0.45-0.879-0.426-1.232-0.373-1.574c0.064-0.396 0.549-1.325 1.054-1.523c0.426-0.165 0.879-0.276 1.197-0.276c0.231 0 0.426 0.015 0.639 0.45l0.58 1.417c0.078 0.165 0.124 0.358 0.046 0.569c-0.078 0.21-0.26 0.45-0.45 0.639c-0.183 0.183-0.33 0.358-0.441 0.569c-0.111 0.21-0.26 0.385-0.137 0.609c0.124 0.223 0.639 1.152 1.518 2.031c0.879 0.879 1.808 1.455 2.031 1.518c0.223 0.124 0.398-0.023 0.609-0.137c0.21-0.111 0.385-0.26 0.569-0.441c0.183-0.183 0.426-0.375 0.639-0.45c0.21-0.078 0.403-0.032 0.569 0.046l1.417 0.58c0.435 0.211 0.546 0.665 0.373 1.197z"/>
               </svg>
               <div className="text-left">
@@ -297,7 +297,7 @@ const ContactFormSection = () => {
           ].map((s) => (
             <React.Fragment key={s.num}>
               {s.num > 1 && (
-                <div className={`w-12 h-px transition-colors duration-500 ${step >= s.num ? 'bg-[#DAA520]/40' : 'bg-white/10'}`} />
+                <div className={`w-12 h-px transition-colors duration-500 ${step >= s.num ? 'bg-[#C9A84C]/40' : 'bg-white/10'}`} />
               )}
               <button
                 type="button"
@@ -307,9 +307,9 @@ const ContactFormSection = () => {
                 <span className={`
                   w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium transition-all duration-500 border
                   ${step === s.num
-                    ? 'border-[#DAA520] text-[#DAA520] bg-[#DAA520]/10'
+                    ? 'border-[#C9A84C] text-[#C9A84C] bg-[#C9A84C]/10'
                     : step > s.num
-                      ? 'border-[#DAA520]/40 text-[#DAA520]/60 bg-[#DAA520]/5'
+                      ? 'border-[#C9A84C]/40 text-[#C9A84C]/60 bg-[#C9A84C]/5'
                       : 'border-white/30 text-white/50'
                   }
                 `}>
@@ -367,7 +367,7 @@ const ContactFormSection = () => {
               <button
                 type="button"
                 onClick={() => setStep(2)}
-                className="group flex items-center gap-3 text-[#DAA520] text-xs tracking-[0.2em] uppercase hover:gap-5 transition-all duration-500"
+                className="group flex items-center gap-3 text-[#C9A84C] text-xs tracking-[0.2em] uppercase hover:gap-5 transition-all duration-500"
               >
                 Continue
                 <span className="inline-block transform group-hover:translate-x-1 transition-transform duration-300">&rarr;</span>
@@ -465,7 +465,7 @@ const ContactFormSection = () => {
               <button
                 type="button"
                 onClick={() => setStep(3)}
-                className="group flex items-center gap-3 text-[#DAA520] text-xs tracking-[0.2em] uppercase hover:gap-5 transition-all duration-500"
+                className="group flex items-center gap-3 text-[#C9A84C] text-xs tracking-[0.2em] uppercase hover:gap-5 transition-all duration-500"
               >
                 Continue
                 <span className="inline-block transform group-hover:translate-x-1 transition-transform duration-300">&rarr;</span>
@@ -487,10 +487,10 @@ const ContactFormSection = () => {
             </Field>
 
             {/* Trust & Security Signals */}
-            <div className="mt-14 mb-10 py-6 px-8 border border-white/5" style={{ background: "rgba(218,165,32,0.02)" }}>
+            <div className="mt-14 mb-10 py-6 px-8 border border-white/5" style={{ background: "rgba(201,168,76,0.02)" }}>
               <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
                 <div className="flex items-center gap-2 text-white/60 text-[10px] tracking-[0.15em] uppercase">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                   <span>{t('contact.secure')}</span>
                 </div>
                 <div className="flex items-center gap-2 text-white/60 text-[10px] tracking-[0.15em] uppercase">
@@ -498,29 +498,29 @@ const ContactFormSection = () => {
                   <span>Strictly Confidential</span>
                 </div>
                 <div className="flex items-center gap-2 text-white/60 text-[10px] tracking-[0.15em] uppercase">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                   <span>No Obligation</span>
                 </div>
                 <div className="flex items-center gap-2 text-white/60 text-[10px] tracking-[0.15em] uppercase">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DAA520" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                   <span>Priority Response</span>
                 </div>
               </div>
               <p className="text-center text-[9px] text-white/50 mt-4 tracking-wider">
-                Your data is protected with bank-grade encryption. <a href="/your-privacy-security" className="text-[#DAA520]/70 hover:text-[#DAA520] underline transition-colors">Learn how we protect your information</a>
+                Your data is protected with bank-grade encryption. <a href="/your-privacy-security" className="text-[#C9A84C]/70 hover:text-[#C9A84C] underline transition-colors">Learn how we protect your information</a>
               </p>
             </div>
 
             {/* GDPR + reCAPTCHA notice */}
             <div className="text-[9px] text-white/50 tracking-widest text-center mb-8 leading-relaxed">
               By submitting this form you consent to George Yachts Brokerage House LLC processing your personal data to respond to your inquiry.
-              See our <a href="/privacy-policy" className="underline text-[#DAA520]/70 hover:text-[#DAA520] transition-colors" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+              See our <a href="/privacy-policy" className="underline text-[#C9A84C]/70 hover:text-[#C9A84C] transition-colors" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
               <br />Protected by reCAPTCHA · Google Privacy Policy and Terms of Service apply.
             </div>
 
             {/* Status */}
             {status && status !== "success" && (
-              <div className="text-[#DAA520] text-sm tracking-widest uppercase text-center mb-6 animate-pulse">
+              <div className="text-[#C9A84C] text-sm tracking-widest uppercase text-center mb-6 animate-pulse">
                 {status}
               </div>
             )}

@@ -26,7 +26,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const GOLD = "#DAA520";
+const GOLD = "#C9A84C";
 
 /* ─── Question set ─────────────────────────────────────────────── */
 // Phase 24 (luxury rebuild, 2026-05-05) — Boss spec: SIX brief fields
@@ -314,7 +314,7 @@ export default function InquiryClient() {
             style={{
               margin: "40px auto 0",
               maxWidth: 720,
-              border: "1px solid rgba(218,165,32,0.32)",
+              border: "1px solid rgba(201,168,76,0.32)",
               boxShadow: "0 24px 56px rgba(0,0,0,0.45)",
               background: "#0a0a0a",
               animation: "gy-cover-reveal 0.9s cubic-bezier(0.2, 0.8, 0.2, 1)",
@@ -352,7 +352,7 @@ export default function InquiryClient() {
               href="https://wa.me/17867988798?text=Hi%20George%20%E2%80%94%20I%20just%20submitted%20an%20inquiry%20on%20the%20site."
               target="_blank"
               rel="noopener noreferrer"
-              style={{ ...ctaPrimary, background: "transparent", border: "1px solid rgba(218,165,32,0.55)", color: "#DAA520" }}
+              style={{ ...ctaPrimary, background: "transparent", border: "1px solid rgba(201,168,76,0.55)", color: "#C9A84C" }}
             >
               Message on WhatsApp now
             </a>
@@ -402,7 +402,7 @@ export default function InquiryClient() {
                     borderColor:
                       answers[step.key] === opt.value
                         ? GOLD
-                        : "rgba(218,165,32,0.22)",
+                        : "rgba(201,168,76,0.22)",
                     color:
                       answers[step.key] === opt.value ? GOLD : "#fff",
                   }}
@@ -558,7 +558,7 @@ const progressTrack = {
   left: 0,
   right: 0,
   height: 2,
-  background: "rgba(218,165,32,0.08)",
+  background: "rgba(201,168,76,0.08)",
   zIndex: 39,
 };
 const progressFill = {
@@ -571,7 +571,7 @@ const card = {
   maxWidth: 640,
   padding: "36px 28px 30px",
   background: "#050505",
-  border: "1px solid rgba(218,165,32,0.16)",
+  border: "1px solid rgba(201,168,76,0.16)",
   animation: "fade-in 0.25s ease both",
 };
 const eyebrow = {
@@ -610,7 +610,7 @@ const textInput = {
   width: "100%",
   padding: "14px 16px",
   background: "#000",
-  border: "1px solid rgba(218,165,32,0.25)",
+  border: "1px solid rgba(201,168,76,0.25)",
   color: "#fff",
   fontFamily: "'Montserrat', sans-serif",
   fontSize: 16,
@@ -621,7 +621,7 @@ const textInput = {
 const choiceBtn = {
   padding: "14px 18px",
   background: "rgba(0,0,0,0.5)",
-  border: "1px solid rgba(218,165,32,0.22)",
+  border: "1px solid rgba(201,168,76,0.22)",
   color: "#fff",
   fontFamily: "'Montserrat', sans-serif",
   fontSize: 13,
