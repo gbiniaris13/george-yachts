@@ -1,23 +1,36 @@
-// Chapter 07 (Boss-spec, 2026-05-08) — destination detail page.
+// Chapter 07 + 09 (Boss-spec, 2026-05-08) — destination detail page.
 //
 // Per-region page rendered for /destinations/cyclades, /ionian,
-// /saronic. Sections (Boss spec):
+// /saronic. Pulls all content from lib/destinations.js (single
+// source of truth). Boss design spec applied exactly per Chapter
+// 09 brief — typography, border-left 2 px on each insider pick,
+// mobile breakpoints, CTA buttons + secondary link.
 //
-//   1. Hero — full-width 70 vh, region label gold + Cormorant
-//      destination title 56 px + tagline. Overlay rgba(13,27,42,0.50).
-//   2. Editorial intro — 2–3 paragraphs in George's voice on why the
-//      region is special FROM A CHARTER PERSPECTIVE. No travel-guide
-//      copy, no restaurants/hotels/sights.
-//   3. George's Insider Picks — 4–6 anchorages with one-line nautical
-//      notes (depth, holding, wind protection, ideal yacht type).
-//      Broker knowledge, not tourism.
-//   4. CTA — full-width dark "Ready to explore the X?" + Browse +
-//      Brief George buttons.
+// Sections:
+//   1. Hero          — full-width 70 vh, region label gold +
+//                      Cormorant title 56 px desktop / 36 px mobile
+//                      + tagline 15 px ivory @ 0.75 alpha. Overlay
+//                      rgba(13, 27, 42, 0.50).
+//   2. Editorial     — max 780 px centred, Montserrat Light 17 px,
+//                      line-height 1.75, ivory @ 0.85 alpha.
+//                      Mobile: 15 px, padding 0 1.5 rem.
+//   3. Insider Picks — gold eyebrow + Cormorant Italic 22 px subline,
+//                      then a list of picks. Each: border-left 2 px
+//                      gold, padding-left 1.5 rem, margin-bottom
+//                      2 rem. Pick name Montserrat Medium 13 px ALL
+//                      CAPS 0.08em. Description Montserrat Light
+//                      15 px desktop / 14 px mobile, line-height 1.7.
+//   4. CTA           — full-width #0D1B2A, top border 1 px gold @
+//                      0.25 alpha. Cormorant 38 px headline,
+//                      primary "Browse the Fleet →" gold-bordered
+//                      transparent button, secondary "Brief George →"
+//                      Montserrat Light 13 px white with hover
+//                      underline.
 //
-// Boss directives on what NOT to surface anywhere on these pages:
-//   • Yacht counts per region
-//   • Prices per region
-//   • Restaurants / hotels / generic sightseeing copy
+// Boss directives respected (NOT surfaced anywhere):
+//   • No yacht counts per region.
+//   • No prices per region.
+//   • No restaurants / hotels / generic sightseeing copy.
 
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -58,194 +71,45 @@ export default async function DestinationPage({ params }) {
 
   return (
     <>
-      <article className="gy-destination-page" style={{ background: "#0D1B2A", color: "#F8F5F0" }}>
+      <article className="gy-destination-page">
         {/* HERO */}
-        <section
-          className="gy-destination-hero"
-          style={{
-            position: "relative",
-            width: "100%",
-            height: "70vh",
-            minHeight: 480,
-            overflow: "hidden",
-          }}
-        >
+        <section className="gy-dest-hero">
           <div
             aria-hidden="true"
-            style={{
-              position: "absolute",
-              inset: 0,
-              backgroundImage: `url(${d.heroImage})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundColor: "#0D1B2A",
-            }}
+            className="gy-dest-hero__bg"
+            style={{ backgroundImage: `url(${d.heroImage})` }}
           />
-          <div
-            aria-hidden="true"
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "rgba(13, 27, 42, 0.50)",
-            }}
-          />
-          <div
-            style={{
-              position: "relative",
-              zIndex: 2,
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-              padding: "0 24px",
-            }}
-          >
-            <p
-              style={{
-                fontFamily: "'Montserrat', sans-serif",
-                fontSize: 11,
-                fontWeight: 500,
-                letterSpacing: "0.32em",
-                textTransform: "uppercase",
-                color: "#C9A84C",
-                margin: "0 0 24px",
-              }}
-            >
+          <div aria-hidden="true" className="gy-dest-hero__overlay" />
+          <div className="gy-dest-hero__content">
+            <p className="gy-dest-hero__label">
               The Greek Waters · {d.label}
             </p>
-            <h1
-              style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontWeight: 300,
-                fontSize: "clamp(40px, 7vw, 84px)",
-                lineHeight: 1.05,
-                letterSpacing: "-0.015em",
-                color: "#F8F5F0",
-                margin: "0 0 24px",
-                textShadow: "0 8px 40px rgba(13, 27, 42, 0.55)",
-                maxWidth: "16ch",
-              }}
-            >
-              {d.cardTitle}
-            </h1>
-            <p
-              style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontStyle: "italic",
-                fontWeight: 300,
-                fontSize: "clamp(16px, 1.6vw, 20px)",
-                color: "rgba(248, 245, 240, 0.85)",
-                margin: 0,
-                maxWidth: "48ch",
-              }}
-            >
-              {d.pageTagline}
-            </p>
+            <h1 className="gy-dest-hero__title">{d.cardTitle}</h1>
+            <p className="gy-dest-hero__tagline">{d.pageTagline}</p>
           </div>
         </section>
 
-        {/* EDITORIAL INTRO */}
-        <section
-          style={{
-            padding: "100px 24px 80px",
-            maxWidth: 760,
-            margin: "0 auto",
-          }}
-        >
+        {/* EDITORIAL */}
+        <section className="gy-dest-editorial">
           {d.intro.map((para, i) => (
-            <p
-              key={i}
-              style={{
-                fontFamily: "'Montserrat', sans-serif",
-                fontWeight: 300,
-                fontSize: 17,
-                lineHeight: 1.75,
-                color: "rgba(248, 245, 240, 0.78)",
-                margin: i === 0 ? "0 0 24px" : "0 0 24px",
-              }}
-            >
+            <p key={i} className="gy-dest-editorial__p">
               {para}
             </p>
           ))}
         </section>
 
         {/* INSIDER PICKS */}
-        <section style={{ background: "#142233", padding: "80px 24px" }}>
-          <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-            <p
-              style={{
-                fontFamily: "'Montserrat', sans-serif",
-                fontSize: 11,
-                fontWeight: 500,
-                letterSpacing: "0.32em",
-                textTransform: "uppercase",
-                color: "#C9A84C",
-                textAlign: "center",
-                margin: "0 0 18px",
-              }}
-            >
-              George's Insider Picks
+        <section className="gy-dest-picks">
+          <div className="gy-dest-picks__inner">
+            <p className="gy-dest-picks__label">George&apos;s Insider Picks</p>
+            <p className="gy-dest-picks__subline">
+              The anchorages we&apos;d put you in.
             </p>
-            <h2
-              style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontWeight: 300,
-                fontSize: "clamp(28px, 3.6vw, 40px)",
-                lineHeight: 1.15,
-                color: "#F8F5F0",
-                textAlign: "center",
-                margin: "0 0 56px",
-                maxWidth: "20ch",
-                marginInline: "auto",
-              }}
-            >
-              The anchorages we'd put you in.
-            </h2>
-            <ul
-              style={{
-                listStyle: "none",
-                padding: 0,
-                margin: 0,
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-                gap: 32,
-              }}
-            >
+            <ul className="gy-dest-picks__list">
               {d.insiderPicks.map((pick) => (
-                <li
-                  key={pick.name}
-                  style={{
-                    paddingLeft: 18,
-                    borderLeft: "1px solid rgba(201, 168, 76, 0.45)",
-                  }}
-                >
-                  <h3
-                    style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
-                      fontWeight: 400,
-                      fontSize: 22,
-                      letterSpacing: 0,
-                      color: "#F8F5F0",
-                      margin: "0 0 8px",
-                      lineHeight: 1.25,
-                    }}
-                  >
-                    {pick.name}
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontWeight: 300,
-                      fontSize: 14,
-                      lineHeight: 1.65,
-                      color: "rgba(248, 245, 240, 0.72)",
-                      margin: 0,
-                    }}
-                  >
-                    {pick.note}
-                  </p>
+                <li key={pick.name} className="gy-dest-pick">
+                  <h3 className="gy-dest-pick__name">{pick.name}</h3>
+                  <p className="gy-dest-pick__desc">{pick.note}</p>
                 </li>
               ))}
             </ul>
@@ -253,74 +117,21 @@ export default async function DestinationPage({ params }) {
         </section>
 
         {/* CTA */}
-        <section
-          style={{
-            background: "#0D1B2A",
-            padding: "100px 24px",
-            textAlign: "center",
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontWeight: 300,
-              fontSize: "clamp(28px, 4vw, 44px)",
-              lineHeight: 1.15,
-              color: "#F8F5F0",
-              margin: "0 0 32px",
-              maxWidth: "22ch",
-              marginInline: "auto",
-            }}
-          >
+        <section className="gy-dest-cta">
+          <h2 className="gy-dest-cta__headline">
             Ready to explore the {d.label}?
           </h2>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 16,
-              justifyContent: "center",
-            }}
-          >
+          <div className="gy-dest-cta__row">
             <Link
               href="/charter-yacht-greece"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "16px 32px",
-                fontFamily: "'Montserrat', sans-serif",
-                fontWeight: 500,
-                fontSize: 12,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "#C9A84C",
-                border: "1px solid #C9A84C",
-                background: "transparent",
-                textDecoration: "none",
-                whiteSpace: "nowrap",
-              }}
+              className="gy-dest-cta__primary"
               data-cursor="Browse"
             >
               Browse the Fleet →
             </Link>
             <Link
               href="/inquiry"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "16px 18px",
-                fontFamily: "'Montserrat', sans-serif",
-                fontWeight: 500,
-                fontSize: 12,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "#F8F5F0",
-                background: "transparent",
-                textDecoration: "none",
-                whiteSpace: "nowrap",
-              }}
+              className="gy-dest-cta__secondary"
               data-cursor="Brief"
             >
               Brief George →
@@ -329,6 +140,232 @@ export default async function DestinationPage({ params }) {
         </section>
       </article>
       <Footer />
+
+      <style>{`
+        .gy-destination-page {
+          background: #0D1B2A;
+          color: #F8F5F0;
+        }
+
+        /* HERO */
+        .gy-dest-hero {
+          position: relative;
+          width: 100%;
+          height: 70vh;
+          min-height: 480px;
+          overflow: hidden;
+        }
+        .gy-dest-hero__bg {
+          position: absolute;
+          inset: 0;
+          background-size: cover;
+          background-position: center;
+          background-color: #0D1B2A;
+        }
+        .gy-dest-hero__overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(13, 27, 42, 0.50);
+        }
+        .gy-dest-hero__content {
+          position: relative;
+          z-index: 2;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 0 24px;
+        }
+        .gy-dest-hero__label {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 400;
+          font-size: 10px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: #C9A84C;
+          margin: 0 0 24px;
+        }
+        .gy-dest-hero__title {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-weight: 300;
+          font-size: 56px;
+          line-height: 1.05;
+          letter-spacing: -0.015em;
+          color: #F8F5F0;
+          margin: 0 0 24px;
+          text-shadow: 0 8px 40px rgba(13, 27, 42, 0.55);
+        }
+        .gy-dest-hero__tagline {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 300;
+          font-size: 15px;
+          line-height: 1.5;
+          color: rgba(248, 245, 240, 0.75);
+          max-width: 48ch;
+          margin: 0;
+        }
+        @media (max-width: 768px) {
+          .gy-dest-hero__title { font-size: 36px; }
+        }
+
+        /* EDITORIAL */
+        .gy-dest-editorial {
+          max-width: 780px;
+          margin: 0 auto;
+          padding: 96px 24px 80px;
+        }
+        .gy-dest-editorial__p {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 300;
+          font-size: 17px;
+          line-height: 1.75;
+          color: rgba(248, 245, 240, 0.85);
+          margin: 0 0 1.5rem;
+        }
+        .gy-dest-editorial__p:last-child { margin-bottom: 0; }
+        @media (max-width: 768px) {
+          .gy-dest-editorial { padding: 72px 1.5rem 56px; }
+          .gy-dest-editorial__p { font-size: 15px; }
+        }
+
+        /* INSIDER PICKS */
+        .gy-dest-picks {
+          background: #142233;
+          padding: 80px 24px;
+        }
+        .gy-dest-picks__inner {
+          max-width: 880px;
+          margin: 0 auto;
+        }
+        .gy-dest-picks__label {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 400;
+          font-size: 10px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: #C9A84C;
+          text-align: center;
+          margin: 0 0 18px;
+        }
+        .gy-dest-picks__subline {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-style: italic;
+          font-weight: 300;
+          font-size: 22px;
+          line-height: 1.3;
+          color: #F8F5F0;
+          text-align: center;
+          margin: 0 0 56px;
+        }
+        .gy-dest-picks__list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+        .gy-dest-pick {
+          border-left: 2px solid #C9A84C;
+          padding-left: 1.5rem;
+          margin-bottom: 2rem;
+        }
+        .gy-dest-pick:last-child { margin-bottom: 0; }
+        .gy-dest-pick__name {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 500;
+          font-size: 13px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #F8F5F0;
+          margin: 0 0 12px;
+          line-height: 1.3;
+        }
+        .gy-dest-pick__desc {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 300;
+          font-size: 15px;
+          line-height: 1.7;
+          color: rgba(248, 245, 240, 0.80);
+          margin: 0;
+        }
+        @media (max-width: 768px) {
+          .gy-dest-pick__desc { font-size: 14px; }
+        }
+
+        /* CTA */
+        .gy-dest-cta {
+          background: #0D1B2A;
+          border-top: 1px solid rgba(201, 168, 76, 0.25);
+          padding: 100px 24px;
+          text-align: center;
+        }
+        .gy-dest-cta__headline {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-weight: 300;
+          font-size: 38px;
+          line-height: 1.15;
+          color: #F8F5F0;
+          margin: 0 0 32px;
+          max-width: 22ch;
+          margin-inline: auto;
+        }
+        @media (max-width: 768px) {
+          .gy-dest-cta__headline { font-size: 28px; }
+        }
+        .gy-dest-cta__row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+          justify-content: center;
+          align-items: center;
+        }
+        .gy-dest-cta__primary {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 16px 32px;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 500;
+          font-size: 12px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: #C9A84C;
+          border: 1px solid #C9A84C;
+          background: transparent;
+          text-decoration: none;
+          white-space: nowrap;
+          transition: background 280ms ease, color 280ms ease;
+        }
+        .gy-dest-cta__primary:hover {
+          background: #C9A84C;
+          color: #0D1B2A;
+        }
+        .gy-dest-cta__secondary {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 300;
+          font-size: 13px;
+          letter-spacing: 0.04em;
+          color: #F8F5F0;
+          text-decoration: none;
+          padding: 16px 18px;
+          white-space: nowrap;
+        }
+        .gy-dest-cta__secondary:hover {
+          text-decoration: underline;
+          text-underline-offset: 3px;
+        }
+        @media (max-width: 768px) {
+          .gy-dest-cta__row {
+            flex-direction: column;
+            gap: 12px;
+            align-items: stretch;
+          }
+          .gy-dest-cta__primary,
+          .gy-dest-cta__secondary {
+            width: 100%;
+          }
+        }
+      `}</style>
     </>
   );
 }
