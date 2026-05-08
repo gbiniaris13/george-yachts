@@ -158,14 +158,14 @@ function ItineraryCard({ itin, index }) {
             <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 400, color: "#F8F5F0", margin: "0 0 6px", lineHeight: 1.2 }}>
               {itin.title}
             </h3>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.35)", letterSpacing: "0.05em" }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", color: "rgba(248, 245, 240,0.35)", letterSpacing: "0.05em" }}>
               {itin.subtitle} &middot; From {itin.embarkation}
             </p>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", color: "rgba(255,255,255,0.25)", marginTop: "8px" }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", color: "rgba(248, 245, 240,0.25)", marginTop: "8px" }}>
               Ideal for: {itin.idealFor}
             </p>
           </div>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={expanded ? "#C9A84C" : "rgba(255,255,255,0.3)"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: expanded ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.4s ease, stroke 0.3s ease", flexShrink: 0, marginTop: "8px" }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={expanded ? "#C9A84C" : "rgba(248, 245, 240,0.3)"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: expanded ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.4s ease, stroke 0.3s ease", flexShrink: 0, marginTop: "8px" }}>
             <polyline points="6 9 12 15 18 9" />
           </svg>
         </button>
@@ -176,14 +176,14 @@ function ItineraryCard({ itin, index }) {
             {/* Day by day */}
             <div style={{ paddingTop: "28px" }}>
               {itin.days.map((day) => (
-                <div key={day.day} style={{ display: "flex", gap: "20px", padding: "20px 0", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
+                <div key={day.day} style={{ display: "flex", gap: "20px", padding: "20px 0", borderBottom: "1px solid rgba(248, 245, 240,0.03)" }}>
                   <div style={{ minWidth: "70px" }}>
                     <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", fontWeight: 300, color: "#C9A84C" }}>Day {day.day}</span>
-                    <span style={{ display: "block", fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.2)", letterSpacing: "0.1em", marginTop: "4px" }}>{day.nm}</span>
+                    <span style={{ display: "block", fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(248, 245, 240,0.2)", letterSpacing: "0.1em", marginTop: "4px" }}>{day.nm}</span>
                   </div>
                   <div>
                     <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", fontWeight: 500, color: "#F8F5F0", marginBottom: "6px" }}>{day.title}</p>
-                    <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.4)", lineHeight: 1.7, fontWeight: 300 }}>{day.desc}</p>
+                    <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", color: "rgba(248, 245, 240,0.4)", lineHeight: 1.7, fontWeight: 300 }}>{day.desc}</p>
                   </div>
                 </div>
               ))}
@@ -192,7 +192,7 @@ function ItineraryCard({ itin, index }) {
             {/* Highlights */}
             <div style={{ marginTop: "28px", paddingTop: "20px", borderTop: "1px solid rgba(201,168,76,0.06)" }}>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "8px" }}>Highlights</p>
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.4)", fontWeight: 300 }}>{itin.highlights}</p>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", color: "rgba(248, 245, 240,0.4)", fontWeight: 300 }}>{itin.highlights}</p>
             </div>
 
             {/* Recommended Yachts */}
@@ -203,7 +203,7 @@ function ItineraryCard({ itin, index }) {
                   <Link
                     key={yacht.slug}
                     href={`/yachts/${yacht.slug}`}
-                    style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", color: "rgba(255,255,255,0.4)", padding: "6px 14px", border: "1px solid rgba(201,168,76,0.15)", textDecoration: "none", letterSpacing: "0.05em", transition: "all 0.3s ease" }}
+                    style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", color: "rgba(248, 245, 240,0.4)", padding: "6px 14px", border: "1px solid rgba(201,168,76,0.15)", textDecoration: "none", letterSpacing: "0.05em", transition: "all 0.3s ease" }}
                   >
                     {yacht.name}
                   </Link>
@@ -231,7 +231,7 @@ export default function ItinerariesContent() {
               Why Trust These Itineraries?
             </h2>
             <div style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, #C9A84C, #C9A84C)", margin: "0 auto 32px" }} />
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.45)", lineHeight: 1.9, fontWeight: 300 }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(248, 245, 240,0.45)", lineHeight: 1.9, fontWeight: 300 }}>
               Every route below has been personally sailed and refined by George Biniaris &mdash; drawing on deep local knowledge of Greek waters. These are not generic suggestions. They are tested, trusted, and designed to deliver the best possible week aboard.
             </p>
           </div>
@@ -252,7 +252,7 @@ export default function ItinerariesContent() {
           <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 16px" }}>
             Let&apos;s Design Your Perfect Week
           </h2>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.4)", lineHeight: 1.7, fontWeight: 300, maxWidth: "550px", margin: "0 auto 40px" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(248, 245, 240,0.4)", lineHeight: 1.7, fontWeight: 300, maxWidth: "550px", margin: "0 auto 40px" }}>
             These routes are starting points. Every charter is personally tailored by George &mdash; your preferences, your pace, your islands. Tell us your dream and we&apos;ll design your perfect week in Greek waters.
           </p>
           <a href="#contact" style={{ display: "inline-block", background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)", color: "#0D1B2A", padding: "16px 48px", fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none", fontWeight: 700 }}>

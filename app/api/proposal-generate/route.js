@@ -127,7 +127,7 @@ export async function POST(req) {
 <div style="font-family:'Lato','Montserrat',sans-serif;font-size:14px;line-height:1.7;color:#0D1B2A">
 <p>Dear ${name.split(" ")[0] || "friend"},</p>
 <p>Attached is your personalized George Yachts proposal — ${yachts.length} yacht${yachts.length === 1 ? "" : "s"} drawn from the live fleet, with George's insider note on each.</p>
-<p style="background:#fafaf6;padding:14px 16px;border-left:3px solid #C9A84C;font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;margin:18px 0">
+<p style="background:#F8F5F0;padding:14px 16px;border-left:3px solid #C9A84C;font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;margin:18px 0">
 ${yachts.map((y) => y.name).join(" · ")}
 </p>
 <p>The numbers in the proposal are honest ranges. The exact figure for your dates lands in a written quote with availability — usually within the day.</p>

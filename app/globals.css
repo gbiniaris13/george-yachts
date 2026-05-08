@@ -303,7 +303,7 @@ section {
   -webkit-text-fill-color: transparent;
   color: transparent;
   filter: drop-shadow(0 0 0.6em rgba(201, 168, 76, 0.28))
-          drop-shadow(0 1px 0 rgba(0, 0, 0, 0.45));
+          drop-shadow(0 1px 0 rgba(13, 27, 42, 0.45));
 }
 .gy-gold-24k-shine {
   background: linear-gradient(
@@ -324,7 +324,7 @@ section {
   -webkit-text-fill-color: transparent;
   color: transparent;
   filter: drop-shadow(0 0 0.8em rgba(201, 168, 76, 0.32))
-          drop-shadow(0 1px 0 rgba(0, 0, 0, 0.5));
+          drop-shadow(0 1px 0 rgba(13, 27, 42, 0.5));
   animation: gy24kShine 8s ease-in-out infinite;
 }
 @keyframes gy24kShine {
@@ -337,7 +337,7 @@ section {
   text-shadow:
     0 0 12px rgba(201, 168, 76, 0.45),
     0 0 28px rgba(201, 168, 76, 0.25),
-    0 1px 0 rgba(0, 0, 0, 0.5);
+    0 1px 0 rgba(13, 27, 42, 0.5);
 }
 @media (prefers-reduced-motion: reduce) {
   .gy-gold-24k-shine { animation: none; }
@@ -368,13 +368,13 @@ section {
   background: linear-gradient(
     100deg,
     /* Cool champagne highlights instead of saturated yellow */
-    #F5EFDA 0%,
+    #F8F5F0 0%,
     #F8F5F0 14%,
-    #D9C9A0 28%,
+    #C9A84C 28%,
     #FFFFFF 36%,    /* white sweep highlight */
     #F8F5F0 44%,
-    #C9B98A 60%,
-    #B59E66 76%,
+    #C9A84C 60%,
+    #C9A84C 76%,
     #8B7B58 100%    /* warm bronze shadow */
   );
   background-size: 320% 100%;
@@ -384,7 +384,7 @@ section {
     gy-luxe-enter-fade 1.8s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards,
     gy-luxe-shine 18s ease-in-out 3s infinite;
   filter: drop-shadow(0 0 0.7em rgba(201, 168, 76, 0.18))
-          drop-shadow(0 1px 0 rgba(0, 0, 0, 0.55));
+          drop-shadow(0 1px 0 rgba(13, 27, 42, 0.55));
 }
 @keyframes gy-luxe-enter-fade {
   /* Cross-fade the solid-color fill into the gradient by tweening
@@ -397,7 +397,7 @@ section {
     background-position: 0% 50%;
   }
   to {
-    -webkit-text-fill-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgba(13, 27, 42, 0);
     color: transparent;
     background-position: 30% 50%;
   }
@@ -412,7 +412,7 @@ section {
 }
 @media (prefers-reduced-motion: reduce) {
   .gy-luxe-enter {
-    -webkit-text-fill-color: rgba(0, 0, 0, 0) !important;
+    -webkit-text-fill-color: rgba(13, 27, 42, 0) !important;
     color: transparent !important;
     background-position: 30% 50% !important;
     animation: none !important;
@@ -443,7 +443,7 @@ section {
   background: linear-gradient(
     100deg,
     #FFFFFF 0%,    /* white at far edge — always safe */
-    #F4F7FB 22%,   /* faint platinum-cool */
+    #F8F5F0 22%,   /* faint platinum-cool */
     #FFFFFF 50%,   /* pure white peak */
     #F8F5F0 78%,   /* faint pearl-warm */
     #FFFFFF 100%   /* white at near edge — always safe */
@@ -454,8 +454,8 @@ section {
   animation:
     gy-pearl-enter-fade 1.6s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards,
     gy-pearl-shine 22s ease-in-out 3s infinite;
-  filter: drop-shadow(0 0 0.7em rgba(255, 255, 255, 0.20))
-          drop-shadow(0 1px 0 rgba(0, 0, 0, 0.55));
+  filter: drop-shadow(0 0 0.7em rgba(248, 245, 240, 0.20))
+          drop-shadow(0 1px 0 rgba(13, 27, 42, 0.55));
 }
 @keyframes gy-pearl-enter-fade {
   from {
@@ -464,7 +464,7 @@ section {
     background-position: 0% 50%;
   }
   to {
-    -webkit-text-fill-color: rgba(0, 0, 0, 0);
+    -webkit-text-fill-color: rgba(13, 27, 42, 0);
     color: transparent;
     background-position: 35% 50%;
   }
@@ -507,15 +507,15 @@ section {
     linear-gradient(
       105deg,
       transparent 30%,
-      rgba(255, 255, 255, 0.32) 45%,
-      rgba(255, 233, 168, 0.6) 50%,
-      rgba(255, 255, 255, 0.32) 55%,
+      rgba(248, 245, 240, 0.32) 45%,
+      rgba(201, 168, 76, 0.6) 50%,
+      rgba(248, 245, 240, 0.32) 55%,
       transparent 70%
     ),
     /* Mid: brushed-metal directional sheen */
     repeating-linear-gradient(
       92deg,
-      rgba(255, 233, 168, 0.18) 0px,
+      rgba(201, 168, 76, 0.18) 0px,
       transparent 1.5px,
       transparent 3px
     ),
@@ -524,7 +524,7 @@ section {
       135deg,
       #C9A84C 0%, #C9A84C 14%, #C9A84C 28%,
       #FFFFFF 36%, #C9A84C 42%, #C9A84C 50%,
-      #C9A84C 64%, #B8860B 78%, #C9A84C 100%
+      #C9A84C 64%, #C9A84C 78%, #C9A84C 100%
     );
   background-size: 200% 100%, 100% 100%, 200% 200%;
   background-position: 0% 50%, 0 0, 30% 30%;
@@ -534,7 +534,7 @@ section {
   color: transparent;
   filter:
     drop-shadow(0 0 0.7em rgba(201, 168, 76, 0.32))
-    drop-shadow(0 1px 0 rgba(0, 0, 0, 0.55));
+    drop-shadow(0 1px 0 rgba(13, 27, 42, 0.55));
   animation: gyGoldFoilSweep 14s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 @keyframes gyGoldFoilSweep {
@@ -715,7 +715,7 @@ section {
   text-shadow:
     0 0 10px rgba(201, 168, 76, 0.32),
     0 0 22px rgba(201, 168, 76, 0.14),
-    0 1px 0 rgba(0, 0, 0, 0.45);
+    0 1px 0 rgba(13, 27, 42, 0.45);
 }
 
 /* Legacy text-shimmer kept for backwards compatibility — points to
@@ -787,7 +787,7 @@ section {
 }
 .hover-lift:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 40px rgba(13, 27, 42, 0.3);
 }
 
 /* Staggered children reveal */
@@ -1133,7 +1133,7 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
 /* ─── #25 Color contrast helpers (AA compliant) ─── */
 /* Utility: force high-contrast variant for text-on-image situations */
 .text-contrast-safe {
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+  text-shadow: 0 1px 3px rgba(13, 27, 42, 0.55);
 }
 
 /* WCAG AA: body text on ivory must be at least #5A5A5A for 4.5:1 ratio
@@ -1314,7 +1314,7 @@ a.btn-secondary {
 .gy-tilt-3d:hover {
   transform: perspective(1200px) translateY(-3px) !important;
   box-shadow:
-    0 18px 44px rgba(0, 0, 0, 0.4),
+    0 18px 44px rgba(13, 27, 42, 0.4),
     0 0 0 1px rgba(201, 168, 76, 0.18) inset !important;
 }
 @media (hover: hover) and (min-width: 700px) {
@@ -1324,7 +1324,7 @@ a.btn-secondary {
   .about-services__card:hover {
     transform: perspective(1200px) translateY(-4px) !important;
     box-shadow:
-      0 20px 48px rgba(0, 0, 0, 0.42),
+      0 20px 48px rgba(13, 27, 42, 0.42),
       0 0 0 1px rgba(201, 168, 76, 0.20) inset !important;
   }
 }
@@ -1418,7 +1418,7 @@ footer h4 {
   .blog-card:hover {
     transform: perspective(1200px) translateY(-4px);
     box-shadow:
-      0 20px 48px rgba(0, 0, 0, 0.42),
+      0 20px 48px rgba(13, 27, 42, 0.42),
       0 0 0 1px rgba(201, 168, 76, 0.20) inset;
   }
 }
@@ -1787,15 +1787,15 @@ a.gy-fancy-link:hover {
 .gy-tilt-3d:hover {
   transform: perspective(1200px) rotateX(2.5deg) rotateY(-3deg) translateY(-4px);
   box-shadow:
-    0 24px 56px rgba(0, 0, 0, 0.45),
+    0 24px 56px rgba(13, 27, 42, 0.45),
     0 0 0 1px rgba(201, 168, 76, 0.18) inset;
 }
 
 /* Subtle "depth" shadow used as the resting state for tilt cards. */
 .gy-depth-card {
   box-shadow:
-    0 6px 18px rgba(0, 0, 0, 0.32),
-    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+    0 6px 18px rgba(13, 27, 42, 0.32),
+    0 0 0 1px rgba(248, 245, 240, 0.04) inset;
 }
 
 /* Magnetic / floating image — slow parallax drift on scroll. Hook
@@ -2028,15 +2028,15 @@ a.gy-fancy-link:hover {
   margin: -28px 0 0 -28px;
   background: radial-gradient(
     circle at 50% 50%,
-    rgba(255, 245, 220, 0.18) 0%,
+    rgba(248, 245, 240, 0.18) 0%,
     rgba(201, 168, 76, 0.22) 45%,
     rgba(201, 168, 76, 0.05) 80%,
     rgba(201, 168, 76, 0) 100%
   );
-  border-color: rgba(245, 235, 210, 0.65);
+  border-color: rgba(248, 245, 240, 0.65);
   box-shadow:
     0 0 24px rgba(201, 168, 76, 0.32),
-    inset 0 0 12px rgba(255, 245, 220, 0.18);
+    inset 0 0 12px rgba(248, 245, 240, 0.18);
 }
 
 /* Text — over inputs / textareas. Ring collapses to a thin gold
@@ -2051,13 +2051,13 @@ a.gy-fancy-link:hover {
     180deg,
     rgba(201, 168, 76, 0) 0%,
     rgba(201, 168, 76, 0.85) 18%,
-    rgba(245, 235, 210, 0.95) 50%,
+    rgba(248, 245, 240, 0.95) 50%,
     rgba(201, 168, 76, 0.85) 82%,
     rgba(201, 168, 76, 0) 100%
   );
   box-shadow:
     0 0 8px rgba(201, 168, 76, 0.5),
-    0 0 1px rgba(245, 235, 210, 0.95);
+    0 0 1px rgba(248, 245, 240, 0.95);
 }
 
 /* Labelled — same expanded ring as interactive, plus a small
@@ -2070,15 +2070,15 @@ a.gy-fancy-link:hover {
   margin: -28px 0 0 -28px;
   background: radial-gradient(
     circle at 50% 50%,
-    rgba(255, 245, 220, 0.20) 0%,
+    rgba(248, 245, 240, 0.20) 0%,
     rgba(201, 168, 76, 0.28) 45%,
     rgba(201, 168, 76, 0.05) 80%,
     rgba(201, 168, 76, 0) 100%
   );
-  border-color: rgba(245, 235, 210, 0.7);
+  border-color: rgba(248, 245, 240, 0.7);
   box-shadow:
     0 0 28px rgba(201, 168, 76, 0.4),
-    inset 0 0 14px rgba(255, 245, 220, 0.22);
+    inset 0 0 14px rgba(248, 245, 240, 0.22);
 }
 
 .gy-luxe-cursor-label {
@@ -2093,7 +2093,7 @@ a.gy-fancy-link:hover {
   text-transform: uppercase;
   color: #F8F5F0;
   white-space: nowrap;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 1px 2px rgba(13, 27, 42, 0.6);
   opacity: 0;
   transform-origin: left center;
   transition: opacity 200ms ease 60ms;
@@ -2203,7 +2203,7 @@ a.gy-fancy-link:hover {
   width: 3px;
   height: 3px;
   border-radius: 50%;
-  background: rgba(245, 235, 210, 0.7);
+  background: rgba(248, 245, 240, 0.7);
   box-shadow: 0 0 6px rgba(201, 168, 76, 0.55);
   animation: gyForbesDustRise 16s linear infinite;
   opacity: 0;
@@ -2265,8 +2265,8 @@ a.gy-fancy-link:hover {
   letter-spacing: -0.02em;
   margin: 0;
   text-shadow:
-    0 1px 0 rgba(0, 0, 0, 0.55),
-    0 14px 40px rgba(0, 0, 0, 0.5);
+    0 1px 0 rgba(13, 27, 42, 0.55),
+    0 14px 40px rgba(13, 27, 42, 0.5);
   /* Subtle scale-in + fade-up on enter */
   opacity: 0;
   transform: translateY(14px) scale(0.985);
@@ -2519,7 +2519,7 @@ a.gy-fancy-link:hover {
   font-weight: 300;
   font-size: clamp(12px, 1.05vw, 13px);
   line-height: 1.6;
-  color: rgba(245, 239, 225, 0.55);
+  color: rgba(248, 245, 240, 0.55);
   text-align: center;
   letter-spacing: 0.01em;
 }
@@ -2534,7 +2534,7 @@ a.gy-fancy-link:hover {
   aspect-ratio: 1.6 / 1;
   border: 1px solid rgba(201, 168, 76, 0.12);
   background:
-    radial-gradient(ellipse at 50% 50%, rgba(20, 40, 63, 0.6) 0%, rgba(6, 17, 33, 0) 70%),
+    radial-gradient(ellipse at 50% 50%, rgba(13, 27, 42, 0.6) 0%, rgba(13, 27, 42, 0) 70%),
     radial-gradient(circle at 30% 35%, rgba(201, 168, 76, 0.06) 0%, transparent 50%),
     radial-gradient(circle at 70% 65%, rgba(201, 168, 76, 0.04) 0%, transparent 50%);
   z-index: 1;
@@ -2595,7 +2595,7 @@ a.gy-fancy-link:hover {
   text-transform: uppercase;
   color: #F8F5F0;
   margin-inline-end: -0.32em;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+  text-shadow: 0 1px 2px rgba(13, 27, 42, 0.7);
 }
 .gy-region-pin-count {
   font-family: "Cormorant Garamond", Georgia, serif;
@@ -2613,7 +2613,7 @@ a.gy-fancy-link:hover {
 .gy-region-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(3, 9, 17, 0.86);
+  background: rgba(13, 27, 42, 0.86);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   z-index: 1000;
@@ -2635,7 +2635,7 @@ a.gy-fancy-link:hover {
   overflow-y: auto;
   background: #0D1B2A;
   border: 1px solid rgba(201, 168, 76, 0.32);
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 30px 90px rgba(13, 27, 42, 0.7);
 }
 .gy-region-modal-close {
   position: absolute;
@@ -2644,7 +2644,7 @@ a.gy-fancy-link:hover {
   width: 36px;
   height: 36px;
   background: rgba(13, 27, 42, 0.5);
-  border: 1px solid rgba(245, 239, 225, 0.3);
+  border: 1px solid rgba(248, 245, 240, 0.3);
   color: #F8F5F0;
   font-size: 22px;
   line-height: 1;
@@ -2670,7 +2670,7 @@ a.gy-fancy-link:hover {
   width: 44px;
   height: 44px;
   border-radius: 0;
-  background: rgba(6, 18, 30, 0.65);
+  background: rgba(13, 27, 42, 0.65);
   border: 1px solid rgba(201, 168, 76, 0.45);
   color: #F8F5F0;
   font-size: 30px;
@@ -2731,9 +2731,9 @@ a.gy-fancy-link:hover {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(3, 9, 17, 0.2) 0%,
-    rgba(3, 9, 17, 0.55) 60%,
-    rgba(3, 9, 17, 0.92) 100%
+    rgba(13, 27, 42, 0.2) 0%,
+    rgba(13, 27, 42, 0.55) 60%,
+    rgba(13, 27, 42, 0.92) 100%
   );
 }
 .gy-region-modal-cover-text {
@@ -2779,7 +2779,7 @@ a.gy-fancy-link:hover {
   font-weight: 300;
   font-size: 17px;
   line-height: 1.55;
-  color: rgba(245, 239, 225, 0.78);
+  color: rgba(248, 245, 240, 0.78);
   margin: 0 0 22px;
 }
 .gy-region-modal-count {
@@ -2804,8 +2804,8 @@ a.gy-fancy-link:hover {
   align-items: center;
   gap: 18px;
   padding: 10px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(248, 245, 240, 0.05);
+  background: rgba(248, 245, 240, 0.015);
   text-decoration: none;
   color: inherit;
   transition: background 200ms ease, border-color 200ms ease;
@@ -2852,7 +2852,7 @@ a.gy-fancy-link:hover {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-style: italic;
   font-size: 14px;
-  color: rgba(245, 239, 225, 0.6);
+  color: rgba(248, 245, 240, 0.6);
   text-align: center;
 }
 .gy-region-yacht-more a {
@@ -2902,8 +2902,8 @@ a.gy-fancy-link:hover {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  border: 1px solid rgba(245, 239, 225, 0.6);
-  background: rgba(245, 239, 225, 0.15);
+  border: 1px solid rgba(248, 245, 240, 0.6);
+  background: rgba(248, 245, 240, 0.15);
   padding: 0;
   cursor: pointer;
   transition: background 280ms ease, border-color 280ms ease, transform 280ms ease;
@@ -3042,7 +3042,7 @@ a.gy-fancy-link:hover {
 .gy-region-map-canvas::after {
   background: radial-gradient(
     ellipse 26% 16% at 70% 60%,
-    rgba(245, 235, 210, 0.08) 0%,
+    rgba(248, 245, 240, 0.08) 0%,
     rgba(201, 168, 76, 0) 65%
   );
   animation: gyMapShimmer2 34s ease-in-out infinite alternate;
@@ -3078,9 +3078,9 @@ a.gy-fancy-link:hover {
   background: linear-gradient(
     90deg,
     rgba(201, 168, 76, 0) 0%,
-    rgba(245, 235, 210, 0.6) 25%,
+    rgba(248, 245, 240, 0.6) 25%,
     rgba(201, 168, 76, 0.85) 50%,
-    rgba(245, 235, 210, 0.6) 75%,
+    rgba(248, 245, 240, 0.6) 75%,
     rgba(201, 168, 76, 0) 100%
   );
   filter: blur(0.8px);
@@ -3156,13 +3156,13 @@ a.gy-fancy-link:hover {
     circle at 50% 50%,
     rgba(201, 168, 76, 0.32) 0%,
     rgba(201, 168, 76, 0.10) 70%,
-    rgba(0, 0, 0, 0.4) 100%
+    rgba(13, 27, 42, 0.4) 100%
   );
-  border-color: rgba(245, 235, 210, 0.85);
+  border-color: rgba(248, 245, 240, 0.85);
   color: #FFFFFF;
   box-shadow:
     0 12px 28px rgba(201, 168, 76, 0.30),
-    inset 0 0 18px rgba(245, 235, 210, 0.15);
+    inset 0 0 18px rgba(248, 245, 240, 0.15);
   transform: translateY(-2px) scale(1.04);
 }
 @media (max-width: 600px) {
@@ -3525,7 +3525,7 @@ figcaption,
 }
 
 /* Tailwind translucent-white text utilities (text-white/60, /70 etc.)
-   Tailwind generates these as `color: rgba(255,255,255,0.6)`. Map
+   Tailwind generates these as `color: rgba(248, 245, 240,0.6)`. Map
    to the ivory-tinted equivalent so secondary copy on dark bg
    matches the brand palette. */
 [class*="text-white\\/"] {

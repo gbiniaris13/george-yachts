@@ -111,7 +111,7 @@ const navLabelStyle = {
 // (ABOUT). Stops the panel from clipping off the viewport when the
 // trigger sits near an edge — Boss flagged the CHARTER dropdown
 // going off-screen on the left under the original centered anchor.
-function NavItem({ section, color = "rgba(255,255,255,0.85)", anchor = "left" }) {
+function NavItem({ section, color = "rgba(248, 245, 240,0.85)", anchor = "left" }) {
   return (
     <div className={`gy-nav-item gy-nav-item--anchor-${anchor} relative`}>
       <button
@@ -405,7 +405,7 @@ export default function NavDrawerSystem() {
           top: calc(100% + 4px);
           min-width: 220px;
           padding: 18px 24px;
-          background: rgba(8, 14, 24, 0.94);
+          background: rgba(13, 27, 42, 0.94);
           backdrop-filter: blur(14px);
           -webkit-backdrop-filter: blur(14px);
           border: 1px solid rgba(201, 168, 76, 0.18);
@@ -427,7 +427,7 @@ export default function NavDrawerSystem() {
           transform: translateY(0);
         }
         .gy-nav-item__link {
-          color: rgba(255, 255, 255, 0.78);
+          color: rgba(248, 245, 240, 0.78);
           padding: 4px 0;
           white-space: nowrap;
           text-decoration: none;

@@ -89,7 +89,7 @@ const Footer = () => {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.45) 35%, rgba(0,0,0,0.55) 100%)",
+              "linear-gradient(180deg, rgba(13, 27, 42,0.55) 0%, rgba(13, 27, 42,0.45) 35%, rgba(13, 27, 42,0.55) 100%)",
           }}
         />
       </div>
@@ -176,7 +176,7 @@ const Footer = () => {
                 height={28}
                 className="h-7 w-auto opacity-60 hover:opacity-100 transition-opacity duration-500"
               />
-              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", letterSpacing: "0.15em", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", maxWidth: "140px", lineHeight: 1.5 }}>
+              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", letterSpacing: "0.15em", color: "rgba(248, 245, 240,0.25)", textTransform: "uppercase", maxWidth: "140px", lineHeight: 1.5 }}>
                 Charter Active Member
               </span>
             </a>
@@ -208,7 +208,7 @@ const Footer = () => {
                 border: "1px solid rgba(201,168,76,0.6)",
                 borderRadius: "999px",
                 boxShadow:
-                  "0 8px 24px -8px rgba(201,168,76,0.4), inset 0 1px 0 rgba(255,255,255,0.25)",
+                  "0 8px 24px -8px rgba(201,168,76,0.4), inset 0 1px 0 rgba(248, 245, 240,0.25)",
               }}
             >
               Browse the Fleet →
@@ -274,8 +274,8 @@ const Footer = () => {
               >
                 Book a Consultation
               </a>
-              <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", color: "rgba(255,255,255,0.3)", lineHeight: 1.8 }}>
-                <span className="block" style={{ fontWeight: 500, color: "rgba(255,255,255,0.5)", letterSpacing: "0.1em", textTransform: "uppercase", fontSize: "9px", marginBottom: "8px" }}>
+              <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", color: "rgba(248, 245, 240,0.3)", lineHeight: 1.8 }}>
+                <span className="block" style={{ fontWeight: 500, color: "rgba(248, 245, 240,0.5)", letterSpacing: "0.1em", textTransform: "uppercase", fontSize: "9px", marginBottom: "8px" }}>
                   <span className="notranslate">George Yachts Brokerage House LLC</span>
                 </span>
                 30 N Gould St, STE R<br />
@@ -356,8 +356,8 @@ const Footer = () => {
                   required
                   style={{
                     flex: 1,
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.1)",
+                    background: "rgba(248, 245, 240,0.03)",
+                    border: "1px solid rgba(248, 245, 240,0.1)",
                     borderRight: "none",
                     color: "#F8F5F0",
                     padding: "14px 16px",
@@ -388,7 +388,7 @@ const Footer = () => {
                 </button>
               </form>
             )}
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.15)", marginTop: "12px", letterSpacing: "0.05em" }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(248, 245, 240,0.15)", marginTop: "12px", letterSpacing: "0.05em" }}>
               By subscribing you agree to receive occasional emails from <span className="notranslate">George Yachts Brokerage House LLC</span>.
               Unsubscribe anytime. See our <Link href="/privacy-policy" style={{ color: "rgba(248,245,240,0.55)", textDecoration: "underline" }}>Privacy Policy</Link>.
             </p>
@@ -423,7 +423,7 @@ const Footer = () => {
           </div>
 
           {/* Copyright */}
-          <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(255,255,255,0.5)", textTransform: "uppercase" }}>
+          <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(248, 245, 240,0.5)", textTransform: "uppercase" }}>
             &copy; {currentYear} <span className="notranslate">George Yachts Brokerage House LLC</span>
           </span>
         </div>
@@ -438,7 +438,7 @@ const Footer = () => {
           style={{
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "9px",
-            color: "rgba(255,255,255,0.55)",
+            color: "rgba(248, 245, 240,0.55)",
             letterSpacing: "0.05em",
             lineHeight: 1.8,
             maxWidth: "820px",
@@ -462,7 +462,7 @@ const Footer = () => {
           style={{
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "8px",
-            color: "rgba(255,255,255,0.45)",
+            color: "rgba(248, 245, 240,0.45)",
             letterSpacing: "0.05em",
             lineHeight: 1.8,
             maxWidth: "800px",
@@ -476,7 +476,7 @@ const Footer = () => {
         </p>
 
         {/* Standard informational disclaimer */}
-        <p className="mt-6 text-center" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.45)", letterSpacing: "0.05em", lineHeight: 1.8, maxWidth: "800px", margin: "24px auto 0" }}>
+        <p className="mt-6 text-center" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(248, 245, 240,0.45)", letterSpacing: "0.05em", lineHeight: 1.8, maxWidth: "800px", margin: "24px auto 0" }}>
           All yacht specifications, images, and pricing are provided for informational purposes only. <span className="notranslate">George Yachts Brokerage House LLC</span> offers the details of these vessels in good faith but cannot guarantee the accuracy of this information or the condition of the vessels. All information is subject to change without notice and is not contractual.
         </p>
       </div>

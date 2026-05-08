@@ -23,7 +23,7 @@ const Section = ({ number, title, children }) => (
           {title}
         </h2>
         <div className="w-12 h-px mb-8" style={{ background: "linear-gradient(90deg, #C9A84C, transparent)" }} />
-        <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", lineHeight: 2.2, color: "rgba(255,255,255,0.55)", letterSpacing: "0.02em" }} className="space-y-4">
+        <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", lineHeight: 2.2, color: "rgba(248, 245, 240,0.55)", letterSpacing: "0.02em" }} className="space-y-4">
           {children}
         </div>
       </div>
@@ -44,7 +44,7 @@ const CookiePolicy = () => {
           <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#F8F5F0", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "16px" }}>
             Global Digital Tracking & Cookie Disclosure
           </h1>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", marginBottom: "32px" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.2em", color: "rgba(248, 245, 240,0.35)", textTransform: "uppercase", marginBottom: "32px" }}>
             George Yachts Brokerage House LLC
           </p>
           <div className="w-16 h-px mx-auto" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
@@ -72,7 +72,7 @@ const CookiePolicy = () => {
             The Company utilizes an integrated stack of Tracking Technologies to
             maintain operational excellence:
           </p>
-          <ul className="list-disc pl-5 space-y-2 mt-4" style={{ color: "rgba(255,255,255,0.5)" }}>
+          <ul className="list-disc pl-5 space-y-2 mt-4" style={{ color: "rgba(248, 245, 240,0.5)" }}>
             <li>
               <strong className="text-white">
                 HTTP Cookies & Local Storage:
@@ -160,7 +160,7 @@ const CookiePolicy = () => {
             users with granular, real-time control over their data footprint.
             You hold the statutory right to:
           </p>
-          <ul className="list-disc pl-5 space-y-2 mt-4" style={{ color: "rgba(255,255,255,0.5)" }}>
+          <ul className="list-disc pl-5 space-y-2 mt-4" style={{ color: "rgba(248, 245, 240,0.5)" }}>
             <li>
               <strong className="text-white">Affirmative Opt-In:</strong> Active
               consent for the full bespoke experience.
@@ -216,7 +216,7 @@ const CookiePolicy = () => {
 
         <div className="mt-32 pt-16 text-center" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
           <div className="w-8 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.3em", color: "rgba(255,255,255,0.2)", textTransform: "uppercase" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.3em", color: "rgba(248, 245, 240,0.2)", textTransform: "uppercase" }}>
             Last Updated: February 2026
           </p>
         </div>

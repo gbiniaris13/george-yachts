@@ -75,7 +75,7 @@ function Step({ number, icon, title, description, detail, delay = 0 }) {
         </h3>
         <p style={{
           fontFamily: "'Montserrat', sans-serif",
-          fontSize: "14px", lineHeight: 2, color: "rgba(255,255,255,0.5)",
+          fontSize: "14px", lineHeight: 2, color: "rgba(248, 245, 240,0.5)",
           marginBottom: "12px",
         }}>
           {description}
@@ -83,7 +83,7 @@ function Step({ number, icon, title, description, detail, delay = 0 }) {
         {detail && (
           <p style={{
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: "12px", lineHeight: 1.8, color: "rgba(255,255,255,0.3)",
+            fontSize: "12px", lineHeight: 1.8, color: "rgba(248, 245, 240,0.3)",
             fontStyle: "italic",
           }}>
             {detail}
@@ -175,7 +175,7 @@ export default function HowItWorksContent() {
       }}>
         <p style={{
           fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: "1.5rem", fontWeight: 300, color: "rgba(255,255,255,0.7)",
+          fontSize: "1.5rem", fontWeight: 300, color: "rgba(248, 245, 240,0.7)",
           fontStyle: "italic", lineHeight: 1.8, marginBottom: "32px",
         }}>
           {t('hiw.closing', 'Five steps. One broker. Zero stress.')}

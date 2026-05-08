@@ -48,7 +48,7 @@ const TIER_COLORS = {
   1: { bg: '#0D4D2B', text: '#2ECC71', label: 'Best Value', desc: 'Lowest rates, quiet islands, perfect weather starting', multiplier: '1×' },
   2: { bg: '#2D5A1E', text: '#82E06C', label: 'Great Value', desc: 'Warm weather, few crowds, excellent rates', multiplier: '1.2×' },
   3: { bg: '#5A5A1E', text: '#C9A84C', label: 'Mid Season', desc: 'Perfect conditions, moderate demand', multiplier: '1.5×' },
-  4: { bg: '#5A3A1E', text: '#E6A23C', label: 'High Season', desc: 'Peak summer, busy islands, premium rates', multiplier: '1.8×' },
+  4: { bg: '#5A3A1E', text: '#C9A84C', label: 'High Season', desc: 'Peak summer, busy islands, premium rates', multiplier: '1.8×' },
   5: { bg: '#5A1E1E', text: '#E74C3C', label: 'Peak Season', desc: 'Highest demand, book 6+ months ahead', multiplier: '2×' },
 };
 
@@ -64,10 +64,10 @@ export default function PricingCalendarClient() {
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
           Smart Planning
         </p>
-        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(0,0,0,0.55)' }}>
+        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(13, 27, 42,0.55)' }}>
           When Is the Best Time to Charter?
         </h1>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(255,255,255,0.4)', maxWidth: 500, margin: '0 auto', lineHeight: 1.8 }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.4)', maxWidth: 500, margin: '0 auto', lineHeight: 1.8 }}>
           Green = best value. Red = peak pricing. Choose your week wisely.
         </p>
       </div>
@@ -78,7 +78,7 @@ export default function PricingCalendarClient() {
           {Object.entries(TIER_COLORS).map(([tier, info]) => (
             <div key={tier} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <div style={{ width: 16, height: 16, borderRadius: 4, background: info.bg, border: `1px solid ${info.text}30` }} />
-              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.1em' }}>
+              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(248, 245, 240,0.4)', letterSpacing: '0.1em' }}>
                 {info.label}
               </span>
             </div>
@@ -117,12 +117,12 @@ export default function PricingCalendarClient() {
                       <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: tier.text, letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 600 }}>
                         {tier.label}
                       </span>
-                      <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>
+                      <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(248, 245, 240,0.3)' }}>
                         {tier.multiplier} rate
                       </span>
                     </div>
                     {isHovered && (
-                      <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(255,255,255,0.4)', margin: '8px 0 0', lineHeight: 1.5 }}>
+                      <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(248, 245, 240,0.4)', margin: '8px 0 0', lineHeight: 1.5 }}>
                         {tier.desc}
                       </p>
                     )}
@@ -136,7 +136,7 @@ export default function PricingCalendarClient() {
         {/* George's tip */}
         <div style={{ marginTop: 40, borderLeft: `3px solid ${GOLD}`, paddingLeft: 24, paddingTop: 8, paddingBottom: 8 }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: GOLD, marginBottom: 8 }}>George's Tip</p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.8, margin: '0 0 4px', fontStyle: 'italic' }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.5)', lineHeight: 1.8, margin: '0 0 4px', fontStyle: 'italic' }}>
             "The sweet spots are late May, early June, and September. You get perfect weather, warm sea, empty islands — and save 30-50% compared to July and August. If your dates are flexible, these weeks deliver the best experience at the best price."
           </p>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: `${GOLD}60`, margin: 0 }}>

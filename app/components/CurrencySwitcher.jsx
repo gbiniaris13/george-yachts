@@ -42,7 +42,7 @@ export default function CurrencySwitcher({ compact = true }) {
               padding: compact ? "4px 8px" : "6px 10px",
               minWidth: compact ? 26 : 32,
               background: active ? "rgba(201,168,76,0.85)" : "transparent",
-              color: active ? "#0D1B2A" : "rgba(255,255,255,0.7)",
+              color: active ? "#0D1B2A" : "rgba(248, 245, 240,0.7)",
               border: "none",
               cursor: "pointer",
               transition: "background 0.18s ease, color 0.18s ease",

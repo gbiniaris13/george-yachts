@@ -96,7 +96,7 @@ const DiagonalWipePanel = ({ item, index, total }) => {
           sizes="100vw"
           quality={85}
         />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(13, 27, 42,0.6)_100%)]" />
         <div className="absolute inset-0 bg-[#0D1B2A]/30" />
       </div>
 
@@ -143,7 +143,7 @@ const DiagonalWipePanel = ({ item, index, total }) => {
       >
         <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12">
           <div
-            className={`w-full md:w-[500px] lg:w-[600px] backdrop-blur-3xl bg-[#0D1B2A]/40 border border-white/10 p-8 md:p-16 shadow-[0_0_50px_rgba(0,0,0,0.5)] group hover:bg-[#0D1B2A]/50 transition-colors duration-700 ${
+            className={`w-full md:w-[500px] lg:w-[600px] backdrop-blur-3xl bg-[#0D1B2A]/40 border border-white/10 p-8 md:p-16 shadow-[0_0_50px_rgba(13, 27, 42,0.5)] group hover:bg-[#0D1B2A]/50 transition-colors duration-700 ${
               isRight ? 'ml-auto' : ''
             }`}
           >

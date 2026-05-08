@@ -115,7 +115,7 @@ export default function FavoritesContent() {
         <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 16px 0' }}>
           {t('favorites.empty', 'No Favorites Yet')}
         </h1>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(255,255,255,0.35)', maxWidth: 400, marginBottom: 32 }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.35)', maxWidth: 400, marginBottom: 32 }}>
           {t('favorites.emptyDesc', 'Browse our fleet and tap the heart icon on any yacht that catches your eye. Your favorites will appear here.')}
         </p>
         <Link
@@ -151,7 +151,7 @@ export default function FavoritesContent() {
           <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 12px 0' }}>
             {items.length} {t('favorites.saved', 'Favorites Saved')}
           </h1>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.35)' }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: 'rgba(248, 245, 240,0.35)' }}>
             {t('favorites.reviewDesc', 'Review your selection and send them to George for a personalized proposal.')}
           </p>
         </div>
@@ -180,7 +180,7 @@ export default function FavoritesContent() {
                 >
                   {yacht.name}
                 </Link>
-                <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: 'rgba(255,255,255,0.3)', marginTop: 4 }}>
+                <div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: 'rgba(248, 245, 240,0.3)', marginTop: 4 }}>
                   {yacht.builder && `${yacht.builder} · `}{yacht.guests && `${yacht.guests} guests · `}{yacht.price || ''}
                 </div>
               </div>
@@ -210,7 +210,7 @@ export default function FavoritesContent() {
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, color: '#F8F5F0', fontWeight: 300, margin: '0 0 8px 0' }}>
               {t('favorites.sendToGeorge', 'Send to George')}
             </h2>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(255,255,255,0.35)', marginBottom: 24 }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(248, 245, 240,0.35)', marginBottom: 24 }}>
               {t('favorites.sendDesc', 'Share your favorites and receive a personalized proposal within 24 hours.')}
             </p>
 
@@ -247,7 +247,7 @@ export default function FavoritesContent() {
                 gap: 8,
                 fontFamily: "'Montserrat', sans-serif",
                 fontSize: 11,
-                color: 'rgba(255,255,255,0.55)',
+                color: 'rgba(248, 245, 240,0.55)',
                 cursor: 'pointer',
                 marginBottom: 20,
               }}
@@ -319,7 +319,7 @@ export default function FavoritesContent() {
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, color: GOLD, fontWeight: 300, margin: '0 0 12px 0' }}>
               {t('favorites.sentToGeorge', 'Sent to George')}
             </h2>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: 'rgba(248, 245, 240,0.4)' }}>
               {t('favorites.sentDesc', 'George will personally review your selection and respond within 24 hours.')}
             </p>
           </div>
@@ -332,7 +332,7 @@ export default function FavoritesContent() {
             style={{
               background: 'none',
               border: 'none',
-              color: 'rgba(255,255,255,0.25)',
+              color: 'rgba(248, 245, 240,0.25)',
               fontFamily: "'Montserrat', sans-serif",
               fontSize: 11,
               cursor: 'pointer',

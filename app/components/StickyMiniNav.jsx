@@ -136,7 +136,7 @@ export default function StickyMiniNav() {
                     fontWeight: 500,
                     color: isActive
                       ? "#C9A84C"
-                      : "rgba(255,255,255,0.55)",
+                      : "rgba(248, 245, 240,0.55)",
                     borderBottom: `1px solid ${
                       isActive ? "#C9A84C" : "transparent"
                     }`,

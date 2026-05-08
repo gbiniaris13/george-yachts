@@ -79,7 +79,7 @@ export default function EventsPage() {
             Where Can You Meet George Yachts This Year?
           </h2>
           <div style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, #C9A84C, #C9A84C)", margin: "0 auto 32px" }} />
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.4)", lineHeight: 1.9, fontWeight: 300 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(248, 245, 240,0.4)", lineHeight: 1.9, fontWeight: 300 }}>
             We attend the most important yacht shows globally to stay connected with owners, captains, and industry leaders. If you&apos;re attending any of these events, we&apos;d welcome the opportunity to meet in person.
           </p>
         </Reveal>
@@ -93,16 +93,16 @@ export default function EventsPage() {
               <div style={{ borderBottom: "1px solid rgba(201,168,76,0.06)", padding: "40px 0", display: "flex", gap: "32px", alignItems: "flex-start", flexWrap: "wrap" }}>
                 <div style={{ minWidth: "140px" }}>
                   <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "18px", color: "#C9A84C", marginBottom: "4px" }}>{event.date}</p>
-                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>{event.location}</p>
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(248, 245, 240,0.25)" }}>{event.location}</p>
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
                     <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", fontWeight: 500, color: "#F8F5F0", margin: 0 }}>{event.name}</h3>
-                    <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "7px", letterSpacing: "0.15em", textTransform: "uppercase", padding: "3px 10px", border: `1px solid ${event.status === "confirmed" ? "rgba(201,168,76,0.4)" : "rgba(255,255,255,0.1)"}`, color: event.status === "confirmed" ? "#C9A84C" : "rgba(255,255,255,0.3)" }}>
+                    <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "7px", letterSpacing: "0.15em", textTransform: "uppercase", padding: "3px 10px", border: `1px solid ${event.status === "confirmed" ? "rgba(201,168,76,0.4)" : "rgba(248, 245, 240,0.1)"}`, color: event.status === "confirmed" ? "#C9A84C" : "rgba(248, 245, 240,0.3)" }}>
                       {event.status === "confirmed" ? "Confirmed" : "To Be Confirmed"}
                     </span>
                   </div>
-                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.4)", lineHeight: 1.7, fontWeight: 300 }}>{event.desc}</p>
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", color: "rgba(248, 245, 240,0.4)", lineHeight: 1.7, fontWeight: 300 }}>{event.desc}</p>
                 </div>
               </div>
             </Reveal>
@@ -115,7 +115,7 @@ export default function EventsPage() {
         <Reveal>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", marginBottom: "16px" }}>Attending a Show?</p>
           <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 16px" }}>Let&apos;s Meet in Person</h2>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.4)", lineHeight: 1.7, fontWeight: 300, maxWidth: "500px", margin: "0 auto 40px" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", color: "rgba(248, 245, 240,0.4)", lineHeight: 1.7, fontWeight: 300, maxWidth: "500px", margin: "0 auto 40px" }}>
             Schedule a private meeting at any upcoming show. We&apos;ll arrange viewings and discuss your charter plans.
           </p>
           <a href="https://calendly.com/george-georgeyachts/30min" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)", color: "#0D1B2A", padding: "16px 48px", fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none", fontWeight: 700 }}>

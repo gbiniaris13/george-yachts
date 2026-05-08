@@ -102,7 +102,7 @@ export default function NewsletterPage() {
             letterSpacing: "-0.035em",
             lineHeight: 0.95,
             color: "#F8F5F0",
-            textShadow: "0 6px 32px rgba(0,0,0,0.55)",
+            textShadow: "0 6px 32px rgba(13, 27, 42,0.55)",
           }}
         >
           The Journals

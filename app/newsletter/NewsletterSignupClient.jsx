@@ -155,7 +155,7 @@ export default function NewsletterSignupClient({ streams }) {
                   textAlign: "left",
                   cursor: "pointer",
                   padding: "20px 22px",
-                  background: isOn ? "rgba(201,168,76,0.07)" : "rgba(255,255,255,0.55)",
+                  background: isOn ? "rgba(201,168,76,0.07)" : "rgba(248, 245, 240,0.55)",
                   border: isOn
                     ? "1px solid #C9A84C"
                     : "1px solid rgba(13,27,42,0.12)",
@@ -350,7 +350,7 @@ export default function NewsletterSignupClient({ streams }) {
               cursor: submitting ? "default" : "pointer",
               opacity: submitting ? 0.7 : 1,
               boxShadow:
-                "0 10px 30px -10px rgba(201,168,76,0.45), inset 0 1px 0 rgba(255,255,255,0.25)",
+                "0 10px 30px -10px rgba(201,168,76,0.45), inset 0 1px 0 rgba(248, 245, 240,0.25)",
             }}
           >
             {submitting ? "Subscribing…" : "Subscribe"}

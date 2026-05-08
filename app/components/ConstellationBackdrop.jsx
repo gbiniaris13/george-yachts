@@ -83,7 +83,7 @@ export default function ConstellationBackdrop({
     >
       <defs>
         <radialGradient id="gyStarGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="rgba(245, 235, 210, 1)" />
+          <stop offset="0%" stopColor="rgba(248, 245, 240, 1)" />
           <stop offset="40%" stopColor="rgba(201, 168, 76, 0.85)" />
           <stop offset="100%" stopColor="rgba(201, 168, 76, 0)" />
         </radialGradient>

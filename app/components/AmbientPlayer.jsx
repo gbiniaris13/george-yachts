@@ -235,7 +235,7 @@ export default function AmbientPlayer() {
             ? "rgba(201,168,76,0.55)"
             : hovered
             ? "rgba(201,168,76,0.4)"
-            : "rgba(255,255,255,0.06)"
+            : "rgba(248, 245, 240,0.06)"
         }`,
         color: playing
           ? "#C9A84C"

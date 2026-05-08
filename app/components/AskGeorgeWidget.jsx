@@ -166,7 +166,7 @@ export default function AskGeorgeWidget() {
           color: "#0D1B2A",
           border: "none",
           cursor: "pointer",
-          boxShadow: "0 6px 24px rgba(0,0,0,0.4)",
+          boxShadow: "0 6px 24px rgba(13, 27, 42,0.4)",
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           fontSize: 18,
           fontWeight: 600,
@@ -210,7 +210,7 @@ export default function AskGeorgeWidget() {
             display: "flex",
             flexDirection: "column",
             zIndex: 9999,
-            boxShadow: "0 12px 40px rgba(0,0,0,0.6)",
+            boxShadow: "0 12px 40px rgba(13, 27, 42,0.6)",
           }}
         >
           <header
@@ -255,7 +255,7 @@ export default function AskGeorgeWidget() {
               aria-label="Close"
               style={{
                 background: "transparent",
-                color: "rgba(255,255,255,0.6)",
+                color: "rgba(248, 245, 240,0.6)",
                 border: "none",
                 fontSize: 18,
                 cursor: "pointer",
@@ -284,7 +284,7 @@ export default function AskGeorgeWidget() {
                   fontFamily: "'Lato', 'Montserrat', sans-serif",
                   fontSize: 13.5,
                   lineHeight: 1.6,
-                  color: "rgba(255,255,255,0.78)",
+                  color: "rgba(248, 245, 240,0.78)",
                 }}
               >
                 <p style={{ margin: "0 0 14px" }}>
@@ -296,7 +296,7 @@ export default function AskGeorgeWidget() {
                     fontSize: 9,
                     letterSpacing: "0.3em",
                     textTransform: "uppercase",
-                    color: "rgba(255,255,255,0.45)",
+                    color: "rgba(248, 245, 240,0.45)",
                     margin: "0 0 8px",
                   }}
                 >
@@ -312,7 +312,7 @@ export default function AskGeorgeWidget() {
                         textAlign: "left",
                         padding: "9px 12px",
                         background: "rgba(201,168,76,0.08)",
-                        color: "rgba(255,255,255,0.85)",
+                        color: "rgba(248, 245, 240,0.85)",
                         border: "1px solid rgba(201,168,76,0.3)",
                         cursor: "pointer",
                         fontFamily: "'Lato', 'Montserrat', sans-serif",
@@ -334,15 +334,15 @@ export default function AskGeorgeWidget() {
                   maxWidth: "88%",
                   padding: "10px 13px",
                   background:
-                    m.role === "user" ? "rgba(201,168,76,0.16)" : "rgba(255,255,255,0.05)",
+                    m.role === "user" ? "rgba(201,168,76,0.16)" : "rgba(248, 245, 240,0.05)",
                   border:
                     m.role === "user"
                       ? "1px solid rgba(201,168,76,0.4)"
-                      : "1px solid rgba(255,255,255,0.1)",
+                      : "1px solid rgba(248, 245, 240,0.1)",
                   fontFamily: "'Lato', 'Montserrat', sans-serif",
                   fontSize: 13.5,
                   lineHeight: 1.55,
-                  color: m.role === "user" ? "#F8F5F0" : "rgba(255,255,255,0.88)",
+                  color: m.role === "user" ? "#F8F5F0" : "rgba(248, 245, 240,0.88)",
                   whiteSpace: "pre-wrap",
                 }}
               >
@@ -360,7 +360,7 @@ export default function AskGeorgeWidget() {
                 background: "rgba(201,168,76,0.06)",
                 fontFamily: "'Lato', 'Montserrat', sans-serif",
                 fontSize: 12.5,
-                color: "rgba(255,255,255,0.85)",
+                color: "rgba(248, 245, 240,0.85)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
@@ -441,7 +441,7 @@ export default function AskGeorgeWidget() {
                 padding: "12px 18px",
                 fontFamily: "'Lato', 'Montserrat', sans-serif",
                 fontSize: 12.5,
-                color: "rgba(255,255,255,0.85)",
+                color: "rgba(248, 245, 240,0.85)",
                 textAlign: "center",
                 background: "rgba(201,168,76,0.08)",
                 borderTop: "1px solid rgba(201,168,76,0.25)",
@@ -473,8 +473,8 @@ export default function AskGeorgeWidget() {
               aria-label="Your message"
               style={{
                 flex: 1,
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.15)",
+                background: "rgba(248, 245, 240,0.06)",
+                border: "1px solid rgba(248, 245, 240,0.15)",
                 color: "#F8F5F0",
                 padding: "10px 12px",
                 fontFamily: "'Lato', 'Montserrat', sans-serif",
@@ -514,8 +514,8 @@ export default function AskGeorgeWidget() {
 // Safari doesn't auto-zoom on focus. The widget IS hidden on mobile
 // now, but tablets at 768px still see it and were affected.
 const inputStyle = {
-  background: "rgba(255,255,255,0.06)",
-  border: "1px solid rgba(255,255,255,0.15)",
+  background: "rgba(248, 245, 240,0.06)",
+  border: "1px solid rgba(248, 245, 240,0.15)",
   color: "#F8F5F0",
   padding: "9px 12px",
   fontFamily: "'Lato', 'Montserrat', sans-serif",

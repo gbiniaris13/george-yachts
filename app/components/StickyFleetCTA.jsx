@@ -134,7 +134,7 @@ export default function StickyFleetCTA({ yachtCount: yachtCountProp } = {}) {
         // Tail-blur so the bar feels integrated with the page rather
         // than glued on top.
         background:
-          "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.78) 60%, rgba(0,0,0,0) 100%)",
+          "linear-gradient(to top, rgba(13, 27, 42,0.92) 0%, rgba(13, 27, 42,0.78) 60%, rgba(13, 27, 42,0) 100%)",
         backdropFilter: "blur(8px)",
         paddingTop: "16px",
         paddingBottom: "max(12px, env(safe-area-inset-bottom))",
@@ -173,7 +173,7 @@ export default function StickyFleetCTA({ yachtCount: yachtCountProp } = {}) {
             border: "1px solid rgba(201,168,76,0.65)",
             borderRadius: "999px",
             boxShadow:
-              "0 14px 35px -10px rgba(201,168,76,0.5), inset 0 1px 0 rgba(255,255,255,0.3)",
+              "0 14px 35px -10px rgba(201,168,76,0.5), inset 0 1px 0 rgba(248, 245, 240,0.3)",
             transition: "transform 0.4s ease, box-shadow 0.4s ease",
           }}
           onMouseEnter={(e) => {

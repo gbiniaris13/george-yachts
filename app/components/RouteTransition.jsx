@@ -59,8 +59,8 @@ export default function RouteTransition() {
     radial-gradient(ellipse at 50% 40%, #0D1B2A 0%, #0D1B2A 60%, #0D1B2A 100%),
     repeating-linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0.02) 0,
-      rgba(255, 255, 255, 0.02) 1px,
+      rgba(248, 245, 240, 0.02) 0,
+      rgba(248, 245, 240, 0.02) 1px,
       transparent 1px,
       transparent 14px
     )
@@ -88,7 +88,7 @@ export default function RouteTransition() {
           width: "50%",
           background: velvetBg,
           transform: "translateX(-100%)",
-          boxShadow: "inset -16px 0 32px rgba(0, 0, 0, 0.85)",
+          boxShadow: "inset -16px 0 32px rgba(13, 27, 42, 0.85)",
         }}
       />
       {/* Right curtain */}
@@ -102,7 +102,7 @@ export default function RouteTransition() {
           width: "50%",
           background: velvetBg,
           transform: "translateX(100%)",
-          boxShadow: "inset 16px 0 32px rgba(0, 0, 0, 0.85)",
+          boxShadow: "inset 16px 0 32px rgba(13, 27, 42, 0.85)",
         }}
       />
       {/* Gold seam — appears at the meeting line */}

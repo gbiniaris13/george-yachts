@@ -52,7 +52,7 @@ export default function TranslateWidget({ variant = 'floating' }) {
           width: '44px',
           height: '44px',
           background: 'transparent',
-          border: '1px solid rgba(255,255,255,0.06)',
+          border: '1px solid rgba(248, 245, 240,0.06)',
           cursor: 'pointer',
           transition: 'all 0.4s ease',
         }
@@ -87,7 +87,7 @@ export default function TranslateWidget({ variant = 'floating' }) {
         }}
         onMouseLeave={(e) => {
           if (variant === 'inline') {
-            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)';
+            e.currentTarget.style.borderColor = 'rgba(248, 245, 240,0.06)';
           }
         }}
       >
@@ -127,7 +127,7 @@ export default function TranslateWidget({ variant = 'floating' }) {
             border: '1px solid rgba(201,168,76,0.2)',
             overflow: 'hidden',
             minWidth: 200,
-            boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+            boxShadow: '0 20px 60px rgba(13, 27, 42,0.5)',
           }}
         >
           <div style={{
@@ -144,9 +144,9 @@ export default function TranslateWidget({ variant = 'floating' }) {
               style={{
                 display: 'flex', alignItems: 'center', gap: 10, width: '100%',
                 padding: '11px 16px', fontFamily: "'Montserrat', sans-serif", fontSize: 11,
-                color: locale === lang.code ? '#C9A84C' : 'rgba(255,255,255,0.5)',
+                color: locale === lang.code ? '#C9A84C' : 'rgba(248, 245, 240,0.5)',
                 background: locale === lang.code ? 'rgba(201,168,76,0.06)' : 'transparent',
-                border: 'none', borderBottom: '1px solid rgba(255,255,255,0.03)',
+                border: 'none', borderBottom: '1px solid rgba(248, 245, 240,0.03)',
                 cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s ease',
               }}
             >

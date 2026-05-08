@@ -19,10 +19,10 @@ const ProfileSection = ({
     "https://placehold.co/1920x710/02132d/ffffff?text=Image+Loading";
 
   const colorMap = {
-    "bg-black": "rgba(0, 0, 0)",
+    "bg-black": "rgba(13, 27, 42)",
     "bg-[#F8F5F0]": "rgba(243, 244, 246)",
   };
-  const gradientColor = colorMap[bgColor] || "rgba(0, 0, 0)";
+  const gradientColor = colorMap[bgColor] || "rgba(13, 27, 42)";
 
   return (
     <section className={`relative w-full overflow-hidden ${bgColor}`}>

@@ -190,21 +190,21 @@ export default function LifestyleGallery({ heading = "Moments aboard", showCta =
           margin: 0;
           overflow: hidden;
           background: #0D1B2A;
-          border: 1px solid rgba(255,255,255,0.04);
+          border: 1px solid rgba(248, 245, 240,0.04);
           transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
                       box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
           will-change: transform;
         }
         .gy-lifestyle-tile:hover {
           transform: translateY(-6px) scale(1.02);
-          box-shadow: 0 20px 48px rgba(0,0,0,0.5),
+          box-shadow: 0 20px 48px rgba(13, 27, 42,0.5),
                       0 0 0 1px rgba(201,168,76,0.3) inset;
           z-index: 3;
         }
         .gy-lifestyle-tile__veil {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.4) 100%);
+          background: linear-gradient(180deg, transparent 60%, rgba(13, 27, 42,0.4) 100%);
           opacity: 1;
           transition: opacity 0.5s ease;
           pointer-events: none;

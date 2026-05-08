@@ -102,7 +102,7 @@ export default function WhatsAppButton() {
               background: "linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)",
               border: "1px solid rgba(201,168,76,0.35)",
               boxShadow:
-                "0 12px 48px rgba(0,0,0,0.5), 0 0 24px rgba(201,168,76,0.08)",
+                "0 12px 48px rgba(13, 27, 42,0.5), 0 0 24px rgba(201,168,76,0.08)",
               backdropFilter: "blur(12px)",
             }}
           >
@@ -124,7 +124,7 @@ export default function WhatsAppButton() {
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: "17px",
                 lineHeight: 1.45,
-                color: "rgba(255,255,255,0.88)",
+                color: "rgba(248, 245, 240,0.88)",
                 fontWeight: 300,
                 marginBottom: "16px",
               }}
@@ -250,8 +250,8 @@ export default function WhatsAppButton() {
               : "linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)",
             border: `1px solid ${hovered ? "rgba(201,168,76,0.6)" : "rgba(201,168,76,0.2)"}`,
             boxShadow: hovered
-              ? "0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(201,168,76,0.1), inset 0 1px 0 rgba(201,168,76,0.1)"
-              : "0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03)",
+              ? "0 8px 32px rgba(13, 27, 42,0.4), 0 0 20px rgba(201,168,76,0.1), inset 0 1px 0 rgba(201,168,76,0.1)"
+              : "0 4px 16px rgba(13, 27, 42,0.3), inset 0 1px 0 rgba(248, 245, 240,0.03)",
             transform: hovered ? "scale(1.08) translateY(-2px)" : "scale(1)",
           }}
         >
@@ -302,7 +302,7 @@ export default function WhatsAppButton() {
           <span
             className="px-4 py-2 text-[10px] tracking-[0.15em] uppercase"
             style={{
-              background: "rgba(13,13,26,0.95)",
+              background: "rgba(13, 27, 42,0.95)",
               border: "1px solid rgba(201,168,76,0.15)",
               color: "rgba(201,168,76,0.7)",
               fontFamily: "'Montserrat', sans-serif",

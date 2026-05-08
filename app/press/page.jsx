@@ -427,7 +427,7 @@ export default function PressPage() {
               marginBottom: 32,
               paddingBottom: 32,
               borderBottom:
-                i < 2 ? "1px solid rgba(255,255,255,0.05)" : "none",
+                i < 2 ? "1px solid rgba(248, 245, 240,0.05)" : "none",
             }}
           >
             <h3
@@ -490,7 +490,7 @@ export default function PressPage() {
         style={{
           padding: "60px 24px 100px",
           textAlign: "center",
-          borderTop: "1px solid rgba(255,255,255,0.05)",
+          borderTop: "1px solid rgba(248, 245, 240,0.05)",
         }}
       >
         <p

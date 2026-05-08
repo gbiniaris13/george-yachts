@@ -8,7 +8,7 @@ const DARK_BG = '#0D1B2A';
 const CARD_BG = '#0D1B2A';
 const BORDER = '#333333';
 const TEXT_MUTED = '#999999';
-const TEXT_LIGHT = '#E0E0E0';
+const TEXT_LIGHT = '#F8F5F0';
 
 const SPEC_KEYS = [
   { key: 'builder', label: 'Builder' },
@@ -119,16 +119,16 @@ export default function CompareYachts({ compareList = [], onRemove, onClear }) {
             fontSize: isMobile ? 14 : 15,
             letterSpacing: '0.05em',
             textTransform: 'uppercase',
-            boxShadow: '0 4px 24px rgba(201, 168, 76, 0.4), 0 2px 8px rgba(0,0,0,0.5)',
+            boxShadow: '0 4px 24px rgba(201, 168, 76, 0.4), 0 2px 8px rgba(13, 27, 42,0.5)',
             transition: 'transform 0.2s ease, box-shadow 0.2s ease',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.05)';
-            e.currentTarget.style.boxShadow = '0 6px 32px rgba(201, 168, 76, 0.6), 0 4px 12px rgba(0,0,0,0.6)';
+            e.currentTarget.style.boxShadow = '0 6px 32px rgba(201, 168, 76, 0.6), 0 4px 12px rgba(13, 27, 42,0.6)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 24px rgba(201, 168, 76, 0.4), 0 2px 8px rgba(0,0,0,0.5)';
+            e.currentTarget.style.boxShadow = '0 4px 24px rgba(201, 168, 76, 0.4), 0 2px 8px rgba(13, 27, 42,0.5)';
           }}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -546,7 +546,7 @@ function CompareCard({ yacht, bestValues, onRemove, isMobile, totalCards }) {
             e.currentTarget.style.borderColor = '#ff4444';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+            e.currentTarget.style.backgroundColor = 'rgba(13, 27, 42, 0.7)';
             e.currentTarget.style.borderColor = BORDER;
           }}
         >
@@ -616,7 +616,7 @@ function SpecRow({ label, value, highlighted, isMobile }) {
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: isMobile ? '10px 20px' : '11px 20px',
-        borderBottom: `1px solid rgba(51, 51, 51, 0.5)`,
+        borderBottom: `1px solid rgba(156, 163, 175, 0.5)`,
         transition: 'background-color 0.2s ease',
       }}
       onMouseEnter={(e) => {

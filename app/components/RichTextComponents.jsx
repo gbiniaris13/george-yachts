@@ -81,7 +81,7 @@ export const RichTextComponents = {
         fontWeight: isHeader ? 600 : 300,
         fontSize: "0.95rem",
         lineHeight: 1.6,
-        borderBottom: isHeader ? "2px solid #C9A84C" : "1px solid #e5e5e5",
+        borderBottom: isHeader ? "2px solid #C9A84C" : "1px solid #F8F5F0",
       });
 
       return (
@@ -134,7 +134,7 @@ export const RichTextComponents = {
               style={{
                 marginTop: "8px",
                 fontSize: "0.8rem",
-                color: "rgba(255,255,255,0.4)",
+                color: "rgba(248, 245, 240,0.4)",
                 fontStyle: "italic",
                 fontFamily: "var(--font-sans), sans-serif",
               }}
@@ -227,7 +227,7 @@ export const RichTextComponents = {
                     fontSize: 10,
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
-                    color: "rgba(255,255,255,0.6)",
+                    color: "rgba(248, 245, 240,0.6)",
                     margin: 0,
                   }}
                 >
@@ -244,7 +244,7 @@ export const RichTextComponents = {
                       fontSize: 8,
                       letterSpacing: "0.3em",
                       textTransform: "uppercase",
-                      color: isPerPerson(y) ? "rgba(255,255,255,0.7)" : "#C9A84C",
+                      color: isPerPerson(y) ? "rgba(248, 245, 240,0.7)" : "#C9A84C",
                       fontWeight: 600,
                     }}
                   >

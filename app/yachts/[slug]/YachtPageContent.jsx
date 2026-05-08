@@ -125,7 +125,7 @@ function DeckLayoutFallback({ images, yachtName }) {
           style={{
             fontFamily: "'Montserrat', sans-serif",
             fontSize: 11,
-            color: 'rgba(255,255,255,0.55)',
+            color: 'rgba(248, 245, 240,0.55)',
             textAlign: 'center',
             margin: '20px 0 0',
             fontStyle: 'italic',
@@ -219,8 +219,8 @@ function DeckPlansSection({ decks, yachtName }) {
                     fontWeight: 600,
                     padding: '10px 18px',
                     background: selected ? 'rgba(201,168,76,0.18)' : 'transparent',
-                    color: selected ? '#C9A84C' : 'rgba(255,255,255,0.6)',
-                    border: `1px solid ${selected ? '#C9A84C' : 'rgba(255,255,255,0.18)'}`,
+                    color: selected ? '#C9A84C' : 'rgba(248, 245, 240,0.6)',
+                    border: `1px solid ${selected ? '#C9A84C' : 'rgba(248, 245, 240,0.18)'}`,
                     cursor: 'pointer',
                     transition: 'background 0.2s ease, color 0.2s ease, border-color 0.2s ease',
                   }}
@@ -283,7 +283,7 @@ function DeckPlansSection({ decks, yachtName }) {
           style={{
             fontFamily: "'Montserrat', sans-serif",
             fontSize: 11,
-            color: 'rgba(255,255,255,0.55)',
+            color: 'rgba(248, 245, 240,0.55)',
             textAlign: 'center',
             margin: '20px 0 0',
             fontStyle: 'italic',
@@ -332,7 +332,7 @@ function DeckPlansSection({ decks, yachtName }) {
                 height: 36,
                 background: 'rgba(13, 27, 42, 0.6)',
                 color: '#F8F5F0',
-                border: '1px solid rgba(255,255,255,0.3)',
+                border: '1px solid rgba(248, 245, 240,0.3)',
                 cursor: 'pointer',
                 fontSize: 16,
                 lineHeight: 1,
@@ -352,7 +352,7 @@ function DeckPlansSection({ decks, yachtName }) {
                 style={{
                   padding: '64px 24px',
                   textAlign: 'center',
-                  color: 'rgba(255,255,255,0.6)',
+                  color: 'rgba(248, 245, 240,0.6)',
                   fontFamily: "'Lato', 'Montserrat', sans-serif",
                   fontSize: 14,
                 }}
@@ -471,7 +471,7 @@ function MatterportSection({ url, yachtName }) {
                   fontFamily: "'Lato', 'Montserrat', sans-serif",
                   fontSize: 13,
                   lineHeight: 1.6,
-                  color: 'rgba(255,255,255,0.65)',
+                  color: 'rgba(248, 245, 240,0.65)',
                   margin: 0,
                 }}
               >
@@ -655,7 +655,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                     padding: '14px 32px',
                     background: 'transparent',
                     color: '#F8F5F0',
-                    border: '1px solid rgba(255,255,255,0.3)',
+                    border: '1px solid rgba(248, 245, 240,0.3)',
                     fontFamily: "'Montserrat', sans-serif",
                     fontSize: '11px',
                     letterSpacing: '0.32em',
@@ -841,7 +841,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                     fontSize: 11,
                     letterSpacing: '0.18em',
                     textTransform: 'uppercase',
-                    color: 'rgba(255,255,255,0.55)',
+                    color: 'rgba(248, 245, 240,0.55)',
                     textAlign: 'center',
                     margin: '0 0 36px',
                   }}
@@ -897,7 +897,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                             x={p.x}
                             y={p.y + (i % 2 === 0 ? -14 : 22)}
                             textAnchor="middle"
-                            fill="rgba(255,255,255,0.55)"
+                            fill="rgba(248, 245, 240,0.55)"
                             fontFamily="'Montserrat', sans-serif"
                             fontSize="9"
                             letterSpacing="0.18em"
@@ -953,7 +953,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                     >
                       Day {leg.day}
                       {leg.distance && (
-                        <span style={{ marginLeft: 12, color: 'rgba(255,255,255,0.55)' }}>
+                        <span style={{ marginLeft: 12, color: 'rgba(248, 245, 240,0.55)' }}>
                           · {leg.distance}
                         </span>
                       )}
@@ -982,7 +982,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                           fontFamily: "'Lato', 'Montserrat', sans-serif",
                           fontSize: 14,
                           lineHeight: 1.65,
-                          color: 'rgba(255,255,255,0.72)',
+                          color: 'rgba(248, 245, 240,0.72)',
                           margin: 0,
                           maxWidth: 640,
                         }}
@@ -998,7 +998,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: 11,
-                  color: 'rgba(255,255,255,0.55)',
+                  color: 'rgba(248, 245, 240,0.55)',
                   textAlign: 'center',
                   margin: '32px 0 24px',
                   fontStyle: 'italic',
@@ -1095,7 +1095,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             left: 0,
             right: 0,
             zIndex: 50,
-            background: 'rgba(10,10,10,0.92)',
+            background: 'rgba(13, 27, 42,0.92)',
             backdropFilter: 'blur(12px)',
             borderBottom: '1px solid rgba(201,168,76,0.25)',
             padding: '10px 20px',

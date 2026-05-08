@@ -190,7 +190,7 @@ const YachtSwiper = ({ yachtData }) => {
       </div>
 
       <div className="relative lg:absolute lg:top-1/2 lg:right-[5%] lg:lg:right-[10%] lg:-translate-y-1/2 z-30 w-full lg:max-w-[500px] px-0 lg:px-6 order-2">
-        <div className="bg-[#0D1B2A]/40 lg:bg-[#0D1B2A]/60 backdrop-blur-2xl border border-white/10 p-8 lg:p-12 shadow-[0_40px_100px_rgba(0,0,0,0.5)] relative overflow-hidden">
+        <div className="bg-[#0D1B2A]/40 lg:bg-[#0D1B2A]/60 backdrop-blur-2xl border border-white/10 p-8 lg:p-12 shadow-[0_40px_100px_rgba(13, 27, 42,0.5)] relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-[#C9A84C] via-[#8a6d21] to-transparent"></div>
 
           <button
@@ -250,7 +250,7 @@ const YachtSwiper = ({ yachtData }) => {
 
             <button
               onClick={() => setIsPopupOpen(true)}
-              className="w-full text-black py-5 text-xs font-sans font-bold tracking-[0.4em] uppercase shadow-[0_0_30px_rgba(201,168,76,0.2)] hover:shadow-[0_0_50px_rgba(255,255,255,0.2)] hover:brightness-110 transition-all duration-300"
+              className="w-full text-black py-5 text-xs font-sans font-bold tracking-[0.4em] uppercase shadow-[0_0_30px_rgba(201,168,76,0.2)] hover:shadow-[0_0_50px_rgba(248, 245, 240,0.2)] hover:brightness-110 transition-all duration-300"
               style={{
                 background:
                   "linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%)",

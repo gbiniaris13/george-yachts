@@ -45,7 +45,7 @@ const YachtListContent = ({ initialYachts }) => {
     <section id="fleet-anchor" className="relative py-20 bg-transparent">
       {/* INDUSTRY KILLING FILTER: Floating Monolith Design */}
       <div className="relative lg:sticky lg:top-24 z-40 flex justify-center px-4 mb-24">
-        <div className="flex flex-wrap justify-center gap-0 bg-white/40 backdrop-blur-2xl border border-black/3 shadow-[0_20px_40px_rgba(0,0,0,0.05)]">
+        <div className="flex flex-wrap justify-center gap-0 bg-white/40 backdrop-blur-2xl border border-black/3 shadow-[0_20px_40px_rgba(13, 27, 42,0.05)]">
           {CATEGORIES.map((cat) => (
             <button
               key={cat.value}

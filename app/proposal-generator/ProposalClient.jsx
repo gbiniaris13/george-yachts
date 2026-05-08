@@ -155,13 +155,13 @@ export default function ProposalClient({ yachts = [] }) {
           fontSize: "clamp(48px, 8vw, 96px)", fontWeight: 300,
           color: "#F8F5F0", margin: "0 0 18px",
           lineHeight: 0.98, letterSpacing: "-0.03em",
-          textShadow: "0 6px 32px rgba(0,0,0,0.55)",
+          textShadow: "0 6px 32px rgba(13, 27, 42,0.55)",
         }}>
           Pick up to 5 yachts. Get a magazine-grade PDF in your inbox.
         </h1>
         <p style={{
           fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 16,
-          lineHeight: 1.7, color: "rgba(255,255,255,0.7)",
+          lineHeight: 1.7, color: "rgba(248, 245, 240,0.7)",
           maxWidth: 640, margin: "0 auto",
         }}>
           Each page in the proposal is a real yacht from the live fleet — hero photo, specs, price, and
@@ -217,8 +217,8 @@ export default function ProposalClient({ yachts = [] }) {
               }}
               style={{
                 position: "relative",
-                background: "rgba(255,255,255,0.03)",
-                border: `1px solid ${checked ? GOLD : "rgba(255,255,255,0.08)"}`,
+                background: "rgba(248, 245, 240,0.03)",
+                border: `1px solid ${checked ? GOLD : "rgba(248, 245, 240,0.08)"}`,
                 cursor: disabled ? "not-allowed" : "pointer",
                 opacity: disabled ? 0.45 : 1,
                 transition: "border-color 0.25s ease, opacity 0.25s ease",
@@ -243,7 +243,7 @@ export default function ProposalClient({ yachts = [] }) {
                   <p style={{
                     fontFamily: "'Montserrat', sans-serif", fontSize: 10,
                     letterSpacing: "0.16em", textTransform: "uppercase",
-                    color: "rgba(255,255,255,0.55)", margin: "0 0 6px",
+                    color: "rgba(248, 245, 240,0.55)", margin: "0 0 6px",
                   }}>
                     {[y.length, y.sleeps && `${y.sleeps} guests`].filter(Boolean).join(" · ")}
                   </p>
@@ -253,7 +253,7 @@ export default function ProposalClient({ yachts = [] }) {
                     fontFamily: "'Montserrat', sans-serif", fontSize: 11,
                     color: GOLD, fontWeight: 600, margin: 0,
                   }}>
-                    <span style={{ fontSize: 8, letterSpacing: "0.3em", color: isPerPerson(y) ? "rgba(255,255,255,0.6)" : GOLD, marginRight: 6 }}>
+                    <span style={{ fontSize: 8, letterSpacing: "0.3em", color: isPerPerson(y) ? "rgba(248, 245, 240,0.6)" : GOLD, marginRight: 6 }}>
                       {priceUnitBadge(y)}
                     </span>
                     {y.weeklyRatePrice}
@@ -266,8 +266,8 @@ export default function ProposalClient({ yachts = [] }) {
                 style={{
                   position: "absolute", top: 10, right: 10,
                   width: 28, height: 28, borderRadius: "50%",
-                  background: checked ? GOLD : "rgba(0,0,0,0.55)",
-                  border: `1px solid ${checked ? GOLD : "rgba(255,255,255,0.4)"}`,
+                  background: checked ? GOLD : "rgba(13, 27, 42,0.55)",
+                  border: `1px solid ${checked ? GOLD : "rgba(248, 245, 240,0.4)"}`,
                   display: "flex", alignItems: "center", justifyContent: "center",
                   color: checked ? "#0D1B2A" : "transparent",
                   fontWeight: 700, fontSize: 14,
@@ -284,7 +284,7 @@ export default function ProposalClient({ yachts = [] }) {
       {/* STICKY BOTTOM BAR */}
       <div style={{
         position: "fixed", bottom: 0, left: 0, right: 0,
-        background: "linear-gradient(180deg, rgba(0,0,0,0.6), #0D1B2A)",
+        background: "linear-gradient(180deg, rgba(13, 27, 42,0.6), #0D1B2A)",
         borderTop: `1px solid ${GOLD}55`,
         padding: "16px 24px",
         display: "flex", justifyContent: "center", gap: 12,
@@ -294,7 +294,7 @@ export default function ProposalClient({ yachts = [] }) {
         <span style={{
           fontFamily: "'Montserrat', sans-serif", fontSize: 11,
           letterSpacing: "0.2em", textTransform: "uppercase",
-          color: "rgba(255,255,255,0.7)",
+          color: "rgba(248, 245, 240,0.7)",
         }}>
           {picked.length === 0
             ? "Pick up to 5 yachts to start"
@@ -314,7 +314,7 @@ export default function ProposalClient({ yachts = [] }) {
             background: picked.length === 0
               ? "rgba(201,168,76,0.25)"
               : `linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)`,
-            color: picked.length === 0 ? "rgba(0,0,0,0.45)" : "#0D1B2A",
+            color: picked.length === 0 ? "rgba(13, 27, 42,0.45)" : "#0D1B2A",
             border: "none",
             cursor: picked.length === 0 ? "default" : "pointer",
           }}
@@ -361,7 +361,7 @@ export default function ProposalClient({ yachts = [] }) {
                 </h3>
                 <p style={{
                   fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 13,
-                  lineHeight: 1.6, color: "rgba(255,255,255,0.7)", margin: "0 0 18px",
+                  lineHeight: 1.6, color: "rgba(248, 245, 240,0.7)", margin: "0 0 18px",
                 }}>
                   We&apos;ll generate the proposal, email it to you, and George will write back within the day with availability.
                 </p>
@@ -415,9 +415,9 @@ export default function ProposalClient({ yachts = [] }) {
                       style={{
                         padding: "12px 16px",
                         fontFamily: "'Montserrat', sans-serif", fontSize: 10,
-                        color: "rgba(255,255,255,0.5)",
+                        color: "rgba(248, 245, 240,0.5)",
                         background: "none",
-                        border: "1px solid rgba(255,255,255,0.18)",
+                        border: "1px solid rgba(248, 245, 240,0.18)",
                         cursor: "pointer",
                       }}
                     >
@@ -436,7 +436,7 @@ export default function ProposalClient({ yachts = [] }) {
                 </p>
                 <p style={{
                   fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 14,
-                  lineHeight: 1.6, color: "rgba(255,255,255,0.78)", margin: "0 0 22px",
+                  lineHeight: 1.6, color: "rgba(248, 245, 240,0.78)", margin: "0 0 22px",
                 }}>
                   {result.emailSent
                     ? `The PDF is on its way to ${email}. George will reach out within the day.`
@@ -467,7 +467,7 @@ export default function ProposalClient({ yachts = [] }) {
                     style={{
                       fontFamily: "'Montserrat', sans-serif", fontSize: 9,
                       letterSpacing: "0.32em", textTransform: "uppercase",
-                      color: "rgba(255,255,255,0.5)",
+                      color: "rgba(248, 245, 240,0.5)",
                       background: "none", border: "none", cursor: "pointer",
                     }}
                   >
@@ -486,8 +486,8 @@ export default function ProposalClient({ yachts = [] }) {
 const inputStyle = {
   padding: "10px 12px",
   fontFamily: "'Montserrat', sans-serif", fontSize: 13,
-  background: "rgba(255,255,255,0.06)",
-  border: "1px solid rgba(255,255,255,0.18)",
+  background: "rgba(248, 245, 240,0.06)",
+  border: "1px solid rgba(248, 245, 240,0.18)",
   color: "#F8F5F0", outline: "none",
 };
 
@@ -497,7 +497,7 @@ function FilterGroup({ label, options, value, onChange }) {
       <p style={{
         fontFamily: "'Montserrat', sans-serif", fontSize: 9,
         letterSpacing: "0.32em", textTransform: "uppercase",
-        color: "rgba(255,255,255,0.5)", margin: "0 0 8px", textAlign: "center",
+        color: "rgba(248, 245, 240,0.5)", margin: "0 0 8px", textAlign: "center",
       }}>
         {label}
       </p>
@@ -513,8 +513,8 @@ function FilterGroup({ label, options, value, onChange }) {
                 letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600,
                 padding: "8px 12px",
                 background: active ? "rgba(201,168,76,0.16)" : "transparent",
-                color: active ? GOLD : "rgba(255,255,255,0.55)",
-                border: `1px solid ${active ? GOLD : "rgba(255,255,255,0.15)"}`,
+                color: active ? GOLD : "rgba(248, 245, 240,0.55)",
+                border: `1px solid ${active ? GOLD : "rgba(248, 245, 240,0.15)"}`,
                 cursor: "pointer",
               }}
             >

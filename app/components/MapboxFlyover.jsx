@@ -156,8 +156,8 @@ export default function MapboxFlyover() {
         try {
           map.setFog({
             range: [0.5, 8],
-            color: "rgba(33, 22, 15, 0.5)",
-            "high-color": "rgba(15, 23, 42, 0.95)",
+            color: "rgba(13, 27, 42, 0.5)",
+            "high-color": "rgba(13, 27, 42, 0.95)",
             "horizon-blend": 0.18,
             "space-color": "#0D1B2A",
             "star-intensity": 0.0,
@@ -259,7 +259,7 @@ export default function MapboxFlyover() {
             margin: "10px 0 0",
             color: "#F8F5F0",
             maxWidth: "18ch",
-            textShadow: "0 4px 24px rgba(0,0,0,0.55)",
+            textShadow: "0 4px 24px rgba(13, 27, 42,0.55)",
           }}
         >
           Where your week could&nbsp;begin.
@@ -316,7 +316,7 @@ export default function MapboxFlyover() {
                 position: "absolute",
                 inset: 0,
                 background:
-                  "radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.55) 75%), linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.7) 100%)",
+                  "radial-gradient(ellipse at center, transparent 0%, rgba(13, 27, 42,0.55) 75%), linear-gradient(180deg, transparent 0%, rgba(13, 27, 42,0.7) 100%)",
                 pointerEvents: "none",
               }}
             />
@@ -462,7 +462,7 @@ export default function MapboxFlyover() {
           background: #C9A84C;
           border-radius: 50%;
           box-shadow: 0 0 0 3px rgba(201,168,76,0.25),
-                      0 2px 6px rgba(0,0,0,0.6);
+                      0 2px 6px rgba(13, 27, 42,0.6);
           animation: gy-pin-pulse 2.4s ease-in-out infinite;
         }
         .gy-mapbox-pin__label {
@@ -484,8 +484,8 @@ export default function MapboxFlyover() {
           transform: translateX(0);
         }
         @keyframes gy-pin-pulse {
-          0%, 100% { box-shadow: 0 0 0 3px rgba(201,168,76,0.25), 0 2px 6px rgba(0,0,0,0.6); }
-          50%      { box-shadow: 0 0 0 8px rgba(201,168,76,0.0),  0 2px 6px rgba(0,0,0,0.6); }
+          0%, 100% { box-shadow: 0 0 0 3px rgba(201,168,76,0.25), 0 2px 6px rgba(13, 27, 42,0.6); }
+          50%      { box-shadow: 0 0 0 8px rgba(201,168,76,0.0),  0 2px 6px rgba(13, 27, 42,0.6); }
         }
         @media (prefers-reduced-motion: reduce) {
           .gy-mapbox-pin__dot { animation: none; }

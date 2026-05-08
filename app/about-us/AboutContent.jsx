@@ -164,7 +164,7 @@ export default function AboutContent() {
             style={{
               fontFamily: "'Lato', 'Montserrat', sans-serif",
               fontSize: 14,
-              color: "rgba(255,255,255,0.65)",
+              color: "rgba(248, 245, 240,0.65)",
               fontWeight: 300,
               margin: "0 0 24px",
               lineHeight: 1.6,
@@ -226,7 +226,7 @@ export default function AboutContent() {
                   alt="George P. Biniaris — Managing Broker, George Yachts Brokerage House"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
-                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%", background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)" }} />
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%", background: "linear-gradient(to top, rgba(13, 27, 42,0.6), transparent)" }} />
               </div>
               {/* IYBA Badge under photo — official logo, link to iyba.org
                   per legal directive §3 backlink-required clause. */}
@@ -239,7 +239,7 @@ export default function AboutContent() {
               >
                 <img src="/images/iyba-official-white.png" alt="IYBA — International Yacht Brokers Association" style={{ height: "32px", width: "auto", opacity: 0.85 }} />
                 <div>
-                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", margin: 0 }}>Charter Active Member</p>
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.2em", color: "rgba(248, 245, 240,0.4)", textTransform: "uppercase", margin: 0 }}>Charter Active Member</p>
                   <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", letterSpacing: "0.1em", color: "#C9A84C", margin: 0 }}>International Yacht Brokers Association</p>
                 </div>
               </a>
@@ -278,19 +278,19 @@ export default function AboutContent() {
           </p>
 
           <div style={{ borderLeft: "4px solid #C9A84C", paddingLeft: "28px" }}>
-            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(18px, 2vw, 22px)", fontWeight: 400, fontStyle: "italic", lineHeight: 1.85, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(18px, 2vw, 22px)", fontWeight: 400, fontStyle: "italic", lineHeight: 1.85, color: "rgba(248, 245, 240,0.75)", marginBottom: "20px" }}>
               I grew up on my uncle&apos;s Ferretti, crossing from Athens to Syros, to Mykonos, to wherever the Cyclades took us. My mother is from Syros &mdash; the sea was never a hobby. It was home.
             </p>
-            <p style={{ fontFamily: "'Lato', sans-serif", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(255,255,255,0.55)", marginBottom: "20px" }}>
+            <p style={{ fontFamily: "'Lato', sans-serif", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248, 245, 240,0.55)", marginBottom: "20px" }}>
               I studied shipping. I became a skipper in Corfu. I earned my motor yacht licence. I managed charters across the Ionian and the Cyclades &mdash; briefing captains, building itineraries, solving problems at midnight.
             </p>
-            <p style={{ fontFamily: "'Lato', sans-serif", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(255,255,255,0.55)", marginBottom: "20px" }}>
+            <p style={{ fontFamily: "'Lato', sans-serif", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248, 245, 240,0.55)", marginBottom: "20px" }}>
               I built George Yachts because I wanted to do this properly. Not as another name on a platform. Not as a cold transaction. But as someone who knows these waters first-hand, who has untangled an anchor under pressure in Paxos, and who has watched a family of twelve cry at disembarkation &mdash; not because something went wrong, but because they didn&apos;t want it to end.
             </p>
-            <p style={{ fontFamily: "'Lato', sans-serif", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(255,255,255,0.55)", marginBottom: "20px" }}>
+            <p style={{ fontFamily: "'Lato', sans-serif", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248, 245, 240,0.55)", marginBottom: "20px" }}>
               That moment &mdash; when your clients hold you and tell you this was unlike anything they&apos;ve ever experienced &mdash; that is why I do this.
             </p>
-            <p style={{ fontFamily: "'Lato', sans-serif", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(255,255,255,0.55)", marginBottom: "28px" }}>
+            <p style={{ fontFamily: "'Lato', sans-serif", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248, 245, 240,0.55)", marginBottom: "28px" }}>
               Greece is not one destination. It is hundreds. And if you have the right person guiding you, every voyage reveals something new. I am that person.
             </p>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.15em", color: "#C9A84C" }}>
@@ -312,9 +312,9 @@ export default function AboutContent() {
               { label: "Large Aggregator", value: "Thousands of yachts, generic filters, algorithm-matched", vs: "vs" },
               { label: "George Yachts", value: "63 personally vetted yachts, hand-selected for you by someone who has been aboard each one", highlight: true },
             ].map((item, i) => (
-              <div key={i} style={{ padding: "32px", border: item.highlight ? "1px solid rgba(201,168,76,0.3)" : "1px solid rgba(255,255,255,0.08)", background: item.highlight ? "rgba(201,168,76,0.05)" : "transparent" }}>
-                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: item.highlight ? "#C9A84C" : "rgba(255,255,255,0.3)", textTransform: "uppercase", marginBottom: "16px" }}>{item.label}</p>
-                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", lineHeight: 1.9, color: item.highlight ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.4)" }}>{item.value}</p>
+              <div key={i} style={{ padding: "32px", border: item.highlight ? "1px solid rgba(201,168,76,0.3)" : "1px solid rgba(248, 245, 240,0.08)", background: item.highlight ? "rgba(201,168,76,0.05)" : "transparent" }}>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: item.highlight ? "#C9A84C" : "rgba(248, 245, 240,0.3)", textTransform: "uppercase", marginBottom: "16px" }}>{item.label}</p>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", lineHeight: 1.9, color: item.highlight ? "rgba(248, 245, 240,0.7)" : "rgba(248, 245, 240,0.4)" }}>{item.value}</p>
               </div>
             ))}
           </div>

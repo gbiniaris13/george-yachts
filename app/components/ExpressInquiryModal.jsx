@@ -213,7 +213,7 @@ export default function ExpressInquiryModal({
             height: 36,
             background: "transparent",
             border: "none",
-            color: "rgba(255,255,255,0.55)",
+            color: "rgba(248, 245, 240,0.55)",
             fontSize: 22,
             cursor: "pointer",
             lineHeight: 1,
@@ -255,7 +255,7 @@ export default function ExpressInquiryModal({
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontStyle: "italic",
                   fontSize: "15px",
-                  color: "rgba(255,255,255,0.7)",
+                  color: "rgba(248, 245, 240,0.7)",
                   margin: "0 0 24px",
                 }}
               >
@@ -308,7 +308,7 @@ export default function ExpressInquiryModal({
                     fontSize: "9px",
                     letterSpacing: "0.32em",
                     textTransform: "uppercase",
-                    color: "rgba(255,255,255,0.65)",
+                    color: "rgba(248, 245, 240,0.65)",
                     marginBottom: 10,
                   }}
                 >
@@ -338,9 +338,9 @@ export default function ExpressInquiryModal({
                         letterSpacing: "0.18em",
                         textTransform: "uppercase",
                         fontWeight: 600,
-                        border: `1px solid ${channel === c.id ? "#C9A84C" : "rgba(255,255,255,0.2)"}`,
+                        border: `1px solid ${channel === c.id ? "#C9A84C" : "rgba(248, 245, 240,0.2)"}`,
                         background: channel === c.id ? "rgba(201,168,76,0.12)" : "transparent",
-                        color: channel === c.id ? "#C9A84C" : "rgba(255,255,255,0.75)",
+                        color: channel === c.id ? "#C9A84C" : "rgba(248, 245, 240,0.75)",
                         cursor: "pointer",
                         transition: "all 0.2s ease",
                       }}
@@ -392,7 +392,7 @@ export default function ExpressInquiryModal({
                 style={{
                   fontSize: "9px",
                   letterSpacing: "0.18em",
-                  color: "rgba(255,255,255,0.45)",
+                  color: "rgba(248, 245, 240,0.45)",
                   marginTop: 14,
                   textAlign: "center",
                   textTransform: "uppercase",
@@ -434,7 +434,7 @@ export default function ExpressInquiryModal({
             <p
               style={{
                 fontSize: 12,
-                color: "rgba(255,255,255,0.7)",
+                color: "rgba(248, 245, 240,0.7)",
                 letterSpacing: "0.05em",
                 lineHeight: 1.7,
               }}
@@ -455,7 +455,7 @@ function FormField({ label, type = "text", value, onChange, required, multiline,
     width: "100%",
     background: "transparent",
     border: "none",
-    borderBottom: "1px solid rgba(255,255,255,0.25)",
+    borderBottom: "1px solid rgba(248, 245, 240,0.25)",
     color: "#F8F5F0",
     padding: "10px 0",
     fontSize: 16,
@@ -471,7 +471,7 @@ function FormField({ label, type = "text", value, onChange, required, multiline,
           fontSize: 9,
           letterSpacing: "0.32em",
           textTransform: "uppercase",
-          color: "rgba(255,255,255,0.65)",
+          color: "rgba(248, 245, 240,0.65)",
           marginBottom: 6,
         }}
       >
@@ -486,7 +486,7 @@ function FormField({ label, type = "text", value, onChange, required, multiline,
           rows={3}
           style={{ ...inputStyle, resize: "vertical" }}
           onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#C9A84C")}
-          onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(255,255,255,0.25)")}
+          onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(248, 245, 240,0.25)")}
         />
       ) : (
         <input
@@ -498,7 +498,7 @@ function FormField({ label, type = "text", value, onChange, required, multiline,
           autoComplete={type === "email" ? "email" : "off"}
           style={inputStyle}
           onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#C9A84C")}
-          onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(255,255,255,0.25)")}
+          onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(248, 245, 240,0.25)")}
         />
       )}
     </label>

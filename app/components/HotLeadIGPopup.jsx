@@ -200,7 +200,7 @@ export default function HotLeadIGPopup() {
           position: 'relative',
           transform: closing ? 'translateY(30px) scale(0.95)' : 'translateY(0) scale(1)',
           transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-          boxShadow: `0 40px 80px rgba(0,0,0,0.6), 0 0 60px ${GOLD}08`,
+          boxShadow: `0 40px 80px rgba(13, 27, 42,0.6), 0 0 60px ${GOLD}08`,
         }}
       >
         <button
@@ -208,7 +208,7 @@ export default function HotLeadIGPopup() {
           style={{
             position: 'absolute', top: 8, right: 8,
             background: 'transparent', border: 'none',
-            color: 'rgba(255,255,255,0.5)', fontSize: 20,
+            color: 'rgba(248, 245, 240,0.5)', fontSize: 20,
             cursor: 'pointer', padding: 12,
             minWidth: 44, minHeight: 44,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -230,7 +230,7 @@ export default function HotLeadIGPopup() {
             </h3>
             <p style={{
               fontFamily: "'Montserrat', sans-serif",
-              fontSize: 13, color: 'rgba(255,255,255,0.65)',
+              fontSize: 13, color: 'rgba(248, 245, 240,0.65)',
               lineHeight: 1.7, margin: 0,
             }}>
               Check your DMs — George will reach out personally from @georgeyachts.
@@ -255,7 +255,7 @@ export default function HotLeadIGPopup() {
               </h3>
               <p style={{
                 fontFamily: "'Montserrat', sans-serif",
-                fontSize: 12, color: 'rgba(255,255,255,0.6)',
+                fontSize: 12, color: 'rgba(248, 245, 240,0.6)',
                 lineHeight: 1.6, margin: 0,
               }}>
                 Drop your Instagram — I&apos;ll send you a direct message today.
@@ -270,8 +270,8 @@ export default function HotLeadIGPopup() {
                 placeholder="Your first name (optional)"
                 style={{
                   padding: '12px 14px',
-                  background: 'rgba(255,255,255,0.05)',
-                  border: '1px solid rgba(255,255,255,0.1)',
+                  background: 'rgba(248, 245, 240,0.05)',
+                  border: '1px solid rgba(248, 245, 240,0.1)',
                   borderRadius: 10, color: '#F8F5F0',
                   fontSize: 16, outline: 'none',
                   fontFamily: 'inherit',
@@ -285,7 +285,7 @@ export default function HotLeadIGPopup() {
                 required
                 style={{
                   padding: '12px 14px',
-                  background: 'rgba(255,255,255,0.05)',
+                  background: 'rgba(248, 245, 240,0.05)',
                   border: `1px solid ${GOLD}40`,
                   borderRadius: 10, color: '#F8F5F0',
                   fontSize: 16, outline: 'none',
@@ -299,8 +299,8 @@ export default function HotLeadIGPopup() {
                 placeholder="Email (optional)"
                 style={{
                   padding: '12px 14px',
-                  background: 'rgba(255,255,255,0.05)',
-                  border: '1px solid rgba(255,255,255,0.1)',
+                  background: 'rgba(248, 245, 240,0.05)',
+                  border: '1px solid rgba(248, 245, 240,0.1)',
                   borderRadius: 10, color: '#F8F5F0',
                   fontSize: 16, outline: 'none',
                   fontFamily: 'inherit',
@@ -311,8 +311,8 @@ export default function HotLeadIGPopup() {
                 onChange={(e) => setInterest(e.target.value)}
                 style={{
                   padding: '12px 14px',
-                  background: 'rgba(255,255,255,0.05)',
-                  border: '1px solid rgba(255,255,255,0.1)',
+                  background: 'rgba(248, 245, 240,0.05)',
+                  border: '1px solid rgba(248, 245, 240,0.1)',
                   borderRadius: 10, color: '#F8F5F0',
                   fontSize: 16, outline: 'none',
                   fontFamily: 'inherit',
@@ -342,7 +342,7 @@ export default function HotLeadIGPopup() {
               </button>
               <p style={{
                 fontSize: 10,
-                color: 'rgba(255,255,255,0.35)',
+                color: 'rgba(248, 245, 240,0.35)',
                 textAlign: 'center',
                 margin: '4px 0 0',
                 fontFamily: "'Montserrat', sans-serif",

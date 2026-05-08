@@ -121,8 +121,8 @@ export default function NavSearch() {
           width: 40,
           height: 40,
           background: "transparent",
-          border: "1px solid rgba(255,255,255,0.18)",
-          color: "rgba(255,255,255,0.85)",
+          border: "1px solid rgba(248, 245, 240,0.18)",
+          color: "rgba(248, 245, 240,0.85)",
           cursor: "pointer",
           display: "inline-flex",
           alignItems: "center",
@@ -134,8 +134,8 @@ export default function NavSearch() {
           e.currentTarget.style.color = GOLD;
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";
-          e.currentTarget.style.color = "rgba(255,255,255,0.85)";
+          e.currentTarget.style.borderColor = "rgba(248, 245, 240,0.18)";
+          e.currentTarget.style.color = "rgba(248, 245, 240,0.85)";
         }}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
@@ -180,7 +180,7 @@ export default function NavSearch() {
                 display: "flex",
                 alignItems: "center",
                 gap: 14,
-                borderBottom: "1px solid rgba(255,255,255,0.15)",
+                borderBottom: "1px solid rgba(248, 245, 240,0.15)",
                 paddingBottom: 14,
               }}
             >
@@ -214,7 +214,7 @@ export default function NavSearch() {
                 style={{
                   background: "transparent",
                   border: "none",
-                  color: "rgba(255,255,255,0.55)",
+                  color: "rgba(248, 245, 240,0.55)",
                   fontSize: 20,
                   cursor: "pointer",
                 }}
@@ -230,7 +230,7 @@ export default function NavSearch() {
                     fontSize: 11,
                     letterSpacing: "0.2em",
                     textTransform: "uppercase",
-                    color: "rgba(255,255,255,0.4)",
+                    color: "rgba(248, 245, 240,0.4)",
                     margin: 0,
                   }}
                 >
@@ -242,7 +242,7 @@ export default function NavSearch() {
                 <p
                   style={{
                     fontSize: 13,
-                    color: "rgba(255,255,255,0.7)",
+                    color: "rgba(248, 245, 240,0.7)",
                     margin: 0,
                   }}
                 >
@@ -280,7 +280,7 @@ export default function NavSearch() {
                           gap: 14,
                           padding: 12,
                           alignItems: "center",
-                          background: "rgba(255,255,255,0.03)",
+                          background: "rgba(248, 245, 240,0.03)",
                           border: "1px solid rgba(201,168,76,0.25)",
                           textDecoration: "none",
                           transition: "all 0.3s ease",
@@ -291,7 +291,7 @@ export default function NavSearch() {
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.borderColor = "rgba(201,168,76,0.25)";
-                          e.currentTarget.style.background = "rgba(255,255,255,0.03)";
+                          e.currentTarget.style.background = "rgba(248, 245, 240,0.03)";
                         }}
                       >
                         {y.image && (
@@ -323,7 +323,7 @@ export default function NavSearch() {
                                 fontSize: 10,
                                 letterSpacing: "0.18em",
                                 textTransform: "uppercase",
-                                color: "rgba(255,255,255,0.55)",
+                                color: "rgba(248, 245, 240,0.55)",
                                 margin: 0,
                               }}
                             >
@@ -338,7 +338,7 @@ export default function NavSearch() {
                                 fontSize: 8,
                                 letterSpacing: "0.28em",
                                 textTransform: "uppercase",
-                                color: isPerPerson(y) ? "rgba(255,255,255,0.6)" : GOLD,
+                                color: isPerPerson(y) ? "rgba(248, 245, 240,0.6)" : GOLD,
                                 margin: "0 0 2px",
                                 fontWeight: 600,
                               }}

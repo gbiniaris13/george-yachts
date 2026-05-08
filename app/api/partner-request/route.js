@@ -141,12 +141,12 @@ export async function POST(request) {
             <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
               Looking forward to collaborating,<br>
               <strong>George P. Biniaris</strong><br>
-              <span style="font-size: 13px; color: #6B7B8D;">Managing Broker · IYBA Member</span>
+              <span style="font-size: 13px; color: #9CA3AF;">Managing Broker · IYBA Member</span>
             </p>
           </div>
 
           <div style="text-align: center; padding: 20px; background: #0D1B2A;">
-            <p style="font-size: 10px; letter-spacing: 0.2em; color: rgba(255,255,255,0.35); margin: 0;">
+            <p style="font-size: 10px; letter-spacing: 0.2em; color: rgba(248, 245, 240,0.35); margin: 0;">
               GEORGE YACHTS BROKERAGE HOUSE LLC · US REGISTERED · IYBA MEMBER
             </p>
           </div>

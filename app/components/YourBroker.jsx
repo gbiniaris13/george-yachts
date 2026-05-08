@@ -60,7 +60,7 @@ export default function YourBroker() {
           />
           <div style={{
             position: "absolute", bottom: 0, left: 0, right: 0, height: "50%",
-            background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
+            background: "linear-gradient(to top, rgba(13, 27, 42,0.7), transparent)",
           }} />
         </div>
 
@@ -92,7 +92,7 @@ export default function YourBroker() {
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "11px",
             letterSpacing: "0.15em",
-            color: "rgba(255,255,255,0.35)",
+            color: "rgba(248, 245, 240,0.35)",
             textTransform: "uppercase",
             marginBottom: "32px",
           }}>
@@ -108,7 +108,7 @@ export default function YourBroker() {
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "15px",
             lineHeight: 2,
-            color: "rgba(255,255,255,0.55)",
+            color: "rgba(248, 245, 240,0.55)",
             marginBottom: "16px",
           }}>
             {t('broker.text1')}
@@ -118,7 +118,7 @@ export default function YourBroker() {
             fontFamily: "'Montserrat', sans-serif",
             fontSize: "15px",
             lineHeight: 2,
-            color: "rgba(255,255,255,0.55)",
+            color: "rgba(248, 245, 240,0.55)",
             marginBottom: "40px",
           }}>
             {t('broker.text2')}
@@ -159,13 +159,13 @@ export default function YourBroker() {
               fontFamily: "'Montserrat', sans-serif",
               fontSize: "11px",
               letterSpacing: "0.15em",
-              color: "rgba(255,255,255,0.4)",
+              color: "rgba(248, 245, 240,0.4)",
               textDecoration: "none",
               marginLeft: "24px",
               transition: "color 0.3s ease",
             }}
             onMouseEnter={(e) => e.target.style.color = "#C9A84C"}
-            onMouseLeave={(e) => e.target.style.color = "rgba(255,255,255,0.4)"}
+            onMouseLeave={(e) => e.target.style.color = "rgba(248, 245, 240,0.4)"}
           >
             {t('broker.learnMore')}
           </a>
@@ -268,7 +268,7 @@ export default function YourBroker() {
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: 12,
-                  color: "rgba(255,255,255,0.48)",
+                  color: "rgba(248, 245, 240,0.48)",
                   lineHeight: 1.7,
                   fontWeight: 300,
                   maxWidth: 260,

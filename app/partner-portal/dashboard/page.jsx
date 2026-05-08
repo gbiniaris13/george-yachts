@@ -43,7 +43,7 @@ export default async function DashboardPage() {
               <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(34px, 5vw, 48px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 6px", lineHeight: 1.1 }}>
                 Welcome back, <em style={{ color: GOLD, fontStyle: "italic" }}>{partnerName}</em>
               </h1>
-              <p style={{ fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.65)", margin: 0 }}>
+              <p style={{ fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 14, color: "rgba(248, 245, 240,0.65)", margin: 0 }}>
                 Signed in as {session.email}
               </p>
             </div>
@@ -128,7 +128,7 @@ export default async function DashboardPage() {
               fontFamily: "'Lato', 'Montserrat', sans-serif",
               fontSize: 12,
               lineHeight: 1.7,
-              color: "rgba(255,255,255,0.5)",
+              color: "rgba(248, 245, 240,0.5)",
               textAlign: "center",
               margin: "40px auto 0",
               maxWidth: 720,
@@ -175,7 +175,7 @@ const cardBody = {
   fontFamily: "'Lato', 'Montserrat', sans-serif",
   fontSize: 13.5,
   lineHeight: 1.6,
-  color: "rgba(255,255,255,0.75)",
+  color: "rgba(248, 245, 240,0.75)",
   margin: 0,
 };
 

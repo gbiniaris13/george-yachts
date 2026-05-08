@@ -317,7 +317,7 @@ const ArticlePage = async ({ params }) => {
               color: "#F8F5F0",
               lineHeight: 0.98,
               letterSpacing: "-0.03em",
-              textShadow: "0 6px 32px rgba(0,0,0,0.55)",
+              textShadow: "0 6px 32px rgba(13, 27, 42,0.55)",
             }}
           >
             {post.title}

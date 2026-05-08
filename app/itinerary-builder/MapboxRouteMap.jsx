@@ -166,7 +166,7 @@ export default function MapboxRouteMap({
             width:${dotSize}px;height:${dotSize}px;border-radius:50%;
             background:${dotColor};border:2px solid #0D1B2A;
             cursor:pointer;padding:0;
-            box-shadow:0 0 0 2px ${GOLD}55, 0 2px 6px rgba(0,0,0,0.5);
+            box-shadow:0 0 0 2px ${GOLD}55, 0 2px 6px rgba(13, 27, 42,0.5);
             transition:transform 0.18s ease, background 0.18s ease;
           `;
           el.addEventListener("mouseenter", () => {
@@ -292,7 +292,7 @@ export default function MapboxRouteMap({
             left: 12,
             zIndex: 5,
             display: "flex",
-            background: "rgba(10,10,10,0.85)",
+            background: "rgba(13, 27, 42,0.85)",
             border: "1px solid rgba(201,168,76,0.35)",
             borderRadius: 4,
             backdropFilter: "blur(8px)",
@@ -320,7 +320,7 @@ export default function MapboxRouteMap({
                   fontWeight: 700,
                   padding: "8px 14px",
                   background: active ? "rgba(201,168,76,0.22)" : "transparent",
-                  color: active ? GOLD_BRIGHT : "rgba(255,255,255,0.65)",
+                  color: active ? GOLD_BRIGHT : "rgba(248, 245, 240,0.65)",
                   border: "none",
                   cursor: "pointer",
                   transition: "background 0.18s ease, color 0.18s ease",

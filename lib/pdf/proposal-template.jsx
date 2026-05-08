@@ -24,12 +24,12 @@ import {
 } from "@react-pdf/renderer";
 
 // ─── Brand palette ───
-const NAVY = "#0a1a2f";
+const NAVY = "#0D1B2A";
 const GOLD = "#C9A84C";
 const GOLD_LIGHT = "#C9A84C";
 const INK = "#0D1B2A";
 const MUTED = "#6b6b6b";
-const PAPER = "#fafaf6";
+const PAPER = "#F8F5F0";
 
 // ─── Font registration ───
 // Wrapped in try so a missing CDN doesn't break the renderer.
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     fontFamily: "Cormorant",
     fontSize: 14,
     lineHeight: 1.7,
-    color: "rgba(255,255,255,0.78)",
+    color: "rgba(248, 245, 240,0.78)",
   },
   coverFooter: {
     flexDirection: "row",
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
     fontFamily: "Cormorant",
     fontSize: 14,
     lineHeight: 1.7,
-    color: "rgba(255,255,255,0.78)",
+    color: "rgba(248, 245, 240,0.78)",
     marginBottom: 24,
   },
   finalRow: {
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
   pageFooter: {
     fontFamily: "Montserrat",
     fontSize: 7,
-    color: "rgba(0,0,0,0.4)",
+    color: "rgba(13, 27, 42,0.4)",
     textAlign: "center",
     paddingTop: 12,
     paddingBottom: 12,

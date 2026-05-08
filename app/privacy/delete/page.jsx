@@ -67,7 +67,7 @@ export default function DeletionPage() {
               fontFamily: "'Lato', 'Montserrat', sans-serif",
               fontSize: 16,
               lineHeight: 1.7,
-              color: "rgba(255,255,255,0.78)",
+              color: "rgba(248, 245, 240,0.78)",
               margin: "0 auto",
               maxWidth: 640,
             }}
@@ -88,7 +88,7 @@ export default function DeletionPage() {
                 fontFamily: "'Lato', 'Montserrat', sans-serif",
                 fontSize: 12,
                 lineHeight: 1.7,
-                color: "rgba(255,255,255,0.55)",
+                color: "rgba(248, 245, 240,0.55)",
                 margin: "32px 0 0",
                 textAlign: "center",
               }}

@@ -30,9 +30,9 @@ export default function WaveDivider({ height = 80, intensity = 1 }) {
             <stop offset="100%" stopColor="rgba(201, 168, 76, 0)" />
           </linearGradient>
           <linearGradient id="gyWaveDividerFill2" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%"  stopColor="rgba(245, 235, 210, 0)" />
-            <stop offset="50%" stopColor="rgba(245, 235, 210, 0.55)" />
-            <stop offset="100%" stopColor="rgba(245, 235, 210, 0)" />
+            <stop offset="0%"  stopColor="rgba(248, 245, 240, 0)" />
+            <stop offset="50%" stopColor="rgba(248, 245, 240, 0.55)" />
+            <stop offset="100%" stopColor="rgba(248, 245, 240, 0)" />
           </linearGradient>
         </defs>
 

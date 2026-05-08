@@ -132,11 +132,11 @@ export default function VisitorGreeting() {
         alignItems: "flex-end",
         gap: 4,
         padding: "12px 18px",
-        background: "linear-gradient(135deg, rgba(13,13,26,0.9) 0%, rgba(0,0,0,0.9) 100%)",
+        background: "linear-gradient(135deg, rgba(13, 27, 42,0.9) 0%, rgba(13, 27, 42,0.9) 100%)",
         backdropFilter: "blur(10px)",
         WebkitBackdropFilter: "blur(10px)",
         border: "1px solid rgba(201,168,76,0.28)",
-        boxShadow: "0 16px 40px rgba(0,0,0,0.45)",
+        boxShadow: "0 16px 40px rgba(13, 27, 42,0.45)",
         opacity: phase === "fading" ? 0 : 1,
         transform: phase === "fading"
           ? "translateY(-8px)"

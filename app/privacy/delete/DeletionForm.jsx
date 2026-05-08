@@ -54,7 +54,7 @@ export default function DeletionForm() {
         <p
           style={{
             fontFamily: "'Lato', 'Montserrat', sans-serif",
-            fontSize: 14, lineHeight: 1.6, color: "rgba(255,255,255,0.78)", margin: 0,
+            fontSize: 14, lineHeight: 1.6, color: "rgba(248, 245, 240,0.78)", margin: 0,
           }}
         >
           George will personally review and respond within 30 days, in line with GDPR Article 17. If your
@@ -113,7 +113,7 @@ export default function DeletionForm() {
       <p
         style={{
           fontFamily: "'Montserrat', sans-serif", fontSize: 9,
-          color: "rgba(255,255,255,0.45)", margin: "4px 0 0", lineHeight: 1.7,
+          color: "rgba(248, 245, 240,0.45)", margin: "4px 0 0", lineHeight: 1.7,
           letterSpacing: "0.06em",
         }}
       >
@@ -128,7 +128,7 @@ export default function DeletionForm() {
 const inputStyle = {
   padding: "11px 13px",
   fontFamily: "'Montserrat', sans-serif", fontSize: 13,
-  background: "rgba(255,255,255,0.06)",
-  border: "1px solid rgba(255,255,255,0.18)",
+  background: "rgba(248, 245, 240,0.06)",
+  border: "1px solid rgba(248, 245, 240,0.18)",
   color: "#F8F5F0", outline: "none",
 };

@@ -148,13 +148,13 @@ export async function POST(request) {
                 <p style="margin:0 0 4px;"><strong>Email:</strong> ${email}</p>
                 ${phone ? `<p style="margin:0 0 4px;"><strong>Phone:</strong> ${phone}</p>` : ""}
                 ${company ? `<p style="margin:0 0 4px;"><strong>Company:</strong> ${company}</p>` : ""}
-                <hr style="border:none;border-top:1px solid #eee;margin:16px 0;" />
+                <hr style="border:none;border-top:1px solid #F8F5F0;margin:16px 0;" />
                 <p style="margin:0 0 4px;"><strong>Source:</strong> ${source}</p>
                 <p style="margin:0 0 12px;"><strong>When:</strong> ${when}</p>
                 ${
                   Object.keys(meta || {}).length
                     ? `<p style="margin:0 0 6px;"><strong>Context:</strong></p>
-                <pre style="background:#f6f6f6;padding:12px;border-radius:4px;font-size:12px;white-space:pre-wrap;">${JSON.stringify(
+                <pre style="background:#F8F5F0;padding:12px;border-radius:4px;font-size:12px;white-space:pre-wrap;">${JSON.stringify(
                   meta,
                   null,
                   2

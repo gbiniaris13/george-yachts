@@ -108,7 +108,7 @@ export default function InteractiveTools() {
               </h3>
               <p style={{
                 fontFamily: "'Montserrat', sans-serif", fontSize: 12,
-                color: 'rgba(255,255,255,0.35)', margin: '0 0 20px 0', lineHeight: 1.6,
+                color: 'rgba(248, 245, 240,0.35)', margin: '0 0 20px 0', lineHeight: 1.6,
               }}>
                 {tool.desc}
               </p>

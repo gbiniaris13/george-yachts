@@ -87,8 +87,8 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
                     textDecoration: "none",
                     color: "inherit",
                     display: "block",
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.08)",
+                    background: "rgba(248, 245, 240,0.03)",
+                    border: "1px solid rgba(248, 245, 240,0.08)",
                     overflow: "hidden",
                     transition: "transform 0.4s ease, border-color 0.4s ease",
                   }}
@@ -121,7 +121,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
                           fontFamily: "'Montserrat', sans-serif",
                           fontSize: 11,
                           letterSpacing: "0.12em",
-                          color: "rgba(255,255,255,0.65)",
+                          color: "rgba(248, 245, 240,0.65)",
                           margin: "0 0 8px",
                           textTransform: "uppercase",
                         }}
@@ -139,7 +139,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
                             fontSize: 8,
                             letterSpacing: "0.3em",
                             textTransform: "uppercase",
-                            color: isPerPerson(y) ? "rgba(255,255,255,0.65)" : GOLD,
+                            color: isPerPerson(y) ? "rgba(248, 245, 240,0.65)" : GOLD,
                             fontWeight: 600,
                             marginBottom: 2,
                           }}
@@ -191,7 +191,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
         style={{
           background: "#0D1B2A",
           padding: "56px 24px",
-          borderBottom: "1px solid rgba(255,255,255,0.05)",
+          borderBottom: "1px solid rgba(248, 245, 240,0.05)",
         }}
       >
         <div
@@ -252,7 +252,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
               style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: 16,
-                color: "rgba(255,255,255,0.85)",
+                color: "rgba(248, 245, 240,0.85)",
                 margin: "0 0 18px",
                 lineHeight: 1.6,
               }}
@@ -317,7 +317,7 @@ const btnGhost = {
   fontWeight: 600,
   padding: "10px 18px",
   background: "transparent",
-  color: "rgba(255,255,255,0.85)",
-  border: "1px solid rgba(255,255,255,0.25)",
+  color: "rgba(248, 245, 240,0.85)",
+  border: "1px solid rgba(248, 245, 240,0.25)",
   textDecoration: "none",
 };

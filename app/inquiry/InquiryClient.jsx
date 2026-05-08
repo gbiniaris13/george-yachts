@@ -315,7 +315,7 @@ export default function InquiryClient() {
               margin: "40px auto 0",
               maxWidth: 720,
               border: "1px solid rgba(201,168,76,0.32)",
-              boxShadow: "0 24px 56px rgba(0,0,0,0.45)",
+              boxShadow: "0 24px 56px rgba(13, 27, 42,0.45)",
               background: "#0D1B2A",
               animation: "gy-cover-reveal 0.9s cubic-bezier(0.2, 0.8, 0.2, 1)",
             }}
@@ -426,7 +426,7 @@ export default function InquiryClient() {
                   appearance: "none",
                   WebkitAppearance: "none",
                   background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))",
+                    "linear-gradient(135deg, rgba(248, 245, 240,0.04), rgba(248, 245, 240,0.02))",
                   paddingRight: 36,
                   cursor: "pointer",
                 }}
@@ -454,7 +454,7 @@ export default function InquiryClient() {
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: 11,
                   letterSpacing: "0.05em",
-                  color: "rgba(255,255,255,0.45)",
+                  color: "rgba(248, 245, 240,0.45)",
                   margin: "4px 2px 0",
                 }}
               >
@@ -596,7 +596,7 @@ const subtext = {
   fontFamily: "'Cormorant Garamond', Georgia, serif",
   fontSize: 17,
   lineHeight: 1.6,
-  color: "rgba(255,255,255,0.65)",
+  color: "rgba(248, 245, 240,0.65)",
   fontWeight: 300,
   margin: 0,
 };
@@ -633,7 +633,7 @@ const choiceBtn = {
 const navBtn = {
   background: "none",
   border: "none",
-  color: "rgba(255,255,255,0.5)",
+  color: "rgba(248, 245, 240,0.5)",
   fontFamily: "'Montserrat', sans-serif",
   fontSize: 11,
   letterSpacing: "0.18em",

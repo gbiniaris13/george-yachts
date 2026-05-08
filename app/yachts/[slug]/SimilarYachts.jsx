@@ -94,7 +94,7 @@ export default function SimilarYachts({ items = [] }) {
                     position: "absolute",
                     inset: 0,
                     background:
-                      "linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.6) 100%)",
+                      "linear-gradient(to bottom, transparent 55%, rgba(13, 27, 42,0.6) 100%)",
                   }}
                 />
               </div>
@@ -128,7 +128,7 @@ export default function SimilarYachts({ items = [] }) {
                   style={{
                     fontFamily: "'Montserrat', sans-serif",
                     fontSize: 11,
-                    color: "rgba(255,255,255,0.48)",
+                    color: "rgba(248, 245, 240,0.48)",
                     lineHeight: 1.5,
                     margin: 0,
                   }}

@@ -96,10 +96,10 @@ export default function HowItWorksPage() {
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#C9A84C", marginBottom: "24px", textTransform: "uppercase" }}>
             Your Charter Journey
           </p>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(56px, 10vw, 130px)", fontWeight: 300, color: "#F8F5F0", letterSpacing: "-0.035em", lineHeight: 0.95, marginBottom: "24px", textShadow: "0 6px 32px rgba(0,0,0,0.55)" }}>
+          <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(56px, 10vw, 130px)", fontWeight: 300, color: "#F8F5F0", letterSpacing: "-0.035em", lineHeight: 0.95, marginBottom: "24px", textShadow: "0 6px 32px rgba(13, 27, 42,0.55)" }}>
             How It Works
           </h1>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "15px", lineHeight: 1.9, color: "rgba(255,255,255,0.45)", maxWidth: "600px", margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "15px", lineHeight: 1.9, color: "rgba(248, 245, 240,0.45)", maxWidth: "600px", margin: "0 auto" }}>
             From first conversation to boarding day — five steps, one point of contact, zero stress.
           </p>
           <div className="w-16 h-px mx-auto mt-10" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />

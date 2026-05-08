@@ -174,7 +174,7 @@ export default async function BlogPage() {
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: 12,
-                  color: "rgba(255,255,255,0.55)",
+                  color: "rgba(248, 245, 240,0.55)",
                   margin: 0,
                   letterSpacing: "0.05em",
                 }}
@@ -197,8 +197,8 @@ export default async function BlogPage() {
                     textDecoration: "none",
                     color: "inherit",
                     display: "block",
-                    background: "rgba(255,255,255,0.02)",
-                    border: "1px solid rgba(255,255,255,0.08)",
+                    background: "rgba(248, 245, 240,0.02)",
+                    border: "1px solid rgba(248, 245, 240,0.08)",
                     borderRadius: 6,
                     overflow: "hidden",
                     transition: "border-color 0.3s ease, transform 0.3s ease",

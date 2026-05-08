@@ -332,7 +332,7 @@ export default function YachtFinderQuiz({ fleet = [] }) {
                 style={{
                   flex: 1,
                   height: 2,
-                  background: i <= step ? GOLD : 'rgba(255,255,255,0.08)',
+                  background: i <= step ? GOLD : 'rgba(248, 245, 240,0.08)',
                   transition: 'background 0.4s ease',
                 }}
               />
@@ -440,7 +440,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
             style={{
               width: '100%',
               background: 'transparent',
-              border: '1px solid rgba(255,255,255,0.18)',
+              border: '1px solid rgba(248, 245, 240,0.18)',
               color: '#F8F5F0',
               padding: '16px 18px',
               fontFamily: "'Montserrat', sans-serif",
@@ -449,7 +449,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
               borderRadius: 0,
             }}
             onFocus={(e) => (e.currentTarget.style.borderColor = GOLD)}
-            onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)')}
+            onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(248, 245, 240,0.18)')}
           />
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <button
@@ -477,7 +477,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
                 textAlign: 'left',
                 padding: '18px 22px',
                 background: 'transparent',
-                border: '1px solid rgba(255,255,255,0.15)',
+                border: '1px solid rgba(248, 245, 240,0.15)',
                 color: '#F8F5F0',
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: 18,
@@ -490,7 +490,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'transparent';
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
+                e.currentTarget.style.borderColor = 'rgba(248, 245, 240,0.15)';
               }}
             >
               <div style={{ fontWeight: 400 }}>{opt.label}</div>
@@ -520,7 +520,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
           style={{
             background: 'transparent',
             border: 'none',
-            color: 'rgba(255,255,255,0.55)',
+            color: 'rgba(248, 245, 240,0.55)',
             fontFamily: "'Montserrat', sans-serif",
             fontSize: 11,
             letterSpacing: '0.32em',
@@ -636,9 +636,9 @@ function ContactStep({ contact, setContact, onBack, onSubmit, submitting, error,
                 letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 fontWeight: 600,
-                border: `1px solid ${contact.channel === c ? GOLD : 'rgba(255,255,255,0.2)'}`,
+                border: `1px solid ${contact.channel === c ? GOLD : 'rgba(248, 245, 240,0.2)'}`,
                 background: contact.channel === c ? 'rgba(201,168,76,0.12)' : 'transparent',
-                color: contact.channel === c ? GOLD : 'rgba(255,255,255,0.75)',
+                color: contact.channel === c ? GOLD : 'rgba(248, 245, 240,0.75)',
                 cursor: 'pointer',
                 fontFamily: "'Montserrat', sans-serif",
               }}
@@ -723,7 +723,7 @@ function ResultScreen({ matches, answers }) {
       </p>
 
       {matches.length === 0 ? (
-        <p style={{ color: 'rgba(255,255,255,0.7)' }}>
+        <p style={{ color: 'rgba(248, 245, 240,0.7)' }}>
           I couldn&rsquo;t find an exact match in our active fleet — but that&rsquo;s
           why I do this work personally. Watch for an email from me shortly.
         </p>
@@ -733,8 +733,8 @@ function ResultScreen({ matches, answers }) {
             <li
               key={y.slug}
               style={{
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(255,255,255,0.08)',
+                background: 'rgba(248, 245, 240,0.03)',
+                border: '1px solid rgba(248, 245, 240,0.08)',
                 padding: 20,
                 display: 'flex',
                 gap: 16,
@@ -861,7 +861,7 @@ function Field({ label, type = 'text', value, onChange, required }) {
           width: '100%',
           background: 'transparent',
           border: 'none',
-          borderBottom: '1px solid rgba(255,255,255,0.25)',
+          borderBottom: '1px solid rgba(248, 245, 240,0.25)',
           color: '#F8F5F0',
           padding: '10px 0',
           fontSize: 14,
@@ -871,7 +871,7 @@ function Field({ label, type = 'text', value, onChange, required }) {
           borderRadius: 0,
         }}
         onFocus={(e) => (e.currentTarget.style.borderBottomColor = GOLD)}
-        onBlur={(e) => (e.currentTarget.style.borderBottomColor = 'rgba(255,255,255,0.25)')}
+        onBlur={(e) => (e.currentTarget.style.borderBottomColor = 'rgba(248, 245, 240,0.25)')}
       />
     </label>
   );
@@ -893,8 +893,8 @@ const primaryBtnStyle = {
 const ghostBtnStyle = {
   padding: '14px 24px',
   background: 'transparent',
-  color: 'rgba(255,255,255,0.85)',
-  border: '1px solid rgba(255,255,255,0.25)',
+  color: 'rgba(248, 245, 240,0.85)',
+  border: '1px solid rgba(248, 245, 240,0.25)',
   fontFamily: "'Montserrat', sans-serif",
   fontSize: 11,
   letterSpacing: '0.32em',

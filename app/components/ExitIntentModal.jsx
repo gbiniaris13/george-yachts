@@ -217,7 +217,7 @@ export default function ExitIntentModal() {
             "linear-gradient(145deg, #0D1B2A 0%, #0D1B2A 55%, #0D1B2A 100%)",
           border: "1px solid rgba(201,168,76,0.35)",
           boxShadow:
-            "0 30px 80px rgba(0,0,0,0.6), 0 0 40px rgba(201,168,76,0.08)",
+            "0 30px 80px rgba(13, 27, 42,0.6), 0 0 40px rgba(201,168,76,0.08)",
           animation: "gy-ei-modal 0.55s cubic-bezier(0.2,0.8,0.2,1) both",
         }}
       >
@@ -301,7 +301,7 @@ export default function ExitIntentModal() {
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "clamp(15px, 1.3vw, 17px)",
               lineHeight: 1.65,
-              color: "rgba(255,255,255,0.65)",
+              color: "rgba(248, 245, 240,0.65)",
               fontWeight: 300,
               marginBottom: "28px",
             }}
@@ -335,7 +335,7 @@ export default function ExitIntentModal() {
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontSize: "15px",
                   lineHeight: 1.55,
-                  color: "rgba(255,255,255,0.7)",
+                  color: "rgba(248, 245, 240,0.7)",
                   fontWeight: 300,
                 }}
               >
@@ -417,7 +417,7 @@ export default function ExitIntentModal() {
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: "9px",
                   letterSpacing: "0.2em",
-                  color: "rgba(255,255,255,0.35)",
+                  color: "rgba(248, 245, 240,0.35)",
                   textTransform: "uppercase",
                   marginTop: "8px",
                 }}

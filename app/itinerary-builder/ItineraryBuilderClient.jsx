@@ -156,17 +156,17 @@ export default function ItineraryBuilderClient() {
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
           {t('builder.label', 'Interactive Route Planner')}
         </p>
-        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px 0', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(0,0,0,0.55)' }}>
+        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px 0', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(13, 27, 42,0.55)' }}>
           {t('builder.title', 'Build Your Dream Itinerary')}
         </h1>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(255,255,255,0.35)', maxWidth: 500, margin: '0 auto' }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.35)', maxWidth: 500, margin: '0 auto' }}>
           {t('builder.subtitle', "Click islands on the map to create your route. We'll calculate distances and sailing time.")}
         </p>
       </div>
 
       {/* Starting port selector */}
       <div style={{ display: 'flex', justifyContent: 'center', gap: 12, padding: '0 24px 16px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>
+        <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.3)' }}>
           {t('builder.startFrom', 'Start from:')}
         </span>
         {[
@@ -190,7 +190,7 @@ export default function ItineraryBuilderClient() {
               textTransform: 'uppercase',
               border: `1px solid ${selected[0]?.id === island?.id ? GOLD : '#9CA3AF'}`,
               background: selected[0]?.id === island?.id ? `${GOLD}15` : 'transparent',
-              color: selected[0]?.id === island?.id ? GOLD : 'rgba(255,255,255,0.4)',
+              color: selected[0]?.id === island?.id ? GOLD : 'rgba(248, 245, 240,0.4)',
               borderRadius: 20,
               cursor: 'pointer',
               transition: 'all 0.3s ease',
@@ -215,7 +215,7 @@ export default function ItineraryBuilderClient() {
               textTransform: 'uppercase',
               border: `1px solid ${activeRegion === r ? GOLD : '#9CA3AF'}`,
               background: activeRegion === r ? `${GOLD}15` : 'transparent',
-              color: activeRegion === r ? GOLD : 'rgba(255,255,255,0.4)',
+              color: activeRegion === r ? GOLD : 'rgba(248, 245, 240,0.4)',
               borderRadius: 20,
               cursor: 'pointer',
               transition: 'all 0.3s ease',
@@ -231,7 +231,7 @@ export default function ItineraryBuilderClient() {
         className="itinerary-layout"
       >
         {/* MAP */}
-        <div style={{ position: 'relative', background: '#0D1B2A', border: '1px solid rgba(201,168,76,0.12)', borderRadius: 16, overflow: 'hidden', aspectRatio: '5/4', boxShadow: 'inset 0 0 80px rgba(0,0,0,0.5), 0 8px 32px rgba(0,0,0,0.4)' }}>
+        <div style={{ position: 'relative', background: '#0D1B2A', border: '1px solid rgba(201,168,76,0.12)', borderRadius: 16, overflow: 'hidden', aspectRatio: '5/4', boxShadow: 'inset 0 0 80px rgba(13, 27, 42,0.5), 0 8px 32px rgba(13, 27, 42,0.4)' }}>
           {HAS_MAPBOX ? (
             <MapboxRouteMap
               islands={ISLANDS}
@@ -330,7 +330,7 @@ export default function ItineraryBuilderClient() {
             {/* Region labels — subtle watermark style */}
             <text x="590" y="395" textAnchor="middle" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, fill: 'rgba(201,168,76,0.06)', letterSpacing: '0.3em', fontStyle: 'italic' }}>CYCLADES</text>
             <text x="190" y="320" textAnchor="middle" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 12, fill: 'rgba(74,144,217,0.06)', letterSpacing: '0.3em', fontStyle: 'italic' }}>IONIAN</text>
-            <text x="420" y="430" textAnchor="middle" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 11, fill: 'rgba(139,105,20,0.06)', letterSpacing: '0.3em', fontStyle: 'italic' }}>SARONIC</text>
+            <text x="420" y="430" textAnchor="middle" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 11, fill: 'rgba(201, 168, 76,0.06)', letterSpacing: '0.3em', fontStyle: 'italic' }}>SARONIC</text>
             <text x="445" y="225" textAnchor="middle" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 11, fill: 'rgba(46,204,113,0.06)', letterSpacing: '0.3em', fontStyle: 'italic' }}>SPORADES</text>
             <text x="740" y="480" textAnchor="middle" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 11, fill: 'rgba(230,126,34,0.06)', letterSpacing: '0.3em', fontStyle: 'italic' }}>DODECANESE</text>
 
@@ -422,7 +422,7 @@ export default function ItineraryBuilderClient() {
                       fontFamily: "'Montserrat', sans-serif",
                       fontSize: isSelected ? 10 : 8,
                       fontWeight: isSelected ? 600 : 400,
-                      fill: isSelected ? '#F8F5F0' : isHovered ? '#F8F5F0' : 'rgba(255,255,255,0.5)',
+                      fill: isSelected ? '#F8F5F0' : isHovered ? '#F8F5F0' : 'rgba(248, 245, 240,0.5)',
                       transition: 'all 0.3s ease',
                       pointerEvents: 'none',
                     }}
@@ -452,7 +452,7 @@ export default function ItineraryBuilderClient() {
               <div style={{ fontFamily: "'Montserrat'", fontSize: 10, color: `${GOLD}99`, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 6 }}>
                 {hoveredIsland.region}
               </div>
-              <div style={{ fontFamily: "'Montserrat'", fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>
+              <div style={{ fontFamily: "'Montserrat'", fontSize: 12, color: 'rgba(248, 245, 240,0.5)' }}>
                 {hoveredIsland.desc}
               </div>
             </div>
@@ -464,7 +464,7 @@ export default function ItineraryBuilderClient() {
           <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: '#F8F5F0', margin: '0 0 4px 0' }}>
             {t('builder.yourRoute', 'Your Route')}
           </h3>
-          <p style={{ fontFamily: "'Montserrat'", fontSize: 10, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 20 }}>
+          <p style={{ fontFamily: "'Montserrat'", fontSize: 10, color: 'rgba(248, 245, 240,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 20 }}>
             {selected.length === 0 ? t('builder.clickToBegin', 'Click islands to begin') : `${selected.length} ${t('builder.stopsSelected', 'stops selected')}`}
           </p>
 
@@ -473,7 +473,7 @@ export default function ItineraryBuilderClient() {
             {selected.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '40px 0', opacity: 0.3 }}>
                 <div style={{ fontSize: 32, marginBottom: 12 }}>🏝️</div>
-                <p style={{ fontFamily: "'Montserrat'", fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>
+                <p style={{ fontFamily: "'Montserrat'", fontSize: 12, color: 'rgba(248, 245, 240,0.4)' }}>
                   {t('builder.tapIslands', 'Tap islands on the map to build your itinerary')}
                 </p>
               </div>
@@ -498,13 +498,13 @@ export default function ItineraryBuilderClient() {
                       <div style={{ fontFamily: "'Montserrat'", fontSize: 13, fontWeight: 600, color: '#F8F5F0' }}>
                         {island.name}
                       </div>
-                      <div style={{ fontFamily: "'Montserrat'", fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>
+                      <div style={{ fontFamily: "'Montserrat'", fontSize: 10, color: 'rgba(248, 245, 240,0.3)' }}>
                         {island.region}
                       </div>
                     </div>
                     <button
                       onClick={() => toggleIsland(island)}
-                      style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.2)', cursor: 'pointer', fontSize: 16, padding: 4 }}
+                      style={{ background: 'none', border: 'none', color: 'rgba(248, 245, 240,0.2)', cursor: 'pointer', fontSize: 16, padding: 4 }}
                     >
                       ✕
                     </button>
@@ -521,7 +521,7 @@ export default function ItineraryBuilderClient() {
               padding: '16px', background: `${GOLD}08`, borderRadius: 8, border: `1px solid ${GOLD}15`,
             }}>
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 4 }}>
+                <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(248, 245, 240,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 4 }}>
                   {t('builder.totalDistance', 'Total Distance')}
                 </div>
                 <div style={{ fontFamily: "'Cormorant Garamond'", fontSize: 24, color: GOLD, fontWeight: 600 }}>
@@ -529,7 +529,7 @@ export default function ItineraryBuilderClient() {
                 </div>
               </div>
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 4 }}>
+                <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(248, 245, 240,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 4 }}>
                   {t('builder.sailingTime', 'Sailing Time')}
                 </div>
                 <div style={{ fontFamily: "'Cormorant Garamond'", fontSize: 24, color: GOLD, fontWeight: 600 }}>
@@ -542,7 +542,7 @@ export default function ItineraryBuilderClient() {
           {/* Legs breakdown */}
           {routeStats.legs.length > 0 && (
             <div style={{ marginBottom: 20 }}>
-              <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 8 }}>
+              <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: 'rgba(248, 245, 240,0.3)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 8 }}>
                 {t('builder.legs', 'Legs')}
               </div>
               {routeStats.legs.map((leg, i) => (
@@ -551,7 +551,7 @@ export default function ItineraryBuilderClient() {
                   padding: '6px 0', borderBottom: '1px solid #0D1B2A',
                   fontFamily: "'Montserrat'", fontSize: 11,
                 }}>
-                  <span style={{ color: 'rgba(255,255,255,0.5)' }}>{leg.from} → {leg.to}</span>
+                  <span style={{ color: 'rgba(248, 245, 240,0.5)' }}>{leg.from} → {leg.to}</span>
                   <span style={{ color: GOLD, fontWeight: 600 }}>{leg.nm} NM</span>
                 </div>
               ))}
@@ -581,7 +581,7 @@ export default function ItineraryBuilderClient() {
                 style={{
                   width: '100%', padding: '11px 0',
                   fontFamily: "'Montserrat', sans-serif", fontSize: 10,
-                  color: 'rgba(255,255,255,0.65)', background: 'none',
+                  color: 'rgba(248, 245, 240,0.65)', background: 'none',
                   border: '1px solid rgba(201,168,76,0.35)', borderRadius: 4, cursor: 'pointer',
                   letterSpacing: '0.15em', textTransform: 'uppercase',
                 }}
@@ -595,7 +595,7 @@ export default function ItineraryBuilderClient() {
                 style={{
                   width: '100%', padding: '12px 0',
                   fontFamily: "'Montserrat', sans-serif", fontSize: 10,
-                  color: 'rgba(255,255,255,0.3)', background: 'none',
+                  color: 'rgba(248, 245, 240,0.3)', background: 'none',
                   border: '1px solid #0D1B2A', borderRadius: 4, cursor: 'pointer',
                   letterSpacing: '0.1em', textTransform: 'uppercase',
                 }}
@@ -660,7 +660,7 @@ export default function ItineraryBuilderClient() {
                 <p style={{
                   fontFamily: "'Lato', 'Montserrat', sans-serif",
                   fontSize: 13, lineHeight: 1.6,
-                  color: 'rgba(255,255,255,0.7)', margin: '0 0 18px',
+                  color: 'rgba(248, 245, 240,0.7)', margin: '0 0 18px',
                 }}>
                   We&apos;ll email you a copy of this route and George will come back within 24 hours with the yachts that fit it.
                 </p>
@@ -740,8 +740,8 @@ export default function ItineraryBuilderClient() {
                       type="button" onClick={() => setSaveOpen(false)} disabled={saveSubmitting}
                       style={{
                         padding: '12px 16px', fontFamily: "'Montserrat', sans-serif",
-                        fontSize: 10, color: 'rgba(255,255,255,0.5)',
-                        background: 'none', border: '1px solid rgba(255,255,255,0.18)', cursor: 'pointer',
+                        fontSize: 10, color: 'rgba(248, 245, 240,0.5)',
+                        background: 'none', border: '1px solid rgba(248, 245, 240,0.18)', cursor: 'pointer',
                       }}
                     >
                       Cancel
@@ -761,7 +761,7 @@ export default function ItineraryBuilderClient() {
                 <p style={{
                   fontFamily: "'Lato', 'Montserrat', sans-serif",
                   fontSize: 14, lineHeight: 1.6,
-                  color: 'rgba(255,255,255,0.78)', margin: '0 0 22px',
+                  color: 'rgba(248, 245, 240,0.78)', margin: '0 0 22px',
                 }}>
                   A copy is on its way to {saveEmail || 'your inbox'}. George will reach out within 24 hours with two yachts that fit this route.
                 </p>
@@ -788,7 +788,7 @@ export default function ItineraryBuilderClient() {
 const modalInput = {
   padding: '10px 12px',
   fontFamily: "'Montserrat', sans-serif", fontSize: 13,
-  background: 'rgba(255,255,255,0.06)',
-  border: '1px solid rgba(255,255,255,0.18)',
+  background: 'rgba(248, 245, 240,0.06)',
+  border: '1px solid rgba(248, 245, 240,0.18)',
   color: '#F8F5F0', outline: 'none',
 };

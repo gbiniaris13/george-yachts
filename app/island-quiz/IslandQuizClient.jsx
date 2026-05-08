@@ -101,7 +101,7 @@ export default function IslandQuizClient() {
             {QUESTIONS.map((_, i) => (
               <div key={i} style={{
                 width: 40, height: 3, borderRadius: 2,
-                background: i <= step ? GOLD : 'rgba(255,255,255,0.1)',
+                background: i <= step ? GOLD : 'rgba(248, 245, 240,0.1)',
                 transition: 'background 0.5s ease',
               }} />
             ))}
@@ -125,8 +125,8 @@ export default function IslandQuizClient() {
                   padding: '20px 24px',
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: 13,
-                  color: 'rgba(255,255,255,0.7)',
-                  background: 'rgba(255,255,255,0.03)',
+                  color: 'rgba(248, 245, 240,0.7)',
+                  background: 'rgba(248, 245, 240,0.03)',
                   border: '1px solid rgba(201,168,76,0.1)',
                   borderRadius: 12,
                   cursor: 'pointer',
@@ -141,8 +141,8 @@ export default function IslandQuizClient() {
                 }}
                 onMouseLeave={(e) => {
                   e.target.style.borderColor = 'rgba(201,168,76,0.1)';
-                  e.target.style.background = 'rgba(255,255,255,0.03)';
-                  e.target.style.color = 'rgba(255,255,255,0.7)';
+                  e.target.style.background = 'rgba(248, 245, 240,0.03)';
+                  e.target.style.color = 'rgba(248, 245, 240,0.7)';
                 }}
               >
                 {t(`quiz.q${step + 1}o${i + 1}`, opt.text)}
@@ -163,21 +163,21 @@ export default function IslandQuizClient() {
           <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: GOLD, fontStyle: 'italic', marginBottom: 32 }}>
             {result.tagline}
           </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(255,255,255,0.6)', lineHeight: 2, marginBottom: 32 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.6)', lineHeight: 2, marginBottom: 32 }}>
             {result.desc}
           </p>
 
-          <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(201,168,76,0.15)', borderRadius: 12, padding: 24, marginBottom: 32, textAlign: 'left' }}>
+          <div style={{ background: 'rgba(248, 245, 240,0.03)', border: '1px solid rgba(201,168,76,0.15)', borderRadius: 12, padding: 24, marginBottom: 32, textAlign: 'left' }}>
             <div style={{ marginBottom: 16 }}>
-              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>{t('quiz.region', 'Region')}</span>
+              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.3)' }}>{t('quiz.region', 'Region')}</span>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: '#F8F5F0', margin: '4px 0 0' }}>{result.region}</p>
             </div>
             <div style={{ marginBottom: 16 }}>
-              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>{t('quiz.bestFor', 'Best For')}</span>
+              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.3)' }}>{t('quiz.bestFor', 'Best For')}</span>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: '#F8F5F0', margin: '4px 0 0' }}>{result.bestFor}</p>
             </div>
             <div>
-              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>{t('quiz.recommendedYacht', 'Recommended Yacht')}</span>
+              <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.3)' }}>{t('quiz.recommendedYacht', 'Recommended Yacht')}</span>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: GOLD, margin: '4px 0 0' }}>{result.yacht}</p>
             </div>
           </div>
@@ -230,8 +230,8 @@ export default function IslandQuizClient() {
                 letterSpacing: '0.15em',
                 textTransform: 'uppercase',
                 background: 'transparent',
-                border: '1px solid rgba(255,255,255,0.1)',
-                color: 'rgba(255,255,255,0.3)',
+                border: '1px solid rgba(248, 245, 240,0.1)',
+                color: 'rgba(248, 245, 240,0.3)',
                 borderRadius: 8,
                 cursor: 'pointer',
               }}

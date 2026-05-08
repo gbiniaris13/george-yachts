@@ -162,8 +162,8 @@ export default function TrendingYachts({ yachts }) {
                 textDecoration: "none",
                 color: "inherit",
                 display: "block",
-                background: "rgba(255,255,255,0.02)",
-                border: "1px solid rgba(255,255,255,0.08)",
+                background: "rgba(248, 245, 240,0.02)",
+                border: "1px solid rgba(248, 245, 240,0.08)",
                 borderRadius: "8px",
                 overflow: "hidden",
                 transition: "transform 0.4s ease, border-color 0.4s ease",
@@ -174,7 +174,7 @@ export default function TrendingYachts({ yachts }) {
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+                e.currentTarget.style.borderColor = "rgba(248, 245, 240,0.08)";
               }}
             >
               {/* Image — A.11: served through the Sanity image helper
@@ -211,7 +211,7 @@ export default function TrendingYachts({ yachts }) {
                       fontFamily: "'Montserrat', sans-serif",
                       fontSize: "11px",
                       letterSpacing: "0.12em",
-                      color: "rgba(255,255,255,0.55)",
+                      color: "rgba(248, 245, 240,0.55)",
                       margin: "0 0 10px",
                       textTransform: "uppercase",
                     }}
@@ -231,7 +231,7 @@ export default function TrendingYachts({ yachts }) {
                         fontSize: "8px",
                         letterSpacing: "0.3em",
                         textTransform: "uppercase",
-                        color: isPerPerson(y) ? "rgba(255,255,255,0.65)" : GOLD,
+                        color: isPerPerson(y) ? "rgba(248, 245, 240,0.65)" : GOLD,
                         fontWeight: 600,
                       }}
                     >
@@ -277,7 +277,7 @@ export default function TrendingYachts({ yachts }) {
           .gy-trending-card:hover {
             transform: perspective(1200px) rotateX(2deg) rotateY(-3deg) translateY(-6px);
             box-shadow:
-              0 28px 60px rgba(0, 0, 0, 0.55),
+              0 28px 60px rgba(13, 27, 42, 0.55),
               0 0 0 1px rgba(201, 168, 76, 0.32) inset;
           }
         }

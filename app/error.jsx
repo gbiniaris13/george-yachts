@@ -41,7 +41,7 @@ export default function Error({ error, reset }) {
         <p
           style={{
             fontSize: "13px",
-            color: "rgba(255,255,255,0.4)",
+            color: "rgba(248, 245, 240,0.4)",
             lineHeight: 1.8,
             marginBottom: "40px",
             fontWeight: 300,

@@ -335,7 +335,7 @@ export default async function RegionPage({ params }) {
                 key={card.label}
                 style={{
                   padding: "clamp(28px, 4vw, 44px)",
-                  background: "rgba(255,255,255,0.02)",
+                  background: "rgba(248, 245, 240,0.02)",
                   border: "1px solid rgba(201,168,76,0.22)",
                   position: "relative",
                 }}
@@ -436,7 +436,7 @@ export default async function RegionPage({ params }) {
                     style={{
                       display: "block",
                       background: "#0D1B2A",
-                      border: "1px solid rgba(255,255,255,0.06)",
+                      border: "1px solid rgba(248, 245, 240,0.06)",
                       textDecoration: "none",
                       transition:
                         "border-color 0.5s ease, transform 0.5s ease",
@@ -484,7 +484,7 @@ export default async function RegionPage({ params }) {
                             fontSize: 9,
                             letterSpacing: "0.28em",
                             textTransform: "uppercase",
-                            color: "rgba(255,255,255,0.45)",
+                            color: "rgba(248, 245, 240,0.45)",
                             margin: "0 0 12px",
                             fontWeight: 500,
                           }}
@@ -496,7 +496,7 @@ export default async function RegionPage({ params }) {
                         style={{
                           fontFamily: "'Lato', 'Montserrat', sans-serif",
                           fontSize: 12,
-                          color: "rgba(255,255,255,0.6)",
+                          color: "rgba(248, 245, 240,0.6)",
                           lineHeight: 1.7,
                         }}
                       >
@@ -641,7 +641,7 @@ export default async function RegionPage({ params }) {
                 textDecoration: "none",
                 border: "1px solid rgba(201,168,76,0.7)",
                 boxShadow:
-                  "0 14px 35px -10px rgba(201,168,76,0.5), inset 0 1px 0 rgba(255,255,255,0.3)",
+                  "0 14px 35px -10px rgba(201,168,76,0.5), inset 0 1px 0 rgba(248, 245, 240,0.3)",
               }}
             >
               Brief George — reply within 24h →

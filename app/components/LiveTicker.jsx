@@ -155,10 +155,10 @@ export default function LiveTicker() {
       <div style={{
         background: 'rgba(13, 27, 42, 0.85)',
         backdropFilter: 'blur(16px)',
-        border: `1px solid ${message.isBooking ? `${GOLD}25` : 'rgba(255,255,255,0.06)'}`,
+        border: `1px solid ${message.isBooking ? `${GOLD}25` : 'rgba(248, 245, 240,0.06)'}`,
         borderRadius: 12,
         padding: '12px 16px',
-        boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+        boxShadow: '0 8px 32px rgba(13, 27, 42,0.3)',
         display: 'flex',
         alignItems: 'flex-start',
         gap: 10,
@@ -169,7 +169,7 @@ export default function LiveTicker() {
           <p className="notranslate" style={{
             fontFamily: "'Montserrat', sans-serif",
             fontSize: 11,
-            color: message.isBooking ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.45)',
+            color: message.isBooking ? 'rgba(248, 245, 240,0.7)' : 'rgba(248, 245, 240,0.45)',
             margin: '0 0 3px',
             lineHeight: 1.4,
           }}>
@@ -178,7 +178,7 @@ export default function LiveTicker() {
           <p style={{
             fontFamily: "'Montserrat', sans-serif",
             fontSize: 8,
-            color: 'rgba(255,255,255,0.5)',
+            color: 'rgba(248, 245, 240,0.5)',
             margin: 0,
             letterSpacing: '0.08em',
           }}>
@@ -191,7 +191,7 @@ export default function LiveTicker() {
           aria-label="Dismiss notification"
           style={{
             background: 'none', border: 'none',
-            color: 'rgba(255,255,255,0.5)', fontSize: 12,
+            color: 'rgba(248, 245, 240,0.5)', fontSize: 12,
             cursor: 'pointer', padding: 8, flexShrink: 0,
             minWidth: 44, minHeight: 44,
             display: 'flex', alignItems: 'center', justifyContent: 'center',

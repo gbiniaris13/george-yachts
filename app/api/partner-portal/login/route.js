@@ -39,7 +39,7 @@ export async function POST(req) {
 <p>Hello,</p>
 <p>You can sign in to the George Yachts partner portal using the link below. It expires in 15 minutes.</p>
 <p style="margin:24px 0">
-  <a href="${url}" style="display:inline-block;padding:12px 22px;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:0.24em;text-transform:uppercase;font-weight:700;color:#0a1a2f;background:#C9A84C;text-decoration:none">
+  <a href="${url}" style="display:inline-block;padding:12px 22px;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:0.24em;text-transform:uppercase;font-weight:700;color:#0D1B2A;background:#C9A84C;text-decoration:none">
     Open partner portal →
   </a>
 </p>

@@ -170,7 +170,7 @@ export default async function IslandPage({ params }) {
                 fontSize: "clamp(18px, 2.4vw, 22px)",
                 fontWeight: 300,
                 fontStyle: "italic",
-                color: "rgba(255,255,255,0.78)",
+                color: "rgba(248, 245, 240,0.78)",
                 margin: 0,
                 lineHeight: 1.5,
               }}
@@ -201,7 +201,7 @@ export default async function IslandPage({ params }) {
                 fontFamily: "'Lato', 'Montserrat', sans-serif",
                 fontSize: 17,
                 lineHeight: 1.75,
-                color: "rgba(255,255,255,0.82)",
+                color: "rgba(248, 245, 240,0.82)",
                 margin: 0,
               }}
             >
@@ -263,8 +263,8 @@ export default async function IslandPage({ params }) {
                       textDecoration: "none",
                       color: "inherit",
                       display: "block",
-                      background: "rgba(255,255,255,0.03)",
-                      border: "1px solid rgba(255,255,255,0.08)",
+                      background: "rgba(248, 245, 240,0.03)",
+                      border: "1px solid rgba(248, 245, 240,0.08)",
                       overflow: "hidden",
                       transition: "border-color 0.3s ease",
                     }}
@@ -298,7 +298,7 @@ export default async function IslandPage({ params }) {
                             fontFamily: "'Montserrat', sans-serif",
                             fontSize: 11,
                             letterSpacing: "0.12em",
-                            color: "rgba(255,255,255,0.65)",
+                            color: "rgba(248, 245, 240,0.65)",
                             margin: "0 0 8px",
                             textTransform: "uppercase",
                           }}
@@ -314,7 +314,7 @@ export default async function IslandPage({ params }) {
                               fontSize: 8,
                               letterSpacing: "0.3em",
                               textTransform: "uppercase",
-                              color: isPerPerson(y) ? "rgba(255,255,255,0.65)" : GOLD,
+                              color: isPerPerson(y) ? "rgba(248, 245, 240,0.65)" : GOLD,
                               fontWeight: 600,
                               marginBottom: 2,
                             }}
@@ -405,7 +405,7 @@ export default async function IslandPage({ params }) {
                     >
                       {(y.sampleItinerary?.days || []).map((d) => d.to).filter(Boolean).slice(0, 3).join(" → ")} →&nbsp;…
                     </h3>
-                    <ol style={{ margin: 0, padding: "0 0 0 20px", color: "rgba(255,255,255,0.78)", fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 14, lineHeight: 1.7 }}>
+                    <ol style={{ margin: 0, padding: "0 0 0 20px", color: "rgba(248, 245, 240,0.78)", fontFamily: "'Lato', 'Montserrat', sans-serif", fontSize: 14, lineHeight: 1.7 }}>
                       {(y.sampleItinerary?.days || []).map((d, i) => (
                         <li key={i}>
                           <strong style={{ color: "#F8F5F0" }}>Day {d.day}</strong> · {d.distance ? `${d.distance} · ` : ""}{d.from} → {d.to}
@@ -465,7 +465,7 @@ export default async function IslandPage({ params }) {
                 fontFamily: "'Lato', 'Montserrat', sans-serif",
                 fontSize: 16,
                 lineHeight: 1.75,
-                color: "rgba(255,255,255,0.82)",
+                color: "rgba(248, 245, 240,0.82)",
                 margin: 0,
               }}
               dangerouslySetInnerHTML={{ __html: island.seasonality.replace(/\*\*(.+?)\*\*/g, '<strong style="color:#F8F5F0">$1</strong>') }}
@@ -497,7 +497,7 @@ export default async function IslandPage({ params }) {
                     fontFamily: "'Lato', 'Montserrat', sans-serif",
                     fontSize: 15,
                     lineHeight: 1.65,
-                    color: "rgba(255,255,255,0.82)",
+                    color: "rgba(248, 245, 240,0.82)",
                     paddingLeft: 22,
                     position: "relative",
                   }}
@@ -555,7 +555,7 @@ export default async function IslandPage({ params }) {
                 <details
                   key={i}
                   style={{
-                    border: "1px solid rgba(255,255,255,0.1)",
+                    border: "1px solid rgba(248, 245, 240,0.1)",
                     padding: "16px 20px",
                   }}
                 >
@@ -576,7 +576,7 @@ export default async function IslandPage({ params }) {
                       fontFamily: "'Lato', 'Montserrat', sans-serif",
                       fontSize: 14,
                       lineHeight: 1.7,
-                      color: "rgba(255,255,255,0.78)",
+                      color: "rgba(248, 245, 240,0.78)",
                       margin: "12px 0 0",
                     }}
                   >
@@ -633,8 +633,8 @@ export default async function IslandPage({ params }) {
                   fontWeight: 600,
                   padding: "14px 26px",
                   background: "transparent",
-                  color: "rgba(255,255,255,0.85)",
-                  border: "1px solid rgba(255,255,255,0.3)",
+                  color: "rgba(248, 245, 240,0.85)",
+                  border: "1px solid rgba(248, 245, 240,0.3)",
                   textDecoration: "none",
                 }}
               >

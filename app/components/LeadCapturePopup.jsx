@@ -111,7 +111,7 @@ export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadD
           position: 'relative',
           transform: closing ? 'translateY(30px) scale(0.95)' : 'translateY(0) scale(1)',
           transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-          boxShadow: `0 40px 80px rgba(0,0,0,0.6), 0 0 60px ${GOLD}08`,
+          boxShadow: `0 40px 80px rgba(13, 27, 42,0.6), 0 0 60px ${GOLD}08`,
         }}
       >
         {/* Close button */}
@@ -120,14 +120,14 @@ export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadD
           style={{
             position: 'absolute', top: 8, right: 8,
             background: 'transparent', border: 'none',
-            color: 'rgba(255,255,255,0.5)', fontSize: 20,
+            color: 'rgba(248, 245, 240,0.5)', fontSize: 20,
             cursor: 'pointer', padding: 12,
             minWidth: 44, minHeight: 44,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             transition: 'color 0.2s',
           }}
           onMouseEnter={(e) => e.target.style.color = '#F8F5F0'}
-          onMouseLeave={(e) => e.target.style.color = 'rgba(255,255,255,0.4)'}
+          onMouseLeave={(e) => e.target.style.color = 'rgba(248, 245, 240,0.4)'}
           aria-label="Close"
         >
           &times;
@@ -146,7 +146,7 @@ export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadD
             </h3>
             <p style={{
               fontFamily: "'Montserrat', sans-serif",
-              fontSize: 13, color: 'rgba(255,255,255,0.6)',
+              fontSize: 13, color: 'rgba(248, 245, 240,0.6)',
               lineHeight: 1.7, margin: '0 0 20px',
             }}>
               Our yacht specialist will contact you within 24 hours with personalized recommendations and exclusive pricing.
@@ -183,7 +183,7 @@ export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadD
             </h3>
             <p style={{
               fontFamily: "'Montserrat', sans-serif",
-              fontSize: 12, color: 'rgba(255,255,255,0.5)',
+              fontSize: 12, color: 'rgba(248, 245, 240,0.5)',
               textAlign: 'center', margin: '0 0 24px',
               lineHeight: 1.6, letterSpacing: '0.02em',
             }}>
@@ -205,7 +205,7 @@ export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadD
                   <span style={{ fontSize: 15, flexShrink: 0 }}>{b.icon}</span>
                   <span style={{
                     fontFamily: "'Montserrat', sans-serif",
-                    fontSize: 12, color: 'rgba(255,255,255,0.7)',
+                    fontSize: 12, color: 'rgba(248, 245, 240,0.7)',
                     letterSpacing: '0.02em',
                   }}>
                     {b.text}
@@ -264,7 +264,7 @@ export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadD
 
             <p style={{
               fontFamily: "'Montserrat', sans-serif",
-              fontSize: 9, color: 'rgba(255,255,255,0.25)',
+              fontSize: 9, color: 'rgba(248, 245, 240,0.25)',
               textAlign: 'center', margin: '16px 0 0',
               letterSpacing: '0.05em', lineHeight: 1.5,
             }}>
@@ -280,8 +280,8 @@ export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadD
 // Phase 27 — bumped 13→16px to prevent iOS Safari auto-zoom on focus.
 const inputStyle = {
   padding: '13px 16px',
-  background: 'rgba(255,255,255,0.06)',
-  border: '1px solid rgba(255,255,255,0.12)',
+  background: 'rgba(248, 245, 240,0.06)',
+  border: '1px solid rgba(248, 245, 240,0.12)',
   borderRadius: 10,
   color: '#F8F5F0',
   fontFamily: "'Montserrat', sans-serif",

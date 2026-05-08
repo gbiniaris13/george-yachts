@@ -64,7 +64,7 @@ function page({ title, body }) {
     <h1 style="margin:0 0 18px; font-family:Georgia,serif; font-size:30px; font-weight:300; letter-spacing:0.01em; color:#F8F5F0;">
       ${title}
     </h1>
-    <p style="margin:0 0 28px; font-family:Georgia,serif; font-size:16px; line-height:1.7; color:rgba(255,255,255,0.7); font-weight:300;">
+    <p style="margin:0 0 28px; font-family:Georgia,serif; font-size:16px; line-height:1.7; color:rgba(248, 245, 240,0.7); font-weight:300;">
       ${body}
     </p>
     <a href="https://georgeyachts.com" style="display:inline-block; padding:12px 26px; font-family:'Montserrat',Arial,sans-serif; font-size:10px; letter-spacing:0.28em; text-transform:uppercase; color:#C9A84C; text-decoration:none; border:1px solid rgba(201,168,76,0.45);">

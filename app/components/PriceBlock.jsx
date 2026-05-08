@@ -75,7 +75,7 @@ export default function PriceBlock({
           style={{
             fontFamily: "'Montserrat', sans-serif",
             fontSize: s.note,
-            color: "rgba(255,255,255,0.65)",
+            color: "rgba(248, 245, 240,0.65)",
             letterSpacing: "0.04em",
             lineHeight: 1.6,
             maxWidth: "32ch",

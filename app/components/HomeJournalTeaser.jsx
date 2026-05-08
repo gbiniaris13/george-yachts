@@ -27,7 +27,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
       style={{
         background: "#0D1B2A",
         padding: "80px 24px",
-        borderTop: "1px solid rgba(255,255,255,0.04)",
+        borderTop: "1px solid rgba(248, 245, 240,0.04)",
         position: "relative",
         overflow: "hidden",
       }}
@@ -75,7 +75,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontStyle: "italic",
               fontSize: "clamp(14px, 1.4vw, 18px)",
-              color: "rgba(255,255,255,0.7)",
+              color: "rgba(248, 245, 240,0.7)",
               margin: 0,
             }}
           >
@@ -107,8 +107,8 @@ export default function HomeJournalTeaser({ posts = [] }) {
                   textDecoration: "none",
                   color: "inherit",
                   display: "block",
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(255,255,255,0.08)",
+                  background: "rgba(248, 245, 240,0.03)",
+                  border: "1px solid rgba(248, 245, 240,0.08)",
                   overflow: "hidden",
                   transition: "border-color 0.4s ease, transform 0.4s ease",
                 }}
@@ -138,7 +138,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
                         fontSize: 9,
                         letterSpacing: "0.32em",
                         textTransform: "uppercase",
-                        color: "rgba(255,255,255,0.55)",
+                        color: "rgba(248, 245, 240,0.55)",
                         margin: "0 0 10px",
                         fontWeight: 500,
                       }}
@@ -164,7 +164,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
                         fontSize: 15,
                         lineHeight: 1.6,
-                        color: "rgba(255,255,255,0.75)",
+                        color: "rgba(248, 245, 240,0.75)",
                         margin: "0 0 14px",
                       }}
                     >

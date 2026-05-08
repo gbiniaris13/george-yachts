@@ -189,13 +189,13 @@ export default function GreekWatersMap() {
             {/* Mainland backdrop — faint */}
             <path
               d={BACKDROP_PATHS.mainland}
-              fill="rgba(255,255,255,0.025)"
+              fill="rgba(248, 245, 240,0.025)"
               stroke="rgba(201,168,76,0.15)"
               strokeWidth="1"
             />
             <path
               d={BACKDROP_PATHS.crete}
-              fill="rgba(255,255,255,0.025)"
+              fill="rgba(248, 245, 240,0.025)"
               stroke="rgba(201,168,76,0.15)"
               strokeWidth="1"
             />
@@ -215,7 +215,7 @@ export default function GreekWatersMap() {
                 x="405"
                 y="380"
                 textAnchor="end"
-                fill="rgba(255,255,255,0.55)"
+                fill="rgba(248, 245, 240,0.55)"
                 fontFamily="'Montserrat', sans-serif"
                 fontSize="16"
                 letterSpacing="3"
@@ -238,7 +238,7 @@ export default function GreekWatersMap() {
                   y={labelY}
                   textAnchor="middle"
                   fill={
-                    isActive ? "rgba(201,168,76,1)" : "rgba(255,255,255,0.48)"
+                    isActive ? "rgba(201,168,76,1)" : "rgba(248, 245, 240,0.48)"
                   }
                   fontFamily="'Montserrat', sans-serif"
                   fontSize="20"
@@ -272,11 +272,11 @@ export default function GreekWatersMap() {
                       fill={
                         isActive
                           ? "rgba(201,168,76,0.85)"
-                          : "rgba(255,255,255,0.75)"
+                          : "rgba(248, 245, 240,0.75)"
                       }
                       stroke={
                         isActive
-                          ? "rgba(230,199,122,1)"
+                          ? "rgba(201, 168, 76,1)"
                           : "rgba(201,168,76,0.4)"
                       }
                       strokeWidth={isActive ? 1.5 : 0.8}

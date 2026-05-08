@@ -67,7 +67,7 @@ export default function GreekMapBackdrop() {
         </pattern>
         {/* Greece land — subtle ivory/gold gradient */}
         <linearGradient id="greekLand" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stopColor="rgba(245, 235, 210, 0.10)" />
+          <stop offset="0%"   stopColor="rgba(248, 245, 240, 0.10)" />
           <stop offset="100%" stopColor="rgba(201, 168, 76, 0.06)" />
         </linearGradient>
         {/* Drop-shadow filter — subtle depth around Greece coastline */}
@@ -97,7 +97,7 @@ export default function GreekMapBackdrop() {
       {neighboursPath && (
         <path
           d={neighboursPath}
-          fill="rgba(255, 255, 255, 0.012)"
+          fill="rgba(248, 245, 240, 0.012)"
           stroke="rgba(201, 168, 76, 0.10)"
           strokeWidth={0.5}
         />

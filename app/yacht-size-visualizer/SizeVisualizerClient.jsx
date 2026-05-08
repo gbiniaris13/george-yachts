@@ -11,7 +11,7 @@ const COMPARISONS = [
   { name: 'Basketball Court', key: 'basketballCourt', length: 28.65, icon: '🏀', color: '#E67E22' },
   { name: 'Olympic Pool', key: 'olympicPool', length: 50, icon: '🏊', color: '#3498DB' },
   { name: 'Boeing 737', key: 'boeing737', length: 39.5, icon: '✈️', color: '#9CA3AF' },
-  { name: 'NYC Studio Apt', key: 'nycStudio', length: 6, icon: '🏠', color: '#9B59B6' },
+  { name: 'NYC Studio Apt', key: 'nycStudio', length: 6, icon: '🏠', color: '#9CA3AF' },
   { name: 'London Bus', key: 'londonBus', length: 11.23, icon: '🚌', color: '#E74C3C' },
   { name: 'Blue Whale', key: 'blueWhale', length: 30, icon: '🐋', color: '#2980B9' },
 ];
@@ -41,10 +41,10 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
           {t('tools.label', 'Interactive Tool')}
         </p>
-        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(0,0,0,0.55)' }}>
+        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(13, 27, 42,0.55)' }}>
           {t('sizeViz.title', 'How Big Is Your Yacht?')}
         </h1>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(255,255,255,0.4)', maxWidth: 480, margin: '0 auto', lineHeight: 1.8 }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.4)', maxWidth: 480, margin: '0 auto', lineHeight: 1.8 }}>
           {t('sizeViz.subtitle', "Numbers on paper don't tell the story. See how each yacht compares to things you know.")}
         </p>
       </div>
@@ -63,7 +63,7 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
                 letterSpacing: '0.1em',
                 border: `1px solid ${selectedYacht.slug === y.slug ? GOLD : '#9CA3AF'}`,
                 background: selectedYacht.slug === y.slug ? `${GOLD}15` : 'transparent',
-                color: selectedYacht.slug === y.slug ? GOLD : 'rgba(255,255,255,0.4)',
+                color: selectedYacht.slug === y.slug ? GOLD : 'rgba(248, 245, 240,0.4)',
                 borderRadius: 20,
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
@@ -82,7 +82,7 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: `${GOLD}80`, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
             {selectedYacht.length}m {t('sizeViz.length', 'length')} · {selectedYacht.beam}m {t('sizeViz.beam', 'beam')} · {selectedYacht.type}
           </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(255,255,255,0.3)', marginTop: 8 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: 'rgba(248, 245, 240,0.3)', marginTop: 8 }}>
             {t('sizeViz.deckArea', 'Total deck area')} ≈ {Math.round(selectedYacht.length * selectedYacht.beam * 0.7)}m² ({Math.round(selectedYacht.length * selectedYacht.beam * 0.7 * 10.76)} sq ft)
           </p>
         </div>
@@ -94,7 +94,7 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
             <div style={{ width: 100, textAlign: 'right', fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: GOLD, fontWeight: 600 }}>
               {t('sizeViz.yourYacht', 'Your Yacht')}
             </div>
-            <div style={{ flex: 1, position: 'relative', height: 40, background: 'rgba(255,255,255,0.02)', borderRadius: 4, overflow: 'hidden' }}>
+            <div style={{ flex: 1, position: 'relative', height: 40, background: 'rgba(248, 245, 240,0.02)', borderRadius: 4, overflow: 'hidden' }}>
               <div style={{
                 width: `${(selectedYacht.length / maxLen) * 100}%`,
                 height: '100%',
@@ -116,10 +116,10 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
           {/* Comparison bars */}
           {comparisons.map((c, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-              <div style={{ width: 100, textAlign: 'right', fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(255,255,255,0.4)' }}>
+              <div style={{ width: 100, textAlign: 'right', fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(248, 245, 240,0.4)' }}>
                 {c.icon} {t(`sizeViz.${c.key}`, c.name)}
               </div>
-              <div style={{ flex: 1, position: 'relative', height: 28, background: 'rgba(255,255,255,0.02)', borderRadius: 4, overflow: 'hidden' }}>
+              <div style={{ flex: 1, position: 'relative', height: 28, background: 'rgba(248, 245, 240,0.02)', borderRadius: 4, overflow: 'hidden' }}>
                 <div style={{
                   width: `${Math.min((c.length / maxLen) * 100, 100)}%`,
                   height: '100%',
@@ -131,12 +131,12 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
                   justifyContent: 'flex-end',
                   paddingRight: 8,
                 }}>
-                  <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(255,255,255,0.5)' }}>
+                  <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 9, color: 'rgba(248, 245, 240,0.5)' }}>
                     {c.length}m
                   </span>
                 </div>
               </div>
-              <div style={{ width: 120, fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: c.ratio >= 1 ? GOLD : 'rgba(255,255,255,0.3)' }}>
+              <div style={{ width: 120, fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: c.ratio >= 1 ? GOLD : 'rgba(248, 245, 240,0.3)' }}>
                 {c.display}
               </div>
             </div>
@@ -148,7 +148,7 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
           <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: '#F8F5F0', fontStyle: 'italic', margin: '0 0 8px' }}>
             "{selectedYacht.name} {t('sizeViz.asLongAs', 'is as long as')} {fmt(selectedYacht.length / 11.23)} {t('sizeViz.londonBusesEndToEnd', 'London buses parked end to end')}"
           </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(255,255,255,0.25)', margin: 0, letterSpacing: '0.1em' }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, color: 'rgba(248, 245, 240,0.25)', margin: 0, letterSpacing: '0.1em' }}>
             {t('sizeViz.or', 'Or')} {Math.round(selectedYacht.length / 6)} {t('sizeViz.nycStudiosInRow', 'NYC studio apartments laid in a row')}
           </p>
         </div>

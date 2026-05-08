@@ -48,7 +48,7 @@ export default function LoginForm() {
             fontFamily: "'Lato', 'Montserrat', sans-serif",
             fontSize: 14,
             lineHeight: 1.6,
-            color: "rgba(255,255,255,0.78)",
+            color: "rgba(248, 245, 240,0.78)",
             margin: 0,
           }}
         >
@@ -79,8 +79,8 @@ export default function LoginForm() {
           padding: "11px 13px",
           fontFamily: "'Montserrat', sans-serif",
           fontSize: 13,
-          background: "rgba(255,255,255,0.06)",
-          border: "1px solid rgba(255,255,255,0.18)",
+          background: "rgba(248, 245, 240,0.06)",
+          border: "1px solid rgba(248, 245, 240,0.18)",
           color: "#F8F5F0",
           outline: "none",
         }}

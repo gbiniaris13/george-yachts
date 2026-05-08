@@ -88,7 +88,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                 position: "absolute",
                 inset: 0,
                 background:
-                  "linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.20) 30%, rgba(5,5,5,0.95) 100%)",
+                  "linear-gradient(180deg, rgba(13, 27, 42,0.55) 0%, rgba(13, 27, 42,0.20) 30%, rgba(13, 27, 42,0.95) 100%)",
               }}
             />
           </div>
@@ -103,7 +103,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
             style={{
               maxWidth: "16ch",
               margin: 0,
-              textShadow: "0 6px 32px rgba(0,0,0,0.6)",
+              textShadow: "0 6px 32px rgba(13, 27, 42,0.6)",
             }}
           >
             Ten places we keep returning&nbsp;to.
@@ -238,7 +238,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                 className="gy-display-lg"
                 style={{
                   margin: "12px 0 0",
-                  textShadow: "0 6px 28px rgba(0,0,0,0.55)",
+                  textShadow: "0 6px 28px rgba(13, 27, 42,0.55)",
                   letterSpacing: "-0.025em",
                 }}
               >
@@ -370,7 +370,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                           style={{
                             position: "absolute",
                             inset: 0,
-                            background: "linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%)",
+                            background: "linear-gradient(180deg, transparent 50%, rgba(13, 27, 42,0.85) 100%)",
                           }}
                         />
                       </div>
@@ -569,7 +569,7 @@ function StopBackdrop({ stop }) {
           position: "absolute",
           inset: 0,
           background:
-            "linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.35) 35%, rgba(0,0,0,0.85) 100%)",
+            "linear-gradient(180deg, rgba(13, 27, 42,0.6) 0%, rgba(13, 27, 42,0.35) 35%, rgba(13, 27, 42,0.85) 100%)",
         }}
       />
     </div>

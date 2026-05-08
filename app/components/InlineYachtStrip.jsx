@@ -52,7 +52,7 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
           alignItems: "stretch",
           textDecoration: "none",
           color: "inherit",
-          background: "rgba(255,255,255,0.02)",
+          background: "rgba(248, 245, 240,0.02)",
           border: "1px solid rgba(201,168,76,0.18)",
           borderRadius: "10px",
           overflow: "hidden",
@@ -120,7 +120,7 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
                 fontSize: "11px",
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
-                color: "rgba(255,255,255,0.55)",
+                color: "rgba(248, 245, 240,0.55)",
                 margin: 0,
               }}
             >
@@ -160,7 +160,7 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
                 color: "#F8F5F0",
                 fontWeight: 600,
                 paddingBottom: "2px",
-                borderBottom: "1px solid rgba(255,255,255,0.4)",
+                borderBottom: "1px solid rgba(248, 245, 240,0.4)",
               }}
             >
               View Yacht →
@@ -187,7 +187,7 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
           :global(.gy-inline-yacht-strip:hover) {
             transform: perspective(1200px) rotateX(1.5deg) rotateY(-1.5deg) translateY(-4px);
             box-shadow:
-              0 32px 72px rgba(0, 0, 0, 0.55),
+              0 32px 72px rgba(13, 27, 42, 0.55),
               0 0 0 1px rgba(201, 168, 76, 0.22) inset;
           }
         }

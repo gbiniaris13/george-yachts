@@ -161,7 +161,7 @@ function ExitCard({ href, eyebrow, title, primary }) {
         textDecoration: "none",
         background: primary
           ? "linear-gradient(135deg, rgba(201,168,76,0.12) 0%, rgba(13,27,42,0.6) 100%)"
-          : "rgba(0,0,0,0.55)",
+          : "rgba(13, 27, 42,0.55)",
         border: `1px solid ${primary ? "rgba(201,168,76,0.55)" : "rgba(248,245,240,0.12)"}`,
         color: "#F8F5F0",
       }}

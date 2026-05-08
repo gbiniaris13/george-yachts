@@ -78,9 +78,9 @@ export default function ForbesReferrerWelcome() {
         right: 92, // sits left of the WhatsApp/ContactDrawer FAB stack
         zIndex: 65,
         maxWidth: "min(380px, calc(100vw - 48px))",
-        background: "linear-gradient(135deg, rgba(13,27,42,0.96) 0%, rgba(5,5,5,0.96) 100%)",
+        background: "linear-gradient(135deg, rgba(13,27,42,0.96) 0%, rgba(13, 27, 42,0.96) 100%)",
         border: "1px solid rgba(201,168,76,0.42)",
-        boxShadow: "0 24px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,168,76,0.10) inset",
+        boxShadow: "0 24px 60px rgba(13, 27, 42,0.55), 0 0 0 1px rgba(201,168,76,0.10) inset",
         backdropFilter: "blur(10px)",
         WebkitBackdropFilter: "blur(10px)",
         padding: "20px 22px 22px",

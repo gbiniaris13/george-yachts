@@ -74,10 +74,10 @@ export default function TimelineClient() {
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 10, letterSpacing: '0.4em', color: `${GOLD}99`, textTransform: 'uppercase', marginBottom: 16 }}>
           Your Journey
         </p>
-        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(0,0,0,0.55)' }}>
+        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(56px, 10vw, 130px)', color: '#F8F5F0', fontWeight: 300, margin: '0 0 18px', letterSpacing: '-0.035em', lineHeight: 0.95, textShadow: '0 6px 32px rgba(13, 27, 42,0.55)' }}>
           Charter Experience Timeline
         </h1>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(255,255,255,0.4)', maxWidth: 500, margin: '0 auto', lineHeight: 1.8 }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: 'rgba(248, 245, 240,0.4)', maxWidth: 500, margin: '0 auto', lineHeight: 1.8 }}>
           From first message to stepping aboard — every step, every detail, handled personally.
         </p>
       </div>
@@ -105,7 +105,7 @@ export default function TimelineClient() {
               fontSize: 9,
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
-              color: activeStep === i ? GOLD : 'rgba(255,255,255,0.2)',
+              color: activeStep === i ? GOLD : 'rgba(248, 245, 240,0.2)',
               transition: 'color 0.3s ease',
             }}>
               {step.day}
@@ -143,7 +143,7 @@ export default function TimelineClient() {
               <h3 style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 fontSize: activeStep === i ? 22 : 18,
-                color: activeStep === i ? '#F8F5F0' : 'rgba(255,255,255,0.5)',
+                color: activeStep === i ? '#F8F5F0' : 'rgba(248, 245, 240,0.5)',
                 fontWeight: 400,
                 margin: '0 0 8px',
                 transition: 'all 0.3s ease',
@@ -153,7 +153,7 @@ export default function TimelineClient() {
               <p style={{
                 fontFamily: "'Montserrat', sans-serif",
                 fontSize: 13,
-                color: activeStep === i ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.2)',
+                color: activeStep === i ? 'rgba(248, 245, 240,0.5)' : 'rgba(248, 245, 240,0.2)',
                 lineHeight: 1.8,
                 margin: '0 0 12px',
                 transition: 'all 0.3s ease',
@@ -170,7 +170,7 @@ export default function TimelineClient() {
                     <li key={j} style={{
                       fontFamily: "'Montserrat', sans-serif",
                       fontSize: 11,
-                      color: 'rgba(255,255,255,0.3)',
+                      color: 'rgba(248, 245, 240,0.3)',
                       lineHeight: 2,
                       position: 'relative',
                       paddingLeft: 16,

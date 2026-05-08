@@ -169,8 +169,8 @@ export default function ContactDrawer() {
           justifyContent: "center",
           gap: 2,
           boxShadow: hovered
-            ? "0 12px 36px rgba(0,0,0,0.5), 0 0 24px rgba(201,168,76,0.18)"
-            : "0 6px 20px rgba(0,0,0,0.35)",
+            ? "0 12px 36px rgba(13, 27, 42,0.5), 0 0 24px rgba(201,168,76,0.18)"
+            : "0 6px 20px rgba(13, 27, 42,0.35)",
           transform: hovered ? "translateY(-2px)" : "translateY(0)",
           transition: "all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
         }}
@@ -211,9 +211,9 @@ export default function ContactDrawer() {
               bottom: FAB_BOTTOM + 72,
               zIndex: 101,
               width: "min(360px, calc(100vw - 48px))",
-              background: "linear-gradient(155deg, rgba(13,13,26,0.98) 0%, rgba(0,0,0,0.98) 100%)",
+              background: "linear-gradient(155deg, rgba(13, 27, 42,0.98) 0%, rgba(13, 27, 42,0.98) 100%)",
               border: "1px solid rgba(201,168,76,0.32)",
-              boxShadow: "0 28px 72px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.08) inset",
+              boxShadow: "0 28px 72px rgba(13, 27, 42,0.6), 0 0 0 1px rgba(201,168,76,0.08) inset",
               padding: "26px 22px 22px",
               animation: "gy-drawer-in 0.42s cubic-bezier(0.2, 0.8, 0.2, 1)",
             }}

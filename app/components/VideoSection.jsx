@@ -161,7 +161,7 @@ export default function VideoSection() {
               letterSpacing: "-0.02em",
               color: "#F8F5F0",
               margin: 0,
-              textShadow: "0 12px 50px rgba(0, 0, 0, 0.55)",
+              textShadow: "0 12px 50px rgba(13, 27, 42, 0.55)",
               maxWidth: "16ch",
             }}
           >
@@ -288,7 +288,7 @@ export default function VideoSection() {
           right: 18px;
           bottom: 12px;
           height: 1px;
-          background: rgba(255, 255, 255, 0.85);
+          background: rgba(248, 245, 240, 0.85);
           transform: scaleX(0);
           transform-origin: center;
           transition: transform 360ms cubic-bezier(0.2, 0.85, 0.25, 1);

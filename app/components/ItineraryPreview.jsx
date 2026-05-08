@@ -216,7 +216,7 @@ export default function ItineraryPreview() {
               fontWeight: 700,
               color: streaming ? "#F8F5F0" : "#0D1B2A",
               background: streaming
-                ? "rgba(0,0,0,0.7)"
+                ? "rgba(13, 27, 42,0.7)"
                 : "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)",
               border: streaming ? "1px solid #C9A84C" : "1px solid #C9A84C",
               boxShadow: streaming
@@ -251,7 +251,7 @@ export default function ItineraryPreview() {
               padding: "clamp(28px, 4vw, 48px)",
               background: "rgba(13, 27, 42, 0.55)",
               border: "1px solid rgba(201,168,76,0.32)",
-              boxShadow: "0 24px 56px rgba(0,0,0,0.45)",
+              boxShadow: "0 24px 56px rgba(13, 27, 42,0.45)",
               minHeight: 280,
               position: "relative",
               animation: "gy-fade-in 0.4s ease",

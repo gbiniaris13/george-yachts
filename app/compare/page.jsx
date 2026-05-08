@@ -332,7 +332,7 @@ export default async function ComparePage({ searchParams }) {
                     fontWeight: 500,
                     textDecoration: "none",
                     border: "1px solid rgba(201,168,76,0.7)",
-                    boxShadow: "0 14px 35px -10px rgba(201,168,76,0.5), inset 0 1px 0 rgba(255,255,255,0.3)",
+                    boxShadow: "0 14px 35px -10px rgba(201,168,76,0.5), inset 0 1px 0 rgba(248, 245, 240,0.3)",
                   }}
                 >
                   Brief George — reply within 24h →

@@ -35,8 +35,8 @@ export default function PressStrip() {
       aria-label="Trust signals — independent journalism, professional standards"
       style={{
         background: "rgba(13, 27, 42, 0.92)",
-        borderTop: "1px solid rgba(255,255,255,0.04)",
-        borderBottom: "1px solid rgba(255,255,255,0.04)",
+        borderTop: "1px solid rgba(248, 245, 240,0.04)",
+        borderBottom: "1px solid rgba(248, 245, 240,0.04)",
         padding: "36px 24px",
       }}
     >

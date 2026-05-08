@@ -198,7 +198,7 @@ export default function PartnersClient() {
                 color: "#F8F5F0",
                 marginBottom: "18px",
                 letterSpacing: "-0.035em",
-                textShadow: "0 6px 32px rgba(0,0,0,0.55)",
+                textShadow: "0 6px 32px rgba(13, 27, 42,0.55)",
               }}
             >
               For travel professionals only.
@@ -208,7 +208,7 @@ export default function PartnersClient() {
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: "clamp(15px, 1.5vw, 18px)",
                 fontWeight: 300,
-                color: "rgba(255,255,255,0.6)",
+                color: "rgba(248, 245, 240,0.6)",
                 lineHeight: 1.7,
                 fontStyle: "italic",
                 marginBottom: "36px",
@@ -328,7 +328,7 @@ export default function PartnersClient() {
                   fontFamily: "'Montserrat', sans-serif",
                   fontSize: 9,
                   letterSpacing: "0.18em",
-                  color: "rgba(255,255,255,0.35)",
+                  color: "rgba(248, 245, 240,0.35)",
                   textTransform: "uppercase",
                   textAlign: "center",
                 }}
@@ -387,7 +387,7 @@ export default function PartnersClient() {
               fontSize: "clamp(14px, 1.6vw, 18px)",
               fontWeight: 300,
               lineHeight: 1.7,
-              color: "rgba(255,255,255,0.6)",
+              color: "rgba(248, 245, 240,0.6)",
               maxWidth: "560px",
               margin: "0 auto",
             }}
@@ -444,7 +444,7 @@ export default function PartnersClient() {
       {/* ═══════ WHY PARTNERS CHOOSE US ═══════ */}
       <section className="py-20 md:py-28 px-6" style={{ backgroundColor: "#0D1B2A" }}>
         <div className="max-w-5xl mx-auto">
-          <p className="text-center mb-16" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.45em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
+          <p className="text-center mb-16" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.45em", textTransform: "uppercase", color: "rgba(248, 245, 240,0.4)" }}>
             W H Y &nbsp; P A R T N E R S &nbsp; C H O O S E &nbsp; U S
           </p>
           <div className="grid md:grid-cols-2 gap-12">
@@ -461,7 +461,7 @@ export default function PartnersClient() {
                 >
                   {r.title}
                 </h3>
-                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", fontWeight: 300, color: "rgba(255,255,255,0.55)", lineHeight: 1.7 }}>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", fontWeight: 300, color: "rgba(248, 245, 240,0.55)", lineHeight: 1.7 }}>
                   {r.desc}
                 </p>
               </div>
@@ -499,7 +499,7 @@ export default function PartnersClient() {
       {/* ═══════ FLEET OVERVIEW ═══════ */}
       <section className="py-20 md:py-28 px-6" style={{ backgroundColor: "#0D1B2A" }}>
         <div className="max-w-5xl mx-auto">
-          <p className="text-center mb-16" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.45em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
+          <p className="text-center mb-16" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.45em", textTransform: "uppercase", color: "rgba(248, 245, 240,0.4)" }}>
             O U R &nbsp; F L E E T
           </p>
           <div className="grid md:grid-cols-3 gap-8 mb-12">
@@ -511,13 +511,13 @@ export default function PartnersClient() {
                 <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "14px", fontWeight: 600, color: "#C9A84C", marginBottom: "4px" }}>
                   {f.price}
                 </p>
-                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", fontWeight: 300, color: "rgba(255,255,255,0.45)" }}>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "12px", fontWeight: 300, color: "rgba(248, 245, 240,0.45)" }}>
                   {f.count}
                 </p>
               </div>
             ))}
           </div>
-          <p className="text-center" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", fontWeight: 300, color: "rgba(255,255,255,0.5)", letterSpacing: "0.1em" }}>
+          <p className="text-center" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "13px", fontWeight: 300, color: "rgba(248, 245, 240,0.5)", letterSpacing: "0.1em" }}>
             66+ curated vessels across all Greek waters
           </p>
         </div>
@@ -526,7 +526,7 @@ export default function PartnersClient() {
       {/* ═══════ J.1 — PARTNERS FAQ ═══════ */}
       <section className="py-20 md:py-28 px-6" style={{ backgroundColor: "#0D1B2A" }}>
         <div className="max-w-3xl mx-auto">
-          <p className="text-center mb-16" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.45em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
+          <p className="text-center mb-16" style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", fontWeight: 300, letterSpacing: "0.45em", textTransform: "uppercase", color: "rgba(248, 245, 240,0.4)" }}>
             F R E Q U E N T L Y &nbsp; A S K E D
           </p>
           <div className="space-y-3">
@@ -578,7 +578,7 @@ export default function PartnersClient() {
                     fontSize: 13.5,
                     fontWeight: 300,
                     lineHeight: 1.75,
-                    color: "rgba(255,255,255,0.7)",
+                    color: "rgba(248, 245, 240,0.7)",
                     margin: "12px 0 0",
                   }}
                 >
@@ -726,7 +726,7 @@ export default function PartnersClient() {
                 fontWeight: 400,
                 letterSpacing: "0.3em",
                 textTransform: "uppercase",
-                color: "rgba(255,255,255,0.35)",
+                color: "rgba(248, 245, 240,0.35)",
               }}
             >
               {c}

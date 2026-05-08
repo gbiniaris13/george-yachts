@@ -59,7 +59,7 @@ export default function AccessibilityPage() {
           </div>
 
           <article className="[&_p]:mb-8 [&_p]:leading-[2] [&_p]:text-white/60 [&_p]:text-[1.05rem] [&_h2]:text-2xl [&_h2]:md:text-3xl [&_h2]:text-white [&_h2]:font-marcellus [&_h2]:mt-16 [&_h2]:mb-6 [&_h2]:uppercase [&_h2]:tracking-wide [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-3 [&_ul]:text-white/60 [&_ul]:text-[1.05rem] [&_ul]:mb-8 [&_ul]:leading-[2]">
-            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.15rem", lineHeight: 1.85, color: "rgba(255,255,255,0.8)" }}>
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.15rem", lineHeight: 1.85, color: "rgba(248, 245, 240,0.8)" }}>
               George Yachts Brokerage House LLC is committed to ensuring digital
               accessibility for people with disabilities. We are continually
               improving the user experience for everyone and applying the
