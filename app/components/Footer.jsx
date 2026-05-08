@@ -454,6 +454,33 @@ const Footer = () => {
           <span className="notranslate">George Yachts</span> will only ever request payment via signed MYBA-standard charter agreement, with bank details provided directly by our company in writing. We will never request wire transfers via email, messaging app, or unverified channels. If you receive any communication asking for payment that does not match this protocol, contact us immediately to verify.
         </p>
 
+        {/* 2026-05-08 — Boss directive: replaces the masthead currency
+            switcher with a single subtle line on every page so visitors
+            always see prices in EUR (the contract currency) and a
+            spread between view-time and signature never lands as our
+            liability. Same visual register as the anti-fraud note — a
+            small editorial card, not a banner. */}
+        <p
+          className="mt-6 text-center"
+          style={{
+            fontFamily: "var(--gy-font-ui)",
+            fontSize: "9px",
+            color: "rgba(248, 245, 240,0.55)",
+            letterSpacing: "0.05em",
+            lineHeight: 1.8,
+            maxWidth: "820px",
+            margin: "24px auto 0",
+            border: "1px solid rgba(201,168,76,0.18)",
+            padding: "16px 22px",
+            background: "rgba(201,168,76,0.025)",
+          }}
+        >
+          <strong style={{ color: "#F8F5F0", letterSpacing: "0.12em", textTransform: "uppercase", fontSize: "8px", display: "block", marginBottom: "8px" }}>
+            A note on currency
+          </strong>
+          All charter rates are quoted in <strong style={{ color: "#C9A84C" }}>EUR (€)</strong> and the MYBA-standard charter agreement is signed in EUR. Conversion to USD, GBP or any other currency is provided by your own bank at the time of payment; <span className="notranslate">George Yachts</span> assumes no responsibility for exchange-rate movement between view, quote and contract execution.
+        </p>
+
         {/* O.2 — GDPR data residency + deletion line. Reinforces the
             cookie/privacy posture set by Cookiebot + the privacy
             policy page. Linked deletion form lives at /privacy/delete. */}

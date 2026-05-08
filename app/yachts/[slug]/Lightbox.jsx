@@ -112,7 +112,14 @@ export default function Lightbox({ images, yachtName }) {
             className="relative w-[90vw] h-[80vh] max-w-7xl"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* 2026-05-08 — Boss flagged the gallery counter changing
+                ("1 / 5" → "2 / 5") while the photo did not. Next.js
+                <Image fill> can skip the src update when only the
+                URL string changes; a unique `key` per index forces a
+                fresh mount on every navigation so the new image
+                always paints. */}
             <Image
+              key={currentIndex}
               src={images[currentIndex].url}
               alt={images[currentIndex].alt || `${yachtName} — charter yacht in Greece, image ${currentIndex + 1}`}
               fill

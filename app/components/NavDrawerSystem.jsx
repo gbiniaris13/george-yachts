@@ -49,8 +49,15 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import CurrencySwitcher from "./CurrencySwitcher";
 import { DESTINATIONS } from "@/lib/destinations";
+
+// 2026-05-08 — Boss directive: the €/$/£ switcher is removed from
+// the masthead. Reasoning (in his words): MYBA charter contracts
+// are signed in EUR; if a visitor sees a converted USD/GBP figure
+// and rates move between view and signature, we eat the spread.
+// All quoted prices stay denominated in EUR — the EUR-only
+// disclaimer lives in the footer. CurrencySwitcher.jsx + the
+// CurrencyProvider context stay on disk for any future re-enable.
 
 // Top-level nav items + their dropdowns. Order matters — the spec
 // puts CHARTER first (revenue), EXPLORE GREECE second (intent
@@ -324,13 +331,9 @@ export default function NavDrawerSystem() {
             </Link>
           </div>
 
-          {/* RIGHT — currency switcher (tiny corner pip). Hidden on
-              mobile per Boss spec — the mobile overlay carries its own
-              €/$/£ row instead so the masthead stays uncluttered next
-              to the hamburger. */}
-          <div className="hidden md:block absolute right-3 top-3 md:right-4 md:top-3" style={{ zIndex: 30 }}>
-            <CurrencySwitcher compact={true} />
-          </div>
+          {/* Currency switcher removed 2026-05-08 — Boss directive
+              (rates always quoted + signed in EUR; conversion liability
+              risk if the spread moves between view and contract). */}
         </div>
       </nav>
 
@@ -448,11 +451,10 @@ export default function NavDrawerSystem() {
             </Link>
           </div>
 
-          {/* Currency switcher row — 3 buttons (€/$/£) Montserrat 11 px,
-              centered, sits below the BRIEF GEORGE CTA per Boss spec. */}
-          <div className="px-6 pb-10 pt-2 flex justify-center">
-            <CurrencySwitcher />
-          </div>
+          {/* Currency row removed 2026-05-08 — see masthead note above.
+              The mobile overlay closes with a slim ivory rule + bottom
+              padding so the BRIEF GEORGE CTA remains the visual close. */}
+          <div className="px-6 pb-10 pt-2" aria-hidden="true" />
         </div>
       </div>
 

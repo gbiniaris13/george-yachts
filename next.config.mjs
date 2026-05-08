@@ -120,6 +120,28 @@ const nextConfig = {
         destination: "/#destinations",
         permanent: false,
       },
+      // 2026-05-08 — Boss screenshotted /yacht-charter/cyclades and
+      // flagged it as off-brand vs the rebuilt /destinations/[region]
+      // editorial pages. Both URL families targeted the same regions
+      // (Cyclades, Ionian, Saronic) but with different copy + chrome
+      // — a duplicate-content + brand-consistency problem. Redirect
+      // permanently so SEO equity flows to the canonical destination
+      // page and there is one source of truth for region content.
+      {
+        source: "/yacht-charter/cyclades",
+        destination: "/destinations/cyclades",
+        permanent: true,
+      },
+      {
+        source: "/yacht-charter/ionian",
+        destination: "/destinations/ionian",
+        permanent: true,
+      },
+      {
+        source: "/yacht-charter/saronic",
+        destination: "/destinations/saronic",
+        permanent: true,
+      },
       // 2026-05-04 link audit fix — 3 broken outgoing links inside
       // blog/airport-hell-2026 pointed at posts that exist as drafts
       // in Sanity but were never published. Send the ghost URLs to
