@@ -1,12 +1,10 @@
-/* Phase 28 (typography overhaul, 2026-05-08) — FontShare imports for
-   the three free FontShare faces (Sentient editorial, General Sans
-   body, Switzer UI). Fraunces (display) loads via next/font/google
-   in layout.jsx so it gets the same self-host treatment as the rest.
-   FontShare's CDN is licensed CC-BY-style (free for commercial,
-   self-hostable, no per-pageview cost). All weights requested below
-   match the 5-tier spec — keeping the request to actual usage so the
-   font payload stays under 220 KB total. */
-@import url("https://api.fontshare.com/v2/css?f[]=sentient@400,500,500i,400i&f[]=general-sans@200,300,400,500,600,200i,300i,400i,500i&f[]=switzer@200,300,400,500,600,700&display=swap");
+/* Phase 28 (typography overhaul, 2026-05-08) — Sentient / General
+   Sans / Switzer load via <link rel="stylesheet"> in layout.jsx.
+   We tried an @import here first; Next/Turbopack's CSS optimizer
+   silently dropped it from the production bundle, leaving the tier
+   vars pointing at fonts the browser never fetched. The <link>
+   approach is bullet-proof — runs before the page CSS parse and
+   isn't a candidate for any optimizer rewrites. */
 
 /* Fonts loaded via next/font in layout.jsx — no render-blocking @import */
 @import "tailwindcss";

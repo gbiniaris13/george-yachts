@@ -272,6 +272,22 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/* Phase 28 (typography overhaul, 2026-05-08) — FontShare CDN
+            for the three free FontShare faces in the 5-tier system:
+            Sentient (editorial H2/H3), General Sans (body / reading),
+            Switzer (UI / captions). Loaded as a stylesheet <link> in
+            <head> rather than @import inside globals.css because
+            Next/Turbopack's optimizeCss experiment was silently
+            dropping the @import from the production bundle. The
+            preconnect hint shaves ~150 ms off the first paint by
+            opening the TLS connection early. */}
+        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,500i,400i&f[]=general-sans@200,300,400,500,600,200i,300i,400i,500i&f[]=switzer@200,300,400,500,600,700&display=swap"
+        />
+
         {/* theme-color + apple-mobile-web-app-* now emitted by Next's
             Metadata API (see `export const viewport` + `metadata.icons`
             above). `mobile-web-app-capable` is the non-deprecated
