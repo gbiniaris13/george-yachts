@@ -1,27 +1,26 @@
 "use client";
 
-// D2 — Exit-intent modal.
+// Exit-intent modal — Boss-spec rewrite (2026-05-08).
 //
-// When a desktop visitor moves the cursor toward the top of the
-// viewport (classic "about to close the tab" gesture) we surface a
-// last-chance editorial offer: join The George Yachts Journal for
-// a curated yacht + a Greek itinerary each month. Submits through
-// the existing /api/newsletter endpoint, so every capture flows
-// into the same Telegram + Gmail pipeline already in place.
-//
-// Mobile fallback: exit-intent gestures are unreliable on phones,
-// so we use a time-based trigger (45s on page OR scroll past 70%
-// of the document, whichever hits first).
-//
-// Guardrails:
-//   - sessionStorage flag `gy_exit_intent_seen` → one show per visit
-//   - localStorage flag `gy_exit_intent_subscribed` → never again if
-//     they subscribed in a prior session
-//   - Dismiss (×, Esc, backdrop click) all mark "seen"
-//   - prefers-reduced-motion → no animation, modal just appears
-//
-// Mounts from layout.jsx. Runs everywhere; each page gets one shot
-// per session to capture the email.
+// Rules from the pop-up audit:
+//   • Desktop only. Mobile scroll-trigger removed entirely — it
+//     fired on visitors who briefly put the phone down, which is
+//     not real exit intent.
+//   • Trigger: cursor leaves the top of the viewport, AND the
+//     visitor has been on the page ≥ 3 minutes (180 s). Anything
+//     less is too aggressive for a UHNW reading-pace.
+//   • Copy is editorial, not e-commerce. No "subscribe", no
+//     urgency, no discounts.
+//       Headline: "Before you go — George sends one briefing per
+//                 month. Market intelligence, not marketing."
+//       Field:    email only.
+//       Button:   "Send it to me".
+//   • Visual: backdrop rgba(13,27,42,0.95) so the page reads as
+//     paused, not obscured. Modal frame keeps the existing gold
+//     corner accents and a 1 px gold top border.
+//   • Once subscribed (localStorage gy_exit_intent_subscribed) or
+//     once seen this session (sessionStorage gy_exit_intent_seen),
+//     never fires again.
 
 import { useEffect, useState, useRef } from "react";
 import {
@@ -33,17 +32,8 @@ import {
 
 const SESSION_KEY = "gy_exit_intent_seen";
 const SUBSCRIBED_KEY = "gy_exit_intent_subscribed";
-// Roberto 2026-05-02 (popup orchestration):
-//   • Desktop minimum dwell raised 45s → 60s so we don't pounce on
-//     fresh visitors who haven't seen the fleet yet.
-//   • Mobile time-based trigger DROPPED. Mobile gets one trigger
-//     only: 80% scroll. Time-based on mobile was firing for visitors
-//     who put the phone down briefly — a frustrated gesture, not
-//     genuine exit intent.
-//   • Coordinator gate prevents this modal from ever stacking on top
-//     of HotLeadIGPopup or LeadCapturePopup.
-const MOBILE_SCROLL_THRESHOLD = 0.8;
-const DESKTOP_MIN_TIME_MS = 60_000;
+// Boss spec: 3 min minimum dwell (was 60 s).
+const DESKTOP_MIN_TIME_MS = 180_000;
 
 export default function ExitIntentModal() {
   const [open, setOpen] = useState(false);
@@ -53,11 +43,14 @@ export default function ExitIntentModal() {
   const inputRef = useRef(null);
   const firedRef = useRef(false);
 
-  // ── Arm the triggers once on mount ─────────────────────────────
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Already subscribed → never show
+    // Mobile / coarse pointers — modal disabled entirely (Boss spec).
+    const isCoarse = window.matchMedia?.("(pointer: coarse)")?.matches;
+    if (isCoarse) return;
+
+    // Already-captured / already-seen gates.
     try {
       if (window.localStorage.getItem(SUBSCRIBED_KEY)) return;
       if (window.sessionStorage.getItem(SESSION_KEY)) return;
@@ -68,48 +61,22 @@ export default function ExitIntentModal() {
     const mountedAt = Date.now();
     const trigger = () => {
       if (firedRef.current) return;
-      // Honour the minimum dwell time — don't surprise someone who
-      // bounces off the site in the first 60 s.
       if (Date.now() - mountedAt < DESKTOP_MIN_TIME_MS) return;
-      // Coordinator gate: skip if another popup is open or we're
-      // still inside the post-popup cooldown window.
       if (!canShow()) return;
       firedRef.current = true;
       markActive();
       setOpen(true);
     };
 
-    // Desktop: cursor exits top of viewport, but only after 45s dwell.
     const onMouseOut = (e) => {
       if (e.clientY <= 2 && !e.relatedTarget) {
         trigger();
       }
     };
 
-    // Mobile/tablet: fallbacks
-    const isTouch =
-      window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
-
-    let scrollHandler = null;
-
-    if (isTouch) {
-      // Mobile gets one trigger only: scroll past 80%. Drop the
-      // 2-minute timer — it was firing for visitors who briefly put
-      // the phone down, which isn't real exit intent.
-      scrollHandler = () => {
-        const scrolled =
-          (window.scrollY + window.innerHeight) /
-          Math.max(document.documentElement.scrollHeight, 1);
-        if (scrolled >= MOBILE_SCROLL_THRESHOLD) trigger();
-      };
-      window.addEventListener("scroll", scrollHandler, { passive: true });
-    } else {
-      document.addEventListener("mouseout", onMouseOut);
-    }
-
+    document.addEventListener("mouseout", onMouseOut);
     return () => {
       document.removeEventListener("mouseout", onMouseOut);
-      if (scrollHandler) window.removeEventListener("scroll", scrollHandler);
     };
   }, []);
 
@@ -125,7 +92,7 @@ export default function ExitIntentModal() {
     return () => clearTimeout(t);
   }, [open]);
 
-  // Esc to close + body scroll lock
+  // Esc + body scroll lock
   useEffect(() => {
     if (!open) return;
     const onKey = (e) => {
@@ -176,9 +143,7 @@ export default function ExitIntentModal() {
       } catch {
         /* ignore */
       }
-      // Mark coordinator captured so no further popups fire this session.
       markCaptured();
-      // Auto-close after a beat so the success note has time to land
       setTimeout(() => {
         setOpen(false);
         markInactive();
@@ -198,13 +163,13 @@ export default function ExitIntentModal() {
       aria-labelledby="gy-exit-title"
       className="fixed inset-0 z-[9997] flex items-center justify-center p-5"
     >
-      {/* Backdrop */}
+      {/* Backdrop — Boss spec rgba(13,27,42,0.95). */}
       <div
         onClick={close}
         className="absolute inset-0"
         style={{
-          background: "rgba(13, 27, 42, 0.82)",
-          backdropFilter: "blur(6px)",
+          background: "rgba(13, 27, 42, 0.95)",
+          backdropFilter: "blur(4px)",
           animation: "gy-ei-backdrop 0.45s ease both",
         }}
       />
@@ -213,11 +178,9 @@ export default function ExitIntentModal() {
       <div
         className="relative w-full max-w-[540px]"
         style={{
-          background:
-            "linear-gradient(145deg, #0D1B2A 0%, #0D1B2A 55%, #0D1B2A 100%)",
-          border: "1px solid rgba(201,168,76,0.35)",
-          boxShadow:
-            "0 30px 80px rgba(13, 27, 42,0.6), 0 0 40px rgba(201,168,76,0.08)",
+          background: "#0D1B2A",
+          borderTop: "1px solid rgba(201,168,76,0.35)",
+          boxShadow: "0 30px 80px rgba(13, 27, 42, 0.6)",
           animation: "gy-ei-modal 0.55s cubic-bezier(0.2,0.8,0.2,1) both",
         }}
       >
@@ -252,64 +215,30 @@ export default function ExitIntentModal() {
         </button>
 
         <div className="px-8 md:px-12 py-12 md:py-14">
-          {/* Eyebrow */}
-          <p
-            style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontSize: "9px",
-              letterSpacing: "0.55em",
-              textTransform: "uppercase",
-              color: "#C9A84C",
-              fontWeight: 600,
-              marginBottom: "18px",
-            }}
-          >
-            Before you go
-          </p>
-
-          {/* Headline */}
+          {/* Headline — Boss-spec exact copy */}
           <h2
             id="gy-exit-title"
             style={{
               fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: "clamp(26px, 3.2vw, 38px)",
-              fontWeight: 200,
+              fontSize: "clamp(24px, 3vw, 34px)",
+              fontWeight: 300,
               color: "#F8F5F0",
-              lineHeight: 1.15,
+              lineHeight: 1.25,
               letterSpacing: "0.005em",
-              marginBottom: "14px",
+              marginBottom: "32px",
             }}
           >
-            One curated yacht{" "}
+            Before you go — George sends one briefing per month.
+            <br />
             <span
-              className="italic"
               style={{
-                background:
-                  "linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%)",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                color: "transparent",
+                fontStyle: "italic",
+                color: "#C9A84C",
               }}
             >
-              a month.
+              Market intelligence, not marketing.
             </span>
           </h2>
-
-          <p
-            style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: "clamp(15px, 1.3vw, 17px)",
-              lineHeight: 1.65,
-              color: "rgba(248, 245, 240,0.65)",
-              fontWeight: 300,
-              marginBottom: "28px",
-            }}
-          >
-            The George Yachts Journal — one signature yacht, one Greek
-            itinerary, and the quiet stories behind each sailing. No
-            noise, no spam. Unsubscribe anytime.
-          </p>
 
           {status === "success" ? (
             <div
@@ -328,7 +257,7 @@ export default function ExitIntentModal() {
                   marginBottom: "4px",
                 }}
               >
-                Welcome aboard.
+                On its way.
               </p>
               <p
                 style={{
@@ -339,7 +268,7 @@ export default function ExitIntentModal() {
                   fontWeight: 300,
                 }}
               >
-                Your first issue will arrive within the week.
+                Your first briefing will arrive within the week.
               </p>
             </div>
           ) : (
@@ -369,19 +298,19 @@ export default function ExitIntentModal() {
                   disabled={status === "submitting"}
                   className="px-6 py-3 transition-all duration-400 hover:brightness-110 disabled:opacity-60 disabled:cursor-not-allowed"
                   style={{
-                    background:
-                      "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)",
-                    color: "#0D1B2A",
+                    background: "transparent",
+                    color: "#C9A84C",
                     fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "10px",
-                    fontWeight: 700,
-                    letterSpacing: "0.28em",
+                    fontSize: "11px",
+                    fontWeight: 500,
+                    letterSpacing: "0.18em",
                     textTransform: "uppercase",
-                    border: 0,
+                    border: "1px solid #C9A84C",
                     cursor: "pointer",
+                    whiteSpace: "nowrap",
                   }}
                 >
-                  {status === "submitting" ? "Sending…" : "Subscribe"}
+                  {status === "submitting" ? "Sending…" : "Send it to me"}
                 </button>
               </div>
 
@@ -411,19 +340,6 @@ export default function ExitIntentModal() {
                   {errorMsg}
                 </p>
               )}
-
-              <p
-                style={{
-                  fontFamily: "'Montserrat', sans-serif",
-                  fontSize: "9px",
-                  letterSpacing: "0.2em",
-                  color: "rgba(248, 245, 240,0.35)",
-                  textTransform: "uppercase",
-                  marginTop: "8px",
-                }}
-              >
-                One email / month · Unsubscribe anytime
-              </p>
             </form>
           )}
         </div>

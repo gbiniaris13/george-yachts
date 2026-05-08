@@ -52,7 +52,6 @@ import VisitorIntelligence from "./components/VisitorIntelligence";
 import EnhancedAnalytics from "./components/EnhancedAnalytics";
 import MicrosoftClarity from "./components/MicrosoftClarity";
 import ForbesTopBar from "./components/ForbesTopBar";
-import FavoritesEmailPrompt from "./components/FavoritesEmailPrompt";
 import { cookies } from "next/headers";
 // Swiper CSS moved to individual Swiper components to avoid loading on non-Swiper pages
 
@@ -451,10 +450,11 @@ export default async function RootLayout({ children }) {
         <StickyFleetCTA />
         {/* D2 — Exit-intent capture, one shot per session */}
         <ExitIntentModal />
-        {/* K.1 (Roberto master rebuild) — favorites auto-prompt at
-            count = 2 (and again at 3 if dismissed). Mounted inside
-            WishlistProvider so it can read the live count. */}
-        <FavoritesEmailPrompt />
+        {/* FavoritesEmailPrompt removed 2026-05-08 (Boss directive) —
+            interrupting a visitor mid-shortlist with a modal is
+            the wrong moment. The /favorites page already exposes
+            a static "Send to George" form that does the same job
+            on the visitor's own schedule. */}
         <VisitorBeacon />
         </CurrencyProvider>
         </WishlistProvider>

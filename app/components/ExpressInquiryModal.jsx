@@ -180,7 +180,10 @@ export default function ExpressInquiryModal({
         position: "fixed",
         inset: 0,
         zIndex: 90,
-        background: "rgba(13, 27, 42, 0.78)",
+        // 2026-05-08 — Boss spec: bump backdrop to rgba(13,27,42,0.95)
+        // so the modal reads as the page paused, not a translucent
+        // dim. Matches the ExitIntentModal treatment.
+        background: "rgba(13, 27, 42, 0.95)",
         backdropFilter: "blur(8px)",
         display: "flex",
         alignItems: "center",

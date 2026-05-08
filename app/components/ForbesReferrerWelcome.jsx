@@ -125,7 +125,7 @@ export default function ForbesReferrerWelcome() {
         </span>
       </div>
 
-      {/* Headline */}
+      {/* Headline — Boss-spec copy (2026-05-08): warmer, less salesy. */}
       <p
         style={{
           fontFamily: "'Cormorant Garamond', Georgia, serif",
@@ -134,27 +134,24 @@ export default function ForbesReferrerWelcome() {
           color: "rgba(248,245,240,0.92)",
           fontWeight: 300,
           margin: "0 0 12px",
-          lineHeight: 1.3,
+          lineHeight: 1.35,
           letterSpacing: "0.005em",
         }}
       >
-        We were expecting you.
+        Welcome from Forbes — you&apos;ve read the story.
       </p>
 
-      {/* Body */}
       <p
         style={{
-          fontFamily: "'Lato', 'Montserrat', sans-serif",
-          fontSize: 13,
-          lineHeight: 1.6,
-          color: "rgba(248,245,240,0.7)",
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: 14,
+          lineHeight: 1.65,
+          color: "rgba(248,245,240,0.72)",
           fontWeight: 300,
           margin: "0 0 18px",
         }}
       >
-        Forbes readers brief George directly. A reply within 24 hours,
-        three yachts our brokers would put on your shortlist for this
-        week — no AI, no autoresponder.
+        George is available for a direct conversation.
       </p>
 
       {/* Gold rule */}
