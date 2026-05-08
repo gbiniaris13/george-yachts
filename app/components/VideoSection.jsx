@@ -36,27 +36,27 @@
 // Brand identity now lives in the nav logo + the embedded Forbes top
 // bar (which Chapter 01 also makes non-dismissible).
 //
-// Video swap: 6-clip Boss-curated cinematic loop — interleaves the
-// 3 above-water clips with 3 underwater clips so the visitor never
-// sees two similar shots back-to-back. Reorder + per-clip trim per
-// Boss directive ("το πρώτο 4 δευτερόλεπτα · τα τοπία και αυτά 4
-// δευτερόλεπτα το καθένα · το πρώτο underwater να πάει στη θέση 6
-// και τα άλλα να μετατοπιστούν προς την αρχή"):
+// Video swap: Boss-tightened 6-clip cinematic loop. New 4th clip
+// added at slot 2 (snorkeler swimming forward toward the camera —
+// 5607894), motorboat-wake clip dropped, and per-clip durations
+// re-balanced for a snappier 37.4 s loop.
 //
-//   1. 8303143  — golden-hour motor yacht aerial      (4 s, trimmed)
-//   2. 854344   — snorkeler on shallow sandy bottom   (6.9 s, full)
-//   3. 14545703 — superyacht in rocky-shore anchorage (4 s, trimmed)
-//   4. 4612166  — freediver gliding over seagrass     (31.1 s, full)
-//   5. 12532891 — motorboat carving a wake at sunset  (4 s, trimmed)
-//   6. 8824586  — yacht hull splashing through waves  (13.7 s, full)
+// Final order:
+//   1. 8303143  — golden-hour motor yacht aerial   (4 s, trimmed)
+//   2. 5607894  — snorkeler swims toward camera    (10.4 s, full) ★ NEW
+//   3. 14545703 — superyacht rocky-shore anchorage (4 s, trimmed)
+//   4. 854344   — snorkeler on sandy bottom        (4 s, trimmed)
+//   5. 4612166  — freediver over seagrass meadow   (10 s, trimmed)
+//   6. 8824586  — yacht hull splashing waves       (5 s, trimmed)
 //
-// Total 63.7 s loop. The above-water clips are tightened to 4 s each
-// so they read as quick "transition" beats between the longer
-// underwater shots that carry the cinematic weight. All sources
-// normalised to 1920×1080 30 fps via ffmpeg concat filter so playback
-// speed feels identical across every clip. Encoded:
-//   • WebM VP9  1000 kbps 2-pass →  7.6 MB (Chrome / Firefox / Edge)
-//   • MP4  H.264 1500 kbps 2-pass → 12   MB (Safari fallback)
+// Total 37.4 s loop (down from 63.7 s). The fresh 5607894 clip
+// becomes the long-form moment after a snappy 4 s opening; the rest
+// of the loop punches through three quick transitions and a 10 s
+// freediving beat before closing on the splash. Speed normalised
+// to 1920×1080 30 fps via ffmpeg concat filter — every clip plays
+// at the same apparent real-time pace. Encoded:
+//   • WebM VP9  1000 kbps 2-pass → 4.5 MB (Chrome / Firefox / Edge)
+//   • MP4  H.264 1500 kbps 2-pass → 6.9 MB (Safari fallback)
 // preload="auto" so the browser starts buffering immediately.
 
 import React, { useEffect, useRef, useState } from "react";
