@@ -37,15 +37,20 @@
 // bar (which Chapter 01 also makes non-dismissible).
 //
 // Video swap: the prior "/videos/yacht-cruising-new.mp4" gives way to
-// "/videos/hero-golden-yacht.{webm,mp4}" — Boss-curated golden-hour
-// motor yacht aerial (Pexels CC0, encoded 1920×1080 @ ~5 MB WebM /
-// 7.6 MB MP4 fallback). The Boss-supplied source clip lives at
-// Downloads/8303143-uhd_4096_2160_25fps.mp4; encode pipeline lives
-// in the Chapter 01 commit message for reproducibility.
+// "/videos/hero-trio.{webm,mp4}" — Boss-curated three-clip cinematic
+// loop. ffmpeg concat at 1920×1080 / 30 fps / yuv420p:
+//   1. 8303143  — golden-hour motor yacht aerial (8.4 s) — Boss pick
+//   2. 14545703 — superyacht in rocky-shore anchorage (19 s)
+//   3. 12532891 — motorboat carving a wake at sunset (10 s)
+// Total 37.4 s loop, encoded WebM VP9 1800 kbps / MP4 H.264 2400 kbps
+// 2-pass → 8.0 MB WebM (Chrome/Firefox/Edge primary) + 11 MB MP4
+// (Safari fallback). The order is Boss-specified — golden yacht
+// opens, anchorage carries the middle beat, motorboat wake closes
+// the loop before it returns to the opening shot.
 
 import React, { useEffect, useRef, useState } from "react";
 
-const HERO_VIDEO_BASE = "/videos/hero-golden-yacht";
+const HERO_VIDEO_BASE = "/videos/hero-trio";
 
 function HeroBackgroundVideo() {
   const ref = useRef(null);
