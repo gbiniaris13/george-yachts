@@ -249,7 +249,7 @@ export default function ItineraryPreview() {
             style={{
               marginTop: 36,
               padding: "clamp(28px, 4vw, 48px)",
-              background: "rgba(0,0,0,0.55)",
+              background: "rgba(13, 27, 42, 0.55)",
               border: "1px solid rgba(201,168,76,0.32)",
               boxShadow: "0 24px 56px rgba(0,0,0,0.45)",
               minHeight: 280,
@@ -373,7 +373,7 @@ function SelectField({ label, value, onChange, options }) {
         onChange={onChange}
         style={{
           padding: "12px 14px",
-          background: "rgba(0,0,0,0.55)",
+          background: "rgba(13, 27, 42, 0.55)",
           border: "1px solid rgba(201,168,76,0.25)",
           color: "#F8F5F0",
           fontFamily: "'Montserrat', sans-serif",
@@ -416,7 +416,7 @@ function TextField({ label, value, onChange, placeholder }) {
         maxLength={80}
         style={{
           padding: "12px 14px",
-          background: "rgba(0,0,0,0.55)",
+          background: "rgba(13, 27, 42, 0.55)",
           border: "1px solid rgba(201,168,76,0.25)",
           color: "#F8F5F0",
           fontFamily: "'Montserrat', sans-serif",

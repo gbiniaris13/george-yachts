@@ -767,7 +767,7 @@ function FieldInput({ label, value, onChange, placeholder, type = "text", requir
         style={{
           width: "100%",
           padding: "11px 14px",
-          background: "rgba(0,0,0,0.6)",
+          background: "rgba(13, 27, 42, 0.6)",
           border: "1px solid rgba(201,168,76,0.28)",
           color: "#F8F5F0",
           fontFamily: "'Montserrat', sans-serif",

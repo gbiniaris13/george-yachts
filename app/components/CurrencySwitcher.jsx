@@ -18,7 +18,7 @@ export default function CurrencySwitcher({ compact = true }) {
         alignItems: "center",
         gap: 0,
         border: "1px solid rgba(201,168,76,0.4)",
-        background: "rgba(0,0,0,0.4)",
+        background: "rgba(13, 27, 42, 0.4)",
         backdropFilter: "blur(8px)",
         padding: 2,
       }}

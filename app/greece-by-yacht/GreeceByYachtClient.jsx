@@ -348,7 +348,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                       style={{
                         position: "relative",
                         textDecoration: "none",
-                        background: "rgba(0,0,0,0.55)",
+                        background: "rgba(13, 27, 42, 0.55)",
                         border: "1px solid rgba(248,245,240,0.08)",
                         overflow: "hidden",
                         display: "block",

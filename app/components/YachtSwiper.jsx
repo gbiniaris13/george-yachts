@@ -147,7 +147,7 @@ const YachtSwiper = ({ yachtData }) => {
         index={lightboxIndex}
         slides={lightboxSlides}
         plugins={[Zoom, Thumbnails]}
-        styles={{ container: { backgroundColor: "rgba(0, 0, 0, .95)" } }}
+        styles={{ container: { backgroundColor: "rgba(13, 27, 42, .95)" } }}
       />
 
       <div className="relative h-[50vh] lg:h-[85vh] w-full overflow-hidden border-y border-white/5 order-1">

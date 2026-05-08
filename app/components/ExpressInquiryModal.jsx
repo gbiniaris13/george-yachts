@@ -180,7 +180,7 @@ export default function ExpressInquiryModal({
         position: "fixed",
         inset: 0,
         zIndex: 90,
-        background: "rgba(0,0,0,0.78)",
+        background: "rgba(13, 27, 42, 0.78)",
         backdropFilter: "blur(8px)",
         display: "flex",
         alignItems: "center",

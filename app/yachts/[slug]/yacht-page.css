@@ -221,7 +221,7 @@
    at scale, signature in Cinzel small caps. Reads like Robb Report
    "Editor's Note" instead of "tooltip card". */
 .yacht-insider__card {
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(13, 27, 42, 0.45);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: none;
@@ -234,7 +234,7 @@
 }
 
 .yacht-insider__card:hover {
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(13, 27, 42, 0.55);
 }
 
 .yacht-insider__header {

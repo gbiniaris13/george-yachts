@@ -331,7 +331,7 @@ export default function ProposalClient({ yachts = [] }) {
           role="dialog" aria-modal="true" aria-label="Generate proposal"
           onClick={() => !submitting && setOpen(false)}
           style={{
-            position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)",
+            position: "fixed", inset: 0, background: "rgba(13, 27, 42, 0.85)",
             display: "flex", alignItems: "center", justifyContent: "center",
             padding: 24, zIndex: 1000,
           }}

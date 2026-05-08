@@ -53,7 +53,7 @@ const YachtListContent = ({ initialYachts }) => {
               className={`relative px-8 py-5 font-marcellus cursor-pointer text-[11px] tracking-[0.4em] uppercase transition-all duration-700 ${
                 activeTab === cat.value
                   ? "text-black"
-                  : "text-black/40 hover:text-black hover:bg-black/3"
+                  : "text-black/40 hover:text-black hover:bg-[#0D1B2A]/3"
               }`}
             >
               {cat.label}

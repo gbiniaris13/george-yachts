@@ -91,7 +91,7 @@ export default function LeadCapturePopup({ isOpen, onClose, onCaptured, hotLeadD
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'rgba(0,0,0,0.7)',
+        background: 'rgba(13, 27, 42, 0.7)',
         backdropFilter: 'blur(8px)',
         opacity: closing ? 0 : 1,
         transition: 'opacity 0.4s ease',

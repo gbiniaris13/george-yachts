@@ -46,7 +46,7 @@ const WhatsAppEnquiry = ({ yachtName }) => {
       {/* Mobile: sticky bottom bar */}
       <div
         className="md:hidden fixed bottom-0 left-0 right-0 z-50 p-3"
-        style={{ backgroundColor: "rgba(0, 0, 0, 0.95)", backdropFilter: "blur(12px)" }}
+        style={{ backgroundColor: "rgba(13, 27, 42, 0.95)", backdropFilter: "blur(12px)" }}
       >
         <a
           href={whatsappUrl}

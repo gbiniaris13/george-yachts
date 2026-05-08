@@ -11,7 +11,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
     <div style={{ minHeight: "100vh", background: "#0D1B2A" }}>
       {/* Back Button */}
       <div style={{ position: "fixed", top: 100, left: 24, zIndex: 9999 }}>
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", fontFamily: "'Montserrat', sans-serif", fontSize: 11, letterSpacing: "0.15em", color: "rgba(255,255,255,0.5)", padding: "12px 20px", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)", borderRadius: 4, border: "1px solid rgba(201,168,76,0.2)" }}>
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", fontFamily: "'Montserrat', sans-serif", fontSize: 11, letterSpacing: "0.15em", color: "rgba(255,255,255,0.5)", padding: "12px 20px", background: "rgba(13, 27, 42, 0.6)", backdropFilter: "blur(8px)", borderRadius: 4, border: "1px solid rgba(201,168,76,0.2)" }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
           BACK
         </Link>

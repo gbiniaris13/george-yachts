@@ -203,7 +203,7 @@ export default function ExitIntentModal() {
         onClick={close}
         className="absolute inset-0"
         style={{
-          background: "rgba(0,0,0,0.82)",
+          background: "rgba(13, 27, 42, 0.82)",
           backdropFilter: "blur(6px)",
           animation: "gy-ei-backdrop 0.45s ease both",
         }}
@@ -355,7 +355,7 @@ export default function ExitIntentModal() {
                   disabled={status === "submitting"}
                   className="flex-1 px-4 py-3 outline-none focus:border-[#C9A84C]/70 transition-colors duration-300"
                   style={{
-                    background: "rgba(0,0,0,0.5)",
+                    background: "rgba(13, 27, 42, 0.5)",
                     border: "1px solid rgba(201,168,76,0.25)",
                     color: "#F8F5F0",
                     fontFamily: "'Cormorant Garamond', Georgia, serif",

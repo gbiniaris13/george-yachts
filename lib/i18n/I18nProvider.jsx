@@ -110,7 +110,7 @@ export function LanguageSwitcher() {
         className="flex items-center gap-2 transition-all duration-300"
         style={{
           padding: '7px 12px',
-          background: 'rgba(0,0,0,0.6)',
+          background: 'rgba(13, 27, 42, 0.6)',
           backdropFilter: 'blur(8px)',
           border: '1px solid rgba(201,168,76,0.2)',
           borderRadius: '20px',
@@ -136,7 +136,7 @@ export function LanguageSwitcher() {
             top: '100%',
             right: 0,
             marginTop: 8,
-            background: 'rgba(0,0,0,0.95)',
+            background: 'rgba(13, 27, 42, 0.95)',
             backdropFilter: 'blur(16px)',
             border: '1px solid rgba(201,168,76,0.2)',
             borderRadius: 12,

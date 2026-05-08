@@ -376,7 +376,7 @@ export default function MapboxFlyover() {
                       alignItems: "center",
                       gap: 8,
                       padding: "10px 18px",
-                      background: "rgba(0,0,0,0.55)",
+                      background: "rgba(13, 27, 42, 0.55)",
                       border: "1px solid rgba(201,168,76,0.45)",
                       color: "#F8F5F0",
                       fontFamily: "'Montserrat', sans-serif",
@@ -472,7 +472,7 @@ export default function MapboxFlyover() {
           text-transform: uppercase;
           font-weight: 600;
           color: #F8F5F0;
-          background: rgba(0,0,0,0.55);
+          background: rgba(13, 27, 42, 0.55);
           padding: 3px 8px;
           backdrop-filter: blur(4px);
           opacity: 0;

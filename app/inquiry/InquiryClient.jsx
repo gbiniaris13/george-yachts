@@ -620,7 +620,7 @@ const textInput = {
 };
 const choiceBtn = {
   padding: "14px 18px",
-  background: "rgba(0,0,0,0.5)",
+  background: "rgba(13, 27, 42, 0.5)",
   border: "1px solid rgba(201,168,76,0.22)",
   color: "#F8F5F0",
   fontFamily: "'Montserrat', sans-serif",

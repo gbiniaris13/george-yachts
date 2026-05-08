@@ -316,7 +316,7 @@ export default function ItineraryBuilderClient() {
             <div style={{
               position: 'absolute', bottom: 16, left: 16, right: 16,
               padding: '12px 16px',
-              background: 'rgba(0,0,0,0.85)',
+              background: 'rgba(13, 27, 42, 0.85)',
               backdropFilter: 'blur(8px)',
               border: `1px solid ${GOLD}30`,
               borderRadius: 8,

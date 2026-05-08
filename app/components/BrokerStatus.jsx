@@ -118,7 +118,7 @@ export default function BrokerStatus() {
         alignItems: "center",
         gap: 8,
         padding: "6px 12px 6px 10px",
-        background: "rgba(0, 0, 0, 0.6)",
+        background: "rgba(13, 27, 42, 0.6)",
         backdropFilter: "blur(8px)",
         WebkitBackdropFilter: "blur(8px)",
         border: `1px solid ${live ? "rgba(76, 175, 80, 0.42)" : "rgba(248,245,240,0.16)"}`,

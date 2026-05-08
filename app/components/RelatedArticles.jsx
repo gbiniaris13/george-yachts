@@ -68,7 +68,7 @@ export default function RelatedArticles({ posts }) {
                     </span>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2A]/60 to-transparent" />
               </div>
 
               {/* Content */}

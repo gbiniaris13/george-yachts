@@ -302,7 +302,7 @@ function DeckPlansSection({ decks, yachtName }) {
           style={{
             position: 'fixed',
             inset: 0,
-            background: 'rgba(0,0,0,0.85)',
+            background: 'rgba(13, 27, 42, 0.85)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -330,7 +330,7 @@ function DeckPlansSection({ decks, yachtName }) {
                 right: 12,
                 width: 36,
                 height: 36,
-                background: 'rgba(0,0,0,0.6)',
+                background: 'rgba(13, 27, 42, 0.6)',
                 color: '#F8F5F0',
                 border: '1px solid rgba(255,255,255,0.3)',
                 cursor: 'pointer',

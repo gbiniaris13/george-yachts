@@ -76,7 +76,7 @@ const TeamCard = ({ member }) => {
         onError={(e) => (e.target.src = IMAGE_PLACEHOLDER_URL)}
       />
       {/* Overlay Gradient (for text contrast) */}
-      <div className="absolute inset-0 bg-black/50 hover:bg-black/40 transition duration-300"></div>
+      <div className="absolute inset-0 bg-[#0D1B2A]/50 hover:bg-[#0D1B2A]/40 transition duration-300"></div>
 
       {/* Content Container (Aligned Top-Left) */}
       <div className="relative z-10 p-6 flex flex-col h-full justify-end">

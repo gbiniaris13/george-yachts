@@ -383,7 +383,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
             style={{
               position: 'absolute', top: 12, right: 12, zIndex: 5,
               width: 36, height: 36, borderRadius: '50%',
-              background: 'rgba(0,0,0,0.5)', border: 'none',
+              background: 'rgba(13, 27, 42, 0.5)', border: 'none',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               cursor: 'pointer', transition: 'all 0.3s ease',
               backdropFilter: 'blur(4px)',
@@ -831,7 +831,7 @@ export default function FleetGrid({ yachts }) {
           flexWrap: 'wrap',
           justifyContent: 'center',
           padding: '24px 24px 8px',
-          background: 'rgba(0,0,0,0.85)',
+          background: 'rgba(13, 27, 42, 0.85)',
         }}
       >
         {PRESETS.map((preset) => (

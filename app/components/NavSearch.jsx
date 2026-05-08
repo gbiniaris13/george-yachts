@@ -153,7 +153,7 @@ export default function NavSearch() {
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(0,0,0,0.85)",
+            background: "rgba(13, 27, 42, 0.85)",
             backdropFilter: "blur(8px)",
             zIndex: 90,
             paddingTop: "calc(120px + var(--gy-top-offset, 0px))",

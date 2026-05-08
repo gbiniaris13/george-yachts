@@ -143,8 +143,8 @@ export default function SignatureYacht({ yacht }) {
 
         {/* Gradient overlays — ensure text readability top & bottom,
             keep the image alive in the middle. */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/10 to-black/85" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-black/35" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0D1B2A]/65 via-[#0D1B2A]/10 to-[#0D1B2A]/85" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0D1B2A]/35 via-transparent to-[#0D1B2A]/35" />
 
         {/* Top label — FEATURED THIS WEEK. Pushed below the fixed
             nav zone (72px scrolled-state) plus a bit more breathing. */}
@@ -160,7 +160,7 @@ export default function SignatureYacht({ yacht }) {
               textTransform: "uppercase",
               fontWeight: 600,
               backdropFilter: "blur(8px)",
-              backgroundColor: "rgba(0,0,0,0.35)",
+              backgroundColor: "rgba(13, 27, 42, 0.35)",
             }}
           >
             Featured This Week

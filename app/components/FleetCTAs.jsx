@@ -68,7 +68,7 @@ function FleetPanel({
       />
 
       {/* Dark overlay — heavier by default, lifts on hover to reveal the image. */}
-      <div className="absolute inset-0 bg-black/60 group-hover:bg-black/30 transition-colors duration-700" />
+      <div className="absolute inset-0 bg-[#0D1B2A]/60 group-hover:bg-[#0D1B2A]/30 transition-colors duration-700" />
 
       {/* Subtle vertical gold glow from bottom on hover (creates depth). */}
       <div

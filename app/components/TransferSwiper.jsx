@@ -106,7 +106,7 @@ const TransferSwiper = ({ transferData }) => {
                         loading="lazy"
                         decoding="async"
                       />
-                      <div className="absolute inset-0 bg-black/30"></div>
+                      <div className="absolute inset-0 bg-[#0D1B2A]/30"></div>
                     </SwiperSlide>
                   ))}
                 <div

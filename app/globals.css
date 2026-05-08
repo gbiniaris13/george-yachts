@@ -76,6 +76,13 @@ section[id], main[id], div[id^="section-"] {
    the Forbes bar instead of getting hidden behind it. */
 body {
   --gy-top-offset: 0px;
+  /* 2026-05-08 (Chapter 05 Pass 6) — canonical navy bg on body so
+     any section without its own background still renders navy
+     (not the browser default white or the older transparent
+     "show the html bg through"). Belt-and-braces with the
+     .bg-black Tailwind override. */
+  background-color: var(--gy-navy, #0D1B2A);
+  color: var(--gy-ivory, #F8F5F0);
 }
 body.gy-with-forbes-bar {
   --gy-top-offset: 36px;
@@ -763,7 +770,7 @@ section {
 
 /* Glass panel */
 .glass {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(13, 27, 42, 0.4);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(201, 168, 76, 0.08);
@@ -2636,7 +2643,7 @@ a.gy-fancy-link:hover {
   right: 12px;
   width: 36px;
   height: 36px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(13, 27, 42, 0.5);
   border: 1px solid rgba(245, 239, 225, 0.3);
   color: #F8F5F0;
   font-size: 22px;
@@ -3120,7 +3127,7 @@ a.gy-fancy-link:hover {
   height: 44px;
   border-radius: 50%;
   border: 1px solid rgba(201, 168, 76, 0.55);
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(13, 27, 42, 0.55);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   color: #F8F5F0;

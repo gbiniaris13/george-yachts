@@ -191,7 +191,7 @@ export default function ContactDrawer() {
             style={{
               position: "fixed",
               inset: 0,
-              background: "rgba(0,0,0,0.55)",
+              background: "rgba(13, 27, 42, 0.55)",
               backdropFilter: "blur(6px)",
               WebkitBackdropFilter: "blur(6px)",
               zIndex: 100,

@@ -336,7 +336,7 @@ export default function GreekWatersMap() {
               aria-live="polite"
               className="hidden md:block absolute top-8 right-8 max-w-sm p-8 pointer-events-none"
               style={{
-                background: "rgba(0, 0, 0, 0.9)",
+                background: "rgba(13, 27, 42, 0.9)",
                 backdropFilter: "blur(14px)",
                 border: "1px solid rgba(201,168,76,0.35)",
                 color: "#F8F5F0",
@@ -413,7 +413,7 @@ export default function GreekWatersMap() {
               key={`list-${r.id}`}
               href={r.href}
               className="group block border border-[#C9A84C]/15 hover:border-[#C9A84C]/55 p-6 transition-colors duration-500"
-              style={{ background: "rgba(0,0,0,0.55)" }}
+              style={{ background: "rgba(13, 27, 42, 0.55)" }}
               onMouseEnter={() => setActiveId(r.id)}
               onMouseLeave={() =>
                 setActiveId((prev) => (prev === r.id ? null : prev))

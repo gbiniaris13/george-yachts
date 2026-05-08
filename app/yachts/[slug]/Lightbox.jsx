@@ -75,7 +75,7 @@ export default function Lightbox({ images, yachtName }) {
               height={400}
               className="yacht-gallery__image transition-transform duration-500 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
+            <div className="absolute inset-0 bg-[#0D1B2A]/0 group-hover:bg-[#0D1B2A]/30 transition-all duration-300 flex items-center justify-center">
               <span className="opacity-0 group-hover:opacity-100 text-white text-xs tracking-[0.3em] uppercase transition-opacity duration-300">
                 View larger
               </span>
@@ -87,7 +87,7 @@ export default function Lightbox({ images, yachtName }) {
       {/* Lightbox Modal */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-sm flex items-center justify-center"
+          className="fixed inset-0 z-[9999] bg-[#0D1B2A]/95 backdrop-blur-sm flex items-center justify-center"
           onClick={() => setIsOpen(false)}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}

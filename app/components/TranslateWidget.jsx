@@ -62,7 +62,7 @@ export default function TranslateWidget({ variant = 'floating' }) {
           gap: '8px',
           padding: '9px 14px',
           minHeight: '40px',
-          background: 'rgba(0,0,0,0.75)',
+          background: 'rgba(13, 27, 42, 0.75)',
           backdropFilter: 'blur(12px)',
           border: '1px solid rgba(201,168,76,0.25)',
           cursor: 'pointer',
@@ -122,7 +122,7 @@ export default function TranslateWidget({ variant = 'floating' }) {
             ...(variant === 'inline'
               ? { top: '100%', right: 0, marginTop: 10 }
               : { bottom: '100%', left: 0, marginBottom: 10 }),
-            background: 'rgba(0,0,0,0.95)',
+            background: 'rgba(13, 27, 42, 0.95)',
             backdropFilter: 'blur(20px)',
             border: '1px solid rgba(201,168,76,0.2)',
             overflow: 'hidden',

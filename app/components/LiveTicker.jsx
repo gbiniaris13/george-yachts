@@ -153,7 +153,7 @@ export default function LiveTicker() {
       }}
     >
       <div style={{
-        background: 'rgba(0,0,0,0.85)',
+        background: 'rgba(13, 27, 42, 0.85)',
         backdropFilter: 'blur(16px)',
         border: `1px solid ${message.isBooking ? `${GOLD}25` : 'rgba(255,255,255,0.06)'}`,
         borderRadius: 12,

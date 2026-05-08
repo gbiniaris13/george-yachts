@@ -99,7 +99,7 @@ export default function StickyMiniNav() {
         pointerEvents: visible ? "auto" : "none",
         transition:
           "transform 0.45s cubic-bezier(0.2,0.8,0.2,1), opacity 0.35s ease",
-        background: "rgba(0,0,0,0.78)",
+        background: "rgba(13, 27, 42, 0.78)",
         backdropFilter: "blur(14px)",
         WebkitBackdropFilter: "blur(14px)",
         borderTop: "1px solid rgba(201,168,76,0.12)",
