@@ -406,7 +406,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
             {builder && <p className="fleet-card__builder notranslate">{builder}</p>}
           </div>
         </div>
-      </Link>
+      </ViewTransitionLink>
 
       {/* Info section */}
       <div className="fleet-card__info">
