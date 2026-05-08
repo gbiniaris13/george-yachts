@@ -136,7 +136,13 @@ const italiana = Italiana({
 // component breaks during the rollout.
 const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600"],
+  // 2026-05-08 follow-up — Boss said the hero "GEORGE YACHTS" still
+  // read "πρόχειρο/παιδικό" at Light 300. Fraunces 100 is the
+  // editorial-thin axis used by Vogue / NYT Cooking on display
+  // headlines — much closer to Canela Thin's air-and-grace feel.
+  // Added 100 to the weight set + kept the rest for non-display
+  // contexts that benefit from a touch more body.
+  weight: ["100", "200", "300", "400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--gy-font-display",
   display: "swap",

@@ -3258,6 +3258,23 @@ a.gy-fancy-link:hover {
   letter-spacing: -0.015em;
 }
 
+/* 2026-05-08 follow-up — hero wordmark refinement.
+   Boss flagged the hero as "πρόχειρο/παιδικό" at Light 300 / +0.04em
+   tracking (the inline letter-spacing in VideoSection.jsx was overriding
+   the Phase 28 default). New treatment matches Boss's master spec
+   exactly: Canela Thin → Fraunces 100, tracking -0.02em, mixed case
+   bones held in uppercase via the existing textTransform.
+   Three !important's because the inline <h1 style> in VideoSection
+   currently sets font-weight 500 and letter-spacing 0.04em — easier
+   to win them at the CSS layer than to chase down the inline edit
+   on every component that does the same trick (FleetCTAs hero etc.). */
+.gy-pearl-white,
+.gy-hero-headline.gy-pearl-white {
+  font-weight: 100 !important;
+  letter-spacing: -0.02em !important;
+  font-stretch: 100% !important;
+}
+
 /* TIER 1 stat numbers — Canela Thin in Boss's spec.
    Targets HomeStats stat values + similar large numerics. */
 [class*="gy-stat-value"],
