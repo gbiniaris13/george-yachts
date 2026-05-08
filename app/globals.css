@@ -3389,3 +3389,93 @@ figcaption,
 /* ───────────────────────────────────────────────────────────────────
    End Phase 28 typography mapping.
    ─────────────────────────────────────────────────────────────────── */
+
+/* ───────────────────────────────────────────────────────────────────
+   Chapter 05 Pass 2 — Gold restraint (Boss directive, 2026-05-08).
+
+   Boss rule: gold (#C9A84C) appears ONLY on:
+     • CTA button borders
+     • 0.5 px section divider lines
+     • George's Inside Info left border
+     • Hover states
+   …nowhere else. Eyebrows, labels, italic accents, stat numbers,
+   captions, prices, blurbs, etc. land on ivory (#F8F5F0) or the
+   muted gray (#9CA3AF) for secondary text.
+
+   This block sits at the BOTTOM of globals.css so its specificity
+   wins against the legacy gold-text rules above. !important is
+   required because so many of those rules already use it.
+
+   Anything intentionally gold (borders, hovers) is unaffected —
+   the rules below only target color (text fill), not border-color
+   or background.
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Eyebrow / label / pre-headline / caption patterns → ivory */
+[class*="eyebrow"]:not(button):not(button *),
+[class*="-label"]:not(button):not(button *):not([class*="cta-label"]),
+[class*="pre-headline"],
+[class*="-tag"]:not(button):not([class*="hashtag"]),
+[class*="-callout"]:not(button),
+[class*="-pip"]:not(button),
+[class*="-counter"]:not(button),
+[class*="-eyebrow"]:not(button),
+.gy-region-map-eyebrow,
+.gy-region-map-blurb,
+.gy-region-modal-eyebrow,
+.gy-region-modal-name,
+.gy-region-modal-subtitle,
+.gy-region-modal-blurb,
+.gy-region-pin-name,
+.gy-region-pin-count,
+.gy-yacht-tour-eyebrow,
+.gy-yacht-tour-caption,
+.gy-yacht-tour-counter,
+.gy-yacht-tour-counter span,
+.gy-stat-num,
+.fleet-hero__eyebrow,
+.fleet-trust__eyebrow,
+.fleet-trust__quote-attr,
+.fleet-trust__cta-eyebrow,
+.fleet-empty__eyebrow,
+.fleet-card__builder,
+.yacht-specs__title,
+.yacht-pricing__title,
+.yacht-gallery__title,
+.yacht-features__title,
+.yacht-toys__title,
+.yacht-ideal__title,
+.yacht-insider__title,
+.yacht-insider__signature,
+.yacht-story__title,
+.fleet-filters__tab--active,
+.fleet-card__price {
+  color: var(--gy-ivory, #F8F5F0) !important;
+}
+
+/* Sub-heading / fine-print descriptors → muted gray */
+.fleet-hero__desc,
+.fleet-trust__desc,
+.fleet-empty__desc,
+[class*="-disclaimer"],
+[class*="-fine-print"] {
+  color: var(--gy-muted, #9CA3AF) !important;
+}
+
+/* Allowed gold survivors — explicitly re-asserted so the broad
+   selectors above can't accidentally catch them. */
+.gy-nav-cta,
+.gy-region-modal-nav,
+.gy-region-pin-dot,
+.gy-yacht-tour-progress-bar,
+[class*="cta-primary"],
+[class*="cta-gold"],
+[class*="brief-george"] {
+  color: var(--gy-gold, #C9A84C) !important;
+}
+
+/* George's Inside Info — explicit override so the 4 px gold left
+   border stays intact (it's one of the 4 allowed gold uses). */
+.yacht-insider__card {
+  border-left-color: var(--gy-gold, #C9A84C) !important;
+}

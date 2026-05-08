@@ -81,7 +81,10 @@ const BrokerTestimonials = () => {
                 fontWeight: 600,
                 letterSpacing: "0.2em",
                 textTransform: "uppercase",
-                color: "#C9A84C",
+                // Chapter 05 Pass 2 — gold restraint: section is on
+                // ivory bg, attribution moved from gold to navy for
+                // better contrast + the restraint rule.
+                color: "#0D1B2A",
               }}
             >
               — {t(`testimonials.q${i + 1}.role`, quote.role)} · {t(`testimonials.q${i + 1}.locations`, quote.locations)}

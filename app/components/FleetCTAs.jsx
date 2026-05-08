@@ -243,7 +243,7 @@ export default function FleetCTAs({
               fontSize: "9px",
               letterSpacing: "0.45em",
               textTransform: "uppercase",
-              color: "rgba(201,168,76,0.7)",
+              color: "rgba(248,245,240,0.7)",
               fontWeight: 600,
             }}
           >

@@ -217,7 +217,7 @@ const Footer = () => {
 
           {/* Services Column */}
           <div className="flex flex-col items-center lg:items-start">
-            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#C9A84C", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
+            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#F8F5F0", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
               {t('footer.servicesTitle')}
             </h4>
             <nav className="flex flex-col gap-3">
@@ -236,7 +236,7 @@ const Footer = () => {
 
           {/* Company Column */}
           <div className="flex flex-col items-center lg:items-start">
-            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#C9A84C", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
+            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#F8F5F0", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
               {t('footer.companyTitle')}
             </h4>
             <nav className="flex flex-col gap-3">
@@ -255,7 +255,7 @@ const Footer = () => {
 
           {/* Contact Column */}
           <div className="flex flex-col items-center lg:items-start">
-            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#C9A84C", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
+            <h4 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "9px", letterSpacing: "0.3em", color: "#F8F5F0", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
               {t('footer.contactTitle')}
             </h4>
             <div className="flex flex-col gap-4 text-center lg:text-left">
@@ -303,7 +303,7 @@ const Footer = () => {
             <span aria-hidden="true" className="gy-divider-star" style={{ marginBottom: 24 }}>
               <span />
             </span>
-            <h4 style={{ fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', sans-serif", fontSize: "10px", letterSpacing: "0.42em", textTransform: "uppercase", color: "#C9A84C", fontWeight: 500, marginBottom: "16px" }}>
+            <h4 style={{ fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', sans-serif", fontSize: "10px", letterSpacing: "0.42em", textTransform: "uppercase", color: "#F8F5F0", fontWeight: 500, marginBottom: "16px" }}>
               {t('footer.newsletter')}
             </h4>
             <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 300, color: "#F8F5F0", marginBottom: "12px", lineHeight: 1.15, letterSpacing: "-0.015em" }}>
@@ -313,7 +313,7 @@ const Footer = () => {
               An invitation, not a list. Market intelligence and curated charter opportunities, delivered the day they matter — never more often.
             </p>
             {subscribed ? (
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", color: "#C9A84C", letterSpacing: "0.15em" }}>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "11px", color: "#F8F5F0", letterSpacing: "0.15em" }}>
                 Thank you. You&apos;re on the list.
               </p>
             ) : (
@@ -390,7 +390,7 @@ const Footer = () => {
             )}
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "8px", color: "rgba(255,255,255,0.15)", marginTop: "12px", letterSpacing: "0.05em" }}>
               By subscribing you agree to receive occasional emails from <span className="notranslate">George Yachts Brokerage House LLC</span>.
-              Unsubscribe anytime. See our <Link href="/privacy-policy" style={{ color: "rgba(201,168,76,0.4)", textDecoration: "underline" }}>Privacy Policy</Link>.
+              Unsubscribe anytime. See our <Link href="/privacy-policy" style={{ color: "rgba(248,245,240,0.55)", textDecoration: "underline" }}>Privacy Policy</Link>.
             </p>
           </div>
         </div>
@@ -448,7 +448,7 @@ const Footer = () => {
             background: "rgba(201,168,76,0.025)",
           }}
         >
-          <strong style={{ color: "#C9A84C", letterSpacing: "0.12em", textTransform: "uppercase", fontSize: "8px", display: "block", marginBottom: "8px" }}>
+          <strong style={{ color: "#F8F5F0", letterSpacing: "0.12em", textTransform: "uppercase", fontSize: "8px", display: "block", marginBottom: "8px" }}>
             A note on payments
           </strong>
           <span className="notranslate">George Yachts</span> will only ever request payment via signed MYBA-standard charter agreement, with bank details provided directly by our company in writing. We will never request wire transfers via email, messaging app, or unverified channels. If you receive any communication asking for payment that does not match this protocol, contact us immediately to verify.
@@ -470,7 +470,7 @@ const Footer = () => {
           }}
         >
           Data stored in EU-based servers (Vercel EU regions where applicable). All inquiries handled with discretion.{" "}
-          <Link href="/privacy/delete" style={{ color: "rgba(201,168,76,0.6)", textDecoration: "underline" }}>
+          <Link href="/privacy/delete" style={{ color: "rgba(248,245,240,0.55)", textDecoration: "underline" }}>
             Request data deletion →
           </Link>
         </p>

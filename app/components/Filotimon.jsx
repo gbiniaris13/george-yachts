@@ -153,7 +153,12 @@ export default function Filotimon({ filotimoImage = null }) {
                 // copy and adding visual noise on narrow phones.
                 fontSize: "clamp(48px, 9vw, 140px)",
                 fontWeight: 200,
-                color: "rgba(201,168,76,0.25)",
+                // Chapter 05 Pass 2 — gold restraint: ΦΙΛΟΤΙΜΟ
+                // watermark moved from translucent gold to translucent
+                // ivory. The mix-blend-mode overlay below keeps the
+                // shape feel without painting the whole letterform
+                // in the now-rationed gold.
+                color: "rgba(248,245,240,0.18)",
                 letterSpacing: "0.08em",
                 lineHeight: 0.9,
                 mixBlendMode: "overlay",

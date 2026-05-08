@@ -97,7 +97,7 @@ export default function PressStrip() {
                 fontSize: 9,
                 letterSpacing: "0.32em",
                 textTransform: "uppercase",
-                color: "#C9A84C",
+                color: "#F8F5F0",
                 fontWeight: 600,
               }}
             >
