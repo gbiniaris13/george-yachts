@@ -885,3 +885,31 @@
   .gy-yacht-tour-overlay-text { max-width: 70%; }
   .gy-yacht-tour-caption { font-size: 14px; }
 }
+
+/* Chapter 06 (mobile, 2026-05-08) — gallery swipe carousel.
+   Boss spec: "Yacht page gallery: swipe horizontal για τα photos
+   (touch carousel). Όχι grid — πολύ μικρά γίνονται στο mobile."
+   At ≤ 768 px the grid flips to a single horizontal scroll row;
+   each item is 80 vw wide so the visitor sees one photo at a
+   time and naturally scrolls left/right with a thumb swipe. The
+   tap-to-open lightbox still works the same way. */
+@media (max-width: 768px) {
+  .yacht-gallery__grid {
+    display: flex !important;
+    flex-direction: row !important;
+    grid-template-columns: none !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0 16px 12px;
+    gap: 12px;
+  }
+  .yacht-gallery__grid::-webkit-scrollbar { display: none; }
+  .yacht-gallery__item {
+    flex: 0 0 80vw;
+    scroll-snap-align: center;
+    aspect-ratio: 4/3;
+  }
+}

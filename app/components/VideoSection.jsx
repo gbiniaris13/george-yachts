@@ -54,13 +54,43 @@ const HERO_VIDEO_BASE = "/videos/hero-trio";
 
 function HeroBackgroundVideo() {
   const ref = useRef(null);
+  // Chapter 06 (mobile, 2026-05-08) — iOS fallback. If autoplay is
+  // blocked (Low Power Mode, Safari aggressive media policies, etc.)
+  // we surface the frame-1 poster as a static image and never end up
+  // with an empty hero. The fallback also fires on any video-load
+  // error so a dropped CDN connection or 404 doesn't blank out the
+  // masthead.
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     const video = ref.current;
     if (!video) return;
     video.muted = true;
-    video.play?.().catch(() => {});
+    const playPromise = video.play?.();
+    if (playPromise && typeof playPromise.then === "function") {
+      playPromise.catch(() => {
+        // Autoplay denied — fall back to the poster image.
+        setFailed(true);
+      });
+    }
   }, []);
+
+  if (failed) {
+    return (
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          backgroundImage: "url('/images/posters/hero-trio-frame1.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+    );
+  }
 
   return (
     <video
@@ -77,6 +107,7 @@ function HeroBackgroundVideo() {
       muted
       playsInline
       aria-hidden="true"
+      onError={() => setFailed(true)}
       style={{
         position: "absolute",
         inset: 0,

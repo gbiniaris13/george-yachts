@@ -3558,3 +3558,114 @@ figcaption,
 .gy-forbes-bar {
   background-color: #0D1B2A !important;
 }
+
+/* ───────────────────────────────────────────────────────────────────
+   Chapter 06 — mobile priority polish (Boss directive, 2026-05-08).
+
+   Compact the masthead, enforce 44×44 touch targets, and switch the
+   currency switcher to a more thumb-friendly size on small viewports.
+   ─────────────────────────────────────────────────────────────────── */
+
+/* 1) Sticky nav on mobile — Boss spec: "στο mobile να παραμένει
+      πάντα visible στην κορυφή, με logo + hamburger. Height 56px."
+      The desktop masthead reserves 168 px for the centred wordmark;
+      that's deliberate visual real estate on a 1440 viewport. On
+      mobile the same height eats half the hero on a 667-tall
+      iPhone SE. Compact to 56 px regardless of scroll state, so the
+      nav is always a thin always-visible band with logo + hamburger. */
+@media (max-width: 768px) {
+  .gy-nav {
+    height: 56px !important;
+    padding-top: 0 !important;
+  }
+  .gy-nav .gy-logo-reveal img {
+    height: 36px !important;
+  }
+}
+
+/* 2) Touch targets ≥ 44 × 44 — Boss spec: "Ειδικά τα currency
+      switcher icons." Pads the compact CurrencySwitcher buttons to
+      44 px minimum tap area while keeping their tiny visual size.
+      Same treatment for the nav hamburger and any other small
+      iconography that's < 44 px on the rendered mobile masthead. */
+@media (max-width: 768px) {
+  /* Currency switcher: each currency pip is 4×8 padding inside a
+     button. Bump min-width / min-height to 44 px so iOS treats the
+     full square as a tap region without showing a giant pill. */
+  .gy-currency-switcher button,
+  [class*="currency"] button {
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+  /* Nav hamburger + close icons */
+  .gy-nav button,
+  .gy-nav-overlay button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* 3) Mobile-only floating "Inquire" CTA — Boss spec: full-width
+      gold button pinned to the bottom of the viewport on yacht
+      detail pages, mobile only. Visible by default; the .gy-yacht-
+      mobile-cta--hidden modifier (toggled by JS when the visitor
+      scrolls onto an active form section) fades it out so it
+      doesn't clash with form inputs. The bar adopts the
+      var(--gy-bottom-cta-h) height (read by .yacht-page padding
+      below) so the page never paints content behind a permanent
+      ~64 px overlay. */
+.gy-yacht-mobile-cta {
+  display: none; /* desktop hides it — sticky top mini-bar takes over */
+}
+@media (max-width: 768px) {
+  .gy-yacht-mobile-cta {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    display: block;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+    background: rgba(13, 27, 42, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(201, 168, 76, 0.45);
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                opacity 320ms ease;
+  }
+  .gy-yacht-mobile-cta--hidden {
+    transform: translateY(120%);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .gy-yacht-mobile-cta__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 52px;
+    background: transparent;
+    color: #C9A84C;
+    border: 1px solid #C9A84C;
+    text-decoration: none;
+    font-family: var(--gy-font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .gy-yacht-mobile-cta__btn:active {
+    background: #C9A84C;
+    color: #0D1B2A;
+  }
+  /* Reserve room above the bar so the page footer never sits behind
+     it — give the article a 76 px bottom padding on mobile yacht
+     pages. */
+  .yacht-page {
+    padding-bottom: 76px;
+  }
+}
+
+/* End Chapter 06 mobile polish */

@@ -503,6 +503,54 @@ function MatterportSection({ url, yachtName }) {
   );
 }
 
+// Chapter 06 (mobile, 2026-05-08) — sticky bottom-bar "Inquire" CTA
+// for mobile yacht pages. Hides whenever any input / textarea on the
+// page is focused so the bar doesn't cover the field the visitor is
+// typing into. Pure focus-tracking via the document's focusin /
+// focusout events (works for any inquiry form anywhere on the page,
+// no per-form wiring required).
+function MobileInquireBar({ onClick }) {
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    const onFocusIn = (e) => {
+      const tag = e.target?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") {
+        setHidden(true);
+      }
+    };
+    const onFocusOut = () => {
+      // Defer one tick — if the next focus is also on a form field
+      // we keep the bar hidden (focus moves between inputs without a
+      // gap). If nothing else takes focus the bar reappears.
+      setTimeout(() => {
+        const a = document.activeElement;
+        const t = a?.tagName;
+        if (t !== "INPUT" && t !== "TEXTAREA" && t !== "SELECT") {
+          setHidden(false);
+        }
+      }, 0);
+    };
+    document.addEventListener("focusin", onFocusIn);
+    document.addEventListener("focusout", onFocusOut);
+    return () => {
+      document.removeEventListener("focusin", onFocusIn);
+      document.removeEventListener("focusout", onFocusOut);
+    };
+  }, []);
+  return (
+    <div className={`gy-yacht-mobile-cta ${hidden ? "gy-yacht-mobile-cta--hidden" : ""}`}>
+      <button
+        type="button"
+        onClick={onClick}
+        className="gy-yacht-mobile-cta__btn"
+        data-cursor="Inquire"
+      >
+        Inquire →
+      </button>
+    </div>
+  );
+}
+
 export default function YachtPageContent({ yacht, heroImage, description }) {
   const { t } = useI18n();
   const [modalOpen, setModalOpen] = useState(false);
@@ -1080,6 +1128,16 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </div>
         </section>
       </article>
+
+      {/* Chapter 06 (mobile, 2026-05-08) — full-width "Inquire" bottom
+          bar, mobile-only via the .gy-yacht-mobile-cta media query in
+          globals.css. The bar hides whenever an input/textarea is
+          focused so it doesn't fight with form fields the visitor is
+          actively typing into (Boss spec: "εξαφανίζεται αν ο χρήστης
+          scroll-άρει πάνω σε ενεργό form section"). */}
+      <MobileInquireBar onClick={openModal} />
+
+      {/* D.2 — Top sticky mini-bar (desktop), continues below */}
 
       {/* D.2 — Sticky Inquire bar (appears after scrolling past the
           hero). Always reachable; click opens the express modal.
