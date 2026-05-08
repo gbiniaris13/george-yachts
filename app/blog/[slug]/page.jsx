@@ -48,6 +48,7 @@ async function getPost(slug) {
     _updatedAt,
     author,
     excerpt,
+    quickAnswer,
     mainImage,
     body[]{
       ...,
@@ -362,6 +363,54 @@ const ArticlePage = async ({ params }) => {
             </span>
             <span className="block flex-1 h-px bg-white/5" />
           </div>
+
+          {/* Boss directive 2026-05-08 — AI-search Quick Answer.
+              When a Sanity post carries a `quickAnswer` field, render
+              it as a 50-word direct answer block at the top of the
+              article. This is the format Perplexity / ChatGPT /
+              Google AI Overviews preferentially extract. Editorial
+              workflow: Boss adds the field in Sanity Studio for the
+              3-4 top-converting posts; future posts include it as a
+              standard field. When missing, the block just doesn't
+              render — no visual disruption. */}
+          {post.quickAnswer && (
+            <aside
+              className="gy-quick-answer"
+              aria-label="Quick answer"
+              style={{
+                borderLeft: "2px solid #C9A84C",
+                padding: "20px 24px",
+                margin: "0 0 56px",
+                background: "rgba(201, 168, 76, 0.04)",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: "10px",
+                  fontWeight: 500,
+                  letterSpacing: "0.32em",
+                  textTransform: "uppercase",
+                  color: "#C9A84C",
+                  margin: "0 0 12px",
+                }}
+              >
+                Quick Answer
+              </p>
+              <p
+                style={{
+                  fontFamily: "var(--gy-font-editorial)",
+                  fontSize: "17px",
+                  fontWeight: 300,
+                  lineHeight: 1.65,
+                  color: "rgba(248, 245, 240, 0.88)",
+                  margin: 0,
+                }}
+              >
+                {post.quickAnswer}
+              </p>
+            </aside>
+          )}
 
           <article className="editorial-content [&_p]:mb-10 [&_p]:leading-[2] [&_p]:text-white/60 [&_p]:text-[1.05rem] [&_p:first-of-type]:text-white/80 [&_p:first-of-type]:text-[1.15rem] [&_p:first-of-type]:leading-[1.85]">
             <PortableText value={enhancedBody} components={RichTextComponents} />

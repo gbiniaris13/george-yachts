@@ -18,7 +18,10 @@ export default function robots() {
       { userAgent: "Google-Extended", allow: "/" },
       { userAgent: "Applebot-Extended", allow: "/" },
       { userAgent: "FacebookBot", allow: "/" },
-      { userAgent: "Bytespider", allow: "/" },
+      // Boss directive 2026-05-08: Bytespider (ByteDance / TikTok)
+      // disallowed. Doesn't drive AI citations and consumes
+      // bandwidth — net-negative for our crawl budget.
+      { userAgent: "Bytespider", disallow: "/" },
       { userAgent: "Amazonbot", allow: "/" },
       { userAgent: "CCBot", allow: "/" },
       { userAgent: "cohere-ai", allow: "/" },
