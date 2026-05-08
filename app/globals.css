@@ -2515,10 +2515,15 @@ a.gy-fancy-link:hover {
   cursor: pointer;
   pointer-events: auto;
   white-space: nowrap;
-  transition: transform 320ms cubic-bezier(0.2, 0.9, 0.3, 1);
-}
-.gy-region-pin:hover {
-  transform: translate(-50%, -50%) scale(1.06);
+  /* 2026-05-08 (Phase 27i.21) — removed the pin-level :hover
+     scale(1.06). Boss reported the pin "shifting right" on hover,
+     forcing him to chase it with the cursor before clicking.
+     Root cause: combined with the name's letter-spacing 0.32em
+     + margin-inline-end -0.32em compensation, scaling the whole
+     button magnified the visual-vs-layout asymmetry and the name
+     drifted slightly. The dot's own scale(1.18) + the halo's
+     scale(3.4) already supply plenty of "this is hovered" feedback
+     — the outer pin no longer needs to move at all. */
 }
 .gy-region-pin-dot {
   display: block;
