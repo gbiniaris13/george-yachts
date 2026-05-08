@@ -37,22 +37,26 @@
 // bar (which Chapter 01 also makes non-dismissible).
 //
 // Video swap: 6-clip Boss-curated cinematic loop — interleaves the
-// 3 above-water yacht clips from the original hero-trio with 3
-// underwater clips so the visitor never sees two similar shots
-// back-to-back. Boss spec: "δε θέλω να είναι back to back, υποβρύχιο
-// και επιφάνεια σε εναλλαγή". Order:
-//   1. 8303143  — golden-hour motor yacht aerial (8.4 s)
-//   2. 8824586  — yacht hull splashing through waves (13.7 s)
-//   3. 14545703 — superyacht in rocky-shore anchorage (19 s)
-//   4. 854344   — snorkeler on shallow sandy bottom (6.9 s)
-//   5. 12532891 — motorboat carving a wake at sunset (10 s)
-//   6. 4612166  — freediver gliding over seagrass meadow (31.1 s)
-// Total 89.1 s loop. All sources normalised to 1920×1080 30 fps via
-// ffmpeg concat filter so playback speed feels identical across
-// every clip (Boss directive: "η ταχύτητα και των έξι να είναι ίδια
-// — μην είναι το ένα πιο γρήγορο και το άλλο πιο αργό"). Encoded:
-//   • WebM VP9  1000 kbps 2-pass → 11 MB (Chrome / Firefox / Edge)
-//   • MP4  H.264 1500 kbps 2-pass → 16 MB (Safari fallback)
+// 3 above-water clips with 3 underwater clips so the visitor never
+// sees two similar shots back-to-back. Reorder + per-clip trim per
+// Boss directive ("το πρώτο 4 δευτερόλεπτα · τα τοπία και αυτά 4
+// δευτερόλεπτα το καθένα · το πρώτο underwater να πάει στη θέση 6
+// και τα άλλα να μετατοπιστούν προς την αρχή"):
+//
+//   1. 8303143  — golden-hour motor yacht aerial      (4 s, trimmed)
+//   2. 854344   — snorkeler on shallow sandy bottom   (6.9 s, full)
+//   3. 14545703 — superyacht in rocky-shore anchorage (4 s, trimmed)
+//   4. 4612166  — freediver gliding over seagrass     (31.1 s, full)
+//   5. 12532891 — motorboat carving a wake at sunset  (4 s, trimmed)
+//   6. 8824586  — yacht hull splashing through waves  (13.7 s, full)
+//
+// Total 63.7 s loop. The above-water clips are tightened to 4 s each
+// so they read as quick "transition" beats between the longer
+// underwater shots that carry the cinematic weight. All sources
+// normalised to 1920×1080 30 fps via ffmpeg concat filter so playback
+// speed feels identical across every clip. Encoded:
+//   • WebM VP9  1000 kbps 2-pass →  7.6 MB (Chrome / Firefox / Edge)
+//   • MP4  H.264 1500 kbps 2-pass → 12   MB (Safari fallback)
 // preload="auto" so the browser starts buffering immediately.
 
 import React, { useEffect, useRef, useState } from "react";
