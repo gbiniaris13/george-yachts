@@ -92,11 +92,27 @@ export default function YachtCinematicTour({ images = [], yachtName = "" }) {
       className="gy-yacht-tour"
       style={{ height: `${SECTION_HEIGHT_VH}vh`, position: "relative" }}
     >
-      <div className="gy-yacht-tour-pin">
+      <div
+        className="gy-yacht-tour-pin"
+        // Phase 27i.18 (2026-05-08) — 3D parallax tilt on the
+        // pinned tour. Setting a perspective on the parent lets
+        // the active photo's rotateY (computed below) read as a
+        // subtle camera dolly around the yacht instead of a flat
+        // rotation. 1400 px is the sweet spot — any closer and
+        // the tilt looks gimmicky, any further and it reads as
+        // 2D. Closes Session C #10 from the original brief.
+        style={{ perspective: "1400px", perspectiveOrigin: "50% 40%" }}
+      >
         {tourImages.map((img, i) => {
           const isActive = i === activeIdx;
           // Ken Burns scale: 1.04 → 1.10 across the active slot
           const scale = isActive ? 1.04 + localProgress * 0.06 : 1.04;
+          // 3D parallax tilt: -2.4° → +2.4° rotateY across the
+          // active slot, plus a tiny rotateX so the camera feels
+          // anchored to a horizon line. Inactive photos stay flat
+          // so the transitions don't compound rotations.
+          const rotY = isActive ? (localProgress - 0.5) * 4.8 : 0;
+          const rotX = isActive ? Math.sin(localProgress * Math.PI) * 1.2 : 0;
           return (
             <div
               key={img.url}
@@ -104,7 +120,8 @@ export default function YachtCinematicTour({ images = [], yachtName = "" }) {
               style={{
                 backgroundImage: `url(${img.url}?w=1800&fit=crop&auto=format)`,
                 opacity: isActive ? 1 : 0,
-                transform: `scale(${scale})`,
+                transform: `scale(${scale}) rotateY(${rotY}deg) rotateX(${rotX}deg)`,
+                transformStyle: "preserve-3d",
                 zIndex: isActive ? 2 : 1,
               }}
               aria-hidden={!isActive}

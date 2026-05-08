@@ -10,6 +10,7 @@
 import Link from "next/link";
 import { sanityCardImg } from "@/lib/sanity-image";
 import { useI18n } from "@/lib/i18n/I18nProvider";
+import ConstellationBackdrop from "./ConstellationBackdrop";
 
 const GOLD = "#DAA520";
 
@@ -27,9 +28,17 @@ export default function HomeJournalTeaser({ posts = [] }) {
         background: "#000",
         padding: "80px 24px",
         borderTop: "1px solid rgba(255,255,255,0.04)",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+      {/* Phase 27i.18 (2026-05-08) — constellation backdrop. Editorial
+          section deserves the same night-sky register; intensity kept
+          low (0.28) so it sits behind the post tiles without
+          competing with them. */}
+      <ConstellationBackdrop intensity={0.28} />
+
+      <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div
           style={{
             textAlign: "center",

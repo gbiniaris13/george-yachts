@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useI18n } from "@/lib/i18n/I18nProvider";
+import ConstellationBackdrop from "./ConstellationBackdrop";
 
 const RECAPTCHA_PUBLIC_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
@@ -202,6 +203,14 @@ const ContactFormSection = () => {
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#1a1200] via-black to-black z-0" />
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay z-10" />
+
+      {/* Phase 27i.18 (2026-05-08) — constellation backdrop. Reads
+          as "navigate to us by the stars" — a quiet poetic note for
+          the final destination on the homepage scroll. Low intensity
+          so it doesn't fight with the gold gradient overlay above. */}
+      <div className="absolute inset-0 z-[5] pointer-events-none">
+        <ConstellationBackdrop intensity={0.30} />
+      </div>
 
       {/* Decorative gold line */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent via-[#DAA520]/20 to-transparent z-20" />

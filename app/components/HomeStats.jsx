@@ -16,6 +16,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import ConstellationBackdrop from "./ConstellationBackdrop";
 
 export default function HomeStats({ yachtCount = 66 }) {
   const ref = useRef(null);
@@ -52,6 +53,13 @@ export default function HomeStats({ yachtCount = 66 }) {
     >
       {/* Subtle gold gradient line at top */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#DAA520]/20 to-transparent" />
+
+      {/* Phase 27i.18 (2026-05-08) — constellation backdrop. Same
+          night-sky register as Filotimon, kept very low intensity
+          here so it sits behind the stats numbers without competing
+          for the eye. Closes the "constellation between sections"
+          item from the original cinematic brief. */}
+      <ConstellationBackdrop intensity={0.32} />
 
       <div className="max-w-[1100px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4">
         {stats.map((stat, i) => (
