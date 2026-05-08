@@ -196,7 +196,7 @@ export default async function CharterFleetPage() {
       <section className="fleet-trust">
         <div className="fleet-trust__eyebrow">Trusted Brokerage</div>
         <div className="fleet-trust__badges">
-          <span>IYBA Member</span>
+          <a href="https://iyba.org" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }}>IYBA Member</a>
           <span className="fleet-trust__dot">&middot;</span>
           <span>MYBA Contracts</span>
           <span className="fleet-trust__dot">&middot;</span>

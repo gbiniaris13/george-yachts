@@ -157,20 +157,29 @@ export default function HomeStats({ yachtCount = 66 }) {
               ),
               label: "Greek Waters Specialist",
             },
-          ].map((cred, i) => (
-            <div
-              key={i}
-              className="group flex flex-col items-center gap-3 text-center"
-            >
-              <div className="h-12 flex items-center justify-center">{cred.icon}</div>
-              <span
-                className="text-[10px] tracking-[0.2em] uppercase text-white/70 group-hover:text-white transition-colors duration-500 font-light"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
+          ].map((cred, i) => {
+            const isIyba = cred.label === "IYBA Member Broker";
+            const Wrap = isIyba ? "a" : "div";
+            const wrapProps = isIyba
+              ? { href: "https://iyba.org", target: "_blank", rel: "noopener noreferrer", "aria-label": "Verify on iyba.org — opens in new tab" }
+              : {};
+            return (
+              <Wrap
+                key={i}
+                {...wrapProps}
+                className="group flex flex-col items-center gap-3 text-center no-underline"
+                style={isIyba ? { textDecoration: "none" } : undefined}
               >
-                {cred.label}
-              </span>
-            </div>
-          ))}
+                <div className="h-12 flex items-center justify-center">{cred.icon}</div>
+                <span
+                  className="text-[10px] tracking-[0.2em] uppercase text-white/70 group-hover:text-white transition-colors duration-500 font-light"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  {cred.label}
+                </span>
+              </Wrap>
+            );
+          })}
         </div>
       </div>
     </section>

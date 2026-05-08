@@ -811,7 +811,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   &ldquo;{yacht.georgeInsiderTip}&rdquo;
                 </blockquote>
                 <p className="yacht-insider__signature">
-                  — <span itemProp="author">George P. Biniaris</span>, {t('yacht.managingBroker', 'Managing Broker')} &amp; IYBA {t('yacht.member', 'Member')}
+                  — <span itemProp="author">George P. Biniaris</span>, {t('yacht.managingBroker', 'Managing Broker')} &amp; <a href="https://iyba.org" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}>IYBA {t('yacht.member', 'Member')}</a>
                 </p>
               </div>
             </div>

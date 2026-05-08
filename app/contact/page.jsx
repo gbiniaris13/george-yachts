@@ -314,7 +314,7 @@ export default function ContactPage() {
                   Credentials
                 </h2>
                 <ul className="space-y-2 text-sm text-white/85">
-                  <li>· IYBA Member Broker (International Yacht Brokers Association)</li>
+                  <li>· <a href="https://iyba.org" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}>IYBA Member Broker</a> (International Yacht Brokers Association)</li>
                   <li>· MYBA-standard charter contracts</li>
                   <li>· Managing Broker: George P. Biniaris</li>
                   <li>· Operating from Athens, Greece</li>

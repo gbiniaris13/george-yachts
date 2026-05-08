@@ -248,7 +248,9 @@ export default function AboutContent() {
             <RevealSection className="about-george__text-col" delay={0.2}>
               <p className="about-george__eyebrow">Managing Broker</p>
               <h2 className="about-george__name">George P. Biniaris</h2>
-              <p className="about-george__role">Managing Broker &middot; IYBA Member</p>
+              <p className="about-george__role">
+                Managing Broker &middot; <a href="https://iyba.org" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}>IYBA Member</a>
+              </p>
               <div className="about-george__line" />
               <p className="about-george__bio">
                 Every client works directly with George. No call centres, no junior agents,

@@ -149,7 +149,9 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
           </div>
           <div style={{ textAlign: "center", flex: 1, minWidth: 250 }}>
             <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", color: "#F8F5F0", marginBottom: 8 }}>Your Broker: George</h3>
-            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: "#C9A84C", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16 }}>Managing Broker · IYBA Member</p>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, color: "#C9A84C", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16 }}>
+              Managing Broker · <a href="https://iyba.org" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}>IYBA Member</a>
+            </p>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "rgba(248, 245, 240,0.4)", lineHeight: 1.8, fontStyle: "italic" }}>
               "One broker. One relationship. One standard."
             </p>
