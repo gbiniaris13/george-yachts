@@ -13,9 +13,9 @@ import "./fleet-page.css";
 export const revalidate = 3600;
 
 export const metadata = {
-  title: "Luxury Yacht Charter Fleet Greece | 66 Curated Yachts | George Yachts",
+  title: "Charter Yacht Greece — 63 Curated Yachts | George Yachts",
   description:
-    "Browse our curated fleet of 66 yachts in Greek waters. Private Fleet (full crew) + Explorer Fleet (skippered). Motor yachts, sailing catamarans, monohulls. Cyclades, Ionian, Saronic. IYBA Charter Active Member.",
+    "Curated fleet of 63 yachts in Greek waters — Private Fleet (full crew) + Explorer Fleet (skippered). Motor, sailing, catamaran. Cyclades, Ionian, Saronic.",
   alternates: {
     canonical: "https://georgeyachts.com/charter-yacht-greece",
   },

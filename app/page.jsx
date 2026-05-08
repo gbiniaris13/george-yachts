@@ -9,9 +9,10 @@ import { sanityClient } from "@/lib/sanity";
 export const revalidate = 3600;
 
 export const metadata = {
-  title: "George Yachts | Featured in Forbes · Luxury Yacht Charter Greece",
+  // Boss Ch.1B — title ≤ 60, description 150–160 for SERP rendering.
+  title: "Luxury Yacht Charter Greece | George Yachts Brokerage",
   description:
-    "Featured in Forbes (May 2026). George Yachts Brokerage House — boutique luxury yacht charter in Greek waters. 66 curated yachts. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Cyclades, Ionian, Saronic. Personal broker service from Athens.",
+    "Boutique IYBA-member yacht brokerage in Greek waters. 66 curated yachts across Cyclades, Ionian, Saronic. Featured in Forbes 2026. Brief George directly.",
   alternates: {
     canonical: "https://georgeyachts.com",
   },

@@ -37,6 +37,74 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import { DESTINATIONS, REGION_SLUGS, getDestination } from "@/lib/destinations";
 
+// Boss Ch.1D — Quick Facts blocks for AI-search citation. ChatGPT,
+// Perplexity, and Google AI Overviews preferentially cite plain-text
+// structured fact lists; this content is what those engines pull
+// when they answer "yacht charter cyclades best season" / "where to
+// charter yacht greece" etc.
+const QUICK_FACTS = {
+  cyclades: {
+    region: "Cyclades, Greece",
+    bestSeason: "May–June, September–early October",
+    duration: "7–10 days",
+    departurePorts: "Athens (Lavrion / Alimos), Mykonos, Paros",
+    yachtTypes: "Motor yachts, sailing catamarans, sailing yachts",
+    weeklyRange: "€13,000 – €235,000",
+    weatherNote:
+      "Meltemi (NW) blows strongest mid-July through end-August; June and September are the calm-weather sweet spots.",
+  },
+  ionian: {
+    region: "Ionian Islands, Greece",
+    bestSeason: "Late May – early October",
+    duration: "7 days",
+    departurePorts: "Corfu, Lefkada, Athens repositioning",
+    yachtTypes: "Sailing catamarans, sailing yachts, motor yachts",
+    weeklyRange: "€11,500 – €180,000",
+    weatherNote:
+      "Sheltered waters, no Meltemi. Light afternoon thermals; the calmest sailing region in Greece.",
+  },
+  saronic: {
+    region: "Saronic Gulf, Greece",
+    bestSeason: "April – October (longest season of the three regions)",
+    duration: "3–7 days",
+    departurePorts: "Athens (Alimos / Flisvos / Vouliagmeni)",
+    yachtTypes: "Motor yachts, catamarans, sailing yachts",
+    weeklyRange: "€12,000 – €200,000",
+    weatherNote:
+      "Sheltered by the Peloponnese; sailable even when the Aegean Meltemi peaks.",
+  },
+};
+
+function buildTouristDestinationSchema(d, facts) {
+  const url = `https://georgeyachts.com/destinations/${d.slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "TouristDestination",
+    name: `${d.label} — Yacht Charter`,
+    description: `${d.cardSubline} ${d.pageTagline}`,
+    url,
+    image: d.heroImage
+      ? `https://georgeyachts.com${d.heroImage}`
+      : undefined,
+    touristType: ["UHNW families", "couples", "groups", "private jet travellers"],
+    geo: { "@type": "GeoCoordinates", addressCountry: "GR" },
+    includesAttraction: (d.insiderPicks || []).slice(0, 6).map((p) => ({
+      "@type": "TouristAttraction",
+      name: p.name,
+      description: p.note,
+    })),
+    additionalProperty: facts
+      ? [
+          { "@type": "PropertyValue", name: "Best season", value: facts.bestSeason },
+          { "@type": "PropertyValue", name: "Typical charter duration", value: facts.duration },
+          { "@type": "PropertyValue", name: "Departure ports", value: facts.departurePorts },
+          { "@type": "PropertyValue", name: "Yacht types", value: facts.yachtTypes },
+          { "@type": "PropertyValue", name: "Weekly charter range", value: facts.weeklyRange },
+        ]
+      : undefined,
+  };
+}
+
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
@@ -68,9 +136,15 @@ export default async function DestinationPage({ params }) {
   const { region } = await params;
   const d = getDestination(region);
   if (!d) notFound();
+  const facts = QUICK_FACTS[region];
+  const schema = buildTouristDestinationSchema(d, facts);
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       <article className="gy-destination-page">
         {/* HERO */}
         <section className="gy-dest-hero">
@@ -88,6 +162,26 @@ export default async function DestinationPage({ params }) {
             <p className="gy-dest-hero__tagline">{d.pageTagline}</p>
           </div>
         </section>
+
+        {/* QUICK FACTS — Boss Ch.1D, AI-search citation block. Plain
+            structured data that ChatGPT / Perplexity / Google AI
+            Overviews preferentially pull when answering charter
+            questions about this region. Visually restrained: small
+            gold-divided rows, navy bg, no headings. */}
+        {facts && (
+          <section className="gy-dest-facts" aria-label="Quick facts">
+            <dl className="gy-dest-facts__list">
+              <div className="gy-dest-facts__row"><dt>Region</dt><dd>{facts.region}</dd></div>
+              <div className="gy-dest-facts__row"><dt>Best season</dt><dd>{facts.bestSeason}</dd></div>
+              <div className="gy-dest-facts__row"><dt>Typical charter duration</dt><dd>{facts.duration}</dd></div>
+              <div className="gy-dest-facts__row"><dt>Departure ports</dt><dd>{facts.departurePorts}</dd></div>
+              <div className="gy-dest-facts__row"><dt>Yacht types</dt><dd>{facts.yachtTypes}</dd></div>
+              <div className="gy-dest-facts__row"><dt>Weekly charter range</dt><dd>{facts.weeklyRange}</dd></div>
+              <div className="gy-dest-facts__row"><dt>Weather note</dt><dd>{facts.weatherNote}</dd></div>
+              <div className="gy-dest-facts__row"><dt>Broker</dt><dd>George P. Biniaris, IYBA member</dd></div>
+            </dl>
+          </section>
+        )}
 
         {/* EDITORIAL */}
         <section className="gy-dest-editorial">
@@ -208,6 +302,50 @@ export default async function DestinationPage({ params }) {
         }
         @media (max-width: 768px) {
           .gy-dest-hero__title { font-size: 36px; }
+        }
+
+        /* QUICK FACTS — narrow, calm, machine-readable. */
+        .gy-dest-facts {
+          max-width: 780px;
+          margin: 0 auto;
+          padding: 64px 24px 8px;
+        }
+        .gy-dest-facts__list {
+          margin: 0;
+          padding: 0;
+          border-top: 1px solid rgba(201, 168, 76, 0.18);
+        }
+        .gy-dest-facts__row {
+          display: grid;
+          grid-template-columns: 220px 1fr;
+          gap: 24px;
+          padding: 14px 0;
+          border-bottom: 1px solid rgba(201, 168, 76, 0.10);
+        }
+        .gy-dest-facts__row dt {
+          font-family: var(--gy-font-ui);
+          font-weight: 500;
+          font-size: 10px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: rgba(248, 245, 240, 0.55);
+          margin: 0;
+        }
+        .gy-dest-facts__row dd {
+          font-family: var(--gy-font-ui);
+          font-weight: 300;
+          font-size: 14px;
+          line-height: 1.6;
+          color: rgba(248, 245, 240, 0.85);
+          margin: 0;
+        }
+        @media (max-width: 600px) {
+          .gy-dest-facts { padding: 48px 1.5rem 0; }
+          .gy-dest-facts__row {
+            grid-template-columns: 1fr;
+            gap: 4px;
+            padding: 12px 0;
+          }
         }
 
         /* EDITORIAL */

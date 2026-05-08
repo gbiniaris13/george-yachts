@@ -12,8 +12,8 @@ export async function generateMetadata() {
     if (pp.length) { low = Math.min(...pp); high = Math.max(...pp); }
   } catch {}
   return {
-    title: `Explorer Fleet | Yacht Charter Greece from €${low.toLocaleString()}/person | George Yachts`,
-    description: `More islands. More adventure. The smart way to see Greece. Group yacht charters from €${low.toLocaleString()} to €${high.toLocaleString()} per person per week.`,
+    title: `Explorer Fleet — Skippered Yacht Charter | George Yachts`,
+    description: `Skippered yacht charters in Greek waters from €${low.toLocaleString()}/person/week. More islands, more adventure — Cyclades, Ionian, Saronic. Brief George.`,
     openGraph: {
       title: "Explorer Fleet | George Yachts",
       description: `More islands. More adventure. From €${low.toLocaleString()} to €${high.toLocaleString()} per person per week.`,

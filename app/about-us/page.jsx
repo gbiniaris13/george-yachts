@@ -6,9 +6,9 @@ import Image from "next/image";
 import "./about-us.css";
 
 export const metadata = {
-  title: "About George Yachts | Boutique Yacht Brokerage | Greek Waters",
+  title: "About George Yachts | Boutique Brokerage in Greek Waters",
   description:
-    "George Yachts Brokerage House — a boutique yacht brokerage specializing exclusively in Greek waters. IYBA Member Broker, 360° luxury services, personal broker relationship. Led by George P. Biniaris, Managing Broker.",
+    "George P. Biniaris — Managing Broker, IYBA Member. Boutique yacht brokerage in Greek waters. Personal broker relationship. 360° luxury services. Athens HQ.",
   alternates: {
     canonical: "https://georgeyachts.com/about-us",
   },
