@@ -304,11 +304,16 @@ export default function FleetCTAs({
           image={explorerHeroImage}
           gradientFallback="linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)"
           ctaLabel="View the Fleet"
-          // Chapter 06.5 — Explorer Fleet video pending. Boss is
-          // sending the second clip next; until then the panel falls
-          // back to its existing Sanity-supplied explorerHeroImage.
-          // overlayOpacity stays at 0.45 per spec — slightly more
-          // luminous than Private to suit the "Explorer mood".
+          // Chapter 06.5 — Boss-curated Explorer Fleet background
+          // video (underwater swimmer in red, 26 s loop —
+          // captures the "snorkel / explore / lightly crewed"
+          // adventure mood). WebM 3.4 MB / MP4 5.3 MB / poster
+          // 126 KB. Overlay 0.45 per Boss spec — slightly more
+          // luminous than Private (0.55) to keep the underwater
+          // turquoise readable behind the copy without losing
+          // text contrast.
+          videoBase="explorer-fleet-bg"
+          posterSrc="/images/posters/explorer-fleet-bg-frame1.jpg"
           overlayOpacity={0.45}
         />
       </div>
