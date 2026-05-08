@@ -1,6 +1,56 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+
+/* Boss directive 2026-05-08 — restore the "Our Core Team" section
+ * on /about-us with the same six people, same photos, same titles,
+ * same profile links as the standalone /team page. Only the palette
+ * + tier-font tokens differ from the previous site (Cormorant /
+ * Montserrat / hardcoded hex → var(--gy-font-*) + canonical 6-colour
+ * tokens). Source-of-truth for the data list is the standalone
+ * /team/TeamContent.jsx; mirrored here so a routine change there
+ * doesn't break this section. Update both when titles change. */
+const CORE_TEAM = [
+  {
+    name: "George P. Biniaris",
+    title: "Managing Broker",
+    imageUrl: "/images/george.jpg",
+    profileUrl: "/team/george-biniaris",
+    lead: true,
+  },
+  {
+    name: "George Katrantzos",
+    title: "Luxury Travel Liaison & Strategic Associate (U.S.)",
+    imageUrl: "/images/george-katrantzos.jpg",
+    profileUrl: "/team/george-katrantzos",
+  },
+  {
+    name: "Elleanna Karvouni",
+    title: "Head of Business Operations & Finance",
+    imageUrl: "/images/elleanna.jpg",
+    profileUrl: "/team/elleana-karvouni",
+  },
+  {
+    name: "Chris Daskalopoulos",
+    title: "Marine Insurance & ISO Maritime Compliance Advisor",
+    imageUrl: "/images/chris.jpg",
+    profileUrl: "/team/chris-daskalopoulos",
+  },
+  {
+    name: "Valleria Karvouni",
+    title: "Administrative & Charter Logistics Coordinator",
+    imageUrl: "/images/valeria.jpg",
+    profileUrl: "/team/valleria-karvouni",
+  },
+  {
+    name: 'Captain Emmanouil "Manos" Kourmoulakis',
+    title: "Aviation & Private Travel Advisor",
+    imageUrl: "/images/manos-new.jpg",
+    profileUrl: "/team/manos-kourmoulakis",
+  },
+];
 
 /* ─── Scroll Reveal Hook ─── */
 function useReveal(threshold = 0.2) {
@@ -299,6 +349,199 @@ export default function AboutContent() {
               &mdash; George P. Biniaris, Managing Broker
             </p>
           </div>
+        </RevealSection>
+      </section>
+
+      {/* ═══════ OUR CORE TEAM ═══════
+          Boss directive 2026-05-08 — restore from the prior site,
+          same six people / photos / titles. Palette + fonts run
+          through the canonical brand tokens (no inline hex, no
+          hardcoded font-family beyond what the Phase 28 catcher
+          already routes to the tier vars). */}
+      <section
+        className="about-team"
+        style={{
+          padding: "100px 24px",
+          background: "var(--gy-navy)",
+          borderTop: "1px solid rgba(201,168,76,0.10)",
+        }}
+      >
+        <RevealSection style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "64px" }}>
+            <p
+              style={{
+                fontFamily: "var(--gy-font-ui)",
+                fontSize: "10px",
+                fontWeight: 500,
+                letterSpacing: "0.42em",
+                textTransform: "uppercase",
+                color: "var(--gy-gold)",
+                marginBottom: "20px",
+              }}
+            >
+              Our Core Team
+            </p>
+            <h2
+              style={{
+                fontFamily: "var(--gy-font-editorial)",
+                fontSize: "clamp(28px, 4vw, 44px)",
+                fontWeight: 300,
+                lineHeight: 1.15,
+                letterSpacing: "0.005em",
+                color: "var(--gy-ivory)",
+                margin: "0 0 24px",
+              }}
+            >
+              The people behind every charter
+            </h2>
+            <span
+              aria-hidden="true"
+              style={{
+                display: "block",
+                width: 60,
+                height: 1,
+                margin: "0 auto 24px",
+                background: "rgba(201, 168, 76, 0.55)",
+              }}
+            />
+            <p
+              style={{
+                fontFamily: "var(--gy-font-editorial)",
+                fontStyle: "italic",
+                fontSize: "clamp(15px, 1.5vw, 18px)",
+                lineHeight: 1.7,
+                fontWeight: 300,
+                color: "rgba(248, 245, 240, 0.7)",
+                maxWidth: "60ch",
+                margin: "0 auto",
+              }}
+            >
+              Yacht Management &middot; Yacht Sales &middot; Yacht Charter.
+              No call centres. No automated responses. Real people, real
+              expertise, real relationships.
+            </p>
+          </div>
+
+          <div
+            className="about-team__grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+              gap: "24px",
+            }}
+          >
+            {CORE_TEAM.map((m, i) => (
+              <RevealSection key={m.name} delay={i * 0.06}>
+                <Link
+                  href={m.profileUrl}
+                  className="about-team__card"
+                  style={{
+                    display: "block",
+                    position: "relative",
+                    overflow: "hidden",
+                    background: "var(--gy-card)",
+                    border: "1px solid rgba(201, 168, 76, 0.10)",
+                    textDecoration: "none",
+                    height: "100%",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "relative",
+                      width: "100%",
+                      aspectRatio: "3 / 4",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <Image
+                      src={m.imageUrl}
+                      alt={`${m.name} — ${m.title} at George Yachts`}
+                      fill
+                      className="about-team__img"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 240px"
+                      style={{ objectFit: "cover" }}
+                    />
+                    <div
+                      aria-hidden="true"
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        background:
+                          "linear-gradient(180deg, rgba(13, 27, 42, 0) 40%, rgba(13, 27, 42, 0.85) 100%)",
+                      }}
+                    />
+                  </div>
+                  <div style={{ padding: "20px 22px 24px" }}>
+                    <h3
+                      className="notranslate"
+                      style={{
+                        fontFamily: "var(--gy-font-editorial)",
+                        fontSize: "20px",
+                        fontWeight: 400,
+                        lineHeight: 1.2,
+                        letterSpacing: "0.005em",
+                        color: "var(--gy-ivory)",
+                        margin: "0 0 8px",
+                      }}
+                    >
+                      {m.name}
+                    </h3>
+                    <p
+                      style={{
+                        fontFamily: "var(--gy-font-ui)",
+                        fontSize: "11px",
+                        fontWeight: 400,
+                        lineHeight: 1.5,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        color: "rgba(248, 245, 240, 0.55)",
+                        margin: "0 0 14px",
+                      }}
+                    >
+                      {m.title}
+                    </p>
+                    <span
+                      style={{
+                        fontFamily: "var(--gy-font-ui)",
+                        fontSize: "10px",
+                        fontWeight: 500,
+                        letterSpacing: "0.18em",
+                        textTransform: "uppercase",
+                        color: "var(--gy-gold)",
+                      }}
+                    >
+                      View profile &rarr;
+                    </span>
+                  </div>
+                </Link>
+              </RevealSection>
+            ))}
+          </div>
+
+          <p
+            style={{
+              textAlign: "center",
+              marginTop: "48px",
+              fontFamily: "var(--gy-font-ui)",
+              fontSize: "11px",
+              fontWeight: 300,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "rgba(248, 245, 240, 0.45)",
+            }}
+          >
+            <Link
+              href="/team"
+              style={{
+                color: "rgba(248, 245, 240, 0.7)",
+                textDecoration: "none",
+                borderBottom: "1px solid rgba(201, 168, 76, 0.4)",
+                paddingBottom: "2px",
+              }}
+            >
+              Meet the full team &rarr;
+            </Link>
+          </p>
         </RevealSection>
       </section>
 
