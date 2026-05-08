@@ -39,7 +39,13 @@ const GreekWatersMap = dynamic(() => import("./components/GreekWatersMap"));
 // (Athens hub + Cyclades / Ionian / Saronic / Sporades). Click a
 // region → modal with cover photo + yacht list. Photos are Pexels
 // CC0 placeholders pending Boss-curated regional photography.
-const RegionalYachtMap = dynamic(() => import("./components/RegionalYachtMap"));
+// Chapter 07 (2026-05-08) — RegionalYachtMap removed from the
+// homepage in favour of <ThreeGreekWorlds />. Boss directive: drop
+// the interactive port map / yacht counts / disclaimer copy and
+// surface a 3-card editorial section pointing at the new
+// destination pages instead. The RegionalYachtMap component file
+// stays on disk for any future use.
+const ThreeGreekWorlds = dynamic(() => import("./components/ThreeGreekWorlds"));
 const WaveDivider = dynamic(() => import("./components/WaveDivider"));
 // 2026-05-08 (Phase 27i.19) — MapboxFlyover removed from the
 // homepage tree. Merged with RegionalYachtMap below — both surfaces
@@ -159,15 +165,16 @@ const HomeClient = ({
           a future page wants it, but the homepage no longer mounts
           it. */}
 
-      {/* 2026-05-07 (Phase 27i.5) — Regional Yacht Map. Replaces
-          GreekWatersMap. Pulls cruisingRegion from Sanity and
-          clusters every yacht into 5 ports (Athens hub + 4 sea
-          regions). Click a region → modal with cover photo +
-          yachts pinned there. Photos are Pexels placeholders pending
-          Boss-curated regional photography (1 hero photo per region,
-          to swap in via /public/images/regions/<slug>.jpg). */}
-      <section id="map" data-gy-reveal="up">
-        <RegionalYachtMap yachts={fleet} />
+      {/* Chapter 07 (2026-05-08) — Three Greek Worlds.
+          Replaces the prior <RegionalYachtMap /> per Boss directive:
+          drop the interactive port map / yacht counts / disclaimer
+          copy and surface a 3-card editorial section pointing at
+          the new /destinations/{cyclades,ionian,saronic} pages.
+          Boss spec: no yacht counts or prices anywhere on the
+          homepage — the brand message is "we know these waters,
+          we'll put you on the right yacht". */}
+      <section id="destinations" data-gy-reveal="up">
+        <ThreeGreekWorlds />
       </section>
 
       {/* Aegean wave divider — gold + ivory sine waves drifting in
