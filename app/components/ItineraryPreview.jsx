@@ -43,13 +43,17 @@ const WHO_OPTIONS = [
   { value: "an extended multigenerational family", label: "Multi-generational family" },
 ];
 
+// Chapter 09.5 (Boss directive, 2026-05-08) — "Where" options aligned
+// to the three regions George Yachts actively brokers + the two
+// most-requested combinations + an "advise me" escape hatch.
+// Removed Sporades / Dodecanese (out of core book).
 const WHERE_OPTIONS = [
   { value: "Cyclades — Mykonos, Folegandros, Milos, Sifnos", label: "Cyclades" },
   { value: "Saronic — Hydra, Spetses, Aegina", label: "Saronic" },
-  { value: "Sporades — Skiathos, Skopelos, Alonissos", label: "Sporades" },
-  { value: "Dodecanese — Symi, Lipsi, Patmos", label: "Dodecanese" },
   { value: "Ionian — Lefkada, Kefalonia, Ithaca", label: "Ionian" },
   { value: "a mix of Cyclades and Saronic", label: "Cyclades + Saronic" },
+  { value: "a mix of Cyclades and Ionian", label: "Cyclades + Ionian" },
+  { value: "open — let the broker advise based on dates and guests", label: "Advise Me" },
 ];
 
 export default function ItineraryPreview() {
