@@ -52,6 +52,14 @@ const HomeJournalTeaser = dynamic(() => import("./components/HomeJournalTeaser")
 // tool was previously only on /greece-by-yacht; for tomorrow's Forbes
 // traffic landing on the home page, show it within the scroll path.
 const ItineraryPreview = dynamic(() => import("./components/ItineraryPreview"), { ssr: false });
+// Phase 27i.17 (2026-05-08) — custom WebGL water shader. Closes the
+// last "statement piece" item from the original cinematic brief.
+// Sits as a horizon band between the hero and the fleet split-screen.
+// ssr:false because three.js shader compilation is a pure client task.
+const WaterShaderHorizon = dynamic(
+  () => import("./components/WaterShaderHorizon"),
+  { ssr: false }
+);
 
 const HomeClient = ({
   yachtCount,
@@ -97,6 +105,14 @@ const HomeClient = ({
           in FleetCTAs + SignatureYacht below; weekly rotation is now
           visible on @georgeyachts (yacht-first IG feed, see gy-command
           PLAYBOOKS §9). */}
+
+      {/* Phase 27i.17 (2026-05-08) — custom WebGL water shader.
+          Sits as a thin horizon band between the hero and the
+          fleet split-screen — reads as the camera looking down at
+          the sea before tilting up to the fleet. Multi-octave fBm
+          noise + caustic light + champagne gold near the horizon.
+          Mobile / reduced-motion gets a CSS gradient fallback. */}
+      <WaterShaderHorizon height={220} />
 
       {/* 2026-05-02 reorder: Fleet split-screen now sits IMMEDIATELY
           below the hero so the Private / Explorer choice is the
