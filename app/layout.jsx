@@ -159,7 +159,7 @@ export const metadata = {
     template: "%s | George Yachts",
   },
   description:
-    "Featured in Forbes (May 2026). George Yachts Brokerage House — boutique luxury yacht charter in Greek waters. 66 curated yachts. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Cyclades, Ionian, Saronic, Sporades. Personal broker service from Athens.",
+    "Featured in Forbes (May 2026). George Yachts Brokerage House — boutique luxury yacht charter in Greek waters. 66 curated yachts. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Cyclades, Ionian, Saronic. Personal broker service from Athens.",
   applicationName: "George Yachts",
   authors: [{ name: "George P. Biniaris", url: "https://georgeyachts.com" }],
   generator: "Next.js",

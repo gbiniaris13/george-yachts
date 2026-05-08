@@ -54,8 +54,6 @@ export async function GET(request) {
     if (d.includes("cyclades")) return "A week through\nthe Cyclades.";
     if (d.includes("ionian")) return "An Ionian\nwhite-sail summer.";
     if (d.includes("saronic")) return "Saronic mornings.\nAthens never closer.";
-    if (d.includes("sporades")) return "Where pine meets\nthe Aegean.";
-    if (d.includes("dodecanese")) return "The Dodecanese,\nproperly told.";
     return `A week through\n${destination}.`;
   })();
 

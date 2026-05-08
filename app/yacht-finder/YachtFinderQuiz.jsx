@@ -70,11 +70,6 @@ const QUESTIONS = [
         label: 'Saronic',
         sub: 'Hydra, Spetses — short charters from Athens',
       },
-      {
-        value: 'sporades',
-        label: 'Sporades',
-        sub: 'Skiathos, Skopelos — quiet, pine-forested',
-      },
       { value: 'any', label: 'I want George to recommend', sub: '' },
     ],
   },

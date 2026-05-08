@@ -19,8 +19,6 @@ const REGIONS = [
   { name: 'Cyclades', wind: 'Strong Meltemi Jul–Aug (15–30 kn)', best: 'Jun, Sep', note: 'The Meltemi makes July–August challenging for sailing beginners. Experienced sailors love it. Sheltered bays exist but require local knowledge.', icon: '🏛️' },
   { name: 'Ionian', wind: 'Gentle (5–15 kn year-round)', best: 'May–Oct', note: 'The calmest sailing ground in Greece. Protected waters, gentle thermal winds. Perfect for first-time charterers and families with children.', icon: '🌿' },
   { name: 'Saronic', wind: 'Light–Moderate (5–15 kn)', best: 'May–Oct', note: 'Close to Athens, sheltered by the Peloponnese. Short passages between islands. Ideal for weekend charters and short trips.', icon: '⚓' },
-  { name: 'Sporades', wind: 'Moderate (8–18 kn)', best: 'Jun–Sep', note: 'More wind than the Ionian, less than the Cyclades. Marine park area with pristine waters. Best for nature lovers and divers.', icon: '🐬' },
-  { name: 'Dodecanese', wind: 'Moderate–Strong (10–25 kn)', best: 'May–Jun, Sep–Oct', note: 'Similar wind patterns to Cyclades but slightly less intense. Rhodes and Kos as hubs. Turkey coast proximity adds options.', icon: '🏰' },
 ];
 
 export default function WeatherClient() {

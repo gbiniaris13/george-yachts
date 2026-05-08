@@ -9,7 +9,7 @@
 //
 // Questions were tuned for the info George needs to quote fast:
 //   1.  Fleet preference   (Private / Explorer / Not sure)
-//   2.  Region              (Cyclades / Ionian / Sporades / Saronic / Anywhere)
+//   2.  Region              (Cyclades / Ionian / Saronic / Anywhere)
 //   3.  Group size
 //   4.  When                (rough dates / season)
 //   5.  Duration            (days at sea)
@@ -67,9 +67,7 @@ const STEPS = [
     options: [
       { value: "cyclades", label: "Cyclades — Mykonos, Santorini, Paros" },
       { value: "ionian", label: "Ionian — Corfu, Lefkada, Kefalonia" },
-      { value: "sporades", label: "Sporades — Skiathos, Alonissos" },
       { value: "saronic", label: "Saronic Gulf — Hydra, Spetses" },
-      { value: "dodecanese", label: "Dodecanese — Symi, Patmos, Rhodes" },
       { value: "mix", label: "A mix / I'd like a recommendation" },
     ],
   },
@@ -286,7 +284,6 @@ export default function InquiryClient() {
     const regionMap = {
       cyclades: "Cyclades",
       ionian: "Ionian",
-      sporades: "Sporades",
       saronic: "Saronic",
       mix: "Greek Waters",
     };

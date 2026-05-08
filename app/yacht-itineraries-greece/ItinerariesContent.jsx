@@ -113,31 +113,9 @@ const itineraries = [
       { name: "S/Y Serenissima", slug: "serenissima" },
     ],
   },
-  {
-    id: "sporades",
-    title: "The Sporades Escape",
-    subtitle: "Greece\u2019s Green Islands",
-    duration: "7 Days / 6 Nights",
-    embarkation: "Skiathos (Skiathos Port)",
-    season: "June \u2013 September",
-    idealFor: "Nature lovers, families, Mamma Mia fans, divers",
-    days: [
-      { day: 1, title: "Skiathos", nm: "0 NM", desc: "Board and explore. Koukounaries beach \u2014 voted among Europe\u2019s best. Lalaria beach accessible only by boat (your yacht is the ticket). Dinner in the Old Port." },
-      { day: 2, title: "Skiathos \u2192 Skopelos", nm: "12 NM", desc: "The Mamma Mia island. Visit Agios Ioannis chapel (the wedding scene location). Skopelos Town is all stone houses and bougainvillea. Fresh almonds, plums, and the best cheese pies in Greece." },
-      { day: 3, title: "Skopelos \u2192 Alonissos", nm: "15 NM", desc: "Entrance to the National Marine Park \u2014 the largest protected marine area in Europe. Spot monk seals, dolphins, and rare seabirds. Anchor at Kokkinokastro \u2014 red cliffs, red sand, crystal water." },
-      { day: 4, title: "Alonissos \u2192 Kyra Panagia", nm: "12 NM", desc: "The uninhabited island inside the Marine Park. An ancient monastery, wild goats, absolute isolation. Anchor in the protected bay. Dive, snorkel, swim. One of the most pristine spots in the Mediterranean." },
-      { day: 5, title: "Kyra Panagia \u2192 Peristera", nm: "8 NM", desc: "The island with the underwater archaeological site \u2014 a 5th century BC shipwreck you can dive or snorkel over. Then back to Alonissos for evening." },
-      { day: 6, title: "Alonissos \u2192 Skopelos (Panormos Bay)", nm: "18 NM", desc: "Return to Skopelos\u2019s quieter west coast. Panormos Bay \u2014 pine trees to the waterline, a handful of tavernas, perfect sunset. Last evening dinner under the stars." },
-      { day: 7, title: "Skopelos \u2192 Skiathos", nm: "12 NM", desc: "Final morning cruise. Farewell breakfast. Disembark by noon." },
-    ],
-    highlights: "Marine Park wildlife, Mamma Mia locations, underwater archaeology, pristine nature",
-    yachts: [
-      { name: "S/Y World\u2019s End", slug: "worlds-end" },
-      { name: "S/Y Libra", slug: "libra" },
-      { name: "P/C Alteya", slug: "alteya" },
-      { name: "S/Y Summer Star", slug: "summer-star" },
-    ],
-  },
+  // Sporades Escape itinerary retired 2026-05-08 \u2014 Boss directive:
+  // Sporades + Dodecanese are no longer surfaced anywhere on the
+  // site. Re-add only on explicit owner direction.
 ];
 
 function ItineraryCard({ itin, index }) {

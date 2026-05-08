@@ -239,8 +239,8 @@ export default function Filotimon({ filotimoImage = null }) {
                 letterSpacing: "0.04em",
               }}
             >
-              φίλο <span className="text-[#C9A84C]/50">(philo)</span> — love &nbsp;·&nbsp;
-              τιμώ <span className="text-[#C9A84C]/50">(timo)</span> — honour
+              φίλος <span className="text-[#C9A84C]/50">(philos)</span> — friend, love &nbsp;·&nbsp;
+              τιμή <span className="text-[#C9A84C]/50">(timi)</span> — honour, worth
             </p>
 
             {/* Intro paragraph — full i18n string, long-form */}
@@ -407,7 +407,7 @@ export default function Filotimon({ filotimoImage = null }) {
                 fontWeight: 500,
               }}
             >
-              — A Greek Saying
+              — Thales, Ancient Greek philosopher
             </p>
 
             {/* Signature diamond */}

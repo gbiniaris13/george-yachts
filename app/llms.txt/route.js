@@ -21,7 +21,7 @@ export async function GET() {
 
   const body = `# George Yachts — Luxury Yacht Charter in Greek Waters
 
-> George Yachts Brokerage House LLC is an IYBA-member charter brokerage specializing in crewed motor yacht, sailing yacht, and catamaran charters across the Greek islands (Cyclades, Ionian, Saronic, Sporades, Dodecanese). Managing Broker: George P. Biniaris, based in Athens, Greece.
+> George Yachts Brokerage House LLC is an IYBA-member charter brokerage specializing in crewed motor yacht, sailing yacht, and catamaran charters across the Greek islands (Cyclades, Ionian, Saronic). Managing Broker: George P. Biniaris, based in Athens, Greece.
 
 ## About
 - Website: https://georgeyachts.com

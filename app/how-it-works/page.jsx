@@ -27,7 +27,7 @@ const howToSchema = {
       "@type": "HowToStep",
       position: 1,
       name: "Initial conversation",
-      text: "Reach a working broker by phone, WhatsApp, or Calendly. Share dates, party size, region preference (Cyclades, Ionian, Saronic, Sporades), and budget band. The broker filters the curated fleet to 3–5 best-fit yachts within 24 hours.",
+      text: "Reach a working broker by phone, WhatsApp, or Calendly. Share dates, party size, region preference (Cyclades, Ionian, Saronic), and budget band. The broker filters the curated fleet to 3–5 best-fit yachts within 24 hours.",
       url: "https://georgeyachts.com/how-it-works#step-1",
     },
     {

@@ -11,7 +11,6 @@ const ISLANDS = {
   santorini: { name: 'Santorini', emoji: '🌅', tagline: 'The Romantic Dreamer', desc: "You believe in magic hours — that moment when the caldera turns gold and the world holds its breath. Santorini is where proposals happen, where wine tastes better at altitude, and where the volcanic landscape makes everything feel cinematic.", region: 'Cyclades', bestFor: 'Sunsets, wine tasting, caldera views, romance', yacht: "S/Y Above & Beyond or S/Y Ad Astra" },
   paxos: { name: 'Paxos', emoji: '🌿', tagline: 'The Gentle Escapist', desc: "You don't need a crowd to feel alive. A horseshoe bay surrounded by olive groves, turquoise water so clear it barely looks real, and a taverna where the owner knows your name by day two. Paxos is for those who understand that the best-kept secrets are the quietest ones.", region: 'Ionian', bestFor: 'Privacy, nature, slow pace, hidden coves', yacht: "S/Y Kimata or S/Y Serenissima" },
   milos: { name: 'Milos', emoji: '🌊', tagline: 'The Explorer', desc: "You want to discover what others haven't found yet. Volcanic shores sculpted by wind and time, sea caves that glow turquoise from within, and beaches with names you can't pronounce. Milos rewards the curious — those willing to sail a little further for something extraordinary.", region: 'Cyclades', bestFor: 'Geology, unique beaches, photography, off-the-beaten-path', yacht: "S/Y World's End or S/Y Odyssey" },
-  skopelos: { name: 'Skopelos', emoji: '🎬', tagline: 'The Joyful Storyteller', desc: "You see life as a movie — and you want it to look like one. Skopelos is the Mamma Mia island, where bougainvillea spills over stone walls, chapels sit on clifftops, and every meal feels like a celebration. You bring energy, laughter, and a talent for making memories.", region: 'Sporades', bestFor: 'Families, nature, Mamma Mia locations, cheese pies', yacht: "S/Y Summer Star or S/Y Libra" },
   kefalonia: { name: 'Kefalonia', emoji: '⛰️', tagline: 'The Connoisseur', desc: "You appreciate depth — in wine, in conversation, in landscape. Kefalonia delivers on all counts: dramatic mountains plunging into wine-dark seas, Fiskardo's Venetian elegance, and Captain Tassia's legendary cooking. This is the island for those who know what quality looks like.", region: 'Ionian', bestFor: 'Wine, fine dining, dramatic scenery, sophistication', yacht: "S/Y Crazy Horse or S/Y Huayra" },
   koufonisia: { name: 'Koufonisia', emoji: '🏝️', tagline: 'The Free Spirit', desc: "You believe the best things are the simplest: bare feet on white sand, swimming in water that belongs in a dream, and a sky full of stars that makes you forget your phone exists. Koufonisia is tiny, car-free, and achingly beautiful — the Greek Caribbean, without trying to be anything else.", region: 'Cyclades', bestFor: 'Beaches, simplicity, barefoot luxury, stargazing', yacht: "S/Y Helidoni or S/Y Alegria" },
 };
@@ -23,7 +22,7 @@ const QUESTIONS = [
       { text: "A rooftop cocktail watching the sun set over the sea", islands: ['santorini', 'mykonos'] },
       { text: "A long walk through quiet streets, ending at a waterfront taverna", islands: ['hydra', 'paxos'] },
       { text: "Anchoring in a hidden bay, dinner under the stars on deck", islands: ['koufonisia', 'milos'] },
-      { text: "A table at the best restaurant in town, local wine flowing", islands: ['kefalonia', 'skopelos'] },
+      { text: "A table at the best restaurant in town, local wine flowing", islands: ['kefalonia', 'paxos'] },
     ],
   },
   {
@@ -32,7 +31,7 @@ const QUESTIONS = [
       { text: "Energy, style, and being where things are happening", islands: ['mykonos', 'santorini'] },
       { text: "Silence, space, and the absence of crowds", islands: ['paxos', 'koufonisia'] },
       { text: "History, culture, and places with stories to tell", islands: ['hydra', 'kefalonia'] },
-      { text: "Raw beauty — landscapes that stop you in your tracks", islands: ['milos', 'skopelos'] },
+      { text: "Raw beauty — landscapes that stop you in your tracks", islands: ['milos', 'kefalonia'] },
     ],
   },
   {
@@ -40,7 +39,7 @@ const QUESTIONS = [
     options: [
       { text: "Organised with sunbeds, a bar, and beautiful people nearby", islands: ['mykonos', 'santorini'] },
       { text: "Completely empty — just you and the water", islands: ['koufonisia', 'paxos'] },
-      { text: "A pebble cove with a taverna serving fresh fish", islands: ['hydra', 'skopelos'] },
+      { text: "A pebble cove with a taverna serving fresh fish", islands: ['hydra', 'paxos'] },
       { text: "A volcanic shore that looks like another planet", islands: ['milos', 'kefalonia'] },
     ],
   },
@@ -50,7 +49,7 @@ const QUESTIONS = [
       { text: "Chef's table at a Michelin-level restaurant", islands: ['mykonos', 'kefalonia'] },
       { text: "Slow-cooked fish bought from a local fisherman that morning", islands: ['paxos', 'hydra'] },
       { text: "A picnic on deck with fresh bread, cheese, and wine", islands: ['koufonisia', 'milos'] },
-      { text: "A long family-style feast where everyone shares everything", islands: ['skopelos', 'santorini'] },
+      { text: "A long family-style feast where everyone shares everything", islands: ['kefalonia', 'santorini'] },
     ],
   },
   {
@@ -58,7 +57,7 @@ const QUESTIONS = [
     options: [
       { text: "My camera — I need to capture everything", islands: ['santorini', 'milos'] },
       { text: "A great book — I want to disappear into it on deck", islands: ['paxos', 'hydra'] },
-      { text: "My playlist — music makes every moment better", islands: ['mykonos', 'skopelos'] },
+      { text: "My playlist — music makes every moment better", islands: ['mykonos', 'santorini'] },
       { text: "Nothing — the sea is enough", islands: ['koufonisia', 'kefalonia'] },
     ],
   },

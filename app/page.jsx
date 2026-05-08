@@ -11,7 +11,7 @@ export const revalidate = 3600;
 export const metadata = {
   title: "George Yachts | Featured in Forbes · Luxury Yacht Charter Greece",
   description:
-    "Featured in Forbes (May 2026). George Yachts Brokerage House — boutique luxury yacht charter in Greek waters. 66 curated yachts. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Cyclades, Ionian, Saronic, Sporades, Dodecanese. Personal broker service from Athens.",
+    "Featured in Forbes (May 2026). George Yachts Brokerage House — boutique luxury yacht charter in Greek waters. 66 curated yachts. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Cyclades, Ionian, Saronic. Personal broker service from Athens.",
   alternates: {
     canonical: "https://georgeyachts.com",
   },
@@ -71,7 +71,7 @@ function HomepageFaqSchema() {
         name: "When is the best time to charter a yacht in Greece?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "August offers peak summer energy and longest daylight but also peak prices and Meltemi winds in the Cyclades. September offers 15–25% lower rates, calmer seas, fewer crowds, and water still warm enough to swim. June and July are ideal for the Ionian; May and October work best for the Saronic Gulf and Sporades.",
+          text: "August offers peak summer energy and longest daylight but also peak prices and Meltemi winds in the Cyclades. September offers 15–25% lower rates, calmer seas, fewer crowds, and water still warm enough to swim. June and July are ideal for the Ionian; May and October work best for the Saronic Gulf.",
         },
       },
       {
@@ -95,7 +95,7 @@ function HomepageFaqSchema() {
         name: "Which Greek islands are best for yachting?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "The Cyclades (Mykonos, Santorini, Paros, Milos) are best for energy and iconic scenery but require weather-aware planning around the Meltemi. The Ionian (Corfu, Lefkada, Kefalonia) is calmer and more family-friendly. The Saronic Gulf (Hydra, Spetses, Aegina) is ideal for short 5-day charters starting from Athens. The Sporades (Skiathos, Skopelos, Alonissos) offer pine-forested anchorages and a quieter atmosphere.",
+          text: "The Cyclades (Mykonos, Santorini, Paros, Milos) are best for energy and iconic scenery but require weather-aware planning around the Meltemi. The Ionian (Corfu, Lefkada, Kefalonia) is calmer and more family-friendly. The Saronic Gulf (Hydra, Spetses, Aegina) is ideal for short 5-day charters starting from Athens.",
         },
       },
       {

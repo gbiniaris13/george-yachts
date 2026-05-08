@@ -7,7 +7,7 @@
 // / favorites) with a Burgess/Aman-tier 4-item top nav:
 //
 //   CHARTER          (dropdown: Private Fleet · Explorer Fleet · View All)
-//   EXPLORE GREECE   (dropdown: Cyclades · Ionian · Saronic · Sporades · Itineraries)
+//   EXPLORE GREECE   (dropdown: Cyclades · Ionian · Saronic · Itineraries)
 //   ABOUT            (dropdown: About George · How It Works · FAQ)
 //   BRIEF GEORGE →   (no dropdown — primary CTA, gold, direct link to /inquiry)
 //
@@ -74,7 +74,6 @@ const NAV_SECTIONS = [
       { label: "Cyclades", href: "/yacht-charter/cyclades" },
       { label: "Ionian", href: "/yacht-charter/ionian" },
       { label: "Saronic", href: "/yacht-charter/saronic" },
-      { label: "Sporades", href: "/yacht-charter/sporades" },
       { label: "Itineraries", href: "/yacht-itineraries-greece" },
     ],
   },

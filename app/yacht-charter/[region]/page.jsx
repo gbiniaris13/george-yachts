@@ -12,9 +12,10 @@
 //      for "Cyclades" / "Ionian" mentions instead of all going to
 //      /inquiry — better topical clustering signal for Google.
 //
-// 4 regions live: Cyclades, Ionian, Saronic, Sporades. To add more
-// (Dodecanese, etc.), append to REGION_DATA + Sanity will start
-// returning yachts that match cruisingRegion automatically.
+// 3 regions live: Cyclades, Ionian, Saronic. Sporades + Dodecanese
+// retired 2026-05-08 — Boss directive: those regions are no longer
+// surfaced anywhere on the site. Re-add to REGION_DATA only on
+// explicit owner direction.
 
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -88,27 +89,6 @@ const REGION_DATA = {
     weatherNote:
       "Sheltered enough for almost any conditions. Even when the Aegean Meltemi peaks, the Saronic stays sailable. Water temps are charter-friendly from May.",
     sanityRegionMatch: ["Saronic", "Saronic Gulf", "Saronic, Greece"],
-  },
-  sporades: {
-    title: "Yacht Charter Sporades",
-    h1: "Yacht Charter — Sporades",
-    metaTitle: "Yacht Charter Sporades 2026 | Skiathos · Skopelos · Alonissos",
-    metaDescription:
-      "Crewed yacht charter in the Sporades — Skiathos, Skopelos, Alonissos, Skyros. Pine-fringed anchorages, the Mamma Mia! coastline. George Yachts IYBA broker advice.",
-    intro:
-      "The Sporades — Skiathos, Skopelos, Alonissos, Skyros — is the Greek charter region tourists know least and brokers love most. Pine-fringed anchorages, the Mediterranean's only marine national park (Alonissos), the Mamma Mia! coastline, and water clearer than the Cyclades. Embarkation is via Skiathos (small international airport) or Volos (mainland, ferry connection).",
-    queries: [
-      "yacht charter Sporades",
-      "Skiathos yacht charter",
-      "Skopelos yacht charter",
-      "Alonissos yacht charter",
-      "quiet yacht charter Greece",
-    ],
-    bestFor:
-      "UHNW clients seeking total privacy, repeat charterers who have done the Cyclades + Ionian and want something different, environmentally conscious travelers (Alonissos marine park).",
-    weatherNote:
-      "Calmer than the Cyclades. The Sporades catches the tail end of north winds but in lighter form. Water visibility is the best of any Greek region — 30+ meters in summer.",
-    sanityRegionMatch: ["Sporades", "Sporades, Greece"],
   },
 };
 

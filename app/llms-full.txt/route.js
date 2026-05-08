@@ -93,7 +93,7 @@ export async function GET() {
 - Member: International Yacht Brokers Association (IYBA)
 - Contract standard: MYBA-standard charter contracts
 - Specialty: Crewed motor yacht, sailing yacht, catamaran charters in Greek waters
-- Cruising regions: Cyclades, Ionian, Saronic, Sporades, Dodecanese
+- Cruising regions: Cyclades, Ionian, Saronic
 - Price range (weekly charter): EUR 10,000 → EUR 500,000+
 - Phones: +30 6970380999 (Athens) · +44 2037692707 (London) · +1 7867988798 (Miami / WhatsApp)
 - Email: george@georgeyachts.com

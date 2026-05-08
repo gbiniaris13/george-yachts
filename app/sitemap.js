@@ -33,11 +33,12 @@ const staticRoutes = [
   { path: "/compare?yachts=genny,filotimo", priority: 0.7, changeFrequency: "weekly" },
 
   // Per-region SEO landing pages (NEW 2026-04-25). High-volume
-  // queries: "yacht charter Cyclades / Ionian / Saronic / Sporades".
+  // queries: "yacht charter Cyclades / Ionian / Saronic".
+  // Sporades + Dodecanese pulled 2026-05-08 — Boss directive: those
+  // regions are no longer surfaced anywhere on the site.
   { path: "/yacht-charter/cyclades", priority: 0.9, changeFrequency: "weekly" },
   { path: "/yacht-charter/ionian", priority: 0.9, changeFrequency: "weekly" },
   { path: "/yacht-charter/saronic", priority: 0.9, changeFrequency: "weekly" },
-  { path: "/yacht-charter/sporades", priority: 0.9, changeFrequency: "weekly" },
 
   // Interactive tools.
   // E.3 (Roberto master rebuild brief, May 2026): /cost-calculator

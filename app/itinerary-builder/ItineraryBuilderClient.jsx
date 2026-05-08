@@ -47,15 +47,9 @@ const ISLANDS = [
   { id: 'zakynthos', name: 'Zakynthos', region: 'Ionian', x: 210, y: 420, lat: 37.7870, lng: 20.8980, desc: 'Navagio shipwreck beach, turtles' },
   { id: 'meganisi', name: 'Meganisi', region: 'Ionian', x: 205, y: 345, lat: 38.6400, lng: 20.7800, desc: 'Secret island, 3 villages, crystal water' },
 
-  // Sporades
-  { id: 'skiathos', name: 'Skiathos', region: 'Sporades', x: 420, y: 250, lat: 39.1600, lng: 23.4900, desc: 'Koukounaries beach, pine forests' },
-  { id: 'skopelos', name: 'Skopelos', region: 'Sporades', x: 445, y: 240, lat: 39.1200, lng: 23.7300, desc: 'Mamma Mia island, stone houses' },
-  { id: 'alonissos', name: 'Alonissos', region: 'Sporades', x: 465, y: 230, lat: 39.1500, lng: 23.8700, desc: 'Marine Park, monk seals, pristine' },
-
-  // Dodecanese
-  { id: 'rhodes', name: 'Rhodes', region: 'Dodecanese', x: 780, y: 520, lat: 36.4344, lng: 28.2176, desc: 'Medieval old town, Lindos, Colossus' },
-  { id: 'kos', name: 'Kos', region: 'Dodecanese', x: 730, y: 480, lat: 36.8930, lng: 26.9880, desc: 'Hippocrates\' birthplace, thermal springs' },
-  { id: 'symi', name: 'Symi', region: 'Dodecanese', x: 760, y: 500, lat: 36.6170, lng: 27.8370, desc: 'Pastel harbour, sponge diving, Panormitis' },
+  // Sporades + Dodecanese waypoints retired 2026-05-08 — Boss
+  // directive: those regions are no longer surfaced anywhere on
+  // the site. Re-add only on explicit owner direction.
 
   // Key mainland ports
   { id: 'athens', name: 'Athens (Alimos)', region: 'Mainland', x: 430, y: 380, lat: 37.9838, lng: 23.7275, desc: 'Alimos Marina — main charter base, easy airport access' },
@@ -78,8 +72,6 @@ const REGION_COLORS = {
   Cyclades: '#C9A84C',
   Saronic: '#C9A84C',
   Ionian: '#4A90D9',
-  Sporades: '#2ECC71',
-  Dodecanese: '#E67E22',
   Mainland: '#9CA3AF',
 };
 
@@ -111,8 +103,6 @@ export default function ItineraryBuilderClient() {
     Cyclades: '480 360 220 180',
     Saronic: '370 360 120 120',
     Ionian: '140 200 130 260',
-    Sporades: '380 200 120 80',
-    Dodecanese: '680 420 180 140',
     Mainland: '350 330 200 160',
   };
   const currentViewBox = regionViewBoxes[activeRegion] || regionViewBoxes.all;

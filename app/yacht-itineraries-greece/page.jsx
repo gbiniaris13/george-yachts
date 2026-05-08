@@ -6,13 +6,13 @@ import Image from "next/image";
 import "@/styles/service-page.css";
 
 export const metadata = {
-  title: "Yacht Itineraries Greece | Cyclades, Ionian, Saronic, Sporades | George Yachts",
+  title: "Yacht Itineraries Greece | Cyclades, Ionian, Saronic | George Yachts",
   description:
-    "4 signature Greek yacht charter itineraries personally sailed by George Biniaris. Cyclades Classic, Saronic Elegance, Ionian Dream, Sporades Escape. Day-by-day routes with insider tips.",
+    "3 signature Greek yacht charter itineraries personally sailed by George Biniaris. Cyclades Classic, Saronic Elegance, Ionian Dream. Day-by-day routes with insider tips.",
   alternates: { canonical: "https://georgeyachts.com/yacht-itineraries-greece" },
   openGraph: {
     title: "Signature Yacht Itineraries Greece | George Yachts",
-    description: "4 personally crafted Greek yacht charter routes. Cyclades, Saronic, Ionian, Sporades. Day-by-day with insider knowledge.",
+    description: "3 personally crafted Greek yacht charter routes. Cyclades, Saronic, Ionian. Day-by-day with insider knowledge.",
     url: "https://georgeyachts.com/yacht-itineraries-greece",
   },
 };
@@ -22,13 +22,12 @@ function PageSchema() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "Greek Yacht Charter Itineraries by George Yachts",
-    description: "4 signature yacht charter itineraries across Greek waters — Cyclades, Saronic Gulf, Ionian Islands, Sporades.",
-    numberOfItems: 4,
+    description: "3 signature yacht charter itineraries across Greek waters — Cyclades, Saronic Gulf, Ionian Islands.",
+    numberOfItems: 3,
     itemListElement: [
       { "@type": "ListItem", position: 1, item: { "@type": "TouristTrip", name: "The Cyclades Classic — Athens to Mykonos & Beyond", touristType: "Luxury Yacht Charter" } },
       { "@type": "ListItem", position: 2, item: { "@type": "TouristTrip", name: "Saronic Elegance — The Athens Riviera Circuit", touristType: "Luxury Yacht Charter" } },
       { "@type": "ListItem", position: 3, item: { "@type": "TouristTrip", name: "The Ionian Dream — Corfu to Kefalonia", touristType: "Luxury Yacht Charter" } },
-      { "@type": "ListItem", position: 4, item: { "@type": "TouristTrip", name: "The Sporades Escape — Greece's Green Islands", touristType: "Luxury Yacht Charter" } },
     ],
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
@@ -42,7 +41,7 @@ export default function YachtItinerariesPage() {
       <section className="svc-hero">
         <Image
           src="/images/yacht-itineraries.jpeg"
-          alt="Greek yacht charter itineraries - Cyclades Ionian Saronic Sporades"
+          alt="Greek yacht charter itineraries - Cyclades Ionian Saronic"
           fill
           priority
           className="svc-hero__bg"

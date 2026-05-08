@@ -46,13 +46,11 @@ export default function ProposalClient({ yachts = [] }) {
     const set = new Set();
     yachts.forEach((y) => {
       if (y.cruisingRegion) {
-        // Bucket loose names into the canonical 4
+        // Bucket loose names into the canonical 3
         const r = String(y.cruisingRegion).toLowerCase();
         if (r.includes("cyclad")) set.add("Cyclades");
         else if (r.includes("ionian")) set.add("Ionian");
         else if (r.includes("saronic")) set.add("Saronic");
-        else if (r.includes("dodecan")) set.add("Dodecanese");
-        else if (r.includes("sporad")) set.add("Sporades");
       }
     });
     return ["all", ...Array.from(set).sort()];
@@ -66,8 +64,6 @@ export default function ProposalClient({ yachts = [] }) {
         if (region === "Cyclades" && !r.includes("cyclad")) return false;
         if (region === "Ionian" && !r.includes("ionian")) return false;
         if (region === "Saronic" && !r.includes("saronic")) return false;
-        if (region === "Dodecanese" && !r.includes("dodecan")) return false;
-        if (region === "Sporades" && !r.includes("sporad")) return false;
       }
       return true;
     });

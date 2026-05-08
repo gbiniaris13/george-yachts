@@ -59,7 +59,6 @@ const ARTICLE_SCHEMA = {
     { "@type": "Place", name: "Cyclades, Greece" },
     { "@type": "Place", name: "Ionian Islands, Greece" },
     { "@type": "Place", name: "Saronic Gulf, Greece" },
-    { "@type": "Place", name: "Sporades, Greece" },
   ],
 };
 
@@ -91,7 +90,7 @@ const FAQ_SCHEMA = {
       acceptedAnswer: {
         "@type": "Answer",
         text:
-          "Four primary regions. Cyclades (Mykonos, Santorini, Paros, Naxos) — the iconic, energetic choice; June–September. Ionian (Corfu, Lefkada, Kefalonia, Ithaca) — calmer waters, family-friendly; May–October. Saronic (Hydra, Spetses, Aegina) — short charters from Athens, quiet; year-round. Sporades (Skiathos, Skopelos) — pine-forested, low crowd; June–September.",
+          "Three primary regions. Cyclades (Mykonos, Santorini, Paros, Naxos) — the iconic, energetic choice; June–September. Ionian (Corfu, Lefkada, Kefalonia, Ithaca) — calmer waters, family-friendly; May–October. Saronic (Hydra, Spetses, Aegina) — short charters from Athens, quiet; year-round.",
       },
     },
     {
@@ -287,10 +286,6 @@ export default function AIResearchHub() {
                 Yacht charter Hydra
               </Link>
               .<br />
-              <br />
-              <strong>Sporades</strong> — Skiathos, Skopelos, Alonnisos. Pine-forested,
-              low-crowd. Best June–September.
-              <br />
               <br />
               <Link href="/yacht-itineraries-greece" style={inlineLink}>
                 Curated 7-day itineraries per region →

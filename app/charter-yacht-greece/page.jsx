@@ -15,7 +15,7 @@ export const revalidate = 3600;
 export const metadata = {
   title: "Luxury Yacht Charter Fleet Greece | 66 Curated Yachts | George Yachts",
   description:
-    "Browse our curated fleet of 66 yachts in Greek waters. Private Fleet (full crew) + Explorer Fleet (skippered). Motor yachts, sailing catamarans, monohulls. Cyclades, Ionian, Saronic, Sporades. IYBA Charter Active Member.",
+    "Browse our curated fleet of 66 yachts in Greek waters. Private Fleet (full crew) + Explorer Fleet (skippered). Motor yachts, sailing catamarans, monohulls. Cyclades, Ionian, Saronic. IYBA Charter Active Member.",
   alternates: {
     canonical: "https://georgeyachts.com/charter-yacht-greece",
   },
@@ -174,7 +174,7 @@ export default async function CharterFleetPage() {
           <div className="fleet-hero__line" />
           <p className="fleet-hero__desc">
             {yachts.length} curated vessels &mdash; from intimate sailing catamarans
-            to 64-meter superyachts. Cyclades &middot; Ionian &middot; Saronic &middot; Sporades.
+            to 64-meter superyachts. Cyclades &middot; Ionian &middot; Saronic.
           </p>
         </div>
         {/* Scroll indicator */}

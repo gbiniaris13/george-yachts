@@ -95,7 +95,7 @@ export default function AboutContent() {
             George Yachts is led by George P. Biniaris, Managing Broker and IYBA member, operating from Athens with a hands-on approach built from years on the water. From crewed sailing charters in the Ionian to complex MYBA-contract superyacht operations in the Cyclades, every recommendation comes from first-hand experience &mdash; not a database.
           </p>
           <p className="about-philosophy__text">
-            As a boutique brokerage, we do one thing and we do it properly: crewed yacht charters in Greek waters. The Cyclades, the Ionian, the Saronic Gulf, the Sporades &mdash; every region, every season, every type of vessel. One broker, one relationship, one standard.
+            As a boutique brokerage, we do one thing and we do it properly: crewed yacht charters in Greek waters. The Cyclades, the Ionian, the Saronic Gulf &mdash; every region, every season, every type of vessel. One broker, one relationship, one standard.
           </p>
           <p className="about-philosophy__text">
             Every yacht in our fleet is personally vetted. Every captain is known by name. Itineraries are crafted from real routes sailed in these waters &mdash; not copied from brochures. We work exclusively with MYBA-standard contracts, transparent APA and VAT breakdowns, and fast, detailed proposals.
@@ -395,7 +395,7 @@ export default function AboutContent() {
               { title: "IYBA Member", desc: "International Yacht Brokers Association" },
               { title: "MYBA Contracts", desc: "Industry-standard charter agreements" },
               { title: "US Registered", desc: "George Yachts Brokerage House LLC" },
-              { title: "Greek Expertise", desc: "Cyclades \u00b7 Ionian \u00b7 Saronic \u00b7 Sporades" },
+              { title: "Greek Expertise", desc: "Cyclades \u00b7 Ionian \u00b7 Saronic" },
             ].map((cred, i) => (
               <div key={i} className="about-credentials__item">
                 <h4 className="about-credentials__item-title">{cred.title}</h4>
