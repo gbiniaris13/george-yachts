@@ -105,8 +105,15 @@ export default function Filotimon({ filotimoImage = null }) {
               first paint while the video decodes). */}
           <video
             className="absolute inset-0 w-full h-full object-cover"
-            poster={filotimoImage || undefined}
-            preload="metadata"
+            // 2026-05-08 (Chapter 01 follow-up) — poster now uses a
+            // frame extracted from the Navagio video itself, not the
+            // Sanity filotimoImage which read as a different scene
+            // and flashed visibly before the video started. The
+            // editorial filter (grayscale 0.15 / brightness 0.8 /
+            // contrast 1.06) is applied via CSS so it covers BOTH
+            // poster and live video — no swap visible.
+            poster="/images/posters/filotimo-navagio-frame1.jpg"
+            preload="auto"
             autoPlay
             loop
             muted

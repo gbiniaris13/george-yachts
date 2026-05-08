@@ -129,10 +129,27 @@ export default async function CharterFleetPage() {
           sailing-cat texture so the visitor immediately reads
           "we cover both sides of the brokerage". */}
       <section className="fleet-hero">
+        {/* 2026-05-08 (Chapter 01 follow-up) — poster + preload fix.
+            Boss reported the Pellegrina Sanity image flashing at
+            page load before the catamaran video kicked in. Two
+            changes:
+              (a) poster now points to a frame extracted directly
+                  from fleet-catamarans.mp4 at t=0 — so even if the
+                  poster shows for 100 ms while the video buffers,
+                  it's the SAME image as frame 1 of the video.
+                  Swap is invisible.
+              (b) preload="auto" tells the browser to begin
+                  downloading the video bytes as soon as the page
+                  loads, instead of waiting for the play() call.
+                  Trade-off: 12 MB starts downloading immediately
+                  on this route — acceptable here because the fleet
+                  page is intent-driven (visitor typed it / clicked
+                  through) and bandwidth is rarely the constraint
+                  for the UHNW visitor. */}
         <video
           className="fleet-hero__bg"
-          poster="https://cdn.sanity.io/images/ecqr94ey/production/5a1d2f46e69d3e21c61aa3950deb11085e725b9d-1024x768.jpg?w=1920&h=900&fit=crop&auto=format"
-          preload="metadata"
+          poster="/images/posters/fleet-catamarans-frame1.jpg"
+          preload="auto"
           autoPlay
           loop
           muted

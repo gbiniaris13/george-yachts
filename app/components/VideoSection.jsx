@@ -65,8 +65,13 @@ function HeroBackgroundVideo() {
   return (
     <video
       ref={ref}
-      poster="/images/hero-poster.jpg"
-      preload="metadata"
+      // 2026-05-08 (Chapter 01 follow-up) — poster matches frame 1
+      // of the trio video so the swap is invisible. preload="auto"
+      // so the browser starts downloading bytes immediately and the
+      // visitor doesn't see the poster freeze for 1–2 s on slower
+      // connections. See the matching change in the fleet page.
+      poster="/images/posters/hero-trio-frame1.jpg"
+      preload="auto"
       autoPlay
       loop
       muted
