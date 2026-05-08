@@ -47,6 +47,54 @@ const Footer = () => {
 
   return (
     <footer className="relative w-full bg-black text-white overflow-hidden">
+      {/* Chapter 01 (2026-05-08) — Boss-curated footer ambient video.
+          Two sunset-water close-ups (13992647 → 14079402) concat'd
+          into a single 68 s loop:
+            • WebM VP9  900 kbps 2-pass → 7.3 MB
+            • MP4  H.264 1400 kbps 2-pass → 11 MB
+          Boss spec: "Calm sea surface, sunset reflection, loop. Very
+          subtle, very slow." Honoured via opacity 0.22 + a deep
+          black-to-transparent overlay so the footer copy/CTA stay
+          fully readable. The video sits absolute z-0; all original
+          footer children get a relative z-1 wrapper below so they
+          float above the video without each one needing its own
+          z-index. */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        aria-hidden="true"
+        style={{ zIndex: 0 }}
+      >
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          poster="/images/posters/footer-sunset-frame1.jpg"
+          preload="auto"
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{ opacity: 0.22, filter: "saturate(0.8) brightness(0.7)" }}
+        >
+          <source src="/videos/footer-sunset.webm" type="video/webm" />
+          <source src="/videos/footer-sunset.mp4" type="video/mp4" />
+        </video>
+        {/* Deep navy/black wash so the footer text never has to
+            compete with the brightest sunset highlights. Heavier
+            at the top (where the gold divider line sits) so the
+            handoff from the section above reads as "horizon line
+            then black text" rather than "sun glare on a logo". */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.78) 35%, rgba(0,0,0,0.85) 100%)",
+          }}
+        />
+      </div>
+
+      {/* All footer content sits above the ambient video via a
+          single relative wrapper. Avoids touching every child's
+          z-index individually. */}
+      <div className="relative" style={{ zIndex: 1 }}>
       {/* A.5 — Press strip with trust signals (IYBA + MYBA-standard
           + U.S. Registered). Forbes intentionally omitted until the
           article is actually published. */}
@@ -429,6 +477,7 @@ const Footer = () => {
           All yacht specifications, images, and pricing are provided for informational purposes only. <span className="notranslate">George Yachts Brokerage House LLC</span> offers the details of these vessels in good faith but cannot guarantee the accuracy of this information or the condition of the vessels. All information is subject to change without notice and is not contractual.
         </p>
       </div>
+      </div>{/* /relative z-1 wrapper opened above the ambient video */}
     </footer>
   );
 };
