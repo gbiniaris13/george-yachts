@@ -235,6 +235,20 @@ export default function RegionalYachtMap({ yachts = [] }) {
         </div>
       </div>
 
+      {/* Phase 27i.19 (2026-05-08) — home-base footnote. Boss
+          directive: the per-region yacht counts are home bases, not
+          static "this is where the yacht lives all summer". Yachts
+          relocate on client request and most charters cross regions
+          mid-itinerary. The footnote is intentionally small so it
+          reads as the editorial fine print under the headline,
+          not as a disclaimer panel. */}
+      <p className="gy-region-map-footnote">
+        These counts show each port's home base. Yachts relocate on
+        client request, and most summer charters itinerate across
+        regions — a vessel based in Athens may begin your week there
+        and end it in the Cyclades.
+      </p>
+
       {/* Region detail modal — photo carousel cover + yacht list.
           key={region.slug} so the modal remounts on fly-through →
           photoIdx resets to 0 → cover photos start their fade fresh

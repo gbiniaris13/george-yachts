@@ -70,6 +70,15 @@ function Stars({ count = 800 }) {
 
 export default function StarField3D() {
   const [enabled, setEnabled] = useState(false);
+  // Phase 27i.19 (2026-05-08) — IntersectionObserver gates the
+  // render loop. "always" while in view, "never" otherwise so the
+  // GPU is genuinely idle when the section is scrolled past. Was
+  // previously hard-coded to "always", which kept WebGL warm
+  // through the entire scroll path — measurable lag on lower-spec
+  // laptops with all three R3F canvases (Stars + Embers + Water)
+  // running at once.
+  const [frameloop, setFrameloop] = useState("never");
+  const containerRef = useRef(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -79,10 +88,23 @@ export default function StarField3D() {
     setEnabled(true);
   }, []);
 
+  useEffect(() => {
+    if (!enabled || !containerRef.current) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        setFrameloop(entries[0]?.isIntersecting ? "always" : "never");
+      },
+      { rootMargin: "120px" }
+    );
+    obs.observe(containerRef.current);
+    return () => obs.disconnect();
+  }, [enabled]);
+
   if (!enabled) return null;
 
   return (
     <div
+      ref={containerRef}
       aria-hidden="true"
       style={{
         position: "absolute",
@@ -92,10 +114,7 @@ export default function StarField3D() {
       }}
     >
       <Canvas
-        // R3F pauses the render loop automatically when the canvas
-        // leaves the viewport. We still useFrame so motion advances
-        // when on-screen, but the GPU stays cool when scrolled past.
-        frameloop="always"
+        frameloop={frameloop}
         performance={{ min: 0.4 }}
         gl={{ antialias: false, alpha: true, powerPreference: "low-power" }}
         camera={{ position: [0, 0, 5], fov: 60 }}

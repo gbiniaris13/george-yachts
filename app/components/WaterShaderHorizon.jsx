@@ -160,6 +160,13 @@ function WaterPlane() {
 
 export default function WaterShaderHorizon({ height = 220 }) {
   const [enabled, setEnabled] = useState(false);
+  // Phase 27i.19 (2026-05-08) — IntersectionObserver gating. See
+  // StarField3D / GoldEmbers3D — same pattern. Especially important
+  // here because the fragment shader runs every visible pixel
+  // through fBm noise + power curves; pausing it the moment the
+  // band scrolls out of view drops sustained GPU usage.
+  const [frameloop, setFrameloop] = useState("never");
+  const containerRef = useRef(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -168,6 +175,18 @@ export default function WaterShaderHorizon({ height = 220 }) {
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
     setEnabled(true);
   }, []);
+
+  useEffect(() => {
+    if (!enabled || !containerRef.current) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        setFrameloop(entries[0]?.isIntersecting ? "always" : "never");
+      },
+      { rootMargin: "100px" }
+    );
+    obs.observe(containerRef.current);
+    return () => obs.disconnect();
+  }, [enabled]);
 
   if (!enabled) {
     // Mobile / reduced-motion fallback: a CSS gradient that hints at
@@ -188,6 +207,7 @@ export default function WaterShaderHorizon({ height = 220 }) {
 
   return (
     <div
+      ref={containerRef}
       aria-hidden="true"
       style={{
         width: "100%",
@@ -197,7 +217,7 @@ export default function WaterShaderHorizon({ height = 220 }) {
       }}
     >
       <Canvas
-        frameloop="always"
+        frameloop={frameloop}
         performance={{ min: 0.4 }}
         gl={{
           antialias: false,

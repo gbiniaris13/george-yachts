@@ -2461,6 +2461,23 @@ a.gy-fancy-link:hover {
   letter-spacing: 0.02em;
 }
 
+/* Phase 27i.19 (2026-05-08) — home-base footnote sits under the
+   regional map. Tiny, non-italic, low-emphasis ivory so it reads
+   as fine print rather than a disclaimer banner. Centered + boxed
+   to roughly the same width as the map itself. */
+.gy-region-map-footnote {
+  max-width: 640px;
+  margin: 28px auto 0;
+  padding: 0 24px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(12px, 1.05vw, 13px);
+  line-height: 1.6;
+  color: rgba(245, 239, 225, 0.55);
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
 /* Map canvas — fixed aspect ratio to keep regional positions
    readable across viewports. R3F canvas + HTML pin overlay are
    both absolutely positioned within this. */

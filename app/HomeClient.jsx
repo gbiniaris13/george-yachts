@@ -41,10 +41,10 @@ const GreekWatersMap = dynamic(() => import("./components/GreekWatersMap"));
 // CC0 placeholders pending Boss-curated regional photography.
 const RegionalYachtMap = dynamic(() => import("./components/RegionalYachtMap"));
 const WaveDivider = dynamic(() => import("./components/WaveDivider"));
-// Phase 2 / E2 (luxury rebuild) — 3D Mapbox flyover. Lives ABOVE the
-// editorial GreekWatersMap so the cinematic version reads first; the
-// SVG illustration stays as the no-JS / reduced-motion fallback story.
-const MapboxFlyover = dynamic(() => import("./components/MapboxFlyover"), { ssr: false });
+// 2026-05-08 (Phase 27i.19) — MapboxFlyover removed from the
+// homepage tree. Merged with RegionalYachtMap below — both surfaces
+// were showing islands with photos, so consolidating into one.
+// Performance bonus: drops Mapbox GL JS off the homepage bundle.
 const BrokerTestimonials = dynamic(() => import("./components/BrokerTestimonials"));
 const ContactFormSection = dynamic(() => import("./components/ContactFormSection"));
 const HomeJournalTeaser = dynamic(() => import("./components/HomeJournalTeaser"));
@@ -149,10 +149,15 @@ const HomeClient = ({
           directive (along with TrendingYachts + Editor's Pick) —
           eliminates the "shopping carousel" feel from the homepage. */}
 
-      {/* Phase 2 / E2 — Cinematic 3D Mapbox flyover (statement piece). */}
-      <section id="flyover" aria-label="3D flyover of the Greek waters" data-gy-reveal="blur">
-        <MapboxFlyover />
-      </section>
+      {/* 2026-05-08 (Phase 27i.19) — MapboxFlyover removed from the
+          homepage tree. Boss directive: it duplicated the work of the
+          Regional Yacht Map below (both surfaces show islands with
+          photos), so the two are merged into one. The Mapbox section
+          also dragged Mapbox GL JS (~250 KB gz) into the homepage
+          bundle for no incremental value — removing it is also a
+          performance win. The component file stays on disk in case
+          a future page wants it, but the homepage no longer mounts
+          it. */}
 
       {/* 2026-05-07 (Phase 27i.5) — Regional Yacht Map. Replaces
           GreekWatersMap. Pulls cruisingRegion from Sanity and

@@ -3,22 +3,20 @@
 import { useEffect, useRef } from "react";
 
 export default function GlobalEffects() {
-  const progressRef = useRef(null);
   const rippleContainerRef = useRef(null);
 
   useEffect(() => {
-    // ═══════ 1. SCROLL PROGRESS BAR ═══════
-    const progressBar = progressRef.current;
-    const onScroll = () => {
-      if (!progressBar) return;
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      progressBar.style.width = `${progress}%`;
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
+    // 2026-05-08 (Phase 27i.19) — perf audit: the original
+    // GlobalEffects scroll-progress bar duplicated the newer
+    // ScrollProgress component (mounted next to GlobalEffects in
+    // app/layout.jsx). Both DOM nodes rendered, both fired on
+    // every scroll event — and the older one had no rAF throttle,
+    // which on fast trackpads was triggering layout reads + style
+    // writes 1000×/sec. Removed the duplicate; ScrollProgress
+    // (Phase 27i.2) already does the job with rAF throttling and
+    // the brand gold gradient.
 
-    // ═══════ 2. TOUCH RIPPLE (Mobile + Desktop) ═══════
+    // ═══════ TOUCH RIPPLE (Mobile + Desktop) ═══════
     const rippleContainer = rippleContainerRef.current;
     const createRipple = (x, y) => {
       if (!rippleContainer) return;
@@ -146,16 +144,29 @@ export default function GlobalEffects() {
       btn.addEventListener("pointerleave", onPointerUp);
     });
 
-    // ═══════ 5. TILT EFFECT ON CARDS (Desktop) ═══════
+    // ═══════ TILT EFFECT ON CARDS (Desktop) ═══════
+    // 2026-05-08 perf: rAF-throttle the mousemove. Without throttling
+    // a fast trackpad fires hundreds of events per second, each one
+    // doing a getBoundingClientRect (forced layout) + style write.
+    // Now we coalesce to one update per frame and bail early on
+    // touch viewports.
     const cards = document.querySelectorAll(".fleet-card, .blog-card, .about-services__card, .team-card");
+    let cardRaf = 0;
+    let cardPending = null;
     const onCardMouseMove = (e) => {
       if (window.innerWidth < 1024) return;
-      const card = e.currentTarget;
-      const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      card.style.transform = `perspective(800px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`;
-      card.style.transition = "transform 0.1s ease";
+      cardPending = { card: e.currentTarget, x: e.clientX, y: e.clientY };
+      if (cardRaf) return;
+      cardRaf = requestAnimationFrame(() => {
+        cardRaf = 0;
+        const p = cardPending;
+        if (!p) return;
+        const rect = p.card.getBoundingClientRect();
+        const x = (p.x - rect.left) / rect.width - 0.5;
+        const y = (p.y - rect.top) / rect.height - 0.5;
+        p.card.style.transform = `perspective(800px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`;
+        p.card.style.transition = "transform 0.1s ease";
+      });
     };
     const onCardMouseLeave = (e) => {
       const card = e.currentTarget;
@@ -170,9 +181,9 @@ export default function GlobalEffects() {
 
     // Cleanup
     return () => {
-      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("scroll", onFirstScroll);
       clearTimeout(safetyNet);
+      if (cardRaf) cancelAnimationFrame(cardRaf);
       document.removeEventListener("touchstart", onTouchStart);
       document.removeEventListener("click", onClick);
       buttons.forEach((btn) => {
@@ -189,21 +200,9 @@ export default function GlobalEffects() {
 
   return (
     <>
-      {/* Scroll Progress Bar */}
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          height: "2px",
-          zIndex: 99999,
-          background: "linear-gradient(90deg, #E6C77A, #DAA520, #A67C2E)",
-          transition: "width 0.1s linear",
-          width: "0%",
-          pointerEvents: "none",
-        }}
-        ref={progressRef}
-      />
+      {/* 2026-05-08 — duplicate scroll progress bar removed. The
+          newer <ScrollProgress /> handles this with rAF throttling
+          and the proper brand gold gradient. */}
 
       {/* Ripple Container */}
       <div ref={rippleContainerRef} style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 99990 }} />

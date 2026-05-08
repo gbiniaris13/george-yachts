@@ -76,6 +76,10 @@ function Embers({ count = 600 }) {
 
 export default function GoldEmbers3D() {
   const [enabled, setEnabled] = useState(false);
+  // Phase 27i.19 (2026-05-08) — IntersectionObserver gating. See
+  // StarField3D for the rationale; same pattern, same payoff.
+  const [frameloop, setFrameloop] = useState("never");
+  const containerRef = useRef(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -85,10 +89,23 @@ export default function GoldEmbers3D() {
     setEnabled(true);
   }, []);
 
+  useEffect(() => {
+    if (!enabled || !containerRef.current) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        setFrameloop(entries[0]?.isIntersecting ? "always" : "never");
+      },
+      { rootMargin: "120px" }
+    );
+    obs.observe(containerRef.current);
+    return () => obs.disconnect();
+  }, [enabled]);
+
   if (!enabled) return null;
 
   return (
     <div
+      ref={containerRef}
       aria-hidden="true"
       style={{
         position: "absolute",
@@ -98,7 +115,7 @@ export default function GoldEmbers3D() {
       }}
     >
       <Canvas
-        frameloop="always"
+        frameloop={frameloop}
         performance={{ min: 0.4 }}
         gl={{ antialias: false, alpha: true, powerPreference: "low-power" }}
         camera={{ position: [0, 0, 5], fov: 60 }}
