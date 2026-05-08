@@ -64,6 +64,14 @@ const Footer = () => {
         aria-hidden="true"
         style={{ zIndex: 0 }}
       >
+        {/* 2026-05-08 follow-up — Boss couldn't see the ambient at
+            the original opacity 0.22 + dark overlay 0.85 (combined
+            visible blend ~3%, effectively invisible at footer
+            scale). Bumped video opacity to 0.55 and dropped the
+            overlay to a 0.45–0.55 wash so the sunset reflections
+            now read clearly behind the content. The overlay still
+            keeps the footer copy readable but no longer drowns
+            the video. */}
         <video
           className="absolute inset-0 w-full h-full object-cover"
           poster="/images/posters/footer-sunset-frame1.jpg"
@@ -72,21 +80,16 @@ const Footer = () => {
           loop
           muted
           playsInline
-          style={{ opacity: 0.22, filter: "saturate(0.8) brightness(0.7)" }}
+          style={{ opacity: 0.55, filter: "saturate(1.05) brightness(0.95)" }}
         >
           <source src="/videos/footer-sunset.webm" type="video/webm" />
           <source src="/videos/footer-sunset.mp4" type="video/mp4" />
         </video>
-        {/* Deep navy/black wash so the footer text never has to
-            compete with the brightest sunset highlights. Heavier
-            at the top (where the gold divider line sits) so the
-            handoff from the section above reads as "horizon line
-            then black text" rather than "sun glare on a logo". */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.78) 35%, rgba(0,0,0,0.85) 100%)",
+              "linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.45) 35%, rgba(0,0,0,0.55) 100%)",
           }}
         />
       </div>
