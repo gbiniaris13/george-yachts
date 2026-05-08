@@ -260,8 +260,13 @@ export default async function RootLayout({ children }) {
   // dismissed (cookie set), padding returns to 0 and the page
   // reclaims that strip. Read server-side so the very first paint
   // already has the correct offset — no layout shift after hydration.
-  const forbesDismissed =
-    (await cookies()).get("gy_forbes_bar_dismissed")?.value === "true";
+  // 2026-05-08 (Chapter 01) — Forbes top bar is now non-dismissible
+  // per Boss directive ("πάρα πολύ σημαντικό credential, να μην
+  // μπορεί να το κλείσει"). The cookie check is kept inline as a
+  // const so the body class below stays a single expression, but
+  // it's hardcoded to false — the bar always renders, the
+  // gy-with-forbes-bar offset always applies.
+  const forbesDismissed = false;
 
   // Phase 27e (Forbes-launch eve, 2026-05-05) — fetch the Service
   // schema WITH AggregateRating if real reviews exist in Sanity.

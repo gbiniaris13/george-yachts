@@ -1,685 +1,302 @@
 "use client";
 
+// Chapter 01 (Boss-spec hero rebuild, 2026-05-08) — full rewrite.
+//
+// Replaces the multi-line "GEORGE YACHTS / EXCLUSIVELY GREEK WATERS /
+// BROKERAGE HOUSE LLC / Boutique Luxury Yacht Charter / seasonal /
+// fleet-snapshot pill / dual CTAs + whisper hint / Scroll text /
+// chevron / desktop category nav" hero — too much above-the-fold
+// reading for a UHNW visitor — with a Burgess/Fraser-tier minimal
+// hero: video, 6-word headline, 1-line subline, 2 restrained CTAs,
+// a chevron scroll cue. Nothing else.
+//
+// Layout per Boss spec:
+//   • Full-viewport (100vh / 100dvh on mobile)
+//   • Video background, autoplay/muted/loop/playsinline
+//   • Overlay gradient: rgba(13,27,42,0.45) top → rgba(13,27,42,0.75) bottom
+//   • Headline 6 words, Cormorant-tier display (Fraunces via Phase 28
+//     mapping) Light, 64 px desktop / 40 px mobile, tracking -0.02em
+//   • Subline 1 line, Switzer Light 300, 16 px, tracking 0.04em
+//   • Two CTAs centered with 16 px gap. Primary = gold border + gold
+//     text + transparent bg. Secondary = no border + white text +
+//     underline-on-hover only.
+//   • Animated chevron icon (20 px white 0.5 opacity, gentle 2 s pulse)
+//     pinned bottom-center; replaces the "Scroll" text + line.
+//
+// Content removed in this rewrite:
+//   - GEORGE YACHTS letter-by-letter reveal + .gy-pearl-white wordmark
+//   - "EXCLUSIVELY GREEK WATERS" eyebrow
+//   - "BROKERAGE HOUSE LLC" gold descriptor
+//   - "Boutique Luxury Yacht Charter · Est. U.S.A. · Operating from Athens"
+//   - Seasonal italic line
+//   - "Take the 60-second quiz / or browse all N yachts" whisper
+//   - "Scroll" text + breathing vertical line
+//   - Desktop category nav strip ("Sailing Monohulls / Sailing Catamarans /…")
+//
+// Brand identity now lives in the nav logo + the embedded Forbes top
+// bar (which Chapter 01 also makes non-dismissible).
+//
+// Video swap: the prior "/videos/yacht-cruising-new.mp4" gives way to
+// "/videos/hero-golden-yacht.{webm,mp4}" — Boss-curated golden-hour
+// motor yacht aerial (Pexels CC0, encoded 1920×1080 @ ~5 MB WebM /
+// 7.6 MB MP4 fallback). The Boss-supplied source clip lives at
+// Downloads/8303143-uhd_4096_2160_25fps.mp4; encode pipeline lives
+// in the Chapter 01 commit message for reproducibility.
+
 import React, { useEffect, useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectFade } from "swiper/modules";
-import Link from "next/link";
-import MagneticButton from "./MagneticButton";
-import { useI18n } from "@/lib/i18n/I18nProvider";
 
-import "swiper/css";
-import "swiper/css/effect-fade";
-// Removed: swiper/css/pagination — we don't use the Pagination module
-// here (only Autoplay + EffectFade), so the pagination stylesheet was
-// dead weight on every first paint.
+const HERO_VIDEO_BASE = "/videos/hero-golden-yacht";
 
-const CATEGORIES = [
-  { label: "Sailing Monohulls", value: "sailing-monohulls" },
-  { label: "Sailing Catamarans", value: "sailing-catamarans" },
-  { label: "Power Catamarans", value: "power-catamarans" },
-  { label: "Motor Yachts", value: "motor-yachts" },
-];
+function HeroBackgroundVideo() {
+  const ref = useRef(null);
 
-const BackgroundVideo = ({ src, poster }) => {
-  const videoRef = useRef(null);
   useEffect(() => {
-    const video = videoRef.current;
+    const video = ref.current;
     if (!video) return;
     video.muted = true;
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch((error) => console.log("Autoplay prevented:", error));
-    }
-  }, [src]);
-
-  // Phase 27e (Forbes-launch eve, 2026-05-05) — WebM fallback chain.
-  // Browsers prefer WebM (smaller, ~40% bandwidth saving) when both
-  // are listed first. Today we ship MP4 only; the day a WebM
-  // transcode lands in /public/videos/ alongside the MP4 (filename
-  // swapped to .webm), it auto-activates with no code change. This
-  // gives the perf win the moment the file exists.
-  const webmSrc = typeof src === "string" && src.endsWith(".mp4")
-    ? src.replace(/\.mp4$/, ".webm")
-    : null;
+    video.play?.().catch(() => {});
+  }, []);
 
   return (
     <video
-      ref={videoRef}
-      poster={poster}
-      preload="none"
+      ref={ref}
+      poster="/images/hero-poster.jpg"
+      preload="metadata"
       autoPlay
       loop
       muted
       playsInline
-      className="w-full h-full object-cover"
-      style={{ objectFit: "cover", objectPosition: "center", minHeight: "100%", minWidth: "100%" }}
+      aria-hidden="true"
+      style={{
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        objectPosition: "center",
+      }}
     >
-      {/* WebM listed first — browsers that support it download only
-          this; browsers without WebM (older Safari) fall through to
-          the MP4. If /videos/foo.webm doesn't exist (404), browsers
-          immediately try the next <source>. */}
-      {webmSrc && <source src={webmSrc} type="video/webm" />}
-      <source src={src} type="video/mp4" />
+      {/* WebM (smaller) → MP4 fallback. Browsers without WebM (older
+          Safari) skip the first <source> and fall through to MP4. */}
+      <source src={`${HERO_VIDEO_BASE}.webm`} type="video/webm" />
+      <source src={`${HERO_VIDEO_BASE}.mp4`} type="video/mp4" />
     </video>
   );
-};
+}
 
-const VideoSection = ({ yachtCount, privateRange, explorerRange } = {}) => {
-  const { t } = useI18n();
-  const HEIGHT_CLASSES = "h-[100dvh]";
-  const isVideo = (url) => url && url.toLowerCase().endsWith(".mp4");
-  const [heroVisible, setHeroVisible] = useState(false);
-
+export default function VideoSection() {
+  // Single fade-up reveal — kept minimal compared to the prior 8-stage
+  // choreography. The whole hero settles in around 800 ms then breathes
+  // with the chevron pulse and the looping video.
+  const [revealed, setRevealed] = useState(false);
   useEffect(() => {
-    const timer = setTimeout(() => setHeroVisible(true), 300);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setRevealed(true), 240);
+    return () => clearTimeout(t);
   }, []);
 
-  // Phase 20 (luxury rebuild, 2026-05-05) — Boss directive: the prior
-  // badge was LYING. It said "€420 – €180k/week · CREWED" but:
-  //   • €420 is per-PERSON (Explorer Fleet, with skipper) — not per
-  //     yacht/week
-  //   • €180k IS per yacht/week (Private Fleet, full crew)
-  //   • The Explorer Fleet sails with a skipper, NOT full crew, so
-  //     blanket "Crewed" misrepresents half of the fleet
-  // Forbes feature drops tomorrow + heavy social-media push — the site
-  // CANNOT have an inaccurate banner the moment those readers land.
-  // New badge surfaces both fleet tiers on their own terms.
-  const fmtK = (n) => (n >= 1000 ? `€${Math.round(n / 1000)}K` : `€${n}`);
-  const explorerLow = explorerRange?.low;
-  const privateHigh = privateRange?.high;
-  // Phase 24 — desktop / mobile variants. Mobile keeps it tight so
-  // the badge doesn't wrap to 5+ lines on 375px phones.
-  const fleetBadgeFull =
-    yachtCount && yachtCount > 0
-      ? `${yachtCount} yachts · Explorer Fleet (skippered) from ${
-          explorerLow ? fmtK(explorerLow) : "€420"
-        }/guest · Private Fleet (full crew) to ${
-          privateHigh ? fmtK(privateHigh) : "€180K"
-        }/week`
-      : null;
-  // Phase 27 (mobile audit, 2026-05-05) — the prior "short" variant
-  // was barely shorter than full and still wrapped to 4–5 lines on a
-  // 390px iPhone. Truly compact form: just numbers + count. The full
-  // sentence stays for tablet+ where there's horizontal room.
-  const fleetBadgeShort =
-    yachtCount && yachtCount > 0
-      ? `${yachtCount} yachts · ${
-          explorerLow ? fmtK(explorerLow) : "€420"
-        }/guest – ${privateHigh ? fmtK(privateHigh) : "€180K"}/week`
-      : null;
-  // Default to full text — the JSX renders both with CSS class
-  // toggles so we get the right one per viewport.
-  const fleetBadge = fleetBadgeFull;
-
-  // The button styling renders the FIRST button as a ghost
-  // (white-bordered, subtle) and the SECOND button as a solid GOLD
-  // pill — the gold one carries the visual weight, so it must
-  // contain the action we most want visitors to take. Per the GA4
-  // dive, that's the direct fleet grid (/charter-yacht-greece) —
-  // not the quiz. Hence: ghost = quiz (demoted), gold = fleet.
-  const slideData = [
-    {
-      id: 1,
-      imageUrl: "/videos/yacht-cruising-new.mp4",
-      // Slot 1 → ghost button (subtle): browse-fleet path for visitors
-      // who already know what they want
-      primaryHref: "/charter-yacht-greece",
-      primaryText: yachtCount && yachtCount > 0
-        ? `or explore all ${yachtCount} yachts`
-        : "or explore all yachts",
-      // Phase 20 (luxury rebuild, 2026-05-05) — Forbes launch tomorrow.
-      // The prior "Match me to 3 yachts in 90s" copy reads as
-      // tech-startup quiz, not Forbes-tier broker. Old-money UHNW
-      // visitors brief, they don't quiz. Updated to "Brief George".
-      // Same /yacht-finder destination (the structured form is fine).
-      secondaryHref: "/inquiry",
-      secondaryText: "Brief George — reply within 24h",
-    },
-  ];
-
   return (
-    <section className="relative w-full overflow-hidden bg-black" style={{ marginTop: 0, paddingTop: 0 }}>
-      <Swiper
-        modules={[Autoplay, EffectFade]}
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
-        effect={"fade"}
-        fadeEffect={{ crossFade: true }}
-        loop={true}
-        className={`relative w-full ${HEIGHT_CLASSES} z-0`}
-      >
-        {slideData.map((slide) => (
-          <SwiperSlide key={slide.id}>
-            {({ isActive }) => (
-              <div className={`relative w-full ${HEIGHT_CLASSES} z-0`}>
-                <div className="absolute inset-0 z-0">
-                  {isVideo(slide.imageUrl) ? (
-                    <BackgroundVideo src={slide.imageUrl} poster="/images/hero-poster.jpg" />
-                  ) : (
-                    <img
-                      src={slide.imageUrl}
-                      alt="George Yachts - luxury yacht charter Greece"
-                      className="w-full h-full object-cover"
-                    />
-                  )}
-                  {/* Cinematic overlay */}
-                  <div className="absolute inset-0 bg-black/40"></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20"></div>
-                  {/* P.3 (Roberto brief) — slow-cinema film grain.
-                      Pure CSS-pseudo via the .gy-film-grain class
-                      defined in globals.css. ~5% opacity multiplied
-                      over the video so the texture reads only at the
-                      edges of the frame, not as visible noise. */}
-                  <div className="absolute inset-0 gy-film-grain pointer-events-none" aria-hidden="true"></div>
-                </div>
+    <section
+      className="gy-hero relative w-full overflow-hidden bg-black"
+      aria-label="George Yachts — Greek waters charter"
+      style={{ height: "100dvh", marginTop: 0, paddingTop: 0 }}
+    >
+      {/* Video background */}
+      <HeroBackgroundVideo />
 
-                {/* Hero Content — flex column on the inner wrapper so EVERY
-                    child element (H1, eyebrow, gold dashes, sub-tagline, CTAs)
-                    aligns on the same vertical axis regardless of its own
-                    intrinsic width. text-align:center alone wasn't enough
-                    because letter-spaced lines drag a phantom trailing
-                    space that shifts the visible glyphs off-center
-                    (George 2026-04-29 feedback: "χρυσά γράμματα προς τα
-                    δεξιά, μικρά αριστερά"). flex+items-center force-centers
-                    each block on its own axis, so the eyebrow, BROKERAGE
-                    HOUSE LLC, sub-tagline and seasonal italic ALL line up
-                    dead-on with the H1. */}
-                <div className="relative z-10 flex items-center justify-center h-full text-center px-6 md:px-8">
-                  <div
-                    className={`w-full max-w-[1200px] mx-auto flex flex-col items-center ${
-                      isActive && heroVisible ? "opacity-100" : "opacity-0"
-                    }`}
-                    style={{ textAlign: "center", transition: "opacity 800ms ease" }}
-                  >
-                    {/* ── Move #1: cinematic reveal choreography ──
-                        - t=0        video is playing, everything invisible
-                        - t=400ms    gold curtain line expands from centre
-                        - t=900ms    letter-by-letter reveal of "GEORGE YACHTS"
-                                     (60ms per glyph, Cormorant Garamond)
-                        - t=1700ms   "EXCLUSIVELY GREEK WATERS" eyebrow appears
-                                     BELOW the headline (moved from above —
-                                     more confident, signature line under the
-                                     name, not above it)
-                        - t=1900ms   BROKERAGE HOUSE LLC gold gradient
-                        - t=2200ms   gold divider + sub-tagline
-                        - t=2500ms   seasonal italic
-                        - t=2800ms   CTAs
-                        - t=3100ms   secondary quiz link                    */}
-
-                    {/* Gold curtain — reveals the headline on load.
-                        Draws from centre outward to 800px, then holds. */}
-                    <div
-                      aria-hidden="true"
-                      className="mx-auto mb-6 md:mb-8"
-                      style={{
-                        height: "1px",
-                        background:
-                          "linear-gradient(90deg, transparent, #DAA520 20%, #DAA520 80%, transparent)",
-                        width: heroVisible ? "min(80vw, 800px)" : "0px",
-                        transition: "width 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s",
-                      }}
-                    />
-
-                    {/* Brand Name — letter-by-letter reveal.
-                        2026-04-21 CENTERING FIX: CSS `letter-spacing`
-                        adds trailing whitespace after the final glyph,
-                        so `textAlign:center` on the <h1> centres the
-                        bounding-box (letters + phantom trailing space)
-                        — making the visible word look shifted LEFT.
-                        Fix: wrap all letters in a single inline-block
-                        span, move the letter-spacing to the wrapper,
-                        and give it a matching negative
-                        `margin-inline-end`. The phantom space is
-                        literally pulled back into the wrapper, so the
-                        visible letters centre dead-on the viewport
-                        axis. Same trick used below for every other
-                        letter-spaced line (eyebrow, BROKERAGE HOUSE,
-                        sub-tagline). */}
-                    {/* Phase 27e revert (Forbes-launch day, 2026-05-06)
-                        — the .gy-gold-foil class broke the hero text
-                        rendering: the 3-layer gradient with mix-blend
-                        + sqrt-skew animation didn't compose with the
-                        existing letter-by-letter reveal (each <span
-                        class="gy-hero-letter"> independently animates
-                        opacity), so the text rendered transparent
-                        with no visible fill. Boss reported it missing
-                        from the live homepage. Swapped to the
-                        verified-working .gy-gold-24k-shine class
-                        which is exactly what BROKERAGE HOUSE LLC
-                        uses and renders correctly. Cinzel + uppercase
-                        + 24K gold gradient + slow shimmer — same
-                        luxurious feel without the rendering risk. */}
-                    {/* Phase 27f (Forbes-launch day, 2026-05-06) — Boss
-                        flagged the 24k yellow gold as "μουσταρδί". New
-                        .gy-luxe-enter class: starts ivory white, then
-                        cross-fades over 1.8s into a muted champagne-
-                        gold gradient (cool highlights + warm bronze
-                        shadows, NOT saturated yellow). Plus a barely-
-                        noticeable 18s shimmer for that "light catching
-                        polished metal" feel. */}
-                    {/* Phase 27h (2026-05-07) — Boss feedback: champagne
-                        gold read warm-coloured. Switched to .gy-pearl-
-                        white: pure white base + barely-perceptible
-                        platinum/pearl shimmer (no yellow). Reads as
-                        polished marble at the Aman / Belmond / Tiffany
-                        tier — old-money restraint, not new-money gold. */}
-                    <h1
-                      className="gy-hero-headline gy-pearl-white"
-                      aria-label="George Yachts"
-                      style={{
-                        // Phase 17 (luxury rebuild, 2026-05-05) —
-                        // Bodoni Moda for the homepage hero. The most
-                        // "expensive" free serif on Google Fonts —
-                        // Vogue / Harper's Bazaar high-contrast cut
-                        // with thin verticals + thick horizontals.
-                        // Boss directive: "ta poio akriva gramata".
-                        // White-space: nowrap forces single line; the
-                        // 9.5vw clamp scales the type so it fits at
-                        // every viewport without overflow.
-                        // Phase 17c — switched from heavy Bodoni (which
-                        // Boss flagged as "afisa cinema / Forbes Vogue
-                        // bold") to CINZEL — the Trajan Pro derivative
-                        // used by Aman, Belmond, Bulgari, Four Seasons,
-                        // Le Bristol, and The Carlyle. Old-money
-                        // Roman-inscription dignity. Medium weight
-                        // (500), never bold. Slightly OPEN tracking
-                        // (0.04em) — Roman caps want to breathe, that's
-                        // what makes them read as monumental.
-                        fontFamily: "var(--font-cinzel), 'Cinzel', 'Trajan Pro', Georgia, serif",
-                        // 2026-05-07 — narrowed the lower clamp from 40px
-                        // (10vw) to 34px (9vw). On 375 px iPhone SE the
-                        // wider clamp pushed "GEORGE YACHTS" past the
-                        // viewport edge under whiteSpace: nowrap;
-                        // 34/9vw fits comfortably with the section padding.
-                        fontSize: "clamp(34px, 9vw, 144px)",
-                        fontWeight: 500,
-                        fontStyle: "normal",
-                        lineHeight: 1.05,
-                        letterSpacing: "0.04em",
-                        color: "#F8F5F0",
-                        textTransform: "uppercase",
-                        margin: "0 0 24px 0",
-                        textAlign: "center",
-                        textShadow: "0 10px 48px rgba(0, 0, 0, 0.6)",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      <span
-                        className="gy-hero-letters-wrap"
-                        style={{
-                          display: "inline-block",
-                          letterSpacing: "0.04em",
-                          marginInlineEnd: "calc(-1 * 0.04em)",
-                        }}
-                      >
-                        {/* Phase 27e fix (Forbes-launch day, 2026-05-06):
-                            removed per-letter reveal animation \u2014 it
-                            was stuck at opacity:0 because the parent's
-                            .gy-gold-24k-shine infinite shimmer was
-                            triggering style recalcs that reset each
-                            letter's gy-hero-letter-in animation. Boss
-                            reported the headline was missing entirely
-                            from the live homepage. The 24K gold
-                            shimmer alone is enough luxury \u2014 no need
-                            for letter-by-letter choreography. */}
-                        <span
-                          style={{
-                            display: "inline-block",
-                            opacity: heroVisible ? 1 : 0,
-                            transition: "opacity 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.6s",
-                          }}
-                          aria-hidden="true"
-                        >
-                          GEORGE&nbsp;YACHTS
-                        </span>
-                      </span>
-                      <span className="sr-only"> — Luxury Yacht Charter Greece</span>
-                    </h1>
-
-                    {/* Eyebrow — same trailing-letter-spacing fix as
-                        the headline: inline-block wrapper absorbs the
-                        phantom space so the gold eyebrow sits centered. */}
-                    <p
-                      style={{
-                        fontFamily: "'Montserrat', sans-serif",
-                        fontSize: "10px",
-                        textTransform: "uppercase",
-                        color: "#DAA520",
-                        fontWeight: 600,
-                        margin: "0 0 28px 0",
-                        textAlign: "center",
-                        opacity: heroVisible ? 1 : 0,
-                        transform: heroVisible ? "translateY(0)" : "translateY(8px)",
-                        transition: "opacity 1s ease 1.7s, transform 1s ease 1.7s",
-                      }}
-                    >
-                      <span
-                        style={{
-                          display: "inline-block",
-                          letterSpacing: "clamp(0.22em, 1.2vw, 0.55em)",
-                          marginInlineEnd: "calc(-1 * clamp(0.22em, 1.2vw, 0.55em))",
-                        }}
-                      >
-                        {t('hero.tagline')}
-                      </span>
-                    </p>
-
-                    {/* Subtitle — BROKERAGE HOUSE LLC.
-                        Phase 27 (Forbes-launch eve, 2026-05-05) —
-                        upgraded to 24K luxury glowing gold via the new
-                        .gy-gold-24k-shine class. Slow shimmer + drop-
-                        shadow halo so the line reads as polished metal,
-                        not flat paint. */}
-                    <p
-                      className="gy-gold-24k-shine"
-                      style={{
-                        fontFamily: "'Montserrat', sans-serif",
-                        fontSize: "clamp(10px, 1.8vw, 16px)",
-                        fontWeight: 400,
-                        textTransform: "uppercase",
-                        margin: "0 0 28px 0",
-                        textAlign: "center",
-                        opacity: heroVisible ? 1 : 0,
-                        transform: heroVisible ? "translateY(0)" : "translateY(12px)",
-                        transition: "opacity 1s ease 1.9s, transform 1s ease 1.9s",
-                      }}
-                    >
-                      <span
-                        style={{
-                          display: "inline-block",
-                          letterSpacing: "0.45em",
-                          marginInlineEnd: "-0.45em",
-                        }}
-                      >
-                        BROKERAGE HOUSE LLC
-                      </span>
-                    </p>
-
-                    {/* Secondary inline gold dash (between brand block and
-                        descriptor block). Narrower than the top curtain so
-                        it reads as a separator, not another hero element.
-                        2026-05-07 — desktop-only. Mobile hero declutter
-                        per Boss directive: too many lines on mobile, the
-                        separator is a desktop nice-to-have. */}
-                    <div
-                      aria-hidden="true"
-                      className="h-px mx-auto mb-8 hidden md:block"
-                      style={{
-                        background:
-                          "linear-gradient(90deg, transparent, rgba(218,165,32,0.45), transparent)",
-                        width: heroVisible ? "100px" : "0px",
-                        transition: "width 1s cubic-bezier(0.16, 1, 0.3, 1) 2.1s",
-                      }}
-                    />
-
-                    {/* Sub-tagline — descriptor block.
-                        2026-05-07 — desktop-only. Mobile already shows
-                        eyebrow + BROKERAGE HOUSE LLC + CTAs; this third
-                        descriptor line was the main mobile-clutter
-                        complaint. */}
-                    <p
-                      className="hidden md:block"
-                      style={{
-                        fontFamily: "'Montserrat', sans-serif",
-                        fontSize: "10px",
-                        textTransform: "uppercase",
-                        color: "rgba(255,255,255,0.42)",
-                        fontWeight: 300,
-                        marginBottom: "40px",
-                        textAlign: "center",
-                        opacity: heroVisible ? 1 : 0,
-                        transition: "opacity 1s ease 2.3s",
-                      }}
-                    >
-                      <span
-                        style={{
-                          display: "inline-block",
-                          letterSpacing: "0.3em",
-                          marginInlineEnd: "-0.3em",
-                        }}
-                      >
-                        Boutique Luxury Yacht Charter &middot; Est. U.S.A. &middot; Operating from Athens
-                      </span>
-                    </p>
-
-                    {/* Seasonal Message (retimed for Move #1).
-                        2026-05-07 — desktop-only. The italic seasonal
-                        line is editorial flourish; on mobile it pushes
-                        the CTAs below the fold. */}
-                    <p
-                      className="hidden md:block"
-                      style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
-                        fontSize: "clamp(12px, 2vw, 16px)",
-                        fontWeight: 300,
-                        fontStyle: "italic",
-                        color: "rgba(218,165,32,0.5)",
-                        marginBottom: "40px",
-                        textAlign: "center",
-                        opacity: heroVisible ? 1 : 0,
-                        transition: "opacity 1.2s ease 2.5s",
-                      }}
-                    >
-                      {(() => {
-                        const m = new Date().getMonth();
-                        if (m >= 0 && m <= 2) return t('seasonal.winter');
-                        if (m >= 3 && m <= 4) return t('seasonal.spring');
-                        if (m >= 5 && m <= 7) return t('seasonal.summer');
-                        if (m === 8) return t('seasonal.september');
-                        return t('seasonal.autumn');
-                      })()}
-                    </p>
-
-                    {/* "66 yachts · €420/guest · €180k/week" fleet-snapshot
-                        badge removed 2026-05-07 per Boss directive. The
-                        priced rounded-pill panel was reading as a price
-                        sticker in front of the hero — wrong tone for the
-                        Forbes-tier audience the redesign is built for.
-                        Real fleet snapshot lives one scroll down in
-                        FleetCTAs (Private vs Explorer split) and on the
-                        Forbes pull-quote section that follows. */}
-
-                    {/* Dual CTA pair (George 2026-04-29):
-                        ① Primary  — guided 60-second quiz for undecided
-                          visitors (white-bordered ghost, hovers gold).
-                        ② Secondary — direct fleet entry for visitors who
-                          already know what they want; gold-filled to read
-                          as "the action with the strongest commercial
-                          intent" without overwhelming the primary.
-                        Mobile: stacks vertical with even gap.
-                        Desktop: side-by-side, equal min-width so the row
-                        reads as a single confident statement.            */}
-                    <div
-                      style={{
-                        opacity: heroVisible ? 1 : 0,
-                        transform: heroVisible ? "translateY(0)" : "translateY(10px)",
-                        transition: "opacity 0.9s ease 2.8s, transform 0.9s ease 2.8s",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "14px",
-                        alignItems: "center",
-                        width: "100%",
-                      }}
-                    >
-                      <div
-                        className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto"
-                      >
-                        {/* ① Ghost — browse-fleet escape hatch */}
-                        <MagneticButton
-                          href={slide.primaryHref}
-                          dataCursor="Explore"
-                          onClick={() => {
-                            // N.1 — hero_browse_clicked
-                            try {
-                              window.gtag?.('event', 'hero_browse_clicked', {
-                                yacht_count: yachtCount,
-                              });
-                            } catch {}
-                          }}
-                          className="inline-flex items-center justify-center px-10 md:px-14 py-4 md:py-5 text-white text-[10px] tracking-[0.35em] uppercase font-semibold border border-white/25 hover:border-[#DAA520] hover:text-[#DAA520] transition-colors duration-500 backdrop-blur-sm bg-white/[0.03] min-w-[260px] sm:min-w-[300px]"
-                        >
-                          {slide.primaryText}
-                        </MagneticButton>
-
-                        {/* ② Primary — Smart Match Quiz (B.2) */}
-                        <MagneticButton
-                          href={slide.secondaryHref}
-                          dataCursor="Match"
-                          onClick={() => {
-                            // N.1 — hero_quiz_clicked
-                            try {
-                              window.gtag?.('event', 'hero_quiz_clicked', {
-                                source: 'hero_primary_cta',
-                              });
-                            } catch {}
-                          }}
-                          className="inline-flex items-center justify-center px-10 md:px-14 py-4 md:py-5 text-[10px] tracking-[0.35em] uppercase font-semibold transition-all duration-500 min-w-[260px] sm:min-w-[300px]"
-                          style={{
-                            background:
-                              "linear-gradient(135deg, #E6C77A 0%, #C9A24D 50%, #A67C2E 100%)",
-                            color: "#000000",
-                            border: "1px solid rgba(218,165,32,0.6)",
-                            boxShadow:
-                              "0 10px 30px -10px rgba(218,165,32,0.45), inset 0 1px 0 rgba(255,255,255,0.25)",
-                          }}
-                        >
-                          {slide.secondaryText}
-                        </MagneticButton>
-                      </div>
-
-                      {/* Whisper hint under the CTAs — sells the choice */}
-                      <p
-                        style={{
-                          fontFamily: "'Montserrat', sans-serif",
-                          fontSize: "9px",
-                          letterSpacing: "0.3em",
-                          textTransform: "uppercase",
-                          color: "rgba(255,255,255,0.35)",
-                          marginTop: "6px",
-                        }}
-                      >
-                        <span
-                          style={{
-                            display: "inline-block",
-                            marginInlineEnd: "-0.3em",
-                          }}
-                        >
-                          {t('common.heroSecondaryHint')}
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </SwiperSlide>
-        ))}
-      </Swiper>
-
-      {/* Scroll indicator — Move #1: breathing vertical line instead of
-          bouncing chevron. Gold gradient top→transparent, 1px × 40px,
-          pulses opacity every 3.2s. No motion jitter, just a slow
-          breath that signals "keep going" without shouting. */}
+      {/* Overlay gradient — Boss spec exactly: rgba(13,27,42,0.45) at
+          the top settling to rgba(13,27,42,0.75) at the bottom. The
+          deep-navy hue (13,27,42) is brand "Aegean midnight". */}
       <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3"
+        aria-hidden="true"
         style={{
-          opacity: heroVisible ? 1 : 0,
-          transition: "opacity 1s ease 3.4s",
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(180deg, rgba(13,27,42,0.45) 0%, rgba(13,27,42,0.60) 50%, rgba(13,27,42,0.75) 100%)",
+        }}
+      />
+
+      {/* Slow-cinema film grain — kept from the prior hero, ~5 % opacity
+          via .gy-film-grain in globals.css. Reads only at the edges
+          of the frame, never as visible noise. */}
+      <div
+        aria-hidden="true"
+        className="gy-film-grain"
+        style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
+      />
+
+      {/* Content */}
+      <div
+        className="relative z-10 flex h-full w-full items-center justify-center px-6 md:px-10"
+        style={{
+          opacity: revealed ? 1 : 0,
+          transition: "opacity 800ms cubic-bezier(0.2, 0.8, 0.2, 1)",
         }}
       >
-        <span
-          className="text-white/50 text-[10px] tracking-[0.35em] uppercase"
-          style={{
-            fontFamily: "'Montserrat', sans-serif",
-            textShadow: "0 1px 2px rgba(0,0,0,0.45)",
-          }}
-        >
-          Scroll
-        </span>
-        <span
-          aria-hidden="true"
-          className="gy-hero-scroll-line"
-          style={{
-            display: "block",
-            width: "1px",
-            height: "40px",
-            background:
-              "linear-gradient(to bottom, rgba(218,165,32,0.7) 0%, rgba(218,165,32,0.1) 100%)",
-          }}
-        />
-      </div>
-
-      {/* Phase 27c (Forbes-launch eve, 2026-05-05) — Boss directive
-          "στήσε κάτι άλλο στο κινητό για να 'μαστε κύριοι". Adds a
-          luminous gold chevron below the breathing scroll line on
-          mobile only. Fades automatically once the visitor scrolls
-          past 40vh (handled in NavDrawerSystem via body.gy-scrolled).
-          Sits ABOVE the StickyFleetCTA gold bar at bottom:96 so it
-          never collides with the commercial CTA. */}
-      <div className="gy-mobile-scroll-hint" aria-hidden="true">
-        <span className="gy-mobile-scroll-hint__rule" />
-        <span className="gy-mobile-scroll-hint__chevron" />
-      </div>
-
-      {/* Desktop Category Navigation */}
-      <div className="hidden lg:flex absolute bottom-0 left-1/2 -translate-x-1/2 z-20 w-full max-w-[1200px] justify-center">
         <div
-          className="flex bg-black/40 backdrop-blur-2xl border-t border-x border-white/10 px-12 py-1"
-          style={{
-            clipPath: "polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%)",
-          }}
+          className="flex w-full max-w-[1100px] flex-col items-center text-center"
+          style={{ transform: revealed ? "translateY(0)" : "translateY(8px)", transition: "transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1)" }}
         >
-          {CATEGORIES.map((cat) => (
-            <Link
-              key={cat.value}
-              href={`/charter-yacht-greece?type=${cat.value}#fleet-anchor`}
-              className="px-8 py-6 text-white/70 font-marcellus text-[10px] tracking-[0.4em] uppercase hover:text-[#DAA520] transition-colors duration-300 whitespace-nowrap"
+          {/* Headline — Boss-spec exactly: "Greek Waters. One Broker.
+              Total Discretion." Six words. Three propositions. Reads
+              with the deliberate punctuation pause — exclusivity →
+              personal service → UHNW priority. Font lands on the
+              Phase 28 display tier (Fraunces Thin 100) via the
+              .gy-hero-headline mapping in globals.css. */}
+          <h1
+            className="gy-hero-headline gy-pearl-white"
+            style={{
+              fontSize: "clamp(40px, 6.4vw, 84px)",
+              lineHeight: 1.05,
+              letterSpacing: "-0.02em",
+              color: "#F8F5F0",
+              margin: 0,
+              textShadow: "0 12px 50px rgba(0, 0, 0, 0.55)",
+              maxWidth: "16ch",
+            }}
+          >
+            Greek Waters. One Broker. Total Discretion.
+          </h1>
+
+          {/* Subline — Boss-spec: 1 line, Switzer Light 300, 16 px,
+              tracking 0.04em, ivory white at 70 % opacity. Lands on
+              the Phase 28 UI tier via inline font-family. */}
+          <p
+            style={{
+              marginTop: "32px",
+              fontFamily: "var(--gy-font-ui)",
+              fontWeight: 300,
+              fontSize: "clamp(13px, 1.2vw, 16px)",
+              letterSpacing: "0.04em",
+              color: "rgba(248, 245, 240, 0.7)",
+              maxWidth: "62ch",
+            }}
+          >
+            Exclusively crewed yacht charter in Greece — since the beginning.
+          </p>
+
+          {/* CTA pair — primary (gold-bordered transparent) + secondary
+              (text-only with underline on hover). 16 px gap on desktop,
+              stacks on mobile with the same gap. */}
+          <div
+            className="flex flex-col items-center sm:flex-row sm:items-center"
+            style={{ marginTop: "44px", gap: "16px" }}
+          >
+            <a
+              href="/charter-yacht-greece"
+              data-cursor="Browse"
+              className="gy-hero-cta-primary"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "16px 32px",
+                fontFamily: "var(--gy-font-ui)",
+                fontWeight: 500,
+                fontSize: "12px",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "#C9A84C",
+                background: "transparent",
+                border: "1px solid #C9A84C",
+                textDecoration: "none",
+                whiteSpace: "nowrap",
+                transition: "background 320ms ease, color 320ms ease, border-color 320ms ease",
+              }}
             >
-              {cat.label}
-            </Link>
-          ))}
+              Browse the Fleet
+            </a>
+
+            <a
+              href="/inquiry"
+              data-cursor="Brief"
+              className="gy-hero-cta-secondary"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "16px 18px",
+                fontFamily: "var(--gy-font-ui)",
+                fontWeight: 500,
+                fontSize: "12px",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "#FFFFFF",
+                background: "transparent",
+                border: 0,
+                textDecoration: "none",
+                whiteSpace: "nowrap",
+                transition: "color 320ms ease",
+              }}
+            >
+              Brief George
+            </a>
+          </div>
         </div>
       </div>
 
+      {/* Chevron scroll cue — Boss spec: 20 px white at 50 % opacity,
+          gentle 2 s pulse, absolute bottom center. Replaces the prior
+          "Scroll" text + breathing vertical line. */}
+      <div
+        aria-hidden="true"
+        className="gy-hero-chevron"
+        style={{
+          position: "absolute",
+          bottom: 28,
+          left: "50%",
+          transform: "translateX(-50%)",
+          opacity: revealed ? 0.5 : 0,
+          transition: "opacity 1.2s ease 1.4s",
+          color: "#FFFFFF",
+          zIndex: 20,
+        }}
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </div>
+
       <style jsx global>{`
-        * { border-radius: 0 !important; }
-
-        /* Move #1 — letter-by-letter reveal choreography */
-        .gy-hero-letter {
-          opacity: 0;
-          transform: translateY(18px);
-          filter: blur(6px);
-          animation: gy-hero-letter-in 900ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        /* Chapter 01 — hero CTA hover states + chevron pulse.
+           Primary CTA on hover fills with gold and flips text to black.
+           Secondary CTA on hover keeps the text white but reveals an
+           underline (no border, just the underline cue Boss specified).
+           Chevron pulses opacity 0.4 → 0.7 over 2 s. */
+        .gy-hero-cta-primary:hover {
+          background: #C9A84C;
+          color: #0D1B2A;
+          border-color: #C9A84C;
         }
-        @keyframes gy-hero-letter-in {
-          0%   { opacity: 0; transform: translateY(18px); filter: blur(6px); }
-          60%  { opacity: 1; filter: blur(0); }
-          100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+        .gy-hero-cta-secondary {
+          position: relative;
         }
-
-        /* Move #1 — scroll line breathing pulse */
-        .gy-hero-scroll-line {
-          animation: gy-hero-breathe 3.2s ease-in-out infinite;
-          transform-origin: top center;
+        .gy-hero-cta-secondary::after {
+          content: "";
+          position: absolute;
+          left: 18px;
+          right: 18px;
+          bottom: 12px;
+          height: 1px;
+          background: rgba(255, 255, 255, 0.85);
+          transform: scaleX(0);
+          transform-origin: center;
+          transition: transform 360ms cubic-bezier(0.2, 0.85, 0.25, 1);
         }
-        @keyframes gy-hero-breathe {
-          0%, 100% { opacity: 0.35; transform: scaleY(1); }
-          50%      { opacity: 1;    transform: scaleY(1.08); }
+        .gy-hero-cta-secondary:hover::after {
+          transform: scaleX(1);
         }
-
-        /* Respect reduced-motion preference — instant reveal, no breath */
+        .gy-hero-chevron {
+          animation: gy-hero-chevron-pulse 2s ease-in-out infinite;
+        }
+        @keyframes gy-hero-chevron-pulse {
+          0%, 100% { transform: translate(-50%, 0); opacity: 0.4; }
+          50%      { transform: translate(-50%, 4px); opacity: 0.7; }
+        }
         @media (prefers-reduced-motion: reduce) {
-          .gy-hero-letter {
-            opacity: 1 !important;
-            transform: none !important;
-            filter: none !important;
-            animation: none !important;
-          }
-          .gy-hero-scroll-line { animation: none !important; opacity: 0.5 !important; }
+          .gy-hero-chevron { animation: none !important; opacity: 0.5 !important; }
         }
       `}</style>
     </section>
   );
-};
-
-export default VideoSection;
+}

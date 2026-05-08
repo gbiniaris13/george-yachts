@@ -20,23 +20,20 @@
 //   • George Yachts logo always ≥ Forbes mark on same screen.
 //
 // Architecture:
-//   • Server Component reads cookies() to decide if the bar renders.
-//   • Dismiss is handled by a tiny client child (a single <button>
-//     that sets the cookie + reloads). No JS needed for the rest.
+//   • Server Component (no JS, no client interactivity).
+//
+// 2026-05-08 (Chapter 01) — Boss directive: the Forbes feature is the
+// site's strongest credential, so the bar is no longer dismissible.
+// The × button + cookie check were both pulled. The bar always
+// renders. Anyone who wants the Forbes context not to occupy the top
+// 36 px can scroll — the rest of the page sits below as before.
 
-import { cookies } from "next/headers";
 import Link from "next/link";
-import ForbesBarDismiss from "./ForbesBarDismiss";
 
 const ARTICLE_URL =
   "https://www.forbes.com/sites/jacquesledbetter/2026/05/01/how-the-wealthy-are-hedging-for-instability/";
-const COOKIE_NAME = "gy_forbes_bar_dismissed";
 
-export default async function ForbesTopBar() {
-  const store = await cookies();
-  const dismissed = store.get(COOKIE_NAME)?.value;
-  if (dismissed === "true") return null;
-
+export default function ForbesTopBar() {
   return (
     <div
       role="region"
@@ -170,7 +167,8 @@ export default async function ForbesTopBar() {
         </span>
       </Link>
 
-      <ForbesBarDismiss cookieName={COOKIE_NAME} />
+      {/* 2026-05-08 — × dismiss button removed (see Chapter 01 note
+          at the top). The Forbes credential always shows. */}
 
       {/* Inline responsive rules — flips desktop/mobile copy and
           tightens spacing under 600px so the bar never wraps. */}
