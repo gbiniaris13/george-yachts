@@ -30,8 +30,14 @@
 // No CTAs — the section is contemplative by design.
 
 import React from "react";
+import dynamic from "next/dynamic";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 import ConstellationBackdrop from "./ConstellationBackdrop";
+
+// Phase 27i.14 (2026-05-08) — R3F gold-ember layer behind the
+// constellation. Lazy-loaded, ssr:false because three.js is a heavy
+// client-only payload. Desktop-only inside the component itself.
+const GoldEmbers3D = dynamic(() => import("./GoldEmbers3D"), { ssr: false });
 
 export default function Filotimon({ filotimoImage = null }) {
   const { t } = useI18n();
@@ -72,6 +78,15 @@ export default function Filotimon({ filotimoImage = null }) {
           stars twinkle on independent timing. Adds the night-sky
           register the philosophy section was missing. */}
       <ConstellationBackdrop intensity={0.55} />
+
+      {/* Phase 27i.14 (2026-05-08) — R3F gold embers drift upward
+          through the constellation. Original cinematic brief asked
+          for a 3D R3F particle field behind Filotimo + Forbes; the
+          Forbes side has StarField3D (drifting stars), this side
+          gets embers (rising motes) so the two sections feel
+          related but not identical. Desktop-only via the component's
+          own viewport gate. */}
+      <GoldEmbers3D />
 
       <div className="relative grid grid-cols-1 lg:grid-cols-[40%_60%]">
         {/* ── LEFT — editorial image, sticky on desktop so it frames
