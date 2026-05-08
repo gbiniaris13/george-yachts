@@ -36,21 +36,28 @@
 // Brand identity now lives in the nav logo + the embedded Forbes top
 // bar (which Chapter 01 also makes non-dismissible).
 //
-// Video swap: the prior "/videos/yacht-cruising-new.mp4" gives way to
-// "/videos/hero-trio.{webm,mp4}" — Boss-curated three-clip cinematic
-// loop. ffmpeg concat at 1920×1080 / 30 fps / yuv420p:
-//   1. 8303143  — golden-hour motor yacht aerial (8.4 s) — Boss pick
-//   2. 14545703 — superyacht in rocky-shore anchorage (19 s)
-//   3. 12532891 — motorboat carving a wake at sunset (10 s)
-// Total 37.4 s loop, encoded WebM VP9 1800 kbps / MP4 H.264 2400 kbps
-// 2-pass → 8.0 MB WebM (Chrome/Firefox/Edge primary) + 11 MB MP4
-// (Safari fallback). The order is Boss-specified — golden yacht
-// opens, anchorage carries the middle beat, motorboat wake closes
-// the loop before it returns to the opening shot.
+// Video swap: 6-clip Boss-curated cinematic loop — interleaves the
+// 3 above-water yacht clips from the original hero-trio with 3
+// underwater clips so the visitor never sees two similar shots
+// back-to-back. Boss spec: "δε θέλω να είναι back to back, υποβρύχιο
+// και επιφάνεια σε εναλλαγή". Order:
+//   1. 8303143  — golden-hour motor yacht aerial (8.4 s)
+//   2. 8824586  — yacht hull splashing through waves (13.7 s)
+//   3. 14545703 — superyacht in rocky-shore anchorage (19 s)
+//   4. 854344   — snorkeler on shallow sandy bottom (6.9 s)
+//   5. 12532891 — motorboat carving a wake at sunset (10 s)
+//   6. 4612166  — freediver gliding over seagrass meadow (31.1 s)
+// Total 89.1 s loop. All sources normalised to 1920×1080 30 fps via
+// ffmpeg concat filter so playback speed feels identical across
+// every clip (Boss directive: "η ταχύτητα και των έξι να είναι ίδια
+// — μην είναι το ένα πιο γρήγορο και το άλλο πιο αργό"). Encoded:
+//   • WebM VP9  1000 kbps 2-pass → 11 MB (Chrome / Firefox / Edge)
+//   • MP4  H.264 1500 kbps 2-pass → 16 MB (Safari fallback)
+// preload="auto" so the browser starts buffering immediately.
 
 import React, { useEffect, useRef, useState } from "react";
 
-const HERO_VIDEO_BASE = "/videos/hero-trio";
+const HERO_VIDEO_BASE = "/videos/hero-loop";
 
 function HeroBackgroundVideo() {
   const ref = useRef(null);
@@ -84,7 +91,7 @@ function HeroBackgroundVideo() {
           inset: 0,
           width: "100%",
           height: "100%",
-          backgroundImage: "url('/images/posters/hero-trio-frame1.jpg')",
+          backgroundImage: "url('/images/posters/hero-loop-frame1.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -100,7 +107,7 @@ function HeroBackgroundVideo() {
       // so the browser starts downloading bytes immediately and the
       // visitor doesn't see the poster freeze for 1–2 s on slower
       // connections. See the matching change in the fleet page.
-      poster="/images/posters/hero-trio-frame1.jpg"
+      poster="/images/posters/hero-loop-frame1.jpg"
       preload="auto"
       autoPlay
       loop
