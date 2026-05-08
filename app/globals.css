@@ -3065,8 +3065,13 @@ a.gy-fancy-link:hover {
 .gy-scroll-to-top {
   position: fixed;
   right: 22px;
-  bottom: 250px; /* sits above the WhatsApp + SPEAK + G column */
-  z-index: 50;
+  /* 2026-05-08: AskGeorgeWidget gold "G" button lives at bottom:216,
+     56 px tall → top edge at 272. Pull the scroll-to-top up to 290
+     so the arrow clears the G and never gets hidden behind it. Also
+     bump z-index above 9998 (the G's z-index) so any future stacking
+     change can't re-overlap. */
+  bottom: 290px;
+  z-index: 9999;
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -3110,7 +3115,9 @@ a.gy-fancy-link:hover {
   transform: translateY(-2px) scale(1.04);
 }
 @media (max-width: 600px) {
-  .gy-scroll-to-top { right: 14px; bottom: 200px; }
+  /* Mobile: same logic — clear the G button (which on small viewports
+     sits a bit lower in the column) by 16 px. */
+  .gy-scroll-to-top { right: 14px; bottom: 240px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .gy-scroll-to-top { transition: opacity 200ms ease; transform: none !important; }

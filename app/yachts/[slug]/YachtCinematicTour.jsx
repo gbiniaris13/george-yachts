@@ -43,6 +43,32 @@ export default function YachtCinematicTour({ images = [], yachtName = "" }) {
     .filter((img) => img && img.url);
   const count = tourImages.length;
 
+  // 2026-05-08 (Phase 27i.20) — image preloading. Boss reported a
+  // "black screen between photos" bug while scrolling through the
+  // tour. Root cause: each photo was using a CSS background-image
+  // and the browser only started fetching when the photo became
+  // active. On a fast scroll the next photo wasn't decoded yet, so
+  // the dark fallback background-color (#050a14) showed through
+  // for the duration of the load. Fix: preload every tour photo
+  // immediately on mount so they're already in the cache by the
+  // time the user scrolls to them.
+  useEffect(() => {
+    if (count < 1 || typeof window === "undefined") return;
+    const preloads = tourImages.map((img) => {
+      const i = new window.Image();
+      i.src = `${img.url}?w=1800&fit=crop&auto=format`;
+      return i;
+    });
+    return () => {
+      // Letting them GC; explicitly drop the src to cancel any
+      // in-flight requests if the user unmounts mid-load.
+      preloads.forEach((i) => { i.src = ""; });
+    };
+    // tourImages identity changes per render but its members are stable
+    // for a given yacht, so depend on count only.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [count]);
+
   useEffect(() => {
     if (count < 2) return;
     if (typeof window === "undefined") return;
@@ -120,8 +146,13 @@ export default function YachtCinematicTour({ images = [], yachtName = "" }) {
               style={{
                 backgroundImage: `url(${img.url}?w=1800&fit=crop&auto=format)`,
                 opacity: isActive ? 1 : 0,
+                // 2026-05-08: removed transformStyle:preserve-3d. It was
+                // unnecessary (the photo has no 3D children) and was
+                // suspected of causing edge-render artefacts in Safari
+                // when combined with the parent's perspective + the
+                // small rotateY/rotateX. The 3D parallax tilt still
+                // works fine without it — perspective lives on the pin.
                 transform: `scale(${scale}) rotateY(${rotY}deg) rotateX(${rotX}deg)`,
-                transformStyle: "preserve-3d",
                 zIndex: isActive ? 2 : 1,
               }}
               aria-hidden={!isActive}
