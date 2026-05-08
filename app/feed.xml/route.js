@@ -63,7 +63,7 @@ export async function GET() {
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <generator>Next.js + Sanity</generator>
     <image>
-      <url>${BASE}/images/logo-full-light.svg</url>
+      <url>${BASE}/images/yacht-icon-only.svg</url>
       <title>George Yachts — The Journal</title>
       <link>${BASE}/blog</link>
     </image>

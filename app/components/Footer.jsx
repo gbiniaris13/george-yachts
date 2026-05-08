@@ -115,15 +115,10 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-1 flex flex-col items-center lg:items-start">
             <Link href="/" className="block mb-8">
-              {/* 2026-05-08 — Boss new master logo. Single SVG/PNG
-                  combines the icon + "GEORGE YACHTS" + "Brokerage
-                  House" into one element, so the prior plain-text
-                  wordmark beside the icon is no longer needed.
-                  Footer height per Boss spec: 52 px. */}
               <img
-                src="/images/logo-full-light.svg"
-                alt="George Yachts Brokerage House"
-                style={{ height: "52px", width: "auto" }}
+                src="/images/yacht-icon-only.svg"
+                alt="George Yachts Brokerage House LLC"
+                style={{ height: "clamp(90px, 20vw, 150px)", width: "auto" }}
               />
             </Link>
 
