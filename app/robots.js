@@ -3,8 +3,13 @@ export default function robots() {
 
   return {
     rules: [
-      // Traditional search engines — full access
-      { userAgent: "*", allow: "/", disallow: ["/_next/", "/api/", "/admin/", "/studio"] },
+      // Traditional search engines — full access.
+      // 2026-05-11 — '/admin' (no trailing slash) instead of '/admin/'
+      // so the rule covers both bare '/admin' (404 with smart-404
+      // fallback) and '/admin/*' (KPIs dashboard, future tools).
+      // Per Google's robots spec, '/admin/' would only match the
+      // trailing-slash path, not the bare one.
+      { userAgent: "*", allow: "/", disallow: ["/_next/", "/api/", "/admin", "/studio"] },
 
       // AI crawlers — explicitly allowed (GEO strategy)
       { userAgent: "GPTBot", allow: "/" },
