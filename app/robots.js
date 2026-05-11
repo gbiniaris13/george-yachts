@@ -27,7 +27,17 @@ export default function robots() {
       { userAgent: "cohere-ai", allow: "/" },
       { userAgent: "Diffbot", allow: "/" },
     ],
-    sitemap: `${BASE_URL}/sitemap.xml`,
+    // Phase 7 Round 4 — split sitemaps surfaced to search engines
+    // (Section 1.4 of the SEO strategy doc). The main sitemap.xml
+    // remains the comprehensive index; the split ones help large-
+    // site indexing on Google + Bing.
+    sitemap: [
+      `${BASE_URL}/sitemap.xml`,
+      `${BASE_URL}/sitemap-yachts.xml`,
+      `${BASE_URL}/sitemap-destinations.xml`,
+      `${BASE_URL}/sitemap-blog.xml`,
+      `${BASE_URL}/sitemap-programmatic.xml`,
+    ],
     host: BASE_URL,
   };
 }

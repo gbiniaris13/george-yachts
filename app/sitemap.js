@@ -7,6 +7,7 @@ import { LONG_TAIL_PAGES } from "@/lib/longTailSeo";
 import { COMPARISONS } from "@/lib/comparisonSeo";
 import { LINKABLE_ASSETS } from "@/lib/linkableAssetSeo";
 import { COMBOS } from "@/lib/comboSeo";
+import { ARTICLES } from "@/lib/articleSeo";
 
 const BASE_URL = "https://georgeyachts.com";
 
@@ -241,6 +242,13 @@ export default async function sitemap() {
       priority: 0.88,
     },
   ];
+  // Phase 7 Round 4 — 4 GEO reference articles.
+  const articleEntries = ARTICLES.map((a) => ({
+    url: `${BASE_URL}${a.urlPath}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "monthly",
+    priority: 0.87,
+  }));
 
   let yachtEntries = [];
   try {
@@ -268,6 +276,7 @@ export default async function sitemap() {
     ...linkableAssetEntries,
     ...comboEntries,
     ...otherSeoEntries,
+    ...articleEntries,
     ...blogEntries,
     ...yachtEntries,
   ];
