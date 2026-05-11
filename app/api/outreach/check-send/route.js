@@ -134,9 +134,12 @@ function localTimeAt(tz) {
 }
 
 // Returns { ok, reason }. Mirrors the bot's checkBusinessHours_ logic.
+// 2026-05-11 update: unknown country FALLS BACK to Athens business
+// hours (Boss directive — send at sender's office time when we don't
+// know the recipient's tz, instead of refusing the send forever).
 function checkRecipientHours(country) {
-  const tz = tzForCountry(country);
-  if (!tz) return { ok: false, reason: 'unknown_country' };
+  let tz = tzForCountry(country);
+  if (!tz) tz = 'Europe/Athens'; // fallback
   const { hour, minute, dow } = localTimeAt(tz);
 
   // Sat/Sun/Mon — never.
