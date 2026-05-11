@@ -19,6 +19,7 @@ import { sanityCardImg, sanityHeroImg } from "@/lib/sanity-image";
 import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import IslandPageTracker from "./IslandPageTracker";
+import { relatedFor } from "@/lib/seoInternalLinks";
 
 export const revalidate = 3600;
 
@@ -125,6 +126,12 @@ export default async function IslandPage({ params }) {
   if (!island) notFound();
 
   const { yachts, itineraries } = await loadIslandData(island);
+
+  // Phase 7 Round 11 — surface contextually related programmatic
+  // pages (combos, durations, yacht-types, articles) on every
+  // island root so the new Round 7+10 combos + Round 5 duration
+  // pages are reachable from /yacht-charter-{island}.
+  const related = relatedFor(`/yacht-charter-${island.slug}`, { max: 6 });
 
   const breadcrumbs = [
     { name: "Home", url: "https://georgeyachts.com/" },
@@ -606,6 +613,90 @@ export default async function IslandPage({ params }) {
             </div>
           </div>
         </section>
+
+        {/* CONTINUE EXPLORING — Phase 7 Round 11 internal linking */}
+        {related.length > 0 && (
+          <section style={{ padding: "72px 24px", borderTop: "1px solid rgba(248, 245, 240, 0.06)" }}>
+            <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+              <p
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 9,
+                  letterSpacing: "0.42em",
+                  textTransform: "uppercase",
+                  color: "#C9A84C",
+                  fontWeight: 600,
+                  margin: "0 0 14px",
+                  textAlign: "center",
+                }}
+              >
+                Continue exploring
+              </p>
+              <h2
+                style={{
+                  fontFamily: "var(--gy-font-editorial)",
+                  fontSize: "clamp(24px, 3.4vw, 34px)",
+                  fontWeight: 300,
+                  color: "#F8F5F0",
+                  margin: "0 0 36px",
+                  textAlign: "center",
+                  lineHeight: 1.2,
+                }}
+              >
+                Related to {island.name}
+              </h2>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+                  gap: 14,
+                }}
+              >
+                {related.map((r) => (
+                  <Link
+                    key={r.urlPath}
+                    href={r.urlPath}
+                    style={{
+                      display: "block",
+                      textDecoration: "none",
+                      color: "inherit",
+                      border: "1px solid rgba(248, 245, 240, 0.1)",
+                      padding: "18px 20px",
+                      background: "rgba(248, 245, 240, 0.02)",
+                      transition: "border-color 0.3s ease",
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontFamily: "var(--gy-font-ui)",
+                        fontSize: 9,
+                        letterSpacing: "0.3em",
+                        textTransform: "uppercase",
+                        color: "#C9A84C",
+                        fontWeight: 600,
+                        margin: "0 0 8px",
+                      }}
+                    >
+                      {r.eyebrow}
+                    </p>
+                    <p
+                      style={{
+                        fontFamily: "var(--gy-font-editorial)",
+                        fontSize: 17,
+                        fontWeight: 400,
+                        color: "#F8F5F0",
+                        margin: 0,
+                        lineHeight: 1.3,
+                      }}
+                    >
+                      {r.title}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* CTA */}
         <section style={{ padding: "84px 24px" }}>
