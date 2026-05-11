@@ -37,7 +37,11 @@ const SPECIALIST_LINKS = [
   { label: "2026 season guide", href: "/private-yacht-charter-greece-2026" },
   { label: "With private chef", href: "/luxury-yacht-charter-greece-with-private-chef" },
   { label: "All-inclusive contracts", href: "/all-inclusive-yacht-charter-greece" },
-  { label: "Tenders, toys, e-foils", href: "/yacht-charter-greece-with-tender-and-toys" },
+  // 2026-05-11 — was /yacht-charter-greece-with-tender-and-toys (404).
+  // The route was renamed to /luxury-yacht-charter-greece-tender-and-toys
+  // during the [island] routing-conflict fix in commit 4c2787d but this
+  // link wasn't updated, so /charter-yacht-greece had a 404 outlink.
+  { label: "Tenders, toys, e-foils", href: "/luxury-yacht-charter-greece-tender-and-toys" },
   { label: "Multi-yacht flotillas", href: "/multi-yacht-charter-greece-large-group" },
   { label: "Off-market exclusives", href: "/exclusive-yacht-charter-greece" },
 ];
