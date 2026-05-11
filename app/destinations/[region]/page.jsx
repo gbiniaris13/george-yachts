@@ -36,6 +36,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import { DESTINATIONS, REGION_SLUGS, getDestination } from "@/lib/destinations";
+import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 
 // Boss Ch.1D — Quick Facts blocks for AI-search citation. ChatGPT,
 // Perplexity, and Google AI Overviews preferentially cite plain-text
@@ -139,12 +140,22 @@ export default async function DestinationPage({ params }) {
   const facts = QUICK_FACTS[region];
   const schema = buildTouristDestinationSchema(d, facts);
 
+  // 2026-05-11 audit fix — breadcrumbs were missing on /destinations/*
+  // region pages. Google relies on BreadcrumbList JSON-LD to render
+  // the breadcrumb path in SERP results instead of the raw URL.
+  const breadcrumbs = [
+    { name: "Home", url: "https://georgeyachts.com/" },
+    { name: "Destinations", url: "https://georgeyachts.com/#destinations" },
+    { name: d.heading || d.region || region, url: `https://georgeyachts.com/destinations/${region}` },
+  ];
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
+      <BreadcrumbSchema items={breadcrumbs} />
       <article className="gy-destination-page">
         {/* HERO */}
         <section className="gy-dest-hero">

@@ -30,26 +30,12 @@ export const metadata = {
   },
 };
 
-function WebSiteSchema() {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "George Yachts Brokerage House",
-    url: "https://georgeyachts.com",
-    description: "Boutique luxury yacht charter brokerage specializing exclusively in Greek waters. IYBA member.",
-    publisher: {
-      "@type": "Organization",
-      name: "George Yachts Brokerage House LLC",
-      url: "https://georgeyachts.com",
-    },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: "https://georgeyachts.com/charter-yacht-greece?q={search_term_string}",
-      "query-input": "required name=search_term_string",
-    },
-  };
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
-}
+// 2026-05-11 Phase 7 audit — WebSiteSchema removed. The canonical
+// WebSite schema with proper @id linkage + correct SearchAction
+// target (`?search=...`) ships from lib/serviceSchema.js via the
+// root layout. The duplicate here used the wrong query param (`?q=`)
+// and lacked @id, so Google saw two competing WebSite entities for
+// the same domain.
 
 // Homepage FAQ schema — answers the 6 highest-volume questions about
 // crewed charter in Greece. Plays in answer-box queries on Google +
@@ -293,7 +279,6 @@ export default async function HomePage() {
           Metadata API. The previous attempted preload was dead code.
           If hero-poster.jpg ever becomes LCP again, add via
           `metadata.other` or a Next `<link>` emitted via `generateMetadata`. */}
-      <WebSiteSchema />
       <HomepageFaqSchema />
       <HomeClient
         yachtCount={yachtCount}
