@@ -24,6 +24,7 @@
 
 import { sanityClient } from "@/lib/sanity";
 import { sendTelegram } from "@/lib/telegram";
+import { fetchGscWeekly, fetchBingWeekly } from "@/lib/seo-apis";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -99,7 +100,7 @@ export async function GET(request) {
 
   const { from, to, fromLabel, toLabel } = weekRange();
 
-  // ── Pull from Sanity in parallel ─────────────────────────────────
+  // ── Pull from Sanity + GSC + Bing in parallel ────────────────────
   const [
     totalPosts,
     newPostsThisWeek,
@@ -108,6 +109,8 @@ export async function GET(request) {
     newYachtsThisWeek,
     recentPosts,
     sitemapCount,
+    gscData,
+    bingData,
   ] = await Promise.all([
     sanityClient
       .fetch(
@@ -142,6 +145,8 @@ export async function GET(request) {
       )
       .catch(() => []),
     countSitemapUrls(),
+    fetchGscWeekly().catch(() => null),
+    fetchBingWeekly().catch(() => null),
   ]);
 
   // ── Build Telegram message ───────────────────────────────────────
@@ -193,12 +198,49 @@ export async function GET(request) {
     lines.push("");
   }
 
+  // ── Google Search Console (V2) ──────────────────────────────────
+  if (gscData) {
+    lines.push("🔍 *Google Search* — last 7 days");
+    lines.push(
+      `• ${fmt(gscData.clicks)} clicks · ${fmt(gscData.impressions)} impressions`,
+    );
+    lines.push(
+      `• Avg position: ${gscData.avgPosition.toFixed(1)} · CTR: ${(gscData.ctr * 100).toFixed(2)}%`,
+    );
+    if (gscData.topQueries.length > 0) {
+      lines.push("• Top queries:");
+      for (const q of gscData.topQueries.slice(0, 3)) {
+        const qEsc = String(q.query).replace(/[*_`[\]]/g, "").slice(0, 50);
+        lines.push(`   — "${qEsc}" · ${q.clicks} clicks · pos ${q.position.toFixed(1)}`);
+      }
+    }
+    if (gscData.topPages.length > 0) {
+      const top = gscData.topPages[0];
+      lines.push(`• Top page: ${top.page} (${top.clicks} clicks)`);
+    }
+    lines.push("");
+  }
+
+  // ── Bing AI / Search (V2) ───────────────────────────────────────
+  if (bingData) {
+    lines.push("🤖 *Bing* — last 7 days (feeds ChatGPT)");
+    lines.push(
+      `• ${fmt(bingData.clicks)} clicks · ${fmt(bingData.impressions)} impressions`,
+    );
+    lines.push("");
+  }
+
   lines.push("🔗 *Live dashboards*");
   lines.push("• [Search Console](https://search.google.com/search-console?resource_id=sc-domain:georgeyachts.com)");
   lines.push("• [Bing Webmaster](https://www.bing.com/webmasters)");
   lines.push("• [Sanity Studio](https://the-george-yachts-brokerage.sanity.studio)");
-  lines.push("");
-  lines.push("_V2: GSC + Bing API integration on standby._");
+  if (!gscData || !bingData) {
+    lines.push("");
+    const missing = [];
+    if (!gscData) missing.push("GSC API");
+    if (!bingData) missing.push("Bing API");
+    lines.push(`_⚙️ ${missing.join(" + ")} env var(s) not set — see hand-off note._`);
+  }
 
   const message = lines.join("\n");
 
