@@ -514,6 +514,32 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
   );
 }
 
+// Phase 7 Round 13 (2026-05-11) — URL-param filter prefill so
+// programmatic SEO pages can link to filtered fleet views
+// (e.g. /charter-yacht-greece?type=motor). Maps short URL terms
+// to internal filter enum values.
+const URL_TYPE_TO_CATEGORY = {
+  motor: 'motor-yachts',
+  'motor-yacht': 'motor-yachts',
+  sailing: 'sailing-monohulls',
+  'sailing-yacht': 'sailing-monohulls',
+  monohull: 'sailing-monohulls',
+  catamaran: 'sailing-catamarans',
+  'sailing-cat': 'sailing-catamarans',
+  'sailing-catamaran': 'sailing-catamarans',
+  'power-cat': 'power-catamarans',
+  'power-catamaran': 'power-catamarans',
+};
+const URL_LENGTH_TO_RANGE = {
+  small: 'small',
+  medium: 'medium',
+  large: 'large',
+  // also accept numeric hints
+  under20: 'small',
+  '20-40': 'medium',
+  '40plus': 'large',
+};
+
 export default function FleetGrid({ yachts }) {
   const { t } = useI18n();
   const [activeCategory, setActiveCategory] = useState('all');
@@ -534,6 +560,33 @@ export default function FleetGrid({ yachts }) {
   const [inquiryYacht, setInquiryYacht] = useState(null);
   const gridRef = useScrollReveal();
   useHeroParallax();
+
+  // Phase 7 Round 13 — read URL params on mount and pre-apply
+  // filters. Lets programmatic SEO pages link to filtered fleet
+  // views like /charter-yacht-greece?type=motor&length=large.
+  // Hydration-safe via useEffect; brief flash of unfiltered grid
+  // before filters apply is acceptable.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const sp = new URLSearchParams(window.location.search);
+      const t = (sp.get('type') || '').toLowerCase();
+      if (t && URL_TYPE_TO_CATEGORY[t]) setActiveCategory(URL_TYPE_TO_CATEGORY[t]);
+      const l = (sp.get('length') || '').toLowerCase();
+      if (l && URL_LENGTH_TO_RANGE[l]) setLengthRange(URL_LENGTH_TO_RANGE[l]);
+      const g = sp.get('guests');
+      if (g && ['6', '8', '10', '12'].includes(g)) setGuestFilter(g);
+      const c = sp.get('cabins');
+      if (c && ['3', '4', '5', '6'].includes(c)) setCabinFilter(c);
+      try {
+        window.gtag?.('event', 'fleet_filter_prefill_from_url', {
+          type: t || null,
+          length: l || null,
+        });
+      } catch {}
+    } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const toggleCompare = useCallback((yacht) => {
     setCompareList((prev) => {
