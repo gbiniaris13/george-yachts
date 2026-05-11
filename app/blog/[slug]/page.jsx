@@ -324,10 +324,33 @@ const ArticlePage = async ({ params }) => {
             {post.title}
           </h1>
 
+          {/* Phase 1 (2026-05-08, E-E-A-T) — author byline now links
+              to the author's full profile page when George is the
+              listed author. Adds an "IYBA Member" credential pip
+              right of the name (visible authority signal — Google
+              + AI engines + readers all see expertise badge). */}
           <div className="flex items-center space-x-5 mt-10">
             <span className="block w-12 h-px bg-white/10" />
             <span className="text-white/50 text-[9px] tracking-[0.5em] uppercase">
-              By {post.author}
+              By {post.author === "George P. Biniaris" ? (
+                <Link
+                  href="/team/george-biniaris"
+                  className="hover:text-[#C9A84C] transition-colors"
+                  style={{ color: "rgba(248, 245, 240, 0.7)" }}
+                >
+                  {post.author}
+                </Link>
+              ) : (
+                post.author
+              )}
+              {post.author === "George P. Biniaris" && (
+                <>
+                  {" · "}
+                  <span style={{ color: "rgba(201, 168, 76, 0.65)" }}>
+                    IYBA Member
+                  </span>
+                </>
+              )}
             </span>
             <span className="block w-12 h-px bg-white/10" />
           </div>
@@ -377,6 +400,7 @@ const ArticlePage = async ({ params }) => {
             <aside
               className="gy-quick-answer"
               aria-label="Quick answer"
+              data-speakable="true"
               style={{
                 borderLeft: "2px solid #C9A84C",
                 padding: "20px 24px",
@@ -398,6 +422,7 @@ const ArticlePage = async ({ params }) => {
                 Quick Answer
               </p>
               <p
+                className="gy-qa-text"
                 style={{
                   fontFamily: "var(--gy-font-editorial)",
                   fontSize: "17px",
