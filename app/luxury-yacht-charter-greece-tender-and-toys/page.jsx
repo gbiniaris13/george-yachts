@@ -5,7 +5,7 @@ import { getLongTailBySlug } from "@/lib/longTailSeo";
 // this wrapper just imports + renders. See SeoLanding component for
 // the JSX. Static metadata pre-computed at build time.
 
-const SLUG = "yacht-charter-greece-with-tender-and-toys";
+const SLUG = "luxury-yacht-charter-greece-tender-and-toys";
 const PAGE = getLongTailBySlug(SLUG);
 
 export const revalidate = 86400;
