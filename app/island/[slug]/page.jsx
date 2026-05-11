@@ -21,22 +21,13 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import IslandPageTracker from "./IslandPageTracker";
 
 export const revalidate = 3600;
-// 2026-05-11 — diagnostic addition. Production build was rendering
-// this route as ○ (static, no SSG params). Adding explicit
-// dynamicParams flag plus dynamic="force-static" exports to verify
-// behaviour. Also log the slugs at module init so build output
-// shows whether ISLANDS is populated.
-export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  const params = ISLANDS.map((i) => ({ island: i.slug }));
-  // eslint-disable-next-line no-console
-  console.log("[generateStaticParams /yacht-charter-[island]]", params.length, "islands:", params.map(p => p.island).join(","));
-  return params;
+  return ISLANDS.map((i) => ({ slug: i.slug }));
 }
 
 export async function generateMetadata({ params }) {
-  const { island: islandSlug } = await params;
+  const { slug: islandSlug } = await params;
   const island = getIslandBySlug(islandSlug);
   if (!island) return { title: "Yacht Charter Greece | George Yachts" };
   return {
@@ -129,7 +120,7 @@ function FaqJsonLd({ island }) {
 }
 
 export default async function IslandPage({ params }) {
-  const { island: islandSlug } = await params;
+  const { slug: islandSlug } = await params;
   const island = getIslandBySlug(islandSlug);
   if (!island) notFound();
 

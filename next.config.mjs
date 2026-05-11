@@ -53,6 +53,24 @@ const nextConfig = {
       },
     ];
   },
+  // 2026-05-11 - Phase 7 SEO routing fix. Next.js 15 doesn't
+  // support prefix-[dynamic] folder names like yacht-charter-[island]
+  // (the entire folder name has to be a single dynamic segment).
+  // The route lived at app/yacht-charter-[island]/ and worked under
+  // older Next.js versions but broke silently in 15 (route built as
+  // static with no generateStaticParams output, every island URL
+  // returned 404). Solution: move the page to the standard pattern
+  // app/island/[slug]/ and rewrite the public URL transparently.
+  // Users keep seeing /yacht-charter-mykonos; internally Next.js
+  // routes to /island/mykonos.
+  async rewrites() {
+    return [
+      {
+        source: "/yacht-charter-:slug([a-z0-9-]+)",
+        destination: "/island/:slug",
+      },
+    ];
+  },
   async redirects() {
     return [
       {
