@@ -190,12 +190,16 @@ export async function POST(request) {
   }
 
   // ── Server-side business-hours safety net (2026-05-11) ────────
-  // If the bot sent us a country field, we cross-check the recipient
-  // local time. Outside the window → refuse the send (HTTP 423) and
-  // DO NOT register as sent — so the bot retries next cycle. Country
-  // missing/empty (older bot version) → fall through to legacy
-  // behaviour ("trust the bot") so we don't break overnight.
-  if (country) {
+  // Bot must send a `country` field in the payload. Unknown / empty
+  // country → falls back to Athens business hours (Boss directive).
+  // Outside the window → refuse the send (HTTP 423) and DO NOT
+  // register as sent — bot retries next cycle.
+  //
+  // Detect legacy bots (no `country` key at all in the request) and
+  // let them through for backwards-compat — they were already vetted
+  // by the bot-side gate before deploying this safety net. Once both
+  // bots run the new code, every call carries country.
+  if (country !== '' || ('country' in body)) {
     const window = checkRecipientHours(country);
     if (!window.ok) {
       // Telemetry — log the deferral so the daily summary sees it.
