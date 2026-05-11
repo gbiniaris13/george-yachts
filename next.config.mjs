@@ -168,6 +168,17 @@ const nextConfig = {
         destination: "/destinations/saronic",
         permanent: true,
       },
+      // 2026-05-11 — blog post "greek-yacht-charter-vs-mediterranean-2026"
+      // links to /destinations/sporades but only cyclades/ionian/saronic
+      // region pages exist. Redirect to /yacht-charter-skiathos (the
+      // main Sporades charter island, has its own full island page).
+      // Boss may build a proper /destinations/sporades hub later — at
+      // that point this redirect gets removed.
+      {
+        source: "/destinations/sporades",
+        destination: "/yacht-charter-skiathos",
+        permanent: true,
+      },
       // 2026-05-04 link audit fix — 3 broken outgoing links inside
       // blog/airport-hell-2026 pointed at posts that exist as drafts
       // in Sanity but were never published. Send the ghost URLs to
