@@ -7,6 +7,7 @@ import BriefGeorgeBanner from "@/app/components/BriefGeorgeBanner";
 // <video> tag (Boss-curated catamaran concat) instead of next/image
 // for the background, and no other Image instances live in this file.
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import BrowseSeoCategories from "@/app/components/seo/BrowseSeoCategories";
 import "./fleet-page.css";
 
 // ISR - revalidate every hour
@@ -191,6 +192,12 @@ export default async function CharterFleetPage() {
           don't want to filter through 60+ yachts. */}
       <BriefGeorgeBanner />
       <FleetGrid yachts={yachts} />
+
+      {/* Phase 7 (2026-05-11) — SEO internal-link block. Pushes
+          authority from the fleet page (high traffic, ranking well)
+          to the 22 new yacht-type / use-case / long-tail landing
+          pages built per the SEO strategy doc. */}
+      <BrowseSeoCategories />
 
       {/* TRUST / CTA SECTION */}
       <section className="fleet-trust">

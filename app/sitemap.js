@@ -1,6 +1,9 @@
 import { sanityClient } from "@/lib/sanity";
 import { JOURNAL_CLUSTERS } from "@/lib/journal-clusters";
 import { ISLANDS } from "@/lib/islands";
+import { YACHT_TYPES } from "@/lib/yachtTypeSeo";
+import { USE_CASES } from "@/lib/useCaseSeo";
+import { LONG_TAIL_PAGES } from "@/lib/longTailSeo";
 
 const BASE_URL = "https://georgeyachts.com";
 
@@ -179,6 +182,28 @@ export default async function sitemap() {
     priority: 0.92,
   }));
 
+  // Phase 7 (2026-05-11, SEO strategy doc execution) — 22 new
+  // programmatic SEO landing pages: yacht-type / use-case / long-tail.
+  // Higher priority than yacht detail pages, lower than islands.
+  const yachtTypeEntries = YACHT_TYPES.map((t) => ({
+    url: `${BASE_URL}${t.urlPath}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "weekly",
+    priority: 0.88,
+  }));
+  const useCaseEntries = USE_CASES.map((u) => ({
+    url: `${BASE_URL}${u.urlPath}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "weekly",
+    priority: 0.85,
+  }));
+  const longTailEntries = LONG_TAIL_PAGES.map((p) => ({
+    url: `${BASE_URL}${p.urlPath}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "monthly",
+    priority: 0.82,
+  }));
+
   let yachtEntries = [];
   try {
     const yachts = await sanityClient.fetch(
@@ -198,6 +223,9 @@ export default async function sitemap() {
     ...staticEntries,
     ...journalClusterEntries,
     ...islandEntries,
+    ...yachtTypeEntries,
+    ...useCaseEntries,
+    ...longTailEntries,
     ...blogEntries,
     ...yachtEntries,
   ];
