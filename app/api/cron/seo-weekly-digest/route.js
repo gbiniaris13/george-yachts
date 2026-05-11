@@ -25,6 +25,7 @@
 import { sanityClient } from "@/lib/sanity";
 import { sendTelegram } from "@/lib/telegram";
 import { fetchGscWeekly, fetchBingWeekly } from "@/lib/seo-apis";
+import { fetchAiVisibility } from "@/lib/ai-visibility";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -149,6 +150,13 @@ export async function GET(request) {
     fetchBingWeekly().catch(() => null),
   ]);
 
+  // 2026-05-11 — AI visibility check via Gemini free tier
+  // (replaces Otterly AI €150/mo). Runs after the parallel block
+  // because it self-rate-limits to 1.5s between queries to stay
+  // within Gemini's 60 RPM free cap. Total runtime ~25 seconds
+  // for 12 queries which is acceptable in a weekly cron.
+  const aiVisibility = await fetchAiVisibility().catch(() => null);
+
   // ── Build Telegram message ───────────────────────────────────────
   const lines = [];
   lines.push("📊 *SEO Weekly Digest* — George Yachts");
@@ -226,6 +234,36 @@ export async function GET(request) {
     lines.push("🤖 *Bing* — last 7 days (feeds ChatGPT)");
     lines.push(
       `• ${fmt(bingData.clicks)} clicks · ${fmt(bingData.impressions)} impressions`,
+    );
+    lines.push("");
+  }
+
+  // ── AI Visibility (Gemini free-tier sampling, V3) ───────────────
+  // Free replacement for Otterly AI / Frase / similar paid trackers.
+  // Sends 10 representative yacht-charter queries to Gemini and
+  // counts how often "georgeyachts.com" or our brand name appears
+  // in the AI's answer. Shows direction-of-travel week over week.
+  if (aiVisibility && aiVisibility.ok) {
+    const s = aiVisibility.summary;
+    const pct = Math.round(s.mentionRate * 100);
+    lines.push("🤖 *AI Visibility* (Gemini sample, 10 queries)");
+    lines.push(
+      `• Mentioned in ${s.mentionedIn}/${s.totalQueries} answers (${pct}%)`,
+    );
+    lines.push(
+      `• Competitor mentions: ${s.competitorMentions} across all answers`,
+    );
+    // Surface up to 2 queries where we did get mentioned (good news)
+    const wins = (aiVisibility.perQuery || []).filter((p) => p.mentions).slice(0, 2);
+    for (const w of wins) {
+      const qShort = w.q.slice(0, 60);
+      lines.push(`   ✅ "${qShort}"`);
+    }
+    lines.push("");
+  } else if (aiVisibility && aiVisibility.reason === "no_api_key") {
+    // Don't shout when the key isn't set; just note quietly.
+    lines.push(
+      "_🤖 AI visibility tracker idle — set GOOGLE_GEMINI_API_KEY to enable._",
     );
     lines.push("");
   }

@@ -42,6 +42,23 @@ const SPECIALIST_LINKS = [
   { label: "Off-market exclusives", href: "/exclusive-yacht-charter-greece" },
 ];
 
+const COMPARE_LINKS = [
+  { label: "Greece vs Croatia", href: "/greece-vs-croatia-yacht-charter" },
+  { label: "Greece vs French Riviera", href: "/greece-vs-french-riviera-yacht-charter" },
+  { label: "Greece vs Turkey", href: "/greece-vs-turkey-yacht-charter" },
+  { label: "Cyclades vs Ionian", href: "/cyclades-vs-ionian-yacht-charter" },
+  { label: "Motor vs sailing yacht", href: "/motor-vs-sailing-yacht-charter-greece" },
+  { label: "Catamaran vs monohull", href: "/catamaran-vs-monohull-yacht-charter-greece" },
+  { label: "Crewed vs bareboat", href: "/crewed-vs-bareboat-yacht-charter-greece" },
+  { label: "Athens vs Mykonos vs Lefkada", href: "/athens-vs-mykonos-vs-lefkada-yacht-charter-departure" },
+];
+
+const REFERENCE_LINKS = [
+  { label: "2026 Charter pricing index", href: "/greek-yacht-charter-pricing-index-2026" },
+  { label: "Greek anchorages database", href: "/greek-anchorages-database" },
+  { label: "MYBA contract explained", href: "/myba-contract-yacht-charter-explained" },
+];
+
 function Column({ heading, items }) {
   return (
     <div>
@@ -132,6 +149,8 @@ export default function BrowseSeoCategories() {
           <Column heading="By yacht type" items={TYPE_LINKS} />
           <Column heading="By occasion" items={OCCASION_LINKS} />
           <Column heading="Specialist briefs" items={SPECIALIST_LINKS} />
+          <Column heading="Compare destinations" items={COMPARE_LINKS} />
+          <Column heading="Reference guides" items={REFERENCE_LINKS} />
         </div>
       </div>
       <style>{`

@@ -4,6 +4,8 @@ import { ISLANDS } from "@/lib/islands";
 import { YACHT_TYPES } from "@/lib/yachtTypeSeo";
 import { USE_CASES } from "@/lib/useCaseSeo";
 import { LONG_TAIL_PAGES } from "@/lib/longTailSeo";
+import { COMPARISONS } from "@/lib/comparisonSeo";
+import { LINKABLE_ASSETS } from "@/lib/linkableAssetSeo";
 
 const BASE_URL = "https://georgeyachts.com";
 
@@ -203,6 +205,19 @@ export default async function sitemap() {
     changeFrequency: "monthly",
     priority: 0.82,
   }));
+  // 2026-05-11 Phase 7 Round 2 — 8 comparison + 3 linkable assets.
+  const comparisonEntries = COMPARISONS.map((c) => ({
+    url: `${BASE_URL}${c.urlPath}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "monthly",
+    priority: 0.85,
+  }));
+  const linkableAssetEntries = LINKABLE_ASSETS.map((a) => ({
+    url: `${BASE_URL}${a.urlPath}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "monthly",
+    priority: 0.83,
+  }));
 
   let yachtEntries = [];
   try {
@@ -226,6 +241,8 @@ export default async function sitemap() {
     ...yachtTypeEntries,
     ...useCaseEntries,
     ...longTailEntries,
+    ...comparisonEntries,
+    ...linkableAssetEntries,
     ...blogEntries,
     ...yachtEntries,
   ];
