@@ -157,11 +157,13 @@ export const metadata = {
   // Boss directive 2026-05-08 — webmaster-tool ownership verification.
   // Each meta tag is added by the upstream tool when the property is
   // claimed; we keep them all here so the homepage <head> serves the
-  // full set in one render. Pinterest meta to be added when Boss
-  // returns the claim string.
+  // full set in one render. Yandex is verified via the standalone HTML
+  // file at /public/yandex_ca7f0d2ae243a269.html (no meta tag needed
+  // for that method).
   verification: {
     other: {
       "msvalidate.01": "9590EE7F9E1A7B891E7DEF1DA4B6C5D6",
+      "p:domain_verify": "90c2335ca4946a7b03a5aec55b495930",
     },
   },
   openGraph: {
