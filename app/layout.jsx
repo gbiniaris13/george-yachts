@@ -146,13 +146,17 @@ export const metadata = {
   // Phase 27 (Forbes-launch eve, 2026-05-05) — Boss replaced the
   // bookmark logo with a Cinzel-style gold "G" matching the AskGeorge
   // widget identity ("multi-trillion level, αρμόζει στην ταυτότητά
-  // μας"). Both icon.svg + apple-icon.svg are vector now (crisp at
-  // every size). Next auto-discovers /favicon.ico if present.
+  // μας"). icon.svg stays SVG (browsers handle it well). apple-icon
+  // had to go to PNG: iOS Safari does not reliably render SVG
+  // home-screen icons, and Next.js's app-router apple-icon convention
+  // only accepts jpg|jpeg|png. Was 404'ing in production until
+  // 2026-05-11 when we rendered the SVG to 180x180 PNG via Sharp.
+  // The .svg file stays on disk for reference / future re-render.
   icons: {
     icon: [
       { url: "/icon.svg", type: "image/svg+xml" },
     ],
-    apple: [{ url: "/apple-icon.svg", sizes: "180x180", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
   },
   // Boss directive 2026-05-08 — webmaster-tool ownership verification.
   // Each meta tag is added by the upstream tool when the property is
