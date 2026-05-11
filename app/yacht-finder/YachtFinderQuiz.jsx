@@ -34,6 +34,47 @@ import { useState, useMemo, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
+// Phase 7 Round 10 (2026-05-11) — URL-param prefill. Combo landing
+// pages (e.g. /honeymoon-yacht-charter-santorini) link here with
+// ?usecase=honeymoon&region=Cyclades&type=motor. This helper reads
+// those params and pre-seeds answers so visitors arrive 1-2 steps
+// further into the quiz instead of restarting from scratch. The
+// existing 5 questions still appear; pre-seeded values can be
+// changed by the visitor as normal.
+const USECASE_TO_GROUP = {
+  honeymoon: 'couple',
+  anniversary: 'couple',
+  romantic: 'couple',
+  family: 'family',
+  multigenerational: 'multigen',
+  corporate: 'corporate',
+  wedding: 'friends',
+  bachelor: 'friends',
+};
+const REGION_PARAM_MAP = {
+  cyclades: 'cyclades',
+  ionian: 'ionian',
+  saronic: 'saronic',
+  dodecanese: 'any', // not a quiz option — fall back to "any"
+  sporades: 'any',
+};
+function prefillFromUrl() {
+  if (typeof window === 'undefined') return {};
+  try {
+    const sp = new URLSearchParams(window.location.search);
+    const out = {};
+    const usecase = (sp.get('usecase') || '').toLowerCase();
+    const region = (sp.get('region') || '').toLowerCase();
+    if (usecase && USECASE_TO_GROUP[usecase]) out.group = USECASE_TO_GROUP[usecase];
+    if (region && REGION_PARAM_MAP[region]) out.region = REGION_PARAM_MAP[region];
+    // We don't prefill rhythm or budget from URLs — those are
+    // genuinely personal choices the visitor should make.
+    return out;
+  } catch {
+    return {};
+  }
+}
+
 const GOLD = '#C9A84C';
 
 const QUESTIONS = [
@@ -188,6 +229,9 @@ function buildReasoning(yacht, answers) {
 }
 
 export default function YachtFinderQuiz({ fleet = [] }) {
+  // Phase 7 Round 10 — URL-prefill state runs through useEffect to
+  // stay hydration-safe (initial render must match SSR's empty
+  // state). Brief flash of Q1 is acceptable.
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [contact, setContact] = useState({
@@ -205,6 +249,19 @@ export default function YachtFinderQuiz({ fleet = [] }) {
   const totalSteps = QUESTIONS.length + 1; // questions + contact
   const isContact = step === QUESTIONS.length;
   const matches = useMemo(() => matchYachts(answers, fleet), [answers, fleet]);
+
+  // Phase 7 Round 10 — read URL params once on mount and jump
+  // ahead in the quiz if combo-page CTAs pre-answered some questions.
+  useEffect(() => {
+    const seed = prefillFromUrl();
+    if (Object.keys(seed).length === 0) return;
+    setAnswers((prev) => ({ ...seed, ...prev }));
+    let next = 0;
+    if (seed.group && seed.region) next = 2;
+    else if (seed.group || seed.region) next = 1;
+    if (next > 0) setStep(next);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Smooth scroll to top of card on step change
   useEffect(() => {
