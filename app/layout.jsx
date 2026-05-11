@@ -154,6 +154,16 @@ export const metadata = {
     ],
     apple: [{ url: "/apple-icon.svg", sizes: "180x180", type: "image/svg+xml" }],
   },
+  // Boss directive 2026-05-08 — webmaster-tool ownership verification.
+  // Each meta tag is added by the upstream tool when the property is
+  // claimed; we keep them all here so the homepage <head> serves the
+  // full set in one render. Pinterest meta to be added when Boss
+  // returns the claim string.
+  verification: {
+    other: {
+      "msvalidate.01": "9590EE7F9E1A7B891E7DEF1DA4B6C5D6",
+    },
+  },
   openGraph: {
     type: "website",
     siteName: "George Yachts Brokerage House",
