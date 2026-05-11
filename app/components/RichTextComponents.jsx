@@ -387,6 +387,17 @@ export const RichTextComponents = {
         {children}
       </p>
     ),
+    // 2026-05-11 — h1 mapping added. Without it, PortableText falls
+    // back to default and outputs <h1>, which collides with the
+    // template-level <h1>{post.title}</h1> in /blog/[slug]/page.jsx
+    // and ships a duplicate H1 (SEO + accessibility issue). Map
+    // content H1s down to H2 so the page has exactly one H1 (the
+    // post title) and content "h1" blocks become section H2s.
+    h1: ({ children }) => (
+      <h2 className="text-3xl md:text-4xl text-white font-marcellus mt-16 mb-6 uppercase tracking-wide">
+        {children}
+      </h2>
+    ),
     h2: ({ children }) => (
       <h2 className="text-3xl md:text-4xl text-white font-marcellus mt-16 mb-6 uppercase tracking-wide">
         {children}

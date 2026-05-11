@@ -206,7 +206,10 @@ export default async function DestinationPage({ params }) {
         {/* INSIDER PICKS */}
         <section className="gy-dest-picks">
           <div className="gy-dest-picks__inner">
-            <p className="gy-dest-picks__label">George&apos;s Insider Picks</p>
+            {/* 2026-05-11 — was <p>, promoted to <h2> so the H1 → H3
+                jump (page title → individual pick names) gets a
+                proper H2 bridge. Visual class unchanged. */}
+            <h2 className="gy-dest-picks__label">George&apos;s Insider Picks</h2>
             <p className="gy-dest-picks__subline">
               The anchorages we&apos;d put you in.
             </p>

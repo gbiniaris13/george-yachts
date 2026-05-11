@@ -214,9 +214,9 @@ const Footer = () => {
 
           {/* Services Column */}
           <div className="flex flex-col items-center lg:items-start">
-            <h4 style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.3em", color: "#F8F5F0", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
+            <h3 style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.3em", color: "#F8F5F0", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
               {t('footer.servicesTitle')}
-            </h4>
+            </h3>
             <nav className="flex flex-col gap-3">
               {serviceLinks.map((link) => (
                 <Link
@@ -233,9 +233,9 @@ const Footer = () => {
 
           {/* Company Column */}
           <div className="flex flex-col items-center lg:items-start">
-            <h4 style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.3em", color: "#F8F5F0", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
+            <h3 style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.3em", color: "#F8F5F0", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
               {t('footer.companyTitle')}
-            </h4>
+            </h3>
             <nav className="flex flex-col gap-3">
               {companyLinks.map((link) => (
                 <Link
@@ -252,9 +252,9 @@ const Footer = () => {
 
           {/* Contact Column */}
           <div className="flex flex-col items-center lg:items-start">
-            <h4 style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.3em", color: "#F8F5F0", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
+            <h3 style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.3em", color: "#F8F5F0", textTransform: "uppercase", fontWeight: 600, marginBottom: "24px" }}>
               {t('footer.contactTitle')}
-            </h4>
+            </h3>
             <div className="flex flex-col gap-4 text-center lg:text-left">
               <a
                 href="https://calendly.com/george-georgeyachts/30min"
@@ -300,9 +300,9 @@ const Footer = () => {
             <span aria-hidden="true" className="gy-divider-star" style={{ marginBottom: 24 }}>
               <span />
             </span>
-            <h4 style={{ fontFamily: "var(--gy-font-display)", fontSize: "10px", letterSpacing: "0.42em", textTransform: "uppercase", color: "#F8F5F0", fontWeight: 500, marginBottom: "16px" }}>
+            <h3 style={{ fontFamily: "var(--gy-font-display)", fontSize: "10px", letterSpacing: "0.42em", textTransform: "uppercase", color: "#F8F5F0", fontWeight: 500, marginBottom: "16px" }}>
               {t('footer.newsletter')}
-            </h4>
+            </h3>
             <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 300, color: "#F8F5F0", marginBottom: "12px", lineHeight: 1.15, letterSpacing: "-0.015em" }}>
               The George Yachts Journal
             </p>
