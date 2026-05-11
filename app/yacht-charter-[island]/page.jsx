@@ -66,13 +66,32 @@ async function loadIslandData(island) {
 const GOLD = "#C9A84C";
 
 function PlaceJsonLd({ island }) {
+  // Phase 5 (2026-05-08, Boss SEO/AI directive) — upgraded to
+  // TouristDestination type so AI engines + Google read this as a
+  // primary destination entity rather than a generic Place. Includes
+  // sub-attractions derived from the curated insider tips so each
+  // page exposes a structured tourist-attraction list — strongest
+  // citation-friendly form for "things to do in X" queries.
+  const subAttractions = (island.insiderTips || []).slice(0, 6).map((tip, i) => ({
+    "@type": "TouristAttraction",
+    position: i + 1,
+    name: tip.split(/[—,.]/)[0].trim().slice(0, 80) || `${island.name} attraction ${i + 1}`,
+    description: tip,
+    geo: { "@type": "GeoCoordinates", addressCountry: "GR" },
+  }));
+  const url = `https://georgeyachts.com/yacht-charter-${island.slug}`;
   const json = {
     "@context": "https://schema.org",
-    "@type": "Place",
+    "@type": "TouristDestination",
+    "@id": `${url}#destination`,
     name: `${island.name}, ${island.region}, Greece`,
+    alternateName: `Yacht Charter ${island.name}`,
     description: island.whyVisit.slice(0, 300),
-    url: `https://georgeyachts.com/yacht-charter-${island.slug}`,
+    url,
+    geo: { "@type": "GeoCoordinates", addressCountry: "GR" },
+    touristType: ["UHNW families", "Couples", "Yacht charterers", "Luxury travellers"],
     isAccessibleForFree: false,
+    ...(subAttractions.length > 0 ? { includesAttraction: subAttractions } : {}),
   };
   return (
     <script
