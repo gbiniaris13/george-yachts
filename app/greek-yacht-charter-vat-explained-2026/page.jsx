@@ -9,6 +9,6 @@ export const metadata = {
   title: PAGE.seoTitle,
   description: PAGE.seoDescription,
   alternates: { canonical: PAGE.canonical },
-  openGraph: { title: PAGE.seoTitle, description: PAGE.seoDescription, url: PAGE.canonical, type: "article" },
+  openGraph: { title: PAGE.seoTitle, description: PAGE.seoDescription, url: PAGE.canonical, type: "article", images: [`/api/og?title=${encodeURIComponent(PAGE.h1)}&eyebrow=${encodeURIComponent(PAGE.eyebrow)}`] },
 };
 export default function Page() { return <SeoLanding pageData={PAGE} />; }

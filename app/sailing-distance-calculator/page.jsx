@@ -18,6 +18,13 @@ export const metadata = {
   title: "Greek Islands Sailing Distance Calculator | George Yachts",
   description: "Interactive sailing distance calculator for Greek waters. Calculate passage time, distance, and fuel cost between 32+ ports. Motor, sailing, catamaran speeds.",
   alternates: { canonical: "https://georgeyachts.com/sailing-distance-calculator" },
+  openGraph: {
+    title: "Greek Islands Sailing Distance Calculator | George Yachts",
+    description: "Interactive sailing distance calculator for Greek waters. Calculate passage time, distance, and fuel cost between 32+ ports.",
+    url: "https://georgeyachts.com/sailing-distance-calculator",
+    type: "website",
+    images: [`/api/og?title=${encodeURIComponent("Greek Islands Sailing Distance Calculator")}&eyebrow=${encodeURIComponent("Charter planning tool")}`],
+  },
 };
 
 function CalculatorJsonLd() {
