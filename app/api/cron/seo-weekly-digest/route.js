@@ -237,9 +237,14 @@ export async function GET(request) {
   if (!gscData || !bingData) {
     lines.push("");
     const missing = [];
-    if (!gscData) missing.push("GSC API");
-    if (!bingData) missing.push("Bing API");
-    lines.push(`_⚙️ ${missing.join(" + ")} env var(s) not set — see hand-off note._`);
+    if (!gscData) missing.push("GSC");
+    if (!bingData) missing.push("Bing");
+    // Could be (a) env var not set, or (b) API returned null/error
+    // (e.g. site not yet propagated, account mismatch, rate-limit).
+    // Phrasing kept neutral so the digest doesn't lie about config.
+    lines.push(
+      `_⚙️ ${missing.join(" + ")} data unavailable this run — usually clears within 24–48h of initial verification._`,
+    );
   }
 
   const message = lines.join("\n");
