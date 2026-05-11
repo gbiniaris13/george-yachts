@@ -632,15 +632,19 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
         </section>
 
         {/* Phase 27i.10 (2026-05-07) — Diamond Journey scroll-driven
-            cinematic tour. Pinned for ~250 vh, fades through the
-            yacht's hero + 3-4 supporting photos with Ken Burns scale
-            on the active one. Renders only when ≥2 photos exist. */}
-        {Array.isArray(yacht.images) && yacht.images.length >= 2 && (
+            cinematic tour. Disabled 2026-05-11 per Boss directive:
+            the 300vh pinned section read as an unbroken navy gap on
+            many yachts (scroll progress hard to trigger on trackpads
+            + the cross-fade swap registered as "broken" UX). Gallery
+            below provides the same photo access without consuming
+            3 viewport heights of scroll. Component file retained in
+            case we revive a shorter version later — DO NOT delete. */}
+        {/* {Array.isArray(yacht.images) && yacht.images.length >= 2 && (
           <YachtCinematicTour
             images={yacht.images}
             yachtName={yacht.name}
           />
-        )}
+        )} */}
 
         {/* A.6 — Breadcrumb (sits below hero) */}
         <Breadcrumbs items={breadcrumbItems.map(b => ({ name: b.name, url: b.url ? new URL(b.url).pathname : undefined }))} />
@@ -1088,7 +1092,10 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             <span className="label-text block text-center mb-4">
               {t('yacht.beginJourney', 'Begin Your Journey')}
             </span>
-            <h2 className="text-4xl md:text-5xl font-marcellus text-white text-center mb-4 uppercase tracking-wide">
+            <h2
+              className="text-4xl md:text-5xl text-white text-center mb-4 uppercase tracking-wide"
+              style={{ fontFamily: "var(--gy-font-editorial)" }}
+            >
               {t('yacht.experience', 'Experience')}{' '}
               <span className="gradient-gold italic font-light">{yacht.name}</span>
             </h2>
