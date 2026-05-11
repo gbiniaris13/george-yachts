@@ -6,6 +6,7 @@ import { USE_CASES } from "@/lib/useCaseSeo";
 import { LONG_TAIL_PAGES } from "@/lib/longTailSeo";
 import { COMPARISONS } from "@/lib/comparisonSeo";
 import { LINKABLE_ASSETS } from "@/lib/linkableAssetSeo";
+import { COMBOS } from "@/lib/comboSeo";
 
 const BASE_URL = "https://georgeyachts.com";
 
@@ -218,6 +219,28 @@ export default async function sitemap() {
     changeFrequency: "monthly",
     priority: 0.83,
   }));
+  // Phase 7 Round 3 — 13 yacht-type x destination combo pages.
+  const comboEntries = COMBOS.map((c) => ({
+    url: `${BASE_URL}${c.urlPath}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "monthly",
+    priority: 0.84,
+  }));
+  // Phase 7 Round 3 — reviews page + market report.
+  const otherSeoEntries = [
+    {
+      url: `${BASE_URL}/reviews`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    {
+      url: `${BASE_URL}/2026-greek-charter-market-report`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: "monthly",
+      priority: 0.88,
+    },
+  ];
 
   let yachtEntries = [];
   try {
@@ -243,6 +266,8 @@ export default async function sitemap() {
     ...longTailEntries,
     ...comparisonEntries,
     ...linkableAssetEntries,
+    ...comboEntries,
+    ...otherSeoEntries,
     ...blogEntries,
     ...yachtEntries,
   ];

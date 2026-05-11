@@ -55,8 +55,10 @@ const COMPARE_LINKS = [
 
 const REFERENCE_LINKS = [
   { label: "2026 Charter pricing index", href: "/greek-yacht-charter-pricing-index-2026" },
+  { label: "2026 Market report", href: "/2026-greek-charter-market-report" },
   { label: "Greek anchorages database", href: "/greek-anchorages-database" },
   { label: "MYBA contract explained", href: "/myba-contract-yacht-charter-explained" },
+  { label: "Charter reviews", href: "/reviews" },
 ];
 
 function Column({ heading, items }) {
