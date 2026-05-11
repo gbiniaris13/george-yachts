@@ -56,10 +56,21 @@ export async function POST(req) {
     // Rate limit by IP — 10 inquiries per hour per IP. The brief
     // assumes one wealthy user submits at most 2-3 yachts in a
     // session; anything above that is bot/scrape behaviour.
-    const ip = (req.headers.get("x-forwarded-for") || "0.0.0.0").split(",")[0].trim();
-    const limited = await checkRateLimit?.(ip, "inquiry", 10, 3600);
-    if (limited && limited.blocked) {
-      return NextResponse.json({ ok: false, error: "rate_limited" }, { status: 429 });
+    //
+    // 2026-05-11 BUG FIX — previous call passed (ip, "inquiry", 10, 3600)
+    // but lib/rateLimit.js checkRateLimit signature is
+    // (request, { max, windowMs }). The positional misuse caused
+    // request.headers.get(...) inside the lib to throw on a plain
+    // string, returning HTTP 500 on every single inquiry submission
+    // since the function was first wired up. Fixed to match the
+    // canonical signature used by /api/contact, /api/newsletter,
+    // /api/partner-request, /api/lead-gate.
+    const rl = checkRateLimit(req, { max: 10, windowMs: 3600000 });
+    if (!rl.ok) {
+      return NextResponse.json(
+        { ok: false, error: "rate_limited", retryAfter: rl.retryAfter },
+        { status: 429 },
+      );
     }
 
     const body = await req.json();
