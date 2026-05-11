@@ -1,164 +1,309 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
+// Yacht gallery — editorial carousel + fullscreen lightbox.
+//
+// 2026-05-11 (Boss directive: "site addresses ultra-wealthy who've
+// seen everything — yacht presentation must IMPRESS, work flawlessly
+// on mobile and desktop, this is the central product"). Complete
+// rewrite after three prior attempts at <img>-based rendering left
+// thumbnails as empty navy boxes. Root cause was almost certainly a
+// race condition between Next.js client hydration and the
+// `aspect-ratio` grid-cell sizing for lazy-loaded <img> tags. The
+// existing cinematic-tour component never had this problem because
+// it used `background-image`, so this rebuild standardises the whole
+// gallery on the same proven pattern.
+//
+// Design (Robb Report / Vogue editorial spread):
+//   • ONE large hero slide at a time (3:2 desktop, 4:3 mobile)
+//   • Slow Ken Burns scale on active slide, 1.1s crossfade
+//   • Restrained gold arrows with backdrop-blur, navy translucent
+//   • Top-right "01 / 12" counter in Switzer small caps
+//   • Bottom-left caption (alt text if meaningful) or "Tap to expand"
+//   • Below: horizontal thumbnail strip, gold border on active
+//   • Click main slide → fullscreen lightbox modal
+//   • Keyboard ← → arrows, ESC to close modal
+//   • Touch swipe (60 px threshold) on both carousel and modal
+//   • Single-step autoplay (first slide → second after 6s, then
+//     manual only — same pattern as Apple product pages, never
+//     becomes a slideshow that distracts from the photo)
+//   • Preloads next + prev images so navigation feels instant
+//   • Respects prefers-reduced-motion (no autoplay, no Ken Burns)
+
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 export default function Lightbox({ images, yachtName }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  // Chapter 03 (2026-05-08) — touch-swipe nav for mobile users.
-  // Track the start X of each touch; on touchend, if the horizontal
-  // delta exceeds 60 px, advance / retreat by one image. Vertical
-  // pulls fall through to the browser (so users can still close
-  // the lightbox by swiping down past the trackable area, although
-  // a tap on the backdrop already does that).
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [autoplay, setAutoplay] = useState(true);
   const touchStartX = useRef(null);
-  const SWIPE_THRESHOLD = 60;
+  const count = Array.isArray(images) ? images.length : 0;
 
+  // ── Navigation ────────────────────────────────────────────
+  const next = useCallback(() => {
+    setCurrentIdx((i) => (i + 1) % count);
+    setAutoplay(false);
+  }, [count]);
+
+  const prev = useCallback(() => {
+    setCurrentIdx((i) => (i - 1 + count) % count);
+    setAutoplay(false);
+  }, [count]);
+
+  const jump = useCallback((idx) => {
+    setCurrentIdx(idx);
+    setAutoplay(false);
+  }, []);
+
+  // ── Single-step autoplay ──────────────────────────────────
+  // First slide holds for 6 s then advances ONCE, then manual.
+  // Like an Apple product page intro — not a slideshow.
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') setIsOpen(false);
-      if (e.key === 'ArrowRight') setCurrentIndex((prev) => (prev + 1) % images.length);
-      if (e.key === 'ArrowLeft') setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-    };
+    if (!autoplay) return;
+    if (count < 2) return;
+    if (typeof window === 'undefined') return;
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
 
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
+    const t = setTimeout(() => {
+      setCurrentIdx(1);
+      setAutoplay(false);
+    }, 6000);
+    return () => clearTimeout(t);
+  }, [autoplay, count]);
+
+  // ── Keyboard + body scroll lock ───────────────────────────
+  useEffect(() => {
+    const onKey = (e) => {
+      if (modalOpen) {
+        if (e.key === 'Escape') setModalOpen(false);
+        if (e.key === 'ArrowRight') next();
+        if (e.key === 'ArrowLeft') prev();
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    if (modalOpen) {
       document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
     }
-
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'unset';
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
     };
-  }, [isOpen, currentIndex, images.length]);
+  }, [modalOpen, next, prev]);
 
+  // ── Touch swipe ───────────────────────────────────────────
   const onTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
   };
   const onTouchEnd = (e) => {
     if (touchStartX.current == null) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(dx) > SWIPE_THRESHOLD) {
-      if (dx < 0) {
-        setCurrentIndex((prev) => (prev + 1) % images.length);
-      } else {
-        setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-      }
+    if (Math.abs(dx) > 60) {
+      if (dx < 0) next();
+      else prev();
     }
     touchStartX.current = null;
   };
 
-  const openLightbox = (index) => {
-    setCurrentIndex(index);
-    setIsOpen(true);
+  // ── Preload prev + next so transitions are instant ────────
+  useEffect(() => {
+    if (typeof window === 'undefined' || count < 2) return;
+    const indices = [
+      (currentIdx + 1) % count,
+      (currentIdx - 1 + count) % count,
+    ];
+    const tags = indices.map((idx) => {
+      const im = new window.Image();
+      im.src = `${images[idx].url}?w=1800&h=1200&fit=crop&auto=format`;
+      return im;
+    });
+    return () => {
+      tags.forEach((t) => { t.src = ''; });
+    };
+  }, [currentIdx, images, count]);
+
+  // ── GA4 event on lightbox open ────────────────────────────
+  const openModal = useCallback(() => {
+    setModalOpen(true);
     try {
-      // N.1 — yacht_gallery_opened
-      window.gtag?.("event", "yacht_gallery_opened", { yacht: yachtName, image_index: index });
+      window.gtag?.('event', 'yacht_gallery_opened', {
+        yacht: yachtName,
+        image_index: currentIdx,
+      });
     } catch {}
-  };
+  }, [currentIdx, yachtName]);
+
+  if (count === 0) return null;
+  const current = images[currentIdx];
+
+  // Caption logic: surface alt text only when it's substantive (not
+  // just "Yacht Name" or empty). Falls back to action hint.
+  const altText = (current.alt || '').trim();
+  const hasMeaningfulCaption =
+    altText.length > 12 &&
+    !altText.toLowerCase().includes(yachtName.toLowerCase());
+  const captionText = hasMeaningfulCaption ? altText : 'Tap photo to expand';
 
   return (
     <>
-      {/* Gallery Grid */}
-      <div className="yacht-gallery__grid">
-        {images.map((image, index) => (
-          <div
-            key={index}
-            className="yacht-gallery__item cursor-pointer group relative overflow-hidden"
-            onClick={() => openLightbox(index)}
-          >
-            {/* 2026-05-11 — third attempt at rendering thumbnails. Both
-                Next/Image variants (width/height and fill) left photos
-                invisible on Boss's screen even though the network
-                payload (verified via curl + /_next/image proxy) was
-                fine. Smells like a race condition between Next.js
-                lazy hydration, the IntersectionObserver-driven loading
-                attribute, and the aspect-ratio grid cell.
-                Plain <img> with Sanity URL params is what the
-                cinematic tour, deck layout fallback, and 100% of
-                similar gallery patterns on the site use successfully.
-                Eager-load the first 2 (above the fold once gallery
-                hits viewport), lazy-load the rest. */}
-            <img
-              src={`${image.url}?w=900&h=600&fit=crop&auto=format`}
-              alt={image.alt || `${yachtName} — charter yacht in Greece, image ${index + 2}`}
-              loading={index < 2 ? "eager" : "lazy"}
-              decoding="async"
-              className="yacht-gallery__image"
+      {/* ───────────────────────────────────────────────
+          MAIN CAROUSEL
+          ─────────────────────────────────────────────── */}
+      <div
+        className="yacht-carousel"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        role="region"
+        aria-roledescription="carousel"
+        aria-label={`${yachtName} photo gallery`}
+      >
+        <div className="yacht-carousel__stage">
+          {images.map((img, i) => (
+            <div
+              key={i}
+              className={`yacht-carousel__slide ${i === currentIdx ? 'is-active' : ''}`}
               style={{
-                position: "absolute",
-                inset: 0,
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                display: "block",
+                backgroundImage: `url(${img.url}?w=1800&h=1200&fit=crop&auto=format)`,
+              }}
+              aria-hidden={i !== currentIdx}
+              role={i === currentIdx ? 'button' : undefined}
+              tabIndex={i === currentIdx ? 0 : -1}
+              aria-label={
+                i === currentIdx
+                  ? `Photo ${i + 1} of ${count} — click to enlarge`
+                  : undefined
+              }
+              onClick={() => {
+                if (i === currentIdx) openModal();
+              }}
+              onKeyDown={(e) => {
+                if (i === currentIdx && (e.key === 'Enter' || e.key === ' ')) {
+                  e.preventDefault();
+                  openModal();
+                }
               }}
             />
-            <div className="absolute inset-0 bg-[#0D1B2A]/0 group-hover:bg-[#0D1B2A]/30 transition-all duration-300 flex items-center justify-center pointer-events-none">
-              <span className="opacity-0 group-hover:opacity-100 text-white text-xs tracking-[0.3em] uppercase transition-opacity duration-300">
-                View larger
-              </span>
-            </div>
+          ))}
+
+          {/* Gradient shade so counter + caption read against any photo */}
+          <div className="yacht-carousel__shade" aria-hidden="true" />
+
+          {/* Counter */}
+          <div className="yacht-carousel__counter" aria-live="polite">
+            <span className="yacht-carousel__counter-current">
+              {String(currentIdx + 1).padStart(2, '0')}
+            </span>
+            <span className="yacht-carousel__counter-sep"> / </span>
+            <span className="yacht-carousel__counter-total">
+              {String(count).padStart(2, '0')}
+            </span>
           </div>
-        ))}
+
+          {/* Caption / hint */}
+          <div className="yacht-carousel__caption">
+            {captionText}
+          </div>
+
+          {/* Arrows — only when more than 1 photo */}
+          {count > 1 && (
+            <>
+              <button
+                type="button"
+                className="yacht-carousel__arrow yacht-carousel__arrow--prev"
+                onClick={(e) => { e.stopPropagation(); prev(); }}
+                aria-label="Previous photo"
+              >
+                <span aria-hidden="true">‹</span>
+              </button>
+              <button
+                type="button"
+                className="yacht-carousel__arrow yacht-carousel__arrow--next"
+                onClick={(e) => { e.stopPropagation(); next(); }}
+                aria-label="Next photo"
+              >
+                <span aria-hidden="true">›</span>
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* Thumbnail strip */}
+        {count > 1 && (
+          <div
+            className="yacht-carousel__thumbs"
+            role="tablist"
+            aria-label="Gallery thumbnails"
+          >
+            {images.map((img, i) => (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                aria-selected={i === currentIdx}
+                aria-controls={`yacht-carousel-slide-${i}`}
+                className={`yacht-carousel__thumb ${i === currentIdx ? 'is-active' : ''}`}
+                style={{
+                  backgroundImage: `url(${img.url}?w=300&h=200&fit=crop&auto=format)`,
+                }}
+                onClick={() => jump(i)}
+                aria-label={`Go to photo ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Lightbox Modal */}
-      {isOpen && (
+      {/* ───────────────────────────────────────────────
+          FULLSCREEN LIGHTBOX MODAL
+          ─────────────────────────────────────────────── */}
+      {modalOpen && (
         <div
-          className="fixed inset-0 z-[9999] bg-[#0D1B2A]/95 backdrop-blur-sm flex items-center justify-center"
-          onClick={() => setIsOpen(false)}
+          className="yacht-lightbox"
+          onClick={() => setModalOpen(false)}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${yachtName} photo ${currentIdx + 1} of ${count}`}
         >
           <button
-            className="absolute top-6 right-6 text-white/60 hover:text-white text-4xl z-10 transition-colors duration-300"
-            onClick={() => setIsOpen(false)}
-            aria-label="Close gallery"
+            className="yacht-lightbox__close"
+            onClick={() => setModalOpen(false)}
+            aria-label="Close fullscreen view"
           >
             ✕
           </button>
 
-          <button
-            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white/60 hover:text-white text-6xl z-10 transition-colors duration-300"
-            onClick={(e) => { e.stopPropagation(); setCurrentIndex((prev) => (prev - 1 + images.length) % images.length); }}
-            aria-label="Previous image"
-          >
-            ‹
-          </button>
+          {count > 1 && (
+            <button
+              className="yacht-lightbox__arrow yacht-lightbox__arrow--prev"
+              onClick={(e) => { e.stopPropagation(); prev(); }}
+              aria-label="Previous photo"
+            >
+              <span aria-hidden="true">‹</span>
+            </button>
+          )}
 
           <div
-            className="relative w-[90vw] h-[80vh] max-w-7xl"
+            className="yacht-lightbox__stage"
+            style={{
+              backgroundImage: `url(${current.url}?w=2400&h=1600&fit=max&auto=format)`,
+            }}
             onClick={(e) => e.stopPropagation()}
-          >
-            {/* 2026-05-08 — Boss flagged the gallery counter changing
-                ("1 / 5" → "2 / 5") while the photo did not. Next.js
-                <Image fill> can skip the src update when only the
-                URL string changes; a unique `key` per index forces a
-                fresh mount on every navigation so the new image
-                always paints. */}
-            <Image
-              key={currentIndex}
-              src={images[currentIndex].url}
-              alt={images[currentIndex].alt || `${yachtName} — charter yacht in Greece, image ${currentIndex + 1}`}
-              fill
-              className="object-contain"
-              sizes="90vw"
-              priority
-            />
-          </div>
+          />
 
-          <button
-            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white/60 hover:text-white text-6xl z-10 transition-colors duration-300"
-            onClick={(e) => { e.stopPropagation(); setCurrentIndex((prev) => (prev + 1) % images.length); }}
-            aria-label="Next image"
-          >
-            ›
-          </button>
+          {count > 1 && (
+            <button
+              className="yacht-lightbox__arrow yacht-lightbox__arrow--next"
+              onClick={(e) => { e.stopPropagation(); next(); }}
+              aria-label="Next photo"
+            >
+              <span aria-hidden="true">›</span>
+            </button>
+          )}
 
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/50 text-sm tracking-[0.3em] uppercase">
-            {currentIndex + 1} / {images.length}
+          <div className="yacht-lightbox__counter">
+            {String(currentIdx + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}
           </div>
         </div>
       )}

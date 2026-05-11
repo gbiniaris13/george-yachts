@@ -723,14 +723,21 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </section>
         )}
 
-        {/* D.3 — PHOTO GALLERY pulled up so visitors see the yacht
-            within the first 1500px of scroll, not 5000px. */}
-        {yacht.images && yacht.images.length > 1 && (
+        {/* D.3 — PHOTO GALLERY (rebuilt 2026-05-11 as editorial
+            carousel + fullscreen lightbox). Now receives ALL images
+            (was .slice(1) — that skipped the hero). The hero photo
+            is the strongest shot we have; including it as the first
+            carousel slide reinforces the impression rather than
+            wasting it. The carousel renders ONE photo at a time
+            (Robb Report spread), so duplication of the hero across
+            the top-of-page hero section + first slide is editorial-
+            correct, not visual repetition. */}
+        {yacht.images && yacht.images.length > 0 && (
           <section className="yacht-gallery">
             <div className="container">
               <h2 className="yacht-gallery__title">{t('yacht.galleryTitle', 'What Does')} {yacht.name} {t('yacht.lookLike', 'Look Like Inside and Out')}?</h2>
               <Lightbox
-                images={yacht.images.slice(1)}
+                images={yacht.images}
                 yachtName={yacht.name}
               />
             </div>
