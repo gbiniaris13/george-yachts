@@ -32,6 +32,8 @@ export function GET() {
     { loc: `${BASE_URL}/2026-greek-charter-market-report`, priority: 0.88 },
     { loc: `${BASE_URL}/reviews`, priority: 0.85 },
     { loc: `${BASE_URL}/sailing-distance-calculator`, priority: 0.86 },
+    { loc: `${BASE_URL}/charter-cost-estimator`, priority: 0.86 },
+    { loc: `${BASE_URL}/charter-calendar-heat-map`, priority: 0.86 },
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
