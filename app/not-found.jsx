@@ -9,6 +9,7 @@
 // + gy-shimmer-cta + gy-divider-star from Phase 1/2.
 
 import Link from "next/link";
+import NotFoundSuggestions from "@/app/components/NotFoundSuggestions";
 
 export default function NotFound() {
   return (
@@ -94,7 +95,12 @@ export default function NotFound() {
           Perhaps the link weathered. Perhaps a section retired. Either
           way — we know the waters from here. Pick a heading.
         </p>
+      </div>
 
+      {/* Smart suggestions inferred from the attempted URL */}
+      <NotFoundSuggestions />
+
+      <div style={{ maxWidth: 880, position: "relative", zIndex: 2 }}>
         {/* Three quick exits */}
         <div
           style={{
