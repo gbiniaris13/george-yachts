@@ -11,6 +11,7 @@ import { COMPARISONS } from "@/lib/comparisonSeo";
 import { LINKABLE_ASSETS } from "@/lib/linkableAssetSeo";
 import { COMBOS } from "@/lib/comboSeo";
 import { ARTICLES } from "@/lib/articleSeo";
+import { DURATION_PAGES } from "@/lib/durationSeo";
 
 export const dynamic = "force-static";
 export const revalidate = 3600;
@@ -27,8 +28,10 @@ export function GET() {
     ...LINKABLE_ASSETS.map((a) => ({ loc: `${BASE_URL}${a.urlPath}`, priority: 0.83 })),
     ...COMBOS.map((c) => ({ loc: `${BASE_URL}${c.urlPath}`, priority: 0.84 })),
     ...ARTICLES.map((a) => ({ loc: `${BASE_URL}${a.urlPath}`, priority: 0.87 })),
+    ...DURATION_PAGES.map((p) => ({ loc: `${BASE_URL}${p.urlPath}`, priority: 0.82 })),
     { loc: `${BASE_URL}/2026-greek-charter-market-report`, priority: 0.88 },
     { loc: `${BASE_URL}/reviews`, priority: 0.85 },
+    { loc: `${BASE_URL}/sailing-distance-calculator`, priority: 0.86 },
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

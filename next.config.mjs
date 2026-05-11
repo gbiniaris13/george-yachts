@@ -64,9 +64,17 @@ const nextConfig = {
   // Users keep seeing /yacht-charter-mykonos; internally Next.js
   // routes to /island/mykonos.
   async rewrites() {
+    // Restrict the island-rewrite to only known island slugs so the
+    // pattern doesn't accidentally catch other yacht-charter-* URLs
+    // like /yacht-charter-mykonos-7-day (duration pages, Phase 7
+    // Round 5) which need to go to their own static routes.
+    //
+    // Keep this list in sync with /lib/islands.js -> ISLANDS slugs.
+    const ISLAND_SLUGS_PATTERN =
+      "mykonos|santorini|paros|corfu|hydra|milos|folegandros|lefkada|spetses|kefalonia|naxos|rhodes|skiathos|zakynthos|ithaca|paxos|symi|crete-chania|sifnos";
     return [
       {
-        source: "/yacht-charter-:slug([a-z0-9-]+)",
+        source: `/yacht-charter-:slug(${ISLAND_SLUGS_PATTERN})`,
         destination: "/island/:slug",
       },
     ];

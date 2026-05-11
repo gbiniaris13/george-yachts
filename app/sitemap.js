@@ -8,6 +8,7 @@ import { COMPARISONS } from "@/lib/comparisonSeo";
 import { LINKABLE_ASSETS } from "@/lib/linkableAssetSeo";
 import { COMBOS } from "@/lib/comboSeo";
 import { ARTICLES } from "@/lib/articleSeo";
+import { DURATION_PAGES } from "@/lib/durationSeo";
 
 const BASE_URL = "https://georgeyachts.com";
 
@@ -249,6 +250,21 @@ export default async function sitemap() {
     changeFrequency: "monthly",
     priority: 0.87,
   }));
+  // Phase 7 Round 5 — 40 duration pages + sailing distance calculator.
+  const durationEntries = DURATION_PAGES.map((p) => ({
+    url: `${BASE_URL}${p.urlPath}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "monthly",
+    priority: 0.82,
+  }));
+  const toolEntries = [
+    {
+      url: `${BASE_URL}/sailing-distance-calculator`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: "monthly",
+      priority: 0.86,
+    },
+  ];
 
   let yachtEntries = [];
   try {
@@ -277,6 +293,8 @@ export default async function sitemap() {
     ...comboEntries,
     ...otherSeoEntries,
     ...articleEntries,
+    ...durationEntries,
+    ...toolEntries,
     ...blogEntries,
     ...yachtEntries,
   ];
