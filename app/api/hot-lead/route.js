@@ -1,20 +1,59 @@
 // Hot Lead Alert — fires when a visitor views 3+ yacht pages in one session
 // Sends urgent Telegram notification with yacht names and visitor country
+//
+// 2026-05-11 — Added validation + rate limiting. Previously the
+// endpoint fired a Telegram alert on ANY POST including empty {}
+// so anyone could trigger spurious 'HOT LEAD' notifications by
+// curl-ing the endpoint. Now requires >=3 valid yacht slugs
+// (matching the client-side threshold in VisitorBeacon.jsx) and
+// caps real visitors at 3 alerts per IP per hour.
 
 export const runtime = 'edge';
 
 import { sendTelegram, getFlag, getCountryName, detectDevice, athensTime } from '@/lib/telegram';
+
+// Edge in-memory rate buckets — instances reset frequently so this
+// is defence-in-depth, not a guarantee. Combined with the >=3-yacht
+// gate, it stops obvious abuse.
+const buckets = new Map();
+const WINDOW_MS = 60 * 60 * 1000; // 1 hour
+const MAX_PER_WINDOW = 3;
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const b = buckets.get(ip) || { count: 0, resetAt: now + WINDOW_MS };
+  if (now > b.resetAt) {
+    b.count = 0;
+    b.resetAt = now + WINDOW_MS;
+  }
+  b.count += 1;
+  buckets.set(ip, b);
+  return b.count > MAX_PER_WINDOW;
+}
+
+function isPlausibleSlug(s) {
+  return typeof s === 'string' && /^[a-z0-9][a-z0-9-]{1,80}$/i.test(s);
+}
 
 export async function POST(request) {
   try {
     const country = request.headers.get('x-vercel-ip-country') || '??';
     const city = request.headers.get('x-vercel-ip-city') || '';
     const ua = request.headers.get('user-agent') || '';
+    const ip = (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'unknown';
 
     let body = {};
     try { body = await request.json(); } catch {}
 
-    const yachts = body.yachts || [];
+    const rawYachts = Array.isArray(body.yachts) ? body.yachts : [];
+    const yachts = rawYachts.filter(isPlausibleSlug);
+    if (yachts.length < 3) {
+      return new Response('Bad Request', { status: 400 });
+    }
+    if (isRateLimited(ip)) {
+      return new Response('Rate limited', { status: 429 });
+    }
+
     const flag = getFlag(country);
     const countryName = getCountryName(country);
     const device = detectDevice(ua);
@@ -43,6 +82,8 @@ export async function POST(request) {
 
     return new Response('OK', { status: 200 });
   } catch {
-    return new Response('OK', { status: 200 });
+    // Defensive: never throw 500 since the client uses keepalive
+    // and ignores the response, but log nothing useful here either.
+    return new Response('Error', { status: 500 });
   }
 }
