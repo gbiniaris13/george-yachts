@@ -397,18 +397,21 @@
   margin-bottom: 14px;
 }
 
+/* 2026-05-11 — Specs values brought into the site palette per Boss.
+   Was: Sentient editorial @ 36-56px with a #F8F5F0 → #C9A84C gradient
+   clipped to text (the cream-to-gold ombré read as Vegas-luxury, not
+   Forbes-restraint). Now: Fraunces display @ Tier-1 weight + solid
+   var(--gy-white), matching the homepage stat-number treatment
+   (gy-stat-num in globals.css). The gold accent moves to the
+   small-caps label above each value (already var(--gy-gold)). */
 .yacht-specs__value {
   display: block;
-  font-family: var(--gy-font-editorial);
+  font-family: var(--gy-font-display);
   font-size: clamp(36px, 5vw, 56px);
-  font-weight: 300;
+  font-weight: 200;
   line-height: 1;
-  letter-spacing: -0.025em;
-  background: linear-gradient(135deg, #F8F5F0 0%, #C9A84C 60%, #C9A84C 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  letter-spacing: -0.02em;
+  color: var(--gy-white);
   font-variant-numeric: tabular-nums;
 }
 
@@ -675,14 +678,16 @@
   margin: 0 0 16px 0;
 }
 
+/* 2026-05-11 — legacy pricing rate. The flat gold gradient was
+   pointless (all three stops were #C9A84C) and the clipped-text
+   treatment forced color: transparent which can read as missing
+   on slow font load. Switched to a solid Tier-1 display + gold
+   token so the rendering matches the rest of the price strip. */
 .yacht-pricing__rate {
-  font-family: var(--gy-font-editorial);
+  font-family: var(--gy-font-display);
   font-size: 2rem;
-  background-image: linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  font-weight: 300;
+  color: var(--gy-gold);
   margin: 0;
 }
 

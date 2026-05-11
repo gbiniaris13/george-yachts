@@ -68,14 +68,22 @@ export default function Lightbox({ images, yachtName }) {
             className="yacht-gallery__item cursor-pointer group relative overflow-hidden"
             onClick={() => openLightbox(index)}
           >
+            {/* 2026-05-11 — switched from width/height to `fill`. With the
+                parent's `aspect-ratio: 3/2`, explicit dimensions on
+                <Image> caused the image to render at intrinsic 600×400
+                while the box sized to viewport — visually the photo
+                stayed invisible while the click target on the overlay
+                still worked. `fill` absolute-positions the image inside
+                the aspect-ratio box so it always paints. */}
             <Image
               src={image.url}
               alt={image.alt || `${yachtName} — charter yacht in Greece, image ${index + 2}`}
-              width={600}
-              height={400}
+              fill
+              sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"
               className="yacht-gallery__image transition-transform duration-500 group-hover:scale-110"
+              style={{ objectFit: "cover" }}
             />
-            <div className="absolute inset-0 bg-[#0D1B2A]/0 group-hover:bg-[#0D1B2A]/30 transition-all duration-300 flex items-center justify-center">
+            <div className="absolute inset-0 bg-[#0D1B2A]/0 group-hover:bg-[#0D1B2A]/30 transition-all duration-300 flex items-center justify-center pointer-events-none">
               <span className="opacity-0 group-hover:opacity-100 text-white text-xs tracking-[0.3em] uppercase transition-opacity duration-300">
                 View larger
               </span>
