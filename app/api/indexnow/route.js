@@ -20,7 +20,11 @@
 
 import { NextResponse } from "next/server";
 
-const INDEXNOW_KEY = "4245afcd2cc6f34fbc8a0d131febf937";
+// Reads from the same env var as /api/reindex so both share one
+// public key file (public/<INDEXNOW_KEY>.txt). The fallback constant
+// only runs in local dev where the env var isn't loaded.
+const INDEXNOW_KEY =
+  process.env.INDEXNOW_KEY || "00828e97c23b40259c163410fd1b83b1";
 const HOST = "georgeyachts.com";
 const KEY_LOCATION = `https://${HOST}/${INDEXNOW_KEY}.txt`;
 // IndexNow lets us submit to any participating endpoint and they
