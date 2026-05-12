@@ -38,6 +38,18 @@ function unauthorized() {
 }
 
 export async function GET(request) {
+  // 2026-05-12 — auth check moved ABOVE the emergency-pause block.
+  // The emergency block previously returned 200 + a verbose
+  // 'Manually paused by Roberto on 2026-05-03 after IG account
+  // flagged by Meta' message to ANY caller, leaking operational
+  // state + a team member's name. Now unauthenticated callers get
+  // 401; only the bots (with OUTREACH_SECRET) see the pause state.
+  const auth = request.headers.get('authorization') || '';
+  const token = auth.replace(/^Bearer\s+/i, '').trim();
+  const expected =
+    process.env.OUTREACH_SECRET || process.env.CRON_SECRET;
+  if (!expected || token !== expected) return unauthorized();
+
   // ROBERTO 2026-05-03 — EMERGENCY PAUSE.
   // George flagged that the IG account has been actioned by Meta and
   // the outreach email bots may also be on shaky ground. Hard-pause
@@ -46,21 +58,16 @@ export async function GET(request) {
   return new Response(
     JSON.stringify({
       paused: true,
-      reason: 'emergency_manual_2026-05-03',
+      reason: 'emergency_manual',
+      // Verbose message kept here for authenticated bots only.
       message:
-        'Manually paused by Roberto on 2026-05-03 after IG account ' +
-        'flagged by Meta. Restore by deleting the emergency block in ' +
-        'app/api/outreach/health/route.js and redeploying.',
+        'Manually paused 2026-05-03. Restore by deleting the ' +
+        'emergency block in app/api/outreach/health/route.js.',
     }),
     { status: 200, headers: { 'content-type': 'application/json' } },
   );
 
   // eslint-disable-next-line no-unreachable
-  const auth = request.headers.get('authorization') || '';
-  const token = auth.replace(/^Bearer\s+/i, '').trim();
-  const expected =
-    process.env.OUTREACH_SECRET || process.env.CRON_SECRET;
-  if (!expected || token !== expected) return unauthorized();
 
   // If a human has pre-paused, skip all computation and say so.
   const manualPause = await kvGet('outreach:paused');
