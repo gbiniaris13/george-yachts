@@ -40,11 +40,19 @@ const nextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://translate.google.com https://translate.googleapis.com https://js.hs-scripts.com https://js.hsforms.net https://js.hs-analytics.net https://js.hs-banner.com https://js.hscollectedforms.net",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com https://api.fontshare.com",
-              "font-src 'self' https://fonts.gstatic.com https://cdn.fontshare.com",
-              "img-src 'self' data: blob: https://cdn.sanity.io https://images.pexels.com https://images.unsplash.com https://www.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://translate.google.com https://www.google.com https://translate.googleapis.com",
-              "connect-src 'self' https://cdn.sanity.io https://*.sanity.io https://www.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://*.hubapi.com https://api.hubspot.com https://forms.hubspot.com https://translate.googleapis.com https://translate.google.com https://wttr.in",
+              // 2026-05-12 — Cookiebot CSP allowances added. The
+              // layout.jsx Cookiebot <Script src="https://consent.
+              // cookiebot.com/uc.js"> was being silently blocked by
+              // CSP, so EU visitors never saw the consent banner —
+              // an active GDPR compliance gap. Cookiebot's docs list
+              // both consent.cookiebot.com (main script) and
+              // consentcdn.cookiebot.com (consent state CDN) as
+              // required across script/img/connect/frame directives.
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://translate.google.com https://translate.googleapis.com https://js.hs-scripts.com https://js.hsforms.net https://js.hs-analytics.net https://js.hs-banner.com https://js.hscollectedforms.net https://consent.cookiebot.com https://consentcdn.cookiebot.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com https://api.fontshare.com https://consent.cookiebot.com https://consentcdn.cookiebot.com",
+              "font-src 'self' https://fonts.gstatic.com https://cdn.fontshare.com https://consent.cookiebot.com https://consentcdn.cookiebot.com",
+              "img-src 'self' data: blob: https://cdn.sanity.io https://images.pexels.com https://images.unsplash.com https://www.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://translate.google.com https://www.google.com https://translate.googleapis.com https://imgsct.cookiebot.com https://consent.cookiebot.com",
+              "connect-src 'self' https://cdn.sanity.io https://*.sanity.io https://www.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://*.hubapi.com https://api.hubspot.com https://forms.hubspot.com https://translate.googleapis.com https://translate.google.com https://wttr.in https://consent.cookiebot.com https://consentcdn.cookiebot.com",
               // 2026-05-12 — added my.matterport.com pre-emptively.
               // The yacht detail page (YachtPageContent.jsx Matterport
               // section) renders an <iframe src={yacht.matterportEmbedUrl}>
@@ -52,7 +60,7 @@ const nextConfig = {
               // yacht has populated it yet. When George adds the first
               // 3D tour, the iframe would otherwise be silently
               // CSP-blocked.
-              "frame-src 'self' https://www.google.com https://calendly.com https://www.youtube.com https://translate.google.com https://my.matterport.com",
+              "frame-src 'self' https://www.google.com https://calendly.com https://www.youtube.com https://translate.google.com https://my.matterport.com https://consent.cookiebot.com https://consentcdn.cookiebot.com",
               "media-src 'self' https://cdn.sanity.io blob:",
             ].join("; "),
           },
