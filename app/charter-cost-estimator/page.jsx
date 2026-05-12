@@ -15,11 +15,11 @@ const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
 
 export const metadata = {
-  title: "Greek Yacht Charter Cost Estimator 2026 | All-In Pricing Tool | George Yachts",
+  title: "Greek Yacht Charter Cost Estimator 2026",
   description: "Estimate your Greek yacht charter cost 2026. Base + APA + 12% VAT + crew gratuity. Motor yachts, sailing, catamaran, gulet, superyacht. Honest 2026 rates.",
   alternates: { canonical: "https://georgeyachts.com/charter-cost-estimator" },
   openGraph: {
-    title: "Greek Yacht Charter Cost Estimator | George Yachts",
+    title: "Greek Yacht Charter Cost Estimator",
     description: "Estimate your Greek yacht charter cost: base + APA + 12% VAT + crew gratuity. Honest 2026 market rates.",
     url: "https://georgeyachts.com/charter-cost-estimator",
     type: "website",

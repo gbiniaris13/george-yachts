@@ -13,11 +13,11 @@ const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
 
 export const metadata = {
-  title: "Greek Yacht Charter Calendar 2026 | Best Months by Island | George Yachts",
+  title: "Greek Yacht Charter Calendar 2026",
   description: "Visual best-weeks-to-charter heat map across the top 12 Greek charter destinations. Cyclades, Ionian, Saronic, Dodecanese. May through October scored 1-5.",
   alternates: { canonical: "https://georgeyachts.com/charter-calendar-heat-map" },
   openGraph: {
-    title: "Greek Yacht Charter Calendar Heat Map | George Yachts",
+    title: "Greek Yacht Charter Calendar Heat Map",
     description: "12 destinations x 6 months scored 1-5. Visual best-weeks-to-charter reference.",
     url: "https://georgeyachts.com/charter-calendar-heat-map",
     type: "website",

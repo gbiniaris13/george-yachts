@@ -30,12 +30,12 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug: islandSlug } = await params;
   const island = getIslandBySlug(islandSlug);
-  if (!island) return { title: "Yacht Charter Greece | George Yachts" };
+  if (!island) return { title: "Yacht Charter Greece" };
   return {
-    title: `Yacht Charter ${island.name} | George Yachts`,
+    title: `Yacht Charter ${island.name}`,
     description: island.whyVisit.slice(0, 158),
     openGraph: {
-      title: `Yacht Charter ${island.name} | George Yachts`,
+      title: `Yacht Charter ${island.name}`,
       description: island.whyVisit.slice(0, 158),
       type: "website",
       url: `https://georgeyachts.com/yacht-charter-${island.slug}`,

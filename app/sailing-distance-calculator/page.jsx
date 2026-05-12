@@ -15,11 +15,11 @@ const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
 
 export const metadata = {
-  title: "Greek Islands Sailing Distance Calculator | George Yachts",
+  title: "Greek Islands Sailing Distance Calculator",
   description: "Interactive sailing distance calculator for Greek waters. Calculate passage time, distance, and fuel cost between 32+ ports. Motor, sailing, catamaran speeds.",
   alternates: { canonical: "https://georgeyachts.com/sailing-distance-calculator" },
   openGraph: {
-    title: "Greek Islands Sailing Distance Calculator | George Yachts",
+    title: "Greek Islands Sailing Distance Calculator",
     description: "Interactive sailing distance calculator for Greek waters. Calculate passage time, distance, and fuel cost between 32+ ports.",
     url: "https://georgeyachts.com/sailing-distance-calculator",
     type: "website",

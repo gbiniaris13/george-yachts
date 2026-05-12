@@ -14,7 +14,7 @@ import "./fleet-page.css";
 export const revalidate = 3600;
 
 export const metadata = {
-  title: "Charter Yacht Greece — 63 Curated Yachts | George Yachts",
+  title: "Charter Yacht Greece — 63 Curated Yachts",
   description:
     "Curated fleet of 63 yachts in Greek waters — Private Fleet (full crew) + Explorer Fleet (skippered). Motor, sailing, catamaran. Cyclades, Ionian, Saronic.",
   alternates: {

@@ -115,8 +115,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { region } = await params;
   const d = getDestination(region);
-  if (!d) return { title: "Destination — George Yachts" };
-  const title = `${d.label} Yacht Charter — ${d.cardTitle} | George Yachts`;
+  if (!d) return { title: "Destination" };
+  const title = `${d.label} Yacht Charter — ${d.cardTitle}`;
   const description = `${d.cardSubline} ${d.pageTagline}`;
   const canonical = `https://georgeyachts.com/destinations/${d.slug}`;
   return {
