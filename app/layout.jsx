@@ -282,6 +282,12 @@ export default async function RootLayout({ children }) {
             opening the TLS connection early. */}
         <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />
+        {/* 2026-05-12 — yacht thumbnails (homepage trending carousel,
+            fleet grid, yacht detail galleries) all load from
+            cdn.sanity.io. Homepage references it 76 times. Preconnect
+            opens the TLS connection during HTML parse and shaves
+            150-300 ms off the first Sanity image fetch. */}
+        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
           href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,500i,400i&f[]=general-sans@200,300,400,500,600,200i,300i,400i,500i&f[]=switzer@200,300,400,500,600,700&display=swap"
