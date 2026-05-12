@@ -1,11 +1,46 @@
 // /app/api/track/route.js
 // Visitor tracking API — sends real-time Telegram alerts for site visitors
 // FREE: uses Vercel geo headers + Telegram Bot API
+//
+// 2026-05-12 — added KV-backed Telegram dedup. Previously every
+// {event:'new_visit'|'hot_lead'|'session_end'} POST fired a fresh
+// Telegram. The client gates with sessionStorage but an attacker
+// can bypass and flood. Same pattern as Items 14 and 62.
+// Each (event-type, IP) pair fires at most 1 Telegram per dedup
+// window. The CRM writes (Supabase sessions, notifications) still
+// run on every call so analytics stay accurate.
+
+import { kvGet, kvSet } from '@/lib/kv';
 
 export const dynamic = 'force-dynamic';
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
+// Per-event dedup TTL (seconds). new_visit: 4h (matches visitor-ping).
+// hot_lead/lead_captured/session_end: 1h (one Telegram per session
+// per event class is sufficient).
+const TG_DEDUP_TTL = {
+  new_visit: 4 * 60 * 60,
+  hot_lead: 60 * 60,
+  lead_captured: 60 * 60,
+  session_end: 60 * 60,
+};
+
+async function shouldFireTelegram(eventName, ip) {
+  if (!ip || ip === 'unknown') return true;
+  const ttl = TG_DEDUP_TTL[eventName] ?? 60 * 60;
+  const key = `track:tg-dedup:${eventName}:${ip}`;
+  try {
+    const already = await kvGet(key);
+    if (already) return false;
+    await kvSet(key, '1', ttl);
+    return true;
+  } catch {
+    // KV outage → fail open (legit traffic shouldn't break)
+    return true;
+  }
+}
 
 // CRM Supabase connection (write leads + sessions to GY Command)
 const CRM_SUPABASE_URL = process.env.CRM_SUPABASE_URL;
@@ -179,6 +214,9 @@ export async function POST(request) {
     const body = await request.json();
     const { event, sessionId, visitorId, page, yachtsViewed, timeOnSite, referrer, isTest, leadData } = body;
 
+    // 2026-05-12 — IP for KV dedup keys (Item 73 abuse fix).
+    const ip = (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'unknown';
+
     // Get geo from Vercel headers
     const countryCode = request.headers.get('x-vercel-ip-country') || '';
     const city = request.headers.get('x-vercel-ip-city') || '';
@@ -242,8 +280,10 @@ export async function POST(request) {
         return writeToCRM('sessions', baseRow);
       };
 
+      // Item 73 — Telegram dedup per IP per event (4h for new_visit).
+      const sendTg = await shouldFireTelegram('new_visit', ip);
       await Promise.allSettled([
-        sendTelegram(msg),
+        sendTg ? sendTelegram(msg) : Promise.resolve(),
         insertWithFallback(),
       ]);
     }
@@ -266,8 +306,10 @@ export async function POST(request) {
       ].join('\n');
 
       const hotLeadDesc = `${country}${city ? ` (${decodeURIComponent(city)})` : ''} — ${formatDuration(timeOnSite)}${(yachtsViewed || []).length ? ` — viewed ${(yachtsViewed || []).join(', ')}` : ''}`;
+      // Item 73 — dedup per IP per hour.
+      const sendTg = await shouldFireTelegram('hot_lead', ip);
       await Promise.allSettled([
-        sendTelegram(msg),
+        sendTg ? sendTelegram(msg) : Promise.resolve(),
         updateCRMSession(sessionId, {
           is_hot_lead: true,
           time_on_site: Math.round(timeOnSite || 0),
@@ -379,7 +421,10 @@ export async function POST(request) {
         link: '/dashboard/contacts',
       });
 
-      await sendTelegram(msg);
+      // Item 73 — dedup per IP per hour.
+      if (await shouldFireTelegram('lead_captured', ip)) {
+        await sendTelegram(msg);
+      }
     }
 
     // --- EVENT: Page View Update (aggregated) ---
@@ -449,8 +494,10 @@ export async function POST(request) {
         yachts_viewed: yachtsViewed || [],
       });
 
-      // Only send Telegram if they spent more than 30 seconds
-      if (timeOnSite > 30) {
+      // Only send Telegram if they spent more than 30 seconds.
+      // Item 73 — and dedup per IP per hour to stop spoofed
+      // session-end floods.
+      if (timeOnSite > 30 && (await shouldFireTelegram('session_end', ip))) {
         await sendTelegram(msg);
       }
     }
