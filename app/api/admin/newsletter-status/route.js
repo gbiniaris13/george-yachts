@@ -19,18 +19,25 @@ export const runtime = "nodejs";
 
 const SUBSCRIBERS_SET = "newsletter:subscribers";
 
-// Privacy split:
-//   - Without ?key=… : returns flag value, total subscriber count,
-//                      domain breakdown (anonymised), env presence.
-//                      Safe to leave public.
-//   - With matching ?key=… (NEWSLETTER_UNSUB_SECRET or CRON_SECRET):
-//                      additionally returns the full sorted email list.
+// 2026-05-12 — was 'safe to leave public' for the anonymised
+// version. Revised: even the anonymised view leaks competitive
+// intelligence (per-domain subscriber counts reveal which travel
+// agencies / competing brokers are on the list, plus exact size
+// of each stream tells Boss's CRM strategy). For a UHNW brokerage
+// where competitors actively monitor each other, gate the entire
+// endpoint behind ?key=.
+//
+// Auth: ?key= with NEWSLETTER_UNSUB_SECRET or CRON_SECRET.
+// Without a matching key → 401.
 export async function GET(request) {
   const url = new URL(request.url);
   const provided = url.searchParams.get("key");
   const expected =
     process.env.NEWSLETTER_UNSUB_SECRET || process.env.CRON_SECRET;
-  const showFullEmails = !!expected && provided === expected;
+  if (!expected || provided !== expected) {
+    return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
+  }
+  const showFullEmails = true; // gated above
 
   const enabledRaw = process.env.NEWSLETTER_WEEKLY_ENABLED;
   const flag = {
