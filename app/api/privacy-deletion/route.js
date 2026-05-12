@@ -7,10 +7,23 @@
 
 import { sendTelegram } from "@/lib/telegram";
 import { bumpKpi } from "@/lib/kpis";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 export const runtime = "nodejs";
 
 export async function POST(req) {
+  // 2026-05-12 — rate limit. GDPR deletion is a low-volume real
+  // workflow; same /min cap as partner-portal/login (3/min/IP).
+  // Stops Telegram + Resend amplifier abuse without blocking a
+  // legitimate user who hits submit twice.
+  const rl = checkRateLimit(req, { max: 3, windowMs: 60000 });
+  if (!rl.ok) {
+    return Response.json(
+      { ok: false, error: "Too many requests." },
+      { status: 429, headers: { "Retry-After": String(rl.retryAfter) } }
+    );
+  }
+
   let body;
   try {
     body = await req.json();
