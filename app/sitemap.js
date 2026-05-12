@@ -10,6 +10,7 @@ import { COMBOS } from "@/lib/comboSeo";
 import { ARTICLES } from "@/lib/articleSeo";
 import { DURATION_PAGES } from "@/lib/durationSeo";
 import { GLOSSARY_TERMS } from "@/lib/glossarySeo";
+import { DESTINATION_COMPARISONS } from "@/lib/destinationComparisonSeo";
 
 const BASE_URL = "https://georgeyachts.com";
 
@@ -286,6 +287,20 @@ export default async function sitemap() {
     priority: 0.78,
   }));
 
+  // Phase 7 Round 16 (2026-05-12) — destination comparison pages.
+  // 5 head-to-head pages targeting UHNW decision-phase queries.
+  // High priority (0.9) — highest commercial intent in the entire
+  // long-tail because the buyer is choosing where to commit
+  // €150k+. Each page is ~3000 words of unique decision-grade
+  // analysis with structured comparison data the AI engines can
+  // extract directly.
+  const destinationComparisonEntries = DESTINATION_COMPARISONS.map((c) => ({
+    url: `${BASE_URL}${c.urlPath}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "monthly",
+    priority: 0.9,
+  }));
+
   let yachtEntries = [];
   try {
     const yachts = await sanityClient.fetch(
@@ -317,6 +332,7 @@ export default async function sitemap() {
     ...toolEntries,
     glossaryHubEntry,
     ...glossaryEntries,
+    ...destinationComparisonEntries,
     ...blogEntries,
     ...yachtEntries,
   ];
