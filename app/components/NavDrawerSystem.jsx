@@ -75,13 +75,14 @@ const NAV_SECTIONS = [
   {
     label: "Explore Greece",
     items: [
-      // Region pages live at /yacht-charter/[region] (slash, NOT
-      // dash — that's the per-island route, /yacht-charter-mykonos
-      // etc.). Boss spec asks for the four cruising regions, all
-      // resolve via this dynamic route.
-      { label: "Cyclades", href: "/yacht-charter/cyclades" },
-      { label: "Ionian", href: "/yacht-charter/ionian" },
-      { label: "Saronic", href: "/yacht-charter/saronic" },
+      // 2026-05-12 — region pages were moved from /yacht-charter/[region]
+      // to /destinations/[region] on 2026-05-08 (Boss screenshot flag
+      // re. brand consistency; see next.config.mjs redirects). Old URLs
+      // still 301-redirect but pointing the NavDrawer at canonical
+      // saves the extra roundtrip on every click.
+      { label: "Cyclades", href: "/destinations/cyclades" },
+      { label: "Ionian", href: "/destinations/ionian" },
+      { label: "Saronic", href: "/destinations/saronic" },
       { label: "Itineraries", href: "/yacht-itineraries-greece" },
     ],
   },
