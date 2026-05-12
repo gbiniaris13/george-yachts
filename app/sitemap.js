@@ -12,6 +12,7 @@ import { DURATION_PAGES } from "@/lib/durationSeo";
 import { GLOSSARY_TERMS } from "@/lib/glossarySeo";
 import { DESTINATION_COMPARISONS } from "@/lib/destinationComparisonSeo";
 import { MARKET_REPORTS } from "@/lib/marketReportsSeo";
+import { ISLAND_ANCHORAGES } from "@/lib/islandAnchoragesSeo";
 
 const BASE_URL = "https://georgeyachts.com";
 
@@ -325,6 +326,17 @@ export default async function sitemap() {
     priority: 0.86,
   }));
 
+  // Phase 7 Round 21 (2026-05-12) — topical-cluster anchorage spokes
+  // for top 5 islands (Mykonos, Santorini, Paros, Corfu, Hydra).
+  // Priority 0.84 — meaningful but below the island root pages so
+  // crawlers prioritise the parent destination.
+  const anchorageEntries = ISLAND_ANCHORAGES.map((a) => ({
+    url: `${BASE_URL}${a.urlPath}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "monthly",
+    priority: 0.84,
+  }));
+
   let yachtEntries = [];
   try {
     const yachts = await sanityClient.fetch(
@@ -359,6 +371,7 @@ export default async function sitemap() {
     ...destinationComparisonEntries,
     marketReportsHubEntry,
     ...marketReportEntries,
+    ...anchorageEntries,
     ...blogEntries,
     ...yachtEntries,
   ];

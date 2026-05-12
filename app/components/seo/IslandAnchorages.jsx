@@ -1,0 +1,559 @@
+// Island anchorages spoke-page template — Phase 7 Round 21 (2026-05-12).
+//
+// Renders an anchorage-by-anchorage guide for a given island. Each
+// anchorage is its own Place schema entity with GeoCoordinates — the
+// page becomes a structured directory of anchorages, citable by AI
+// engines when users ask "where to anchor in Mykonos" type queries.
+//
+// Topical-cluster effect: every anchorage page links back to the
+// island root page (/yacht-charter-{island}), the region page
+// (/destinations/{region}), and related islands. Internal authority
+// flows toward the island root, deepening Google's perception that
+// George Yachts is the topical authority on that island.
+
+import Link from "next/link";
+import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+
+const GOLD = "#C9A84C";
+const NAVY = "#0D1B2A";
+const CREAM = "#F8F5F0";
+
+function CollectionAndArticleJsonLd({ data }) {
+  // The guide page itself is an Article. Each anchorage is a Place
+  // with GeoCoordinates, collected as ItemList. The combination
+  // gives AI engines both an editorial source AND a structured
+  // anchorage directory to extract.
+  const article = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `https://georgeyachts.com${data.urlPath}#article`,
+    headline: data.h1,
+    description: data.intro.slice(0, 280),
+    url: `https://georgeyachts.com${data.urlPath}`,
+    datePublished: "2026-05-12",
+    dateModified: "2026-05-12",
+    author: {
+      "@type": "Person",
+      "@id": "https://georgeyachts.com/about/george-p-biniaris#person",
+      name: "George P. Biniaris",
+      url: "https://georgeyachts.com/about/george-p-biniaris",
+    },
+    publisher: {
+      "@type": "Organization",
+      "@id": "https://georgeyachts.com#organization",
+      name: "George Yachts Brokerage House LLC",
+      url: "https://georgeyachts.com",
+    },
+    about: {
+      "@type": "TouristDestination",
+      name: `${data.islandName} yacht charter`,
+    },
+  };
+
+  const anchorageList = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": `https://georgeyachts.com${data.urlPath}#anchorages`,
+    name: `${data.islandName} yacht anchorages`,
+    numberOfItems: data.anchorages.length,
+    itemListElement: data.anchorages.map((a, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Place",
+        name: a.name,
+        description: a.notes,
+        geo: a.coords
+          ? {
+              "@type": "GeoCoordinates",
+              latitude: a.coords.lat,
+              longitude: a.coords.lng,
+            }
+          : undefined,
+        containedInPlace: {
+          "@type": "Place",
+          name: data.islandName,
+          address: {
+            "@type": "PostalAddress",
+            addressCountry: "GR",
+            addressRegion: data.region,
+          },
+        },
+      },
+    })),
+  };
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(article) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(anchorageList) }} />
+    </>
+  );
+}
+
+export default function IslandAnchorages({ guideData }) {
+  const g = guideData;
+  const breadcrumbs = [
+    { name: "Home", url: "https://georgeyachts.com/" },
+    { name: g.islandName, url: `https://georgeyachts.com/yacht-charter-${g.slug}` },
+    { name: "Anchorages", url: `https://georgeyachts.com${g.urlPath}` },
+  ];
+
+  return (
+    <>
+      <CollectionAndArticleJsonLd data={g} />
+      <BreadcrumbSchema items={breadcrumbs} />
+
+      <article style={{ background: NAVY, minHeight: "100vh", color: CREAM }}>
+        {/* HERO */}
+        <header style={{ padding: "120px 24px 56px", borderBottom: "1px solid rgba(201,168,76,0.15)" }}>
+          <div style={{ maxWidth: 880, margin: "0 auto" }}>
+            <Link
+              href={`/yacht-charter-${g.slug}`}
+              style={{
+                fontFamily: "var(--gy-font-ui)",
+                fontSize: 10,
+                letterSpacing: "0.32em",
+                textTransform: "uppercase",
+                color: GOLD,
+                fontWeight: 600,
+                textDecoration: "none",
+                borderBottom: `1px solid ${GOLD}`,
+                paddingBottom: 2,
+                marginBottom: 22,
+                display: "inline-block",
+              }}
+            >
+              ← {g.islandName} charter
+            </Link>
+            <p
+              style={{
+                fontFamily: "var(--gy-font-ui)",
+                fontSize: 9,
+                letterSpacing: "0.42em",
+                textTransform: "uppercase",
+                color: GOLD,
+                fontWeight: 600,
+                margin: "22px 0 18px",
+              }}
+            >
+              {g.eyebrow}  ·  {g.region}
+            </p>
+            <h1
+              style={{
+                fontFamily: "var(--gy-font-editorial)",
+                fontSize: "clamp(40px, 7vw, 88px)",
+                fontWeight: 300,
+                margin: "0 0 22px",
+                lineHeight: 0.98,
+                letterSpacing: "-0.02em",
+              }}
+            >
+              {g.h1}
+            </h1>
+            <p
+              style={{
+                fontFamily: "var(--gy-font-editorial)",
+                fontSize: "clamp(17px, 2vw, 21px)",
+                fontWeight: 300,
+                fontStyle: "italic",
+                color: "rgba(248, 245, 240, 0.78)",
+                margin: 0,
+                lineHeight: 1.55,
+              }}
+            >
+              {g.tagline}
+            </p>
+          </div>
+        </header>
+
+        {/* INTRO */}
+        <section style={{ padding: "56px 24px" }}>
+          <div style={{ maxWidth: 720, margin: "0 auto" }}>
+            <div
+              style={{
+                fontFamily: "var(--gy-font-ui)",
+                fontSize: 17,
+                lineHeight: 1.78,
+                color: "rgba(248, 245, 240, 0.85)",
+              }}
+              dangerouslySetInnerHTML={{
+                __html: g.intro
+                  .split(/\n\n|(?<=\.) (?=[A-Z])/)
+                  .filter((p) => p.trim())
+                  .map((p) => `<p style="margin: 0 0 18px;">${p.trim()}</p>`)
+                  .join(""),
+              }}
+            />
+          </div>
+        </section>
+
+        {/* ANCHORAGES — the directory */}
+        <section
+          style={{
+            background: "rgba(201,168,76,0.025)",
+            borderTop: "1px solid rgba(201,168,76,0.15)",
+            borderBottom: "1px solid rgba(201,168,76,0.15)",
+            padding: "72px 24px",
+          }}
+        >
+          <div style={{ maxWidth: 980, margin: "0 auto" }}>
+            <p
+              style={{
+                fontFamily: "var(--gy-font-ui)",
+                fontSize: 9,
+                letterSpacing: "0.42em",
+                textTransform: "uppercase",
+                color: GOLD,
+                fontWeight: 600,
+                margin: "0 0 14px",
+                textAlign: "center",
+              }}
+            >
+              The anchorages
+            </p>
+            <h2
+              style={{
+                fontFamily: "var(--gy-font-editorial)",
+                fontSize: "clamp(28px, 4vw, 38px)",
+                fontWeight: 300,
+                color: CREAM,
+                margin: "0 0 8px",
+                textAlign: "center",
+                lineHeight: 1.2,
+              }}
+            >
+              {g.anchorages.length} anchorages around {g.islandName}
+            </h2>
+            <p
+              style={{
+                fontFamily: "var(--gy-font-editorial)",
+                fontSize: 16,
+                fontStyle: "italic",
+                color: "rgba(248, 245, 240, 0.6)",
+                margin: "0 0 48px",
+                textAlign: "center",
+              }}
+            >
+              {g.bestUseCase}
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              {g.anchorages.map((a) => (
+                <div
+                  key={a.name}
+                  id={a.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}
+                  style={{
+                    border: "1px solid rgba(201,168,76,0.2)",
+                    padding: "28px 32px",
+                    background: "rgba(248, 245, 240, 0.02)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "baseline",
+                      gap: 24,
+                      flexWrap: "wrap",
+                      marginBottom: 18,
+                    }}
+                  >
+                    <h3
+                      style={{
+                        fontFamily: "var(--gy-font-editorial)",
+                        fontSize: "clamp(22px, 3vw, 28px)",
+                        fontWeight: 400,
+                        color: CREAM,
+                        margin: 0,
+                        lineHeight: 1.25,
+                      }}
+                    >
+                      {a.name}
+                    </h3>
+                    {a.coords && (
+                      <p
+                        style={{
+                          fontFamily: "var(--gy-font-ui)",
+                          fontSize: 11,
+                          letterSpacing: "0.12em",
+                          color: "rgba(248, 245, 240, 0.55)",
+                          margin: 0,
+                          fontVariant: "tabular-nums",
+                        }}
+                      >
+                        {a.coords.lat.toFixed(3)}°N, {a.coords.lng.toFixed(3)}°E
+                      </p>
+                    )}
+                  </div>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+                      gap: 14,
+                      marginBottom: 18,
+                      borderBottom: "1px solid rgba(248, 245, 240, 0.08)",
+                      paddingBottom: 18,
+                    }}
+                  >
+                    {[
+                      { label: "Depth", value: a.depth },
+                      { label: "Holding", value: a.holding },
+                      { label: "Shelter", value: a.shelter },
+                      { label: "Ashore", value: a.ashore },
+                    ].map((spec) => (
+                      <div key={spec.label}>
+                        <p
+                          style={{
+                            fontFamily: "var(--gy-font-ui)",
+                            fontSize: 8,
+                            letterSpacing: "0.32em",
+                            textTransform: "uppercase",
+                            color: GOLD,
+                            fontWeight: 700,
+                            margin: "0 0 6px",
+                          }}
+                        >
+                          {spec.label}
+                        </p>
+                        <p
+                          style={{
+                            fontFamily: "var(--gy-font-ui)",
+                            fontSize: 13,
+                            lineHeight: 1.55,
+                            color: "rgba(248, 245, 240, 0.82)",
+                            margin: 0,
+                          }}
+                        >
+                          {spec.value}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <p
+                    style={{
+                      fontFamily: "var(--gy-font-ui)",
+                      fontSize: 15,
+                      lineHeight: 1.7,
+                      color: "rgba(248, 245, 240, 0.85)",
+                      margin: "0 0 12px",
+                    }}
+                  >
+                    {a.notes}
+                  </p>
+                  {a.bestFor && (
+                    <p
+                      style={{
+                        fontFamily: "var(--gy-font-editorial)",
+                        fontSize: 14,
+                        fontStyle: "italic",
+                        color: GOLD,
+                        margin: 0,
+                      }}
+                    >
+                      Best for: {a.bestFor}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* SEASONALITY */}
+        {g.seasonality && (
+          <section style={{ padding: "72px 24px" }}>
+            <div style={{ maxWidth: 720, margin: "0 auto" }}>
+              <p
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 9,
+                  letterSpacing: "0.42em",
+                  textTransform: "uppercase",
+                  color: GOLD,
+                  fontWeight: 600,
+                  margin: "0 0 16px",
+                }}
+              >
+                When to visit
+              </p>
+              <p
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 17,
+                  lineHeight: 1.78,
+                  color: "rgba(248, 245, 240, 0.85)",
+                  margin: 0,
+                }}
+              >
+                {g.seasonality}
+              </p>
+            </div>
+          </section>
+        )}
+
+        {/* CAPTAIN ADVICE */}
+        {g.captainAdvice && (
+          <section
+            style={{
+              background: "rgba(201,168,76,0.04)",
+              borderTop: "1px solid rgba(201,168,76,0.15)",
+              borderBottom: "1px solid rgba(201,168,76,0.15)",
+              padding: "56px 24px",
+            }}
+          >
+            <div style={{ maxWidth: 720, margin: "0 auto" }}>
+              <p
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 9,
+                  letterSpacing: "0.42em",
+                  textTransform: "uppercase",
+                  color: GOLD,
+                  fontWeight: 600,
+                  margin: "0 0 14px",
+                }}
+              >
+                Captain's note
+              </p>
+              <p
+                style={{
+                  fontFamily: "var(--gy-font-editorial)",
+                  fontSize: 17,
+                  fontStyle: "italic",
+                  lineHeight: 1.6,
+                  color: "rgba(248, 245, 240, 0.92)",
+                  margin: 0,
+                }}
+              >
+                {g.captainAdvice}
+              </p>
+            </div>
+          </section>
+        )}
+
+        {/* RELATED PAGES */}
+        {Array.isArray(g.relatedPages) && g.relatedPages.length > 0 && (
+          <section style={{ padding: "72px 24px" }}>
+            <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+              <p
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 9,
+                  letterSpacing: "0.42em",
+                  textTransform: "uppercase",
+                  color: GOLD,
+                  fontWeight: 600,
+                  margin: "0 0 14px",
+                  textAlign: "center",
+                }}
+              >
+                Continue exploring
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  gap: 12,
+                  marginTop: 24,
+                }}
+              >
+                {g.relatedPages.map((p) => (
+                  <Link
+                    key={p.url}
+                    href={p.url}
+                    style={{
+                      fontFamily: "var(--gy-font-ui)",
+                      fontSize: 12,
+                      letterSpacing: "0.18em",
+                      textTransform: "uppercase",
+                      color: CREAM,
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      border: "1px solid rgba(201,168,76,0.4)",
+                      padding: "12px 22px",
+                    }}
+                  >
+                    {p.title}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* CTA */}
+        <section
+          style={{
+            background: "rgba(201,168,76,0.025)",
+            borderTop: "1px solid rgba(201,168,76,0.15)",
+            padding: "84px 24px",
+          }}
+        >
+          <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+            <h2
+              style={{
+                fontFamily: "var(--gy-font-editorial)",
+                fontSize: "clamp(28px, 4vw, 40px)",
+                fontWeight: 300,
+                color: CREAM,
+                margin: "0 0 18px",
+                lineHeight: 1.2,
+              }}
+            >
+              Charter {g.islandName}
+            </h2>
+            <p
+              style={{
+                fontFamily: "var(--gy-font-ui)",
+                fontSize: 16,
+                lineHeight: 1.65,
+                color: "rgba(248, 245, 240, 0.78)",
+                margin: "0 0 28px",
+              }}
+            >
+              Speak with George P. Biniaris directly. MYBA-standard contracts, full Greek charter fleet.
+            </p>
+            <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+              <Link
+                href="/inquiry"
+                style={{
+                  display: "inline-block",
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 11,
+                  letterSpacing: "0.32em",
+                  textTransform: "uppercase",
+                  fontWeight: 700,
+                  padding: "14px 26px",
+                  background: GOLD,
+                  color: NAVY,
+                  textDecoration: "none",
+                }}
+              >
+                Write to George
+              </Link>
+              <Link
+                href={`/yacht-charter-${g.slug}`}
+                style={{
+                  display: "inline-block",
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 11,
+                  letterSpacing: "0.32em",
+                  textTransform: "uppercase",
+                  fontWeight: 600,
+                  padding: "14px 26px",
+                  background: "transparent",
+                  color: "rgba(248, 245, 240, 0.85)",
+                  border: "1px solid rgba(248, 245, 240, 0.3)",
+                  textDecoration: "none",
+                }}
+              >
+                {g.islandName} charter →
+              </Link>
+            </div>
+          </div>
+        </section>
+      </article>
+    </>
+  );
+}
