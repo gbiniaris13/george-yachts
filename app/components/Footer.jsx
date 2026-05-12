@@ -423,10 +423,33 @@ const Footer = () => {
             ))}
           </div>
 
-          {/* Copyright */}
-          <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(248, 245, 240,0.5)", textTransform: "uppercase" }}>
-            &copy; {currentYear} <span className="notranslate">George Yachts Brokerage House LLC</span>
-          </span>
+          {/* Copyright + GHOST_ build credit stacked on the right.
+              GHOST_ link is the agency that built the site (same Boss
+              owns both entities); surfaced discreetly so peers who
+              notice can follow. */}
+          <div className="flex flex-col items-center md:items-end gap-3">
+            <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(248, 245, 240,0.5)", textTransform: "uppercase" }}>
+              &copy; {currentYear} <span className="notranslate">George Yachts Brokerage House LLC</span>
+            </span>
+            <a
+              href="https://ghostwebdesign.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontSize: "11px",
+                color: "#4A4A4A",
+                textDecoration: "none",
+                fontFamily: '"JetBrains Mono", "SF Mono", Menlo, Consolas, monospace',
+                letterSpacing: "0.05em",
+                opacity: 0.6,
+                transition: "opacity 0.3s ease",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.opacity = "1"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.opacity = "0.6"; }}
+            >
+              Built in the shadows by GHOST_ ↗
+            </a>
+          </div>
         </div>
 
         {/* A.8 — Anti-fraud notice (Roberto brief, May 2026).
