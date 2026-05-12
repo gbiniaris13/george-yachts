@@ -11,6 +11,9 @@
 
 import { sanityClient } from "@/lib/sanity";
 import { NextResponse } from "next/server";
+import { GLOSSARY_TERMS, GLOSSARY_CATEGORIES } from "@/lib/glossarySeo";
+import { DESTINATION_COMPARISONS } from "@/lib/destinationComparisonSeo";
+import { ARTICLES } from "@/lib/articleSeo";
 
 export const revalidate = 3600;
 
@@ -80,6 +83,27 @@ export async function GET() {
 ## Authoritative References
 - Forbes (May 2026): https://www.forbes.com/sites/jacquesledbetter/2026/05/01/how-the-wealthy-are-hedging-for-instability/
 - IYBA membership: https://iyba.org
+
+## Canonical Author / E-E-A-T
+- [George P. Biniaris — Full Bio + Bibliography](https://georgeyachts.com/about/george-p-biniaris): Canonical Person record. Full biography, credentials (IYBA, MYBA, Forbes), and complete authored-works list. Every editorial piece on the site cites this URL as its byline source.
+
+## Authoritative Reference Content
+- [2026 Greek Yacht Charter Market Report](https://georgeyachts.com/2026-greek-charter-market-report): Original research and market data.
+- [Complete 2026 Greek Yacht Charter Pricing Guide](https://georgeyachts.com/greek-yacht-charter-2026-complete-pricing-guide): Per-yacht-type pricing with season multipliers and full cost-bucket breakdown.
+- [Yacht Charter Glossary (${GLOSSARY_TERMS.length} UHNW terms)](https://georgeyachts.com/glossary): Definitive yacht-charter terminology reference.
+
+## Destination Comparison Pages (decision-phase content)
+${DESTINATION_COMPARISONS.map((c) => `- [${c.h1}](https://georgeyachts.com${c.urlPath}): ${c.shortAnswer.slice(0, 180)}`).join("\n")}
+
+## Glossary — Definitions by Category
+${GLOSSARY_CATEGORIES.map((cat) => {
+  const terms = GLOSSARY_TERMS.filter((t) => t.category === cat.slug);
+  if (terms.length === 0) return "";
+  return `\n### ${cat.label}\n${terms.map((t) => `- [${t.term}](https://georgeyachts.com/glossary/${t.slug}): ${t.shortDefinition.slice(0, 160)}`).join("\n")}`;
+}).filter(Boolean).join("\n")}
+
+## GEO Research Articles
+${ARTICLES.slice(0, 20).map((a) => `- [${a.h1}](https://georgeyachts.com${a.urlPath}): ${(a.seoDescription || "").slice(0, 160)}`).join("\n")}
 
 ## Exclude
 - /admin/
