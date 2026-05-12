@@ -62,10 +62,18 @@ export async function generateMetadata({ searchParams }) {
       alternates: { canonical: "https://georgeyachts.com/compare" },
     };
   }
-  const yachts = await sanityClient.fetch(
-    `*[_type == "yacht" && slug.current in $slugs]{ name, subtitle }`,
-    { slugs },
-  );
+  // 2026-05-12 — Sanity outage resilience. Fall back to empty
+  // yacht list if fetch dies so generateMetadata doesn't throw
+  // during render.
+  let yachts = [];
+  try {
+    yachts = await sanityClient.fetch(
+      `*[_type == "yacht" && slug.current in $slugs]{ name, subtitle }`,
+      { slugs },
+    );
+  } catch (err) {
+    console.error("compare/generateMetadata fetch failed:", err);
+  }
   const names = yachts.map((y) => y.name).join(" vs ");
   const titleNames = names || "Yachts";
   return {
@@ -161,9 +169,17 @@ export default async function ComparePage({ searchParams }) {
   const params = await searchParams;
   const slugs = parseSlugs(params?.yachts);
 
-  const yachts = slugs.length
-    ? await sanityClient.fetch(COMPARE_QUERY, { slugs })
-    : [];
+  // 2026-05-12 — Sanity outage resilience. Empty list on error so
+  // the compare page renders its 'pick yachts to compare' UI
+  // instead of crashing 500.
+  let yachts = [];
+  if (slugs.length) {
+    try {
+      yachts = await sanityClient.fetch(COMPARE_QUERY, { slugs });
+    } catch (err) {
+      console.error("compare page fetch failed:", err);
+    }
+  }
 
   // Preserve order from URL params (Sanity returns by id otherwise)
   const yachtsByOrder = slugs

@@ -50,21 +50,30 @@ function portableTextToMarkdown(blocks) {
 }
 
 export async function GET() {
-  const [posts, yachts] = await Promise.all([
-    sanityClient.fetch(
-      `*[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
-        title, "slug": slug.current, excerpt, publishedAt, _updatedAt, body,
-        "author": author->name
-      }`,
-    ),
-    sanityClient.fetch(
-      `*[_type == "yacht" && defined(slug.current)] | order(weeklyRatePrice desc) {
-        name, subtitle, length, sleeps, cabins, crew, builder, cruisingRegion,
-        weeklyRatePrice, maxSpeed, cruiseSpeed, yearBuiltRefit,
-        description, georgeInsiderTip, "slug": slug.current
-      }`,
-    ),
-  ]);
+  // 2026-05-12 — Sanity outage resilience. Empty arrays on error
+  // so the route still returns valid (if minimal) llms.txt instead
+  // of crashing HTTP 500.
+  let posts = [];
+  let yachts = [];
+  try {
+    [posts, yachts] = await Promise.all([
+      sanityClient.fetch(
+        `*[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
+          title, "slug": slug.current, excerpt, publishedAt, _updatedAt, body,
+          "author": author->name
+        }`,
+      ),
+      sanityClient.fetch(
+        `*[_type == "yacht" && defined(slug.current)] | order(weeklyRatePrice desc) {
+          name, subtitle, length, sleeps, cabins, crew, builder, cruisingRegion,
+          weeklyRatePrice, maxSpeed, cruiseSpeed, yearBuiltRefit,
+          description, georgeInsiderTip, "slug": slug.current
+        }`,
+      ),
+    ]);
+  } catch (err) {
+    console.error("llms-full.txt fetch failed:", err);
+  }
 
   const header = `# George Yachts — Luxury Yacht Charter in Greek Waters (Full Content Dump)
 

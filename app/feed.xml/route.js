@@ -27,12 +27,19 @@ function escapeXml(s) {
 }
 
 export async function GET() {
-  const posts = await sanityClient.fetch(
-    `*[_type == "post" && defined(slug.current)] | order(publishedAt desc)[0...50]{
-      title, "slug": slug.current, excerpt, publishedAt, _updatedAt,
-      "author": author->name
-    }`,
-  );
+  // 2026-05-12 — Sanity outage resilience. Empty feed (still valid
+  // RSS XML) instead of HTTP 500 if Sanity is unreachable.
+  let posts = [];
+  try {
+    posts = await sanityClient.fetch(
+      `*[_type == "post" && defined(slug.current)] | order(publishedAt desc)[0...50]{
+        title, "slug": slug.current, excerpt, publishedAt, _updatedAt,
+        "author": author->name
+      }`,
+    );
+  } catch (err) {
+    console.error("feed.xml fetch failed:", err);
+  }
 
   const items = posts
     .map((p) => {
