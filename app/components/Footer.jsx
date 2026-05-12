@@ -436,16 +436,26 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                fontSize: "11px",
-                color: "#4A4A4A",
+                fontSize: "12px",
+                color: "#C9A84C",
                 textDecoration: "none",
                 fontFamily: '"JetBrains Mono", "SF Mono", Menlo, Consolas, monospace',
-                letterSpacing: "0.05em",
-                opacity: 0.6,
-                transition: "opacity 0.3s ease",
+                letterSpacing: "0.08em",
+                fontWeight: 500,
+                borderBottom: "1px solid rgba(201, 168, 76, 0.35)",
+                paddingBottom: "2px",
+                transition: "color 0.3s ease, border-color 0.3s ease, text-shadow 0.3s ease",
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.opacity = "1"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.opacity = "0.6"; }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "#F4E4B8";
+                e.currentTarget.style.borderColor = "#F4E4B8";
+                e.currentTarget.style.textShadow = "0 0 12px rgba(201, 168, 76, 0.45)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = "#C9A84C";
+                e.currentTarget.style.borderColor = "rgba(201, 168, 76, 0.35)";
+                e.currentTarget.style.textShadow = "none";
+              }}
             >
               Built in the shadows by GHOST_ ↗
             </a>
