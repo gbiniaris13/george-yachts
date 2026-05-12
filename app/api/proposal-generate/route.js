@@ -14,6 +14,27 @@
 import { sanityClient } from "@/lib/sanity";
 import { sendTelegram } from "@/lib/telegram";
 import { bumpKpi } from "@/lib/kpis";
+import { kvIncr, kvExpire } from "@/lib/kv";
+
+// 2026-05-12 — abuse protection. Without a rate limit, each
+// proposal-generate call costs: 1 Sanity fetch + PDF render + 1
+// Resend email send (depletes free-tier 100/day) + 1 Telegram
+// notification + Gemini AI tokens (in template-llm path). Anyone
+// could flood the endpoint to drain Boss's budget and burn the
+// Resend daily quota so real proposals can't go out.
+const RATE_LIMIT_PER_HOUR = 5;
+
+async function checkProposalRateLimit(ip) {
+  if (!process.env.KV_REST_API_URL) return true; // dev only
+  const key = `proposal-generate:rate:${ip}:${new Date().toISOString().slice(0, 13)}`;
+  try {
+    const count = await kvIncr(key);
+    if (count === 1) await kvExpire(key, 3700);
+    return (count || 0) <= RATE_LIMIT_PER_HOUR;
+  } catch {
+    return true; // allow on KV error (defensive)
+  }
+}
 
 const RESEND_API = "https://api.resend.com";
 const RESEND_FROM =
@@ -60,6 +81,19 @@ function fmtFile(name) {
 }
 
 export async function POST(req) {
+  // 2026-05-12 — rate limit before doing any expensive work.
+  // 5 proposals per IP per hour is generous for legit use (typical
+  // visitor builds 1-2 shortlists) and stops abuse from draining
+  // Resend free-tier + Gemini budget.
+  const ip = (req.headers.get("x-forwarded-for") || "0.0.0.0").split(",")[0].trim();
+  const allowed = await checkProposalRateLimit(ip);
+  if (!allowed) {
+    return Response.json(
+      { ok: false, error: "Too many proposals from this address. Try again in an hour, or write to George at /inquiry." },
+      { status: 429 }
+    );
+  }
+
   let body;
   try {
     body = await req.json();
