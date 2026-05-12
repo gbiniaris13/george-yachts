@@ -26,9 +26,16 @@ const freshClient = createClient({
 export const revalidate = 60;
 
 export async function generateStaticParams() {
+  // 2026-05-12 — Sanity outage resilience. Return [] on fetch
+  // error so the build doesn't crash; new posts render dynamically.
   const query = `*[_type == "post"]{ "slug": slug.current }`;
-  const slugs = await sanityClient.fetch(query);
-  return slugs.map((post) => ({ slug: post.slug }));
+  try {
+    const slugs = await sanityClient.fetch(query);
+    return slugs.map((post) => ({ slug: post.slug }));
+  } catch (err) {
+    console.error("blog/[slug] generateStaticParams fetch failed:", err);
+    return [];
+  }
 }
 
 async function getPost(slug) {

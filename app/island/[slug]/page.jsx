@@ -57,10 +57,19 @@ async function loadIslandData(island) {
       days[]{ day, distance, from, to, narrative }
     }
   }`;
-  const [yachts, itineraries] = await Promise.all([
-    sanityClient.fetch(yachtQuery),
-    sanityClient.fetch(itineraryQuery, { slugs: island.itineraryYachts || [] }),
-  ]);
+  // 2026-05-12 — Sanity outage resilience. Empty arrays on fetch
+  // error so the page still renders (yachts/itineraries are
+  // optional content for the page; hero + editorial copy stays).
+  let yachts = [];
+  let itineraries = [];
+  try {
+    [yachts, itineraries] = await Promise.all([
+      sanityClient.fetch(yachtQuery),
+      sanityClient.fetch(itineraryQuery, { slugs: island.itineraryYachts || [] }),
+    ]);
+  } catch (err) {
+    console.error(`island/[slug] fetch failed for ${island.slug}:`, err);
+  }
   return { yachts: yachts || [], itineraries: itineraries || [] };
 }
 

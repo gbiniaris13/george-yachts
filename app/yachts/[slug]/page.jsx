@@ -11,22 +11,36 @@ export const revalidate = 3600;
 
 // Generate static paths for all yachts with slugs
 export async function generateStaticParams() {
-  const yachts = await sanityClient.fetch(`*[_type == "yacht" && defined(slug.current)]{
-    "slug": slug.current
-  }`);
-  return yachts.map((yacht) => ({ slug: yacht.slug }));
+  // 2026-05-12 — Sanity outage resilience. If the catalog fetch
+  // fails at build time, return [] so the build doesn't crash;
+  // pages are rendered dynamically as visitors hit them.
+  try {
+    const yachts = await sanityClient.fetch(`*[_type == "yacht" && defined(slug.current)]{
+      "slug": slug.current
+    }`);
+    return yachts.map((yacht) => ({ slug: yacht.slug }));
+  } catch (err) {
+    console.error("yachts/[slug] generateStaticParams fetch failed:", err);
+    return [];
+  }
 }
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const yacht = await sanityClient.fetch(
-    `*[_type == "yacht" && slug.current == $slug][0]{
-      name, subtitle, length, sleeps, weeklyRatePrice, cruisingRegion,
-      "imageUrl": images[0].asset->url
-    }`,
-    { slug }
-  );
+  let yacht;
+  try {
+    yacht = await sanityClient.fetch(
+      `*[_type == "yacht" && slug.current == $slug][0]{
+        name, subtitle, length, sleeps, weeklyRatePrice, cruisingRegion,
+        "imageUrl": images[0].asset->url
+      }`,
+      { slug }
+    );
+  } catch (err) {
+    console.error(`yachts/[slug] generateMetadata fetch failed for ${slug}:`, err);
+    yacht = null;
+  }
 
   if (!yacht) return { title: 'Yacht Not Found' };
 
@@ -144,7 +158,14 @@ function YachtSchema({ yacht, imageUrl, slug }) {
 export default async function YachtPage({ params }) {
   const { slug } = await params;
 
-  const yacht = await sanityClient.fetch(
+  // 2026-05-12 — Sanity outage resilience. A Sanity hiccup during
+  // page render would otherwise crash with HTTP 500. Wrap in
+  // try/catch and treat a fetch error as 'yacht not found' so we
+  // route through notFound() → the cinematic 404 instead of a
+  // user-facing crash. Sanity outages are rare but real.
+  let yacht;
+  try {
+    yacht = await sanityClient.fetch(
     `*[_type == "yacht" && slug.current == $slug][0]{
       _id,
       name,
@@ -224,8 +245,12 @@ export default async function YachtPage({ params }) {
         "alt": alt
       }
     }`,
-    { slug }
-  );
+      { slug }
+    );
+  } catch (err) {
+    console.error(`yacht/[slug] fetch error for ${slug}:`, err);
+    yacht = null;
+  }
 
   if (!yacht) {
     notFound();
