@@ -94,6 +94,11 @@ function YachtSchema({ yacht, imageUrl, slug }) {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
+    // Phase 7 Round 20 (2026-05-12) — @id per yacht so each yacht is a
+    // stable, distinct Product entity in the knowledge graph. AI engines
+    // can now reference a specific yacht's Product entity without
+    // conflating it with the Organization's umbrella Service.
+    '@id': `https://georgeyachts.com/yachts/${slug}#product`,
     name: yacht.name,
     description: `Luxury ${yacht.subtitle || ''} yacht available for charter in Greek waters. ${yacht.length}, accommodating ${yacht.sleeps} guests.`,
     brand: {
@@ -107,6 +112,9 @@ function YachtSchema({ yacht, imageUrl, slug }) {
       const low = extractLowPrice(yacht.weeklyRatePrice);
       const base = {
         '@type': 'Offer',
+        // Phase 7 Round 20 — Offer @id linked to the parent Product
+        // for entity-graph consistency.
+        '@id': `https://georgeyachts.com/yachts/${slug}#offer`,
         priceCurrency: 'EUR',
         availability: 'https://schema.org/InStock',
         url: `https://georgeyachts.com/yachts/${slug}`,
@@ -114,8 +122,13 @@ function YachtSchema({ yacht, imageUrl, slug }) {
           '@type': 'Place',
           name: yacht.cruisingRegion || 'Greece',
         },
+        // Phase 7 Round 20 — seller now references the canonical
+        // Organization @id rather than inline-redefining. This means
+        // every yacht Offer ties back to the same Organization entity
+        // referenced by Service schema, Article author publisher, etc.
         seller: {
           '@type': 'Organization',
+          '@id': 'https://georgeyachts.com#organization',
           name: 'George Yachts Brokerage House',
           url: 'https://georgeyachts.com',
         },
