@@ -28,7 +28,7 @@ export default function PricingGuidePdfGate() {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [timing, setTiming] = useState("");
-  const [status, setStatus] = useState("idle"); // idle | submitting | success | error
+  const [status, setStatus] = useState("idle"); // idle | submitting | success | success-no-pdf | error
   const [errorMsg, setErrorMsg] = useState("");
   const [downloadUrl, setDownloadUrl] = useState(null);
 
@@ -52,10 +52,29 @@ export default function PricingGuidePdfGate() {
           sourcePage: typeof window !== "undefined" ? window.location.pathname : null,
         }),
       });
+
+      // 503 with leadCaptured: lead was saved, PDF temporarily failed.
+      // Show a "guide is below this form" success state instead of
+      // a hard error - the visitor still gets the content.
+      if (res.status === 503) {
+        const data = await res.json().catch(() => ({}));
+        if (data.leadCaptured) {
+          setStatus("success-no-pdf");
+          try {
+            if (typeof window !== "undefined" && typeof window.gtag === "function") {
+              window.gtag("event", "pricing_guide_lead_captured_no_pdf", { timing });
+            }
+          } catch {}
+          return;
+        }
+        throw new Error(data.error || "Service temporarily unavailable");
+      }
+
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || `Server returned ${res.status}`);
       }
+
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       // Trigger download
@@ -178,6 +197,41 @@ export default function PricingGuidePdfGate() {
                 click here to re-download
               </a>
               . George will be in touch shortly.
+            </p>
+          </div>
+        ) : status === "success-no-pdf" ? (
+          <div
+            style={{
+              background: "rgba(201,168,76,0.08)",
+              border: `1px solid ${GOLD}`,
+              padding: "20px 24px",
+              textAlign: "center",
+            }}
+          >
+            <p
+              style={{
+                fontFamily: "var(--gy-font-editorial)",
+                fontSize: 18,
+                color: NAVY,
+                margin: "0 0 8px",
+              }}
+            >
+              Thanks - George has your details.
+            </p>
+            <p
+              style={{
+                fontFamily: "var(--gy-font-ui)",
+                fontSize: 13,
+                color: NAVY,
+                opacity: 0.75,
+                margin: 0,
+                lineHeight: 1.55,
+              }}
+            >
+              The full pricing guide is below this form. George will email
+              the printable PDF version to{" "}
+              <span style={{ fontWeight: 600 }}>{email}</span> within 24
+              hours, along with a personal note. Scroll down to read now.
             </p>
           </div>
         ) : (

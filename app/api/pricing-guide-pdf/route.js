@@ -8,28 +8,24 @@
 // 3. Renders the @react-pdf/renderer document.
 // 4. Streams the PDF back with Content-Disposition: attachment.
 //
-// Why this design: keeps a single source of truth for lead capture
-// (lead-gate route already handles Telegram + Gmail + CRM). This
-// endpoint adds only the PDF generation on top.
+// Note 2026-05-12: dynamic imports for @react-pdf/renderer + the
+// PDF document component are deferred to the handler. Importing at
+// module load was causing a TypeError on Vercel's Node.js serverless
+// runtime because react-pdf pulls in dom-helpers at static analysis
+// time. Dynamic import resolves it.
 
 import { NextResponse } from "next/server";
-import { renderToBuffer } from "@react-pdf/renderer";
-import React from "react";
-import { PricingGuidePdfDocument } from "@/lib/pricingGuidePdf";
 import { checkRateLimit } from "@/lib/rateLimit";
 
-// Force Node.js runtime - @react-pdf/renderer needs Node APIs,
-// won't run on edge.
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const maxDuration = 30; // PDF generation can take 5-15s cold
 
 function isValidEmail(email) {
   return typeof email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 async function forwardLeadCapture(payload, req) {
-  // Build absolute URL to our own lead-gate endpoint so we can
-  // reuse its Telegram + Gmail flow without duplicating logic.
   const origin =
     req.headers.get("origin") ||
     `https://${req.headers.get("host") || "georgeyachts.com"}`;
@@ -49,13 +45,11 @@ async function forwardLeadCapture(payload, req) {
       }),
     });
   } catch {
-    // Non-blocking - still deliver the PDF even if notifications fail.
+    // Non-blocking
   }
 }
 
 export async function POST(req) {
-  // Rate-limit by IP. 5 PDF downloads per 10 minutes is plenty for
-  // a real user (lead-gate already protects against amplifier abuse).
   const ip =
     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     req.headers.get("x-real-ip") ||
@@ -84,19 +78,33 @@ export async function POST(req) {
   }
 
   // Fire-and-forget lead capture so the PDF response stays fast.
-  forwardLeadCapture({ firstName, email, timing }, req).catch(() => {});
+  forwardLeadCapture({ firstName, email, timing, sourcePage: payload.sourcePage }, req).catch(() => {});
 
-  // Generate the PDF as a Buffer.
+  // Generate the PDF. Dynamic imports avoid the Node.js serverless
+  // TypeError that fires when @react-pdf/renderer is imported at
+  // module load (it pulls in dom-helpers at static-analysis time).
   let pdfBuffer;
   try {
+    const [{ renderToBuffer }, React, { PricingGuidePdfDocument }] = await Promise.all([
+      import("@react-pdf/renderer"),
+      import("react").then((m) => m.default || m),
+      import("@/lib/pricingGuidePdf"),
+    ]);
     pdfBuffer = await renderToBuffer(
       React.createElement(PricingGuidePdfDocument, { firstName })
     );
   } catch (err) {
-    console.error("[pricing-guide-pdf] PDF generation failed:", err);
+    console.error("[pricing-guide-pdf] PDF generation failed:", err?.message, err?.stack);
+    // Fallback: tell the client the lead was captured but the PDF
+    // failed. The form will surface a friendly fallback message.
     return NextResponse.json(
-      { error: "PDF generation failed. Please contact george@georgeyachts.com." },
-      { status: 500 }
+      {
+        error: "PDF generation temporarily unavailable",
+        leadCaptured: true,
+        fallbackUrl: "/greek-yacht-charter-2026-complete-pricing-guide",
+        contactEmail: "george@georgeyachts.com",
+      },
+      { status: 503 }
     );
   }
 
