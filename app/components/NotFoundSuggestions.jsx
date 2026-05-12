@@ -7,10 +7,17 @@
 // returns 6 semantically-close suggestions using the same
 // seoInternalLinks engine that powers the "Continue exploring"
 // widget elsewhere. Client component so SSR stays static.
+//
+// 2026-05-12 — relatedFor() lives in /lib/seoInternalLinks.js which
+// pulls in the entire programmatic-SEO catalog (~330 KB of JSON-y
+// JS). A static import here meant every page in the route group
+// shipped that catalog just so the 404 fallback could compute
+// suggestions. Lazy-imported now via dynamic import inside the
+// effect — keeps the catalog out of the layout's shared chunks,
+// only fetches it on actual 404 hits (rare event).
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { relatedFor } from "@/lib/seoInternalLinks";
 
 const ISLAND_SLUGS = [
   "mykonos", "santorini", "paros", "corfu", "hydra", "milos",
@@ -58,15 +65,21 @@ export default function NotFoundSuggestions() {
     const path = window.location.pathname;
     setAttempted(path);
     const canonical = inferCanonicalFromAttempt(path);
-    try {
-      const related = relatedFor(canonical, { max: 6 });
-      setItems(related);
-      window.gtag?.("event", "404_suggested_routes", {
-        attempted_path: path,
-        inferred_canonical: canonical,
-        suggestions_count: related.length,
-      });
-    } catch {}
+    // Dynamic import keeps the 330 KB SEO catalog out of every page's
+    // shared chunks. Only fetched when a real 404 fires (rare).
+    import("@/lib/seoInternalLinks")
+      .then(({ relatedFor }) => {
+        try {
+          const related = relatedFor(canonical, { max: 6 });
+          setItems(related);
+          window.gtag?.("event", "404_suggested_routes", {
+            attempted_path: path,
+            inferred_canonical: canonical,
+            suggestions_count: related.length,
+          });
+        } catch {}
+      })
+      .catch(() => {});
   }, []);
 
   if (items.length === 0) return null;
