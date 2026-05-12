@@ -47,11 +47,19 @@ export async function POST(request) {
 
     const rawYachts = Array.isArray(body.yachts) ? body.yachts : [];
     const yachts = rawYachts.filter(isPlausibleSlug);
+    // 2026-05-12 — JSON error responses to match the convention used
+    // by inquiry/itinerary-save/proposal-generate. Was returning
+    // plain-text 'Bad Request' / 'Rate limited' which broke JSON-
+    // expecting clients.
     if (yachts.length < 3) {
-      return new Response('Bad Request', { status: 400 });
+      return new Response(JSON.stringify({ ok: false, error: 'invalid_input' }), {
+        status: 400, headers: { 'Content-Type': 'application/json' },
+      });
     }
     if (isRateLimited(ip)) {
-      return new Response('Rate limited', { status: 429 });
+      return new Response(JSON.stringify({ ok: false, error: 'rate_limited' }), {
+        status: 429, headers: { 'Content-Type': 'application/json' },
+      });
     }
 
     const flag = getFlag(country);
@@ -80,10 +88,12 @@ export async function POST(request) {
 
     await sendTelegram(text);
 
-    return new Response('OK', { status: 200 });
+    return new Response(JSON.stringify({ ok: true }), {
+      status: 200, headers: { 'Content-Type': 'application/json' },
+    });
   } catch {
-    // Defensive: never throw 500 since the client uses keepalive
-    // and ignores the response, but log nothing useful here either.
-    return new Response('Error', { status: 500 });
+    return new Response(JSON.stringify({ ok: false, error: 'server_error' }), {
+      status: 500, headers: { 'Content-Type': 'application/json' },
+    });
   }
 }
