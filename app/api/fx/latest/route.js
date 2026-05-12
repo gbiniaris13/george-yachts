@@ -30,6 +30,13 @@ async function fetchFresh() {
   };
 }
 
+// 2026-05-12 — browser+CDN cache. FX rates update daily, so a
+// 1-hour browser cache + 24h CDN drastically reduces calls. Same
+// pattern as /api/fleet (Item 70).
+const CACHE_HEADERS = {
+  "Cache-Control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=86400",
+};
+
 export async function GET() {
   // Try KV cache first
   try {
@@ -37,7 +44,10 @@ export async function GET() {
     if (cached) {
       const data = typeof cached === "string" ? JSON.parse(cached) : cached;
       if (data?.rates?.USD) {
-        return Response.json({ ok: true, ...data, source: "kv" });
+        return Response.json(
+          { ok: true, ...data, source: "kv" },
+          { headers: CACHE_HEADERS }
+        );
       }
     }
   } catch {}
@@ -48,15 +58,21 @@ export async function GET() {
     try {
       await kvSet(CACHE_KEY, JSON.stringify(fresh), CACHE_TTL);
     } catch {}
-    return Response.json({ ok: true, ...fresh, source: "fresh" });
+    return Response.json(
+      { ok: true, ...fresh, source: "fresh" },
+      { headers: CACHE_HEADERS }
+    );
   } catch {}
 
   // Fallback if KV + frankfurter both fail
-  return Response.json({
-    ok: true,
-    base: "EUR",
-    rates: FALLBACK_RATES,
-    fetched: new Date().toISOString().slice(0, 10),
-    source: "fallback",
-  });
+  return Response.json(
+    {
+      ok: true,
+      base: "EUR",
+      rates: FALLBACK_RATES,
+      fetched: new Date().toISOString().slice(0, 10),
+      source: "fallback",
+    },
+    { headers: CACHE_HEADERS }
+  );
 }
