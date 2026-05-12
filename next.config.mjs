@@ -45,7 +45,14 @@ const nextConfig = {
               "font-src 'self' https://fonts.gstatic.com https://cdn.fontshare.com",
               "img-src 'self' data: blob: https://cdn.sanity.io https://images.pexels.com https://images.unsplash.com https://www.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://translate.google.com https://www.google.com https://translate.googleapis.com",
               "connect-src 'self' https://cdn.sanity.io https://*.sanity.io https://www.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://*.hubapi.com https://api.hubspot.com https://forms.hubspot.com https://translate.googleapis.com https://translate.google.com https://wttr.in",
-              "frame-src 'self' https://www.google.com https://calendly.com https://www.youtube.com https://translate.google.com",
+              // 2026-05-12 — added my.matterport.com pre-emptively.
+              // The yacht detail page (YachtPageContent.jsx Matterport
+              // section) renders an <iframe src={yacht.matterportEmbedUrl}>
+              // when the Sanity matterportEmbedUrl field is set, but no
+              // yacht has populated it yet. When George adds the first
+              // 3D tour, the iframe would otherwise be silently
+              // CSP-blocked.
+              "frame-src 'self' https://www.google.com https://calendly.com https://www.youtube.com https://translate.google.com https://my.matterport.com",
               "media-src 'self' https://cdn.sanity.io blob:",
             ].join("; "),
           },
