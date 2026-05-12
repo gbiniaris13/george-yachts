@@ -63,6 +63,62 @@ const REGION_PARAM_MAP = {
   dodecanese: 'any', // not a quiz option — fall back to "any"
   sporades: 'any',
 };
+// Phase 7 R24 (2026-05-12, technical brief Priority 1E) - island
+// to region mapping so the quiz can pre-seed region from the
+// island name. Used both for ?from=mykonos URL params and for
+// document.referrer-based prefill from island root pages.
+const ISLAND_TO_REGION = {
+  // Cyclades
+  mykonos: 'cyclades',
+  santorini: 'cyclades',
+  paros: 'cyclades',
+  naxos: 'cyclades',
+  milos: 'cyclades',
+  folegandros: 'cyclades',
+  sifnos: 'cyclades',
+  ios: 'cyclades',
+  antiparos: 'cyclades',
+  tinos: 'cyclades',
+  andros: 'cyclades',
+  // Ionian
+  corfu: 'ionian',
+  lefkada: 'ionian',
+  kefalonia: 'ionian',
+  ithaca: 'ionian',
+  paxos: 'ionian',
+  zakynthos: 'ionian',
+  // Saronic
+  hydra: 'saronic',
+  spetses: 'saronic',
+  // Dodecanese + Sporades fall back to 'any' since not first-class
+  // quiz options in QUESTION 2 yet.
+  rhodes: 'any',
+  symi: 'any',
+  kos: 'any',
+  patmos: 'any',
+  skiathos: 'any',
+  skopelos: 'any',
+  'crete-chania': 'any',
+  athens: 'any',
+};
+// Read the referrer pathname (same-origin only) and try to extract
+// island context from URLs like /yacht-charter-mykonos,
+// /yacht-charter-mykonos-anchorages, /greek-yacht-charter-vs-croatia,
+// /motor-yacht-charter-mykonos, etc. Returns the matched island slug
+// or null.
+function extractIslandFromPath(path) {
+  if (!path || typeof path !== 'string') return null;
+  // /yacht-charter-{slug}, /motor-yacht-charter-{slug}, etc.
+  // Iterate known islands longest-first to avoid partial matches.
+  const islandsLongestFirst = Object.keys(ISLAND_TO_REGION).sort(
+    (a, b) => b.length - a.length
+  );
+  for (const island of islandsLongestFirst) {
+    const re = new RegExp(`(?:^|/|-)${island}(?:-|/|$)`);
+    if (re.test(path)) return island;
+  }
+  return null;
+}
 function prefillFromUrl() {
   if (typeof window === 'undefined') return {};
   try {
@@ -72,6 +128,37 @@ function prefillFromUrl() {
     const region = (sp.get('region') || '').toLowerCase();
     if (usecase && USECASE_TO_GROUP[usecase]) out.group = USECASE_TO_GROUP[usecase];
     if (region && REGION_PARAM_MAP[region]) out.region = REGION_PARAM_MAP[region];
+
+    // Phase 7 R24 - new ?from= param. Brief spec: ?from=mykonos
+    // pre-fills region=cyclades. Mapped via ISLAND_TO_REGION above.
+    const fromParam = (sp.get('from') || '').toLowerCase();
+    if (fromParam && ISLAND_TO_REGION[fromParam]) {
+      out.region = ISLAND_TO_REGION[fromParam];
+    }
+    // Also accept ?island= as an alternative param name.
+    const islandParam = (sp.get('island') || '').toLowerCase();
+    if (islandParam && ISLAND_TO_REGION[islandParam]) {
+      out.region = ISLAND_TO_REGION[islandParam];
+    }
+
+    // Phase 7 R24 - document.referrer fallback. If no URL params
+    // pre-seeded the region, try to infer from the referrer page.
+    // Same-origin only to avoid leaking referrer interpretation
+    // across domains.
+    if (!out.region && document?.referrer) {
+      try {
+        const referrerUrl = new URL(document.referrer);
+        if (referrerUrl.hostname === window.location.hostname) {
+          const inferredIsland = extractIslandFromPath(referrerUrl.pathname);
+          if (inferredIsland) {
+            out.region = ISLAND_TO_REGION[inferredIsland];
+          }
+        }
+      } catch {
+        // bad referrer URL, skip
+      }
+    }
+
     // We don't prefill rhythm or budget from URLs — those are
     // genuinely personal choices the visitor should make.
     return out;

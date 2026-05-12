@@ -12,6 +12,7 @@
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { MARKET_REPORTS } from "@/lib/marketReportsSeo";
+import InlineCalendlySection from "@/app/components/InlineCalendlySection";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -299,6 +300,12 @@ export default function MarketReportsHub() {
             </div>
           </div>
         </section>
+
+        {/* Inline Calendly - Phase 7 R23 (technical brief Priority 1B). */}
+        <InlineCalendlySection
+          heading="Want a market briefing for your specific charter?"
+          subheading="Book a free 30-minute call with George to walk through the latest data, what it means for your dates, and where the 2026 opportunities are."
+        />
 
         {/* CTA */}
         <section

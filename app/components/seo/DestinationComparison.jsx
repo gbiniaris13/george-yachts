@@ -8,6 +8,8 @@
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { relatedFor } from "@/lib/seoInternalLinks";
+import InlineCalendlySection from "@/app/components/InlineCalendlySection";
+import QuizCtaCard from "@/app/components/QuizCtaCard";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -584,6 +586,13 @@ export default function DestinationComparison({ pageData }) {
           </div>
         </section>
 
+        {/* Quiz CTA - Phase 7 R24 (technical brief Priority 1E).
+            Surfaces the match quiz right between decision-matrix and
+            verdict, when the reader is most actively comparing. */}
+        <div style={{ padding: "0 24px" }}>
+          <QuizCtaCard fromName="your Greek charter" />
+        </div>
+
         {/* VERDICT */}
         <section style={{ padding: "84px 24px" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
@@ -782,6 +791,14 @@ export default function DestinationComparison({ pageData }) {
             </div>
           </section>
         )}
+
+        {/* Inline Calendly - Phase 7 R23 (technical brief Priority 1B).
+            Embedded discovery call widget before the final CTA, so
+            decision-stage visitors can book without leaving the page. */}
+        <InlineCalendlySection
+          heading="Still comparing? Book a free 30-minute call with George."
+          subheading={`Honest take on whether Greece or ${pageData.competitorName} fits your specific charter. MYBA-standard contracts.`}
+        />
 
         {/* CTA */}
         <section

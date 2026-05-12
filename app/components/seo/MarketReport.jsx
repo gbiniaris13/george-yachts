@@ -8,6 +8,7 @@
 
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import InlineCalendlySection from "@/app/components/InlineCalendlySection";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -545,6 +546,14 @@ export default function MarketReport({ reportData }) {
             </div>
           </section>
         )}
+
+        {/* Inline Calendly - Phase 7 R23 (technical brief Priority 1B).
+            Report readers reaching this point are decision-grade
+            traffic. Book straight from the page. */}
+        <InlineCalendlySection
+          heading="Want these numbers translated for your specific charter?"
+          subheading="Book a free 30-minute call with George to walk through what the data means for your dates, yacht size, and itinerary."
+        />
 
         {/* CTA */}
         <section

@@ -20,6 +20,7 @@ import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import IslandPageTracker from "./IslandPageTracker";
 import { relatedFor } from "@/lib/seoInternalLinks";
+import QuizCtaCard from "@/app/components/QuizCtaCard";
 
 export const revalidate = 3600;
 
@@ -622,6 +623,13 @@ export default async function IslandPage({ params }) {
             </div>
           </div>
         </section>
+
+        {/* Quiz CTA - Phase 7 R24 (technical brief Priority 1E).
+            Surfaces the match quiz right after FAQ, when the visitor
+            has absorbed the island content and is decision-staging. */}
+        <div style={{ padding: "0 24px" }}>
+          <QuizCtaCard fromSlug={island.slug} fromName={island.name} />
+        </div>
 
         {/* CONTINUE EXPLORING — Phase 7 Round 11 internal linking */}
         {related.length > 0 && (
