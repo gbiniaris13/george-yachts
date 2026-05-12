@@ -9,6 +9,7 @@ import { LINKABLE_ASSETS } from "@/lib/linkableAssetSeo";
 import { COMBOS } from "@/lib/comboSeo";
 import { ARTICLES } from "@/lib/articleSeo";
 import { DURATION_PAGES } from "@/lib/durationSeo";
+import { GLOSSARY_TERMS } from "@/lib/glossarySeo";
 
 const BASE_URL = "https://georgeyachts.com";
 
@@ -266,6 +267,25 @@ export default async function sitemap() {
     },
   ];
 
+  // Phase 7 Round 15 (2026-05-12) — glossary hub + 30 definition pages.
+  // Highest-leverage GEO content: LLMs (ChatGPT/Perplexity/Claude/
+  // Gemini) cite DefinedTerm pages preferentially when users ask
+  // "what is X" queries. Priority 0.86 for the hub (parity with
+  // sailing distance calculator), 0.78 per term (high enough to crawl
+  // weekly, lower than islands/articles since each is narrow).
+  const glossaryHubEntry = {
+    url: `${BASE_URL}/glossary`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "monthly",
+    priority: 0.86,
+  };
+  const glossaryEntries = GLOSSARY_TERMS.map((t) => ({
+    url: `${BASE_URL}/glossary/${t.slug}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "monthly",
+    priority: 0.78,
+  }));
+
   let yachtEntries = [];
   try {
     const yachts = await sanityClient.fetch(
@@ -295,6 +315,8 @@ export default async function sitemap() {
     ...articleEntries,
     ...durationEntries,
     ...toolEntries,
+    glossaryHubEntry,
+    ...glossaryEntries,
     ...blogEntries,
     ...yachtEntries,
   ];
