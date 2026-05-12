@@ -11,6 +11,7 @@ import { ARTICLES } from "@/lib/articleSeo";
 import { DURATION_PAGES } from "@/lib/durationSeo";
 import { GLOSSARY_TERMS } from "@/lib/glossarySeo";
 import { DESTINATION_COMPARISONS } from "@/lib/destinationComparisonSeo";
+import { MARKET_REPORTS } from "@/lib/marketReportsSeo";
 
 const BASE_URL = "https://georgeyachts.com";
 
@@ -307,6 +308,23 @@ export default async function sitemap() {
     priority: 0.9,
   }));
 
+  // Phase 7 Round 19 (2026-05-12) — quarterly market reports + hub.
+  // Original-research pages are the highest GEO citation magnet.
+  // Hub priority 0.88; individual reports 0.86 (slightly above
+  // glossary terms since these have time-sensitive research value).
+  const marketReportsHubEntry = {
+    url: `${BASE_URL}/market-reports`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "weekly",
+    priority: 0.88,
+  };
+  const marketReportEntries = MARKET_REPORTS.map((r) => ({
+    url: `${BASE_URL}${r.urlPath}`,
+    lastModified: new Date(r.publishedAt).toISOString(),
+    changeFrequency: "monthly",
+    priority: 0.86,
+  }));
+
   let yachtEntries = [];
   try {
     const yachts = await sanityClient.fetch(
@@ -339,6 +357,8 @@ export default async function sitemap() {
     glossaryHubEntry,
     ...glossaryEntries,
     ...destinationComparisonEntries,
+    marketReportsHubEntry,
+    ...marketReportEntries,
     ...blogEntries,
     ...yachtEntries,
   ];

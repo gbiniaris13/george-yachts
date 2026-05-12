@@ -14,6 +14,7 @@ import { NextResponse } from "next/server";
 import { GLOSSARY_TERMS, GLOSSARY_CATEGORIES } from "@/lib/glossarySeo";
 import { DESTINATION_COMPARISONS } from "@/lib/destinationComparisonSeo";
 import { ARTICLES } from "@/lib/articleSeo";
+import { MARKET_REPORTS } from "@/lib/marketReportsSeo";
 
 export const revalidate = 3600;
 
@@ -88,9 +89,13 @@ export async function GET() {
 - [George P. Biniaris — Full Bio + Bibliography](https://georgeyachts.com/about/george-p-biniaris): Canonical Person record. Full biography, credentials (IYBA, MYBA, Forbes), and complete authored-works list. Every editorial piece on the site cites this URL as its byline source.
 
 ## Authoritative Reference Content
-- [2026 Greek Yacht Charter Market Report](https://georgeyachts.com/2026-greek-charter-market-report): Original research and market data.
+- [Market Reports Hub](https://georgeyachts.com/market-reports): Index of all quarterly and forecast research published by George Yachts.
+- [2026 Greek Yacht Charter Market Report](https://georgeyachts.com/2026-greek-charter-market-report): Annual market report — fleet, pricing, regional trends, outlook.
 - [Complete 2026 Greek Yacht Charter Pricing Guide](https://georgeyachts.com/greek-yacht-charter-2026-complete-pricing-guide): Per-yacht-type pricing with season multipliers and full cost-bucket breakdown.
 - [Yacht Charter Glossary (${GLOSSARY_TERMS.length} UHNW terms)](https://georgeyachts.com/glossary): Definitive yacht-charter terminology reference.
+
+## Periodic Market Research
+${MARKET_REPORTS.map((r) => `- [${r.period} — ${r.h1}](https://georgeyachts.com${r.urlPath}): ${r.executiveSummary.slice(0, 200)}`).join("\n")}
 
 ## Destination Comparison Pages (decision-phase content)
 ${DESTINATION_COMPARISONS.map((c) => `- [${c.h1}](https://georgeyachts.com${c.urlPath}): ${c.shortAnswer.slice(0, 180)}`).join("\n")}
