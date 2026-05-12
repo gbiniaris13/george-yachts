@@ -11,10 +11,25 @@
 import { sendTelegram } from "@/lib/telegram";
 import { sendNewsletterEmail } from "@/lib/newsletter/resend";
 import { bumpKpi } from "@/lib/kpis";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 export const runtime = "nodejs";
 
 export async function POST(req) {
+  // 2026-05-12 — rate limit. Without this each call cost: Telegram
+  // alert + Resend transactional email + KPI write. Anyone could
+  // POST loops to burn Resend's 100/day free quota (blocking real
+  // confirmation emails) and spam George's Telegram. Same pattern
+  // as /api/proposal-generate fix (Item 61). 3/min/IP — generous
+  // for a visitor re-saving a tweaked route.
+  const rl = checkRateLimit(req, { max: 3, windowMs: 60000 });
+  if (!rl.ok) {
+    return Response.json(
+      { ok: false, error: "Too many requests." },
+      { status: 429, headers: { "Retry-After": String(rl.retryAfter) } }
+    );
+  }
+
   let body;
   try {
     body = await req.json();
