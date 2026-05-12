@@ -35,6 +35,12 @@ import AmbientPlayer from "./components/AmbientPlayer";
 // import BrokerStatus from "./components/BrokerStatus";
 import ForbesReferrerWelcome from "./components/ForbesReferrerWelcome";
 import StickyFleetCTA from "./components/StickyFleetCTA";
+// Phase 7 Round 22 (2026-05-12, technical brief Priority 1A) -
+// StickyInquiryBar surfaces on all programmatic pages (islands,
+// comparisons, glossary, reports, articles, anchorages) after 40%
+// scroll. Two CTAs: WhatsApp + Calendly. Dismissible 24h. Coexists
+// with WhatsAppButton via body class coordination.
+import StickyInquiryBar from "./components/StickyInquiryBar";
 import AskGeorgeWidget from "./components/AskGeorgeWidget";
 import GoldCurtain from "./components/GoldCurtain";
 import RouteTransition from "./components/RouteTransition";
@@ -443,6 +449,10 @@ export default async function RootLayout({ children }) {
             Sanity round-trip on every route; the component falls
             back to "View All Yachts" when count is missing. */}
         <StickyFleetCTA />
+        {/* Phase 7 R22 (2026-05-12, technical brief Priority 1A) -
+            StickyInquiryBar for programmatic pages. The component
+            self-suppresses on homepage and conversion pages. */}
+        <StickyInquiryBar />
         {/* D2 — Exit-intent capture, one shot per session */}
         <ExitIntentModal />
         {/* FavoritesEmailPrompt removed 2026-05-08 (Boss directive) —
