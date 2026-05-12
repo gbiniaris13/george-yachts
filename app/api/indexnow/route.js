@@ -61,9 +61,20 @@ async function submit(urls) {
   };
 }
 
-export async function GET() {
-  // Smoke-test: ping homepage. Useful from a manual curl to confirm
-  // the integration before wiring the Sanity webhook.
+export async function GET(request) {
+  // 2026-05-12 — gated. GET fires a real IndexNow submission on
+  // every anonymous request, so without auth it was a free amplifier
+  // for anyone wanting to either flood our IndexNow quota or get our
+  // key flagged for abuse by Bing/Yandex. Same x-indexnow-token gate
+  // as POST.
+  const auth = request.headers.get("x-indexnow-token");
+  const expected = process.env.INDEXNOW_AUTH_TOKEN;
+  if (expected && auth !== expected) {
+    return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
+  }
+  // Smoke-test: ping homepage. Useful from a manual curl with the
+  // auth header to confirm the integration before wiring the Sanity
+  // webhook.
   const result = await submit([`https://${HOST}/`]);
   return NextResponse.json(result);
 }
