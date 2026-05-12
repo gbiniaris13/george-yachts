@@ -263,11 +263,16 @@ export default function NewsletterSignupClient({ streams }) {
           })}
         </div>
 
-        {/* Honeypot — invisible to humans, bots fill it */}
+        {/* Honeypot — invisible to humans, bots fill it.
+            2026-05-12 — added aria-hidden + aria-label so screen
+            readers don't read the unlabeled field aloud and so
+            sighted-keyboard users don't tab onto it. */}
         <input
           type="text"
           name="website"
           tabIndex={-1}
+          aria-hidden="true"
+          aria-label="Leave this field empty"
           autoComplete="off"
           value={website}
           onChange={(e) => setWebsite(e.target.value)}
