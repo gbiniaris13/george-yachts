@@ -14,6 +14,7 @@ import { DESTINATION_COMPARISONS } from "@/lib/destinationComparisonSeo";
 import { MARKET_REPORTS } from "@/lib/marketReportsSeo";
 import { ISLAND_ANCHORAGES } from "@/lib/islandAnchoragesSeo";
 import { BOTTOM_FUNNEL_PAGES } from "@/lib/bottomFunnelSeo";
+import { BEST_YACHTS_PAGES } from "@/lib/bestYachtsSeo";
 
 const BASE_URL = "https://georgeyachts.com";
 
@@ -353,6 +354,14 @@ export default async function sitemap() {
     priority: 0.88,
   }));
 
+  // Phase 7 R35 (2026-05-12) - "Best yachts for X" series.
+  const bestYachtsEntries = BEST_YACHTS_PAGES.map((p) => ({
+    url: `${BASE_URL}${p.urlPath}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "monthly",
+    priority: 0.85,
+  }));
+
   let yachtEntries = [];
   try {
     const yachts = await sanityClient.fetch(
@@ -389,6 +398,7 @@ export default async function sitemap() {
     ...marketReportEntries,
     ...anchorageEntries,
     ...bottomFunnelEntries,
+    ...bestYachtsEntries,
     ...blogEntries,
     ...yachtEntries,
   ];
