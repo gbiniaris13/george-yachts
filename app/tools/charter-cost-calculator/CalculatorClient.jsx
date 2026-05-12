@@ -21,7 +21,11 @@ const CREAM = "#F8F5F0";
 // in some places; correct figure as of 2026 is 12% (half of the
 // standard 24% Greek VAT). Foreign-flagged yachts have variable
 // rules - flagged separately in the disclaimer.
-const GREEK_VAT_RATE = 0.12;
+// Brief 2A: Greek VAT 13% for Greek-flagged yachts departing Greek
+// ports. (Note: half the standard 24% is 12%, but the brief and
+// industry practice for charter-as-passenger-service apply 13% as
+// the consistent reduced rate. Follow brief.)
+const GREEK_VAT_RATE = 0.13;
 
 // Embarkation ports - all currently flat 12% VAT on Greek charters.
 // Differentiated by typical delivery surcharge from Athens-based fleet.
