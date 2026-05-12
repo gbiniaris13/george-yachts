@@ -69,7 +69,12 @@ export async function GET(request) {
   // as POST.
   const auth = request.headers.get("x-indexnow-token");
   const expected = process.env.INDEXNOW_AUTH_TOKEN;
-  if (expected && auth !== expected) {
+  // 2026-05-12 — fail-closed. Previously `if (expected && auth !==
+  // expected)` was a no-op when env var unset, leaving the endpoint
+  // open. Now: env var MUST be set in production, and caller MUST
+  // pass it. If Boss removes the env var the feature breaks — but
+  // it's safer than an open IndexNow amplifier.
+  if (!expected || auth !== expected) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
   // Smoke-test: ping homepage. Useful from a manual curl with the
@@ -83,7 +88,12 @@ export async function POST(request) {
   // Auth gate — only fire if the caller carries the shared secret.
   const auth = request.headers.get("x-indexnow-token");
   const expected = process.env.INDEXNOW_AUTH_TOKEN;
-  if (expected && auth !== expected) {
+  // 2026-05-12 — fail-closed. Previously `if (expected && auth !==
+  // expected)` was a no-op when env var unset, leaving the endpoint
+  // open. Now: env var MUST be set in production, and caller MUST
+  // pass it. If Boss removes the env var the feature breaks — but
+  // it's safer than an open IndexNow amplifier.
+  if (!expected || auth !== expected) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
 
