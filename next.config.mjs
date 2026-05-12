@@ -31,7 +31,11 @@ const nextConfig = {
           { key: "X-Frame-Options", value: "DENY" },
           { key: "X-XSS-Protection", value: "1; mode=block" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          { key: "Permissions-Policy", value: "camera=(), microphone=(self), geolocation=()" },
+          // 2026-05-12 — microphone tightened from (self) to () because no
+          // code calls navigator.mediaDevices.getUserMedia; the (self)
+          // grant was opening attack surface without a corresponding
+          // feature. Camera + geolocation already disabled.
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
           {
             key: "Content-Security-Policy",
             value: [
