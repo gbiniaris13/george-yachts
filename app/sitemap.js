@@ -103,6 +103,12 @@ const staticRoutes = [
 
   // Team members
   { path: "/team/george-biniaris", priority: 0.6, changeFrequency: "monthly" },
+  // Phase 7 Round 17 (2026-05-12) — canonical E-E-A-T author surface.
+  // Higher priority than /team/george-biniaris because this is the
+  // authority page LLMs and Google should preferentially cite for
+  // queries about George's expertise. Carries the canonical Person
+  // record + complete authored-works bibliography.
+  { path: "/about/george-p-biniaris", priority: 0.85, changeFrequency: "monthly" },
   { path: "/team/george-katrantzos", priority: 0.5, changeFrequency: "monthly" },
   { path: "/team/elleana-karvouni", priority: 0.5, changeFrequency: "monthly" },
   { path: "/team/chris-daskalopoulos", priority: 0.5, changeFrequency: "monthly" },
