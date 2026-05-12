@@ -59,6 +59,75 @@ function fmtMeta(meta = {}) {
     .join("\n");
 }
 
+// Human-readable label map for the Context section in lead emails.
+// Replaces raw JSON-key display ("source_page") with friendly labels
+// ("Source page"). Falls back to a sentence-case version of any key
+// that doesn't have an explicit mapping.
+const META_LABELS = {
+  timing: "Charter timing",
+  download: "Resource downloaded",
+  source_page: "Page",
+  yacht: "Yacht of interest",
+  yachtName: "Yacht of interest",
+  region: "Region",
+  season: "Season",
+  budget: "Budget",
+  guests: "Guests",
+  duration: "Duration",
+  dates: "Preferred dates",
+  language: "Language",
+  referrer: "Referrer",
+};
+
+// Format a value for human display. Slug paths get prefixed with
+// the site domain so George can click them. Dates left as-is.
+function fmtMetaValue(key, raw) {
+  if (raw == null) return "";
+  const v = String(raw);
+  if (key === "source_page" && v.startsWith("/")) {
+    return `<a href="https://georgeyachts.com${v}" style="color:#C9A84C;text-decoration:none;border-bottom:1px solid #C9A84C;">${v}</a>`;
+  }
+  if (key === "timing") {
+    // Map dropdown values to friendly labels
+    const labels = {
+      "summer-2026": "Summer 2026",
+      "autumn-2026": "Autumn 2026",
+      "2027": "2027",
+      "researching": "Just researching",
+    };
+    return labels[v] || v;
+  }
+  return v.replace(/-/g, " ").replace(/^[a-z]/, (c) => c.toUpperCase());
+}
+
+function metaLabel(key) {
+  if (META_LABELS[key]) return META_LABELS[key];
+  return key
+    .replace(/[_-]/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function renderMetaTable(meta = {}) {
+  const entries = Object.entries(meta).filter(
+    ([, v]) => v !== null && v !== undefined && v !== ""
+  );
+  if (entries.length === 0) return "";
+  const rows = entries
+    .map(
+      ([k, v]) =>
+        `<tr>
+          <td style="padding:8px 14px 8px 0;color:#0D1B2A;opacity:0.65;font-size:13px;letter-spacing:0.04em;width:160px;vertical-align:top;">${metaLabel(k)}</td>
+          <td style="padding:8px 0;color:#0D1B2A;font-size:14px;line-height:1.5;">${fmtMetaValue(k, v)}</td>
+        </tr>`
+    )
+    .join("");
+  return `
+    <p style="margin:18px 0 6px;color:#0D1B2A;font-size:9px;letter-spacing:0.32em;text-transform:uppercase;font-weight:600;">Details</p>
+    <table style="border-collapse:collapse;width:100%;border-top:1px solid rgba(13,27,42,0.1);">
+      ${rows}
+    </table>`;
+}
+
 export async function POST(request) {
   // Rate-limit — same bar as the newsletter signup (light abuse shield)
   const rl = checkRateLimit(request, { max: 6, windowMs: 60000 });
@@ -137,31 +206,40 @@ export async function POST(request) {
     transporter
       ? transporter
           .sendMail({
-            from: `"George Yachts — Lead" <${GMAIL_USER}>`,
+            from: `"George Yachts - Lead" <${GMAIL_USER}>`,
             to: "george@georgeyachts.com",
             replyTo: email,
-            subject: `${headline}: ${name || email}`,
+            subject: `${headline.replace(/[*]/g, "").replace(/[📬📄🤝✉️]/g, "").trim()}: ${name || email}`,
+            // 2026-05-12 hotfix: replaced the raw JSON Context block
+            // (which displayed as code) with a clean human-readable
+            // key/value table. Brand-aligned typography + navy/gold,
+            // mailbox-safe inline styles only.
             html: `
-              <div style="font-family:Arial,Helvetica,sans-serif;max-width:600px;color:#0D1B2A;">
-                <h2 style="margin:0 0 8px;">${headline.replace(/\*/g, "")}</h2>
-                <p style="margin:0 0 4px;"><strong>Name:</strong> ${name || "—"}</p>
-                <p style="margin:0 0 4px;"><strong>Email:</strong> ${email}</p>
-                ${phone ? `<p style="margin:0 0 4px;"><strong>Phone:</strong> ${phone}</p>` : ""}
-                ${company ? `<p style="margin:0 0 4px;"><strong>Company:</strong> ${company}</p>` : ""}
-                <hr style="border:none;border-top:1px solid #F8F5F0;margin:16px 0;" />
-                <p style="margin:0 0 4px;"><strong>Source:</strong> ${source}</p>
-                <p style="margin:0 0 12px;"><strong>When:</strong> ${when}</p>
-                ${
-                  Object.keys(meta || {}).length
-                    ? `<p style="margin:0 0 6px;"><strong>Context:</strong></p>
-                <pre style="background:#F8F5F0;padding:12px;border-radius:4px;font-size:12px;white-space:pre-wrap;">${JSON.stringify(
-                  meta,
-                  null,
-                  2
-                )}</pre>`
-                    : ""
-                }
-                <p style="font-size:11px;color:#9CA3AF;margin-top:24px;">You can reply directly to this email to reach the lead.</p>
+              <div style="font-family:'Helvetica Neue',Arial,sans-serif;max-width:580px;margin:0 auto;color:#0D1B2A;background:#FFFFFF;border:1px solid rgba(13,27,42,0.08);">
+                <div style="background:#0D1B2A;padding:22px 28px;">
+                  <p style="margin:0;color:#C9A84C;font-size:9px;letter-spacing:0.42em;text-transform:uppercase;font-weight:700;">George Yachts</p>
+                  <p style="margin:8px 0 0;color:#F8F5F0;font-size:20px;font-weight:300;line-height:1.25;">${headline.replace(/[*]/g, "").replace(/[📬📄🤝✉️]/g, "").trim()}</p>
+                </div>
+                <div style="padding:26px 28px;">
+                  <p style="margin:0 0 4px;color:#0D1B2A;opacity:0.65;font-size:10px;letter-spacing:0.32em;text-transform:uppercase;font-weight:600;">From</p>
+                  <p style="margin:0 0 6px;color:#0D1B2A;font-size:22px;font-weight:400;line-height:1.25;">${name || "(no name provided)"}</p>
+                  <p style="margin:0 0 6px;font-size:14px;">
+                    <a href="mailto:${email}" style="color:#C9A84C;text-decoration:none;border-bottom:1px solid #C9A84C;padding-bottom:1px;">${email}</a>
+                  </p>
+                  ${phone ? `<p style="margin:0 0 4px;color:#0D1B2A;font-size:14px;"><span style="opacity:0.6;">Phone:</span> <a href="tel:${phone}" style="color:#C9A84C;text-decoration:none;">${phone}</a></p>` : ""}
+                  ${company ? `<p style="margin:0 0 4px;color:#0D1B2A;font-size:14px;"><span style="opacity:0.6;">Company:</span> ${company}</p>` : ""}
+                  ${renderMetaTable(meta)}
+                  <hr style="border:none;border-top:1px solid rgba(13,27,42,0.1);margin:24px 0 14px;" />
+                  <p style="margin:0;color:#0D1B2A;opacity:0.55;font-size:11px;letter-spacing:0.04em;">
+                    <strong style="font-weight:600;">Source:</strong> ${source}  &nbsp;·&nbsp;
+                    <strong style="font-weight:600;">When:</strong> ${new Date(when).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" })}
+                  </p>
+                </div>
+                <div style="background:rgba(201,168,76,0.06);padding:16px 28px;border-top:1px solid rgba(201,168,76,0.2);">
+                  <p style="margin:0;color:#0D1B2A;font-size:12px;line-height:1.55;">
+                    Reply to this email to reach <strong>${name || "the lead"}</strong> directly. Their address is set as Reply-To.
+                  </p>
+                </div>
               </div>
             `,
           })
