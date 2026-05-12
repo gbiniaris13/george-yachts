@@ -89,8 +89,11 @@ const nextConfig = {
     // Round 5) which need to go to their own static routes.
     //
     // Keep this list in sync with /lib/islands.js -> ISLANDS slugs.
+    // 2026-05-12 — added ios, antiparos, tinos, andros, kos, skopelos,
+    // patmos (Round 14 expansion toward the 50-destination strategy
+    // target). Keep in sync with /lib/islands.js ISLANDS slugs.
     const ISLAND_SLUGS_PATTERN =
-      "mykonos|santorini|paros|corfu|hydra|milos|folegandros|lefkada|spetses|kefalonia|naxos|rhodes|skiathos|zakynthos|ithaca|paxos|symi|crete-chania|sifnos";
+      "mykonos|santorini|paros|corfu|hydra|milos|folegandros|lefkada|spetses|kefalonia|naxos|rhodes|skiathos|zakynthos|ithaca|paxos|symi|crete-chania|sifnos|ios|antiparos|tinos|andros|kos|skopelos|patmos";
     return [
       {
         source: `/yacht-charter-:slug(${ISLAND_SLUGS_PATTERN})`,
