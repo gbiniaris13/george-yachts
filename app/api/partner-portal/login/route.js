@@ -5,6 +5,7 @@
 
 import { isPartnerAllowed, createMagicLink } from "@/lib/partner-portal";
 import { sendTelegram } from "@/lib/telegram";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 export const runtime = "nodejs";
 
@@ -14,6 +15,20 @@ const RESEND_FROM =
   "George Yachts <newsletter@georgeyachts.com>";
 
 export async function POST(req) {
+  // 2026-05-12 — rate limit before doing any work. Without this an
+  // attacker could POST thousands of requests with different emails
+  // to: (a) burn through Resend's 100/day free-tier for allow-listed
+  // partners, or (b) spam Telegram alerts to George via repeated
+  // hits on a known allow-listed address. 3/min/IP throttles abuse
+  // without blocking legitimate retries.
+  const rl = checkRateLimit(req, { max: 3, windowMs: 60000 });
+  if (!rl.ok) {
+    return Response.json(
+      { ok: false, error: "Too many requests." },
+      { status: 429, headers: { "Retry-After": String(rl.retryAfter) } }
+    );
+  }
+
   let body;
   try {
     body = await req.json();
