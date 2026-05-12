@@ -20,18 +20,22 @@ const Footer = () => {
   const [website, setWebsite] = useState(""); // honeypot — bots autofill, humans never see
   const [subscribed, setSubscribed] = useState(false);
 
+  // 2026-05-12 — trailing slashes removed. Next.js normalises
+  // /path/ → /path via 308 redirect (audited Item 33), so each
+  // footer click was costing an extra roundtrip + leaking link
+  // equity. Targets now hit the canonical no-slash URLs directly.
   const serviceLinks = [
-    { name: "Charter a Yacht", href: "/charter-yacht-greece/" },
-    { name: "Buy a Yacht", href: "/yachts-for-sale/" },
-    { name: "Fly Private", href: "/private-jet-charter/" },
-    { name: "VIP Transfers", href: "/vip-transfers-greece/" },
-    { name: "Luxury Villas", href: "/luxury-villas-greece/" },
-    { name: "Yacht Itineraries", href: "/yacht-itineraries-greece/" },
+    { name: "Charter a Yacht", href: "/charter-yacht-greece" },
+    { name: "Buy a Yacht", href: "/yachts-for-sale" },
+    { name: "Fly Private", href: "/private-jet-charter" },
+    { name: "VIP Transfers", href: "/vip-transfers-greece" },
+    { name: "Luxury Villas", href: "/luxury-villas-greece" },
+    { name: "Yacht Itineraries", href: "/yacht-itineraries-greece" },
   ];
 
   const companyLinks = [
-    { name: "About Us", href: "/about-us/" },
-    { name: "Our Team", href: "/team/" },
+    { name: "About Us", href: "/about-us" },
+    { name: "Our Team", href: "/team" },
     { name: "Credentials", href: "/credentials" },
     { name: "Greece by Yacht", href: "/greece-by-yacht" },
     { name: "The Journal", href: "/blog" },
