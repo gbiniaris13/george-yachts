@@ -414,8 +414,12 @@ export default function InquiryClient() {
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {/* Native select — single tap on mobile, opens system
                   picker. We append a "flexible" sentinel so the step
-                  never feels like a hard gate. */}
+                  never feels like a hard gate.
+                  2026-05-12 — aria-label added so screen readers
+                  announce the question for each field; without it the
+                  unlabeled <select> reads as just 'combo box'. */}
               <select
+                aria-label={step.label}
                 value={answers[step.key] || ""}
                 onChange={(e) => setValue(e.target.value)}
                 style={{
@@ -466,6 +470,7 @@ export default function InquiryClient() {
             <input
               ref={inputRef}
               type={step.type}
+              aria-label={step.label}
               value={answers[step.key] || ""}
               onChange={(e) => setValue(e.target.value)}
               onKeyDown={onKeyDown}
@@ -478,6 +483,7 @@ export default function InquiryClient() {
             <input
               ref={inputRef}
               type="number"
+              aria-label={step.label}
               min={step.min}
               max={step.max}
               value={answers[step.key] || ""}
@@ -491,6 +497,7 @@ export default function InquiryClient() {
           {step.type === "textarea" && (
             <textarea
               ref={inputRef}
+              aria-label={step.label}
               value={answers[step.key] || ""}
               onChange={(e) => setValue(e.target.value)}
               placeholder={step.placeholder}
