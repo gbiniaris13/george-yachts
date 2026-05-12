@@ -149,7 +149,7 @@ const Footer = () => {
                 <Linkedin className="w-4 h-4 text-white/50 group-hover:text-[#C9A84C] transition-colors duration-300" />
               </a>
               <a
-                href="https://wa.me/17867988798"
+                href="https://wa.me/306970380999"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#C9A84C]/40 transition-all duration-500"

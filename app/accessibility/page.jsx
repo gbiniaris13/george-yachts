@@ -122,7 +122,7 @@ export default function AccessibilityPage() {
               <li>
                 WhatsApp:{" "}
                 <a
-                  href="https://wa.me/17867988798"
+                  href="https://wa.me/306970380999"
                   className="text-[#C9A84C] hover:text-white border-b border-[#C9A84C]/30 hover:border-white transition-colors duration-300"
                   target="_blank"
                   rel="noopener noreferrer"

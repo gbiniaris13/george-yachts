@@ -699,7 +699,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   Request a personal proposal →
                 </button>
                 <a
-                  href={`https://wa.me/17867988798?text=${encodeURIComponent(`Hi George — could you share availability and rates for ${yacht.name}?`)}`}
+                  href={`https://wa.me/306970380999?text=${encodeURIComponent(`Hi George — could you share availability and rates for ${yacht.name}?`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   data-cursor="WhatsApp"
@@ -1119,7 +1119,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                 Request a personal proposal
               </button>
               <a
-                href={`https://wa.me/17867988798?text=${encodeURIComponent(`Hi, I'm interested in chartering ${yacht.name} — could you share availability and rates?`)}`}
+                href={`https://wa.me/306970380999?text=${encodeURIComponent(`Hi, I'm interested in chartering ${yacht.name} — could you share availability and rates?`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-secondary"

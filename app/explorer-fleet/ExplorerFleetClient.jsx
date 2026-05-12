@@ -32,7 +32,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
             More islands. More adventure. The smart way to see Greece.
           </p>
           <a
-            href="https://wa.me/17867988798?text=Hello%20George%20%E2%80%94%20I%27m%20exploring%20the%20Explorer%20Fleet%20for%20a%20Greek%20charter.%20Can%20we%20plan%20an%20adventure%3F"
+            href="https://wa.me/306970380999?text=Hello%20George%20%E2%80%94%20I%27m%20exploring%20the%20Explorer%20Fleet%20for%20a%20Greek%20charter.%20Can%20we%20plan%20an%20adventure%3F"
             target="_blank"
             rel="noopener noreferrer"
             style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--gy-font-ui)", fontSize: 11, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#0D1B2A", background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)", padding: "16px 48px", textDecoration: "none" }}
@@ -187,7 +187,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
           Plan Your Adventure
         </h2>
         <a
-          href="https://wa.me/17867988798?text=Hello%20George%20%E2%80%94%20I%27d%20like%20to%20plan%20a%20Greek%20Explorer%20charter.%20What%27s%20available%20and%20what%20do%20you%20recommend%3F"
+          href="https://wa.me/306970380999?text=Hello%20George%20%E2%80%94%20I%27d%20like%20to%20plan%20a%20Greek%20Explorer%20charter.%20What%27s%20available%20and%20what%20do%20you%20recommend%3F"
           target="_blank"
           rel="noopener noreferrer"
           style={{ display: "inline-flex", alignItems: "center", gap: 12, fontFamily: "var(--gy-font-ui)", fontSize: 12, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#0D1B2A", background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)", padding: "18px 56px", textDecoration: "none" }}

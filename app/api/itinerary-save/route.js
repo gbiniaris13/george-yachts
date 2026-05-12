@@ -71,7 +71,7 @@ export async function POST(req) {
 </p>
 ${message ? `<p style="background:#F8F5F0;padding:12px 16px;border-left:3px solid #C9A84C;font-style:italic">${message.replace(/</g, "&lt;")}</p>` : ""}
 <p>I'll come back to you within 24 hours with two yachts that fit this route at the time of year you're looking at, plus one alternative I think you haven't considered.</p>
-<p>If anything's urgent, the fastest channel is WhatsApp: <a href="https://wa.me/17867988798">+1 786 798 8798</a>.</p>
+<p>If anything's urgent, the fastest channel is WhatsApp: <a href="https://wa.me/306970380999">+1 786 798 8798</a>.</p>
 <p style="margin-top:24px">— George<br/>
 <span style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#9CA3AF">George P. Biniaris · Managing Broker</span></p>
 </div>`.trim();

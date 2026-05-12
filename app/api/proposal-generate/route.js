@@ -165,7 +165,7 @@ export async function POST(req) {
 ${yachts.map((y) => y.name).join(" · ")}
 </p>
 <p>The numbers in the proposal are honest ranges. The exact figure for your dates lands in a written quote with availability — usually within the day.</p>
-<p>If anything's urgent, the fastest channel is WhatsApp: <a href="https://wa.me/17867988798">+1 786 798 8798</a>. To book a 30-minute call: <a href="https://calendly.com/george-georgeyachts/30min">calendly.com/george-georgeyachts/30min</a>.</p>
+<p>If anything's urgent, the fastest channel is WhatsApp: <a href="https://wa.me/306970380999">+1 786 798 8798</a>. To book a 30-minute call: <a href="https://calendly.com/george-georgeyachts/30min">calendly.com/george-georgeyachts/30min</a>.</p>
 <p style="margin-top:24px">— George<br/>
 <span style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#9CA3AF">George P. Biniaris · Managing Broker</span></p>
 </div>`.trim();

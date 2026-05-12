@@ -104,7 +104,7 @@ export default async function DashboardPage() {
                 Partners get a dedicated WhatsApp + Telegram channel to George. Same-day quote turnarounds, real-time availability checks, no copy-paste forms.
               </p>
               <a
-                href="https://wa.me/17867988798"
+                href="https://wa.me/306970380999"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={ctaLink}
