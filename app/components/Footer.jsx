@@ -423,43 +423,50 @@ const Footer = () => {
             ))}
           </div>
 
-          {/* Copyright + GHOST_ build credit stacked on the right.
-              GHOST_ link is the agency that built the site (same Boss
-              owns both entities); surfaced discreetly so peers who
-              notice can follow. */}
-          <div className="flex flex-col items-center md:items-end gap-3">
-            <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(248, 245, 240,0.5)", textTransform: "uppercase" }}>
-              &copy; {currentYear} <span className="notranslate">George Yachts Brokerage House LLC</span>
-            </span>
-            <a
-              href="https://ghostwebdesign.dev"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                fontSize: "12px",
-                color: "#C9A84C",
-                textDecoration: "none",
-                fontFamily: '"JetBrains Mono", "SF Mono", Menlo, Consolas, monospace',
-                letterSpacing: "0.08em",
-                fontWeight: 500,
-                borderBottom: "1px solid rgba(201, 168, 76, 0.35)",
-                paddingBottom: "2px",
-                transition: "color 0.3s ease, border-color 0.3s ease, text-shadow 0.3s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#F4E4B8";
-                e.currentTarget.style.borderColor = "#F4E4B8";
-                e.currentTarget.style.textShadow = "0 0 12px rgba(201, 168, 76, 0.45)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "#C9A84C";
-                e.currentTarget.style.borderColor = "rgba(201, 168, 76, 0.35)";
-                e.currentTarget.style.textShadow = "none";
-              }}
-            >
-              Built in the shadows by GHOST_ ↗
-            </a>
-          </div>
+          {/* Copyright */}
+          <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.15em", color: "rgba(248, 245, 240,0.5)", textTransform: "uppercase" }}>
+            &copy; {currentYear} <span className="notranslate">George Yachts Brokerage House LLC</span>
+          </span>
+        </div>
+
+        {/* GHOST_ build credit — full-width attribution row.
+            Boss directive: make it crystal clear that THIS site was
+            designed and built by GHOST_, and span the row edge to
+            edge so the gold reads across the full footer width (not
+            tucked into the right column). Same Boss owns both
+            entities; lead-gen channel for the agency. */}
+        <div className="w-full mt-10 pt-8 border-t border-[rgba(201,168,76,0.18)]">
+          <a
+            href="https://ghostwebdesign.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block text-center"
+            style={{
+              fontSize: "13px",
+              color: "#C9A84C",
+              textDecoration: "none",
+              fontFamily: '"JetBrains Mono", "SF Mono", Menlo, Consolas, monospace',
+              letterSpacing: "0.12em",
+              fontWeight: 500,
+              padding: "4px 16px",
+              lineHeight: 1.6,
+              transition: "color 0.3s ease, text-shadow 0.3s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "#F4E4B8";
+              e.currentTarget.style.textShadow = "0 0 16px rgba(201, 168, 76, 0.55)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "#C9A84C";
+              e.currentTarget.style.textShadow = "none";
+            }}
+          >
+            This website was designed and built by{" "}
+            <span style={{ fontWeight: 700, color: "#F4E4B8", letterSpacing: "0.22em" }}>GHOST_</span>
+            {" "}—{" "}
+            <span style={{ fontStyle: "italic", opacity: 0.92 }}>premium digital agency for the discerning few</span>
+            {" "}↗
+          </a>
         </div>
 
         {/* A.8 — Anti-fraud notice (Roberto brief, May 2026).
