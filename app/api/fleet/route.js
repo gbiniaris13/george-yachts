@@ -64,7 +64,28 @@ export async function GET() {
       };
     });
 
-    return NextResponse.json({ yachts, count: yachts.length });
+    // 2026-05-12 — explicit browser-cache headers. The route already
+    // edge-caches via `revalidate = 3600` but the default response
+    // cache-control was 'public, max-age=0, must-revalidate' so
+    // browsers refetched on every navigation. 3 client components
+    // hit /api/fleet (InquiryClient, StickyFleetCTA, NavSearch) so
+    // a session navigating across 4-5 pages could trigger 12-15
+    // network calls for the same 31KB payload.
+    //
+    // New policy:
+    //   - max-age=900    (15 min in browser cache; tolerable
+    //                     staleness for yacht-price updates)
+    //   - s-maxage=3600  (1h at Vercel CDN, matches revalidate)
+    //   - stale-while-revalidate=86400 (serve stale up to 1 day
+    //                                   while refreshing in bg)
+    return NextResponse.json(
+      { yachts, count: yachts.length },
+      {
+        headers: {
+          "Cache-Control": "public, max-age=900, s-maxage=3600, stale-while-revalidate=86400",
+        },
+      },
+    );
   } catch (error) {
     console.error("[/api/fleet]", error);
     return NextResponse.json(
