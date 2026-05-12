@@ -62,6 +62,11 @@ const staticRoutes = [
   // still 301-redirects to /inquiry until the Smart Match Quiz
   // ships at /yacht-finder.
   { path: "/cost-calculator", priority: 0.9, changeFrequency: "weekly" },
+  // Phase 7 R26 (2026-05-12, technical brief Priority 2A) - VAT/APA
+  // calculator. Highest-leverage linkable asset. Higher priority
+  // than cost-calculator because this is the comprehensive new
+  // model with the full cost-bucket logic + flag-state awareness.
+  { path: "/tools/charter-cost-calculator", priority: 0.92, changeFrequency: "monthly" },
   { path: "/itinerary-builder", priority: 0.85, changeFrequency: "monthly" },
   { path: "/island-quiz", priority: 0.8, changeFrequency: "monthly" },
   { path: "/yacht-size-visualizer", priority: 0.8, changeFrequency: "monthly" },
