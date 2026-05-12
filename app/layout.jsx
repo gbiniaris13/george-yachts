@@ -188,13 +188,18 @@ export const metadata = {
     ],
   },
   twitter: {
+    // 2026-05-12 — title/description/images intentionally omitted at
+    // the layout level. When set, Next.js emits literal <meta name=
+    // "twitter:*"> tags that override the page-specific openGraph
+    // image we generate at /api/og?title=...&eyebrow=... — every
+    // non-home page was shipping the homepage Forbes banner on
+    // Twitter shares. Twitter's card renderer falls back to og:image
+    // / og:title / og:description when twitter:* equivalents are
+    // absent, so removing them lets each page's dynamic OG flow
+    // through to the Twitter preview naturally.
     card: "summary_large_image",
     site: "@georgeyachts",
     creator: "@georgeyachts",
-    title: "George Yachts | Featured in Forbes · Greek Waters",
-    description:
-      "Featured in Forbes (May 2026). 66 yachts. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Member.",
-    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
