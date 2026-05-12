@@ -294,9 +294,38 @@ export default async function YachtPage({ params }) {
     { name: yacht.name, url: `https://georgeyachts.com/yachts/${slug}` },
   ];
 
+  // Brief 2B (2026-05-12): Quick Answer FAQPage schema for each
+  // yacht detail page. AI engines (Perplexity, ChatGPT, Claude)
+  // extract Q/A pairs for citation. Derived from yacht specs.
+  const quickAnswerQ = `What is the ${yacht.name} yacht and what does a charter cost?`;
+  const quickAnswerA = `The ${yacht.name} is a ${yacht.length || ""} ${yacht.subtitle ? yacht.subtitle.split("|")[0].trim() : "luxury"} yacht available for crewed charter in ${yacht.cruisingRegion || "Greek waters"}, sleeping ${yacht.sleeps || "up to 12"} guests across ${yacht.cabins || "multiple"} cabins. ${yacht.weeklyRatePrice ? `Weekly base charter rate: ${yacht.weeklyRatePrice}. ` : ""}Add 30% APA, 13% Greek VAT, and 10-15% crew gratuity for the fully loaded cost. MYBA-standard contract.`;
+  const quickAnswerJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: quickAnswerQ,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: quickAnswerA,
+          author: {
+            "@type": "Person",
+            "@id": "https://georgeyachts.com/about/george-p-biniaris#person",
+            name: "George P. Biniaris",
+          },
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <YachtSchema yacht={yacht} imageUrl={heroImage?.url} slug={slug} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(quickAnswerJsonLd) }}
+      />
       <BreadcrumbSchema items={breadcrumbs} />
       <YachtPageContent
         yacht={{

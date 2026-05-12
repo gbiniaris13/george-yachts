@@ -1,0 +1,148 @@
+# Wikidata QuickStatements batch - Phase 7 Round 37 (2026-05-12)
+# Technical brief Priority 2C.
+#
+# How to use this file:
+# 1. Go to https://quickstatements.toolforge.org/
+# 2. Log in with your Wikipedia account (free; same SSO as Wikidata)
+# 3. Click "New batch" -> "Use V1 format"
+# 4. Paste the lines below
+# 5. Click "Import V1 commands"
+# 6. Review the preview, then "Run"
+# 7. QuickStatements creates both entities + properties in 1-3 minutes
+#
+# After creation, update lib/organizationSchema.js sameAs + lib/teamSchema.js
+# sameAs with the assigned Q-numbers. The two entities cross-reference
+# each other via {Q-org} and {Q-person} placeholders below - QuickStatements
+# auto-resolves these when both are in the same batch.
+#
+# ─────────────────────────────────────────────────────────────────
+# ENTITY 1: George Yachts Brokerage House LLC
+# ─────────────────────────────────────────────────────────────────
+
+CREATE
+LAST	Len	"George Yachts Brokerage House"
+LAST	Den	"Luxury crewed yacht charter brokerage based in Athens, Greece. IYBA member. Featured in Forbes 2026."
+LAST	Aen	"George Yachts"
+LAST	Aen	"George Yachts Brokerage House LLC"
+LAST	P31	Q4830453	S854	"https://georgeyachts.com/about-us"
+LAST	P1454	Q2912172	S854	"https://georgeyachts.com/about-us"
+LAST	P17	Q30	S854	"https://georgeyachts.com/about-us"
+LAST	P159	Q1524	S854	"https://georgeyachts.com/about-us"
+LAST	P571	+2025-11-00T00:00:00Z/10	S854	"https://georgeyachts.com/about-us"
+LAST	P856	"https://georgeyachts.com"
+LAST	P452	Q47269737	S854	"https://georgeyachts.com/charter-yacht-greece"
+LAST	P154	"yacht-icon-only.svg"
+LAST	P2003	"georgeyachts"
+LAST	P1813	"George Yachts"
+
+# ─────────────────────────────────────────────────────────────────
+# ENTITY 2: George P. Biniaris (Managing Broker)
+# ─────────────────────────────────────────────────────────────────
+
+CREATE
+LAST	Len	"George P. Biniaris"
+LAST	Den	"Greek yacht charter broker. Managing Broker of George Yachts Brokerage House LLC. IYBA member. Featured in Forbes (May 2026)."
+LAST	Aen	"George Biniaris"
+LAST	Aen	"George Petros Biniaris"
+LAST	P31	Q5	S854	"https://georgeyachts.com/about/george-p-biniaris"
+LAST	P21	Q6581097	S854	"https://georgeyachts.com/about/george-p-biniaris"
+LAST	P27	Q41	S854	"https://georgeyachts.com/about/george-p-biniaris"
+LAST	P106	Q43845	S854	"https://georgeyachts.com/about/george-p-biniaris"
+LAST	P551	Q1524	S854	"https://georgeyachts.com/about/george-p-biniaris"
+LAST	P856	"https://georgeyachts.com/about/george-p-biniaris"
+LAST	P6634	"george-p-biniaris"
+LAST	P2003	"george_p.biniaris"
+
+# ─────────────────────────────────────────────────────────────────
+# Property reference key (for review before running):
+# ─────────────────────────────────────────────────────────────────
+# P31    instance of
+# P21    sex or gender
+# P27    country of citizenship
+# P106   occupation
+# P108   employer
+# P112   founder
+# P127   owner
+# P154   logo image
+# P159   headquarters location
+# P166   award received
+# P17    country
+# P1343  described by source
+# P1454  legal form
+# P1813  short name
+# P21    sex or gender
+# P2003  Instagram username
+# P21    sex or gender
+# P27    country of citizenship
+# P452   industry
+# P551   residence
+# P571   founded / inception
+# P6634  LinkedIn personal profile username
+# P856   official website
+# Q1524  Athens (Greek capital)
+# Q2912172 limited liability company
+# Q30    United States of America
+# Q41    Greece
+# Q43845 businessperson
+# Q47269737 yacht charter (industry)
+# Q4830453 business
+# Q5     human
+# Q6581097 male
+#
+# ─────────────────────────────────────────────────────────────────
+# POST-CREATION STEPS (after QuickStatements run completes):
+# ─────────────────────────────────────────────────────────────────
+#
+# 1. Note the Q-numbers assigned to each entity (e.g. Q123456789).
+#
+# 2. Update lib/organizationSchema.js - add the Org Q-number to sameAs:
+#    "sameAs": [
+#      "https://www.wikidata.org/wiki/Q<ORG-NUMBER>",
+#      // existing entries...
+#    ]
+#
+# 3. Update lib/teamSchema.js - george-biniaris sameAs:
+#    "sameAs": [
+#      "https://www.wikidata.org/wiki/Q<PERSON-NUMBER>",
+#      // existing entries...
+#    ]
+#
+# 4. (Optional) Edit each entity manually in Wikidata to add:
+#    - Organization.founder (P112) -> link Person Q-number
+#    - Person.employer (P108) -> link Organization Q-number
+#    - These cross-references can't be done in V1 QuickStatements
+#      because the Q-numbers don't exist when the batch starts.
+#
+# 5. Commit + deploy:
+#    git add lib/organizationSchema.js lib/teamSchema.js
+#    git commit -m "feat(seo): add Wikidata Q-numbers to sameAs"
+#    git push
+#
+# 6. Wait 7-30 days for Google Knowledge Graph to ingest the Q-numbers.
+#    AI engines (ChatGPT, Perplexity, Claude) typically refresh within
+#    2-6 weeks of next crawl cycle.
+#
+# ─────────────────────────────────────────────────────────────────
+# COMMON GOTCHAS:
+# ─────────────────────────────────────────────────────────────────
+#
+# - QuickStatements may fail if it detects a duplicate. Search Wikidata
+#   first for "George Yachts" and "George P. Biniaris" to confirm
+#   no existing entries.
+#
+# - Q47269737 ("yacht charter") may not exist yet as a Wikidata item.
+#   If QuickStatements errors on P452, either find a more general
+#   industry Q-number (Q6979134 "tourism", Q1303167 "service industry"),
+#   OR create the yacht-charter item first as a separate batch.
+#
+# - S854 lines are "reference URL" qualifiers. Wikidata requires
+#   references for most claims; without them statements may be
+#   challenged or removed.
+#
+# - The CREATE / LAST pattern is QuickStatements V1 syntax. The CREATE
+#   command starts a new item; LAST refers to the most recently
+#   created or modified item.
+#
+# ─────────────────────────────────────────────────────────────────
+# END
+# ─────────────────────────────────────────────────────────────────
