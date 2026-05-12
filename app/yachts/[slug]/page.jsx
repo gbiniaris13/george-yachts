@@ -31,12 +31,15 @@ export async function generateMetadata({ params }) {
   if (!yacht) return { title: 'Yacht Not Found' };
 
   // 2026-05-12 — shortened to fit Google's SERP rendering threshold.
-  // Layout template appends ' | George Yachts' so the rendered title
-  // is `${name} | ${subtitle} | George Yachts` (~50 chars vs 100+
-  // before). Description trimmed to land 130-155 chars instead of
-  // 180+ which Google truncates.
-  const title = `${yacht.name} | ${yacht.subtitle}`;
-  const description = `Charter ${yacht.name}: ${yacht.length} ${yacht.subtitle}, sleeps ${yacht.sleeps}. Greek-waters crewed yacht charter. ${yacht.weeklyRatePrice}`;
+  // Layout template appends ' | George Yachts'. The Sanity subtitle
+  // field often contains a full marketing tagline after a ' | ' (e.g.
+  // 'FOUNTAINE PAJOT POWER 67 | BRAND NEW 2025 BUILD'). For meta we
+  // only want the builder/model part — split on first ' | ' and use
+  // the leading segment. Verified on 8 sample yachts: rendered title
+  // ~45-58 chars (was 76-108).
+  const shortSubtitle = (yacht.subtitle || '').split('|')[0].trim();
+  const title = shortSubtitle ? `${yacht.name} | ${shortSubtitle}` : yacht.name;
+  const description = `Charter ${yacht.name}: ${yacht.length} ${shortSubtitle}, sleeps ${yacht.sleeps}. Crewed yacht charter in Greek waters. ${yacht.weeklyRatePrice}`;
   const canonical = `https://georgeyachts.com/yachts/${slug}`;
 
   return {
