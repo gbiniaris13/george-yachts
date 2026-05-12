@@ -50,14 +50,12 @@ async function forwardLeadCapture(payload, req) {
 }
 
 export async function POST(req) {
-  const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    req.headers.get("x-real-ip") ||
-    "anonymous";
-  const limit = checkRateLimit(`pdf-${ip}`, { max: 5, windowMs: 10 * 60 * 1000 });
-  if (!limit.allowed) {
+  // checkRateLimit expects a Request, not a string. Returns { ok, retryAfter }
+  // not { allowed }. Fix both bugs from the original draft.
+  const limit = checkRateLimit(req, { max: 5, windowMs: 10 * 60 * 1000 });
+  if (!limit.ok) {
     return NextResponse.json(
-      { error: "Rate limit exceeded. Try again later." },
+      { error: "Rate limit exceeded. Try again later.", retryAfter: limit.retryAfter },
       { status: 429 }
     );
   }
