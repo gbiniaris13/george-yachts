@@ -30,8 +30,13 @@ export async function generateMetadata({ params }) {
 
   if (!yacht) return { title: 'Yacht Not Found' };
 
-  const title = `${yacht.name} | ${yacht.subtitle} | Luxury Yacht Charter Greece`;
-  const description = `Charter ${yacht.name}, a ${yacht.length} ${yacht.subtitle} accommodating ${yacht.sleeps} guests in Greek waters. ${yacht.weeklyRatePrice}`;
+  // 2026-05-12 — shortened to fit Google's SERP rendering threshold.
+  // Layout template appends ' | George Yachts' so the rendered title
+  // is `${name} | ${subtitle} | George Yachts` (~50 chars vs 100+
+  // before). Description trimmed to land 130-155 chars instead of
+  // 180+ which Google truncates.
+  const title = `${yacht.name} | ${yacht.subtitle}`;
+  const description = `Charter ${yacht.name}: ${yacht.length} ${yacht.subtitle}, sleeps ${yacht.sleeps}. Greek-waters crewed yacht charter. ${yacht.weeklyRatePrice}`;
   const canonical = `https://georgeyachts.com/yachts/${slug}`;
 
   return {
