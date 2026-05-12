@@ -1,4 +1,5 @@
 import React from "react";
+import { notFound } from "next/navigation";
 import { sanityClient, urlFor } from "@/lib/sanity";
 import { createClient } from "@sanity/client";
 import { PortableText } from "@portabletext/react";
@@ -196,13 +197,12 @@ const ArticlePage = async ({ params }) => {
   ]);
 
   if (!post) {
-    return (
-      <div className="min-h-screen bg-[#0D1B2A] flex items-center justify-center">
-        <h1 className="text-white font-marcellus text-3xl">
-          Article Not Found
-        </h1>
-      </div>
-    );
+    // 2026-05-12 — was a JSX fallback returning HTTP 200 (soft 404),
+    // which Google penalises because the URL appeared indexable.
+    // notFound() triggers Next's real 404 path: HTTP 404 status +
+    // app/not-found.jsx (cinematic page with smart-suggestion engine
+    // from Item 6) renders for the visitor.
+    notFound();
   }
 
   const articleSchema = generateArticleSchema({ ...post, slug });
