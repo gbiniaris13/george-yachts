@@ -13,6 +13,7 @@ import { GLOSSARY_TERMS } from "@/lib/glossarySeo";
 import { DESTINATION_COMPARISONS } from "@/lib/destinationComparisonSeo";
 import { MARKET_REPORTS } from "@/lib/marketReportsSeo";
 import { ISLAND_ANCHORAGES } from "@/lib/islandAnchoragesSeo";
+import { BOTTOM_FUNNEL_PAGES } from "@/lib/bottomFunnelSeo";
 
 const BASE_URL = "https://georgeyachts.com";
 
@@ -342,6 +343,16 @@ export default async function sitemap() {
     priority: 0.84,
   }));
 
+  // Phase 7 R34 (2026-05-12) - 20 bottom-funnel commercial-intent pages.
+  // Priority 0.88 - highest among programmatic family since these are
+  // pure purchase-intent queries.
+  const bottomFunnelEntries = BOTTOM_FUNNEL_PAGES.map((p) => ({
+    url: `${BASE_URL}${p.urlPath}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "weekly",
+    priority: 0.88,
+  }));
+
   let yachtEntries = [];
   try {
     const yachts = await sanityClient.fetch(
@@ -377,6 +388,7 @@ export default async function sitemap() {
     marketReportsHubEntry,
     ...marketReportEntries,
     ...anchorageEntries,
+    ...bottomFunnelEntries,
     ...blogEntries,
     ...yachtEntries,
   ];
