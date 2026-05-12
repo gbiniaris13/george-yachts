@@ -50,6 +50,11 @@ const USECASE_TO_GROUP = {
   corporate: 'corporate',
   wedding: 'friends',
   bachelor: 'friends',
+  // 2026-05-12 — added 'group' which the multi-yacht / large-group
+  // landing pages emit in their CTA URLs (e.g.
+  // /multi-yacht-charter-greece-large-group → /yacht-finder?usecase=group).
+  // Was silently dropped before this entry existed.
+  group: 'friends',
 };
 const REGION_PARAM_MAP = {
   cyclades: 'cyclades',
