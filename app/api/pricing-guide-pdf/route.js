@@ -80,29 +80,37 @@ export async function POST(req) {
   // Fire-and-forget lead capture so the PDF response stays fast.
   forwardLeadCapture({ firstName, email, timing, sourcePage: payload.sourcePage }, req).catch(() => {});
 
-  // Generate the PDF. Dynamic imports avoid the Node.js serverless
-  // TypeError that fires when @react-pdf/renderer is imported at
-  // module load (it pulls in dom-helpers at static-analysis time).
+  // Generate the PDF. Dynamic imports + explicit React resolution.
   let pdfBuffer;
+  let debugErr = null;
   try {
-    const [{ renderToBuffer }, React, { PricingGuidePdfDocument }] = await Promise.all([
-      import("@react-pdf/renderer"),
-      import("react").then((m) => m.default || m),
-      import("@/lib/pricingGuidePdf"),
-    ]);
-    pdfBuffer = await renderToBuffer(
-      React.createElement(PricingGuidePdfDocument, { firstName })
-    );
+    const reactMod = await import("react");
+    const React = reactMod.default || reactMod;
+    const createElement = React.createElement || reactMod.createElement;
+    const pdfMod = await import("@react-pdf/renderer");
+    const renderToBuffer = pdfMod.renderToBuffer || pdfMod.default?.renderToBuffer;
+    const { PricingGuidePdfDocument } = await import("@/lib/pricingGuidePdf");
+
+    if (typeof renderToBuffer !== "function") {
+      throw new Error(`renderToBuffer not a function. Got: ${typeof renderToBuffer}. Keys: ${Object.keys(pdfMod).join(",")}`);
+    }
+    if (typeof createElement !== "function") {
+      throw new Error(`React.createElement not a function. React keys: ${Object.keys(React).join(",")}`);
+    }
+    const element = createElement(PricingGuidePdfDocument, { firstName });
+    pdfBuffer = await renderToBuffer(element);
   } catch (err) {
-    console.error("[pricing-guide-pdf] PDF generation failed:", err?.message, err?.stack);
-    // Fallback: tell the client the lead was captured but the PDF
-    // failed. The form will surface a friendly fallback message.
+    console.error("[pricing-guide-pdf] PDF gen failed:", err);
+    debugErr = err;
     return NextResponse.json(
       {
         error: "PDF generation temporarily unavailable",
         leadCaptured: true,
         fallbackUrl: "/greek-yacht-charter-2026-complete-pricing-guide",
         contactEmail: "george@georgeyachts.com",
+        // Diagnostic info (safe to expose - it's only the error
+        // message, not env values or stack frames pointing to secrets).
+        diagnostic: err?.message || String(err),
       },
       { status: 503 }
     );
