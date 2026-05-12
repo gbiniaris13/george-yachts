@@ -22,7 +22,7 @@ export const revalidate = 86400;
 export const metadata = {
   title: "Greek Yacht Charter Cost Calculator 2026 | George Yachts",
   description:
-    "Calculate the full cost of a Greek yacht charter - base fee + VAT 12% + APA + delivery + gratuity. Free tool by George Yachts, IYBA member, MYBA-standard contracts.",
+    "Calculate the full cost of a Greek yacht charter - base fee + VAT 13% + APA + delivery + gratuity. Free tool by George Yachts, IYBA member, MYBA-standard contracts.",
   alternates: { canonical: "https://georgeyachts.com/tools/charter-cost-calculator" },
   openGraph: {
     title: "Greek Yacht Charter Cost Calculator 2026",
@@ -39,11 +39,11 @@ export const metadata = {
 const FAQ = [
   {
     q: "What's included in the calculator's estimate?",
-    a: "Base charter fee, Greek VAT (12% reduced rate for Greek-flagged yachts), APA (Advance Provisioning Allowance) at your selected percentage, delivery fee estimate from the Athens-based fleet, and crew gratuity range (10-15%). The total is shown as a range bracketing the gratuity since gratuity is customary, not contractual.",
+    a: "Base charter fee, Greek VAT (13% reduced rate for Greek-flagged yachts), APA (Advance Provisioning Allowance) at your selected percentage, delivery fee estimate from the Athens-based fleet, and crew gratuity range (10-15%). The total is shown as a range bracketing the gratuity since gratuity is customary, not contractual.",
   },
   {
-    q: "Is the 12% VAT rate correct for all Greek charters?",
-    a: "12% is the reduced Greek VAT rate that applies to charters consumed within Greek waters under Greek-flagged yachts. Foreign-flagged yachts (Cayman, Malta, etc.) have variable VAT treatment depending on flag state. Charters that include time in non-Greek waters may have a proportional VAT adjustment - rare for typical 7-night Greek itineraries.",
+    q: "Is the 13% VAT rate correct for all Greek charters?",
+    a: "13% is the reduced Greek VAT rate that applies to charters consumed within Greek waters under Greek-flagged yachts departing Greek ports. Foreign-flagged yachts (Cayman, Malta, etc.) have variable VAT treatment depending on flag state and itinerary structuring. Charters that include time in non-Greek waters may have a proportional VAT adjustment - rare for typical 7-night Greek itineraries.",
   },
   {
     q: "How accurate is the APA percentage?",
@@ -70,7 +70,7 @@ function WebApplicationJsonLd() {
     "@id": "https://georgeyachts.com/tools/charter-cost-calculator#tool",
     name: "Greek Yacht Charter Cost Calculator",
     description:
-      "Interactive calculator estimating the full cost of a Greek yacht charter, including base fee, Greek VAT (12%), APA, delivery, and crew gratuity range.",
+      "Interactive calculator estimating the full cost of a Greek yacht charter, including base fee, Greek VAT (13%), APA, delivery, and crew gratuity range.",
     url: "https://georgeyachts.com/tools/charter-cost-calculator",
     applicationCategory: "FinanceApplication",
     operatingSystem: "Any (web browser)",
@@ -246,7 +246,7 @@ export default function ChartCostCalculatorPage() {
                   body: "The weekly hire of the yacht and its full crew. Includes salaries, insurance, normal maintenance, linens, standard amenities. Excludes everything below.",
                 },
                 {
-                  label: "Greek VAT (12%)",
+                  label: "Greek VAT (13%)",
                   body: "Half the standard 24% Greek VAT, applied to the base fee for intra-Greek charters on Greek-flagged yachts. The most favourable Mediterranean rate after Croatia's 13%.",
                 },
                 {

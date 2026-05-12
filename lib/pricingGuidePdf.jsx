@@ -266,7 +266,7 @@ const SEASON_MULTIPLIERS_TABLE = {
 const COMPARISON_TABLE = {
   headers: ["Destination", "VAT", "Mid-tier weekly", "Verdict"],
   rows: [
-    ["Greece", "12%", "€120k-180k", "Best value-to-quality"],
+    ["Greece", "13%", "€120k-180k", "Best value-to-quality"],
     ["Croatia", "13%", "€95k-150k", "Cheaper, less variety"],
     ["French Riviera", "10-22%", "€200k-300k", "+40% premium for Monaco access"],
     ["Italy (Amalfi)", "6.6-22%", "€150k-220k", "Iconic but VAT complex"],
@@ -417,7 +417,7 @@ export function PricingGuidePdfDocument({ firstName = "" }) {
         <View style={styles.costBucket}>
           <Text style={styles.costBucketNum}>3</Text>
           <View style={styles.costBucketBody}>
-            <Text style={styles.costBucketLabel}>Greek VAT - 12%</Text>
+            <Text style={styles.costBucketLabel}>Greek VAT - 13%</Text>
             <Text style={styles.costBucketDetail}>
               Reduced VAT rate on the base charter fee. Half of standard
               Greek VAT (24%). Among the most favourable Mediterranean
@@ -464,7 +464,7 @@ export function PricingGuidePdfDocument({ firstName = "" }) {
         </Text>
         <Text style={styles.paragraph}>
           Base charter fee: <Text style={{ fontWeight: "bold" }}>€150,000</Text>{"  "}
-          | APA 30%: €45,000 | Greek VAT 12%: €18,000 | Delivery (Athens
+          | APA 30%: €45,000 | Greek VAT 13%: €19,500 | Delivery (Athens
           base): €0 | Crew gratuity 12%: €18,000
         </Text>
         <Text style={[styles.paragraph, { fontWeight: "bold", color: NAVY }]}>
