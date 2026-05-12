@@ -16,6 +16,7 @@
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { getGlossaryTermBySlug } from "@/lib/glossarySeo";
+import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -146,44 +147,21 @@ export default function GlossaryTerm({ termData }) {
               </p>
             )}
 
-            {/* Definition block — this is the snippet target */}
-            <div
-              style={{
-                background: "rgba(201,168,76,0.06)",
-                borderLeft: `3px solid ${GOLD}`,
-                padding: "28px 32px",
-                marginTop: 12,
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: "var(--gy-font-ui)",
-                  fontSize: 9,
-                  letterSpacing: "0.42em",
-                  textTransform: "uppercase",
-                  color: GOLD,
-                  fontWeight: 600,
-                  margin: "0 0 12px",
-                }}
-              >
-                Definition
-              </p>
-              <p
-                style={{
-                  fontFamily: "var(--gy-font-editorial)",
-                  fontSize: "clamp(18px, 2.2vw, 22px)",
-                  lineHeight: 1.55,
-                  fontWeight: 300,
-                  color: CREAM,
-                  margin: 0,
-                  fontStyle: "italic",
-                }}
-              >
-                {term.shortDefinition}
-              </p>
-            </div>
           </div>
         </header>
+
+        {/* QUICK ANSWER - Phase 7 R27 (technical brief Priority 2B).
+            Replaces "Definition" block with Q&A "answer unit" format.
+            Question derived from term name; answer is the short
+            definition verbatim. Attributed to George for E-E-A-T. */}
+        <section style={{ padding: "32px 24px 0" }}>
+          <div style={{ maxWidth: 980, margin: "0 auto" }}>
+            <QuickAnswerBlock
+              question={`What is ${term.term} in yacht charter?`}
+              answer={term.shortDefinition}
+            />
+          </div>
+        </section>
 
         {/* LONG DEFINITION */}
         <section style={{ padding: "72px 24px" }}>

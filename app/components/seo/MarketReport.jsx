@@ -9,6 +9,7 @@
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import InlineCalendlySection from "@/app/components/InlineCalendlySection";
+import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -259,42 +260,22 @@ export default function MarketReport({ reportData }) {
           </div>
         </header>
 
-        {/* EXECUTIVE SUMMARY */}
+        {/* QUICK ANSWER - Phase 7 R27 (technical brief Priority 2B).
+            Replaces "Executive summary" block with Q&A "answer unit"
+            format. Question derived from report type + period; answer
+            is the executive summary verbatim. */}
         <section style={{ padding: "56px 24px" }}>
-          <div style={{ maxWidth: 820, margin: "0 auto" }}>
-            <div
-              style={{
-                background: "rgba(201,168,76,0.06)",
-                borderLeft: `3px solid ${GOLD}`,
-                padding: "28px 32px",
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: "var(--gy-font-ui)",
-                  fontSize: 9,
-                  letterSpacing: "0.42em",
-                  textTransform: "uppercase",
-                  color: GOLD,
-                  fontWeight: 600,
-                  margin: "0 0 12px",
-                }}
-              >
-                Executive summary
-              </p>
-              <p
-                style={{
-                  fontFamily: "var(--gy-font-editorial)",
-                  fontSize: "clamp(17px, 2.1vw, 20px)",
-                  lineHeight: 1.6,
-                  fontWeight: 300,
-                  color: CREAM,
-                  margin: 0,
-                }}
-              >
-                {r.executiveSummary}
-              </p>
-            </div>
+          <div style={{ maxWidth: 980, margin: "0 auto" }}>
+            <QuickAnswerBlock
+              question={
+                r.reportType === "forecast"
+                  ? `What's the outlook for the Greek yacht charter market in ${r.period.toLowerCase().replace("peak ", "")}?`
+                  : r.reportType === "retrospective"
+                  ? `What happened in the Greek yacht charter market in ${r.period}?`
+                  : `What's the state of the Greek yacht charter market right now (${r.period})?`
+              }
+              answer={r.executiveSummary}
+            />
           </div>
         </section>
 

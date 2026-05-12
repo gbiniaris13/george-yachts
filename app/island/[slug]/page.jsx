@@ -21,6 +21,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import IslandPageTracker from "./IslandPageTracker";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import QuizCtaCard from "@/app/components/QuizCtaCard";
+import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 
 export const revalidate = 3600;
 
@@ -215,6 +216,22 @@ export default async function IslandPage({ params }) {
             </p>
           </div>
         </header>
+
+        {/* QUICK ANSWER - Phase 7 R27 (technical brief Priority 2B). */}
+        <section style={{ padding: "32px 24px 0" }}>
+          <div style={{ maxWidth: 980, margin: "0 auto" }}>
+            <QuickAnswerBlock
+              question={`What is a yacht charter in ${island.name} like?`}
+              answer={(() => {
+                const firstSentence = (island.whyVisit || "").split(". ")[0];
+                const tag = island.tagline ? island.tagline.replace(/\.$/, "") : "";
+                return tag
+                  ? `${tag}. ${firstSentence}.`.replace(/\.\.$/, ".")
+                  : `${firstSentence}.`;
+              })()}
+            />
+          </div>
+        </section>
 
         {/* WHY THIS ISLAND */}
         <section style={{ padding: "72px 24px" }}>

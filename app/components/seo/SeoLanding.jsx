@@ -41,6 +41,7 @@ import { sanityCardImg } from "@/lib/sanity-image";
 import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { relatedFor } from "@/lib/seoInternalLinks";
+import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -149,6 +150,35 @@ export default async function SeoLanding({ pageData }) {
       <BreadcrumbSchema items={breadcrumbs} />
 
       <article style={{ background: NAVY, minHeight: "100vh" }}>
+        {/* QUICK ANSWER - Phase 7 R27 (technical brief Priority 2B).
+            Renders only when pageData.quickAnswer is present, OR
+            falls back to derived Q/A using h1 + seoDescription. */}
+        {(() => {
+          const qa = pageData.quickAnswer;
+          let question;
+          let answer;
+          if (qa && qa.question && qa.answer) {
+            question = qa.question;
+            answer = qa.answer;
+          } else if (pageData.seoDescription && pageData.h1) {
+            question = `${pageData.h1}: what should I know?`;
+            answer = pageData.seoDescription;
+          }
+          if (!question || !answer) return null;
+          return (
+            <section
+              style={{
+                background: NAVY,
+                padding: "32px 24px 0",
+              }}
+            >
+              <div style={{ maxWidth: 980, margin: "0 auto" }}>
+                <QuickAnswerBlock question={question} answer={answer} />
+              </div>
+            </section>
+          );
+        })()}
+
         {/* HERO */}
         <header
           style={{

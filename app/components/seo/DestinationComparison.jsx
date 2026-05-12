@@ -10,6 +10,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import InlineCalendlySection from "@/app/components/InlineCalendlySection";
 import QuizCtaCard from "@/app/components/QuizCtaCard";
+import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -168,42 +169,15 @@ export default function DestinationComparison({ pageData }) {
           </div>
         </header>
 
-        {/* SHORT ANSWER — snippet target */}
+        {/* QUICK ANSWER - Phase 7 R27 (technical brief Priority 2B).
+            Replaces the previous "Short answer" block with the Q&A
+            "answer unit" format optimised for AI extraction. */}
         <section style={{ padding: "56px 24px 32px" }}>
-          <div style={{ maxWidth: 820, margin: "0 auto" }}>
-            <div
-              style={{
-                background: "rgba(201,168,76,0.06)",
-                borderLeft: `3px solid ${GOLD}`,
-                padding: "28px 32px",
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: "var(--gy-font-ui)",
-                  fontSize: 9,
-                  letterSpacing: "0.42em",
-                  textTransform: "uppercase",
-                  color: GOLD,
-                  fontWeight: 600,
-                  margin: "0 0 12px",
-                }}
-              >
-                The short answer
-              </p>
-              <p
-                style={{
-                  fontFamily: "var(--gy-font-editorial)",
-                  fontSize: "clamp(17px, 2.1vw, 20px)",
-                  lineHeight: 1.6,
-                  fontWeight: 300,
-                  color: CREAM,
-                  margin: 0,
-                }}
-              >
-                {data.shortAnswer}
-              </p>
-            </div>
+          <div style={{ maxWidth: 980, margin: "0 auto" }}>
+            <QuickAnswerBlock
+              question={`Greece or ${data.competitorName} for a 2026 yacht charter?`}
+              answer={data.shortAnswer}
+            />
           </div>
         </section>
 

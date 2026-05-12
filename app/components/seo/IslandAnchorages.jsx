@@ -13,6 +13,7 @@
 
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -166,6 +167,23 @@ export default function IslandAnchorages({ guideData }) {
             </p>
           </div>
         </header>
+
+        {/* QUICK ANSWER - Phase 7 R27 (technical brief Priority 2B). */}
+        <section style={{ padding: "32px 24px 0" }}>
+          <div style={{ maxWidth: 980, margin: "0 auto" }}>
+            <QuickAnswerBlock
+              question={`Where should I anchor a yacht around ${g.islandName}?`}
+              answer={
+                g.anchorages && g.anchorages.length > 0
+                  ? `${g.islandName} has ${g.anchorages.length} meaningful yacht anchorages. The primary anchorages are ${g.anchorages
+                      .slice(0, 3)
+                      .map((a) => a.name)
+                      .join(", ")} - each with different shelter, holding, and ashore access. ${g.captainAdvice ? g.captainAdvice.split(". ")[0] + "." : ""}`
+                  : g.intro.split(". ").slice(0, 2).join(". ") + "."
+              }
+            />
+          </div>
+        </section>
 
         {/* INTRO */}
         <section style={{ padding: "56px 24px" }}>
