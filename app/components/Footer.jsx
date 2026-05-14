@@ -37,9 +37,110 @@ const Footer = () => {
     { name: "About Us", href: "/about-us" },
     { name: "Our Team", href: "/team" },
     { name: "Credentials", href: "/credentials" },
+    // 2026-05-14 (Ahrefs orphan-page audit) — /press, /partners,
+    // /events had zero incoming internal links. All three are real,
+    // indexable, and high-trust surfaces, so they belong here under
+    // Company alongside Credentials.
+    { name: "Press", href: "/press" },
+    { name: "Partners", href: "/partners" },
+    { name: "Events", href: "/events" },
     { name: "Greece by Yacht", href: "/greece-by-yacht" },
     { name: "The Journal", href: "/blog" },
     { name: "FAQ", href: "/faq" },
+  ];
+
+  // 2026-05-14 — Site Index (Ahrefs orphan-page fix).
+  //
+  // The Ahrefs 2026-05-14 crawl flagged 57 orphan pages (no incoming
+  // internal links). They were all real, indexable, programmatic-SEO
+  // landing pages targeting high-intent long-tail queries — Google
+  // and the AI search engines (Perplexity / ChatGPT / Claude /
+  // Gemini) couldn't reach them because nothing on the site linked
+  // to them. PageRank was effectively zero across 57 high-value URLs.
+  //
+  // The fix is the canonical luxury-publication pattern (NYT,
+  // Bloomberg, Vogue): a discrete "More from George Yachts" tiered
+  // sitemap block at the bottom of the footer. Every link is real
+  // anchor text — no nofollow, no obfuscation — so each orphan now
+  // has a site-wide inbound link from every page on the domain.
+  //
+  // Categorisation matches search-intent groupings:
+  //   1. Charter by Occasion         — life-event keywords
+  //   2. Charter by Audience & Budget — qualifying-filter keywords
+  //   3. Explore by Island            — destination long-tail
+  //   4. Yacht-Type & Itinerary       — vessel-class + duration combos
+  //
+  // Visual register: muted ivory/45 labels + grid layout that
+  // matches the existing footer column rhythm so it reads as a
+  // sober editorial index, not a keyword dump.
+  const siteIndexSections = [
+    {
+      heading: "Charter by Occasion",
+      links: [
+        { name: "Honeymoon Charter", href: "/yacht-charter-greece-honeymoon" },
+        { name: "Proposal Charter", href: "/proposal-yacht-charter-greece" },
+        { name: "Bachelorette Charter", href: "/bachelorette-yacht-charter-greece" },
+        { name: "Billionaire Charter", href: "/billionaire-yacht-charter-greece" },
+        { name: "Milestone Celebration", href: "/milestone-celebration-yacht-charter-greece" },
+        { name: "Private Retreat", href: "/retreat-yacht-charter-greece" },
+        { name: "Family with Children", href: "/yacht-charter-greece-family-with-children" },
+        { name: "Corporate Groups", href: "/yacht-charter-greece-corporate-groups" },
+        { name: "Friends' Trip", href: "/friends-trip-yacht-charter-greece" },
+      ],
+    },
+    {
+      heading: "Charter by Audience & Budget",
+      links: [
+        { name: "American Clients", href: "/yacht-charter-greece-american-clients" },
+        { name: "UK Clients", href: "/yacht-charter-greece-uk-clients" },
+        { name: "Under €50,000", href: "/yacht-charter-greece-under-50000" },
+        { name: "Under €100,000", href: "/yacht-charter-greece-under-100000" },
+        { name: "With Stabilizers", href: "/yacht-charter-greece-with-stabilizers" },
+        { name: "Compare Yachts", href: "/compare" },
+        { name: "Crewed Charter Greek Islands", href: "/crewed-yacht-charter-greek-islands-2026" },
+      ],
+    },
+    {
+      heading: "Explore by Island",
+      links: [
+        { name: "Mykonos Anchorages", href: "/yacht-charter-mykonos-anchorages" },
+        { name: "Santorini Anchorages", href: "/yacht-charter-santorini-anchorages" },
+        { name: "Hydra Anchorages", href: "/yacht-charter-hydra-anchorages" },
+        { name: "Corfu Anchorages", href: "/yacht-charter-corfu-anchorages" },
+        { name: "Andros", href: "/yacht-charter-andros" },
+        { name: "Naxos", href: "/yacht-charter-naxos" },
+        { name: "Sifnos", href: "/yacht-charter-sifnos" },
+        { name: "Ithaca", href: "/yacht-charter-ithaca" },
+        { name: "Zakynthos", href: "/yacht-charter-zakynthos" },
+        { name: "Rhodes", href: "/yacht-charter-rhodes" },
+        { name: "Symi", href: "/yacht-charter-symi" },
+        { name: "Crete · Chania", href: "/yacht-charter-crete-chania" },
+        { name: "Sporades · Skiathos", href: "/yacht-charter-sporades-skiathos" },
+        { name: "Dodecanese · Rhodes", href: "/yacht-charter-dodecanese-rhodes" },
+      ],
+    },
+    {
+      heading: "Yacht Type & Itinerary",
+      links: [
+        { name: "Best Catamarans", href: "/best-catamarans-greece-charter" },
+        { name: "Best Gulets", href: "/best-gulets-greece-authentic-experience" },
+        { name: "Best Motor Yachts", href: "/best-motor-yachts-greece-speed" },
+        { name: "Best Sailing Yachts", href: "/best-sailing-yachts-greece" },
+        { name: "Best Superyachts (August)", href: "/best-superyachts-greece-august" },
+        { name: "Best for Couples", href: "/best-yachts-greece-couples" },
+        { name: "Best for Large Groups", href: "/best-yachts-greece-large-groups" },
+        { name: "Best with Stabilizers", href: "/best-yachts-greece-stabilizers-smooth-sailing" },
+        { name: "Superyacht Greece — August", href: "/superyacht-charter-greece-august" },
+        { name: "Mykonos · 8 Guests", href: "/yacht-charter-mykonos-8-guests" },
+        { name: "Mykonos · 12 Guests", href: "/yacht-charter-mykonos-12-guests" },
+        { name: "Santorini for Couples", href: "/yacht-charter-santorini-couples" },
+        { name: "Athens → Mykonos", href: "/yacht-charter-athens-to-mykonos" },
+        { name: "Ionian · 2 Weeks", href: "/yacht-charter-ionian-2-weeks" },
+        { name: "Motor Yacht · Saronic", href: "/motor-yacht-charter-saronic-gulf" },
+        { name: "Crewed Catamaran · Cyclades", href: "/crewed-catamaran-charter-cyclades" },
+        { name: "Family with Catamarans", href: "/catamaran-charter-greece-family" },
+      ],
+    },
   ];
 
   const legalLinks = [
@@ -393,6 +494,73 @@ const Footer = () => {
               By subscribing you agree to receive occasional emails from <span className="notranslate">George Yachts Brokerage House LLC</span>.
               Unsubscribe anytime. See our <Link href="/privacy-policy" style={{ color: "rgba(248,245,240,0.55)", textDecoration: "underline" }}>Privacy Policy</Link>.
             </p>
+          </div>
+        </div>
+
+        {/* 2026-05-14 — Site Index (Ahrefs orphan-page fix).
+            Discrete editorial index — 4 columns, muted ivory labels,
+            same tracking/spacing language as the rest of the footer
+            so it reads as the sober "More from us" block luxury
+            publications run at the bottom of every page. The full
+            categorisation rationale lives in the comment above the
+            siteIndexSections constant. */}
+        <div className="w-full mb-12 pt-2">
+          <p
+            style={{
+              fontFamily: "var(--gy-font-ui)",
+              fontSize: "8px",
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: "rgba(248, 245, 240,0.4)",
+              marginBottom: "20px",
+              textAlign: "center",
+            }}
+          >
+            More from George Yachts
+          </p>
+          <div
+            className="grid gap-x-8 gap-y-6"
+            style={{
+              gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+            }}
+          >
+            {siteIndexSections.map((section) => (
+              <div key={section.heading}>
+                <p
+                  style={{
+                    fontFamily: "var(--gy-font-ui)",
+                    fontSize: "9px",
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: "rgba(201, 168, 76,0.85)",
+                    marginBottom: "10px",
+                  }}
+                >
+                  {section.heading}
+                </p>
+                <ul className="space-y-1.5">
+                  {section.links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        style={{
+                          fontFamily: "var(--gy-font-ui)",
+                          fontSize: "11px",
+                          letterSpacing: "0.04em",
+                          color: "rgba(248, 245, 240,0.55)",
+                          textDecoration: "none",
+                          lineHeight: 1.55,
+                          transition: "color 0.25s ease",
+                        }}
+                        className="hover:!text-white"
+                      >
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
 
