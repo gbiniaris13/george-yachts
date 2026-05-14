@@ -58,6 +58,7 @@ async function getPost(slug) {
     excerpt,
     quickAnswer,
     mainImage,
+    faqItems[]{ question, answer },
     body[]{
       ...,
       _type == "yachtCallout" => {
@@ -214,8 +215,19 @@ const ArticlePage = async ({ params }) => {
 
   const articleSchema = generateArticleSchema({ ...post, slug });
 
-  // Extract FAQs from H3 headings ending in "?"
-  const faqs = extractFAQs(post.body);
+  // Prefer the structured `faqItems` field (added 2026-05-14 — see
+  // `lib/sanity-schema-post-faq.js` for the Studio paste). Fall back to
+  // extracting H3-followed-by-paragraph from the body for legacy posts
+  // that put their FAQ inline in the body editor.
+  //
+  // Only one path runs for any given post: structured > extracted.
+  const structuredFaqs = Array.isArray(post.faqItems)
+    ? post.faqItems.filter((f) => f && f.question && f.answer)
+    : [];
+  const faqs = structuredFaqs.length > 0
+    ? structuredFaqs
+    : extractFAQs(post.body);
+
   const faqSchema = faqs.length > 0 ? {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -470,6 +482,77 @@ const ArticlePage = async ({ params }) => {
           </div>
         </div>
       </section>
+
+      {/* Frequently asked questions — visible section, only renders when
+          the post has a structured `faqItems` field (legacy posts that
+          put FAQs inline as H3-in-body skip this to avoid duplication;
+          their FAQ JSON-LD is still emitted via extractFAQs above). */}
+      {structuredFaqs.length > 0 && (
+        <section className="relative z-10 bg-[#0D1B2A] px-6 pb-20 md:pb-28">
+          <div className="max-w-[720px] mx-auto">
+            <div className="flex items-center space-x-6 mb-12">
+              <span className="block w-6 h-px bg-[#C9A84C]/50" />
+              <span className="text-[#C9A84C]/50 text-[8px] tracking-[0.7em] uppercase">
+                Frequently Asked
+              </span>
+              <span className="block flex-1 h-px bg-white/5" />
+            </div>
+
+            <h2
+              style={{
+                fontFamily: "var(--gy-font-editorial)",
+                fontSize: "clamp(28px, 4vw, 44px)",
+                fontWeight: 300,
+                color: "#F8F5F0",
+                lineHeight: 1.05,
+                letterSpacing: "-0.02em",
+                margin: "0 0 40px",
+              }}
+            >
+              Frequently asked questions
+            </h2>
+
+            <div className="space-y-2">
+              {structuredFaqs.map((item, idx) => (
+                <details
+                  key={idx}
+                  className="group border-b border-white/[0.07] py-6"
+                >
+                  <summary
+                    className="cursor-pointer list-none flex items-start justify-between gap-6 text-white/85 hover:text-[#C9A84C] transition-colors duration-300"
+                    style={{
+                      fontFamily: "var(--gy-font-editorial)",
+                      fontSize: "20px",
+                      fontWeight: 400,
+                      lineHeight: 1.35,
+                      letterSpacing: "-0.01em",
+                    }}
+                  >
+                    <span>{item.question}</span>
+                    <span
+                      aria-hidden="true"
+                      className="shrink-0 text-[#C9A84C]/70 transition-transform duration-300 group-open:rotate-45"
+                      style={{ fontSize: "20px", lineHeight: 1 }}
+                    >
+                      +
+                    </span>
+                  </summary>
+                  <p
+                    className="mt-5 text-white/65"
+                    style={{
+                      fontSize: "16px",
+                      lineHeight: 1.85,
+                      fontWeight: 300,
+                    }}
+                  >
+                    {item.answer}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* F.1 + F.2 — Yachts to consider + author bio. Sits BEFORE
           related articles so the highest-conversion path (yacht
