@@ -3,9 +3,33 @@
 // VisitorTracker — Real-time visitor tracking with Telegram alerts
 // Tracks: pages, yachts viewed, time on site, device, source
 // Triggers hot lead detection popup
+//
+// 2026-05-14 visitor-intelligence rollout — see the consultancy
+// report in the conversation. This component now collects:
+//   • Attribution (UTM, gclid, fbclid, msclkid, li_fat_id, ttclid…)
+//   • Full referrer URL (verbatim, not just hostname)
+//   • Browser locale (preferred + language[])
+//   • Device tier signals (DPR, cores, memory, screen, viewport,
+//     connection effective-type, touch points, preferences)
+//   • Scroll-depth per page (25/50/75/90% marks)
+//   • CTA clicks (Brief George, WhatsApp, Calendly, phone, email,
+//     compare, cost-calc, yacht-finder, pricing-calendar)
+//   • Tab-focus active vs hidden seconds
+//   • Copy + print events (strong intent signals)
+//
+// The server side (/api/track) then enriches with:
+//   • Vercel Edge geo (lat/lng/region/postal/timezone)
+//   • IP → company / ASN / VPN flag (via IPinfo or ipapi fallback)
+//   • Email → company enrichment on lead capture (Apollo / Hunter)
+//   • Composite hot-lead score with explainable breakdown
+//
+// Every layer is graceful: if any signal is unavailable the rest
+// continue to work. If any API key is missing, the corresponding
+// enrichment silently no-ops.
 
 import { useEffect, useRef, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
+import { captureAttribution, collectClientSignals } from '@/lib/visitor-signals';
 
 const SESSION_KEY = 'gy-tracker-session';
 const YACHT_HISTORY_KEY = 'gy-view-history';
@@ -28,7 +52,8 @@ function getOrCreateVisitorId() {
   }
 }
 
-// Hot lead thresholds
+// Hot lead client-side thresholds (server has the FINAL say via
+// the weighted score — these are just early-fire triggers).
 const HOT_LEAD_UNIQUE_YACHTS = 3;     // 3+ different yachts
 const HOT_LEAD_SAME_YACHT = 3;         // same yacht 3x
 const HOT_LEAD_TIME_SECONDS = 300;     // 5+ minutes on site
@@ -66,7 +91,7 @@ let lastBeaconKey = '';
 async function sendBeacon(data) {
   try {
     // Deduplicate noisy events. session_end / hot_lead / new_visit
-    // are allowed through; only page_view heartbeats coalesce.
+    // are allowed through; only page_view + scroll_depth heartbeats coalesce.
     if (data?.event === 'page_view') {
       const key = `${data.event}:${data.sessionId}:${data.page}`;
       const now = Date.now();
@@ -94,11 +119,55 @@ async function sendBeacon(data) {
   }
 }
 
+// Match a path to a "high-intent surface" — these light up the
+// scoring formula as boolean flags in the session row.
+function classifyPath(pathname) {
+  if (!pathname) return null;
+  if (pathname.startsWith('/compare')) return 'compare';
+  if (pathname.startsWith('/cost-calculator')) return 'cost_calc';
+  if (pathname.startsWith('/tools/charter-cost-calculator')) return 'cost_calc';
+  if (pathname.startsWith('/yacht-finder')) return 'yacht_finder';
+  if (pathname.startsWith('/pricing-calendar')) return 'pricing_calendar';
+  if (pathname.startsWith('/sailing-distance-calculator')) return 'distance_calc';
+  if (pathname.startsWith('/itinerary-builder')) return 'itinerary_builder';
+  if (pathname.startsWith('/inquiry')) return 'inquiry';
+  if (pathname.startsWith('/yachts/')) return 'yacht_detail';
+  if (pathname.startsWith('/blog/')) return 'blog_post';
+  return null;
+}
+
+// Match a clicked element to a CTA kind. Returns null for non-CTA clicks.
+function classifyCTA(el) {
+  if (!el || el.nodeType !== 1) return null;
+  const a = el.closest && el.closest('a, button');
+  if (!a) return null;
+  const href = a.getAttribute('href') || '';
+  const txt = (a.textContent || '').trim().toLowerCase();
+  const dataCta = a.getAttribute('data-cta');
+  if (dataCta) return dataCta;
+  if (href.startsWith('https://wa.me/') || href.includes('whatsapp.com/')) return 'whatsapp';
+  if (href.startsWith('tel:')) return 'phone_call';
+  if (href.startsWith('mailto:')) return 'email_click';
+  if (href.includes('calendly.com')) return 'calendly';
+  if (href === '/inquiry' || href.startsWith('/inquiry?') || href.endsWith('#inquiry')) {
+    return 'brief_george';
+  }
+  if (txt === 'brief george' || txt === 'start your charter') return 'brief_george';
+  if (href.startsWith('/compare')) return 'compare_click';
+  return null;
+}
+
 export default function VisitorTracker({ onHotLead }) {
   const pathname = usePathname();
   const startTimeRef = useRef(Date.now());
   const sessionRef = useRef(null);
   const hotLeadTriggeredRef = useRef(false);
+  // Per-page scroll depth bookkeeping. Reset on pathname change.
+  const scrollDepthRef = useRef({ path: null, max: 0, reported: new Set() });
+  // Tab focus active/hidden seconds.
+  const focusRef = useRef({
+    active: 0, hidden: 0, lastTickAt: Date.now(), visible: true,
+  });
 
   // Initialize session on mount
   useEffect(() => {
@@ -106,6 +175,12 @@ export default function VisitorTracker({ onHotLead }) {
     const isNew = !session;
 
     if (isNew) {
+      // Capture attribution + client signals ONCE per session — same
+      // payload travels with every subsequent beacon so the server
+      // can correlate them with the right session row.
+      const attribution = captureAttribution() || {};
+      const clientSignals = collectClientSignals() || {};
+
       session = {
         id: Math.random().toString(36).substring(2, 10),
         startTime: Date.now(),
@@ -113,6 +188,17 @@ export default function VisitorTracker({ onHotLead }) {
         yachtsViewed: [],
         yachtViewCounts: {},  // { slug: count }
         referrer: document.referrer || '',
+        attribution,
+        clientSignals,
+        // Session-level tallies for the hot-score formula.
+        ctaClicks: 0,
+        copyEvents: 0,
+        printEvents: 0,
+        scrollDeep: false,
+        comparePageVisited: false,
+        costCalcUsed: false,
+        yachtFinderUsed: false,
+        pricingCalendarUsed: false,
       };
       saveSession(session);
 
@@ -124,6 +210,8 @@ export default function VisitorTracker({ onHotLead }) {
         visitorId: getOrCreateVisitorId(),
         page: pathname,
         referrer: document.referrer || '',
+        attribution,
+        client: clientSignals,
         isTest: false,
       });
     }
@@ -143,6 +231,14 @@ export default function VisitorTracker({ onHotLead }) {
     if (!session.pages.includes(pathname)) {
       session.pages.push(pathname);
     }
+
+    // High-intent surface classification — boolean flags fed into
+    // hot-score on the server side.
+    const intent = classifyPath(pathname);
+    if (intent === 'compare') session.comparePageVisited = true;
+    if (intent === 'cost_calc') session.costCalcUsed = true;
+    if (intent === 'yacht_finder') session.yachtFinderUsed = true;
+    if (intent === 'pricing_calendar') session.pricingCalendarUsed = true;
 
     // Check if this is a yacht page
     const yachtMatch = pathname.match(/^\/yachts\/(.+)/);
@@ -165,6 +261,9 @@ export default function VisitorTracker({ onHotLead }) {
     saveSession(session);
     sessionRef.current = session;
 
+    // Reset per-page scroll depth bookkeeping on path change.
+    scrollDepthRef.current = { path: pathname, max: 0, reported: new Set() };
+
     // Persist progress to the CRM session row so the Visitors dashboard
     // reflects the real time_on_site + pages list even if the visitor
     // leaves without firing beforeunload (common on mobile).
@@ -174,7 +273,24 @@ export default function VisitorTracker({ onHotLead }) {
       sessionId: session.id,
       page: pathname,
       yachtsViewed: session.yachtsViewed,
+      yachtSlugs: Object.keys(session.yachtViewCounts || {}),
       timeOnSite,
+      activeSeconds: Math.round(focusRef.current.active),
+      hiddenSeconds: Math.round(focusRef.current.hidden),
+      attribution: session.attribution,
+      client: session.clientSignals,
+      intentFlags: {
+        compare: !!session.comparePageVisited,
+        cost_calc: !!session.costCalcUsed,
+        yacht_finder: !!session.yachtFinderUsed,
+        pricing_calendar: !!session.pricingCalendarUsed,
+      },
+      tallies: {
+        cta_clicks: session.ctaClicks || 0,
+        copy_events: session.copyEvents || 0,
+        print_events: session.printEvents || 0,
+        scroll_deep: !!session.scrollDeep,
+      },
       isTest: false,
     });
 
@@ -182,7 +298,9 @@ export default function VisitorTracker({ onHotLead }) {
     checkHotLead(session);
   }, [pathname]);
 
-  // Check hot lead thresholds
+  // Check hot lead thresholds (client-side gate — server still
+  // computes the authoritative weighted score and may upgrade a
+  // visitor based on signals the client never sees).
   const checkHotLead = useCallback((session) => {
     if (hotLeadTriggeredRef.current) return;
     if (sessionStorage.getItem(HOT_LEAD_SHOWN_KEY)) return;
@@ -206,7 +324,24 @@ export default function VisitorTracker({ onHotLead }) {
         event: 'hot_lead',
         sessionId: session.id,
         yachtsViewed: session.yachtsViewed,
+        yachtSlugs: Object.keys(session.yachtViewCounts || {}),
         timeOnSite: Math.round(timeOnSite),
+        activeSeconds: Math.round(focusRef.current.active),
+        hiddenSeconds: Math.round(focusRef.current.hidden),
+        attribution: session.attribution,
+        client: session.clientSignals,
+        intentFlags: {
+          compare: !!session.comparePageVisited,
+          cost_calc: !!session.costCalcUsed,
+          yacht_finder: !!session.yachtFinderUsed,
+          pricing_calendar: !!session.pricingCalendarUsed,
+        },
+        tallies: {
+          cta_clicks: session.ctaClicks || 0,
+          copy_events: session.copyEvents || 0,
+          print_events: session.printEvents || 0,
+          scroll_deep: !!session.scrollDeep,
+        },
         isTest: false,
       });
 
@@ -257,7 +392,24 @@ export default function VisitorTracker({ onHotLead }) {
         sessionId: session.id,
         page: pathname,
         yachtsViewed: session.yachtsViewed,
+        yachtSlugs: Object.keys(session.yachtViewCounts || {}),
         timeOnSite,
+        activeSeconds: Math.round(focusRef.current.active),
+        hiddenSeconds: Math.round(focusRef.current.hidden),
+        attribution: session.attribution,
+        client: session.clientSignals,
+        intentFlags: {
+          compare: !!session.comparePageVisited,
+          cost_calc: !!session.costCalcUsed,
+          yacht_finder: !!session.yachtFinderUsed,
+          pricing_calendar: !!session.pricingCalendarUsed,
+        },
+        tallies: {
+          cta_clicks: session.ctaClicks || 0,
+          copy_events: session.copyEvents || 0,
+          print_events: session.printEvents || 0,
+          scroll_deep: !!session.scrollDeep,
+        },
         isTest: false,
       });
 
@@ -272,6 +424,155 @@ export default function VisitorTracker({ onHotLead }) {
     };
   }, [checkHotLead, pathname]);
 
+  // -------------------------------------------------------------
+  // Scroll-depth observer — reports 25/50/75/90% milestones once
+  // per page. Coalesced via the 5s page_view dedup so it doesn't
+  // billion-fire on a long scroll.
+  // -------------------------------------------------------------
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    let raf = null;
+    const onScroll = () => {
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        raf = null;
+        const doc = document.documentElement;
+        const total = Math.max(
+          1,
+          (doc?.scrollHeight || 1) - (window.innerHeight || 0),
+        );
+        const y = window.scrollY || doc?.scrollTop || 0;
+        const pct = Math.min(100, Math.max(0, (y / total) * 100));
+        const sd = scrollDepthRef.current;
+        if (pct > sd.max) sd.max = pct;
+        const milestones = [25, 50, 75, 90];
+        for (const m of milestones) {
+          if (sd.max >= m && !sd.reported.has(m)) {
+            sd.reported.add(m);
+            const session = sessionRef.current;
+            if (!session) continue;
+            if (m >= 90) {
+              session.scrollDeep = true;
+              sessionRef.current = session;
+              saveSession(session);
+            }
+            sendBeacon({
+              event: 'scroll_depth',
+              sessionId: session.id,
+              page: pathname,
+              depth: m,
+              isTest: false,
+            });
+          }
+        }
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [pathname]);
+
+  // -------------------------------------------------------------
+  // CTA click listener — single delegated handler covers every
+  // anchor / button on the page so individual components don't
+  // each need their own onClick boilerplate.
+  // -------------------------------------------------------------
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handler = (e) => {
+      const session = sessionRef.current;
+      if (!session) return;
+      const cta = classifyCTA(e.target);
+      if (!cta) return;
+      session.ctaClicks = (session.ctaClicks || 0) + 1;
+      sessionRef.current = session;
+      saveSession(session);
+      sendBeacon({
+        event: 'cta_click',
+        sessionId: session.id,
+        page: pathname,
+        cta,
+        isTest: false,
+      });
+    };
+    document.addEventListener('click', handler, true);
+    return () => document.removeEventListener('click', handler, true);
+  }, [pathname]);
+
+  // -------------------------------------------------------------
+  // Tab focus accounting — separate active vs hidden seconds so
+  // the dashboard distinguishes "8 minutes in front of the screen"
+  // from "8 minutes with the tab parked behind 14 others".
+  // -------------------------------------------------------------
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    focusRef.current.lastTickAt = Date.now();
+    focusRef.current.visible = !document.hidden;
+    const tick = () => {
+      const now = Date.now();
+      const elapsed = (now - focusRef.current.lastTickAt) / 1000;
+      if (focusRef.current.visible) {
+        focusRef.current.active += elapsed;
+      } else {
+        focusRef.current.hidden += elapsed;
+      }
+      focusRef.current.lastTickAt = now;
+    };
+    const onVisibility = () => {
+      tick();
+      focusRef.current.visible = !document.hidden;
+    };
+    const interval = setInterval(tick, 5000);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, []);
+
+  // -------------------------------------------------------------
+  // Copy + print events — strong intent signals (someone copying
+  // yacht specs / phone / email is preparing to act; someone
+  // printing a page is generating a proposal artifact).
+  // -------------------------------------------------------------
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const onCopy = () => {
+      const session = sessionRef.current;
+      if (!session) return;
+      session.copyEvents = (session.copyEvents || 0) + 1;
+      sessionRef.current = session;
+      saveSession(session);
+      sendBeacon({
+        event: 'copy_event',
+        sessionId: session.id,
+        page: pathname,
+        isTest: false,
+      });
+    };
+    const onPrint = () => {
+      const session = sessionRef.current;
+      if (!session) return;
+      session.printEvents = (session.printEvents || 0) + 1;
+      sessionRef.current = session;
+      saveSession(session);
+      sendBeacon({
+        event: 'print_event',
+        sessionId: session.id,
+        page: pathname,
+        isTest: false,
+      });
+    };
+    document.addEventListener('copy', onCopy);
+    window.addEventListener('beforeprint', onPrint);
+    return () => {
+      document.removeEventListener('copy', onCopy);
+      window.removeEventListener('beforeprint', onPrint);
+    };
+  }, [pathname]);
+
   // Send session end on page unload
   useEffect(() => {
     const handleUnload = () => {
@@ -283,8 +584,25 @@ export default function VisitorTracker({ onHotLead }) {
         event: 'session_end',
         sessionId: session.id,
         yachtsViewed: session.yachtsViewed,
+        yachtSlugs: Object.keys(session.yachtViewCounts || {}),
         timeOnSite,
+        activeSeconds: Math.round(focusRef.current.active),
+        hiddenSeconds: Math.round(focusRef.current.hidden),
         pagesVisited: session.pages.length,
+        attribution: session.attribution,
+        client: session.clientSignals,
+        intentFlags: {
+          compare: !!session.comparePageVisited,
+          cost_calc: !!session.costCalcUsed,
+          yacht_finder: !!session.yachtFinderUsed,
+          pricing_calendar: !!session.pricingCalendarUsed,
+        },
+        tallies: {
+          cta_clicks: session.ctaClicks || 0,
+          copy_events: session.copyEvents || 0,
+          print_events: session.printEvents || 0,
+          scroll_deep: !!session.scrollDeep,
+        },
         isTest: false,
       });
     };
