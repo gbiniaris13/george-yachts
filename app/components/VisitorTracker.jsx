@@ -53,9 +53,30 @@ function getYachtHistory() {
   } catch { return []; }
 }
 
-// Track a beacon to /api/track
+// Track a beacon to /api/track.
+//
+// 2026-05-14 cost-control — coalesce duplicate fires within
+// COALESCE_MS so the rapid-fire combo at session-start
+// (new_visit immediately followed by page_view from the pathname
+// effect) doesn't double-bill us. session_end + hot_lead always
+// fire — they're rare and important.
+const COALESCE_MS = 5000;
+let lastBeaconAt = 0;
+let lastBeaconKey = '';
 async function sendBeacon(data) {
   try {
+    // Deduplicate noisy events. session_end / hot_lead / new_visit
+    // are allowed through; only page_view heartbeats coalesce.
+    if (data?.event === 'page_view') {
+      const key = `${data.event}:${data.sessionId}:${data.page}`;
+      const now = Date.now();
+      if (key === lastBeaconKey && now - lastBeaconAt < COALESCE_MS) {
+        return; // skip — duplicate within coalesce window
+      }
+      lastBeaconAt = now;
+      lastBeaconKey = key;
+    }
+
     // Use navigator.sendBeacon for reliability on page unload
     const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
     if (navigator.sendBeacon) {
@@ -200,14 +221,34 @@ export default function VisitorTracker({ onHotLead }) {
     }
   }, [onHotLead]);
 
-  // Periodic hot lead check (for time-based trigger) + heartbeat ping
-  // The heartbeat keeps sessions.time_on_site up-to-date even when the
-  // visitor stays on one page the whole time (no pathname change to
-  // piggyback on) and even if beforeunload never fires.
+  // Periodic hot lead check (for time-based trigger) + heartbeat ping.
+  //
+  // 2026-05-14 cost-control — pushed cadence 30s → 120s and gated on
+  // user activity. Original 30s was burning ~$5/mo at modest concurrent
+  // traffic and the data freshness benefit was negligible (session
+  // time_on_site is also updated on every page navigation via the
+  // pathname effect and on unload via beforeunload). The 2-min cadence
+  // still lets us catch the 5-minute hot-lead time threshold in 2-3
+  // beacons. We also skip the heartbeat entirely when the visitor has
+  // been idle for >5 minutes (no input/scroll/mouse activity) so
+  // background/forgotten tabs stop billing us.
   useEffect(() => {
+    const HEARTBEAT_MS = 120_000;
+    const IDLE_THRESHOLD_MS = 5 * 60_000;
+
+    let lastActivityAt = Date.now();
+    const bumpActivity = () => { lastActivityAt = Date.now(); };
+    const events = ['mousemove', 'keydown', 'scroll', 'touchstart', 'visibilitychange'];
+    events.forEach((e) => window.addEventListener(e, bumpActivity, { passive: true }));
+
     const interval = setInterval(() => {
       const session = sessionRef.current;
       if (!session) return;
+
+      // Skip when the tab is hidden or the user has been idle —
+      // a forgotten background tab shouldn't keep pinging.
+      if (typeof document !== 'undefined' && document.hidden) return;
+      if (Date.now() - lastActivityAt > IDLE_THRESHOLD_MS) return;
 
       const timeOnSite = Math.round((Date.now() - session.startTime) / 1000);
 
@@ -223,9 +264,12 @@ export default function VisitorTracker({ onHotLead }) {
       if (!hotLeadTriggeredRef.current) {
         checkHotLead(session);
       }
-    }, 30000); // Every 30 seconds
+    }, HEARTBEAT_MS);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      events.forEach((e) => window.removeEventListener(e, bumpActivity));
+    };
   }, [checkHotLead, pathname]);
 
   // Send session end on page unload
