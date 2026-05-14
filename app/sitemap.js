@@ -70,6 +70,12 @@ const staticRoutes = [
   // model with the full cost-bucket logic + flag-state awareness.
   { path: "/tools/charter-cost-calculator", priority: 0.92, changeFrequency: "monthly" },
   { path: "/itinerary-builder", priority: 0.85, changeFrequency: "monthly" },
+  // 2026-05-14 — moved here from the (now retired) sitemap-programmatic.xml.
+  // Both pages were live and indexable but only listed in the sub-sitemap,
+  // so they were "orphan from main" in Ahrefs. Folded in so /sitemap.xml
+  // is the single canonical source after the multi-sitemap dedup.
+  { path: "/charter-calendar-heat-map", priority: 0.78, changeFrequency: "monthly" },
+  { path: "/charter-cost-estimator", priority: 0.78, changeFrequency: "monthly" },
   { path: "/island-quiz", priority: 0.8, changeFrequency: "monthly" },
   { path: "/yacht-size-visualizer", priority: 0.8, changeFrequency: "monthly" },
   { path: "/proposal-generator", priority: 0.7, changeFrequency: "monthly" },

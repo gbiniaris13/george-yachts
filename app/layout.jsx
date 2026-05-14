@@ -294,9 +294,18 @@ export default async function RootLayout({ children }) {
             opens the TLS connection during HTML parse and shaves
             150-300 ms off the first Sanity image fetch. */}
         <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+        {/* 2026-05-14 — Ahrefs flagged 459 pages "Page has broken CSS".
+            Root cause: the fontshare /v2/css endpoint returns 500 for
+            ANY italic variant (400i / 500i / etc) — confirmed by
+            bisection (sentient@400,500 → 200 OK; +500i → 500 ERROR).
+            Italic styles fall back to browser-synthesised oblique
+            (font-synthesis: style; default) — visually negligible at
+            our body / accent sizes, and the alternative was the entire
+            stylesheet 500'ing on every page. Revisit if fontshare ever
+            ships the italic fix. */}
         <link
           rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f[]=sentient@400,500,500i,400i&f[]=general-sans@200,300,400,500,600,200i,300i,400i,500i&f[]=switzer@200,300,400,500,600,700&display=swap"
+          href="https://api.fontshare.com/v2/css?f[]=sentient@400,500&f[]=general-sans@200,300,400,500,600&f[]=switzer@200,300,400,500,600,700&display=swap"
         />
 
         {/* theme-color + apple-mobile-web-app-* now emitted by Next's

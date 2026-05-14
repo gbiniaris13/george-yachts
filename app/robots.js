@@ -32,17 +32,15 @@ export default function robots() {
       { userAgent: "cohere-ai", allow: "/" },
       { userAgent: "Diffbot", allow: "/" },
     ],
-    // Phase 7 Round 4 — split sitemaps surfaced to search engines
-    // (Section 1.4 of the SEO strategy doc). The main sitemap.xml
-    // remains the comprehensive index; the split ones help large-
-    // site indexing on Google + Bing.
-    sitemap: [
-      `${BASE_URL}/sitemap.xml`,
-      `${BASE_URL}/sitemap-yachts.xml`,
-      `${BASE_URL}/sitemap-destinations.xml`,
-      `${BASE_URL}/sitemap-blog.xml`,
-      `${BASE_URL}/sitemap-programmatic.xml`,
-    ],
+    // 2026-05-14 — collapsed back to a single /sitemap.xml. The Phase 7
+    // Round 4 split was duplicating every URL across 5 sitemaps (Ahrefs
+    // flagged 240 "Page in multiple sitemaps" warnings). /sitemap.xml
+    // is the comprehensive canonical surface — the 4 sub-sitemaps
+    // (yachts / destinations / blog / programmatic) were 100% subsets
+    // of it. Removed both the route handlers and the robots.txt
+    // references in the same change so search engines don't keep
+    // hitting deleted endpoints.
+    sitemap: [`${BASE_URL}/sitemap.xml`],
     host: BASE_URL,
   };
 }
