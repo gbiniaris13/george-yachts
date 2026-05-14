@@ -239,6 +239,36 @@ function formatDuration(seconds) {
   return sec > 0 ? `${min}m ${sec}s` : `${min}m`;
 }
 
+// 2026-05-14 — visitor sessions were reporting impossibly long
+// durations (264m, 170m) because timeOnSite was the raw wall-clock
+// "time since session start" — including hours of an idle background
+// tab. We now ALWAYS prefer activeSeconds (foreground/active time
+// only — already tracked client-side via visibilitychange). When
+// activeSeconds isn't supplied (pre-2026-05-14 sessions) we still
+// hard-cap at 90 minutes so a single session can't claim more than
+// a long lunch's worth of attention.
+//
+// MAX_SESSION_SECONDS is intentionally generous — a UHNW prospect
+// comparing 3 yachts + reading a Forbes-cited blog can spend 60-80m
+// genuinely; we cap at 90 to allow that ceiling while killing the
+// "tab parked since morning" inflation.
+const MAX_SESSION_SECONDS = 90 * 60;
+
+function sanitizeTimeOnSite(timeOnSite, activeSeconds) {
+  const tos = Math.max(0, Math.round(Number(timeOnSite) || 0));
+  const active =
+    typeof activeSeconds === 'number' && Number.isFinite(activeSeconds)
+      ? Math.max(0, Math.round(activeSeconds))
+      : null;
+  // Prefer activeSeconds when we have it — that's foreground time
+  // only, which is the closest we get to "real engagement time".
+  let canonical = active !== null ? active : tos;
+  if (canonical > MAX_SESSION_SECONDS) {
+    canonical = MAX_SESSION_SECONDS;
+  }
+  return canonical;
+}
+
 // ----- The high-leverage entry point -----
 //
 // Build the rich "new visitor" Telegram card. Pulled into its own
@@ -549,10 +579,11 @@ export async function POST(request) {
 
           // Recompute hot-score with the latest tallies.
           const premiumViews = await countPremiumViews(Array.isArray(yachtSlugs) ? yachtSlugs : []);
+          const sanitisedTimeOnSite = sanitizeTimeOnSite(timeOnSite, activeSeconds);
           const score = computeHotScore({
             uniqueYachts: incomingYachts.length || nextYachts.length,
             premiumYachtViews: premiumViews,
-            timeOnSiteSec: Math.round(timeOnSite || 0),
+            timeOnSiteSec: sanitisedTimeOnSite,
             activeSeconds: typeof activeSeconds === 'number' ? activeSeconds : null,
             isReturnVisitor: !!row?.is_return_visitor,
             deviceTier: row?.device_tier || deviceTier,
@@ -567,7 +598,7 @@ export async function POST(request) {
           });
 
           await updateCRMSession(sessionId, {
-            time_on_site: Math.round(timeOnSite || 0),
+            time_on_site: sanitisedTimeOnSite,
             active_seconds: typeof activeSeconds === 'number' ? activeSeconds : undefined,
             hidden_seconds: typeof hiddenSeconds === 'number' ? hiddenSeconds : undefined,
             pages_visited: nextPages,
@@ -626,10 +657,11 @@ export async function POST(request) {
       const row = await getCRMSession(sessionId);
       const ipEnrich = await enrichIP(ip);
       const premiumViews = await countPremiumViews(Array.isArray(yachtSlugs) ? yachtSlugs : []);
+      const sanitisedTimeOnSite = sanitizeTimeOnSite(timeOnSite, activeSeconds);
       const scoreInputs = {
         uniqueYachts: (yachtsViewed || []).length,
         premiumYachtViews: premiumViews,
-        timeOnSiteSec: Math.round(timeOnSite || 0),
+        timeOnSiteSec: sanitisedTimeOnSite,
         activeSeconds: typeof activeSeconds === 'number' ? activeSeconds : null,
         isReturnVisitor: !!row?.is_return_visitor,
         deviceTier: row?.device_tier || deviceTier,
@@ -658,7 +690,7 @@ export async function POST(request) {
         `${device.icon} ${device.type} · ${uaParsed.browser || ''}${uaParsed.browser_version ? ' ' + uaParsed.browser_version : ''}${browserLanguage ? ' · ' + browserLanguage : ''}${(row?.device_tier || deviceTier) !== 'unknown' ? `  — *${row?.device_tier || deviceTier} device*` : ''}`,
         '',
         `\u{1F517} *Source:* ${source}`,
-        `⏱ *Time on site:* ${formatDuration(timeOnSite)}${typeof activeSeconds === 'number' ? `  (active ${formatDuration(activeSeconds)})` : ''}`,
+        `⏱ *Time on site:* ${formatDuration(sanitisedTimeOnSite)}${typeof activeSeconds === 'number' ? `  (active ${formatDuration(activeSeconds)})` : ''}`,
         '',
         `\u{1F6A2} *Yachts viewed (${(yachtsViewed || []).length}${premiumViews ? `, ${premiumViews} premium` : ''}):*`,
         yachtList || '  (none)',
@@ -669,14 +701,14 @@ export async function POST(request) {
         `\u{26A0}️ _Popup shown to capture their details._`,
       ].filter(Boolean).join('\n');
 
-      const hotLeadDesc = `${country}${decodedCity ? ` (${decodedCity})` : ''} — ${formatDuration(timeOnSite)} — ${(yachtsViewed || []).length} yachts (${premiumViews} premium) — score ${score}${ipEnrich?.company ? ` — ${ipEnrich.company}` : ''}`;
+      const hotLeadDesc = `${country}${decodedCity ? ` (${decodedCity})` : ''} — ${formatDuration(sanitisedTimeOnSite)} — ${(yachtsViewed || []).length} yachts (${premiumViews} premium) — score ${score}${ipEnrich?.company ? ` — ${ipEnrich.company}` : ''}`;
       const sendTg = await shouldFireTelegram('hot_lead', ip);
       await Promise.allSettled([
         sendTg ? sendTelegram(card) : Promise.resolve(),
         updateCRMSession(sessionId, {
           is_hot_lead: true,
           hot_score: score,
-          time_on_site: Math.round(timeOnSite || 0),
+          time_on_site: sanitisedTimeOnSite,
           active_seconds: typeof activeSeconds === 'number' ? activeSeconds : undefined,
           hidden_seconds: typeof hiddenSeconds === 'number' ? hiddenSeconds : undefined,
           yachts_viewed: yachtsViewed || [],
@@ -696,6 +728,7 @@ export async function POST(request) {
       const enriched = await enrichEmail(leadData.email);
       const ipEnrich = await enrichIP(ip);
       const premiumViews = await countPremiumViews(Array.isArray(yachtSlugs) ? yachtSlugs : []);
+      const sanitisedTimeOnSite = sanitizeTimeOnSite(timeOnSite, activeSeconds);
 
       const msg = testLabel + [
         `\u{1F389}\u{1F389}\u{1F389} *NEW LEAD CAPTURED!* \u{1F389}\u{1F389}\u{1F389}`,
@@ -713,7 +746,7 @@ export async function POST(request) {
         `\u{1F6A2} *Yachts viewed (${(yachtsViewed || []).length}${premiumViews ? `, ${premiumViews} premium` : ''}):*`,
         ...(yachtsViewed || []).map(y => `  • ${y}`),
         '',
-        `⏱ *Time on site:* ${formatDuration(timeOnSite)}`,
+        `⏱ *Time on site:* ${formatDuration(sanitisedTimeOnSite)}${typeof activeSeconds === 'number' ? `  (active ${formatDuration(activeSeconds)})` : ''}`,
         `${device.icon} ${device.type}`,
         '',
         `✅ _Auto-added to CRM_`,
@@ -738,7 +771,7 @@ export async function POST(request) {
           body: JSON.stringify({
             phone: leadData.phone || existingContact.phone,
             yachts_viewed: yachtsViewed || [],
-            time_on_site: timeOnSite || 0,
+            time_on_site: sanitisedTimeOnSite,
             pipeline_stage_id: hotStageId || existingContact.pipeline_stage_id,
             last_activity_at: new Date().toISOString(),
             company: enriched?.company || existingContact.company,
@@ -757,7 +790,7 @@ export async function POST(request) {
           contact_id: existingContact.id,
           type: 'lead_captured',
           description: `Website lead merged — viewed ${(yachtsViewed || []).join(', ')}${enriched?.company ? ` — ${enriched.company}` : ''}`,
-          metadata: { yachts_viewed: yachtsViewed, time_on_site: timeOnSite, source: 'website_popup', enrichment: enriched },
+          metadata: { yachts_viewed: yachtsViewed, time_on_site: sanitisedTimeOnSite, source: 'website_popup', enrichment: enriched },
         }).catch(() => {});
       } else {
         const newContact = await writeToCRM('contacts', {
@@ -770,7 +803,7 @@ export async function POST(request) {
           source: 'website_lead',
           pipeline_stage_id: hotStageId,
           yachts_viewed: yachtsViewed || [],
-          time_on_site: timeOnSite || 0,
+          time_on_site: sanitisedTimeOnSite,
           company: enriched?.company || null,
           company_domain: enriched?.company_domain || null,
           company_size: enriched?.company_size || null,
@@ -787,7 +820,7 @@ export async function POST(request) {
             contact_id: newContact[0].id,
             type: 'lead_captured',
             description: `Captured from website popup — ${country}, viewed ${(yachtsViewed || []).join(', ')}${enriched?.company ? ` — ${enriched.company}` : ''}`,
-            metadata: { yachts_viewed: yachtsViewed, time_on_site: timeOnSite, device: device.type, referrer, enrichment: enriched },
+            metadata: { yachts_viewed: yachtsViewed, time_on_site: sanitisedTimeOnSite, device: device.type, referrer, enrichment: enriched },
           }).catch(() => {});
         }
       }
@@ -795,7 +828,7 @@ export async function POST(request) {
       await updateCRMSession(sessionId, {
         lead_captured: true,
         is_hot_lead: true,
-        time_on_site: Math.round(timeOnSite || 0),
+        time_on_site: sanitisedTimeOnSite,
         yachts_viewed: yachtsViewed || [],
         premium_yacht_views: premiumViews,
       });
@@ -816,10 +849,11 @@ export async function POST(request) {
     if (event === 'session_end') {
       const premiumViews = await countPremiumViews(Array.isArray(yachtSlugs) ? yachtSlugs : []);
       const row = await getCRMSession(sessionId);
+      const sanitisedTimeOnSite = sanitizeTimeOnSite(timeOnSite, activeSeconds);
       const finalScoreInputs = {
         uniqueYachts: (yachtsViewed || []).length,
         premiumYachtViews: premiumViews,
-        timeOnSiteSec: Math.round(timeOnSite || 0),
+        timeOnSiteSec: sanitisedTimeOnSite,
         activeSeconds: typeof activeSeconds === 'number' ? activeSeconds : null,
         isReturnVisitor: !!row?.is_return_visitor,
         deviceTier: row?.device_tier || deviceTier,
@@ -843,7 +877,7 @@ export async function POST(request) {
         '',
         `${flag} *${country}*${decodedCity ? ` (${decodedCity})` : ''}`,
         `${device.icon} ${device.type}`,
-        `⏱ *Session:* ${formatDuration(timeOnSite)}${typeof activeSeconds === 'number' ? `  (active ${formatDuration(activeSeconds)})` : ''}`,
+        `⏱ *Session:* ${formatDuration(sanitisedTimeOnSite)}${typeof activeSeconds === 'number' ? `  (active ${formatDuration(activeSeconds)})` : ''}`,
         `\u{1F4C4} *Pages:* ${body.pagesVisited || 1}`,
         '',
         `\u{1F6A2} *Yachts viewed${premiumViews ? ` (${premiumViews} premium)` : ''}:*`,
@@ -851,7 +885,7 @@ export async function POST(request) {
       ].join('\n');
 
       await updateCRMSession(sessionId, {
-        time_on_site: Math.round(timeOnSite || 0),
+        time_on_site: sanitisedTimeOnSite,
         active_seconds: typeof activeSeconds === 'number' ? activeSeconds : undefined,
         hidden_seconds: typeof hiddenSeconds === 'number' ? hiddenSeconds : undefined,
         ended_at: new Date().toISOString(),
@@ -862,7 +896,7 @@ export async function POST(request) {
         is_hot_lead: isHotLead(finalScore),
       });
 
-      if (timeOnSite > 30 && (await shouldFireTelegram('session_end', ip))) {
+      if (sanitisedTimeOnSite > 30 && (await shouldFireTelegram('session_end', ip))) {
         await sendTelegram(msg);
       }
     }
