@@ -2,15 +2,16 @@ import React from "react";
 import ChrisDaskalopoulosClient from "./ChrisDaskalopoulosClient";
 import { generatePersonSchema } from "@/lib/teamSchema";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "Chris Daskalopoulos - Marine Insurance & ISO Advisor | George Yachts",
+// 2026-05-14 — title trimmed 73→55 chars.
+export const metadata = pageMeta({
+  title: "Chris Daskalopoulos — ISO & Insurance | George Yachts",
   description:
     "Meet Chris Daskalopoulos, Marine Insurance & ISO Maritime Compliance Advisor for George Yachts, ensuring safety protocols and international best practices.",
-  alternates: {
-    canonical: "https://georgeyachts.com/team/chris-daskalopoulos",
-  },
-};
+  path: "/team/chris-daskalopoulos",
+  type: "profile",
+});
 
 const personSchema = generatePersonSchema("chris-daskalopoulos");
 

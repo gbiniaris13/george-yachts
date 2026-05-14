@@ -4,18 +4,15 @@ import ContactFormSection from "@/components/ContactFormSection";
 import { ServiceParallax, Reveal } from "@/components/ServiceParallax";
 import Image from "next/image";
 import "@/styles/service-page.css";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "Luxury Villas Greece | Mykonos, Santorini, Paros | George Yachts",
+// 2026-05-14 — title trimmed 64→52 chars (Ahrefs flag).
+export const metadata = pageMeta({
+  title: "Luxury Villas Greece | Curated | George Yachts",
   description:
-    "Luxury villas in Mykonos, Paros, Santorini, Athens Riviera. Curated privately through our partner network. Beachfront estates, chef service, yacht+villa packages. George Yachts.",
-  alternates: { canonical: "https://georgeyachts.com/luxury-villas-greece" },
-  openGraph: {
-    title: "Luxury Villas Greece | Curated Collection | George Yachts",
-    description: "Handpicked luxury villas across Greece. Beachfront estates, private compounds, staff included.",
-    url: "https://georgeyachts.com/luxury-villas-greece",
-  },
-};
+    "Luxury villas in Mykonos, Paros, Santorini, Athens Riviera. Curated privately through our partner network. Beachfront estates, chef service, yacht+villa packages.",
+  path: "/luxury-villas-greece",
+});
 
 function PageSchema() {
   const schema = {

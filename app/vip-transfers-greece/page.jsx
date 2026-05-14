@@ -4,18 +4,15 @@ import ContactFormSection from "@/components/ContactFormSection";
 import { ServiceParallax, Reveal } from "@/components/ServiceParallax";
 import Image from "next/image";
 import "@/styles/service-page.css";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "VIP Transfers Athens & Greek Islands | Luxury Chauffeur | George Yachts",
+// 2026-05-14 — title trimmed 71→55 chars (Ahrefs flag).
+export const metadata = pageMeta({
+  title: "VIP Transfers Greece | Luxury Chauffeur | George Yachts",
   description:
     "Luxury VIP transfers in Athens, Mykonos, Santorini, and across Greece. Professional chauffeurs, premium vehicles. Airport to marina, seamless coordination with yacht charters.",
-  alternates: { canonical: "https://georgeyachts.com/vip-transfers-greece" },
-  openGraph: {
-    title: "VIP Transfers Greece | Luxury Chauffeur Services | George Yachts",
-    description: "Premium chauffeur services coordinated with your yacht charter. Athens, Mykonos, Santorini.",
-    url: "https://georgeyachts.com/vip-transfers-greece",
-  },
-};
+  path: "/vip-transfers-greece",
+});
 
 function PageSchema() {
   const schema = {

@@ -1,14 +1,13 @@
 import Footer from "@/components/Footer";
 import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
+export const metadata = pageMeta({
   title: "Privacy Policy | George Yachts",
   description:
     "Master Privacy & Data Protection Policy for George Yachts Brokerage House LLC.",
-  alternates: {
-    canonical: "https://georgeyachts.com/privacy-policy",
-  },
-};
+  path: "/privacy-policy",
+});
 
 const Section = ({ number, title, children }) => (
   <div className="mb-20 group" style={{ opacity: 1 }}>

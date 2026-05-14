@@ -1,16 +1,15 @@
 import { sanityClient } from '@/lib/sanity';
 import YachtFinderQuiz from './YachtFinderQuiz';
+import { pageMeta } from '@/lib/pageMeta';
 
 export const revalidate = 3600;
 
-export const metadata = {
-  title: 'Find Your Perfect Yacht | George Yachts Brokerage House',
-  description: 'Answer 5 simple questions and we\'ll match you with the ideal yacht for your Greek charter. Personalized recommendations from our curated fleet.',
-  openGraph: {
-    title: 'Find Your Perfect Yacht | George Yachts',
-    description: 'Answer 5 questions. Get your perfect yacht match in Greek waters.',
-  },
-};
+export const metadata = pageMeta({
+  title: 'Find Your Perfect Yacht | George Yachts',
+  description:
+    "Answer 5 simple questions and we'll match you with the ideal yacht for your Greek charter. Personalized recommendations from our curated fleet.",
+  path: '/yacht-finder',
+});
 
 const QUERY = `*[_type == "yacht"] | order(weeklyRatePrice asc) {
   name, "slug": slug.current, weeklyRatePrice, sleeps, cabins, category, builder, length, idealFor,

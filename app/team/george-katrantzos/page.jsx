@@ -2,15 +2,15 @@ import React from "react";
 import GeorgeKatrantzosClient from "./GeorgeKatrantzosClient";
 import { generatePersonSchema } from "@/lib/teamSchema";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "George Katrantzos - U.S. Partner | George Yachts",
+export const metadata = pageMeta({
+  title: "George Katrantzos — U.S. Partner | George Yachts",
   description:
     "Meet George Katrantzos, U.S. Partner & Sales Director for George Yachts. Bridging Greek luxury with the sophistication of the U.S. market.",
-  alternates: {
-    canonical: "https://georgeyachts.com/team/george-katrantzos",
-  },
-};
+  path: "/team/george-katrantzos",
+  type: "profile",
+});
 
 const personSchema = generatePersonSchema("george-katrantzos");
 

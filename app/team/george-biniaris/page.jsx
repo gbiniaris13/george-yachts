@@ -2,15 +2,15 @@ import React from "react";
 import GeorgeBiniarisClient from "./GeorgeBiniarisClient";
 import { generatePersonSchema } from "@/lib/teamSchema";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "George P. Biniaris - Managing Broker | George Yachts",
+export const metadata = pageMeta({
+  title: "George P. Biniaris — Managing Broker | George Yachts",
   description:
     "Meet George P. Biniaris, Managing Broker of George Yachts Brokerage House. IYBA member specializing in crewed yacht charters across Greek waters.",
-  alternates: {
-    canonical: "https://georgeyachts.com/team/george-biniaris",
-  },
-};
+  path: "/team/george-biniaris",
+  type: "profile",
+});
 
 const personSchema = generatePersonSchema("george-biniaris");
 

@@ -2,15 +2,15 @@ import React from "react";
 import ManosKourmoulakisClient from "./ManosKourmoulakisClient";
 import { generatePersonSchema } from "@/lib/teamSchema";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "Cpt. Manos Kourmoulakis - Aviation Advisor | George Yachts",
+export const metadata = pageMeta({
+  title: "Cpt. Manos Kourmoulakis — Aviation Advisor | George Yachts",
   description:
     "Meet Cpt. Manos Kourmoulakis, Aviation & Private Travel Advisor for George Yachts. A former Olympic Airways captain advising on jet coordination and client logistics.",
-  alternates: {
-    canonical: "https://georgeyachts.com/team/manos-kourmoulakis",
-  },
-};
+  path: "/team/manos-kourmoulakis",
+  type: "profile",
+});
 
 const personSchema = generatePersonSchema("manos-kourmoulakis");
 

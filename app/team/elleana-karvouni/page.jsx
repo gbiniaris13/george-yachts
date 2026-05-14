@@ -2,15 +2,15 @@ import React from "react";
 import ElleanaKarvouniClient from "./ElleanaKarvouniClient";
 import { generatePersonSchema } from "@/lib/teamSchema";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "Elleana Karvouni - Operations & Finance | George Yachts",
+export const metadata = pageMeta({
+  title: "Elleana Karvouni — Operations & Finance | George Yachts",
   description:
     "Meet Elleana Karvouni, Head of Business Operations & Finance at George Yachts, ensuring every transaction meets the highest standards of clarity and trust.",
-  alternates: {
-    canonical: "https://georgeyachts.com/team/elleana-karvouni",
-  },
-};
+  path: "/team/elleana-karvouni",
+  type: "profile",
+});
 
 const personSchema = generatePersonSchema("elleana-karvouni");
 

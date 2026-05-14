@@ -1,14 +1,13 @@
 import Footer from "@/components/Footer";
 import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
+export const metadata = pageMeta({
   title: "Cookie Policy | George Yachts",
   description:
     "Global Digital Tracking & Cookie Disclosure for George Yachts Brokerage House LLC.",
-  alternates: {
-    canonical: "https://georgeyachts.com/cookie-policy",
-  },
-};
+  path: "/cookie-policy",
+});
 
 const Section = ({ number, title, children }) => (
   <div className="mb-20 group" style={{ opacity: 1 }}>

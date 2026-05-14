@@ -1,15 +1,14 @@
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
+export const metadata = pageMeta({
   title: "How We Protect Your Information | George Yachts",
   description:
     "Learn how George Yachts Brokerage House protects your personal data, documents, and privacy with bank-grade encryption and strict confidentiality protocols.",
-  alternates: {
-    canonical: "https://georgeyachts.com/your-privacy-security",
-  },
-};
+  path: "/your-privacy-security",
+});
 
 const Card = ({ icon, title, description }) => (
   <div className="p-8 md:p-10" style={{ background: "rgba(201,168,76,0.03)", border: "1px solid rgba(201,168,76,0.1)" }}>

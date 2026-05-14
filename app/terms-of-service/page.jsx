@@ -1,14 +1,13 @@
 import Footer from "@/components/Footer";
 import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
+export const metadata = pageMeta({
   title: "Terms of Service | George Yachts",
   description:
     "Global Terms of Service & Brokerage Agreement for George Yachts Brokerage House LLC.",
-  alternates: {
-    canonical: "https://georgeyachts.com/terms-of-service",
-  },
-};
+  path: "/terms-of-service",
+});
 
 const Section = ({ number, title, children }) => (
   <div className="mb-20 group" style={{ opacity: 1 }}>

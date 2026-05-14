@@ -12,17 +12,21 @@
 
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import { pageMeta } from "@/lib/pageMeta";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
 
 export const revalidate = 86400;
 
-export const metadata = {
-  title: "2026 Greek Charter Market Report | Original Research | George Yachts",
-  description: "Original 2026 Greek yacht charter market research. Booking patterns, source markets, fleet composition, pricing trends. Data-driven from IYBA member.",
-  alternates: { canonical: "https://georgeyachts.com/2026-greek-charter-market-report" },
-};
+// 2026-05-14 — title trimmed 73→55 chars (Ahrefs flag).
+export const metadata = pageMeta({
+  title: "2026 Greek Charter Market Report | George Yachts",
+  description:
+    "Original 2026 Greek yacht charter market research. Booking patterns, source markets, fleet composition, pricing trends. Data-driven from IYBA member.",
+  path: "/2026-greek-charter-market-report",
+  type: "article",
+});
 
 function ArticleJsonLd() {
   const json = {

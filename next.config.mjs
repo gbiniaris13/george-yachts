@@ -223,6 +223,21 @@ const nextConfig = {
         destination: "/blog",
         permanent: false,
       },
+      // 2026-05-14 Ahrefs audit — 2 hard 404s flagged. Both had
+      // legitimate inbound interest (one external blog citation, one
+      // internal glossary link that I'm also removing below) so we
+      // catch them with permanent redirects to the nearest sensible
+      // surface rather than leaving them as 404 dead ends.
+      {
+        source: "/blog/what-actually-happens-crewed-yacht-charter-greece",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/power-catamaran-charter-greece",
+        destination: "/best-motor-yachts-greece-speed",
+        permanent: true,
+      },
     ];
   },
 };

@@ -19,6 +19,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { sanityClient } from "@/lib/sanity";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import { pageMeta } from "@/lib/pageMeta";
 
 export const revalidate = 3600;
 
@@ -55,12 +56,12 @@ export async function generateMetadata({ searchParams }) {
   const params = await searchParams;
   const slugs = parseSlugs(params?.yachts);
   if (slugs.length === 0) {
-    return {
+    return pageMeta({
       title: "Compare Yachts for Charter in Greece",
       description:
         "Side-by-side comparison of luxury yachts available for charter in Greek waters. Specs, weekly rates, regions, and capacity — built by working brokers at George Yachts.",
-      alternates: { canonical: "https://georgeyachts.com/compare" },
-    };
+      path: "/compare",
+    });
   }
   // 2026-05-12 — Sanity outage resilience. Fall back to empty
   // yacht list if fetch dies so generateMetadata doesn't throw
@@ -76,19 +77,11 @@ export async function generateMetadata({ searchParams }) {
   }
   const names = yachts.map((y) => y.name).join(" vs ");
   const titleNames = names || "Yachts";
-  return {
-    title: `${titleNames} — Side-by-Side Charter Comparison`,
+  return pageMeta({
+    title: `${titleNames} — Charter Comparison | George Yachts`,
     description: `Honest specs and weekly-rate comparison of ${titleNames} for crewed charter in Greek waters. Built by IYBA-member brokers at George Yachts.`,
-    alternates: {
-      canonical: `https://georgeyachts.com/compare?yachts=${slugs.join(",")}`,
-    },
-    openGraph: {
-      title: `${titleNames} — Charter Comparison`,
-      description: `Side-by-side charter comparison by IYBA brokers. ${titleNames}.`,
-      url: `https://georgeyachts.com/compare?yachts=${slugs.join(",")}`,
-      type: "website",
-    },
-  };
+    path: `/compare?yachts=${slugs.join(",")}`,
+  });
 }
 
 function ComparisonSchema({ yachts, slugs }) {

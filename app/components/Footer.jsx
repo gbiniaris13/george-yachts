@@ -44,6 +44,11 @@ const Footer = () => {
     { name: "Press", href: "/press" },
     { name: "Partners", href: "/partners" },
     { name: "Events", href: "/events" },
+    // 2026-05-14 — /ai-research is the AI-search citation hub
+    // (engineered for ChatGPT/Perplexity/Claude/Gemini extraction)
+    // and was orphaned per Ahrefs. Surfacing it under Company so it
+    // gets the same site-wide inbound as the rest of the trust pages.
+    { name: "AI Research Hub", href: "/ai-research" },
     { name: "Greece by Yacht", href: "/greece-by-yacht" },
     { name: "The Journal", href: "/blog" },
     { name: "FAQ", href: "/faq" },
@@ -80,12 +85,15 @@ const Footer = () => {
         { name: "Honeymoon Charter", href: "/yacht-charter-greece-honeymoon" },
         { name: "Proposal Charter", href: "/proposal-yacht-charter-greece" },
         { name: "Bachelorette Charter", href: "/bachelorette-yacht-charter-greece" },
+        { name: "Bachelor Party Charter", href: "/bachelor-party-yacht-charter-greece" },
         { name: "Billionaire Charter", href: "/billionaire-yacht-charter-greece" },
+        { name: "Celebrity Charter", href: "/celebrity-yacht-charter-greece" },
         { name: "Milestone Celebration", href: "/milestone-celebration-yacht-charter-greece" },
         { name: "Private Retreat", href: "/retreat-yacht-charter-greece" },
         { name: "Family with Children", href: "/yacht-charter-greece-family-with-children" },
         { name: "Corporate Groups", href: "/yacht-charter-greece-corporate-groups" },
         { name: "Friends' Trip", href: "/friends-trip-yacht-charter-greece" },
+        { name: "Last-Minute Charter 2026", href: "/last-minute-yacht-charter-greece-2026" },
       ],
     },
     {
@@ -107,6 +115,7 @@ const Footer = () => {
         { name: "Santorini Anchorages", href: "/yacht-charter-santorini-anchorages" },
         { name: "Hydra Anchorages", href: "/yacht-charter-hydra-anchorages" },
         { name: "Corfu Anchorages", href: "/yacht-charter-corfu-anchorages" },
+        { name: "Paros Anchorages", href: "/yacht-charter-paros-anchorages" },
         { name: "Andros", href: "/yacht-charter-andros" },
         { name: "Naxos", href: "/yacht-charter-naxos" },
         { name: "Sifnos", href: "/yacht-charter-sifnos" },
@@ -129,6 +138,8 @@ const Footer = () => {
         { name: "Best Superyachts (August)", href: "/best-superyachts-greece-august" },
         { name: "Best for Couples", href: "/best-yachts-greece-couples" },
         { name: "Best for Large Groups", href: "/best-yachts-greece-large-groups" },
+        { name: "Best for Corporate Events", href: "/best-yachts-greece-corporate-events" },
+        { name: "Best for Families & Children", href: "/best-yachts-greece-families-children" },
         { name: "Best with Stabilizers", href: "/best-yachts-greece-stabilizers-smooth-sailing" },
         { name: "Superyacht Greece — August", href: "/superyacht-charter-greece-august" },
         { name: "Mykonos · 8 Guests", href: "/yacht-charter-mykonos-8-guests" },

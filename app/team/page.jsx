@@ -4,15 +4,15 @@ import ContactFormSection from "@/components/ContactFormSection";
 import TeamContent from "./TeamContent";
 import Image from "next/image";
 import "./team.css";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "Our Core Team | George Yachts | Boutique Yacht Brokerage Athens",
+// 2026-05-14 — title trimmed from 67→48 chars (Ahrefs flag).
+export const metadata = pageMeta({
+  title: "Our Team | George Yachts",
   description:
-    "Meet the expert team behind George Yachts Brokerage House. Managing brokers, luxury travel liaisons, operations & finance, maritime compliance. Athens, Greece.",
-  alternates: {
-    canonical: "https://georgeyachts.com/team",
-  },
-};
+    "Meet the brokers, luxury travel liaisons, and maritime advisors behind George Yachts Brokerage House — boutique yacht brokerage based in Athens.",
+  path: "/team",
+});
 
 export default function TeamPage() {
   return (

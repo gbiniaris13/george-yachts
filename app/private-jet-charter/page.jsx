@@ -4,18 +4,16 @@ import ContactFormSection from "@/components/ContactFormSection";
 import { ServiceParallax, Reveal } from "@/components/ServiceParallax";
 import Image from "next/image";
 import "@/styles/service-page.css";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "Private Jet & Helicopter Charter Greece | George Yachts Aviation",
+// 2026-05-14 — title trimmed 65→55 chars (Ahrefs flag); migrated to
+// pageMeta() so og:url/canonical/twitter stay in lockstep.
+export const metadata = pageMeta({
+  title: "Private Jet & Helicopter Charter Greece | George Yachts",
   description:
-    "Book private jets and helicopters in Greece with George Yachts. 24/7 bespoke aviation services for Athens, Greek islands, and the Mediterranean. Seamless yacht-to-jet coordination.",
-  alternates: { canonical: "https://georgeyachts.com/private-jet-charter" },
-  openGraph: {
-    title: "Fly Private | Helicopters & Jets | George Yachts",
-    description: "Private aviation for yacht charter clients. Helicopters, jets, island transfers. One point of contact.",
-    url: "https://georgeyachts.com/private-jet-charter",
-  },
-};
+    "Book private jets and helicopters in Greece with George Yachts. 24/7 bespoke aviation for Athens, Greek islands, and the Mediterranean. Seamless yacht-to-jet coordination.",
+  path: "/private-jet-charter",
+});
 
 function PageSchema() {
   const schema = {

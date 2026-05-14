@@ -4,12 +4,14 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import { ServiceParallax, Reveal } from "@/components/ServiceParallax";
 import "@/styles/service-page.css";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "Yacht Shows & Events 2026 | George Yachts Brokerage House",
-  description: "Meet George Yachts at the world's leading yacht shows and maritime events. Monaco Yacht Show, MEDYS Athens, Cannes Yachting Festival, and more.",
-  alternates: { canonical: "https://georgeyachts.com/events" },
-};
+export const metadata = pageMeta({
+  title: "Yacht Shows & Events 2026 | George Yachts",
+  description:
+    "Meet George Yachts at the world's leading yacht shows — Monaco Yacht Show, MEDYS Athens, Cannes Yachting Festival, Antibes Yacht Show, and more.",
+  path: "/events",
+});
 
 const events = [
   {

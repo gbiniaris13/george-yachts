@@ -1,12 +1,15 @@
 import { sanityClient } from '@/lib/sanity';
 import SizeVisualizerClient from './SizeVisualizerClient';
+import { pageMeta } from '@/lib/pageMeta';
 
 export const revalidate = 3600;
 
-export const metadata = {
-  title: 'Yacht Size Visualizer | How Big Is Your Yacht? | George Yachts',
-  description: 'See how big each yacht really is — compared to tennis courts, hotel suites, and swimming pools. Interactive size comparison tool.',
-};
+export const metadata = pageMeta({
+  title: 'Yacht Size Visualizer | George Yachts',
+  description:
+    'See how big each yacht really is — compared to tennis courts, hotel suites, and swimming pools. Interactive size comparison tool.',
+  path: '/yacht-size-visualizer',
+});
 
 const QUERY = `*[_type == "yacht"] | order(length desc) {
   name, "slug": slug.current, length, category

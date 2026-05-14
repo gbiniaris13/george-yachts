@@ -2,15 +2,15 @@ import React from "react";
 import ValleriaKarvouniClient from "./ValleriaKarvouniClient";
 import { generatePersonSchema } from "@/lib/teamSchema";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "Valleria Karvouni - Logistics Coordinator | George Yachts",
+export const metadata = pageMeta({
+  title: "Valleria Karvouni — Charter Logistics | George Yachts",
   description:
     "Meet Valleria Karvouni, Administrative & Charter Logistics Coordinator at George Yachts. Valleria supports our administrative core with precision and discipline.",
-  alternates: {
-    canonical: "https://georgeyachts.com/team/valleria-karvouni",
-  },
-};
+  path: "/team/valleria-karvouni",
+  type: "profile",
+});
 
 const personSchema = generatePersonSchema("valleria-karvouni");
 

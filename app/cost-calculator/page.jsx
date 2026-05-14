@@ -1,16 +1,15 @@
 import { sanityClient } from '@/lib/sanity';
 import CostCalculatorClient from './CostCalculatorClient';
+import { pageMeta } from '@/lib/pageMeta';
 
 export const revalidate = 3600;
 
-export const metadata = {
+export const metadata = pageMeta({
   title: 'Charter Cost Calculator | George Yachts',
-  description: 'Calculate the total cost of your Greek yacht charter. Transparent pricing with charter rate, APA, VAT, and transfer estimates. No hidden fees.',
-  openGraph: {
-    title: 'Charter Cost Calculator | George Yachts',
-    description: 'See exactly what your yacht charter will cost — charter rate, APA, VAT, transfers. Complete transparency.',
-  },
-};
+  description:
+    'Calculate the total cost of your Greek yacht charter. Transparent pricing with charter rate, APA, VAT, and transfer estimates. No hidden fees.',
+  path: '/cost-calculator',
+});
 
 const QUERY = `*[_type == "yacht"] | order(weeklyRatePrice asc) {
   name, "slug": slug.current, weeklyRatePrice, sleeps, cabins, category, builder, length

@@ -2,15 +2,14 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import Link from "next/link";
 import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "Accessibility Statement | George Yachts Brokerage House",
+export const metadata = pageMeta({
+  title: "Accessibility Statement | George Yachts",
   description:
     "George Yachts is committed to ensuring digital accessibility for people with disabilities. Learn about our accessibility standards and ongoing efforts.",
-  alternates: {
-    canonical: "https://georgeyachts.com/accessibility",
-  },
-};
+  path: "/accessibility",
+});
 
 export default function AccessibilityPage() {
   const lastUpdated = "April 2026";

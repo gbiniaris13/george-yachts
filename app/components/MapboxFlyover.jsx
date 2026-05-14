@@ -361,11 +361,17 @@ export default function MapboxFlyover() {
                   marginTop: 8,
                 }}
               >
+                {/* 2026-05-14 — Ahrefs flagged these as "page has links to
+                    redirect": /yacht-charter/{region} 308-redirects to
+                    /destinations/{region}. Point them at the canonical
+                    destination URL directly so the redirect roundtrip +
+                    flagged warning go away. /yacht-charter/sporades →
+                    /yacht-charter-skiathos (per next.config.mjs). */}
                 {[
-                  { name: "Cyclades", href: "/yacht-charter/cyclades" },
-                  { name: "Ionian", href: "/yacht-charter/ionian" },
-                  { name: "Saronic", href: "/yacht-charter/saronic" },
-                  { name: "Sporades", href: "/yacht-charter/sporades" },
+                  { name: "Cyclades", href: "/destinations/cyclades" },
+                  { name: "Ionian", href: "/destinations/ionian" },
+                  { name: "Saronic", href: "/destinations/saronic" },
+                  { name: "Sporades", href: "/yacht-charter-skiathos" },
                   { name: "Dodecanese", href: "/yacht-itineraries-greece" },
                 ].map((r) => (
                   <Link

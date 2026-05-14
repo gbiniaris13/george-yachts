@@ -4,18 +4,15 @@ import ContactFormSection from "@/components/ContactFormSection";
 import ItinerariesContent from "./ItinerariesContent";
 import Image from "next/image";
 import "@/styles/service-page.css";
+import { pageMeta } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "Yacht Itineraries Greece | Cyclades, Ionian, Saronic | George Yachts",
+// 2026-05-14 — title trimmed 67→55 chars (Ahrefs flag).
+export const metadata = pageMeta({
+  title: "Signature Yacht Itineraries Greece | George Yachts",
   description:
     "3 signature Greek yacht charter itineraries personally sailed by George Biniaris. Cyclades Classic, Saronic Elegance, Ionian Dream. Day-by-day routes with insider tips.",
-  alternates: { canonical: "https://georgeyachts.com/yacht-itineraries-greece" },
-  openGraph: {
-    title: "Signature Yacht Itineraries Greece | George Yachts",
-    description: "3 personally crafted Greek yacht charter routes. Cyclades, Saronic, Ionian. Day-by-day with insider knowledge.",
-    url: "https://georgeyachts.com/yacht-itineraries-greece",
-  },
-};
+  path: "/yacht-itineraries-greece",
+});
 
 function PageSchema() {
   const schema = {
