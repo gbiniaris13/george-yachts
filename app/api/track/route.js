@@ -429,11 +429,17 @@ export async function POST(request) {
       // IP enrichment (graceful — null on miss).
       const ipEnrich = await enrichIP(ip);
 
-      // Skip Telegram entirely for known bots / hosting / Tor with NO engagement signal.
+      // Skip Telegram entirely for known bots / hosting / Tor / headless
+      // browsers / scrapers with NO engagement signal. The is_hosting
+      // flag is now decorated in lib/ip-enrich.js using the DC ASN
+      // hit-list (Azure / AWS / GCP / DigitalOcean / Linode / etc), so
+      // this gate finally catches Microsoft Corporation (AS8075) traffic
+      // that previously slipped through with is_hosting=null.
       const looksLikeBot =
         ipEnrich?.is_hosting === true ||
         ipEnrich?.is_tor === true ||
-        /bot|crawler|spider|scraper|headless/i.test(ua);
+        clientSignals?.webdriver === true ||
+        /bot|crawler|spider|scraper|headless|preview|monitor/i.test(ua);
 
       // Check if we've seen this visitor before.
       const isReturn = await hasPriorSession(visitorId);
@@ -505,6 +511,19 @@ export async function POST(request) {
         prefers_dark: clientSignals?.prefers_dark ?? null,
         prefers_reduced_motion: clientSignals?.prefers_reduced_motion ?? null,
         touch_points: clientSignals?.touch_points ?? null,
+        // Advanced fingerprint (2026-05-15) — columns added in
+        // 2026-05-15-visitor-fingerprint.sql.
+        webgl_vendor: clientSignals?.webgl_vendor || null,
+        webgl_renderer: clientSignals?.webgl_renderer || null,
+        webgl_sig: clientSignals?.webgl_sig || null,
+        canvas_sig: clientSignals?.canvas_sig || null,
+        audio_sig: clientSignals?.audio_sig || null,
+        plugin_count: clientSignals?.plugin_count ?? null,
+        mime_count: clientSignals?.mime_count ?? null,
+        pdf_viewer: clientSignals?.pdf_viewer ?? null,
+        webdriver: clientSignals?.webdriver ?? null,
+        color_depth: clientSignals?.color_depth ?? null,
+        tz_offset_min: clientSignals?.tz_offset_min ?? null,
         os: uaParsed.os,
         os_version: uaParsed.os_version,
         browser: uaParsed.browser,
@@ -642,7 +661,27 @@ export async function POST(request) {
     if (event === 'copy_event' && sessionId) {
       const row = await getCRMSession(sessionId);
       const current = row?.copy_events || 0;
-      await updateCRMSession(sessionId, { copy_events: current + 1 });
+      const update = { copy_events: current + 1 };
+      // Append the copied text to copy_texts (cap at last 5 entries,
+      // 500 chars each). Strong intent signal — visible in dashboard
+      // as "highlighted: <text>". Server-side PII guard strips
+      // anything that looks like a credit-card / SSN pattern.
+      const copyText = typeof body?.copyText === 'string' ? body.copyText : null;
+      if (copyText) {
+        const safe = copyText
+          // strip 13-19 digit clusters (credit cards)
+          .replace(/\b\d{13,19}\b/g, '[redacted]')
+          // strip standalone SSN-like 9-digit groups
+          .replace(/\b\d{3}-?\d{2}-?\d{4}\b/g, '[redacted]')
+          .slice(0, 500);
+        const existing = Array.isArray(row?.copy_texts) ? row.copy_texts : [];
+        const next = [
+          { page: page || '/', text: safe, ts: new Date().toISOString() },
+          ...existing,
+        ].slice(0, 5);
+        update.copy_texts = next;
+      }
+      await updateCRMSession(sessionId, update);
     }
 
     // --- EVENT: Print Event ---
@@ -884,6 +923,13 @@ export async function POST(request) {
         yachtList,
       ].join('\n');
 
+      // Mouse-entropy summary — populated by VisitorTracker when the
+      // tab unloads. Stored so dashboard can flag bot-like scroll
+      // sessions even AFTER the new_visit gate let them through.
+      const mouseEntropy = body?.mouseEntropy && typeof body.mouseEntropy === 'object'
+        ? body.mouseEntropy
+        : null;
+
       await updateCRMSession(sessionId, {
         time_on_site: sanitisedTimeOnSite,
         active_seconds: typeof activeSeconds === 'number' ? activeSeconds : undefined,
@@ -894,6 +940,10 @@ export async function POST(request) {
         premium_yacht_views: premiumViews,
         hot_score: finalScore,
         is_hot_lead: isHotLead(finalScore),
+        mouse_samples: mouseEntropy?.samples ?? undefined,
+        mouse_angle_var: mouseEntropy?.angle_var ?? undefined,
+        mouse_speed_var: mouseEntropy?.speed_var ?? undefined,
+        mouse_idle_gaps: mouseEntropy?.idle_gaps ?? undefined,
       });
 
       if (sanitisedTimeOnSite > 30 && (await shouldFireTelegram('session_end', ip))) {

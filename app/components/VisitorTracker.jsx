@@ -29,7 +29,11 @@
 
 import { useEffect, useRef, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
-import { captureAttribution, collectClientSignals } from '@/lib/visitor-signals';
+import {
+  captureAttribution,
+  collectClientSignals,
+  collectAudioFingerprint,
+} from '@/lib/visitor-signals';
 
 const SESSION_KEY = 'gy-tracker-session';
 const YACHT_HISTORY_KEY = 'gy-view-history';
@@ -168,6 +172,22 @@ export default function VisitorTracker({ onHotLead }) {
   const focusRef = useRef({
     active: 0, hidden: 0, lastTickAt: Date.now(), visible: true,
   });
+  // Mouse-entropy bookkeeping. We sample at ≤8 Hz (every 125 ms),
+  // accumulate angular variance (turn-angle changes) and step-size
+  // variance — bots tend to move in straight lines at constant speed
+  // (low variance) while humans drift / hesitate / overshoot.
+  const mouseRef = useRef({
+    samples: 0,        // raw sample count
+    lastX: null,
+    lastY: null,
+    lastT: 0,
+    lastAngle: null,
+    angleSum: 0,       // sum of |Δangle|, normalised by samples
+    angleSqSum: 0,     // squared for variance
+    speedSum: 0,
+    speedSqSum: 0,
+    idleGaps: 0,       // gaps >1.5s — humans pause to read
+  });
 
   // Initialize session on mount
   useEffect(() => {
@@ -214,6 +234,11 @@ export default function VisitorTracker({ onHotLead }) {
         client: clientSignals,
         isTest: false,
       });
+
+      // Audio fingerprint is async — fire-and-forget, hash lands in
+      // sessionStorage so subsequent beacons attach it automatically
+      // via collectClientSignals().audio_sig.
+      collectAudioFingerprint().catch(() => null);
     }
 
     sessionRef.current = session;
@@ -533,6 +558,48 @@ export default function VisitorTracker({ onHotLead }) {
   }, []);
 
   // -------------------------------------------------------------
+  // Mouse-entropy sampler — humans vs bots. Throttled to ≤8 Hz so
+  // the event handler stays cheap on heavy pages.
+  // -------------------------------------------------------------
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+    const SAMPLE_MS = 125;
+
+    const onMove = (ev) => {
+      const m = mouseRef.current;
+      const now = performance.now();
+      if (now - m.lastT < SAMPLE_MS) return;
+      const x = ev.clientX;
+      const y = ev.clientY;
+      if (m.lastX !== null) {
+        const dx = x - m.lastX;
+        const dy = y - m.lastY;
+        const dt = (now - m.lastT) / 1000 || 0.0001;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const speed = dist / dt;
+        const angle = Math.atan2(dy, dx);
+        if (m.lastAngle !== null) {
+          let dAng = Math.abs(angle - m.lastAngle);
+          if (dAng > Math.PI) dAng = 2 * Math.PI - dAng;
+          m.angleSum += dAng;
+          m.angleSqSum += dAng * dAng;
+        }
+        m.lastAngle = angle;
+        m.speedSum += speed;
+        m.speedSqSum += speed * speed;
+        if (dt > 1.5) m.idleGaps += 1;
+        m.samples += 1;
+      }
+      m.lastX = x;
+      m.lastY = y;
+      m.lastT = now;
+    };
+
+    document.addEventListener('mousemove', onMove, { passive: true });
+    return () => document.removeEventListener('mousemove', onMove);
+  }, []);
+
+  // -------------------------------------------------------------
   // Copy + print events — strong intent signals (someone copying
   // yacht specs / phone / email is preparing to act; someone
   // printing a page is generating a proposal artifact).
@@ -545,10 +612,27 @@ export default function VisitorTracker({ onHotLead }) {
       session.copyEvents = (session.copyEvents || 0) + 1;
       sessionRef.current = session;
       saveSession(session);
+
+      // Capture the selected text (truncated). Strong intent signal —
+      // a visitor highlighting "Aphrodite 38m 8 guests" is researching
+      // properly. NO email/phone scraping (server-side guard strips
+      // any obvious PII).
+      let selectedText = null;
+      try {
+        const sel = window.getSelection?.();
+        if (sel) {
+          selectedText = String(sel.toString() || '').trim().slice(0, 500);
+          if (!selectedText) selectedText = null;
+        }
+      } catch {
+        // ignore
+      }
+
       sendBeacon({
         event: 'copy_event',
         sessionId: session.id,
         page: pathname,
+        copyText: selectedText,
         isTest: false,
       });
     };
@@ -580,6 +664,25 @@ export default function VisitorTracker({ onHotLead }) {
       if (!session) return;
       const timeOnSite = Math.round((Date.now() - session.startTime) / 1000);
 
+      // Mouse entropy summary — variance proxies for bot detection.
+      // Low angle-variance + low speed-variance + zero idle gaps =
+      // straight-line robot. Real humans hover and reread → idle gaps
+      // > 0, angle variance > 0.5, speed variance > 0.
+      let mouseEntropy = null;
+      const m = mouseRef.current;
+      if (m.samples >= 10) {
+        const angleMean = m.angleSum / m.samples;
+        const angleVar = m.angleSqSum / m.samples - angleMean * angleMean;
+        const speedMean = m.speedSum / m.samples;
+        const speedVar = m.speedSqSum / m.samples - speedMean * speedMean;
+        mouseEntropy = {
+          samples: m.samples,
+          angle_var: Math.max(0, +angleVar.toFixed(3)),
+          speed_var: Math.round(Math.max(0, speedVar)),
+          idle_gaps: m.idleGaps,
+        };
+      }
+
       sendBeacon({
         event: 'session_end',
         sessionId: session.id,
@@ -603,6 +706,7 @@ export default function VisitorTracker({ onHotLead }) {
           print_events: session.printEvents || 0,
           scroll_deep: !!session.scrollDeep,
         },
+        mouseEntropy,
         isTest: false,
       });
     };
