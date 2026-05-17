@@ -7,7 +7,7 @@
 //
 // Activation requires three env vars:
 //   AI_API_KEY        – auth bearer for the model provider
-//   AI_BASE_URL       – e.g. https://generativelanguage.googleapis.com/v1beta/openai
+//   AI_BASE_URL       – OpenAI-compatible base URL (e.g. Google's v1beta/openai shim)
 //   AI_MODEL          – e.g. gemini-2.5-flash
 // When any are missing the endpoint returns a graceful fallback ("Ask
 // George is warming up — write to George directly via /inquiry") so
@@ -198,15 +198,16 @@ export async function POST(req) {
   const fleetText = formatFleetForPrompt(fleet);
   const systemPrompt = `${SYSTEM_PROMPT_BASE}\n\nLIVE FLEET CATALOG (${fleet.length} yachts):\n${fleetText}\n\nWhen recommending, link the yacht using its slug like /yachts/genny.`;
 
-  const upstream = await fetch(`${baseUrl.replace(/\/+$/, "")}/chat/completions`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
+  // Routes through lib/gemini-client which enforces the €10/month
+  // cost cap (master kill-switch + per-provider monthly limit).
+  // Never call the upstream model endpoint directly here.
+  let upstream;
+  try {
+    const { geminiOpenAiStream } = await import("@/lib/gemini-client");
+    upstream = await geminiOpenAiStream({
       model,
-      stream: true,
+      apiKey,
+      baseURL: baseUrl,
       temperature: 0.6,
       max_tokens: 800,
       messages: [
@@ -216,8 +217,12 @@ export async function POST(req) {
           content: (m.content || "").toString().slice(0, 2000),
         })),
       ],
-    }),
-  });
+    });
+  } catch (e) {
+    // Cap reached, AI features disabled, or network failure →
+    // graceful fallback ("Ask George is warming up...").
+    return fallbackReply();
+  }
 
   if (!upstream.ok || !upstream.body) {
     return fallbackReply();

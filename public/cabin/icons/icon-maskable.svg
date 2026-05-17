@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Maskable variant — keeps important content in 80% safe zone
+       (radius 205 from centre) so Android icon masks (circle,
+       squircle, drop) never crop the compass. -->
+  <rect width="512" height="512" fill="#0D1B2A"/>
+  <circle cx="256" cy="256" r="136" fill="none" stroke="#C9A84C" stroke-width="2.5" opacity="0.55"/>
+  <circle cx="256" cy="256" r="98"  fill="none" stroke="#C9A84C" stroke-width="2"   opacity="0.4"/>
+  <g fill="#C9A84C">
+    <polygon points="256,104 264,256 256,232 248,256" opacity="0.95"/>
+    <polygon points="256,408 264,256 256,280 248,256" opacity="0.6"/>
+    <polygon points="408,256 256,264 280,256 256,248" opacity="0.7"/>
+    <polygon points="104,256 256,264 232,256 256,248" opacity="0.7"/>
+  </g>
+  <circle cx="256" cy="256" r="11" fill="#F8F5F0"/>
+</svg>

@@ -51,8 +51,14 @@ const nextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://translate.google.com https://translate.googleapis.com https://js.hs-scripts.com https://js.hsforms.net https://js.hs-analytics.net https://js.hs-banner.com https://js.hscollectedforms.net https://consent.cookiebot.com https://consentcdn.cookiebot.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com https://api.fontshare.com https://consent.cookiebot.com https://consentcdn.cookiebot.com",
               "font-src 'self' https://fonts.gstatic.com https://cdn.fontshare.com https://consent.cookiebot.com https://consentcdn.cookiebot.com",
-              "img-src 'self' data: blob: https://cdn.sanity.io https://images.pexels.com https://images.unsplash.com https://www.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://translate.google.com https://www.google.com https://translate.googleapis.com https://imgsct.cookiebot.com https://consent.cookiebot.com",
-              "connect-src 'self' https://cdn.sanity.io https://*.sanity.io https://www.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://*.hubapi.com https://api.hubspot.com https://forms.hubspot.com https://translate.googleapis.com https://translate.google.com https://wttr.in https://consent.cookiebot.com https://consentcdn.cookiebot.com",
+              // 2026-05-17 — The Cabin (mood-board + voyage-album)
+              // serves signed images from Supabase Storage. Without
+              // *.supabase.co here, every photo loads with a CSP
+              // violation in the console and the <img> shows broken.
+              // Also allowing https: for arbitrary mood-board pastes
+              // (Pinterest, etc.) which are charterer-pasted URLs.
+              "img-src 'self' data: blob: https: https://cdn.sanity.io https://images.pexels.com https://images.unsplash.com https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://translate.google.com https://www.google.com https://translate.googleapis.com https://imgsct.cookiebot.com https://consent.cookiebot.com",
+              "connect-src 'self' https://cdn.sanity.io https://*.sanity.io https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://*.hubapi.com https://api.hubspot.com https://forms.hubspot.com https://translate.googleapis.com https://translate.google.com https://wttr.in https://consent.cookiebot.com https://consentcdn.cookiebot.com",
               // 2026-05-12 — added my.matterport.com pre-emptively.
               // The yacht detail page (YachtPageContent.jsx Matterport
               // section) renders an <iframe src={yacht.matterportEmbedUrl}>
