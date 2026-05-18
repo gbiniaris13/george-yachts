@@ -2,6 +2,7 @@ import { sanityClient } from '@/lib/sanity';
 import CostCalculatorClient from './CostCalculatorClient';
 import { pageMeta } from '@/lib/pageMeta';
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const revalidate = 3600;
 
 export const metadata = pageMeta({
@@ -58,5 +59,20 @@ export default async function CostCalculatorPage() {
     console.error('Failed to fetch yachts for cost calculator:', e);
   }
 
-  return <CostCalculatorClient yachts={yachts} />;
+  return (
+
+
+    <>
+
+
+      <PageBreadcrumb path="/cost-calculator" />
+
+
+      <CostCalculatorClient yachts={yachts} />
+
+
+    </>
+
+
+  );
 }

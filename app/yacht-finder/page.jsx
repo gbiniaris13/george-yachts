@@ -2,6 +2,7 @@ import { sanityClient } from '@/lib/sanity';
 import YachtFinderQuiz from './YachtFinderQuiz';
 import { pageMeta } from '@/lib/pageMeta';
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const revalidate = 3600;
 
 export const metadata = pageMeta({
@@ -90,5 +91,20 @@ export default async function YachtFinderPage() {
     console.error('Failed to fetch yachts for yacht finder:', e);
   }
 
-  return <YachtFinderQuiz fleet={fleet} />;
+  return (
+
+
+    <>
+
+
+      <PageBreadcrumb path="/yacht-finder" />
+
+
+      <YachtFinderQuiz fleet={fleet} />
+
+
+    </>
+
+
+  );
 }

@@ -24,6 +24,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Footer from "@/app/components/Footer";
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
   title: "Credentials | Forbes · IYBA · MYBA · Wyoming-Athens | George Yachts",
   description:
@@ -44,6 +45,7 @@ const FORBES_URL =
 export default function CredentialsPage() {
   return (
     <>
+      <PageBreadcrumb path="/credentials" />
       <main
         style={{
           background: "#0D1B2A",

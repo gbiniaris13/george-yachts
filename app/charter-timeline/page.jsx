@@ -1,6 +1,7 @@
 import TimelineClient from './TimelineClient';
 import { pageMeta } from '@/lib/pageMeta';
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: 'Charter Experience Timeline | George Yachts',
   description:
@@ -9,5 +10,10 @@ export const metadata = pageMeta({
 });
 
 export default function TimelinePage() {
-  return <TimelineClient />;
+  return (
+    <>
+      <PageBreadcrumb path="/charter-timeline" />
+      <TimelineClient />
+    </>
+  );
 }

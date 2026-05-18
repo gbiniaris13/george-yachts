@@ -2,6 +2,7 @@ import { sanityClient } from '@/lib/sanity';
 import SizeVisualizerClient from './SizeVisualizerClient';
 import { pageMeta } from '@/lib/pageMeta';
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const revalidate = 3600;
 
 export const metadata = pageMeta({
@@ -75,5 +76,20 @@ export default async function SizeVisualizerPage() {
     console.error('Failed to fetch yachts for size visualizer:', e);
   }
 
-  return <SizeVisualizerClient yachts={yachts} />;
+  return (
+
+
+    <>
+
+
+      <PageBreadcrumb path="/yacht-size-visualizer" />
+
+
+      <SizeVisualizerClient yachts={yachts} />
+
+
+    </>
+
+
+  );
 }

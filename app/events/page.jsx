@@ -6,6 +6,7 @@ import { ServiceParallax, Reveal } from "@/components/ServiceParallax";
 import "@/styles/service-page.css";
 import { pageMeta } from "@/lib/pageMeta";
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: "Yacht Shows & Events 2026 | George Yachts",
   description:
@@ -59,6 +60,7 @@ function PageSchema() {
 export default function EventsPage() {
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "var(--gy-font-ui)" }}>
+      <PageBreadcrumb path="/events" />
       <PageSchema />
       <ServiceParallax />
 

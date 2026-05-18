@@ -105,6 +105,34 @@ const nextConfig = {
         source: `/yacht-charter-:slug(${ISLAND_SLUGS_PATTERN})`,
         destination: "/island/:slug",
       },
+
+      // Markdown mirrors. Bots that want a clean plain-text
+      // representation of any page hit /path/index.md (or the root
+      // /index.md). We catch both with two rules and route to the
+      // internal /api/markdown handler, which looks up the path in
+      // lib/markdown-serializers and returns text/markdown.
+      //
+      // Order matters: /:path*/index.md catches everything except
+      // the bare /index.md, which gets its own rule.
+      //
+      // 2026-05-18 — Initial implementation passed the captured path
+      // as `?path=/:path*` but Next.js's rewrite engine quietly drops
+      // captured params when the placeholder appears inside a query
+      // value with a leading literal (the `?path=/` prefix confused
+      // the substitution). Every /:path*/index.md request hit the
+      // handler with no `path` query and fell back to "/", so every
+      // mirror returned the homepage. Fix: pass the captured segments
+      // through the URL pathname (no query string) and add a
+      // catch-all dynamic route at /api/markdown/[[...path]] that
+      // reads them from params.
+      {
+        source: "/index.md",
+        destination: "/api/markdown",
+      },
+      {
+        source: "/:path*/index.md",
+        destination: "/api/markdown/:path*",
+      },
     ];
   },
   async redirects() {

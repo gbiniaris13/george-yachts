@@ -6,6 +6,7 @@ import Image from "next/image";
 import "@/styles/service-page.css";
 import { pageMeta } from "@/lib/pageMeta";
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 // 2026-05-14 — title trimmed 64→52 chars (Ahrefs flag).
 export const metadata = pageMeta({
   title: "Luxury Villas Greece | Curated | George Yachts",
@@ -32,6 +33,7 @@ const CHECK = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke
 export default function LuxuryVillasPage() {
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "var(--gy-font-ui)" }}>
+      <PageBreadcrumb path="/luxury-villas-greece" />
       <PageSchema />
       <ServiceParallax />
 

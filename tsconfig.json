@@ -31,5 +31,13 @@
     "**/*.js",
     "**/*.jsx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "node_modules.nosync",
+    ".next",
+    ".next.nosync",
+    ".next 2",
+    "scripts",
+    "sanity"
+  ]
 }

@@ -14,6 +14,7 @@ import { JOURNAL_CLUSTERS, getClusterBySlug } from "@/lib/journal-clusters";
 import { sanityCardImg } from "@/lib/sanity-image";
 import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
@@ -68,6 +69,8 @@ export default async function ClusterPage({ params }) {
 
   return (
     <article style={{ background: "#0D1B2A", minHeight: "100vh" }}>
+      {/* journal cluster */}
+      <PageBreadcrumb path="/blog" />
       {/* HEADER */}
       <header
         style={{

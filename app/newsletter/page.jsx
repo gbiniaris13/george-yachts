@@ -11,6 +11,7 @@
 
 import NewsletterSignupClient from "./NewsletterSignupClient";
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
   title: "Subscribe — The George Yachts Journals",
   description:
@@ -72,6 +73,7 @@ export default function NewsletterPage() {
         padding: "0",
       }}
     >
+      <PageBreadcrumb path="/newsletter" />
       <header
         style={{
           textAlign: "center",

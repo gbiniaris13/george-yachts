@@ -14,6 +14,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 const FORBES = {
   url:
     "https://www.forbes.com/sites/jacquesledbetter/2026/05/01/how-the-wealthy-are-hedging-for-instability/",
@@ -99,10 +100,13 @@ function CollectionPageSchema() {
     },
   };
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
+    <>
+      <PageBreadcrumb path="/press" />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+    </>
   );
 }
 
