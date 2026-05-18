@@ -76,6 +76,31 @@ const nextConfig = {
           },
         ],
       },
+      // 2026-05-18 — Admin routes get X-Robots-Tag pinned at the
+      // CDN layer too (middleware sets it on its own responses, but
+      // not every code path through Next.js runs middleware on the
+      // response object — e.g. static prerendered admin chrome).
+      // robots.txt already disallows /admin for every user-agent;
+      // X-Robots-Tag is the in-band fallback for any crawler that
+      // ignores or hasn't re-fetched robots.txt.
+      {
+        source: "/admin/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow, noarchive, nosnippet",
+          },
+        ],
+      },
+      {
+        source: "/api/admin/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow, noarchive, nosnippet",
+          },
+        ],
+      },
     ];
   },
   // 2026-05-11 - Phase 7 SEO routing fix. Next.js 15 doesn't
