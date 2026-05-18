@@ -80,18 +80,21 @@ export default function HealthSectionPage() {
               <TextField
                 label="Full name"
                 name="emergency_contact.full_name"
+                placeholder="e.g. Eleni Papadopoulou"
                 register={register}
                 required
               />
               <TextField
                 label="Relationship to charterer"
                 name="emergency_contact.relationship"
+                placeholder="e.g. Sister, daughter, business partner"
                 register={register}
                 required
               />
               <TextField
                 label="Mobile number"
                 name="emergency_contact.mobile"
+                placeholder="+30 6970 380 999"
                 register={register}
                 required
                 inputMode="tel"
@@ -99,6 +102,7 @@ export default function HealthSectionPage() {
               <TextField
                 label="Email"
                 name="emergency_contact.email"
+                placeholder="eleni@example.com"
                 register={register}
                 required
                 type="email"

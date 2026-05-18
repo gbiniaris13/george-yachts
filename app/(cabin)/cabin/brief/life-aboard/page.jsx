@@ -82,14 +82,35 @@ export default function LifeAboardSectionPage() {
               </em>
             </p>
             <div className="brief-grid">
-              <TextField label="Morning music" name="music.morning" register={register} />
-              <TextField label="Lunch & afternoon" name="music.lunch_afternoon" register={register} />
-              <TextField label="Sunset & dinner" name="music.sunset_dinner" register={register} />
-              <TextField label="Late night" name="music.late_night" register={register} />
+              <TextField
+                label="Morning music"
+                name="music.morning"
+                placeholder="e.g. Acoustic, jazz, Greek classics"
+                register={register}
+              />
+              <TextField
+                label="Lunch & afternoon"
+                name="music.lunch_afternoon"
+                placeholder="e.g. Bossa nova, Mediterranean lounge"
+                register={register}
+              />
+              <TextField
+                label="Sunset & dinner"
+                name="music.sunset_dinner"
+                placeholder="e.g. Soft soul, Cuban, French chanson"
+                register={register}
+              />
+              <TextField
+                label="Late night"
+                name="music.late_night"
+                placeholder="e.g. House, deep electronica"
+                register={register}
+              />
             </div>
             <OpenTextarea
               label="Specific artists or playlists to have ready"
               name="music.specific_artists"
+              placeholder="e.g. Nick Cave, Άννα Βίσση, a Spotify playlist link"
               register={register}
               rows={2}
             />

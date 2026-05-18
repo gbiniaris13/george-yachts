@@ -35,10 +35,15 @@ function FieldLabel({ children, required, htmlFor, hint }) {
         .brief-label {
           display: block;
           font-family: var(--gy-font-ui);
-          font-size: 10px;
-          letter-spacing: 2.5px;
+          /* Bumped from 10px → 11.5px and opacity from 0.55 → 0.78.
+             At 10px uppercase + tracked, the labels read as decorative
+             rules rather than "this is what to type here." George
+             reported empty Music/Emergency-contact fields because
+             the labels were invisible to anyone over 40 years old. */
+          font-size: 11.5px;
+          letter-spacing: 2.2px;
           text-transform: uppercase;
-          color: rgba(13, 27, 42, 0.55);
+          color: rgba(13, 27, 42, 0.78);
           margin-bottom: 8px;
           font-weight: 500;
         }
