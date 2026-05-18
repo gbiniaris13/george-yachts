@@ -38,7 +38,7 @@ export default function BeveragesSectionPage() {
         prevSection={{ key: "dining", title: "At the Table" }}
         nextSection={{ key: "little_things", title: "The Little Things" }}
       >
-        {({ register }) => (
+        {({ register, control }) => (
           <>
             {/* ─────────── Water ─────────── */}
             <h2 className="brief-subhead">Bottled water</h2>
@@ -79,6 +79,7 @@ export default function BeveragesSectionPage() {
               name="soft_drinks"
               label=""
               register={register}
+              control={control}
               startRows={4}
             />
 
@@ -143,6 +144,7 @@ export default function BeveragesSectionPage() {
               name="wines"
               label=""
               register={register}
+              control={control}
               withPriceRange
               startRows={4}
             />
@@ -153,12 +155,12 @@ export default function BeveragesSectionPage() {
               <em>One block per spirit. Add only what you want stocked.</em>
             </p>
 
-            <LabelQuantityRows name="whiskey" label="Whiskey" register={register} startRows={2} />
-            <LabelQuantityRows name="vodka"   label="Vodka"   register={register} startRows={2} />
-            <LabelQuantityRows name="gin"     label="Gin"     register={register} startRows={2} />
-            <LabelQuantityRows name="rum"     label="Rum"     register={register} startRows={2} />
-            <LabelQuantityRows name="tequila" label="Tequila" register={register} startRows={2} />
-            <LabelQuantityRows name="liqueur" label="Liqueur" register={register} startRows={2} />
+            <LabelQuantityRows name="whiskey" label="Whiskey" register={register} control={control} startRows={2} />
+            <LabelQuantityRows name="vodka"   label="Vodka"   register={register} control={control} startRows={2} />
+            <LabelQuantityRows name="gin"     label="Gin"     register={register} control={control} startRows={2} />
+            <LabelQuantityRows name="rum"     label="Rum"     register={register} control={control} startRows={2} />
+            <LabelQuantityRows name="tequila" label="Tequila" register={register} control={control} startRows={2} />
+            <LabelQuantityRows name="liqueur" label="Liqueur" register={register} control={control} startRows={2} />
 
             {/* ─────────── Beers ─────────── */}
             <h2 className="brief-subhead">Beers</h2>
@@ -166,12 +168,14 @@ export default function BeveragesSectionPage() {
               name="beers"
               label="International beers"
               register={register}
+              control={control}
               startRows={3}
             />
             <LabelQuantityRows
               name="beers_local"
               label="Local Greek beers (Mythos, Alfa, Septem…)"
               register={register}
+              control={control}
               startRows={2}
             />
 

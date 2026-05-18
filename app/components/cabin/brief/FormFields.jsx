@@ -5,6 +5,7 @@
 // inline to keep the section pages self-contained.
 
 import { useId, useState, useEffect } from "react";
+import { useFieldArray } from "react-hook-form";
 
 // =================== Required dot ===========================
 export function RequiredDot({ label = "required" }) {
@@ -665,10 +666,17 @@ export function LikeDislikeMatrix({ name, label, hint, items, register }) {
 // =================== LabelQuantityRows ======================
 // Repeatable rows for "label" + "quantity" tables (soft drinks,
 // spirits, beers). Optional third column for wines (price range).
-// We use local state for row count and rely on RHF's register to
-// own the actual field values — each input registers as
-// `name.i.label` / `name.i.quantity` so RHF's nested-path resolver
-// picks them up into an array on submit.
+//
+// Uses react-hook-form's useFieldArray so adding, removing, and
+// reordering rows keeps RHF's internal state perfectly in sync.
+// Without useFieldArray, removing a middle row via local state
+// (.filter on a plain array) leaves stale RHF entries behind and
+// the next save writes the wrong indices.
+//
+// startRows controls how many empty rows show on first paint.
+// Existing rows from loaded data populate via form.reset() inside
+// BriefFormShell — useFieldArray reads from the parent form's
+// state automatically.
 export function LabelQuantityRows({
   name,
   label,
@@ -676,40 +684,40 @@ export function LabelQuantityRows({
   withPriceRange,
   startRows = 3,
   register,
-  // Optional: caller may pass already-loaded rows to seed initial
-  // state. We don't reach into RHF directly here.
-  initialRows,
+  control,
 }) {
-  const [rows, setRows] = useState(() => {
-    const base = Array.isArray(initialRows) && initialRows.length > 0
-      ? initialRows.map((r) => ({
-          label: r.label ?? "",
-          quantity: r.quantity ?? "",
-          price_range_per_bottle: r.price_range_per_bottle ?? "",
-        }))
-      : Array.from({ length: startRows }, () => ({ label: "", quantity: "", price_range_per_bottle: "" }));
-    return base;
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name,
   });
 
-  // Reset when caller re-mounts with new defaults (e.g. cabin switch)
+  // Pad the field array up to startRows on first mount so the table
+  // shows a useful number of blank rows out of the gate. We can't
+  // do this inside useFieldArray's `defaultValues` because the
+  // parent form owns defaults — we'd race the reset() that loads
+  // server data. Instead, only pad once and only when empty.
   useEffect(() => {
-    if (Array.isArray(initialRows) && initialRows.length > 0) {
-      setRows(
-        initialRows.map((r) => ({
-          label: r.label ?? "",
-          quantity: r.quantity ?? "",
-          price_range_per_bottle: r.price_range_per_bottle ?? "",
-        })),
-      );
+    if (fields.length === 0) {
+      for (let i = 0; i < startRows; i++) {
+        append({
+          label: "",
+          quantity: "",
+          ...(withPriceRange ? { price_range_per_bottle: "" } : {}),
+        }, { shouldFocus: false });
+      }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function addRow() {
-    setRows((r) => [...r, { label: "", quantity: "", price_range_per_bottle: "" }]);
+    append({
+      label: "",
+      quantity: "",
+      ...(withPriceRange ? { price_range_per_bottle: "" } : {}),
+    }, { shouldFocus: false });
   }
   function removeRow(i) {
-    setRows((r) => r.filter((_, j) => j !== i));
+    remove(i);
   }
 
   return (
@@ -726,28 +734,23 @@ export function LabelQuantityRows({
         <span />
       </div>
 
-      {rows.map((row, i) => (
-        <div key={i} className={"brief-lq-row" + (withPriceRange ? " has-price" : "")}>
+      {fields.map((field, i) => (
+        <div key={field.id} className={"brief-lq-row" + (withPriceRange ? " has-price" : "")}>
           <input
             type="text"
-            defaultValue={row.label}
             placeholder={withPriceRange ? "e.g. Ruinart Brut Blanc" : "e.g. Diet Coke cans"}
-            {...(register ? register(`${name}.${i}.label`) : { name: `${name}[${i}][label]` })}
+            {...register(`${name}.${i}.label`)}
           />
           <input
             type="text"
-            defaultValue={row.quantity}
             placeholder={withPriceRange ? "6" : "24"}
-            {...(register ? register(`${name}.${i}.quantity`) : { name: `${name}[${i}][quantity]` })}
+            {...register(`${name}.${i}.quantity`)}
           />
           {withPriceRange && (
             <input
               type="text"
-              defaultValue={row.price_range_per_bottle}
               placeholder="150"
-              {...(register
-                ? register(`${name}.${i}.price_range_per_bottle`)
-                : { name: `${name}[${i}][price_range_per_bottle]` })}
+              {...register(`${name}.${i}.price_range_per_bottle`)}
             />
           )}
           <button
