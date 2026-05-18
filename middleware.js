@@ -32,6 +32,9 @@ const PUBLIC_PATHS = [
 
 const PUBLIC_PREFIXES = [
   "/cabin/icons/",
+  "/cabin/share/",           // tokenized read-only preference sheet
+                              // for captains, chefs, owners — auth via
+                              // the token in the URL, not the cookie
   "/api/cabin/auth/",        // request-link, verify, logout
   // Admin routes called server-to-server from gy-command. They
   // authenticate with the x-cabin-admin-secret header, not the
