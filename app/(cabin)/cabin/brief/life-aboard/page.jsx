@@ -115,6 +115,22 @@ export default function LifeAboardSectionPage() {
               rows={2}
             />
 
+            <h2 className="brief-subhead">Wellness on board</h2>
+            <CheckboxGroup
+              name="wellness_onboard"
+              label="Anything that interests you"
+              hint="The captain pre-checks availability and pricing with the management company. Most yachts can arrange these with notice."
+              register={register}
+              twoColumn
+              options={[
+                { value: "yoga_morning",        label: "Morning yoga session" },
+                { value: "massage_onboard",     label: "Massage on board" },
+                { value: "stargazing_nights",   label: "Stargazing evenings" },
+                { value: "sunrise_meditation",  label: "Sunrise meditation" },
+                { value: "personal_trainer",    label: "Personal trainer / fitness" },
+              ]}
+            />
+
             <OpenTextarea
               label="A few small touches we should ask the crew about"
               hint="Fresh flowers, board games, books in a particular language, yoga mats, beach equipment for shore stops — whatever would make a small difference. Write freely."

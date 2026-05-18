@@ -66,6 +66,29 @@ export default function LittleThingsSectionPage() {
                 { value: "no_only_for_us",   label: "No — keep them only inside our Cabin" },
               ]}
             />
+            <RadioGroup
+              name="drone_photography"
+              label="Drone photography on the water"
+              hint="Drone laws vary by Greek island — the captain pre-checks the route. Many yachts have a drone aboard already."
+              register={register}
+              options={[
+                { value: "yes_please",       label: "Yes, please arrange (we don't have one)" },
+                { value: "already_bringing", label: "Yes — we are bringing our own" },
+                { value: "no_thanks",        label: "No, thank you" },
+              ]}
+            />
+            <RadioGroup
+              name="professional_photographer"
+              label="Professional photographer day on board"
+              hint="A photographer sails for a day to capture the week. Arranged via the management company; typically a small extra."
+              register={register}
+              options={[
+                { value: "yes_please",         label: "Yes, please arrange" },
+                { value: "already_arranging",  label: "Already arranging this ourselves" },
+                { value: "no_thanks",          label: "No, thank you" },
+              ]}
+            />
+
             <CheckboxGroup
               name="night_service"
               label="Night service in your cabin"
