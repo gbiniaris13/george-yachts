@@ -6,6 +6,7 @@ import {
   SectionTitle,
   OpenTextarea,
   RadioGroup,
+  CheckboxGroup,
 } from "../../../../components/cabin/brief/FormFields";
 
 export default function LittleThingsSectionPage() {
@@ -65,6 +66,21 @@ export default function LittleThingsSectionPage() {
                 { value: "no_only_for_us",   label: "No — keep them only inside our Cabin" },
               ]}
             />
+            <CheckboxGroup
+              name="night_service"
+              label="Night service in your cabin"
+              hint="Items the hostess places in your cabin in the early evening, between 6 and 9pm."
+              register={register}
+              twoColumn
+              options={[
+                { value: "water_bottles",  label: "Bottles of water" },
+                { value: "chocolates",     label: "Chocolates" },
+                { value: "bedtime_books",  label: "Bedtime books (for children)" },
+                { value: "fresh_fruit",    label: "Fresh fruit" },
+                { value: "herbal_tea",     label: "Herbal tea kit" },
+              ]}
+            />
+
             <OpenTextarea
               label="Any final notes"
               hint="Whatever feels worth telling us. There is no wrong answer."

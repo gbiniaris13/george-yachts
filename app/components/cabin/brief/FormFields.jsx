@@ -4,7 +4,7 @@
 // use plain HTML controls (no shadcn dependency) and are styled
 // inline to keep the section pages self-contained.
 
-import { useId } from "react";
+import { useId, useState, useEffect } from "react";
 
 // =================== Required dot ===========================
 export function RequiredDot({ label = "required" }) {
@@ -515,5 +515,351 @@ export function SectionTitle({ kicker, title, italic }) {
         }
       `}</style>
     </header>
+  );
+}
+
+// =================== LikeDislikeMatrix ======================
+// Three-column radio matrix (Like / Dislike / Indifferent) over a
+// list of food items. Stores as { item: "like" | "dislike" |
+// "indifferent" } on a parent object — caller passes `name="food_matrix"`
+// and we register child radios as `food_matrix.fish` etc.
+//
+// items: [{ value: "fish", label: "Fish" }, ...]
+export function LikeDislikeMatrix({ name, label, hint, items, register }) {
+  return (
+    <fieldset className="brief-matrix">
+      <legend>
+        {label}
+        {hint && <em>{hint}</em>}
+      </legend>
+
+      <div className="brief-matrix-grid" role="presentation">
+        <div className="brief-matrix-head" aria-hidden>
+          <span />
+          <span>Like</span>
+          <span>Dislike</span>
+          <span>Indifferent</span>
+        </div>
+        {items.map((it) => (
+          <div key={it.value} className="brief-matrix-row">
+            <span className="brief-matrix-label">{it.label}</span>
+            {["like", "dislike", "indifferent"].map((v) => (
+              <label key={v} className="brief-matrix-cell">
+                <input
+                  type="radio"
+                  value={v}
+                  {...(register ? register(`${name}.${it.value}`) : { name: `${name}.${it.value}` })}
+                />
+                <span className="brief-matrix-dot" aria-hidden />
+                <span className="brief-matrix-srlabel">{v}</span>
+              </label>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <style>{`
+        .brief-matrix {
+          border: 0;
+          padding: 0;
+          margin: 0 0 26px 0;
+        }
+        .brief-matrix legend {
+          font-family: var(--gy-font-ui);
+          font-size: 11.5px;
+          letter-spacing: 2.2px;
+          text-transform: uppercase;
+          color: rgba(13, 27, 42, 0.78);
+          margin-bottom: 12px;
+          font-weight: 500;
+        }
+        .brief-matrix legend em {
+          display: block;
+          font-style: italic;
+          font-family: var(--gy-font-editorial);
+          font-size: 12.5px;
+          color: rgba(13, 27, 42, 0.55);
+          letter-spacing: 0;
+          text-transform: none;
+          margin-top: 4px;
+        }
+        .brief-matrix-grid {
+          background: rgba(13, 27, 42, 0.04);
+          border: 1px solid rgba(13, 27, 42, 0.08);
+        }
+        .brief-matrix-head,
+        .brief-matrix-row {
+          display: grid;
+          grid-template-columns: 1.4fr 1fr 1fr 1fr;
+          align-items: center;
+        }
+        .brief-matrix-head {
+          background: var(--gy-navy);
+          color: var(--gy-ivory);
+        }
+        .brief-matrix-head span {
+          padding: 9px 12px;
+          font-family: var(--gy-font-ui);
+          font-size: 10px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: rgba(248, 245, 240, 0.85);
+          text-align: center;
+        }
+        .brief-matrix-head span:first-child { text-align: left; }
+        .brief-matrix-row {
+          background: #ffffff;
+          border-top: 1px solid rgba(13, 27, 42, 0.05);
+        }
+        .brief-matrix-row:first-of-type { border-top: 0; }
+        .brief-matrix-label {
+          font-family: var(--gy-font-editorial);
+          font-size: 14.5px;
+          color: var(--gy-navy);
+          padding: 10px 14px;
+        }
+        .brief-matrix-cell {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px 0;
+          cursor: pointer;
+          position: relative;
+        }
+        .brief-matrix-cell input {
+          position: absolute;
+          opacity: 0;
+          pointer-events: none;
+        }
+        .brief-matrix-dot {
+          width: 18px;
+          height: 18px;
+          border: 1px solid rgba(13, 27, 42, 0.35);
+          border-radius: 50%;
+          background: #fff;
+          display: inline-block;
+          transition: background 140ms ease, border-color 140ms ease;
+        }
+        .brief-matrix-cell input:checked + .brief-matrix-dot {
+          background: var(--gy-gold);
+          border-color: var(--gy-gold);
+          box-shadow: inset 0 0 0 3px #fff;
+        }
+        .brief-matrix-cell:hover .brief-matrix-dot {
+          border-color: var(--gy-gold);
+        }
+        .brief-matrix-srlabel {
+          position: absolute;
+          left: -10000px;
+        }
+        @media (max-width: 560px) {
+          .brief-matrix-head,
+          .brief-matrix-row { grid-template-columns: 1.1fr 0.9fr 0.9fr 0.9fr; }
+          .brief-matrix-label { font-size: 13px; padding: 8px 8px; }
+        }
+      `}</style>
+    </fieldset>
+  );
+}
+
+// =================== LabelQuantityRows ======================
+// Repeatable rows for "label" + "quantity" tables (soft drinks,
+// spirits, beers). Optional third column for wines (price range).
+// We use local state for row count and rely on RHF's register to
+// own the actual field values — each input registers as
+// `name.i.label` / `name.i.quantity` so RHF's nested-path resolver
+// picks them up into an array on submit.
+export function LabelQuantityRows({
+  name,
+  label,
+  hint,
+  withPriceRange,
+  startRows = 3,
+  register,
+  // Optional: caller may pass already-loaded rows to seed initial
+  // state. We don't reach into RHF directly here.
+  initialRows,
+}) {
+  const [rows, setRows] = useState(() => {
+    const base = Array.isArray(initialRows) && initialRows.length > 0
+      ? initialRows.map((r) => ({
+          label: r.label ?? "",
+          quantity: r.quantity ?? "",
+          price_range_per_bottle: r.price_range_per_bottle ?? "",
+        }))
+      : Array.from({ length: startRows }, () => ({ label: "", quantity: "", price_range_per_bottle: "" }));
+    return base;
+  });
+
+  // Reset when caller re-mounts with new defaults (e.g. cabin switch)
+  useEffect(() => {
+    if (Array.isArray(initialRows) && initialRows.length > 0) {
+      setRows(
+        initialRows.map((r) => ({
+          label: r.label ?? "",
+          quantity: r.quantity ?? "",
+          price_range_per_bottle: r.price_range_per_bottle ?? "",
+        })),
+      );
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function addRow() {
+    setRows((r) => [...r, { label: "", quantity: "", price_range_per_bottle: "" }]);
+  }
+  function removeRow(i) {
+    setRows((r) => r.filter((_, j) => j !== i));
+  }
+
+  return (
+    <fieldset className="brief-lq">
+      <legend>
+        {label}
+        {hint && <em>{hint}</em>}
+      </legend>
+
+      <div className="brief-lq-head" aria-hidden>
+        <span>Label</span>
+        <span>Quantity</span>
+        {withPriceRange && <span>Price range / bottle</span>}
+        <span />
+      </div>
+
+      {rows.map((row, i) => (
+        <div key={i} className={"brief-lq-row" + (withPriceRange ? " has-price" : "")}>
+          <input
+            type="text"
+            defaultValue={row.label}
+            placeholder={withPriceRange ? "e.g. Ruinart Brut Blanc" : "e.g. Diet Coke cans"}
+            {...(register ? register(`${name}.${i}.label`) : { name: `${name}[${i}][label]` })}
+          />
+          <input
+            type="text"
+            defaultValue={row.quantity}
+            placeholder={withPriceRange ? "6" : "24"}
+            {...(register ? register(`${name}.${i}.quantity`) : { name: `${name}[${i}][quantity]` })}
+          />
+          {withPriceRange && (
+            <input
+              type="text"
+              defaultValue={row.price_range_per_bottle}
+              placeholder="150"
+              {...(register
+                ? register(`${name}.${i}.price_range_per_bottle`)
+                : { name: `${name}[${i}][price_range_per_bottle]` })}
+            />
+          )}
+          <button
+            type="button"
+            onClick={() => removeRow(i)}
+            className="brief-lq-remove"
+            aria-label="Remove this row"
+          >
+            ×
+          </button>
+        </div>
+      ))}
+
+      <button type="button" onClick={addRow} className="brief-lq-add">
+        + Add another row
+      </button>
+
+      <style>{`
+        .brief-lq {
+          border: 0;
+          padding: 0;
+          margin: 0 0 26px 0;
+        }
+        .brief-lq legend {
+          font-family: var(--gy-font-ui);
+          font-size: 11.5px;
+          letter-spacing: 2.2px;
+          text-transform: uppercase;
+          color: rgba(13, 27, 42, 0.78);
+          margin-bottom: 10px;
+          font-weight: 500;
+        }
+        .brief-lq legend em {
+          display: block;
+          font-style: italic;
+          font-family: var(--gy-font-editorial);
+          font-size: 12.5px;
+          color: rgba(13, 27, 42, 0.55);
+          letter-spacing: 0;
+          text-transform: none;
+          margin-top: 4px;
+        }
+        .brief-lq-head {
+          display: grid;
+          grid-template-columns: 2fr 1fr 36px;
+          background: var(--gy-navy);
+          color: var(--gy-ivory);
+          padding: 9px 12px;
+          gap: 12px;
+        }
+        .brief-lq-head span {
+          font-family: var(--gy-font-ui);
+          font-size: 10px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: rgba(248, 245, 240, 0.85);
+        }
+        .brief-lq-row {
+          display: grid;
+          grid-template-columns: 2fr 1fr 36px;
+          gap: 12px;
+          padding: 8px 12px;
+          background: #fff;
+          border-bottom: 1px solid rgba(13, 27, 42, 0.06);
+          align-items: center;
+        }
+        .brief-lq-head:has(~ .brief-lq-row.has-price),
+        .brief-lq-row.has-price {
+          grid-template-columns: 2fr 0.8fr 1fr 36px;
+        }
+        .brief-lq-row input {
+          width: 100%;
+          background: transparent;
+          border: 0;
+          border-bottom: 1px solid rgba(13, 27, 42, 0.15);
+          padding: 6px 0 7px;
+          font-family: var(--gy-font-editorial);
+          font-size: 15px;
+          color: var(--gy-navy);
+          outline: none;
+        }
+        .brief-lq-row input:focus {
+          border-bottom-color: var(--gy-gold);
+        }
+        .brief-lq-remove {
+          background: transparent;
+          border: 0;
+          color: rgba(13, 27, 42, 0.45);
+          font-size: 22px;
+          line-height: 1;
+          cursor: pointer;
+        }
+        .brief-lq-remove:hover { color: #b91c1c; }
+        .brief-lq-add {
+          margin-top: 12px;
+          background: transparent;
+          border: 1px solid rgba(13, 27, 42, 0.2);
+          padding: 10px 18px;
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--gy-navy);
+          cursor: pointer;
+        }
+        .brief-lq-add:hover { border-color: var(--gy-gold); }
+        @media (max-width: 560px) {
+          .brief-lq-head,
+          .brief-lq-row { grid-template-columns: 1.4fr 1fr 36px; }
+          .brief-lq-row.has-price { grid-template-columns: 1fr 0.7fr 0.9fr 36px; }
+        }
+      `}</style>
+    </fieldset>
   );
 }
