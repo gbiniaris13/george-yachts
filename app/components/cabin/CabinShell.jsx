@@ -109,12 +109,30 @@ export default function CabinShell({ session, cabin, children }) {
     <div className="cabin-shell">
       {showChrome && (
         <header className="cabin-shell__header" role="banner">
-          <div className="cabin-shell__brand">
+          {/* Back arrow on every sub-page. Tapping returns to /cabin
+              home — the single source of nav truth. On mobile this
+              is the primary affordance because the bottom nav only
+              surfaces 5 of 13 sections; the hamburger (right) opens
+              the full drawer with every section. */}
+          {pathname !== "/cabin" && (
+            <Link
+              href="/cabin"
+              className="cabin-shell__back"
+              aria-label="Back to Cabin home"
+            >
+              <span aria-hidden>←</span>
+            </Link>
+          )}
+          <Link
+            href="/cabin"
+            className="cabin-shell__brand"
+            aria-label="Cabin home"
+          >
             <span className="cabin-shell__brand-eyebrow">George Yachts</span>
             <span className="cabin-shell__brand-title">
               The Cabin <em>· Filotimo</em>
             </span>
-          </div>
+          </Link>
           <div className="cabin-shell__charter">
             <span className="cabin-shell__charter-name">
               {principalName}
@@ -278,9 +296,11 @@ export default function CabinShell({ session, cabin, children }) {
           top: 0;
           z-index: 30;
           display: grid;
-          grid-template-columns: auto 1fr auto;
+          /* Four columns now: back (optional) · brand · charter info · hamburger.
+             The back column collapses to 0 when absent (no JSX = no track). */
+          grid-template-columns: auto auto 1fr auto;
           align-items: center;
-          gap: 16px;
+          gap: 12px;
           padding: 14px 18px;
           padding-top: calc(14px + env(safe-area-inset-top, 0));
           background: var(--gy-navy);
@@ -288,10 +308,36 @@ export default function CabinShell({ session, cabin, children }) {
           border-bottom: 1px solid rgba(201, 168, 76, 0.4);
         }
 
+        .cabin-shell__back {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 36px;
+          height: 36px;
+          border: 1px solid rgba(248, 245, 240, 0.25);
+          border-radius: 2px;
+          color: var(--gy-ivory);
+          text-decoration: none;
+          font-size: 18px;
+          line-height: 1;
+          transition: background 140ms ease, border-color 140ms ease;
+        }
+        .cabin-shell__back:hover,
+        .cabin-shell__back:focus-visible {
+          background: rgba(248, 245, 240, 0.08);
+          border-color: var(--gy-gold);
+          outline: none;
+        }
+
         .cabin-shell__brand {
           display: flex;
           flex-direction: column;
           line-height: 1.1;
+          text-decoration: none;
+          color: inherit;
+        }
+        .cabin-shell__brand:hover .cabin-shell__brand-title {
+          color: var(--gy-gold);
         }
         .cabin-shell__brand-eyebrow {
           font-family: var(--gy-font-ui);
@@ -338,7 +384,13 @@ export default function CabinShell({ session, cabin, children }) {
         }
 
         .cabin-shell__menu {
-          display: none;
+          /* Visible on every breakpoint now. Previously hidden on
+             mobile, which left mobile users with only the 5-item
+             bottom nav and no path to Crew/Menu/Vessel/etc. without
+             returning home first. */
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
           background: transparent;
           border: 1px solid rgba(248, 245, 240, 0.25);
           color: var(--gy-ivory);
@@ -349,11 +401,11 @@ export default function CabinShell({ session, cabin, children }) {
           cursor: pointer;
           border-radius: 2px;
         }
-        .cabin-shell__menu:hover {
+        .cabin-shell__menu:hover,
+        .cabin-shell__menu:focus-visible {
           background: rgba(248, 245, 240, 0.08);
-        }
-        @media (min-width: 768px) {
-          .cabin-shell__menu { display: inline-block; }
+          border-color: var(--gy-gold);
+          outline: none;
         }
 
         .cabin-shell__main {
