@@ -3,6 +3,7 @@ import Link from "next/link";
 import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
 import { pageMeta } from "@/lib/pageMeta";
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: "How We Protect Your Information | George Yachts",
   description:
@@ -25,6 +26,7 @@ const Card = ({ icon, title, description }) => (
 export default function YourPrivacySecurity() {
   return (
     <div className="min-h-screen bg-black text-white">
+      <PageBreadcrumb path="/your-privacy-security" />
       {/* Hero */}
       <div className="relative pt-44 pb-24 px-6 md:px-12" style={{ borderBottom: "1px solid rgba(201,168,76,0.1)" }}>
         <div className="container mx-auto max-w-4xl text-center">

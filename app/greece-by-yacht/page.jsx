@@ -25,6 +25,7 @@ import LifestyleGallery from "@/app/components/LifestyleGallery";
 import ItineraryPreview from "@/app/components/ItineraryPreview";
 import Footer from "@/app/components/Footer";
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const revalidate = 3600;
 
 export const metadata = {
@@ -99,6 +100,7 @@ export default async function GreeceByYachtPage() {
 
   return (
     <>
+      <PageBreadcrumb path="/greece-by-yacht" />
       <GreeceByYachtClient stops={stops} heroBackdrop={heroBackdrop} />
       {/* Phase 5 / H1 — AI itinerary preview (texture only, never a
           proposal). Streams a 3-day sample week from Gemini based on

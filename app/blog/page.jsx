@@ -5,6 +5,7 @@ import { createClient } from "@sanity/client";
 import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import BlogGrid from "./BlogGrid";
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 import "@/styles/blog.css";
 
 // Non-CDN client for server-side fetches that need real-time data
@@ -109,6 +110,7 @@ export default async function BlogPage() {
 
   return (
     <div className="min-h-screen bg-black selection:bg-[#C9A84C] selection:text-black" style={{ fontFamily: "var(--gy-font-ui)" }}>
+      <PageBreadcrumb path="/blog" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }} />
 
       {/* HERO */}

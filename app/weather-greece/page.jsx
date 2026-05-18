@@ -1,6 +1,7 @@
 import WeatherClient from './WeatherClient';
 import { pageMeta } from '@/lib/pageMeta';
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: 'Greek Sailing Weather Guide | George Yachts',
   description:
@@ -9,5 +10,10 @@ export const metadata = pageMeta({
 });
 
 export default function WeatherPage() {
-  return <WeatherClient />;
+  return (
+    <>
+      <PageBreadcrumb path="/weather-greece" />
+      <WeatherClient />
+    </>
+  );
 }

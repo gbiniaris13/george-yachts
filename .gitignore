@@ -15,7 +15,13 @@
 
 # next.js
 /.next/
+/.next.nosync/
+/.next 2/
+/.next 2
 /out/
+
+# macOS iCloud .nosync mirror of dependencies — local-machine only
+/node_modules.nosync/
 
 # production
 /build

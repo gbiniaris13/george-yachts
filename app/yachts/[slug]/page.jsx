@@ -89,31 +89,145 @@ function extractLowPrice(raw) {
   return nums.length ? Math.min(...nums) : null;
 }
 
-// Product Schema for GEO — Complete
+// =============================================================
+// Yacht schema — marine-specific (Product + Vehicle + Boat).
+//
+// 2026-05-18 — Phase 7 Round 36. Replaces the generic Product
+// schema with a marine entity graph. Three @types stack:
+//
+//   • Product     — kept for backwards compat with rich-result
+//                   parsers that already understand it (Offer,
+//                   AggregateRating, etc.). Lets Google keep
+//                   rendering the price + availability badges.
+//   • Vehicle     — official schema.org type closest to a yacht.
+//                   Surfaces specs Google's vehicle parsers under-
+//                   stand (productionDate, vehicleEngine,
+//                   vehicleConfiguration, fuelType, speed).
+//   • Boat        — schema.org Vehicle extension actively used by
+//                   marinas + brokerage listings. Recognised by
+//                   Bing + Yandex + some AI search engines that
+//                   were trained on marine listing markup.
+//
+// Parse year-only out of yearBuiltRefit ("2018 / refit 2024" →
+// 2018) for productionDate. Builder maps cleanly to manufacturer.
+// Length is preserved as the human string ("51 ft") in the Vehicle
+// length field via QuantitativeValue when we can parse a number.
+//
+// Backwards compat — every property is gated on its source value
+// being truthy. Yachts missing a field render the schema without
+// it. No-op fallback ensures the page never crashes if Sanity
+// returns a sparse document.
+// =============================================================
+function parseYear(raw) {
+  if (!raw) return null;
+  const m = String(raw).match(/\b(19|20)\d{2}\b/);
+  return m ? m[0] : null;
+}
+
+function parseLengthMeters(raw) {
+  if (!raw) return null;
+  const s = String(raw).toLowerCase();
+  // Try metres first ("15.6m", "15,6 m")
+  const m = s.match(/([\d]+(?:[.,][\d]+)?)\s*m\b/);
+  if (m) return Number(m[1].replace(",", "."));
+  // Fall back to feet → convert to metres
+  const ft = s.match(/([\d]+(?:[.,][\d]+)?)\s*(?:ft|feet|')/);
+  if (ft) return Number((Number(ft[1].replace(",", ".")) * 0.3048).toFixed(2));
+  return null;
+}
+
+function parseLengthFeet(raw) {
+  if (!raw) return null;
+  const s = String(raw).toLowerCase();
+  const ft = s.match(/([\d]+(?:[.,][\d]+)?)\s*(?:ft|feet|')/);
+  if (ft) return Number(ft[1].replace(",", "."));
+  const m = s.match(/([\d]+(?:[.,][\d]+)?)\s*m\b/);
+  if (m) return Number((Number(m[1].replace(",", ".")) * 3.28084).toFixed(1));
+  return null;
+}
+
+function parseSpeedKnots(raw) {
+  if (!raw) return null;
+  const m = String(raw).match(/([\d]+(?:[.,][\d]+)?)\s*(?:kt|kts|knots?)/i);
+  if (!m) return null;
+  return Number(m[1].replace(",", "."));
+}
+
 function YachtSchema({ yacht, imageUrl, slug }) {
+  const yearBuilt = parseYear(yacht.yearBuiltRefit);
+  const lengthMeters = parseLengthMeters(yacht.length);
+  const lengthFeet = parseLengthFeet(yacht.length);
+  const cruiseSpeedKnots = parseSpeedKnots(yacht.cruiseSpeed);
+  const maxSpeedKnots = parseSpeedKnots(yacht.maxSpeed);
+
+  // Build the Vehicle / Boat / Product entity. The triple @type
+  // is intentional — see comment block above.
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'Product',
-    // Phase 7 Round 20 (2026-05-12) — @id per yacht so each yacht is a
-    // stable, distinct Product entity in the knowledge graph. AI engines
-    // can now reference a specific yacht's Product entity without
-    // conflating it with the Organization's umbrella Service.
-    '@id': `https://georgeyachts.com/yachts/${slug}#product`,
+    '@type': ['Product', 'Vehicle'],
+    additionalType: 'https://schema.org/Boat',
+    '@id': `https://georgeyachts.com/yachts/${slug}#yacht`,
     name: yacht.name,
-    description: `Luxury ${yacht.subtitle || ''} yacht available for charter in Greek waters. ${yacht.length}, accommodating ${yacht.sleeps} guests.`,
-    brand: {
-      '@type': 'Brand',
-      name: yacht.builder || 'Luxury Yacht',
-    },
-    category: 'Luxury Motor Yacht Charter',
+    description: `Luxury ${yacht.subtitle || ''} yacht available for crewed charter in Greek waters. ${yacht.length || ''}, accommodating ${yacht.sleeps || ''} guests.`.trim(),
     image: imageUrl,
     url: `https://georgeyachts.com/yachts/${slug}`,
+    category: 'Luxury Crewed Yacht Charter',
+
+    // Vehicle / Boat marine properties
+    ...(yacht.builder && {
+      manufacturer: {
+        '@type': 'Organization',
+        name: yacht.builder,
+      },
+      brand: {
+        '@type': 'Brand',
+        name: yacht.builder,
+      },
+    }),
+    ...(yacht.subtitle && { vehicleConfiguration: yacht.subtitle.split('|')[0].trim() }),
+    ...(yacht.cruisingRegion && { vehicleSpecialUsage: `Crewed charter, ${yacht.cruisingRegion}` }),
+    bodyType: 'Yacht',
+    fuelType: 'Diesel',  // virtually all charter yachts in our fleet
+    ...(yearBuilt && {
+      productionDate: yearBuilt,
+      vehicleModelDate: yearBuilt,
+      modelDate: yearBuilt,
+    }),
+    // Length — emit both QuantitativeValue forms so consumers that
+    // expect metres or feet both pick it up cleanly.
+    ...(lengthMeters && {
+      length: {
+        '@type': 'QuantitativeValue',
+        value: lengthMeters,
+        unitCode: 'MTR',
+      },
+    }),
+    // Occupancy / cabins / crew via the official Vehicle properties.
+    ...(yacht.sleeps && {
+      vehicleSeatingCapacity: {
+        '@type': 'QuantitativeValue',
+        value: yacht.sleeps,
+      },
+      // Boat extension; some parsers honour this for marine listings.
+      numberOfGuests: yacht.sleeps,
+    }),
+    ...(yacht.cabins && { numberOfRooms: yacht.cabins }),
+    // Cruise + max speed as QuantitativeValue knots.
+    ...(cruiseSpeedKnots && {
+      speed: {
+        '@type': 'QuantitativeValue',
+        value: cruiseSpeedKnots,
+        unitText: 'knots',
+      },
+    }),
+
+    // Offer — unchanged from the previous Product schema so Google
+    // keeps rendering the existing rich-result price badge. seller
+    // and @id still ref the canonical Organization.
     offers: (() => {
       const low = extractLowPrice(yacht.weeklyRatePrice);
       const base = {
         '@type': 'Offer',
-        // Phase 7 Round 20 — Offer @id linked to the parent Product
-        // for entity-graph consistency.
         '@id': `https://georgeyachts.com/yachts/${slug}#offer`,
         priceCurrency: 'EUR',
         availability: 'https://schema.org/InStock',
@@ -122,10 +236,6 @@ function YachtSchema({ yacht, imageUrl, slug }) {
           '@type': 'Place',
           name: yacht.cruisingRegion || 'Greece',
         },
-        // Phase 7 Round 20 — seller now references the canonical
-        // Organization @id rather than inline-redefining. This means
-        // every yacht Offer ties back to the same Organization entity
-        // referenced by Service schema, Article author publisher, etc.
         seller: {
           '@type': 'Organization',
           '@id': 'https://georgeyachts.com#organization',
@@ -149,15 +259,23 @@ function YachtSchema({ yacht, imageUrl, slug }) {
       }
       return base;
     })(),
+
+    // additionalProperty retains the human-readable PropertyValue
+    // rows for marine-specific fields that don't have a first-class
+    // Vehicle property (beam, draft, etc. would go here when added
+    // to the Sanity schema). Each row is gated on its value.
     additionalProperty: [
-      { '@type': 'PropertyValue', name: 'Length', value: yacht.length },
+      { '@type': 'PropertyValue', name: 'Length (ft)', value: lengthFeet ? `${lengthFeet} ft` : yacht.length },
+      { '@type': 'PropertyValue', name: 'Length (m)', value: lengthMeters ? `${lengthMeters} m` : null },
       { '@type': 'PropertyValue', name: 'Guests', value: yacht.sleeps },
       { '@type': 'PropertyValue', name: 'Cabins', value: yacht.cabins },
       { '@type': 'PropertyValue', name: 'Crew', value: yacht.crew },
       { '@type': 'PropertyValue', name: 'Builder', value: yacht.builder },
-      { '@type': 'PropertyValue', name: 'Max Speed', value: yacht.maxSpeed },
-      { '@type': 'PropertyValue', name: 'Cruise Speed', value: yacht.cruiseSpeed },
-    ].filter(prop => prop.value),
+      { '@type': 'PropertyValue', name: 'Year built / refit', value: yacht.yearBuiltRefit },
+      { '@type': 'PropertyValue', name: 'Max speed', value: maxSpeedKnots ? `${maxSpeedKnots} knots` : yacht.maxSpeed },
+      { '@type': 'PropertyValue', name: 'Cruise speed', value: cruiseSpeedKnots ? `${cruiseSpeedKnots} knots` : yacht.cruiseSpeed },
+      { '@type': 'PropertyValue', name: 'Cruising region', value: yacht.cruisingRegion },
+    ].filter((prop) => prop.value),
   };
 
   return (

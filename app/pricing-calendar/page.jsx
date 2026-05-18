@@ -1,6 +1,7 @@
 import PricingCalendarClient from './PricingCalendarClient';
 import { pageMeta } from '@/lib/pageMeta';
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: 'Charter Pricing Calendar | George Yachts',
   description:
@@ -9,5 +10,10 @@ export const metadata = pageMeta({
 });
 
 export default function PricingCalendarPage() {
-  return <PricingCalendarClient />;
+  return (
+    <>
+      <PageBreadcrumb path="/pricing-calendar" />
+      <PricingCalendarClient />
+    </>
+  );
 }

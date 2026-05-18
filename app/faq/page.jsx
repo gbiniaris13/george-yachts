@@ -4,6 +4,7 @@ import JsonLd from "../components/JsonLd";
 import { faqSchema } from "@/lib/faqSchema";
 import { pageMeta } from "@/lib/pageMeta";
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 // 2026-05-14 — migrated to pageMeta() so og:url, twitter card, and
 // canonical stay in lockstep. Ahrefs flagged this page as inheriting
 // the homepage OG (title/description/url all wrong).
@@ -17,6 +18,7 @@ export const metadata = pageMeta({
 const FAQPage = () => {
   return (
     <>
+      <PageBreadcrumb path="/faq" />
       <JsonLd data={faqSchema} />
       <FAQClient />
     </>

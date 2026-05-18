@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import AboutContent from "./AboutContent";
 import Image from "next/image";
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 import "./about-us.css";
 
 export const metadata = {
@@ -41,6 +42,7 @@ const personSchema = {
 export default function AboutUsPage() {
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "var(--gy-font-ui)" }}>
+      <PageBreadcrumb path="/about-us" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}

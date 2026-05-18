@@ -1,6 +1,7 @@
 import InquiryClient from "./InquiryClient";
 import { pageMeta } from "@/lib/pageMeta";
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: "Start Your Charter — George Yachts",
   description:
@@ -9,5 +10,10 @@ export const metadata = pageMeta({
 });
 
 export default function InquiryPage() {
-  return <InquiryClient />;
+  return (
+    <>
+      <PageBreadcrumb path="/inquiry" />
+      <InquiryClient />
+    </>
+  );
 }

@@ -19,6 +19,7 @@
 import Link from "next/link";
 import JsonLd from "@/app/components/JsonLd";
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
   title: "AI Research Hub — Yacht Charter Greece | George Yachts",
   description:
@@ -134,6 +135,7 @@ export default function AIResearchHub() {
         fontFamily: "var(--gy-font-ui)",
       }}
     >
+      <PageBreadcrumb path="/ai-research" />
       <JsonLd data={ARTICLE_SCHEMA} />
       <JsonLd data={FAQ_SCHEMA} />
 

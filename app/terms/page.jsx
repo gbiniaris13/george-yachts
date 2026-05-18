@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
   title: "Terms of Service | George Yachts",
   description:
@@ -34,6 +35,7 @@ const Section = ({ number, title, children }) => (
 const TermsOfService = () => {
   return (
     <div className="min-h-screen bg-black text-white">
+      <PageBreadcrumb path="/terms" />
       <div className="relative pt-44 pb-24 px-6 md:px-12" style={{ borderBottom: "1px solid rgba(218,165,32,0.1)" }}>
         <div className="container mx-auto max-w-4xl text-center">
           <div className="w-16 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #DAA520, transparent)" }} />

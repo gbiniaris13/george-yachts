@@ -6,6 +6,7 @@ import Image from "next/image";
 import "@/styles/service-page.css";
 import { pageMeta } from "@/lib/pageMeta";
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 // 2026-05-14 — title trimmed 67→55 chars (Ahrefs flag).
 export const metadata = pageMeta({
   title: "Signature Yacht Itineraries Greece | George Yachts",
@@ -33,6 +34,7 @@ function PageSchema() {
 export default function YachtItinerariesPage() {
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "var(--gy-font-ui)" }}>
+      <PageBreadcrumb path="/yacht-itineraries-greece" />
       <PageSchema />
 
       <section className="svc-hero">

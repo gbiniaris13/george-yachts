@@ -1,6 +1,7 @@
 import { sanityClient as client } from "@/lib/sanity";
 import ProposalClient from "./ProposalClient";
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
   title: "Instant Charter Proposal | George Yachts",
   description: "Generate a personalized yacht charter proposal in seconds. Select your yacht, dates, and preferences — receive a complete breakdown instantly.",
@@ -33,5 +34,15 @@ async function getYachts() {
 
 export default async function ProposalPage() {
   const yachts = await getYachts();
-  return <ProposalClient yachts={yachts} />;
+  return (
+
+    <>
+
+      <PageBreadcrumb path="/proposal-generator" />
+
+      <ProposalClient yachts={yachts} />
+
+    </>
+
+  );
 }

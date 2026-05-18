@@ -6,6 +6,7 @@ import Image from "next/image";
 import "./team.css";
 import { pageMeta } from "@/lib/pageMeta";
 
+import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 // 2026-05-14 — title trimmed from 67→48 chars (Ahrefs flag).
 export const metadata = pageMeta({
   title: "Our Team | George Yachts",
@@ -17,6 +18,7 @@ export const metadata = pageMeta({
 export default function TeamPage() {
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "var(--gy-font-ui)" }}>
+      <PageBreadcrumb path="/team" />
 
       {/* ── HERO ── */}
       <section className="team-hero">
