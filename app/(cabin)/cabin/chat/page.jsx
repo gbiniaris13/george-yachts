@@ -212,6 +212,28 @@ export default function ChatPage() {
         within the hour.
       </IntroParagraph>
 
+      {/* WhatsApp escape hatch. If a guest wants an even-more-live
+          channel — especially mid-voyage when seconds matter —
+          this opens a chat with George on WhatsApp pre-filled with
+          context so he knows which cabin it concerns. The wa.me
+          format works on iPhone + Android natively. No bridge fee
+          because the conversation lives entirely in WhatsApp. */}
+      <a
+        className="chat-whatsapp"
+        href={`https://wa.me/17867988798?text=${encodeURIComponent(
+          "Hello George, it's me from The Cabin. ",
+        )}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span className="chat-whatsapp__icon" aria-hidden>✆</span>
+        <span className="chat-whatsapp__text">
+          <strong>Need George right now?</strong>
+          <em>Open in WhatsApp · instant, on his phone</em>
+        </span>
+        <span className="chat-whatsapp__arrow" aria-hidden>→</span>
+      </a>
+
       <div className="chat-card">
         <ul ref={listRef} className="chat-list" role="log" aria-live="polite">
           {messages === null && (
@@ -268,8 +290,60 @@ export default function ChatPage() {
       </div>
 
       <style>{`
+        .chat-whatsapp {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          margin: 18px 0 0;
+          padding: 14px 18px;
+          background: #25D366;
+          color: #ffffff;
+          text-decoration: none;
+          border: 1px solid #1ea951;
+          transition: background 160ms ease, transform 160ms ease;
+          font-family: var(--gy-font-editorial);
+        }
+        .chat-whatsapp:hover,
+        .chat-whatsapp:focus-visible {
+          background: #1ea951;
+          outline: none;
+        }
+        .chat-whatsapp:active {
+          transform: translateY(1px);
+        }
+        .chat-whatsapp__icon {
+          font-size: 22px;
+          line-height: 1;
+          width: 28px;
+          text-align: center;
+          color: rgba(255,255,255,0.95);
+        }
+        .chat-whatsapp__text {
+          display: flex;
+          flex-direction: column;
+          line-height: 1.2;
+          flex: 1;
+          min-width: 0;
+        }
+        .chat-whatsapp__text strong {
+          font-weight: 400;
+          font-size: 15px;
+          color: #ffffff;
+          letter-spacing: -0.1px;
+        }
+        .chat-whatsapp__text em {
+          font-style: italic;
+          font-size: 12px;
+          color: rgba(255,255,255,0.85);
+          margin-top: 2px;
+        }
+        .chat-whatsapp__arrow {
+          font-size: 18px;
+          color: rgba(255,255,255,0.9);
+        }
+
         .chat-card {
-          margin-top: 28px;
+          margin-top: 18px;
           background: #ffffff;
           border: 1px solid rgba(13,27,42,0.08);
           display: flex;
