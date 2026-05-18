@@ -5,7 +5,37 @@ import { useEffect, useRef, useState } from "react";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
 
-const POLL_INTERVAL_MS = 5000;
+// Tighter polling for a more "live" feel. 3s costs roughly one
+// 1KB GET every 3 seconds while the tab is visible — negligible.
+const POLL_INTERVAL_MS = 3000;
+
+// Soft two-tone chime generated on the fly via WebAudio. No asset
+// to host, no autoplay-policy gotchas (always triggered by an
+// arriving message after the user has interacted with the page).
+function playChime() {
+  try {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    const ctx = new Ctx();
+    const now = ctx.currentTime;
+    const make = (freq, start, dur) => {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = "sine";
+      o.frequency.value = freq;
+      g.gain.setValueAtTime(0.0001, now + start);
+      g.gain.exponentialRampToValueAtTime(0.18, now + start + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + start + dur);
+      o.connect(g).connect(ctx.destination);
+      o.start(now + start);
+      o.stop(now + start + dur + 0.02);
+    };
+    make(880, 0, 0.14);
+    make(1175, 0.14, 0.18);
+    // Auto-close to free up the device's audio context.
+    setTimeout(() => ctx.close().catch(() => {}), 600);
+  } catch { /* ignore — chime is decorative */ }
+}
 
 function fmtTime(iso) {
   const d = new Date(iso);
@@ -54,8 +84,40 @@ export default function ChatPage() {
       if (newMsgs.length) {
         setMessages((prev) => [...(prev ?? []), ...newMsgs]);
         sinceRef.current = newMsgs[newMsgs.length - 1].created_at;
+
+        // Ping for any incoming message that isn't the user's own.
+        // The admin (George) sending us a note is the case that
+        // actually matters here — the charterer never sees their
+        // own message arrive via polling because it was already
+        // in state when send() succeeded.
+        const fromAdmin = newMsgs.some((m) => m.sender_role === "admin");
+        if (fromAdmin) {
+          playChime();
+          if (
+            typeof Notification !== "undefined" &&
+            Notification.permission === "granted" &&
+            document.visibilityState !== "visible"
+          ) {
+            try {
+              const last = newMsgs[newMsgs.length - 1];
+              new Notification("New message from George", {
+                body: (last.body || "").slice(0, 140),
+                tag: "cabin-chat",
+              });
+            } catch { /* notification spec varies by browser */ }
+          }
+        }
       }
     } catch { /* ignore */ }
+  }
+
+  // Ask once for browser-notification permission. Only nudges
+  // when the user is actively reading the chat — we don't want
+  // a permission popup the second the cabin loads.
+  function enableNotifications() {
+    if (typeof Notification === "undefined") return;
+    if (Notification.permission === "granted") return;
+    Notification.requestPermission().catch(() => {});
   }
 
   useEffect(() => {
@@ -81,6 +143,11 @@ export default function ChatPage() {
     e.preventDefault();
     const body = draft.trim();
     if (!body || sending) return;
+    // Hitchhike on the explicit user gesture (send button click)
+    // to request browser-notification permission. Browsers reject
+    // requestPermission() calls outside a real gesture, so doing
+    // it on page mount would silently fail.
+    enableNotifications();
     setSending(true);
     // Optimistic
     const localId = "local-" + Date.now();
@@ -145,6 +212,28 @@ export default function ChatPage() {
         within the hour.
       </IntroParagraph>
 
+      {/* WhatsApp escape hatch. If a guest wants an even-more-live
+          channel — especially mid-voyage when seconds matter —
+          this opens a chat with George on WhatsApp pre-filled with
+          context so he knows which cabin it concerns. The wa.me
+          format works on iPhone + Android natively. No bridge fee
+          because the conversation lives entirely in WhatsApp. */}
+      <a
+        className="chat-whatsapp"
+        href={`https://wa.me/17867988798?text=${encodeURIComponent(
+          "Hello George, it's me from The Cabin. ",
+        )}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span className="chat-whatsapp__icon" aria-hidden>✆</span>
+        <span className="chat-whatsapp__text">
+          <strong>Need George right now?</strong>
+          <em>Open in WhatsApp · instant, on his phone</em>
+        </span>
+        <span className="chat-whatsapp__arrow" aria-hidden>→</span>
+      </a>
+
       <div className="chat-card">
         <ul ref={listRef} className="chat-list" role="log" aria-live="polite">
           {messages === null && (
@@ -201,8 +290,60 @@ export default function ChatPage() {
       </div>
 
       <style>{`
+        .chat-whatsapp {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          margin: 18px 0 0;
+          padding: 14px 18px;
+          background: #25D366;
+          color: #ffffff;
+          text-decoration: none;
+          border: 1px solid #1ea951;
+          transition: background 160ms ease, transform 160ms ease;
+          font-family: var(--gy-font-editorial);
+        }
+        .chat-whatsapp:hover,
+        .chat-whatsapp:focus-visible {
+          background: #1ea951;
+          outline: none;
+        }
+        .chat-whatsapp:active {
+          transform: translateY(1px);
+        }
+        .chat-whatsapp__icon {
+          font-size: 22px;
+          line-height: 1;
+          width: 28px;
+          text-align: center;
+          color: rgba(255,255,255,0.95);
+        }
+        .chat-whatsapp__text {
+          display: flex;
+          flex-direction: column;
+          line-height: 1.2;
+          flex: 1;
+          min-width: 0;
+        }
+        .chat-whatsapp__text strong {
+          font-weight: 400;
+          font-size: 15px;
+          color: #ffffff;
+          letter-spacing: -0.1px;
+        }
+        .chat-whatsapp__text em {
+          font-style: italic;
+          font-size: 12px;
+          color: rgba(255,255,255,0.85);
+          margin-top: 2px;
+        }
+        .chat-whatsapp__arrow {
+          font-size: 18px;
+          color: rgba(255,255,255,0.9);
+        }
+
         .chat-card {
-          margin-top: 28px;
+          margin-top: 18px;
           background: #ffffff;
           border: 1px solid rgba(13,27,42,0.08);
           display: flex;

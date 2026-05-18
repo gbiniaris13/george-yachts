@@ -11,9 +11,16 @@ import { writeAudit, AUDIT_ACTIONS } from "@/lib/cabin/audit";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// Photos: 5MB after client-side compression. Videos: 50MB.
-const MAX_PHOTO = 5 * 1024 * 1024;
-const MAX_VIDEO = 50 * 1024 * 1024;
+// Vercel hard-limits serverless function request bodies to ~4.5 MB.
+// Anything bigger is killed at the edge with a plain-text 413 that
+// never reaches this handler. Until we add direct-to-Supabase
+// signed uploads, both photos and short clips must fit under that.
+//
+// Photos: 4 MB after client-side compression (Canvas JPEG at 0.85
+// quality usually lands well under). Videos: 3.8 MB so multipart
+// overhead doesn't tip a borderline clip over the edge limit.
+const MAX_PHOTO = 4 * 1024 * 1024;
+const MAX_VIDEO = 3.8 * 1024 * 1024;
 const ALLOWED_PHOTO = new Set(["image/jpeg", "image/png", "image/webp"]);
 const ALLOWED_VIDEO = new Set(["video/mp4", "video/quicktime", "video/webm"]);
 

@@ -76,7 +76,13 @@ export async function PUT(req, ctx) {
   }
 
   const completeness = sectionCompleteness(a.section, parsed.data);
-  const completed = completeness >= 40;     // soft threshold
+  // Soft threshold: 30 means ≥5 populated fields counts as "done."
+  // The original 40 (=6 fields) was too strict for sections like
+  // itinerary and little_things which only HAVE 5 fields total —
+  // George filled them all and still got no tick. The full Brief
+  // is opt-in and progressive; tighter gating belongs in the
+  // concierge-handoff step, not the per-section dot.
+  const completed = completeness >= 30;
 
   const db = getCabinDb();
   await dbQuery(

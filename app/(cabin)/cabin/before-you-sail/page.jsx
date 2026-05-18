@@ -195,6 +195,47 @@ export default async function BeforeYouSailPage() {
         ))}
       </section>
 
+      <section className="bys-block">
+        <h2 className="bys-label">A few quiet reminders</h2>
+        <ul className="bys-reminders">
+          <li>
+            <strong>Passport &amp; cards.</strong> Passport, ATM cards, a
+            credit card, and a little cash for shore mornings — small kiosks
+            on the islands are often cash-only.
+          </li>
+          <li>
+            <strong>Soft, foldable luggage.</strong> Cabins store soft bags
+            beautifully; hard suitcases struggle. If you can, leave them at
+            your hotel and bring a duffel aboard.
+          </li>
+          <li>
+            <strong>Power.</strong> Yachts in Greece run 220V with European
+            plugs. If your devices use a different standard, a small adapter
+            saves a hunt on day one.
+          </li>
+          <li>
+            <strong>Sunscreen.</strong> SPF 30 or higher for the first days.
+            Please avoid tanning oils and gels — they stain teak.
+          </li>
+          <li>
+            <strong>On board.</strong> Barefoot is best, or soft-soled boat
+            shoes with non-marking soles.
+          </li>
+          <li>
+            <strong>Watersports licences.</strong> Greek law requires a
+            licence to operate jet skis and certain motorised toys — and a
+            PADI certificate for scuba. If anyone in your group has a
+            certificate, bring it; we&apos;ll handle the rest.
+          </li>
+          <li>
+            <strong>A small word on tipping.</strong> Entirely at your
+            discretion. Most guests find 10–15% of the charter fee, shared
+            among the crew at the end, feels right when the week has been a
+            joy — but truly, only if it has.
+          </li>
+        </ul>
+      </section>
+
       <p className="bys-foot">
         <em>
           A more personalised "final logistics" note from George will arrive in
@@ -357,6 +398,41 @@ export default async function BeforeYouSailPage() {
           color: var(--gy-gold);
           font-size: 16px;
           line-height: 1;
+        }
+
+        .bys-reminders {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+        .bys-reminders li {
+          font-family: var(--gy-font-editorial);
+          font-size: 14.5px;
+          line-height: 1.7;
+          color: rgba(13,27,42,0.85);
+          padding-left: 22px;
+          position: relative;
+        }
+        .bys-reminders li::before {
+          content: "·";
+          position: absolute;
+          left: 0; top: -4px;
+          color: var(--gy-gold);
+          font-size: 28px;
+          line-height: 1;
+        }
+        .bys-reminders strong {
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          color: var(--gy-gold);
+          font-weight: 500;
+          display: inline-block;
+          margin-right: 6px;
         }
 
         .bys-foot {

@@ -60,6 +60,51 @@ export default function VoyageAlbumPage() {
     if (!files.length) return;
     setError(null);
 
+    // Photos go through the legacy multipart route — they're tiny
+    // after Canvas compression. Videos go through the new direct
+    // upload path: sign URL → PUT bytes to Supabase → finalize.
+    // Supabase Storage doesn't care about Vercel's 4.5 MB limit
+    // because the bytes never touch our serverless function.
+    const VIDEO_LIMIT_BYTES = 100 * 1024 * 1024;       // 100 MB
+    const PHOTO_LIMIT_BYTES = 25 * 1024 * 1024;        // 25 MB pre-compress
+
+    async function uploadDirect(file) {
+      const signRes = await fetch("/api/cabin/voyage-album/sign-upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content_type: file.type, size: file.size }),
+      });
+      const signJson = await signRes.json().catch(() => null);
+      if (!signRes.ok || !signJson?.signedUrl) {
+        const err = signJson?.error || "sign-failed";
+        throw new Error(err);
+      }
+      // PUT raw bytes to Supabase Storage. Their signed-upload URL
+      // accepts a standard PUT with the Content-Type header set
+      // to the file's MIME — no auth headers needed beyond what's
+      // baked into the signedUrl.
+      const putRes = await fetch(signJson.signedUrl, {
+        method: "PUT",
+        headers: { "Content-Type": file.type },
+        body: file,
+      });
+      if (!putRes.ok) {
+        throw new Error(`storage-put-failed (${putRes.status})`);
+      }
+      return signJson.path;
+    }
+
+    async function finalize(path, captionText) {
+      const r = await fetch("/api/cabin/voyage-album/finalize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path, caption: captionText || "" }),
+      });
+      const j = await r.json().catch(() => null);
+      if (!r.ok) throw new Error(j?.error || "finalize-failed");
+      return j;
+    }
+
     for (let i = 0; i < files.length; i++) {
       const f = files[i];
       const isImage = /^image\//.test(f.type);
@@ -67,28 +112,49 @@ export default function VoyageAlbumPage() {
       if (!isImage && !isVideo) continue;
       setProgress(`Uploading ${i + 1}/${files.length}…`);
       try {
-        const form = new FormData();
+        const captionThis = caption.trim() && i === 0 ? caption.trim() : "";
         if (isImage) {
-          // Photos: client-side Canvas compression to JPEG so we
-          // stay inside the 5 MB-per-photo bucket budget.
+          // Photos: client-side Canvas compression to JPEG, then
+          // multipart upload — the existing route still handles
+          // the small post-compression payload.
+          if (f.size > PHOTO_LIMIT_BYTES) throw new Error("too-large-photo");
           const small = await compress(f);
+          const form = new FormData();
           form.append("file", small, f.name.replace(/\.\w+$/, "") + ".jpg");
+          if (captionThis) form.append("caption", captionThis);
+          const r = await fetch("/api/cabin/voyage-album", {
+            method: "POST",
+            body: form,
+          });
+          let j = null;
+          const ct = r.headers.get("content-type") || "";
+          if (ct.includes("application/json")) {
+            j = await r.json().catch(() => null);
+          } else {
+            const txt = await r.text().catch(() => "");
+            if (r.status === 413 || /entity too large/i.test(txt)) {
+              throw new Error("too-large-photo-multipart");
+            }
+            throw new Error(`upload-failed (${r.status})`);
+          }
+          if (!r.ok) throw new Error(j?.error || "upload-failed");
         } else {
-          // Videos: server accepts up to 50 MB raw, no re-encoding.
-          if (f.size > 50 * 1024 * 1024) throw new Error("too-large");
-          form.append("file", f, f.name);
+          // Videos: direct upload to Supabase Storage, then finalize.
+          if (f.size > VIDEO_LIMIT_BYTES) throw new Error("too-large-video");
+          const path = await uploadDirect(f);
+          await finalize(path, captionThis);
         }
-        if (caption.trim() && i === 0) form.append("caption", caption.trim());
-        const r = await fetch("/api/cabin/voyage-album", { method: "POST", body: form });
-        const j = await r.json();
-        if (!r.ok) throw new Error(j.error || "upload-failed");
       } catch (err) {
         const m = err?.message;
         const friendly =
           m === "compress-failed"
             ? "could not read on this browser — try saving as JPG"
-            : m === "too-large"
-            ? "file is over 50 MB — try a shorter clip or lower resolution"
+            : m === "too-large-video"
+            ? "video is over 100 MB — try a shorter clip or lower resolution"
+            : m === "too-large-photo" || m === "too-large-photo-multipart"
+            ? "image is too large even after compression — try saving as a smaller JPG first"
+            : m === "unsupported-type"
+            ? "file type isn't supported here — please use JPG, PNG, MP4, MOV or WebM"
             : m || "upload failed";
         setError(`Item ${i + 1}: ${friendly}`);
       }
@@ -119,7 +185,8 @@ export default function VoyageAlbumPage() {
         After your week at sea, this is where the photographs live — yours,
         forever. Any member of your group can upload. Tap any photo to view
         it large; full-resolution downloads are always available from your
-        Cabin.
+        Cabin. Short videos welcome too — up to one hundred megabytes each,
+        which covers most phone clips at HD quality.
       </IntroParagraph>
 
       <div className="va-add">

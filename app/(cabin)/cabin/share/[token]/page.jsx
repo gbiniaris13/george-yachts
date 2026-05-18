@@ -1,0 +1,1025 @@
+// /cabin/share/[token] — Public read-only Charter preferences view.
+//
+// George shares the preference sheet with the operating team (captain,
+// chef, hostess, management company, yacht's owner) by generating a
+// signed token from the CRM and emailing the recipient this URL.
+// Middleware lets /cabin/share/* through without a session cookie —
+// the URL itself is the auth. Tokens default to a 365-day TTL so the
+// captain can re-open the sheet from a thread weeks later.
+//
+// Render mirrors the CRM preference-sheet view (same brand tokens,
+// same Section/SubBlock/Row primitives, same food-matrix table, same
+// label×qty tables). When that page's structure changes, this page
+// is updated in lock-step. There is no shared library yet — the
+// two repos render independently, intentionally, because the CRM
+// needs auth-gated edit affordances and the public route does not.
+// The cost is two-file maintenance; the benefit is no cross-repo
+// build coupling.
+
+import { notFound } from "next/navigation";
+import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
+import { readShareToken } from "@/lib/cabin/share-tokens";
+import PrintButton from "./PrintButton";
+
+export const dynamic = "force-dynamic";
+
+export const metadata = { title: "Charter preferences · George Yachts" };
+
+// =================== BRAND TOKENS ============================
+const NAVY = "#0D1B2A";
+const GOLD = "#C9A84C";
+const IVORY = "#F8F5F0";
+const RULE = "rgba(13, 27, 42, 0.12)";
+const MUTED = "rgba(13, 27, 42, 0.55)";
+const FONT_EDITORIAL = "Georgia, 'Times New Roman', serif";
+const FONT_UI = "-apple-system, 'Helvetica Neue', Arial, sans-serif";
+
+// =================== HELPERS =================================
+function fmtDate(iso) {
+  if (!iso) return null;
+  return new Date(iso + "T00:00:00Z").toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+function titleCase(s) {
+  return s.replace(/_/g, " ").replace(/\b\w/g, (m) => m.toUpperCase());
+}
+
+function fmtMaybe(v) {
+  if (v == null || v === "") return "—";
+  if (typeof v === "string") return v;
+  if (typeof v === "number" || typeof v === "boolean") return String(v);
+  if (Array.isArray(v)) {
+    if (v.length === 0) return "—";
+    return v.map((x) => titleCase(String(x))).join(" · ");
+  }
+  return String(v);
+}
+
+function getSection(sections, key) {
+  const row = sections.find((s) => s.section_key === key);
+  return row?.data ?? {};
+}
+
+function get(obj, path) {
+  const parts = path.split(".");
+  let cur = obj;
+  for (const p of parts) {
+    if (cur == null || typeof cur !== "object") return undefined;
+    cur = cur[p];
+  }
+  return cur;
+}
+
+// =================== DATA FETCH ==============================
+async function fetchSheetData(cabinId) {
+  const db = getCabinDb();
+  const [cabin, sections, manifest] = await Promise.all([
+    dbQuery(db.from("cabins").select("*").eq("id", cabinId).maybeSingle()),
+    dbQuery(
+      db
+        .from("cabin_brief_sections")
+        .select("section_key, data, completed")
+        .eq("cabin_id", cabinId),
+    ),
+    dbQuery(
+      db
+        .from("cabin_guests_manifest")
+        .select("*")
+        .eq("cabin_id", cabinId)
+        .order("guest_order", { ascending: true }),
+    ),
+  ]);
+  return { cabin, sections: sections ?? [], manifest: manifest ?? [] };
+}
+
+// =================== PAGE ====================================
+export default async function PreferenceSharePage({ params }) {
+  const { token } = await params;
+  const tokenPayload = await readShareToken(token);
+  if (!tokenPayload) notFound();
+
+  const { cabin, sections, manifest } = await fetchSheetData(tokenPayload.cabin_id);
+  if (!cabin) notFound();
+
+  const arrival = getSection(sections, "arrival");
+  const guestsSection = getSection(sections, "guests");
+  const health = getSection(sections, "health");
+  const itinerary = getSection(sections, "itinerary");
+  const lifeAboard = getSection(sections, "life_aboard");
+  const dining = getSection(sections, "dining");
+  const beverages = getSection(sections, "beverages");
+  const little = getSection(sections, "little_things");
+  const children = getSection(sections, "children");
+
+  return (
+    <div style={{ background: IVORY, minHeight: "100vh" }}>
+      <style>{`
+        body { font-family: ${FONT_EDITORIAL}; color: ${NAVY}; background: ${IVORY}; }
+        h1, h2, h3 { font-weight: 300; }
+        @media print {
+          @page { size: A4; margin: 16mm 14mm 16mm 14mm; }
+          body { background: white !important; }
+          .no-print { display: none !important; }
+          .page-break-before { page-break-before: always; }
+          .avoid-break { page-break-inside: avoid; }
+        }
+      `}</style>
+
+      <div
+        className="no-print"
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 10,
+          background: NAVY,
+          color: IVORY,
+          padding: "12px 20px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          borderBottom: `1px solid ${GOLD}55`,
+        }}
+      >
+        <span style={{ fontSize: 11, letterSpacing: 2.5, textTransform: "uppercase", fontFamily: FONT_UI }}>
+          Charter preferences ·{" "}
+          <span style={{ color: GOLD }}>⌘P / Ctrl+P to save as PDF</span>
+        </span>
+        <PrintButton />
+      </div>
+
+      <article style={{ maxWidth: 920, margin: "0 auto", padding: "0 24px 60px" }}>
+        {/* ============ COVER ============ */}
+        <header
+          className="avoid-break"
+          style={{
+            background: NAVY,
+            color: IVORY,
+            margin: "32px -24px 36px",
+            padding: "48px 40px 40px",
+          }}
+        >
+          <div
+            style={{
+              fontFamily: FONT_UI,
+              fontSize: 10,
+              letterSpacing: 5,
+              textTransform: "uppercase",
+              color: GOLD,
+              fontWeight: 500,
+            }}
+          >
+            George Yachts · Charter preferences
+          </div>
+          <h1
+            style={{
+              fontFamily: FONT_EDITORIAL,
+              fontSize: 46,
+              fontWeight: 300,
+              margin: "16px 0 4px",
+              letterSpacing: -0.5,
+              color: IVORY,
+            }}
+          >
+            {cabin.vessel_name}
+            {cabin.vessel_make_model ? (
+              <span style={{ fontStyle: "italic", color: "rgba(248,245,240,0.7)", fontSize: 28 }}>
+                {" · "}
+                {cabin.vessel_make_model}
+              </span>
+            ) : null}
+          </h1>
+          <div
+            style={{
+              fontFamily: FONT_EDITORIAL,
+              fontSize: 16,
+              fontStyle: "italic",
+              color: "rgba(248,245,240,0.85)",
+              marginTop: 12,
+            }}
+          >
+            {fmtDate(cabin.charter_period_from) ?? "—"} to {fmtDate(cabin.charter_period_to) ?? "—"}
+          </div>
+          <div
+            style={{
+              fontFamily: FONT_UI,
+              fontSize: 11,
+              letterSpacing: 2,
+              color: "rgba(248,245,240,0.7)",
+              marginTop: 6,
+              textTransform: "uppercase",
+            }}
+          >
+            {cabin.port_embarkation || "—"} → {cabin.port_disembarkation || "—"}
+            {cabin.cruising_area ? `  ·  ${cabin.cruising_area}` : ""}
+          </div>
+
+          <p
+            style={{
+              marginTop: 28,
+              fontFamily: FONT_EDITORIAL,
+              fontSize: 13,
+              fontStyle: "italic",
+              color: "rgba(248,245,240,0.7)",
+              lineHeight: 1.7,
+              maxWidth: 540,
+            }}
+          >
+            Prepared with care by George Yachts — to help everyone caring for
+            our charterer aboard {cabin.vessel_name} give them the most
+            thoughtful week possible. Shared with the operating team, the
+            captain and crew, the chef and hostess, and the yacht&apos;s owner
+            so every preference lands where it can do the most good. Please
+            handle as you would any guest information of your own.
+          </p>
+        </header>
+
+        {/* ============ 01 — LOGISTICS ============ */}
+        <Section number="01" title="Logistics" italic="arrival & departure">
+          <SubBlock label="Yacht">
+            <Row k="Vessel" v={`${cabin.vessel_name}${cabin.vessel_make_model ? " · " + cabin.vessel_make_model : ""}`} />
+            <Row k="Length" v={cabin.vessel_length} />
+            <Row k="Homeport" v={cabin.homeport} />
+            <Row k="Cruising area" v={cabin.cruising_area} />
+            <Row k="Embarkation" v={cabin.port_embarkation} />
+            <Row k="Disembarkation" v={cabin.port_disembarkation} />
+          </SubBlock>
+
+          <SubBlock label="Arrival">
+            <Row k="Date" v={fmtMaybe(get(arrival, "flight_group_1.date_of_arrival"))} />
+            <Row k="Time" v={fmtMaybe(get(arrival, "flight_group_1.time_of_arrival"))} />
+            <Row k="Flight" v={fmtMaybe(get(arrival, "flight_group_1.airline_and_flight"))} />
+            <Row k="Flight type" v={fmtMaybe(get(arrival, "flight_group_1.flight_type"))} />
+            <Row k="Coming from" v={fmtMaybe(get(arrival, "flight_group_1.coming_from"))} />
+            <Row k="Guests on flight" v={fmtMaybe(get(arrival, "flight_group_1.number_of_guests"))} />
+            {get(arrival, "flight_group_2.airline_and_flight") ? (
+              <>
+                <Row k="Flight #2" v={fmtMaybe(get(arrival, "flight_group_2.airline_and_flight"))} />
+                <Row k="Date #2" v={fmtMaybe(get(arrival, "flight_group_2.date_of_arrival"))} />
+                <Row k="Time #2" v={fmtMaybe(get(arrival, "flight_group_2.time_of_arrival"))} />
+                <Row k="Flight #2 type" v={fmtMaybe(get(arrival, "flight_group_2.flight_type"))} />
+              </>
+            ) : null}
+            <Row k="Private arrival notes" v={fmtMaybe(get(arrival, "private_arrival_notes"))} />
+            <Row k="Yachting experience" v={fmtMaybe(get(arrival, "yachting_experience"))} />
+          </SubBlock>
+
+          <SubBlock label="Accommodation ashore">
+            <Row k="Hotel before embarkation" v={fmtMaybe(get(arrival, "before_embarkation.hotel_or_address"))} />
+            <Row k="Check-out date" v={fmtMaybe(get(arrival, "before_embarkation.check_out_date"))} />
+            <Row k="Hotel after disembarkation" v={fmtMaybe(get(arrival, "after_disembarkation.hotel_or_address"))} />
+            <Row k="Check-in date" v={fmtMaybe(get(arrival, "after_disembarkation.check_in_date"))} />
+          </SubBlock>
+
+          <SubBlock label="Transfers">
+            <Row k="Requested" v={fmtMaybe(arrival.transfers_requested)} />
+            {get(arrival, "transfer_to_yacht.pickup_location") ? (
+              <>
+                <Row k="To yacht — pickup" v={fmtMaybe(get(arrival, "transfer_to_yacht.pickup_location"))} />
+                <Row k="To yacht — when" v={fmtMaybe(get(arrival, "transfer_to_yacht.pickup_datetime"))} />
+                <Row k="To yacht — guests" v={fmtMaybe(get(arrival, "transfer_to_yacht.number_of_guests"))} />
+              </>
+            ) : null}
+            {get(arrival, "transfer_from_yacht.dropoff_location") ? (
+              <>
+                <Row k="From yacht — drop-off" v={fmtMaybe(get(arrival, "transfer_from_yacht.dropoff_location"))} />
+                <Row k="From yacht — when" v={fmtMaybe(get(arrival, "transfer_from_yacht.dropoff_datetime"))} />
+                <Row k="From yacht — guests" v={fmtMaybe(get(arrival, "transfer_from_yacht.number_of_guests"))} />
+              </>
+            ) : null}
+          </SubBlock>
+        </Section>
+
+        {/* ============ 02 — THE GROUP ============ */}
+        <Section number="02" title="The group" italic="who is aboard, and why" pageBreakBefore>
+          {get(guestsSection, "charter_purpose_narrative") ? (
+            <div
+              className="avoid-break"
+              style={{
+                background: "rgba(201,168,76,0.06)",
+                borderLeft: `2px solid ${GOLD}`,
+                padding: "16px 20px",
+                marginBottom: 24,
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: FONT_UI,
+                  fontSize: 10.5,
+                  letterSpacing: 3,
+                  textTransform: "uppercase",
+                  color: GOLD,
+                  fontWeight: 500,
+                  marginBottom: 8,
+                }}
+              >
+                In the charterer&apos;s words
+              </div>
+              <p
+                style={{
+                  margin: 0,
+                  fontFamily: FONT_EDITORIAL,
+                  fontStyle: "italic",
+                  fontSize: 16,
+                  lineHeight: 1.7,
+                  color: NAVY,
+                }}
+              >
+                &ldquo;{fmtMaybe(get(guestsSection, "charter_purpose_narrative"))}&rdquo;
+              </p>
+            </div>
+          ) : null}
+
+          {(get(guestsSection, "group_type") ||
+            get(guestsSection, "energy_level") ||
+            get(guestsSection, "group_scenarios") ||
+            get(guestsSection, "group_notes")) && (
+            <SubBlock label="Character of the group">
+              <Row k="Type of week" v={fmtMaybe(get(guestsSection, "group_type"))} />
+              <Row k="Energy level" v={fmtMaybe(get(guestsSection, "energy_level"))} />
+              <Row k="Scenarios" v={fmtMaybe(get(guestsSection, "group_scenarios"))} />
+              <Row k="General notes" v={fmtMaybe(get(guestsSection, "group_notes"))} />
+            </SubBlock>
+          )}
+
+          {get(guestsSection, "has_pet") || get(guestsSection, "pet_details") ? (
+            <SubBlock label="Pets on board">
+              <Row
+                k="A four-legged guest?"
+                v={
+                  get(guestsSection, "has_pet") === true ||
+                  get(guestsSection, "has_pet") === "true"
+                    ? "Yes"
+                    : "No"
+                }
+              />
+              <Row k="Details" v={fmtMaybe(get(guestsSection, "pet_details"))} />
+            </SubBlock>
+          ) : null}
+
+          <h3
+            style={{
+              fontFamily: FONT_UI,
+              fontSize: 10.5,
+              letterSpacing: 3.5,
+              textTransform: "uppercase",
+              color: GOLD,
+              margin: "26px 0 14px",
+              fontWeight: 500,
+            }}
+          >
+            Manifest
+          </h3>
+          {manifest.length === 0 ? (
+            <p style={mutedItalic}>
+              The guest list will appear here once the charterer has filled
+              it in. Until then, please coordinate names and arrival details
+              with George directly.
+            </p>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+              {manifest.map((g, i) => (
+                <GuestCard key={g.id} order={i + 1} g={g} />
+              ))}
+            </div>
+          )}
+        </Section>
+
+        {/* ============ 03 — HEALTH & ITINERARY ============ */}
+        <Section number="03" title="Health, safety & itinerary" italic="what shapes the week" pageBreakBefore>
+          <SubBlock label="Health & safety">
+            <Row k="Allergies & dietary requirements" v={fmtMaybe(health.allergies_dietary)} />
+            <Row k="Medical conditions" v={fmtMaybe(health.medical_conditions)} />
+            <Row k="Medications brought on board" v={fmtMaybe(health.medications_onboard)} />
+            <Row k="Swimming experience" v={fmtMaybe(health.swimming_experience)} />
+            <Row k="Swimming notes" v={fmtMaybe(health.swimming_other)} />
+          </SubBlock>
+
+          <SubBlock label="Itinerary">
+            <Row k="Pace of the week" v={fmtMaybe(itinerary.pace)} />
+            <Row k="Overall character" v={fmtMaybe(itinerary.overall_experience)} />
+            <Row k="Docking preference" v={fmtMaybe(itinerary.docking_preference)} />
+            <Row k="Preferred areas" v={fmtMaybe(itinerary.preferred_areas)} />
+            <Row k="Specific places they would love" v={fmtMaybe(itinerary.specific_places)} />
+            <Row k="Night-time preference" v={fmtMaybe(itinerary.night_preference)} />
+            <Row k="Extra activities of interest" v={fmtMaybe(itinerary.activities_extra)} />
+          </SubBlock>
+
+          {(itinerary.special_event_types ||
+            itinerary.special_event_extras ||
+            itinerary.celebrations) && (
+            <SubBlock label="Celebrations on board">
+              <Row k="Type of occasion" v={fmtMaybe(itinerary.special_event_types)} />
+              <Row k="Extras to pre-stage" v={fmtMaybe(itinerary.special_event_extras)} />
+              <Row k="Details" v={fmtMaybe(itinerary.celebrations)} />
+            </SubBlock>
+          )}
+
+          <SubBlock label="Life aboard">
+            <Row k="Crew presence preference" v={fmtMaybe(lifeAboard.crew_interaction)} />
+            <Row k="Activities of interest" v={fmtMaybe(lifeAboard.activities)} />
+            <Row k="Other activities" v={fmtMaybe(lifeAboard.activities_other)} />
+            <Row k="Music — morning" v={fmtMaybe(get(lifeAboard, "music.morning"))} />
+            <Row k="Music — lunch & afternoon" v={fmtMaybe(get(lifeAboard, "music.lunch_afternoon"))} />
+            <Row k="Music — sunset & dinner" v={fmtMaybe(get(lifeAboard, "music.sunset_dinner"))} />
+            <Row k="Music — late night" v={fmtMaybe(get(lifeAboard, "music.late_night"))} />
+            <Row k="Specific artists / playlists" v={fmtMaybe(get(lifeAboard, "music.specific_artists"))} />
+            <Row k="Small touches to ask about" v={fmtMaybe(lifeAboard.extras_freeform)} />
+            <Row k="Wellness on board" v={fmtMaybe(lifeAboard.wellness_onboard)} />
+          </SubBlock>
+        </Section>
+
+        {/* ============ 04 — FOOD & DRINK ============ */}
+        <Section number="04" title="Food & drink preferences" italic="what the chef should know" pageBreakBefore>
+          <SubBlock label="Meal times">
+            <Row k="Breakfast" v={fmtMaybe(dining.breakfast_time)} />
+            <Row k="Lunch" v={fmtMaybe(dining.lunch_time)} />
+            <Row k="Dinner" v={fmtMaybe(dining.dinner_time)} />
+          </SubBlock>
+
+          <SubBlock label="Service preferences">
+            <Row k="Lunch service" v={fmtMaybe(dining.lunch_service)} />
+            <Row k="Dinner service" v={fmtMaybe(dining.dinner_service)} />
+          </SubBlock>
+
+          <SubBlock label="Breakfast">
+            <Row k="Styles" v={fmtMaybe(dining.breakfast_styles || dining.breakfast_style)} />
+            <Row k="Items to stock" v={fmtMaybe(dining.breakfast_items)} />
+            <Row k="Cheese kind" v={fmtMaybe(dining.breakfast_cheese_kind)} />
+            <Row k="Cereal kind" v={fmtMaybe(dining.breakfast_cereal_kind)} />
+            <Row k="Jam kind" v={fmtMaybe(dining.breakfast_jam_kind)} />
+            <Row k="Tea kind" v={fmtMaybe(dining.breakfast_tea_kind)} />
+            <Row k="Juice kind" v={fmtMaybe(dining.breakfast_juice_kind)} />
+            <Row k="Anything else" v={fmtMaybe(dining.breakfast_specifics)} />
+          </SubBlock>
+
+          <SubBlock label="Coffee, tea & cold drinks">
+            <Row k="Preferences" v={fmtMaybe(dining.coffee_tea)} />
+            <Row k="Brand specifics" v={fmtMaybe(dining.coffee_tea_specifics)} />
+          </SubBlock>
+
+          {dining.food_matrix &&
+            typeof dining.food_matrix === "object" &&
+            Object.keys(dining.food_matrix).length > 0 && (
+              <FoodMatrixTable matrix={dining.food_matrix} />
+            )}
+
+          {(dining.food_loves || dining.food_avoid) && (
+            <SubBlock label="Foods (legacy multi-select)">
+              <Row k="Loves" v={fmtMaybe(dining.food_loves)} />
+              <Row k="Avoid" v={fmtMaybe(dining.food_avoid)} />
+            </SubBlock>
+          )}
+
+          <SubBlock label="Dessert">
+            <Row k="Styles" v={fmtMaybe(dining.dessert_styles)} />
+            <Row k="Specifics" v={fmtMaybe(dining.dessert_specifics)} />
+          </SubBlock>
+
+          <SubBlock label="Snacks & afternoon tea">
+            <Row k="Snacks between meals" v={fmtMaybe(dining.snacks_yes_no)} />
+            <Row k="Snack details" v={fmtMaybe(dining.snacks_details)} />
+            <Row k="Afternoon tea" v={fmtMaybe(dining.afternoon_tea_yes_no)} />
+            <Row k="Tea details" v={fmtMaybe(dining.afternoon_tea_details)} />
+          </SubBlock>
+
+          <SubBlock label="Dining ashore">
+            <Row k="Evenings ashore (count)" v={fmtMaybe(dining.dining_ashore_evenings)} />
+            <Row k="Notes" v={fmtMaybe(dining.dining_ashore_notes)} />
+          </SubBlock>
+
+          {(dining.kids_meal_arrangement ||
+            dining.kids_meal_specifics ||
+            dining.kids_needs_baby_cot ||
+            dining.kids_needs_high_chair ||
+            dining.kids_baby_food_specifics ||
+            dining.children_at_table) && (
+            <SubBlock label="Children at the table">
+              <Row k="Meal arrangement" v={fmtMaybe(dining.kids_meal_arrangement)} />
+              <Row k="What the children love" v={fmtMaybe(dining.kids_meal_specifics)} />
+              <Row k="Baby cot needed" v={fmtMaybe(dining.kids_needs_baby_cot ? "Yes" : null)} />
+              <Row k="High chair needed" v={fmtMaybe(dining.kids_needs_high_chair ? "Yes" : null)} />
+              <Row k="Baby food / formula" v={fmtMaybe(dining.kids_baby_food_specifics)} />
+              <Row k="Other notes" v={fmtMaybe(dining.children_at_table)} />
+            </SubBlock>
+          )}
+
+          <SubBlock label="Open note to the chef">
+            <Row k="From the charterer" v={fmtMaybe(dining.chef_open_note)} />
+          </SubBlock>
+
+          {Object.keys(children).length > 0 && (
+            <SubBlock label="Children on board (legacy)">
+              <Row k="Children profiles" v={fmtMaybe(children.children)} />
+              <Row k="Equipment requested" v={fmtMaybe(children.equipment)} />
+              <Row k="Other equipment" v={fmtMaybe(children.equipment_other)} />
+            </SubBlock>
+          )}
+        </Section>
+
+        {/* ============ 05 — BAR & CELLAR ============ */}
+        <Section number="05" title="Bar & cellar" italic="what to provision" pageBreakBefore>
+          <SubBlock label="Bottled water">
+            <Row k="Type" v={fmtMaybe(beverages.water_type || beverages.water)} />
+            <Row k="Preferred brands" v={fmtMaybe(beverages.water_brand)} />
+            <Row k="Consumption estimate" v={fmtMaybe(beverages.water_consumption_estimate)} />
+          </SubBlock>
+
+          <LabelQtyTable label="Soft drinks" rows={beverages.soft_drinks} />
+
+          <SubBlock label="Standard bar (classics included)">
+            <Row k="Tick-list" v={fmtMaybe(beverages.standard_bar_items)} />
+            <Row k="Specific preferences" v={fmtMaybe(beverages.specific_preferences)} />
+          </SubBlock>
+
+          <SubBlock label="Wine — approach">
+            <Row k="Greek vineyards" v={fmtMaybe(beverages.wine_greek_vineyards)} />
+            <Row k="Preferred price range" v={fmtMaybe(beverages.wine_price_range)} />
+            <Row k="Overall style" v={fmtMaybe(beverages.wine_style)} />
+          </SubBlock>
+
+          <LabelQtyTable label="Wine — specific labels" rows={beverages.wines} withPriceRange />
+
+          <LabelQtyTable label="Whiskey" rows={beverages.whiskey} />
+          <LabelQtyTable label="Vodka" rows={beverages.vodka} />
+          <LabelQtyTable label="Gin" rows={beverages.gin} />
+          <LabelQtyTable label="Rum" rows={beverages.rum} />
+          <LabelQtyTable label="Tequila" rows={beverages.tequila} />
+          <LabelQtyTable label="Liqueur" rows={beverages.liqueur} />
+
+          <LabelQtyTable label="Beers — international" rows={beverages.beers} />
+          <LabelQtyTable label="Beers — local Greek" rows={beverages.beers_local} />
+
+          <SubBlock label="Cocktails & mocktails">
+            <Row k="Cocktails the hostess should know" v={fmtMaybe(beverages.cocktails)} />
+            <Row k="Mocktails" v={fmtMaybe(beverages.mocktails)} />
+          </SubBlock>
+        </Section>
+
+        {/* ============ 06 — CLOSING NOTES ============ */}
+        <Section number="06" title="Closing notes" italic="the small things" pageBreakBefore>
+          <SubBlock label="Surprises & celebrations">
+            <Row k="Surprises to plan" v={fmtMaybe(little.surprises_celebrations)} />
+            <Row k="Things to avoid" v={fmtMaybe(little.things_to_avoid)} />
+          </SubBlock>
+
+          <SubBlock label="Night service in cabins">
+            <Row k="Place in each cabin (6–9pm)" v={fmtMaybe(little.night_service)} />
+          </SubBlock>
+
+          <SubBlock label="Photography on the water">
+            <Row k="Drone photography" v={fmtMaybe(little.drone_photography)} />
+            <Row k="Professional photographer day" v={fmtMaybe(little.professional_photographer)} />
+          </SubBlock>
+
+          <SubBlock label="Practical">
+            <Row k="Connectivity preference" v={fmtMaybe(little.connectivity)} />
+            <Row k="Photo archive permission" v={fmtMaybe(little.photo_archive_permission)} />
+          </SubBlock>
+
+          <SubBlock label="Anything else">
+            <Row k="From the charterer" v={fmtMaybe(little.anything_else)} />
+          </SubBlock>
+        </Section>
+
+        <footer
+          style={{
+            marginTop: 48,
+            paddingTop: 20,
+            borderTop: `1px solid ${RULE}`,
+            fontFamily: FONT_UI,
+            fontSize: 10,
+            letterSpacing: 3,
+            textTransform: "uppercase",
+            color: MUTED,
+            textAlign: "center",
+          }}
+        >
+          George Yachts Brokerage House LLC · Filotimo · Φιλότιμο · georgeyachts.com
+        </footer>
+      </article>
+    </div>
+  );
+}
+
+// =================== PRIMITIVES ==============================
+const mutedItalic = {
+  fontFamily: FONT_EDITORIAL,
+  fontStyle: "italic",
+  fontSize: 13,
+  color: MUTED,
+  lineHeight: 1.6,
+  margin: 0,
+};
+
+function Section({ number, title, italic, children, pageBreakBefore }) {
+  return (
+    <section
+      className={pageBreakBefore ? "page-break-before avoid-break" : "avoid-break"}
+      style={{
+        marginTop: 32,
+        paddingBottom: 28,
+        borderBottom: `1px solid ${RULE}`,
+      }}
+    >
+      <header style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 18 }}>
+        <span
+          style={{
+            fontFamily: FONT_EDITORIAL,
+            fontStyle: "italic",
+            fontSize: 32,
+            fontWeight: 300,
+            color: GOLD,
+            letterSpacing: -0.5,
+          }}
+        >
+          {number}
+        </span>
+        <h2
+          style={{
+            fontFamily: FONT_EDITORIAL,
+            fontWeight: 300,
+            fontSize: 26,
+            margin: 0,
+            letterSpacing: -0.3,
+            color: NAVY,
+          }}
+        >
+          {title}
+          {italic ? (
+            <em style={{ color: GOLD, fontStyle: "italic", marginLeft: 8 }}>
+              · {italic}
+            </em>
+          ) : null}
+        </h2>
+      </header>
+      {children}
+    </section>
+  );
+}
+
+function SubBlock({ label, children }) {
+  return (
+    <div className="avoid-break" style={{ marginTop: 18 }}>
+      <h3
+        style={{
+          fontFamily: FONT_UI,
+          fontSize: 10.5,
+          letterSpacing: 3.5,
+          textTransform: "uppercase",
+          color: GOLD,
+          margin: "0 0 10px",
+          fontWeight: 500,
+        }}
+      >
+        {label}
+      </h3>
+      <dl style={{ margin: 0, display: "flex", flexDirection: "column" }}>{children}</dl>
+    </div>
+  );
+}
+
+function Row({ k, v }) {
+  const empty = v == null || v === "" || v === "—";
+  return (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "210px 1fr",
+        gap: 16,
+        padding: "7px 0",
+        borderBottom: `1px solid ${RULE}`,
+        fontFamily: FONT_EDITORIAL,
+      }}
+    >
+      <dt
+        style={{
+          fontFamily: FONT_UI,
+          fontSize: 10,
+          letterSpacing: 1.8,
+          textTransform: "uppercase",
+          color: MUTED,
+          paddingTop: 2,
+        }}
+      >
+        {k}
+      </dt>
+      <dd
+        style={{
+          margin: 0,
+          fontSize: 14,
+          lineHeight: 1.55,
+          color: empty ? "rgba(13,27,42,0.35)" : NAVY,
+          fontStyle: empty ? "italic" : "normal",
+        }}
+      >
+        {empty ? "—" : v}
+      </dd>
+    </div>
+  );
+}
+
+function GuestCard({ order, g }) {
+  return (
+    <div
+      className="avoid-break"
+      style={{
+        background: "#ffffff",
+        border: `1px solid ${RULE}`,
+        padding: "16px 18px",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 10 }}>
+        <span
+          style={{
+            fontFamily: FONT_UI,
+            fontSize: 10,
+            letterSpacing: 2.5,
+            textTransform: "uppercase",
+            color: GOLD,
+            fontWeight: 500,
+          }}
+        >
+          {String(order).padStart(2, "0")}
+          {order === 1 ? " · Principal" : ""}
+        </span>
+        <h3
+          style={{
+            fontFamily: FONT_EDITORIAL,
+            fontSize: 19,
+            fontWeight: 400,
+            margin: 0,
+            color: NAVY,
+          }}
+        >
+          {g.full_name || "—"}
+          {g.is_minor ? (
+            <em style={{ color: GOLD, marginLeft: 8, fontSize: 13 }}>· minor</em>
+          ) : null}
+        </h3>
+      </div>
+      <dl
+        style={{
+          margin: 0,
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "4px 24px",
+          fontFamily: FONT_EDITORIAL,
+          fontSize: 13,
+        }}
+      >
+        <GuestCell label="DOB" v={fmtDate(g.date_of_birth) ?? "—"} />
+        <GuestCell label="Nationality" v={g.nationality || "—"} />
+        <GuestCell label="Passport №" v={g.passport_number || "—"} />
+        <GuestCell label="Passport expiry" v={fmtDate(g.passport_expiry) ?? "—"} />
+        <GuestCell label="Cabin pairing" v={g.cabin_pairing || "—"} />
+        <GuestCell label="Shoe size" v={g.shoe_size || "—"} />
+        {order === 1 ? (
+          <>
+            <GuestCell label="Mobile" v={g.mobile || "—"} />
+            <GuestCell label="Email" v={g.email || "—"} />
+          </>
+        ) : null}
+        <GuestCell label="Allergies / dietary" v={g.allergies_dietary || "—"} fullWidth />
+      </dl>
+      {g.allergies_severity === "life_threatening" && (
+        <div
+          className="avoid-break"
+          style={{
+            marginTop: 10,
+            padding: "10px 14px",
+            background: "rgba(185, 28, 28, 0.06)",
+            border: "1px solid rgba(185, 28, 28, 0.35)",
+          }}
+        >
+          <div
+            style={{
+              fontFamily: FONT_UI,
+              fontSize: 10,
+              letterSpacing: 2.5,
+              textTransform: "uppercase",
+              color: "#b91c1c",
+              fontWeight: 600,
+              marginBottom: 4,
+            }}
+          >
+            ⚠ Life-threatening allergy
+          </div>
+          {g.emergency_note ? (
+            <div style={{ fontFamily: FONT_EDITORIAL, fontSize: 13.5, color: "#0D1B2A" }}>
+              {g.emergency_note}
+            </div>
+          ) : null}
+        </div>
+      )}
+      {g.allergies_severity && g.allergies_severity !== "life_threatening" && (
+        <div
+          style={{
+            marginTop: 8,
+            fontFamily: FONT_UI,
+            fontSize: 10,
+            letterSpacing: 2,
+            textTransform: "uppercase",
+            color: GOLD,
+          }}
+        >
+          {g.allergies_severity === "strong_intolerance" ? "Strong intolerance" : "Preference / mild"}
+          {g.emergency_note ? (
+            <span style={{ marginLeft: 8, fontStyle: "italic", textTransform: "none", letterSpacing: 0, fontFamily: FONT_EDITORIAL, fontSize: 13, color: "#0D1B2A" }}>
+              · {g.emergency_note}
+            </span>
+          ) : null}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function GuestCell({ label, v, fullWidth }) {
+  const empty = !v || v === "—";
+  return (
+    <div
+      style={{
+        gridColumn: fullWidth ? "1 / -1" : undefined,
+        display: "flex",
+        gap: 10,
+        padding: "3px 0",
+      }}
+    >
+      <dt
+        style={{
+          fontFamily: FONT_UI,
+          fontSize: 9.5,
+          letterSpacing: 1.6,
+          textTransform: "uppercase",
+          color: MUTED,
+          minWidth: 110,
+        }}
+      >
+        {label}
+      </dt>
+      <dd
+        style={{
+          margin: 0,
+          color: empty ? "rgba(13,27,42,0.35)" : NAVY,
+          fontStyle: empty ? "italic" : "normal",
+        }}
+      >
+        {empty ? "—" : v}
+      </dd>
+    </div>
+  );
+}
+
+// =================== FOOD MATRIX TABLE =======================
+const FOOD_MATRIX_LABELS = {
+  fish: "Fish",
+  shellfish: "Shellfish",
+  beef: "Beef",
+  pork: "Pork",
+  lamb: "Lamb",
+  veal: "Veal",
+  chicken: "Chicken",
+  turkey: "Turkey",
+  greek_meze: "Greek meze",
+  pasta: "Pasta",
+  rice: "Rice",
+  vegetables: "Vegetables",
+  salad: "Salad",
+};
+
+function FoodMatrixTable({ matrix }) {
+  const entries = Object.entries(matrix).filter(([, v]) => v);
+  if (entries.length === 0) return null;
+  return (
+    <div className="avoid-break" style={{ marginTop: 18 }}>
+      <h3
+        style={{
+          fontFamily: FONT_UI,
+          fontSize: 10.5,
+          letterSpacing: 3.5,
+          textTransform: "uppercase",
+          color: GOLD,
+          margin: "0 0 10px",
+          fontWeight: 500,
+        }}
+      >
+        Lunch & dinner — preferences matrix
+      </h3>
+      <table
+        style={{
+          width: "100%",
+          borderCollapse: "collapse",
+          fontFamily: FONT_EDITORIAL,
+          fontSize: 13,
+        }}
+      >
+        <thead>
+          <tr style={{ background: NAVY, color: IVORY }}>
+            <th style={matrixHead}>Item</th>
+            <th style={matrixHead}>Like</th>
+            <th style={matrixHead}>Dislike</th>
+            <th style={matrixHead}>Indifferent</th>
+          </tr>
+        </thead>
+        <tbody>
+          {entries.map(([key, verdict]) => {
+            const label = FOOD_MATRIX_LABELS[key] || key.replace(/_/g, " ");
+            return (
+              <tr key={key} style={{ borderBottom: `1px solid ${RULE}` }}>
+                <td style={matrixCellLabel}>{label}</td>
+                <td style={matrixCell}>{verdict === "like" ? "✓" : ""}</td>
+                <td style={matrixCell}>{verdict === "dislike" ? "✓" : ""}</td>
+                <td style={matrixCell}>{verdict === "indifferent" ? "✓" : ""}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+const matrixHead = {
+  padding: "8px 10px",
+  fontFamily: FONT_UI,
+  fontSize: 10,
+  letterSpacing: 2,
+  textTransform: "uppercase",
+  textAlign: "left",
+  color: "rgba(248,245,240,0.85)",
+  fontWeight: 500,
+};
+
+const matrixCellLabel = {
+  padding: "8px 10px",
+  fontFamily: FONT_EDITORIAL,
+  fontSize: 14,
+  color: NAVY,
+};
+
+const matrixCell = {
+  padding: "8px 10px",
+  fontFamily: FONT_EDITORIAL,
+  fontSize: 15,
+  color: GOLD,
+  fontWeight: 600,
+};
+
+// =================== LABEL × QTY TABLE =======================
+function LabelQtyTable({ label, rows, withPriceRange }) {
+  if (!Array.isArray(rows)) return null;
+  const filled = rows.filter(
+    (r) => (r?.label && r.label.trim()) || (r?.quantity && String(r.quantity).trim()),
+  );
+  if (filled.length === 0) return null;
+
+  return (
+    <div className="avoid-break" style={{ marginTop: 18 }}>
+      <h3
+        style={{
+          fontFamily: FONT_UI,
+          fontSize: 10.5,
+          letterSpacing: 3.5,
+          textTransform: "uppercase",
+          color: GOLD,
+          margin: "0 0 10px",
+          fontWeight: 500,
+        }}
+      >
+        {label}
+      </h3>
+      <table
+        style={{
+          width: "100%",
+          borderCollapse: "collapse",
+          fontFamily: FONT_EDITORIAL,
+          fontSize: 13,
+        }}
+      >
+        <thead>
+          <tr style={{ background: NAVY, color: IVORY }}>
+            <th style={{ ...matrixHead, width: "60%" }}>Label</th>
+            <th style={{ ...matrixHead, width: withPriceRange ? "20%" : "40%" }}>Quantity</th>
+            {withPriceRange && <th style={{ ...matrixHead, width: "20%" }}>Price / bottle</th>}
+          </tr>
+        </thead>
+        <tbody>
+          {filled.map((r, i) => (
+            <tr key={i} style={{ borderBottom: `1px solid ${RULE}` }}>
+              <td style={matrixCellLabel}>{r.label || "—"}</td>
+              <td style={matrixCellLabel}>{r.quantity || "—"}</td>
+              {withPriceRange && (
+                <td style={matrixCellLabel}>{r.price_range_per_bottle || "—"}</td>
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}

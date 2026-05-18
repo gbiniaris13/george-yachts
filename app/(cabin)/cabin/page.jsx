@@ -91,10 +91,12 @@ export default async function CabinHomePage() {
         </h1>
         <div className="cabin-home__rule" aria-hidden />
         <IntroParagraph>
-          This is your private Cabin. Below is everything we have
-          prepared for your voyage. Take your time with the Charter
-          Brief — fifteen minutes, in your own pace. Leave any field
-          blank that does not apply.
+          This is your private Cabin — your quiet corner of George
+          Yachts, open to you for the whole arc of your voyage and
+          beyond. Below is everything we have prepared for the week.
+          Take the Charter Brief at your pace — an unhurried half hour,
+          across as many sittings as you like. Save and come back. We
+          will be here, in Greece, looking after the details.
         </IntroParagraph>
       </header>
 

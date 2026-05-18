@@ -76,12 +76,31 @@ export default function ArrivalSectionPage() {
               </div>
             </details>
 
+            <RadioGroup
+              name="flight_group_1.flight_type"
+              label="Flight type (first group)"
+              register={register}
+              options={[
+                { value: "commercial", label: "Commercial flight" },
+                { value: "private",    label: "Private flight (we coordinate FBO pickup)" },
+              ]}
+            />
+
             <OpenTextarea
               label="Any private jet, helicopter, or other arrivals?"
               hint="Tell us here — we can coordinate with the captain."
               name="private_arrival_notes"
               register={register}
               rows={2}
+            />
+
+            <OpenTextarea
+              label="Your group's previous sailing experience"
+              hint="The captain calibrates the safety briefing and the daily rhythm around this. First-charter through 'I race J/70s' is all useful."
+              name="yachting_experience"
+              register={register}
+              rows={3}
+              placeholder="e.g. First charter for most of the group; one guest has crewed Atlantic crossings."
             />
 
             <h2 className="brief-subhead">02 · Where you’re staying</h2>

@@ -32,6 +32,9 @@ const PUBLIC_PATHS = [
 
 const PUBLIC_PREFIXES = [
   "/cabin/icons/",
+  "/cabin/share/",           // tokenized read-only preference sheet
+                              // for captains, chefs, owners — auth via
+                              // the token in the URL, not the cookie
   "/api/cabin/auth/",        // request-link, verify, logout
   // Admin routes called server-to-server from gy-command. They
   // authenticate with the x-cabin-admin-secret header, not the
@@ -57,7 +60,24 @@ export function middleware(req) {
   // Everything else under /cabin or /api/cabin requires a session cookie
   const hasCookie = req.cookies.has(SESSION_COOKIE);
   if (hasCookie) {
-    return NextResponse.next();
+    // Slide the cookie's Max-Age every visit so guests stay signed in
+    // for a year-from-last-visit, not a year-from-first-magic-link.
+    // We can't validate the session here (KV lookup would slow Edge)
+    // — readSessionFromCookies() inside the page does that.
+    const res = NextResponse.next();
+    const existing = req.cookies.get(SESSION_COOKIE);
+    if (existing?.value) {
+      res.cookies.set({
+        name: SESSION_COOKIE,
+        value: existing.value,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge: 365 * 24 * 3600,
+      });
+    }
+    return res;
   }
 
   // For API routes, return 401 JSON instead of redirecting
