@@ -10,8 +10,15 @@
 
 import { NextResponse } from "next/server";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
-import { anthropicMessage } from "@/lib/anthropic-client";
+import { geminiGenerateContent } from "@/lib/gemini-client";
 import { CostCapExceeded, AiFeaturesDisabled } from "@/lib/cost-cap";
+
+// Why Gemini instead of Anthropic here:
+// • Gemini 2.5 Flash has a 1500 req/day FREE tier — at George's
+//   volume (≤30 cabins/month, ≤90 PDFs/month) we never pay.
+// • Already wired in Vercel env (AI_API_KEY) so no new setup.
+// • Same PDF-as-base64 input pattern, same JSON-out behaviour.
+// • Still goes through cost-cap (€10/month) as defence-in-depth.
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -150,10 +157,11 @@ const COLUMN_BY_KIND = {
   vessel: "vessel_brochure",
 };
 
-// Conservative pre-estimate: PDFs run 50-150k tokens. We block
-// extraction calls when we're already at 80% of the cap so a
-// fresh extraction doesn't push us over.
-const ESTIMATED_COST_CENTS_PER_EXTRACTION = 15;
+// Conservative pre-estimate. Gemini 2.5 Flash is much cheaper than
+// Claude Haiku ($0.075/MTok input vs $1/MTok) so a 100k-token PDF
+// costs about $0.0075 — but the free tier swallows it. We pass 0
+// as estimate since real billed cost is typically $0 at our volume.
+const ESTIMATED_COST_CENTS_PER_EXTRACTION = 0;
 
 export async function POST(req) {
   if (!authorized(req)) {
@@ -195,39 +203,41 @@ export async function POST(req) {
   }
   base64 = Buffer.from(base64, "binary").toString("base64");
 
-  // Call Claude (through the capped wrapper).
+  // Call Gemini (through the capped wrapper) for free-tier PDF
+  // structured-extraction.
   let extracted;
   try {
-    const result = await anthropicMessage({
-      model: "claude-haiku-4-5",
-      max_tokens: 4096,
-      system: SYSTEM_PROMPTS[kind],
+    const result = await geminiGenerateContent({
+      model: "gemini-2.5-flash",
       estimatedCostCents: ESTIMATED_COST_CENTS_PER_EXTRACTION,
-      messages: [
+      systemInstruction: { parts: [{ text: SYSTEM_PROMPTS[kind] }] },
+      contents: [
         {
           role: "user",
-          content: [
-            {
-              type: "document",
-              source: { type: "base64", media_type: "application/pdf", data: base64 },
-            },
-            {
-              type: "text",
-              text: `Extract the ${kind} data from this PDF as strict JSON per the schema. Output JSON only — no markdown fences, no commentary.`,
-            },
+          parts: [
+            { inline_data: { mime_type: "application/pdf", data: base64 } },
+            { text: `Extract the ${kind} data from this PDF as strict JSON per the schema. Output JSON only — no markdown fences, no commentary.` },
           ],
         },
       ],
+      generationConfig: {
+        temperature: 0.1,
+        maxOutputTokens: 4096,
+        responseMimeType: "application/json",
+      },
     });
 
-    const text = (result?.content ?? [])
-      .filter((b) => b.type === "text")
-      .map((b) => b.text)
+    const text = (result?.candidates?.[0]?.content?.parts ?? [])
+      .map((p) => p?.text ?? "")
       .join("\n")
       .trim();
 
-    // Strip optional ```json fences just in case
-    const cleaned = text.replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/i, "").trim();
+    // Strip optional ```json fences just in case Gemini ignored
+    // the responseMimeType hint and added markdown.
+    const cleaned = text
+      .replace(/^```(?:json)?\s*/i, "")
+      .replace(/```\s*$/i, "")
+      .trim();
     extracted = JSON.parse(cleaned);
   } catch (err) {
     if (err instanceof CostCapExceeded || err instanceof AiFeaturesDisabled) {
