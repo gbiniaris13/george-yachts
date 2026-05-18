@@ -60,6 +60,17 @@ export default function VoyageAlbumPage() {
     if (!files.length) return;
     setError(null);
 
+    // Vercel's serverless function request body has a hard ceiling
+    // of ~4.5 MB. Anything bigger is killed at the edge with a raw
+    // "Request Entity Too Large" plain-text 413 — never reaches our
+    // route. That's why "Unexpected token 'R' in JSON" was showing
+    // up: r.json() trying to parse the plain-text 413 body.
+    //
+    // Until we ship the direct-to-Supabase signed-upload path,
+    // videos must fit under this ceiling. ~3.8 MB lets us subtract
+    // multipart overhead and still squeeze in a short phone clip.
+    const VIDEO_LIMIT_BYTES = 3.8 * 1024 * 1024;
+
     for (let i = 0; i < files.length; i++) {
       const f = files[i];
       const isImage = /^image\//.test(f.type);
@@ -70,25 +81,36 @@ export default function VoyageAlbumPage() {
         const form = new FormData();
         if (isImage) {
           // Photos: client-side Canvas compression to JPEG so we
-          // stay inside the 5 MB-per-photo bucket budget.
+          // stay inside the budget.
           const small = await compress(f);
           form.append("file", small, f.name.replace(/\.\w+$/, "") + ".jpg");
         } else {
-          // Videos: server accepts up to 50 MB raw, no re-encoding.
-          if (f.size > 50 * 1024 * 1024) throw new Error("too-large");
+          if (f.size > VIDEO_LIMIT_BYTES) throw new Error("too-large");
           form.append("file", f, f.name);
         }
         if (caption.trim() && i === 0) form.append("caption", caption.trim());
         const r = await fetch("/api/cabin/voyage-album", { method: "POST", body: form });
-        const j = await r.json();
-        if (!r.ok) throw new Error(j.error || "upload-failed");
+        // Defensive parser — Vercel returns plain-text 413 above
+        // the body limit, which would otherwise crash JSON.parse.
+        let j = null;
+        const ct = r.headers.get("content-type") || "";
+        if (ct.includes("application/json")) {
+          j = await r.json().catch(() => null);
+        } else {
+          const txt = await r.text().catch(() => "");
+          if (r.status === 413 || /entity too large/i.test(txt)) {
+            throw new Error("too-large");
+          }
+          throw new Error(`upload-failed (${r.status})`);
+        }
+        if (!r.ok) throw new Error(j?.error || "upload-failed");
       } catch (err) {
         const m = err?.message;
         const friendly =
           m === "compress-failed"
             ? "could not read on this browser — try saving as JPG"
             : m === "too-large"
-            ? "file is over 50 MB — try a shorter clip or lower resolution"
+            ? "video is too large — try a clip under ~3 MB (about 5 seconds at phone quality). Longer-video uploads are coming soon."
             : m || "upload failed";
         setError(`Item ${i + 1}: ${friendly}`);
       }
@@ -119,7 +141,8 @@ export default function VoyageAlbumPage() {
         After your week at sea, this is where the photographs live — yours,
         forever. Any member of your group can upload. Tap any photo to view
         it large; full-resolution downloads are always available from your
-        Cabin.
+        Cabin. Short clips welcome too (up to ~3 MB each, roughly five
+        seconds at phone quality) — long-video uploads coming soon.
       </IntroParagraph>
 
       <div className="va-add">
