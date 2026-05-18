@@ -18,6 +18,45 @@ import { BEST_YACHTS_PAGES } from "@/lib/bestYachtsSeo";
 
 const BASE_URL = "https://georgeyachts.com";
 
+// 2026-05-18 — Per-collection lastmod constants. The previous
+// `new Date().toISOString()` everywhere meant the build time was
+// stamped on every URL — so each deploy looked like a full-site
+// content refresh to Google, which is noise that dilutes Google's
+// signal of when to recrawl.
+//
+// Now each collection carries the date of its last meaningful
+// content edit. Bump these when the underlying lib/*Seo.js arrays
+// (or the static content on the matching pages) actually change.
+// Sanity-backed entries (yachts, blog posts) keep using their
+// real `_updatedAt` value — those are accurate per-document.
+//
+// Format: ISO 8601 date-only (YYYY-MM-DD). Google accepts this
+// and it's the most readable form for humans editing this list.
+const LAST_REFRESH = {
+  // Static marketing / tools / legal — these change rarely.
+  // Bump when copy on those pages is edited.
+  STATIC: "2026-05-18",
+  // Programmatic SEO families — bump when the corresponding
+  // lib/*Seo.js data file gets new entries or refreshed copy.
+  ISLANDS: "2026-05-12",
+  YACHT_TYPES: "2026-05-11",
+  USE_CASES: "2026-05-11",
+  LONG_TAIL: "2026-05-11",
+  COMPARISONS: "2026-05-11",
+  LINKABLE: "2026-05-11",
+  COMBOS: "2026-05-11",
+  ARTICLES: "2026-05-11",
+  DURATION: "2026-05-11",
+  GLOSSARY: "2026-05-12",
+  DEST_COMPARISONS: "2026-05-12",
+  ANCHORAGES: "2026-05-12",
+  BOTTOM_FUNNEL: "2026-05-12",
+  BEST_YACHTS: "2026-05-12",
+  JOURNAL: "2026-05-18",
+  // Hubs that aggregate other content — bump weekly-ish.
+  HUBS: "2026-05-18",
+};
+
 const staticRoutes = [
   // Core pages
   { path: "", priority: 1.0, changeFrequency: "weekly" },
@@ -158,7 +197,7 @@ export default async function sitemap() {
   // /ru/...) we'll re-add hreflang at that point.
   const staticEntries = staticRoutes.map((route) => ({
     url: `${BASE_URL}${route.path}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.STATIC,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
@@ -184,7 +223,10 @@ export default async function sitemap() {
     );
     blogEntries = posts.map((post) => ({
       url: `${BASE_URL}/blog/${post.slug}`,
-      lastModified: post._updatedAt || new Date().toISOString(),
+      // Sanity always populates _updatedAt; the fallback is defensive
+      // only. If Sanity ever returns nothing, prefer the JOURNAL date
+      // over "now" so we don't lie about a fresh edit.
+      lastModified: post._updatedAt || LAST_REFRESH.JOURNAL,
       changeFrequency: "weekly",
       priority: 0.8,
     }));
@@ -195,7 +237,7 @@ export default async function sitemap() {
   // F.4 (Roberto brief) — topic-cluster landing pages.
   const journalClusterEntries = JOURNAL_CLUSTERS.map((c) => ({
     url: `${BASE_URL}/journal/${c.slug}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.JOURNAL,
     changeFrequency: "weekly",
     priority: 0.8,
   }));
@@ -205,7 +247,7 @@ export default async function sitemap() {
   // charter" is the high-intent UHNW search.
   const islandEntries = ISLANDS.map((i) => ({
     url: `${BASE_URL}/yacht-charter-${i.slug}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.ISLANDS,
     changeFrequency: "weekly",
     priority: 0.92,
   }));
@@ -215,39 +257,39 @@ export default async function sitemap() {
   // Higher priority than yacht detail pages, lower than islands.
   const yachtTypeEntries = YACHT_TYPES.map((t) => ({
     url: `${BASE_URL}${t.urlPath}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.YACHT_TYPES,
     changeFrequency: "weekly",
     priority: 0.88,
   }));
   const useCaseEntries = USE_CASES.map((u) => ({
     url: `${BASE_URL}${u.urlPath}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.USE_CASES,
     changeFrequency: "weekly",
     priority: 0.85,
   }));
   const longTailEntries = LONG_TAIL_PAGES.map((p) => ({
     url: `${BASE_URL}${p.urlPath}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.LONG_TAIL,
     changeFrequency: "monthly",
     priority: 0.82,
   }));
   // 2026-05-11 Phase 7 Round 2 — 8 comparison + 3 linkable assets.
   const comparisonEntries = COMPARISONS.map((c) => ({
     url: `${BASE_URL}${c.urlPath}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.COMPARISONS,
     changeFrequency: "monthly",
     priority: 0.85,
   }));
   const linkableAssetEntries = LINKABLE_ASSETS.map((a) => ({
     url: `${BASE_URL}${a.urlPath}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.LINKABLE,
     changeFrequency: "monthly",
     priority: 0.83,
   }));
   // Phase 7 Round 3 — 13 yacht-type x destination combo pages.
   const comboEntries = COMBOS.map((c) => ({
     url: `${BASE_URL}${c.urlPath}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.COMBOS,
     changeFrequency: "monthly",
     priority: 0.84,
   }));
@@ -255,13 +297,13 @@ export default async function sitemap() {
   const otherSeoEntries = [
     {
       url: `${BASE_URL}/reviews`,
-      lastModified: new Date().toISOString(),
+      lastModified: LAST_REFRESH.STATIC,
       changeFrequency: "weekly",
       priority: 0.85,
     },
     {
       url: `${BASE_URL}/2026-greek-charter-market-report`,
-      lastModified: new Date().toISOString(),
+      lastModified: LAST_REFRESH.STATIC,
       changeFrequency: "monthly",
       priority: 0.88,
     },
@@ -269,21 +311,21 @@ export default async function sitemap() {
   // Phase 7 Round 4 — 4 GEO reference articles.
   const articleEntries = ARTICLES.map((a) => ({
     url: `${BASE_URL}${a.urlPath}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.ARTICLES,
     changeFrequency: "monthly",
     priority: 0.87,
   }));
   // Phase 7 Round 5 — 40 duration pages + sailing distance calculator.
   const durationEntries = DURATION_PAGES.map((p) => ({
     url: `${BASE_URL}${p.urlPath}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.DURATION,
     changeFrequency: "monthly",
     priority: 0.82,
   }));
   const toolEntries = [
     {
       url: `${BASE_URL}/sailing-distance-calculator`,
-      lastModified: new Date().toISOString(),
+      lastModified: LAST_REFRESH.HUBS,
       changeFrequency: "monthly",
       priority: 0.86,
     },
@@ -297,13 +339,13 @@ export default async function sitemap() {
   // weekly, lower than islands/articles since each is narrow).
   const glossaryHubEntry = {
     url: `${BASE_URL}/glossary`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.HUBS,
     changeFrequency: "monthly",
     priority: 0.86,
   };
   const glossaryEntries = GLOSSARY_TERMS.map((t) => ({
     url: `${BASE_URL}/glossary/${t.slug}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.GLOSSARY,
     changeFrequency: "monthly",
     priority: 0.78,
   }));
@@ -317,7 +359,7 @@ export default async function sitemap() {
   // extract directly.
   const destinationComparisonEntries = DESTINATION_COMPARISONS.map((c) => ({
     url: `${BASE_URL}${c.urlPath}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.DEST_COMPARISONS,
     changeFrequency: "monthly",
     priority: 0.9,
   }));
@@ -328,7 +370,7 @@ export default async function sitemap() {
   // glossary terms since these have time-sensitive research value).
   const marketReportsHubEntry = {
     url: `${BASE_URL}/market-reports`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.HUBS,
     changeFrequency: "weekly",
     priority: 0.88,
   };
@@ -345,7 +387,7 @@ export default async function sitemap() {
   // crawlers prioritise the parent destination.
   const anchorageEntries = ISLAND_ANCHORAGES.map((a) => ({
     url: `${BASE_URL}${a.urlPath}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.ANCHORAGES,
     changeFrequency: "monthly",
     priority: 0.84,
   }));
@@ -355,7 +397,7 @@ export default async function sitemap() {
   // pure purchase-intent queries.
   const bottomFunnelEntries = BOTTOM_FUNNEL_PAGES.map((p) => ({
     url: `${BASE_URL}${p.urlPath}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.BOTTOM_FUNNEL,
     changeFrequency: "weekly",
     priority: 0.88,
   }));
@@ -363,7 +405,7 @@ export default async function sitemap() {
   // Phase 7 R35 (2026-05-12) - "Best yachts for X" series.
   const bestYachtsEntries = BEST_YACHTS_PAGES.map((p) => ({
     url: `${BASE_URL}${p.urlPath}`,
-    lastModified: new Date().toISOString(),
+    lastModified: LAST_REFRESH.BEST_YACHTS,
     changeFrequency: "monthly",
     priority: 0.85,
   }));
@@ -375,7 +417,8 @@ export default async function sitemap() {
     );
     yachtEntries = yachts.map((yacht) => ({
       url: `${BASE_URL}/yachts/${yacht.slug}`,
-      lastModified: yacht._updatedAt || new Date().toISOString(),
+      // Sanity always populates _updatedAt; the fallback is defensive.
+      lastModified: yacht._updatedAt || LAST_REFRESH.STATIC,
       changeFrequency: "weekly",
       priority: 0.75,
     }));

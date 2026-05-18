@@ -88,6 +88,78 @@ function generateFleetSchema(yachts) {
   };
 }
 
+// 2026-05-18 — Service schema added alongside the ItemList.
+// The ItemList tells Google "here are the yachts"; the Service
+// schema tells Google "here is the bookable service this page
+// describes." Schema.org's Service type unlocks the service-style
+// rich result (areaServed, provider, offerCatalog) which is more
+// commercially relevant for a brokerage page than a pure product
+// listing.
+//
+// Price range is computed from the actual fleet data so the schema
+// matches what's on the page; falls back to the published spread
+// when fleet fetch fails.
+function generateServiceSchema(yachts) {
+  const prices = yachts
+    .map((y) => y.weeklyRatePrice)
+    .filter((p) => typeof p === "number" && p > 0);
+  const low = prices.length ? Math.min(...prices) : 10000;
+  const high = prices.length ? Math.max(...prices) : 235000;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Luxury Crewed Yacht Charter Greece",
+    serviceType: "Luxury Yacht Charter",
+    description:
+      "Boutique luxury crewed yacht charter brokerage specialising " +
+      "exclusively in Greek waters — Cyclades, Ionian, Saronic Gulf, " +
+      "Sporades. Curated fleet of motor yachts, sailing yachts, and " +
+      "catamarans. Personal broker service via George P. Biniaris.",
+    provider: {
+      "@type": "Organization",
+      name: "George Yachts Brokerage House LLC",
+      url: "https://georgeyachts.com",
+      logo: "https://georgeyachts.com/images/george-yachts-logo.png",
+    },
+    areaServed: [
+      { "@type": "AdministrativeArea", name: "Cyclades, Greece" },
+      { "@type": "AdministrativeArea", name: "Ionian Islands, Greece" },
+      { "@type": "AdministrativeArea", name: "Saronic Gulf, Greece" },
+      { "@type": "AdministrativeArea", name: "Sporades, Greece" },
+      { "@type": "AdministrativeArea", name: "Dodecanese, Greece" },
+    ],
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "EUR",
+      lowPrice: low,
+      highPrice: high,
+      offerCount: yachts.length || 63,
+      availability: "https://schema.org/InStock",
+    },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Yacht charter fleet",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Private Fleet — full crew",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Explorer Fleet — skippered or lightly crewed",
+          },
+        },
+      ],
+    },
+    url: "https://georgeyachts.com/charter-yacht-greece",
+  };
+}
+
 export default async function CharterFleetPage() {
   let yachts = [];
   try {
@@ -97,6 +169,7 @@ export default async function CharterFleetPage() {
   }
 
   const jsonLdSchema = generateFleetSchema(yachts);
+  const serviceSchema = generateServiceSchema(yachts);
 
   return (
     <div
@@ -117,6 +190,14 @@ export default async function CharterFleetPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
+      />
+      {/* 2026-05-18 — Service schema (companion to the ItemList above).
+          ItemList lists the yachts; Service describes the bookable
+          service this page sells. Two scripts, no conflict — Google
+          merges multiple JSON-LD blocks on the same page. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
 
       {/* HERO — Chapter 01 (2026-05-08): Boss-curated catamaran video
