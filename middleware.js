@@ -33,6 +33,12 @@ const PUBLIC_PATHS = [
 const PUBLIC_PREFIXES = [
   "/cabin/icons/",
   "/api/cabin/auth/",        // request-link, verify, logout
+  // Admin routes called server-to-server from gy-command. They
+  // authenticate with the x-cabin-admin-secret header, not the
+  // gy_cabin_session cookie. Without this whitelist, the cookie
+  // gate above blocks them with "auth-required" before they reach
+  // the route handler that would have accepted the secret.
+  "/api/cabin/admin/",
 ];
 
 function isPublic(pathname) {
