@@ -23,6 +23,9 @@ import ScrollProgress from "./components/ScrollProgress";
 import SoundFx from "./components/SoundFx";
 import ScrollToTop from "./components/ScrollToTop";
 import WhatsAppButton from "./components/WhatsAppButton";
+// 2026-05-18 — PostHog provider (free 1M events/mo). Inert until
+// NEXT_PUBLIC_POSTHOG_KEY env var is set in Vercel.
+import PostHogProvider from "./components/PostHogProvider";
 import ContactDrawer from "./components/ContactDrawer";
 import VisitorGreeting from "./components/VisitorGreeting";
 import AmbientPlayer from "./components/AmbientPlayer";
@@ -294,6 +297,14 @@ export default async function RootLayout({ children }) {
             opens the TLS connection during HTML parse and shaves
             150-300 ms off the first Sanity image fetch. */}
         <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+        {/* 2026-05-18 — Pexels + Unsplash are whitelisted as next/image
+            remotePatterns for destination + island stock photography
+            (per next.config.mjs). The yacht-itineraries + greece-by-yacht
+            + destinations/[region] pages fetch from them. Preconnect
+            mirrors the cdn.sanity.io treatment: open TLS during HTML
+            parse so the first image fetch starts immediately. */}
+        <link rel="preconnect" href="https://images.pexels.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
         {/* 2026-05-14 — Ahrefs flagged 459 pages "Page has broken CSS".
             Root cause: the fontshare /v2/css endpoint returns 500 for
             ANY italic variant (400i / 500i / etc) — confirmed by
@@ -409,6 +420,7 @@ export default async function RootLayout({ children }) {
         {/* A4 — Ambient scroll parallax driver (publishes CSS vars) */}
         <AmbientScroll />
         {/* 2. Page Content */}
+        <PostHogProvider>
         <I18nProvider>
         <WishlistProvider>
         <CurrencyProvider>
@@ -473,6 +485,7 @@ export default async function RootLayout({ children }) {
         </CurrencyProvider>
         </WishlistProvider>
         </I18nProvider>
+        </PostHogProvider>
 
         {/* Visitor Intelligence: real-time tracking + hot lead popup */}
         <VisitorIntelligence />
