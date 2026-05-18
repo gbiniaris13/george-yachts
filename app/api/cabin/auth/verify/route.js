@@ -47,6 +47,11 @@ export async function GET(req) {
   const { token: sessionToken } = await createSession({
     email: otp.email,
     memberships,
+    // The CRM may have pinned a specific cabin when it sent the
+    // invite (e.g. George opened cabin X's detail page → "Send
+    // invite"). Honour the pin so the recipient lands on that
+    // cabin, not whatever sorts first.
+    activeCabinId: otp.target_cabin_id || null,
   });
 
   // Stamp last_login_at on each membership

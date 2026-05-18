@@ -37,6 +37,10 @@ export async function POST(req) {
   const email = String(body?.email ?? "")
     .trim()
     .toLowerCase();
+  // Optional: the CRM passes this when sending an invite from a
+  // specific cabin's detail page, so the magic link pins that
+  // cabin as active. Validated below against actual memberships.
+  const targetCabinId = body?.cabin_id ? String(body.cabin_id).trim() : null;
 
   if (!email || !email.includes("@")) {
     return NextResponse.json({ ok: false }, { status: 400 });
@@ -57,15 +61,27 @@ export async function POST(req) {
     return NextResponse.json({ ok: true });
   }
 
-  // Pick the most-immediate cabin to message about (active first,
-  // then upcoming, then most-recent).
+  // Pick the cabin to message about. If the CRM specified a
+  // targetCabinId AND the email is actually a member of that
+  // cabin, use it. Otherwise fall back to the heuristic
+  // (active → invited → first sorted = most upcoming).
+  const targeted =
+    targetCabinId
+      ? memberships.find((m) => m.cabin_id === targetCabinId)
+      : null;
   const primary =
+    targeted ??
     memberships.find((m) => m.cabin?.status === "active") ??
     memberships.find((m) => m.cabin?.status === "invited") ??
     memberships[0];
 
+  // Only carry the pin through the OTP if it actually resolved to
+  // a real membership. Otherwise the verify route will silently
+  // drop it anyway, but we'd rather not write garbage to KV.
+  const pinnedCabinId = targeted ? targetCabinId : null;
+
   try {
-    const otp = await createMagicLinkOtp(email);
+    const otp = await createMagicLinkOtp(email, pinnedCabinId);
     const origin = publicOrigin(req);
     const link = `${origin}/api/cabin/auth/verify?token=${encodeURIComponent(
       otp
