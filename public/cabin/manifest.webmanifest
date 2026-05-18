@@ -1,0 +1,25 @@
+{
+  "name": "The Cabin · George Yachts",
+  "short_name": "The Cabin",
+  "description": "Your private space at George Yachts. Filotimo · Φιλότιμο.",
+  "start_url": "/cabin",
+  "scope": "/cabin",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0D1B2A",
+  "theme_color": "#0D1B2A",
+  "icons": [
+    {
+      "src": "/cabin/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/cabin/icons/icon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

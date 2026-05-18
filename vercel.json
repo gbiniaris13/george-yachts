@@ -71,6 +71,14 @@
     {
       "path": "/api/cron/content-pipeline",
       "schedule": "0 8 * * 1"
+    },
+    {
+      "path": "/api/cron/cabin-memory-anchors",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/cabin-time-capsules",
+      "schedule": "0 5 * * *"
     }
   ],
   "headers": [

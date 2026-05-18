@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- The Cabin · Filotimo — app icon. Deep navy square,
+       antique-gold compass rose, all vector. Free, no
+       external assets, scales to any size. -->
+  <rect width="512" height="512" fill="#0D1B2A"/>
+  <!-- outer ring -->
+  <circle cx="256" cy="256" r="172" fill="none" stroke="#C9A84C" stroke-width="2.5" opacity="0.55"/>
+  <!-- inner ring -->
+  <circle cx="256" cy="256" r="124" fill="none" stroke="#C9A84C" stroke-width="2" opacity="0.4"/>
+  <!-- 4-point compass star (N/S/E/W primary, NE/SE/SW/NW shorter) -->
+  <g fill="#C9A84C">
+    <!-- N -->
+    <polygon points="256,68 264,256 256,232 248,256" opacity="0.95"/>
+    <!-- S -->
+    <polygon points="256,444 264,256 256,280 248,256" opacity="0.6"/>
+    <!-- E -->
+    <polygon points="444,256 256,264 280,256 256,248" opacity="0.7"/>
+    <!-- W -->
+    <polygon points="68,256 256,264 232,256 256,248" opacity="0.7"/>
+  </g>
+  <!-- secondary 45° rays -->
+  <g fill="#C9A84C" opacity="0.35">
+    <polygon points="392,120 268,244 256,256 260,244"/>
+    <polygon points="392,392 268,268 256,256 260,268"/>
+    <polygon points="120,392 244,268 256,256 252,268"/>
+    <polygon points="120,120 244,244 256,256 252,244"/>
+  </g>
+  <!-- centre disc -->
+  <circle cx="256" cy="256" r="11" fill="#F8F5F0"/>
+  <!-- tiny ivory label arc replaced by clean monogram at bottom -->
+  <text x="256" y="486" text-anchor="middle"
+        font-family="Georgia, serif" font-size="22" fill="#C9A84C" font-style="italic">
+    Filotimo
+  </text>
+</svg>

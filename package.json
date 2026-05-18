@@ -8,12 +8,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@next/third-parties": "^16.0.3",
     "@portabletext/react": "^6.0.2",
     "@react-pdf/renderer": "^4.5.1",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
     "@sanity/client": "^7.12.0",
+    "@supabase/ssr": "^0.10.3",
+    "@supabase/supabase-js": "^2.105.4",
     "axios": "^1.12.2",
     "critters": "^0.0.23",
     "d3-geo": "^3.1.1",
@@ -27,10 +30,12 @@
     "react-dom": "19.1.0",
     "react-fast-marquee": "^1.6.5",
     "react-google-recaptcha": "^3.1.0",
+    "react-hook-form": "^7.76.0",
     "swiper": "^12.0.3",
     "three": "^0.184.0",
     "topojson-client": "^3.1.0",
-    "yet-another-react-lightbox": "^3.28.0"
+    "yet-another-react-lightbox": "^3.28.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
