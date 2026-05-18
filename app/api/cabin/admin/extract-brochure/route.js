@@ -103,13 +103,17 @@ Rules:
 • Output ONLY the JSON.`,
 
   vessel: `You are extracting a VESSEL BROCHURE for a charter yacht.
+The placeholders below are EXAMPLES showing the data type — DO NOT
+copy the example strings into your output. Extract the real values
+from the PDF, or use null when the PDF does not contain that field.
+
 Output strict JSON with this exact shape:
 {
-  "vessel_name": "Effie Star",
-  "type_line": "Sailing Catamaran",
-  "builder_model": "Lagoon 51",
-  "year_built": 2025,
-  "summary": "Full intro paragraph from 'The Yacht' page, preserved verbatim.",
+  "vessel_name": "<the actual yacht name from the cover or 'THE YACHT' page>",
+  "type_line": "<e.g. Sailing Catamaran, Motor Yacht, Sailing Yacht — from the brochure cover>",
+  "builder_model": "<e.g. Lagoon 51, Sunseeker 76>",
+  "year_built": <integer year or null>,
+  "summary": "<paste the actual intro paragraph from the brochure's 'THE YACHT' or main intro page — the real prose, verbatim. NOT the words 'Full intro paragraph from the Yacht page'.>",
   "key_features": ["Brand new built in 2025", "Accommodates up to 10 guests in 5 cabins", "Spacious flybridge with panoramic views"],
   "specifications": {
     "length_m": 15.6,
