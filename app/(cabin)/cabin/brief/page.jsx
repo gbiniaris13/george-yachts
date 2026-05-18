@@ -16,57 +16,57 @@ const SECTION_META = [
   {
     key: "arrival",
     title: "Arrival & Departure",
-    intro: "How and when you reach us — flights, hotels, transfers.",
-    minutes: 3,
+    intro: "Flights, hotels, transfers — and a word on your sailing experience.",
+    minutes: 4,
   },
   {
     key: "guests",
     title: "Your Group",
-    intro: "Anything the crew should know about who is sailing.",
-    minutes: 2,
+    intro: "Who is sailing, the kind of week this is, the spirit of it all.",
+    minutes: 5,
   },
   {
     key: "health",
     title: "Health & Safety",
     intro: "Allergies, conditions, the emergency contact ashore.",
-    minutes: 3,
+    minutes: 4,
     importance: "high",
   },
   {
     key: "itinerary",
     title: "Your Itinerary",
-    intro: "Where you would like to go, your preferred pace.",
-    minutes: 2,
+    intro: "Pace, docking style, activities, anything to celebrate.",
+    minutes: 4,
   },
   {
     key: "life_aboard",
     title: "Life Aboard",
-    intro: "Activities, music, the texture of the days.",
-    minutes: 3,
+    intro: "Activities, music, wellness, the texture of the days.",
+    minutes: 5,
   },
   {
     key: "dining",
     title: "At the Table",
-    intro: "What your group loves and what to avoid.",
-    minutes: 4,
+    intro: "How you eat — breakfast detail, food matrix, snacks, kids.",
+    minutes: 8,
   },
   {
     key: "beverages",
     title: "In the Cellar",
-    intro: "Water, wine, spirits, the cocktails the hostess should know.",
-    minutes: 3,
+    intro: "Water, soft drinks, wines, spirits, beers, cocktails.",
+    minutes: 8,
   },
   {
     key: "little_things",
     title: "The Little Things",
-    intro: "Anything we haven't asked. The most filotimo page.",
-    minutes: 3,
+    intro: "Photography, night service, anything we haven't asked.",
+    minutes: 4,
   },
   {
     key: "children",
     title: "If You're Sailing with Children",
     intro: "Ages, naps, the snacks that travel well.",
-    minutes: 2,
+    minutes: 3,
     onlyIfMinors: true,
   },
 ];
@@ -115,20 +115,24 @@ export default async function CabinBriefOverviewPage() {
       <header className="cabin-brief__head">
         <div className="cabin-brief__eyebrow">The Charter Brief</div>
         <h1 className="cabin-brief__title">
-          A quiet conversation, <em>fifteen minutes.</em>
+          A quiet conversation, <em>an unhurried half hour.</em>
         </h1>
         <div className="cabin-brief__rule" aria-hidden />
         <IntroParagraph>
-          Eight gentle sections. Every blank is optional. Leave what
-          does not apply. Fields marked with a small gold dot are the
-          only ones we truly need.
+          Eight gentle sections. Every blank is optional — leave what
+          does not apply. Only your name and email are truly required.
+          Save as you go; come back days, weeks, or months later. The
+          more you share, the more thoughtfully your week can be
+          designed. You won&apos;t have to repeat yourself to the crew,
+          the chef, the hostess or the captain — they all read from
+          here.
         </IntroParagraph>
         <p className="cabin-brief__time">
           Around <strong>{remainingMinutes || totalMinutes} minutes</strong>{" "}
           remaining
           {remainingMinutes !== totalMinutes
             ? " — pick up from where you left off."
-            : "."}
+            : ", in your own time."}
         </p>
       </header>
 
