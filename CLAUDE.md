@@ -179,6 +179,46 @@ app/newsletter/                     public 4-stream signup landing
 app/admin/newsletter-add/           orphan public admin (deprecated; use CRM)
 ```
 
+## Development discipline — every contributor, every push
+
+George finalised this working agreement on 2026-05-18 after a Vercel
+build-minute overage. The overage was a one-time mistake (live
+debugging on Vercel instead of local), not a structural cost. These
+rules stop it from happening again:
+
+1. **Local-first, always.** ALL coding and verification happens
+   locally before any push. `npm run build` clean + `npm run start`
+   smoke-tested locally is the gate, not Vercel preview URLs.
+2. **Push only when you'd ship.** A push to a feature branch should
+   represent a checkpoint that's ready for review, not a "let me see
+   if this works" experiment. Target: **max 2-3 preview builds per
+   feature branch.** If you find yourself at 4+, stop and finish
+   locally first.
+3. **Use `[skip ci]` for trivial commits.** Docs-only edits, typo
+   fixes, comment changes, CLAUDE.md updates — all should carry
+   `[skip ci]` or `[skip vercel]` in the commit message. The Vercel
+   "Ignored Build Step" script auto-skips them; the explicit tag
+   makes intent legible in git history.
+4. **One deploy per feature when possible.** Squash-merge feature
+   branches into main as a single commit. Each main-branch push
+   triggers a production build — pay for the final state, not the
+   iteration.
+5. **Concurrent builds setting is "Run up to one build per branch."**
+   Rapid same-branch pushes queue instead of running in parallel
+   (which was billing premium per-minute rates). If you push 3
+   commits in a row, only the latest finishes building immediately;
+   earlier ones are cancelled or run sequentially.
+
+## Budget — locked
+
+Recurring monthly cost is **Claude Max + Vercel Pro + Google
+Workspace**. Anything else is either free-tier (cancel before any
+charge if it's a trial) or has to clear the 100× ROI rule (one €10
+spend has to drive €1,000 of attributable revenue or it doesn't
+ship). The Vercel build overage in May 2026 was a one-time mistake
+from live-debugging on the platform; the discipline rules above
+prevent recurrence.
+
 ## Don't
 
 - Don't drop or rename `subscribers:*` KV keys without coordinating
@@ -189,3 +229,6 @@ app/admin/newsletter-add/           orphan public admin (deprecated; use CRM)
 - Don't post to The Compass any content type that the §6 matrix
   marks `never` — broker peers receiving offer/announcement copy
   is a commission-protection violation.
+- Don't push debug/experiment commits to `claude/*` branches just to
+  see Vercel preview output. That habit cost us $85.61 in build
+  overage in 16 days. Build and run locally first.
