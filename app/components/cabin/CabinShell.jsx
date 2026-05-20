@@ -76,7 +76,7 @@ function formatDateRange(from, to) {
   return `${fmt(from)} – ${fmt(to)}`;
 }
 
-export default function CabinShell({ session, cabin, children }) {
+export default function CabinShell({ session, cabin, viewerDisplayName, children }) {
   const pathname = usePathname() || "";
 
   // 2026-05-20 — Friend-test pass 3 (George): the hamburger drawer
@@ -86,8 +86,14 @@ export default function CabinShell({ session, cabin, children }) {
   // stays (5 anchor items: Home, Brief, Chat, Before, Guests).
   // Sign-out moved to a small footer link on /cabin.
 
-  const principalName =
-    cabin?.principal_charterer_name ||
+  // 2026-05-20 — Pass 6 (Domingo): header chip now shows the
+  // VIEWER's name (from their cabin_members.display_name passed
+  // through the layout), falling back to the email local-part.
+  // It does NOT show the principal_charterer_name when an invited
+  // guest is logged in — that misled guests into thinking they
+  // were inside someone else's account.
+  const viewerName =
+    viewerDisplayName ||
     session?.email?.split("@")[0] ||
     "guest";
 
@@ -128,7 +134,7 @@ export default function CabinShell({ session, cabin, children }) {
           </Link>
           <div className="cabin-shell__charter">
             <span className="cabin-shell__charter-name">
-              {principalName}
+              {viewerName}
             </span>
             {cabin?.vessel_name && (
               <span className="cabin-shell__charter-meta">

@@ -36,6 +36,13 @@ function fmtDateTime(iso) {
   });
 }
 
+// 2026-05-20 — Pass 6 (Sarah): tier casing inconsistency ("friend"
+// vs "Friend" across pages). Display always capitalised.
+function titleCase(s) {
+  if (!s) return "";
+  return String(s).split(/\s+/).map((w) => w[0]?.toUpperCase() + w.slice(1).toLowerCase()).join(" ");
+}
+
 export default function YourDataPage() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -133,15 +140,31 @@ export default function YourDataPage() {
             </ul>
           </section>
 
+          {/* 2026-05-20 — Pass 6 (Sarah, David, Helen): "Tier:
+              friend" displayed on this page before any voyage has
+              happened reads as fake-bestowed loyalty. The tier +
+              "Member since" rows are now hidden until at least one
+              voyage is on record. The personal fields (DOB,
+              anniversary, hometown) stay — those are the user's own
+              data they consented to. */}
           {data.circle && (
             <section className="yd-block">
               <h2>What the Filotimo Circle knows</h2>
               <dl>
-                <Row label="Member since">
-                  {new Date(data.circle.joined_at).toLocaleDateString("en-GB", { year: "numeric" })}
-                </Row>
-                <Row label="Tier">{data.circle.tier}</Row>
-                <Row label="Voyages with us">{data.circle.voyages_count ?? 0}</Row>
+                {(data.circle.voyages_count ?? 0) >= 1 && (
+                  <>
+                    <Row label="Member since">
+                      {new Date(data.circle.joined_at).toLocaleDateString("en-GB", { year: "numeric" })}
+                    </Row>
+                    <Row label="Tier">{titleCase(data.circle.tier)}</Row>
+                    <Row label="Voyages with us">{data.circle.voyages_count}</Row>
+                  </>
+                )}
+                {(data.circle.voyages_count ?? 0) === 0 && (
+                  <Row label="Voyages with us">
+                    <em>None yet — your circle begins this charter.</em>
+                  </Row>
+                )}
                 <Row label="Date of birth">{fmtDate(data.circle.date_of_birth) || <em>—</em>}</Row>
                 <Row label="Anniversary">{fmtDate(data.circle.anniversary_date) || <em>—</em>}</Row>
                 <Row label="Hometown">{data.circle.hometown || <em>—</em>}</Row>

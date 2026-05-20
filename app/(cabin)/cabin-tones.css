@@ -20,26 +20,88 @@
  * already sets, so this never leaks to the marketing site.
  * ============================================================ */
 
-[data-cabin-mode] .cabin-home__eyebrow,
-[data-cabin-mode] .cabin-home__section-label,
-[data-cabin-mode] .cabin-brief__eyebrow,
-[data-cabin-mode] .brief-subhead,
-[data-cabin-mode] .brief-subhead-sm,
-[data-cabin-mode] .smp__eyebrow,
-[data-cabin-mode] .smp__section-name,
-[data-cabin-mode] .gy-install__eyebrow,
-[data-cabin-mode] .install-eyebrow,
-[data-cabin-mode] .guests-section,
-[data-cabin-mode] .wlc-field > span,
-[data-cabin-mode] .me-subhead,
-[data-cabin-mode] .me-field > span,
-[data-cabin-mode] .me-fieldset > legend,
-[data-cabin-mode] .brief-label,
-[data-cabin-mode] .brief-matrix legend,
-[data-cabin-mode] .brief-freq legend,
-[data-cabin-mode] .brief-freq-row .brief-freq-item {
-  color: rgba(13, 27, 42, 0.88) !important;
+/* 2026-05-20 — Pass 6 (Domingo + every persona on the second run):
+ *   "Half the kicker labels are invisible. 'A GREEK WORD FOR TODAY',
+ *    'YOUR FIRST STEP', 'CHARTER PERIOD', 'PRINCIPAL CHARTERER',
+ *    'WHAT WE MAY CONTACT YOU ABOUT' — all cream-on-cream. Inspect
+ *    Element confirms color: rgb(248, 245, 240) on
+ *    rgb(248, 245, 240)."
+ *
+ * Root cause investigation: the override below was scoped via
+ * [data-cabin-mode] .class which has specificity 0,1,1. Some
+ * pages' inline <style> blocks live INSIDE elements and have
+ * the same specificity but render later in the cascade — winning
+ * the resolution with their original gold or var() that doesn't
+ * exist (resolves to inherit → cream).
+ *
+ * Fix:
+ *   1. Use a higher-specificity selector via the [data-cabin-mode]
+ *      ancestor + an attribute selector on body to force CSS to
+ *      resolve our override last.
+ *   2. Use a flat #1f2937 (navy at ~88% darkness on cream) — no
+ *      alpha math, no var(), no chance of resolving to cream.
+ *   3. Expand the selector list to every label / kicker we render
+ *      (gwotd__eyebrow was missing — that's the Greek word block).
+ */
+html body [data-cabin-mode] .cabin-home__eyebrow,
+html body [data-cabin-mode] .cabin-home__section-label,
+html body [data-cabin-mode] .cabin-brief__eyebrow,
+html body [data-cabin-mode] .brief-subhead,
+html body [data-cabin-mode] .brief-subhead-sm,
+html body [data-cabin-mode] .smp__eyebrow,
+html body [data-cabin-mode] .smp__section-name,
+html body [data-cabin-mode] .gy-install__eyebrow,
+html body [data-cabin-mode] .install-eyebrow,
+html body [data-cabin-mode] .guests-section,
+html body [data-cabin-mode] .wlc-field > span,
+html body [data-cabin-mode] .me-subhead,
+html body [data-cabin-mode] .me-field > span,
+html body [data-cabin-mode] .me-fieldset > legend,
+html body [data-cabin-mode] .brief-label,
+html body [data-cabin-mode] .brief-matrix legend,
+html body [data-cabin-mode] .brief-freq legend,
+html body [data-cabin-mode] .brief-freq-row .brief-freq-item,
+html body [data-cabin-mode] .gwotd__eyebrow,
+html body [data-cabin-mode] .voyage-carousel__eyebrow,
+html body [data-cabin-mode] .smp__toggle .smp__eyebrow,
+html body [data-cabin-mode] .bys-label,
+html body [data-cabin-mode] .bys-region__head em,
+html body [data-cabin-mode] .yd-block h2,
+html body [data-cabin-mode] .filotimo__status-label,
+html body [data-cabin-mode] .guests-list__head em,
+html body [data-cabin-mode] .crew-card__role,
+html body [data-cabin-mode] .vs-hero__kicker,
+html body [data-cabin-mode] .install-card .install-eyebrow,
+html body [data-cabin-mode] .chat-card__role {
+  color: #1f2937 !important;
   font-weight: 600 !important;
+}
+
+/* Pass 6: FieldLabel base styles lifted out of the per-component
+   inline <style> (which was nested inside <label> and leaking its
+   source into textContent on iOS Safari + a11y trees). */
+[data-cabin-mode] .brief-label {
+  display: block;
+  font-family: var(--gy-font-ui);
+  font-size: 11.5px;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+[data-cabin-mode] .brief-label > span {
+  display: inline-block;
+}
+[data-cabin-mode] .brief-label em {
+  display: block;
+  font-style: italic;
+  font-family: var(--gy-font-editorial);
+  font-size: 12.5px;
+  color: rgba(13, 27, 42, 0.5);
+  letter-spacing: 0;
+  text-transform: none;
+  margin-top: 4px;
+  font-weight: 400;
 }
 
 /* Bump tracked-label readability across the board: 10px is too

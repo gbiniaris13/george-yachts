@@ -279,10 +279,14 @@ const COLUMN_BY_KIND = {
 // the extraction onto these flat columns. Any field NOT in this
 // allowlist is dropped (we never silently widen the contract's
 // influence over the cabin record).
+//
+// Note: `homeport` is intentionally NOT mapped from contract.homeport
+// (which is the legal Port of Registry, often unrelated to where
+// the charter actually departs). We instead derive it from the
+// embarkation port in the persistence block below.
 const CONTRACT_SAFE_TO_COLUMN = {
   vessel_name: "vessel_name",
   vessel_make_model: "vessel_make_model",
-  homeport: "homeport",
   charter_period_from: "charter_period_from",
   charter_period_to: "charter_period_to",
   port_embarkation: "port_embarkation",
@@ -410,6 +414,23 @@ export async function POST(req) {
       update.vessel_length = `${safe.vessel_length_ft} ft`;
     } else if (safe.vessel_length_m != null) {
       update.vessel_length = `${safe.vessel_length_m} m`;
+    }
+
+    // 2026-05-20 — Pass 6 (George): "λέει Πειραιάς, αλλά το port
+    // δεν είναι Πειραιάς — παίρνει embarkation/disembarkation από
+    // το συμβόλαιο αλλά στο port [homeport] δεν το παίρνει — πρέπει
+    // να είναι το ίδιο."
+    // The MYBA "Port of Registry" is a legal flag-state property
+    // unrelated to where the charter departs (often different
+    // entirely). For customer-facing display, what they want to
+    // see is where they BOARD. Derive homeport from the embarkation
+    // port the contract just gave us.
+    if (typeof safe.port_embarkation === "string" && safe.port_embarkation.trim().length > 0) {
+      update.homeport = safe.port_embarkation.trim();
+    } else if (typeof safe.homeport === "string" && safe.homeport.trim().length > 0) {
+      // Fall back to the Port of Registry only if no embarkation
+      // was given.
+      update.homeport = safe.homeport.trim();
     }
     // Capacity — prefer "sleeping" (the binding number for
     // accommodation); fall back to cruising.

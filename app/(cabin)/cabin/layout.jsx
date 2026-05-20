@@ -15,7 +15,7 @@
 // pathname ends with "/cabin/login").
 // =============================================================
 
-import { readSessionFromCookies, pickActiveCabinId } from "@/lib/cabin/auth";
+import { readSessionFromCookies, pickActiveCabinId, resolveMembership } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import CabinShell from "../../components/cabin/CabinShell";
 
@@ -33,16 +33,45 @@ async function fetchCabinForHeader(cabinId) {
   );
 }
 
+// 2026-05-20 — Friend-test pass 6 (Domingo):
+//   "The header chip on every page shows the principal's name,
+//    even when I'm logged in as an invited guest. For Tricia
+//    herself looks fine; for any guest she invites it's going to
+//    look like the page belongs to Tricia and they're an intruder."
+//
+// Fix: fetch the VIEWER's own display_name from cabin_members
+// using the membership's member_id. Pass as a prop so CabinShell
+// renders the viewer's identity, not the principal's.
+async function fetchViewerDisplayName(memberId) {
+  if (!memberId) return null;
+  const db = getCabinDb();
+  const row = await dbQuery(
+    db
+      .from("cabin_members")
+      .select("display_name")
+      .eq("id", memberId)
+      .maybeSingle()
+  );
+  return row?.display_name ?? null;
+}
+
 export default async function CabinLayout({ children }) {
   let session = null;
   let cabin = null;
+  let viewerDisplayName = null;
 
   try {
     session = await readSessionFromCookies();
     if (session) {
       const activeCabinId = pickActiveCabinId(session);
       if (activeCabinId) {
-        cabin = await fetchCabinForHeader(activeCabinId);
+        const membership = resolveMembership(session, activeCabinId);
+        const [c, name] = await Promise.all([
+          fetchCabinForHeader(activeCabinId),
+          fetchViewerDisplayName(membership?.member_id),
+        ]);
+        cabin = c;
+        viewerDisplayName = name;
       }
     }
   } catch (err) {
@@ -53,7 +82,11 @@ export default async function CabinLayout({ children }) {
   }
 
   return (
-    <CabinShell session={session} cabin={cabin}>
+    <CabinShell
+      session={session}
+      cabin={cabin}
+      viewerDisplayName={viewerDisplayName}
+    >
       {children}
     </CabinShell>
   );

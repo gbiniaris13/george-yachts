@@ -25,38 +25,27 @@ export function RequiredDot() {
 
 // =================== Label =================================
 function FieldLabel({ children, required, htmlFor, hint }) {
+  // 2026-05-20 — Friend-test pass 6 (Tyler, Sarah):
+  //   "On /cabin/brief/arrival, the labels above the date / time /
+  //    flight-number / departure-city inputs don't render at all.
+  //    DOM inspection shows the labels' textContent contains the
+  //    literal CSS block as a string: 'When you land in Greece
+  //    .brief-label { display: block; font-fa…'."
+  //
+  // Root cause: this component rendered a <style> block AS A CHILD
+  // of the <label> element. In iOS Safari and a couple of
+  // accessibility readers, a <style> nested inside other elements
+  // sometimes leaks its source into textContent. The CSS was also
+  // duplicated 10–20× per page (once per FieldLabel instance).
+  //
+  // Fix: <style> rules are now in cabin-tones.css alongside the
+  // other label / kicker overrides. <label> renders nothing but
+  // semantic content.
   return (
     <label htmlFor={htmlFor} className="brief-label">
       {required && <RequiredDot />}
       <span>{children}</span>
       {hint && <em>{hint}</em>}
-      <style>{`
-        .brief-label {
-          display: block;
-          font-family: var(--gy-font-ui);
-          /* Bumped from 10px → 11.5px and opacity from 0.55 → 0.78.
-             At 10px uppercase + tracked, the labels read as decorative
-             rules rather than "this is what to type here." George
-             reported empty Music/Emergency-contact fields because
-             the labels were invisible to anyone over 40 years old. */
-          font-size: 11.5px;
-          letter-spacing: 2.2px;
-          text-transform: uppercase;
-          color: rgba(13, 27, 42, 0.78);
-          margin-bottom: 8px;
-          font-weight: 500;
-        }
-        .brief-label em {
-          display: block;
-          font-style: italic;
-          font-family: var(--gy-font-editorial);
-          font-size: 12.5px;
-          color: rgba(13, 27, 42, 0.5);
-          letter-spacing: 0;
-          text-transform: none;
-          margin-top: 4px;
-        }
-      `}</style>
     </label>
   );
 }
