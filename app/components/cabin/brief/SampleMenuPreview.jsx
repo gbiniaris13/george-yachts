@@ -17,6 +17,89 @@
 
 import { useEffect, useState } from "react";
 
+// 2026-05-20 — Friend-test pass 4 (Helen 60F + David 50M):
+//   Helen: "Sample Menu reads like a banquet hall — Title Case
+//    everywhere. A real menu is sentence-case: 'Filet mignon,
+//    grilled summer vegetables, smoked salt.'"
+//   Helen: "'Nutella' between 'Marmalade, Honey & Jams' cheapens
+//    the rest. Either remove or rename 'chocolate-hazelnut spread'."
+//   David: "Greek menu items — Moussaka, Galaktoboureko, Pastitsio,
+//    Barbouni — have no English explanations. I can't pronounce
+//    them in front of my wife."
+//
+// Pure display transforms — leave the stored data unchanged so
+// George's existing menu uploads keep working. We:
+//   1. Normalise excessive Title Case to sentence-case (only when
+//      the dish is in pure Title Case, never when the writer chose
+//      a mix).
+//   2. Rename "Nutella" → "Chocolate-hazelnut spread".
+//   3. Append a tiny "(English: …)" gloss for known Greek dishes.
+const GREEK_DISH_GLOSSES = {
+  moussaka: "layered eggplant, lamb, béchamel",
+  galaktoboureko: "sweet semolina custard in syrup",
+  pastitsio: "baked pasta with béchamel + meat sauce",
+  baklava: "filo pastry with nuts + honey",
+  barbouni: "red mullet, pan-fried",
+  loukoumades: "fried dough drizzled with honey",
+  spanakopita: "spinach + feta in filo",
+  tzatziki: "yoghurt, cucumber, garlic dip",
+  taramosalata: "fish-roe dip",
+  saganaki: "pan-seared cheese",
+  bougatsa: "custard or cheese in filo",
+  yiouvetsi: "lamb + orzo, baked",
+  kleftiko: "slow-cooked lamb",
+  fasolada: "white-bean soup",
+  horiatiki: "Greek salad",
+  dolmades: "stuffed vine leaves",
+  souvlaki: "grilled meat skewers",
+  gyros: "spit-roasted meat in pita",
+  feta: "brined sheep-milk cheese",
+  graviera: "hard sheep-milk cheese",
+};
+
+function isPureTitleCase(s) {
+  // True if every word in the string begins with an uppercase letter.
+  // Numbers / single-letter words are ignored.
+  const words = String(s).trim().split(/\s+/).filter((w) => /[a-zA-Z]/.test(w));
+  if (words.length < 2) return false;
+  return words.every((w) => /^[A-Z]/.test(w));
+}
+
+function toSentenceCase(s) {
+  if (!s || typeof s !== "string") return s;
+  // Lowercase everything, then capitalise the first letter only.
+  const lower = s.toLowerCase();
+  return lower.charAt(0).toUpperCase() + lower.slice(1);
+}
+
+function renameBrands(s) {
+  if (!s) return s;
+  // Keep specific high-end labels (Krug, Sancerre, etc.) — only
+  // replace mass-market brand names that cheapen a thoughtful menu.
+  return s.replace(/\bnutella\b/gi, "chocolate-hazelnut spread");
+}
+
+function dishGloss(s) {
+  if (!s) return "";
+  // Look up the first Greek dish name we can find in the string.
+  const lower = String(s).toLowerCase();
+  for (const [key, gloss] of Object.entries(GREEK_DISH_GLOSSES)) {
+    // Word-boundary match (handles plural/possessive crudely).
+    if (new RegExp(`\\b${key}\\b`).test(lower)) {
+      return gloss;
+    }
+  }
+  return "";
+}
+
+function presentDish(raw) {
+  if (!raw) return { label: "", gloss: "" };
+  let label = String(raw).trim();
+  label = renameBrands(label);
+  if (isPureTitleCase(label)) label = toSentenceCase(label);
+  return { label, gloss: dishGloss(raw) };
+}
+
 export default function SampleMenuPreview() {
   const [menu, setMenu] = useState(null);
   const [loaded, setLoaded] = useState(false);
@@ -81,9 +164,19 @@ export default function SampleMenuPreview() {
                 <h4 className="smp__section-name">{s.name}</h4>
                 {s.dishes.length > 0 && (
                   <ul className="smp__dishes">
-                    {s.dishes.map((d, di) => (
-                      <li key={di}>{d}</li>
-                    ))}
+                    {s.dishes.map((d, di) => {
+                      const { label, gloss } = presentDish(d);
+                      return (
+                        <li key={di}>
+                          {label}
+                          {gloss && (
+                            <em className="smp__dish-gloss">
+                              {" "}— {gloss}
+                            </em>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 )}
               </div>
@@ -186,6 +279,11 @@ export default function SampleMenuPreview() {
           line-height: 1.55;
           color: var(--gy-navy);
           padding: 3px 0;
+        }
+        .smp__dish-gloss {
+          font-style: italic;
+          color: rgba(13, 27, 42, 0.55);
+          font-size: 12.5px;
         }
       `}</style>
     </section>

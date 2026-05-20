@@ -111,9 +111,16 @@ export default function DiningSectionPage() {
               ]}
             />
 
+            {/* 2026-05-20 — Friend-test pass 4 (Sarah):
+                "Milk — low fat / Milk — full fat as separate items.
+                 If I tick neither, do I get nothing? Default?"
+                Added a hint: tick none = whichever the chef prefers
+                (typically full fat for cooking + low fat for coffee
+                 carafe). Plus oat/almond options for completeness. */}
             <CheckboxGroup
               name="breakfast_items"
               label="Items to have available"
+              hint="If you don't tick anything in a row, the chef carries the boat's normal stock for that item."
               register={register}
               twoColumn
               options={[
@@ -130,6 +137,8 @@ export default function DiningSectionPage() {
                 { value: "cream_cheese",    label: "Cream cheese" },
                 { value: "milk_low_fat",    label: "Milk — low fat" },
                 { value: "milk_full_fat",   label: "Milk — full fat" },
+                { value: "milk_oat",        label: "Oat milk" },
+                { value: "milk_almond",     label: "Almond milk" },
                 { value: "yogurt_low_fat",  label: "Yoghurt — low fat" },
                 { value: "yogurt_full_fat", label: "Yoghurt — full fat" },
                 { value: "honey",           label: "Honey" },
@@ -214,10 +223,23 @@ export default function DiningSectionPage() {
 
             {/* ─────────── Food matrix ─────────── */}
             <h2 className="brief-subhead">Lunch & dinner — what your group enjoys</h2>
+            {/* 2026-05-20 — Friend-test pass 4 (Sarah):
+                "My husband loves shellfish; my son is allergic. If I
+                 check 'Dislike' my husband loses out; if I check 'Like'
+                 my son might die. The Health page captures the allergy,
+                 but the food matrix is the chef's working document —
+                 those two sources need to be wired together visibly."
+                Added a copy bridge: tick what the group EATS, not what
+                the chef will SERVE blanket. Allergies from Health +
+                from each guest's /cabin/me override. */}
             <p className="brief-note">
               <em>
                 The chef provisions and plans around this. Mark each as Like,
-                Dislike, or Indifferent — whatever you don&apos;t mark stays neutral.
+                Dislike, or Indifferent — whatever you don&apos;t mark stays
+                neutral. <strong>Allergies and intolerances always override
+                Like</strong>: anything flagged on Health & Safety or on a
+                guest&apos;s personal page is never served to that person,
+                even if the group&apos;s matrix says Like.
               </em>
             </p>
             <LikeDislikeMatrix
@@ -357,7 +379,7 @@ export default function DiningSectionPage() {
 
             <OpenTextarea
               label="A note to the chef"
-              hint="Favourite dishes from past travels, a meal you've always wanted to try in Greece, surprises you'd welcome."
+              hint="Favourite dishes from past travels, a meal you've always wanted to try in Greece, surprises you would welcome."
               name="chef_open_note"
               register={register}
               rows={4}

@@ -200,19 +200,32 @@ export default function BeveragesSectionPage() {
             />
 
             {/* ─────────── Spirits ─────────── */}
+            {/* 2026-05-20 — Friend-test pass 4 (David):
+                "Cellar page is a LOT. I'm going to lie and tick 'Sometimes'
+                 for everything to get through it."
+                Made the per-item frequency rows skippable: the wrapper is
+                a <details> that defaults to collapsed. If the user doesn't
+                open it, the hostess defaults to her own provisioning.
+                If they do open it, they can answer per item. */}
             <h2 className="brief-subhead">Spirits</h2>
             <p className="brief-note">
               <em>
-                The bar already carries the core categories. Mark how often
-                your group drinks each — the hostess provisions accordingly.
+                The bar already carries the core categories — gin, vodka,
+                whisky, rum, tequila, liqueurs. If your group has strong
+                preferences, set them per category below; otherwise leave
+                everything closed and the hostess provisions from her usual
+                stock.
               </em>
             </p>
-            <FrequencyPicker
-              name="spirits_frequency"
-              label=""
-              items={SPIRITS_ITEMS}
-              register={register}
-            />
+            <details className="brief-details">
+              <summary>Set per-spirit detail (optional)</summary>
+              <FrequencyPicker
+                name="spirits_frequency"
+                label=""
+                items={SPIRITS_ITEMS}
+                register={register}
+              />
+            </details>
             <OpenTextarea
               label="Specific labels you love (optional)"
               hint="Single malts, particular gins, dark rums — anything the hostess should hunt for at provisioning."
@@ -258,16 +271,20 @@ export default function BeveragesSectionPage() {
             <h2 className="brief-subhead">Soft drinks</h2>
             <p className="brief-note">
               <em>
-                Same idea — mark each as often, sometimes, rarely, or skip.
-                The hostess takes it from there.
+                The fridge stays stocked with water, tonic, cola, lemon-lime
+                and fresh juices as standard. Open the panel below only if
+                your group has clear preferences worth recording per item.
               </em>
             </p>
-            <FrequencyPicker
-              name="soft_drinks_frequency"
-              label=""
-              items={SOFT_DRINK_ITEMS}
-              register={register}
-            />
+            <details className="brief-details">
+              <summary>Set per-drink detail (optional)</summary>
+              <FrequencyPicker
+                name="soft_drinks_frequency"
+                label=""
+                items={SOFT_DRINK_ITEMS}
+                register={register}
+              />
+            </details>
             <OpenTextarea
               label="Specific brands (optional)"
               name="soft_drinks_brands"
@@ -322,6 +339,34 @@ export default function BeveragesSectionPage() {
           color: rgba(13, 27, 42, 0.65);
           margin: 0 0 14px 0;
           line-height: 1.6;
+        }
+        /* Pass 4: collapse heavy per-item frequency rows behind a
+           details/summary so David's "I'll lie and tick Sometimes"
+           failure mode doesn't happen. The hostess provisions from
+           house defaults if the user doesn't open the panel. */
+        .brief-details {
+          margin: 0 0 22px 0;
+          padding: 0;
+          border-top: 1px solid rgba(13,27,42,0.08);
+          border-bottom: 1px solid rgba(13,27,42,0.08);
+        }
+        .brief-details > summary {
+          cursor: pointer;
+          font-family: var(--gy-font-ui);
+          font-size: 11px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--gy-gold);
+          padding: 14px 0;
+          list-style: none;
+        }
+        .brief-details > summary::before {
+          content: "+ ";
+          color: var(--gy-gold);
+        }
+        .brief-details[open] > summary::before { content: "− "; }
+        .brief-details[open] {
+          padding: 0 0 14px 0;
         }
         .bev-extras-note {
           font-family: var(--gy-font-editorial);

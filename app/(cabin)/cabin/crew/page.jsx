@@ -85,9 +85,10 @@ export default async function CrewPage() {
       />
       <IntroParagraph>
         A small, hand-picked team will look after you and your guests at sea.
-        Their first names, the role each holds, a few quiet words about each.
-        The captain reads your preferences in your own voice — what follows
-        is their voice, in return.
+        Their first names, the role each holds, a few quiet words about each
+        — not a CV, more the kind of thing you&apos;d hear at a welcome
+        dinner. The captain reads your preferences in your own voice; what
+        follows is their voice, in return.
       </IntroParagraph>
 
       {crew.length === 0 ? (

@@ -349,7 +349,7 @@ export default async function CabinHomePage() {
           <Link href="/cabin/voyage-album" className="cabin-home__tile">
             <span className="cabin-home__tile-glyph" aria-hidden>▣</span>
             <strong>Voyage Album</strong>
-            <em>Your photos from the week. Yours forever.</em>
+            <em>Your photos from the week — download any time, zip on request.</em>
           </Link>
           <Link href="/cabin/time-capsule" className="cabin-home__tile">
             <span className="cabin-home__tile-glyph" aria-hidden>✉</span>

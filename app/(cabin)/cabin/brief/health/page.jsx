@@ -24,6 +24,32 @@ export default function HealthSectionPage() {
         it down.
       </IntroParagraph>
 
+      {/* 2026-05-20 — Friend-test pass 4 (Sarah, mother of 2):
+          "Allergies textarea for 5 people including 2 kids is asking
+           me to do data entry the system should do." We already have
+           per-guest data via /cabin/me — each invited guest fills
+           their own allergies + swimming + mobility. The crew list
+           PDF in GY Command aggregates. This section here is the
+           principal's group-level rollup for anything the chef should
+           know across the whole party. Make that explicit. */}
+      <p
+        className="brief-note"
+        style={{
+          background: "rgba(201,168,76,0.08)",
+          borderLeft: "2px solid var(--gy-gold)",
+          padding: "12px 14px",
+          marginBottom: 22,
+        }}
+      >
+        <em>
+          Each guest you invite to your Cabin fills their own allergies,
+          swimming and mobility on their personal page — the captain reads
+          those per-person. Use this page for anything <strong>across the
+          group</strong> the chef should know up-front, plus your emergency
+          contact ashore.
+        </em>
+      </p>
+
       <BriefFormShell
         sectionKey="health"
         prevSection={{ key: "guests", title: "Your Group" }}
@@ -32,8 +58,8 @@ export default function HealthSectionPage() {
         {({ register }) => (
           <>
             <OpenTextarea
-              label="Allergies, intolerances, dietary needs"
-              hint="List every allergy, food intolerance, religious or ethical restriction across your party. Note which guest each applies to."
+              label="Allergies and dietary notes across your group"
+              hint="Anything serious enough that the chef should know it before guests have filled their own pages. Per-guest detail comes from each guest's /cabin/me; this is the safety net."
               name="allergies_dietary"
               register={register}
               required
@@ -55,8 +81,8 @@ export default function HealthSectionPage() {
             />
             <RadioGroup
               name="swimming_experience"
-              label="Swimming experience"
-              hint="The captain plans water activities accordingly."
+              label="Swimming — group overview"
+              hint="Each guest also fills their own swimming comfort on their personal page. This radio is the captain's quick read for the whole group."
               register={register}
               options={[
                 { value: "all_strong", label: "All guests are strong swimmers" },

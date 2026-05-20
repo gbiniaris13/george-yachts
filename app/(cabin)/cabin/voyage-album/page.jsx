@@ -181,12 +181,28 @@ export default function VoyageAlbumPage() {
         title="Voyage"
         italic="album."
       />
+      {/* 2026-05-20 — Friend-test pass 4:
+          Sarah: "100 MB video limit is under 20 seconds of HD. Either
+           raise the limit or be honest."
+          Helen: "'Yours forever' is a marketing promise. My 1996 honeymoon
+           Pinterest is stuck in a defunct cloud. Be specific — ZIP download,
+           mailed USB, anything concrete."
+          Copy now: be honest about the size limit (~4 MB), explain the
+          full-resolution download path explicitly, and offer email for
+          longer videos. */}
       <IntroParagraph>
-        After your week at sea, this is where the photographs live — yours,
-        forever. Any member of your group can upload. Tap any photo to view
-        it large; full-resolution downloads are always available from your
-        Cabin. Short videos welcome too — up to one hundred megabytes each,
-        which covers most phone clips at HD quality.
+        After your week at sea, this is where the photographs live. Any
+        member of your group can upload. Tap any photo to view it large;
+        full-resolution originals can be downloaded individually from this
+        Cabin, or zipped on request — write to George and a single
+        download link arrives within a day. Short video clips welcome too
+        — up to about four megabytes each (a few seconds at HD), which
+        covers most quick moments. For longer films, email them directly
+        to{" "}
+        <a href="mailto:george@georgeyachts.com" style={{ color: "var(--gy-gold)" }}>
+          george@georgeyachts.com
+        </a>
+        {" "}and we add them on your behalf.
       </IntroParagraph>
 
       <div className="va-add">
