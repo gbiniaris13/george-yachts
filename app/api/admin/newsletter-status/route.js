@@ -27,14 +27,22 @@ const SUBSCRIBERS_SET = "newsletter:subscribers";
 // where competitors actively monitor each other, gate the entire
 // endpoint behind ?key=.
 //
-// Auth: ?key= with NEWSLETTER_UNSUB_SECRET or CRON_SECRET.
-// Without a matching key → 401.
+// Auth: ?key= with NEWSLETTER_PROXY_SECRET / NEWSLETTER_UNSUB_SECRET /
+// CRON_SECRET. Without a match → 401.
+//
+// 2026-05-20 — Accept NEWSLETTER_PROXY_SECRET so the CRM dashboard
+// (command.georgeyachts.com) can read status without sharing the
+// Telegram-unsubscribe secret. See newsletter-add-subscribers for
+// full rationale.
 export async function GET(request) {
   const url = new URL(request.url);
   const provided = url.searchParams.get("key");
-  const expected =
-    process.env.NEWSLETTER_UNSUB_SECRET || process.env.CRON_SECRET;
-  if (!expected || provided !== expected) {
+  const candidates = [
+    process.env.NEWSLETTER_PROXY_SECRET,
+    process.env.NEWSLETTER_UNSUB_SECRET,
+    process.env.CRON_SECRET,
+  ].filter(Boolean);
+  if (candidates.length === 0 || !candidates.includes(provided)) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
   const showFullEmails = true; // gated above

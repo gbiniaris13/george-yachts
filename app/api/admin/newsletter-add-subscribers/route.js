@@ -129,10 +129,18 @@ async function upsertProfile(email, stream, source) {
 }
 
 async function authOk(provided) {
+  // 2026-05-20 — Accept NEWSLETTER_PROXY_SECRET as well so the CRM
+  // (command.georgeyachts.com) can call this endpoint without
+  // re-using the Telegram-unsubscribe secret. NEWSLETTER_UNSUB_SECRET
+  // is marked Sensitive on Vercel and cannot be read back, which
+  // made cross-project copying impossible — splitting concerns fixes
+  // that.
   return (
     (process.env.CRON_SECRET && provided === process.env.CRON_SECRET) ||
     (process.env.NEWSLETTER_UNSUB_SECRET &&
-      provided === process.env.NEWSLETTER_UNSUB_SECRET)
+      provided === process.env.NEWSLETTER_UNSUB_SECRET) ||
+    (process.env.NEWSLETTER_PROXY_SECRET &&
+      provided === process.env.NEWSLETTER_PROXY_SECRET)
   );
 }
 

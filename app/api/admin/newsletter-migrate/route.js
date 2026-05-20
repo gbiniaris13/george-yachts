@@ -97,18 +97,22 @@ async function profileWriteIfMissing(email, source) {
 export async function GET(request) {
   const url = new URL(request.url);
   const provided = url.searchParams.get("key");
-  // Accept either CRON_SECRET (canonical) or NEWSLETTER_UNSUB_SECRET
-  // (for one-off bootstrap moves). Both are equally privileged for
-  // this idempotent migrator.
+  // Accept CRON_SECRET (canonical), NEWSLETTER_UNSUB_SECRET (legacy
+  // bootstrap), or NEWSLETTER_PROXY_SECRET (CRM dashboard call —
+  // added 2026-05-20). All three are equally privileged for this
+  // idempotent migrator.
   const okCron = process.env.CRON_SECRET && provided === process.env.CRON_SECRET;
   const okUnsub =
     process.env.NEWSLETTER_UNSUB_SECRET &&
     provided === process.env.NEWSLETTER_UNSUB_SECRET;
-  if (!okCron && !okUnsub) {
+  const okProxy =
+    process.env.NEWSLETTER_PROXY_SECRET &&
+    provided === process.env.NEWSLETTER_PROXY_SECRET;
+  if (!okCron && !okUnsub && !okProxy) {
     return NextResponse.json(
       {
         error:
-          "unauthorized — pass ?key=<CRON_SECRET or NEWSLETTER_UNSUB_SECRET>",
+          "unauthorized — pass ?key=<CRON_SECRET, NEWSLETTER_UNSUB_SECRET, or NEWSLETTER_PROXY_SECRET>",
       },
       { status: 401 },
     );

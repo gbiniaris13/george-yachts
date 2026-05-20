@@ -53,10 +53,15 @@ function maskEmail(e) {
 }
 
 function authOk(provided) {
+  // 2026-05-20 — Accept NEWSLETTER_PROXY_SECRET so the CRM proxy
+  // can call this. See newsletter-add-subscribers/route.js for
+  // the rationale.
   return (
     (process.env.CRON_SECRET && provided === process.env.CRON_SECRET) ||
     (process.env.NEWSLETTER_UNSUB_SECRET &&
-      provided === process.env.NEWSLETTER_UNSUB_SECRET)
+      provided === process.env.NEWSLETTER_UNSUB_SECRET) ||
+    (process.env.NEWSLETTER_PROXY_SECRET &&
+      provided === process.env.NEWSLETTER_PROXY_SECRET)
   );
 }
 

@@ -38,7 +38,11 @@ export async function GET(request) {
   const okUnsub =
     process.env.NEWSLETTER_UNSUB_SECRET &&
     provided === process.env.NEWSLETTER_UNSUB_SECRET;
-  if (!okCron && !okUnsub) {
+  // 2026-05-20 — Accept the CRM proxy secret too.
+  const okProxy =
+    process.env.NEWSLETTER_PROXY_SECRET &&
+    provided === process.env.NEWSLETTER_PROXY_SECRET;
+  if (!okCron && !okUnsub && !okProxy) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
