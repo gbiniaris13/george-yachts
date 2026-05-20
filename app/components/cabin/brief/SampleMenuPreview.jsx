@@ -20,7 +20,11 @@ import { useEffect, useState } from "react";
 export default function SampleMenuPreview() {
   const [menu, setMenu] = useState(null);
   const [loaded, setLoaded] = useState(false);
-  const [open, setOpen] = useState(false);
+  // 2026-05-20 — Friend-test pass 4 (George): "Καλό θα ήταν αυτό
+  // να ήταν πάντα ανοιχτό για να το διαβάσουν σίγουρα και μετά
+  // να πάνε από κάτω." Default open; collapse stays available
+  // via the toggle for guests who want to skip it.
+  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     let cancelled = false;

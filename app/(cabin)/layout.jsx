@@ -42,6 +42,9 @@ export const viewport = {
 };
 
 import CabinBodyClass from "../components/cabin/CabinBodyClass";
+// 2026-05-20 — Global readability override for the small uppercase
+// tracked labels across the cabin. See cabin-tones.css for the why.
+import "./cabin-tones.css";
 
 export default function CabinRouteGroupLayout({ children }) {
   return (

@@ -1,0 +1,100 @@
+/* app/(cabin)/cabin-tones.css
+ * ============================================================
+ * 2026-05-20 — Friend-test pass 4 (George):
+ *   "Όπου υπάρχει αυτό το χρώμα μέσα στην καμπίνα σε παρακαλώ να
+ *    το διορθώσεις και να φαίνονται τα πάντα. Δεν φαίνονται οι
+ *    τίτλοι είναι πολύ θολοί."
+ *
+ * The small-uppercase-tracked label tone in the Cabin used
+ * `var(--gy-gold)` (#C9A84C) for the kicker / section-label /
+ * eyebrow / subhead / matrix-head text. At 10px tracked uppercase
+ * on the ivory body, the contrast is too low for 20-80yr eyes.
+ *
+ * One global override here, rather than editing 20+ style-jsx
+ * blocks across cabin pages. We promote the LABEL tone to a deep
+ * navy at 0.88 opacity (still calm, no longer faded). The actual
+ * GOLD accents — links, rules, primary buttons, gold borders —
+ * keep their gold, because we only target the label class names.
+ *
+ * Scoped via the [data-cabin-mode] attribute the cabin layout
+ * already sets, so this never leaks to the marketing site.
+ * ============================================================ */
+
+[data-cabin-mode] .cabin-home__eyebrow,
+[data-cabin-mode] .cabin-home__section-label,
+[data-cabin-mode] .cabin-brief__eyebrow,
+[data-cabin-mode] .brief-subhead,
+[data-cabin-mode] .brief-subhead-sm,
+[data-cabin-mode] .smp__eyebrow,
+[data-cabin-mode] .smp__section-name,
+[data-cabin-mode] .gy-install__eyebrow,
+[data-cabin-mode] .install-eyebrow,
+[data-cabin-mode] .guests-section,
+[data-cabin-mode] .wlc-field > span,
+[data-cabin-mode] .me-subhead,
+[data-cabin-mode] .me-field > span,
+[data-cabin-mode] .me-fieldset > legend,
+[data-cabin-mode] .brief-label,
+[data-cabin-mode] .brief-matrix legend,
+[data-cabin-mode] .brief-freq legend,
+[data-cabin-mode] .brief-freq-row .brief-freq-item {
+  color: rgba(13, 27, 42, 0.88) !important;
+  font-weight: 600 !important;
+}
+
+/* Bump tracked-label readability across the board: 10px is too
+   small at the brand letter-spacing. 11px buys real legibility
+   without breaking the calm rhythm. */
+[data-cabin-mode] .cabin-home__eyebrow,
+[data-cabin-mode] .cabin-home__section-label,
+[data-cabin-mode] .cabin-brief__eyebrow,
+[data-cabin-mode] .smp__eyebrow,
+[data-cabin-mode] .gy-install__eyebrow,
+[data-cabin-mode] .install-eyebrow,
+[data-cabin-mode] .guests-section {
+  font-size: 11px !important;
+  letter-spacing: 2.5px !important;
+}
+
+/* Food matrix row labels — George flagged Fish/Beef/Pork as
+   "δεν φαίνονται" repeatedly. Push to weight 700 and force pure
+   navy. Mobile fallback bumps from 13→15px. */
+[data-cabin-mode] .brief-matrix-label {
+  color: #0D1B2A !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+}
+@media (max-width: 560px) {
+  [data-cabin-mode] .brief-matrix-label {
+    font-size: 15px !important;
+    padding: 12px 12px !important;
+  }
+}
+
+/* Matrix head row ("LIKE / DISLIKE / INDIFFERENT") was navy bg
+   with 85% ivory — bump to full ivory for the bold pop. */
+[data-cabin-mode] .brief-matrix-head span {
+  color: #F8F5F0 !important;
+  font-weight: 600 !important;
+}
+
+/* CharterAtAGlance field labels: the "Charter at a Glance" eyebrow,
+   the group labels ("VESSEL", "WHEN", "WEATHER"), and the row keys
+   ("FROM", "TO", "HOMEPORT", etc.). George flagged all three as
+   "δεν φαίνονται". */
+[data-cabin-mode] .cabin-at-a-glance__label {
+  color: rgba(13, 27, 42, 0.88) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 2.5px !important;
+}
+[data-cabin-mode] .cabin-at-a-glance__group-label {
+  color: rgba(13, 27, 42, 0.85) !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+}
+[data-cabin-mode] .cabin-at-a-glance__row dt {
+  color: rgba(13, 27, 42, 0.8) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
