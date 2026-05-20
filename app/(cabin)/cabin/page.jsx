@@ -218,8 +218,8 @@ export default async function CabinHomePage() {
           </p>
           <Link href="/cabin/guests" className="cabin-home__cta">
             {invitedCount === 0
-              ? "Invite your group →"
-              : "Manage your group →"}
+              ? "Invite your group ›"
+              : "Manage your group ›"}
           </Link>
         </section>
       ) : (
@@ -236,7 +236,7 @@ export default async function CabinHomePage() {
               : "DOB, any allergies, swimming comfort — that’s really all we ask. Two minutes."}
           </p>
           <Link href="/cabin/me" className="cabin-home__cta">
-            {myDetailsComplete ? "Edit my details →" : "Share my details →"}
+            {myDetailsComplete ? "Edit my details ›" : "Share my details ›"}
           </Link>
         </section>
       )}
@@ -379,6 +379,13 @@ export default async function CabinHomePage() {
           ταξιδιών." Quietly renders nothing if no photos yet. */}
       <VoyageCarousel />
 
+      {/* 2026-05-20 — Pass 4 (David, 50M one-time charterer):
+          "'2 more voyages and you become a Companion' — this is for
+           someone else. I am doing this once." Soften the tier-up
+           nudge so it doesn't read as a sales upsell to a first-time
+           customer. Only show the "X more voyages" line if the user
+           is already past their first voyage. Otherwise we show a
+           warm welcome line. */}
       {circle && (
         <aside className="cabin-home__circle">
           <div className="cabin-home__section-label">Filotimo Circle</div>
@@ -387,6 +394,7 @@ export default async function CabinHomePage() {
             Circle{circle.joined_at ? `, since ${new Date(circle.joined_at).getFullYear()}` : ""}.
             {goal?.kind === "voyages" &&
               goal.voyages_to_go > 0 &&
+              (circle.voyages_count ?? 0) >= 1 &&
               ` ${goal.voyages_to_go} more voyage${
                 goal.voyages_to_go > 1 ? "s" : ""
               } and you become a ${TIERS[goal.next_tier].label}.`}

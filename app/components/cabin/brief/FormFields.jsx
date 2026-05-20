@@ -8,21 +8,19 @@ import { useId, useState, useEffect } from "react";
 import { useFieldArray } from "react-hook-form";
 
 // =================== Required dot ===========================
-export function RequiredDot({ label = "required" }) {
-  return (
-    <span className="brief-req" title={label} aria-label={label}>
-      ·
-      <style>{`
-        .brief-req {
-          color: var(--gy-gold, #C9A84C);
-          font-weight: 700;
-          margin-right: 6px;
-          font-size: 16px;
-          line-height: 1;
-        }
-      `}</style>
-    </span>
-  );
+// 2026-05-20 — Friend-test pass 4 (David):
+//   "Emergency contact labels '·FULL NAME · RELATIONSHIP · MOBILE
+//    · EMAIL' — the middle-dot bullets appear attached to the label
+//    like a typo." They WERE the "required" indicator — a single
+//    "·" prefix per required field. David read them as typos.
+//
+// The brief uses autosave (no form submit), so the visual required
+// signal was decorative anyway. We collapse it to nothing — the
+// `required` attribute on the input still hints to assistive tech
+// where appropriate. If we want to bring it back, a single italic
+// "(needed)" suffix on the field hint would be calmer.
+export function RequiredDot() {
+  return null;
 }
 
 // =================== Label =================================

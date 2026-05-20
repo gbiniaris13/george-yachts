@@ -85,14 +85,23 @@ export default function ArrivalSectionPage() {
                 name="flight_group_1.airline_and_flight"
                 register={register}
               />
+              {/* 2026-05-20 — Pass 4 (David):
+                  "Departure airport (city you fly from)" — the parenthetical
+                  is ambiguous: enter "JFK" or "New York"? Renamed to "Where
+                  you fly from" so a city is clearly what we want. */}
               <TextField
-                label="Departure airport (city you fly from)"
-                placeholder="e.g. Munich"
+                label="Where you fly from"
+                placeholder="e.g. New York · London · Munich"
                 name="flight_group_1.coming_from"
                 register={register}
               />
+              {/* Pass 4 (David):
+                  "Number of guests on this flight" is asked before we know
+                  the total group size. Added a brief hint so the field
+                  doesn't feel like a quiz the user is failing. */}
               <TextField
-                label="How many guests on this flight"
+                label="How many of your group on this flight"
+                hint="If everyone's together, this is just the total."
                 name="flight_group_1.number_of_guests"
                 type="number"
                 inputMode="numeric"
@@ -106,7 +115,7 @@ export default function ArrivalSectionPage() {
                 <TextField label="When they land in Greece" name="flight_group_2.date_of_arrival" register={register} type="date" />
                 <TextField label="What time they land" name="flight_group_2.time_of_arrival" register={register} />
                 <TextField label="Flight number" name="flight_group_2.airline_and_flight" register={register} />
-                <TextField label="Departure airport" name="flight_group_2.coming_from" register={register} />
+                <TextField label="Where they fly from" name="flight_group_2.coming_from" register={register} placeholder="e.g. New York" />
                 <TextField label="How many guests on this flight" name="flight_group_2.number_of_guests" type="number" register={register} />
               </div>
             </details>

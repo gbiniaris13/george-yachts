@@ -122,8 +122,12 @@ export default async function CabinBriefOverviewPage() {
     <div className="cabin-brief">
       <header className="cabin-brief__head">
         <div className="cabin-brief__eyebrow">The Charter Brief</div>
+        {/* 2026-05-20 — Pass 4 (Tyler):
+            "Half an hour" vs "Around 24 minutes" — pick one. Bumped
+            headline to "twenty-odd minutes" which lines up with the
+            actual sum and reads more honest. */}
         <h1 className="cabin-brief__title">
-          A quiet conversation, <em>an unhurried half hour.</em>
+          A quiet conversation, <em>around twenty minutes.</em>
         </h1>
         <div className="cabin-brief__rule" aria-hidden />
         <IntroParagraph>

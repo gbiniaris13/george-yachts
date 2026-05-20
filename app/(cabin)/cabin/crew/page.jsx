@@ -13,10 +13,55 @@ export const metadata = { title: "Your crew · Your Cabin" };
 
 function paragraphs(bio) {
   if (!bio || typeof bio !== "string") return [];
-  return bio
+  return scrubBio(bio)
     .split(/\n\s*\n/)
     .map((p) => p.trim())
     .filter(Boolean);
+}
+
+// 2026-05-20 — Friend-test pass 4 (Margaret 70F, Helen 60F):
+//   "Leonora Stavrou was born in 1978…" — please do not tell me
+//   the year a woman was born. It is none of my business and she
+//   did not consent to share it with me.
+// We strip "born in YYYY" / "born YYYY" / "(b. YYYY)" patterns
+// from the bio at render time. Operator can override by editing
+// in GY Command if a date is intentional (e.g. an anniversary).
+function scrubBio(s) {
+  if (!s) return "";
+  return String(s)
+    .replace(/\b(?:was\s+)?born\s+(?:in\s+)?(?:19|20)\d{2}\b[.,]?\s*/gi, "")
+    .replace(/\(\s*b\.?\s*(?:19|20)\d{2}\s*\)\s*/gi, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+// 2026-05-20 — Pass 4 (Margaret + Helen):
+//   "'COOK · Leonora' — on a yacht of this calibre we say Chef,
+//    not Cook." The brochure extraction sometimes returns "Cook"
+//   verbatim from the source PDF. Map it to the term the audience
+//   expects.
+const ROLE_DISPLAY = {
+  cook: "Chef",
+  chef: "Chef",
+  "head chef": "Chef",
+  "sous chef": "Sous Chef",
+  captain: "Captain",
+  "first officer": "First Officer",
+  "chief officer": "First Officer",
+  "first mate": "First Officer",
+  engineer: "Engineer",
+  "chief engineer": "Chief Engineer",
+  deckhand: "Deckhand",
+  stewardess: "Stewardess",
+  "chief stewardess": "Chief Stewardess",
+  hostess: "Hostess",
+  steward: "Steward",
+  purser: "Purser",
+};
+function prettyRole(r) {
+  if (!r) return "";
+  const k = String(r).toLowerCase().trim();
+  return ROLE_DISPLAY[k] || r;
 }
 
 export default async function CrewPage() {
@@ -58,8 +103,8 @@ export default async function CrewPage() {
         <ul className="crew-list">
           {crew.map((m, i) => {
             const roleLine = m.secondary_role
-              ? `${m.role} · ${m.secondary_role}`
-              : m.role;
+              ? `${prettyRole(m.role)} · ${prettyRole(m.secondary_role)}`
+              : prettyRole(m.role);
             const bioPgs = paragraphs(m.bio);
             return (
               <li key={i} className="crew-card">

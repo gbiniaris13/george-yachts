@@ -125,9 +125,15 @@ export default function WelcomePage() {
       </IntroParagraph>
 
       <form className="wlc-form" onSubmit={onSave}>
+        {/* 2026-05-20 — Pass 4 (Margaret 70F):
+            "Four small red 'required' badges shout at me on a single
+             form. The intro already told me there are only four
+             small things. Don't repeat it loudly." Replaced the red
+             chips with a single quiet "(all four needed)" hint
+             under the row. */}
         <div className="wlc-row">
           <label className="wlc-field">
-            <span>First name <em className="wlc-req">required</em></span>
+            <span>First name</span>
             <input
               type="text"
               value={firstName}
@@ -139,7 +145,7 @@ export default function WelcomePage() {
             />
           </label>
           <label className="wlc-field">
-            <span>Surname <em className="wlc-req">required</em></span>
+            <span>Surname</span>
             <input
               type="text"
               value={lastName}
@@ -154,7 +160,7 @@ export default function WelcomePage() {
 
         <div className="wlc-row">
           <label className="wlc-field">
-            <span>Date of birth <em className="wlc-req">required</em></span>
+            <span>Date of birth</span>
             <input
               type="date"
               value={dob}
@@ -164,12 +170,16 @@ export default function WelcomePage() {
             />
           </label>
           <label className="wlc-field">
-            <span>Mobile <em className="wlc-req">required</em></span>
+            <span>Mobile</span>
+            {/* Pass 4 (Margaret): "+44 7700 900000 placeholder is
+                wrong for an American widow in Boston." Switched to a
+                neutral international format that doesn't telegraph
+                a country. */}
             <input
               type="tel"
               value={mobile}
               onChange={(e) => setMobile(e.target.value)}
-              placeholder="+44 7700 900000"
+              placeholder="e.g. +1 617 555 0100"
               inputMode="tel"
               maxLength={40}
               autoComplete="tel"
@@ -177,6 +187,10 @@ export default function WelcomePage() {
             />
           </label>
         </div>
+        <p className="wlc-req-note">
+          <em>All four above are needed before you go in. Everything else
+          can wait.</em>
+        </p>
 
         <button
           type="button"
@@ -277,9 +291,16 @@ export default function WelcomePage() {
           letter-spacing: 0;
           text-transform: none;
         }
-        .wlc-req {
-          color: #b14a3a !important;
+        /* Pass 4 — the per-field red "required" chip was removed;
+           replaced by a single quiet sentence below the row. */
+        .wlc-req-note {
+          font-family: var(--gy-font-editorial);
+          font-size: 12.5px;
+          color: rgba(13, 27, 42, 0.55);
+          margin: -6px 0 4px 0;
+          line-height: 1.55;
         }
+        .wlc-req-note em { font-style: italic; }
         .wlc-field input {
           background: transparent;
           border: 0;

@@ -29,7 +29,7 @@ const GREEK_PHRASES = [
   { gr: "Ωραίο",     en: "Oréo",      meaning: "Beautiful / lovely" },
   { gr: "Νόστιμο",   en: "Nóstimo",   meaning: "Delicious" },
   { gr: "Σιγά σιγά", en: "Sigá sigá", meaning: "Slowly, slowly (a way of life)" },
-  { gr: "Φιλότιμο",  en: "Filotimo",  meaning: "Doing the right thing because of who you are" },
+  { gr: "Φιλότιμο",  en: "Filotimo  ·  fee-LO-tee-mo", meaning: "Doing the right thing because of who you are" },
 ];
 
 const PACKING = {
@@ -68,7 +68,7 @@ export default async function BeforeYouSailPage() {
   const db = getCabinDb();
   const cabin = await dbQuery(
     db.from("cabins")
-      .select("port_embarkation, charter_period_from, charter_period_to")
+      .select("port_embarkation, charter_period_from, charter_period_to, cruising_area")
       .eq("id", cabinId)
       .maybeSingle()
   );
@@ -97,13 +97,16 @@ export default async function BeforeYouSailPage() {
   // anchor ports and date-slicing logic.
   let regionsForecast = [];
   let outOfRange = false;
+  let completed = false;
   if (cabin?.charter_period_from && cabin?.charter_period_to) {
     try {
       regionsForecast = await fetchCharterWindowForecast({
         fromIso: cabin.charter_period_from,
         toIso: cabin.charter_period_to,
+        cruisingArea: cabin.cruising_area,
       });
       outOfRange = regionsForecast.some((r) => r.out_of_range);
+      completed = regionsForecast.some((r) => r.completed);
     } catch (err) {
       console.error("[before-you-sail] weather fetch:", err);
     }
@@ -124,18 +127,25 @@ export default async function BeforeYouSailPage() {
         you to think about.
       </IntroParagraph>
 
-      {(hasAnyForecast || outOfRange) && (
+      {(hasAnyForecast || outOfRange || completed) && (
         <section className="bys-block">
           <h2 className="bys-label">Weather across your cruising waters</h2>
           <p className="bys-sub">
-            Outlook from Open-Meteo for the dates of your charter. We show
-            four anchor points across Greece — your captain reads live
-            marine sources and chooses the route around what each day
-            actually brings. Pack for warm days, breezy evenings, and the
-            occasional gust.
+            Outlook from Open-Meteo for the dates of your charter. Your
+            captain reads live marine sources and chooses the route around
+            what each day actually brings. Pack for warm days, breezy
+            evenings, and the occasional gust.
           </p>
 
-          {outOfRange ? (
+          {completed ? (
+            <p className="bys-out-of-range">
+              <em>
+                Your voyage has completed — we hope it was as bright as
+                the forecast had promised. The Voyage Album holds the
+                rest.
+              </em>
+            </p>
+          ) : outOfRange ? (
             <p className="bys-out-of-range">
               <em>
                 Your charter is beyond the 16-day forecast window. The

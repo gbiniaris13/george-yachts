@@ -12,6 +12,30 @@ const INLINE_LABELS = {
   marketing_newsletter: "Occasional newsletters (Bridge, Wake, Compass)",
 };
 
+// 2026-05-20 — Friend-test pass 4 (Margaret 70F):
+//   "DOB is 1980-06-15 but last sign-in is 5/20/2026, 3:41:23 PM.
+//    Two formats on the same page. Pick one." — fmtDate/fmtDateTime
+//   unify everything to "15 June 1980" / "20 May 2026, 15:41".
+function fmtDate(iso) {
+  if (!iso) return "";
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso));
+  if (!m) return String(iso);
+  const d = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]));
+  if (Number.isNaN(d.getTime())) return String(iso);
+  return d.toLocaleDateString("en-GB", {
+    day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
+  });
+}
+function fmtDateTime(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return String(iso);
+  return d.toLocaleString("en-GB", {
+    day: "numeric", month: "long", year: "numeric",
+    hour: "2-digit", minute: "2-digit",
+  });
+}
+
 export default function YourDataPage() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -80,7 +104,7 @@ export default function YourDataPage() {
               <Row label="Role">{data.profile.role?.replace(/_/g, " ")}</Row>
               <Row label="Last sign-in">
                 {data.profile.last_login_at
-                  ? new Date(data.profile.last_login_at).toLocaleString()
+                  ? fmtDateTime(data.profile.last_login_at)
                   : <em>—</em>}
               </Row>
             </dl>
@@ -118,8 +142,8 @@ export default function YourDataPage() {
                 </Row>
                 <Row label="Tier">{data.circle.tier}</Row>
                 <Row label="Voyages with us">{data.circle.voyages_count ?? 0}</Row>
-                <Row label="Date of birth">{data.circle.date_of_birth || <em>—</em>}</Row>
-                <Row label="Anniversary">{data.circle.anniversary_date || <em>—</em>}</Row>
+                <Row label="Date of birth">{fmtDate(data.circle.date_of_birth) || <em>—</em>}</Row>
+                <Row label="Anniversary">{fmtDate(data.circle.anniversary_date) || <em>—</em>}</Row>
                 <Row label="Hometown">{data.circle.hometown || <em>—</em>}</Row>
               </dl>
             </section>
@@ -135,7 +159,7 @@ export default function YourDataPage() {
                   <li key={c.id}>
                     <strong>{c.data_point.replace(/_/g, " ")}</strong>
                     <em>used for {c.given_for}</em>
-                    <span>{new Date(c.created_at).toLocaleDateString()}</span>
+                    <span>{fmtDate(c.created_at)}</span>
                     {c.consent_state === "granted" && (
                       <button onClick={() => withdraw("consent_row", c.id)}>Withdraw</button>
                     )}

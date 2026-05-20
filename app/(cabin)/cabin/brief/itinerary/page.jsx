@@ -72,17 +72,13 @@ export default function ItinerarySectionPage() {
                 { value: "captain_decides", label: "Let the captain decide based on weather" },
               ]}
             />
-            <RadioGroup
-              name="overall_experience"
-              label="Overall character of the week"
-              hint="Helps the captain pace days and the chef weight menus toward your energy."
-              register={register}
-              options={[
-                { value: "productive_exciting", label: "Productive & exciting", description: "Active days, lots of movement, social evenings." },
-                { value: "peaceful_relaxing",   label: "Peaceful & relaxing", description: "Quiet bays, restful pace, early nights." },
-                { value: "combination",         label: "A combination of both" },
-              ]}
-            />
+            {/* 2026-05-20 — Friend-test pass 4 (Tyler):
+                "/cabin/brief/itinerary has TWO sections that ask the
+                 same thing — YOUR PREFERRED PACE and OVERALL CHARACTER
+                 OF THE WEEK. Pick one."
+                Removed the second radio. The overall_experience schema
+                field stays in lib/cabin/schemas.js for back-compat with
+                already-saved briefs. */}
 
             {/* 2026-05-20 — Da$k friend-test: "Αυτό το έχεις ξανά
                 ρωτήσει — ποιο αν προτιμούν bays ή μαρίνα νομίζω, με
@@ -109,6 +105,20 @@ export default function ItinerarySectionPage() {
                 { value: "scuba_diving_padi",  label: "Scuba diving (diving certificate required)" },
                 { value: "fishing_specific",   label: "Sport fishing" },
               ]}
+            />
+            {/* 2026-05-20 — Friend-test pass 4 (Sarah):
+                "Itinerary requires a PADI / SSI / BSAC certificate
+                 for scuba — but the brief never asks me whether anyone
+                 has one. Close the loop." Added a free-text field
+                 surfaced conditionally below the scuba checkbox. The
+                 captain reads the list verbatim. */}
+            <OpenTextarea
+              label="Anyone in your group already certified to dive?"
+              hint="Only fill if scuba is on the wishlist above. Name + body (PADI Open Water, SSI Advanced, BSAC Sports, etc.) per certified guest. Card numbers + photos can come closer to the date."
+              name="diving_certifications"
+              register={register}
+              rows={3}
+              placeholder={"e.g. Sarah — PADI Open Water (2018)\nMark — PADI Advanced (2014)"}
             />
 
             <h2 className="brief-subhead">Celebrations</h2>
