@@ -98,6 +98,15 @@ export default function CabinInstallPage() {
     );
   }
 
+  // 2026-05-20 — Friend-test pass 4 (Tyler, Sarah): platform
+  // detection was misfiring (UA sniffing fails when devtools
+  // emulate a phone size with desktop UA). Result: only "ON YOUR
+  // LAPTOP" rendered on real phones. Fix: ALWAYS render all three
+  // platform blocks — the user picks their own. No UA sniffing
+  // dependency for the most critical conversion surface in the
+  // product. The `deferredPrompt` wiring still works for Android
+  // Chrome since the beforeinstallprompt listener attaches
+  // unconditionally above.
   return (
     <article>
       <SectionTitle
@@ -107,13 +116,53 @@ export default function CabinInstallPage() {
       />
       <IntroParagraph>
         One tap to come back next time — no more sign-in emails on this
-        device. Choose the instructions below for your phone.
+        device. Pick the section below that matches your phone.
       </IntroParagraph>
 
-      {platform === "android" && (
-        <section className="install-card">
-          <div className="install-eyebrow">Android · Chrome or Edge</div>
-          {deferredPrompt ? (
+      {/* Reorder so iPhone (~60% of UHNW guests) is first.
+          All three blocks always shown — no UA sniffing. */}
+      {/* iPhone — Safari (manual, but the most common case) */}
+      <section className="install-card">
+        <div className="install-eyebrow">iPhone · Safari</div>
+        <p>
+          Safari on iPhone doesn’t offer a one-tap install button —
+          Apple’s rules. The good news: it takes three taps.
+        </p>
+        <ol className="install-steps">
+          <li>
+            At the bottom of Safari, tap the share icon{" "}
+            <span className="install-share" aria-hidden>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <path d="M12 4v12" />
+                <path d="M8 8l4-4 4 4" />
+                <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" />
+              </svg>
+            </span>{" "}
+            (the box with the arrow pointing up).
+          </li>
+          <li>
+            Scroll down the share sheet and tap{" "}
+            <em>Add to Home Screen</em>.
+          </li>
+          <li>
+            Confirm the name (we suggest <em>The Cabin</em>) and tap{" "}
+            <em>Add</em>.
+          </li>
+        </ol>
+        <p className="install-note">
+          <em>
+            Tip: if you opened this in a different browser (Chrome,
+            Firefox, Brave), iOS won’t let those install apps — only
+            Safari can. Open the magic-link email in Safari first.
+          </em>
+        </p>
+      </section>
+
+      {/* Android — Chrome / Edge (one-tap when beforeinstallprompt
+          has fired, manual three-step otherwise). */}
+      <section className="install-card">
+        <div className="install-eyebrow">Android · Chrome or Edge</div>
+        {deferredPrompt ? (
             <>
               <p>
                 Tap the button below. Your browser will ask once whether
@@ -154,50 +203,13 @@ export default function CabinInstallPage() {
               </ol>
             </>
           )}
-        </section>
-      )}
+      </section>
 
-      {platform === "ios" && (
-        <section className="install-card">
-          <div className="install-eyebrow">iPhone · Safari</div>
-          <p>
-            Safari on iPhone doesn’t offer a one-tap install button —
-            Apple’s rules. The good news: it takes three taps.
-          </p>
-          <ol className="install-steps">
-            <li>
-              At the bottom of Safari, tap the share icon{" "}
-              <span className="install-share" aria-hidden>
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.6">
-                  <path d="M12 4v12" />
-                  <path d="M8 8l4-4 4 4" />
-                  <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" />
-                </svg>
-              </span>{" "}
-              (the box with the arrow pointing up).
-            </li>
-            <li>
-              Scroll down the share sheet and tap{" "}
-              <em>Add to Home Screen</em>.
-            </li>
-            <li>
-              Confirm the name (we suggest <em>The Cabin</em>) and tap{" "}
-              <em>Add</em>.
-            </li>
-          </ol>
-          <p className="install-note">
-            <em>
-              Tip: if you opened this in a different browser (Chrome,
-              Firefox, Brave), iOS won’t let those install apps — only
-              Safari can. Open the magic-link email in Safari first.
-            </em>
-          </p>
-        </section>
-      )}
-
-      {platform === "desktop" && (
-        <section className="install-card">
-          <div className="install-eyebrow">On your laptop</div>
+      {/* Desktop — Chrome / Edge / Arc. Shown for everyone since
+          UA sniffing isn't reliable; the user just ignores blocks
+          that aren't theirs. */}
+      <section className="install-card">
+        <div className="install-eyebrow">On your laptop</div>
           {deferredPrompt ? (
             <>
               <p>
@@ -228,8 +240,7 @@ export default function CabinInstallPage() {
               </p>
             </>
           )}
-        </section>
-      )}
+      </section>
 
       <Link href="/cabin" className="install-back">← Back to your Cabin</Link>
 

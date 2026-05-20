@@ -12,8 +12,24 @@
 // chain. Less invasive than editing every global component.
 // =============================================================
 
+// 2026-05-20 — Friend-test pass 4 (Sarah, devtools inspector):
+//   "The page title in Chrome reads 'The Cabin · George Yachts |
+//    George Yachts' on most pages. Duplicate 'George Yachts.'
+//    Looks like a <title> template bug."
+//
+// Root cause: app/layout.jsx applies a template "%s | George Yachts"
+// to every child page's title. The cabin layout was setting its
+// title to "The Cabin · George Yachts" — which the template then
+// re-appended "George Yachts" to. Result: duplicate brand.
+//
+// Fix: override with `title.template` so cabin pages get a single
+// brand suffix, and override default with absolute so the cabin
+// route group's own title strings stay clean.
 export const metadata = {
-  title: "The Cabin · George Yachts",
+  title: {
+    default: "The Cabin · George Yachts",
+    template: "%s · Your Cabin",
+  },
   description:
     "Your private space at George Yachts — Filotimo · Φιλότιμο.",
   robots: { index: false, follow: false },     // never indexed

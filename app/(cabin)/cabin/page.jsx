@@ -177,11 +177,11 @@ export default async function CabinHomePage() {
         {isPrincipal ? (
           <IntroParagraph>
             This is your private Cabin — your quiet corner of George
-            Yachts. The first thing we’d ask of you is small: invite
-            the people sailing with you. Each one gets their own quiet
-            sign-in to share a few details about themselves — allergies,
-            swimming, what they’d like the chef to know. You don’t need
-            to fill that in for them.
+            Yachts. The first thing we’d like to ask of you is small:
+            invite the people sailing with you. Each one gets their own
+            quiet sign-in to share a few details about themselves —
+            allergies, swimming, what they’d like the chef to know.
+            You don’t need to fill that in for them.
           </IntroParagraph>
         ) : (
           <IntroParagraph>

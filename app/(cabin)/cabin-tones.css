@@ -78,6 +78,54 @@
   font-weight: 600 !important;
 }
 
+/* 2026-05-20 — Pass 4 (Tyler, iPhone Pro Max 430×932):
+ *   "Welcome line breaks like this: 'Welcom / e, / Dimingo / .'"
+ *   "Auto-hyphenation in wrong places."
+ * Force humane wrapping on every cabin heading + body. iOS
+ * sometimes inherits aggressive break behavior; kill it. */
+[data-cabin-mode] h1,
+[data-cabin-mode] h2,
+[data-cabin-mode] h3,
+[data-cabin-mode] .cabin-home__greeting,
+[data-cabin-mode] .cabin-home__primary-title,
+[data-cabin-mode] .cabin-home__progress-title,
+[data-cabin-mode] .cabin-brief__title,
+[data-cabin-mode] p {
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  -webkit-hyphens: none !important;
+}
+/* On very narrow phone viewports, the H1 was occasionally being
+   squeezed to break a name character-by-character. Force ample
+   per-line minimum width so single words always fit on one line. */
+[data-cabin-mode] .cabin-home__greeting,
+[data-cabin-mode] .cabin-home__primary-title {
+  word-spacing: normal;
+}
+
+/* Pass 4 (Tyler): "M/Y TEST 1 · 17 MAY – 24 MAY" header wraps
+   each word onto its own line on iPhone. Also "D..." truncation
+   of the name in the top right.
+
+   Fix: hide the entire charter strip in the sticky header on
+   narrow viewports. The same info renders one screen down in
+   the CharterAtAGlance block on /cabin home, so it's not lost. */
+@media (max-width: 560px) {
+  [data-cabin-mode] .cabin-shell__charter {
+    display: none !important;
+  }
+  /* Two-column header on phone: back arrow (if present) + brand. */
+  [data-cabin-mode] .cabin-shell__header {
+    grid-template-columns: auto 1fr !important;
+  }
+}
+/* Desktop: relax the harsh ellipsize on the name — show ~22
+   chars before truncating, not ~3. */
+[data-cabin-mode] .cabin-shell__charter-name {
+  max-width: 280px;
+}
+
 /* CharterAtAGlance field labels: the "Charter at a Glance" eyebrow,
    the group labels ("VESSEL", "WHEN", "WEATHER"), and the row keys
    ("FROM", "TO", "HOMEPORT", etc.). George flagged all three as
