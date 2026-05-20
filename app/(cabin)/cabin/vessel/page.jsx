@@ -28,7 +28,7 @@ export default async function VesselPage() {
   const db = getCabinDb();
   const cabin = await dbQuery(
     db.from("cabins")
-      .select("vessel_name, vessel_make_model, vessel_length, vessel_capacity, homeport, cruising_area, vessel_brochure")
+      .select("vessel_name, vessel_make_model, vessel_length, vessel_capacity, homeport, cruising_area, vessel_brochure, vessel_photos")
       .eq("id", cabinId)
       .maybeSingle()
   );
@@ -37,6 +37,15 @@ export default async function VesselPage() {
   const brochure = (cabin.vessel_brochure && typeof cabin.vessel_brochure === "object")
     ? cabin.vessel_brochure
     : {};
+
+  // 2026-05-20 — Friend-test pass 4 (Tyler, David, Helen):
+  //   "Vessel page has NO photos. The most evocative page in the
+  //    Cabin has been left empty."
+  // Pull from the new cabins.vessel_photos column (array of {url,
+  // caption?, credit?}). George pastes URLs in GY Command.
+  const photos = Array.isArray(cabin.vessel_photos)
+    ? cabin.vessel_photos.filter((p) => p && typeof p.url === "string" && p.url.trim().length > 0)
+    : [];
 
   const name = brochure.vessel_name || cabin.vessel_name;
   const typeLine = brochure.type_line;
@@ -64,6 +73,50 @@ export default async function VesselPage() {
         title="A quiet introduction to"
         italic="your week at sea."
       />
+
+      {/* 2026-05-20 — Pass 4: photo gallery above the hero text.
+          If George hasn't pasted any URLs yet, we show a calm
+          placeholder rather than leaving the page bare. */}
+      {photos.length > 0 ? (
+        <section className="vs-gallery" aria-label="Vessel photos">
+          {photos.slice(0, 1).map((p, i) => (
+            <figure key={i} className="vs-gallery__hero">
+              {/* Plain <img> — these are URLs to external hosts and
+                  not in next.config remotePatterns. Avoid the image
+                  rewrite pipeline. */}
+              <img src={p.url} alt={p.caption || name} />
+              {(p.caption || p.credit) && (
+                <figcaption>
+                  {p.caption}
+                  {p.credit && <em> · {p.credit}</em>}
+                </figcaption>
+              )}
+            </figure>
+          ))}
+          {photos.length > 1 && (
+            <div className="vs-gallery__rail">
+              {photos.slice(1, 9).map((p, i) => (
+                <figure key={i} className="vs-gallery__tile">
+                  <img src={p.url} alt={p.caption || `${name} ${i + 2}`} />
+                </figure>
+              ))}
+            </div>
+          )}
+        </section>
+      ) : (
+        <section className="vs-placeholder">
+          <div className="vs-placeholder__inner">
+            <span className="vs-placeholder__glyph" aria-hidden>⛵</span>
+            <p>
+              Photographs of {name || "your vessel"} are uploaded to the
+              Cabin a week before embarkation. If you would like to see them
+              sooner,{" "}
+              <a href="mailto:george@georgeyachts.com">write to George</a>{" "}
+              and we will share the gallery directly.
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* HERO */}
       <section className="vs-hero">
@@ -185,6 +238,90 @@ export default async function VesselPage() {
       )}
 
       <style>{`
+        /* Vessel photo gallery (pass-4 addition) */
+        .vs-gallery {
+          margin: 8px 0 28px 0;
+          display: flex;
+          flex-direction: column;
+          gap: 1px;
+        }
+        .vs-gallery__hero {
+          margin: 0;
+          background: rgba(13,27,42,0.06);
+          position: relative;
+        }
+        .vs-gallery__hero img {
+          width: 100%;
+          height: auto;
+          max-height: 460px;
+          object-fit: cover;
+          display: block;
+        }
+        .vs-gallery__hero figcaption {
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 12.5px;
+          color: rgba(13,27,42,0.55);
+          padding: 8px 2px 0 2px;
+        }
+        .vs-gallery__hero figcaption em {
+          font-style: normal;
+          color: rgba(13,27,42,0.4);
+        }
+        .vs-gallery__rail {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 6px;
+        }
+        @media (min-width: 640px) {
+          .vs-gallery__rail { grid-template-columns: repeat(4, 1fr); }
+        }
+        .vs-gallery__tile {
+          margin: 0;
+          aspect-ratio: 4 / 3;
+          background: rgba(13,27,42,0.06);
+          overflow: hidden;
+        }
+        .vs-gallery__tile img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        /* Calm placeholder when no photos uploaded yet */
+        .vs-placeholder {
+          background: linear-gradient(135deg, rgba(13,27,42,0.04), rgba(201,168,76,0.06));
+          border: 1px solid rgba(13,27,42,0.08);
+          padding: 36px 24px;
+          text-align: center;
+          margin: 8px 0 28px 0;
+        }
+        .vs-placeholder__inner {
+          max-width: 440px;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 14px;
+        }
+        .vs-placeholder__glyph {
+          font-size: 36px;
+          color: var(--gy-gold);
+        }
+        .vs-placeholder p {
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 14.5px;
+          color: rgba(13,27,42,0.65);
+          margin: 0;
+          line-height: 1.65;
+        }
+        .vs-placeholder a {
+          color: var(--gy-gold);
+          text-decoration: none;
+          border-bottom: 1px solid currentColor;
+        }
+
         .vs-hero {
           background: var(--gy-navy);
           color: var(--gy-ivory);

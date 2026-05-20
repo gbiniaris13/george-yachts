@@ -83,6 +83,13 @@ export default function CharterAtAGlance({ summary }) {
           </a>{" "}
           — we will fix it before you do anything else.
         </p>
+        {/* 2026-05-20 — Pass 4 (Tyler): "A real .ics download
+            anywhere." Single quiet link beneath the glance card. */}
+        <p className="cabin-at-a-glance__ics">
+          <a href="/api/cabin/calendar.ics" download>
+            ✦ Add these dates to your calendar
+          </a>
+        </p>
       </div>
 
       <style>{`
@@ -161,6 +168,19 @@ export default function CharterAtAGlance({ summary }) {
         .cabin-at-a-glance__correction a {
           color: var(--gy-gold);
           text-decoration: none;
+          border-bottom: 1px solid currentColor;
+        }
+        .cabin-at-a-glance__ics {
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 12.5px;
+          margin: 10px 0 0 0;
+        }
+        .cabin-at-a-glance__ics a {
+          color: var(--gy-gold);
+          text-decoration: none;
+        }
+        .cabin-at-a-glance__ics a:hover {
           border-bottom: 1px solid currentColor;
         }
       `}</style>

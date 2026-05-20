@@ -34,6 +34,7 @@ import CharterAtAGlance from "../../components/cabin/CharterAtAGlance";
 import IntroParagraph from "../../components/cabin/IntroParagraph";
 import InstallNudge from "../../components/cabin/InstallNudge";
 import VoyageCarousel from "../../components/cabin/VoyageCarousel";
+import GreekWordOfTheDay from "../../components/cabin/GreekWordOfTheDay";
 import { titleCaseName } from "@/lib/cabin/format";
 
 export const metadata = {
@@ -250,6 +251,14 @@ export default async function CabinHomePage() {
       <InstallNudge />
 
       <CharterAtAGlance summary={summary} cabin={cabin} />
+
+      {/* 2026-05-20 — Friend-test pass 4 (Sarah):
+          "Surface a single Greek word of the day on the Cabin home —
+           don't bury it two clicks deep in Before You Sail."
+          Picks one of 10 phrases deterministically by day of year
+          so guests see something fresh per visit but no random
+          jitter mid-session. */}
+      <GreekWordOfTheDay />
 
       {/* ============================================================
           THE BRIEF — secondary card. The principal can come back
