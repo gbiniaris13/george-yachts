@@ -2,6 +2,7 @@
 
 import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
+import AllergyAlert from "../../../../components/cabin/brief/AllergyAlert";
 import {
   SectionTitle,
   TextField,
@@ -24,6 +25,11 @@ export default function ChildrenSectionPage() {
         age-appropriate snacks, quieter evenings if needed. Tell us about
         each child.
       </IntroParagraph>
+
+      {/* 2026-05-20 — Allergy banner — children food allergies are
+          the highest-stakes case (insulin, peanut, anaphylactic
+          shellfish). Da$k friend-test flagged this explicitly. */}
+      <AllergyAlert />
 
       <BriefFormShell sectionKey="children" prevSection={{ key: "little_things", title: "The Little Things" }}>
         {({ register, watch }) => (

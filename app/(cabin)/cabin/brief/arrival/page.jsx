@@ -19,9 +19,10 @@ export default function ArrivalSectionPage() {
         italic="getting home."
       />
       <IntroParagraph>
-        The smallest details — what time your flight lands, where you would
-        like to be picked up — make the biggest difference. Tell us as much
-        as you know now; we can refine closer to the date.
+        The smallest details — what time your flight lands in Greece, where you
+        would like to be picked up — make the biggest difference. Tell us as
+        much as you know now; we can refine closer to the date. Skip anything
+        you don&apos;t know yet — everything saves as you type.
       </IntroParagraph>
 
       <BriefFormShell
@@ -30,34 +31,48 @@ export default function ArrivalSectionPage() {
       >
         {({ register }) => (
           <>
-            <h2 className="brief-subhead">01 · Your arrival</h2>
+            {/* 2026-05-20 — Eleanna + Da$k friend-tests both flagged that
+                the first questions on the arrival section don't make it
+                obvious WHAT to fill in. Adding a small explainer above
+                the fields so a first-time reader knows the questions are
+                about THEIR flight INTO Greece, not the charter dates. */}
+            <h2 className="brief-subhead">01 · Your flight into Greece</h2>
+            <p className="brief-help">
+              Most charterers arrive by commercial flight to Athens (ATH) or a
+              regional airport (e.g. Mykonos, Heraklion). Fill in what you know
+              about the flight that brings you into the country — even
+              partial details help the captain plan transfers.
+            </p>
             <div className="brief-grid">
               <TextField
-                label="Date of arrival"
+                label="Date your flight arrives"
+                hint="The day you land in Greece, not the day you board the yacht."
                 name="flight_group_1.date_of_arrival"
                 register={register}
                 type="date"
               />
               <TextField
-                label="Time of arrival"
-                name="flight_group_1.time_of_arrival"
+                label="Time of arrival (local Greek time)"
                 placeholder="e.g. 14:35"
+                name="flight_group_1.time_of_arrival"
                 register={register}
               />
               <TextField
                 label="Airline & flight number"
+                hint="If you don't have a ticket yet, leave blank."
                 name="flight_group_1.airline_and_flight"
                 placeholder="e.g. LH 1283"
                 register={register}
               />
               <TextField
-                label="Coming from (city)"
+                label="Departing from (city)"
                 name="flight_group_1.coming_from"
                 placeholder="e.g. Munich"
                 register={register}
               />
               <TextField
-                label="Guests on this flight"
+                label="How many guests on this flight"
+                hint="If your group flies in together, the full count. If some arrive separately, use the second flight group below."
                 name="flight_group_1.number_of_guests"
                 type="number"
                 inputMode="numeric"
@@ -66,13 +81,13 @@ export default function ArrivalSectionPage() {
             </div>
 
             <details className="brief-details">
-              <summary>Add a second flight group</summary>
+              <summary>Some guests arriving on a different flight? Add a second group</summary>
               <div className="brief-grid">
-                <TextField label="Date of arrival" name="flight_group_2.date_of_arrival" register={register} type="date" />
-                <TextField label="Time of arrival" name="flight_group_2.time_of_arrival" register={register} />
+                <TextField label="Date your flight arrives" name="flight_group_2.date_of_arrival" register={register} type="date" />
+                <TextField label="Time of arrival (local Greek time)" name="flight_group_2.time_of_arrival" register={register} />
                 <TextField label="Airline & flight number" name="flight_group_2.airline_and_flight" register={register} />
-                <TextField label="Coming from (city)" name="flight_group_2.coming_from" register={register} />
-                <TextField label="Guests on this flight" name="flight_group_2.number_of_guests" type="number" register={register} />
+                <TextField label="Departing from (city)" name="flight_group_2.coming_from" register={register} />
+                <TextField label="How many guests on this flight" name="flight_group_2.number_of_guests" type="number" register={register} />
               </div>
             </details>
 
@@ -212,6 +227,18 @@ export default function ArrivalSectionPage() {
           margin: 8px 0 0 0;
         }
         .brief-note em { font-style: italic; }
+        /* 2026-05-20 — friend-test fix: explainer paragraph that sits
+           between the subhead and the first form field on the arrival
+           page. Slightly smaller and dimmer than the IntroParagraph at
+           the very top so the visual hierarchy stays clean. */
+        .brief-help {
+          font-family: var(--gy-font-editorial);
+          font-size: 14.5px;
+          line-height: 1.55;
+          color: rgba(13, 27, 42, 0.72);
+          margin: 0 0 18px 0;
+          font-style: italic;
+        }
       `}</style>
     </article>
   );

@@ -10,6 +10,26 @@ import useBriefAutosave from "./useBriefAutosave";
 import SaveStatus from "./SaveStatus";
 import Link from "next/link";
 
+// 2026-05-20 — Friend-test fix. Da$k reported that navigating to
+// the next section left the page scrolled to wherever you'd been
+// on the previous one ("σε πάρει στην επόμενη σελίδα αλλά δεν σε
+// ανεβάζει πανω πανω"). Next.js App Router preserves scroll by
+// default when the URL changes via Link. Force window.scrollTo(0)
+// once the shell mounts (i.e. once per section navigation) so
+// every section starts at the top.
+function useScrollToTopOnMount() {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    // requestAnimationFrame so the scroll happens after the new
+    // page has painted — without it, the previous page's scroll
+    // position is restored by Next before our scroll fires.
+    const id = requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" in window.scrollTo ? "instant" : "auto" });
+    });
+    return () => cancelAnimationFrame(id);
+  }, []);
+}
+
 export default function BriefFormShell({
   sectionKey,
   defaultValues,
@@ -20,6 +40,7 @@ export default function BriefFormShell({
   // place of "Next →". Used on /cabin/brief/little-things.
   isLastSection = false,
 }) {
+  useScrollToTopOnMount();
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [submitErr, setSubmitErr] = useState(null);

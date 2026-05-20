@@ -22,13 +22,20 @@ export default function SaveStatus({ state }) {
 
   if (!visible && state === "idle") return null;
 
+  // 2026-05-20 — Friend-test fix. The original "Couldn't save —
+  // retrying" copy was misleading: the autosave hook does NOT
+  // retry; it only re-attempts on the next user edit. Testers
+  // saw the message persist for entire sections, assumed the
+  // save was actively retrying, then panicked when nothing
+  // changed. New copy makes the action explicit ("try again")
+  // without sounding like a hard error.
   const label =
     state === "saving"
       ? "Saving…"
       : state === "saved"
         ? "Saved"
         : state === "error"
-          ? "Couldn’t save — retrying"
+          ? "Couldn’t save — keep typing to retry"
           : "";
 
   return (

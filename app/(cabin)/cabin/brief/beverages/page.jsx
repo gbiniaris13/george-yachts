@@ -10,6 +10,7 @@
 
 import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
+import AllergyAlert from "../../../../components/cabin/brief/AllergyAlert";
 import {
   SectionTitle,
   TextField,
@@ -32,6 +33,10 @@ export default function BeveragesSectionPage() {
         during the week is yours to take home — a glass with friends back
         home is the loveliest way to remember Greece.
       </IntroParagraph>
+
+      {/* 2026-05-20 — Allergy banner echoes on every food-adjacent
+          page. Bartender pours these too. */}
+      <AllergyAlert />
 
       <BriefFormShell
         sectionKey="beverages"
@@ -66,13 +71,22 @@ export default function BeveragesSectionPage() {
               register={register}
             />
 
-            {/* ─────────── Soft drinks ─────────── */}
+            {/* 2026-05-20 — Da$k friend-test: "Αυτό δεν μπορεί να το
+                υπολογίσει ο άλλος... συνήθως λένε ότι πίνουμε κοκακόλα
+                και η Hostess τα υπολογίζει." The exact-quantity table
+                read as broker counting drinks. Softened framing so the
+                charterer can say "we drink lots of Coke Zero" without
+                feeling pressured to specify "24 cans". The labels still
+                get saved if anyone uses the rows; the captain treats
+                quantity as advisory, not literal. */}
             <h2 className="brief-subhead">Soft drinks</h2>
             <p className="brief-note">
               <em>
-                Add labels and quantities — the captain provisions straight
-                from this list. Use plural counts (24 cans, 12 bottles).
-                Leave blank what you don&apos;t need.
+                Tell us what your group drinks and the hostess will keep it
+                stocked. You don&apos;t need to specify exact quantities —
+                she calibrates from group size and the week ahead. If you
+                want a specific brand (Coca-Cola Zero, San Pellegrino,
+                Sprite light), name it; otherwise leave blank.
               </em>
             </p>
             <LabelQuantityRows
@@ -80,7 +94,7 @@ export default function BeveragesSectionPage() {
               label=""
               register={register}
               control={control}
-              startRows={4}
+              startRows={3}
             />
 
             {/* ─────────── Standard bar ─────────── */}
@@ -116,10 +130,15 @@ export default function BeveragesSectionPage() {
                 { value: "no",      label: "No, just our own selections" },
               ]}
             />
+            {/* 2026-05-20 — Eleanna friend-test: asked "per person or per
+                bottle?" on this exact field even though the LABEL said
+                per bottle. Adding it to the placeholder makes the unit
+                unambiguous at the point of input, not only in the label. */}
             <TextField
               label="Preferred price range per bottle (Greek wines)"
+              hint="Per bottle, not per person. The captain agrees the final budget with you when you board."
               name="wine_price_range"
-              placeholder="e.g. €40-80, €100-150"
+              placeholder="e.g. €40-80 per bottle, or €100-150 per bottle"
               register={register}
             />
             <RadioGroup
@@ -149,45 +168,53 @@ export default function BeveragesSectionPage() {
               startRows={4}
             />
 
-            {/* ─────────── Spirits ─────────── */}
-            <h2 className="brief-subhead">Spirits</h2>
+            {/* 2026-05-20 — Da$k friend-test: "γενικά από όσο ξέρω αυτά
+                τα σκάφη από μπαρ κτλ είναι φουλ γιατί δεν ξέρουν τι θα
+                ζητήσει ο πελάτης". The six per-spirit label/qty tables
+                + two per-beer tables produced visible fatigue ("γενικά
+                είναι πολύ μεγάλο") and the implication that the charter
+                bar wasn't already stocked. Collapsed into one prompt
+                each for spirits + beers — the bartender already has the
+                core spirits and works from a one-liner like "we drink
+                gin & tonics, dark rum on the rocks, Mythos with lunch."
+
+                Original LabelQuantityRows for each spirit + beer kept
+                in schemas.js (commented use) so old saved briefs still
+                load; new submissions will use the new freeform fields
+                below. */}
+
+            <h2 className="brief-subhead">Spirits — what your group drinks</h2>
             <p className="brief-note">
-              <em>One block per spirit. Add only what you want stocked.</em>
+              <em>
+                The yacht keeps a full bar (gin, vodka, rum, tequila, whiskey,
+                core liqueurs, mixers). Tell us your favourites and any
+                specific labels you love — the hostess buys what matters and
+                leaves the rest stocked at house level.
+              </em>
             </p>
-
-            <LabelQuantityRows name="whiskey" label="Whiskey" register={register} control={control} startRows={2} />
-            <LabelQuantityRows name="vodka"   label="Vodka"   register={register} control={control} startRows={2} />
-            <LabelQuantityRows name="gin"     label="Gin"     register={register} control={control} startRows={2} />
-            <LabelQuantityRows name="rum"     label="Rum"     register={register} control={control} startRows={2} />
-            <LabelQuantityRows name="tequila" label="Tequila" register={register} control={control} startRows={2} />
-            <LabelQuantityRows name="liqueur" label="Liqueur" register={register} control={control} startRows={2} />
-
-            {/* ─────────── Beers ─────────── */}
-            <h2 className="brief-subhead">Beers</h2>
-            <LabelQuantityRows
-              name="beers"
-              label="International beers"
-              register={register}
-              control={control}
-              startRows={3}
-            />
-            <LabelQuantityRows
-              name="beers_local"
-              label="Local Greek beers (Mythos, Alfa, Septem…)"
-              register={register}
-              control={control}
-              startRows={2}
-            />
-
-            {/* ─────────── Specific brand prefs ─────────── */}
-            <h2 className="brief-subhead">Anything else specific</h2>
             <OpenTextarea
-              label="Specific brand preferences or rare labels"
-              hint="Free text — anything that didn't fit the tables above."
-              name="specific_preferences"
+              label="Spirits, brands, and how you take them"
+              name="spirits_notes"
+              register={register}
+              rows={4}
+              placeholder="e.g. We drink gin & tonics — Hendrick's if you have it, Fever-Tree tonic. My husband loves a Talisker neat in the evening. Margaritas on Friday night, Don Julio if possible."
+            />
+
+            <h2 className="brief-subhead">Beers</h2>
+            <OpenTextarea
+              label="Beers your group drinks"
+              hint="Mention international labels (Heineken, Corona, IPA) or Greek beers you'd like to taste (Mythos, Alfa, Vergina, Septem)."
+              name="beers_notes"
               register={register}
               rows={3}
+              placeholder="e.g. Mostly Corona with lime at lunch. Open to Greek labels — happy to try Mythos and whatever the captain recommends."
             />
+
+            {/* 2026-05-20 — "Anything else specific" section removed.
+                It was a third place for charterers to write spirit/beer/
+                wine brand preferences after we already ask in three
+                other places. specific_preferences kept on the schema
+                for back-compat with already-saved briefs. */}
 
             {/* ─────────── Cocktails ─────────── */}
             <h2 className="brief-subhead">Cocktails & mocktails</h2>

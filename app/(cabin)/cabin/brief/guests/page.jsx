@@ -116,13 +116,20 @@ export default function GuestsSectionPage() {
                 />
               )}
 
-              <h2 className="brief-subhead">Anything else?</h2>
+              {/* 2026-05-20 — Eleanna friend-test: "Δεν κατάλαβα τι ήθελες
+                  να γράψω εδώ". The original prompt was abstract — by the
+                  time you reach this field you've already filled the
+                  charter_purpose_narrative at the top, so "anything else"
+                  reads as "what do you want me to add now?" Concrete examples
+                  the captain actually USES make it obvious what's worth
+                  writing here. */}
+              <h2 className="brief-subhead">Anything else for the crew?</h2>
               <OpenTextarea
-                label="About your group"
-                hint="Family relationships, who is travelling with whom, anything you'd like the crew to know."
+                label="A few sentences the captain reads to the chef and hostess"
+                hint="The small things that don't fit the questions above. Pair-ups (who's sharing a cabin), kids' ages, anyone who tires easily, a guest with a fear of water, a couple celebrating quietly while the others party loudly. Skip if you've already said it elsewhere."
                 name="group_notes"
-                placeholder="A few sentences are perfect."
-                rows={4}
+                placeholder="e.g. My mother-in-law is 78 — she'll need an easy boarding ramp and a calm anchorage on the last night. Two of the kids (8 and 10) only just learned to swim. We're trying to keep my brother's surprise birthday under wraps until Thursday."
+                rows={5}
                 register={register}
               />
             </>
