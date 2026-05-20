@@ -12,6 +12,7 @@
 import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 import AllergyAlert from "../../../../components/cabin/brief/AllergyAlert";
+import SampleMenuPreview from "../../../../components/cabin/brief/SampleMenuPreview";
 import {
   SectionTitle,
   TextField,
@@ -58,6 +59,15 @@ export default function DiningSectionPage() {
           context follows wherever a chef/hostess will be reading. */}
       <AllergyAlert />
 
+      {/* 2026-05-20 — Friend-test pass 3 (George): "I upload the
+          sample menu in GY Command. The charterer should see what
+          the chef proposes BEFORE ticking preferences — otherwise
+          they're filling in a vacuum." Component fetches the active
+          cabin's sample_menu and renders a collapsed preview at the
+          top of the dining page. Quietly renders nothing if no menu
+          has been uploaded yet. */}
+      <SampleMenuPreview />
+
       <BriefFormShell
         sectionKey="dining"
         prevSection={{ key: "life_aboard", title: "Life Aboard" }}
@@ -66,11 +76,22 @@ export default function DiningSectionPage() {
         {({ register }) => (
           <>
             {/* ─────────── Meal times ─────────── */}
+            {/* 2026-05-20 — Friend-test pass 3: times read for both
+                American (AM/PM) and European (24h) charterers. We
+                accept either format as free text — the captain reads
+                "2pm" and "14:00" identically. Placeholder + hint show
+                both so neither audience feels asked the wrong thing. */}
             <h2 className="brief-subhead">When do you like to eat?</h2>
+            <p className="brief-note">
+              <em>
+                Either format is fine — write &quot;9am&quot; or &quot;09:00&quot;,
+                whichever feels natural.
+              </em>
+            </p>
             <div className="brief-grid-3">
-              <TextField label="Breakfast typically" name="breakfast_time" placeholder="e.g. 9:00" register={register} />
-              <TextField label="Lunch typically" name="lunch_time" placeholder="e.g. 14:00" register={register} />
-              <TextField label="Dinner typically" name="dinner_time" placeholder="e.g. 20:30" register={register} />
+              <TextField label="Breakfast typically" name="breakfast_time" placeholder="e.g. 9am or 09:00" register={register} />
+              <TextField label="Lunch typically" name="lunch_time" placeholder="e.g. 2pm or 14:00" register={register} />
+              <TextField label="Dinner typically" name="dinner_time" placeholder="e.g. 8:30pm or 20:30" register={register} />
             </div>
 
             {/* ─────────── Breakfast ─────────── */}
@@ -315,20 +336,24 @@ export default function DiningSectionPage() {
                 <span>High chair needed</span>
               </label>
             </div>
+            {/* 2026-05-20 — Friend-test pass 3 (George): the
+                "HiPP Stage 2 in jars" placeholder reads as jargon to
+                anyone outside the baby-food world. Replaced with a
+                plain-English example. */}
             <OpenTextarea
-              label="Baby food / formula specifics"
+              label="Baby food / formula"
               name="kids_baby_food_specifics"
               register={register}
               rows={2}
-              placeholder="e.g. HiPP Stage 2 in jars, formula brand X 800g cans, organic purées"
+              placeholder="e.g. The brand of formula we use, any baby food jars or pouches we'd like stocked"
             />
 
-            <OpenTextarea
-              label="Children at the table — anything more"
-              name="children_at_table"
-              register={register}
-              rows={2}
-            />
+            {/* 2026-05-20 — Friend-test pass 3: removed the orphan
+                "Children at the table — anything more" textarea. It
+                sat above the chef note with no label clarity and George
+                flagged it as "δεν έχει ουσία να υπάρχει εκεί". Schema
+                field children_at_table kept in lib/cabin/schemas.js
+                for back-compat with already-saved briefs. */}
 
             <OpenTextarea
               label="A note to the chef"

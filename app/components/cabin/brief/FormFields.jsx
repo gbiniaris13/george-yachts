@@ -618,12 +618,17 @@ export function LikeDislikeMatrix({ name, label, hint, items, register }) {
            labels (food names) and the radio circles were too low-
            contrast for over-40 eyes. Pushed font weight + size up
            on labels; tightened radio border. */
+        /* 2026-05-20 — Friend-test pass 3: George flagged the food
+           matrix as "πολύ αχνά" — first column labels invisible.
+           Pushed font-size 15→16, weight 500→600, removed the
+           half-tone navy in favour of full var(--gy-navy). Cell
+           padding bumped so labels don't kiss the radio cells. */
         .brief-matrix-label {
           font-family: var(--gy-font-body);
-          font-size: 15px;
-          font-weight: 500;
+          font-size: 16px;
+          font-weight: 600;
           color: var(--gy-navy);
-          padding: 12px 14px;
+          padding: 14px 16px;
         }
         .brief-matrix-cell {
           display: flex;
@@ -662,7 +667,140 @@ export function LikeDislikeMatrix({ name, label, hint, items, register }) {
         @media (max-width: 560px) {
           .brief-matrix-head,
           .brief-matrix-row { grid-template-columns: 1.1fr 0.9fr 0.9fr 0.9fr; }
-          .brief-matrix-label { font-size: 13px; padding: 8px 8px; }
+          .brief-matrix-label { font-size: 14px; padding: 10px 10px; }
+        }
+      `}</style>
+    </fieldset>
+  );
+}
+
+// =================== FrequencyPicker ========================
+// 2026-05-20 — Friend-test pass 3 (In the Cellar rework).
+//
+// George said: "Δεν είναι F&B managers οι πελάτες μας. Μη βάζεις
+// τον άλλο να γράψει '16 κοκακόλες'. Βάλε τον να μου πει 'Coca-Cola
+// light' και να επιλέξει: το πίνω συχνά / χαλαρά / σπάνια αλλά το
+// χρειάζομαι."
+//
+// So this is a 4-option chip row keyed under a parent (e.g.
+// soft_drinks_frequency.coca_cola_light). Stores values from the
+// FREQUENCY enum below. The captain reads "often" and lets the
+// hostess provision; the user never touches a number.
+//
+// items: [{ value: "coca_cola_light", label: "Coca-Cola Light" }, ...]
+export const FREQUENCY_VALUES = ["often", "sometimes", "rarely", "skip"];
+export const FREQUENCY_LABEL = {
+  often: "Often",
+  sometimes: "Sometimes",
+  rarely: "Rarely but keep some",
+  skip: "Skip",
+};
+
+export function FrequencyPicker({ name, label, hint, items, register }) {
+  return (
+    <fieldset className="brief-freq">
+      <legend>
+        {label}
+        {hint && <em>{hint}</em>}
+      </legend>
+      <div className="brief-freq-list">
+        {items.map((it) => (
+          <div key={it.value} className="brief-freq-row">
+            <span className="brief-freq-item">{it.label}</span>
+            <div className="brief-freq-chips" role="radiogroup" aria-label={it.label}>
+              {FREQUENCY_VALUES.map((v) => (
+                <label key={v} className="brief-freq-chip">
+                  <input
+                    type="radio"
+                    value={v}
+                    {...(register
+                      ? register(`${name}.${it.value}`)
+                      : { name: `${name}.${it.value}` })}
+                  />
+                  <span>{FREQUENCY_LABEL[v]}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <style>{`
+        .brief-freq {
+          border: 0;
+          padding: 0;
+          margin: 0 0 24px 0;
+        }
+        .brief-freq legend {
+          font-family: var(--gy-font-ui);
+          font-size: 11.5px;
+          letter-spacing: 2.2px;
+          text-transform: uppercase;
+          color: rgba(13, 27, 42, 0.78);
+          margin-bottom: 12px;
+          font-weight: 500;
+        }
+        .brief-freq legend em {
+          display: block;
+          font-style: italic;
+          font-family: var(--gy-font-editorial);
+          font-size: 12.5px;
+          color: rgba(13, 27, 42, 0.55);
+          letter-spacing: 0;
+          text-transform: none;
+          margin-top: 4px;
+        }
+        .brief-freq-list {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+        .brief-freq-row {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          padding: 12px 0;
+          border-bottom: 1px solid rgba(13, 27, 42, 0.06);
+        }
+        .brief-freq-row:last-of-type { border-bottom: 0; }
+        .brief-freq-item {
+          font-family: var(--gy-font-body);
+          font-size: 15.5px;
+          font-weight: 600;
+          color: var(--gy-navy);
+        }
+        .brief-freq-chips {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .brief-freq-chip {
+          cursor: pointer;
+          position: relative;
+        }
+        .brief-freq-chip input {
+          position: absolute;
+          opacity: 0;
+          pointer-events: none;
+        }
+        .brief-freq-chip span {
+          display: inline-block;
+          padding: 7px 13px;
+          font-family: var(--gy-font-ui);
+          font-size: 11.5px;
+          letter-spacing: 0.6px;
+          border: 1px solid rgba(13, 27, 42, 0.2);
+          color: var(--gy-navy);
+          background: #ffffff;
+          transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+        }
+        .brief-freq-chip input:checked + span {
+          background: var(--gy-gold);
+          border-color: var(--gy-gold);
+          color: #ffffff;
+        }
+        .brief-freq-chip:hover span {
+          border-color: var(--gy-gold);
         }
       `}</style>
     </fieldset>

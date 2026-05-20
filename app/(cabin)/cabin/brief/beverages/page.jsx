@@ -1,12 +1,30 @@
 "use client";
 
 // /cabin/brief/beverages — In the Cellar.
-// Provisioning-grade capture for what the hostess and captain
-// actually buy: bottled water type & brand & per-day estimate,
-// soft drinks Label×Quantity table, wines (Greek vineyards toggle,
-// price range, Label×Qty×Price/bottle table), spirits per type
-// (Whiskey/Vodka/Gin/Rum/Tequila/Liqueur), beers international +
-// local, cocktails + mocktails.
+//
+// 2026-05-20 — Friend-test pass 3 (George):
+//   "Δεν είναι F&B managers οι πελάτες μας. Μη βάζεις τον άλλο να
+//    γράφει '16 κοκακόλες'. Βάλε τον να μου πει 'Coca-Cola light'
+//    και να επιλέξει: το πίνω συχνά / χαλαρά / σπάνια αλλά το
+//    χρειάζομαι. Στα κρασιά: θες κρασί; ναι; ελληνικά; ποια
+//    χρώματα; premium / standard / classic; συγκεκριμένη
+//    ετικέττα; αλλιώς leave it to us."
+//
+// So the cellar is reframed by category. Each category asks:
+//   1. Do you want this stocked?
+//   2. (where it matters) Tier — premium / standard / classic /
+//      leave-to-us.
+//   3. (where it matters) Specific labels you love (free text).
+// Plus FrequencyPicker rows for the spirits + soft drinks where
+// each item has its own drink-often / sometimes / rarely-but-keep
+// chip choice. No numbers, ever.
+//
+// Old keys (soft_drinks[], wines[], wine_price_range, whiskey[],
+// vodka[], gin[], rum[], tequila[], liqueur[], beers[], beers_local[],
+// spirits_notes, beers_notes, wine_style, standard_bar_items) stay
+// defined in lib/cabin/schemas.js so already-submitted briefs keep
+// validating. New submissions populate the *_wanted / *_tier /
+// *_frequency / *_specifics keys below.
 
 import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
@@ -17,8 +35,36 @@ import {
   OpenTextarea,
   CheckboxGroup,
   RadioGroup,
-  LabelQuantityRows,
+  FrequencyPicker,
 } from "../../../../components/cabin/brief/FormFields";
+
+const SOFT_DRINK_ITEMS = [
+  { value: "still_water",      label: "Still water" },
+  { value: "sparkling_water",  label: "Sparkling water" },
+  { value: "tonic",            label: "Tonic water" },
+  { value: "coca_cola",        label: "Coca-Cola" },
+  { value: "coca_cola_light",  label: "Coca-Cola Light / Zero" },
+  { value: "sprite",           label: "Sprite / Lemon-Lime" },
+  { value: "ginger_ale",       label: "Ginger ale" },
+  { value: "fresh_juices",     label: "Freshly squeezed juices" },
+  { value: "iced_tea",         label: "Iced tea" },
+];
+
+const SPIRITS_ITEMS = [
+  { value: "gin",        label: "Gin" },
+  { value: "vodka",      label: "Vodka" },
+  { value: "whisky",     label: "Whisky / Bourbon" },
+  { value: "rum",        label: "Rum" },
+  { value: "tequila",    label: "Tequila / Mezcal" },
+  { value: "liqueurs",   label: "Liqueurs (Aperol, Campari, etc.)" },
+];
+
+const WINE_COLOR_OPTIONS = [
+  { value: "red",    label: "Red" },
+  { value: "white",  label: "White" },
+  { value: "rose",   label: "Rosé" },
+  { value: "orange", label: "Orange / amber (when available)" },
+];
 
 export default function BeveragesSectionPage() {
   return (
@@ -29,27 +75,26 @@ export default function BeveragesSectionPage() {
         italic="cellar."
       />
       <IntroParagraph>
-        The hostess provisions the bar to your taste. Anything not consumed
-        during the week is yours to take home — a glass with friends back
-        home is the loveliest way to remember Greece.
+        The bar comes already stocked — gin, vodka, whisky, the usual mixers.
+        We only need a sense of what your group actually drinks, and any
+        labels that matter to you. The hostess buys the rest. No quantities
+        to count, ever.
       </IntroParagraph>
 
-      {/* 2026-05-20 — Allergy banner echoes on every food-adjacent
-          page. Bartender pours these too. */}
       <AllergyAlert />
 
       <BriefFormShell
         sectionKey="beverages"
         prevSection={{ key: "dining", title: "At the Table" }}
-        nextSection={{ key: "little_things", title: "The Little Things" }}
+        isLastSection
       >
-        {({ register, control }) => (
+        {({ register }) => (
           <>
             {/* ─────────── Water ─────────── */}
             <h2 className="brief-subhead">Bottled water</h2>
             <CheckboxGroup
               name="water_type"
-              label="Type"
+              label="Type your group prefers"
               register={register}
               twoColumn
               options={[
@@ -59,162 +104,177 @@ export default function BeveragesSectionPage() {
               ]}
             />
             <TextField
-              label="Preferred brands"
+              label="Brand preferences (optional)"
               name="water_brand"
-              placeholder="e.g. La Croix, Pellegrino, Evian, Waterloo"
-              register={register}
-            />
-            <TextField
-              label="Consumption estimate"
-              name="water_consumption_estimate"
-              placeholder="e.g. 2-3 bottles per day per person"
+              placeholder="e.g. Pellegrino at meals, anything else for everyday"
               register={register}
             />
 
-            {/* 2026-05-20 — Da$k friend-test: "Αυτό δεν μπορεί να το
-                υπολογίσει ο άλλος... συνήθως λένε ότι πίνουμε κοκακόλα
-                και η Hostess τα υπολογίζει." The exact-quantity table
-                read as broker counting drinks. Softened framing so the
-                charterer can say "we drink lots of Coke Zero" without
-                feeling pressured to specify "24 cans". The labels still
-                get saved if anyone uses the rows; the captain treats
-                quantity as advisory, not literal. */}
-            <h2 className="brief-subhead">Soft drinks</h2>
-            <p className="brief-note">
-              <em>
-                Tell us what your group drinks and the hostess will keep it
-                stocked. You don&apos;t need to specify exact quantities —
-                she calibrates from group size and the week ahead. If you
-                want a specific brand (Coca-Cola Zero, San Pellegrino,
-                Sprite light), name it; otherwise leave blank.
-              </em>
-            </p>
-            <LabelQuantityRows
-              name="soft_drinks"
-              label=""
+            {/* ─────────── Champagne ─────────── */}
+            <h2 className="brief-subhead">Champagne</h2>
+            <RadioGroup
+              name="champagne_wanted"
+              label="Would you like champagne stocked?"
               register={register}
-              control={control}
-              startRows={3}
-            />
-
-            {/* ─────────── Standard bar ─────────── */}
-            <h2 className="brief-subhead">Standard bar (classics included)</h2>
-            <p className="brief-note">
-              <em>
-                Tick to keep these stocked by default, or untick to skip a
-                category and let your specific picks below take over.
-              </em>
-            </p>
-            <CheckboxGroup
-              name="standard_bar_items"
-              label=""
-              register={register}
-              twoColumn
               options={[
-                { value: "tonic",     label: "Tonic & sodas" },
-                { value: "citrus",    label: "Fresh citrus & garnish" },
-                { value: "champagne", label: "House champagne for arrival toast" },
+                { value: "yes",               label: "Yes please" },
+                { value: "no",                label: "No, thank you" },
+                { value: "leave_to_captain",  label: "Leave it to the captain" },
               ]}
+            />
+            <RadioGroup
+              name="champagne_tier"
+              label="If yes — what level"
+              hint="The hostess matches the boat's house list to your level. Specific labels go in the box below."
+              register={register}
+              options={[
+                { value: "premium",          label: "Premium (vintage, grandes maisons)" },
+                { value: "standard",         label: "Standard (everyday quality)" },
+                { value: "classic",          label: "Classic (house pour for toasts)" },
+                { value: "leave_to_captain", label: "Leave it to the captain" },
+              ]}
+            />
+            <OpenTextarea
+              label="Specific labels you love (optional)"
+              name="champagne_specifics"
+              register={register}
+              rows={2}
+              placeholder="e.g. Krug Grande Cuvée · Dom Pérignon · Ruinart Blanc de Blancs"
             />
 
             {/* ─────────── Wines ─────────── */}
-            <h2 className="brief-subhead">Wines & Champagne</h2>
+            <h2 className="brief-subhead">Wines</h2>
+            <RadioGroup
+              name="wine_wanted"
+              label="Would you like wine stocked?"
+              register={register}
+              options={[
+                { value: "yes",               label: "Yes please" },
+                { value: "no",                label: "No, thank you" },
+                { value: "leave_to_captain",  label: "Leave it to the captain" },
+              ]}
+            />
             <RadioGroup
               name="wine_greek_vineyards"
-              label="Would you like to taste Greek wines from the best vineyards?"
-              hint="Greece offers exceptional wines — Assyrtiko, Xinomavro, old-vine reds. The crew happily recommends."
+              label="Greek wines from the best vineyards?"
+              hint="Greece offers exceptional wines — Assyrtiko, Xinomavro, old-vine reds. The crew recommends warmly."
               register={register}
               options={[
                 { value: "yes",     label: "Yes please" },
-                { value: "open_to", label: "Open to a few — a mix with our own picks" },
-                { value: "no",      label: "No, just our own selections" },
+                { value: "open_to", label: "Open to a few — mixed with our own picks" },
+                { value: "no",      label: "No, only our own selections" },
               ]}
             />
-            {/* 2026-05-20 — Eleanna friend-test: asked "per person or per
-                bottle?" on this exact field even though the LABEL said
-                per bottle. Adding it to the placeholder makes the unit
-                unambiguous at the point of input, not only in the label. */}
-            <TextField
-              label="Preferred price range per bottle (Greek wines)"
-              hint="Per bottle, not per person. The captain agrees the final budget with you when you board."
-              name="wine_price_range"
-              placeholder="e.g. €40-80 per bottle, or €100-150 per bottle"
+            <CheckboxGroup
+              name="wine_colors"
+              label="Colours your group enjoys"
               register={register}
+              twoColumn
+              options={WINE_COLOR_OPTIONS}
+            />
+            <OpenTextarea
+              label="Grape varieties you love (optional)"
+              hint="Sauvignon Blanc, Pinot Noir, Assyrtiko, Agiorgitiko — the crew will look these out."
+              name="wine_grapes"
+              register={register}
+              rows={2}
+              placeholder="e.g. Burgundy reds, Sancerre whites, Greek Assyrtiko"
             />
             <RadioGroup
-              name="wine_style"
-              label="Overall wine approach"
+              name="wine_tier"
+              label="Overall level"
               register={register}
               options={[
-                { value: "surprise_greek",   label: "Surprise us with Greek selections" },
-                { value: "house_red_white",  label: "House red & white, no fuss" },
-                { value: "specific_only",    label: "Only the specific labels I list" },
-                { value: "combination",      label: "A combination — some surprise, some specific" },
+                { value: "premium",          label: "Premium (crus, vintages)" },
+                { value: "standard",         label: "Standard (good everyday wines)" },
+                { value: "classic",          label: "Classic (house red & white)" },
+                { value: "leave_to_captain", label: "Leave it to the captain" },
               ]}
             />
-            <p className="brief-note" style={{ marginTop: 14 }}>
-              <em>
-                Specific labels — Label, Quantity, Price range per bottle.
-                Leave price blank to let the captain choose within your
-                overall range above.
-              </em>
-            </p>
-            <LabelQuantityRows
-              name="wines"
-              label=""
-              register={register}
-              control={control}
-              withPriceRange
-              startRows={4}
-            />
-
-            {/* 2026-05-20 — Da$k friend-test: "γενικά από όσο ξέρω αυτά
-                τα σκάφη από μπαρ κτλ είναι φουλ γιατί δεν ξέρουν τι θα
-                ζητήσει ο πελάτης". The six per-spirit label/qty tables
-                + two per-beer tables produced visible fatigue ("γενικά
-                είναι πολύ μεγάλο") and the implication that the charter
-                bar wasn't already stocked. Collapsed into one prompt
-                each for spirits + beers — the bartender already has the
-                core spirits and works from a one-liner like "we drink
-                gin & tonics, dark rum on the rocks, Mythos with lunch."
-
-                Original LabelQuantityRows for each spirit + beer kept
-                in schemas.js (commented use) so old saved briefs still
-                load; new submissions will use the new freeform fields
-                below. */}
-
-            <h2 className="brief-subhead">Spirits — what your group drinks</h2>
-            <p className="brief-note">
-              <em>
-                The yacht keeps a full bar (gin, vodka, rum, tequila, whiskey,
-                core liqueurs, mixers). Tell us your favourites and any
-                specific labels you love — the hostess buys what matters and
-                leaves the rest stocked at house level.
-              </em>
-            </p>
             <OpenTextarea
-              label="Spirits, brands, and how you take them"
-              name="spirits_notes"
-              register={register}
-              rows={4}
-              placeholder="e.g. We drink gin & tonics — Hendrick's if you have it, Fever-Tree tonic. My husband loves a Talisker neat in the evening. Margaritas on Friday night, Don Julio if possible."
-            />
-
-            <h2 className="brief-subhead">Beers</h2>
-            <OpenTextarea
-              label="Beers your group drinks"
-              hint="Mention international labels (Heineken, Corona, IPA) or Greek beers you'd like to taste (Mythos, Alfa, Vergina, Septem)."
-              name="beers_notes"
+              label="Specific labels you love (optional)"
+              name="wine_specifics"
               register={register}
               rows={3}
-              placeholder="e.g. Mostly Corona with lime at lunch. Open to Greek labels — happy to try Mythos and whatever the captain recommends."
+              placeholder="e.g. Sancerre Henri Bourgeois · any Domaine Gerovassiliou white · Châteauneuf-du-Pape if a vintage is around"
             />
 
-            {/* 2026-05-20 — "Anything else specific" section removed.
-                It was a third place for charterers to write spirit/beer/
-                wine brand preferences after we already ask in three
-                other places. specific_preferences kept on the schema
-                for back-compat with already-saved briefs. */}
+            {/* ─────────── Spirits ─────────── */}
+            <h2 className="brief-subhead">Spirits</h2>
+            <p className="brief-note">
+              <em>
+                The bar already carries the core categories. Mark how often
+                your group drinks each — the hostess provisions accordingly.
+              </em>
+            </p>
+            <FrequencyPicker
+              name="spirits_frequency"
+              label=""
+              items={SPIRITS_ITEMS}
+              register={register}
+            />
+            <OpenTextarea
+              label="Specific labels you love (optional)"
+              hint="Single malts, particular gins, dark rums — anything the hostess should hunt for at provisioning."
+              name="spirits_brands"
+              register={register}
+              rows={3}
+              placeholder="e.g. Hendrick's gin · Talisker 10 · Don Julio Reposado · Aperol for spritz at sunset"
+            />
+
+            {/* ─────────── Beers ─────────── */}
+            <h2 className="brief-subhead">Beers</h2>
+            <RadioGroup
+              name="beers_frequency"
+              label="How often does your group drink beer?"
+              register={register}
+              options={[
+                { value: "often",     label: "Often" },
+                { value: "sometimes", label: "Sometimes" },
+                { value: "rarely",    label: "Rarely, but keep some" },
+                { value: "skip",      label: "Skip — we don't drink beer" },
+              ]}
+            />
+            <RadioGroup
+              name="beers_origin"
+              label="International or Greek?"
+              register={register}
+              options={[
+                { value: "international",    label: "International (Corona, Heineken, IPA, etc.)" },
+                { value: "greek",            label: "Greek (Mythos, Alfa, Vergina, Septem)" },
+                { value: "both",             label: "Both — a mix" },
+                { value: "leave_to_captain", label: "Leave it to the captain" },
+              ]}
+            />
+            <OpenTextarea
+              label="Specific labels (optional)"
+              name="beers_specifics"
+              register={register}
+              rows={2}
+              placeholder="e.g. Corona with lime at lunch · happy to try Mythos and Septem"
+            />
+
+            {/* ─────────── Soft drinks ─────────── */}
+            <h2 className="brief-subhead">Soft drinks</h2>
+            <p className="brief-note">
+              <em>
+                Same idea — mark each as often, sometimes, rarely, or skip.
+                The hostess takes it from there.
+              </em>
+            </p>
+            <FrequencyPicker
+              name="soft_drinks_frequency"
+              label=""
+              items={SOFT_DRINK_ITEMS}
+              register={register}
+            />
+            <OpenTextarea
+              label="Specific brands (optional)"
+              name="soft_drinks_brands"
+              register={register}
+              rows={2}
+              placeholder="e.g. Fever-Tree tonic · Schweppes ginger ale · only Coca-Cola Light, not Zero"
+            />
 
             {/* ─────────── Cocktails ─────────── */}
             <h2 className="brief-subhead">Cocktails & mocktails</h2>
@@ -224,7 +284,7 @@ export default function BeveragesSectionPage() {
               name="cocktails"
               register={register}
               rows={3}
-              placeholder="e.g. Negroni 1:1:1 over a single large cube, Margarita on the rocks with salt"
+              placeholder="e.g. Negroni 1:1:1 over a single large cube · Margarita on the rocks with salt"
             />
             <OpenTextarea
               label="Mocktails"
@@ -232,7 +292,7 @@ export default function BeveragesSectionPage() {
               name="mocktails"
               register={register}
               rows={2}
-              placeholder="e.g. Virgin mojitos, fresh juice spritzers, ginger cooler"
+              placeholder="e.g. Virgin mojitos · fresh juice spritzers · ginger cooler"
             />
 
             <p className="bev-extras-note">
@@ -259,8 +319,9 @@ export default function BeveragesSectionPage() {
         .brief-note {
           font-family: var(--gy-font-editorial);
           font-size: 13px;
-          color: rgba(13, 27, 42, 0.55);
+          color: rgba(13, 27, 42, 0.65);
           margin: 0 0 14px 0;
+          line-height: 1.6;
         }
         .bev-extras-note {
           font-family: var(--gy-font-editorial);

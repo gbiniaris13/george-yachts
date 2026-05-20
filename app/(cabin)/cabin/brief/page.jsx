@@ -56,12 +56,12 @@ const SECTION_META = [
     intro: "Water, soft drinks, wines, spirits, beers, cocktails.",
     minutes: 8,
   },
-  {
-    key: "little_things",
-    title: "The Little Things",
-    intro: "Photography, night service, anything we haven't asked.",
-    minutes: 4,
-  },
+  // 2026-05-20 — Friend-test pass 3: "The Little Things" removed
+  // from the section list. George: "βγάλετε τελείως, μόνο χρόνο
+  // μας τρώει". Schema (littleThingsSchema) stays registered in
+  // lib/cabin/schemas.js so already-submitted briefs continue to
+  // validate; the URL /cabin/brief/little-things now redirects to
+  // the brief overview rather than a dead page.
   {
     key: "children",
     title: "If You're Sailing with Children",
