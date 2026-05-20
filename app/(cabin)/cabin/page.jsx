@@ -244,73 +244,92 @@ export default async function CabinHomePage() {
         </section>
       )}
 
-      <section className="cabin-home__discoveries">
-        <div className="cabin-home__section-label">Other places in your Cabin</div>
-        <ul>
-          <li>
-            <Link href="/cabin/before-you-sail">
-              <span className="cabin-home__glyph">⊿</span>
-              <span>
-                <strong>Before you sail</strong>
-                <em>Weather, Greek phrases, and a quiet packing list.</em>
-              </span>
+      {/* ============================================================
+          THE CABIN MAP — icon grid (2026-05-20 friend-test pass 3).
+          Replaces the small discoveries list AND the hamburger menu.
+          George: "Κανένας πελάτης δεν θα κάτσει να ανοίξει hamburger.
+          Βγάλε τα όλα στην κεντρική σελίδα σαν εικονίδια με απλά
+          λόγια κάτω από το καθένα."
+
+          Tiles are role-aware:
+            - principal/assistant → "Your Group" (links to /cabin/guests)
+            - guest                → "My Details" (links to /cabin/me)
+          Brief tile is hidden for guests (they don't fill the brief).
+          ============================================================ */}
+      <section className="cabin-home__map">
+        <div className="cabin-home__section-label">Your Cabin, at a glance</div>
+        <div className="cabin-home__grid">
+          {isPrincipal && (
+            <Link href="/cabin/brief" className="cabin-home__tile">
+              <span className="cabin-home__tile-glyph" aria-hidden>✎</span>
+              <strong>The Brief</strong>
+              <em>Tell us about your week — pace, food, what to celebrate.</em>
             </Link>
-          </li>
-          <li>
-            <Link href="/cabin/mood-board">
-              <span className="cabin-home__glyph">❖</span>
-              <span>
-                <strong>Mood Board</strong>
-                <em>Pin the vibe you want — sunsets, dishes, music.</em>
-              </span>
+          )}
+          <Link href="/cabin/chat" className="cabin-home__tile">
+            <span className="cabin-home__tile-glyph" aria-hidden>✺</span>
+            <strong>Chat with George</strong>
+            <em>Message us anytime. George answers personally.</em>
+          </Link>
+          {isPrincipal ? (
+            <Link href="/cabin/guests" className="cabin-home__tile">
+              <span className="cabin-home__tile-glyph" aria-hidden>◇</span>
+              <strong>Your Group</strong>
+              <em>Invite the people sailing with you. See who has joined.</em>
             </Link>
-          </li>
-          <li>
-            <Link href="/cabin/crew">
-              <span className="cabin-home__glyph">⚓</span>
-              <span>
-                <strong>Crew</strong>
-                <em>Meet the captain, chef and hostess of your voyage.</em>
-              </span>
+          ) : (
+            <Link href="/cabin/me" className="cabin-home__tile">
+              <span className="cabin-home__tile-glyph" aria-hidden>◇</span>
+              <strong>My Details</strong>
+              <em>Share a few details — DOB, allergies, swimming.</em>
             </Link>
-          </li>
-          <li>
-            <Link href="/cabin/menu">
-              <span className="cabin-home__glyph">✿</span>
-              <span>
-                <strong>Sample Menu</strong>
-                <em>A taste of what your chef is preparing.</em>
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/cabin/time-capsule">
-              <span className="cabin-home__glyph">✉</span>
-              <span>
-                <strong>Voyage Time Capsule</strong>
-                <em>Write a note to yourself. We will return it in six months.</em>
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/cabin/filotimo-circle">
-              <span className="cabin-home__glyph">◐</span>
-              <span>
-                <strong>Filotimo Circle</strong>
-                <em>You are a member. Here is what that means.</em>
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/cabin/your-data">
-              <span className="cabin-home__glyph">▢</span>
-              <span>
-                <strong>Your Data</strong>
-                <em>Everything we hold for you. Edit or delete anytime.</em>
-              </span>
-            </Link>
-          </li>
-        </ul>
+          )}
+          <Link href="/cabin/crew" className="cabin-home__tile">
+            <span className="cabin-home__tile-glyph" aria-hidden>⚓</span>
+            <strong>Crew</strong>
+            <em>Meet the captain, chef and hostess of your voyage.</em>
+          </Link>
+          <Link href="/cabin/menu" className="cabin-home__tile">
+            <span className="cabin-home__tile-glyph" aria-hidden>✿</span>
+            <strong>Sample Menu</strong>
+            <em>A taste of what your chef proposes for the week.</em>
+          </Link>
+          <Link href="/cabin/vessel" className="cabin-home__tile">
+            <span className="cabin-home__tile-glyph" aria-hidden>⛵</span>
+            <strong>Your Vessel</strong>
+            <em>Photos and details of the yacht you’re sailing on.</em>
+          </Link>
+          <Link href="/cabin/mood-board" className="cabin-home__tile">
+            <span className="cabin-home__tile-glyph" aria-hidden>❖</span>
+            <strong>Mood Board</strong>
+            <em>Save photos that capture the vibe you want.</em>
+          </Link>
+          <Link href="/cabin/before-you-sail" className="cabin-home__tile">
+            <span className="cabin-home__tile-glyph" aria-hidden>⊿</span>
+            <strong>Before You Sail</strong>
+            <em>Weather, Greek phrases, a quiet packing list.</em>
+          </Link>
+          <Link href="/cabin/voyage-album" className="cabin-home__tile">
+            <span className="cabin-home__tile-glyph" aria-hidden>▣</span>
+            <strong>Voyage Album</strong>
+            <em>Your photos from the week. Yours forever.</em>
+          </Link>
+          <Link href="/cabin/time-capsule" className="cabin-home__tile">
+            <span className="cabin-home__tile-glyph" aria-hidden>✉</span>
+            <strong>Time Capsule</strong>
+            <em>Write a note we’ll send you in six months.</em>
+          </Link>
+          <Link href="/cabin/filotimo-circle" className="cabin-home__tile">
+            <span className="cabin-home__tile-glyph" aria-hidden>◐</span>
+            <strong>Filotimo Circle</strong>
+            <em>Your place in our quiet loyalty circle.</em>
+          </Link>
+          <Link href="/cabin/your-data" className="cabin-home__tile">
+            <span className="cabin-home__tile-glyph" aria-hidden>▢</span>
+            <strong>Your Data</strong>
+            <em>Everything we hold for you. Edit or delete any time.</em>
+          </Link>
+        </div>
       </section>
 
       {circle && (
@@ -332,6 +351,17 @@ export default async function CabinHomePage() {
       {/* PWA install nudge — renders client-side, dismissible,
           shows only on mobile after the first successful session. */}
       <InstallNudge />
+
+      {/* 2026-05-20 — Friend-test pass 3: hamburger menu removed
+          entirely (see CabinShell.jsx). Sign-out moved here as a
+          small, calm footer link — visible but not noisy. */}
+      <footer className="cabin-home__footer">
+        <form action="/api/cabin/auth/logout" method="post">
+          <button type="submit" className="cabin-home__signout">
+            Sign out
+          </button>
+        </form>
+      </footer>
 
       <style>{`
         .cabin-home { display: flex; flex-direction: column; gap: 48px; }
@@ -460,50 +490,78 @@ export default async function CabinHomePage() {
           background: rgba(201, 168, 76, 0.08);
         }
 
-        .cabin-home__discoveries ul {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-          display: flex;
-          flex-direction: column;
+        /* ── Icon grid (Cabin map) ─────────────────────────────── */
+        .cabin-home__grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
           gap: 1px;
-          background: rgba(13, 27, 42, 0.06);
+          background: rgba(13, 27, 42, 0.08);
+          border: 1px solid rgba(13, 27, 42, 0.08);
         }
-        .cabin-home__discoveries li { background: #ffffff; }
-        .cabin-home__discoveries a {
-          display: flex;
-          align-items: flex-start;
-          gap: 16px;
-          padding: 18px 18px 20px 18px;
+        @media (min-width: 640px) {
+          .cabin-home__grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (min-width: 1024px) {
+          .cabin-home__grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        .cabin-home__tile {
+          background: #ffffff;
+          padding: 22px 18px 20px 18px;
           color: var(--gy-navy);
           text-decoration: none;
-          transition: background 160ms ease;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          min-height: 130px;
+          transition: background 160ms ease, transform 160ms ease;
         }
-        .cabin-home__discoveries a:hover {
+        .cabin-home__tile:hover {
           background: rgba(201, 168, 76, 0.06);
         }
-        .cabin-home__discoveries strong {
-          display: block;
+        .cabin-home__tile:active {
+          transform: scale(0.985);
+        }
+        .cabin-home__tile-glyph {
+          color: var(--gy-gold);
+          font-size: 28px;
+          line-height: 1;
+        }
+        .cabin-home__tile strong {
           font-family: var(--gy-font-editorial);
           font-weight: 400;
-          font-size: 17px;
+          font-size: 16.5px;
           letter-spacing: -0.1px;
+          line-height: 1.25;
         }
-        .cabin-home__discoveries em {
-          display: block;
+        .cabin-home__tile em {
           font-style: italic;
           font-family: var(--gy-font-editorial);
-          color: rgba(13, 27, 42, 0.6);
+          color: rgba(13, 27, 42, 0.62);
           font-size: 13px;
-          margin-top: 2px;
+          line-height: 1.5;
         }
-        .cabin-home__glyph {
-          color: var(--gy-gold);
-          font-size: 18px;
-          width: 24px;
-          text-align: center;
-          flex-shrink: 0;
-          padding-top: 2px;
+
+        /* ── Sign-out footer ────────────────────────────────────── */
+        .cabin-home__footer {
+          margin-top: 8px;
+          padding-top: 24px;
+          border-top: 1px solid rgba(13, 27, 42, 0.08);
+          display: flex;
+          justify-content: center;
+        }
+        .cabin-home__signout {
+          background: transparent;
+          border: 0;
+          color: rgba(13, 27, 42, 0.45);
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          cursor: pointer;
+          padding: 10px 18px;
+        }
+        .cabin-home__signout:hover {
+          color: var(--gy-navy);
         }
 
         .cabin-home__circle {

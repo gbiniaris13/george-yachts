@@ -12,49 +12,57 @@ import IntroParagraph from "../../../components/cabin/IntroParagraph";
 
 export const metadata = { title: "The Charter Brief · Your Cabin" };
 
+// 2026-05-20 — Friend-test pass 3 (George):
+//   - "Around 34 minutes" felt too long. After we stripped Soundtrack
+//     / Wellness / docking_preference / "pre-stage" / Little Things /
+//     all the label×qty cellar tables, the brief is genuinely faster.
+//     Cap totals at 20–30 min by rebalancing per-section.
+//   - Section `intro` lines now match the simplified content (no
+//     more "music / wellness / docking style" copy that referenced
+//     fields we removed).
 const SECTION_META = [
   {
     key: "arrival",
     title: "Arrival & Departure",
-    intro: "Flights, hotels, transfers — and a word on your sailing experience.",
-    minutes: 4,
+    intro: "Your flights into Greece, transfers, where you’re staying first.",
+    minutes: 3,
   },
   {
     key: "guests",
     title: "Your Group",
-    intro: "Who is sailing, the kind of week this is, the spirit of it all.",
-    minutes: 5,
+    intro: "Who is sailing — and the spirit of the week.",
+    minutes: 3,
   },
   {
     key: "health",
     title: "Health & Safety",
     intro: "Allergies, conditions, the emergency contact ashore.",
-    minutes: 4,
+    minutes: 3,
     importance: "high",
   },
   {
     key: "itinerary",
     title: "Your Itinerary",
-    intro: "Pace, docking style, activities, anything to celebrate.",
-    minutes: 4,
+    intro: "Pace of the week, marina or anchor, any celebrations.",
+    minutes: 3,
   },
   {
     key: "life_aboard",
     title: "Life Aboard",
-    intro: "Activities, music, wellness, the texture of the days.",
-    minutes: 5,
+    intro: "Activities you love, anything else for the captain to know.",
+    minutes: 3,
   },
   {
     key: "dining",
     title: "At the Table",
-    intro: "How you eat — breakfast detail, food matrix, snacks, kids.",
-    minutes: 8,
+    intro: "Times of day, the food matrix, snacks, kids.",
+    minutes: 5,
   },
   {
     key: "beverages",
     title: "In the Cellar",
-    intro: "Water, soft drinks, wines, spirits, beers, cocktails.",
-    minutes: 8,
+    intro: "Champagne, wines, spirits, beers, soft drinks — by feel.",
+    minutes: 4,
   },
   // 2026-05-20 — Friend-test pass 3: "The Little Things" removed
   // from the section list. George: "βγάλετε τελείως, μόνο χρόνο
@@ -66,7 +74,7 @@ const SECTION_META = [
     key: "children",
     title: "If You're Sailing with Children",
     intro: "Ages, naps, the snacks that travel well.",
-    minutes: 3,
+    minutes: 2,
     onlyIfMinors: true,
   },
 ];
@@ -119,20 +127,19 @@ export default async function CabinBriefOverviewPage() {
         </h1>
         <div className="cabin-brief__rule" aria-hidden />
         <IntroParagraph>
-          Eight gentle sections. Every blank is optional — leave what
-          does not apply. Only your name and email are truly required.
-          Save as you go; come back days, weeks, or months later. The
-          more you share, the more thoughtfully your week can be
-          designed. You won&apos;t have to repeat yourself to the crew,
-          the chef, the hostess or the captain — they all read from
-          here.
+          A handful of short sections. Every blank is optional — leave
+          what doesn&apos;t apply. Only your name and email are truly
+          required. Save as you go; come back days, weeks, or months
+          later. The more you share, the more thoughtfully your week
+          can be designed — and you won&apos;t have to repeat yourself
+          to the crew, the chef, the hostess or the captain. They all
+          read from here.
         </IntroParagraph>
         <p className="cabin-brief__time">
           Around <strong>{remainingMinutes || totalMinutes} minutes</strong>{" "}
-          remaining
           {remainingMinutes !== totalMinutes
-            ? " — pick up from where you left off."
-            : ", in your own time."}
+            ? "remaining — pick up from where you left off."
+            : "in total, in your own time."}
         </p>
       </header>
 

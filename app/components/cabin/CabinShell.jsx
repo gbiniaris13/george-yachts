@@ -15,7 +15,7 @@
 
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function ConciergeBanner() {
   const router = useRouter();
@@ -78,20 +78,13 @@ function formatDateRange(from, to) {
 
 export default function CabinShell({ session, cabin, children }) {
   const pathname = usePathname() || "";
-  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Close the drawer on Escape, lock body scroll while open.
-  useEffect(() => {
-    if (!drawerOpen) return;
-    const onKey = (e) => { if (e.key === "Escape") setDrawerOpen(false); };
-    window.addEventListener("keydown", onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [drawerOpen]);
+  // 2026-05-20 — Friend-test pass 3 (George): the hamburger drawer
+  // is gone. George's read: "Κανένας πελάτης δεν θα κάτσει να
+  // ανοίξει hamburger για να ασχοληθεί." All 13 nav items now
+  // live as icon tiles on /cabin home. The bottom mobile nav
+  // stays (5 anchor items: Home, Brief, Chat, Before, Guests).
+  // Sign-out moved to a small footer link on /cabin.
 
   const principalName =
     cabin?.principal_charterer_name ||
@@ -144,14 +137,6 @@ export default function CabinShell({ session, cabin, children }) {
               </span>
             )}
           </div>
-          <button
-            className="cabin-shell__menu"
-            aria-label="Open menu"
-            onClick={() => setDrawerOpen((s) => !s)}
-            type="button"
-          >
-            <span aria-hidden>≡</span>
-          </button>
         </header>
       )}
 
@@ -187,57 +172,8 @@ export default function CabinShell({ session, cabin, children }) {
         </nav>
       )}
 
-      {showChrome && drawerOpen && (
-        <div
-          className="cabin-shell__drawer-backdrop"
-          onClick={() => setDrawerOpen(false)}
-        >
-          <aside
-            className="cabin-shell__drawer"
-            onClick={(e) => e.stopPropagation()}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Cabin navigation"
-          >
-            <div className="cabin-shell__drawer-head">
-              <span className="cabin-shell__brand-eyebrow">Navigation</span>
-            </div>
-            <ul className="cabin-shell__drawer-list">
-              {NAV_ITEMS.map((item) => {
-                const active = pathname === item.href;
-                return (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setDrawerOpen(false)}
-                      className={
-                        "cabin-shell__drawer-link" +
-                        (active ? " is-active" : "")
-                      }
-                    >
-                      <span className="cabin-shell__drawer-glyph" aria-hidden>
-                        {item.glyph}
-                      </span>
-                      <span>{item.label}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-              <li className="cabin-shell__drawer-sep" />
-              <li>
-                <form action="/api/cabin/auth/logout" method="post">
-                  <button
-                    className="cabin-shell__drawer-link cabin-shell__drawer-link--logout"
-                    type="submit"
-                  >
-                    Sign out
-                  </button>
-                </form>
-              </li>
-            </ul>
-          </aside>
-        </div>
-      )}
+      {/* 2026-05-20 — drawer + backdrop removed. The Cabin map on
+          /cabin replaces this; Sign-out lives in /cabin footer. */}
 
       <style jsx global>{`
         .cabin-shell__concierge-banner {
