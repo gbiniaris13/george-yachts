@@ -212,6 +212,14 @@ export default async function CabinHomePage() {
         </section>
       )}
 
+      {/* 2026-05-20 — Friend-test pass 3 (George): "Δεν είδα κουμπί
+          να βάλω την Καμπίνα στο κινητό." Install nudge moved here
+          (was at the bottom of the page) so it's above-the-fold on
+          mobile — visible without scrolling. The component
+          dismisses itself silently on desktop and on already-
+          installed PWAs. */}
+      <InstallNudge />
+
       <CharterAtAGlance summary={summary} cabin={cabin} />
 
       {/* ============================================================
@@ -329,6 +337,11 @@ export default async function CabinHomePage() {
             <strong>Your Data</strong>
             <em>Everything we hold for you. Edit or delete any time.</em>
           </Link>
+          <Link href="/cabin/install" className="cabin-home__tile">
+            <span className="cabin-home__tile-glyph" aria-hidden>⤓</span>
+            <strong>Add to phone</strong>
+            <em>One tap to come back next time — no more sign-in emails.</em>
+          </Link>
         </div>
       </section>
 
@@ -347,10 +360,6 @@ export default async function CabinHomePage() {
           </p>
         </aside>
       )}
-
-      {/* PWA install nudge — renders client-side, dismissible,
-          shows only on mobile after the first successful session. */}
-      <InstallNudge />
 
       {/* 2026-05-20 — Friend-test pass 3: hamburger menu removed
           entirely (see CabinShell.jsx). Sign-out moved here as a
