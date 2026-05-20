@@ -33,6 +33,7 @@ import { getCircleMember, nextTierGoal, TIERS } from "@/lib/cabin/filotimo";
 import CharterAtAGlance from "../../components/cabin/CharterAtAGlance";
 import IntroParagraph from "../../components/cabin/IntroParagraph";
 import InstallNudge from "../../components/cabin/InstallNudge";
+import VoyageCarousel from "../../components/cabin/VoyageCarousel";
 import { titleCaseName } from "@/lib/cabin/format";
 
 export const metadata = {
@@ -369,6 +370,11 @@ export default async function CabinHomePage() {
           </Link>
         </div>
       </section>
+
+      {/* 2026-05-20 — Friend-test pass 4 (George): "Κάτω από το
+          grid θέλω σε καρουζέλ τις τελευταίες φωτογραφίες των
+          ταξιδιών." Quietly renders nothing if no photos yet. */}
+      <VoyageCarousel />
 
       {circle && (
         <aside className="cabin-home__circle">

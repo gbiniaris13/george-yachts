@@ -5,7 +5,7 @@
 import { redirect } from "next/navigation";
 import { readSessionFromCookies, pickActiveCabinId } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
-import { lookupPort, fetchDailyForecast, decodeWeatherCode } from "@/lib/cabin/weather";
+import { fetchCharterWindowForecast, decodeWeatherCode } from "@/lib/cabin/weather";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
 
@@ -87,18 +87,28 @@ export default async function BeforeYouSailPage() {
     itinerary?.data?.night_preference === "captain_decides" ||
     !itinerary?.data?.preferred_areas?.length;
 
-  // Try to fetch weather for the embarkation port. Silent fallback.
-  let forecast = null;
-  let portLabel = cabin?.port_embarkation || null;
-  const port = lookupPort(cabin?.port_embarkation);
-  if (port) {
-    portLabel = port.label;
+  // 2026-05-20 — Friend-test pass 4 (George):
+  //   "Ο καιρός λέει 20-26 May ενώ το charter είναι 24-31 May.
+  //    Επίσης δείχνει μόνο Αθήνα — θα ήθελα Αθήνα, Ιόνιο,
+  //    Σαρονικό, Κυκλάδες."
+  //
+  // Multi-region forecast, sliced to the actual charter dates.
+  // See lib/cabin/weather.js → fetchCharterWindowForecast for the
+  // anchor ports and date-slicing logic.
+  let regionsForecast = [];
+  let outOfRange = false;
+  if (cabin?.charter_period_from && cabin?.charter_period_to) {
     try {
-      forecast = await fetchDailyForecast({ lat: port.lat, lon: port.lon, days: 7 });
+      regionsForecast = await fetchCharterWindowForecast({
+        fromIso: cabin.charter_period_from,
+        toIso: cabin.charter_period_to,
+      });
+      outOfRange = regionsForecast.some((r) => r.out_of_range);
     } catch (err) {
       console.error("[before-you-sail] weather fetch:", err);
     }
   }
+  const hasAnyForecast = regionsForecast.some((r) => r.days?.length > 0);
 
   return (
     <article>
@@ -114,53 +124,71 @@ export default async function BeforeYouSailPage() {
         you to think about.
       </IntroParagraph>
 
-      {forecast && (
+      {(hasAnyForecast || outOfRange) && (
         <section className="bys-block">
-          <h2 className="bys-label">Weather at {portLabel}</h2>
+          <h2 className="bys-label">Weather across your cruising waters</h2>
           <p className="bys-sub">
-            {captainDecides ? (
-              <>
-                Seven-day outlook from Open-Meteo for your embarkation port
-                only. Because the final route is being shaped together with
-                your captain at arrival, the islands you actually visit may
-                see different weather day-to-day — your captain follows live
-                marine sources and adjusts the itinerary accordingly. Pack
-                for warm days, breezy evenings, and the occasional gust.
-              </>
-            ) : (
-              <>
-                Seven-day outlook from Open-Meteo for your departure port.
-                Your captain plans the daily route on this and his own
-                marine sources — different islands often see different
-                conditions, so this is best read as a flavour of the week,
-                not a strict forecast.
-              </>
-            )}
+            Outlook from Open-Meteo for the dates of your charter. We show
+            four anchor points across Greece — your captain reads live
+            marine sources and chooses the route around what each day
+            actually brings. Pack for warm days, breezy evenings, and the
+            occasional gust.
           </p>
-          <ul className="bys-weather">
-            {forecast.map((d) => {
-              const meta = decodeWeatherCode(d.code);
-              const day = fmtDay(d.date);
-              return (
-                <li key={d.date}>
-                  <div className="bys-weather__day">
-                    <strong>{day.day}</strong>
-                    <em>{day.date}</em>
+
+          {outOfRange ? (
+            <p className="bys-out-of-range">
+              <em>
+                Your charter is beyond the 16-day forecast window. The
+                detailed outlook will appear here a couple of weeks before
+                embarkation.
+              </em>
+            </p>
+          ) : (
+            <div className="bys-regions">
+              {regionsForecast.map((region) => (
+                <div key={region.key} className="bys-region">
+                  <div className="bys-region__head">
+                    <strong>{region.label}</strong>
+                    <em>{region.sub}</em>
                   </div>
-                  <div className="bys-weather__glyph" aria-hidden>{meta.glyph}</div>
-                  <div className="bys-weather__main">
-                    <span className="bys-weather__label">{meta.label}</span>
-                    <span className="bys-weather__temp">
-                      {Math.round(d.tmax)}° / {Math.round(d.tmin)}°
-                    </span>
-                  </div>
-                  <div className="bys-weather__wind">
-                    {d.wind_kmh ? `${Math.round(d.wind_kmh)} km/h` : ""}
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+                  {region.days.length === 0 ? (
+                    <p className="bys-region__empty">
+                      <em>
+                        {region.error
+                          ? "Forecast unavailable just now."
+                          : "Outside the forecast window."}
+                      </em>
+                    </p>
+                  ) : (
+                    <ul className="bys-weather">
+                      {region.days.map((d) => {
+                        const meta = decodeWeatherCode(d.code);
+                        const day = fmtDay(d.date);
+                        return (
+                          <li key={d.date}>
+                            <div className="bys-weather__day">
+                              <strong>{day.day}</strong>
+                              <em>{day.date}</em>
+                            </div>
+                            <div className="bys-weather__glyph" aria-hidden>{meta.glyph}</div>
+                            <div className="bys-weather__main">
+                              <span className="bys-weather__label">{meta.label}</span>
+                              <span className="bys-weather__temp">
+                                {Math.round(d.tmax)}° / {Math.round(d.tmin)}°
+                              </span>
+                            </div>
+                            <div className="bys-weather__wind">
+                              {d.wind_kmh ? `${Math.round(d.wind_kmh)} km/h` : ""}
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </section>
       )}
 
@@ -265,6 +293,63 @@ export default async function BeforeYouSailPage() {
           font-size: 13.5px;
           color: rgba(13,27,42,0.6);
           margin: 0 0 18px 0;
+        }
+
+        /* 2026-05-20 — Pass 4: multi-region container. Stacks on
+           mobile, 2-col on tablet, 4-col on wide desktops so all
+           four anchor regions are visible at once. */
+        .bys-regions {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 22px;
+        }
+        @media (min-width: 640px) {
+          .bys-regions { grid-template-columns: 1fr 1fr; }
+        }
+        @media (min-width: 1100px) {
+          .bys-regions { grid-template-columns: repeat(4, 1fr); }
+        }
+        .bys-region {
+          background: #ffffff;
+          border: 1px solid rgba(13, 27, 42, 0.08);
+          padding: 14px 14px 12px 14px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+        .bys-region__head strong {
+          font-family: var(--gy-font-editorial);
+          font-size: 17px;
+          font-weight: 400;
+          color: var(--gy-navy);
+          display: block;
+        }
+        .bys-region__head em {
+          font-family: var(--gy-font-ui);
+          font-size: 9.5px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: rgba(13, 27, 42, 0.55);
+          font-style: normal;
+          display: block;
+          margin-top: 2px;
+        }
+        .bys-region__empty {
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 12.5px;
+          color: rgba(13, 27, 42, 0.5);
+          margin: 6px 0 0 0;
+        }
+        .bys-out-of-range {
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 14px;
+          color: rgba(13, 27, 42, 0.6);
+          background: rgba(201, 168, 76, 0.06);
+          border-left: 2px solid var(--gy-gold);
+          padding: 14px 18px;
+          margin: 0;
         }
 
         .bys-weather {

@@ -1,458 +1,337 @@
-// /cabin/chat — Private chat with George.
-"use client";
+// /cabin/chat — Direct WhatsApp channel to George.
+//
+// 2026-05-20 — Friend-test pass 4 (George):
+//   "Βγάλε τελείως το internal chat που έχει η Καμπίνα. Άσε μόνο
+//    το 'Need George right now' WhatsApp deep link — αλλά κάντο
+//    πιο όμορφο σε user experience. Το άλλο chat από κάτω είναι
+//    άχρηστο."
+//
+// Server-rendered. Reads the active cabin for the pre-filled
+// WhatsApp message so George sees "Hello, it's me from M/Y NOOR
+// for 24–31 May" as the opening line — not a generic ping.
+//
+// The internal chat infrastructure (chat_messages table, polling,
+// chime, server pings) stays in the codebase for the operator
+// surface (CRM /dashboard/cabins/:id/chat). Only the charterer-
+// facing /cabin/chat page is replaced. Direct messages, if anyone
+// sends them via the existing API, still arrive at the CRM.
 
-import { useEffect, useRef, useState } from "react";
-import IntroParagraph from "../../../components/cabin/IntroParagraph";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import {
+  readSessionFromCookies,
+  pickActiveCabinId,
+} from "@/lib/cabin/auth";
+import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
+import { titleCaseName, prettyDate } from "@/lib/cabin/format";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
+import IntroParagraph from "../../../components/cabin/IntroParagraph";
 
-// Tighter polling for a more "live" feel. 3s costs roughly one
-// 1KB GET every 3 seconds while the tab is visible — negligible.
-const POLL_INTERVAL_MS = 3000;
+export const metadata = {
+  title: "Chat with George · Your Cabin",
+};
 
-// Soft two-tone chime generated on the fly via WebAudio. No asset
-// to host, no autoplay-policy gotchas (always triggered by an
-// arriving message after the user has interacted with the page).
-function playChime() {
-  try {
-    const Ctx = window.AudioContext || window.webkitAudioContext;
-    if (!Ctx) return;
-    const ctx = new Ctx();
-    const now = ctx.currentTime;
-    const make = (freq, start, dur) => {
-      const o = ctx.createOscillator();
-      const g = ctx.createGain();
-      o.type = "sine";
-      o.frequency.value = freq;
-      g.gain.setValueAtTime(0.0001, now + start);
-      g.gain.exponentialRampToValueAtTime(0.18, now + start + 0.02);
-      g.gain.exponentialRampToValueAtTime(0.0001, now + start + dur);
-      o.connect(g).connect(ctx.destination);
-      o.start(now + start);
-      o.stop(now + start + dur + 0.02);
-    };
-    make(880, 0, 0.14);
-    make(1175, 0.14, 0.18);
-    // Auto-close to free up the device's audio context.
-    setTimeout(() => ctx.close().catch(() => {}), 600);
-  } catch { /* ignore — chime is decorative */ }
-}
+// George's WhatsApp business number. If this ever changes, update
+// here only — every magic-link email + chat surface reads from
+// this single source.
+const GEORGE_WHATSAPP_NUMBER = "17867988798"; // E.164 without +
 
-function fmtTime(iso) {
-  const d = new Date(iso);
-  const now = new Date();
-  const sameDay = d.toDateString() === now.toDateString();
-  return sameDay
-    ? d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })
-    : d.toLocaleString("en-GB", {
-        day: "numeric", month: "short",
-        hour: "2-digit", minute: "2-digit",
-      });
-}
+export default async function ChatPage() {
+  const session = await readSessionFromCookies();
+  if (!session) redirect("/cabin/login");
 
-export default function ChatPage() {
-  const [messages, setMessages] = useState(null);
-  const [draft, setDraft] = useState("");
-  const [sending, setSending] = useState(false);
-  const [denied, setDenied] = useState(false);
-  const listRef = useRef(null);
-  const sinceRef = useRef(null);
-  const mountedRef = useRef(true);
-
-  async function pullInitial() {
-    try {
-      const r = await fetch("/api/cabin/chat/messages");
-      if (!mountedRef.current) return;
-      if (r.status === 403) { setDenied(true); return; }
-      const j = await r.json();
-      if (!mountedRef.current) return;
-      const m = j.messages ?? [];
-      setMessages(m);
-      if (m.length) sinceRef.current = m[m.length - 1].created_at;
-    } catch {
-      if (mountedRef.current) setMessages([]);
-    }
-  }
-
-  async function pullIncremental() {
-    if (!sinceRef.current) return;
-    try {
-      const r = await fetch(`/api/cabin/chat/messages?since=${encodeURIComponent(sinceRef.current)}`);
-      if (!mountedRef.current || !r.ok) return;
-      const j = await r.json();
-      if (!mountedRef.current) return;
-      const newMsgs = j.messages ?? [];
-      if (newMsgs.length) {
-        setMessages((prev) => [...(prev ?? []), ...newMsgs]);
-        sinceRef.current = newMsgs[newMsgs.length - 1].created_at;
-
-        // Ping for any incoming message that isn't the user's own.
-        // The admin (George) sending us a note is the case that
-        // actually matters here — the charterer never sees their
-        // own message arrive via polling because it was already
-        // in state when send() succeeded.
-        const fromAdmin = newMsgs.some((m) => m.sender_role === "admin");
-        if (fromAdmin) {
-          playChime();
-          if (
-            typeof Notification !== "undefined" &&
-            Notification.permission === "granted" &&
-            document.visibilityState !== "visible"
-          ) {
-            try {
-              const last = newMsgs[newMsgs.length - 1];
-              new Notification("New message from George", {
-                body: (last.body || "").slice(0, 140),
-                tag: "cabin-chat",
-              });
-            } catch { /* notification spec varies by browser */ }
-          }
-        }
-      }
-    } catch { /* ignore */ }
-  }
-
-  // Ask once for browser-notification permission. Only nudges
-  // when the user is actively reading the chat — we don't want
-  // a permission popup the second the cabin loads.
-  function enableNotifications() {
-    if (typeof Notification === "undefined") return;
-    if (Notification.permission === "granted") return;
-    Notification.requestPermission().catch(() => {});
-  }
-
-  useEffect(() => {
-    mountedRef.current = true;
-    void pullInitial();
-    const id = setInterval(() => {
-      if (document.visibilityState === "visible") void pullIncremental();
-    }, POLL_INTERVAL_MS);
-    return () => {
-      mountedRef.current = false;
-      clearInterval(id);
-    };
-  }, []);
-
-  useEffect(() => {
-    // Scroll to bottom whenever messages change
-    if (listRef.current) {
-      listRef.current.scrollTop = listRef.current.scrollHeight;
-    }
-  }, [messages?.length]);
-
-  async function send(e) {
-    e.preventDefault();
-    const body = draft.trim();
-    if (!body || sending) return;
-    // Hitchhike on the explicit user gesture (send button click)
-    // to request browser-notification permission. Browsers reject
-    // requestPermission() calls outside a real gesture, so doing
-    // it on page mount would silently fail.
-    enableNotifications();
-    setSending(true);
-    // Optimistic
-    const localId = "local-" + Date.now();
-    const optimistic = {
-      id: localId, body, sender_role: "charterer",
-      sender_email: "you", created_at: new Date().toISOString(),
-      pending: true,
-    };
-    setMessages((prev) => [...(prev ?? []), optimistic]);
-    setDraft("");
-    try {
-      const r = await fetch("/api/cabin/chat/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ body }),
-      });
-      const j = await r.json();
-      if (r.ok && j.message) {
-        setMessages((prev) =>
-          (prev ?? []).map((m) => (m.id === localId ? j.message : m))
-        );
-        sinceRef.current = j.message.created_at;
-      } else {
-        // Mark optimistic as failed
-        setMessages((prev) =>
-          (prev ?? []).map((m) => (m.id === localId ? { ...m, failed: true } : m))
-        );
-      }
-    } catch {
-      setMessages((prev) =>
-        (prev ?? []).map((m) => (m.id === localId ? { ...m, failed: true } : m))
-      );
-    } finally {
-      setSending(false);
-    }
-  }
-
-  if (denied) {
-    return (
-      <article>
-        <SectionTitle kicker="Private channel" title="A private chat" italic="with George." />
-        <IntroParagraph>
-          The chat is between the principal charterer and George. Guests do not
-          see this conversation — by design. If you have a question for George,
-          please ask the principal charterer to pass it on, or write directly
-          to george@georgeyachts.com.
-        </IntroParagraph>
-      </article>
+  const cabinId = pickActiveCabinId(session);
+  let cabin = null;
+  if (cabinId) {
+    const db = getCabinDb();
+    cabin = await dbQuery(
+      db
+        .from("cabins")
+        .select("vessel_name, charter_period_from, charter_period_to, principal_charterer_name")
+        .eq("id", cabinId)
+        .maybeSingle()
     );
   }
+
+  const firstName = titleCaseName(
+    (cabin?.principal_charterer_name || session.email.split("@")[0])
+      .split(" ")[0]
+  );
+  const vessel = cabin?.vessel_name || "the charter";
+  const dates = cabin?.charter_period_from && cabin?.charter_period_to
+    ? `${prettyDate(cabin.charter_period_from)} – ${prettyDate(cabin.charter_period_to)}`
+    : "";
+
+  const prefill = `Hello George, it's ${firstName} from ${vessel}${
+    dates ? ` (${dates})` : ""
+  }. `;
+
+  const waLink = `https://wa.me/${GEORGE_WHATSAPP_NUMBER}?text=${encodeURIComponent(prefill)}`;
 
   return (
     <article>
       <SectionTitle
-        kicker="A private channel"
-        title="Chat with"
-        italic="George."
+        kicker="Always within reach"
+        title="A direct line"
+        italic="to George."
       />
       <IntroParagraph>
-        Anything you need, anything you want to share — text it here. I read
-        every message personally. During your voyage, replies will usually be
-        within the hour.
+        I’m one tap away on WhatsApp — for the small questions before
+        you sail, the celebrations during the week, and the things
+        that don’t fit anywhere else. I read every message personally.
       </IntroParagraph>
 
-      {/* WhatsApp escape hatch. If a guest wants an even-more-live
-          channel — especially mid-voyage when seconds matter —
-          this opens a chat with George on WhatsApp pre-filled with
-          context so he knows which cabin it concerns. The wa.me
-          format works on iPhone + Android natively. No bridge fee
-          because the conversation lives entirely in WhatsApp. */}
-      <a
-        className="chat-whatsapp"
-        href={`https://wa.me/17867988798?text=${encodeURIComponent(
-          "Hello George, it's me from The Cabin. ",
-        )}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <span className="chat-whatsapp__icon" aria-hidden>✆</span>
-        <span className="chat-whatsapp__text">
-          <strong>Need George right now?</strong>
-          <em>Open in WhatsApp · instant, on his phone</em>
-        </span>
-        <span className="chat-whatsapp__arrow" aria-hidden>→</span>
-      </a>
-
-      <div className="chat-card">
-        <ul ref={listRef} className="chat-list" role="log" aria-live="polite">
-          {messages === null && (
-            <li className="chat-skel" aria-hidden>Loading…</li>
-          )}
-          {messages?.length === 0 && (
-            <li className="chat-empty">
-              <em>No messages yet. Start the conversation below.</em>
-            </li>
-          )}
-          {messages?.map((m, i) => {
-            const isMe = m.sender_role === "charterer";
-            const prev = messages[i - 1];
-            const groupWithPrev = prev && prev.sender_role === m.sender_role &&
-              (new Date(m.created_at) - new Date(prev.created_at)) < 5 * 60 * 1000;
-            return (
-              <li
-                key={m.id || i}
-                className={
-                  "chat-msg " +
-                  (isMe ? "chat-msg--me" : "chat-msg--them") +
-                  (groupWithPrev ? " is-grouped" : "")
-                }
+      <section className="chat-card">
+        <div className="chat-card__head">
+          <span className="chat-card__avatar" aria-hidden>
+            {/* Brand monogram as the avatar — pure SVG, no asset
+                round-trip. Replaceable with a real headshot later. */}
+            <svg viewBox="0 0 64 64" width="56" height="56" aria-hidden>
+              <circle cx="32" cy="32" r="32" fill="#0D1B2A" />
+              <text
+                x="50%"
+                y="55%"
+                textAnchor="middle"
+                fontFamily="Georgia, serif"
+                fontStyle="italic"
+                fontSize="22"
+                fill="#C9A84C"
               >
-                {!groupWithPrev && (
-                  <span className="chat-msg__who">
-                    {isMe ? "You" : "George"}
-                    <em>· {fmtTime(m.created_at)}</em>
-                  </span>
-                )}
-                <span className={"chat-msg__bubble" + (m.pending ? " is-pending" : "") + (m.failed ? " is-failed" : "")}>
-                  {m.body}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
+                GB
+              </text>
+            </svg>
+          </span>
+          <div>
+            <div className="chat-card__name">George P. Biniaris</div>
+            <div className="chat-card__role">Managing Broker · George Yachts</div>
+          </div>
+          <div className="chat-card__status">
+            <span className="chat-card__dot" aria-hidden /> Online
+          </div>
+        </div>
 
-        <form className="chat-compose" onSubmit={send}>
-          <textarea
-            value={draft}
-            onChange={(e) => setDraft(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) send(e);
-            }}
-            placeholder="A short note, a question, a request…"
-            rows={2}
-            maxLength={8000}
-          />
-          <button type="submit" disabled={sending || !draft.trim()}>
-            {sending ? "Sending…" : "Send"}
-          </button>
-        </form>
-      </div>
+        <p className="chat-card__lede">
+          Tap below to open WhatsApp with our chat ready. I’ll see your
+          first message arrive with your vessel and dates already
+          attached — so I’ll know it’s you, even mid-week at sea.
+        </p>
+
+        <a
+          className="chat-card__cta"
+          href={waLink}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span className="chat-card__cta-icon" aria-hidden>
+            <svg viewBox="0 0 32 32" width="20" height="20" fill="currentColor">
+              <path d="M19.11 17.42c-.28-.14-1.66-.82-1.92-.91-.26-.1-.45-.14-.64.14-.19.28-.74.91-.91 1.1-.17.19-.34.21-.62.07-.28-.14-1.18-.43-2.24-1.38-.83-.74-1.39-1.65-1.55-1.93-.16-.28-.02-.43.12-.57.13-.13.28-.34.42-.51.14-.17.19-.29.28-.48.09-.19.05-.36-.02-.5-.07-.14-.64-1.54-.88-2.11-.23-.55-.46-.48-.64-.49-.16-.01-.36-.01-.55-.01-.19 0-.5.07-.76.36s-1 .98-1 2.39 1.02 2.77 1.16 2.96c.14.19 2 3.06 4.84 4.29.68.29 1.2.47 1.61.6.68.22 1.29.18 1.78.11.54-.08 1.66-.68 1.9-1.33.24-.65.24-1.21.17-1.33-.07-.12-.26-.19-.54-.33z"/>
+              <path d="M16 4a12 12 0 0 0-10.32 18.13L4 28l5.96-1.56A12 12 0 1 0 16 4zm0 22a10 10 0 0 1-5.1-1.4l-.36-.21-3.54.93.94-3.45-.24-.36A10 10 0 1 1 16 26z"/>
+            </svg>
+          </span>
+          <span className="chat-card__cta-label">
+            <strong>Open WhatsApp</strong>
+            <em>Instant — on George’s phone</em>
+          </span>
+          <span className="chat-card__cta-arrow" aria-hidden>→</span>
+        </a>
+
+        <ul className="chat-card__notes">
+          <li>
+            <span className="chat-card__note-glyph" aria-hidden>✦</span>
+            <span>
+              <strong>Before sailing</strong> — replies usually within a
+              few hours, sometimes faster.
+            </span>
+          </li>
+          <li>
+            <span className="chat-card__note-glyph" aria-hidden>⚓</span>
+            <span>
+              <strong>During your voyage</strong> — within the hour,
+              quicker if it’s urgent. The captain has my number too.
+            </span>
+          </li>
+          <li>
+            <span className="chat-card__note-glyph" aria-hidden>✉</span>
+            <span>
+              <strong>After your voyage</strong> — I’m here. Re-charters,
+              referrals, the time capsule arriving in six months — all
+              of it goes through this same channel.
+            </span>
+          </li>
+        </ul>
+      </section>
+
+      <p className="chat-fallback">
+        <em>
+          Not on WhatsApp? Reply to any email I’ve sent you, or write
+          to{" "}
+          <Link href="mailto:george@georgeyachts.com">
+            george@georgeyachts.com
+          </Link>
+          {" "}— I read both with the same care.
+        </em>
+      </p>
 
       <style>{`
-        .chat-whatsapp {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          margin: 18px 0 0;
-          padding: 14px 18px;
-          background: #25D366;
-          color: #ffffff;
-          text-decoration: none;
-          border: 1px solid #1ea951;
-          transition: background 160ms ease, transform 160ms ease;
-          font-family: var(--gy-font-editorial);
-        }
-        .chat-whatsapp:hover,
-        .chat-whatsapp:focus-visible {
-          background: #1ea951;
-          outline: none;
-        }
-        .chat-whatsapp:active {
-          transform: translateY(1px);
-        }
-        .chat-whatsapp__icon {
-          font-size: 22px;
-          line-height: 1;
-          width: 28px;
-          text-align: center;
-          color: rgba(255,255,255,0.95);
-        }
-        .chat-whatsapp__text {
-          display: flex;
-          flex-direction: column;
-          line-height: 1.2;
-          flex: 1;
-          min-width: 0;
-        }
-        .chat-whatsapp__text strong {
-          font-weight: 400;
-          font-size: 15px;
-          color: #ffffff;
-          letter-spacing: -0.1px;
-        }
-        .chat-whatsapp__text em {
-          font-style: italic;
-          font-size: 12px;
-          color: rgba(255,255,255,0.85);
-          margin-top: 2px;
-        }
-        .chat-whatsapp__arrow {
-          font-size: 18px;
-          color: rgba(255,255,255,0.9);
-        }
-
         .chat-card {
-          margin-top: 18px;
           background: #ffffff;
-          border: 1px solid rgba(13,27,42,0.08);
-          display: flex;
-          flex-direction: column;
-          min-height: 60dvh;
+          border: 1px solid rgba(13, 27, 42, 0.08);
+          padding: 26px 26px 22px 26px;
+          margin-top: 28px;
         }
-        .chat-list {
-          flex: 1;
-          list-style: none;
-          padding: 18px 18px 8px;
-          margin: 0;
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          overflow-y: auto;
-          scroll-behavior: smooth;
-          min-height: 320px;
+        .chat-card__head {
+          display: grid;
+          grid-template-columns: 56px 1fr auto;
+          align-items: center;
+          gap: 16px;
+          padding-bottom: 22px;
+          border-bottom: 1px solid rgba(13, 27, 42, 0.08);
         }
-        .chat-skel, .chat-empty {
-          color: rgba(13,27,42,0.4);
+        .chat-card__avatar {
+          width: 56px;
+          height: 56px;
+          display: inline-block;
+          border-radius: 50%;
+          overflow: hidden;
+        }
+        .chat-card__name {
           font-family: var(--gy-font-editorial);
-          font-style: italic;
-          text-align: center;
-          padding: 32px 8px;
+          font-size: 18px;
+          font-weight: 400;
+          color: var(--gy-navy);
         }
-        .chat-msg {
-          display: flex;
-          flex-direction: column;
-          margin-top: 10px;
-        }
-        .chat-msg.is-grouped { margin-top: 2px; }
-        .chat-msg--me { align-items: flex-end; }
-        .chat-msg--them { align-items: flex-start; }
-        .chat-msg__who {
+        .chat-card__role {
           font-family: var(--gy-font-ui);
           font-size: 10px;
-          letter-spacing: 1.5px;
+          letter-spacing: 2px;
           text-transform: uppercase;
-          color: rgba(13,27,42,0.45);
-          margin-bottom: 4px;
+          color: rgba(13, 27, 42, 0.55);
+          margin-top: 2px;
         }
-        .chat-msg__who em {
-          font-style: italic;
-          font-family: var(--gy-font-editorial);
-          color: rgba(13,27,42,0.35);
-          letter-spacing: 0;
-          margin-left: 4px;
+        .chat-card__status {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-family: var(--gy-font-ui);
+          font-size: 10px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: rgba(13, 27, 42, 0.55);
         }
-        .chat-msg__bubble {
-          max-width: 78%;
-          padding: 10px 14px;
-          font-family: var(--gy-font-body);
-          font-size: 14.5px;
-          line-height: 1.55;
-          white-space: pre-wrap;
-          overflow-wrap: anywhere;
+        .chat-card__dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #2f7d3a;
+          box-shadow: 0 0 0 3px rgba(47, 125, 58, 0.18);
+          animation: chat-pulse 2.4s ease-in-out infinite;
         }
-        .chat-msg--me .chat-msg__bubble {
-          background: var(--gy-navy);
-          color: var(--gy-ivory);
-          border: 1px solid var(--gy-navy);
-        }
-        .chat-msg--them .chat-msg__bubble {
-          background: rgba(201,168,76,0.08);
-          color: var(--gy-navy);
-          border: 1px solid rgba(201,168,76,0.35);
-        }
-        .chat-msg__bubble.is-pending { opacity: 0.6; }
-        .chat-msg__bubble.is-failed {
-          border-color: #b14a3a;
-          color: #b14a3a;
-          background: rgba(177,74,58,0.06);
+        @keyframes chat-pulse {
+          0%, 100% { box-shadow: 0 0 0 3px rgba(47, 125, 58, 0.18); }
+          50%      { box-shadow: 0 0 0 6px rgba(47, 125, 58, 0.10); }
         }
 
-        .chat-compose {
-          display: flex;
-          gap: 10px;
-          padding: 12px;
-          border-top: 1px solid rgba(13,27,42,0.08);
-          background: rgba(13,27,42,0.02);
+        .chat-card__lede {
+          font-family: var(--gy-font-editorial);
+          font-size: 15px;
+          line-height: 1.7;
+          color: rgba(13, 27, 42, 0.75);
+          margin: 22px 0 24px 0;
         }
-        .chat-compose textarea {
-          flex: 1;
-          background: #ffffff;
-          border: 1px solid rgba(13,27,42,0.12);
-          padding: 10px 12px;
-          font-family: var(--gy-font-body);
-          font-size: 14.5px;
-          line-height: 1.5;
-          color: var(--gy-navy);
-          outline: none;
-          resize: none;
-          min-height: 44px;
-          max-height: 200px;
+
+        .chat-card__cta {
+          display: grid;
+          grid-template-columns: 40px 1fr auto;
+          align-items: center;
+          gap: 16px;
+          padding: 18px 22px;
+          background: #25D366; /* WhatsApp green */
+          color: #ffffff;
+          text-decoration: none;
+          border: 1px solid #1FB053;
+          transition: background 160ms ease, transform 120ms ease;
         }
-        .chat-compose textarea:focus { border-color: var(--gy-gold); }
-        .chat-compose button {
-          background: var(--gy-navy);
-          color: var(--gy-ivory);
-          border: 1px solid var(--gy-gold);
-          padding: 0 18px;
+        .chat-card__cta:hover { background: #20c25c; }
+        .chat-card__cta:active { transform: scale(0.99); }
+        .chat-card__cta-icon {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          background: rgba(255, 255, 255, 0.18);
+          border-radius: 50%;
+          color: #ffffff;
+        }
+        .chat-card__cta-label strong {
+          display: block;
           font-family: var(--gy-font-ui);
-          font-size: 10.5px;
+          font-size: 13px;
           letter-spacing: 2.5px;
           text-transform: uppercase;
-          cursor: pointer;
-          align-self: stretch;
+          font-weight: 600;
         }
-        .chat-compose button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .chat-card__cta-label em {
+          display: block;
+          font-style: italic;
+          font-family: var(--gy-font-editorial);
+          font-size: 13.5px;
+          color: rgba(255, 255, 255, 0.92);
+          margin-top: 2px;
+        }
+        .chat-card__cta-arrow {
+          font-family: var(--gy-font-editorial);
+          font-size: 22px;
+          color: #ffffff;
+          padding-left: 8px;
+        }
+
+        .chat-card__notes {
+          list-style: none;
+          padding: 0;
+          margin: 24px 0 0 0;
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+        .chat-card__notes li {
+          display: grid;
+          grid-template-columns: 24px 1fr;
+          gap: 12px;
+          align-items: flex-start;
+        }
+        .chat-card__note-glyph {
+          font-size: 16px;
+          line-height: 1.4;
+          color: var(--gy-gold);
+          text-align: center;
+        }
+        .chat-card__notes strong {
+          font-family: var(--gy-font-editorial);
+          font-weight: 500;
+          color: var(--gy-navy);
+          margin-right: 4px;
+        }
+        .chat-card__notes li > span:last-child {
+          font-family: var(--gy-font-editorial);
+          font-size: 14.5px;
+          line-height: 1.65;
+          color: rgba(13, 27, 42, 0.75);
+        }
+
+        .chat-fallback {
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 13px;
+          color: rgba(13, 27, 42, 0.55);
+          margin: 22px 0 0 0;
+          text-align: center;
+        }
+        .chat-fallback a {
+          color: var(--gy-gold);
+          text-decoration: none;
+          border-bottom: 1px solid currentColor;
+        }
       `}</style>
     </article>
   );
