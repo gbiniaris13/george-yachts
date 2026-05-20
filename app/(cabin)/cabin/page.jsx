@@ -33,6 +33,7 @@ import { getCircleMember, nextTierGoal, TIERS } from "@/lib/cabin/filotimo";
 import CharterAtAGlance from "../../components/cabin/CharterAtAGlance";
 import IntroParagraph from "../../components/cabin/IntroParagraph";
 import InstallNudge from "../../components/cabin/InstallNudge";
+import { titleCaseName } from "@/lib/cabin/format";
 
 export const metadata = {
   title: "Your Cabin · George Yachts",
@@ -69,26 +70,44 @@ export default async function CabinHomePage() {
   const isPrincipal =
     role === "principal_charterer" || role === "designated_assistant";
 
-  // Soft-onboard: only the principal/assistant gets the Filotimo
-  // welcome flow (full name + DOB + hometown). Guests skip it —
-  // for them the right first step is /cabin/me, which is what
-  // they expect after the invite email said "share your details."
+  // 2026-05-20 — Friend-test pass 3 (George):
+  //   "Όταν ο κεντρικός ναυλωτής καλεί κόσμο, θέλουμε σίγουρα
+  //    ονοματεπώνυμο + τηλέφωνο + ημ. γέννησης. Το mail το έχουμε
+  //    ήδη. Όταν πατήσει να μπει, του εμφανίζεται μάσκα — βάζει
+  //    τα στοιχεία και συνεχίζει."
+  //
+  // The gate now applies to EVERY member (principal + guest + DA).
+  // The required minimum is display_name + mobile + DOB. Principals
+  // also get hometown asked (for the Filotimo birthday workflow);
+  // guests skip hometown because George has no business reason to
+  // store it for non-account-holders.
   const db2 = getCabinDb();
-  if (isPrincipal) {
-    const circleCheck = await dbQuery(
+  const [memberRow, circleRow] = await Promise.all([
+    dbQuery(
+      db2
+        .from("cabin_members")
+        .select("display_name, mobile")
+        .eq("id", membership?.member_id)
+        .maybeSingle()
+    ),
+    dbQuery(
       db2
         .from("filotimo_circle_members")
         .select("display_name, date_of_birth, hometown")
         .ilike("email", session.email)
         .is("deleted_at", null)
         .maybeSingle()
-    );
-    const profileMissing = !(
-      circleCheck?.display_name &&
-      circleCheck?.date_of_birth &&
-      circleCheck?.hometown
-    );
-    if (profileMissing) redirect("/cabin/welcome");
+    ),
+  ]);
+  const hasName = Boolean(memberRow?.display_name || circleRow?.display_name);
+  const hasMobile = Boolean(memberRow?.mobile);
+  const hasDOB = Boolean(circleRow?.date_of_birth);
+  const principalAlsoNeedsHometown =
+    isPrincipal && !circleRow?.hometown;
+  const onboardingIncomplete =
+    !hasName || !hasMobile || !hasDOB || principalAlsoNeedsHometown;
+  if (onboardingIncomplete) {
+    redirect("/cabin/welcome");
   }
 
   const cabin = await loadCabin(cabinId);
@@ -130,10 +149,16 @@ export default async function CabinHomePage() {
 
   const principalRow = members.find((m) => m.role === "principal_charterer");
 
-  const firstName =
+  // 2026-05-20 — Friend-test pass 3 (George): the greeting read
+  // "Welcome, george." because the source string was lowercased
+  // at data entry. titleCaseName on display fixes the symptom
+  // without rewriting historical data.
+  const rawFirstName =
     membership?.display_name?.split(" ")[0] ||
     myRow?.display_name?.split(" ")[0] ||
-    (cabin?.principal_charterer_name?.split(" ")[0] ?? "friend");
+    cabin?.principal_charterer_name?.split(" ")[0] ||
+    "friend";
+  const firstName = titleCaseName(rawFirstName);
 
   const percent = cabin.brief_completion_percent ?? 0;
 

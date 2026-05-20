@@ -1,7 +1,19 @@
-// /cabin/welcome — First-login onboarding.
-// Captures display_name, date_of_birth, hometown for the Filotimo
-// Circle and the broker's "birthday wishes" workflow. Every field
-// optional — we never block the user.
+// /cabin/welcome — First-login onboarding (required gate).
+//
+// 2026-05-20 — Friend-test pass 3 (George):
+//   "When the principal invites someone, we definitely want first
+//    name + surname + phone + date of birth. Email we already have
+//    because we invited them. As soon as they tap to enter, show
+//    a mask: 'Welcome, fill these in, continue to the Cabin.'"
+//
+// Required fields (all four below) gate access to /cabin. There is
+// NO skip button. The /cabin landing page checks for the same four
+// fields and redirects back here until they're filled.
+//
+// First name + Last name are split here even though the API saves
+// them as a single `display_name` — the split is purely for input
+// clarity (and for any future marina-paperwork workflow that needs
+// the surname separately).
 "use client";
 
 import { useEffect, useState } from "react";
@@ -9,14 +21,27 @@ import { useRouter } from "next/navigation";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
 
+function splitFullName(full) {
+  if (!full) return { first: "", last: "" };
+  const parts = String(full).trim().split(/\s+/);
+  if (parts.length === 1) return { first: parts[0], last: "" };
+  return {
+    first: parts[0],
+    last: parts.slice(1).join(" "),
+  };
+}
+
 export default function WelcomePage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [dob, setDob] = useState("");
+  const [mobile, setMobile] = useState("");
+  // Optional fields — only shown when expanded, never required.
   const [hometown, setHometown] = useState("");
   const [anniversary, setAnniversary] = useState("");
-  const [mobile, setMobile] = useState("");
+  const [moreOpen, setMoreOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState(null);
 
@@ -25,19 +50,36 @@ export default function WelcomePage() {
       .then((r) => r.json())
       .then((j) => {
         if (j?.profile) {
-          setName(j.profile.display_name ?? "");
+          const { first, last } = splitFullName(j.profile.display_name);
+          setFirstName(first);
+          setLastName(last);
           setDob(j.profile.date_of_birth ?? "");
           setHometown(j.profile.hometown ?? "");
           setAnniversary(j.profile.anniversary_date ?? "");
           setMobile(j.profile.mobile ?? "");
+          // If user has hometown/anniversary saved already, expand
+          // the optional section so they can see/edit it.
+          if (j.profile.hometown || j.profile.anniversary_date) {
+            setMoreOpen(true);
+          }
         }
       })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
 
+  const requiredFilled =
+    firstName.trim().length > 0 &&
+    lastName.trim().length > 0 &&
+    /^\d{4}-\d{2}-\d{2}$/.test(dob.trim()) &&
+    mobile.trim().length >= 5;
+
   async function onSave(e) {
     e.preventDefault();
+    if (!requiredFilled) {
+      setErr("Please fill in all four required fields above.");
+      return;
+    }
     setBusy(true);
     setErr(null);
     try {
@@ -45,7 +87,7 @@ export default function WelcomePage() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          display_name: name,
+          display_name: `${firstName.trim()} ${lastName.trim()}`.trim(),
           date_of_birth: dob,
           hometown,
           anniversary_date: anniversary,
@@ -61,84 +103,111 @@ export default function WelcomePage() {
     }
   }
 
-  function onSkip() {
-    router.push("/cabin");
-  }
-
   if (loading) {
-    return <p style={{ padding: 24, fontStyle: "italic", color: "rgba(13,27,42,0.5)" }}>Loading…</p>;
+    return (
+      <p style={{ padding: 24, fontStyle: "italic", color: "rgba(13,27,42,0.5)" }}>
+        Loading…
+      </p>
+    );
   }
 
   return (
     <article>
       <SectionTitle
         kicker="A warm welcome aboard"
-        title="Three small"
-        italic="touches, before you sail."
+        title="A few quiet"
+        italic="details, then you’re in."
       />
       <IntroParagraph>
-        We don’t need much — but a few details mean we can look after
-        you well over the years. Your name to address you properly,
-        a date of birth so we can wish you well in the right season,
-        and where you’re from. Anything you leave blank stays blank;
-        you can always come back to this page.
+        Just four small things — first name, surname, your mobile,
+        and a date of birth. These let the chef, the captain and the
+        marina paperwork find you. Everything else can wait.
       </IntroParagraph>
 
       <form className="wlc-form" onSubmit={onSave}>
-        <label className="wlc-field">
-          <span>Your full name</span>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="e.g. Alexandra Papadopoulou"
-            autoComplete="name"
-            maxLength={120}
-          />
-        </label>
+        <div className="wlc-row">
+          <label className="wlc-field">
+            <span>First name <em className="wlc-req">required</em></span>
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              placeholder="e.g. Alexandra"
+              autoComplete="given-name"
+              maxLength={60}
+              required
+            />
+          </label>
+          <label className="wlc-field">
+            <span>Surname <em className="wlc-req">required</em></span>
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              placeholder="e.g. Papadopoulou"
+              autoComplete="family-name"
+              maxLength={80}
+              required
+            />
+          </label>
+        </div>
 
         <div className="wlc-row">
           <label className="wlc-field">
-            <span>Date of birth</span>
+            <span>Date of birth <em className="wlc-req">required</em></span>
             <input
               type="date"
               value={dob}
               onChange={(e) => setDob(e.target.value)}
               max={new Date().toISOString().slice(0, 10)}
+              required
             />
           </label>
           <label className="wlc-field">
-            <span>Where you call home</span>
+            <span>Mobile <em className="wlc-req">required</em></span>
             <input
-              type="text"
-              value={hometown}
-              onChange={(e) => setHometown(e.target.value)}
-              placeholder="e.g. London · Athens · Miami"
-              maxLength={120}
+              type="tel"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
+              placeholder="+44 7700 900000"
+              inputMode="tel"
+              maxLength={40}
+              autoComplete="tel"
+              required
             />
           </label>
         </div>
 
-        <label className="wlc-field">
-          <span>Mobile (optional)</span>
-          <input
-            type="tel"
-            value={mobile}
-            onChange={(e) => setMobile(e.target.value)}
-            placeholder="+44 7700 900000"
-            inputMode="tel"
-            maxLength={40}
-          />
-        </label>
+        <button
+          type="button"
+          className="wlc-more-toggle"
+          onClick={() => setMoreOpen((v) => !v)}
+        >
+          {moreOpen ? "× Hide optional details" : "+ Add a couple of optional touches"}
+        </button>
 
-        <label className="wlc-field">
-          <span>Anniversary date (optional)</span>
-          <input
-            type="date"
-            value={anniversary}
-            onChange={(e) => setAnniversary(e.target.value)}
-          />
-        </label>
+        {moreOpen && (
+          <div className="wlc-more">
+            <label className="wlc-field">
+              <span>Where you call home <em>optional</em></span>
+              <input
+                type="text"
+                value={hometown}
+                onChange={(e) => setHometown(e.target.value)}
+                placeholder="e.g. London · Athens · Miami"
+                maxLength={120}
+              />
+            </label>
+            <label className="wlc-field">
+              <span>Anniversary date <em>optional</em></span>
+              <input
+                type="date"
+                value={anniversary}
+                onChange={(e) => setAnniversary(e.target.value)}
+              />
+            </label>
+          </div>
+        )}
 
         <p className="wlc-note">
           <em>
@@ -152,11 +221,12 @@ export default function WelcomePage() {
         {err && <p className="wlc-err" role="alert">{err}</p>}
 
         <div className="wlc-actions">
-          <button type="button" onClick={onSkip} className="wlc-skip">
-            Skip for now
-          </button>
-          <button type="submit" disabled={busy} className="wlc-save">
-            {busy ? "Saving…" : "Save and continue"}
+          <button
+            type="submit"
+            disabled={busy || !requiredFilled}
+            className="wlc-save"
+          >
+            {busy ? "Saving…" : "Save and enter the Cabin →"}
           </button>
         </div>
       </form>
@@ -191,6 +261,20 @@ export default function WelcomePage() {
           text-transform: uppercase;
           color: var(--gy-gold);
           font-weight: 500;
+          display: flex;
+          gap: 8px;
+          align-items: baseline;
+        }
+        .wlc-field > span > em {
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 10.5px;
+          color: rgba(13,27,42,0.4);
+          letter-spacing: 0;
+          text-transform: none;
+        }
+        .wlc-req {
+          color: #b14a3a !important;
         }
         .wlc-field input {
           background: transparent;
@@ -205,6 +289,32 @@ export default function WelcomePage() {
           outline: none;
         }
         .wlc-field input:focus { border-bottom-color: var(--gy-gold); }
+        .wlc-field input:invalid:not(:placeholder-shown) {
+          border-bottom-color: rgba(177, 74, 58, 0.5);
+        }
+
+        .wlc-more-toggle {
+          background: transparent;
+          border: 0;
+          color: var(--gy-gold);
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          padding: 8px 0 0 0;
+          cursor: pointer;
+          text-align: left;
+          align-self: flex-start;
+        }
+        .wlc-more {
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+          padding-top: 4px;
+          border-top: 1px dashed rgba(13,27,42,0.12);
+          margin-top: 4px;
+        }
+
         .wlc-note {
           font-family: var(--gy-font-editorial);
           font-size: 12.5px;
@@ -221,34 +331,21 @@ export default function WelcomePage() {
         }
         .wlc-actions {
           display: flex;
-          justify-content: space-between;
-          gap: 16px;
-          flex-wrap: wrap;
+          justify-content: flex-end;
           margin-top: 8px;
-        }
-        .wlc-skip {
-          background: transparent;
-          border: 0;
-          font-family: var(--gy-font-ui);
-          font-size: 10.5px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: rgba(13,27,42,0.55);
-          cursor: pointer;
-          padding: 11px 0;
         }
         .wlc-save {
           background: var(--gy-navy);
           color: var(--gy-ivory);
           border: 1px solid var(--gy-gold);
-          padding: 12px 26px;
+          padding: 13px 28px;
           font-family: var(--gy-font-ui);
-          font-size: 10.5px;
+          font-size: 11px;
           letter-spacing: 2.5px;
           text-transform: uppercase;
           cursor: pointer;
         }
-        .wlc-save:disabled { opacity: 0.6; cursor: default; }
+        .wlc-save:disabled { opacity: 0.55; cursor: not-allowed; }
       `}</style>
     </article>
   );
