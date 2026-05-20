@@ -4,7 +4,6 @@ import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 import {
   SectionTitle,
-  TextField,
   OpenTextarea,
   RadioGroup,
   CheckboxGroup,
@@ -74,77 +73,29 @@ export default function LifeAboardSectionPage() {
               rows={2}
             />
 
-            <h2 className="brief-subhead">Soundtrack</h2>
-            <p className="brief-note">
-              <em>
-                Your hostess can pre-load playlists, or you can connect your
-                own devices via Bluetooth. Tell us styles, artists, moods.
-              </em>
-            </p>
-            <div className="brief-grid">
-              <TextField
-                label="Morning music"
-                name="music.morning"
-                placeholder="e.g. Acoustic, jazz, Greek classics"
-                register={register}
-              />
-              <TextField
-                label="Lunch & afternoon"
-                name="music.lunch_afternoon"
-                placeholder="e.g. Bossa nova, Mediterranean lounge"
-                register={register}
-              />
-              <TextField
-                label="Sunset & dinner"
-                name="music.sunset_dinner"
-                placeholder="e.g. Soft soul, Cuban, French chanson"
-                register={register}
-              />
-              <TextField
-                label="Late night"
-                name="music.late_night"
-                placeholder="e.g. House, deep electronica"
-                register={register}
-              />
-            </div>
-            <OpenTextarea
-              label="Specific artists or playlists to have ready"
-              name="music.specific_artists"
-              placeholder="e.g. Nick Cave, Άννα Βίσση, a Spotify playlist link"
-              register={register}
-              rows={2}
-            />
-
-            <h2 className="brief-subhead">Wellness on board</h2>
-            <CheckboxGroup
-              name="wellness_onboard"
-              label="Anything that interests you"
-              hint="The captain pre-checks availability and pricing with the management company. Most yachts can arrange these with notice."
-              register={register}
-              twoColumn
-              options={[
-                { value: "yoga_morning",        label: "Morning yoga session" },
-                { value: "massage_onboard",     label: "Massage on board" },
-                { value: "stargazing_nights",   label: "Stargazing evenings" },
-                { value: "sunrise_meditation",  label: "Sunrise meditation" },
-                { value: "personal_trainer",    label: "Personal trainer / fitness" },
-              ]}
-            />
+            {/* 2026-05-20 — Friend-test pass 2: removed Soundtrack
+                section (Morning / Lunch / Sunset / Late-night music
+                fields) and Wellness on board section (yoga, massage,
+                trainer checkboxes). George flagged both as
+                "δεν θέλουμε να υπάρχει — θέλουμε την ουσία: τι θα
+                φάνε, τι θα πιούνε, αλλεργίες, κατοικίδια". Schema
+                fields (music, wellness_onboard) stay in
+                lib/cabin/schemas.js for back-compat with already-
+                submitted briefs. */}
 
             <OpenTextarea
               label="A few small touches we should ask the crew about"
-              hint="Fresh flowers, board games, books in a particular language, yoga mats, beach equipment for shore stops — whatever would make a small difference. Write freely."
+              hint="Anything that would make a small difference — write freely. The captain will come back with a quick yes/no on each."
               name="extras_freeform"
               register={register}
               rows={4}
             />
-            <p className="la-extras-note">
-              <em>
-                Most of these are included; a few may carry a small cost from
-                the management company. We’ll come back to you with a quiet
-                yes/no on anything that isn’t free — no surprises.
-              </em>
-            </p>
+
+            {/* 2026-05-20 — Removed the "Most of these are included…
+                management company" disclaimer. George: "Δεν θέλουμε να
+                ξέρουν οι πελάτες μας αν έχουμε εταιρεία management, αν
+                το σκάφος είναι δικό μας. Είμαστε brokers — αυτές οι
+                πληροφορίες δεν εκτίθενται." */}
           </>
         )}
       </BriefFormShell>
@@ -173,16 +124,9 @@ export default function LifeAboardSectionPage() {
           color: rgba(13, 27, 42, 0.55);
           margin: 0 0 14px 0;
         }
-        .la-extras-note {
-          font-family: var(--gy-font-editorial);
-          font-size: 12.5px;
-          line-height: 1.65;
-          color: rgba(13, 27, 42, 0.6);
-          background: rgba(201, 168, 76, 0.05);
-          border-left: 1px solid rgba(201, 168, 76, 0.5);
-          padding: 10px 14px;
-          margin: 6px 0 0 0;
-        }
+        /* 2026-05-20 — .la-extras-note styles removed alongside the
+           "Most of these are included… management company" disclaimer
+           it used to apply to. */
       `}</style>
     </article>
   );

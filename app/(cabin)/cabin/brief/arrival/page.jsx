@@ -1,6 +1,40 @@
 // Section 01 — Arrival & Departure
 "use client";
 
+// 2026-05-20 — Friend-test pass 2. Heavy rewrite based on George's
+// "θέλω πολύ εύκολο, πολύ friendly" direction:
+//
+//   - Removed "Flight type (commercial / private)" radio
+//     ("συνήθως commercial ταξιδεύουν. Αν κάποιος ταξιδέψει με
+//      ιδιωτικό τζετ θα μας το πει").
+//
+//   - Removed the "Any private jet, helicopter, or other arrivals?"
+//     textarea ("Δεν καταλαβαίνω τι είναι αυτό το πράγμα — βγάλ' το").
+//
+//   - Removed the "Your group's previous sailing experience" textarea
+//     with the "captain calibrates the safety briefing..." copy
+//     ("εδώ το κείμενο πάλι είναι περίεργο, και αυτό πρέπει να βγει").
+//
+//   - Collapsed "Where you're staying" from a 4-field grid (hotel
+//     before + check-out date + hotel after + check-in date) into a
+//     single optional textarea, because "οι περισσότεροι δεν θα
+//     μένουν πουθενά, θα πάνε από το αεροδρόμιο στο σκάφος".
+//
+//   - Field layout changed from 2-column grid to a single calm
+//     column. George flagged the grid as "ανακατεμένα — η ώρα είναι
+//     πάνω δεξιά, η ημερομηνία μετά, δεν βγάζει οργάνωση".
+//
+//   - Dropped the "01 · / 02 · / 03 ·" numbered subheads — visual
+//     noise that wasn't earning its keep.
+//
+//   - Friendlier copy throughout. Short sentences, plain Greek-style
+//     English ("πότε φτάνεις στην Ελλάδα, τι ώρα").
+//
+// Schema unchanged (flight_type / private_arrival_notes /
+// yachting_experience / before_embarkation / after_disembarkation
+// all remain in lib/cabin/schemas.js) so already-submitted briefs
+// keep validating. Only the UI surface stopped collecting them.
+
 import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 import {
@@ -19,10 +53,9 @@ export default function ArrivalSectionPage() {
         italic="getting home."
       />
       <IntroParagraph>
-        The smallest details — what time your flight lands in Greece, where you
-        would like to be picked up — make the biggest difference. Tell us as
-        much as you know now; we can refine closer to the date. Skip anything
-        you don&apos;t know yet — everything saves as you type.
+        A few simple questions about your flight into Greece. Skip
+        anything you don&apos;t know yet — every field saves as you
+        type, and you can come back any time.
       </IntroParagraph>
 
       <BriefFormShell
@@ -31,48 +64,35 @@ export default function ArrivalSectionPage() {
       >
         {({ register }) => (
           <>
-            {/* 2026-05-20 — Eleanna + Da$k friend-tests both flagged that
-                the first questions on the arrival section don't make it
-                obvious WHAT to fill in. Adding a small explainer above
-                the fields so a first-time reader knows the questions are
-                about THEIR flight INTO Greece, not the charter dates. */}
-            <h2 className="brief-subhead">01 · Your flight into Greece</h2>
-            <p className="brief-help">
-              Most charterers arrive by commercial flight to Athens (ATH) or a
-              regional airport (e.g. Mykonos, Heraklion). Fill in what you know
-              about the flight that brings you into the country — even
-              partial details help the captain plan transfers.
-            </p>
-            <div className="brief-grid">
+            <h2 className="brief-subhead">Your flight</h2>
+
+            <div className="brief-stack">
               <TextField
-                label="Date your flight arrives"
-                hint="The day you land in Greece, not the day you board the yacht."
+                label="When you land in Greece"
                 name="flight_group_1.date_of_arrival"
                 register={register}
                 type="date"
               />
               <TextField
-                label="Time of arrival (local Greek time)"
+                label="What time you land (local Greek time)"
                 placeholder="e.g. 14:35"
                 name="flight_group_1.time_of_arrival"
                 register={register}
               />
               <TextField
-                label="Airline & flight number"
-                hint="If you don't have a ticket yet, leave blank."
-                name="flight_group_1.airline_and_flight"
+                label="Flight number"
                 placeholder="e.g. LH 1283"
+                name="flight_group_1.airline_and_flight"
                 register={register}
               />
               <TextField
-                label="Departing from (city)"
-                name="flight_group_1.coming_from"
+                label="Departure airport (city you fly from)"
                 placeholder="e.g. Munich"
+                name="flight_group_1.coming_from"
                 register={register}
               />
               <TextField
                 label="How many guests on this flight"
-                hint="If your group flies in together, the full count. If some arrive separately, use the second flight group below."
                 name="flight_group_1.number_of_guests"
                 type="number"
                 inputMode="numeric"
@@ -82,70 +102,26 @@ export default function ArrivalSectionPage() {
 
             <details className="brief-details">
               <summary>Some guests arriving on a different flight? Add a second group</summary>
-              <div className="brief-grid">
-                <TextField label="Date your flight arrives" name="flight_group_2.date_of_arrival" register={register} type="date" />
-                <TextField label="Time of arrival (local Greek time)" name="flight_group_2.time_of_arrival" register={register} />
-                <TextField label="Airline & flight number" name="flight_group_2.airline_and_flight" register={register} />
-                <TextField label="Departing from (city)" name="flight_group_2.coming_from" register={register} />
+              <div className="brief-stack">
+                <TextField label="When they land in Greece" name="flight_group_2.date_of_arrival" register={register} type="date" />
+                <TextField label="What time they land" name="flight_group_2.time_of_arrival" register={register} />
+                <TextField label="Flight number" name="flight_group_2.airline_and_flight" register={register} />
+                <TextField label="Departure airport" name="flight_group_2.coming_from" register={register} />
                 <TextField label="How many guests on this flight" name="flight_group_2.number_of_guests" type="number" register={register} />
               </div>
             </details>
 
-            <RadioGroup
-              name="flight_group_1.flight_type"
-              label="Flight type (first group)"
-              register={register}
-              options={[
-                { value: "commercial", label: "Commercial flight" },
-                { value: "private",    label: "Private flight (we coordinate FBO pickup)" },
-              ]}
-            />
-
+            <h2 className="brief-subhead">Before you board (optional)</h2>
             <OpenTextarea
-              label="Any private jet, helicopter, or other arrivals?"
-              hint="Tell us here — we can coordinate with the captain."
-              name="private_arrival_notes"
-              register={register}
-              rows={2}
-            />
-
-            <OpenTextarea
-              label="Your group's previous sailing experience"
-              hint="The captain calibrates the safety briefing and the daily rhythm around this. First-charter through 'I race J/70s' is all useful."
-              name="yachting_experience"
+              label="Staying somewhere before the yacht?"
+              hint="Most groups go straight from the airport to the yacht. If you're spending a night or two ashore first, share the hotel name + address here so the captain knows where to pick you up. Leave blank if you go directly to the yacht."
+              name="before_embarkation.hotel_or_address"
+              placeholder="e.g. Grande Bretagne, Syntagma Square, Athens — checking out Saturday morning."
               register={register}
               rows={3}
-              placeholder="e.g. First charter for most of the group; one guest has crewed Atlantic crossings."
             />
 
-            <h2 className="brief-subhead">02 · Where you’re staying</h2>
-            <div className="brief-grid">
-              <TextField
-                label="Hotel before embarkation"
-                name="before_embarkation.hotel_or_address"
-                placeholder="Hotel or address"
-                register={register}
-              />
-              <TextField
-                label="Check-out date"
-                name="before_embarkation.check_out_date"
-                type="date"
-                register={register}
-              />
-              <TextField
-                label="Hotel after disembarkation"
-                name="after_disembarkation.hotel_or_address"
-                register={register}
-              />
-              <TextField
-                label="Check-in date"
-                name="after_disembarkation.check_in_date"
-                type="date"
-                register={register}
-              />
-            </div>
-
-            <h2 className="brief-subhead">03 · Transfers</h2>
+            <h2 className="brief-subhead">Transfers</h2>
             <RadioGroup
               name="transfers_requested"
               label="Would you like us to arrange transfers?"
@@ -159,7 +135,7 @@ export default function ArrivalSectionPage() {
 
             <details className="brief-details">
               <summary>If yes — transfer details</summary>
-              <div className="brief-grid">
+              <div className="brief-stack">
                 <TextField label="Pickup location to yacht" name="transfer_to_yacht.pickup_location" register={register} />
                 <TextField label="Pickup date & time" name="transfer_to_yacht.pickup_datetime" register={register} />
                 <TextField label="Number of guests" name="transfer_to_yacht.number_of_guests" type="number" register={register} />
@@ -187,19 +163,17 @@ export default function ArrivalSectionPage() {
           letter-spacing: 3.5px;
           text-transform: uppercase;
           color: var(--gy-gold);
-          margin: 32px 0 16px 0;
+          margin: 36px 0 16px 0;
           font-weight: 500;
         }
-        .brief-grid {
-          display: grid;
-          grid-template-columns: 1fr;
+        /* 2026-05-20 — Was .brief-grid (2-column grid on desktop).
+           George flagged that as "ανακατεμένα" — fields didn't read
+           in a clean top-to-bottom order. Single-column stack reads
+           like a conversation. */
+        .brief-stack {
+          display: flex;
+          flex-direction: column;
           gap: 0;
-        }
-        @media (min-width: 560px) {
-          .brief-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 0 24px;
-          }
         }
         .brief-details {
           margin: 12px 0 22px 0;
@@ -227,18 +201,6 @@ export default function ArrivalSectionPage() {
           margin: 8px 0 0 0;
         }
         .brief-note em { font-style: italic; }
-        /* 2026-05-20 — friend-test fix: explainer paragraph that sits
-           between the subhead and the first form field on the arrival
-           page. Slightly smaller and dimmer than the IntroParagraph at
-           the very top so the visual hierarchy stays clean. */
-        .brief-help {
-          font-family: var(--gy-font-editorial);
-          font-size: 14.5px;
-          line-height: 1.55;
-          color: rgba(13, 27, 42, 0.72);
-          margin: 0 0 18px 0;
-          font-style: italic;
-        }
       `}</style>
     </article>
   );

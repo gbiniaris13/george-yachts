@@ -125,20 +125,14 @@ export default function ItinerarySectionPage() {
                 { value: "other",       label: "Other (describe below)" },
               ]}
             />
-            <CheckboxGroup
-              name="special_event_extras"
-              label="What we should pre-stage"
-              register={register}
-              twoColumn
-              options={[
-                { value: "flowers",      label: "Flowers" },
-                { value: "music",        label: "Music / playlist" },
-                { value: "board_games",  label: "Board games" },
-                { value: "magazines",    label: "Magazines" },
-                { value: "banner",       label: "Banner / decoration" },
-                { value: "cake",         label: "Custom cake" },
-              ]}
-            />
+            {/* 2026-05-20 — Friend-test pass 2: George flagged the
+                "What we should pre-stage" checkbox grid (flowers /
+                music / board games / magazines / banner / cake) as
+                noise — these decisions are made face-to-face between
+                George and the charterer, not pre-clicked from a list
+                buried in section 4. Removed from the UI. Schema field
+                special_event_extras stays in lib/cabin/schemas.js for
+                back-compat with already-saved briefs. */}
             <OpenTextarea
               label="Tell us the day, the person, how big a moment"
               hint="Names, dates, anything we should know to make it special — or to keep it a surprise from someone aboard."
