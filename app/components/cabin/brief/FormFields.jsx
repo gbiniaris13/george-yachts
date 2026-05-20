@@ -613,17 +613,23 @@ export function LikeDislikeMatrix({ name, label, hint, items, register }) {
           border-top: 1px solid rgba(13, 27, 42, 0.05);
         }
         .brief-matrix-row:first-of-type { border-top: 0; }
+        /* 2026-05-20 — Eleanna friend-test: "Είμαι πολύ αχνα" + "δεν
+           φαίνονται οι επιλογές που πρέπει να τσεκάρω". Both the row
+           labels (food names) and the radio circles were too low-
+           contrast for over-40 eyes. Pushed font weight + size up
+           on labels; tightened radio border. */
         .brief-matrix-label {
-          font-family: var(--gy-font-editorial);
-          font-size: 14.5px;
+          font-family: var(--gy-font-body);
+          font-size: 15px;
+          font-weight: 500;
           color: var(--gy-navy);
-          padding: 10px 14px;
+          padding: 12px 14px;
         }
         .brief-matrix-cell {
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 8px 0;
+          padding: 10px 0;
           cursor: pointer;
           position: relative;
         }
@@ -633,9 +639,9 @@ export function LikeDislikeMatrix({ name, label, hint, items, register }) {
           pointer-events: none;
         }
         .brief-matrix-dot {
-          width: 18px;
-          height: 18px;
-          border: 1px solid rgba(13, 27, 42, 0.35);
+          width: 20px;
+          height: 20px;
+          border: 1.5px solid rgba(13, 27, 42, 0.55);
           border-radius: 50%;
           background: #fff;
           display: inline-block;

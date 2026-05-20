@@ -84,28 +84,29 @@ export default function ItinerarySectionPage() {
               ]}
             />
 
-            <RadioGroup
-              name="docking_preference"
-              label="When mooring, you prefer"
-              hint="Distinct from night preference above — this is about the captain's working rhythm."
-              register={register}
-              options={[
-                { value: "marinas",   label: "Marinas (predictable, shore access)" },
-                { value: "anchoring", label: "Anchoring (quieter, more freedom)" },
-                { value: "both",      label: "A combination of both" },
-              ]}
-            />
+            {/* 2026-05-20 — Da$k friend-test: "Αυτό το έχεις ξανά
+                ρωτήσει — ποιο αν προτιμούν bays ή μαρίνα νομίζω, με
+                τα ίδια ακριβώς". The `docking_preference` block here
+                duplicated `night_preference` above with only slightly
+                different wording. Removed from the UI. The schema
+                field stays in lib/cabin/schemas.js so already-saved
+                briefs continue to validate. */}
 
+            {/* 2026-05-20 — Eleanna friend-test asked "Τι είναι το PADI;"
+                Rephrasing the label so the acronym isn't load-bearing:
+                "diving certification required" reads as the same gate
+                without forcing every reader to recognise the body name.
+                Hint already explains; tightened it too. */}
             <CheckboxGroup
               name="activities_extra"
               label="Additional activities"
-              hint="The captain pre-checks licences, age limits, and provisioning. Scuba requires a PADI certificate."
+              hint="The captain pre-checks licences, age limits, and provisioning. Scuba diving requires a recognised diving certificate (PADI, SSI, BSAC or similar)."
               register={register}
               twoColumn
               options={[
                 { value: "cycling",            label: "Cycling ashore" },
                 { value: "island_tour",        label: "Island tour (driver + car)" },
-                { value: "scuba_diving_padi",  label: "Scuba diving (PADI required)" },
+                { value: "scuba_diving_padi",  label: "Scuba diving (diving certificate required)" },
                 { value: "fishing_specific",   label: "Sport fishing" },
               ]}
             />

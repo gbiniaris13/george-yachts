@@ -11,6 +11,7 @@
 
 import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
+import AllergyAlert from "../../../../components/cabin/brief/AllergyAlert";
 import {
   SectionTitle,
   TextField,
@@ -50,6 +51,12 @@ export default function DiningSectionPage() {
         designed. Don&apos;t worry about being too specific. We would rather know
         too much than too little.
       </IntroParagraph>
+
+      {/* 2026-05-20 — Da$k friend-test asked for an allergy banner
+          on every food-related page, prominently. AllergyAlert mounts
+          at top of dining, beverages, and children sections so the
+          context follows wherever a chef/hostess will be reading. */}
+      <AllergyAlert />
 
       <BriefFormShell
         sectionKey="dining"
@@ -263,25 +270,20 @@ export default function DiningSectionPage() {
             />
 
             {/* ─────────── Dining ashore ─────────── */}
+            {/* 2026-05-20 — Da$k friend-test: the explicit "0 / 1 / 2 / 3 / 4+
+                evenings ashore" question read as "πιεστικό" and "γύφτικο" —
+                like the broker was counting dinners to save on food. Replaced
+                the radio count with an open prompt about restaurant intent.
+                The captain hears the actual count by ear on day one — the
+                brief just needs to know that ashore-dining is on the menu. */}
             <h2 className="brief-subhead">Dining ashore</h2>
-            <RadioGroup
-              name="dining_ashore_evenings"
-              label="Evenings ashore (approximate)"
-              hint="The crew adjusts provisioning to avoid food waste."
-              register={register}
-              options={[
-                { value: "0", label: "0" },
-                { value: "1", label: "1" },
-                { value: "2", label: "2" },
-                { value: "3", label: "3" },
-                { value: "4_plus", label: "4 or more" },
-              ]}
-            />
             <OpenTextarea
-              label="Restaurant style or specific places"
+              label="Restaurants or places you'd like to try"
+              hint="Anywhere you've heard of, anywhere you've loved before, or any vibe (waterfront tavernas / a Michelin night / quiet local spot). The captain knows the islands and will fold them in. Leave blank if you'd rather decide week-of."
               name="dining_ashore_notes"
               register={register}
-              rows={2}
+              placeholder="e.g. We've heard about Spondi in Athens before embarkation, and we'd love at least one quiet taverna night in the Cyclades — the kind with grandma in the kitchen."
+              rows={4}
             />
 
             {/* ─────────── Kids ─────────── */}

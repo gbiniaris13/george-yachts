@@ -69,6 +69,13 @@ export default function useBriefAutosave(sectionKey) {
     [sectionKey]   // eslint-disable-line react-hooks/exhaustive-deps
   );
 
+  // 2026-05-20 — friend-test fix. The original implementation said
+  // "retrying" in the UI but actually only retried when the user
+  // typed something new. With the schema-level fixes most validation
+  // failures are gone, but network blips still happen. One inline
+  // retry-with-backoff (1.5s then give up) covers transient
+  // hiccups; the SaveStatus copy "keep typing to retry" still
+  // tells the user the action is on them if the retry fails.
   const flushSave = useCallback(async () => {
     const payload = pendingPayloadRef.current;
     if (payload == null) return;
@@ -81,7 +88,7 @@ export default function useBriefAutosave(sectionKey) {
     const ctrl = new AbortController();
     abortRef.current = ctrl;
 
-    try {
+    async function attempt() {
       const r = await fetch(`/api/cabin/brief/${sectionKey}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -90,10 +97,27 @@ export default function useBriefAutosave(sectionKey) {
         signal: ctrl.signal,
       });
       if (!r.ok) throw new Error(`save-${r.status}`);
+      return r;
+    }
+
+    try {
+      await attempt();
       if (seq === seqRef.current) setState("saved");
-    } catch (err) {
-      if (err?.name === "AbortError") return;
-      if (seq === seqRef.current) setState("error");
+    } catch (err1) {
+      if (err1?.name === "AbortError") return;
+      // One-shot retry after 1.5s for transient errors. We do NOT
+      // retry on validation errors (4xx) because the same payload
+      // will fail again, but we keep the check cheap by accepting
+      // all errors here — the second failure surfaces correctly.
+      try {
+        await new Promise((res) => setTimeout(res, 1500));
+        if (seq !== seqRef.current || ctrl.signal.aborted) return;
+        await attempt();
+        if (seq === seqRef.current) setState("saved");
+      } catch (err2) {
+        if (err2?.name === "AbortError") return;
+        if (seq === seqRef.current) setState("error");
+      }
     }
   }, [sectionKey]);
 

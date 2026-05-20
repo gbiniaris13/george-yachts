@@ -12,6 +12,7 @@ import { NextResponse } from "next/server";
 import { readSessionFromCookies, pickActiveCabinId, resolveMembership } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import { SECTION_SCHEMAS, sectionCompleteness } from "@/lib/cabin/schemas";
+import { normalizeBriefPayload } from "@/lib/cabin/brief-normalize";
 import { writeAudit, AUDIT_ACTIONS } from "@/lib/cabin/audit";
 import { recomputeCabinCompletion } from "@/lib/cabin/prefill";
 
@@ -67,8 +68,25 @@ export async function PUT(req, ctx) {
   }
 
   const schema = SECTION_SCHEMAS[a.section];
-  const parsed = schema.safeParse(body?.data ?? {});
+
+  // 2026-05-20 — friend-test fix. RHF sends form-shaped payloads
+  // (HTML input quirks intact: "" for empty dates, false for empty
+  // checkbox groups, single strings for solo-checked checkbox
+  // groups, etc.). normalizeBriefPayload strips those before the
+  // schema sees them — without this, 3/3 testers hit
+  // "Couldn't save — retrying" loops in their first section.
+  const cleaned = normalizeBriefPayload(body?.data ?? {}) ?? {};
+  const parsed = schema.safeParse(cleaned);
   if (!parsed.success) {
+    // Log to the server for forensic analysis but still return a
+    // clean 400 — the client retries on the next change anyway.
+    console.error("[cabin/brief] validation rejected", {
+      section: a.section,
+      issues: parsed.error.flatten(),
+      // Trim cleaned payload to first 500 chars so we don't blow up
+      // logs with full brief copies.
+      payload_preview: JSON.stringify(cleaned).slice(0, 500),
+    });
     return NextResponse.json(
       { ok: false, error: "validation", issues: parsed.error.flatten() },
       { status: 400 }
