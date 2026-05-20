@@ -26,7 +26,13 @@ export const runtime = "nodejs";
 // caps at 10s for Edge; we explicitly use nodejs which gets 60s).
 export const maxDuration = 60;
 
-const ALLOWED_KINDS = new Set(["crew", "menu", "vessel"]);
+// 2026-05-20 — Added "contract" kind for MYBA charter agreement
+// auto-extraction. See SYSTEM_PROMPTS.contract below for the
+// safe/internal split. The internal half is stored in cabins
+// .contract_internal JSONB and never exposed to charterer-facing
+// surfaces — George's principle: clients are unaware of
+// central-agent or owner identity, by design.
+const ALLOWED_KINDS = new Set(["crew", "menu", "vessel", "contract"]);
 const MAX_BYTES = 10 * 1024 * 1024; // 10 MB per PDF
 
 function authorized(req) {
@@ -153,12 +159,136 @@ Rules:
 • "water_toys" — split the "Tender & Toys" list into individual items, dropping the tender itself (which goes in "tender").
 • "areas" — list of named areas/sections the brochure walks through (Aft Deck, Saloon, Flybridge, etc.).
 • Output ONLY the JSON.`,
+
+  // 2026-05-20 — Friend-test pass 4 +:
+  // MYBA Charter Agreement extraction. The contract carries the
+  // single source of truth for vessel + charter logistics —
+  // George wants the cabin to read directly from it after signing.
+  //
+  // CRITICAL: output is split into "safe" (fields safe to surface
+  // to the charterer) and "internal" (operator-only fields the
+  // client must never see). The persistence layer writes the
+  // INTERNAL half to a dedicated JSONB column that no /cabin/*
+  // page selects.
+  contract: `You are extracting structured data from a signed MYBA
+Charter Agreement (the standard contract used across the worldwide
+yacht-charter industry, published by MYBA). Page One contains the
+"Charter Particulars" block — that's where most fields live.
+Subsequent pages are the standard clauses; skip them unless an
+addendum modifies the headline particulars.
+
+Output strict JSON with this exact shape — and obey the safe/
+internal split:
+
+{
+  "safe": {
+    "vessel_name": "EFFIE STAR",
+    "vessel_make_model": "Lagoon 51",
+    "vessel_type": "Sailing Catamaran",
+    "vessel_length_ft": 51,
+    "vessel_length_m": null,
+    "homeport": "Piraeus",
+    "flag": "Greek",
+    "max_guests_sleeping": 10,
+    "max_guests_cruising": 10,
+    "crew_summary": "Captain +1",
+    "charter_period_from": "2026-06-27",
+    "charter_period_to": "2026-07-04",
+    "port_embarkation": "Athens, Greece",
+    "port_disembarkation": "Athens, Greece",
+    "cruising_area": "Greek & International Waters",
+    "principal_charterer_name": "Tricia Stevens",
+    "principal_charterer_address": "4523 Club Circle NE Atlanta, GA 30319 USA"
+  },
+  "internal": {
+    "contract_number": "001019092602063480-02",
+    "contract_date": "2026-02-06",
+    "contract_place": "Alimos, Athens",
+    "owner_name": "STAR YACHTS MCPY",
+    "owner_address": "43-45 Mousson Str., 17562, Athens, Greece",
+    "stakeholder_name": "Istion Yachting S.A.",
+    "stakeholder_address": "1 Posidonos Avenue & Goumi Street Alimos, Athens 17455 Greece",
+    "stakeholder_myba_id": "ISTIGR",
+    "broker_name_on_contract": "ELENI IOANNA KARVOUNI",
+    "broker_address_on_contract": "Leoforos Iraklejou 189, Nea Ionia",
+    "charter_fee_eur": 20856,
+    "vat_provision_eur": 2502.72,
+    "apa_eur": 5200,
+    "security_deposit_eur": null,
+    "delivery_redelivery_fees_eur": null,
+    "payment_schedule": [
+      { "instalment": "first", "amount_eur": 10428, "due_date": "2026-02-13", "label": "50% of charter fee" },
+      { "instalment": "second", "amount_eur": 18130.72, "due_date": "2026-05-27", "label": "Rest 50% + VAT 12% + APA" }
+    ],
+    "bank_account": {
+      "bank_name": "EUROBANK",
+      "branch_address": "2A Atlantos Str. & Posidonos Ave., Paleo Faliro Athens, GREECE",
+      "swift_bic": "ERBKGRAA",
+      "iban": "GR8502600350000120200909374",
+      "beneficiary": "ISTION YACHTING S.A."
+    },
+    "special_conditions_summary": null
+  }
+}
+
+Rules:
+• Dates: output ISO 8601 (YYYY-MM-DD). MYBA dates appear as
+  "27 June 2026" — convert.
+• "charter_period_from / _to": parse the From and To times on Page
+  One. The DATE portion only (we discard the 12:00 hour).
+• "vessel_make_model": MYBA "Type" field. Often a builder + model
+  (Lagoon 51, Sunseeker 76, etc.). Preserve case.
+• "vessel_length_ft" / "_m": MYBA "Length" field. If only one unit
+  is present, set the other to null — DO NOT convert.
+• "principal_charterer_name": from the CHARTERER row. Strip
+  honorifics (Mr / Ms / Mrs / Dr) — just first + last name.
+  Preserve the original honorific if present nowhere else.
+• "principal_charterer_address": full address line from the
+  CHARTERER ADDRESS row, single string.
+• "cruising_area": verbatim from the "Cruising area" line.
+• "max_guests_sleeping / _cruising": parse the "Maximum number of
+  guests sleeping (X) and cruising (Y) on board" line — two
+  separate integers.
+• "crew_summary": short phrase verbatim, e.g. "Captain +1".
+• "charter_fee_eur", "vat_provision_eur", "apa_eur",
+  "security_deposit_eur", "delivery_redelivery_fees_eur": numeric
+  values (EUR). Drop currency symbols. If the field says "n/a" or
+  blank, output null.
+• "payment_schedule": parse the FIRST INSTALMENT and SECOND
+  INSTALMENT (and any additional) into ordered entries. Each
+  entry has amount, due_date (ISO), and a short "label" (e.g.
+  "50% of charter fee", "Rest 50% + VAT 12% + APA").
+• "bank_account": from the "To the following Broker's Client
+  Account" block. SWIFT/BIC, IBAN, beneficiary — all preserved.
+• "special_conditions_summary": only set if Page Two's Special
+  Conditions block carries clauses that materially affect the
+  charter (e.g. APA percentage variances). Otherwise null.
+• Unknown / missing fields → null (not empty strings).
+• Output ONLY the JSON. No markdown fences, no commentary.`,
 };
 
 const COLUMN_BY_KIND = {
   crew: "crew_display",
   menu: "sample_menu",
   vessel: "vessel_brochure",
+  // contract is special — it writes to multiple columns; see the
+  // contract-specific persistence block below the basic kinds.
+};
+
+// 2026-05-20 — MYBA contract extraction maps the "safe" half of
+// the extraction onto these flat columns. Any field NOT in this
+// allowlist is dropped (we never silently widen the contract's
+// influence over the cabin record).
+const CONTRACT_SAFE_TO_COLUMN = {
+  vessel_name: "vessel_name",
+  vessel_make_model: "vessel_make_model",
+  homeport: "homeport",
+  charter_period_from: "charter_period_from",
+  charter_period_to: "charter_period_to",
+  port_embarkation: "port_embarkation",
+  port_disembarkation: "port_disembarkation",
+  cruising_area: "cruising_area",
+  principal_charterer_name: "principal_charterer_name",
 };
 
 // Conservative pre-estimate. Gemini 2.5 Flash is much cheaper than
@@ -252,8 +382,68 @@ export async function POST(req) {
   }
 
   // Save to the matching cabin column.
-  const col = COLUMN_BY_KIND[kind];
   const db = getCabinDb();
+
+  // 2026-05-20 — Contract kind takes a different persistence path
+  // because it touches multiple flat columns AND the
+  // contract_internal JSONB. We assemble a single UPDATE for
+  // atomicity, then return a summary of what landed where.
+  if (kind === "contract") {
+    const safe = (extracted && typeof extracted === "object" && extracted.safe) || {};
+    const internal = (extracted && typeof extracted === "object" && extracted.internal) || {};
+
+    // Build the column-level update from the allowlist. Only fields
+    // present (non-null, non-empty) overwrite; everything else
+    // leaves the existing value alone — George may have typed it
+    // by hand before signing the contract.
+    const update = {};
+    for (const [safeKey, col] of Object.entries(CONTRACT_SAFE_TO_COLUMN)) {
+      const v = safe[safeKey];
+      if (v === null || v === undefined) continue;
+      if (typeof v === "string" && v.trim().length === 0) continue;
+      update[col] = typeof v === "string" ? v.trim() : v;
+    }
+
+    // Vessel length: pick the unit the contract carries. Stored
+    // as free-text "<n> ft" or "<n> m" on the cabin row.
+    if (safe.vessel_length_ft != null) {
+      update.vessel_length = `${safe.vessel_length_ft} ft`;
+    } else if (safe.vessel_length_m != null) {
+      update.vessel_length = `${safe.vessel_length_m} m`;
+    }
+    // Capacity — prefer "sleeping" (the binding number for
+    // accommodation); fall back to cruising.
+    if (Number.isInteger(safe.max_guests_sleeping)) {
+      update.vessel_capacity = safe.max_guests_sleeping;
+    } else if (Number.isInteger(safe.max_guests_cruising)) {
+      update.vessel_capacity = safe.max_guests_cruising;
+    }
+
+    // contract_internal: store the whole internal blob verbatim
+    // for operator surfaces (preference sheet, crew list PDF,
+    // future financial reconciliation). Never read by client pages.
+    update.contract_internal = internal;
+
+    await dbQuery(
+      db.from("cabins").update(update).eq("id", cabinId)
+    );
+
+    return NextResponse.json({
+      ok: true,
+      kind,
+      summary: {
+        applied_columns: Object.keys(update).filter((k) => k !== "contract_internal"),
+        internal_fields_captured: Object.keys(internal),
+        vessel_name: update.vessel_name ?? null,
+        charterer: update.principal_charterer_name ?? null,
+        charter_window: update.charter_period_from && update.charter_period_to
+          ? `${update.charter_period_from} → ${update.charter_period_to}`
+          : null,
+      },
+    });
+  }
+
+  const col = COLUMN_BY_KIND[kind];
   // crew uses a different shape on the cabin column — we keep the
   // members array as { first_name, role, bio, ... } for backwards
   // compat with the simple admin form. New shape adds last_name,

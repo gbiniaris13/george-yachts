@@ -47,12 +47,48 @@ export const metadata = {
   title: { absolute: "Your Cabin · George Yachts" },
 };
 
+// 2026-05-20 — MYBA contract extraction added a `contract_internal`
+// JSONB column carrying owner, stakeholder, fees, payment schedule,
+// bank account. NEVER expose to charterer surfaces.
+//
+// We could `select("*")` and rely on the JSX never rendering that
+// field — but defense-in-depth: enumerate the columns we actually
+// need so a future change can't accidentally surface internal data.
+const CABIN_CLIENT_COLUMNS = [
+  "id",
+  "status",
+  "concierge_mode_active",
+  "vessel_name",
+  "vessel_make_model",
+  "vessel_length",
+  "vessel_capacity",
+  "homeport",
+  "cruising_area",
+  "port_embarkation",
+  "port_disembarkation",
+  "charter_period_from",
+  "charter_period_to",
+  "principal_charterer_name",
+  "principal_charterer_email",
+  "principal_charterer_mobile",
+  "brief_completion_percent",
+  "brief_submitted_at",
+  "brief_locked_at",
+  "vessel_brochure",
+  "vessel_photos",
+  "sample_menu",
+  "crew_display",
+  "inspiration_content",
+  "created_at",
+  "updated_at",
+].join(", ");
+
 async function loadCabin(cabinId) {
   const db = getCabinDb();
   return dbQuery(
     db
       .from("cabins")
-      .select("*")
+      .select(CABIN_CLIENT_COLUMNS)
       .eq("id", cabinId)
       .maybeSingle()
   );
