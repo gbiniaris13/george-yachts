@@ -212,7 +212,13 @@ export default async function CabinHomePage() {
   return (
     <div className="cabin-home">
       <header className="cabin-home__welcome">
-        <div className="cabin-home__eyebrow">Welcome aboard, in spirit</div>
+        {/* 2026-05-20 — Pass 6 (Domingo, Margaret):
+            "'Welcome aboard, in spirit' over 'Welcome, George' reads
+            like two competing greetings — and the 'in spirit' hedge
+            sits awkwardly with people who paid €50k for a real
+            voyage. The eyebrow is now a calm contextualizer, not a
+            second welcome. */}
+        <div className="cabin-home__eyebrow">Your private Cabin</div>
         <h1 className="cabin-home__greeting">
           Welcome, <em>{firstName}.</em>
         </h1>
@@ -614,6 +620,33 @@ export default async function CabinHomePage() {
         }
         @media (min-width: 1024px) {
           .cabin-home__grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        /* 2026-05-20 — Pass 6 (Domingo, Tyler): the principal grid
+           had 13 tiles, leaving one lonely tile in column 1 of the
+           bottom row with 3 empty cells beside it on the 4-col
+           desktop layout (and analogous gaps at the other
+           breakpoints). When the last tile is the sole occupant of
+           its row, span it across the remaining cells so the grid
+           always reads as intentional and never has visible empty
+           white cells.
+
+           Each rule is scoped by media query so the nth-child
+           calculation matches the active column count.
+        */
+        @media (max-width: 639.98px) {
+          .cabin-home__tile:last-child:nth-child(odd) {
+            grid-column: 1 / -1;
+          }
+        }
+        @media (min-width: 640px) and (max-width: 1023.98px) {
+          .cabin-home__tile:last-child:nth-child(3n+1) {
+            grid-column: 1 / -1;
+          }
+        }
+        @media (min-width: 1024px) {
+          .cabin-home__tile:last-child:nth-child(4n+1) {
+            grid-column: 1 / -1;
+          }
         }
         .cabin-home__tile {
           background: #ffffff;

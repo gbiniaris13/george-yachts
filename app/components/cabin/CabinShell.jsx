@@ -238,9 +238,19 @@ export default function CabinShell({ session, cabin, viewerDisplayName, children
           top: 0;
           z-index: 30;
           display: grid;
-          /* Four columns now: back (optional) · brand · charter info · hamburger.
-             The back column collapses to 0 when absent (no JSX = no track). */
-          grid-template-columns: auto auto 1fr auto;
+          /* 2026-05-20 — Pass 6 (Domingo, Tyler):
+             pass-3 removed the hamburger button but the grid kept a
+             trailing 'auto' track for it. The charter chip's '1fr'
+             column was being squeezed to ~80px on a 375px-wide
+             iPhone, and viewerName + vessel + dates ellipsised down
+             to literally nothing — the chip rendered empty.
+
+             Grid is now three tracks: back (optional, auto) · brand
+             (auto) · charter chip (1fr, right-aligned). No dead
+             trailing track. On phones < 480px the charter chip's
+             vessel-meta line is hidden so the name alone has room
+             to breathe; the meta returns at ≥ 480px. */
+          grid-template-columns: auto auto 1fr;
           align-items: center;
           gap: 12px;
           padding: 14px 18px;
@@ -248,6 +258,17 @@ export default function CabinShell({ session, cabin, viewerDisplayName, children
           background: var(--gy-navy);
           color: var(--gy-ivory);
           border-bottom: 1px solid rgba(201, 168, 76, 0.4);
+        }
+        @media (max-width: 479.98px) {
+          .cabin-shell__charter-meta {
+            display: none;
+          }
+          .cabin-shell__brand-eyebrow {
+            display: none;
+          }
+          .cabin-shell__brand-title {
+            font-size: 15px;
+          }
         }
 
         .cabin-shell__back {

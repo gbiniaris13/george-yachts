@@ -132,13 +132,18 @@ export default async function CabinBriefOverviewPage() {
         </h1>
         <div className="cabin-brief__rule" aria-hidden />
         <IntroParagraph>
-          A handful of short sections. Every blank is optional — leave
-          what doesn&apos;t apply. Only your name and email are truly
-          required. Save as you go; come back days, weeks, or months
-          later. The more you share, the more thoughtfully your week
-          can be designed — and you won&apos;t have to repeat yourself
-          to the crew, the chef, the hostess or the captain. They all
-          read from here.
+          {/* 2026-05-20 — Pass 6 (Margaret, Helen): "Only your name
+              and email are truly required" was stale copy from the
+              old onboarding (which now sits behind the Welcome
+              flow). In the Brief itself, every field is optional —
+              and the principal already filled name + email at sign
+              up. Rewritten to say what's true now. */}
+          A handful of short sections. Every blank is optional —
+          leave what doesn&apos;t apply. Save as you go; come back
+          days, weeks, or months later. The more you share, the more
+          thoughtfully your week can be designed — and you won&apos;t
+          have to repeat yourself to the crew, the chef, the hostess
+          or the captain. They all read from here.
         </IntroParagraph>
         <p className="cabin-brief__time">
           Around <strong>{remainingMinutes || totalMinutes} minutes</strong>{" "}
