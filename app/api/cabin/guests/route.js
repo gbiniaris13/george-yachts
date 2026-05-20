@@ -45,7 +45,7 @@ export async function GET() {
   const db = getCabinDb();
   const data = await dbQuery(
     db.from("cabin_members")
-      .select("id, role, email, display_name, invite_sent_at, last_login_at, created_at")
+      .select("id, role, email, display_name, invite_sent_at, last_login_at, personal_details_completed_at, created_at")
       .eq("cabin_id", a.cabinId)
       .is("deleted_at", null)
       .order("created_at")
@@ -109,7 +109,12 @@ export async function POST(req) {
   let mailed = false;
   if (sendInvite) {
     try {
-      const otp = await createMagicLinkOtp(email);
+      // Pin the magic link to THIS cabin so the recipient lands on
+      // it (not whatever cabin happens to sort first for their
+      // email). Critical when a guest is invited to multiple cabins
+      // by different principals — without the pin they'd land on
+      // the wrong one.
+      const otp = await createMagicLinkOtp(email, a.cabinId);
       const origin = new URL(req.url).origin;
       const link = `${origin}/api/cabin/auth/verify?token=${encodeURIComponent(otp)}`;
       await sendMagicLinkEmail({
@@ -121,6 +126,16 @@ export async function POST(req) {
         link,
       });
       mailed = true;
+      // Stamp invite_sent_at for resends too — otherwise the
+      // principal's group page can't tell whether a guest was
+      // re-prodded today vs invited 3 weeks ago.
+      if (existing) {
+        await dbQuery(
+          db.from("cabin_members")
+            .update({ invite_sent_at: new Date().toISOString() })
+            .eq("id", existing.id)
+        );
+      }
     } catch (err) {
       console.error("[guests] invite send error:", err);
     }

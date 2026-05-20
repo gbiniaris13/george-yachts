@@ -1,4 +1,19 @@
-// /cabin/guests — charterer's guest invitation page (Phase 2).
+// /cabin/guests — charterer's group page.
+//
+// 2026-05-20 — Phase 2 (invite-first architecture). The page
+// used to ship as a Phase 2 stub. Now it's the principal's
+// primary dashboard:
+//
+//   - Compact "Add a guest" form at the top (single + bulk).
+//   - Member list with three-state badge per row:
+//       Invited       → invite_sent_at present, never logged in
+//       Joined        → has logged in once
+//       Details ready → personal_details_completed_at set
+//   - Per-row "Resend invite" button for anyone still on Invited.
+//   - "Remove" stays as before.
+//
+// Bulk invite still POSTs sequentially — clearer feedback and we
+// avoid hitting Resend's rate limits.
 "use client";
 
 import { useEffect, useState } from "react";
@@ -11,6 +26,20 @@ const ROLE_LABEL = {
   designated_assistant: "Designated assistant",
 };
 
+function statusFor(member) {
+  if (member.personal_details_completed_at) return "ready";
+  if (member.last_login_at) return "joined";
+  if (member.invite_sent_at) return "invited";
+  return "unsent";
+}
+
+const STATUS_BADGE = {
+  ready:   { label: "Details ready", tone: "ok" },
+  joined:  { label: "Joined — waiting on details", tone: "warm" },
+  invited: { label: "Invite sent", tone: "cool" },
+  unsent:  { label: "Not invited yet", tone: "muted" },
+};
+
 export default function GuestsPage() {
   const [members, setMembers] = useState(null);
   const [email, setEmail] = useState("");
@@ -18,6 +47,8 @@ export default function GuestsPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
   const [info, setInfo] = useState(null);
+  const [resendingId, setResendingId] = useState(null);
+
   // Bulk-invite state — paste a list of emails (one per line, or
   // comma-separated). We POST each sequentially and report the
   // count back so the charterer doesn't have to submit 12 forms.
@@ -115,6 +146,27 @@ export default function GuestsPage() {
     }
   }
 
+  async function onResend(memberEmail, memberId) {
+    setResendingId(memberId);
+    setError(null);
+    setInfo(null);
+    try {
+      const r = await fetch("/api/cabin/guests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: memberEmail, send_invite: true }),
+      });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || "resend-failed");
+      setInfo(`Reminder sent to ${memberEmail}.`);
+      void load();
+    } catch {
+      setError("Could not resend just now. Try again in a moment.");
+    } finally {
+      setResendingId(null);
+    }
+  }
+
   async function onRemove(member_id, role) {
     if (role === "principal_charterer") return;
     if (!confirm("Remove this guest from your cabin? They will lose access immediately.")) return;
@@ -135,21 +187,41 @@ export default function GuestsPage() {
     }
   }
 
+  // Compute a tiny summary line — used in the header so the
+  // principal sees progress at a glance.
+  const guestRows = (members ?? []).filter(
+    (m) => m.role !== "principal_charterer" && m.role !== "designated_assistant"
+  );
+  const readyCount = guestRows.filter(
+    (m) => m.personal_details_completed_at
+  ).length;
+  const joinedCount = guestRows.filter((m) => m.last_login_at).length;
+  const invitedTotal = guestRows.length;
+
   return (
     <article>
       <SectionTitle
-        kicker="Invite your guests"
+        kicker="Your group"
         title="Who is"
         italic="sailing with you?"
       />
       <IntroParagraph>
-        Add the email of each guest joining you. Each receives their own
-        private sign-in link to your Cabin, with a small welcome from us.
-        They see the same details you see, except for any pages you choose
-        to keep private. You stay in control — invite or remove at any time.
-        Most charters carry six to twelve guests; use the bulk option below
-        if you’d rather paste the whole list at once.
+        Add an email for each guest. Each one receives their own private
+        sign-in to your Cabin — they share their own details (allergies,
+        swimming, anything we should know) so you’re not asked to remember
+        it all for them. You stay in control: invite, resend or remove
+        at any time.
       </IntroParagraph>
+
+      {invitedTotal > 0 && (
+        <div className="guests-summary" aria-live="polite">
+          <span><strong>{invitedTotal}</strong> invited</span>
+          <span>·</span>
+          <span><strong>{joinedCount}</strong> joined</span>
+          <span>·</span>
+          <span><strong>{readyCount}</strong> shared their details</span>
+        </div>
+      )}
 
       <form className="guests-add" onSubmit={onInvite}>
         <div className="guests-add__row">
@@ -215,31 +287,77 @@ export default function GuestsPage() {
       {members === null && <p style={{ color: "rgba(13,27,42,0.5)" }}>Loading…</p>}
       {members?.length > 0 && (
         <ul className="guests-list">
-          {members.map((m) => (
-            <li key={m.id}>
-              <div className="guests-list__head">
-                <strong>{m.display_name || m.email}</strong>
-                <em>{ROLE_LABEL[m.role] ?? m.role}</em>
-              </div>
-              <div className="guests-list__meta">
-                <span>{m.email}</span>
-                {m.last_login_at
-                  ? <span>· signed in {new Date(m.last_login_at).toLocaleDateString()}</span>
-                  : m.invite_sent_at
-                    ? <span>· invited {new Date(m.invite_sent_at).toLocaleDateString()}</span>
-                    : <span>· not invited yet</span>}
-              </div>
-              {m.role !== "principal_charterer" && (
-                <button onClick={() => onRemove(m.id, m.role)} className="guests-list__remove" type="button">
-                  Remove
-                </button>
-              )}
-            </li>
-          ))}
+          {members.map((m) => {
+            const status = statusFor(m);
+            const badge = STATUS_BADGE[status];
+            const showResend =
+              m.role !== "principal_charterer" &&
+              m.role !== "designated_assistant" &&
+              (status === "invited" || status === "joined");
+            return (
+              <li key={m.id}>
+                <div className="guests-list__head">
+                  <strong>{m.display_name || m.email}</strong>
+                  <em>{ROLE_LABEL[m.role] ?? m.role}</em>
+                </div>
+                <div className="guests-list__meta">
+                  <span>{m.email}</span>
+                  {m.last_login_at
+                    ? <span>· signed in {new Date(m.last_login_at).toLocaleDateString()}</span>
+                    : m.invite_sent_at
+                      ? <span>· invited {new Date(m.invite_sent_at).toLocaleDateString()}</span>
+                      : <span>· not invited yet</span>}
+                </div>
+                {m.role !== "principal_charterer" && (
+                  <div className={`guests-list__badge guests-list__badge--${badge.tone}`}>
+                    {badge.label}
+                  </div>
+                )}
+                <div className="guests-list__actions">
+                  {showResend && (
+                    <button
+                      type="button"
+                      onClick={() => onResend(m.email, m.id)}
+                      disabled={resendingId === m.id}
+                      className="guests-list__resend"
+                    >
+                      {resendingId === m.id ? "Resending…" : "Resend invite"}
+                    </button>
+                  )}
+                  {m.role !== "principal_charterer" && (
+                    <button
+                      onClick={() => onRemove(m.id, m.role)}
+                      className="guests-list__remove"
+                      type="button"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+              </li>
+            );
+          })}
         </ul>
       )}
 
       <style>{`
+        .guests-summary {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          align-items: baseline;
+          margin: 18px 0 0 0;
+          padding: 14px 16px;
+          background: rgba(201, 168, 76, 0.07);
+          border-left: 2px solid var(--gy-gold);
+          font-family: var(--gy-font-editorial);
+          font-size: 14px;
+          color: rgba(13,27,42,0.75);
+        }
+        .guests-summary strong {
+          font-weight: 500;
+          color: var(--gy-navy);
+        }
         .guests-add {
           background: #ffffff;
           border: 1px solid rgba(13,27,42,0.08);
@@ -262,7 +380,7 @@ export default function GuestsPage() {
           border-bottom: 1px solid rgba(13,27,42,0.18);
           padding: 8px 0 9px;
           font-family: var(--gy-font-body);
-          font-size: 14px;
+          font-size: 16px;
           color: var(--gy-navy);
           outline: none;
         }
@@ -406,17 +524,52 @@ export default function GuestsPage() {
           font-size: 12.5px;
           color: rgba(13,27,42,0.55);
         }
+        .guests-list__badge {
+          display: inline-block;
+          margin-top: 10px;
+          padding: 4px 9px;
+          font-family: var(--gy-font-ui);
+          font-size: 9.5px;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+        }
+        .guests-list__badge--ok    { background: rgba(47, 125, 58, 0.12); color: #2f7d3a; }
+        .guests-list__badge--warm  { background: rgba(201, 168, 76, 0.14); color: #8a7327; }
+        .guests-list__badge--cool  { background: rgba(13, 27, 42, 0.06);   color: rgba(13,27,42,0.65); }
+        .guests-list__badge--muted { background: rgba(13, 27, 42, 0.04);   color: rgba(13,27,42,0.45); }
+        .guests-list__actions {
+          margin-top: 12px;
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+        .guests-list__resend {
+          background: transparent;
+          border: 1px solid var(--gy-gold);
+          font-family: var(--gy-font-ui);
+          font-size: 9.5px;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          padding: 6px 12px;
+          cursor: pointer;
+          color: var(--gy-gold);
+        }
+        .guests-list__resend:hover {
+          background: var(--gy-gold);
+          color: #ffffff;
+        }
+        .guests-list__resend:disabled {
+          opacity: 0.6;
+          cursor: default;
+        }
         .guests-list__remove {
-          position: absolute;
-          top: 12px;
-          right: 12px;
           background: transparent;
           border: 1px solid rgba(13,27,42,0.18);
           font-family: var(--gy-font-ui);
           font-size: 9px;
           letter-spacing: 1.5px;
           text-transform: uppercase;
-          padding: 5px 10px;
+          padding: 6px 12px;
           cursor: pointer;
           color: rgba(13,27,42,0.6);
         }
