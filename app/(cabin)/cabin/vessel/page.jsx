@@ -10,7 +10,7 @@ import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
 
-export const metadata = { title: "Your vessel · Your Cabin" };
+export const metadata = { title: "Your vessel" };
 
 function fmtNum(n, suffix = "") {
   if (n == null || n === "") return null;

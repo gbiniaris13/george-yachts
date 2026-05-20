@@ -9,7 +9,7 @@ import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
 
-export const metadata = { title: "Sample menu · Your Cabin" };
+export const metadata = { title: "Sample menu" };
 
 function normaliseMenu(raw) {
   if (!raw || typeof raw !== "object") return null;

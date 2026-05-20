@@ -9,7 +9,7 @@ import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
 
-export const metadata = { title: "Your crew · Your Cabin" };
+export const metadata = { title: "Your crew" };
 
 function paragraphs(bio) {
   if (!bio || typeof bio !== "string") return [];
@@ -26,13 +26,50 @@ function paragraphs(bio) {
 // We strip "born in YYYY" / "born YYYY" / "(b. YYYY)" patterns
 // from the bio at render time. Operator can override by editing
 // in GY Command if a date is intentional (e.g. an anniversary).
+// 2026-05-20 — Pass 4 round 5 (Margaret, Helen):
+//   Leonora's bio shipped as "Leonora Stavrou and raised in Athens"
+//   (missing "was born"), with "yachting .For the past" (bad
+//   spacing), "reliable a strong asset" (missing comma), and a
+//   "Cosmetics and Aesthetics" line irrelevant to a chef intro.
+//
+// We can't reliably auto-fix every grammar failure — that's
+// George's job in CRM. But we CAN catch the common spacing /
+// punctuation defects the extraction pipeline tends to introduce.
+// Plus we strip a few patently-irrelevant phrases that often
+// survive the extractor (degrees unrelated to the role).
 function scrubBio(s) {
   if (!s) return "";
-  return String(s)
+  let out = String(s);
+
+  // Strip year-of-birth phrases.
+  out = out
     .replace(/\b(?:was\s+)?born\s+(?:in\s+)?(?:19|20)\d{2}\b[.,]?\s*/gi, "")
-    .replace(/\(\s*b\.?\s*(?:19|20)\d{2}\s*\)\s*/gi, "")
-    .replace(/\s{2,}/g, " ")
-    .trim();
+    .replace(/\(\s*b\.?\s*(?:19|20)\d{2}\s*\)\s*/gi, "");
+
+  // Strip degrees unrelated to the role. Cosmetics / aesthetics
+  // on a chef bio surfaced in pass 4 — surface area is small
+  // enough to maintain by hand.
+  out = out
+    .replace(/\bholds?\s+a\s+degree\s+in\s+cosmetics(?:\s+and\s+aesthetics)?[^.]*\.?\s*/gi, "")
+    .replace(/\bdegree\s+in\s+aircraft\s+engineering[^.]*\.?\s*/gi, "");
+
+  // Punctuation/whitespace defects we see often in extracted bios:
+  //   "yachting .For"  → "yachting. For"
+  //   "reliable a strong"  → "reliable, a strong"
+  //   double spaces, trailing whitespace.
+  out = out
+    // Space before punctuation: "yachting ." → "yachting."
+    .replace(/\s+([.,;:!?])/g, "$1")
+    // Missing space after period (between sentences): ".For" → ". For"
+    .replace(/([.!?])([A-Z])/g, "$1 $2")
+    // Repeated spaces / tabs → single space
+    .replace(/[ \t]{2,}/g, " ")
+    // Trim each paragraph
+    .split(/\n/)
+    .map((l) => l.trim())
+    .join("\n");
+
+  return out.trim();
 }
 
 // 2026-05-20 — Pass 4 (Margaret + Helen):

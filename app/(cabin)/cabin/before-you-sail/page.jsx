@@ -9,7 +9,7 @@ import { fetchCharterWindowForecast, decodeWeatherCode } from "@/lib/cabin/weath
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
 
-export const metadata = { title: "Before you sail · Your Cabin" };
+export const metadata = { title: "Before you sail" };
 
 function fmtDay(iso) {
   const d = new Date(iso + "T00:00:00Z");
@@ -175,10 +175,15 @@ export default async function BeforeYouSailPage() {
                         const meta = decodeWeatherCode(d.code);
                         const day = fmtDay(d.date);
                         return (
-                          <li key={d.date}>
+                          <li key={d.date} className={d.historical ? "is-historical" : ""}>
                             <div className="bys-weather__day">
                               <strong>{day.day}</strong>
-                              <em>{day.date}</em>
+                              <em>
+                                {day.date}
+                                {d.historical && (
+                                  <span className="bys-weather__past">already at sea</span>
+                                )}
+                              </em>
                             </div>
                             <div className="bys-weather__glyph" aria-hidden>{meta.glyph}</div>
                             <div className="bys-weather__main">
@@ -394,6 +399,21 @@ export default async function BeforeYouSailPage() {
           letter-spacing: 1px;
           text-transform: uppercase;
           margin-top: 1px;
+        }
+        /* Pass 4 round 5: historical-day pill. Mark past days
+           that we filled in from the archive API so the user
+           sees the row but understands these are completed. */
+        .bys-weather__past {
+          display: inline-block;
+          margin-left: 6px;
+          font-size: 8.5px;
+          letter-spacing: 1px;
+          color: var(--gy-gold);
+          text-transform: uppercase;
+          font-weight: 600;
+        }
+        .bys-weather li.is-historical {
+          opacity: 0.72;
         }
         .bys-weather__glyph {
           color: var(--gy-gold);

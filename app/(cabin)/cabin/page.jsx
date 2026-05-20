@@ -38,7 +38,12 @@ import GreekWordOfTheDay from "../../components/cabin/GreekWordOfTheDay";
 import { titleCaseName } from "@/lib/cabin/format";
 
 export const metadata = {
-  title: "Your Cabin · George Yachts",
+  // 2026-05-20 — Pass 4 round 5 (Tyler, Helen, Margaret): browser
+  // tab read "Your Cabin · George Yachts · Your Cabin". The cabin
+  // layout applies a "%s · Your Cabin" template; this page provided
+  // its own title that already included "Your Cabin", so the
+  // template re-appended. `absolute` bypasses the template.
+  title: { absolute: "Your Cabin · George Yachts" },
 };
 
 async function loadCabin(cabinId) {

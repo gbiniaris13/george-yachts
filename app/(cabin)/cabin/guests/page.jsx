@@ -20,6 +20,224 @@ import { useEffect, useState } from "react";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
 
+// 2026-05-20 — Friend-test pass 4 round 5 (Sarah):
+// Inline minor adder. Saves a row to cabin_guests_manifest
+// (no email, no member account). Crew list PDF aggregates these
+// alongside adult members.
+function MinorAdder({ onAdded }) {
+  const [open, setOpen] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [dob, setDob] = useState("");
+  const [allergies, setAllergies] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState(null);
+  const [ok, setOk] = useState(false);
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    if (!firstName.trim() || !lastName.trim()) {
+      setErr("First name and surname are needed.");
+      return;
+    }
+    setBusy(true);
+    setErr(null);
+    setOk(false);
+    try {
+      const r = await fetch("/api/cabin/guests/minor", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          first_name: firstName.trim(),
+          last_name: lastName.trim(),
+          date_of_birth: dob || null,
+          allergies_dietary: allergies.trim() || null,
+        }),
+      });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j?.error || "save-failed");
+      setOk(true);
+      setFirstName("");
+      setLastName("");
+      setDob("");
+      setAllergies("");
+      onAdded?.();
+      setTimeout(() => setOk(false), 3000);
+    } catch (e) {
+      setErr(e.message || "Could not save. Try again.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="minor-adder">
+      <button
+        type="button"
+        className="minor-adder__toggle"
+        onClick={() => setOpen((v) => !v)}
+      >
+        {open ? "× Close" : "+ Travelling with children? Add them here (no email needed)"}
+      </button>
+      {open && (
+        <form className="minor-adder__form" onSubmit={onSubmit}>
+          <p className="minor-adder__hint">
+            <em>
+              Children don&apos;t need their own sign-in. Their details go
+              straight to the captain&apos;s manifest and the chef&apos;s
+              allergy list. You can edit any of this with George.
+            </em>
+          </p>
+          <div className="minor-adder__row">
+            <input
+              type="text"
+              placeholder="First name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              maxLength={60}
+              autoComplete="off"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Surname"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              maxLength={80}
+              autoComplete="off"
+              required
+            />
+          </div>
+          <label className="minor-adder__field">
+            <span>Date of birth (for life-jacket sizing)</span>
+            <input
+              type="date"
+              value={dob}
+              onChange={(e) => setDob(e.target.value)}
+              max={new Date().toISOString().slice(0, 10)}
+            />
+          </label>
+          <label className="minor-adder__field">
+            <span>Any allergies or dietary notes</span>
+            <input
+              type="text"
+              placeholder="e.g. severe peanut allergy · no shellfish"
+              value={allergies}
+              onChange={(e) => setAllergies(e.target.value)}
+              maxLength={400}
+            />
+          </label>
+          {err && <p className="minor-adder__err">{err}</p>}
+          {ok && <p className="minor-adder__ok">Added. Add another, or close.</p>}
+          <div className="minor-adder__actions">
+            <button type="submit" disabled={busy}>
+              {busy ? "Saving…" : "Add child to manifest"}
+            </button>
+          </div>
+        </form>
+      )}
+
+      <style>{`
+        .minor-adder {
+          margin: 0 0 28px 0;
+        }
+        .minor-adder__toggle {
+          background: transparent;
+          border: 0;
+          color: var(--gy-gold);
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          padding: 8px 0;
+          cursor: pointer;
+        }
+        .minor-adder__form {
+          background: rgba(201,168,76,0.06);
+          border-left: 2px solid var(--gy-gold);
+          padding: 16px 18px 18px;
+          margin-top: 10px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+        .minor-adder__hint {
+          font-family: var(--gy-font-editorial);
+          font-size: 13px;
+          color: rgba(13,27,42,0.65);
+          margin: 0;
+          line-height: 1.55;
+        }
+        .minor-adder__row {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+        @media (min-width: 560px) {
+          .minor-adder__row { grid-template-columns: 1fr 1fr; }
+        }
+        .minor-adder__row input,
+        .minor-adder__field input {
+          width: 100%;
+          background: #ffffff;
+          border: 1px solid rgba(13,27,42,0.12);
+          padding: 9px 11px;
+          font-family: var(--gy-font-body);
+          font-size: 16px;
+          color: var(--gy-navy);
+          outline: none;
+        }
+        .minor-adder__row input:focus,
+        .minor-adder__field input:focus {
+          border-color: var(--gy-gold);
+        }
+        .minor-adder__field {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+        .minor-adder__field > span {
+          font-family: var(--gy-font-ui);
+          font-size: 10px;
+          letter-spacing: 1.8px;
+          text-transform: uppercase;
+          color: rgba(13,27,42,0.65);
+        }
+        .minor-adder__err {
+          color: #b14a3a;
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 13px;
+          margin: 0;
+        }
+        .minor-adder__ok {
+          color: #2f7d3a;
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 13px;
+          margin: 0;
+        }
+        .minor-adder__actions {
+          display: flex;
+          justify-content: flex-end;
+        }
+        .minor-adder__actions button {
+          background: var(--gy-navy);
+          color: var(--gy-ivory);
+          border: 1px solid var(--gy-gold);
+          padding: 10px 18px;
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          cursor: pointer;
+        }
+        .minor-adder__actions button:disabled { opacity: 0.6; cursor: default; }
+      `}</style>
+    </div>
+  );
+}
+
 const ROLE_LABEL = {
   principal_charterer: "Principal charterer (you)",
   guest: "Guest",
@@ -206,12 +424,20 @@ export default function GuestsPage() {
         italic="sailing with you?"
       />
       <IntroParagraph>
-        Add an email for each guest. Each one receives their own private
-        sign-in to your Cabin — they share their own details (allergies,
-        swimming, anything we should know) so you’re not asked to remember
-        it all for them. You stay in control: invite, resend or remove
-        at any time.
+        Add an email for each adult guest. Each one receives their own
+        private sign-in to your Cabin — they share their own details
+        (allergies, swimming, anything we should know) so you’re not
+        asked to remember it all for them.
       </IntroParagraph>
+
+      {/* 2026-05-20 — Friend-test pass 4 round 5 (Sarah):
+          "My kids are 8 and 11. They do not have email addresses…
+           Either I can't add my kids, or the system contradicts its
+           own promise."
+          Inline minor adder (no email needed). Stored directly in
+          cabin_guests_manifest with is_minor=true. Crew list PDF in
+          GY Command aggregates these alongside the adults. */}
+      <MinorAdder onAdded={() => void load()} />
 
       {invitedTotal > 0 && (
         <div className="guests-summary" aria-live="polite">

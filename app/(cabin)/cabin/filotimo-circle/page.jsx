@@ -14,7 +14,7 @@ import {
 } from "@/lib/cabin/filotimo";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 
-export const metadata = { title: "The Filotimo Circle · Your Cabin" };
+export const metadata = { title: "The Filotimo Circle" };
 
 const TIER_DESCRIPTIONS = {
   friend: {

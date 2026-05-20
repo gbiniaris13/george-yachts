@@ -10,7 +10,7 @@ import { readSessionFromCookies, pickActiveCabinId } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 
-export const metadata = { title: "The Charter Brief · Your Cabin" };
+export const metadata = { title: "The Charter Brief" };
 
 // 2026-05-20 — Friend-test pass 3 (George):
 //   - "Around 34 minutes" felt too long. After we stripped Soundtrack
@@ -122,12 +122,13 @@ export default async function CabinBriefOverviewPage() {
     <div className="cabin-brief">
       <header className="cabin-brief__head">
         <div className="cabin-brief__eyebrow">The Charter Brief</div>
-        {/* 2026-05-20 — Pass 4 (Tyler):
-            "Half an hour" vs "Around 24 minutes" — pick one. Bumped
-            headline to "twenty-odd minutes" which lines up with the
-            actual sum and reads more honest. */}
+        {/* 2026-05-20 — Pass 4 round 5 (Margaret, Sarah, David, Tyler):
+            "Says 'around twenty minutes' here and 'Around 24 minutes'
+             four lines below. Pick one."
+            H1 dropped the specific number — the body line does the
+            job with the live total. The two no longer disagree. */}
         <h1 className="cabin-brief__title">
-          A quiet conversation, <em>around twenty minutes.</em>
+          A quiet conversation, <em>at your pace.</em>
         </h1>
         <div className="cabin-brief__rule" aria-hidden />
         <IntroParagraph>

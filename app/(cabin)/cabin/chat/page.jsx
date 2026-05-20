@@ -28,7 +28,7 @@ import { SectionTitle } from "../../../components/cabin/brief/FormFields";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 
 export const metadata = {
-  title: "Chat with George · Your Cabin",
+  title: "Chat with George",
 };
 
 // George's WhatsApp business number. If this ever changes, update
