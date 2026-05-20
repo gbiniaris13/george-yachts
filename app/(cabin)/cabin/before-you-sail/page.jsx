@@ -49,7 +49,7 @@ const PACKING = {
   ],
   "Pleasures": [
     "Book or e-reader for the long afternoons at anchor",
-    "Bluetooth speaker if you want to choose every soundtrack yourself",
+    "Bluetooth speaker for the cabin — the cicadas have the deck",
     "Camera or phone — there is no shortage of moments",
     "Reusable water bottle (we keep them cold)",
   ],

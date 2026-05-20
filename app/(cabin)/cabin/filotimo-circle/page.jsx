@@ -76,7 +76,11 @@ export default async function FilotimoCirclePage() {
         </IntroParagraph>
       </header>
 
-      {circle && (
+      {/* 2026-05-20 — Pass 4 round 5 (David, Helen, Tyler):
+          "Friend of the Circle, since 2026" before the first voyage
+          reads as fake-bestowed loyalty. Hide the tier-status card
+          entirely until at least one voyage is completed. */}
+      {circle && (circle.voyages_count ?? 0) >= 1 && (
         <section className="filotimo__status">
           <div className="filotimo__status-label">Your standing</div>
           <div className="filotimo__status-card">

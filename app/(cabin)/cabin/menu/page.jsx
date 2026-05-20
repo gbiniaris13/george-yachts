@@ -8,6 +8,7 @@ import { readSessionFromCookies, pickActiveCabinId } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
+import { presentDish } from "@/lib/cabin/menu-format";
 
 export const metadata = { title: "Sample menu" };
 
@@ -83,9 +84,17 @@ export default async function MenuPage() {
                   <p className="mn-section__empty"><em>—</em></p>
                 ) : (
                   <ul className="mn-section__dishes">
-                    {s.dishes.map((d, di) => (
-                      <li key={di}>{d}</li>
-                    ))}
+                    {s.dishes.map((d, di) => {
+                      const { label, gloss } = presentDish(d);
+                      return (
+                        <li key={di}>
+                          {label}
+                          {gloss && (
+                            <em className="mn-section__gloss"> — {gloss}</em>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 )}
               </div>
@@ -171,6 +180,11 @@ export default async function MenuPage() {
           font-size: 16px;
           line-height: 1.55;
           color: var(--gy-navy);
+        }
+        .mn-section__gloss {
+          font-style: italic;
+          color: rgba(13,27,42,0.55);
+          font-size: 13.5px;
         }
         .mn-section__empty { color: rgba(13,27,42,0.4); }
         .mn-footnote {

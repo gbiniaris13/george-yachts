@@ -35,6 +35,7 @@ import IntroParagraph from "../../components/cabin/IntroParagraph";
 import InstallNudge from "../../components/cabin/InstallNudge";
 import VoyageCarousel from "../../components/cabin/VoyageCarousel";
 import GreekWordOfTheDay from "../../components/cabin/GreekWordOfTheDay";
+import CabinIcon from "../../components/cabin/CabinIcon";
 import { titleCaseName } from "@/lib/cabin/format";
 
 export const metadata = {
@@ -312,76 +313,76 @@ export default async function CabinHomePage() {
         <div className="cabin-home__grid">
           {isPrincipal && (
             <Link href="/cabin/brief" className="cabin-home__tile">
-              <span className="cabin-home__tile-glyph" aria-hidden>✎</span>
+              <CabinIcon name="brief" className="cabin-home__tile-glyph" />
               <strong>The Brief</strong>
               <em>Tell us about your week — pace, food, what to celebrate.</em>
             </Link>
           )}
           <Link href="/cabin/chat" className="cabin-home__tile">
-            <span className="cabin-home__tile-glyph" aria-hidden>✺</span>
+            <CabinIcon name="chat" className="cabin-home__tile-glyph" />
             <strong>Chat with George</strong>
             <em>Message us anytime. George answers personally.</em>
           </Link>
           {isPrincipal ? (
             <Link href="/cabin/guests" className="cabin-home__tile">
-              <span className="cabin-home__tile-glyph" aria-hidden>◇</span>
+              <CabinIcon name="group" className="cabin-home__tile-glyph" />
               <strong>Your Group</strong>
               <em>Invite the people sailing with you. See who has joined.</em>
             </Link>
           ) : (
             <Link href="/cabin/me" className="cabin-home__tile">
-              <span className="cabin-home__tile-glyph" aria-hidden>◇</span>
+              <CabinIcon name="group" className="cabin-home__tile-glyph" />
               <strong>My Details</strong>
               <em>Share a few details — DOB, allergies, swimming.</em>
             </Link>
           )}
           <Link href="/cabin/crew" className="cabin-home__tile">
-            <span className="cabin-home__tile-glyph" aria-hidden>⚓</span>
+            <CabinIcon name="crew" className="cabin-home__tile-glyph" />
             <strong>Crew</strong>
             <em>Meet the captain, chef and hostess of your voyage.</em>
           </Link>
           <Link href="/cabin/menu" className="cabin-home__tile">
-            <span className="cabin-home__tile-glyph" aria-hidden>✿</span>
+            <CabinIcon name="menu" className="cabin-home__tile-glyph" />
             <strong>Sample Menu</strong>
             <em>A taste of what your chef proposes for the week.</em>
           </Link>
           <Link href="/cabin/vessel" className="cabin-home__tile">
-            <span className="cabin-home__tile-glyph" aria-hidden>⛵</span>
+            <CabinIcon name="vessel" className="cabin-home__tile-glyph" />
             <strong>Your Vessel</strong>
             <em>Photos and details of the yacht you’re sailing on.</em>
           </Link>
           <Link href="/cabin/mood-board" className="cabin-home__tile">
-            <span className="cabin-home__tile-glyph" aria-hidden>❖</span>
+            <CabinIcon name="mood" className="cabin-home__tile-glyph" />
             <strong>Mood Board</strong>
             <em>Save photos that capture the vibe you want.</em>
           </Link>
           <Link href="/cabin/before-you-sail" className="cabin-home__tile">
-            <span className="cabin-home__tile-glyph" aria-hidden>⊿</span>
+            <CabinIcon name="before" className="cabin-home__tile-glyph" />
             <strong>Before You Sail</strong>
             <em>Weather, Greek phrases, a quiet packing list.</em>
           </Link>
           <Link href="/cabin/voyage-album" className="cabin-home__tile">
-            <span className="cabin-home__tile-glyph" aria-hidden>▣</span>
+            <CabinIcon name="album" className="cabin-home__tile-glyph" />
             <strong>Voyage Album</strong>
             <em>Your photos from the week — download any time, zip on request.</em>
           </Link>
           <Link href="/cabin/time-capsule" className="cabin-home__tile">
-            <span className="cabin-home__tile-glyph" aria-hidden>✉</span>
+            <CabinIcon name="capsule" className="cabin-home__tile-glyph" />
             <strong>Time Capsule</strong>
             <em>Write a note we’ll send you in six months.</em>
           </Link>
           <Link href="/cabin/filotimo-circle" className="cabin-home__tile">
-            <span className="cabin-home__tile-glyph" aria-hidden>◐</span>
+            <CabinIcon name="circle" className="cabin-home__tile-glyph" />
             <strong>Filotimo Circle</strong>
             <em>Your place in our quiet loyalty circle.</em>
           </Link>
           <Link href="/cabin/your-data" className="cabin-home__tile">
-            <span className="cabin-home__tile-glyph" aria-hidden>▢</span>
+            <CabinIcon name="data" className="cabin-home__tile-glyph" />
             <strong>Your Data</strong>
             <em>Everything we hold for you. Edit or delete any time.</em>
           </Link>
           <Link href="/cabin/install" className="cabin-home__tile">
-            <span className="cabin-home__tile-glyph" aria-hidden>⤓</span>
+            <CabinIcon name="install" className="cabin-home__tile-glyph" />
             <strong>Add to phone</strong>
             <em>One tap to come back next time — no more sign-in emails.</em>
           </Link>
@@ -393,27 +394,36 @@ export default async function CabinHomePage() {
           ταξιδιών." Quietly renders nothing if no photos yet. */}
       <VoyageCarousel />
 
-      {/* 2026-05-20 — Pass 4 (David, 50M one-time charterer):
-          "'2 more voyages and you become a Companion' — this is for
-           someone else. I am doing this once." Soften the tier-up
-           nudge so it doesn't read as a sales upsell to a first-time
-           customer. Only show the "X more voyages" line if the user
-           is already past their first voyage. Otherwise we show a
-           warm welcome line. */}
+      {/* 2026-05-20 — Pass 4 rounds 4+5 (David, Tyler, Helen):
+          "'You are a Friend of the Circle, since 2026' BEFORE the
+           charter has even started — reads as pre-bestowed loyalty.
+           The whole point of filotimo is that it's earned."
+          Hide the tier badge entirely until the user has at least
+          one completed voyage. Pre-voyage, we show a calm "on the
+          threshold" line that doesn't claim a relationship that
+          hasn't happened yet. */}
       {circle && (
         <aside className="cabin-home__circle">
           <div className="cabin-home__section-label">Filotimo Circle</div>
-          <p>
-            You are a <strong>{TIERS[circle.tier].label}</strong> of the
-            Circle{circle.joined_at ? `, since ${new Date(circle.joined_at).getFullYear()}` : ""}.
-            {goal?.kind === "voyages" &&
-              goal.voyages_to_go > 0 &&
-              (circle.voyages_count ?? 0) >= 1 &&
-              ` ${goal.voyages_to_go} more voyage${
-                goal.voyages_to_go > 1 ? "s" : ""
-              } and you become a ${TIERS[goal.next_tier].label}.`}
-            {goal?.kind === "max" && " You are at the heart of the Circle."}
-          </p>
+          {(circle.voyages_count ?? 0) === 0 ? (
+            <p>
+              You&apos;re at the start of our quiet circle. The Circle
+              isn&apos;t earned in advance — it&apos;s built across
+              voyages, one at a time. We&apos;ll write to you about it
+              once you&apos;re home.
+            </p>
+          ) : (
+            <p>
+              You are a <strong>{TIERS[circle.tier].label}</strong> of the
+              Circle{circle.joined_at ? `, since ${new Date(circle.joined_at).getFullYear()}` : ""}.
+              {goal?.kind === "voyages" &&
+                goal.voyages_to_go > 0 &&
+                ` ${goal.voyages_to_go} more voyage${
+                  goal.voyages_to_go > 1 ? "s" : ""
+                } and you become a ${TIERS[goal.next_tier].label}.`}
+              {goal?.kind === "max" && " You are at the heart of the Circle."}
+            </p>
+          )}
         </aside>
       )}
 
@@ -588,8 +598,11 @@ export default async function CabinHomePage() {
         }
         .cabin-home__tile-glyph {
           color: var(--gy-gold);
-          font-size: 28px;
-          line-height: 1;
+          width: 28px;
+          height: 28px;
+          display: block;
+          /* Now an inline SVG (CabinIcon) rather than a Unicode
+             glyph — one consistent hand across the entire grid. */
         }
         .cabin-home__tile strong {
           font-family: var(--gy-font-editorial);

@@ -28,7 +28,14 @@
 
 import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
-import AllergyAlert from "../../../../components/cabin/brief/AllergyAlert";
+// 2026-05-20 — Friend-test pass 4 round 5 (Sarah):
+//   "ALLERGIES & MEDICAL — Add in Health & Safety appears on the
+//    cellar page. What allergy info am I going to add to my drinks
+//    page? Make it conditional, or remove from cellar entirely."
+// Removed the AllergyAlert from the beverages section — the only
+// pages where it makes sense are dining (allergens drive food)
+// and health (where the data is captured). Cellar is too far from
+// that concern; the banner was noise.
 import {
   SectionTitle,
   TextField,
@@ -81,8 +88,6 @@ export default function BeveragesSectionPage() {
         to count, ever.
       </IntroParagraph>
 
-      <AllergyAlert />
-
       <BriefFormShell
         sectionKey="beverages"
         prevSection={{ key: "dining", title: "At the Table" }}
@@ -122,15 +127,22 @@ export default function BeveragesSectionPage() {
                 { value: "leave_to_captain",  label: "Leave it to the captain" },
               ]}
             />
+            {/* 2026-05-20 — Pass 4 round 5 (David, Sarah):
+                "What does 'Premium' translate to in dollars? If
+                 Premium means $400/night × 7 nights, that's $2,800
+                 I didn't budget. Give me a price ladder or a
+                 'typical charter spends X here' range."
+                Added rough per-bottle price ranges to each tier
+                so the user can mentally budget before ticking. */}
             <RadioGroup
               name="champagne_tier"
               label="If yes — what level"
-              hint="The hostess matches the boat's house list to your level. Specific labels go in the box below."
+              hint="The hostess matches the boat's house list to your level. Anything beyond the range below is confirmed by phone before ordering, never silently added to your tab."
               register={register}
               options={[
-                { value: "premium",          label: "Premium (vintage, grandes maisons)" },
-                { value: "standard",         label: "Standard (everyday quality)" },
-                { value: "classic",          label: "Classic (house pour for toasts)" },
+                { value: "premium",          label: "Premium · €120–€300 per bottle (vintage, grandes maisons)" },
+                { value: "standard",         label: "Standard · €60–€120 per bottle (everyday quality)" },
+                { value: "classic",          label: "Classic · €40–€70 per bottle (house pour for toasts)" },
                 { value: "leave_to_captain", label: "Leave it to the captain" },
               ]}
             />
@@ -183,11 +195,12 @@ export default function BeveragesSectionPage() {
             <RadioGroup
               name="wine_tier"
               label="Overall level"
+              hint="Same ceiling logic as champagne — anything above the range is confirmed by phone first."
               register={register}
               options={[
-                { value: "premium",          label: "Premium (crus, vintages)" },
-                { value: "standard",         label: "Standard (good everyday wines)" },
-                { value: "classic",          label: "Classic (house red & white)" },
+                { value: "premium",          label: "Premium · €80–€200 per bottle (crus, vintages)" },
+                { value: "standard",         label: "Standard · €30–€70 per bottle (good everyday wines)" },
+                { value: "classic",          label: "Classic · €15–€30 per bottle (house red & white)" },
                 { value: "leave_to_captain", label: "Leave it to the captain" },
               ]}
             />

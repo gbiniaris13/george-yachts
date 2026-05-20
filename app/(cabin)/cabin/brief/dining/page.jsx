@@ -179,7 +179,10 @@ export default function DiningSectionPage() {
                 { value: "americano",       label: "Americano" },
                 { value: "filtered_coffee", label: "Filtered coffee" },
                 { value: "greek_coffee",    label: "Greek coffee" },
-                { value: "instant_coffee",  label: "Instant coffee" },
+                /* 2026-05-20 — Pass 4 round 5 (Tyler):
+                   "Instant coffee on a €40k charter. Remove it." Yep.
+                   Kept the enum value in schemas.js so already-saved
+                   briefs validate; just hidden from the UI. */
                 { value: "milk_shake",      label: "Milk shake" },
                 { value: "cold_chocolate",  label: "Cold chocolate" },
                 { value: "hot_chocolate",   label: "Hot chocolate" },
@@ -232,14 +235,24 @@ export default function DiningSectionPage() {
                 Added a copy bridge: tick what the group EATS, not what
                 the chef will SERVE blanket. Allergies from Health +
                 from each guest's /cabin/me override. */}
+            {/* 2026-05-20 — Pass 4 round 5 (Sarah):
+                "If 'Indifferent' is functionally the same as unmarked,
+                 why is Indifferent a column?" Clarified: Indifferent
+                 is a positive signal ("yes we eat this, doesn't excite
+                 us"); unmarked is "we haven't decided yet, chef uses
+                 his judgement." Different by intent. */}
             <p className="brief-note">
               <em>
-                The chef provisions and plans around this. Mark each as Like,
-                Dislike, or Indifferent — whatever you don&apos;t mark stays
-                neutral. <strong>Allergies and intolerances always override
-                Like</strong>: anything flagged on Health & Safety or on a
-                guest&apos;s personal page is never served to that person,
-                even if the group&apos;s matrix says Like.
+                The chef provisions and plans around this. Three signals
+                per item: <strong>Like</strong> (please feature it),
+                {" "}<strong>Dislike</strong> (please skip it), and
+                {" "}<strong>Indifferent</strong> (we eat it, doesn&apos;t
+                need to be central). Unmarked rows mean &quot;chef&apos;s
+                judgement&quot; — neither a yes nor a no.
+                {" "}<strong>Allergies and intolerances always override
+                Like</strong>: anything flagged on Health & Safety or on
+                a guest&apos;s personal page is never served to that
+                person, even if the group&apos;s matrix says Like.
               </em>
             </p>
             <LikeDislikeMatrix
