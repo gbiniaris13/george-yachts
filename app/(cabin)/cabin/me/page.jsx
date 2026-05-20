@@ -299,7 +299,7 @@ export default function CabinMePage() {
         </div>
         <em className="me-hint">
           Some marinas (especially in the Cyclades) ask for these.
-          Stored privately. Visible only to the captain and George.
+          Kept privately in your Cabin.
         </em>
 
         <h2 className="me-subhead">Aboard the yacht</h2>

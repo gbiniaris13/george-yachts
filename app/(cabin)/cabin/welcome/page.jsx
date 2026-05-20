@@ -209,12 +209,16 @@ export default function WelcomePage() {
           </div>
         )}
 
+        {/* 2026-05-20 — Friend-test pass 4 (George):
+            "Μην αναφέρεις yacht owner / management company / άλλους
+             ανθρώπους — αυτά εκθέτουν την αλυσίδα στον πελάτη. Είμαστε
+             brokers, ο πελάτης δεν χρειάζεται να ξέρει τίποτα γι' αυτό."
+            Trimmed to a quiet privacy line that does not name any
+            third party. */}
         <p className="wlc-note">
           <em>
-            Stored privately in your Cabin. Visible to George only —
-            never shared with the yacht owner, the management company,
-            or anyone else. You can edit or delete any of this from
-            the Your Data page at any time.
+            Kept privately in your Cabin. You can edit or delete any of
+            this from the Your Data page at any time.
           </em>
         </p>
 

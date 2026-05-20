@@ -71,42 +71,45 @@ export default async function CabinHomePage() {
   const isPrincipal =
     role === "principal_charterer" || role === "designated_assistant";
 
-  // 2026-05-20 — Friend-test pass 3 (George):
-  //   "Όταν ο κεντρικός ναυλωτής καλεί κόσμο, θέλουμε σίγουρα
-  //    ονοματεπώνυμο + τηλέφωνο + ημ. γέννησης. Το mail το έχουμε
-  //    ήδη. Όταν πατήσει να μπει, του εμφανίζεται μάσκα — βάζει
-  //    τα στοιχεία και συνεχίζει."
+  // 2026-05-20 — Friend-test pass 3 + 4 (George):
+  //   Gate required minimum is display_name + mobile + DOB for EVERY
+  //   member (principal + guest + DA). Hometown is OPTIONAL in the
+  //   form (collapsed behind "Add a couple of optional touches"), so
+  //   it MUST NOT be part of the gate — pass 4 caught a redirect
+  //   loop where the principal saved name/DOB/mobile, the gate
+  //   demanded hometown they hadn't filled, they got bounced back
+  //   to /cabin/welcome, hometown is collapsed/optional, save again,
+  //   loop. Eventually 503 from Chrome timing out.
   //
-  // The gate now applies to EVERY member (principal + guest + DA).
-  // The required minimum is display_name + mobile + DOB. Principals
-  // also get hometown asked (for the Filotimo birthday workflow);
-  // guests skip hometown because George has no business reason to
-  // store it for non-account-holders.
+  // Now: the gate only checks the THREE truly required fields the
+  // form actually enforces. Hometown is a soft Filotimo nice-to-have,
+  // captured opportunistically.
   const db2 = getCabinDb();
-  const [memberRow, circleRow] = await Promise.all([
-    dbQuery(
-      db2
-        .from("cabin_members")
-        .select("display_name, mobile")
-        .eq("id", membership?.member_id)
-        .maybeSingle()
-    ),
-    dbQuery(
-      db2
-        .from("filotimo_circle_members")
-        .select("display_name, date_of_birth, hometown")
-        .ilike("email", session.email)
-        .is("deleted_at", null)
-        .maybeSingle()
-    ),
-  ]);
+  let memberRow = null;
+  let circleRow = null;
+  if (membership?.member_id) {
+    [memberRow, circleRow] = await Promise.all([
+      dbQuery(
+        db2
+          .from("cabin_members")
+          .select("display_name, mobile")
+          .eq("id", membership.member_id)
+          .maybeSingle()
+      ),
+      dbQuery(
+        db2
+          .from("filotimo_circle_members")
+          .select("display_name, date_of_birth")
+          .ilike("email", session.email)
+          .is("deleted_at", null)
+          .maybeSingle()
+      ),
+    ]);
+  }
   const hasName = Boolean(memberRow?.display_name || circleRow?.display_name);
   const hasMobile = Boolean(memberRow?.mobile);
   const hasDOB = Boolean(circleRow?.date_of_birth);
-  const principalAlsoNeedsHometown =
-    isPrincipal && !circleRow?.hometown;
-  const onboardingIncomplete =
-    !hasName || !hasMobile || !hasDOB || principalAlsoNeedsHometown;
+  const onboardingIncomplete = !hasName || !hasMobile || !hasDOB;
   if (onboardingIncomplete) {
     redirect("/cabin/welcome");
   }
