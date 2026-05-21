@@ -84,14 +84,34 @@ export default async function MenuPage() {
                   <p className="mn-section__empty"><em>—</em></p>
                 ) : (
                   <ul className="mn-section__dishes">
+                    {/* 2026-05-21 — Pass 7 (Helen): dishes now
+                        accept either a plain string or an object
+                        { label, gloss?, photo_url? }. When a photo
+                        is present we render it above the label so
+                        the surface reads as a chef's portfolio,
+                        not a Word-doc list. Strings keep working
+                        unchanged via presentDish. */}
                     {s.dishes.map((d, di) => {
-                      const { label, gloss } = presentDish(d);
+                      const { label, gloss, photo_url } = presentDish(d);
                       return (
-                        <li key={di}>
-                          {label}
-                          {gloss && (
-                            <em className="mn-section__gloss"> — {gloss}</em>
+                        <li key={di} className={photo_url ? "mn-section__dish-with-photo" : ""}>
+                          {photo_url && (
+                            <figure className="mn-section__photo">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={photo_url}
+                                alt={label}
+                                loading="lazy"
+                                decoding="async"
+                              />
+                            </figure>
                           )}
+                          <div className="mn-section__dish-body">
+                            <span className="mn-section__dish-label">{label}</span>
+                            {gloss && (
+                              <em className="mn-section__gloss"> — {gloss}</em>
+                            )}
+                          </div>
                         </li>
                       );
                     })}
@@ -190,6 +210,35 @@ export default async function MenuPage() {
           -webkit-hyphens: manual;
           word-break: keep-all;
           overflow-wrap: break-word;
+        }
+        /* 2026-05-21 — Pass 7 (Helen): dishes with photos take a
+           slightly different layout — the figure stacks above the
+           label and gloss, with a thin gold rule between courses
+           to keep the editorial rhythm. Dishes without photos are
+           unchanged (the body element is just inline content). */
+        .mn-section__dish-with-photo {
+          padding-top: 4px;
+        }
+        .mn-section__photo {
+          margin: 0 0 10px 0;
+          aspect-ratio: 4 / 3;
+          overflow: hidden;
+          background: rgba(13,27,42,0.04);
+        }
+        .mn-section__photo img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .mn-section__dish-body {
+          /* Wraps label + gloss together so the inline em-dash gloss
+             sits on the same line as the label when the line allows,
+             matching the no-photo rendering exactly. */
+          display: block;
+        }
+        .mn-section__dish-label {
+          font-family: var(--gy-font-editorial);
         }
         .mn-section__gloss {
           font-style: italic;
