@@ -253,7 +253,7 @@ export default async function CabinHomePage() {
         ) : (
           <IntroParagraph>
             {principalRow?.display_name
-              ? `${principalRow.display_name.split(" ")[0]} invited you `
+              ? `${firstNameFromDisplayName(principalRow.display_name) || "Your host"} invited you `
               : "You’ve been invited "}
             to {cabin.vessel_name || "this charter"} for{" "}
             {summary?.dates || "the coming week"}. We just need a few quiet

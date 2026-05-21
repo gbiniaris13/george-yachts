@@ -23,7 +23,7 @@ import {
   pickActiveCabinId,
 } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
-import { titleCaseName, prettyDate } from "@/lib/cabin/format";
+import { titleCaseName, prettyDate, firstNameFromDisplayName } from "@/lib/cabin/format";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 
@@ -53,9 +53,12 @@ export default async function ChatPage() {
     );
   }
 
+  // 2026-05-21 — Use honorific-stripping helper so the WhatsApp
+  // prefill "it's <FirstName> from <vessel>" reads correctly on
+  // cabins whose name still carries the MYBA-style "Ms." prefix.
   const firstName = titleCaseName(
-    (cabin?.principal_charterer_name || session.email.split("@")[0])
-      .split(" ")[0]
+    firstNameFromDisplayName(cabin?.principal_charterer_name) ||
+      session.email.split("@")[0],
   );
   const vessel = cabin?.vessel_name || "the charter";
   const dates = cabin?.charter_period_from && cabin?.charter_period_to

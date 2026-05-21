@@ -28,6 +28,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
+import { firstNameFromDisplayName } from "@/lib/cabin/format";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 
 const SWIMS_OPTIONS = [
@@ -227,8 +228,12 @@ export default function CabinMePage() {
     );
   }
 
+  // 2026-05-21 — Pass 7: honorific-stripping helper. Was
+  // split(/[\s@]/)[0] which yielded "Ms." on MYBA-style names.
   const firstName =
-    (member?.display_name || member?.email || "").split(/[\s@]/)[0] || "friend";
+    firstNameFromDisplayName(member?.display_name) ||
+    (member?.email || "").split("@")[0] ||
+    "friend";
 
   return (
     <article>

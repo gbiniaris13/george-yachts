@@ -17,6 +17,7 @@
 
 import { readSessionFromCookies, pickActiveCabinId, resolveMembership } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
+import { displayNameWithoutHonorific } from "@/lib/cabin/format";
 import CabinShell from "../../components/cabin/CabinShell";
 
 async function fetchCabinForHeader(cabinId) {
@@ -52,7 +53,13 @@ async function fetchViewerDisplayName(memberId) {
       .eq("id", memberId)
       .maybeSingle()
   );
-  return row?.display_name ?? null;
+  // 2026-05-21 — Strip leading honorifics ("Ms.", "Dr.", etc) so
+  // a member whose display_name was seeded from the MYBA contract
+  // ("Ms. Tricia Stevens") doesn't display "Ms." in the header
+  // chip. After the principal's passport extraction runs, this
+  // value is already clean — but cabins not yet passport-checked
+  // still benefit from defensive stripping here.
+  return displayNameWithoutHonorific(row?.display_name) ?? row?.display_name ?? null;
 }
 
 export default async function CabinLayout({ children }) {
