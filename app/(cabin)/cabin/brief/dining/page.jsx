@@ -9,6 +9,7 @@
 // with baby cot + high chair + baby food specifics. This is what
 // the chef and provisioning team print and shop from.
 
+import { useEffect, useState } from "react";
 import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 import AllergyAlert from "../../../../components/cabin/brief/AllergyAlert";
@@ -39,6 +40,30 @@ const FOOD_MATRIX_ITEMS = [
 ];
 
 export default function DiningSectionPage() {
+  // 2026-05-21 — Pass 7 prep (Domingo): the Children block below
+  // was rendered unconditionally. It's now gated on a server signal
+  // sourced from cabin_guests_manifest. Sailing with no minors →
+  // no kids subheading, no cot/high-chair toggles, no baby-food
+  // prompt. With minors → the block surfaces with a soft intro so
+  // it doesn't appear out of nowhere.
+  const [hasMinors, setHasMinors] = useState(null); // null = unknown
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/cabin/has-minors")
+      .then((r) => r.json())
+      .then((j) => {
+        if (cancelled) return;
+        if (j?.ok) setHasMinors(Boolean(j.hasMinors));
+        else setHasMinors(false);
+      })
+      .catch(() => {
+        if (!cancelled) setHasMinors(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <article>
       <SectionTitle
@@ -343,45 +368,61 @@ export default function DiningSectionPage() {
             />
 
             {/* ─────────── Kids ─────────── */}
-            <h2 className="brief-subhead">Children (if any)</h2>
-            <RadioGroup
-              name="kids_meal_arrangement"
-              label="When do the children eat?"
-              register={register}
-              options={[
-                { value: "with_adults", label: "With the adults" },
-                { value: "separate",    label: "Separately, earlier" },
-                { value: "mixed",       label: "A mix — depends on the day" },
-              ]}
-            />
-            <OpenTextarea
-              label="What the children love"
-              name="kids_meal_specifics"
-              register={register}
-              rows={2}
-              placeholder="e.g. Pasta & butter, grilled cheese, tomato soup, chicken nuggets, fries"
-            />
-            <div className="brief-grid-2">
-              <label className="brief-toggle">
-                <input type="checkbox" {...register("kids_needs_baby_cot")} />
-                <span>Baby cot needed</span>
-              </label>
-              <label className="brief-toggle">
-                <input type="checkbox" {...register("kids_needs_high_chair")} />
-                <span>High chair needed</span>
-              </label>
-            </div>
-            {/* 2026-05-20 — Friend-test pass 3 (George): the
-                "HiPP Stage 2 in jars" placeholder reads as jargon to
-                anyone outside the baby-food world. Replaced with a
-                plain-English example. */}
-            <OpenTextarea
-              label="Baby food / formula"
-              name="kids_baby_food_specifics"
-              register={register}
-              rows={2}
-              placeholder="e.g. The brand of formula we use, any baby food jars or pouches we'd like stocked"
-            />
+            {/* 2026-05-21 — Pass 7 prep: only render when minors are
+                on the manifest. While `hasMinors` is still loading
+                (null) we keep the block hidden so the page doesn't
+                visibly reshuffle once the answer arrives. */}
+            {hasMinors === true && (
+              <>
+                <h2 className="brief-subhead">For your children</h2>
+                <p className="brief-note">
+                  <em>
+                    These few fields appear because your group includes a
+                    child or infant. They&apos;re entirely optional — the
+                    chef will quietly check in with you on day one in any
+                    case.
+                  </em>
+                </p>
+                <RadioGroup
+                  name="kids_meal_arrangement"
+                  label="When do the children eat?"
+                  register={register}
+                  options={[
+                    { value: "with_adults", label: "With the adults" },
+                    { value: "separate",    label: "Separately, earlier" },
+                    { value: "mixed",       label: "A mix — depends on the day" },
+                  ]}
+                />
+                <OpenTextarea
+                  label="What the children love"
+                  name="kids_meal_specifics"
+                  register={register}
+                  rows={2}
+                  placeholder="e.g. Pasta & butter, grilled cheese, tomato soup, chicken nuggets, fries"
+                />
+                <div className="brief-grid-2">
+                  <label className="brief-toggle">
+                    <input type="checkbox" {...register("kids_needs_baby_cot")} />
+                    <span>Baby cot needed</span>
+                  </label>
+                  <label className="brief-toggle">
+                    <input type="checkbox" {...register("kids_needs_high_chair")} />
+                    <span>High chair needed</span>
+                  </label>
+                </div>
+                {/* 2026-05-20 — Friend-test pass 3 (George): the
+                    "HiPP Stage 2 in jars" placeholder reads as jargon
+                    to anyone outside the baby-food world. Replaced
+                    with a plain-English example. */}
+                <OpenTextarea
+                  label="Baby food / formula"
+                  name="kids_baby_food_specifics"
+                  register={register}
+                  rows={2}
+                  placeholder="e.g. The brand of formula we use, any baby food jars or pouches we'd like stocked"
+                />
+              </>
+            )}
 
             {/* 2026-05-20 — Friend-test pass 3: removed the orphan
                 "Children at the table — anything more" textarea. It

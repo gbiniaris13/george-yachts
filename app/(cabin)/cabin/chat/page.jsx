@@ -105,8 +105,14 @@ export default async function ChatPage() {
             <div className="chat-card__name">George P. Biniaris</div>
             <div className="chat-card__role">Managing Broker · George Yachts</div>
           </div>
+          {/* 2026-05-20 — Pass 6 (Domingo / Tyler):
+              the green "Online" dot was a fake-presence claim — it
+              animated whether or not George was actually awake.
+              Replaced with an honest cadence label sourced from the
+              same notes block below. No animation, no false trust
+              signal. */}
           <div className="chat-card__status">
-            <span className="chat-card__dot" aria-hidden /> Online
+            <span>Usually replies in hours</span>
           </div>
         </div>
 
@@ -132,7 +138,16 @@ export default async function ChatPage() {
             <strong>Open WhatsApp</strong>
             <em>Instant — on George’s phone</em>
           </span>
-          <span className="chat-card__cta-arrow" aria-hidden>→</span>
+          {/* 2026-05-20 — Pass 6: ASCII "→" rendered as a thin
+              broken arrow in WhatsApp green on iOS Safari (no glyph
+              for the codepoint in the system fallback font at that
+              weight). Replaced with an inline SVG chevron so the
+              CTA arrow is consistent across every browser. */}
+          <span className="chat-card__cta-arrow" aria-hidden>
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 10h10M11 6l4 4-4 4" />
+            </svg>
+          </span>
         </a>
 
         <ul className="chat-card__notes">
@@ -218,18 +233,9 @@ export default async function ChatPage() {
           text-transform: uppercase;
           color: rgba(13, 27, 42, 0.55);
         }
-        .chat-card__dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          background: #2f7d3a;
-          box-shadow: 0 0 0 3px rgba(47, 125, 58, 0.18);
-          animation: chat-pulse 2.4s ease-in-out infinite;
-        }
-        @keyframes chat-pulse {
-          0%, 100% { box-shadow: 0 0 0 3px rgba(47, 125, 58, 0.18); }
-          50%      { box-shadow: 0 0 0 6px rgba(47, 125, 58, 0.10); }
-        }
+        /* .chat-card__dot + chat-pulse keyframes removed in Pass 6 —
+           see the comment above on the .chat-card__status block.
+           Honest cadence label only, no animated presence dot. */
 
         .chat-card__lede {
           font-family: var(--gy-font-editorial);

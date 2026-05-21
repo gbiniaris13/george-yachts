@@ -32,6 +32,15 @@ function paragraphs(bio) {
 //   spacing), "reliable a strong asset" (missing comma), and a
 //   "Cosmetics and Aesthetics" line irrelevant to a chef intro.
 //
+// 2026-05-20 — Pass 6 (Margaret, Domingo synthesis):
+//   Two additional defects surfaced from the brochure extractor:
+//   (a) "She Her" / "He Him" — the slash in "She/Her" disappears
+//       in PDF text-layer flattening, leaving a double pronoun.
+//   (b) "Leonora Stavrou and raised in Athens" — the "born in
+//       <city>," fragment dropped in extraction. We collapse the
+//       orphan "<Proper Name> and raised in" → "raised in" which
+//       reads grammatically on its own.
+//
 // We can't reliably auto-fix every grammar failure — that's
 // George's job in CRM. But we CAN catch the common spacing /
 // punctuation defects the extraction pipeline tends to introduce.
@@ -52,6 +61,26 @@ function scrubBio(s) {
   out = out
     .replace(/\bholds?\s+a\s+degree\s+in\s+cosmetics(?:\s+and\s+aesthetics)?[^.]*\.?\s*/gi, "")
     .replace(/\bdegree\s+in\s+aircraft\s+engineering[^.]*\.?\s*/gi, "");
+
+  // Pass 6 — "She Her" / "He Him" / "They Them" double pronouns
+  // (PDF lost the slash). Collapse to a single pronoun chip we
+  // simply strip — it's never information the reader needs in a
+  // crew narrative paragraph.
+  out = out
+    .replace(/\b(She)\s+Her\b/g, "$1")
+    .replace(/\b(He)\s+Him\b/g, "$1")
+    .replace(/\b(They)\s+Them\b/g, "$1");
+
+  // Pass 6 — "<Surname> and raised in" orphan: the "<Name> was
+  // born in <city>, and raised in <other-city>" sentence often
+  // loses the middle clause. We rescue the orphan into "Raised
+  // in <city>" so the sentence still parses. Triggers only on a
+  // capitalised single token immediately followed by " and
+  // raised in" — narrow enough to avoid false positives.
+  out = out.replace(
+    /\b([A-Z][a-zà-ÿ'’\-]+)\s+and\s+raised\s+in\b/g,
+    "Raised in"
+  );
 
   // Punctuation/whitespace defects we see often in extracted bios:
   //   "yachting .For"  → "yachting. For"

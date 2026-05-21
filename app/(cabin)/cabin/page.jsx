@@ -209,10 +209,52 @@ export default async function CabinHomePage() {
 
   const percent = cabin.brief_completion_percent ?? 0;
 
+  // 2026-05-21 — Pass 7 prep:
+  // Generate the Crew tile blurb from what's actually in
+  // crew_display. We categorise each role into one of three slots
+  // (captain, chef, interior-service) and build a natural sentence
+  // — "Meet the captain and chef" / "Meet the captain, chef and
+  // hostess" / "Meet your crew" as a graceful fallback when the
+  // crew sheet hasn't been published yet.
+  const crewTileBlurb = (() => {
+    const crew = Array.isArray(cabin?.crew_display) ? cabin.crew_display : [];
+    if (crew.length === 0) {
+      return "Meet the captain, chef and crew caring for you this week.";
+    }
+    const roles = crew
+      .flatMap((m) => [m?.role, m?.secondary_role])
+      .filter(Boolean)
+      .map((r) => String(r).toLowerCase());
+    const hasCaptain = roles.some((r) => r.includes("captain"));
+    const hasChef = roles.some(
+      (r) => r === "chef" || r === "cook" || r.includes("chef") || r.includes("cook"),
+    );
+    const hasInteriorService = roles.some(
+      (r) => r.includes("hostess") || r.includes("stewardess") || r.includes("steward") || r.includes("purser"),
+    );
+    const parts = [];
+    if (hasCaptain) parts.push("captain");
+    if (hasChef) parts.push("chef");
+    if (hasInteriorService) parts.push("hostess");
+    if (parts.length === 0) return "Meet the small team caring for you this week.";
+    // Join naturally: A / A and B / A, B and C
+    let joined;
+    if (parts.length === 1) joined = parts[0];
+    else if (parts.length === 2) joined = `${parts[0]} and ${parts[1]}`;
+    else joined = `${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`;
+    return `Meet the ${joined} of your voyage.`;
+  })();
+
   return (
     <div className="cabin-home">
       <header className="cabin-home__welcome">
-        <div className="cabin-home__eyebrow">Welcome aboard, in spirit</div>
+        {/* 2026-05-20 — Pass 6 (Domingo, Margaret):
+            "'Welcome aboard, in spirit' over 'Welcome, George' reads
+            like two competing greetings — and the 'in spirit' hedge
+            sits awkwardly with people who paid €50k for a real
+            voyage. The eyebrow is now a calm contextualizer, not a
+            second welcome. */}
+        <div className="cabin-home__eyebrow">Your private Cabin</div>
         <h1 className="cabin-home__greeting">
           Welcome, <em>{firstName}.</em>
         </h1>
@@ -372,10 +414,17 @@ export default async function CabinHomePage() {
               <em>Share a few details — DOB, allergies, swimming.</em>
             </Link>
           )}
+          {/* 2026-05-21 — Pass 7 prep (Domingo): the original tile
+              copy hard-coded "captain, chef and hostess" but smaller
+              vessels often sail with captain + chef only, or
+              captain + chef + deckhand. Promising a hostess we
+              don't have is the kind of small lie that erodes the
+              filotimo voice. The blurb is now generated from the
+              actual crew_display roles. */}
           <Link href="/cabin/crew" className="cabin-home__tile">
             <CabinIcon name="crew" className="cabin-home__tile-glyph" />
             <strong>Crew</strong>
-            <em>Meet the captain, chef and hostess of your voyage.</em>
+            <em>{crewTileBlurb}</em>
           </Link>
           <Link href="/cabin/menu" className="cabin-home__tile">
             <CabinIcon name="menu" className="cabin-home__tile-glyph" />
@@ -614,6 +663,33 @@ export default async function CabinHomePage() {
         }
         @media (min-width: 1024px) {
           .cabin-home__grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        /* 2026-05-20 — Pass 6 (Domingo, Tyler): the principal grid
+           had 13 tiles, leaving one lonely tile in column 1 of the
+           bottom row with 3 empty cells beside it on the 4-col
+           desktop layout (and analogous gaps at the other
+           breakpoints). When the last tile is the sole occupant of
+           its row, span it across the remaining cells so the grid
+           always reads as intentional and never has visible empty
+           white cells.
+
+           Each rule is scoped by media query so the nth-child
+           calculation matches the active column count.
+        */
+        @media (max-width: 639.98px) {
+          .cabin-home__tile:last-child:nth-child(odd) {
+            grid-column: 1 / -1;
+          }
+        }
+        @media (min-width: 640px) and (max-width: 1023.98px) {
+          .cabin-home__tile:last-child:nth-child(3n+1) {
+            grid-column: 1 / -1;
+          }
+        }
+        @media (min-width: 1024px) {
+          .cabin-home__tile:last-child:nth-child(4n+1) {
+            grid-column: 1 / -1;
+          }
         }
         .cabin-home__tile {
           background: #ffffff;

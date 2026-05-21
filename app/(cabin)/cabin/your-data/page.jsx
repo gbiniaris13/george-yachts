@@ -4,6 +4,11 @@
 import { useEffect, useState } from "react";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
+// 2026-05-21 — Pass 7 prep: replace local fmtDate/fmtDateTime with
+// the canonical helpers from lib/cabin/format so /cabin/your-data,
+// /cabin/guests and the email templates all render dates the same
+// way (en-GB "20 May 2026" / "20 May 2026, 15:41").
+import { prettyDate, prettyDateTime } from "@/lib/cabin/format";
 
 const INLINE_LABELS = {
   essential_charter_emails: "Essential charter emails (logistics, confirmations)",
@@ -14,27 +19,15 @@ const INLINE_LABELS = {
 
 // 2026-05-20 — Friend-test pass 4 (Margaret 70F):
 //   "DOB is 1980-06-15 but last sign-in is 5/20/2026, 3:41:23 PM.
-//    Two formats on the same page. Pick one." — fmtDate/fmtDateTime
-//   unify everything to "15 June 1980" / "20 May 2026, 15:41".
-function fmtDate(iso) {
-  if (!iso) return "";
-  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso));
-  if (!m) return String(iso);
-  const d = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]));
-  if (Number.isNaN(d.getTime())) return String(iso);
-  return d.toLocaleDateString("en-GB", {
-    day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
-  });
-}
-function fmtDateTime(iso) {
-  if (!iso) return "";
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return String(iso);
-  return d.toLocaleString("en-GB", {
-    day: "numeric", month: "long", year: "numeric",
-    hour: "2-digit", minute: "2-digit",
-  });
-}
+//    Two formats on the same page. Pick one." — unified to
+//   "15 June 1980" / "20 May 2026, 15:41".
+// 2026-05-21 — Pass 7 prep:
+//   Local fmtDate/fmtDateTime removed; we now import the canonical
+//   helpers from lib/cabin/format so every cabin page that renders
+//   dates does so the same way. The local aliases below preserve
+//   the existing call sites without churn.
+const fmtDate = prettyDate;
+const fmtDateTime = prettyDateTime;
 
 // 2026-05-20 — Pass 6 (Sarah): tier casing inconsistency ("friend"
 // vs "Friend" across pages). Display always capitalised.

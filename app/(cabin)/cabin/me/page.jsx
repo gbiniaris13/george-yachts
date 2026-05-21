@@ -153,11 +153,77 @@ export default function CabinMePage() {
     }
   }
 
+  // 2026-05-20 — Pass 6 (Tyler, Helen): "italic 'Loading your
+  // details…' looks like an error/empty state, not loading." A
+  // pulsing skeleton reads as intentional progress and stops Tyler
+  // from refreshing while it's still resolving the fetch.
   if (loading) {
     return (
-      <p style={{ padding: 24, fontStyle: "italic", color: "rgba(13,27,42,0.5)" }}>
-        Loading your details…
-      </p>
+      <article aria-busy="true">
+        <SectionTitle
+          kicker="A few details about you"
+          title="Just enough"
+          italic="for the captain and the chef."
+        />
+        <div className="me-skel" aria-hidden>
+          <div className="me-skel__intro" />
+          <div className="me-skel__card">
+            <div className="me-skel__head" />
+            <div className="me-skel__row" />
+            <div className="me-skel__row" />
+            <div className="me-skel__row" />
+            <div className="me-skel__row me-skel__row--short" />
+          </div>
+        </div>
+        <span className="sr-only" role="status">Loading your details…</span>
+        <style>{`
+          @keyframes me-skel-pulse {
+            0%, 100% { opacity: 0.55; }
+            50%      { opacity: 0.92; }
+          }
+          .me-skel {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            margin-top: 28px;
+          }
+          .me-skel__intro {
+            height: 14px;
+            width: 78%;
+            max-width: 420px;
+            background: rgba(13,27,42,0.08);
+            animation: me-skel-pulse 1.6s ease-in-out infinite;
+          }
+          .me-skel__card {
+            background: #ffffff;
+            border: 1px solid rgba(13,27,42,0.08);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+          }
+          .me-skel__head {
+            height: 12px;
+            width: 140px;
+            background: rgba(201,168,76,0.18);
+            animation: me-skel-pulse 1.6s ease-in-out infinite;
+          }
+          .me-skel__row {
+            height: 38px;
+            background: rgba(13,27,42,0.05);
+            border-bottom: 1px solid rgba(13,27,42,0.06);
+            animation: me-skel-pulse 1.6s ease-in-out infinite;
+          }
+          .me-skel__row--short { width: 60%; }
+          .sr-only {
+            position: absolute;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0,0,0,0);
+            white-space: nowrap; border: 0;
+          }
+        `}</style>
+      </article>
     );
   }
 
@@ -298,8 +364,14 @@ export default function CabinMePage() {
           </label>
         </div>
         <em className="me-hint">
+          {/* 2026-05-20 — Pass 6 (Domingo, Helen): "Kept privately
+              in your Cabin" is vague — privacy language for a
+              passport field should commit to encryption + the people
+              who can decrypt it. */}
           Some marinas (especially in the Cyclades) ask for these.
-          Kept privately in your Cabin.
+          Stored encrypted in your Cabin — visible only to you,
+          and decrypted for the captain at the moment of
+          embarkation paperwork.
         </em>
 
         <h2 className="me-subhead">Aboard the yacht</h2>
@@ -348,9 +420,25 @@ export default function CabinMePage() {
           <Link href="/cabin" className="me-back">
             ← Back to your Cabin
           </Link>
-          <button type="submit" disabled={busy || !dirty} className="me-save">
-            {busy ? "Saving…" : dirty ? "Save my details" : "Saved"}
-          </button>
+          {/* 2026-05-20 — Pass 6 (Domingo, Tyler): the saved state
+              still rendered as a full navy CTA — just slightly
+              dimmed. To a tester it looked clickable, and they
+              tapped Save again expecting confirmation. The saved
+              state is now a calm checkmark badge that is visibly a
+              status (not a button), while the dirty button keeps
+              its CTA weight. */}
+          {!dirty && !busy ? (
+            <span className="me-saved" aria-live="polite">
+              <svg viewBox="0 0 20 20" width="14" height="14" aria-hidden focusable="false">
+                <path d="M4 10.5l4 4 8-9" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              Saved
+            </span>
+          ) : (
+            <button type="submit" disabled={busy} className="me-save">
+              {busy ? "Saving…" : "Save my details"}
+            </button>
+          )}
         </div>
       </form>
 
@@ -518,6 +606,22 @@ export default function CabinMePage() {
         .me-save:disabled {
           opacity: 0.6;
           cursor: default;
+        }
+        /* Passive saved-state badge. Not a button — a status. */
+        .me-saved {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 11px 18px 11px 14px;
+          background: rgba(47, 125, 58, 0.08);
+          color: #2f7d3a;
+          border: 1px solid rgba(47, 125, 58, 0.35);
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          cursor: default;
+          user-select: none;
         }
       `}</style>
     </article>

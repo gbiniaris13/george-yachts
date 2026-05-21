@@ -47,9 +47,17 @@ const PACKING = {
     "One smart-casual outfit if you'd like a refined dinner ashore",
     "Soft-soled or barefoot shoes only on deck (non-marking)",
   ],
+  // 2026-05-20 — Pass 6 (Domingo, David):
+  //   "Bluetooth speaker for the cabin" reads as "the yacht doesn't
+  //   have one" — which on this tier of vessel is plainly untrue.
+  //   Every yacht we charter has a built-in sound system, and the
+  //   chef's playlist takes requests. The line was downscale and
+  //   accidentally implied the contrary. Replaced with a playlist
+  //   prompt — guests already have music on their phone; we'll
+  //   stream it through the yacht's system.
   "Pleasures": [
     "Book or e-reader for the long afternoons at anchor",
-    "Bluetooth speaker for the cabin — the cicadas have the deck",
+    "A favourite playlist — we'll stream it through the yacht's sound system",
     "Camera or phone — there is no shortage of moments",
     "Reusable water bottle (we keep them cold)",
   ],

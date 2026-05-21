@@ -180,11 +180,25 @@ export default async function MenuPage() {
           font-size: 16px;
           line-height: 1.55;
           color: var(--gy-navy);
+          /* 2026-05-20 — Pass 6 (Domingo, Helen):
+             "cus-tard" hyphenation appeared mid-word in the gloss
+             on iOS Safari. The default UA stylesheet for some Greek
+             locales enables auto-hyphenation; here we want every
+             course read intact. 'hyphens: manual' honours soft
+             hyphens we author but forbids browser-inserted ones. */
+          hyphens: manual;
+          -webkit-hyphens: manual;
+          word-break: keep-all;
+          overflow-wrap: break-word;
         }
         .mn-section__gloss {
           font-style: italic;
           color: rgba(13,27,42,0.55);
           font-size: 13.5px;
+          hyphens: manual;
+          -webkit-hyphens: manual;
+          word-break: keep-all;
+          overflow-wrap: break-word;
         }
         .mn-section__empty { color: rgba(13,27,42,0.4); }
         .mn-footnote {
