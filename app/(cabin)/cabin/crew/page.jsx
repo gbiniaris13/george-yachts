@@ -63,13 +63,21 @@ function scrubBio(s) {
     .replace(/\bdegree\s+in\s+aircraft\s+engineering[^.]*\.?\s*/gi, "");
 
   // Pass 6 — "She Her" / "He Him" / "They Them" double pronouns
-  // (PDF lost the slash). Collapse to a single pronoun chip we
-  // simply strip — it's never information the reader needs in a
-  // crew narrative paragraph.
+  // (PDF lost the slash between "She/Her").
+  // 2026-05-21 — Pass 7 (Margaret): the Pass 6 fix collapsed
+  // "She Her" to "She" — but the source PDFs had these as standalone
+  // pronoun annotations next to the crew member's name, not as part
+  // of a sentence. After collapse, Margaret saw "Leonora. She
+  // passion for the sea..." — a subject "She" stranded without a
+  // verb. The right move is to STRIP the annotation entirely (and
+  // clean up the space + any leading punctuation that drops with
+  // it), so the next sentence starts cleanly.
   out = out
-    .replace(/\b(She)\s+Her\b/g, "$1")
-    .replace(/\b(He)\s+Him\b/g, "$1")
-    .replace(/\b(They)\s+Them\b/g, "$1");
+    .replace(/\s*\b(She\s+Her|He\s+Him|They\s+Them)\b\s*/g, " ")
+    // If we just stripped the start of a sentence we may have left
+    // a leading ". " — collapse any "<sentence-end> <space> <space>"
+    // back to a single space.
+    .replace(/([.!?])\s{2,}/g, "$1 ");
 
   // Pass 6 — "<Surname> and raised in" orphan: the "<Name> was
   // born in <city>, and raised in <other-city>" sentence often

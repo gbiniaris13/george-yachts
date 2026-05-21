@@ -203,9 +203,38 @@ export default function MoodBoardPage() {
       <div className="mood-grid">
         {items === null && <SkeletonGrid />}
         {items?.length === 0 && (
-          <p className="mood-empty">
-            Your Mood Board is empty. Pin a first image to set the tone.
-          </p>
+          /* 2026-05-21 — Pass 7 (Helen): "for an art collector who
+              would use this tool most, the empty state offers nothing
+              to react to. As shipped, it looks like a feature that
+              was scoped but not designed."
+              The board now opens with four CSS-gradient placeholders
+              evoking the Greek visual register (Cycladic blue,
+              taverna marble, Aegean horizon, olive grove). They are
+              labelled as inspiration — not the user's pins — and
+              quietly disappear once the user adds anything. No
+              external assets used: no photos to license, no risk of
+              an example image stealing focus from the customer's
+              own taste. */
+          <>
+            <p className="mood-empty">
+              Your Mood Board is empty. These are the kinds of moments
+              guests pin here — replace them with your own as you go.
+            </p>
+            <div className="mood-grid__seeds" aria-hidden>
+              <figure className="mood-seed mood-seed--blue">
+                <figcaption>Cycladic blue</figcaption>
+              </figure>
+              <figure className="mood-seed mood-seed--marble">
+                <figcaption>Taverna marble at noon</figcaption>
+              </figure>
+              <figure className="mood-seed mood-seed--horizon">
+                <figcaption>An Aegean horizon</figcaption>
+              </figure>
+              <figure className="mood-seed mood-seed--olive">
+                <figcaption>Old olive, dry summer</figcaption>
+              </figure>
+            </div>
+          </>
         )}
         {items?.map((it) => (
           <figure key={it.id} className="mood-card">
@@ -326,10 +355,66 @@ export default function MoodBoardPage() {
           grid-column: 1 / -1;
           font-family: var(--gy-font-editorial);
           font-style: italic;
-          color: rgba(13,27,42,0.5);
+          color: rgba(13,27,42,0.55);
           text-align: center;
-          padding: 32px 0;
-          font-size: 14px;
+          padding: 28px 18px 14px;
+          font-size: 14.5px;
+          line-height: 1.7;
+          max-width: 520px;
+          margin: 0 auto;
+        }
+        /* 2026-05-21 — Pass 7 (Helen) — inspiration seeds.
+           Pure CSS gradients, no asset round-trip. They are clearly
+           NOT photographs (no faces, no specific places) so they
+           inspire without competing with whatever the user pins.
+           Drops out of the DOM completely once the user adds even
+           one real pin — items.length === 0 is the only render
+           condition above. */
+        .mood-grid__seeds {
+          grid-column: 1 / -1;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          margin-top: 4px;
+        }
+        @media (min-width: 768px) {
+          .mood-grid__seeds { grid-template-columns: repeat(4, 1fr); }
+        }
+        .mood-seed {
+          margin: 0;
+          position: relative;
+          aspect-ratio: 1;
+          border: 1px solid rgba(13,27,42,0.08);
+          overflow: hidden;
+        }
+        .mood-seed figcaption {
+          position: absolute;
+          left: 0; right: 0; bottom: 0;
+          padding: 8px 10px;
+          background: linear-gradient(to top, rgba(13,27,42,0.55), transparent);
+          color: #ffffff;
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 12.5px;
+          letter-spacing: 0.1px;
+        }
+        .mood-seed--blue {
+          background: linear-gradient(180deg, #b9d7ec 0%, #6ea4c8 55%, #2a5e87 100%);
+        }
+        .mood-seed--marble {
+          background:
+            radial-gradient(at 30% 20%, rgba(255,255,255,0.5), transparent 50%),
+            radial-gradient(at 70% 80%, rgba(13,27,42,0.08), transparent 60%),
+            linear-gradient(135deg, #f5f1e8 0%, #ddd4c1 100%);
+        }
+        .mood-seed--horizon {
+          background:
+            linear-gradient(180deg, #f3d6a7 0%, #e9b985 35%, #9bb8c8 60%, #5d8aa8 100%);
+        }
+        .mood-seed--olive {
+          background:
+            radial-gradient(at 40% 60%, rgba(95,107,73,0.55), transparent 55%),
+            linear-gradient(160deg, #c8c4a4 0%, #8b9070 50%, #5c6147 100%);
         }
         .mood-card {
           margin: 0;

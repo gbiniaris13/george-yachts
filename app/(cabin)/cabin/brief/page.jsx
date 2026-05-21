@@ -8,6 +8,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { readSessionFromCookies, pickActiveCabinId } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
+import { crewRoles, joinNouns } from "@/lib/cabin/format";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 
 export const metadata = { title: "The Charter Brief" };
@@ -102,6 +103,20 @@ export default async function CabinBriefOverviewPage() {
       / (365.25 * 24 * 3600 * 1000);
     return Number.isFinite(years) && years < 18;
   });
+  // 2026-05-21 — Pass 7 (Helen, David): the intro paragraph used
+  // to say "the crew, the chef, the hostess or the captain" but
+  // many vessels in our fleet don't carry a hostess. Pull the
+  // actual crew_display and let lib/cabin/format build the noun
+  // list that matches reality.
+  const cabinRecord = await dbQuery(
+    db
+      .from("cabins")
+      .select("crew_display")
+      .eq("id", cabinId)
+      .maybeSingle()
+  );
+  const crewNouns = joinNouns(crewRoles(cabinRecord?.crew_display));
+
   const sections = await dbQuery(
     db
       .from("cabin_brief_sections")
@@ -140,10 +155,10 @@ export default async function CabinBriefOverviewPage() {
               up. Rewritten to say what's true now. */}
           A handful of short sections. Every blank is optional —
           leave what doesn&apos;t apply. Save as you go; come back
-          days, weeks, or months later. The more you share, the more
-          thoughtfully your week can be designed — and you won&apos;t
-          have to repeat yourself to the crew, the chef, the hostess
-          or the captain. They all read from here.
+          days, weeks, or months later. The more you share, the
+          more thoughtfully your week can be designed — and you
+          won&apos;t have to repeat yourself to your {crewNouns}.
+          They all read from here.
         </IntroParagraph>
         <p className="cabin-brief__time">
           Around <strong>{remainingMinutes || totalMinutes} minutes</strong>{" "}

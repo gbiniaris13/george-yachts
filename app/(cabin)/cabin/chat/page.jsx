@@ -139,15 +139,17 @@ export default async function ChatPage() {
             <em>Instant — on George’s phone</em>
           </span>
           {/* 2026-05-20 — Pass 6: ASCII "→" rendered as a thin
-              broken arrow in WhatsApp green on iOS Safari (no glyph
-              for the codepoint in the system fallback font at that
-              weight). Replaced with an inline SVG chevron so the
-              CTA arrow is consistent across every browser. */}
-          <span className="chat-card__cta-arrow" aria-hidden>
-            <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 10h10M11 6l4 4-4 4" />
-            </svg>
-          </span>
+              broken arrow in WhatsApp green on iOS Safari.
+              2026-05-21 — Pass 7 (Tyler, David): the SVG chevron
+              I substituted in Pass 6 read as a different idiom from
+              the rest of the Cabin, which uses the U+203A single
+              angle quotation mark ("›") on every CTA ("Invite your
+              group ›", "Manage your group ›", "Continue the brief
+              ›"). Reverted to the same glyph for consistency. The
+              U+203A character renders cleanly in the WhatsApp
+              green at this weight on iOS Safari (it's typographic,
+              not ASCII). */}
+          <span className="chat-card__cta-arrow" aria-hidden>›</span>
         </a>
 
         <ul className="chat-card__notes">
