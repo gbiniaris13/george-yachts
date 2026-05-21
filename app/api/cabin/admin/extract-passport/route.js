@@ -30,14 +30,10 @@ export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
-<<<<<<< HEAD
-const MAX_BYTES = 10 * 1024 * 1024;
-=======
 // 2026-05-21 — Vercel's serverless body cap (~4.5 MB) is the real
 // gate; our own check is a defensive backstop. Compressed passports
 // land well under 4 MB by design.
 const MAX_BYTES = 8 * 1024 * 1024;
->>>>>>> origin/claude/strange-yonath-963c3a
 
 function authorized(req) {
   const expected = process.env.CABIN_ADMIN_SECRET;
