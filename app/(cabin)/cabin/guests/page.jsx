@@ -19,6 +19,12 @@
 import { useEffect, useState } from "react";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
+// 2026-05-21 — Pass 7 prep: use shared en-GB date formatter so the
+// "signed in" / "invited" badges match /cabin/your-data and /cabin/me.
+// Bare `new Date().toLocaleDateString()` defaulted to the browser
+// locale, which rendered as "5/20/2026" for the American audience
+// while every other surface read "20 May 2026".
+import { prettyDateShort } from "@/lib/cabin/format";
 
 // 2026-05-20 — Friend-test pass 4 round 5 (Sarah):
 // Inline minor adder. Saves a row to cabin_guests_manifest
@@ -529,9 +535,9 @@ export default function GuestsPage() {
                 <div className="guests-list__meta">
                   <span>{m.email}</span>
                   {m.last_login_at
-                    ? <span>· signed in {new Date(m.last_login_at).toLocaleDateString()}</span>
+                    ? <span>· signed in {prettyDateShort(m.last_login_at)}</span>
                     : m.invite_sent_at
-                      ? <span>· invited {new Date(m.invite_sent_at).toLocaleDateString()}</span>
+                      ? <span>· invited {prettyDateShort(m.invite_sent_at)}</span>
                       : <span>· not invited yet</span>}
                 </div>
                 {m.role !== "principal_charterer" && (

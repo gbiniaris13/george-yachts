@@ -14,6 +14,20 @@
 // Usage:  <CabinIcon name="brief" />
 // =============================================================
 
+// 2026-05-21 — Pass 7 prep:
+//   Tyler's "inconsistent stroke weight" complaint was actually
+//   visual-density mismatch: every icon shared strokeWidth=1.4, but
+//   the bounding boxes ranged from 8 units wide (menu) to 16 units
+//   (vessel), so the lighter glyphs read as "thinner" beside their
+//   denser neighbours. Two changes here:
+//     1. Stroke bumped from 1.4 → 1.5 — renders crisper on retina
+//        (1.4 × 28/24 = 1.63 device-px, which hinted unevenly on
+//        some iOS Safari versions; 1.5 × 28/24 = 1.75 sits cleaner).
+//     2. The under-weight icons (chat, crew, menu, install) gained
+//        secondary marks so each tile's optical mass is similar:
+//        chat now has two speech lines; crew anchor reaches the
+//        viewBox edges; menu has a proper full-length fork; install
+//        the phone arrow sits on a sturdier device frame.
 const ICONS = {
   // The Charter Brief — a quill
   brief: (
@@ -23,10 +37,12 @@ const ICONS = {
       <path d="M5 19l-1 2 2-1" />
     </>
   ),
-  // Chat with George — speech bubble
+  // Chat with George — speech bubble with two message lines inside
   chat: (
     <>
       <path d="M4 5h16v11H8l-4 3z" />
+      <path d="M8 9h8" />
+      <path d="M8 12h5" />
     </>
   ),
   // Group / My details — interlinked rings
@@ -36,22 +52,25 @@ const ICONS = {
       <circle cx="15" cy="13" r="3.5" />
     </>
   ),
-  // Crew — anchor
+  // Crew — anchor, sized to fill the viewBox so it carries the
+  // same visual weight as the boat/compass tiles next to it.
   crew: (
     <>
-      <circle cx="12" cy="6" r="2" />
-      <path d="M12 8v12" />
-      <path d="M7 15c0 3 2 5 5 5s5-2 5-5" />
-      <path d="M9 11h6" />
+      <circle cx="12" cy="5" r="2" />
+      <path d="M12 7v13" />
+      <path d="M6 14c0 4 3 6 6 6s6-2 6-6" />
+      <path d="M8 11h8" />
+      <path d="M4 14h4" />
+      <path d="M16 14h4" />
     </>
   ),
-  // Sample Menu — fork + knife
+  // Sample Menu — fork + knife, both reaching full vertical extent
   menu: (
     <>
-      <path d="M7 4v8a2 2 0 002 2v6" />
+      <path d="M7 4v6a2 2 0 002 2v8" />
       <path d="M9 4v6" />
-      <path d="M15 4v16" />
-      <path d="M14 4c-1 0-1 3 0 4 1 0 1-4 0-4z" />
+      <path d="M11 4v6" />
+      <path d="M15 4c-1.5 0-1.5 5 0 6v10" />
     </>
   ),
   // Vessel — boat profile
@@ -104,12 +123,13 @@ const ICONS = {
       <path d="M8 10V7a4 4 0 018 0v3" />
     </>
   ),
-  // Add to Phone — download arrow into device
+  // Add to Phone — phone with download arrow into the screen
   install: (
     <>
-      <rect x="7" y="3" width="10" height="18" rx="2" />
-      <path d="M12 8v6" />
-      <path d="M9 12l3 3 3-3" />
+      <rect x="6" y="3" width="12" height="18" rx="2" />
+      <path d="M10 19h4" />
+      <path d="M12 7v6" />
+      <path d="M9 11l3 3 3-3" />
     </>
   ),
 };
@@ -124,7 +144,7 @@ export default function CabinIcon({ name, size = 26, className = "" }) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.4"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
