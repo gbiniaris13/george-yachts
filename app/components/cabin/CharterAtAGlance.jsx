@@ -32,9 +32,16 @@ export default function CharterAtAGlance({ summary }) {
   const broker    = summary.broker    || {};
   const rows = [
     {
+      // 2026-05-21 — Pass 7 follow-up (George):
+      //   "Vessel / Vessel / EFFIE STAR · Lagoon 51 — λέει δύο
+      //    φορές vessel." The group header read VESSEL and the
+      //    first row label also read Vessel. Two labels for one
+      //    thing read as a copy bug. Renamed the row to "Name" —
+      //    it's the vessel's name + make/model, no longer a
+      //    semantic clash with the section header.
       group: "Vessel",
       items: [
-        ["Vessel", `${vessel.name || "—"}${vessel.make_model ? " · " + vessel.make_model : ""}`],
+        ["Name", `${vessel.name || "—"}${vessel.make_model ? " · " + vessel.make_model : ""}`],
         ["Length", vessel.length],
         ["Homeport", vessel.homeport],
       ],

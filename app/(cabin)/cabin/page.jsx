@@ -36,7 +36,10 @@ import InstallNudge from "../../components/cabin/InstallNudge";
 import VoyageCarousel from "../../components/cabin/VoyageCarousel";
 import GreekWordOfTheDay from "../../components/cabin/GreekWordOfTheDay";
 import CabinIcon from "../../components/cabin/CabinIcon";
-import { titleCaseName, firstNameFromDisplayName, crewRoles, joinNouns } from "@/lib/cabin/format";
+import VesselHero from "../../components/cabin/VesselHero";
+import VesselTeaser from "../../components/cabin/VesselTeaser";
+import GhostCredit from "../../components/cabin/GhostCredit";
+import { titleCaseName, firstNameFromDisplayName, crewRoles, joinNouns, prettyDate } from "@/lib/cabin/format";
 
 export const metadata = {
   // 2026-05-20 — Pass 4 round 5 (Tyler, Helen, Margaret): browser
@@ -227,8 +230,29 @@ export default async function CabinHomePage() {
     ? "Meet the small team caring for you this week."
     : `Meet the ${crewNouns} of your voyage.`;
 
+  // 2026-05-21 — Hero band caption uses the friendly date range.
+  // We deliberately keep this distinct from "Charter at a Glance"
+  // dates (which carries full year for legal clarity); the hero
+  // is editorial and wants the punchier "27 Jun — 4 Jul 2026".
+  const heroDates =
+    cabin.charter_period_from && cabin.charter_period_to
+      ? `${prettyDate(cabin.charter_period_from)} — ${prettyDate(cabin.charter_period_to)}`
+      : null;
+
   return (
     <div className="cabin-home">
+      {/* 2026-05-21 — Pass 7 (George): "Με το που μπαίνει ο
+          πελάτης να βλέπει πίσω το σκάφος του." Full-bleed
+          hero band of the chartered yacht. Renders nothing if
+          vessel_photos is empty — the page below works without
+          it, but with it on, the moment-of-entry is unmistakable. */}
+      <VesselHero
+        photos={cabin.vessel_photos}
+        vesselName={cabin.vessel_name}
+        makeModel={cabin.vessel_make_model}
+        dates={heroDates}
+      />
+
       <header className="cabin-home__welcome">
         {/* 2026-05-20 — Pass 6 (Domingo, Margaret):
             "'Welcome aboard, in spirit' over 'Welcome, George' reads
@@ -308,6 +332,63 @@ export default async function CabinHomePage() {
         </section>
       )}
 
+      {/* 2026-05-21 — Pass 7 (George): "Μετά από το Your First
+          Step να είναι μία μίνι μπροσούρα του σκάφους." Editorial
+          teaser block — 2-3 facts + small photo squares + link
+          to the full vessel page. Lives BETWEEN the first step
+          and the second step so the customer gets a calm pause
+          on what they've just chartered before being asked to
+          fill the brief. */}
+      <VesselTeaser cabin={cabin} />
+
+      {/* ============================================================
+          YOUR SECOND STEP — THE CHARTER BRIEF.
+          ============================================================
+          2026-05-21 — Pass 7 (George):
+            "Το charter brief πρέπει να είναι το δεύτερο βήμα.
+             Πρέπει να καταλαβαίνει ότι αυτό πρέπει να το κάνει —
+             είναι για το ταξίδι σας. Όσες περισσότερες πληροφορίες
+             βάλετε, τόσο καλύτερα θα είμαστε οργανωμένοι εμείς, το
+             σκάφος και το πλήρωμα."
+
+          The previous design treated the brief as a quiet progress
+          card buried deep on the page. Now it's a full Second
+          Step card — same visual weight as Your First Step — with
+          warm framing explaining WHY this matters (everyone caring
+          for them needs it, including the captain and chef and
+          George himself). Still only shown for principals; guests
+          fill /me, not the brief.
+          ============================================================ */}
+      {isPrincipal && (
+        <section className="cabin-home__primary cabin-home__primary--second">
+          <div className="cabin-home__section-label">Your second step</div>
+          <h2 className="cabin-home__primary-title">
+            {percent > 0
+              ? `${percent}% of the brief is yours so far.`
+              : "Tell us about your week — in your own words."}
+          </h2>
+          <p className="cabin-home__primary-blurb">
+            This is the heart of preparing your charter. The captain
+            and the chef read it. Your hostess reads it. I read it. It
+            shapes how the boat is stocked, which coves we choose, the
+            small touches that turn a week into yours. The more you
+            give us, the better organised we&apos;ll all be for you —
+            and the more the week will feel made on purpose.
+          </p>
+          {percent > 0 && (
+            <div className="cabin-home__progress-bar" aria-hidden>
+              <div
+                className="cabin-home__progress-fill"
+                style={{ width: `${percent}%` }}
+              />
+            </div>
+          )}
+          <Link href="/cabin/brief" className="cabin-home__cta">
+            {percent > 0 ? "Continue the brief ›" : "Start the brief ›"}
+          </Link>
+        </section>
+      )}
+
       {/* 2026-05-20 — Friend-test pass 3 (George): "Δεν είδα κουμπί
           να βάλω την Καμπίνα στο κινητό." Install nudge moved here
           (was at the bottom of the page) so it's above-the-fold on
@@ -325,36 +406,6 @@ export default async function CabinHomePage() {
           so guests see something fresh per visit but no random
           jitter mid-session. */}
       <GreekWordOfTheDay />
-
-      {/* ============================================================
-          THE BRIEF — secondary card. The principal can come back
-          to it whenever they like; it no longer dominates the page.
-          Guests don't see the brief CTA — they don't fill it.
-          ============================================================ */}
-      {isPrincipal && (
-        <section className="cabin-home__progress">
-          <div className="cabin-home__section-label">The Charter Brief</div>
-          <h3 className="cabin-home__progress-title">
-            {percent > 0
-              ? `${percent}% of the brief is filled in.`
-              : "The brief is yours to write — at your pace."}
-          </h3>
-          <p className="cabin-home__progress-blurb">
-            Itinerary preferences, dining instincts, little touches that
-            make a week feel like yours. Half an hour across as many sittings
-            as you want.
-          </p>
-          <div className="cabin-home__progress-bar" aria-hidden>
-            <div
-              className="cabin-home__progress-fill"
-              style={{ width: `${percent}%` }}
-            />
-          </div>
-          <Link href="/cabin/brief" className="cabin-home__cta cabin-home__cta--ghost">
-            {percent > 0 ? "Continue the brief" : "Start the brief"}
-          </Link>
-        </section>
-      )}
 
       {/* ============================================================
           THE CABIN MAP — icon grid (2026-05-20 friend-test pass 3).
@@ -505,6 +556,13 @@ export default async function CabinHomePage() {
         </form>
       </footer>
 
+      {/* 2026-05-21 — Pass 7 (George): the same GHOST_ build credit
+          the marketing site footer carries. Quiet, low on the page,
+          luxury-tech monospace gold. Same agency owns both surfaces
+          — the credit on the cabin signs the platform without
+          shouting over the customer's own page. */}
+      <GhostCredit />
+
       <style>{`
         .cabin-home { display: flex; flex-direction: column; gap: 48px; }
         .cabin-home__welcome { text-align: left; }
@@ -556,6 +614,13 @@ export default async function CabinHomePage() {
           display: flex;
           flex-direction: column;
           gap: 14px;
+        }
+        /* 2026-05-21 — Pass 7: a Second Step variant of the
+           primary card. Gold left rim subtly signals "this card
+           is the one you'll come back to most" without screaming
+           with a full gold fill. Same internal layout. */
+        .cabin-home__primary--second {
+          border-left: 3px solid var(--gy-gold);
         }
         .cabin-home__primary-title {
           font-family: var(--gy-font-editorial);
