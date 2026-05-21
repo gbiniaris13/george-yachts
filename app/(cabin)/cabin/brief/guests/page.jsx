@@ -46,7 +46,11 @@ export default function GuestsSectionPage() {
               <CheckboxGroup
                 name="group_type"
                 label="Tick any that apply"
-                hint="The crew, chef and hostess all calibrate around this."
+                /* 2026-05-21 — Pass 7 (Helen, David):
+                   was "The crew, chef and hostess…" but many of our
+                   vessels carry no hostess. Generic "your crew" reads
+                   the same on every cabin without promising a role. */
+                hint="Your crew calibrates around this."
                 register={register}
                 twoColumn
                 options={[
@@ -64,7 +68,10 @@ export default function GuestsSectionPage() {
               <RadioGroup
                 name="energy_level"
                 label="Overall energy of the group"
-                hint="Helps the chef weight menus, the hostess plan the bar, and the captain choose anchorages."
+                /* 2026-05-21 — Pass 7: was "the chef … the hostess
+                   … the captain". Generic phrasing avoids promising
+                   a hostess we don't always carry. */
+                hint="Helps the chef weight menus and the captain choose anchorages."
                 register={register}
                 options={[
                   { value: "calm_restorative",      label: "Calm & restorative", description: "Quiet bays, early nights, slower mornings." },
@@ -99,7 +106,10 @@ export default function GuestsSectionPage() {
               <RadioGroup
                 name="has_pet"
                 label="Bringing a four-legged guest?"
-                hint="Greek waters allow pets aboard with the right paperwork. The captain pre-plans rest stops and the hostess sets up a quiet corner."
+                /* 2026-05-21 — Pass 7: removed "hostess sets up a
+                   quiet corner". The captain remains the safe
+                   universal noun across all vessel sizes. */
+                hint="Greek waters allow pets aboard with the right paperwork. The captain pre-plans rest stops and sets aside a quiet corner."
                 register={register}
                 options={[
                   { value: "true",  label: "Yes" },
@@ -125,7 +135,9 @@ export default function GuestsSectionPage() {
                   writing here. */}
               <h2 className="brief-subhead">Anything else for the crew?</h2>
               <OpenTextarea
-                label="A few sentences the captain reads to the chef and hostess"
+                /* 2026-05-21 — Pass 7: dropped "and hostess" so the
+                   label is true for every vessel composition. */
+                label="A few sentences the captain reads to the rest of the crew"
                 hint="The small things that don't fit the questions above. Pair-ups (who's sharing a cabin), kids' ages, anyone who tires easily, a guest with a fear of water, a couple celebrating quietly while the others party loudly. Skip if you've already said it elsewhere."
                 name="group_notes"
                 placeholder="e.g. My mother-in-law is 78 — she'll need an easy boarding ramp and a calm anchorage on the last night. Two of the kids (8 and 10) only just learned to swim. We're trying to keep my brother's surprise birthday under wraps until Thursday."

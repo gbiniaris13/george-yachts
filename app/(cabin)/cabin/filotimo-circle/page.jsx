@@ -58,7 +58,22 @@ export default async function FilotimoCirclePage() {
   const circle = await getCircleMember(session.email);
   const goal = nextTierGoal(circle);
 
-  const currentTier = circle?.tier ?? "friend";
+  // 2026-05-21 — Pass 7 (Domingo, Margaret, David, Helen, Sarah,
+  //   BLOCKER #2):
+  //   The /cabin home blurb and /cabin/your-data already hide the
+  //   tier pre-voyage, but the dedicated Filotimo Circle page
+  //   still asserted "your current tier" on the Friend card before
+  //   the charter had even begun. David read it as a points scheme
+  //   he didn't sign up for; Margaret read it as a contradiction
+  //   against the home blurb; Helen and Sarah called it
+  //   Marriott-Bonvoy energy.
+  //   The page now treats the three-tier list as PURELY
+  //   informational pre-voyage — no card is marked "is-current"
+  //   and no "your current tier" badge is rendered until at least
+  //   one voyage is recorded.
+  const voyagesCount = circle?.voyages_count ?? 0;
+  const tierEarned = voyagesCount >= 1;
+  const currentTier = tierEarned ? (circle?.tier ?? "friend") : null;
 
   return (
     <div className="filotimo">

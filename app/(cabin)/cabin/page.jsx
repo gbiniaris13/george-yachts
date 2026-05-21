@@ -36,7 +36,7 @@ import InstallNudge from "../../components/cabin/InstallNudge";
 import VoyageCarousel from "../../components/cabin/VoyageCarousel";
 import GreekWordOfTheDay from "../../components/cabin/GreekWordOfTheDay";
 import CabinIcon from "../../components/cabin/CabinIcon";
-import { titleCaseName } from "@/lib/cabin/format";
+import { titleCaseName, crewRoles, joinNouns } from "@/lib/cabin/format";
 
 export const metadata = {
   // 2026-05-20 — Pass 4 round 5 (Tyler, Helen, Margaret): browser
@@ -209,41 +209,14 @@ export default async function CabinHomePage() {
 
   const percent = cabin.brief_completion_percent ?? 0;
 
-  // 2026-05-21 — Pass 7 prep:
-  // Generate the Crew tile blurb from what's actually in
-  // crew_display. We categorise each role into one of three slots
-  // (captain, chef, interior-service) and build a natural sentence
-  // — "Meet the captain and chef" / "Meet the captain, chef and
-  // hostess" / "Meet your crew" as a graceful fallback when the
-  // crew sheet hasn't been published yet.
-  const crewTileBlurb = (() => {
-    const crew = Array.isArray(cabin?.crew_display) ? cabin.crew_display : [];
-    if (crew.length === 0) {
-      return "Meet the captain, chef and crew caring for you this week.";
-    }
-    const roles = crew
-      .flatMap((m) => [m?.role, m?.secondary_role])
-      .filter(Boolean)
-      .map((r) => String(r).toLowerCase());
-    const hasCaptain = roles.some((r) => r.includes("captain"));
-    const hasChef = roles.some(
-      (r) => r === "chef" || r === "cook" || r.includes("chef") || r.includes("cook"),
-    );
-    const hasInteriorService = roles.some(
-      (r) => r.includes("hostess") || r.includes("stewardess") || r.includes("steward") || r.includes("purser"),
-    );
-    const parts = [];
-    if (hasCaptain) parts.push("captain");
-    if (hasChef) parts.push("chef");
-    if (hasInteriorService) parts.push("hostess");
-    if (parts.length === 0) return "Meet the small team caring for you this week.";
-    // Join naturally: A / A and B / A, B and C
-    let joined;
-    if (parts.length === 1) joined = parts[0];
-    else if (parts.length === 2) joined = `${parts[0]} and ${parts[1]}`;
-    else joined = `${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`;
-    return `Meet the ${joined} of your voyage.`;
-  })();
+  // 2026-05-21 — Pass 7: extracted to lib/cabin/format so this
+  // page, /cabin/brief and /cabin/brief/guests share one canonical
+  // noun list. crewRoles() returns ["captain","chef","hostess"] /
+  // ["captain","chef"] / ["crew"] (graceful fallback).
+  const crewNouns = joinNouns(crewRoles(cabin?.crew_display));
+  const crewTileBlurb = crewNouns === "crew"
+    ? "Meet the small team caring for you this week."
+    : `Meet the ${crewNouns} of your voyage.`;
 
   return (
     <div className="cabin-home">

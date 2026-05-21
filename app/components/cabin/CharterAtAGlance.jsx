@@ -41,11 +41,20 @@ export default function CharterAtAGlance({ summary }) {
       ],
     },
     {
+      // 2026-05-21 — Pass 7 (Domingo, Tyler, David, Margaret):
+      //   the principal charterer's email and mobile were rendered
+      //   on the home page, visible to every guest of the cabin —
+      //   not just the principal themselves. That's PII of another
+      //   person leaking to ten other people. Even the principal
+      //   doesn't need to see their own email here (they typed it).
+      //   Removed both fields. Only the principal's NAME remains so
+      //   guests still know whose voyage they're aboard.
+      //   The cabin record still stores principal_charterer_email
+      //   and _mobile for broker operations — they just don't
+      //   surface in customer-facing UI any more.
       group: "Principal Charterer",
       items: [
         ["Name", charterer.name],
-        ["Email", charterer.email],
-        ["Mobile", charterer.mobile],
       ],
     },
     {
@@ -115,7 +124,15 @@ export default function CharterAtAGlance({ summary }) {
           font-size: 9.5px;
           letter-spacing: 2.5px;
           text-transform: uppercase;
-          color: rgba(13, 27, 42, 0.4);
+          /* 2026-05-21 — Pass 7 (Margaret, BLOCKER #3):
+             the previous rgba(13,27,42,0.4) over the card's white
+             background blended to roughly RGB(158,164,170) — a 2.7:1
+             contrast ratio, failing WCAG AA. Margaret in her sunlit
+             Cambridge sunroom couldn't read VESSEL / CHARTER PERIOD /
+             PRINCIPAL CHARTERER / YOUR BROKER and assumed the site
+             was broken. Switched to a flat slate that sits at ≈8:1. */
+          color: #4b5563;
+          font-weight: 600;
           margin-bottom: 10px;
         }
         .cabin-at-a-glance__group dl {
@@ -144,7 +161,11 @@ export default function CharterAtAGlance({ summary }) {
           font-size: 10px;
           letter-spacing: 1.8px;
           text-transform: uppercase;
-          color: rgba(13, 27, 42, 0.5);
+          /* 2026-05-21 — Pass 7 contrast pass (Margaret):
+             ditto on the row labels — rgba(...,0.5) was ~3.5:1, also
+             below WCAG AA on a white card. Flat slate, ≈8:1. */
+          color: #4b5563;
+          font-weight: 600;
           padding-top: 3px;
         }
         .cabin-at-a-glance__row dd {
