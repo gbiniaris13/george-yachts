@@ -19,123 +19,74 @@ function paragraphs(bio) {
     .filter(Boolean);
 }
 
-// 2026-05-20 — Friend-test pass 4 (Margaret 70F, Helen 60F):
-//   "Leonora Stavrou was born in 1978…" — please do not tell me
-//   the year a woman was born. It is none of my business and she
-//   did not consent to share it with me.
-// We strip "born in YYYY" / "born YYYY" / "(b. YYYY)" patterns
-// from the bio at render time. Operator can override by editing
-// in GY Command if a date is intentional (e.g. an anniversary).
-// 2026-05-20 — Pass 4 round 5 (Margaret, Helen):
-//   Leonora's bio shipped as "Leonora Stavrou and raised in Athens"
-//   (missing "was born"), with "yachting .For the past" (bad
-//   spacing), "reliable a strong asset" (missing comma), and a
-//   "Cosmetics and Aesthetics" line irrelevant to a chef intro.
+// 2026-05-21 — Roberto's brief (v1) restructures the entire
+// bio-display philosophy:
 //
-// 2026-05-20 — Pass 6 (Margaret, Domingo synthesis):
-//   Two additional defects surfaced from the brochure extractor:
-//   (a) "She Her" / "He Him" — the slash in "She/Her" disappears
-//       in PDF text-layer flattening, leaving a double pronoun.
-//   (b) "Leonora Stavrou and raised in Athens" — the "born in
-//       <city>," fragment dropped in extraction. We collapse the
-//       orphan "<Proper Name> and raised in" → "raised in" which
-//       reads grammatically on its own.
+//   "EXPLICITLY OUT OF SCOPE: No manual crew-bio editing or
+//    George-authored crew sentences. Crew content comes from
+//    the owner's booklet via extraction (faithfully). We do not
+//    add our own lines to crew bios."
 //
-// We can't reliably auto-fix every grammar failure — that's
-// George's job in CRM. But we CAN catch the common spacing /
-// punctuation defects the extraction pipeline tends to introduce.
-// Plus we strip a few patently-irrelevant phrases that often
-// survive the extractor (degrees unrelated to the role).
+//   "Light post-extraction cleanup as a SAFETY NET ONLY […]
+//    NEVER changes meaning, rewrites sentences, adds, or
+//    removes content. NEVER injects George Yachts' own wording."
+//
+// All five destructive rules from earlier friend-test rounds —
+//   • strip "was born in 1978"
+//   • strip "degree in Cosmetics and Aesthetics"
+//   • strip "degree in Aircraft Engineering"
+//   • strip "She Her" / "He Him" / "They Them" pronoun chips
+//   • rescue "<Name> and raised in" → "Raised in"
+// — were REMOVING content that the owner's crew booklet actually
+// contains. Sample inspected: Leonora Stavrou's bio PDF reads
+// verbatim "Leonora Stavrou was born in 1978 and raised in Athens,
+// Greece. She holds a degree in Cosmetics and Aesthetics from the
+// University of Athens. Her passion for the sea…" — every fragment
+// we were stripping is in the source.
+//
+// scrubBio is now a CONSERVATIVE whitespace + punctuation safety
+// net only. It corrects the artifacts the extraction pipeline
+// commonly introduces (".For" without space, " ." stray space
+// before period, double spaces) but never adds, removes, or
+// rewrites any word the owner wrote.
 function scrubBio(s) {
   if (!s) return "";
-  let out = String(s);
-
-  // Strip year-of-birth phrases.
-  out = out
-    .replace(/\b(?:was\s+)?born\s+(?:in\s+)?(?:19|20)\d{2}\b[.,]?\s*/gi, "")
-    .replace(/\(\s*b\.?\s*(?:19|20)\d{2}\s*\)\s*/gi, "");
-
-  // Strip degrees unrelated to the role. Cosmetics / aesthetics
-  // on a chef bio surfaced in pass 4 — surface area is small
-  // enough to maintain by hand.
-  out = out
-    .replace(/\bholds?\s+a\s+degree\s+in\s+cosmetics(?:\s+and\s+aesthetics)?[^.]*\.?\s*/gi, "")
-    .replace(/\bdegree\s+in\s+aircraft\s+engineering[^.]*\.?\s*/gi, "");
-
-  // Pass 6 — "She Her" / "He Him" / "They Them" double pronouns
-  // (PDF lost the slash between "She/Her").
-  // 2026-05-21 — Pass 7 (Margaret): the Pass 6 fix collapsed
-  // "She Her" to "She" — but the source PDFs had these as standalone
-  // pronoun annotations next to the crew member's name, not as part
-  // of a sentence. After collapse, Margaret saw "Leonora. She
-  // passion for the sea..." — a subject "She" stranded without a
-  // verb. The right move is to STRIP the annotation entirely (and
-  // clean up the space + any leading punctuation that drops with
-  // it), so the next sentence starts cleanly.
-  out = out
-    .replace(/\s*\b(She\s+Her|He\s+Him|They\s+Them)\b\s*/g, " ")
-    // If we just stripped the start of a sentence we may have left
-    // a leading ". " — collapse any "<sentence-end> <space> <space>"
-    // back to a single space.
-    .replace(/([.!?])\s{2,}/g, "$1 ");
-
-  // Pass 6 — "<Surname> and raised in" orphan: the "<Name> was
-  // born in <city>, and raised in <other-city>" sentence often
-  // loses the middle clause. We rescue the orphan into "Raised
-  // in <city>" so the sentence still parses. Triggers only on a
-  // capitalised single token immediately followed by " and
-  // raised in" — narrow enough to avoid false positives.
-  out = out.replace(
-    /\b([A-Z][a-zà-ÿ'’\-]+)\s+and\s+raised\s+in\b/g,
-    "Raised in"
-  );
-
-  // Punctuation/whitespace defects we see often in extracted bios:
-  //   "yachting .For"  → "yachting. For"
-  //   "reliable a strong"  → "reliable, a strong"
-  //   double spaces, trailing whitespace.
-  out = out
+  return String(s)
     // Space before punctuation: "yachting ." → "yachting."
     .replace(/\s+([.,;:!?])/g, "$1")
-    // Missing space after period (between sentences): ".For" → ". For"
+    // Missing space after sentence-end period: ".For" → ". For"
     .replace(/([.!?])([A-Z])/g, "$1 $2")
-    // Repeated spaces / tabs → single space
+    // Collapse double spaces / tabs to a single space.
     .replace(/[ \t]{2,}/g, " ")
-    // Trim each paragraph
+    // Trim each paragraph (preserves blank lines between paras).
     .split(/\n/)
     .map((l) => l.trim())
-    .join("\n");
-
-  return out.trim();
+    .join("\n")
+    .trim();
 }
 
-// 2026-05-20 — Pass 4 (Margaret + Helen):
-//   "'COOK · Leonora' — on a yacht of this calibre we say Chef,
-//    not Cook." The brochure extraction sometimes returns "Cook"
-//   verbatim from the source PDF. Map it to the term the audience
-//   expects.
-const ROLE_DISPLAY = {
-  cook: "Chef",
-  chef: "Chef",
-  "head chef": "Chef",
-  "sous chef": "Sous Chef",
-  captain: "Captain",
-  "first officer": "First Officer",
-  "chief officer": "First Officer",
-  "first mate": "First Officer",
-  engineer: "Engineer",
-  "chief engineer": "Chief Engineer",
-  deckhand: "Deckhand",
-  stewardess: "Stewardess",
-  "chief stewardess": "Chief Stewardess",
-  hostess: "Hostess",
-  steward: "Steward",
-  purser: "Purser",
-};
+// 2026-05-21 — Roberto's brief (v1):
+//   "Crew content comes from the owner's booklet via extraction
+//    (faithfully). We do not add our own lines to crew bios."
+//
+// The earlier ROLE_DISPLAY map mapped "Cook" → "Chef" because a
+// friend-test panel preferred the higher-status term. That's a
+// George-authored rewrite of the owner's role text — exactly what
+// the brief forbids. Removed.
+//
+// prettyRole now only does a safe title-case pass on the verbatim
+// role string. "cook" → "Cook", "chief stewardess" → "Chief
+// Stewardess". The role NOUN and any compounds (e.g. "Cook/
+// Hostess") survive untouched.
 function prettyRole(r) {
   if (!r) return "";
-  const k = String(r).toLowerCase().trim();
-  return ROLE_DISPLAY[k] || r;
+  return String(r)
+    .trim()
+    .split(/(\s+|[\/\-])/)
+    .map((w) =>
+      /^[a-z]/.test(w) ? w.charAt(0).toUpperCase() + w.slice(1) : w
+    )
+    .join("");
 }
 
 export default async function CrewPage() {
