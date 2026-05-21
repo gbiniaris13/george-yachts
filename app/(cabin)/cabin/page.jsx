@@ -36,7 +36,7 @@ import InstallNudge from "../../components/cabin/InstallNudge";
 import VoyageCarousel from "../../components/cabin/VoyageCarousel";
 import GreekWordOfTheDay from "../../components/cabin/GreekWordOfTheDay";
 import CabinIcon from "../../components/cabin/CabinIcon";
-import { titleCaseName, crewRoles, joinNouns } from "@/lib/cabin/format";
+import { titleCaseName, firstNameFromDisplayName, crewRoles, joinNouns } from "@/lib/cabin/format";
 
 export const metadata = {
   // 2026-05-20 — Pass 4 round 5 (Tyler, Helen, Margaret): browser
@@ -200,10 +200,19 @@ export default async function CabinHomePage() {
   // "Welcome, george." because the source string was lowercased
   // at data entry. titleCaseName on display fixes the symptom
   // without rewriting historical data.
+  //
+  // 2026-05-21 — Pass 7 follow-up (preview-as-customer surfaced
+  // the EFFIE STAR fixture): display_name was "Ms. Tricia Stevens"
+  // (MYBA-style) and split(" ")[0] yielded "Ms." → "Welcome, Ms..".
+  // firstNameFromDisplayName skips leading honorifics so the next
+  // real token wins. Belt-and-braces: passport extraction now
+  // also patches cabin_members.display_name to the signature form
+  // ("Patricia R. Stevens"), so new cabins shouldn't hit the
+  // honorific path at all — this defends old fixtures.
   const rawFirstName =
-    membership?.display_name?.split(" ")[0] ||
-    myRow?.display_name?.split(" ")[0] ||
-    cabin?.principal_charterer_name?.split(" ")[0] ||
+    firstNameFromDisplayName(membership?.display_name) ||
+    firstNameFromDisplayName(myRow?.display_name) ||
+    firstNameFromDisplayName(cabin?.principal_charterer_name) ||
     "friend";
   const firstName = titleCaseName(rawFirstName);
 
