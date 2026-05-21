@@ -16,6 +16,7 @@
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import CabinBrandMark from "./CabinBrandMark";
 
 // 2026-05-21 — Admin "Preview as customer" banner.
 //
@@ -200,11 +201,21 @@ export default function CabinShell({
       )}
       {showChrome && (
         <header className="cabin-shell__header" role="banner">
-          {/* Back arrow on every sub-page. Tapping returns to /cabin
-              home — the single source of nav truth. On mobile this
-              is the primary affordance because the bottom nav only
-              surfaces 5 of 13 sections; the hamburger (right) opens
-              the full drawer with every section. */}
+          {/* 2026-05-21 — George's pass-7 critique on the EFFIE STAR
+              preview: "Όλα στριμωγμένα στον τίτλο. Multi-billion
+              εταιρεία, Vogue, για πλούσιους πελάτες." Header
+              redesigned in three parts:
+
+                · Left  — back arrow (when not on /cabin home).
+                · Centre — CabinBrandMark: gold-G monogram + Roman-
+                  caps wordmark + "Brokerage House" strapline.
+                · Right — vessel name (italic editorial) over dates +
+                  viewer name (small caps). The vessel leads because
+                  the cabin IS the vessel — the customer's "I've
+                  walked into the cabin of MY yacht" moment.
+
+              The header is taller (more vertical padding), uses
+              luxury-mag spacing, and never crams text into corners. */}
           {pathname !== "/cabin" && (
             <Link
               href="/cabin"
@@ -214,26 +225,20 @@ export default function CabinShell({
               <span aria-hidden>←</span>
             </Link>
           )}
-          <Link
-            href="/cabin"
-            className="cabin-shell__brand"
-            aria-label="Cabin home"
-          >
-            <span className="cabin-shell__brand-eyebrow">George Yachts</span>
-            <span className="cabin-shell__brand-title">
-              The Cabin <em>· Filotimo</em>
-            </span>
-          </Link>
+          <div className="cabin-shell__brand-slot">
+            <CabinBrandMark href="/cabin" />
+          </div>
           <div className="cabin-shell__charter">
-            <span className="cabin-shell__charter-name">
-              {viewerName}
-            </span>
             {cabin?.vessel_name && (
-              <span className="cabin-shell__charter-meta">
+              <span className="cabin-shell__charter-vessel notranslate">
                 {cabin.vessel_name}
-                {dates ? ` · ${dates}` : ""}
               </span>
             )}
+            <span className="cabin-shell__charter-meta">
+              {dates ? dates : null}
+              {dates && viewerName ? <span aria-hidden> · </span> : null}
+              {viewerName ? <em>{viewerName}</em> : null}
+            </span>
           </div>
         </header>
       )}
@@ -392,41 +397,39 @@ export default function CabinShell({
           padding-bottom: env(safe-area-inset-bottom);
         }
 
+        /* 2026-05-21 — Pass 7 redesign (George):
+           "Multi-billion εταιρεία, Vogue feel, για πλούσιους
+           πελάτες." Header now breathes — bigger vertical
+           padding, brand on left (monogram + wordmark +
+           strapline), vessel name on right as the right-side
+           lead, dates + viewer name in a smaller secondary line.
+           The three regions are laid out with grid: back · brand
+           · charter, where back is optional and the brand /
+           charter share the remaining space evenly. */
         .cabin-shell__header {
           position: sticky;
           top: 0;
           z-index: 30;
           display: grid;
-          /* 2026-05-20 — Pass 6 (Domingo, Tyler):
-             pass-3 removed the hamburger button but the grid kept a
-             trailing 'auto' track for it. The charter chip's '1fr'
-             column was being squeezed to ~80px on a 375px-wide
-             iPhone, and viewerName + vessel + dates ellipsised down
-             to literally nothing — the chip rendered empty.
-
-             Grid is now three tracks: back (optional, auto) · brand
-             (auto) · charter chip (1fr, right-aligned). No dead
-             trailing track. On phones < 480px the charter chip's
-             vessel-meta line is hidden so the name alone has room
-             to breathe; the meta returns at ≥ 480px. */
-          grid-template-columns: auto auto 1fr;
+          grid-template-columns: auto 1fr auto;
           align-items: center;
-          gap: 12px;
-          padding: 14px 18px;
-          padding-top: calc(14px + env(safe-area-inset-top, 0));
+          gap: 18px;
+          padding: 22px 28px;
+          padding-top: calc(22px + env(safe-area-inset-top, 0));
           background: var(--gy-navy);
           color: var(--gy-ivory);
-          border-bottom: 1px solid rgba(201, 168, 76, 0.4);
+          border-bottom: 1px solid rgba(201, 168, 76, 0.32);
+        }
+        @media (max-width: 767.98px) {
+          .cabin-shell__header {
+            padding: 16px 18px;
+            padding-top: calc(16px + env(safe-area-inset-top, 0));
+            gap: 12px;
+          }
         }
         @media (max-width: 479.98px) {
           .cabin-shell__charter-meta {
             display: none;
-          }
-          .cabin-shell__brand-eyebrow {
-            display: none;
-          }
-          .cabin-shell__brand-title {
-            font-size: 15px;
           }
         }
 
@@ -451,58 +454,49 @@ export default function CabinShell({
           outline: none;
         }
 
-        .cabin-shell__brand {
-          display: flex;
-          flex-direction: column;
-          line-height: 1.1;
-          text-decoration: none;
-          color: inherit;
-        }
-        .cabin-shell__brand:hover .cabin-shell__brand-title {
-          color: var(--gy-gold);
-        }
-        .cabin-shell__brand-eyebrow {
-          font-family: var(--gy-font-ui);
-          font-size: 9px;
-          letter-spacing: 2.5px;
-          text-transform: uppercase;
-          color: var(--gy-gold);
-          font-weight: 500;
-        }
-        .cabin-shell__brand-title {
-          font-family: var(--gy-font-editorial);
-          font-size: 17px;
-          font-weight: 400;
-          margin-top: 2px;
-          letter-spacing: -0.3px;
-        }
-        .cabin-shell__brand-title em {
-          color: var(--gy-gold);
-          font-style: italic;
+        .cabin-shell__brand-slot {
+          min-width: 0;
+          /* Empty wrapper so the grid column can collapse cleanly
+             on tiny phones without the CabinBrandMark internals
+             having to know about layout. */
         }
 
         .cabin-shell__charter {
           display: flex;
           flex-direction: column;
+          align-items: flex-end;
           text-align: right;
           min-width: 0;
         }
-        .cabin-shell__charter-name {
+        .cabin-shell__charter-vessel {
           font-family: var(--gy-font-editorial);
-          font-size: 15px;
+          font-size: 17px;
           font-style: italic;
           font-weight: 300;
+          letter-spacing: 0.4px;
+          color: var(--gy-ivory);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+          max-width: 100%;
         }
         .cabin-shell__charter-meta {
           font-family: var(--gy-font-ui);
-          font-size: 10px;
-          letter-spacing: 1.5px;
+          font-size: 9.5px;
+          letter-spacing: 2.4px;
           color: rgba(248, 245, 240, 0.55);
           text-transform: uppercase;
-          margin-top: 2px;
+          margin-top: 6px;
+        }
+        .cabin-shell__charter-meta em {
+          font-style: normal;
+          color: var(--gy-gold);
+          font-weight: 500;
+        }
+        @media (max-width: 479.98px) {
+          .cabin-shell__charter-vessel {
+            font-size: 14px;
+          }
         }
 
         .cabin-shell__menu {
