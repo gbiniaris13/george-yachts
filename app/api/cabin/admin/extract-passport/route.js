@@ -325,6 +325,25 @@ export async function POST(req) {
         })
         .eq("id", cabinId)
     );
+
+    // 2026-05-21 — Patch cabin_members.display_name too.
+    //
+    // cabins.principal_charterer_name is read by the back-office
+    // (preference sheet, crew list, "Charter at a Glance" block on
+    // the customer home page). But the in-cabin header chip and the
+    // "Welcome, <firstName>." greeting both read from
+    // cabin_members.display_name — which was set at cabin creation
+    // from the MYBA-derived name ("Ms. Tricia Stevens"). Without
+    // this patch the cabin showed "Welcome, Ms.." (first space-
+    // tokenised word of the MYBA string) even after the passport
+    // had landed and the cabin's own name field flipped to
+    // "Patricia R. Stevens". One row → no churn risk.
+    await dbQuery(
+      db.from("cabin_members")
+        .update({ display_name: sig })
+        .eq("cabin_id", cabinId)
+        .eq("role", "principal_charterer")
+    );
     displayNameApplied = sig;
   }
 
