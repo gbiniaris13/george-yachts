@@ -6,6 +6,7 @@ import {
   readSessionFromCookies,
   destroySession,
   SESSION_COOKIE,
+  PREVIEW_COOKIE,
 } from "@/lib/cabin/auth";
 import { writeAudit, AUDIT_ACTIONS } from "@/lib/cabin/audit";
 
@@ -30,5 +31,9 @@ export async function POST(req) {
   }
   const res = NextResponse.json({ ok: true });
   res.cookies.set(SESSION_COOKIE, "", { path: "/", maxAge: 0 });
+  // 2026-05-21 — Also clear the admin preview marker, in case
+  // this logout is the "Exit preview" button in CabinShell.
+  // No-op for normal customer logouts (cookie not set).
+  res.cookies.set(PREVIEW_COOKIE, "", { path: "/", maxAge: 0 });
   return res;
 }
