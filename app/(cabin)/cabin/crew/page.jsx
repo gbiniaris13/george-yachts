@@ -11,12 +11,59 @@ import { SectionTitle } from "../../../components/cabin/brief/FormFields";
 
 export const metadata = { title: "Your crew" };
 
-function paragraphs(bio) {
+function paragraphs(bio, firstName) {
   if (!bio || typeof bio !== "string") return [];
-  return scrubBio(bio)
+  return redactSurname(scrubBio(bio), firstName)
     .split(/\n\s*\n/)
     .map((p) => p.trim())
     .filter(Boolean);
+}
+
+// 2026-05-21 — Roberto's brief (v1):
+//   "White-label is absolute. The client view must NEVER show:
+//    crew surnames, the vessel's owning company, the central
+//    agent, the owner, or any commercial figures."
+//
+// The bio text from the owner's crew booklet contains the surname
+// in its opening sentence ("Leonora Stavrou was born in 1978…").
+// We honour the brief at the DISPLAY layer only — storage stays
+// verbatim, so the surname is available to back-office surfaces
+// (preference sheet, crew list for port authorities) where it
+// belongs.
+//
+// Logic: infer the surname as the capitalised word that follows
+// the first_name on its first appearance in the bio. Then redact
+// every occurrence of that surname from the rendered text. This
+// catches the canonical "FirstName Surname" opening and any
+// later "Mrs/Mr Surname" references.
+//
+// Defensive notes:
+//   • If no "FirstName Surname" pattern is found, return bio
+//     unchanged (Thanos's bio in the sample never names him as
+//     "Thanos Karagiozis" — it starts "Thanos is an experienced
+//     Captain", so no redaction is triggered, which is the right
+//     outcome).
+//   • The replacement consumes the SPACE before the surname so
+//     "Leonora Stavrou was" → "Leonora was" — no double space.
+function escapeRegExp(s) {
+  return String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+function redactSurname(bio, firstName) {
+  if (!bio || !firstName) return bio;
+  const fn = escapeRegExp(String(firstName).trim());
+  if (!fn) return bio;
+  // Find the capitalised word that immediately follows the first
+  // appearance of first_name. Surname tokens include letters,
+  // apostrophes, hyphens, and accented chars.
+  const finder = new RegExp(`\\b${fn}\\s+([A-Z][a-zà-ÿ'’\\-]+)\\b`);
+  const m = bio.match(finder);
+  if (!m) return bio;
+  const surname = m[1];
+  if (!surname || surname === firstName) return bio;
+  // Redact every occurrence of the surname (with the space before
+  // it, to avoid double-spacing).
+  const redactor = new RegExp(`\\s+${escapeRegExp(surname)}\\b`, "g");
+  return bio.replace(redactor, "");
 }
 
 // 2026-05-21 — Roberto's brief (v1) restructures the entire
@@ -131,7 +178,10 @@ export default async function CrewPage() {
             const roleLine = m.secondary_role
               ? `${prettyRole(m.role)} · ${prettyRole(m.secondary_role)}`
               : prettyRole(m.role);
-            const bioPgs = paragraphs(m.bio);
+            // 2026-05-21 — pass first_name so redactSurname() can
+            // strip the surname from the display text. See the
+            // helper's comment for the white-label rationale.
+            const bioPgs = paragraphs(m.bio, m.first_name);
             return (
               <li key={i} className="crew-card">
                 <div className="crew-card__role">{roleLine}</div>
