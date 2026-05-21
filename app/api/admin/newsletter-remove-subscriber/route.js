@@ -53,9 +53,9 @@ function maskEmail(e) {
 }
 
 function authOk(provided) {
-  // 2026-05-20 — Accept NEWSLETTER_PROXY_SECRET so the CRM proxy
-  // can call this. See newsletter-add-subscribers/route.js for
-  // the rationale.
+  // 2026-05-21 — accept NEWSLETTER_PROXY_SECRET too so the CRM
+  // "Remove subscriber" form works through the same shared key the
+  // rest of the dashboard uses.
   return (
     (process.env.CRON_SECRET && provided === process.env.CRON_SECRET) ||
     (process.env.NEWSLETTER_UNSUB_SECRET &&

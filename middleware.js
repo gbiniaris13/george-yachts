@@ -74,6 +74,31 @@ function adminSecrets() {
   ].filter(Boolean);
 }
 
+// 2026-05-21 — Newsletter-scoped secrets.
+//
+// The CRM (command.georgeyachts.com) talks to a small set of
+// `/api/admin/newsletter-*` endpoints using NEWSLETTER_PROXY_SECRET
+// as the shared key. The route handlers themselves accept that
+// secret (and the legacy NEWSLETTER_UNSUB_SECRET) — but until now
+// the middleware ran first and 404'd anything that didn't match
+// the master admin-secrets list, so the route handlers never got
+// the request.
+//
+// This list is scoped: these secrets ONLY unlock the newsletter
+// admin routes, never the powerful /admin/kpis, /admin/haro-process
+// or AI-monitoring routes (those still require a master admin
+// secret). Defence-in-depth is preserved.
+function newsletterSecrets() {
+  return [
+    process.env.NEWSLETTER_PROXY_SECRET,
+    process.env.NEWSLETTER_UNSUB_SECRET,
+  ].filter(Boolean);
+}
+
+function isNewsletterAdminPath(pathname) {
+  return pathname.startsWith("/api/admin/newsletter-");
+}
+
 // Headers we want on every /admin response — even authenticated ones
 // — so a search engine or AI crawler that somehow lands on the page
 // (despite robots.txt) is told not to index. Belt + suspenders with
@@ -105,32 +130,44 @@ function isAdminPath(pathname) {
 }
 
 function hasValidAdminAuth(req) {
-  const secrets = adminSecrets();
-  if (secrets.length === 0) {
+  const masterSecrets = adminSecrets();
+  // 2026-05-21 — Newsletter routes additionally accept the
+  // newsletter-scoped secrets (NEWSLETTER_PROXY_SECRET /
+  // NEWSLETTER_UNSUB_SECRET). All other /api/admin/* and /admin/*
+  // paths continue to require a master admin secret.
+  const isNewsletter = isNewsletterAdminPath(req.nextUrl.pathname);
+  const acceptedSecrets = isNewsletter
+    ? [...masterSecrets, ...newsletterSecrets()]
+    : masterSecrets;
+
+  if (acceptedSecrets.length === 0) {
     // Fail-closed: if no secrets are configured, NOTHING is allowed
     // through. Better than silent open-access.
     return false;
   }
 
   // Cookie — value is the secret itself (httpOnly, secure).
+  // Only honour the cookie when it matches a MASTER secret —
+  // newsletter secrets are server-to-server only and should never
+  // become a long-lived browser cookie that unlocks the admin gate.
   const cookieValue = req.cookies.get(ADMIN_COOKIE)?.value;
-  if (cookieValue && secrets.includes(cookieValue)) return true;
+  if (cookieValue && masterSecrets.includes(cookieValue)) return true;
 
   // Query string — ?token= (used by /admin/haro-process,
   // /admin/ai-monitoring, most /api/admin/* routes) or ?key=
   // (used by /admin/kpis and /api/admin/kpis).
   const url = req.nextUrl;
   const fromToken = url.searchParams.get("token");
-  if (fromToken && secrets.includes(fromToken)) return true;
+  if (fromToken && acceptedSecrets.includes(fromToken)) return true;
   const fromKey = url.searchParams.get("key");
-  if (fromKey && secrets.includes(fromKey)) return true;
+  if (fromKey && acceptedSecrets.includes(fromKey)) return true;
 
   // Authorization: Bearer — used by server-to-server callers
   // (gy-command CRM, Vercel cron jobs).
   const authz = req.headers.get("authorization") || "";
   if (authz.startsWith("Bearer ")) {
     const t = authz.slice(7).trim();
-    if (t && secrets.includes(t)) return true;
+    if (t && acceptedSecrets.includes(t)) return true;
   }
 
   return false;
@@ -155,6 +192,11 @@ function handleAdmin(req) {
   // If they came in via query token / key, persist as cookie so
   // subsequent visits work without the URL param. The cookie value
   // IS the secret — httpOnly + secure so it's never readable by JS.
+  //
+  // 2026-05-21 — only persist MASTER admin secrets as a cookie.
+  // Newsletter-scoped secrets (used by server-to-server CRM calls)
+  // are never echoed back as a browser cookie that would unlock the
+  // admin gate on subsequent visits.
   const url = req.nextUrl;
   const fromQuery =
     url.searchParams.get("token") || url.searchParams.get("key");

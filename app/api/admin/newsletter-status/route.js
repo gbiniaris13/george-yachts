@@ -27,22 +27,24 @@ const SUBSCRIBERS_SET = "newsletter:subscribers";
 // where competitors actively monitor each other, gate the entire
 // endpoint behind ?key=.
 //
-// Auth: ?key= with NEWSLETTER_PROXY_SECRET / NEWSLETTER_UNSUB_SECRET /
-// CRON_SECRET. Without a match → 401.
+// Auth: ?key= with NEWSLETTER_PROXY_SECRET (CRM proxy),
+// NEWSLETTER_UNSUB_SECRET (legacy / cron) or CRON_SECRET (Vercel crons).
+// Without a matching key → 401.
 //
-// 2026-05-20 — Accept NEWSLETTER_PROXY_SECRET so the CRM dashboard
-// (command.georgeyachts.com) can read status without sharing the
-// Telegram-unsubscribe secret. See newsletter-add-subscribers for
-// full rationale.
+// 2026-05-21 — added NEWSLETTER_PROXY_SECRET to the accept-list to
+// match the other newsletter routes (compose, queue). The CRM
+// dashboard always sends NEWSLETTER_PROXY_SECRET; accepting only
+// the unsub secret meant the dashboard 401'd whenever the two env
+// vars held different values.
 export async function GET(request) {
   const url = new URL(request.url);
   const provided = url.searchParams.get("key");
-  const candidates = [
+  const accepted = [
     process.env.NEWSLETTER_PROXY_SECRET,
     process.env.NEWSLETTER_UNSUB_SECRET,
     process.env.CRON_SECRET,
   ].filter(Boolean);
-  if (candidates.length === 0 || !candidates.includes(provided)) {
+  if (accepted.length === 0 || !provided || !accepted.includes(provided)) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
   const showFullEmails = true; // gated above

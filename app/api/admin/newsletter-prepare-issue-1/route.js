@@ -38,7 +38,9 @@ export async function GET(request) {
   const okUnsub =
     process.env.NEWSLETTER_UNSUB_SECRET &&
     provided === process.env.NEWSLETTER_UNSUB_SECRET;
-  // 2026-05-20 — Accept the CRM proxy secret too.
+  // 2026-05-21 — accept NEWSLETTER_PROXY_SECRET (the CRM proxy key)
+  // so "Prepare Issue 1" works from the dashboard the same way the
+  // composer and queue endpoints already do.
   const okProxy =
     process.env.NEWSLETTER_PROXY_SECRET &&
     provided === process.env.NEWSLETTER_PROXY_SECRET;
