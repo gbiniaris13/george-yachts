@@ -74,11 +74,29 @@ export default function CharterAtAGlance({ summary }) {
       <div className="cabin-at-a-glance__card">
         {rows.map((g) => (
           <div className="cabin-at-a-glance__group" key={g.group}>
-            <div className="cabin-at-a-glance__group-label">{g.group}</div>
+            {/* 2026-05-21 — Pass 7 re-check (Domingo, third pass):
+                Two layers of !important CSS still rendered as
+                rgb(248, 245, 240) on his machine. Could not
+                reproduce locally or in the served CSS bundle, so
+                rather than burn another round trip, drop a direct
+                inline `style` attribute on the element. Inline
+                style attributes beat every external CSS rule that
+                doesn't carry !important, and the cabin-tones.css
+                rule (which DOES carry !important) is functionally
+                the same color. End result: this element computes
+                #1f2937 regardless of cascade weirdness, browser
+                extensions, stale caches, or whatever else was
+                producing ivory in Domingo's session. */}
+            <div
+              className="cabin-at-a-glance__group-label"
+              style={{ color: "#1f2937", fontWeight: 600 }}
+            >
+              {g.group}
+            </div>
             <dl>
               {g.items.map(([k, v]) => (
                 <div key={k} className="cabin-at-a-glance__row">
-                  <dt>{k}</dt>
+                  <dt style={{ color: "#1f2937", fontWeight: 600 }}>{k}</dt>
                   <dd>{v || <span className="muted">—</span>}</dd>
                 </div>
               ))}
