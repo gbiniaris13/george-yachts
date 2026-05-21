@@ -8,7 +8,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { readSessionFromCookies, pickActiveCabinId } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
-import { crewRoles, joinNouns } from "@/lib/cabin/format";
+import { crewRoles, joinNouns, theyAllOrBoth } from "@/lib/cabin/format";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 
 export const metadata = { title: "The Charter Brief" };
@@ -115,7 +115,12 @@ export default async function CabinBriefOverviewPage() {
       .eq("id", cabinId)
       .maybeSingle()
   );
-  const crewNouns = joinNouns(crewRoles(cabinRecord?.crew_display));
+  const crewNounList = crewRoles(cabinRecord?.crew_display);
+  const crewNouns = joinNouns(crewNounList);
+  // 2026-05-21 — Pass 7 polish (Domingo): "They all" reads oversold
+  // when the noun list has only two people. theyAllOrBoth() returns
+  // "both" for 2-item lists, "all" otherwise.
+  const crewQuantifier = theyAllOrBoth(crewNounList);
 
   const sections = await dbQuery(
     db
@@ -158,7 +163,7 @@ export default async function CabinBriefOverviewPage() {
           days, weeks, or months later. The more you share, the
           more thoughtfully your week can be designed — and you
           won&apos;t have to repeat yourself to your {crewNouns}.
-          They all read from here.
+          They {crewQuantifier} read from here.
         </IntroParagraph>
         <p className="cabin-brief__time">
           Around <strong>{remainingMinutes || totalMinutes} minutes</strong>{" "}
