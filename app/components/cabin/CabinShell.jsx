@@ -15,7 +15,85 @@
 
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+// 2026-05-21 — Admin "Preview as customer" banner.
+//
+// Sits at the very top of the shell (above the concierge banner
+// and the header). Solid teal so it can never be confused with
+// the gold concierge banner or the navy header. Shows:
+//   • who's previewing (admin email)
+//   • a live countdown to session expiry (15 min TTL)
+//   • an "Exit preview" button that hits /api/cabin/auth/logout
+//     to clear both the session cookie and the preview cookie,
+//     then bounces the admin back to the CRM.
+//
+// Read-only by design — writes are blocked at the edge by the
+// middleware (preview cookie → 403 on POST/PUT/PATCH/DELETE).
+function PreviewBanner({ adminEmail, expiresAt }) {
+  const router = useRouter();
+  const [remaining, setRemaining] = useState(() =>
+    expiresAt ? Math.max(0, expiresAt - Date.now()) : 0,
+  );
+  const [exiting, setExiting] = useState(false);
+
+  useEffect(() => {
+    if (!expiresAt) return undefined;
+    const id = setInterval(() => {
+      setRemaining(Math.max(0, expiresAt - Date.now()));
+    }, 1000);
+    return () => clearInterval(id);
+  }, [expiresAt]);
+
+  async function onExit() {
+    setExiting(true);
+    try {
+      await fetch("/api/cabin/auth/logout", { method: "POST" });
+    } catch {
+      // proceed — we'll force-navigate regardless
+    }
+    // Send the admin back to the CRM cabin list. If they want
+    // back into the same preview, the CRM has the button.
+    // NEXT_PUBLIC_CRM_URL is unlikely to be set on the public
+    // site (no need usually) so we hardcode the production
+    // command.georgeyachts.com as the fallback.
+    const crm =
+      process.env.NEXT_PUBLIC_CRM_URL || "https://command.georgeyachts.com";
+    window.location.href = `${crm}/dashboard/cabins`;
+  }
+
+  const mins = Math.floor(remaining / 60000);
+  const secs = Math.floor((remaining % 60000) / 1000)
+    .toString()
+    .padStart(2, "0");
+
+  return (
+    <div
+      className="cabin-shell__preview-banner"
+      role="status"
+      aria-live="polite"
+    >
+      <span className="cabin-shell__preview-banner-icon" aria-hidden>
+        ◉
+      </span>
+      <span className="cabin-shell__preview-banner-copy">
+        <strong>Admin preview</strong>
+        {adminEmail ? <> — viewing as the principal charterer · {adminEmail}</> : null}
+        <em className="cabin-shell__preview-banner-timer">
+          {" "}· read-only · expires in {mins}:{secs}
+        </em>
+      </span>
+      <button
+        type="button"
+        onClick={onExit}
+        disabled={exiting}
+        className="cabin-shell__preview-banner-exit"
+      >
+        {exiting ? "Exiting…" : "Exit preview ✕"}
+      </button>
+    </div>
+  );
+}
 
 function ConciergeBanner() {
   const router = useRouter();
@@ -76,7 +154,15 @@ function formatDateRange(from, to) {
   return `${fmt(from)} – ${fmt(to)}`;
 }
 
-export default function CabinShell({ session, cabin, viewerDisplayName, children }) {
+export default function CabinShell({
+  session,
+  cabin,
+  viewerDisplayName,
+  previewMode = false,
+  previewAdminEmail = null,
+  previewExpiresAt = null,
+  children,
+}) {
   const pathname = usePathname() || "";
 
   // 2026-05-20 — Friend-test pass 3 (George): the hamburger drawer
@@ -106,6 +192,12 @@ export default function CabinShell({ session, cabin, viewerDisplayName, children
 
   return (
     <div className="cabin-shell">
+      {previewMode && showChrome && (
+        <PreviewBanner
+          adminEmail={previewAdminEmail}
+          expiresAt={previewExpiresAt}
+        />
+      )}
       {showChrome && (
         <header className="cabin-shell__header" role="banner">
           {/* Back arrow on every sub-page. Tapping returns to /cabin
@@ -182,6 +274,73 @@ export default function CabinShell({ session, cabin, viewerDisplayName, children
           /cabin replaces this; Sign-out lives in /cabin footer. */}
 
       <style jsx global>{`
+        /* 2026-05-21 — Admin preview banner.
+           Teal (#0E7C7B) keeps it unmistakable: gold = concierge,
+           navy = header, teal = "you are an admin previewing".
+           Sticks above everything else (z-index 30) so it stays
+           visible even when nested pages scroll. */
+        .cabin-shell__preview-banner {
+          position: sticky;
+          top: 0;
+          z-index: 30;
+          background: #0E7C7B;
+          color: #ffffff;
+          padding: 10px 18px;
+          font-family: var(--gy-font-ui, system-ui, sans-serif);
+          font-size: 12px;
+          letter-spacing: 0.4px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          flex-wrap: wrap;
+          border-bottom: 1px solid rgba(255,255,255,0.18);
+          box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+        }
+        .cabin-shell__preview-banner-icon {
+          font-size: 14px;
+          line-height: 1;
+        }
+        .cabin-shell__preview-banner-copy {
+          flex: 1;
+          min-width: 0;
+        }
+        .cabin-shell__preview-banner-copy strong {
+          font-weight: 600;
+          letter-spacing: 1.4px;
+          text-transform: uppercase;
+          font-size: 10px;
+          margin-right: 4px;
+        }
+        .cabin-shell__preview-banner-timer {
+          font-style: normal;
+          opacity: 0.9;
+          font-variant-numeric: tabular-nums;
+        }
+        .cabin-shell__preview-banner-exit {
+          background: rgba(255,255,255,0.16);
+          color: #ffffff;
+          border: 1px solid rgba(255,255,255,0.55);
+          padding: 7px 14px;
+          font-family: inherit;
+          font-size: 9.5px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          cursor: pointer;
+        }
+        .cabin-shell__preview-banner-exit:hover {
+          background: rgba(255,255,255,0.26);
+        }
+        .cabin-shell__preview-banner-exit:disabled {
+          opacity: 0.6;
+          cursor: wait;
+        }
+        @media (max-width: 600px) {
+          .cabin-shell__preview-banner {
+            font-size: 11px;
+            padding: 8px 14px;
+          }
+        }
+
         .cabin-shell__concierge-banner {
           background: rgba(201, 168, 76, 0.12);
           border-bottom: 1px solid rgba(201, 168, 76, 0.4);

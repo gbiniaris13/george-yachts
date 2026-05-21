@@ -62,6 +62,17 @@ import { NextResponse } from "next/server";
 
 const CABIN_COOKIE = "gy_cabin_session";
 const ADMIN_COOKIE = "gy_admin_session";
+// 2026-05-21 — Set by /cabin/admin/enter-preview when an admin
+// opens a "preview as customer" link. Its presence flips this
+// middleware into read-only mode for /api/cabin/* writes so a
+// preview session can't accidentally fire chat / consent /
+// brief saves under the customer's identity.
+const PREVIEW_COOKIE = "gy_cabin_preview";
+
+// Methods the middleware treats as writes during preview mode.
+// HEAD/OPTIONS/GET are obviously fine; POST and friends are
+// gated because The Cabin's mutation endpoints all use them.
+const PREVIEW_BLOCKED_METHODS = new Set(["POST", "PUT", "PATCH", "DELETE"]);
 
 // Cache the admin-secrets at module init. These come from process.env
 // and never change for the lifetime of an edge worker.
@@ -116,6 +127,11 @@ function isCabinPublic(pathname) {
     "/cabin/icons/",
     "/cabin/share/",
     "/api/cabin/auth/",
+    // /api/cabin/admin/* covers both the admin extraction routes
+    // and (2026-05-21) the "preview as customer" landing handler
+    // at /api/cabin/admin/enter-preview, which runs WITHOUT a
+    // cabin cookie because it's the very thing that sets the
+    // cookie. Each route validates its own admin secret / token.
     "/api/cabin/admin/",
   ];
   if (CABIN_PUBLIC_PATHS.includes(pathname)) return true;
@@ -226,6 +242,42 @@ function handleCabin(req) {
   // Public routes pass through
   if (isCabinPublic(pathname)) {
     return NextResponse.next();
+  }
+
+  // 2026-05-21 — Preview-mode write gate.
+  //
+  // When `gy_cabin_preview` is set, this browser is viewing the
+  // cabin as an admin in read-only mode. Reject all /api/cabin/*
+  // mutations at the edge — cheaper than touching KV / DB and
+  // means we never have to remember to add a preview check to
+  // every new mutation endpoint.
+  //
+  // Allow-list within the gate:
+  //   • /api/cabin/auth/logout — admin should always be able to
+  //     drop their preview session.
+  //   • non-/api/cabin/* paths — pages only render (no writes).
+  //
+  // The blocked response is a 403 JSON so the client sees a
+  // clear "you're in preview" message instead of a silent fail.
+  if (req.cookies.has(PREVIEW_COOKIE)) {
+    if (
+      pathname.startsWith("/api/cabin/") &&
+      PREVIEW_BLOCKED_METHODS.has(req.method) &&
+      !pathname.startsWith("/api/cabin/auth/logout")
+    ) {
+      return new NextResponse(
+        JSON.stringify({
+          ok: false,
+          error: "preview-mode-read-only",
+          message:
+            "This session is an admin preview — writes are disabled. Sign in via the real magic link to take actions.",
+        }),
+        {
+          status: 403,
+          headers: { "content-type": "application/json" },
+        },
+      );
+    }
   }
 
   // Everything else under /cabin or /api/cabin requires a session cookie

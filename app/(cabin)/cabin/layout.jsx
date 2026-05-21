@@ -81,11 +81,22 @@ export default async function CabinLayout({ children }) {
     console.error("[cabin/layout] session/cabin fetch error:", err);
   }
 
+  // 2026-05-21 — Admin preview indicator. The layout passes a
+  // single flag + the admin's email + expiry timestamp; CabinShell
+  // renders a permanent banner so George (or any other admin)
+  // never mistakes a preview for a real customer session.
+  const previewMode = Boolean(session?.preview_mode);
+  const previewAdminEmail = session?.preview_admin_email || null;
+  const previewExpiresAt = session?.expires || null;
+
   return (
     <CabinShell
       session={session}
       cabin={cabin}
       viewerDisplayName={viewerDisplayName}
+      previewMode={previewMode}
+      previewAdminEmail={previewAdminEmail}
+      previewExpiresAt={previewExpiresAt}
     >
       {children}
     </CabinShell>
