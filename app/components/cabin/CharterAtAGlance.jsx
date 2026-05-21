@@ -127,12 +127,18 @@ export default function CharterAtAGlance({ summary }) {
           /* 2026-05-21 — Pass 7 (Margaret, BLOCKER #3):
              the previous rgba(13,27,42,0.4) over the card's white
              background blended to roughly RGB(158,164,170) — a 2.7:1
-             contrast ratio, failing WCAG AA. Margaret in her sunlit
-             Cambridge sunroom couldn't read VESSEL / CHARTER PERIOD /
-             PRINCIPAL CHARTERER / YOUR BROKER and assumed the site
-             was broken. Switched to a flat slate that sits at ≈8:1. */
-          color: #4b5563;
-          font-weight: 600;
+             contrast ratio, failing WCAG AA. Switched to flat slate
+             at ≈8:1.
+             2026-05-21 — Pass 7 re-check (Domingo):
+             reported computed style still showing cream-on-white
+             after Batch 5 deploy. The cabin-tones.css rule already
+             carries !important, and the production CSS bundle does
+             include it — but a defensive !important here too means
+             the inline style block alone is enough to guarantee
+             readability regardless of any future stylesheet
+             reordering or scope drift. Cheap insurance. */
+          color: #1f2937 !important;
+          font-weight: 600 !important;
           margin-bottom: 10px;
         }
         .cabin-at-a-glance__group dl {
@@ -162,10 +168,13 @@ export default function CharterAtAGlance({ summary }) {
           letter-spacing: 1.8px;
           text-transform: uppercase;
           /* 2026-05-21 — Pass 7 contrast pass (Margaret):
-             ditto on the row labels — rgba(...,0.5) was ~3.5:1, also
-             below WCAG AA on a white card. Flat slate, ≈8:1. */
-          color: #4b5563;
-          font-weight: 600;
+             rgba(...,0.5) was ~3.5:1, below WCAG AA on a white card.
+             Belt-and-braces with !important after Domingo Pass 7
+             re-check flagged the group-label as still cream — same
+             insurance applied here so both label tiers are
+             unambiguously dark. */
+          color: #1f2937 !important;
+          font-weight: 600 !important;
           padding-top: 3px;
         }
         .cabin-at-a-glance__row dd {
