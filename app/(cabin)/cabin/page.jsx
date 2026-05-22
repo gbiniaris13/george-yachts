@@ -333,6 +333,7 @@ export default async function CabinHomePage() {
         crewListReady={crewListReady}
         myDetailsComplete={myDetailsComplete}
         briefPercent={percent}
+        briefSubmitted={Boolean(cabin?.brief_submitted_at)}
       />
 
       {/* 2026-05-22 — George rejected the small teaser:

@@ -53,6 +53,12 @@ export default function PreVoyageSteps({
   // visible reason.
   crewListTotal = 0,
   crewListReady = 0,
+  // 2026-05-22 — Whether the brief has been formally sent to
+  // George (cabins.brief_submitted_at IS NOT NULL). Filling all
+  // sections to 100% is NOT the same as locking the brief — the
+  // principal still has to press Send-to-George. The step-03
+  // card distinguishes the two states.
+  briefSubmitted = false,
 }) {
   if (isPrincipal) {
     // Three quiet pieces for the head charterer:
@@ -66,7 +72,7 @@ export default function PreVoyageSteps({
       invitedCount,
       myDetailsComplete,
     });
-    const step3 = deriveBriefStep({ briefPercent });
+    const step3 = deriveBriefStep({ briefPercent, briefSubmitted });
     return (
       <PreVoyageShell
         title="Three quiet pieces,"
@@ -184,12 +190,22 @@ function PreVoyageShell({ title, lede, steps }) {
 // -------------------------------------------------------------
 function StepCard({ step, ordinal, totalSteps }) {
   const numberStr = String(ordinal).padStart(2, "0");
+  // 2026-05-22 — Generalised n-of-m label. Previous version
+  // hard-coded "First of two / Second of two" and broke once the
+  // principal flow grew to 3 steps (the third card surfaced as
+  // "Second of two" — meaningless).
+  const WORD = ["", "one", "two", "three", "four", "five"];
+  const totalWord = WORD[totalSteps] || String(totalSteps);
+  const positionWord =
+    ordinal === 1
+      ? "First"
+      : ordinal === 2
+        ? "Second"
+        : ordinal === 3
+          ? "Third"
+          : `#${ordinal}`;
   const ordinalLabel =
-    totalSteps === 1
-      ? "The first step"
-      : ordinal === 1
-        ? "First of two"
-        : "Second of two";
+    totalSteps === 1 ? "The first step" : `${positionWord} of ${totalWord}`;
 
   return (
     <article className={`cabin-pv-step ${step.done ? "is-done" : ""}`}>
@@ -529,9 +545,12 @@ function deriveCrewListStep({
   };
 }
 
-function deriveBriefStep({ briefPercent }) {
+function deriveBriefStep({ briefPercent, briefSubmitted }) {
   const pct = Number.isFinite(briefPercent) ? briefPercent : 0;
-  if (pct >= 100) {
+  // 2026-05-22 — Distinguish "100% filled but not yet sent" from
+  // "submitted". Both used to show "Brief delivered" which was a
+  // lie if Send-to-George hadn't been pressed.
+  if (briefSubmitted) {
     return {
       title: "Your brief is with us — thank you.",
       body:
@@ -540,6 +559,18 @@ function deriveBriefStep({ briefPercent }) {
       cta: "Revisit the brief",
       ctaHref: "/cabin/brief",
       done: true,
+      progressPercent: 100,
+    };
+  }
+  if (pct >= 100) {
+    return {
+      title: "Your brief is ready to send.",
+      body:
+        "Every section is filled. When your group's crew list is in too, you can send the whole thing to George from the review screen.",
+      status: "Ready to review & send",
+      cta: "Review & send",
+      ctaHref: "/cabin/brief/review",
+      done: false,
       progressPercent: 100,
     };
   }
