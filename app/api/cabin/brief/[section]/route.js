@@ -60,6 +60,33 @@ export async function PUT(req, ctx) {
   const a = await authorizeSection(params);
   if (a.error) return a.error;
 
+  // 2026-05-22 — Brief submission lock.
+  // Once the principal has hit "Submit final to George", the brief
+  // is frozen until George explicitly re-opens it from the CRM
+  // (concierge mode). All save attempts after that point return a
+  // 423 LOCKED with a helpful message — the UI surfaces this as
+  // "Your brief is with George" instead of the normal error toast.
+  const dbLock = getCabinDb();
+  const cabinLock = await dbQuery(
+    dbLock
+      .from("cabins")
+      .select("brief_submitted_at")
+      .eq("id", a.cabinId)
+      .maybeSingle(),
+  );
+  if (cabinLock?.brief_submitted_at) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "brief-submitted",
+        message:
+          "Your brief has already been sent to George. Ask George if you need to reopen it for changes.",
+        submitted_at: cabinLock.brief_submitted_at,
+      },
+      { status: 423 },
+    );
+  }
+
   let body;
   try {
     body = await req.json();
@@ -112,6 +139,10 @@ export async function PUT(req, ctx) {
         completed,
         last_edited_at: new Date().toISOString(),
         last_edited_by_email: a.session.email,
+        // 2026-05-22 — Track the member-id too so the UI can
+        // render "Last edited by [display_name]" without a join
+        // on the email back-reference.
+        last_edited_by_member_id: a.member?.member_id ?? null,
         last_edited_concierge: false,
       },
       { onConflict: "cabin_id,section_key" }

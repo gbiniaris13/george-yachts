@@ -195,22 +195,34 @@ export default function VesselBrochureBlock({ cabin, photos, asPage = false }) {
         accommodation.crew_summary) && (
         <div className="cabin-vessel-block__chapter">
           <h3 className="cabin-vessel-block__chapter-label">Accommodation</h3>
-          <dl className="cabin-vessel-block__specs">
-            <Row term="Guests" def={accommodation.guests} />
-            <Row term="Cabins" def={accommodation.cabins_summary} />
-            <Row
-              term="Crew"
-              def={
-                accommodation.crew_count
-                  ? `${accommodation.crew_count}${
-                      accommodation.crew_summary
-                        ? " · " + accommodation.crew_summary
-                        : ""
-                    }`
-                  : accommodation.crew_summary
-              }
-            />
-          </dl>
+          {/* 2026-05-22 — George's read on the EFFIE STAR preview:
+              "Πώς γίνεται σε τέσσερις καμπίνες να κοιμούνται δέκα
+               άνθρωποι?" The previous render put the brochure's
+              verbatim sentence ("10 guests in 4 double cabins, all
+              with en-suite facilities & 1 French double that
+              shares bathroom") into a Row labelled "Cabins" — the
+              label collided with the sentence's own subject and
+              the customer read "4 cabins · 10 guests" without
+              parsing the " & 1 French double" tail.
+              Now: prose paragraphs in the brochure's own voice.
+              The main sentence carries the layout AND the guest
+              count; crew gets its own line so the count never
+              competes with the cabin-layout count. */}
+          <div className="cabin-vessel-block__accommodation">
+            {accommodation.cabins_summary ? (
+              <p>{accommodation.cabins_summary}</p>
+            ) : accommodation.guests ? (
+              <p>{accommodation.guests}</p>
+            ) : null}
+            {(accommodation.crew_count || accommodation.crew_summary) && (
+              <p>
+                <strong>Crew of {accommodation.crew_count || "—"}</strong>
+                {accommodation.crew_summary
+                  ? ` — ${accommodation.crew_summary}`
+                  : null}
+              </p>
+            )}
+          </div>
         </div>
       )}
 
@@ -432,6 +444,22 @@ export default function VesselBrochureBlock({ cabin, photos, asPage = false }) {
             padding-top: 10px;
             border-bottom: 1px solid rgba(13, 27, 42, 0.06);
           }
+        }
+        .cabin-vessel-block__accommodation {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+        .cabin-vessel-block__accommodation p {
+          margin: 0;
+          font-family: var(--gy-font-editorial);
+          font-size: 15px;
+          line-height: 1.65;
+          color: var(--gy-navy);
+        }
+        .cabin-vessel-block__accommodation p strong {
+          font-weight: 600;
+          color: var(--gy-navy);
         }
         .cabin-vessel-block__tags {
           list-style: none;
