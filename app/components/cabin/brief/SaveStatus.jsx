@@ -7,11 +7,16 @@
 import { useEffect, useState } from "react";
 
 export default function SaveStatus({ state }) {
-  // state = 'idle' | 'saving' | 'saved' | 'error'
+  // state = 'idle' | 'saving' | 'saved' | 'error' | 'preview'
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (state === "saving" || state === "saved" || state === "error") {
+    if (
+      state === "saving" ||
+      state === "saved" ||
+      state === "error" ||
+      state === "preview"
+    ) {
       setVisible(true);
       if (state === "saved") {
         const t = setTimeout(() => setVisible(false), 1800);
@@ -29,6 +34,12 @@ export default function SaveStatus({ state }) {
   // save was actively retrying, then panicked when nothing
   // changed. New copy makes the action explicit ("try again")
   // without sounding like a hard error.
+  //
+  // 2026-05-22 — Preview mode pill. When the admin is in
+  // "Preview as customer", the brief autosave hook reports
+  // state === "preview" and we render a calm teal indicator
+  // ("Admin preview · changes won't be saved") instead of
+  // letting the error toast fire on every blocked write.
   const label =
     state === "saving"
       ? "Saving…"
@@ -36,7 +47,9 @@ export default function SaveStatus({ state }) {
         ? "Saved"
         : state === "error"
           ? "Couldn’t save — keep typing to retry"
-          : "";
+          : state === "preview"
+            ? "Admin preview · changes won’t be saved"
+            : "";
 
   return (
     <div
@@ -89,6 +102,15 @@ export default function SaveStatus({ state }) {
           animation: cabin-save-pulse 1.1s ease-in-out infinite;
         }
         .cabin-save-status--error .cabin-save-status__dot { background: #E0BA77; }
+        /* 2026-05-22 — Preview state: same teal as the in-cabin
+           preview banner (#0E7C7B). Calm presence, not alarming. */
+        .cabin-save-status--preview {
+          background: #0E7C7B;
+          border-color: rgba(255, 255, 255, 0.45);
+        }
+        .cabin-save-status--preview .cabin-save-status__dot {
+          background: rgba(255, 255, 255, 0.85);
+        }
         @keyframes cabin-save-pulse {
           0%, 100% { opacity: 0.35; transform: scale(0.85); }
           50%      { opacity: 1;    transform: scale(1.1); }
