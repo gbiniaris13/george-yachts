@@ -74,12 +74,33 @@ export default function PreVoyageSteps({
         <StepCard step={step2} ordinal={2} totalSteps={2} />
       )}
 
+      {/* 2026-05-22 — Boutique deadline footnote. Same line appears
+          in the magic-link invite email so the message lands twice
+          in two different voices — first when the invite arrives,
+          again when the recipient steps inside the cabin. */}
+      <p className="cabin-pre-voyage__deadline">
+        So that the chef can stock, the cellar can be set, and every
+        harbour quietly noted — these are best complete by the week
+        before you sail.
+      </p>
+
       <style>{`
         .cabin-pre-voyage {
           display: flex;
           flex-direction: column;
           gap: 18px;
           margin-top: 24px;
+        }
+        .cabin-pre-voyage__deadline {
+          margin: 6px 0 0 0;
+          padding: 8px 0 8px 16px;
+          border-left: 2px solid rgba(201, 168, 76, 0.55);
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 14px;
+          line-height: 1.7;
+          color: rgba(13, 27, 42, 0.72);
+          max-width: 60ch;
         }
         .cabin-pre-voyage__intro {
           padding: 4px 4px 6px;
