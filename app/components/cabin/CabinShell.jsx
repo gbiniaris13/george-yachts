@@ -201,30 +201,46 @@ export default function CabinShell({
       )}
       {showChrome && (
         <header className="cabin-shell__header" role="banner">
-          {/* 2026-05-21 — George's pass-7 critique on the EFFIE STAR
-              preview: "Όλα στριμωγμένα στον τίτλο. Multi-billion
-              εταιρεία, Vogue, για πλούσιους πελάτες." Header
-              redesigned in three parts:
-
-                · Left  — back arrow (when not on /cabin home).
-                · Centre — CabinBrandMark: gold-G monogram + Roman-
-                  caps wordmark + "Brokerage House" strapline.
-                · Right — vessel name (italic editorial) over dates +
-                  viewer name (small caps). The vessel leads because
-                  the cabin IS the vessel — the customer's "I've
-                  walked into the cabin of MY yacht" moment.
-
-              The header is taller (more vertical padding), uses
-              luxury-mag spacing, and never crams text into corners. */}
-          {pathname !== "/cabin" && (
+          {/* 2026-05-22 — Header redesigned, take 3 (George's
+              directive after seeing the centred-but-small logo):
+                · LEFT     — "THE CABIN · Filotimo" with a
+                             quiet brand tagline beneath.
+                             The back arrow tucks here too,
+                             before the brand block.
+                · CENTRE   — CabinBrandMark: the real GY logo,
+                             large, the page's visual anchor.
+                · RIGHT    — vessel name (italic editorial) over
+                             dates + viewer name (spaced caps).
+                             The cabin IS the vessel — the
+                             customer's "I've walked into the
+                             cabin of MY yacht" moment lives
+                             here.
+              Grid is 1fr auto 1fr so the centre column sizes
+              itself to the logo (large) while the two flanks
+              balance evenly. */}
+          <div className="cabin-shell__left">
+            {pathname !== "/cabin" && (
+              <Link
+                href="/cabin"
+                className="cabin-shell__back"
+                aria-label="Back to Cabin home"
+              >
+                <span aria-hidden>←</span>
+              </Link>
+            )}
             <Link
               href="/cabin"
-              className="cabin-shell__back"
-              aria-label="Back to Cabin home"
+              className="cabin-shell__left-brand"
+              aria-label="The Cabin — home"
             >
-              <span aria-hidden>←</span>
+              <span className="cabin-shell__left-title">
+                The Cabin <em>· Filotimo</em>
+              </span>
+              <span className="cabin-shell__left-tagline">
+                By invitation · in confidence
+              </span>
             </Link>
-          )}
+          </div>
           <div className="cabin-shell__brand-slot">
             <CabinBrandMark href="/cabin" />
           </div>
@@ -411,9 +427,9 @@ export default function CabinShell({
           top: 0;
           z-index: 30;
           display: grid;
-          grid-template-columns: auto 1fr auto;
+          grid-template-columns: 1fr auto 1fr;
           align-items: center;
-          gap: 18px;
+          gap: 22px;
           padding: 22px 28px;
           padding-top: calc(22px + env(safe-area-inset-top, 0));
           background: var(--gy-navy);
@@ -424,13 +440,67 @@ export default function CabinShell({
           .cabin-shell__header {
             padding: 16px 18px;
             padding-top: calc(16px + env(safe-area-inset-top, 0));
-            gap: 12px;
+            gap: 14px;
           }
         }
         @media (max-width: 479.98px) {
           .cabin-shell__charter-meta {
             display: none;
           }
+          .cabin-shell__left-tagline {
+            display: none;
+          }
+        }
+
+        .cabin-shell__left {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          min-width: 0;
+          justify-self: start;
+        }
+        .cabin-shell__left-brand {
+          display: flex;
+          flex-direction: column;
+          text-decoration: none;
+          color: inherit;
+          min-width: 0;
+        }
+        .cabin-shell__left-title {
+          font-family: var(--gy-font-editorial, Georgia, serif);
+          font-size: 13.5px;
+          letter-spacing: 0.32em;
+          text-transform: uppercase;
+          color: var(--gy-ivory);
+          font-weight: 400;
+          white-space: nowrap;
+        }
+        .cabin-shell__left-title em {
+          font-style: italic;
+          color: var(--gy-gold);
+          letter-spacing: 0.06em;
+          text-transform: none;
+          margin-left: 2px;
+          font-size: 14.5px;
+        }
+        .cabin-shell__left-tagline {
+          font-family: var(--gy-font-editorial, Georgia, serif);
+          font-style: italic;
+          font-size: 11.5px;
+          letter-spacing: 0.04em;
+          color: rgba(248, 245, 240, 0.55);
+          margin-top: 4px;
+          white-space: nowrap;
+        }
+        @media (max-width: 1023.98px) {
+          .cabin-shell__left-title { font-size: 11.5px; letter-spacing: 0.26em; }
+          .cabin-shell__left-title em { font-size: 12.5px; }
+          .cabin-shell__left-tagline { font-size: 10px; }
+        }
+        @media (max-width: 767.98px) {
+          .cabin-shell__left-title { font-size: 10px; letter-spacing: 0.22em; }
+          .cabin-shell__left-title em { font-size: 11px; }
+          .cabin-shell__left-tagline { font-size: 9px; }
         }
 
         .cabin-shell__back {
@@ -446,6 +516,7 @@ export default function CabinShell({
           font-size: 18px;
           line-height: 1;
           transition: background 140ms ease, border-color 140ms ease;
+          flex-shrink: 0;
         }
         .cabin-shell__back:hover,
         .cabin-shell__back:focus-visible {
@@ -456,10 +527,6 @@ export default function CabinShell({
 
         .cabin-shell__brand-slot {
           min-width: 0;
-          /* 2026-05-22 — Centre the brand mark in the middle of
-             the header (matching the marketing site's hero logo
-             treatment). The header grid is auto 1fr auto, so this
-             flex centres the logo inside the 1fr column. */
           display: flex;
           justify-content: center;
           align-items: center;
@@ -471,6 +538,7 @@ export default function CabinShell({
           align-items: flex-end;
           text-align: right;
           min-width: 0;
+          justify-self: end;
         }
         .cabin-shell__charter-vessel {
           font-family: var(--gy-font-editorial);
