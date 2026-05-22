@@ -152,18 +152,23 @@ export default function ArrivalSectionPage() {
               </em>
             </p>
             <RadioGroup
-              name="local_contact.same_as_principal"
-              label="Who should the captain contact in country?"
+              name="local_contact.routing"
+              label="Who should the captain coordinate with in country?"
               register={register}
               options={[
                 {
-                  value: "true",
+                  value: "principal",
                   label: "Me, the principal charterer — direct.",
                 },
                 {
-                  value: "false",
-                  label:
-                    "Someone else is on the ground — let me share who.",
+                  value: "broker",
+                  label: "My broker — George P. Biniaris.",
+                  description:
+                    "George is already in Greece and is happy to liaise with the captain on your behalf for anything that comes up.",
+                },
+                {
+                  value: "other",
+                  label: "Someone else is on the ground — let me share who.",
                 },
               ]}
             />
