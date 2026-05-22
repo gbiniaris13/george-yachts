@@ -180,19 +180,34 @@ export default async function CabinHomePage() {
   const allMembers = await dbQuery(
     db2
       .from("cabin_members")
-      .select("id, role, email, display_name, invite_sent_at, last_login_at, personal_details_completed_at")
+      .select("id, role, email, display_name, invite_sent_at, last_login_at, personal_details_completed_at, brief_participation_opt_out_at")
       .eq("cabin_id", cabinId)
       .is("deleted_at", null)
   );
   const members = allMembers ?? [];
 
   // Count of people the principal has INVITED (excluding self).
+  // Drives Step 01 "Invite the people sailing with you."
   const guestRows = members.filter(
     (m) => m.role !== "principal_charterer" && m.role !== "designated_assistant"
   );
   const invitedCount = guestRows.length;
   const completedCount = guestRows.filter(
     (m) => m.personal_details_completed_at
+  ).length;
+
+  // 2026-05-22 — Crew-list totals INCLUDE the principal. Step 02
+  // ("X of Y crew-list lines are in") needs to surface the
+  // principal's own readiness, since the Send-to-George gate
+  // requires them too. Opt-out guests are excluded from the
+  // denominator — if Trish marked herself opt-out, she doesn't
+  // hold up the lock.
+  const crewListRows = members.filter(
+    (m) => !m.brief_participation_opt_out_at,
+  );
+  const crewListTotal = crewListRows.length;
+  const crewListReady = crewListRows.filter(
+    (m) => m.personal_details_completed_at,
   ).length;
 
   const myRow = members.find((m) => m.id === membership?.member_id) ?? null;
@@ -314,6 +329,8 @@ export default async function CabinHomePage() {
         isPrincipal={isPrincipal}
         invitedCount={invitedCount}
         completedCount={completedCount}
+        crewListTotal={crewListTotal}
+        crewListReady={crewListReady}
         myDetailsComplete={myDetailsComplete}
         briefPercent={percent}
       />
@@ -380,16 +397,28 @@ export default async function CabinHomePage() {
             <em>Message us anytime. George answers personally.</em>
           </Link>
           {isPrincipal ? (
-            <Link href="/cabin/guests" className="cabin-home__tile">
-              <CabinIcon name="group" className="cabin-home__tile-glyph" />
-              <strong>Your Group</strong>
-              <em>Invite the people sailing with you. See who has joined.</em>
-            </Link>
+            <>
+              <Link href="/cabin/guests" className="cabin-home__tile">
+                <CabinIcon name="group" className="cabin-home__tile-glyph" />
+                <strong>Your Group</strong>
+                <em>Invite the people sailing with you. See who has joined.</em>
+              </Link>
+              {/* 2026-05-22 — Principal needs their own /cabin/me
+                  surface too. The brief lock now requires every
+                  member (incl. principal) to have a complete Crew
+                  List, but the principal previously had no direct
+                  tile to their own details page from /cabin home. */}
+              <Link href="/cabin/me" className="cabin-home__tile">
+                <CabinIcon name="data" className="cabin-home__tile-glyph" />
+                <strong>My Crew List Line</strong>
+                <em>Your own DOB, gender, nationality, ID/passport, mobile — the harbour-authority essentials.</em>
+              </Link>
+            </>
           ) : (
             <Link href="/cabin/me" className="cabin-home__tile">
               <CabinIcon name="group" className="cabin-home__tile-glyph" />
-              <strong>My Details</strong>
-              <em>Share a few details — DOB, allergies, swimming.</em>
+              <strong>My Crew List Line</strong>
+              <em>Your DOB, gender, nationality, ID/passport, mobile — five quiet fields for the marinas.</em>
             </Link>
           )}
           {/* 2026-05-21 — Pass 7 prep (Domingo): the original tile

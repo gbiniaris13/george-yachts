@@ -43,12 +43,16 @@ export default function PreVoyageSteps({
   completedCount,
   myDetailsComplete,
   briefPercent,
-  // 2026-05-22 — Crew-list readiness signals injected by the
-  // server. invitedCount / completedCount are now reused as "how
-  // many group members have completed their Crew List essentials"
-  // (date of birth, gender, nationality, passport/ID, mobile).
-  // completedCount being < invitedCount blocks brief lock at the
-  // review screen.
+  // 2026-05-22 — Crew-list readiness includes the PRINCIPAL too.
+  // crewListTotal = all non-opted-out members (principal + guests).
+  // crewListReady = those who completed the five port-authority
+  // essentials. The Send-to-George lock checks the same set, so
+  // Step 02 has to surface the principal's own status — they were
+  // invisible before, and a head charterer who hadn't filled
+  // /cabin/me would hit a confusing "Send disabled" with no
+  // visible reason.
+  crewListTotal = 0,
+  crewListReady = 0,
 }) {
   if (isPrincipal) {
     // Three quiet pieces for the head charterer:
@@ -56,7 +60,12 @@ export default function PreVoyageSteps({
     //   02 Crew list           (per-member port-authority essentials)
     //   03 Charter Brief       (the preference brief itself)
     const step1 = deriveInviteStep({ invitedCount, completedCount });
-    const step2 = deriveCrewListStep({ invitedCount, completedCount });
+    const step2 = deriveCrewListStep({
+      crewListTotal,
+      crewListReady,
+      invitedCount,
+      myDetailsComplete,
+    });
     const step3 = deriveBriefStep({ briefPercent });
     return (
       <PreVoyageShell
@@ -432,44 +441,90 @@ function deriveGuestCrewListStep({ myDetailsComplete }) {
 }
 
 // 2026-05-22 — Principal's view of the GROUP's crew-list state.
-// Drives the Step 02 card on /cabin home. Click-through goes to
-// /cabin/guests where the head charterer sees a per-member status.
-function deriveCrewListStep({ invitedCount, completedCount }) {
-  if (invitedCount === 0) {
+// Drives the Step 02 card on /cabin home. Counts INCLUDE the
+// principal — the Send-to-George gate requires every non-opted-out
+// member (incl. principal) to have completed crew-list essentials,
+// so the card has to surface the principal's own status.
+//
+// CTA priority:
+//   1. If the principal's OWN line isn't in, link them to /cabin/me
+//      first ("Add your own line"). This is the most common gap.
+//   2. If they're in but guests aren't, link to /cabin/guests
+//      ("See who's pending").
+//   3. If everyone's in (or no guests yet + principal done),
+//      surface a calm "review the crew list" CTA.
+function deriveCrewListStep({
+  crewListTotal,
+  crewListReady,
+  invitedCount,
+  myDetailsComplete,
+}) {
+  // Edge: no group invited yet AND principal's own line not done.
+  if (invitedCount === 0 && !myDetailsComplete) {
     return {
-      title: "The crew list waits on Step 01.",
+      title: "Add your own line to the crew list.",
       body:
-        "Once your guests are invited, each one will be asked for the harbour-paperwork essentials — date of birth, gender, nationality, ID or passport, mobile. We won't lock the brief until they're in.",
-      status: "Awaiting invites",
-      cta: "Invite your group",
-      ctaHref: "/cabin/guests",
+        "Five quiet fields — date of birth, gender, nationality, ID or passport, mobile. Your own first, then your guests as you invite them.",
+      status: "Not yet shared",
+      cta: "Open my crew-list line",
+      ctaHref: "/cabin/me",
       done: false,
     };
   }
+  // Edge: no group invited yet, but principal's line is in.
+  if (invitedCount === 0 && myDetailsComplete) {
+    return {
+      title: "Your line is in — invite your group when you're ready.",
+      body:
+        "Each guest will be asked for the same five fields. The brief locks only when everyone is in (or has formally stepped aside).",
+      status: "Yours is in · 1 of 1",
+      cta: "Invite your group",
+      ctaHref: "/cabin/guests",
+      done: true,
+    };
+  }
+
   const allDone =
-    completedCount >= invitedCount && invitedCount > 0;
+    crewListReady >= crewListTotal && crewListTotal > 0;
   if (allDone) {
     return {
-      title: "Your group's crew list is complete.",
+      title: "Your whole group's crew list is in.",
       body:
-        "Every member's line is in — the captain has the paperwork for the harbour authorities and the chef has the names. Whenever you're ready, the brief can be locked.",
-      status: `All ${invitedCount} aboard`,
+        "Every line — yours and every guest's — is with us. The captain has the harbour paperwork. Whenever you're ready, the brief can be locked.",
+      status: `All ${crewListTotal} aboard`,
       cta: "Review the crew list",
       ctaHref: "/cabin/guests",
       done: true,
     };
   }
+  // Mid-state: some still pending. Surface principal's own status
+  // first if they're the one missing.
+  if (!myDetailsComplete) {
+    return {
+      title: `Start with your own line — ${crewListReady} of ${crewListTotal} are in.`,
+      body:
+        "Your guests will follow once you've shown them the way. Five quiet fields — date of birth, gender, nationality, ID or passport, mobile.",
+      status: `${crewListReady} of ${crewListTotal} ready`,
+      cta: "Add my line",
+      ctaHref: "/cabin/me",
+      done: false,
+      progressPercent:
+        crewListTotal > 0
+          ? Math.round((crewListReady / crewListTotal) * 100)
+          : 0,
+    };
+  }
   return {
-    title: `${completedCount} of ${invitedCount} crew-list lines are in.`,
+    title: `${crewListReady} of ${crewListTotal} crew-list lines are in.`,
     body:
-      "The rest can fill in their five fields whenever it suits them; you can resend a quiet reminder from your group page. The brief stays editable until everyone's line is in.",
-    status: `${completedCount} of ${invitedCount} ready`,
+      "Your line is in. The rest can fill their five fields whenever it suits them; you can resend a quiet reminder from your group page. The brief stays editable until everyone's in.",
+    status: `${crewListReady} of ${crewListTotal} ready`,
     cta: "See who's pending",
     ctaHref: "/cabin/guests",
     done: false,
     progressPercent:
-      invitedCount > 0
-        ? Math.round((completedCount / invitedCount) * 100)
+      crewListTotal > 0
+        ? Math.round((crewListReady / crewListTotal) * 100)
         : 0,
   };
 }
