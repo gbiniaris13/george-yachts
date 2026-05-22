@@ -74,14 +74,15 @@ export default function PreVoyageSteps({
         <StepCard step={step2} ordinal={2} totalSteps={2} />
       )}
 
-      {/* 2026-05-22 — Boutique deadline footnote. Same line appears
-          in the magic-link invite email so the message lands twice
-          in two different voices — first when the invite arrives,
-          again when the recipient steps inside the cabin. */}
+      {/* 2026-05-22 — Boutique deadline footnote. Seven days from
+          the invite arriving (NOT seven days before the voyage —
+          George's correction). Mirrored in the magic-link email
+          so the message lands twice: first when the email arrives,
+          again as a quiet reminder once the recipient steps inside. */}
       <p className="cabin-pre-voyage__deadline">
-        So that the chef can stock, the cellar can be set, and every
-        harbour quietly noted — these are best complete by the week
-        before you sail.
+        We invite you to bring these to a quiet close within seven
+        days of your invitation arriving — so the chef can stock,
+        the cellar can be set, and every harbour quietly noted.
       </p>
 
       <style>{`
