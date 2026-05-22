@@ -38,6 +38,16 @@ export default function ChildrenSectionPage() {
               <ChildBlock key={i} register={register} index={i} watch={watch} />
             ))}
             <h2 className="brief-subhead">Equipment the crew should prepare</h2>
+            {/* 2026-05-22 — George: "άσε ό,τι έχουν και αυτοί. Μη
+                βάλεις 7 γιατί μπορεί να είναι έξτρα και να την
+                πατήσουμε." Trimmed to the three items industry
+                preference forms commit to: baby cot, high chair,
+                baby food/formula. Life jackets / pool toys / books
+                are often a per-vessel paid extra; offering them
+                here on every cabin sets an expectation we can't
+                always honour. Removed values stay in the enum
+                (back-compat with old briefs); just not surfaced
+                in the UI. */}
             <CheckboxGroup
               name="equipment"
               register={register}
@@ -46,9 +56,6 @@ export default function ChildrenSectionPage() {
               options={[
                 { value: "baby_cot", label: "Baby cot / travel crib" },
                 { value: "high_chair", label: "High chair" },
-                { value: "kids_life_jackets", label: "Children’s life jackets" },
-                { value: "pool_toys", label: "Pool noodles, inflatables, beach toys" },
-                { value: "bedtime_books", label: "Bedtime books" },
                 { value: "baby_food", label: "Specific formula / baby food" },
                 { value: "other", label: "Other (write below)" },
               ]}

@@ -133,6 +133,24 @@ export default function GuestsSectionPage() {
                   reads as "what do you want me to add now?" Concrete examples
                   the captain actually USES make it obvious what's worth
                   writing here. */}
+              {/* 2026-05-22 — Photo preference. George's read on
+                  the BF preference-list audit: "Το να μην φωτο-
+                  γραφίζουν τους guest το κρατάμε."
+                  Discreet single yes/no — default unset = crew
+                  uses normal practice. Explicit "yes please refrain"
+                  tells them to put the cameras away entirely. */}
+              <h2 className="brief-subhead">A small note on photography</h2>
+              <RadioGroup
+                name="no_photos_of_guests"
+                label="Would you prefer the crew not photograph the guests during the week?"
+                hint="Some clients — especially the publicly known — prefer the cabin stays off-camera. The crew is always discreet either way; this just tells them to put the phones down entirely."
+                register={register}
+                options={[
+                  { value: "false", label: "No, photos are welcome" },
+                  { value: "true",  label: "Yes, please refrain" },
+                ]}
+              />
+
               <h2 className="brief-subhead">Anything else for the crew?</h2>
               <OpenTextarea
                 /* 2026-05-21 — Pass 7: dropped "and hostess" so the
