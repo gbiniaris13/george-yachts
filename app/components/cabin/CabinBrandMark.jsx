@@ -60,22 +60,27 @@ export default function CabinBrandMark({ href = "/cabin" }) {
         }
         .cabin-brandmark__logo {
           display: block;
-          height: 110px;
+          /* 2026-05-22 — George: "Μεγάλωσε το λογότυπο στη μέση,
+             μας παίρνει κι άλλο. Νομίζω μπορεί να γίνει και
+             διπλό." Doubled the desktop height; the others
+             step down proportionally so the brand mark stays
+             prominent on every viewport. */
+          height: 200px;
           width: auto;
           transition: filter 220ms ease;
         }
         .cabin-brandmark:hover .cabin-brandmark__logo,
         .cabin-brandmark:focus-visible .cabin-brandmark__logo {
-          filter: drop-shadow(0 0 18px rgba(201, 168, 76, 0.35));
+          filter: drop-shadow(0 0 22px rgba(201, 168, 76, 0.4));
         }
         @media (max-width: 1023.98px) {
-          .cabin-brandmark__logo { height: 88px; }
+          .cabin-brandmark__logo { height: 150px; }
         }
         @media (max-width: 767.98px) {
-          .cabin-brandmark__logo { height: 72px; }
+          .cabin-brandmark__logo { height: 115px; }
         }
         @media (max-width: 479.98px) {
-          .cabin-brandmark__logo { height: 56px; }
+          .cabin-brandmark__logo { height: 80px; }
         }
       `}</style>
     </Link>
