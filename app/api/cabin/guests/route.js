@@ -107,12 +107,35 @@ export async function POST(req) {
   }
 
   // Get cabin for the email template
+  // 2026-05-22 — Also pull principal_charterer_name so the
+  // guest's invite can open with "{Inviter} has asked you to join
+  // the week aboard …" instead of the principal-voice anticipation
+  // line. The sender's display name is the inviter the recipient
+  // recognises.
   const cabin = await dbQuery(
     db.from("cabins")
-      .select("vessel_name, charter_period_from, charter_period_to")
+      .select(
+        "vessel_name, charter_period_from, charter_period_to, principal_charterer_name",
+      )
       .eq("id", a.cabinId)
       .maybeSingle()
   );
+
+  // Prefer the live session caller's display name from the
+  // cabin_members row (in case the principal updated their name
+  // after creation). Fall back to the cabins row.
+  let inviterName = cabin?.principal_charterer_name ?? null;
+  try {
+    const senderRow = await dbQuery(
+      db.from("cabin_members")
+        .select("display_name")
+        .eq("id", a.member.member_id)
+        .maybeSingle(),
+    );
+    if (senderRow?.display_name) inviterName = senderRow.display_name;
+  } catch {
+    // best-effort; falls back to the cabins row above
+  }
 
   let mailed = false;
   if (sendInvite) {
@@ -132,6 +155,7 @@ export async function POST(req) {
         fromDate: cabin?.charter_period_from ?? "",
         toDate: cabin?.charter_period_to ?? "",
         link,
+        inviterName,
       });
       mailed = true;
       // Stamp invite_sent_at for resends too — otherwise the
