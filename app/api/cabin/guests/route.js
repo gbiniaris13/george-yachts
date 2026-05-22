@@ -45,12 +45,20 @@ export async function GET() {
   const db = getCabinDb();
   const data = await dbQuery(
     db.from("cabin_members")
-      .select("id, role, email, display_name, invite_sent_at, last_login_at, personal_details_completed_at, created_at")
+      .select("id, role, email, display_name, invite_sent_at, last_login_at, personal_details_completed_at, is_brief_admin, brief_participation_opt_out_at, brief_participation_opt_out_note, created_at")
       .eq("cabin_id", a.cabinId)
       .is("deleted_at", null)
       .order("created_at")
   );
-  return NextResponse.json({ ok: true, members: data ?? [] });
+  return NextResponse.json({
+    ok: true,
+    members: data ?? [],
+    viewer: {
+      member_id: a.member.member_id,
+      role: a.member.role,
+      email: a.session.email,
+    },
+  });
 }
 
 export async function POST(req) {

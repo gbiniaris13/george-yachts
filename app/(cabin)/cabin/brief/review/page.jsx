@@ -127,6 +127,25 @@ export default async function BriefReviewPage() {
     (sections ?? []).map((s) => [s.section_key, s]),
   );
 
+  // 2026-05-22 — Brief admins (delegated) + opted-out guests. The
+  // principal sees both lists on the review screen as a calm reminder
+  // of who's helping ship the brief and who has stepped aside.
+  const groupRows = await dbQuery(
+    db
+      .from("cabin_members")
+      .select(
+        "id, display_name, email, role, is_brief_admin, brief_participation_opt_out_at, brief_participation_opt_out_note",
+      )
+      .eq("cabin_id", cabinId)
+      .is("deleted_at", null),
+  );
+  const delegatedAdmins = (groupRows ?? []).filter(
+    (m) => m.is_brief_admin && m.role !== "principal_charterer",
+  );
+  const optedOut = (groupRows ?? []).filter(
+    (m) => m.brief_participation_opt_out_at,
+  );
+
   const isSubmitted = Boolean(cabin.brief_submitted_at);
   const submittedAtPretty = isSubmitted
     ? new Date(cabin.brief_submitted_at).toLocaleString("en-GB", {
@@ -177,6 +196,34 @@ export default async function BriefReviewPage() {
           </p>
         </section>
       ) : null}
+
+      {(delegatedAdmins.length > 0 || optedOut.length > 0) && (
+        <section className="cabin-brief-review__group">
+          <div className="cabin-brief-review__group-eyebrow">
+            Your group&apos;s choices
+          </div>
+          {delegatedAdmins.length > 0 && (
+            <p className="cabin-brief-review__group-line">
+              <strong>Brief admin{delegatedAdmins.length > 1 ? "s" : ""}:</strong>{" "}
+              {delegatedAdmins
+                .map((m) => m.display_name || m.email)
+                .join(", ")}{" "}
+              — can also send the brief to George on your behalf.
+            </p>
+          )}
+          {optedOut.length > 0 && (
+            <p className="cabin-brief-review__group-line">
+              <strong>Opted out of orders &amp; cellar:</strong>{" "}
+              {optedOut
+                .map((m) => m.display_name || m.email)
+                .join(", ")}{" "}
+              — their allergies, dietary, swimming and passport details
+              remain with them. They&apos;ve left the group choices to
+              the rest of you.
+            </p>
+          )}
+        </section>
+      )}
 
       <ol className="cabin-brief-review__list">
         {visible.map((s, i) => {
@@ -311,6 +358,34 @@ export default async function BriefReviewPage() {
           line-height: 1.7;
           color: rgba(13, 27, 42, 0.7);
           margin: 8px 0 0 0;
+        }
+
+        .cabin-brief-review__group {
+          background: rgba(201, 168, 76, 0.06);
+          border-left: 2px solid var(--gy-gold);
+          padding: 16px 18px 18px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+        .cabin-brief-review__group-eyebrow {
+          font-family: var(--gy-font-ui);
+          font-size: 10px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: #8a7327;
+          font-weight: 600;
+        }
+        .cabin-brief-review__group-line {
+          font-family: var(--gy-font-editorial);
+          font-size: 14px;
+          line-height: 1.65;
+          color: rgba(13, 27, 42, 0.78);
+          margin: 0;
+        }
+        .cabin-brief-review__group-line strong {
+          font-weight: 500;
+          color: var(--gy-navy);
         }
 
         .cabin-brief-review__list {

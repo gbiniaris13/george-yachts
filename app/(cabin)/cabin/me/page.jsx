@@ -118,6 +118,44 @@ export default function CabinMePage() {
     return JSON.stringify(form) !== JSON.stringify(initial);
   }, [form, initial]);
 
+  // ----- Opt-out of order/cellar choices (any non-principal can set
+  // their own; personal facts stay mandatory). State derives from the
+  // member row, updated by POST /api/cabin/me/opt-out-brief.
+  const [optOutBusy, setOptOutBusy] = useState(false);
+  const [optOutNote, setOptOutNote] = useState("");
+  useEffect(() => {
+    setOptOutNote(member?.brief_opt_out_note ?? "");
+  }, [member?.brief_opt_out_note]);
+
+  async function onSetOptOut(nextOptOut) {
+    setOptOutBusy(true);
+    try {
+      const r = await fetch("/api/cabin/me/opt-out-brief", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          opt_out: nextOptOut,
+          note: nextOptOut ? optOutNote : null,
+        }),
+      });
+      const j = await r.json();
+      if (!r.ok || !j.ok) throw new Error(j?.error || "opt-out-failed");
+      setMember((m) =>
+        m
+          ? {
+              ...m,
+              brief_opt_out_at: j.opt_out_at,
+              brief_opt_out_note: nextOptOut ? optOutNote : null,
+            }
+          : m,
+      );
+    } catch {
+      setErr("Could not update just now. Please try again.");
+    } finally {
+      setOptOutBusy(false);
+    }
+  }
+
   function toggleDietary(label) {
     setForm((f) => {
       const has = f.dietary_preferences.includes(label);
@@ -418,6 +456,60 @@ export default function CabinMePage() {
           />
         </label>
 
+        {member?.role && member.role !== "principal_charterer" && (
+          <div className="me-optout">
+            <h2 className="me-subhead">Group orders & cellar</h2>
+            <p className="me-optout__intro">
+              <em>
+                Allergies, dietary notes, swimming and passport details
+                above stay with you — they keep the chef and captain
+                safe. But for the broader brief (orders, cellar
+                selections, menu themes) you can hand the wheel to the
+                rest of your party.
+              </em>
+            </p>
+            {member?.brief_opt_out_at ? (
+              <>
+                <div className="me-optout__badge">
+                  You&apos;ve opted out — the group decides on orders &
+                  cellar.
+                </div>
+                <button
+                  type="button"
+                  className="me-optout__back"
+                  onClick={() => onSetOptOut(false)}
+                  disabled={optOutBusy}
+                >
+                  {optOutBusy ? "Saving…" : "Opt back in"}
+                </button>
+              </>
+            ) : (
+              <>
+                <label className="me-field">
+                  <span>Anything you&apos;d like noted (optional)</span>
+                  <input
+                    type="text"
+                    value={optOutNote}
+                    placeholder="e.g. I trust whatever Patricia picks"
+                    maxLength={240}
+                    onChange={(e) => setOptOutNote(e.target.value)}
+                  />
+                </label>
+                <button
+                  type="button"
+                  className="me-optout__btn"
+                  onClick={() => onSetOptOut(true)}
+                  disabled={optOutBusy}
+                >
+                  {optOutBusy
+                    ? "Saving…"
+                    : "I'll leave orders & cellar to the group"}
+                </button>
+              </>
+            )}
+          </div>
+        )}
+
         {err && <p className="me-err" role="alert">{err}</p>}
         {ok && <p className="me-ok">Saved — thank you.</p>}
 
@@ -612,6 +704,56 @@ export default function CabinMePage() {
           opacity: 0.6;
           cursor: default;
         }
+        .me-optout {
+          margin-top: 16px;
+          padding-top: 18px;
+          border-top: 1px dashed rgba(13,27,42,0.14);
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+        .me-optout__intro {
+          margin: 0;
+          font-family: var(--gy-font-editorial);
+          font-size: 13.5px;
+          color: rgba(13,27,42,0.7);
+          line-height: 1.6;
+        }
+        .me-optout__btn {
+          align-self: flex-start;
+          background: transparent;
+          color: var(--gy-navy);
+          border: 1px solid var(--gy-gold);
+          padding: 11px 22px;
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          cursor: pointer;
+        }
+        .me-optout__btn:disabled { opacity: 0.6; cursor: default; }
+        .me-optout__badge {
+          background: rgba(13,27,42,0.06);
+          border-left: 2px solid var(--gy-gold);
+          padding: 12px 14px;
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 14px;
+          color: var(--gy-navy);
+        }
+        .me-optout__back {
+          align-self: flex-start;
+          background: transparent;
+          border: 0;
+          color: var(--gy-gold);
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          padding: 6px 0;
+          cursor: pointer;
+        }
+        .me-optout__back:disabled { opacity: 0.6; cursor: default; }
         /* Passive saved-state badge. Not a button — a status. */
         .me-saved {
           display: inline-flex;

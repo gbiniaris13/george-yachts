@@ -103,7 +103,7 @@ export async function GET() {
   const row = await dbQuery(
     db
       .from("cabin_members")
-      .select("id, role, display_name, email, personal_details, personal_details_completed_at")
+      .select("id, role, display_name, email, personal_details, personal_details_completed_at, is_brief_admin, brief_participation_opt_out_at, brief_participation_opt_out_note")
       .eq("id", membership.member_id)
       .maybeSingle()
   );
@@ -121,6 +121,9 @@ export async function GET() {
       email: row.email,
       personal_details: row.personal_details ?? {},
       completed_at: row.personal_details_completed_at,
+      is_brief_admin: Boolean(row.is_brief_admin),
+      brief_opt_out_at: row.brief_participation_opt_out_at,
+      brief_opt_out_note: row.brief_participation_opt_out_note,
     },
   });
 }
