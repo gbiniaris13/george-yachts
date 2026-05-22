@@ -141,9 +141,49 @@ Rules:
 • "tagline" — only set if the booklet has a one-line standfirst under the title; else null. Never invent one.
 • Brand names ("Nutella", "Heinz", "Coca-Cola") — keep them. Do not generic-ize.`,
 
-  vessel: `${VERBATIM_MANDATE}
+  vessel: `You are extracting a VESSEL BROCHURE for a charter yacht.
 
-You are extracting a VESSEL BROCHURE for a charter yacht.
+CRITICAL — READ THIS FIRST:
+
+Yacht brochures are DESIGNED documents (typically built in InDesign
+or similar). Most text — vessel name, KEY FEATURES list, the
+SPECIFICATIONS box on the spec page, paragraph descriptions — is
+rendered as part of the page layout, often as bitmap text overlaid
+on photographs or set inside coloured panels. You MUST use your
+vision capability to read this image-rendered text. The PDF's text
+layer alone is almost never complete.
+
+WHAT TO EXTRACT:
+• vessel name (usually on the cover, large type)
+• type descriptor like "Sailing Catamaran" or "Motor Yacht" (often
+  the kicker line above the name)
+• builder + model phrase (often a logo at the bottom of the cover
+  or in the spec table — "Lagoon 51", "Sunseeker 76", etc.)
+• year built (typically on the spec page as "Built: 2025" or in
+  the KEY FEATURES "BRAND NEW, BUILT IN 2025")
+• summary paragraph — the editorial intro, usually on page 2 in
+  a coloured panel headed "THE YACHT" or similar. Read every word.
+• key features — the bullet/slash-separated list near the intro
+  paragraph, typically headed "KEY FEATURES". Split on slashes or
+  bullets into individual entries.
+• specifications — the structured box on the spec page (L.O.A,
+  Beam, Draft, Main Engines, Generator, Cruising speed, Fuel
+  Consumption). Keep units intact.
+• accommodation — usually a short paragraph next to the spec box
+  ("Accommodation: 10 guests in 4 double cabins…"). Also the
+  "Crew consisting of N" line nearby.
+• amenities — the "General Amenities" list.
+• tender — the boat the yacht carries (make/model + engine).
+• water toys — everything in the "Tender & Toys" list MINUS the
+  tender itself, comma- or slash-separated.
+• areas — the section labels the brochure walks through (Aft
+  Deck, Saloon & Dining Area, Cabins, Flybridge, Bow Area, etc.)
+
+Extract verbatim what you can see. If a value is clearly visible
+in any image on any page, capture it — don't return null just
+because the text is part of a layout rather than a parseable text
+layer. ONLY return null for a field that genuinely isn't anywhere
+in the document.
 
 Output strict JSON with this exact shape (every example value is illustrative — extract the actual content of THIS PDF):
 {
@@ -181,8 +221,9 @@ Output strict JSON with this exact shape (every example value is illustrative �
 
 Rules:
 • "summary" — preserve every word, every paragraph break, every quirk of punctuation.
-• Lists — never invent items. If a list is absent, output null. Never use an empty array as a placeholder.
-• When a unit ("ft", "m", "knots", "lt/hr") is present in the brochure, KEEP IT inside the value string.`,
+• Lists — never invent items. Capture what you can read. Use null only when you've checked every page and the list genuinely isn't present.
+• When a unit ("ft", "m", "knots", "lt/hr") is present in the brochure, KEEP IT inside the value string.
+• Output ONLY the JSON object. No markdown fences, no commentary, no preamble.`,
 
   // 2026-05-20 — Friend-test pass 4 +:
   // MYBA Charter Agreement extraction. The contract carries the
@@ -363,12 +404,34 @@ export async function POST(req) {
   }
   base64 = Buffer.from(base64, "binary").toString("base64");
 
+  // 2026-05-22 — Gemini Pro for vessel brochures.
+  //
+  // EFFIE STAR's brochure was returning {all-nulls} on Flash —
+  // the brochure is image-rendered text (InDesign layout, no
+  // parseable text layer) and Flash plus the strict verbatim
+  // mandate was too conservative. Pro has materially better
+  // vision for layout-text and the one-shot per-cabin cost
+  // (~1¢ vs ~0.05¢ on Flash) is negligible.
+  //
+  // Other kinds keep Flash:
+  // - contract is OCR'd text in the PDF layer (Flash is fine)
+  // - crew bios + menu have less visual complexity
+  //
+  // Easy to flip individual kinds to Pro later if we see the
+  // same issue.
+  const MODEL_BY_KIND = {
+    contract: "gemini-2.5-flash",
+    crew:     "gemini-2.5-flash",
+    menu:     "gemini-2.5-flash",
+    vessel:   "gemini-2.5-pro",
+  };
+
   // Call Gemini (through the capped wrapper) for free-tier PDF
   // structured-extraction.
   let extracted;
   try {
     const result = await geminiGenerateContent({
-      model: "gemini-2.5-flash",
+      model: MODEL_BY_KIND[kind] || "gemini-2.5-flash",
       estimatedCostCents: ESTIMATED_COST_CENTS_PER_EXTRACTION,
       systemInstruction: { parts: [{ text: SYSTEM_PROMPTS[kind] }] },
       contents: [
@@ -500,7 +563,7 @@ export async function POST(req) {
   // members array as { first_name, role, bio, ... } for backwards
   // compat with the simple admin form. New shape adds last_name,
   // secondary_role, languages, years_experience, highlights.
-  const persisted = kind === "crew"
+  let persisted = kind === "crew"
     ? (extracted?.members ?? []).map((m) => ({
         first_name: m.first_name ?? "",
         last_name: m.last_name ?? null,
@@ -513,9 +576,78 @@ export async function POST(req) {
       }))
     : extracted;
 
+  // 2026-05-22 — Defensive merge for the vessel brochure shape.
+  //
+  // Vessel-brochure extractions sometimes return a SHAPE-correct
+  // JSON with a few real values and the rest null (Gemini going
+  // conservative when uncertain about image-rendered text).
+  // If we naïvely overwrite the column with that result, we'd
+  // wipe fields that a PREVIOUS extraction had captured.
+  //
+  // Instead: read the current row, deep-merge non-null new
+  // fields over the existing object, write back. Crew/menu are
+  // arrays at the top level and don't benefit from this merge
+  // (their semantics are "the new upload replaces the previous
+  // brochure entirely") so they skip it.
+  if (kind === "vessel" && persisted && typeof persisted === "object") {
+    try {
+      const existing = await dbQuery(
+        db.from("cabins").select(col).eq("id", cabinId).maybeSingle(),
+      );
+      const previousBrochure =
+        existing && existing[col] && typeof existing[col] === "object"
+          ? existing[col]
+          : {};
+      persisted = mergePreservingNonNull(previousBrochure, persisted);
+    } catch (mergeErr) {
+      // If the read fails, fall through to plain overwrite.
+      console.warn("[extract-brochure] vessel merge read failed:", mergeErr);
+    }
+  }
+
   await dbQuery(
-    db.from("cabins").update({ [col]: persisted }).eq("id", cabinId)
+    db.from("cabins").update({ [col]: persisted }).eq("id", cabinId),
   );
 
   return NextResponse.json({ ok: true, kind, persisted });
+}
+
+// 2026-05-22 — Deep merge helper for the brochure object.
+// For each key in `next`:
+//   • non-null primitive       → overwrites previous
+//   • non-empty array          → overwrites previous (extraction
+//                                 is the new source of truth for
+//                                 lists when it found ANY items)
+//   • plain object             → recursive merge so nested fields
+//                                 (specifications.beam, etc.) are
+//                                 preserved individually
+//   • null / undefined / []    → previous value is kept
+function mergePreservingNonNull(previous, next) {
+  if (next == null) return previous;
+  if (Array.isArray(next)) {
+    return next.length > 0 ? next : previous;
+  }
+  if (typeof next !== "object") return next;
+  // object — recurse per key
+  const out = { ...(previous && typeof previous === "object" ? previous : {}) };
+  for (const k of Object.keys(next)) {
+    const newV = next[k];
+    const prevV = out[k];
+    if (newV === null || newV === undefined) {
+      // keep prevV
+      continue;
+    }
+    if (Array.isArray(newV)) {
+      if (newV.length > 0) out[k] = newV;
+      // else keep prevV
+      continue;
+    }
+    if (typeof newV === "object") {
+      out[k] = mergePreservingNonNull(prevV, newV);
+      continue;
+    }
+    // primitive
+    out[k] = newV;
+  }
+  return out;
 }
