@@ -73,15 +73,29 @@ export default function LifeAboardSectionPage() {
               rows={2}
             />
 
-            {/* 2026-05-20 — Friend-test pass 2: removed Soundtrack
-                section (Morning / Lunch / Sunset / Late-night music
-                fields) and Wellness on board section (yoga, massage,
-                trainer checkboxes). George flagged both as
-                "δεν θέλουμε να υπάρχει — θέλουμε την ουσία: τι θα
-                φάνε, τι θα πιούνε, αλλεργίες, κατοικίδια". Schema
-                fields (music, wellness_onboard) stay in
-                lib/cabin/schemas.js for back-compat with already-
-                submitted briefs. */}
+            {/* 2026-05-22 — Music taste — a single, careful question.
+                Pass 2 removed the per-time-of-day soundtrack fields
+                (morning / lunch / sunset / late night) because the
+                hostess can't guarantee specific track delivery and
+                we don't want "you said Sinatra at sunset, got Lo-Fi"
+                complaints. This freeform replacement asks for the
+                room's general taste — the crew uses it as a sense
+                of direction for background music, not a playlist. */}
+            <h2 className="brief-subhead">Music taste</h2>
+            <OpenTextarea
+              label="What does this group enjoy in the background?"
+              hint="The captain and hostess use this to set a tasteful tone — bossa nova at lunch, soft rock at sundown, that sort of thing. We can't promise specific tracks, just a general direction that suits the room."
+              name="music_taste"
+              register={register}
+              rows={3}
+              placeholder="e.g. mostly jazz and bossa nova during the day, anything but house at dinner. We'll bring our own playlists for late nights."
+            />
+            {/* 2026-05-20 — Wellness on board section (yoga, massage,
+                stargazing nights, sunrise meditation, personal trainer)
+                removed in pass 2. George: "Καλύτερα να βγει — στην
+                τελική αν κάποιος είναι κολλημένος με τη γιόγκα μπορεί
+                να το γράψει από μόνος του." Schema field
+                (wellness_onboard) stays for back-compat. */}
 
             <OpenTextarea
               label="A few small touches we should ask the crew about"
