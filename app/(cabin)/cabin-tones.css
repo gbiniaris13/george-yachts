@@ -72,7 +72,30 @@ html body [data-cabin-mode] .guests-list__head em,
 html body [data-cabin-mode] .crew-card__role,
 html body [data-cabin-mode] .vs-hero__kicker,
 html body [data-cabin-mode] .install-card .install-eyebrow,
-html body [data-cabin-mode] .chat-card__role {
+html body [data-cabin-mode] .chat-card__role,
+/* 2026-05-22 — George flagged the new brochure block's eyebrow
+   ("SAILING CATAMARAN") and chapter labels ("Key features",
+   "Specifications", "Accommodation", "On board", etc.) as
+   gold-on-white, unreadable. Adding them to the existing tracked-
+   label navy override.
+   Also covers the standalone /cabin/vessel page (vs-block__label,
+   vs-specs dt) which uses the same pattern.
+   Deliberately EXCLUDED:
+   • cabin-vessel-hero__eyebrow — sits on a dark photo with
+     overlay, gold is correctly readable there.
+   • cabin-ghost-credit__link — the GHOST_ build credit is meant
+     to read as gold/amber tech-mark, branded by design. */
+html body [data-cabin-mode] .cabin-vessel-block__eyebrow,
+html body [data-cabin-mode] .cabin-vessel-block__chapter-label,
+html body [data-cabin-mode] .cabin-vessel-block__year,
+html body [data-cabin-mode] .cabin-vessel-block__specs dt,
+html body [data-cabin-mode] .vs-block__label,
+html body [data-cabin-mode] .vs-specs dt,
+html body [data-cabin-mode] .brief-section-title__eyebrow,
+html body [data-cabin-mode] .filotimo__eyebrow,
+html body [data-cabin-mode] .voyage-carousel__eyebrow,
+html body [data-cabin-mode] .bys-weather__label,
+html body [data-cabin-mode] .tc-sealed__label {
   color: #1f2937 !important;
   font-weight: 600 !important;
 }
