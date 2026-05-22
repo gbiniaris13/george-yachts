@@ -456,9 +456,13 @@ export default function CabinShell({
 
         .cabin-shell__brand-slot {
           min-width: 0;
-          /* Empty wrapper so the grid column can collapse cleanly
-             on tiny phones without the CabinBrandMark internals
-             having to know about layout. */
+          /* 2026-05-22 — Centre the brand mark in the middle of
+             the header (matching the marketing site's hero logo
+             treatment). The header grid is auto 1fr auto, so this
+             flex centres the logo inside the 1fr column. */
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
 
         .cabin-shell__charter {
