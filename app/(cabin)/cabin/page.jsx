@@ -275,7 +275,7 @@ export default async function CabinHomePage() {
             second welcome. */}
         <div className="cabin-home__eyebrow">Your private Cabin</div>
         <h1 className="cabin-home__greeting">
-          Welcome, <em>{firstName}.</em>
+          Welcome on board, <em>{firstName}.</em>
         </h1>
         <div className="cabin-home__rule" aria-hidden />
         {isPrincipal ? (

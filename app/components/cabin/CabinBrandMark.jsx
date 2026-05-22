@@ -28,12 +28,19 @@
 
 import Link from "next/link";
 
+// 2026-05-22 — Trimmed back to just the logo.
+// George's directive after seeing the first layout: the brand
+// logo should breathe at the centre of the header, as large as
+// is comfortable. "The Cabin · Filotimo" + a quiet brand
+// tagline now live in the LEFT slot of the header (handled by
+// CabinShell). The right slot keeps the vessel/date/principal
+// chip. This component just renders the logo, big and centered.
 export default function CabinBrandMark({ href = "/cabin" }) {
   return (
     <Link
       href={href}
       className="cabin-brandmark"
-      aria-label="George Yachts · The Cabin · Home"
+      aria-label="George Yachts · Home"
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
@@ -41,65 +48,34 @@ export default function CabinBrandMark({ href = "/cabin" }) {
         alt="George Yachts · Brokerage House"
         className="cabin-brandmark__logo"
       />
-      <span className="cabin-brandmark__strapline">
-        The Cabin <em>· Filotimo</em>
-      </span>
 
       <style>{`
         .cabin-brandmark {
           display: inline-flex;
-          flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: 6px;
           text-decoration: none;
           color: inherit;
-          padding: 2px 0;
+          padding: 4px 0;
         }
         .cabin-brandmark__logo {
           display: block;
-          height: 84px;
+          height: 110px;
           width: auto;
-          /* Calm hover affordance — gentle warm-tone lift,
-             without animating opacity which would dim the gold. */
           transition: filter 220ms ease;
         }
         .cabin-brandmark:hover .cabin-brandmark__logo,
         .cabin-brandmark:focus-visible .cabin-brandmark__logo {
-          filter: drop-shadow(0 0 16px rgba(201, 168, 76, 0.32));
+          filter: drop-shadow(0 0 18px rgba(201, 168, 76, 0.35));
         }
-        .cabin-brandmark__strapline {
-          font-family: var(--gy-font-editorial, Georgia, serif);
-          font-size: 12.5px;
-          letter-spacing: 0.35em;
-          text-transform: uppercase;
-          color: rgba(248, 245, 240, 0.78);
-          font-weight: 400;
-        }
-        .cabin-brandmark__strapline em {
-          font-style: italic;
-          color: var(--gy-gold, #C9A84C);
-          letter-spacing: 0.06em;
-          text-transform: none;
-          margin-left: 2px;
-          font-size: 13.5px;
+        @media (max-width: 1023.98px) {
+          .cabin-brandmark__logo { height: 88px; }
         }
         @media (max-width: 767.98px) {
-          .cabin-brandmark__logo { height: 64px; }
-          .cabin-brandmark__strapline {
-            font-size: 10.5px;
-            letter-spacing: 0.28em;
-          }
-          .cabin-brandmark__strapline em { font-size: 11.5px; }
+          .cabin-brandmark__logo { height: 72px; }
         }
         @media (max-width: 479.98px) {
-          .cabin-brandmark { gap: 4px; }
-          .cabin-brandmark__logo { height: 52px; }
-          .cabin-brandmark__strapline {
-            font-size: 9.5px;
-            letter-spacing: 0.24em;
-          }
-          .cabin-brandmark__strapline em { font-size: 10.5px; }
+          .cabin-brandmark__logo { height: 56px; }
         }
       `}</style>
     </Link>
