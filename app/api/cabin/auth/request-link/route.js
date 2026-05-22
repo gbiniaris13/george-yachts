@@ -27,6 +27,18 @@ function publicOrigin(req) {
 }
 
 export async function POST(req) {
+  // 2026-05-22 — Admin-aware response.
+  // The public surface always returns 200 + ok:true regardless of
+  // whether the address is a real cabin member (account-enumeration
+  // defence). But when the CRM calls this endpoint with the shared
+  // CABIN_ADMIN_SECRET, the operator needs the TRUTH back —
+  // otherwise the "Send invite" button lies when Resend rejects.
+  // adminMode flips the response shape: { ok, mailed, error? }.
+  const adminSecret = process.env.CABIN_ADMIN_SECRET;
+  const authz = req.headers.get("authorization") || "";
+  const adminMode =
+    adminSecret && authz === `Bearer ${adminSecret}`;
+
   let body;
   try {
     body = await req.json();
@@ -52,11 +64,24 @@ export async function POST(req) {
     memberships = await findMembershipsForEmail(email);
   } catch (err) {
     console.error("[cabin/request-link] DB error:", err);
+    if (adminMode) {
+      return NextResponse.json(
+        { ok: false, mailed: false, error: `db-error: ${err?.message || err}` },
+        { status: 500 },
+      );
+    }
     // Don't leak — still return 200 to client
     return NextResponse.json({ ok: true });
   }
 
   if (memberships.length === 0) {
+    if (adminMode) {
+      return NextResponse.json({
+        ok: true,
+        mailed: false,
+        error: "no-membership-for-email",
+      });
+    }
     // No membership — pretend success. Don't email anyone.
     return NextResponse.json({ ok: true });
   }
@@ -80,6 +105,8 @@ export async function POST(req) {
   // drop it anyway, but we'd rather not write garbage to KV.
   const pinnedCabinId = targeted ? targetCabinId : null;
 
+  let mailed = false;
+  let sendError = null;
   try {
     const otp = await createMagicLinkOtp(email, pinnedCabinId);
     const origin = publicOrigin(req);
@@ -95,6 +122,7 @@ export async function POST(req) {
       console.log("CABIN MAGIC LINK (dev mode, no email):");
       console.log(link);
       console.log("==============================================\n\n");
+      mailed = true; // dev mode counts as delivered for adminMode response
     } else {
       await sendMagicLinkEmail({
         to: email,
@@ -104,6 +132,7 @@ export async function POST(req) {
         toDate: primary?.cabin?.charter_period_to ?? "",
         link,
       });
+      mailed = true;
     }
 
     await writeAudit({
@@ -114,9 +143,25 @@ export async function POST(req) {
       metadata: { memberships_count: memberships.length },
     });
   } catch (err) {
-    console.error("[cabin/request-link] send error:", err);
-    // Still 200 — UI doesn't differentiate; we'll see the error in logs
+    // 2026-05-22 — Verbose error logging so the actual Resend
+    // failure surfaces in Vercel logs. Without this, the previous
+    // silent-catch swallowed every send error and the CRM's
+    // "✓ sent" UI lied to George.
+    sendError = err?.message || String(err);
+    console.error(
+      "[cabin/request-link] send error:",
+      sendError,
+      err?.stack ? `\n${err.stack}` : "",
+    );
   }
 
+  if (adminMode) {
+    return NextResponse.json({
+      ok: true,
+      mailed,
+      ...(sendError ? { error: sendError } : {}),
+    });
+  }
+  // Public callers always get the enumeration-safe 200/ok response.
   return NextResponse.json({ ok: true });
 }
