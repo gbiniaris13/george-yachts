@@ -86,6 +86,43 @@ export async function POST() {
     });
   }
 
+  // 2026-05-22 — HARD crew-list gate. Per George: the brief cannot
+  // be locked until every non-opted-out cabin member has finished
+  // their port-authority essentials (date of birth, gender,
+  // nationality, ID/passport, mobile). The UI hard-disables the
+  // Send button on /cabin/brief/review, but defence in depth: also
+  // reject server-side so a curl can't bypass it.
+  const allActiveMembers = await dbQuery(
+    db
+      .from("cabin_members")
+      .select(
+        "id, display_name, email, role, personal_details_completed_at, brief_participation_opt_out_at",
+      )
+      .eq("cabin_id", cabinId)
+      .is("deleted_at", null),
+  );
+  const stillOweCrewList = (allActiveMembers ?? []).filter(
+    (m) =>
+      !m.brief_participation_opt_out_at &&
+      !m.personal_details_completed_at,
+  );
+  if (stillOweCrewList.length > 0) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "crew-list-incomplete",
+        message:
+          "The brief cannot be sent until every member of the group has finished their Crew List essentials.",
+        pending_count: stillOweCrewList.length,
+        pending: stillOweCrewList.map((m) => ({
+          name: m.display_name || m.email,
+          role: m.role,
+        })),
+      },
+      { status: 409 },
+    );
+  }
+
   const submittedAt = new Date().toISOString();
 
   await dbQuery(

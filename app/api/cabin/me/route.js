@@ -51,17 +51,23 @@ function cleanStrArray(arr, max = 24) {
 }
 
 // The shape we persist in cabin_members.personal_details.
-// Keep this list small — every field is optional, every field is
-// honest about why we ask. Brokers reflex: anything that hints at
-// the management company / ownership stays OUT.
+// 2026-05-22 — gender + mobile added because the Crew List
+// (port-authority paperwork) needs them. They live alongside the
+// chef + captain fields in the same JSONB blob to avoid a schema
+// migration; the UI groups them visually as the mandatory bloc.
 const SWIMS_VALUES = ["confident", "some", "non_swimmer", "prefer_not_say"];
+const GENDER_VALUES = ["male", "female", "non_binary", "prefer_not_say"];
 
 function sanitisePersonalDetails(body) {
   return {
+    // ----- Crew-list essentials (mandatory before the brief can lock)
     date_of_birth: cleanDate(body?.date_of_birth),
+    gender: cleanEnum(body?.gender, GENDER_VALUES),
     nationality: cleanStr(body?.nationality, 80),
     passport_number: cleanStr(body?.passport_number, 32),
     passport_expiry: cleanDate(body?.passport_expiry),
+    mobile: cleanStr(body?.mobile, 32),
+    // ----- Chef + captain niceties (optional)
     allergies_dietary: cleanStr(body?.allergies_dietary, 600),
     dietary_preferences: cleanStrArray(body?.dietary_preferences),
     swims: cleanEnum(body?.swims, SWIMS_VALUES),
@@ -75,13 +81,24 @@ function sanitisePersonalDetails(body) {
   };
 }
 
-// Minimum we ask for a member to count as "details complete" —
-// just DOB and the allergies/dietary line. Anything more is
-// nice-to-have. This drives the "details complete" badge on
-// the principal's group page.
-function isComplete(details) {
-  return Boolean(details?.date_of_birth && details?.allergies_dietary);
+// 2026-05-22 — Crew-list completeness gate. The brief cannot be
+// sent to George until every non-opted-out cabin member has filled
+// these five port-authority essentials. Allergies, dietary, and
+// swimming are chef-related niceties and remain optional.
+//
+// personal_details_completed_at is the timestamp the rest of the
+// app reads to mean "this member is brief-ready"; we now anchor it
+// to the crew-list bar (not the old DOB + allergies bar).
+function isCrewListComplete(details) {
+  return Boolean(
+    details?.date_of_birth &&
+    details?.gender &&
+    details?.nationality &&
+    details?.passport_number &&
+    details?.mobile,
+  );
 }
+const isComplete = isCrewListComplete;
 
 // -----------------------------------------------------------
 // GET — read THIS member's row for the active cabin

@@ -43,36 +43,62 @@ export default function PreVoyageSteps({
   completedCount,
   myDetailsComplete,
   briefPercent,
+  // 2026-05-22 — Crew-list readiness signals injected by the
+  // server. invitedCount / completedCount are now reused as "how
+  // many group members have completed their Crew List essentials"
+  // (date of birth, gender, nationality, passport/ID, mobile).
+  // completedCount being < invitedCount blocks brief lock at the
+  // review screen.
 }) {
-  // Step 1 — Invite group (principal) OR Share details (guest)
-  const step1 = isPrincipal
-    ? deriveInviteStep({ invitedCount, completedCount })
-    : deriveShareDetailsStep({ myDetailsComplete });
+  if (isPrincipal) {
+    // Three quiet pieces for the head charterer:
+    //   01 Invite your group   (cabin_members rows)
+    //   02 Crew list           (per-member port-authority essentials)
+    //   03 Charter Brief       (the preference brief itself)
+    const step1 = deriveInviteStep({ invitedCount, completedCount });
+    const step2 = deriveCrewListStep({ invitedCount, completedCount });
+    const step3 = deriveBriefStep({ briefPercent });
+    return (
+      <PreVoyageShell
+        title="Three quiet pieces,"
+        lede="Settle these in order, and your week begins to take shape. The captain has the harbour paperwork it needs. The chef stocks the galley. Then your brief writes the story."
+        steps={[step1, step2, step3]}
+      />
+    );
+  }
 
-  // Step 2 — Charter brief (principal only)
-  const step2 = isPrincipal
-    ? deriveBriefStep({ briefPercent })
-    : null;
+  // Guest view — their /cabin/me IS their crew-list entry. We
+  // reframe the lone step in port-authority language so they
+  // understand WHY DOB, gender, ID and mobile are not optional.
+  const onlyStep = deriveGuestCrewListStep({ myDetailsComplete });
+  return (
+    <PreVoyageShell
+      title="One quiet piece,"
+      lede="Once your crew-list line is in, the harbour authorities have everything they need for you. The rest of The Cabin is here for you to explore at your pace."
+      steps={[onlyStep]}
+    />
+  );
+}
 
+function PreVoyageShell({ title, lede, steps }) {
   return (
     <section className="cabin-pre-voyage" aria-label="Before you sail">
       <header className="cabin-pre-voyage__intro">
         <div className="cabin-pre-voyage__eyebrow">Before you sail</div>
         <h2 className="cabin-pre-voyage__title">
-          {step2 ? "Two quiet pieces," : "One quiet piece,"}{" "}
-          <em>in order.</em>
+          {title} <em>in order.</em>
         </h2>
-        <p className="cabin-pre-voyage__lede">
-          {step2
-            ? "Settle these two, and your week begins to take shape. The chef stocks the galley around them. The captain plans coves around them. The rest of The Cabin is here for you to explore at your pace."
-            : "Once this is with us, the captain and the chef have what they need to look after you well. The rest of The Cabin is here for you to explore at your pace."}
-        </p>
+        <p className="cabin-pre-voyage__lede">{lede}</p>
       </header>
 
-      <StepCard step={step1} ordinal={1} totalSteps={step2 ? 2 : 1} />
-      {step2 && (
-        <StepCard step={step2} ordinal={2} totalSteps={2} />
-      )}
+      {steps.map((s, i) => (
+        <StepCard
+          key={i}
+          step={s}
+          ordinal={i + 1}
+          totalSteps={steps.length}
+        />
+      ))}
 
       {/* 2026-05-22 — Boutique deadline footnote. Seven days from
           the invite arriving (NOT seven days before the voyage —
@@ -382,26 +408,69 @@ function deriveInviteStep({ invitedCount, completedCount }) {
   };
 }
 
-function deriveShareDetailsStep({ myDetailsComplete }) {
+function deriveGuestCrewListStep({ myDetailsComplete }) {
   if (myDetailsComplete) {
     return {
-      title: "Thank you — the captain has what he needs.",
+      title: "Your crew-list line is in — thank you.",
       body:
-        "You can edit any of it from your details page below, anytime — and browse the rest of your Cabin at your pace.",
-      status: "Your details are in",
+        "The captain has what the marinas ask for. You can revisit your details anytime; share allergies or anything else for the chef whenever it feels right.",
+      status: "Crew list ready",
       cta: "Edit my details",
       ctaHref: "/cabin/me",
       done: true,
     };
   }
   return {
-    title: "Share a few quiet details about you.",
+    title: "Add your line to the crew list.",
     body:
-      "Date of birth, any allergies, swimming comfort — that's really all we ask. Two minutes, and the chef and captain can look after you personally.",
+      "Five quiet fields — date of birth, gender, nationality, ID or passport number, and mobile. The harbour authorities ask for these for every person aboard. Two minutes, and you're done.",
     status: "Not yet shared",
-    cta: "Share my details",
+    cta: "Open my crew-list line",
     ctaHref: "/cabin/me",
     done: false,
+  };
+}
+
+// 2026-05-22 — Principal's view of the GROUP's crew-list state.
+// Drives the Step 02 card on /cabin home. Click-through goes to
+// /cabin/guests where the head charterer sees a per-member status.
+function deriveCrewListStep({ invitedCount, completedCount }) {
+  if (invitedCount === 0) {
+    return {
+      title: "The crew list waits on Step 01.",
+      body:
+        "Once your guests are invited, each one will be asked for the harbour-paperwork essentials — date of birth, gender, nationality, ID or passport, mobile. We won't lock the brief until they're in.",
+      status: "Awaiting invites",
+      cta: "Invite your group",
+      ctaHref: "/cabin/guests",
+      done: false,
+    };
+  }
+  const allDone =
+    completedCount >= invitedCount && invitedCount > 0;
+  if (allDone) {
+    return {
+      title: "Your group's crew list is complete.",
+      body:
+        "Every member's line is in — the captain has the paperwork for the harbour authorities and the chef has the names. Whenever you're ready, the brief can be locked.",
+      status: `All ${invitedCount} aboard`,
+      cta: "Review the crew list",
+      ctaHref: "/cabin/guests",
+      done: true,
+    };
+  }
+  return {
+    title: `${completedCount} of ${invitedCount} crew-list lines are in.`,
+    body:
+      "The rest can fill in their five fields whenever it suits them; you can resend a quiet reminder from your group page. The brief stays editable until everyone's line is in.",
+    status: `${completedCount} of ${invitedCount} ready`,
+    cta: "See who's pending",
+    ctaHref: "/cabin/guests",
+    done: false,
+    progressPercent:
+      invitedCount > 0
+        ? Math.round((completedCount / invitedCount) * 100)
+        : 0,
   };
 }
 

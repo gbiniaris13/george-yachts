@@ -51,6 +51,14 @@ const DIETARY_OPTIONS = [
   "No red meat",
 ];
 
+// 2026-05-22 — Crew List (port-authority) gender options.
+const GENDER_OPTIONS = [
+  { value: "female",         label: "Female" },
+  { value: "male",           label: "Male" },
+  { value: "non_binary",     label: "Non-binary" },
+  { value: "prefer_not_say", label: "Prefer not to say" },
+];
+
 export default function CabinMePage() {
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -62,10 +70,14 @@ export default function CabinMePage() {
   // Local form state — initialised from server on mount, diffed
   // against initial below to drive the disabled state of Save.
   const [form, setForm] = useState({
+    // ----- Crew-list essentials (mandatory)
     date_of_birth: "",
+    gender: "",
     nationality: "",
     passport_number: "",
     passport_expiry: "",
+    mobile: "",
+    // ----- Chef + captain niceties (optional)
     allergies_dietary: "",
     dietary_preferences: [],
     swims: "",
@@ -87,9 +99,11 @@ export default function CabinMePage() {
         const pd = j.member?.personal_details ?? {};
         const next = {
           date_of_birth: pd.date_of_birth ?? "",
+          gender: pd.gender ?? "",
           nationality: pd.nationality ?? "",
           passport_number: pd.passport_number ?? "",
           passport_expiry: pd.passport_expiry ?? "",
+          mobile: pd.mobile ?? "",
           allergies_dietary: pd.allergies_dietary ?? "",
           dietary_preferences: Array.isArray(pd.dietary_preferences)
             ? pd.dietary_preferences
@@ -289,17 +303,118 @@ export default function CabinMePage() {
       </IntroParagraph>
 
       <form className="me-form" onSubmit={onSave}>
-        <h2 className="me-subhead">The essentials</h2>
+        {/* 2026-05-22 — Crew List essentials block. Port authorities
+            require name + gender + DOB + ID/passport + mobile for
+            every person aboard. These five fields are MANDATORY for
+            the brief to lock — the principal sees who's still
+            missing on the review screen before they send to George. */}
+        <div className="me-crewlist">
+          <div className="me-crewlist__head">
+            <div className="me-crewlist__eyebrow">Crew list · Required</div>
+            <p className="me-crewlist__copy">
+              <em>
+                Five lines for the harbour authorities. The brief
+                cannot be sent to George until everyone in the
+                group has finished this short block.
+              </em>
+            </p>
+          </div>
 
-        <label className="me-field">
-          <span>Date of birth</span>
-          <input
-            type="date"
-            value={form.date_of_birth}
-            max={new Date().toISOString().slice(0, 10)}
-            onChange={(e) => setForm({ ...form, date_of_birth: e.target.value })}
-          />
-        </label>
+          <label className="me-field">
+            <span>Date of birth</span>
+            <input
+              type="date"
+              value={form.date_of_birth}
+              max={new Date().toISOString().slice(0, 10)}
+              onChange={(e) =>
+                setForm({ ...form, date_of_birth: e.target.value })
+              }
+              required
+            />
+          </label>
+
+          <fieldset className="me-fieldset">
+            <legend>Gender</legend>
+            <div className="me-radio-stack">
+              {GENDER_OPTIONS.map((opt) => (
+                <label key={opt.value} className="me-radio">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value={opt.value}
+                    checked={form.gender === opt.value}
+                    onChange={() =>
+                      setForm({ ...form, gender: opt.value })
+                    }
+                  />
+                  <span>{opt.label}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <label className="me-field">
+            <span>Nationality</span>
+            <input
+              type="text"
+              value={form.nationality}
+              placeholder="e.g. British · Greek · American"
+              maxLength={80}
+              onChange={(e) =>
+                setForm({ ...form, nationality: e.target.value })
+              }
+              required
+            />
+          </label>
+
+          <div className="me-row">
+            <label className="me-field">
+              <span>ID / Passport number</span>
+              <input
+                type="text"
+                value={form.passport_number}
+                placeholder="e.g. AE1234567"
+                maxLength={32}
+                autoComplete="off"
+                onChange={(e) =>
+                  setForm({ ...form, passport_number: e.target.value })
+                }
+                required
+              />
+            </label>
+            <label className="me-field">
+              <span>Passport expiry</span>
+              <input
+                type="date"
+                value={form.passport_expiry}
+                onChange={(e) =>
+                  setForm({ ...form, passport_expiry: e.target.value })
+                }
+              />
+            </label>
+          </div>
+
+          <label className="me-field">
+            <span>Mobile phone</span>
+            <input
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              value={form.mobile}
+              placeholder="e.g. +30 694 000 0000"
+              maxLength={32}
+              onChange={(e) => setForm({ ...form, mobile: e.target.value })}
+              required
+            />
+          </label>
+
+          <p className="me-hint" style={{ marginTop: 4 }}>
+            Stored encrypted in your Cabin — visible to you, decrypted
+            for the captain at the moment of embarkation paperwork.
+          </p>
+        </div>
+
+        <h2 className="me-subhead">For the chef &amp; the captain</h2>
 
         <label className="me-field">
           <span>Allergies & dietary notes</span>
@@ -368,54 +483,11 @@ export default function CabinMePage() {
           />
         </label>
 
-        <h2 className="me-subhead">For marina paperwork (optional)</h2>
-
-        <label className="me-field">
-          <span>Nationality</span>
-          <input
-            type="text"
-            value={form.nationality}
-            placeholder="e.g. British · Greek · American"
-            maxLength={80}
-            onChange={(e) => setForm({ ...form, nationality: e.target.value })}
-          />
-        </label>
-
-        <div className="me-row">
-          <label className="me-field">
-            <span>Passport number</span>
-            <input
-              type="text"
-              value={form.passport_number}
-              placeholder="optional"
-              maxLength={32}
-              autoComplete="off"
-              onChange={(e) =>
-                setForm({ ...form, passport_number: e.target.value })
-              }
-            />
-          </label>
-          <label className="me-field">
-            <span>Passport expiry</span>
-            <input
-              type="date"
-              value={form.passport_expiry}
-              onChange={(e) =>
-                setForm({ ...form, passport_expiry: e.target.value })
-              }
-            />
-          </label>
-        </div>
-        <em className="me-hint">
-          {/* 2026-05-20 — Pass 6 (Domingo, Helen): "Kept privately
-              in your Cabin" is vague — privacy language for a
-              passport field should commit to encryption + the people
-              who can decrypt it. */}
-          Some marinas (especially in the Cyclades) ask for these.
-          Stored encrypted in your Cabin — visible only to you,
-          and decrypted for the captain at the moment of
-          embarkation paperwork.
-        </em>
+        {/* 2026-05-22 — Old "For marina paperwork (optional)" block
+            removed. Nationality / passport number / passport expiry
+            / mobile all moved up into the mandatory Crew List block
+            at the top of the form. The privacy hint is now rendered
+            inside that block too. */}
 
         <h2 className="me-subhead">Aboard the yacht</h2>
 
@@ -557,6 +629,35 @@ export default function CabinMePage() {
           color: var(--gy-gold);
           font-weight: 500;
           margin: 8px 0 0 0;
+        }
+        /* 2026-05-22 — Crew List essentials block: bordered to read
+            as a distinct, mandatory unit; subtle ivory background
+            so it doesn't shout. */
+        .me-crewlist {
+          background: rgba(201, 168, 76, 0.05);
+          border: 1px solid rgba(201, 168, 76, 0.35);
+          border-left: 3px solid var(--gy-gold);
+          padding: 18px 18px 14px 18px;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          margin-bottom: 4px;
+        }
+        .me-crewlist__head { display: flex; flex-direction: column; gap: 4px; }
+        .me-crewlist__eyebrow {
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 3.2px;
+          text-transform: uppercase;
+          color: #8a7327;
+          font-weight: 700;
+        }
+        .me-crewlist__copy {
+          margin: 0;
+          font-family: var(--gy-font-editorial);
+          font-size: 13.5px;
+          line-height: 1.65;
+          color: rgba(13, 27, 42, 0.72);
         }
         .me-field {
           display: flex;

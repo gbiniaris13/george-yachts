@@ -149,23 +149,28 @@ export default async function BriefReviewPage() {
     (m) => m.brief_participation_opt_out_at,
   );
 
-  // Readiness map for the submit modal — guests who are NOT
-  // opted-out and still owe their personal details (allergies,
-  // dietary, swimming, passport). Principal sees this list and can
-  // either nudge them or send anyway.
+  // 2026-05-22 — Crew-list readiness — HARD gate.
+  // The brief now requires every cabin member (principal + every
+  // non-opted-out guest) to have completed the five port-authority
+  // essentials (date of birth, gender, nationality, ID or passport
+  // number, mobile). personal_details_completed_at is set by the
+  // /api/cabin/me PUT only when isCrewListComplete passes, so we
+  // can read it as the canonical "crew-list ready" signal.
   const guestRows = (groupRows ?? []).filter(
     (m) => m.role !== "principal_charterer",
   );
-  const pendingGuests = guestRows
-    .filter(
-      (m) =>
-        !m.brief_participation_opt_out_at &&
-        !m.personal_details_completed_at,
-    )
+  const allMembersForReadiness = (groupRows ?? []).filter(
+    (m) => !m.brief_participation_opt_out_at,
+  );
+  const pendingMembers = allMembersForReadiness
+    .filter((m) => !m.personal_details_completed_at)
     .map((m) => ({
       name: m.display_name || m.email,
+      role: m.role,
       hasLoggedIn: Boolean(m.last_login_at),
     }));
+  // Back-compat alias used by ReviewSubmit's existing copy paths.
+  const pendingGuests = pendingMembers;
 
   const isSubmitted = Boolean(cabin.brief_submitted_at);
   const submittedAtPretty = isSubmitted

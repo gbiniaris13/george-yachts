@@ -65,26 +65,29 @@ export default function ReviewSubmit({
         </p>
       )}
 
-      {/* 2026-05-22 — Readiness preamble. Pending = guests who
-          haven't opted out AND haven't filled their personal
-          details. The principal sees this BEFORE the send button,
-          so the lock decision is informed rather than reflexive. */}
+      {/* 2026-05-22 — HARD readiness gate. Per George's directive
+          "πρέπει για να κλειδώσει ή αλλιώς δεν κλειδώνει", the brief
+          cannot be sent until every non-opted-out member has finished
+          their Crew List essentials (port-authority paperwork). The
+          Send button below stays disabled while pendingCount > 0,
+          and this panel names who's pending so the principal can
+          nudge them. */}
       {pendingCount > 0 && (
         <div className="cbr-submit__pending">
           <div className="cbr-submit__pending-eyebrow">
-            Still waiting on your group
+            Crew list still pending — required before sending
           </div>
           <p className="cbr-submit__pending-copy">
-            <strong>{pendingCount}</strong> of <strong>{guestsTotal}</strong>{" "}
-            {guestsTotal === 1 ? "guest" : "guests"} {pendingCount === 1 ? "hasn't" : "haven't"} shared
-            their personal details yet (allergies, dietary, swimming,
-            passport).
+            <strong>{pendingCount}</strong> {pendingCount === 1 ? "person" : "people"} in your group {pendingCount === 1 ? "hasn't" : "haven't"} finished {pendingCount === 1 ? "their" : "their"} Crew List yet (date of birth, gender, nationality, ID or passport number, mobile). The harbour authorities require these for every person aboard, so the brief stays unlocked until they're in.
           </p>
           <ul className="cbr-submit__pending-list">
             {pendingGuests.slice(0, 8).map((g, i) => (
               <li key={`${g.name}-${i}`}>
                 {g.name}
-                {!g.hasLoggedIn && (
+                {g.role === "principal_charterer" && (
+                  <em className="cbr-submit__pending-tag"> · you</em>
+                )}
+                {!g.hasLoggedIn && g.role !== "principal_charterer" && (
                   <em className="cbr-submit__pending-tag">
                     {" "}
                     · not yet signed in
@@ -100,10 +103,11 @@ export default function ReviewSubmit({
           </ul>
           <p className="cbr-submit__pending-note">
             <em>
-              You can still send the brief now — George will read what
-              we have and follow up with anyone missing. Or give them
-              another day or two, and resend invitations from{" "}
-              <a href="/cabin/guests">Your Group</a>.
+              Nudge them quietly from{" "}
+              <a href="/cabin/guests">Your Group</a>, or — if you
+              decide someone won't be filling theirs — they can mark
+              themselves as having stepped aside (opt out) from their
+              own page.
             </em>
           </p>
         </div>
@@ -123,13 +127,23 @@ export default function ReviewSubmit({
 
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => pendingCount === 0 && setOpen(true)}
         className="cbr-submit__cta"
+        disabled={pendingCount > 0}
+        title={
+          pendingCount > 0
+            ? "The crew list must be complete before you can send the brief."
+            : undefined
+        }
       >
-        Send to George →
+        {pendingCount > 0
+          ? `Waiting on ${pendingCount} crew-list ${pendingCount === 1 ? "line" : "lines"}`
+          : "Send to George →"}
       </button>
       <p className="cbr-submit__after">
-        Once you send, only George can re-open the brief.
+        {pendingCount > 0
+          ? "The brief unlocks the moment everyone's Crew List is in. You'll get a quiet ping."
+          : "Once you send, only George can re-open the brief."}
       </p>
 
       {open && (
@@ -227,9 +241,15 @@ export default function ReviewSubmit({
           cursor: pointer;
           transition: background 160ms ease, color 160ms ease;
         }
-        .cbr-submit__cta:hover {
+        .cbr-submit__cta:hover:not(:disabled) {
           background: var(--gy-gold);
           color: var(--gy-navy);
+        }
+        .cbr-submit__cta:disabled {
+          background: rgba(13, 27, 42, 0.18);
+          color: rgba(248, 245, 240, 0.85);
+          border-color: rgba(13, 27, 42, 0.18);
+          cursor: not-allowed;
         }
         .cbr-submit__after {
           font-family: var(--gy-font-editorial);
