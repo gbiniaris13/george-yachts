@@ -137,13 +137,31 @@ export default function BeveragesSectionPage() {
             <RadioGroup
               name="champagne_tier"
               label="If yes — what level"
-              hint="The hostess matches the boat's house list to your level. Anything beyond the range below is confirmed by phone before ordering, never silently added to your tab."
+              hint="The hostess matches the boat's house list to your level. Anything materially above your stated tier is confirmed by phone before ordering — never silently added to your tab."
               register={register}
               options={[
-                { value: "premium",          label: "Premium · €120–€300 per bottle (vintage, grandes maisons)" },
-                { value: "standard",         label: "Standard · €60–€120 per bottle (everyday quality)" },
-                { value: "classic",          label: "Classic · €40–€70 per bottle (house pour for toasts)" },
-                { value: "leave_to_captain", label: "Leave it to the captain" },
+                {
+                  value: "premium",
+                  label: "Premium",
+                  description:
+                    "Vintage, grandes maisons. This is our most generous tier — selecting it noticeably shapes your APA usage.",
+                },
+                {
+                  value: "standard",
+                  label: "Standard",
+                  description:
+                    "Respected everyday champagne. The popular middle ground.",
+                },
+                {
+                  value: "classic",
+                  label: "Classic",
+                  description:
+                    "House pour for toasts. The lightest tier on your APA — most likely to leave a refund at week's end.",
+                },
+                {
+                  value: "leave_to_captain",
+                  label: "Leave it to the captain",
+                },
               ]}
             />
             <OpenTextarea
@@ -195,13 +213,31 @@ export default function BeveragesSectionPage() {
             <RadioGroup
               name="wine_tier"
               label="Overall level"
-              hint="Same ceiling logic as champagne — anything above the range is confirmed by phone first."
+              hint="Same ceiling logic as champagne — anything materially above the stated tier is confirmed by phone first."
               register={register}
               options={[
-                { value: "premium",          label: "Premium · €80–€200 per bottle (crus, vintages)" },
-                { value: "standard",         label: "Standard · €30–€70 per bottle (good everyday wines)" },
-                { value: "classic",          label: "Classic · €15–€30 per bottle (house red & white)" },
-                { value: "leave_to_captain", label: "Leave it to the captain" },
+                {
+                  value: "premium",
+                  label: "Premium",
+                  description:
+                    "Crus, vintages, vineyard-rare bottles. This is our most generous tier — selecting it noticeably shapes your APA usage.",
+                },
+                {
+                  value: "standard",
+                  label: "Standard",
+                  description:
+                    "Good everyday wines, respected Greek + international labels. The popular middle ground.",
+                },
+                {
+                  value: "classic",
+                  label: "Classic",
+                  description:
+                    "House red & white. The lightest tier on your APA — most likely to leave a refund at week's end.",
+                },
+                {
+                  value: "leave_to_captain",
+                  label: "Leave it to the captain",
+                },
               ]}
             />
             <OpenTextarea
