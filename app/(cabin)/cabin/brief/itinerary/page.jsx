@@ -88,38 +88,13 @@ export default function ItinerarySectionPage() {
                 field stays in lib/cabin/schemas.js so already-saved
                 briefs continue to validate. */}
 
-            {/* 2026-05-20 — Eleanna friend-test asked "Τι είναι το PADI;"
-                Rephrasing the label so the acronym isn't load-bearing:
-                "diving certification required" reads as the same gate
-                without forcing every reader to recognise the body name.
-                Hint already explains; tightened it too. */}
-            <CheckboxGroup
-              name="activities_extra"
-              label="Additional activities"
-              hint="The captain pre-checks licences, age limits, and provisioning. Scuba diving requires a recognised diving certificate (PADI, SSI, BSAC or similar)."
-              register={register}
-              twoColumn
-              options={[
-                { value: "cycling",            label: "Cycling ashore" },
-                { value: "island_tour",        label: "Island tour (driver + car)" },
-                { value: "scuba_diving_padi",  label: "Scuba diving (diving certificate required)" },
-                { value: "fishing_specific",   label: "Sport fishing" },
-              ]}
-            />
-            {/* 2026-05-20 — Friend-test pass 4 (Sarah):
-                "Itinerary requires a PADI / SSI / BSAC certificate
-                 for scuba — but the brief never asks me whether anyone
-                 has one. Close the loop." Added a free-text field
-                 surfaced conditionally below the scuba checkbox. The
-                 captain reads the list verbatim. */}
-            <OpenTextarea
-              label="Anyone in your group already certified to dive?"
-              hint="Only fill if scuba is on the wishlist above. Name + body (PADI Open Water, SSI Advanced, BSAC Sports, etc.) per certified guest. Card numbers + photos can come closer to the date."
-              name="diving_certifications"
-              register={register}
-              rows={3}
-              placeholder={"e.g. Sarah — PADI Open Water (2018)\nMark — PADI Advanced (2014)"}
-            />
+            {/* 2026-05-22 — George removed the "Additional activities"
+                checkbox group (cycling, island tour, scuba, sport
+                fishing) and the diving-certifications free-text. Those
+                are paid extras coordinated separately with George
+                closer to the dates; they don't belong in the brief.
+                Schema fields stay so any already-saved briefs continue
+                to validate, but they're no longer offered or rendered. */}
 
             <h2 className="brief-subhead">Celebrations</h2>
             <CheckboxGroup

@@ -406,7 +406,6 @@ export default async function PreferenceSharePage({ params }) {
             <Row k="Preferred areas" v={fmtMaybe(itinerary.preferred_areas)} />
             <Row k="Specific places they would love" v={fmtMaybe(itinerary.specific_places)} />
             <Row k="Night-time preference" v={fmtMaybe(itinerary.night_preference)} />
-            <Row k="Extra activities of interest" v={fmtMaybe(itinerary.activities_extra)} />
           </SubBlock>
 
           {(itinerary.special_event_types ||
