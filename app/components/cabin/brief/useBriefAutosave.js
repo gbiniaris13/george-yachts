@@ -22,6 +22,29 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 const DEBOUNCE_MS = 600;
 
+// 2026-05-22 — Admin preview mode detection.
+//
+// When an admin clicks "Preview as customer" in the CRM, the
+// landing handler sets a `gy_cabin_preview` cookie alongside
+// the session cookie. The edge middleware then 403s every
+// /api/cabin/* write so the admin can't accidentally save
+// chat / brief / mood-board entries under the customer's
+// identity.
+//
+// Without this guard, the brief autosave would still TRY every
+// 600 ms — get 403 — surface the "Couldn't save" toast — make
+// George (admin) think something is broken when it's actually
+// the safety-by-design. Now: skip the network entirely when the
+// preview cookie is present, and report state === "preview" so
+// SaveStatus can show a calm "preview — not saved" indicator
+// instead of the error toast.
+function isPreviewMode() {
+  if (typeof document === "undefined") return false;
+  return document.cookie
+    .split(";")
+    .some((c) => c.trim().startsWith("gy_cabin_preview="));
+}
+
 export default function useBriefAutosave(sectionKey) {
   const [initialData, setInitialData] = useState(null);
   const [state, setState] = useState("loading");
@@ -29,6 +52,11 @@ export default function useBriefAutosave(sectionKey) {
   const timerRef = useRef(null);
   const abortRef = useRef(null);
   const pendingPayloadRef = useRef(null);
+  const previewRef = useRef(false);
+
+  useEffect(() => {
+    previewRef.current = isPreviewMode();
+  }, []);
 
   // ---- initial load ----
   useEffect(() => {
@@ -43,7 +71,12 @@ export default function useBriefAutosave(sectionKey) {
         const json = await r.json();
         if (!cancelled) {
           setInitialData(json.data ?? {});
-          setState("idle");
+          // 2026-05-22 — Preview sessions land on "preview"
+          // straight away. SaveStatus renders a calm "Admin
+          // preview · not saving" indicator instead of running
+          // the saving / saved / error states the autosave
+          // hook would otherwise produce.
+          setState(isPreviewMode() ? "preview" : "idle");
         }
       } catch {
         if (!cancelled) {
@@ -60,6 +93,15 @@ export default function useBriefAutosave(sectionKey) {
   // ---- save fn (debounced) ----
   const save = useCallback(
     (data) => {
+      // 2026-05-22 — Preview mode: skip the network entirely.
+      // The middleware would 403 every write anyway; making the
+      // request just to learn that wastes a round-trip and
+      // surfaces a misleading "Couldn't save" toast. Quietly
+      // accept the edit, stay in "preview" state.
+      if (previewRef.current) {
+        setState("preview");
+        return;
+      }
       pendingPayloadRef.current = data;
       if (timerRef.current) clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
@@ -77,6 +119,14 @@ export default function useBriefAutosave(sectionKey) {
   // hiccups; the SaveStatus copy "keep typing to retry" still
   // tells the user the action is on them if the retry fails.
   const flushSave = useCallback(async () => {
+    // 2026-05-22 — Belt-and-braces: even if a flush is invoked
+    // outside the debounce path (visibility change, unmount,
+    // pagehide), skip the network when in preview mode.
+    if (previewRef.current) {
+      pendingPayloadRef.current = null;
+      setState("preview");
+      return;
+    }
     const payload = pendingPayloadRef.current;
     if (payload == null) return;
     pendingPayloadRef.current = null;
