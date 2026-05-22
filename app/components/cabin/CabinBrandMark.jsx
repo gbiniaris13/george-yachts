@@ -1,34 +1,29 @@
 // app/components/cabin/CabinBrandMark.jsx
 // =============================================================
-// The George Yachts logo as it appears at the top of every cabin
-// page.
+// George Yachts brand mark in the cabin header.
 //
-// 2026-05-22 — George's directive after the EFFIE STAR preview:
-//   "Πάνω πάνω, δίπλα στο George Y. υπάρχει ένα λογότυπο, ένα
-//    μικρό λογότυπο μαύρο με ένα χρυσό G. Εγώ θέλω να μου βάλει
-//    στο λογότυπο που υπάρχει και στο site μου, αυτό με το σκάφος
-//    χρυσό ασημή που είναι. […] Θα ήθελα αυτό το λογότυπο να
-//    μπει στην μέση του The Cabin, όπως είναι και στο site,
-//    κεντραρισμένο στη μέση."
+// 2026-05-22 — Two corrections from George after the first
+// logo-swap attempt:
 //
-// Previous version was a custom inline-SVG monogram (a small G
-// in a black tile) plus the wordmark "GEORGE YACHTS" /
-// "Brokerage House" set in HTML — a stand-in I built for the
-// pass-7 header. George wants the real brand mark used across
-// the marketing site: gold-silver yacht wave + serif wordmark +
-// gold divider + spaced caps strapline, all as one composed
-// SVG.
+//   1. The asset I used (/images/logo-full-light.svg) was a
+//      simplified abstract version I'd composed earlier — gold
+//      curve + flat ivory blob + wordmark. George's actual
+//      logo is the elaborate gold-and-silver yacht-wave-and-
+//      hull illustration with the refined serif wordmark. He
+//      pointed me to the real SVG on his Desktop — that's now
+//      copied to /public/images/gy-logo-real.svg and rendered
+//      here.
 //
-// The asset already lives at /public/images/logo-full-light.svg
-// (1.6KB, pure vector, ivory wordmark designed for dark
-// backgrounds — perfect for the navy header). We render it via
-// <img> rather than inline so the SVG file is cached separately
-// from the HTML / JS bundles and any future revision is a
-// one-asset swap with no code change.
+//   2. The old header carried a small italic "The Cabin ·
+//      Filotimo" strapline below the wordmark — George liked
+//      it ("μου άρεσε αυτό, το είχες κάνει πιο πριν") and
+//      asked for it back. Restored beneath the logo, centred,
+//      gold italic.
 //
-// preserveAspectRatio="xMidYMid meet" inside the SVG keeps the
-// logo composed correctly at any rendered size — we just set a
-// height and let the width respond.
+// The brand mark sits in the centre of the header (grid 1fr
+// column flex-centres its child — see CabinShell). The right
+// column carries the vessel/date/principal chip, the left
+// the optional back arrow.
 // =============================================================
 
 import Link from "next/link";
@@ -42,25 +37,28 @@ export default function CabinBrandMark({ href = "/cabin" }) {
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/images/logo-full-light.svg"
+        src="/images/gy-logo-real.svg"
         alt="George Yachts · Brokerage House"
         className="cabin-brandmark__logo"
-        width={240}
-        height={96}
       />
+      <span className="cabin-brandmark__strapline">
+        The Cabin <em>· Filotimo</em>
+      </span>
 
       <style>{`
         .cabin-brandmark {
           display: inline-flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
+          gap: 6px;
           text-decoration: none;
           color: inherit;
-          padding: 4px 0;
+          padding: 2px 0;
         }
         .cabin-brandmark__logo {
           display: block;
-          height: 72px;
+          height: 84px;
           width: auto;
           /* Calm hover affordance — gentle warm-tone lift,
              without animating opacity which would dim the gold. */
@@ -68,17 +66,40 @@ export default function CabinBrandMark({ href = "/cabin" }) {
         }
         .cabin-brandmark:hover .cabin-brandmark__logo,
         .cabin-brandmark:focus-visible .cabin-brandmark__logo {
-          filter: drop-shadow(0 0 18px rgba(201, 168, 76, 0.35));
+          filter: drop-shadow(0 0 16px rgba(201, 168, 76, 0.32));
+        }
+        .cabin-brandmark__strapline {
+          font-family: var(--gy-font-editorial, Georgia, serif);
+          font-size: 12.5px;
+          letter-spacing: 0.35em;
+          text-transform: uppercase;
+          color: rgba(248, 245, 240, 0.78);
+          font-weight: 400;
+        }
+        .cabin-brandmark__strapline em {
+          font-style: italic;
+          color: var(--gy-gold, #C9A84C);
+          letter-spacing: 0.06em;
+          text-transform: none;
+          margin-left: 2px;
+          font-size: 13.5px;
         }
         @media (max-width: 767.98px) {
-          .cabin-brandmark__logo {
-            height: 56px;
+          .cabin-brandmark__logo { height: 64px; }
+          .cabin-brandmark__strapline {
+            font-size: 10.5px;
+            letter-spacing: 0.28em;
           }
+          .cabin-brandmark__strapline em { font-size: 11.5px; }
         }
         @media (max-width: 479.98px) {
-          .cabin-brandmark__logo {
-            height: 48px;
+          .cabin-brandmark { gap: 4px; }
+          .cabin-brandmark__logo { height: 52px; }
+          .cabin-brandmark__strapline {
+            font-size: 9.5px;
+            letter-spacing: 0.24em;
           }
+          .cabin-brandmark__strapline em { font-size: 10.5px; }
         }
       `}</style>
     </Link>
