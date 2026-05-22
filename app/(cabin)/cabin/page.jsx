@@ -38,6 +38,7 @@ import VoyageCarousel from "../../components/cabin/VoyageCarousel";
 import GreekWordOfTheDay from "../../components/cabin/GreekWordOfTheDay";
 import CabinIcon from "../../components/cabin/CabinIcon";
 import VesselBrochureBlock from "../../components/cabin/VesselBrochureBlock";
+import PreVoyageSteps from "../../components/cabin/PreVoyageSteps";
 import GhostCredit from "../../components/cabin/GhostCredit";
 import { titleCaseName, firstNameFromDisplayName, crewRoles, joinNouns, prettyDate } from "@/lib/cabin/format";
 
@@ -301,49 +302,21 @@ export default async function CabinHomePage() {
       </header>
 
       {/* ============================================================
-          PRIMARY CTA — different for principal vs guest.
+          PRE-VOYAGE STEPS — 2026-05-22 (George):
+          The cabin's two onboarding inputs (invite group · brief)
+          are now unified into a single magazine-style block at
+          the top of the page, then the vessel reveals beneath.
+          Renders role-aware: principal sees Step 01 + 02; guest
+          sees only Step 01 (their own /me details). Pressureless
+          luxury framing, status indicators on each card.
           ============================================================ */}
-      {isPrincipal ? (
-        <section className="cabin-home__primary">
-          <div className="cabin-home__section-label">Your first step</div>
-          <h2 className="cabin-home__primary-title">
-            {invitedCount === 0
-              ? "Invite the people sailing with you."
-              : completedCount < invitedCount
-                ? `${completedCount} of ${invitedCount} have shared their details.`
-                : "Your whole group is aboard — beautifully done."}
-          </h2>
-          <p className="cabin-home__primary-blurb">
-            {invitedCount === 0
-              ? "Paste their email addresses — we’ll send each guest their own private sign-in to your Cabin."
-              : completedCount < invitedCount
-                ? "We’ll quietly nudge anyone who hasn’t yet. You can also resend invites from the group page."
-                : "Browse the rest of your Cabin at your pace below."}
-          </p>
-          <Link href="/cabin/guests" className="cabin-home__cta">
-            {invitedCount === 0
-              ? "Invite your group ›"
-              : "Manage your group ›"}
-          </Link>
-        </section>
-      ) : (
-        <section className="cabin-home__primary">
-          <div className="cabin-home__section-label">Your first step</div>
-          <h2 className="cabin-home__primary-title">
-            {myDetailsComplete
-              ? "Thank you — the captain has what he needs."
-              : "Share a few quiet details about you."}
-          </h2>
-          <p className="cabin-home__primary-blurb">
-            {myDetailsComplete
-              ? "You can edit any of it from your details page below, anytime."
-              : "DOB, any allergies, swimming comfort — that’s really all we ask. Two minutes."}
-          </p>
-          <Link href="/cabin/me" className="cabin-home__cta">
-            {myDetailsComplete ? "Edit my details ›" : "Share my details ›"}
-          </Link>
-        </section>
-      )}
+      <PreVoyageSteps
+        isPrincipal={isPrincipal}
+        invitedCount={invitedCount}
+        completedCount={completedCount}
+        myDetailsComplete={myDetailsComplete}
+        briefPercent={percent}
+      />
 
       {/* 2026-05-22 — George rejected the small teaser:
           "λέμε αυτό το κείμενο στον πελάτη και δεν του δείχνουμε
@@ -358,53 +331,8 @@ export default async function CabinHomePage() {
           brochure IS the chapter. */}
       <VesselBrochureBlock cabin={cabin} photos={resolvedVesselPhotos} />
 
-      {/* ============================================================
-          YOUR SECOND STEP — THE CHARTER BRIEF.
-          ============================================================
-          2026-05-21 — Pass 7 (George):
-            "Το charter brief πρέπει να είναι το δεύτερο βήμα.
-             Πρέπει να καταλαβαίνει ότι αυτό πρέπει να το κάνει —
-             είναι για το ταξίδι σας. Όσες περισσότερες πληροφορίες
-             βάλετε, τόσο καλύτερα θα είμαστε οργανωμένοι εμείς, το
-             σκάφος και το πλήρωμα."
-
-          The previous design treated the brief as a quiet progress
-          card buried deep on the page. Now it's a full Second
-          Step card — same visual weight as Your First Step — with
-          warm framing explaining WHY this matters (everyone caring
-          for them needs it, including the captain and chef and
-          George himself). Still only shown for principals; guests
-          fill /me, not the brief.
-          ============================================================ */}
-      {isPrincipal && (
-        <section className="cabin-home__primary cabin-home__primary--second">
-          <div className="cabin-home__section-label">Your second step</div>
-          <h2 className="cabin-home__primary-title">
-            {percent > 0
-              ? `${percent}% of the brief is yours so far.`
-              : "Tell us about your week — in your own words."}
-          </h2>
-          <p className="cabin-home__primary-blurb">
-            This is the heart of preparing your charter. The captain
-            and the chef read it. Your hostess reads it. I read it. It
-            shapes how the boat is stocked, which coves we choose, the
-            small touches that turn a week into yours. The more you
-            give us, the better organised we&apos;ll all be for you —
-            and the more the week will feel made on purpose.
-          </p>
-          {percent > 0 && (
-            <div className="cabin-home__progress-bar" aria-hidden>
-              <div
-                className="cabin-home__progress-fill"
-                style={{ width: `${percent}%` }}
-              />
-            </div>
-          )}
-          <Link href="/cabin/brief" className="cabin-home__cta">
-            {percent > 0 ? "Continue the brief ›" : "Start the brief ›"}
-          </Link>
-        </section>
-      )}
+      {/* 2026-05-22 — Step 02 (Charter Brief) folded into the
+          PreVoyageSteps block above. */}
 
       {/* 2026-05-20 — Friend-test pass 3 (George): "Δεν είδα κουμπί
           να βάλω την Καμπίνα στο κινητό." Install nudge moved here
