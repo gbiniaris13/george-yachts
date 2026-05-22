@@ -130,6 +130,74 @@ export default function ArrivalSectionPage() {
               rows={3}
             />
 
+            {/* 2026-05-22 — Local Contact in Greece. George's
+                directive: "Captain contacts the principal by
+                default. If you have someone in Greece, share
+                their name and mobile."
+                Pattern matches the BF / industry preference
+                sheets — a single line at the top of section 01
+                that lets the captain reach a local point of
+                contact (relative, hotel concierge, etc.) for
+                last-minute coordination without waking the
+                principal. */}
+            <h2 className="brief-subhead">Local contact in Greece</h2>
+            <p className="brief-note brief-note--lead">
+              <em>
+                By default, the captain reaches you — the principal
+                charterer — directly for anything that needs your call.
+                If someone else is already on the ground in Greece (a
+                family member, a personal concierge, a Greek-speaking
+                friend), share their details and the captain will
+                coordinate with them when it&apos;s helpful.
+              </em>
+            </p>
+            <RadioGroup
+              name="local_contact.same_as_principal"
+              label="Who should the captain contact in country?"
+              register={register}
+              options={[
+                {
+                  value: "true",
+                  label: "Me, the principal charterer — direct.",
+                },
+                {
+                  value: "false",
+                  label:
+                    "Someone else is on the ground — let me share who.",
+                },
+              ]}
+            />
+            <details className="brief-details">
+              <summary>If someone else — their details</summary>
+              <div className="brief-stack">
+                <TextField
+                  label="Their full name"
+                  name="local_contact.full_name"
+                  register={register}
+                  placeholder="e.g. Eleni Papadopoulos"
+                />
+                <TextField
+                  label="Relationship to you"
+                  name="local_contact.relationship"
+                  register={register}
+                  placeholder="e.g. sister, family concierge, hotel manager"
+                />
+                <TextField
+                  label="Mobile (with country code)"
+                  name="local_contact.mobile"
+                  register={register}
+                  placeholder="+30 …"
+                />
+                <OpenTextarea
+                  label="Anything the captain should know"
+                  hint="Languages they speak, hours they're reachable, any background that helps."
+                  name="local_contact.notes"
+                  register={register}
+                  rows={2}
+                />
+              </div>
+            </details>
+
             <h2 className="brief-subhead">Transfers</h2>
             <RadioGroup
               name="transfers_requested"
