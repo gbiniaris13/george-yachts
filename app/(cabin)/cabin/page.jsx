@@ -30,6 +30,7 @@ import {
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import { buildAtAGlance } from "@/lib/cabin/prefill";
 import { getCircleMember, nextTierGoal, TIERS } from "@/lib/cabin/filotimo";
+import { resolveVesselPhotoUrls } from "@/lib/cabin/vessel-photo-urls";
 import CharterAtAGlance from "../../components/cabin/CharterAtAGlance";
 import IntroParagraph from "../../components/cabin/IntroParagraph";
 import InstallNudge from "../../components/cabin/InstallNudge";
@@ -239,6 +240,16 @@ export default async function CabinHomePage() {
       ? `${prettyDate(cabin.charter_period_from)} — ${prettyDate(cabin.charter_period_to)}`
       : null;
 
+  // 2026-05-22 — Resolve vessel photos for rendering. Each entry
+  // in cabin.vessel_photos is either {url} (operator pasted) or
+  // {path} (auto-extracted from the brochure PDF and uploaded to
+  // the private cabin-photos bucket). Resolver signs storage
+  // paths and returns a uniform {url, caption, credit, page}
+  // array the components can render without caring which shape
+  // they came from. Passed to both VesselHero and VesselTeaser
+  // so the same signed URLs back both renders (cache-friendly).
+  const resolvedVesselPhotos = await resolveVesselPhotoUrls(cabin.vessel_photos);
+
   return (
     <div className="cabin-home">
       {/* 2026-05-21 — Pass 7 (George): "Με το που μπαίνει ο
@@ -247,7 +258,7 @@ export default async function CabinHomePage() {
           vessel_photos is empty — the page below works without
           it, but with it on, the moment-of-entry is unmistakable. */}
       <VesselHero
-        photos={cabin.vessel_photos}
+        photos={resolvedVesselPhotos}
         vesselName={cabin.vessel_name}
         makeModel={cabin.vessel_make_model}
         dates={heroDates}
@@ -339,7 +350,7 @@ export default async function CabinHomePage() {
           and the second step so the customer gets a calm pause
           on what they've just chartered before being asked to
           fill the brief. */}
-      <VesselTeaser cabin={cabin} />
+      <VesselTeaser cabin={cabin} photos={resolvedVesselPhotos} />
 
       {/* ============================================================
           YOUR SECOND STEP — THE CHARTER BRIEF.

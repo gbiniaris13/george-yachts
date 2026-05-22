@@ -26,18 +26,25 @@ function joinFacts(items) {
   return items.filter((it) => it && it.value).slice(0, 3);
 }
 
-export default function VesselTeaser({ cabin }) {
+export default function VesselTeaser({ cabin, photos: resolvedPhotos }) {
   if (!cabin) return null;
 
   const brochure =
     cabin.vessel_brochure && typeof cabin.vessel_brochure === "object"
       ? cabin.vessel_brochure
       : {};
-  const photos = Array.isArray(cabin.vessel_photos)
-    ? cabin.vessel_photos.filter(
-        (p) => p && typeof p?.url === "string" && p.url.trim().length > 0,
-      )
-    : [];
+  // 2026-05-22 — Photos come from the resolver upstream (which
+  // signs storage paths to URLs and filters bad entries). If
+  // they aren't supplied we fall back to the raw column for
+  // backwards compatibility, but the customer-facing renderers
+  // should always be passing resolved photos.
+  const photos = Array.isArray(resolvedPhotos) && resolvedPhotos.length > 0
+    ? resolvedPhotos
+    : Array.isArray(cabin.vessel_photos)
+      ? cabin.vessel_photos.filter(
+          (p) => p && typeof p?.url === "string" && p.url.trim().length > 0,
+        )
+      : [];
 
   // Three tile photos. We deliberately SKIP photos[0] because
   // that's already the VesselHero band at the top of the page —

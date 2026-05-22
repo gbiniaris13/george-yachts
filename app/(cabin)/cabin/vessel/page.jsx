@@ -7,6 +7,7 @@
 import { redirect } from "next/navigation";
 import { readSessionFromCookies, pickActiveCabinId } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
+import { resolveVesselPhotoUrls } from "@/lib/cabin/vessel-photo-urls";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
 
@@ -41,11 +42,10 @@ export default async function VesselPage() {
   // 2026-05-20 — Friend-test pass 4 (Tyler, David, Helen):
   //   "Vessel page has NO photos. The most evocative page in the
   //    Cabin has been left empty."
-  // Pull from the new cabins.vessel_photos column (array of {url,
-  // caption?, credit?}). George pastes URLs in GY Command.
-  const photos = Array.isArray(cabin.vessel_photos)
-    ? cabin.vessel_photos.filter((p) => p && typeof p.url === "string" && p.url.trim().length > 0)
-    : [];
+  // 2026-05-22 — Photos now flow through the resolver so storage-
+  // path entries (auto-extracted from brochure) get signed URLs at
+  // render time, while pasted URLs flow through as-is.
+  const photos = await resolveVesselPhotoUrls(cabin.vessel_photos);
 
   const name = brochure.vessel_name || cabin.vessel_name;
   const typeLine = brochure.type_line;
