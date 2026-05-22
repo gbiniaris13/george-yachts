@@ -30,24 +30,36 @@ export async function POST() {
   const member = resolveMembership(session, cabinId);
   if (!member) return NextResponse.json({ ok: false }, { status: 403 });
 
-  // 2026-05-22 — Only the principal charterer can ship the brief.
-  // Assistants and guests can collaboratively edit any section
-  // (asynchronous group brief), but the moment-of-submission gate
-  // belongs to the person paying for the trip. They take final
-  // responsibility for what the captain receives.
-  if (member.role !== "principal_charterer") {
+  // 2026-05-22 — Submission gate: principal charterer OR a
+  // cabin_member the principal has explicitly elevated to
+  // is_brief_admin = true via /api/cabin/delegate-brief-admin.
+  // Guests and assistants without that flag cannot ship the
+  // brief — they can edit any section, but the final send-to-
+  // George moment belongs to the principal or their nominated
+  // delegate.
+  const db = getCabinDb();
+  let isAuthorized = member.role === "principal_charterer";
+  if (!isAuthorized) {
+    const memberRow = await dbQuery(
+      db
+        .from("cabin_members")
+        .select("is_brief_admin")
+        .eq("id", member.member_id)
+        .maybeSingle(),
+    );
+    isAuthorized = Boolean(memberRow?.is_brief_admin);
+  }
+  if (!isAuthorized) {
     return NextResponse.json(
       {
         ok: false,
-        error: "only-principal",
+        error: "not-authorised",
         message:
-          "Only the principal charterer can send the brief to George.",
+          "Only the principal charterer or a delegated brief admin can send the brief to George.",
       },
       { status: 403 },
     );
   }
-
-  const db = getCabinDb();
 
   // Idempotent — if the brief is already with George, return the
   // existing submission rather than firing another notification.

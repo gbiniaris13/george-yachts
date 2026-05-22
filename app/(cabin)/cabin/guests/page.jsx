@@ -266,12 +266,14 @@ const STATUS_BADGE = {
 
 export default function GuestsPage() {
   const [members, setMembers] = useState(null);
+  const [viewer, setViewer] = useState(null);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
   const [info, setInfo] = useState(null);
   const [resendingId, setResendingId] = useState(null);
+  const [delegatingId, setDelegatingId] = useState(null);
 
   // Bulk-invite state — paste a list of emails (one per line, or
   // comma-separated). We POST each sequentially and report the
@@ -329,8 +331,41 @@ export default function GuestsPage() {
     try {
       const j = await (await fetch("/api/cabin/guests")).json();
       setMembers(j.members ?? []);
+      setViewer(j.viewer ?? null);
     } catch {
       setMembers([]);
+    }
+  }
+
+  async function onToggleBriefAdmin(memberId, currentlyAdmin, displayName) {
+    const verb = currentlyAdmin ? "revoke admin rights from" : "make admin";
+    const who = displayName || "this guest";
+    if (!confirm(
+      currentlyAdmin
+        ? `Revoke ${who}'s brief admin rights? They will no longer be able to send the brief to George on your behalf.`
+        : `Make ${who} a brief admin? They will be able to send the brief to George on your behalf — recorded in the cabin's audit log as your explicit delegation.`,
+    )) return;
+    setDelegatingId(memberId);
+    setError(null);
+    setInfo(null);
+    try {
+      const r = await fetch("/api/cabin/delegate-brief-admin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ member_id: memberId, is_admin: !currentlyAdmin }),
+      });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || "delegate-failed");
+      setInfo(
+        currentlyAdmin
+          ? `${who} is no longer a brief admin.`
+          : `${who} can now send the brief to George.`,
+      );
+      void load();
+    } catch {
+      setError("Could not update brief admin just now. Try again.");
+    } finally {
+      setDelegatingId(null);
     }
   }
   useEffect(() => { void load(); }, []);
@@ -526,6 +561,11 @@ export default function GuestsPage() {
               m.role !== "principal_charterer" &&
               m.role !== "designated_assistant" &&
               (status === "invited" || status === "joined");
+            const viewerIsPrincipal = viewer?.role === "principal_charterer";
+            const canToggleAdmin =
+              viewerIsPrincipal &&
+              m.role !== "principal_charterer" &&
+              (status === "joined" || status === "ready");
             return (
               <li key={m.id}>
                 <div className="guests-list__head">
@@ -545,6 +585,22 @@ export default function GuestsPage() {
                     {badge.label}
                   </div>
                 )}
+                {m.is_brief_admin && (
+                  <div
+                    className="guests-list__badge guests-list__badge--admin"
+                    title="The principal delegated brief-admin rights to this guest — they can send the brief to George."
+                  >
+                    Brief admin
+                  </div>
+                )}
+                {m.brief_participation_opt_out_at && (
+                  <div
+                    className="guests-list__badge guests-list__badge--optout"
+                    title="This guest opted out of order/cellar choices. Personal facts (allergies, dietary, swimming, passport) remain on them."
+                  >
+                    Opted out of orders
+                  </div>
+                )}
                 <div className="guests-list__actions">
                   {showResend && (
                     <button
@@ -554,6 +610,26 @@ export default function GuestsPage() {
                       className="guests-list__resend"
                     >
                       {resendingId === m.id ? "Resending…" : "Resend invite"}
+                    </button>
+                  )}
+                  {canToggleAdmin && (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        onToggleBriefAdmin(
+                          m.id,
+                          Boolean(m.is_brief_admin),
+                          m.display_name,
+                        )
+                      }
+                      disabled={delegatingId === m.id}
+                      className="guests-list__admin"
+                    >
+                      {delegatingId === m.id
+                        ? "Saving…"
+                        : m.is_brief_admin
+                          ? "Revoke brief admin"
+                          : "Make brief admin"}
                     </button>
                   )}
                   {m.role !== "principal_charterer" && (
@@ -769,6 +845,17 @@ export default function GuestsPage() {
         .guests-list__badge--warm  { background: rgba(201, 168, 76, 0.14); color: #8a7327; }
         .guests-list__badge--cool  { background: rgba(13, 27, 42, 0.06);   color: rgba(13,27,42,0.65); }
         .guests-list__badge--muted { background: rgba(13, 27, 42, 0.04);   color: rgba(13,27,42,0.45); }
+        .guests-list__badge--admin {
+          background: var(--gy-navy);
+          color: var(--gy-ivory);
+          margin-left: 6px;
+        }
+        .guests-list__badge--optout {
+          background: rgba(13, 27, 42, 0.08);
+          color: rgba(13,27,42,0.65);
+          font-style: italic;
+          margin-left: 6px;
+        }
         .guests-list__actions {
           margin-top: 12px;
           display: flex;
