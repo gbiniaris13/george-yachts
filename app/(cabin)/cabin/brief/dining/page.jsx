@@ -215,13 +215,14 @@ export default function DiningSectionPage() {
                 { value: "juice",           label: "Juice (kind in specifics)" },
               ]}
             />
-            <OpenTextarea
-              label="Brand preferences or specific orders"
-              name="coffee_tea_specifics"
-              register={register}
-              rows={2}
-              placeholder="e.g. Lavazza espresso, oat milk for the cappuccinos, Earl Grey tea"
-            />
+            {/* 2026-05-22 — George removed the "Brand preferences or
+                specific orders" free-text. Charter yachts don't
+                carry pro grinders or bar-quality espresso machines,
+                so committing the chef to a specific bean/brand sets
+                an expectation the boat can't deliver. The chef
+                provisions what the boat carries; that's the deal.
+                Schema field coffee_tea_specifics stays for existing
+                briefs but is no longer offered or rendered. */}
 
             {/* ─────────── Service preferences ─────────── */}
             <h2 className="brief-subhead">Service preferences</h2>

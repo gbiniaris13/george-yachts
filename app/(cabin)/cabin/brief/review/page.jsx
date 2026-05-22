@@ -127,14 +127,17 @@ export default async function BriefReviewPage() {
     (sections ?? []).map((s) => [s.section_key, s]),
   );
 
-  // 2026-05-22 — Brief admins (delegated) + opted-out guests. The
-  // principal sees both lists on the review screen as a calm reminder
-  // of who's helping ship the brief and who has stepped aside.
+  // 2026-05-22 — Brief admins (delegated) + opted-out guests + the
+  // readiness check on the Send-to-George modal. The principal sees:
+  //   • who's been delegated brief-admin (also able to submit)
+  //   • who has formally stepped aside from order/cellar choices
+  //   • who's still pending personal-details (so they can be nudged
+  //     before the brief is locked).
   const groupRows = await dbQuery(
     db
       .from("cabin_members")
       .select(
-        "id, display_name, email, role, is_brief_admin, brief_participation_opt_out_at, brief_participation_opt_out_note",
+        "id, display_name, email, role, is_brief_admin, brief_participation_opt_out_at, brief_participation_opt_out_note, personal_details_completed_at, last_login_at",
       )
       .eq("cabin_id", cabinId)
       .is("deleted_at", null),
@@ -145,6 +148,24 @@ export default async function BriefReviewPage() {
   const optedOut = (groupRows ?? []).filter(
     (m) => m.brief_participation_opt_out_at,
   );
+
+  // Readiness map for the submit modal — guests who are NOT
+  // opted-out and still owe their personal details (allergies,
+  // dietary, swimming, passport). Principal sees this list and can
+  // either nudge them or send anyway.
+  const guestRows = (groupRows ?? []).filter(
+    (m) => m.role !== "principal_charterer",
+  );
+  const pendingGuests = guestRows
+    .filter(
+      (m) =>
+        !m.brief_participation_opt_out_at &&
+        !m.personal_details_completed_at,
+    )
+    .map((m) => ({
+      name: m.display_name || m.email,
+      hasLoggedIn: Boolean(m.last_login_at),
+    }));
 
   const isSubmitted = Boolean(cabin.brief_submitted_at);
   const submittedAtPretty = isSubmitted
@@ -283,6 +304,8 @@ export default async function BriefReviewPage() {
           vesselName={cabin.vessel_name}
           completionPercent={completionPercent}
           allDone={allDone}
+          guestsTotal={guestRows.length}
+          pendingGuests={pendingGuests}
         />
       )}
 

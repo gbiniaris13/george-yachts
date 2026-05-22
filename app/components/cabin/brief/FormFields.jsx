@@ -530,7 +530,22 @@ export function LikeDislikeMatrix({ name, label, hint, items, register }) {
         </div>
         {items.map((it) => (
           <div key={it.value} className="brief-matrix-row">
-            <span className="brief-matrix-label">{it.label}</span>
+            {/* 2026-05-22 — George re-reported the labels as invisible
+                on Effie Star (Fish/Shellfish/Beef/Pork etc.). Despite
+                the navy-on-ivory CSS rule in cabin-tones, the first
+                column read empty in his screenshot. Belt-and-braces:
+                inline style with explicit RGB so no theme override
+                or scoped-CSS quirk can hide them again. */}
+            <span
+              className="brief-matrix-label"
+              style={{
+                color: "#0D1B2A",
+                fontWeight: 700,
+                fontSize: "16px",
+              }}
+            >
+              {it.label}
+            </span>
             {["like", "dislike", "indifferent"].map((v) => (
               <label key={v} className="brief-matrix-cell">
                 <input

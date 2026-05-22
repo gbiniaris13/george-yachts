@@ -121,13 +121,17 @@ export async function PUT(req, ctx) {
   }
 
   const completeness = sectionCompleteness(a.section, parsed.data);
-  // Soft threshold: 30 means ≥5 populated fields counts as "done."
-  // The original 40 (=6 fields) was too strict for sections like
-  // itinerary and little_things which only HAVE 5 fields total —
-  // George filled them all and still got no tick. The full Brief
-  // is opt-in and progressive; tighter gating belongs in the
-  // concierge-handoff step, not the per-section dot.
-  const completed = completeness >= 30;
+  // 2026-05-22 — Threshold dropped from 30 → 21 (≥3 populated
+  // values per section). George filled the entire Itinerary
+  // section after the activities-extras removal — pace,
+  // preferred_areas, specific_places, night_preference (4 fields ×
+  // 7 = 28) — and the tick stayed off because 28 < 30. The earlier
+  // 30 was sized for a 5–6-visible-field section; after pruning
+  // it is now too strict. 21 = 3 fields = "the principal has put
+  // something thoughtful here", which is what the dot is meant to
+  // signal. Tighter gating still happens at the final readiness
+  // check before Send-to-George, where it belongs.
+  const completed = completeness >= 21;
 
   const db = getCabinDb();
   await dbQuery(
