@@ -37,7 +37,6 @@ import InstallNudge from "../../components/cabin/InstallNudge";
 import VoyageCarousel from "../../components/cabin/VoyageCarousel";
 import GreekWordOfTheDay from "../../components/cabin/GreekWordOfTheDay";
 import CabinIcon from "../../components/cabin/CabinIcon";
-import VesselHero from "../../components/cabin/VesselHero";
 import VesselBrochureBlock from "../../components/cabin/VesselBrochureBlock";
 import GhostCredit from "../../components/cabin/GhostCredit";
 import { titleCaseName, firstNameFromDisplayName, crewRoles, joinNouns, prettyDate } from "@/lib/cabin/format";
@@ -246,23 +245,26 @@ export default async function CabinHomePage() {
   // the private cabin-photos bucket). Resolver signs storage
   // paths and returns a uniform {url, caption, credit, page}
   // array the components can render without caring which shape
-  // they came from. Passed to both VesselHero and VesselBrochureBlock
-  // so the same signed URLs back both renders (cache-friendly).
+  // they came from. Passed to VesselBrochureBlock.
   const resolvedVesselPhotos = await resolveVesselPhotoUrls(cabin.vessel_photos);
 
   return (
     <div className="cabin-home">
-      {/* 2026-05-21 — Pass 7 (George): "Με το που μπαίνει ο
-          πελάτης να βλέπει πίσω το σκάφος του." Full-bleed
-          hero band of the chartered yacht. Renders nothing if
-          vessel_photos is empty — the page below works without
-          it, but with it on, the moment-of-entry is unmistakable. */}
-      <VesselHero
-        photos={resolvedVesselPhotos}
-        vesselName={cabin.vessel_name}
-        makeModel={cabin.vessel_make_model}
-        dates={heroDates}
-      />
+      {/* 2026-05-22 — VesselHero removed.
+          George's read on the EFFIE STAR preview after the photos
+          landed: the band cropped a horizontal sailing-yacht shot
+          to "only the mast visible" because the band's fixed
+          aspect-ratio + object-fit:cover. Different yachts have
+          different photo aspect-ratios, so no single object-position
+          fits them all without per-cabin art direction.
+          The same hero photo lives properly framed inside the
+          VesselBrochureBlock just below — keeping it once, in the
+          place where it has editorial context (kicker + name +
+          builder + year + summary) reads better than the same
+          shot appearing twice, once cropped wrong.
+          Identity still arrives on entry via the navy header
+          chip on the right ("EFFIE STAR · 27 Jun – 4 Jul ·
+          PATRICIA R. STEVENS"). */}
 
       <header className="cabin-home__welcome">
         {/* 2026-05-20 — Pass 6 (Domingo, Margaret):
