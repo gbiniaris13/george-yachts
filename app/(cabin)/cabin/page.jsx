@@ -38,7 +38,7 @@ import VoyageCarousel from "../../components/cabin/VoyageCarousel";
 import GreekWordOfTheDay from "../../components/cabin/GreekWordOfTheDay";
 import CabinIcon from "../../components/cabin/CabinIcon";
 import VesselHero from "../../components/cabin/VesselHero";
-import VesselTeaser from "../../components/cabin/VesselTeaser";
+import VesselBrochureBlock from "../../components/cabin/VesselBrochureBlock";
 import GhostCredit from "../../components/cabin/GhostCredit";
 import { titleCaseName, firstNameFromDisplayName, crewRoles, joinNouns, prettyDate } from "@/lib/cabin/format";
 
@@ -246,7 +246,7 @@ export default async function CabinHomePage() {
   // the private cabin-photos bucket). Resolver signs storage
   // paths and returns a uniform {url, caption, credit, page}
   // array the components can render without caring which shape
-  // they came from. Passed to both VesselHero and VesselTeaser
+  // they came from. Passed to both VesselHero and VesselBrochureBlock
   // so the same signed URLs back both renders (cache-friendly).
   const resolvedVesselPhotos = await resolveVesselPhotoUrls(cabin.vessel_photos);
 
@@ -343,14 +343,18 @@ export default async function CabinHomePage() {
         </section>
       )}
 
-      {/* 2026-05-21 — Pass 7 (George): "Μετά από το Your First
-          Step να είναι μία μίνι μπροσούρα του σκάφους." Editorial
-          teaser block — 2-3 facts + small photo squares + link
-          to the full vessel page. Lives BETWEEN the first step
-          and the second step so the customer gets a calm pause
-          on what they've just chartered before being asked to
-          fill the brief. */}
-      <VesselTeaser cabin={cabin} photos={resolvedVesselPhotos} />
+      {/* 2026-05-22 — George rejected the small teaser:
+          "λέμε αυτό το κείμενο στον πελάτη και δεν του δείχνουμε
+          τίποτα. 'See the full vessel' τι σημαίνει? Η μπροσούρα
+          που σου έχω ανεβάσει σαν PDF πρέπει να είναι εκεί μέσα.
+          Όλη."
+          Replaced VesselTeaser with VesselBrochureBlock — the
+          FULL brochure rendered inline: hero + intro paragraph
+          + key features + photo gallery + specs + accommodation
+          + amenities + tender & toys + spaces aboard. No more
+          click-through to a separate /cabin/vessel page; the
+          brochure IS the chapter. */}
+      <VesselBrochureBlock cabin={cabin} photos={resolvedVesselPhotos} />
 
       {/* ============================================================
           YOUR SECOND STEP — THE CHARTER BRIEF.
@@ -475,11 +479,13 @@ export default async function CabinHomePage() {
             <strong>Sample Menu</strong>
             <em>A taste of what your chef proposes for the week.</em>
           </Link>
-          <Link href="/cabin/vessel" className="cabin-home__tile">
-            <CabinIcon name="vessel" className="cabin-home__tile-glyph" />
-            <strong>Your Vessel</strong>
-            <em>Photos and details of the yacht you’re sailing on.</em>
-          </Link>
+          {/* 2026-05-22 — Removed the "Your Vessel" tile from
+              the home grid. The full vessel brochure is now
+              rendered INLINE above (VesselBrochureBlock). Keeping
+              a tile that goes to a near-duplicate page just
+              creates two competing entries for the same content.
+              The standalone /cabin/vessel route still exists for
+              direct deep-linking + print views. */}
           <Link href="/cabin/mood-board" className="cabin-home__tile">
             <CabinIcon name="mood" className="cabin-home__tile-glyph" />
             <strong>Mood Board</strong>
