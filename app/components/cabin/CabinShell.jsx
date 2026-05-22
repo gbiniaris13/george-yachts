@@ -139,7 +139,6 @@ const NAV_ITEMS = [
   { href: "/cabin/voyage-album", label: "Voyage Album", short: "Album", glyph: "▣" },
   { href: "/cabin/time-capsule", label: "Time Capsule", short: "Capsule", glyph: "✉" },
   { href: "/cabin/filotimo-circle", label: "Filotimo Circle", short: "Circle", glyph: "◐" },
-  { href: "/cabin/your-data", label: "Your Data", short: "Data", glyph: "▢" },
 ];
 
 function formatDateRange(from, to) {

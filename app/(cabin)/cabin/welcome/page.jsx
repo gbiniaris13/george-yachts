@@ -231,8 +231,7 @@ export default function WelcomePage() {
             third party. */}
         <p className="wlc-note">
           <em>
-            Kept privately in your Cabin. You can edit or delete any of
-            this from the Your Data page at any time.
+            Kept privately in your Cabin.
           </em>
         </p>
 

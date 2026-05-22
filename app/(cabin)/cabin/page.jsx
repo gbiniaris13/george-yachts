@@ -441,11 +441,6 @@ export default async function CabinHomePage() {
             <strong>Filotimo Circle</strong>
             <em>Your place in our quiet loyalty circle.</em>
           </Link>
-          <Link href="/cabin/your-data" className="cabin-home__tile">
-            <CabinIcon name="data" className="cabin-home__tile-glyph" />
-            <strong>Your Data</strong>
-            <em>Everything we hold for you. Edit or delete any time.</em>
-          </Link>
           <Link href="/cabin/install" className="cabin-home__tile">
             <CabinIcon name="install" className="cabin-home__tile-glyph" />
             <strong>Add to phone</strong>
