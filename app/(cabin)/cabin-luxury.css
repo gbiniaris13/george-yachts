@@ -36,6 +36,33 @@
 
 
 /* ─────────────────────────────────────────────────────────────
+ * § -1  FIRST-PAINT BG (eliminate iPhone Safari "black flash")
+ *
+ * 2026-05-23 — Eleanna (friend-test, iPhone 15 Pro Max Safari):
+ * "Της έβαλε μαύρη οθόνη και μετά από κάποιο χρονικό διάστημα την
+ * έβαλε μέσα." Root cause: app/globals.css line 99 sets
+ * `body { background-color: navy }` as the marketing-site default.
+ * When a cabin page loads, that navy renders FIRST, then the
+ * cabin layout's wrapper div (with ivory bg) paints over it.
+ * On a slow mobile connection you see navy for a noticeable
+ * moment — looks like the page broke / went black.
+ *
+ * Fix: as soon as the html document contains a [data-cabin-mode]
+ * element ANYWHERE (which it will from SSR), force html + body
+ * to ivory. The cabin wrapper still renders its own bg over the
+ * top; this just removes the gap between first-paint and content.
+ *
+ * `:has()` is supported in Safari 15.4+ (Eleanna is on iOS 17+).
+ * ───────────────────────────────────────────────────────────── */
+
+html:has([data-cabin-mode]),
+html:has([data-cabin-mode]) body {
+  background: #F8F5F0 !important;
+  color: #0D1B2A;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
  * § 0  LUXURY DESIGN TOKENS
  * One place to tune the whole system. Brand tokens
  * (--gy-navy / --gy-gold / --gy-ivory) come from globals.css;

@@ -437,16 +437,38 @@ export default function CabinShell({
         }
         @media (max-width: 767.98px) {
           .cabin-shell__header {
-            padding: 16px 18px;
-            padding-top: calc(16px + env(safe-area-inset-top, 0));
-            gap: 14px;
+            /* 2026-05-23 — Eleanna (iPhone 15 Pro Max): mobile
+               header looked "juvenile" — the three slots were
+               cramped and the centre logo was tiny. Stack the
+               layout vertically, brand top-left + logo top-right,
+               vessel chip below if present. More boutique-magazine
+               masthead, less Bootstrap navbar. */
+            grid-template-columns: 1fr auto !important;
+            grid-template-areas: "left center" "charter charter" !important;
+            row-gap: 8px !important;
+            padding: 18px 22px !important;
+            padding-top: calc(18px + env(safe-area-inset-top, 0)) !important;
+          }
+          .cabin-shell__left { grid-area: left; }
+          .cabin-shell__brand-slot { grid-area: center; }
+          .cabin-shell__charter { grid-area: charter; justify-self: stretch; align-items: flex-start; }
+          .cabin-shell__left-title {
+            font-size: 14.5px !important;
+            letter-spacing: 0.28em !important;
+          }
+          .cabin-shell__left-title em {
+            font-size: 16px !important;
+          }
+          .cabin-shell__charter-vessel {
+            font-size: 16px !important;
           }
         }
         @media (max-width: 479.98px) {
-          .cabin-shell__charter-meta {
+          .cabin-shell__left-tagline {
             display: none;
           }
-          .cabin-shell__left-tagline {
+          .cabin-shell__charter:empty,
+          .cabin-shell__charter:not(:has(*)) {
             display: none;
           }
         }

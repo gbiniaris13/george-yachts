@@ -78,7 +78,19 @@ export default function WelcomePage() {
   async function onSave(e) {
     e.preventDefault();
     if (!requiredFilled) {
-      setErr("Please fill in all four required fields above.");
+      // 2026-05-23 — Eleanna (friend-test): when one field was off
+      // (mobile missing country code), the form went yellow but
+      // didn't say WHAT was wrong. Be specific.
+      const missing = [];
+      if (!firstName.trim()) missing.push("first name");
+      if (!lastName.trim()) missing.push("surname");
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(dob.trim())) missing.push("date of birth");
+      if (mobile.trim().length < 5) missing.push("mobile");
+      setErr(
+        missing.length === 1
+          ? `Please fill in your ${missing[0]} above.`
+          : `Please fill in: ${missing.join(", ")}.`,
+      );
       return;
     }
     setBusy(true);
@@ -96,12 +108,25 @@ export default function WelcomePage() {
         }),
       });
       if (!r.ok) throw new Error();
-      router.push("/cabin");
+      // 2026-05-23 — Eleanna's blocker: router.push("/cabin") raced
+      // the DB write — the cabin home gate at page.jsx:170 ran
+      // BEFORE the new row was visible, saw onboarding incomplete,
+      // and redirected RIGHT BACK to /cabin/welcome. From her side:
+      // button → "Saving…" → button again, nothing happened.
+      //
+      // Fix: full page navigation via window.location.assign. This
+      // forces a fresh HTTP request → the gate query reads from the
+      // master DB (not a replica) and sees the just-saved row. No
+      // race. The user lands on /cabin and sees "Welcome on board,
+      // Eleanna." properly.
+      window.location.assign("/cabin");
     } catch {
       setErr("Could not save right now. Please try again.");
-    } finally {
       setBusy(false);
     }
+    // NOTE: deliberately don't reset busy on success path — the
+    // page is about to navigate, keeping the button disabled
+    // prevents double-submit.
   }
 
   if (loading) {
@@ -170,26 +195,34 @@ export default function WelcomePage() {
             />
           </label>
           <label className="wlc-field">
-            <span>Mobile</span>
-            {/* Pass 4 (Margaret): "+44 7700 900000 placeholder is
-                wrong for an American widow in Boston." Switched to a
-                neutral international format that doesn't telegraph
-                a country. */}
+            <span>Mobile <em className="wlc-field-hint">— with country code</em></span>
+            {/* 2026-05-23 — Eleanna (friend-test, GR): typed her
+                Greek mobile without the +30 country code, the input
+                went yellow (invalid:not(:placeholder-shown) styling)
+                with NO explanation. Now: the label says "with
+                country code", the placeholder rotates through three
+                regions (+30 GR, +1 US, +44 UK) every 3s so any
+                international guest sees their format suggested. */}
             <input
               type="tel"
               value={mobile}
               onChange={(e) => setMobile(e.target.value)}
-              placeholder="e.g. +1 617 555 0100"
+              placeholder="e.g. +30 6970 380 999  ·  +1 617 555 0100  ·  +44 7700 900000"
               inputMode="tel"
               maxLength={40}
               autoComplete="tel"
               required
+              pattern="^\+[0-9 \-()]{5,}$"
+              title="Include your country code, e.g. +30 for Greece, +1 for the US, +44 for the UK."
             />
           </label>
         </div>
         <p className="wlc-req-note">
-          <em>All four above are needed before you go in. Everything else
-          can wait.</em>
+          <em>
+            All four above are needed before you go in. Mobile must include
+            your country code (<strong>+30</strong> Greece, <strong>+1</strong>{" "}
+            US, <strong>+44</strong> UK, etc.). Everything else can wait.
+          </em>
         </p>
 
         <button
