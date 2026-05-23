@@ -232,3 +232,87 @@ prevent recurrence.
 - Don't push debug/experiment commits to `claude/*` branches just to
   see Vercel preview output. That habit cost us $85.61 in build
   overage in 16 days. Build and run locally first.
+
+## The Cabin — what every contributor must respect
+
+The Cabin (`app/(cabin)/cabin/*`) is the customer-facing yacht-charter
+portal at `georgeyachts.com/cabin`. It serves UHNW guests during a
+charter booking. Rules that are not negotiable:
+
+### Architecture invariants
+- **Cabin scope.** Every cabin page is wrapped in a `<div data-cabin-mode>`
+  by `app/(cabin)/layout.jsx`. ALL cabin-specific styling must be scoped to
+  `[data-cabin-mode]` so it never leaks to the marketing site.
+- **Three CSS layers, in load order:** `cabin-tones.css` (contrast +
+  brand-tone overrides, eyebrow wildcard, navy labels) → `cabin-luxury.css`
+  (the visual luxury layer: animations, hover effects, typography). Never
+  override `cabin-tones.css` rules from `cabin-luxury.css`.
+- **The eyebrow wildcard.** `[class*="eyebrow"]:not(.cabin-vessel-hero__eyebrow)`
+  in `cabin-tones.css` catches every current AND future `*__eyebrow` class
+  and forces it to navy. If you create a new class with "eyebrow" in its
+  name, it inherits the readable navy automatically. Don't enumerate
+  eyebrow classes by hand — the wildcard handles it.
+
+### Containing-block / transform trap
+- **The page-mount cascade animation** (`gy-cabin-rise` in cabin-luxury.css)
+  runs on every direct child of `.cabin-shell`. Its final keyframe MUST end
+  with `transform: none` (not `translateY(0)`). Per CSS spec, ANY non-`none`
+  transform creates a containing block for `position: fixed` descendants —
+  which traps modals/lightboxes inside their parent instead of the viewport.
+- **If you build a new modal/lightbox/sheet that uses `position: fixed`,**
+  render it via `createPortal(modal, document.body)`. Don't render inline.
+  Pattern is in `app/components/cabin/PhotoGallery.jsx` and
+  `app/(cabin)/cabin/brief/review/ReviewSubmit.jsx`. Two blockers were
+  fixed this way in May 2026.
+- **Leaflet protection.** The `.berth-map` container has `transform: none
+  !important` in cabin-luxury.css `§ 4b`. Don't apply scroll-driven
+  animations or page-mount cascade to `.berth-map` or `.leaflet-container`
+  — Leaflet calculates tile positions from getBoundingClientRect() and any
+  ancestor transform breaks them. The `BerthMap.jsx` canvas also has an
+  inline `style={{ transform: 'none' }}` as belt-and-braces defence.
+
+### Customer-facing copy
+- **English only on the customer side.** Customers are international UHNW,
+  not Greek-speakers. The `englishName()` helper in `BerthNearby.jsx`
+  transliterates Greek POI names via ELOT 743 + a brand map for the major
+  Greek banks. Reuse this pattern for any new customer-facing surface that
+  might display Greek source data.
+- **George is the broker, not the captain.** Never write customer copy
+  referencing "captain" or "concierge". George is their direct point of
+  contact. Pattern: "Indicative distances only. For anything beyond — we're
+  a message away." (NOT "Your captain handles the day").
+- **Imperial + metric on every distance.** `400 m · 1,310 ft` and
+  `28 km · 17 mi`. Helper: `formatDistanceDual()` in BerthNearby.jsx.
+
+### Notification path
+- `lib/cabin/notify.js → notifyGeorge()` sends BOTH Telegram (if
+  `TELEGRAM_BOT_TOKEN`/`CHAT_ID` set) AND email (if `RESEND_API_KEY` set)
+  to `george@georgeyachts.com` (env override `CABIN_NOTIFY_EMAIL`). Boutique
+  HTML template included. Used by every cabin event that George needs to
+  see — profile updates, brief submissions, reviews, etc. Never block the
+  user-facing response on a failed notify (fire-and-forget).
+- **Welcome onboarding fires this when a guest completes /cabin/welcome**
+  (PUT /api/cabin/profile). George gets first name + DOB + mobile + email
+  in his inbox automatically. He uses this for birthday wishes + outreach.
+
+### Free-forever guarantees
+- Berth map: Leaflet + OSM raster tiles. Zero API key, zero billing.
+- Berth-nearby (Phase 2): Overpass API + OSRM demo server + Haversine.
+  Zero API key. Five-layer rate-limit defence in `lib/berth-nearby.ts` in
+  the CRM (gy-command): User-Agent header (anonymous Overpass = throttled),
+  4 mirror endpoints with exponential backoff, 90-day cache, throttled
+  auto-backfill (skip if attempted in last 10 min).
+- Single union Overpass query (not 5 parallel) — parallel requests get
+  429'd as abuse. Bucket results client-side by tag.
+
+### Pre-friend-test checklist
+Before sending the cabin to any new guest cohort:
+1. Smoke-test all 19 cabin routes via curl — all should return 200 or 307,
+   never 500. (`for p in /cabin /cabin/login /cabin/welcome ... ; do
+   curl -o /dev/null -w "%{http_code}  $p\n" https://georgeyachts.com$p ; done`)
+2. Hard refresh `/cabin` on desktop AND iPhone Safari — confirm berth map
+   tiles render, charter-at-a-glance reads as boutique not draft, send-to-
+   George modal opens centred on viewport.
+3. Confirm a real guest completion lands in george@georgeyachts.com inbox.
+4. CRM cabin detail page → confirm "Around your berth" panel populated +
+   Preference Sheet PDF still generates cleanly.
