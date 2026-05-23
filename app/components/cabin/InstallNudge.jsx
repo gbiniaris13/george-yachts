@@ -147,17 +147,25 @@ export default function InstallNudge() {
           padding: 22px 22px 20px;
           margin-top: 8px;
         }
+        /* 2026-05-23 — Audit pass: 4/8 padding + 22px font gave a
+           ~30×38px target — below Apple HIG 44px and crowding the
+           eyebrow text. Now a true 44×44 with the × centred. */
         .gy-install__close {
           position: absolute;
-          top: 10px;
-          right: 14px;
+          top: 6px;
+          right: 6px;
+          width: 44px;
+          height: 44px;
           background: transparent;
           border: 0;
           color: rgba(248, 245, 240, 0.7);
           font-size: 22px;
           line-height: 1;
           cursor: pointer;
-          padding: 4px 8px;
+          padding: 0;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
         }
         .gy-install__eyebrow {
           font-family: var(--gy-font-ui);

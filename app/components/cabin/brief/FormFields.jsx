@@ -666,10 +666,25 @@ export function LikeDislikeMatrix({ name, label, hint, items, register }) {
           position: absolute;
           left: -10000px;
         }
-        @media (max-width: 560px) {
+        /* 2026-05-23 — Audit pass: the 4-column grid (label + 3
+           radios) crowds badly at 360px Galaxy S — each cell ~62px,
+           tracked uppercase header overlaps. Two-stage breakpoint:
+             ≤599: tighter columns, smaller label
+             ≤389: matrix header text smaller still (Like/Dislike/
+                   Indifferent must fit in 60-62px per cell). */
+        @media (max-width: 599.98px) {
           .brief-matrix-head,
-          .brief-matrix-row { grid-template-columns: 1.1fr 0.9fr 0.9fr 0.9fr; }
-          .brief-matrix-label { font-size: 14px; padding: 10px 10px; }
+          .brief-matrix-row { grid-template-columns: 1.2fr 0.85fr 0.85fr 0.85fr; }
+          .brief-matrix-label { font-size: 14px; padding: 10px 8px; }
+          .brief-matrix-head span {
+            font-size: 8.5px !important;
+            letter-spacing: 1.2px !important;
+          }
+        }
+        @media (max-width: 389.98px) {
+          .brief-matrix-head,
+          .brief-matrix-row { grid-template-columns: 1.4fr 0.8fr 0.8fr 0.8fr; column-gap: 4px; }
+          .brief-matrix-label { font-size: 13px !important; padding: 8px 6px; }
         }
       `}</style>
     </fieldset>
@@ -1003,10 +1018,41 @@ export function LabelQuantityRows({
           cursor: pointer;
         }
         .brief-lq-add:hover { border-color: var(--gy-gold); }
-        @media (max-width: 560px) {
-          .brief-lq-head,
-          .brief-lq-row { grid-template-columns: 1.4fr 1fr 36px; }
-          .brief-lq-row.has-price { grid-template-columns: 1fr 0.7fr 0.9fr 36px; }
+        /* 2026-05-23 — Audit pass:
+           At 360px viewport the old "1fr 0.7fr 0.9fr 36px" with-price
+           layout gave the wine-label input ~80px wide — typing
+           "Ruinart Brut Blanc de Blancs" was impossible. Now: hide
+           the table header on phones, stack each row vertically
+           (label full-width on its own row, then qty + price + remove
+           as a sub-row). Same data, usable forms. */
+        @media (max-width: 599.98px) {
+          .brief-lq-head { display: none; }
+          .brief-lq-row {
+            grid-template-columns: 1fr 48px !important;
+            grid-template-areas: "label remove" "controls controls" !important;
+            row-gap: 8px;
+            padding-bottom: 14px;
+            border-bottom: 1px dashed rgba(13, 27, 42, 0.08);
+          }
+          .brief-lq-row > :first-child { grid-area: label; }
+          .brief-lq-row > :last-child { grid-area: remove; align-self: start; }
+          .brief-lq-row.has-price {
+            grid-template-columns: 1fr 48px !important;
+          }
+          /* Quantity + price inputs share the controls row, 50/50. */
+          .brief-lq-row .brief-lq-qty,
+          .brief-lq-row .brief-lq-price {
+            grid-area: controls;
+          }
+          .brief-lq-row.has-price .brief-lq-qty,
+          .brief-lq-row.has-price .brief-lq-price {
+            display: inline-block;
+            width: calc(50% - 4px);
+            margin-right: 8px;
+          }
+          .brief-lq-row.has-price .brief-lq-price {
+            margin-right: 0;
+          }
         }
       `}</style>
     </fieldset>

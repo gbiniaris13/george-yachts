@@ -967,15 +967,27 @@ export default function GuestsPage() {
           gap: 8px;
           flex-wrap: wrap;
         }
-        .guests-list__resend {
+        /* 2026-05-23 — Audit pass: all three action buttons were
+           24-28px tall (6px padding × 9-9.5px font). Apple HIG
+           minimum touch target is 44×44px. Bumped to 11/16 padding,
+           10.5/10 font, min-height 44px to meet HIG. */
+        .guests-list__resend,
+        .guests-list__remove,
+        .guests-list__details {
           background: transparent;
-          border: 1px solid var(--gy-gold);
           font-family: var(--gy-font-ui);
-          font-size: 9.5px;
           letter-spacing: 1.5px;
           text-transform: uppercase;
-          padding: 6px 12px;
+          padding: 11px 16px;
+          min-height: 44px;
           cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .guests-list__resend {
+          border: 1px solid var(--gy-gold);
+          font-size: 10.5px;
           color: var(--gy-gold);
         }
         .guests-list__resend:hover {
@@ -987,14 +999,8 @@ export default function GuestsPage() {
           cursor: default;
         }
         .guests-list__remove {
-          background: transparent;
           border: 1px solid rgba(13,27,42,0.18);
-          font-family: var(--gy-font-ui);
-          font-size: 9px;
-          letter-spacing: 1.5px;
-          text-transform: uppercase;
-          padding: 6px 12px;
-          cursor: pointer;
+          font-size: 10px;
           color: rgba(13,27,42,0.6);
         }
         .guests-list__remove:hover {
@@ -1002,14 +1008,8 @@ export default function GuestsPage() {
           border-color: #b14a3a;
         }
         .guests-list__details {
-          background: transparent;
           border: 1px solid rgba(13,27,42,0.18);
-          font-family: var(--gy-font-ui);
-          font-size: 9px;
-          letter-spacing: 1.5px;
-          text-transform: uppercase;
-          padding: 6px 12px;
-          cursor: pointer;
+          font-size: 10px;
           color: rgba(13,27,42,0.7);
         }
         .guests-list__details:hover {

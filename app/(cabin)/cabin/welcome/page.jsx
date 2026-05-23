@@ -305,13 +305,18 @@ export default function WelcomePage() {
           flex-direction: column;
           gap: 6px;
         }
+        /* 2026-05-23 — Audit pass: gold on cream at 10.5px tracked
+           uppercase fails WCAG AA. The systemic eyebrow→navy fix
+           in cabin-tones uses [class*="eyebrow"]/[class*="kicker"]
+           wildcards, but .wlc-field > span doesn't match. Bump to
+           the systemic-eyebrow look: navy at 11px, 2.4px tracking. */
         .wlc-field > span {
           font-family: var(--gy-font-ui);
-          font-size: 10.5px;
-          letter-spacing: 2px;
+          font-size: 11px;
+          letter-spacing: 2.4px;
           text-transform: uppercase;
-          color: var(--gy-gold);
-          font-weight: 500;
+          color: rgba(13, 27, 42, 0.78);
+          font-weight: 600;
           display: flex;
           gap: 8px;
           align-items: baseline;

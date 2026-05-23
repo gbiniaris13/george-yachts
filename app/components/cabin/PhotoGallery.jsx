@@ -389,8 +389,16 @@ export default function PhotoGallery({
         }
         .cabin-lightbox__hint-divider { opacity: 0.4; }
 
-        @media (max-width: 640px) {
-          .cabin-lightbox { padding: 16px 8px 80px; }
+        /* 2026-05-23 — Audit pass:
+             · close button was 40×40 (under Apple HIG 44px)
+             · close + counter sat at top:12-14px which on iPhone
+               14/15 Pro/Pro Max collides with Dynamic Island.
+           Both now respect env(safe-area-inset-top) and meet 44px. */
+        @media (max-width: 599.98px) {
+          .cabin-lightbox {
+            padding: calc(16px + env(safe-area-inset-top, 0)) 8px
+                     calc(80px + env(safe-area-inset-bottom, 0));
+          }
           .cabin-lightbox__nav {
             width: 44px;
             height: 44px;
@@ -398,11 +406,13 @@ export default function PhotoGallery({
           .cabin-lightbox__nav--prev { left: 8px; }
           .cabin-lightbox__nav--next { right: 8px; }
           .cabin-lightbox__close {
-            top: 12px; right: 12px;
-            width: 40px; height: 40px;
+            top: calc(12px + env(safe-area-inset-top, 0));
+            right: 12px;
+            width: 44px;
+            height: 44px;
           }
           .cabin-lightbox__counter {
-            top: 14px;
+            top: calc(14px + env(safe-area-inset-top, 0));
             font-size: 11px;
             letter-spacing: 3px;
             padding: 6px 12px;

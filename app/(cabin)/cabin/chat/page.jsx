@@ -203,13 +203,28 @@ export default async function ChatPage() {
           padding: 26px 26px 22px 26px;
           margin-top: 28px;
         }
+        /* 2026-05-23 — Audit pass: column was 56px but the avatar
+           is 64px → overflow at every viewport. Also added mobile
+           rule below to drop the "Usually replies in hours" status
+           to a second line under the name on phones (was colliding
+           with the role text at 360-412px). */
         .chat-card__head {
           display: grid;
-          grid-template-columns: 56px 1fr auto;
+          grid-template-columns: 64px 1fr auto;
           align-items: center;
           gap: 16px;
           padding-bottom: 22px;
           border-bottom: 1px solid rgba(13, 27, 42, 0.08);
+        }
+        @media (max-width: 599.98px) {
+          .chat-card__head {
+            grid-template-columns: 64px 1fr;
+            row-gap: 8px;
+          }
+          .chat-card__status {
+            grid-column: 1 / -1;
+            justify-self: start;
+          }
         }
         .chat-card__avatar {
           width: 64px;
