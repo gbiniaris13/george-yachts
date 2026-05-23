@@ -437,30 +437,81 @@ export default function CabinShell({
         }
         @media (max-width: 767.98px) {
           .cabin-shell__header {
-            /* 2026-05-23 — Eleanna (iPhone 15 Pro Max): mobile
-               header looked "juvenile" — the three slots were
-               cramped and the centre logo was tiny. Stack the
-               layout vertically, brand top-left + logo top-right,
-               vessel chip below if present. More boutique-magazine
-               masthead, less Bootstrap navbar. */
-            grid-template-columns: 1fr auto !important;
-            grid-template-areas: "left center" "charter charter" !important;
-            row-gap: 8px !important;
-            padding: 18px 22px !important;
+            /* 2026-05-23 — Eleanna round 3 (George, after a client
+               saw the cabin live and the logo was tiny next to the
+               "THE CABIN · Filotimo" wordmark which was eating the
+               whole left column).
+               Full vertical masthead now: logo on top centred and
+               BIG, then "The Cabin · Filotimo" + brand tagline
+               beneath it (also centred), vessel chip below that.
+               Back arrow gets positioned absolute top-left so it
+               doesn't push the masthead off-centre. This is the
+               boutique-magazine cover layout — Vogue masthead,
+               Loro Piana store sign — not the Bootstrap navbar
+               we had before. */
+            position: sticky;
+            grid-template-columns: 1fr !important;
+            grid-template-areas:
+              "center"
+              "left"
+              "charter" !important;
+            row-gap: 10px !important;
+            justify-items: center !important;
+            text-align: center !important;
+            padding: 18px 22px 16px !important;
             padding-top: calc(18px + env(safe-area-inset-top, 0)) !important;
           }
-          .cabin-shell__left { grid-area: left; }
+          .cabin-shell__left {
+            grid-area: left;
+            flex-direction: column;
+            align-items: center !important;
+            gap: 4px !important;
+            justify-self: center !important;
+          }
           .cabin-shell__brand-slot { grid-area: center; }
-          .cabin-shell__charter { grid-area: charter; justify-self: stretch; align-items: flex-start; }
+          .cabin-shell__charter {
+            grid-area: charter;
+            justify-self: center !important;
+            align-items: center !important;
+            text-align: center !important;
+          }
+          .cabin-shell__left-brand {
+            align-items: center !important;
+            text-align: center !important;
+          }
           .cabin-shell__left-title {
-            font-size: 14.5px !important;
-            letter-spacing: 0.28em !important;
+            font-size: 11.5px !important;
+            letter-spacing: 0.36em !important;
+            color: rgba(248, 245, 240, 0.78) !important;
           }
           .cabin-shell__left-title em {
-            font-size: 16px !important;
+            font-size: 13.5px !important;
+            margin-left: 6px !important;
+          }
+          .cabin-shell__left-tagline {
+            font-size: 10.5px !important;
+            letter-spacing: 0.08em !important;
+            margin-top: 2px !important;
+            color: rgba(248, 245, 240, 0.48) !important;
           }
           .cabin-shell__charter-vessel {
+            font-size: 17px !important;
+          }
+          .cabin-shell__charter-meta {
+            font-size: 9px !important;
+            letter-spacing: 2.2px !important;
+            margin-top: 4px !important;
+          }
+          /* Back arrow floats top-left so it never offsets the
+             centred masthead. */
+          .cabin-shell__back {
+            position: absolute !important;
+            top: calc(14px + env(safe-area-inset-top, 0)) !important;
+            left: 16px !important;
+            width: 32px !important;
+            height: 32px !important;
             font-size: 16px !important;
+            z-index: 2 !important;
           }
         }
         @media (max-width: 479.98px) {

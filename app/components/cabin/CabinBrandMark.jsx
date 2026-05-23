@@ -76,11 +76,22 @@ export default function CabinBrandMark({ href = "/cabin" }) {
         @media (max-width: 1023.98px) {
           .cabin-brandmark__logo { height: 150px; }
         }
+        /* 2026-05-23 — Eleanna round 3 (George, after a client saw
+           the cabin and the logo was tiny next to the "THE CABIN ·
+           Filotimo" text): on mobile the logo IS the masthead, not
+           a side ornament. CabinShell now stacks the header
+           vertically — logo on top, "Filotimo" strapline beneath
+           — so the logo gets the full width to breathe. Lifted the
+           mobile heights way up so the brand mark actually reads
+           as boutique luxury, not squeezed afterthought. */
         @media (max-width: 767.98px) {
-          .cabin-brandmark__logo { height: 115px; }
+          .cabin-brandmark__logo { height: 140px; }
         }
         @media (max-width: 479.98px) {
-          .cabin-brandmark__logo { height: 80px; }
+          .cabin-brandmark__logo { height: 120px; }
+        }
+        @media (max-width: 359.98px) {
+          .cabin-brandmark__logo { height: 100px; }
         }
       `}</style>
     </Link>
