@@ -304,32 +304,35 @@ export default function CharterAtAGlance({ summary }) {
         .cabin-at-a-glance__ics a:hover {
           background-size: 100% 2px;
         }
-        @media (max-width: 560px) {
+        /* 2026-05-23 — Eleanna iPhone 15 Pro Max test caught a
+           critical mobile-layout bug: at 430px width, the 110px
+           right-aligned label column ("DISEMBARKATION", "CALLS
+           (ATHENS)", "WHATSAPP (US)") + the value column ("Athens,
+           Greece", "+30 6970 380 999", "+1 786 798 8798") were
+           cramming side-by-side and overflowing the cabin frame.
+           Customer saw text spilling off the right edge of the page.
+           Stack vertically at <620px — the labels go above the
+           values, full width each, no overflow possible. */
+        @media (max-width: 620px) {
           .cabin-at-a-glance__card {
             padding: 28px 22px 24px;
           }
           .cabin-at-a-glance__row {
-            grid-template-columns: 110px 1fr;
-            column-gap: 16px;
+            grid-template-columns: 1fr;
+            row-gap: 4px;
+            align-items: flex-start;
           }
           .cabin-at-a-glance__row dt {
-            font-size: 9.5px;
-            letter-spacing: 1.8px;
+            font-size: 10px;
+            letter-spacing: 2.4px;
+            text-align: left;
+            padding-top: 0;
           }
           .cabin-at-a-glance__row dd {
-            font-size: 15px;
+            font-size: 16px;
           }
           .cabin-at-a-glance__group:first-of-type .cabin-at-a-glance__row:first-of-type dd {
-            font-size: 19px;
-          }
-        }
-        @media (max-width: 380px) {
-          .cabin-at-a-glance__row {
-            grid-template-columns: 1fr;
-            row-gap: 2px;
-          }
-          .cabin-at-a-glance__row dt {
-            text-align: left;
+            font-size: 20px;
           }
         }
       `}</style>

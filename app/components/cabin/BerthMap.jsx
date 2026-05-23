@@ -97,12 +97,25 @@ export default function BerthMap({
         attributionControl: true,
       });
 
+      // 2026-05-23 — Eleanna's iPhone test: berth map had the pin
+      // visible but NO TILES. The OSM raster tile servers
+      // (tile.openstreetmap.org) are community-funded and routinely
+      // slow / timeout from Greek mobile networks. Switched to
+      // CartoDB Voyager: same OSM data, served from a global
+      // CloudFront CDN with sub-200ms latency from Athens.
+      // Free forever, no API key, no billing, no quota for the
+      // usage volumes we'll ever see.
+      //
+      // Attribution stays per their TOS — both OSM (data) and
+      // CARTO (tile rendering) credited in the Leaflet attribution
+      // control. Both links visible at the bottom of the map.
       L.tileLayer(
-        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
         {
-          maxZoom: 19,
+          maxZoom: 20,
+          subdomains: "abcd",
           attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
         },
       ).addTo(map);
 

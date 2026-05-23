@@ -4,13 +4,32 @@
 // Magic link request form. Submits to /api/cabin/auth/request-link.
 // Always shows the same success copy regardless of whether the
 // email is registered (no account enumeration).
+//
+// 2026-05-23 — Eleanna friend-test: her phone went to sleep, when
+// she came back she was on /cabin/login and had to retype her
+// email from scratch. Tiny but real friction. Now: we remember
+// the last email used (localStorage, NEVER transmitted to the
+// server unless they hit Send) so re-auth is a single tap on
+// "SEND MY SIGN-IN LINK". Magic links are valid for 90 days so
+// almost every "kicked out" customer just taps once.
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const REMEMBERED_EMAIL_KEY = "gy_cabin_last_email";
 
 export default function LoginForm({ initialError }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle"); // idle | sending | sent
   const [error, setError] = useState(initialError ?? null);
+
+  // Pre-fill from localStorage on mount (client-only — no SSR
+  // mismatch since initial render returns empty).
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(REMEMBERED_EMAIL_KEY);
+      if (saved && saved.includes("@")) setEmail(saved);
+    } catch { /* localStorage blocked — silently skip */ }
+  }, []);
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -27,6 +46,10 @@ export default function LoginForm({ initialError }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: trimmed }),
       });
+      // Remember on successful submit only — don't cache typos.
+      try {
+        localStorage.setItem(REMEMBERED_EMAIL_KEY, trimmed);
+      } catch { /* ignore */ }
       setStatus("sent");
     } catch {
       setError("Something went wrong on our side. Please try again.");
