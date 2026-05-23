@@ -74,24 +74,28 @@ export default function CabinBrandMark({ href = "/cabin" }) {
           filter: drop-shadow(0 0 22px rgba(201, 168, 76, 0.4));
         }
         @media (max-width: 1023.98px) {
-          .cabin-brandmark__logo { height: 150px; }
-        }
-        /* 2026-05-23 — Eleanna round 3 (George, after a client saw
-           the cabin and the logo was tiny next to the "THE CABIN ·
-           Filotimo" text): on mobile the logo IS the masthead, not
-           a side ornament. CabinShell now stacks the header
-           vertically — logo on top, "Filotimo" strapline beneath
-           — so the logo gets the full width to breathe. Lifted the
-           mobile heights way up so the brand mark actually reads
-           as boutique luxury, not squeezed afterthought. */
-        @media (max-width: 767.98px) {
-          .cabin-brandmark__logo { height: 140px; }
-        }
-        @media (max-width: 479.98px) {
           .cabin-brandmark__logo { height: 120px; }
         }
+        /* 2026-05-23 — Eleanna round 4 (audit pass): the 120-140px
+           mobile logo turned the sticky header into 30% of the
+           viewport on every cabin page. Audit measured iPhone SE2
+           with the old sizing → 53% of viewport was chrome before
+           any content. New canonical sizes balance brand presence
+           against content room:
+             • Tablet (≤1024px)   — 120px
+             • Phone (≤600px)     — 64px   (~16% of viewport on
+                                    iPhone SE2; still distinctly
+                                    visible, no longer crushes
+                                    page content)
+             • Tiny (≤360px)      — 56px   (Galaxy S base)
+           Pairs with the tighter mobile header padding + dropped
+           tagline in CabinShell.jsx for a header total of ~140px
+           on phones instead of ~280-320px. */
+        @media (max-width: 599.98px) {
+          .cabin-brandmark__logo { height: 64px; }
+        }
         @media (max-width: 359.98px) {
-          .cabin-brandmark__logo { height: 100px; }
+          .cabin-brandmark__logo { height: 56px; }
         }
       `}</style>
     </Link>

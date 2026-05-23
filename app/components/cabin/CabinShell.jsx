@@ -189,6 +189,12 @@ export default function CabinShell({
   );
 
   const showChrome = !pathname.endsWith("/cabin/login");
+  // 2026-05-23 — /cabin/welcome is the pre-onboarding gate. Bottom
+  // nav has no business covering the "Save and enter the Cabin"
+  // CTA — and the principal hasn't entered the cabin yet so there's
+  // nowhere to navigate to. Hide bottom nav on welcome explicitly.
+  const showBottomNav =
+    showChrome && !pathname.endsWith("/cabin/welcome");
 
   return (
     <div className="cabin-shell">
@@ -263,7 +269,7 @@ export default function CabinShell({
 
       <main className="cabin-shell__main">{children}</main>
 
-      {showChrome && (
+      {showBottomNav && (
         <nav className="cabin-shell__bottom-nav" aria-label="Cabin navigation">
           {NAV_ITEMS.slice(0, 5).map((item) => {
             const active =
@@ -460,18 +466,18 @@ export default function CabinShell({
            hairline gold rule, "Filotimo" gold italic, vessel chip
            below. Back arrow floats top-left.
            ───────────────────────────────────────────────────────── */
-        @media (max-width: 767.98px) {
+        @media (max-width: 599.98px) {
           [data-cabin-mode] .cabin-shell__header {
             grid-template-columns: 1fr !important;
             grid-template-areas:
               "center"
               "left"
               "charter" !important;
-            row-gap: 10px !important;
+            row-gap: 8px !important;
             justify-items: center !important;
             text-align: center !important;
-            padding: 16px 22px 18px !important;
-            padding-top: calc(16px + env(safe-area-inset-top, 0)) !important;
+            padding: 12px 22px 14px !important;
+            padding-top: calc(12px + env(safe-area-inset-top, 0)) !important;
           }
           [data-cabin-mode] .cabin-shell__left {
             grid-area: left;
