@@ -31,6 +31,8 @@
 // figures. Reads only the customer-safe vessel_brochure JSONB.
 // =============================================================
 
+import PhotoGallery from "./PhotoGallery";
+
 export default function VesselBrochureBlock({ cabin, photos, asPage = false }) {
   if (!cabin) return null;
 
@@ -117,28 +119,82 @@ export default function VesselBrochureBlock({ cabin, photos, asPage = false }) {
         <div className="cabin-vessel-block__year">Built {year}</div>
       )}
 
-      {hero && (
-        <figure className="cabin-vessel-block__hero">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={hero.url}
-            alt={hero.caption || `${name} at anchor`}
-            loading="eager"
-          />
-          {(hero.caption || hero.credit) && (
-            <figcaption>
-              {hero.caption}
-              {hero.credit && <em> · {hero.credit}</em>}
-            </figcaption>
+      {/* 2026-05-23 — George after Olga friend-test: "θα ήταν
+          ωραίο να μπορούν να τις αλλάζουν και να τις βλέπουν
+          μεγάλες." Hero + thumbnails are now click-to-lightbox
+          (arrows, keyboard ← →, swipe on touch, X to close). The
+          PhotoGallery client component owns the modal; we hand it
+          the full photo list (hero is index 0) and a render-prop
+          to draw the triggers. */}
+      {allPhotos.length > 0 && (
+        <PhotoGallery photos={allPhotos} vesselName={name}>
+          {({ open }) => (
+            <>
+              {hero && (
+                <figure className="cabin-vessel-block__hero">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={hero.url}
+                    alt={hero.caption || `${name} at anchor`}
+                    loading="eager"
+                    onClick={() => open(0)}
+                    style={{ cursor: "zoom-in" }}
+                  />
+                  {(hero.caption || hero.credit) && (
+                    <figcaption>
+                      {hero.caption}
+                      {hero.credit && <em> · {hero.credit}</em>}
+                    </figcaption>
+                  )}
+                </figure>
+              )}
+
+              {summary && (
+                <p className="cabin-vessel-block__summary">{summary}</p>
+              )}
+
+              {features.length > 0 && (
+                <div className="cabin-vessel-block__chapter">
+                  <h3 className="cabin-vessel-block__chapter-label">
+                    Key features
+                  </h3>
+                  <ul className="cabin-vessel-block__features">
+                    {features.map((f, i) => (
+                      <li key={i}>{f}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {galleryPhotos.length > 0 && (
+                <div className="cabin-vessel-block__gallery">
+                  {galleryPhotos.slice(0, 12).map((p, i) => (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      key={i}
+                      src={p.url}
+                      alt={p.caption || `${name} — ${i + 2}`}
+                      className="cabin-vessel-block__gallery-tile"
+                      loading="lazy"
+                      onClick={() => open(i + 1)}
+                      style={{ cursor: "zoom-in" }}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
           )}
-        </figure>
+        </PhotoGallery>
       )}
 
-      {summary && (
+      {/* Fallback: same hero + summary + features + gallery
+          rendering used to live HERE without PhotoGallery wrapping.
+          Kept commented as a reminder that allPhotos.length === 0
+          falls through to summary/features only. */}
+      {allPhotos.length === 0 && summary && (
         <p className="cabin-vessel-block__summary">{summary}</p>
       )}
-
-      {features.length > 0 && (
+      {allPhotos.length === 0 && features.length > 0 && (
         <div className="cabin-vessel-block__chapter">
           <h3 className="cabin-vessel-block__chapter-label">Key features</h3>
           <ul className="cabin-vessel-block__features">
@@ -146,21 +202,6 @@ export default function VesselBrochureBlock({ cabin, photos, asPage = false }) {
               <li key={i}>{f}</li>
             ))}
           </ul>
-        </div>
-      )}
-
-      {galleryPhotos.length > 0 && (
-        <div className="cabin-vessel-block__gallery">
-          {galleryPhotos.slice(0, 12).map((p, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={i}
-              src={p.url}
-              alt={p.caption || `${name} — ${i + 2}`}
-              className="cabin-vessel-block__gallery-tile"
-              loading="lazy"
-            />
-          ))}
         </div>
       )}
 
