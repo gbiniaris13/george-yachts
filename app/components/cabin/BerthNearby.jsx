@@ -45,9 +45,6 @@ export default function BerthNearby({ nearby }) {
       <div className="berth-nearby__inner">
         <div className="berth-nearby__head">
           <div className="berth-nearby__eyebrow">Around your berth</div>
-          <div className="berth-nearby__lede">
-            <em>The practicalities, taken care of.</em>
-          </div>
         </div>
 
         <div className="berth-nearby__grid">
@@ -67,7 +64,9 @@ export default function BerthNearby({ nearby }) {
               <ul className="berth-nearby__atms">
                 {atms.map((atm, i) => (
                   <li key={i} className="berth-nearby__atm">
-                    <span className="berth-nearby__atm-name">{atm.name}</span>
+                    <span className="berth-nearby__atm-name">
+                      {englishName(atm.name, "ATM")}
+                    </span>
                     <span className="berth-nearby__atm-dist">
                       {formatDistance(atm.distance_km)}
                     </span>
@@ -82,7 +81,7 @@ export default function BerthNearby({ nearby }) {
               {hasHospital && (
                 <div className="berth-nearby__medical-row">
                   <span className="berth-nearby__place-name">
-                    {hospital.name}
+                    {englishName(hospital.name, "Hospital")}
                   </span>
                   <span className="berth-nearby__place-meta">
                     <em>{formatDriveLine(hospital)}</em>
@@ -92,7 +91,7 @@ export default function BerthNearby({ nearby }) {
               {hasPharmacy && (
                 <div className="berth-nearby__medical-row">
                   <span className="berth-nearby__place-name">
-                    {pharmacy.name}
+                    {englishName(pharmacy.name, "Pharmacy")}
                     {pharmacy.twentyfour_hour ? (
                       <span className="berth-nearby__badge">24/7</span>
                     ) : null}
@@ -108,8 +107,7 @@ export default function BerthNearby({ nearby }) {
 
         <p className="berth-nearby__note">
           <em>
-            Distances are point-to-point. Your captain or our concierge
-            will know the practicalities of the day.
+            Reference points only. Your captain handles the day.
           </em>
         </p>
       </div>
@@ -128,7 +126,7 @@ export default function BerthNearby({ nearby }) {
           overflow: hidden;
         }
         .berth-nearby__head {
-          padding: 30px 32px 22px;
+          padding: 26px 32px 18px;
           display: flex;
           flex-direction: column;
           gap: 6px;
@@ -279,7 +277,7 @@ function Section({ title, place, extra }) {
     <div className="berth-nearby__section">
       <div className="berth-nearby__section-title">{title}</div>
       <div className="berth-nearby__place-name">
-        {place.name}
+        {englishName(place.name, title === "By helicopter" ? "Helipad" : "Airport")}
         {extra ? (
           <span className="berth-nearby__iata">{extra}</span>
         ) : null}
@@ -318,4 +316,72 @@ function formatDistance(km) {
     return `${m} m`;
   }
   return `${km.toFixed(1)} km`;
+}
+
+// 2026-05-23 — George's directive: "οι πελάτες μας δεν είναι Έλληνες,
+// στα Αγγλικά τα θέλω". OSM POIs in Greece often have a Greek `name`
+// but no `name:en`. Our berth-nearby lib already prefers name:en, but
+// when it's missing we fall back to the local name (Greek). This
+// helper transliterates Greek → Latin per the ELOT 743 standard so
+// the customer-facing cabin never shows Greek script.
+//
+// Also runs a small lookup table for big brand names we KNOW have an
+// established English form (Τράπεζα Πειραιώς → Piraeus Bank, etc.).
+const GREEK_BRAND_MAP = {
+  "Τράπεζα Πειραιώς": "Piraeus Bank",
+  "Πειραιώς": "Piraeus Bank",
+  "Εθνική Τράπεζα": "National Bank of Greece",
+  "Εθνική": "National Bank of Greece",
+  "Eurobank": "Eurobank",
+  "Alpha Bank": "Alpha Bank",
+  "Άλφα": "Alpha Bank",
+  "ΑΛΦΑ ΒΑΝΚ": "Alpha Bank",
+  "Attica Bank": "Attica Bank",
+  "Optima Bank": "Optima Bank",
+  "ΕΛΤΑ": "Hellenic Post",
+};
+
+const GREEK_LATIN_MAP = {
+  "Α": "A", "Β": "V", "Γ": "G", "Δ": "D", "Ε": "E", "Ζ": "Z",
+  "Η": "I", "Θ": "Th", "Ι": "I", "Κ": "K", "Λ": "L", "Μ": "M",
+  "Ν": "N", "Ξ": "X", "Ο": "O", "Π": "P", "Ρ": "R", "Σ": "S",
+  "Τ": "T", "Υ": "Y", "Φ": "F", "Χ": "Ch", "Ψ": "Ps", "Ω": "O",
+  "α": "a", "β": "v", "γ": "g", "δ": "d", "ε": "e", "ζ": "z",
+  "η": "i", "θ": "th", "ι": "i", "κ": "k", "λ": "l", "μ": "m",
+  "ν": "n", "ξ": "x", "ο": "o", "π": "p", "ρ": "r", "σ": "s",
+  "ς": "s", "τ": "t", "υ": "y", "φ": "f", "χ": "ch", "ψ": "ps",
+  "ω": "o",
+  // accented vowels — strip the accent
+  "Ά": "A", "Έ": "E", "Ή": "I", "Ί": "I", "Ό": "O", "Ύ": "Y", "Ώ": "O",
+  "ά": "a", "έ": "e", "ή": "i", "ί": "i", "ό": "o", "ύ": "y", "ώ": "o",
+  "ϊ": "i", "ϋ": "y", "ΐ": "i", "ΰ": "y", "Ϊ": "I", "Ϋ": "Y",
+};
+
+function looksGreek(s) {
+  // Match any Greek block character — basic Greek + accents.
+  return /[Ͱ-Ͽἀ-῿]/.test(s);
+}
+
+function transliterate(s) {
+  if (!s || typeof s !== "string") return s;
+  // Exact-match brand override first.
+  for (const [gr, en] of Object.entries(GREEK_BRAND_MAP)) {
+    if (s === gr || s.includes(gr)) return en;
+  }
+  if (!looksGreek(s)) return s;
+  // Char-by-char transliteration.
+  let out = "";
+  for (const ch of s) {
+    out += GREEK_LATIN_MAP[ch] ?? ch;
+  }
+  return out;
+}
+
+// Wrap whatever name the lib gave us in a customer-safe English form.
+// Exposed so all sections (airports, ATMs, hospital, pharmacy) call
+// this in one place — fix once, applies everywhere.
+function englishName(rawName, fallback = "Unnamed") {
+  const transliterated = transliterate(rawName);
+  if (!transliterated || transliterated.trim() === "") return fallback;
+  return transliterated;
 }
