@@ -86,23 +86,27 @@ export default async function ChatPage() {
 
       <section className="chat-card">
         <div className="chat-card__head">
+          {/* 2026-05-23 — George: "Εδώ στο A Direct Line with George
+              έχει ένα κυκλάκι και λέει GB τα αρχικά μου. Θα μπορούσαμε
+              να το κάνουμε λίγο πιο όμορφο όπως είναι η υπογραφή του
+              mail μου." Replaced the GB monogram with his real
+              headshot + an IYBA verification badge bottom-right.
+              Same dual-circle treatment as the broker industry
+              norm — face says "this is a human", IYBA badge says
+              "credentialled" without taking up extra real estate. */}
           <span className="chat-card__avatar" aria-hidden>
-            {/* Brand monogram as the avatar — pure SVG, no asset
-                round-trip. Replaceable with a real headshot later. */}
-            <svg viewBox="0 0 64 64" width="56" height="56" aria-hidden>
-              <circle cx="32" cy="32" r="32" fill="#0D1B2A" />
-              <text
-                x="50%"
-                y="55%"
-                textAnchor="middle"
-                fontFamily="Georgia, serif"
-                fontStyle="italic"
-                fontSize="22"
-                fill="#C9A84C"
-              >
-                GB
-              </text>
-            </svg>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/george.jpg"
+              alt=""
+              className="chat-card__avatar-photo"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/iyba-official.png"
+              alt=""
+              className="chat-card__avatar-badge"
+            />
           </span>
           <div>
             <div className="chat-card__name">George P. Biniaris</div>
@@ -208,11 +212,35 @@ export default async function ChatPage() {
           border-bottom: 1px solid rgba(13, 27, 42, 0.08);
         }
         .chat-card__avatar {
-          width: 56px;
-          height: 56px;
+          width: 64px;
+          height: 64px;
+          position: relative;
           display: inline-block;
+          flex-shrink: 0;
+        }
+        .chat-card__avatar-photo {
+          width: 64px;
+          height: 64px;
           border-radius: 50%;
-          overflow: hidden;
+          object-fit: cover;
+          object-position: center top;
+          border: 2px solid var(--gy-gold);
+          box-shadow: 0 4px 12px rgba(13, 27, 42, 0.12);
+          background: #fff;
+          display: block;
+        }
+        .chat-card__avatar-badge {
+          position: absolute;
+          right: -4px;
+          bottom: -2px;
+          width: 26px;
+          height: 26px;
+          border-radius: 50%;
+          background: #ffffff;
+          padding: 3px;
+          object-fit: contain;
+          border: 1.5px solid var(--gy-gold);
+          box-shadow: 0 2px 6px rgba(13, 27, 42, 0.15);
         }
         .chat-card__name {
           font-family: var(--gy-font-editorial);
