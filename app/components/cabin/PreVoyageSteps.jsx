@@ -72,7 +72,12 @@ export default function PreVoyageSteps({
       invitedCount,
       myDetailsComplete,
     });
-    const step3 = deriveBriefStep({ briefPercent, briefSubmitted });
+    const step3 = deriveBriefStep({
+      briefPercent,
+      briefSubmitted,
+      crewListTotal,
+      crewListReady,
+    });
     return (
       <PreVoyageShell
         title="Three quiet pieces,"
@@ -545,30 +550,58 @@ function deriveCrewListStep({
   };
 }
 
-function deriveBriefStep({ briefPercent, briefSubmitted }) {
+function deriveBriefStep({
+  briefPercent,
+  briefSubmitted,
+  crewListTotal = 0,
+  crewListReady = 0,
+}) {
   const pct = Number.isFinite(briefPercent) ? briefPercent : 0;
-  // 2026-05-22 — Distinguish "100% filled but not yet sent" from
-  // "submitted". Both used to show "Brief delivered" which was a
-  // lie if Send-to-George hadn't been pressed.
+  // 2026-05-23 — George: "στο home δεν κάνουμε γνωστό στο head
+  // charterer ότι περίμενε να το συμπληρώσουν όλοι και μετά
+  // μπορείς να πατήσεις εδώ να το τσεκάρεις και να το στείλεις
+  // και άμα το στείλεις είναι κλειδωμένο."
+  // Step 03 now factors the crew-list readiness into its title +
+  // CTA, so the principal can see at a glance whether they're
+  // actually allowed to send.
   if (briefSubmitted) {
     return {
       title: "Your brief is with us — thank you.",
       body:
         "The captain, the chef, the hostess and George have all read it. You can revisit any section anytime — last-minute additions are always welcome.",
-      status: "Brief delivered",
+      status: "Brief delivered · locked",
       cta: "Revisit the brief",
       ctaHref: "/cabin/brief",
       done: true,
       progressPercent: 100,
     };
   }
+
+  const crewIncomplete =
+    crewListTotal > 0 && crewListReady < crewListTotal;
+  const crewPendingN = crewListTotal - crewListReady;
+
+  if (pct >= 100 && crewIncomplete) {
+    return {
+      title: `Brief is in — waiting on ${crewPendingN} crew-list ${
+        crewPendingN === 1 ? "line" : "lines"
+      }.`,
+      body:
+        "Every brief section is filled and the words are yours. The Send button on the review screen unlocks the moment every member's crew-list is in — until then, the brief stays open for everyone to edit. You can still review what you've written.",
+      status: `${crewListReady} of ${crewListTotal} ready · Send locked`,
+      cta: "Review the brief",
+      ctaHref: "/cabin/brief/review",
+      done: false,
+      progressPercent: 100,
+    };
+  }
   if (pct >= 100) {
     return {
-      title: "Your brief is ready to send.",
+      title: "Everyone's in — your brief is ready to send.",
       body:
-        "Every section is filled. When your group's crew list is in too, you can send the whole thing to George from the review screen.",
+        "All sections filled. Everyone's crew-list line is in. When you press Send to George on the review screen, the brief is locked and only George can re-open it.",
       status: "Ready to review & send",
-      cta: "Review & send",
+      cta: "Review & send →",
       ctaHref: "/cabin/brief/review",
       done: false,
       progressPercent: 100,

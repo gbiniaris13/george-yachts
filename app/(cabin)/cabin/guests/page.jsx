@@ -252,6 +252,86 @@ const ROLE_LABEL = {
   designated_assistant: "Designated assistant",
 };
 
+// 2026-05-23 — Principal's read-only preview of what a guest has
+// filled in on their /cabin/me. George: "πώς μπορώ να δω τι έχει
+// συμπληρώσει η Όλγα." Keeps the same field order as /cabin/me so
+// the principal sees the answers in the order they were asked.
+const GENDER_LABEL = {
+  male: "Male",
+  female: "Female",
+  non_binary: "Non-binary",
+  prefer_not_say: "Prefers not to say",
+};
+const SWIMS_LABEL = {
+  confident: "Confident swimmer",
+  some: "Comfortable with help",
+  non_swimmer: "Non-swimmer",
+  prefer_not_say: "Prefers not to say",
+};
+
+function MemberDetailsPanel({ details }) {
+  const d = details || {};
+  const dietary = Array.isArray(d.dietary_preferences)
+    ? d.dietary_preferences.filter(Boolean)
+    : [];
+
+  const crew = [
+    ["Date of birth", d.date_of_birth],
+    ["Gender", d.gender ? GENDER_LABEL[d.gender] || d.gender : null],
+    ["Nationality", d.nationality],
+    ["ID / Passport number", d.passport_number],
+    ["Passport expiry", d.passport_expiry],
+    ["Mobile", d.mobile],
+  ];
+  const chef = [
+    ["Allergies & dietary notes", d.allergies_dietary],
+    ["Dietary preferences", dietary.length ? dietary.join(" · ") : null],
+    ["Swimming", d.swims ? SWIMS_LABEL[d.swims] || d.swims : null],
+    ["Mobility / medical notes", d.mobility_notes],
+    ["Cabin pairing", d.cabin_pairing],
+    [
+      "A celebration during the week",
+      d.special_dates_during_charter,
+    ],
+    ["Anything else", d.anything_else],
+  ];
+
+  const renderRows = (rows) =>
+    rows.map(([label, value], i) => (
+      <div key={i} className="member-details__row">
+        <span className="member-details__label">{label}</span>
+        <span
+          className={
+            "member-details__value" +
+            (value ? "" : " member-details__value--empty")
+          }
+        >
+          {value || "—"}
+        </span>
+      </div>
+    ));
+
+  return (
+    <div className="member-details" aria-label="What this member shared">
+      <div className="member-details__group">
+        <div className="member-details__eyebrow">Crew list essentials</div>
+        {renderRows(crew)}
+      </div>
+      <div className="member-details__group">
+        <div className="member-details__eyebrow">For the chef &amp; the captain</div>
+        {renderRows(chef)}
+      </div>
+      <p className="member-details__note">
+        <em>
+          You can see this because you&apos;re the principal charterer.
+          The captain and chef will see the same information on the
+          preference sheet George prepares.
+        </em>
+      </p>
+    </div>
+  );
+}
+
 function statusFor(member) {
   if (member.personal_details_completed_at) return "ready";
   if (member.last_login_at) return "joined";
@@ -276,6 +356,11 @@ export default function GuestsPage() {
   const [info, setInfo] = useState(null);
   const [resendingId, setResendingId] = useState(null);
   const [delegatingId, setDelegatingId] = useState(null);
+  // 2026-05-23 — Principal-only: which member's detail panel is
+  // expanded. George: "πώς μπορώ να δω τι έχει συμπληρώσει η Όλγα."
+  // Click "Show details" on any row to reveal the crew-list line +
+  // any optional chef/captain notes that guest filled in.
+  const [expandedId, setExpandedId] = useState(null);
 
   // Bulk-invite state — paste a list of emails (one per line, or
   // comma-separated). We POST each sequentially and report the
@@ -643,7 +728,25 @@ export default function GuestsPage() {
                       Remove
                     </button>
                   )}
+                  {/* 2026-05-23 — Principal only: show details
+                      toggle. Only visible when the guest has
+                      actually filled in something, so we don't
+                      offer an empty drawer. */}
+                  {viewerIsPrincipal && m.personal_details && (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setExpandedId((cur) => (cur === m.id ? null : m.id))
+                      }
+                      className="guests-list__details"
+                    >
+                      {expandedId === m.id ? "Hide details ▴" : "Show details ▾"}
+                    </button>
+                  )}
                 </div>
+                {viewerIsPrincipal && expandedId === m.id && (
+                  <MemberDetailsPanel details={m.personal_details ?? {}} />
+                )}
               </li>
             );
           })}
@@ -897,6 +1000,87 @@ export default function GuestsPage() {
         .guests-list__remove:hover {
           color: #b14a3a;
           border-color: #b14a3a;
+        }
+        .guests-list__details {
+          background: transparent;
+          border: 1px solid rgba(13,27,42,0.18);
+          font-family: var(--gy-font-ui);
+          font-size: 9px;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          padding: 6px 12px;
+          cursor: pointer;
+          color: rgba(13,27,42,0.7);
+        }
+        .guests-list__details:hover {
+          color: var(--gy-navy);
+          border-color: var(--gy-gold);
+        }
+        /* Expandable details panel — principal only. */
+        .member-details {
+          margin-top: 14px;
+          padding: 14px 16px 12px;
+          background: rgba(201, 168, 76, 0.05);
+          border: 1px solid rgba(201, 168, 76, 0.32);
+          border-left: 3px solid var(--gy-gold);
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+        .member-details__group {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+        .member-details__eyebrow {
+          font-family: var(--gy-font-ui);
+          font-size: 9.5px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          color: #8a7327;
+          font-weight: 700;
+          margin-bottom: 4px;
+        }
+        .member-details__row {
+          display: grid;
+          grid-template-columns: 180px 1fr;
+          gap: 12px;
+          padding: 5px 0;
+          border-bottom: 1px dashed rgba(13, 27, 42, 0.08);
+        }
+        .member-details__row:last-child { border-bottom: 0; }
+        .member-details__label {
+          font-family: var(--gy-font-ui);
+          font-size: 10px;
+          letter-spacing: 1.8px;
+          text-transform: uppercase;
+          color: rgba(13, 27, 42, 0.55);
+          align-self: center;
+        }
+        .member-details__value {
+          font-family: var(--gy-font-editorial);
+          font-size: 14px;
+          color: var(--gy-navy);
+        }
+        .member-details__value--empty {
+          color: rgba(13, 27, 42, 0.32);
+          font-style: italic;
+        }
+        .member-details__note {
+          margin: 4px 0 0 0;
+          font-family: var(--gy-font-editorial);
+          font-size: 12.5px;
+          color: rgba(13, 27, 42, 0.6);
+          line-height: 1.6;
+        }
+        @media (max-width: 560px) {
+          .member-details__row {
+            grid-template-columns: 1fr;
+            gap: 2px;
+          }
+          .member-details__value {
+            font-size: 15px;
+          }
         }
       `}</style>
     </article>

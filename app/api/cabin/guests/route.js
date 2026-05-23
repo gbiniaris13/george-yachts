@@ -43,9 +43,21 @@ export async function GET() {
   const a = await authGate();
   if (a.error) return a.error;
   const db = getCabinDb();
+  // 2026-05-23 — When the viewer is the principal_charterer, also
+  // return each member's personal_details so the principal can
+  // verify what their guests have filled in (passport typos,
+  // missing allergies, etc.) before sending the brief. For guests
+  // viewing this endpoint, personal_details is stripped — each
+  // member only owns their own data.
+  const isPrincipalViewer = a.member.role === "principal_charterer";
+  const baseColumns =
+    "id, role, email, display_name, invite_sent_at, last_login_at, personal_details_completed_at, is_brief_admin, brief_participation_opt_out_at, brief_participation_opt_out_note, created_at";
+  const columns = isPrincipalViewer
+    ? `${baseColumns}, personal_details`
+    : baseColumns;
   const data = await dbQuery(
     db.from("cabin_members")
-      .select("id, role, email, display_name, invite_sent_at, last_login_at, personal_details_completed_at, is_brief_admin, brief_participation_opt_out_at, brief_participation_opt_out_note, created_at")
+      .select(columns)
       .eq("cabin_id", a.cabinId)
       .is("deleted_at", null)
       .order("created_at")
