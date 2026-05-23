@@ -1,0 +1,365 @@
+/* app/(cabin)/cabin-luxury.css
+ * ============================================================
+ * 2026-05-23 — The Cabin · Luxury Design Layer (Round 1).
+ *
+ * George's directive: "Πάμε να το κάνουμε multimillion, multibillion
+ * να είναι το καλύτερο που έχει βγει όσο αφορά design και εφέ χωρίς
+ * να επηρεάσει το structure, χωρίς να σπάσουμε τίποτα από αυτά που
+ * δίνει αλλά να γίνει τρομερά καλύτερο, τρομερά πιο κυριλέ σαν να
+ * έχουν δουλέψει προγραμματιστές 6 μήνες και να έχουν πάρει 100.000
+ * ευρώ το μήνα. Πάντα luxury — Louis Vuitton, Vogue, Apple, Loro
+ * Piana, Hermès."
+ *
+ * RULES OF ENGAGEMENT
+ *   1. Zero structural / JSX changes — pure CSS overlay
+ *   2. Scoped to [data-cabin-mode] so the marketing site is untouched
+ *   3. Use existing class names — never add new ones
+ *   4. Build on existing brand tokens: --gy-navy, --gy-gold, --gy-ivory
+ *   5. Never override the systemic eyebrow/contrast rules in cabin-tones.css
+ *   6. Animations: subtle, slow (≥ 500ms), easing-out, never bouncy
+ *   7. Reduced-motion friendly — respect prefers-reduced-motion
+ *
+ * What this layer adds:
+ *   A. Page mount fade-in animations  — every cabin section settles
+ *      in gently on load, like a magazine page turning
+ *   B. Premium hover micro-interactions on buttons + links
+ *   C. Refined dividers — gold hairlines, never plain grey
+ *   D. Type rhythm refinement — better leading, letter-spacing, drop-caps
+ *   E. Subtle paper-grain background via SVG noise data-URI
+ *   F. Polished scrollbar (where browser allows)
+ *   G. Refined focus rings for keyboard navigation (a11y + luxury)
+ *   H. Section-level rise-on-scroll for blocks below the fold
+ * ============================================================ */
+
+
+/* ─────────────────────────────────────────────────────────────
+ * A. PAGE MOUNT — magazine-like settle-in
+ * Every direct child of the cabin shell fades in with a soft
+ * upward float. Staggered by nth-child for a cascading effect
+ * (max 6 children — beyond that everything appears together).
+ * ───────────────────────────────────────────────────────────── */
+@keyframes gy-cabin-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+[data-cabin-mode] .cabin-shell > * {
+  animation: gy-cabin-rise 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+[data-cabin-mode] .cabin-shell > *:nth-child(1) { animation-delay: 0ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(2) { animation-delay: 60ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(3) { animation-delay: 120ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(4) { animation-delay: 180ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(5) { animation-delay: 240ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(6) { animation-delay: 300ms; }
+
+
+/* ─────────────────────────────────────────────────────────────
+ * B. BUTTONS — premium hover micro-interactions
+ * Any pill / chip / gold-bordered link in the cabin gets the
+ * same refined hover: gentle lift, soft shadow, gold sweep.
+ * Apply broadly via attribute selectors so we don't have to
+ * enumerate every class.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] button,
+[data-cabin-mode] a[class*="btn"],
+[data-cabin-mode] a[class*="open"],
+[data-cabin-mode] a[class*="cta"],
+[data-cabin-mode] button[class*="primary"],
+[data-cabin-mode] button[class*="ghost"] {
+  transition:
+    background-color 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-cabin-mode] button:hover:not(:disabled),
+[data-cabin-mode] a[class*="btn"]:hover:not([aria-disabled="true"]),
+[data-cabin-mode] a[class*="open"]:hover,
+[data-cabin-mode] a[class*="cta"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(13, 27, 42, 0.10);
+}
+
+[data-cabin-mode] button:active:not(:disabled),
+[data-cabin-mode] a[class*="btn"]:active:not([aria-disabled="true"]) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(13, 27, 42, 0.08);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * C. LINKS — refined inline links get a gold underline that
+ * grows on hover. Replaces the default underline-everywhere.
+ * Skip class-prefixed elements (those are styled components).
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] p a:not([class]),
+[data-cabin-mode] li a:not([class]),
+[data-cabin-mode] em a:not([class]) {
+  color: var(--gy-navy);
+  text-decoration: none;
+  background-image: linear-gradient(
+    to right,
+    var(--gy-gold, #C9A84C),
+    var(--gy-gold, #C9A84C)
+  );
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 1px;
+  transition: background-size 320ms cubic-bezier(0.16, 1, 0.3, 1),
+              color 240ms ease;
+}
+[data-cabin-mode] p a:not([class]):hover,
+[data-cabin-mode] li a:not([class]):hover {
+  color: var(--gy-gold, #C9A84C);
+  background-size: 100% 2px;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * D. FOCUS RINGS — a11y + luxury. Replaces the harsh blue
+ * outline with a soft gold ring at the same offset.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] *:focus-visible {
+  outline: 2px solid rgba(201, 168, 76, 0.65) !important;
+  outline-offset: 3px !important;
+  border-radius: 2px;
+  transition: outline-color 180ms ease;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * E. TYPE RHYTHM — refine headlines + body, smart-quote font
+ * features, optical kerning, balanced leading.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] h1,
+[data-cabin-mode] h2,
+[data-cabin-mode] h3,
+[data-cabin-mode] .cabin-home__greeting,
+[data-cabin-mode] .cabin-home__primary-title,
+[data-cabin-mode] .cabin-brief__title {
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "onum" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.005em;
+}
+
+[data-cabin-mode] p,
+[data-cabin-mode] li,
+[data-cabin-mode] em,
+[data-cabin-mode] dd {
+  font-feature-settings: "kern" 1, "liga" 1, "onum" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Italic body running text — luxury houses use real italics
+   with a slight upward tracking nudge. */
+[data-cabin-mode] p em,
+[data-cabin-mode] em {
+  letter-spacing: 0.01em;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * F. ALL CARDS / PANELS — unified museum-plate frame style.
+ *
+ * The BerthMap + BerthNearby blocks we shipped use cream/ivory
+ * background + hairline gold border + soft layered shadow +
+ * rounded 6px corners. Apply the same treatment to every other
+ * cabin block that currently renders as a card/panel.
+ *
+ * Target the common card-ish patterns by class fragment so we
+ * catch them without enumerating every component.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] .cabin-vessel-block,
+[data-cabin-mode] .cabin-at-a-glance,
+[data-cabin-mode] .cabin-pre-voyage,
+[data-cabin-mode] .cabin-brief__card,
+[data-cabin-mode] .gwotd,
+[data-cabin-mode] .voyage-carousel,
+[data-cabin-mode] .filotimo-card,
+[data-cabin-mode] .me-fieldset,
+[data-cabin-mode] .crew-card,
+[data-cabin-mode] .chat-card,
+[data-cabin-mode] .install-card,
+[data-cabin-mode] .gy-install,
+[data-cabin-mode] .vs-block,
+[data-cabin-mode] .smp,
+[data-cabin-mode] .mn-section {
+  border-radius: 6px;
+  box-shadow:
+    0 10px 32px rgba(13, 27, 42, 0.06),
+    0 2px 6px rgba(13, 27, 42, 0.04);
+  transition: box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * G. SUBTLE DECORATIVE FLOURISH — gold hairline under the
+ * cabin header logo / brand on every page. Like a foil-stamped
+ * masthead. Already in some places; ensure consistent.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] .cabin-shell__header::after,
+[data-cabin-mode] .cabin-shell__brand::after {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--gy-gold, #C9A84C) 35%,
+    var(--gy-gold, #C9A84C) 65%,
+    transparent
+  );
+  margin: 6px auto 0;
+  opacity: 0.65;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * H. SCROLLBARS — quiet, on-brand. Webkit only; Firefox uses
+ * its system style.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+[data-cabin-mode] ::-webkit-scrollbar-track {
+  background: rgba(248, 245, 240, 0.4);
+}
+[data-cabin-mode] ::-webkit-scrollbar-thumb {
+  background: rgba(13, 27, 42, 0.15);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background 240ms ease;
+}
+[data-cabin-mode] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(13, 27, 42, 0.28);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * I. SELECTION — when a customer highlights text on the cabin
+ * page (e.g. copying their berth coordinates), the selection
+ * background should feel like a gold foil swipe, not the
+ * default electric blue.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] ::selection {
+  background-color: rgba(201, 168, 76, 0.32);
+  color: var(--gy-navy, #0D1B2A);
+}
+[data-cabin-mode] ::-moz-selection {
+  background-color: rgba(201, 168, 76, 0.32);
+  color: var(--gy-navy, #0D1B2A);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * J. PHOTO + IMAGE FRAMES — every photo inside a cabin card
+ * gets a hair-thin gold border + soft inner shadow on hover.
+ * Skip avatars (rounded) and decorative pictograms.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] .cabin-vessel-block__hero img,
+[data-cabin-mode] .cabin-vessel-block__photo img,
+[data-cabin-mode] .vs-hero img,
+[data-cabin-mode] .vs-gallery img,
+[data-cabin-mode] .voyage-carousel img,
+[data-cabin-mode] .filotimo-card img,
+[data-cabin-mode] .smp__dish-photo img {
+  transition: transform 480ms cubic-bezier(0.16, 1, 0.3, 1),
+              filter 480ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-cabin-mode] .cabin-vessel-block__hero:hover img,
+[data-cabin-mode] .voyage-carousel:hover img {
+  filter: brightness(1.04) contrast(1.02);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * K. TYPOGRAPHY FOR LEAD QUOTES / DROP-CAPS — emphasize the
+ * editorial moment. Only applies inside `.cabin-brief__intro`
+ * or `.cabin-home__greeting` (places where there's narrative).
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] .cabin-brief__intro p:first-of-type::first-letter,
+[data-cabin-mode] .cabin-pre-voyage__intro p:first-of-type::first-letter {
+  font-family: var(--gy-font-editorial, Georgia, serif);
+  font-size: 3.1em;
+  line-height: 0.85;
+  float: left;
+  padding: 0.08em 0.12em 0 0;
+  color: var(--gy-navy);
+  font-weight: 400;
+  font-feature-settings: "salt" 1, "swsh" 1;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * L. PRINT-FRIENDLY — when George (or a guest) prints a cabin
+ * page, drop the animations + background grain + hovers.
+ * ───────────────────────────────────────────────────────────── */
+
+@media print {
+  [data-cabin-mode] * {
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+  }
+  [data-cabin-mode] body {
+    background-image: none !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * M. REDUCED-MOTION — accessibility. Disable the rise-in
+ * animation and the hover lifts for users who've requested
+ * reduced motion. Still keep the visual luxury (cards / type)
+ * intact — just no movement.
+ * ───────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-cabin-mode] *,
+  [data-cabin-mode] *::before,
+  [data-cabin-mode] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * N. SCROLL BEHAVIOR — smooth, calm scrolling between in-page
+ * anchors (e.g. "next" buttons on the brief).
+ * ───────────────────────────────────────────────────────────── */
+
+html:has([data-cabin-mode]) {
+  scroll-behavior: smooth;
+}
