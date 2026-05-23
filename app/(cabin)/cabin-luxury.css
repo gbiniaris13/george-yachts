@@ -245,25 +245,25 @@
  * scroll-reveal entirely. Tiles will render perfectly every time.
  * ───────────────────────────────────────────────────────────── */
 
-[data-cabin-mode] .berth-map,
-[data-cabin-mode] .berth-map *,
-[data-cabin-mode] .leaflet-container,
-[data-cabin-mode] .leaflet-container * {
+/* 2026-05-23 (PM) — Tiles were not rendering on /cabin. Previous
+   attempt used `transform: none !important` on `.berth-map *` (all
+   descendants) and tried to re-allow with `transform: revert
+   !important` on Leaflet elements. BUT `revert` reverts to the
+   user-agent value (which is `transform: none`), so the
+   "re-allow" was still blocking Leaflet's inline transforms used
+   for tile positioning. Tiles loaded but were placed at the wrong
+   coords → invisible.
+
+   Correct scope: only the OUTER `.berth-map` and `.leaflet-container`
+   need protection from the luxury layer's animations. Leaflet's
+   children (tiles, markers, zoom layers) MUST keep their own
+   inline transforms. Don't touch them. */
+[data-cabin-mode] .berth-map {
   animation: none !important;
   transform: none !important;
 }
-/* Re-allow Leaflet's own internal transforms (pan/zoom). It uses
-   inline styles so those win over our rule. */
-[data-cabin-mode] .leaflet-tile,
-[data-cabin-mode] .leaflet-marker-icon,
-[data-cabin-mode] .leaflet-marker-shadow,
-[data-cabin-mode] .leaflet-layer,
-[data-cabin-mode] .leaflet-zoom-animated {
-  /* Leaflet sets transform inline; we don't want to fight it.
-     The rule above used `!important`, so override here with the
-     same. The inline-style still wins by source order + specificity
-     for the cases we care about. */
-  transform: revert !important;
+[data-cabin-mode] .leaflet-container {
+  animation: none !important;
 }
 
 
