@@ -1,5 +1,17 @@
+"use client";
+
 // app/components/cabin/VesselBrochureBlock.jsx
 // =============================================================
+// 2026-05-23 — Converted to a client component. The previous
+// server-rendered version broke /cabin entirely after we added
+// the PhotoGallery render-prop ({ open } => ...) — server
+// components cannot pass functions as children to client
+// components, and the runtime threw "Something went wrong" on
+// every load. This component is pure props-to-JSX with no
+// server-only deps (no fs, no DB, no headers), so promoting it
+// to a client component is safe and unblocks the gallery
+// lightbox interaction.
+//
 // 2026-05-22 — George's response to the cabin-home preview:
 //   "Λέμε αυτό το κείμενο στον πελάτη και δεν του δείχνουμε
 //    τίποτα. Έχει απλά 2-3 στοιχεία. 'See the full vessel' τι
