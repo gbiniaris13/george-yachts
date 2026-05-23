@@ -107,35 +107,41 @@ export default function BerthNearby({ nearby }) {
 
         <p className="berth-nearby__note">
           <em>
-            Reference points only. Your captain handles the day.
+            Indicative distances only. For anything beyond — we&apos;re
+            a message away.
           </em>
         </p>
       </div>
 
       <style>{`
+        /* 2026-05-23 — tight gap above (8px) so this block reads as
+           a continuation of the BerthMap above it, not a separate
+           panel floating in whitespace. The BerthMap's bottom
+           margin (36px) is the dominant gap; we pull up here with
+           a negative margin so the visual gap is ~12px. */
         .berth-nearby {
-          margin: 28px 0 36px;
+          margin: -24px 0 44px;
         }
         .berth-nearby__inner {
           background: #FAF7F0;
-          border: 1px solid rgba(201, 168, 76, 0.28);
+          border: 1px solid rgba(201, 168, 76, 0.32);
           border-radius: 6px;
           box-shadow:
-            0 10px 32px rgba(13, 27, 42, 0.07),
-            0 2px 6px rgba(13, 27, 42, 0.04);
+            0 12px 36px rgba(13, 27, 42, 0.08),
+            0 2px 8px rgba(13, 27, 42, 0.04);
           overflow: hidden;
         }
         .berth-nearby__head {
-          padding: 26px 32px 18px;
+          padding: 32px 36px 22px;
           display: flex;
           flex-direction: column;
           gap: 6px;
-          border-bottom: 1px solid rgba(201, 168, 76, 0.18);
+          border-bottom: 1px solid rgba(201, 168, 76, 0.22);
         }
         .berth-nearby__eyebrow {
           font-family: var(--gy-font-ui);
-          font-size: 11px;
-          letter-spacing: 3px;
+          font-size: 11.5px;
+          letter-spacing: 3.2px;
           text-transform: uppercase;
           color: #1f2937;
           font-weight: 600;
@@ -147,25 +153,25 @@ export default function BerthNearby({ nearby }) {
           letter-spacing: 0.2px;
         }
         .berth-nearby__grid {
-          padding: 12px 32px 8px;
+          padding: 8px 36px 6px;
           display: flex;
           flex-direction: column;
         }
         .berth-nearby__section {
-          padding: 22px 0;
-          border-bottom: 1px solid rgba(13, 27, 42, 0.07);
+          padding: 26px 0;
+          border-bottom: 1px solid rgba(201, 168, 76, 0.16);
         }
         .berth-nearby__section:last-child {
           border-bottom: none;
         }
         .berth-nearby__section-title {
           font-family: var(--gy-font-ui);
-          font-size: 10.5px;
-          letter-spacing: 2.6px;
+          font-size: 11px;
+          letter-spacing: 3px;
           text-transform: uppercase;
-          color: rgba(13, 27, 42, 0.7);
+          color: rgba(13, 27, 42, 0.78);
           font-weight: 600;
-          margin-bottom: 10px;
+          margin-bottom: 12px;
         }
         .berth-nearby__place-name {
           font-family: var(--gy-font-editorial);
@@ -257,15 +263,15 @@ export default function BerthNearby({ nearby }) {
           border-top: 1px solid rgba(13, 27, 42, 0.04);
         }
         @media (max-width: 560px) {
-          .berth-nearby { margin: 22px 0 28px; }
-          .berth-nearby__head { padding: 24px 22px 18px; }
+          .berth-nearby { margin: -18px 0 32px; }
+          .berth-nearby__head { padding: 26px 22px 18px; }
           .berth-nearby__lede { font-size: 15px; }
-          .berth-nearby__grid { padding: 8px 22px 4px; }
-          .berth-nearby__section { padding: 18px 0; }
+          .berth-nearby__grid { padding: 6px 22px 4px; }
+          .berth-nearby__section { padding: 22px 0; }
           .berth-nearby__place-name { font-size: 16.5px; }
           .berth-nearby__place-meta { font-size: 13px; }
           .berth-nearby__atm-name { font-size: 14.5px; }
-          .berth-nearby__note { padding: 14px 22px 20px; font-size: 12px; }
+          .berth-nearby__note { padding: 14px 22px 22px; font-size: 12px; }
         }
       `}</style>
     </section>
@@ -289,33 +295,51 @@ function Section({ title, place, extra }) {
   );
 }
 
-// "35 min by car · 28 km" with graceful fallback to crow-flies
-// only when OSRM didn't come back ("28 km · point to point").
+// 2026-05-23 — George's directive: "έχουμε και Ευρωπαίους και
+// Αμερικάνους πελάτες θέλω να δίνεις όπου δίνεις distance θέλω
+// να είναι και σε μέτρα και στο Αμερικάνικο σύστημα."
+//
+// Distance presentation rules:
+//   < 1 km  → "400 m · 1,310 ft"   (walkable; feet for US intuition)
+//   ≥ 1 km  → "28 km · 17 mi"      (drive-scale; miles for US intuition)
+//
+// Distance + drive line for airport / helicopter / hospital:
+//   "28 km · 17 mi · 35 min by car"
+// Always shows both units. Drive time appended when known.
+function formatDistanceDual(km) {
+  if (typeof km !== "number") return "";
+  if (km < 1) {
+    const m = Math.round(km * 1000);
+    const ft = Math.round(m * 3.28084);
+    return `${m} m · ${ft.toLocaleString("en-US")} ft`;
+  }
+  const mi = km * 0.621371;
+  return `${km.toFixed(1)} km · ${mi.toFixed(1)} mi`;
+}
+
 function formatDriveLine(place) {
   const parts = [];
+  // Prefer driving distance if OSRM gave one (more honest than
+  // crow-flies for "how far is it really"). Fall back to Haversine.
+  const distKm =
+    typeof place.drive_km === "number" && place.drive_km > 0
+      ? place.drive_km
+      : typeof place.distance_km === "number"
+      ? place.distance_km
+      : null;
+  if (distKm !== null) {
+    parts.push(formatDistanceDual(distKm));
+  }
   if (typeof place.drive_minutes === "number" && place.drive_minutes > 0) {
     parts.push(`${place.drive_minutes} min by car`);
-  }
-  if (typeof place.drive_km === "number" && place.drive_km > 0) {
-    parts.push(`${place.drive_km.toFixed(1)} km`);
-  } else if (typeof place.distance_km === "number") {
-    parts.push(
-      place.drive_minutes != null
-        ? `${place.distance_km.toFixed(1)} km`
-        : `${place.distance_km.toFixed(1)} km · point to point`,
-    );
   }
   return parts.join(" · ");
 }
 
-// "220 m" for sub-km distances (ATMs), "1.2 km" otherwise.
+// Same dual-unit format used for walking-distance categories (ATMs,
+// pharmacy) where only the crow-flies number matters.
 function formatDistance(km) {
-  if (typeof km !== "number") return "";
-  if (km < 1) {
-    const m = Math.round(km * 1000);
-    return `${m} m`;
-  }
-  return `${km.toFixed(1)} km`;
+  return formatDistanceDual(km);
 }
 
 // 2026-05-23 — George's directive: "οι πελάτες μας δεν είναι Έλληνες,
