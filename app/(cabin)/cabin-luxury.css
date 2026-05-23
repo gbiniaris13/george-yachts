@@ -1,190 +1,399 @@
 /* app/(cabin)/cabin-luxury.css
  * ============================================================
- * 2026-05-23 — The Cabin · Luxury Design Layer (Round 1).
+ * 2026-05-23 — THE CABIN · LUXURY DESIGN LAYER (Round 2)
  *
- * George's directive: "Πάμε να το κάνουμε multimillion, multibillion
- * να είναι το καλύτερο που έχει βγει όσο αφορά design και εφέ χωρίς
- * να επηρεάσει το structure, χωρίς να σπάσουμε τίποτα από αυτά που
- * δίνει αλλά να γίνει τρομερά καλύτερο, τρομερά πιο κυριλέ σαν να
- * έχουν δουλέψει προγραμματιστές 6 μήνες και να έχουν πάρει 100.000
- * ευρώ το μήνα. Πάντα luxury — Louis Vuitton, Vogue, Apple, Loro
- * Piana, Hermès."
+ * George (after Round 1 review): "Δεν είδα και φοβερή διαφορά.
+ * Πάμε για multimillion, multibillion, να φτάσει τον ουρανό.
+ * Λίγο εφέ, λίγο στήσιμο, λίγο design. Όχι λίγα πραγματάκια."
  *
- * RULES OF ENGAGEMENT
- *   1. Zero structural / JSX changes — pure CSS overlay
- *   2. Scoped to [data-cabin-mode] so the marketing site is untouched
- *   3. Use existing class names — never add new ones
- *   4. Build on existing brand tokens: --gy-navy, --gy-gold, --gy-ivory
- *   5. Never override the systemic eyebrow/contrast rules in cabin-tones.css
- *   6. Animations: subtle, slow (≥ 500ms), easing-out, never bouncy
- *   7. Reduced-motion friendly — respect prefers-reduced-motion
+ * Round 2 is DRAMATIC. We are not subtle anymore. Every move below
+ * is something a UHNW client will SEE the moment they open /cabin:
  *
- * What this layer adds:
- *   A. Page mount fade-in animations  — every cabin section settles
- *      in gently on load, like a magazine page turning
- *   B. Premium hover micro-interactions on buttons + links
- *   C. Refined dividers — gold hairlines, never plain grey
- *   D. Type rhythm refinement — better leading, letter-spacing, drop-caps
- *   E. Subtle paper-grain background via SVG noise data-URI
- *   F. Polished scrollbar (where browser allows)
- *   G. Refined focus rings for keyboard navigation (a11y + luxury)
- *   H. Section-level rise-on-scroll for blocks below the fold
+ *   1. MASSIVE editorial greeting (Fraunces display, 88px+ on
+ *      desktop, italic, OpenType swashes)
+ *   2. Scroll-driven section reveals (CSS animation-timeline with
+ *      Safari fallback — content always renders, animations are
+ *      progressive enhancement)
+ *   3. SVG paper-grain texture overlay on body
+ *   4. Gold monogram watermark fixed lower-right corner
+ *   5. Sticky header with backdrop blur on scroll
+ *   6. Hero radial gradient on the welcome block
+ *   7. Premium tile shimmer + lift + glyph color shift on hover
+ *   8. Ken Burns slow zoom on vessel hero photos
+ *   9. Roman-numeral section markers as gold foil overlays
+ *  10. Decorative SVG ornaments between sections (◆ wave)
+ *  11. Drop-cap moments on narrative intros
+ *  12. Premium scrollbar + selection + focus
+ *  13. CSS custom properties for the whole luxury system
+ *      (eases, durations, shadows) — change in one place, ripple
+ *  14. @supports / @media print / @media prefers-reduced-motion
+ *      gracefully degrades EVERY effect
+ *
+ * NEVER overrides cabin-tones.css contrast rules (eyebrow wildcard
+ * stays navy). NEVER changes JSX. ALWAYS scoped to [data-cabin-mode].
  * ============================================================ */
 
 
 /* ─────────────────────────────────────────────────────────────
- * A. PAGE MOUNT — magazine-like settle-in
- * Every direct child of the cabin shell fades in with a soft
- * upward float. Staggered by nth-child for a cascading effect
- * (max 6 children — beyond that everything appears together).
+ * § 0  LUXURY DESIGN TOKENS
+ * One place to tune the whole system. Brand tokens
+ * (--gy-navy / --gy-gold / --gy-ivory) come from globals.css;
+ * here we add the luxury-specific scales.
  * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] {
+  /* Easings */
+  --gy-ease:       cubic-bezier(0.16, 1, 0.3, 1);
+  --gy-ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+  --gy-ease-in:    cubic-bezier(0.7, 0, 0.84, 0);
+  --gy-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Durations */
+  --gy-d-fast:     180ms;
+  --gy-d-base:     320ms;
+  --gy-d-slow:     560ms;
+  --gy-d-cinema:   1200ms;
+
+  /* Shadows — layered like real luxury catalogues */
+  --gy-shadow-card:
+    0 1px 2px rgba(13, 27, 42, 0.04),
+    0 4px 12px rgba(13, 27, 42, 0.05),
+    0 12px 36px rgba(13, 27, 42, 0.07);
+  --gy-shadow-lift:
+    0 2px 4px rgba(13, 27, 42, 0.06),
+    0 8px 18px rgba(13, 27, 42, 0.08),
+    0 22px 52px rgba(13, 27, 42, 0.10);
+  --gy-shadow-press: 0 1px 2px rgba(13, 27, 42, 0.10);
+
+  /* Foil-gold accents */
+  --gy-foil-line: linear-gradient(
+    to right,
+    transparent,
+    rgba(201, 168, 76, 0.35) 18%,
+    rgba(201, 168, 76, 0.7) 50%,
+    rgba(201, 168, 76, 0.35) 82%,
+    transparent
+  );
+  --gy-foil-soft: linear-gradient(
+    135deg,
+    rgba(201, 168, 76, 0.18),
+    rgba(201, 168, 76, 0.05) 50%,
+    rgba(201, 168, 76, 0.18)
+  );
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 1  ATMOSPHERIC BACKGROUND
+ * The body gets a barely-perceptible cream-to-ivory gradient
+ * + an SVG paper-grain overlay. Sets the whole cabin in a
+ * tactile, museum-quality space.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] {
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 0%, #FCFAF4 0%, #F8F5F0 55%, #F5F1E8 100%);
+}
+
+/* SVG grain — fixed, locked to viewport, very faint, multiply
+   blend mode to live under content without dulling colors. */
+[data-cabin-mode]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.05  0 0 0 0 0.05  0 0 0 0 0.05  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 240px 240px;
+}
+
+/* Make sure content stacks above the grain. */
+[data-cabin-mode] > * {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 2  GOLD MONOGRAM WATERMARK
+ * Fixed lower-right corner: a small "GY" mark embossed in foil
+ * gold. Like the embroidered monogram on a Hermès napkin.
+ * Disabled on phones (no room).
+ * ───────────────────────────────────────────────────────────── */
+
+@media (min-width: 900px) {
+  [data-cabin-mode]::after {
+    content: "";
+    position: fixed;
+    right: 28px;
+    bottom: 28px;
+    width: 56px;
+    height: 56px;
+    z-index: 50;
+    pointer-events: none;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g fill='none' stroke='%23C9A84C' stroke-width='1' stroke-linecap='round'><circle cx='32' cy='32' r='28' stroke-opacity='0.45'/><path d='M16 26 Q32 38 48 26' stroke-opacity='0.7'/><path d='M16 34 Q32 22 48 34' stroke-opacity='0.7'/><text x='32' y='40' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='18' fill='%23C9A84C' fill-opacity='0.8' stroke='none'>GY</text></g></svg>");
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: opacity var(--gy-d-base) var(--gy-ease);
+  }
+  [data-cabin-mode]:hover::after { opacity: 0.55; }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 3  PAGE MOUNT CASCADE — refined
+ * Each first-level cabin section eases in with a luxury rise.
+ * Same as Round 1 but with deeper offset and more stagger.
+ * ───────────────────────────────────────────────────────────── */
+
 @keyframes gy-cabin-rise {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+[data-cabin-mode] .cabin-shell > * {
+  animation: gy-cabin-rise 900ms var(--gy-ease) both;
+}
+[data-cabin-mode] .cabin-shell > *:nth-child(1) { animation-delay: 0ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(2) { animation-delay: 80ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(3) { animation-delay: 160ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(4) { animation-delay: 240ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(5) { animation-delay: 320ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(6) { animation-delay: 400ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(7) { animation-delay: 480ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(8) { animation-delay: 560ms; }
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 4  SCROLL-DRIVEN SECTION REVEALS
+ * Modern browsers (Chrome/Edge): each card-class section rises
+ * + fades as it enters the viewport. Safari/Firefox: just shows
+ * (no animation). Always renders.
+ * ───────────────────────────────────────────────────────────── */
+
+@supports (animation-timeline: view()) {
+  @keyframes gy-section-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(32px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  [data-cabin-mode] .cabin-vessel-block,
+  [data-cabin-mode] .berth-map,
+  [data-cabin-mode] .berth-nearby,
+  [data-cabin-mode] .voyage-carousel,
+  [data-cabin-mode] .filotimo-card,
+  [data-cabin-mode] .cabin-at-a-glance,
+  [data-cabin-mode] .cabin-pre-voyage,
+  [data-cabin-mode] .gy-install,
+  [data-cabin-mode] .install-card,
+  [data-cabin-mode] .gwotd {
+    animation: gy-section-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 24%;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 5  EDITORIAL TYPOGRAPHY — the dramatic move
+ *
+ * The greeting on /cabin home is where a UHNW client lands.
+ * It needs to feel like the first spread of a Vogue feature.
+ * Massive Fraunces display italic, swashes ON, tight optical
+ * letter-spacing, dramatic line-height. THIS is the moment.
+ * ───────────────────────────────────────────────────────────── */
+
+/* Eyebrow above the greeting — small, refined, gold-foiled. */
+[data-cabin-mode] .cabin-home__eyebrow {
+  font-family: var(--gy-font-ui, "Inter"), sans-serif;
+  font-size: 11px;
+  letter-spacing: 4.5px;
+  text-transform: uppercase;
+  color: rgba(13, 27, 42, 0.72);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+[data-cabin-mode] .cabin-home__eyebrow::before,
+[data-cabin-mode] .cabin-home__eyebrow::after {
+  content: "";
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: var(--gy-foil-line);
+}
+
+/* THE GREETING — dramatic editorial display. */
+[data-cabin-mode] .cabin-home__greeting {
+  font-family: var(--gy-font-display, "Fraunces"), "Cormorant Garamond", Georgia, serif !important;
+  font-weight: 350 !important;
+  font-style: italic !important;
+  font-size: clamp(44px, 9.5vw, 96px) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.022em !important;
+  color: var(--gy-navy, #0D1B2A) !important;
+  margin: 22px 0 12px !important;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "swsh" 1, "salt" 1, "onum" 1 !important;
+  font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 1 !important;
+  font-optical-sizing: auto !important;
+  text-wrap: balance;
+  animation: gy-letter-rise 1200ms var(--gy-ease) 100ms both;
+}
+@keyframes gy-letter-rise {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(20px);
+    filter: blur(6px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+    filter: blur(0);
   }
 }
 
-[data-cabin-mode] .cabin-shell > * {
-  animation: gy-cabin-rise 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+/* The hairline rule below the greeting — make it foil-gold. */
+[data-cabin-mode] .cabin-home__rule {
+  height: 1px !important;
+  background: var(--gy-foil-line) !important;
+  border: none !important;
+  margin: 28px auto 0 !important;
+  width: min(120px, 22%) !important;
+  opacity: 0.8;
+  animation: gy-rule-grow 1200ms var(--gy-ease) 600ms both;
 }
-[data-cabin-mode] .cabin-shell > *:nth-child(1) { animation-delay: 0ms; }
-[data-cabin-mode] .cabin-shell > *:nth-child(2) { animation-delay: 60ms; }
-[data-cabin-mode] .cabin-shell > *:nth-child(3) { animation-delay: 120ms; }
-[data-cabin-mode] .cabin-shell > *:nth-child(4) { animation-delay: 180ms; }
-[data-cabin-mode] .cabin-shell > *:nth-child(5) { animation-delay: 240ms; }
-[data-cabin-mode] .cabin-shell > *:nth-child(6) { animation-delay: 300ms; }
+@keyframes gy-rule-grow {
+  from { width: 0 !important; opacity: 0; }
+  to   { width: min(120px, 22%) !important; opacity: 0.8; }
+}
+
+/* The welcome block container — radial wash for hero feel. */
+[data-cabin-mode] .cabin-home__welcome {
+  position: relative;
+  text-align: center;
+  padding: 36px 0 44px;
+  background:
+    radial-gradient(ellipse at 50% 0%,
+      rgba(201, 168, 76, 0.05) 0%,
+      transparent 60%);
+}
+
+/* Section labels in the home grid — quieter, more spaced. */
+[data-cabin-mode] .cabin-home__section-label {
+  font-family: var(--gy-font-ui, "Inter"), sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(13, 27, 42, 0.7);
+  font-weight: 600;
+  text-align: center;
+  margin: 56px 0 24px;
+  position: relative;
+}
+[data-cabin-mode] .cabin-home__section-label::before,
+[data-cabin-mode] .cabin-home__section-label::after {
+  content: "";
+  display: inline-block;
+  width: 40px;
+  height: 1px;
+  background: var(--gy-foil-line);
+  vertical-align: middle;
+  margin: 0 16px;
+}
 
 
 /* ─────────────────────────────────────────────────────────────
- * B. BUTTONS — premium hover micro-interactions
- * Any pill / chip / gold-bordered link in the cabin gets the
- * same refined hover: gentle lift, soft shadow, gold sweep.
- * Apply broadly via attribute selectors so we don't have to
- * enumerate every class.
+ * § 6  HOME GRID TILES — premium hover with gold shimmer
+ *
+ * The tile grid on /cabin home is the customer's main navigation.
+ * Each tile needs to feel like it costs money to touch.
  * ───────────────────────────────────────────────────────────── */
 
-[data-cabin-mode] button,
-[data-cabin-mode] a[class*="btn"],
-[data-cabin-mode] a[class*="open"],
-[data-cabin-mode] a[class*="cta"],
-[data-cabin-mode] button[class*="primary"],
-[data-cabin-mode] button[class*="ghost"] {
+[data-cabin-mode] .cabin-home__tile {
+  position: relative;
+  overflow: hidden;
   transition:
-    background-color 240ms cubic-bezier(0.16, 1, 0.3, 1),
-    color 240ms cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 240ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 240ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform var(--gy-d-base) var(--gy-ease),
+    box-shadow var(--gy-d-base) var(--gy-ease),
+    border-color var(--gy-d-base) var(--gy-ease),
+    background-color var(--gy-d-base) var(--gy-ease);
 }
 
-[data-cabin-mode] button:hover:not(:disabled),
-[data-cabin-mode] a[class*="btn"]:hover:not([aria-disabled="true"]),
-[data-cabin-mode] a[class*="open"]:hover,
-[data-cabin-mode] a[class*="cta"]:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(13, 27, 42, 0.10);
-}
-
-[data-cabin-mode] button:active:not(:disabled),
-[data-cabin-mode] a[class*="btn"]:active:not([aria-disabled="true"]) {
-  transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(13, 27, 42, 0.08);
-}
-
-
-/* ─────────────────────────────────────────────────────────────
- * C. LINKS — refined inline links get a gold underline that
- * grows on hover. Replaces the default underline-everywhere.
- * Skip class-prefixed elements (those are styled components).
- * ───────────────────────────────────────────────────────────── */
-
-[data-cabin-mode] p a:not([class]),
-[data-cabin-mode] li a:not([class]),
-[data-cabin-mode] em a:not([class]) {
-  color: var(--gy-navy);
-  text-decoration: none;
-  background-image: linear-gradient(
-    to right,
-    var(--gy-gold, #C9A84C),
-    var(--gy-gold, #C9A84C)
+/* Foil-gold shimmer sweep on hover (diagonal). */
+[data-cabin-mode] .cabin-home__tile::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(201, 168, 76, 0.18) 50%,
+    transparent 70%
   );
-  background-size: 100% 1px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  padding-bottom: 1px;
-  transition: background-size 320ms cubic-bezier(0.16, 1, 0.3, 1),
-              color 240ms ease;
+  transform: skewX(-18deg);
+  transition: left var(--gy-d-cinema) var(--gy-ease);
+  pointer-events: none;
 }
-[data-cabin-mode] p a:not([class]):hover,
-[data-cabin-mode] li a:not([class]):hover {
+[data-cabin-mode] .cabin-home__tile:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--gy-shadow-lift);
+  border-color: rgba(201, 168, 76, 0.55) !important;
+  background-color: #FCFAF4 !important;
+}
+[data-cabin-mode] .cabin-home__tile:hover::before {
+  left: 125%;
+}
+
+/* The icon (glyph) inside each tile — gold tint shift on hover. */
+[data-cabin-mode] .cabin-home__tile-glyph {
+  transition:
+    color var(--gy-d-base) var(--gy-ease),
+    transform var(--gy-d-base) var(--gy-ease),
+    filter var(--gy-d-base) var(--gy-ease);
+}
+[data-cabin-mode] .cabin-home__tile:hover .cabin-home__tile-glyph {
   color: var(--gy-gold, #C9A84C);
-  background-size: 100% 2px;
+  transform: translateY(-2px) scale(1.06);
+  filter: drop-shadow(0 2px 4px rgba(201, 168, 76, 0.35));
 }
 
 
 /* ─────────────────────────────────────────────────────────────
- * D. FOCUS RINGS — a11y + luxury. Replaces the harsh blue
- * outline with a soft gold ring at the same offset.
+ * § 7  KEN BURNS ON HERO PHOTOS
+ * Slow, almost-imperceptible zoom on the vessel hero + voyage
+ * carousel imagery. The "I'm watching a film" feel.
  * ───────────────────────────────────────────────────────────── */
 
-[data-cabin-mode] *:focus-visible {
-  outline: 2px solid rgba(201, 168, 76, 0.65) !important;
-  outline-offset: 3px !important;
-  border-radius: 2px;
-  transition: outline-color 180ms ease;
+@keyframes gy-ken-burns {
+  0%   { transform: scale(1.02) translate(0, 0); }
+  100% { transform: scale(1.08) translate(-1%, 0.5%); }
+}
+
+[data-cabin-mode] .cabin-vessel-block__hero img,
+[data-cabin-mode] .vs-hero img {
+  animation: gy-ken-burns 28s ease-in-out infinite alternate;
+  transform-origin: center center;
 }
 
 
 /* ─────────────────────────────────────────────────────────────
- * E. TYPE RHYTHM — refine headlines + body, smart-quote font
- * features, optical kerning, balanced leading.
- * ───────────────────────────────────────────────────────────── */
-
-[data-cabin-mode] h1,
-[data-cabin-mode] h2,
-[data-cabin-mode] h3,
-[data-cabin-mode] .cabin-home__greeting,
-[data-cabin-mode] .cabin-home__primary-title,
-[data-cabin-mode] .cabin-brief__title {
-  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "onum" 1;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  letter-spacing: -0.005em;
-}
-
-[data-cabin-mode] p,
-[data-cabin-mode] li,
-[data-cabin-mode] em,
-[data-cabin-mode] dd {
-  font-feature-settings: "kern" 1, "liga" 1, "onum" 1;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Italic body running text — luxury houses use real italics
-   with a slight upward tracking nudge. */
-[data-cabin-mode] p em,
-[data-cabin-mode] em {
-  letter-spacing: 0.01em;
-}
-
-
-/* ─────────────────────────────────────────────────────────────
- * F. ALL CARDS / PANELS — unified museum-plate frame style.
+ * § 8  ALL CARDS / PANELS — unified museum-plate frame
  *
- * The BerthMap + BerthNearby blocks we shipped use cream/ivory
- * background + hairline gold border + soft layered shadow +
- * rounded 6px corners. Apply the same treatment to every other
- * cabin block that currently renders as a card/panel.
- *
- * Target the common card-ish patterns by class fragment so we
- * catch them without enumerating every component.
+ * Round 1 introduced soft shadow + rounded corners. Round 2 deepens
+ * the shadow palette, tightens the borders, makes them tactile.
  * ───────────────────────────────────────────────────────────── */
 
 [data-cabin-mode] .cabin-vessel-block,
@@ -203,41 +412,184 @@
 [data-cabin-mode] .smp,
 [data-cabin-mode] .mn-section {
   border-radius: 6px;
-  box-shadow:
-    0 10px 32px rgba(13, 27, 42, 0.06),
-    0 2px 6px rgba(13, 27, 42, 0.04);
-  transition: box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--gy-shadow-card);
+  transition:
+    box-shadow var(--gy-d-base) var(--gy-ease),
+    transform var(--gy-d-base) var(--gy-ease);
+}
+[data-cabin-mode] .crew-card:hover,
+[data-cabin-mode] .filotimo-card:hover,
+[data-cabin-mode] .install-card:hover {
+  box-shadow: var(--gy-shadow-lift);
+  transform: translateY(-2px);
 }
 
 
 /* ─────────────────────────────────────────────────────────────
- * G. SUBTLE DECORATIVE FLOURISH — gold hairline under the
- * cabin header logo / brand on every page. Like a foil-stamped
- * masthead. Already in some places; ensure consistent.
+ * § 9  PREMIUM BUTTON / CTA HOVERS
+ * Every button in the cabin gets the same refined micro-lift.
  * ───────────────────────────────────────────────────────────── */
 
-[data-cabin-mode] .cabin-shell__header::after,
+[data-cabin-mode] button,
+[data-cabin-mode] a[class*="btn"],
+[data-cabin-mode] a[class*="open"],
+[data-cabin-mode] a[class*="cta"] {
+  transition:
+    background-color var(--gy-d-base) var(--gy-ease),
+    color var(--gy-d-base) var(--gy-ease),
+    border-color var(--gy-d-base) var(--gy-ease),
+    box-shadow var(--gy-d-base) var(--gy-ease),
+    transform var(--gy-d-base) var(--gy-ease);
+}
+[data-cabin-mode] button:hover:not(:disabled),
+[data-cabin-mode] a[class*="btn"]:hover:not([aria-disabled="true"]),
+[data-cabin-mode] a[class*="open"]:hover,
+[data-cabin-mode] a[class*="cta"]:hover {
+  transform: translateY(-1.5px);
+  box-shadow: var(--gy-shadow-lift);
+}
+[data-cabin-mode] button:active:not(:disabled),
+[data-cabin-mode] a[class*="btn"]:active:not([aria-disabled="true"]) {
+  transform: translateY(0);
+  box-shadow: var(--gy-shadow-press);
+  transition-duration: var(--gy-d-fast);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 10  REFINED INLINE LINK UNDERLINES
+ * Narrative copy links: 1px gold underline that grows on hover.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] p a:not([class]),
+[data-cabin-mode] li a:not([class]),
+[data-cabin-mode] em a:not([class]) {
+  color: var(--gy-navy);
+  text-decoration: none;
+  background-image: linear-gradient(to right, var(--gy-gold, #C9A84C), var(--gy-gold, #C9A84C));
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 1px;
+  transition:
+    background-size var(--gy-d-base) var(--gy-ease),
+    color var(--gy-d-base) var(--gy-ease);
+}
+[data-cabin-mode] p a:not([class]):hover,
+[data-cabin-mode] li a:not([class]):hover {
+  color: var(--gy-gold, #C9A84C);
+  background-size: 100% 2px;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 11  TYPOGRAPHY RHYTHM — OpenType features everywhere
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] h1,
+[data-cabin-mode] h2,
+[data-cabin-mode] h3,
+[data-cabin-mode] .cabin-brief__title,
+[data-cabin-mode] .cabin-home__primary-title,
+[data-cabin-mode] .cabin-home__progress-title {
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "onum" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+[data-cabin-mode] p,
+[data-cabin-mode] li,
+[data-cabin-mode] em,
+[data-cabin-mode] dd {
+  font-feature-settings: "kern" 1, "liga" 1, "onum" 1, "tnum" 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Numbers — tabular, lining, for clean alignment in lists. */
+[data-cabin-mode] .berth-nearby__atm-dist,
+[data-cabin-mode] .berth-nearby__place-meta,
+[data-cabin-mode] .cabin-at-a-glance__row dd,
+[data-cabin-mode] dl dd {
+  font-feature-settings: "kern" 1, "lnum" 1, "tnum" 1;
+}
+
+/* Italic body running text — slight tracking nudge. */
+[data-cabin-mode] p em,
+[data-cabin-mode] em {
+  letter-spacing: 0.008em;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 12  DROP-CAPS for narrative intros
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] .cabin-brief__intro p:first-of-type::first-letter,
+[data-cabin-mode] .cabin-pre-voyage__intro p:first-of-type::first-letter {
+  font-family: var(--gy-font-display, "Fraunces"), Georgia, serif;
+  font-size: 3.4em;
+  line-height: 0.82;
+  float: left;
+  padding: 0.06em 0.14em 0 0;
+  color: var(--gy-navy);
+  font-weight: 350;
+  font-style: italic;
+  font-feature-settings: "salt" 1, "swsh" 1;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 13  GOLD FOIL FOCUS RINGS (a11y + luxury)
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] *:focus-visible {
+  outline: 2px solid rgba(201, 168, 76, 0.72) !important;
+  outline-offset: 3px !important;
+  border-radius: 2px;
+  transition: outline-color var(--gy-d-fast) ease;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 14  STICKY HEADER WITH BLUR ON SCROLL
+ * The cabin shell header (logo + brand) gets a backdrop blur
+ * + faint divider as the user scrolls down. Apple-style.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] .cabin-shell__header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  background: rgba(248, 245, 240, 0.78);
+  border-bottom: 1px solid rgba(13, 27, 42, 0.04);
+  transition:
+    box-shadow var(--gy-d-base) var(--gy-ease),
+    background var(--gy-d-base) var(--gy-ease);
+}
+[data-cabin-mode] .cabin-shell__header:hover {
+  background: rgba(248, 245, 240, 0.92);
+}
+
+/* Foil-gold hairline under the brand. */
 [data-cabin-mode] .cabin-shell__brand::after {
   content: "";
   display: block;
-  width: 28px;
+  width: 32px;
   height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    var(--gy-gold, #C9A84C) 35%,
-    var(--gy-gold, #C9A84C) 65%,
-    transparent
-  );
+  background: var(--gy-foil-line);
   margin: 6px auto 0;
-  opacity: 0.65;
+  opacity: 0.8;
 }
 
 
 /* ─────────────────────────────────────────────────────────────
- * H. SCROLLBARS — quiet, on-brand. Webkit only; Firefox uses
- * its system style.
+ * § 15  SCROLLBARS / SELECTION
  * ───────────────────────────────────────────────────────────── */
 
 [data-cabin-mode] ::-webkit-scrollbar {
@@ -248,25 +600,17 @@
   background: rgba(248, 245, 240, 0.4);
 }
 [data-cabin-mode] ::-webkit-scrollbar-thumb {
-  background: rgba(13, 27, 42, 0.15);
+  background: rgba(13, 27, 42, 0.18);
   border-radius: 5px;
   border: 2px solid transparent;
   background-clip: padding-box;
-  transition: background 240ms ease;
+  transition: background var(--gy-d-base) var(--gy-ease);
 }
 [data-cabin-mode] ::-webkit-scrollbar-thumb:hover {
-  background: rgba(13, 27, 42, 0.28);
+  background: rgba(201, 168, 76, 0.55);
   background-clip: padding-box;
   border: 2px solid transparent;
 }
-
-
-/* ─────────────────────────────────────────────────────────────
- * I. SELECTION — when a customer highlights text on the cabin
- * page (e.g. copying their berth coordinates), the selection
- * background should feel like a gold foil swipe, not the
- * default electric blue.
- * ───────────────────────────────────────────────────────────── */
 
 [data-cabin-mode] ::selection {
   background-color: rgba(201, 168, 76, 0.32);
@@ -279,10 +623,20 @@
 
 
 /* ─────────────────────────────────────────────────────────────
- * J. PHOTO + IMAGE FRAMES — every photo inside a cabin card
- * gets a hair-thin gold border + soft inner shadow on hover.
- * Skip avatars (rounded) and decorative pictograms.
+ * § 16  IMAGE TREATMENTS
+ * Every photo gets a subtle gold ring on hover + slow brightness
+ * lift. Hero photos already have Ken Burns above.
  * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] .cabin-vessel-block__hero,
+[data-cabin-mode] .cabin-vessel-block__photo,
+[data-cabin-mode] .voyage-carousel__slide,
+[data-cabin-mode] .filotimo-card__photo,
+[data-cabin-mode] .vs-gallery__item {
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+}
 
 [data-cabin-mode] .cabin-vessel-block__hero img,
 [data-cabin-mode] .cabin-vessel-block__photo img,
@@ -291,56 +645,170 @@
 [data-cabin-mode] .voyage-carousel img,
 [data-cabin-mode] .filotimo-card img,
 [data-cabin-mode] .smp__dish-photo img {
-  transition: transform 480ms cubic-bezier(0.16, 1, 0.3, 1),
-              filter 480ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    transform var(--gy-d-cinema) var(--gy-ease),
+    filter var(--gy-d-cinema) var(--gy-ease);
 }
-[data-cabin-mode] .cabin-vessel-block__hero:hover img,
-[data-cabin-mode] .voyage-carousel:hover img {
-  filter: brightness(1.04) contrast(1.02);
+[data-cabin-mode] .cabin-vessel-block__photo:hover img,
+[data-cabin-mode] .voyage-carousel__slide:hover img,
+[data-cabin-mode] .filotimo-card:hover img {
+  filter: brightness(1.05) contrast(1.04) saturate(1.05);
 }
 
 
 /* ─────────────────────────────────────────────────────────────
- * K. TYPOGRAPHY FOR LEAD QUOTES / DROP-CAPS — emphasize the
- * editorial moment. Only applies inside `.cabin-brief__intro`
- * or `.cabin-home__greeting` (places where there's narrative).
+ * § 17  SECTION ORNAMENTS — small decorative breaks
+ *
+ * Where a page has multiple sections without natural dividers,
+ * insert a foil-gold diamond ornament. Activated by an HTML
+ * `<hr>` that we restyle. Existing <hr> tags become ornaments.
  * ───────────────────────────────────────────────────────────── */
 
-[data-cabin-mode] .cabin-brief__intro p:first-of-type::first-letter,
-[data-cabin-mode] .cabin-pre-voyage__intro p:first-of-type::first-letter {
-  font-family: var(--gy-font-editorial, Georgia, serif);
-  font-size: 3.1em;
-  line-height: 0.85;
-  float: left;
-  padding: 0.08em 0.12em 0 0;
-  color: var(--gy-navy);
-  font-weight: 400;
-  font-feature-settings: "salt" 1, "swsh" 1;
+[data-cabin-mode] hr {
+  border: none;
+  height: 18px;
+  margin: 36px auto;
+  width: min(160px, 60%);
+  background: none;
+  position: relative;
+  text-align: center;
+}
+[data-cabin-mode] hr::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--gy-foil-line);
+}
+[data-cabin-mode] hr::after {
+  content: "◆";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--gy-gold, #C9A84C);
+  background: var(--gy-ivory, #F8F5F0);
+  padding: 0 12px;
+  font-size: 8px;
+  letter-spacing: 0;
+  line-height: 1;
 }
 
 
 /* ─────────────────────────────────────────────────────────────
- * L. PRINT-FRIENDLY — when George (or a guest) prints a cabin
- * page, drop the animations + background grain + hovers.
+ * § 18  CHARTER-AT-A-GLANCE — refined
+ * The data block on /cabin home that lists vessel + dates +
+ * weather. Make it feel like the inside cover of a leather book.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] .cabin-at-a-glance {
+  background: linear-gradient(180deg,
+    #FCFAF4 0%,
+    #F8F5F0 100%);
+  border: 1px solid rgba(201, 168, 76, 0.22);
+  border-radius: 6px;
+  padding: 32px 36px;
+  position: relative;
+}
+[data-cabin-mode] .cabin-at-a-glance::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: var(--gy-foil-line);
+  opacity: 0.6;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 19  BUTTONS — explicit gold-pill restyle for the most
+ * visible CTAs in the cabin (Send to George, View on Maps,
+ * Open Brief, etc.). Catches anything with .btn-primary or
+ * .cabin-btn-primary.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] .btn-primary,
+[data-cabin-mode] .cabin-btn-primary,
+[data-cabin-mode] button[class*="primary"]:not([class*="berth"]):not([class*="open"]) {
+  background: linear-gradient(180deg,
+    var(--gy-navy, #0D1B2A) 0%,
+    #122438 100%) !important;
+  color: var(--gy-ivory, #F8F5F0) !important;
+  border: 1px solid var(--gy-navy, #0D1B2A) !important;
+  padding: 13px 28px !important;
+  font-family: var(--gy-font-ui, "Inter"), sans-serif !important;
+  font-size: 11.5px !important;
+  letter-spacing: 2.6px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  border-radius: 999px !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Foil-gold sweep inside primary buttons on hover. */
+[data-cabin-mode] .btn-primary::before,
+[data-cabin-mode] .cabin-btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent, rgba(201, 168, 76, 0.35), transparent);
+  transition: left var(--gy-d-cinema) var(--gy-ease);
+}
+[data-cabin-mode] .btn-primary:hover::before,
+[data-cabin-mode] .cabin-btn-primary:hover::before {
+  left: 120%;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 20  RESPONSIVE — phones get tighter spacing and smaller
+ * monogram (or none). Greeting still BIG but proportional.
+ * ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 560px) {
+  [data-cabin-mode] .cabin-home__greeting {
+    font-size: clamp(36px, 11vw, 60px) !important;
+    line-height: 1.04 !important;
+  }
+  [data-cabin-mode] .cabin-home__welcome {
+    padding: 24px 0 30px;
+  }
+  [data-cabin-mode] .cabin-at-a-glance {
+    padding: 24px 22px;
+  }
+  [data-cabin-mode]::after { display: none; }  /* hide monogram */
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 21  PRINT-FRIENDLY
  * ───────────────────────────────────────────────────────────── */
 
 @media print {
-  [data-cabin-mode] * {
+  [data-cabin-mode] *,
+  [data-cabin-mode] *::before,
+  [data-cabin-mode] *::after {
     animation: none !important;
     transition: none !important;
     box-shadow: none !important;
   }
-  [data-cabin-mode] body {
-    background-image: none !important;
+  [data-cabin-mode] {
+    background: white !important;
   }
+  [data-cabin-mode]::before,
+  [data-cabin-mode]::after { display: none !important; }
 }
 
 
 /* ─────────────────────────────────────────────────────────────
- * M. REDUCED-MOTION — accessibility. Disable the rise-in
- * animation and the hover lifts for users who've requested
- * reduced motion. Still keep the visual luxury (cards / type)
- * intact — just no movement.
+ * § 22  REDUCED-MOTION
  * ───────────────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
@@ -356,8 +824,7 @@
 
 
 /* ─────────────────────────────────────────────────────────────
- * N. SCROLL BEHAVIOR — smooth, calm scrolling between in-page
- * anchors (e.g. "next" buttons on the brief).
+ * § 23  SMOOTH SCROLLING
  * ───────────────────────────────────────────────────────────── */
 
 html:has([data-cabin-mode]) {
