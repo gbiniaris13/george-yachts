@@ -95,9 +95,65 @@ html body [data-cabin-mode] .brief-section-title__eyebrow,
 html body [data-cabin-mode] .filotimo__eyebrow,
 html body [data-cabin-mode] .voyage-carousel__eyebrow,
 html body [data-cabin-mode] .bys-weather__label,
-html body [data-cabin-mode] .tc-sealed__label {
+html body [data-cabin-mode] .tc-sealed__label,
+/* 2026-05-23 — George re-flagged eyebrow/label contrast on the
+   Send-to-George review panel (CREW LIST STILL PENDING …) and a
+   handful of newer surfaces built this week. Adding them to the
+   master navy override so they win against any styled-jsx scope
+   or cream-tinted parent background.
+   • cbr-submit__pending-eyebrow — pending crew-list panel
+   • cbr-submit__ready-eyebrow   — "Everyone's in" green panel
+   • cbr-modal__eyebrow          — "One last look" modal
+   • cabin-brief-review__eyebrow + sub-eyebrows  — review header
+   • cabin-pre-voyage__eyebrow  — "Before you sail" intro
+   • me-crewlist__eyebrow        — /cabin/me Crew List required
+   • member-details__eyebrow     — principal's guest details panel
+   • cabin-login__eyebrow        — login page
+*/
+html body [data-cabin-mode] .cbr-submit__pending-eyebrow,
+html body [data-cabin-mode] .cbr-submit__ready-eyebrow,
+html body [data-cabin-mode] .cbr-modal__eyebrow,
+html body [data-cabin-mode] .cabin-brief-review__eyebrow,
+html body [data-cabin-mode] .cabin-brief-review__group-eyebrow,
+html body [data-cabin-mode] .cabin-brief-review__locked-eyebrow,
+html body [data-cabin-mode] .cabin-pre-voyage__eyebrow,
+html body [data-cabin-mode] .me-crewlist__eyebrow,
+html body [data-cabin-mode] .member-details__eyebrow,
+html body [data-cabin-mode] .cabin-login__eyebrow {
   color: #1f2937 !important;
   font-weight: 600 !important;
+}
+
+/* 2026-05-23 — The Send-to-George pending panel needed more than
+   just a darker eyebrow. The whole panel was rendering on a cream-
+   tinted parent so body copy, the "not yet signed in" tags, the
+   note link, and the disabled "Waiting on N lines" button all
+   fell into a cream-on-cream wash. Force every text element +
+   the panel's own background, so contrast survives every theme
+   layer. Same belt-and-braces pattern as .brief-matrix-label. */
+html body [data-cabin-mode] .cbr-submit__pending {
+  background: #ffffff !important;
+}
+html body [data-cabin-mode] .cbr-submit__pending-copy,
+html body [data-cabin-mode] .cbr-submit__pending-list,
+html body [data-cabin-mode] .cbr-submit__pending-list li {
+  color: #0D1B2A !important;
+}
+html body [data-cabin-mode] .cbr-submit__pending-tag {
+  color: rgba(13, 27, 42, 0.7) !important;
+  font-style: italic !important;
+}
+html body [data-cabin-mode] .cbr-submit__pending-note {
+  color: rgba(13, 27, 42, 0.78) !important;
+}
+html body [data-cabin-mode] .cbr-submit__pending-note a {
+  color: #8a7327 !important;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.55) !important;
+}
+html body [data-cabin-mode] .cbr-submit__cta:disabled {
+  background: rgba(13, 27, 42, 0.08) !important;
+  color: #0D1B2A !important;
+  border-color: rgba(13, 27, 42, 0.25) !important;
 }
 
 /* Pass 6: FieldLabel base styles lifted out of the per-component
