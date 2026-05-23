@@ -123,9 +123,24 @@ html body [data-cabin-mode] .cabin-login__eyebrow,
 /* 2026-05-23 — /cabin/menu used its own .mn-section__* classes
    (separate from .smp__*) and was rendering with gold-on-cream
    section names. Same navy override pattern. */
-html body [data-cabin-mode] .mn-section__name {
+html body [data-cabin-mode] .mn-section__name,
+/* 2026-05-23 — Berth Map block (Phase 1) — eyebrow + the marina
+   label both fell into the gold-on-white wash on Effie Star. */
+html body [data-cabin-mode] .berth-map__eyebrow {
   color: #1f2937 !important;
   font-weight: 600 !important;
+}
+
+/* 2026-05-23 — Berth Map body text. Marina label should be a
+   strong navy italic (it IS the headline of the block now that
+   the eyebrow is calmer), and the legal footnote underneath
+   needs to clear the readable-italic bar too. */
+html body [data-cabin-mode] .berth-map__label {
+  color: #0D1B2A !important;
+  font-weight: 400 !important;
+}
+html body [data-cabin-mode] .berth-map__note {
+  color: rgba(13, 27, 42, 0.72) !important;
 }
 
 /* 2026-05-23 — /cabin/menu dish bodies were inheriting a
