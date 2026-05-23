@@ -217,21 +217,51 @@ export default function MoodBoardPage() {
               own taste. */
           <>
             <p className="mood-empty">
-              Your Mood Board is empty. These are the kinds of moments
-              guests pin here — replace them with your own as you go.
+              Your Mood Board is empty. Below — four moments from the
+              Greek visual register. Pin your own as you go, and these
+              quietly step aside.
             </p>
-            <div className="mood-grid__seeds" aria-hidden>
-              <figure className="mood-seed mood-seed--blue">
-                <figcaption>Cycladic blue</figcaption>
+            {/* 2026-05-23 — George: "λίγο περίεργα, λίγο φτηνά. Να
+                φαίνεται πολύ πιο ακριβό. Multimillion, πολυεθνική
+                εταιρεία yachting, boutique εταιρεία yachting."
+                Rebuilt as museum-plate cards: portrait 4:5 aspect,
+                gold-rule inner border, plate numbering, bilingual
+                Greek/English captions, layered painterly gradients
+                with SVG film grain for that editorial-print finish.
+                Still no asset round-trip — pure CSS + inline SVG
+                so it survives any deploy. */}
+            <div className="mood-grid__plates" aria-hidden>
+              <figure className="mood-plate mood-plate--blue">
+                <div className="mood-plate__art" />
+                <figcaption className="mood-plate__caption">
+                  <span className="mood-plate__num">Plate 01</span>
+                  <span className="mood-plate__name">Cycladic blue</span>
+                  <span className="mood-plate__gloss">Κυκλάδες, μεσημέρι</span>
+                </figcaption>
               </figure>
-              <figure className="mood-seed mood-seed--marble">
-                <figcaption>Taverna marble at noon</figcaption>
+              <figure className="mood-plate mood-plate--marble">
+                <div className="mood-plate__art" />
+                <figcaption className="mood-plate__caption">
+                  <span className="mood-plate__num">Plate 02</span>
+                  <span className="mood-plate__name">Taverna marble</span>
+                  <span className="mood-plate__gloss">Τραπέζι σε σκιά</span>
+                </figcaption>
               </figure>
-              <figure className="mood-seed mood-seed--horizon">
-                <figcaption>An Aegean horizon</figcaption>
+              <figure className="mood-plate mood-plate--horizon">
+                <div className="mood-plate__art" />
+                <figcaption className="mood-plate__caption">
+                  <span className="mood-plate__num">Plate 03</span>
+                  <span className="mood-plate__name">An Aegean horizon</span>
+                  <span className="mood-plate__gloss">Ηλιοβασίλεμα</span>
+                </figcaption>
               </figure>
-              <figure className="mood-seed mood-seed--olive">
-                <figcaption>Old olive, dry summer</figcaption>
+              <figure className="mood-plate mood-plate--olive">
+                <div className="mood-plate__art" />
+                <figcaption className="mood-plate__caption">
+                  <span className="mood-plate__num">Plate 04</span>
+                  <span className="mood-plate__name">Old olive grove</span>
+                  <span className="mood-plate__gloss">Ξεροκαλόκαιρο</span>
+                </figcaption>
               </figure>
             </div>
           </>
@@ -363,58 +393,137 @@ export default function MoodBoardPage() {
           max-width: 520px;
           margin: 0 auto;
         }
-        /* 2026-05-21 — Pass 7 (Helen) — inspiration seeds.
-           Pure CSS gradients, no asset round-trip. They are clearly
-           NOT photographs (no faces, no specific places) so they
-           inspire without competing with whatever the user pins.
-           Drops out of the DOM completely once the user adds even
-           one real pin — items.length === 0 is the only render
-           condition above. */
-        .mood-grid__seeds {
+        /* 2026-05-23 — Museum-plate cards. The previous CSS-gradient
+           swatches read as a Bootstrap demo (George: "λίγο φτηνά").
+           Same constraint (no external assets, no licensing risk) +
+           a much more boutique presentation:
+             • 4:5 portrait aspect (gallery-print proportions)
+             • painterly layered conic + radial gradients
+             • SVG film-grain noise overlay (turbulence, 0.65 alpha)
+             • thin gold inner border (inset shadow trick)
+             • plate-number eyebrow + serif italic name + Greek gloss
+             • hover lift + brighten for that "click me" affordance
+           Drops out of the DOM the moment the user pins one real
+           image, so the principal's own taste takes over. */
+        .mood-grid__plates {
           grid-column: 1 / -1;
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 12px;
-          margin-top: 4px;
+          gap: 16px;
+          margin-top: 8px;
         }
         @media (min-width: 768px) {
-          .mood-grid__seeds { grid-template-columns: repeat(4, 1fr); }
+          .mood-grid__plates { grid-template-columns: repeat(4, 1fr); gap: 22px; }
         }
-        .mood-seed {
+        .mood-plate {
           margin: 0;
           position: relative;
-          aspect-ratio: 1;
-          border: 1px solid rgba(13,27,42,0.08);
+          aspect-ratio: 4 / 5;
           overflow: hidden;
+          background: #0D1B2A;
+          /* Inner gold rule — the inset-shadow trick is sharper
+             than a real border because it sits ABOVE the art and
+             never pushes the edges around. */
+          box-shadow:
+            inset 0 0 0 1px rgba(201, 168, 76, 0.55),
+            0 6px 18px rgba(13, 27, 42, 0.18);
+          transition: transform 320ms ease, box-shadow 320ms ease;
+          cursor: default;
         }
-        .mood-seed figcaption {
+        .mood-plate:hover {
+          transform: translateY(-2px);
+          box-shadow:
+            inset 0 0 0 1px rgba(201, 168, 76, 0.85),
+            0 12px 28px rgba(13, 27, 42, 0.28);
+        }
+        /* Painterly art layer — fills the card, gets the film-grain
+           overlay through a CSS background-image with an inline SVG
+           turbulence filter (no asset request). */
+        .mood-plate__art {
+          position: absolute;
+          inset: 0;
+          background-image:
+            url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.65'/></svg>");
+          background-size: 240px 240px;
+        }
+        /* Each plate's painterly base — multi-stop, slightly conic
+           where it helps to suggest light direction. */
+        .mood-plate--blue .mood-plate__art {
+          background-color: #2a5e87;
+          background-image:
+            radial-gradient(at 25% 15%, rgba(255,255,255,0.42), transparent 55%),
+            radial-gradient(at 75% 90%, rgba(8,30,60,0.55), transparent 60%),
+            linear-gradient(178deg, #c9e1f0 0%, #6ea4c8 38%, #3a76a3 72%, #1c4670 100%),
+            url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>");
+        }
+        .mood-plate--marble .mood-plate__art {
+          background-color: #e8e0cd;
+          background-image:
+            radial-gradient(at 22% 18%, rgba(255,255,255,0.7), transparent 55%),
+            radial-gradient(at 78% 78%, rgba(60,50,30,0.18), transparent 60%),
+            conic-gradient(from 200deg at 50% 60%, #f5f1e8, #e8dec5, #cdc2a3, #ddd4c1, #f5f1e8),
+            url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+        }
+        .mood-plate--horizon .mood-plate__art {
+          background-color: #5d8aa8;
+          background-image:
+            radial-gradient(at 70% 25%, rgba(255,210,160,0.72), transparent 48%),
+            linear-gradient(180deg, #f7c98e 0%, #ecae7a 22%, #c7a896 42%, #7a99b0 62%, #2e547a 100%),
+            url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>");
+        }
+        .mood-plate--olive .mood-plate__art {
+          background-color: #5c6147;
+          background-image:
+            radial-gradient(at 30% 35%, rgba(140,150,108,0.65), transparent 55%),
+            radial-gradient(at 75% 80%, rgba(40,45,30,0.55), transparent 60%),
+            linear-gradient(160deg, #c8c4a4 0%, #8b9070 50%, #475234 100%),
+            url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>");
+        }
+        /* Caption block — editorial typography over a deep navy
+           gradient veil so it reads cleanly against any plate. */
+        .mood-plate__caption {
           position: absolute;
           left: 0; right: 0; bottom: 0;
-          padding: 8px 10px;
-          background: linear-gradient(to top, rgba(13,27,42,0.55), transparent);
-          color: #ffffff;
+          padding: 50px 14px 16px 14px;
+          background: linear-gradient(to top,
+            rgba(13, 27, 42, 0.78) 0%,
+            rgba(13, 27, 42, 0.55) 55%,
+            transparent 100%);
+          color: #F8F5F0;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          z-index: 1;
+        }
+        .mood-plate__num {
+          font-family: var(--gy-font-ui);
+          font-size: 9.5px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: rgba(201, 168, 76, 0.95);
+          font-weight: 600;
+        }
+        .mood-plate__name {
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 17px;
+          line-height: 1.2;
+          color: #F8F5F0;
+          letter-spacing: 0.1px;
+        }
+        .mood-plate__gloss {
           font-family: var(--gy-font-editorial);
           font-style: italic;
           font-size: 12.5px;
-          letter-spacing: 0.1px;
+          color: rgba(248, 245, 240, 0.7);
         }
-        .mood-seed--blue {
-          background: linear-gradient(180deg, #b9d7ec 0%, #6ea4c8 55%, #2a5e87 100%);
-        }
-        .mood-seed--marble {
-          background:
-            radial-gradient(at 30% 20%, rgba(255,255,255,0.5), transparent 50%),
-            radial-gradient(at 70% 80%, rgba(13,27,42,0.08), transparent 60%),
-            linear-gradient(135deg, #f5f1e8 0%, #ddd4c1 100%);
-        }
-        .mood-seed--horizon {
-          background:
-            linear-gradient(180deg, #f3d6a7 0%, #e9b985 35%, #9bb8c8 60%, #5d8aa8 100%);
-        }
-        .mood-seed--olive {
-          background:
-            radial-gradient(at 40% 60%, rgba(95,107,73,0.55), transparent 55%),
-            linear-gradient(160deg, #c8c4a4 0%, #8b9070 50%, #5c6147 100%);
+        /* Marble plate is light — invert caption veil so text stays
+           white-on-dark instead of fighting cream. */
+        .mood-plate--marble .mood-plate__caption {
+          background: linear-gradient(to top,
+            rgba(13, 27, 42, 0.85) 0%,
+            rgba(13, 27, 42, 0.65) 55%,
+            transparent 100%);
         }
         .mood-card {
           margin: 0;
