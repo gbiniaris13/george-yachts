@@ -1,5 +1,10 @@
 "use client";
 
+// 2026-05-23 — Portal the confirm modal into document.body so the
+// luxury layer's transform on cabin-shell children cannot trap its
+// `position: fixed`. Same fix as PhotoGallery + voyage-album.
+import { createPortal } from "react-dom";
+
 // app/(cabin)/cabin/brief/review/ReviewSubmit.jsx
 // =============================================================
 // 2026-05-22 — The "Send to George" client-side island.
@@ -189,7 +194,7 @@ export default function ReviewSubmit({
           : "Once you send, only George can re-open the brief."}
       </p>
 
-      {open && (
+      {open && typeof document !== "undefined" && createPortal(
         <div
           className="cbr-modal"
           role="dialog"
@@ -248,7 +253,8 @@ export default function ReviewSubmit({
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
 
       <style>{`

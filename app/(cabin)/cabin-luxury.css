@@ -166,16 +166,29 @@
 }
 
 [data-cabin-mode] .cabin-shell > * {
-  animation: gy-cabin-rise 900ms var(--gy-ease) both;
+  animation: gy-cabin-rise 600ms var(--gy-ease) both;
 }
 [data-cabin-mode] .cabin-shell > *:nth-child(1) { animation-delay: 0ms; }
-[data-cabin-mode] .cabin-shell > *:nth-child(2) { animation-delay: 80ms; }
-[data-cabin-mode] .cabin-shell > *:nth-child(3) { animation-delay: 160ms; }
-[data-cabin-mode] .cabin-shell > *:nth-child(4) { animation-delay: 240ms; }
-[data-cabin-mode] .cabin-shell > *:nth-child(5) { animation-delay: 320ms; }
-[data-cabin-mode] .cabin-shell > *:nth-child(6) { animation-delay: 400ms; }
-[data-cabin-mode] .cabin-shell > *:nth-child(7) { animation-delay: 480ms; }
-[data-cabin-mode] .cabin-shell > *:nth-child(8) { animation-delay: 560ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(2) { animation-delay: 50ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(3) { animation-delay: 100ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(4) { animation-delay: 150ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(5) { animation-delay: 200ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(6) { animation-delay: 250ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(7) { animation-delay: 300ms; }
+[data-cabin-mode] .cabin-shell > *:nth-child(8) { animation-delay: 350ms; }
+
+/* 2026-05-23 — Sticky cabin header / drawer-backdrop must NOT
+   participate in the cascade. They render instantly so:
+     a) the header doesn't flicker on every navigation
+     b) the drawer backdrop (position: fixed) isn't trapped by
+        the cabin-shell containing block during mount. */
+[data-cabin-mode] .cabin-shell > .cabin-shell__header,
+[data-cabin-mode] .cabin-shell > .cabin-shell__drawer-backdrop,
+[data-cabin-mode] .cabin-shell > .cabin-shell__drawer {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
 
 
 /* ─────────────────────────────────────────────────────────────
@@ -303,12 +316,16 @@
 @keyframes gy-letter-rise {
   from {
     opacity: 0;
-    transform: translateY(20px);
-    filter: blur(6px);
+    transform: translateY(16px);
+    filter: blur(2px);
+  }
+  99% {
+    opacity: 1;
+    filter: blur(0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
     filter: blur(0);
   }
 }
@@ -428,14 +445,19 @@
  * carousel imagery. The "I'm watching a film" feel.
  * ───────────────────────────────────────────────────────────── */
 
+/* 2026-05-23 — Single-cycle Ken Burns. Previously infinite alternate
+   (28s back-and-forth forever) kept the GPU layer composited on the
+   hero photo permanently — measurable laptop battery hit. Now: one
+   pass over 14s on mount, then settles at the slight zoom and stops.
+   Cinematic-on-arrival, calm-after. */
 @keyframes gy-ken-burns {
   0%   { transform: scale(1.02) translate(0, 0); }
-  100% { transform: scale(1.08) translate(-1%, 0.5%); }
+  100% { transform: scale(1.06) translate(-0.6%, 0.3%); }
 }
 
 [data-cabin-mode] .cabin-vessel-block__hero img,
 [data-cabin-mode] .vs-hero img {
-  animation: gy-ken-burns 28s ease-in-out infinite alternate;
+  animation: gy-ken-burns 14s ease-out 1 forwards;
   transform-origin: center center;
 }
 
@@ -477,14 +499,25 @@
 
 
 /* ─────────────────────────────────────────────────────────────
- * § 9  PREMIUM BUTTON / CTA HOVERS
- * Every button in the cabin gets the same refined micro-lift.
+ * § 9  PREMIUM BUTTON / CTA HOVERS — narrowly scoped
+ *
+ * 2026-05-23 — Originally `[data-cabin-mode] button` (every button
+ * in the cabin) which hit icon-only buttons (× close, × delete, x
+ * dismiss) and made them lift+shadow on hover. Wrong. Now only
+ * the explicitly-CTA buttons get the lift: gold pills, CTA-class
+ * links, named primary actions. Plain <button>s keep their own
+ * styles.
  * ───────────────────────────────────────────────────────────── */
 
-[data-cabin-mode] button,
+[data-cabin-mode] .btn,
+[data-cabin-mode] .btn-primary,
+[data-cabin-mode] .cabin-btn-primary,
+[data-cabin-mode] button[class*="primary"],
+[data-cabin-mode] button[class*="cta"],
 [data-cabin-mode] a[class*="btn"],
-[data-cabin-mode] a[class*="open"],
-[data-cabin-mode] a[class*="cta"] {
+[data-cabin-mode] a[class*="cta"],
+[data-cabin-mode] .berth-map__open,
+[data-cabin-mode] .berth-nearby__open {
   transition:
     background-color var(--gy-d-base) var(--gy-ease),
     color var(--gy-d-base) var(--gy-ease),
@@ -492,15 +525,23 @@
     box-shadow var(--gy-d-base) var(--gy-ease),
     transform var(--gy-d-base) var(--gy-ease);
 }
-[data-cabin-mode] button:hover:not(:disabled),
+[data-cabin-mode] .btn:hover:not(:disabled),
+[data-cabin-mode] .btn-primary:hover:not(:disabled),
+[data-cabin-mode] .cabin-btn-primary:hover:not(:disabled),
+[data-cabin-mode] button[class*="primary"]:hover:not(:disabled):not([class*="close"]):not([class*="del"]):not([class*="dismiss"]),
+[data-cabin-mode] button[class*="cta"]:hover:not(:disabled),
 [data-cabin-mode] a[class*="btn"]:hover:not([aria-disabled="true"]),
-[data-cabin-mode] a[class*="open"]:hover,
-[data-cabin-mode] a[class*="cta"]:hover {
+[data-cabin-mode] a[class*="cta"]:hover,
+[data-cabin-mode] .berth-map__open:hover,
+[data-cabin-mode] .berth-nearby__open:hover {
   transform: translateY(-1.5px);
   box-shadow: var(--gy-shadow-lift);
 }
-[data-cabin-mode] button:active:not(:disabled),
-[data-cabin-mode] a[class*="btn"]:active:not([aria-disabled="true"]) {
+[data-cabin-mode] .btn:active:not(:disabled),
+[data-cabin-mode] .btn-primary:active:not(:disabled),
+[data-cabin-mode] .cabin-btn-primary:active:not(:disabled),
+[data-cabin-mode] a[class*="btn"]:active:not([aria-disabled="true"]),
+[data-cabin-mode] .berth-map__open:active {
   transform: translateY(0);
   box-shadow: var(--gy-shadow-press);
   transition-duration: var(--gy-d-fast);
@@ -577,10 +618,20 @@
 
 /* ─────────────────────────────────────────────────────────────
  * § 12  DROP-CAPS for narrative intros
+ *
+ * 2026-05-23 — Disabled by default. The selectors I originally
+ * targeted either don't exist in the JSX (.cabin-brief__intro is
+ * dead code) or match a short italic lede that looks broken with
+ * a 3.4em drop-cap floated next to a 15px italic line (.cabin-
+ * pre-voyage__intro). Will re-enable in a future pass once we
+ * have a real long-form narrative paragraph to apply it to —
+ * keeping the keyframe-ready CSS commented for that day.
+ *
+ * If you want a drop-cap on a future block, add a wrapper class
+ * .cabin-dropcap and apply the rule below to its first <p>.
  * ───────────────────────────────────────────────────────────── */
 
-[data-cabin-mode] .cabin-brief__intro p:first-of-type::first-letter,
-[data-cabin-mode] .cabin-pre-voyage__intro p:first-of-type::first-letter {
+[data-cabin-mode] .cabin-dropcap p:first-of-type::first-letter {
   font-family: var(--gy-font-display, "Fraunces"), Georgia, serif;
   font-size: 3.4em;
   line-height: 0.82;
@@ -594,14 +645,36 @@
 
 
 /* ─────────────────────────────────────────────────────────────
- * § 13  GOLD FOIL FOCUS RINGS (a11y + luxury)
+ * § 13  GOLD FOIL FOCUS RINGS (a11y + luxury) — scoped
+ *
+ * 2026-05-23 — Previously `*:focus-visible` which hit text
+ * inputs / textareas and made them look like form-validation
+ * errors (3px-offset gold rectangle around an "underline" input).
+ * Now only interactive non-input elements get the foil ring;
+ * inputs/textareas/selects use a different focus treatment.
  * ───────────────────────────────────────────────────────────── */
 
-[data-cabin-mode] *:focus-visible {
+[data-cabin-mode] a:focus-visible,
+[data-cabin-mode] button:focus-visible,
+[data-cabin-mode] summary:focus-visible,
+[data-cabin-mode] [role="button"]:focus-visible,
+[data-cabin-mode] [tabindex]:not([tabindex="-1"]):focus-visible {
   outline: 2px solid rgba(201, 168, 76, 0.72) !important;
   outline-offset: 3px !important;
   border-radius: 2px;
   transition: outline-color var(--gy-d-fast) ease;
+}
+
+/* Inputs / textareas / selects get a quieter focus — gold
+   shadow halo around their existing border instead of an
+   outline offset that pierces card padding. */
+[data-cabin-mode] input:focus-visible,
+[data-cabin-mode] textarea:focus-visible,
+[data-cabin-mode] select:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.22) !important;
+  border-color: rgba(201, 168, 76, 0.75) !important;
+  transition: box-shadow var(--gy-d-fast) ease, border-color var(--gy-d-fast) ease;
 }
 
 

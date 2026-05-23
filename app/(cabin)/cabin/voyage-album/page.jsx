@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
 
@@ -266,7 +267,11 @@ export default function VoyageAlbumPage() {
         })}
       </div>
 
-      {active && (
+      {/* 2026-05-23 — Portal the lightbox into document.body so
+          ancestor transforms (cabin-shell mount cascade, scroll
+          reveals) cannot trap its `position: fixed`. Same fix as
+          PhotoGallery in commit 3d7fcd3. */}
+      {active && typeof document !== "undefined" && createPortal(
         <div className="va-lightbox" onClick={() => setActive(null)} role="dialog">
           {/\.(mp4|mov|webm)(\?|$)/i.test(active.storage_path || "") ? (
             <video src={active.url} controls autoPlay playsInline />
@@ -276,7 +281,8 @@ export default function VoyageAlbumPage() {
           )}
           {active.caption && <p>{active.caption}</p>}
           <button onClick={() => setActive(null)} aria-label="Close">×</button>
-        </div>
+        </div>,
+        document.body,
       )}
 
       <style>{`
