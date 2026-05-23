@@ -9,6 +9,19 @@
 //    ενδέχεται να αλλάξει σε περίπτωση διαταγής του λιμενικού
 //    σώματος του εισεκάστοτε μαρίνας."
 //
+// 2026-05-23 (pm) — George flagged the v1 frame as "δεν μου φαίνεται
+// αυτό τώρα ακριβό... αισθητικά". Reworked into a museum-plate frame:
+//   • Cream/ivory inner panel, hairline gold border at 28% opacity
+//   • Soft navy shadow for depth (luxury catalogue feel)
+//   • Rounded corners (6px frame, map fills it)
+//   • Generous 28px padding, capitalised marina name
+//   • Gold-bordered "View on Google Maps ↗" CTA chip below the map
+//   • Leaflet attribution restyled smaller/greyer (legally required,
+//     visually deferred to the Google Maps CTA which is the real
+//     click-through users want)
+//   • Tiles stay OSM (free forever, no API key, no billing) —
+//     premium feel comes from the frame, not the cartography
+//
 // Tech: Leaflet (raster) + OpenStreetMap tiles.
 //   • Zero API key, zero credit card, free forever
 //   • OSM is community-owned (Wikipedia for maps) — won't disappear
@@ -129,39 +142,68 @@ export default function BerthMap({
   // cabin layout pristine for cabins that haven't set a berth.
   if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
 
+  // Google Maps deep link — opens the real maps.google.com with a
+  // pin at our coordinates. On iPhone, Google Maps app intercepts
+  // the URL; if not installed, Apple Maps offers via the OS share
+  // sheet. Either way the user lands in a "real" maps experience,
+  // not on openstreetmap.org. Free, no API key — just a URL.
+  const googleMapsUrl =
+    `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+
   return (
     <section className={`berth-map berth-map--${variant}`}>
-      <div className="berth-map__head">
-        <div className="berth-map__eyebrow">Where you&apos;ll find her</div>
-        {label && <div className="berth-map__label">{label}</div>}
+      <div className="berth-map__inner">
+        <div className="berth-map__head">
+          <div className="berth-map__eyebrow">Where you&apos;ll find her</div>
+          {label && <div className="berth-map__label">{label}</div>}
+        </div>
+
+        <div
+          ref={containerRef}
+          className="berth-map__canvas"
+          aria-label={`Map showing the berth of ${vesselName || "your yacht"}`}
+        />
+
+        <div className="berth-map__actions">
+          <a
+            href={googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="berth-map__open"
+          >
+            View on Google Maps
+            <span aria-hidden="true" className="berth-map__open-arrow">↗</span>
+          </a>
+        </div>
+
+        <p className="berth-map__note">
+          <em>
+            This is your vessel&apos;s current berth. The port authority
+            may adjust the position at the marina&apos;s discretion —
+            should that happen before embarkation, you&apos;ll hear it
+            from us first.
+          </em>
+        </p>
       </div>
-
-      <div
-        ref={containerRef}
-        className="berth-map__canvas"
-        aria-label={`Map showing the berth of ${vesselName || "your yacht"}`}
-      />
-
-      <p className="berth-map__note">
-        <em>
-          This is your vessel&apos;s current berth. The port authority
-          may adjust the position at the marina&apos;s discretion —
-          should that happen before embarkation, you&apos;ll hear it
-          from us first.
-        </em>
-      </p>
 
       <style>{`
         .berth-map {
-          margin: 28px 0;
-          background: #ffffff;
-          border: 1px solid rgba(13, 27, 42, 0.08);
+          margin: 36px 0;
+        }
+        .berth-map__inner {
+          background: #FAF7F0;
+          border: 1px solid rgba(201, 168, 76, 0.28);
+          border-radius: 6px;
+          box-shadow:
+            0 10px 32px rgba(13, 27, 42, 0.07),
+            0 2px 6px rgba(13, 27, 42, 0.04);
+          overflow: hidden;
         }
         .berth-map__head {
-          padding: 18px 22px 12px;
+          padding: 28px 30px 20px;
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 8px;
         }
         .berth-map__eyebrow {
           font-family: var(--gy-font-ui);
@@ -174,24 +216,77 @@ export default function BerthMap({
         .berth-map__label {
           font-family: var(--gy-font-editorial);
           font-style: italic;
-          font-size: 17px;
+          font-size: 21px;
+          line-height: 1.25;
           color: var(--gy-navy);
+          text-transform: capitalize;
+          letter-spacing: 0.2px;
         }
         .berth-map__canvas {
           width: 100%;
           height: 320px;
           background: #e9e4d4;
+          position: relative;
         }
-        .berth-map--full .berth-map__canvas { height: 62vh; min-height: 420px; }
+        .berth-map--full .berth-map__canvas {
+          height: 62vh;
+          min-height: 420px;
+        }
+        .berth-map__actions {
+          padding: 18px 30px;
+          display: flex;
+          justify-content: center;
+          border-top: 1px solid rgba(13, 27, 42, 0.06);
+          background: rgba(255, 255, 255, 0.45);
+        }
+        .berth-map__open {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 11px 22px;
+          border: 1px solid var(--gy-gold);
+          color: var(--gy-navy);
+          font-family: var(--gy-font-ui);
+          font-size: 11px;
+          letter-spacing: 2.4px;
+          text-transform: uppercase;
+          text-decoration: none;
+          border-radius: 999px;
+          font-weight: 600;
+          background: transparent;
+          transition: background 180ms ease, color 180ms ease,
+                      box-shadow 180ms ease, transform 180ms ease;
+        }
+        .berth-map__open:hover,
+        .berth-map__open:focus-visible {
+          background: var(--gy-gold);
+          color: #ffffff;
+          box-shadow: 0 4px 12px rgba(201, 168, 76, 0.32);
+          transform: translateY(-1px);
+        }
+        .berth-map__open-arrow {
+          font-size: 13px;
+          line-height: 1;
+          transform: translateY(-1px);
+        }
         .berth-map__note {
           margin: 0;
-          padding: 12px 22px 18px;
+          padding: 16px 30px 22px;
           font-family: var(--gy-font-editorial);
           font-style: italic;
           font-size: 12.5px;
           line-height: 1.65;
-          color: rgba(13, 27, 42, 0.6);
-          border-top: 1px solid rgba(13, 27, 42, 0.06);
+          color: rgba(13, 27, 42, 0.62);
+          text-align: center;
+          border-top: 1px solid rgba(13, 27, 42, 0.04);
+        }
+        @media (max-width: 560px) {
+          .berth-map { margin: 28px 0; }
+          .berth-map__head { padding: 22px 20px 16px; }
+          .berth-map__label { font-size: 19px; }
+          .berth-map__actions { padding: 14px 20px; }
+          .berth-map__open { padding: 10px 18px; font-size: 10.5px; letter-spacing: 2px; }
+          .berth-map__note { padding: 14px 20px 18px; font-size: 12px; }
         }
         /* Leaflet popup look — tighter, branded. */
         :global(.leaflet-popup-content-wrapper) {
@@ -209,6 +304,25 @@ export default function BerthMap({
         /* SVG pin shouldn't be filtered/dimmed by Leaflet's marker
            default opacity transitions. */
         :global(.berth-pin svg) { display: block; }
+        /* Leaflet attribution — legally required, visually deferred.
+           Tiny, low-opacity, off-white background. The Google Maps
+           CTA is the visible primary action; this is fine-print. */
+        :global(.berth-map .leaflet-control-attribution) {
+          font-size: 9px !important;
+          padding: 2px 6px !important;
+          background: rgba(255, 255, 255, 0.72) !important;
+          color: rgba(13, 27, 42, 0.45) !important;
+          font-family: var(--gy-font-ui) !important;
+          letter-spacing: 0.3px !important;
+        }
+        :global(.berth-map .leaflet-control-attribution a) {
+          color: rgba(13, 27, 42, 0.55) !important;
+          text-decoration: none !important;
+        }
+        :global(.berth-map .leaflet-control-attribution a:hover) {
+          color: rgba(13, 27, 42, 0.8) !important;
+          text-decoration: underline !important;
+        }
       `}</style>
     </section>
   );
