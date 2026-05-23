@@ -73,22 +73,47 @@ export default function ReviewSubmit({
           and this panel names who's pending so the principal can
           nudge them. */}
       {pendingCount > 0 && (
-        <div className="cbr-submit__pending">
-          <div className="cbr-submit__pending-eyebrow">
+        <div
+          className="cbr-submit__pending"
+          /* 2026-05-23 — Explicit white background so the cream-on-
+              gold tint of the outer wrapper can't bleed through and
+              wash out the text inside this panel. George re-reported
+              the eyebrow + "not yet signed in" tags as invisible. */
+          style={{ background: "#ffffff" }}
+        >
+          <div
+            className="cbr-submit__pending-eyebrow"
+            style={{ color: "#9a3a2c", fontWeight: 700 }}
+          >
             Crew list still pending — required before sending
           </div>
-          <p className="cbr-submit__pending-copy">
+          <p
+            className="cbr-submit__pending-copy"
+            style={{ color: "#0D1B2A" }}
+          >
             <strong>{pendingCount}</strong> {pendingCount === 1 ? "person" : "people"} in your group {pendingCount === 1 ? "hasn't" : "haven't"} finished {pendingCount === 1 ? "their" : "their"} Crew List yet (date of birth, gender, nationality, ID or passport number, mobile). The harbour authorities require these for every person aboard, so the brief stays unlocked until they're in.
           </p>
-          <ul className="cbr-submit__pending-list">
+          <ul
+            className="cbr-submit__pending-list"
+            style={{ color: "#0D1B2A" }}
+          >
             {pendingGuests.slice(0, 8).map((g, i) => (
-              <li key={`${g.name}-${i}`}>
+              <li key={`${g.name}-${i}`} style={{ color: "#0D1B2A" }}>
                 {g.name}
                 {g.role === "principal_charterer" && (
-                  <em className="cbr-submit__pending-tag"> · you</em>
+                  <em
+                    className="cbr-submit__pending-tag"
+                    style={{ color: "#5a4a1f", fontStyle: "italic" }}
+                  >
+                    {" "}
+                    · you
+                  </em>
                 )}
                 {!g.hasLoggedIn && g.role !== "principal_charterer" && (
-                  <em className="cbr-submit__pending-tag">
+                  <em
+                    className="cbr-submit__pending-tag"
+                    style={{ color: "#5a4a1f", fontStyle: "italic" }}
+                  >
                     {" "}
                     · not yet signed in
                   </em>
@@ -101,13 +126,18 @@ export default function ReviewSubmit({
               </li>
             )}
           </ul>
-          <p className="cbr-submit__pending-note">
+          <p
+            className="cbr-submit__pending-note"
+            style={{ color: "rgba(13, 27, 42, 0.78)" }}
+          >
             <em>
               Nudge them quietly from{" "}
-              <a href="/cabin/guests">Your Group</a>, or — if you
-              decide someone won't be filling theirs — they can mark
-              themselves as having stepped aside (opt out) from their
-              own page.
+              <a href="/cabin/guests" style={{ color: "#8a7327", borderBottom: "1px solid rgba(201, 168, 76, 0.55)" }}>
+                Your Group
+              </a>
+              , or — if you decide someone won&apos;t be filling theirs
+              — they can mark themselves as having stepped aside (opt
+              out) from their own page.
             </em>
           </p>
         </div>
@@ -133,6 +163,19 @@ export default function ReviewSubmit({
         title={
           pendingCount > 0
             ? "The crew list must be complete before you can send the brief."
+            : undefined
+        }
+        /* 2026-05-23 — Inline contrast guarantee so the disabled
+            button text is always readable even if a theme override
+            tries to wash it out. */
+        style={
+          pendingCount > 0
+            ? {
+                background: "rgba(13, 27, 42, 0.08)",
+                color: "#0D1B2A",
+                borderColor: "rgba(13, 27, 42, 0.25)",
+                cursor: "not-allowed",
+              }
             : undefined
         }
       >
