@@ -120,116 +120,217 @@ export default function CharterAtAGlance({ summary }) {
       </div>
 
       <style>{`
+        /* 2026-05-23 — Graphic-designer pass after George flagged the
+           previous layout as "πρόχειρο, δεν μ' αρέσει εκεί που κάθονται
+           τα γράμματα". Reworked into a boutique catalogue page:
+             • Cream/ivory inner with hairline gold border
+             • Vessel name as large Fraunces italic display headline
+             • Section groups separated by quiet gold hairlines
+             • Right-aligned labels in narrow column, left-aligned
+               values in wider column (the museum-plate convention)
+             • Tighter typographic rhythm, real OpenType numerals */
+        .cabin-at-a-glance {
+          margin: 28px 0 36px;
+        }
         .cabin-at-a-glance__label {
           font-family: var(--gy-font-ui);
-          font-size: 10px;
-          letter-spacing: 3px;
+          font-size: 11px;
+          letter-spacing: 3.2px;
           text-transform: uppercase;
-          color: var(--gy-gold);
-          font-weight: 500;
-          margin-bottom: 14px;
+          color: rgba(13, 27, 42, 0.78);
+          font-weight: 600;
+          margin-bottom: 16px;
+          text-align: center;
+          display: inline-flex;
+          align-items: center;
+          gap: 14px;
+          width: 100%;
+          justify-content: center;
+        }
+        .cabin-at-a-glance__label::before,
+        .cabin-at-a-glance__label::after {
+          content: "";
+          display: inline-block;
+          width: 36px;
+          height: 1px;
+          background: linear-gradient(
+            to right,
+            transparent,
+            rgba(201, 168, 76, 0.6) 50%,
+            transparent
+          );
         }
         .cabin-at-a-glance__card {
-          background: #ffffff;
-          border: 1px solid rgba(201, 168, 76, 0.4);
-          padding: 28px 24px 22px 24px;
+          background: #FCFAF4;
+          border: 1px solid rgba(201, 168, 76, 0.32);
+          border-radius: 6px;
+          padding: 40px 44px 32px 44px;
           display: flex;
           flex-direction: column;
-          gap: 26px;
+          gap: 0;
+          box-shadow:
+            0 1px 2px rgba(13, 27, 42, 0.04),
+            0 4px 12px rgba(13, 27, 42, 0.05),
+            0 12px 36px rgba(13, 27, 42, 0.07);
+          position: relative;
+        }
+        /* Foil-gold ornament at the top centre of the card. */
+        .cabin-at-a-glance__card::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 80px;
+          height: 1px;
+          background: linear-gradient(
+            to right,
+            transparent,
+            rgba(201, 168, 76, 0.75) 50%,
+            transparent
+          );
+        }
+        .cabin-at-a-glance__group {
+          padding: 18px 0;
+          border-top: 1px solid rgba(201, 168, 76, 0.18);
+        }
+        .cabin-at-a-glance__group:first-of-type {
+          border-top: none;
+          padding-top: 4px;
         }
         .cabin-at-a-glance__group-label {
           font-family: var(--gy-font-ui);
-          font-size: 9.5px;
-          letter-spacing: 2.5px;
+          font-size: 10px;
+          letter-spacing: 3.4px;
           text-transform: uppercase;
-          /* 2026-05-21 — Pass 7 (Margaret, BLOCKER #3):
-             the previous rgba(13,27,42,0.4) over the card's white
-             background blended to roughly RGB(158,164,170) — a 2.7:1
-             contrast ratio, failing WCAG AA. Switched to flat slate
-             at ≈8:1.
-             2026-05-21 — Pass 7 re-check (Domingo):
-             reported computed style still showing cream-on-white
-             after Batch 5 deploy. The cabin-tones.css rule already
-             carries !important, and the production CSS bundle does
-             include it — but a defensive !important here too means
-             the inline style block alone is enough to guarantee
-             readability regardless of any future stylesheet
-             reordering or scope drift. Cheap insurance. */
           color: #1f2937 !important;
           font-weight: 600 !important;
-          margin-bottom: 10px;
+          margin-bottom: 14px;
         }
         .cabin-at-a-glance__group dl {
           margin: 0;
           padding: 0;
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 10px;
         }
         .cabin-at-a-glance__row {
           display: grid;
-          grid-template-columns: 130px 1fr;
-          gap: 16px;
+          grid-template-columns: 150px 1fr;
+          column-gap: 28px;
+          row-gap: 4px;
+          align-items: baseline;
           font-family: var(--gy-font-body);
-          font-size: 14px;
-          line-height: 1.55;
-        }
-        @media (max-width: 480px) {
-          .cabin-at-a-glance__row {
-            grid-template-columns: 100px 1fr;
-            gap: 10px;
-          }
+          line-height: 1.5;
         }
         .cabin-at-a-glance__row dt {
           font-family: var(--gy-font-ui);
           font-size: 10px;
-          letter-spacing: 1.8px;
+          letter-spacing: 2.2px;
           text-transform: uppercase;
-          /* 2026-05-21 — Pass 7 contrast pass (Margaret):
-             rgba(...,0.5) was ~3.5:1, below WCAG AA on a white card.
-             Belt-and-braces with !important after Domingo Pass 7
-             re-check flagged the group-label as still cream — same
-             insurance applied here so both label tiers are
-             unambiguously dark. */
-          color: #1f2937 !important;
+          color: rgba(13, 27, 42, 0.7) !important;
           font-weight: 600 !important;
-          padding-top: 3px;
+          text-align: right;
+          padding-top: 4px;
         }
         .cabin-at-a-glance__row dd {
           margin: 0;
           font-family: var(--gy-font-editorial);
-          font-size: 16px;
+          font-size: 17px;
+          line-height: 1.4;
           color: var(--gy-navy);
+          letter-spacing: 0.1px;
+          font-feature-settings: "kern" 1, "liga" 1, "lnum" 1, "onum" 0;
         }
         .cabin-at-a-glance__row .muted {
-          color: rgba(13, 27, 42, 0.3);
+          color: rgba(13, 27, 42, 0.32);
+          font-style: italic;
+        }
+        /* Vessel name (first row of VESSEL group) — display headline. */
+        .cabin-at-a-glance__group:first-of-type .cabin-at-a-glance__row:first-of-type dd {
+          font-family: var(--gy-font-display), "Fraunces", Georgia, serif;
+          font-size: 22px;
+          font-style: italic;
+          font-weight: 350;
+          letter-spacing: -0.005em;
+          line-height: 1.2;
         }
         .cabin-at-a-glance__correction {
           font-family: var(--gy-font-editorial);
           font-style: italic;
           font-size: 12.5px;
-          color: rgba(13, 27, 42, 0.55);
-          border-top: 1px solid rgba(13, 27, 42, 0.08);
-          padding-top: 14px;
-          margin: 6px 0 0 0;
+          color: rgba(13, 27, 42, 0.6);
+          border-top: 1px solid rgba(201, 168, 76, 0.18);
+          padding-top: 16px;
+          margin: 18px 0 0 0;
+          text-align: center;
         }
         .cabin-at-a-glance__correction a {
-          color: var(--gy-gold);
+          color: var(--gy-navy);
           text-decoration: none;
-          border-bottom: 1px solid currentColor;
+          background-image: linear-gradient(
+            to right,
+            var(--gy-gold), var(--gy-gold)
+          );
+          background-size: 100% 1px;
+          background-position: 0 100%;
+          background-repeat: no-repeat;
+          padding-bottom: 1px;
+          transition: background-size 240ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cabin-at-a-glance__correction a:hover {
+          background-size: 100% 2px;
         }
         .cabin-at-a-glance__ics {
           font-family: var(--gy-font-editorial);
           font-style: italic;
-          font-size: 12.5px;
-          margin: 10px 0 0 0;
+          font-size: 13px;
+          margin: 12px 0 0 0;
+          text-align: center;
         }
         .cabin-at-a-glance__ics a {
-          color: var(--gy-gold);
+          color: var(--gy-navy);
           text-decoration: none;
+          background-image: linear-gradient(
+            to right,
+            var(--gy-gold), var(--gy-gold)
+          );
+          background-size: 100% 1px;
+          background-position: 0 100%;
+          background-repeat: no-repeat;
+          padding-bottom: 1px;
+          transition: background-size 240ms cubic-bezier(0.16, 1, 0.3, 1);
         }
         .cabin-at-a-glance__ics a:hover {
-          border-bottom: 1px solid currentColor;
+          background-size: 100% 2px;
+        }
+        @media (max-width: 560px) {
+          .cabin-at-a-glance__card {
+            padding: 28px 22px 24px;
+          }
+          .cabin-at-a-glance__row {
+            grid-template-columns: 110px 1fr;
+            column-gap: 16px;
+          }
+          .cabin-at-a-glance__row dt {
+            font-size: 9.5px;
+            letter-spacing: 1.8px;
+          }
+          .cabin-at-a-glance__row dd {
+            font-size: 15px;
+          }
+          .cabin-at-a-glance__group:first-of-type .cabin-at-a-glance__row:first-of-type dd {
+            font-size: 19px;
+          }
+        }
+        @media (max-width: 380px) {
+          .cabin-at-a-glance__row {
+            grid-template-columns: 1fr;
+            row-gap: 2px;
+          }
+          .cabin-at-a-glance__row dt {
+            text-align: left;
+          }
         }
       `}</style>
     </section>

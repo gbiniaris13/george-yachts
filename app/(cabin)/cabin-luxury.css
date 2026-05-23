@@ -189,16 +189,23 @@
   @keyframes gy-section-reveal {
     from {
       opacity: 0;
-      transform: translateY(32px) scale(0.985);
+      transform: translateY(32px);
     }
+    99%  { opacity: 1; }
     to {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: none;  /* release containing-block trap */
     }
   }
+  /* 2026-05-23 — IMPORTANT: never apply this scroll-reveal to
+     blocks that mount a Leaflet map. Leaflet calculates tile
+     pixel positions from the container's getBoundingClientRect();
+     when the parent has a `transform`, those rects become wrong
+     and tiles end up off-screen. Symptom = grey/cream canvas
+     with no map.
+     We also drop the `scale(0.985)` to avoid sub-pixel artefacts
+     during the animation. */
   [data-cabin-mode] .cabin-vessel-block,
-  [data-cabin-mode] .berth-map,
-  [data-cabin-mode] .berth-nearby,
   [data-cabin-mode] .voyage-carousel,
   [data-cabin-mode] .filotimo-card,
   [data-cabin-mode] .cabin-at-a-glance,
@@ -210,6 +217,40 @@
     animation-timeline: view();
     animation-range: entry 0% cover 24%;
   }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 4b  LEAFLET PROTECTION
+ *
+ * The BerthMap component uses Leaflet, which calculates tile
+ * positions from container bounding rects. Any `transform` on
+ * the container OR an ancestor breaks tile placement.
+ *
+ * Force `.berth-map` (and its descendants) to have no animation
+ * and no transform — opt out of the page-mount cascade AND the
+ * scroll-reveal entirely. Tiles will render perfectly every time.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] .berth-map,
+[data-cabin-mode] .berth-map *,
+[data-cabin-mode] .leaflet-container,
+[data-cabin-mode] .leaflet-container * {
+  animation: none !important;
+  transform: none !important;
+}
+/* Re-allow Leaflet's own internal transforms (pan/zoom). It uses
+   inline styles so those win over our rule. */
+[data-cabin-mode] .leaflet-tile,
+[data-cabin-mode] .leaflet-marker-icon,
+[data-cabin-mode] .leaflet-marker-shadow,
+[data-cabin-mode] .leaflet-layer,
+[data-cabin-mode] .leaflet-zoom-animated {
+  /* Leaflet sets transform inline; we don't want to fight it.
+     The rule above used `!important`, so override here with the
+     same. The inline-style still wins by source order + specificity
+     for the cases we care about. */
+  transform: revert !important;
 }
 
 
@@ -780,6 +821,12 @@
 /* ─────────────────────────────────────────────────────────────
  * § 20  RESPONSIVE — phones get tighter spacing and smaller
  * monogram (or none). Greeting still BIG but proportional.
+ *
+ * 2026-05-23 — George's iPhone/Android pre-test sweep. The Cabin
+ * is opened on phones more than desktop; everything below is for
+ * that. Tap targets 44×44 (Apple HIG) / 48×48 (Android Material).
+ * No fixed-position elements that overlap content on small screens.
+ * Sticky header scaled down. Scrolling tuned for mobile inertia.
  * ───────────────────────────────────────────────────────────── */
 
 @media (max-width: 560px) {
@@ -790,10 +837,89 @@
   [data-cabin-mode] .cabin-home__welcome {
     padding: 24px 0 30px;
   }
-  [data-cabin-mode] .cabin-at-a-glance {
-    padding: 24px 22px;
-  }
   [data-cabin-mode]::after { display: none; }  /* hide monogram */
+
+  /* Sticky header: smaller padding, no backdrop blur on cheap
+     Android GPUs (it tanks frame rate). */
+  [data-cabin-mode] .cabin-shell__header {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(248, 245, 240, 0.96);
+  }
+
+  /* Tap targets — minimum 44px to meet Apple HIG. */
+  [data-cabin-mode] button,
+  [data-cabin-mode] a[class*="btn"],
+  [data-cabin-mode] a[class*="cta"],
+  [data-cabin-mode] a[class*="open"] {
+    min-height: 44px;
+  }
+
+  /* Page-mount cascade: shorter delays + tighter rise on phones
+     so the user isn't waiting to interact. */
+  [data-cabin-mode] .cabin-shell > * {
+    animation-duration: 600ms;
+  }
+  [data-cabin-mode] .cabin-shell > *:nth-child(1) { animation-delay: 0ms; }
+  [data-cabin-mode] .cabin-shell > *:nth-child(2) { animation-delay: 40ms; }
+  [data-cabin-mode] .cabin-shell > *:nth-child(3) { animation-delay: 80ms; }
+  [data-cabin-mode] .cabin-shell > *:nth-child(4) { animation-delay: 120ms; }
+  [data-cabin-mode] .cabin-shell > *:nth-child(5) { animation-delay: 160ms; }
+  [data-cabin-mode] .cabin-shell > *:nth-child(6) { animation-delay: 200ms; }
+  [data-cabin-mode] .cabin-shell > *:nth-child(7) { animation-delay: 240ms; }
+  [data-cabin-mode] .cabin-shell > *:nth-child(8) { animation-delay: 280ms; }
+
+  /* Ken Burns OFF on phones — battery + perceived perf. */
+  [data-cabin-mode] .cabin-vessel-block__hero img,
+  [data-cabin-mode] .vs-hero img {
+    animation: none;
+  }
+
+  /* Photo hover effects don't apply on touch devices anyway — but
+     the transition cost is still paid. Skip. */
+  [data-cabin-mode] .cabin-vessel-block__photo img,
+  [data-cabin-mode] .voyage-carousel img,
+  [data-cabin-mode] .filotimo-card img {
+    transition: none;
+  }
+
+  /* Tile shimmer: skip the diagonal sweep on phones (no hover). */
+  [data-cabin-mode] .cabin-home__tile::before {
+    display: none;
+  }
+
+  /* Drop-cap smaller on narrow viewports. */
+  [data-cabin-mode] .cabin-brief__intro p:first-of-type::first-letter,
+  [data-cabin-mode] .cabin-pre-voyage__intro p:first-of-type::first-letter {
+    font-size: 2.6em;
+  }
+
+  /* iOS Safari: prevent overscroll bounce showing the page-bg below
+     the cabin on PWA-installed mode. */
+  html:has([data-cabin-mode]) {
+    overscroll-behavior-y: none;
+  }
+}
+
+/* Touch-specific (any pointer that's coarse) — disable hover effects
+   entirely. They never trigger correctly, and the transitions add
+   visual jitter on tap. */
+@media (hover: none) and (pointer: coarse) {
+  [data-cabin-mode] button:hover:not(:disabled),
+  [data-cabin-mode] a[class*="btn"]:hover,
+  [data-cabin-mode] a[class*="open"]:hover,
+  [data-cabin-mode] a[class*="cta"]:hover,
+  [data-cabin-mode] .cabin-home__tile:hover,
+  [data-cabin-mode] .crew-card:hover,
+  [data-cabin-mode] .filotimo-card:hover,
+  [data-cabin-mode] .install-card:hover {
+    transform: none;
+    box-shadow: var(--gy-shadow-card);
+  }
+  [data-cabin-mode] .cabin-home__tile:hover .cabin-home__tile-glyph {
+    transform: none;
+    filter: none;
+  }
 }
 
 
