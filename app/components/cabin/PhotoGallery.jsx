@@ -12,15 +12,24 @@
 // a full-screen viewer. Keyboard ← → Esc, on-screen prev/next,
 // swipe on touch devices. Closes on backdrop click or X.
 //
-// Two surfaces:
-//   <PhotoGallery photos={[...]} renderTrigger={(open) => ...}>
-//     — Caller controls how the thumbnail strip looks; we only
-//       own the lightbox modal + interactions.
-//
 // `photos` is an array of { url, caption?, credit? }.
+//
+// 2026-05-23 (PM) — George reported the close X + nav arrows
+// scrolling out of view on tall images. Root cause: the cabin
+// luxury Round 2 layer added a `transform` keyframe to every
+// .cabin-shell child for the page-mount cascade, which leaves
+// `transform: translateY(0)` on those parents — and per CSS
+// spec, any non-`none` transform creates a containing block for
+// `position: fixed` descendants. The lightbox modal was getting
+// trapped inside the VesselBrochureBlock instead of escaping to
+// the viewport.
+//
+// Bulletproof fix: render the lightbox via React Portal into
+// document.body. Ancestor transforms can no longer affect it.
 // =============================================================
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 export default function PhotoGallery({
   photos,
@@ -84,6 +93,120 @@ export default function PhotoGallery({
 
   const current = openAt != null ? list[openAt] : null;
 
+  // 2026-05-23 — portal target. We render the modal into
+  // document.body so no ancestor `transform` / `filter` / `perspective`
+  // can trap our `position: fixed` lightbox inside a containing block.
+  // Mounted client-side only to avoid SSR hydration warnings.
+  const [portalTarget, setPortalTarget] = useState(null);
+  useEffect(() => {
+    setPortalTarget(typeof document !== "undefined" ? document.body : null);
+  }, []);
+
+  const modal = current && (
+    <div
+      className="cabin-lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${vesselName} photo viewer`}
+      onClick={close}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
+      <button
+        type="button"
+        className="cabin-lightbox__close"
+        onClick={(e) => {
+          e.stopPropagation();
+          close();
+        }}
+        aria-label="Close photo"
+        title="Close (Esc)"
+      >
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+          <path d="M1 1 L17 17 M17 1 L1 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+        </svg>
+      </button>
+
+      {list.length > 1 && (
+        <>
+          <button
+            type="button"
+            className="cabin-lightbox__nav cabin-lightbox__nav--prev"
+            onClick={(e) => {
+              e.stopPropagation();
+              prev();
+            }}
+            aria-label="Previous photo"
+            title="Previous (←)"
+          >
+            <svg width="14" height="22" viewBox="0 0 14 22" aria-hidden="true">
+              <path d="M12 1 L2 11 L12 21" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+            </svg>
+          </button>
+          <button
+            type="button"
+            className="cabin-lightbox__nav cabin-lightbox__nav--next"
+            onClick={(e) => {
+              e.stopPropagation();
+              next();
+            }}
+            aria-label="Next photo"
+            title="Next (→)"
+          >
+            <svg width="14" height="22" viewBox="0 0 14 22" aria-hidden="true">
+              <path d="M2 1 L12 11 L2 21" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+            </svg>
+          </button>
+        </>
+      )}
+
+      <figure
+        className="cabin-lightbox__figure"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          key={openAt} /* re-mount on change so the fade-in plays */
+          src={current.url}
+          alt={current.caption || `${vesselName} — photo ${openAt + 1}`}
+          className="cabin-lightbox__img"
+        />
+        {(current.caption || current.credit) && (
+          <figcaption className="cabin-lightbox__caption">
+            {current.caption}
+            {current.credit && <em> · {current.credit}</em>}
+          </figcaption>
+        )}
+      </figure>
+
+      {list.length > 1 && (
+        <div
+          className="cabin-lightbox__counter"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <span className="cabin-lightbox__counter-num">
+            {String(openAt + 1).padStart(2, "0")}
+          </span>
+          <span className="cabin-lightbox__counter-sep"> / </span>
+          <span className="cabin-lightbox__counter-total">
+            {String(list.length).padStart(2, "0")}
+          </span>
+        </div>
+      )}
+
+      <div
+        className="cabin-lightbox__hint"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <span aria-hidden="true">←</span>
+        <span aria-hidden="true">→</span>
+        <em>to navigate</em>
+        <span className="cabin-lightbox__hint-divider">·</span>
+        <em>Esc to close</em>
+      </div>
+    </div>
+  );
+
   return (
     <>
       {/* Caller renders the trigger surface (grid, hero, etc.). We
@@ -91,100 +214,32 @@ export default function PhotoGallery({
           pattern. */}
       {typeof children === "function" ? children({ open }) : children}
 
-      {current && (
-        <div
-          className="cabin-lightbox"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${vesselName} photo viewer`}
-          onClick={close}
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-        >
-          <button
-            type="button"
-            className="cabin-lightbox__close"
-            onClick={(e) => {
-              e.stopPropagation();
-              close();
-            }}
-            aria-label="Close photo"
-          >
-            ×
-          </button>
-
-          {list.length > 1 && (
-            <>
-              <button
-                type="button"
-                className="cabin-lightbox__nav cabin-lightbox__nav--prev"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  prev();
-                }}
-                aria-label="Previous photo"
-              >
-                ‹
-              </button>
-              <button
-                type="button"
-                className="cabin-lightbox__nav cabin-lightbox__nav--next"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  next();
-                }}
-                aria-label="Next photo"
-              >
-                ›
-              </button>
-            </>
-          )}
-
-          <figure
-            className="cabin-lightbox__figure"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={current.url}
-              alt={current.caption || `${vesselName} — photo ${openAt + 1}`}
-              className="cabin-lightbox__img"
-            />
-            {(current.caption || current.credit) && (
-              <figcaption className="cabin-lightbox__caption">
-                {current.caption}
-                {current.credit && <em> · {current.credit}</em>}
-              </figcaption>
-            )}
-          </figure>
-
-          {list.length > 1 && (
-            <div
-              className="cabin-lightbox__counter"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {openAt + 1} / {list.length}
-            </div>
-          )}
-        </div>
-      )}
+      {/* PORTAL the modal into document.body so ancestor transforms
+          can't trap it. After hydration only — first render is null
+          on the client to match server output. */}
+      {modal && portalTarget ? createPortal(modal, portalTarget) : null}
 
       <style>{`
+        /* 2026-05-23 — Lightbox lives at document.body via portal.
+           Controls use position:fixed against the viewport — guaranteed
+           visible regardless of viewport scroll or image height. */
         .cabin-lightbox {
           position: fixed;
           inset: 0;
-          z-index: 1000;
-          background: rgba(13, 27, 42, 0.94);
+          z-index: 10000;
+          background: rgba(8, 16, 26, 0.96);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 32px 56px;
+          padding: 32px 88px;
           cursor: zoom-out;
-          animation: cabin-lightbox-in 180ms ease-out;
+          animation: cabin-lightbox-in 260ms cubic-bezier(0.16, 1, 0.3, 1);
         }
         @keyframes cabin-lightbox-in {
-          from { opacity: 0; }
-          to   { opacity: 1; }
+          from { opacity: 0; backdrop-filter: blur(0); }
+          to   { opacity: 1; backdrop-filter: blur(8px); }
         }
         .cabin-lightbox__figure {
           position: relative;
@@ -195,90 +250,167 @@ export default function PhotoGallery({
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 12px;
+          gap: 16px;
         }
         .cabin-lightbox__img {
-          max-width: min(96vw, 1400px);
-          max-height: 86vh;
+          display: block;
+          max-width: min(94vw, 1500px);
+          max-height: 82vh;
           width: auto;
           height: auto;
           object-fit: contain;
           background: #000;
-          box-shadow: 0 18px 48px rgba(0,0,0,0.55);
+          box-shadow:
+            0 4px 12px rgba(0,0,0,0.4),
+            0 24px 60px rgba(0,0,0,0.55),
+            0 0 0 1px rgba(201, 168, 76, 0.18);
+          animation: cabin-lightbox-img-in 380ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes cabin-lightbox-img-in {
+          from { opacity: 0; transform: scale(0.97); }
+          to   { opacity: 1; transform: scale(1); }
         }
         .cabin-lightbox__caption {
           font-family: var(--gy-font-editorial, Georgia, serif);
           font-style: italic;
-          color: rgba(248, 245, 240, 0.8);
-          font-size: 14px;
+          color: rgba(248, 245, 240, 0.82);
+          font-size: 14.5px;
           line-height: 1.55;
           text-align: center;
-          max-width: 60ch;
+          max-width: 64ch;
+          letter-spacing: 0.2px;
         }
-        .cabin-lightbox__caption em { color: rgba(201, 168, 76, 0.85); }
+        .cabin-lightbox__caption em { color: rgba(201, 168, 76, 0.92); font-style: normal; }
 
+        /* CLOSE — fixed to viewport top-right, always visible. */
         .cabin-lightbox__close {
-          position: absolute;
-          top: 18px;
-          right: 22px;
-          width: 44px;
-          height: 44px;
+          position: fixed;
+          top: 24px;
+          right: 28px;
+          width: 48px;
+          height: 48px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
           background: rgba(248, 245, 240, 0.08);
           color: #F8F5F0;
-          border: 1px solid rgba(201, 168, 76, 0.55);
-          font-size: 28px;
-          line-height: 1;
+          border: 1px solid rgba(201, 168, 76, 0.5);
+          border-radius: 50%;
           cursor: pointer;
-          font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+          transition: all 220ms cubic-bezier(0.16, 1, 0.3, 1);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          z-index: 10001;
         }
         .cabin-lightbox__close:hover {
-          background: rgba(201, 168, 76, 0.18);
+          background: rgba(201, 168, 76, 0.22);
+          border-color: rgba(201, 168, 76, 0.9);
+          transform: scale(1.06);
         }
 
+        /* NAV — fixed to viewport sides, vertically centred. */
         .cabin-lightbox__nav {
-          position: absolute;
+          position: fixed;
           top: 50%;
           transform: translateY(-50%);
-          width: 56px;
-          height: 56px;
+          width: 60px;
+          height: 60px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
           background: rgba(248, 245, 240, 0.08);
           color: #F8F5F0;
-          border: 1px solid rgba(201, 168, 76, 0.55);
-          font-size: 36px;
-          line-height: 1;
+          border: 1px solid rgba(201, 168, 76, 0.5);
+          border-radius: 50%;
           cursor: pointer;
-          font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
-          padding: 0 0 4px 0;
+          transition: all 220ms cubic-bezier(0.16, 1, 0.3, 1);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          z-index: 10001;
         }
-        .cabin-lightbox__nav:hover { background: rgba(201, 168, 76, 0.18); }
-        .cabin-lightbox__nav--prev { left: 18px; }
-        .cabin-lightbox__nav--next { right: 18px; }
+        .cabin-lightbox__nav:hover {
+          background: rgba(201, 168, 76, 0.22);
+          border-color: rgba(201, 168, 76, 0.9);
+          transform: translateY(-50%) scale(1.06);
+        }
+        .cabin-lightbox__nav--prev { left: 24px; }
+        .cabin-lightbox__nav--next { right: 24px; }
 
+        /* COUNTER — fixed top-centre, editorial. */
         .cabin-lightbox__counter {
-          position: absolute;
-          bottom: 22px;
+          position: fixed;
+          top: 28px;
           left: 50%;
           transform: translateX(-50%);
-          font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
-          font-size: 11px;
-          letter-spacing: 3px;
-          color: rgba(248, 245, 240, 0.65);
-          background: rgba(13, 27, 42, 0.6);
-          padding: 6px 14px;
-          border: 1px solid rgba(248, 245, 240, 0.18);
+          font-family: var(--gy-font-ui, -apple-system), sans-serif;
+          font-size: 12px;
+          letter-spacing: 4px;
+          color: rgba(248, 245, 240, 0.85);
+          padding: 8px 16px;
+          border: 1px solid rgba(201, 168, 76, 0.45);
+          border-radius: 999px;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          background: rgba(8, 16, 26, 0.4);
+          font-variant-numeric: tabular-nums;
+          z-index: 10001;
+        }
+        .cabin-lightbox__counter-num {
+          color: rgba(201, 168, 76, 0.95);
+          font-weight: 600;
+        }
+        .cabin-lightbox__counter-sep {
+          color: rgba(248, 245, 240, 0.4);
+          margin: 0 4px;
+        }
+        .cabin-lightbox__counter-total {
+          color: rgba(248, 245, 240, 0.6);
         }
 
+        /* HINT — fixed bottom-centre, small keyboard reminder. */
+        .cabin-lightbox__hint {
+          position: fixed;
+          bottom: 26px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-family: var(--gy-font-ui, -apple-system), sans-serif;
+          font-size: 10.5px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          color: rgba(248, 245, 240, 0.6);
+          z-index: 10001;
+        }
+        .cabin-lightbox__hint em {
+          font-style: normal;
+          letter-spacing: 2.5px;
+        }
+        .cabin-lightbox__hint-divider { opacity: 0.4; }
+
         @media (max-width: 640px) {
-          .cabin-lightbox { padding: 16px 8px 56px; }
+          .cabin-lightbox { padding: 16px 8px 80px; }
           .cabin-lightbox__nav {
             width: 44px;
             height: 44px;
-            font-size: 28px;
           }
-          .cabin-lightbox__nav--prev { left: 6px; }
-          .cabin-lightbox__nav--next { right: 6px; }
-          .cabin-lightbox__close { top: 8px; right: 8px; }
-          .cabin-lightbox__img { max-height: 78vh; }
+          .cabin-lightbox__nav--prev { left: 8px; }
+          .cabin-lightbox__nav--next { right: 8px; }
+          .cabin-lightbox__close {
+            top: 12px; right: 12px;
+            width: 40px; height: 40px;
+          }
+          .cabin-lightbox__counter {
+            top: 14px;
+            font-size: 11px;
+            letter-spacing: 3px;
+            padding: 6px 12px;
+          }
+          .cabin-lightbox__img { max-height: 70vh; }
+          .cabin-lightbox__hint {
+            display: none; /* no keyboard on phones */
+          }
         }
       `}</style>
     </>

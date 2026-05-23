@@ -151,9 +151,18 @@
  * Same as Round 1 but with deeper offset and more stagger.
  * ───────────────────────────────────────────────────────────── */
 
+/* 2026-05-23 — IMPORTANT: keyframe ends with `transform: none`
+   (not translateY(0)). Per CSS spec, any non-`none` transform
+   creates a containing block for `position: fixed` descendants.
+   With `animation-fill-mode: both`, the end-state sticks — and
+   `translateY(0)` was trapping the PhotoGallery lightbox inside
+   the VesselBrochureBlock instead of letting it escape to the
+   viewport. Setting end state to `none` releases the containment
+   the moment the animation completes. */
 @keyframes gy-cabin-rise {
   from { opacity: 0; transform: translateY(28px); }
-  to   { opacity: 1; transform: translateY(0); }
+  99%  { opacity: 1; }
+  to   { opacity: 1; transform: none; }
 }
 
 [data-cabin-mode] .cabin-shell > * {
