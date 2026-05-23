@@ -39,6 +39,7 @@ import GreekWordOfTheDay from "../../components/cabin/GreekWordOfTheDay";
 import CabinIcon from "../../components/cabin/CabinIcon";
 import VesselBrochureBlock from "../../components/cabin/VesselBrochureBlock";
 import PreVoyageSteps from "../../components/cabin/PreVoyageSteps";
+import BerthMap from "../../components/cabin/BerthMap";
 import GhostCredit from "../../components/cabin/GhostCredit";
 import { titleCaseName, firstNameFromDisplayName, crewRoles, joinNouns, prettyDate } from "@/lib/cabin/format";
 
@@ -83,6 +84,10 @@ const CABIN_CLIENT_COLUMNS = [
   "sample_menu",
   "crew_display",
   "inspiration_content",
+  // 2026-05-23 — Berth Map Phase 1 fields.
+  "berth_label",
+  "berth_lat",
+  "berth_lng",
   "created_at",
   "updated_at",
 ].join(", ");
@@ -348,6 +353,16 @@ export default async function CabinHomePage() {
           click-through to a separate /cabin/vessel page; the
           brochure IS the chapter. */}
       <VesselBrochureBlock cabin={cabin} photos={resolvedVesselPhotos} />
+
+      {/* 2026-05-23 — Berth Map (Phase 1). Renders only when George
+          has set lat/lng from the CRM. Cabins without berth data
+          render nothing — fully back-compat for every existing cabin. */}
+      <BerthMap
+        lat={Number(cabin?.berth_lat)}
+        lng={Number(cabin?.berth_lng)}
+        label={cabin?.berth_label}
+        vesselName={cabin?.vessel_name}
+      />
 
       {/* 2026-05-22 — Step 02 (Charter Brief) folded into the
           PreVoyageSteps block above. */}
