@@ -158,9 +158,14 @@ export default function BerthMap({
           {label && <div className="berth-map__label">{label}</div>}
         </div>
 
+        {/* 2026-05-23 — Inline style: belt-and-braces defence against
+            any future luxury-layer rule that would put a transform on
+            this container. Leaflet's tile positioning breaks if an
+            ancestor or this container has a CSS transform. */}
         <div
           ref={containerRef}
           className="berth-map__canvas"
+          style={{ transform: "none" }}
           aria-label={`Map showing the berth of ${vesselName || "your yacht"}`}
         />
 
