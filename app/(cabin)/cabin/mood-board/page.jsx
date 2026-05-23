@@ -71,7 +71,14 @@ export default function MoodBoardPage() {
         body: JSON.stringify({ image_url: url.trim(), caption: caption.trim() }),
       });
       const j = await r.json();
-      if (!r.ok) throw new Error(j.error || "save-failed");
+      if (!r.ok) {
+        // 2026-05-23 — the API now returns a `hint` when an image
+        // URL can't be fetched (Pinterest hotlink protection,
+        // dead link, etc.). Show the hint verbatim — it tells the
+        // user exactly what to do next ("upload the image instead").
+        if (j.hint) throw new Error(j.hint);
+        throw new Error(j.error || "save-failed");
+      }
       setUrl("");
       setCaption("");
       void load();
@@ -79,6 +86,8 @@ export default function MoodBoardPage() {
       setError(
         err.message === "url-must-be-https"
           ? "Please paste a secure (https://) image link."
+          : err.message && err.message.length > 25
+          ? err.message
           : "Could not add that. Try again in a moment."
       );
     }
@@ -269,7 +278,19 @@ export default function MoodBoardPage() {
         {items?.map((it) => (
           <figure key={it.id} className="mood-card">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={it.display_url || it.image_path} alt={it.caption || ""} loading="lazy" />
+            {/* 2026-05-23 — referrerPolicy="no-referrer" is a defence
+                for any legacy rows where image_path is still a raw
+                external URL (pre-2026-05-23 rows where we hadn't yet
+                shipped the server-side rehost). Pinterest et al check
+                the Referer header — sending none bypasses hotlink
+                protection. New rows are stored in our bucket and
+                this attribute is a no-op for them. */}
+            <img
+              src={it.display_url || it.image_path}
+              alt={it.caption || ""}
+              loading="lazy"
+              referrerPolicy="no-referrer"
+            />
             {it.caption && <figcaption>{it.caption}</figcaption>}
             <button
               type="button"

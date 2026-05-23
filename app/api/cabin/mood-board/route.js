@@ -10,9 +10,73 @@ import { NextResponse } from "next/server";
 import { readSessionFromCookies, pickActiveCabinId, resolveMembership } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import { writeAudit, AUDIT_ACTIONS } from "@/lib/cabin/audit";
-import { signCabinPhotoUrl, isStoragePath, deleteCabinPhoto } from "@/lib/cabin/storage";
+import { signCabinPhotoUrl, isStoragePath, deleteCabinPhoto, uploadCabinPhoto } from "@/lib/cabin/storage";
 
 export const runtime = "nodejs";
+
+// 2026-05-23 — Alexandros's friend-test feedback: "Copy image link
+// from Pinterest etc. fails most of the time, security error." Root
+// cause: Pinterest + many CDNs check the Referer header and serve a
+// 403 to any request not coming from their own domain (hotlink
+// protection). Our <img src={url}> from cabin pages = blocked.
+//
+// Fix: fetch the image server-side (no CORS, no hotlink rule applies
+// to server-to-server requests when we set a clean User-Agent) and
+// re-host it in our Supabase Storage bucket. The cabin then serves
+// from our own bucket — bulletproof, no source can block us, and
+// the image stays available even if the source URL later 404s.
+//
+// Fallback: if the fetch fails (rare — usually a dead URL), we
+// return a clear error to the user instead of saving a broken link.
+const FETCH_TIMEOUT_MS = 12_000;
+const MAX_IMAGE_BYTES = 8 * 1024 * 1024; // 8 MB hard cap
+const ALLOWED_MIME = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/avif",
+  "image/gif",
+]);
+
+async function fetchAndRehost(cabinId, url) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
+  try {
+    const r = await fetch(url, {
+      signal: ctrl.signal,
+      redirect: "follow",
+      headers: {
+        // Browser-like UA so CDNs that block bots still serve us.
+        "User-Agent":
+          "Mozilla/5.0 (compatible; GeorgeYachts-Cabin/1.0; +https://georgeyachts.com)",
+        Accept: "image/*",
+      },
+    });
+    if (!r.ok) {
+      throw new Error(`source returned HTTP ${r.status}`);
+    }
+    const contentType = (r.headers.get("content-type") || "").split(";")[0].trim();
+    if (!ALLOWED_MIME.has(contentType)) {
+      throw new Error(`not an image (got ${contentType || "unknown"})`);
+    }
+    const buf = await r.arrayBuffer();
+    if (buf.byteLength > MAX_IMAGE_BYTES) {
+      throw new Error(`image too large (${Math.round(buf.byteLength / 1024)} KB > 8 MB)`);
+    }
+    const path = await uploadCabinPhoto({
+      cabinId,
+      bytes: new Uint8Array(buf),
+      contentType,
+      folder: "mood-board",
+    });
+    return { ok: true, path };
+  } catch (e) {
+    const msg = e?.name === "AbortError" ? "fetch timed out" : (e?.message || String(e));
+    return { ok: false, error: msg };
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 async function gate() {
   const session = await readSessionFromCookies();
@@ -59,6 +123,26 @@ export async function POST(req) {
   if (!url || url.protocol !== "https:") {
     return NextResponse.json({ ok: false, error: "url-must-be-https" }, { status: 400 });
   }
+  // 2026-05-23 — Re-host strategy: try to fetch the image server-side
+  // and upload to our bucket. If that works (95%+ of the time for
+  // Pinterest/Unsplash/most CDNs), the cabin serves the image from
+  // our own storage — bulletproof. If it fails (dead URL, weird MIME,
+  // or genuine block), return a clear error so the user knows to
+  // upload the file directly instead.
+  const rehost = await fetchAndRehost(a.cabinId, url.toString());
+  if (!rehost.ok) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "url-fetch-failed",
+        detail: rehost.error,
+        hint:
+          "We couldn't fetch the image from that link. Many sites (Pinterest, social media) block hot-linking. Save the image to your device and use the upload button instead.",
+      },
+      { status: 422 },
+    );
+  }
+
   const db = getCabinDb();
   const existing = await dbQuery(
     db.from("cabin_mood_board").select("display_order").eq("cabin_id", a.cabinId).order("display_order", { ascending: false }).limit(1)
@@ -70,7 +154,7 @@ export async function POST(req) {
       .insert({
         cabin_id: a.cabinId,
         uploaded_by_email: a.session.email,
-        image_path: url.toString(),
+        image_path: rehost.path,  // stored as a storage path now, not the raw URL
         caption: typeof body.caption === "string" ? body.caption.slice(0, 240) : null,
         display_order: nextOrder,
       })
