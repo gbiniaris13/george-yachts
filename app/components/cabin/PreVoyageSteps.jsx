@@ -268,7 +268,12 @@ function StepCard({ step, ordinal, totalSteps }) {
           border-left-color: rgba(13, 27, 42, 0.25);
           background: rgba(13, 27, 42, 0.02);
         }
-        @media (max-width: 540px) {
+        /* 2026-05-23 — Audit pass: was 540px which left a 541-599
+           collision zone where the 96px magazine-number column ate
+           ~30% of the card body width — title + CTA crowded on
+           Pro Max viewports. Canonical cabin phone breakpoint is
+           600px, matches every other component. */
+        @media (max-width: 599.98px) {
           .cabin-pv-step {
             grid-template-columns: 1fr;
             padding: 22px 22px 22px 20px;

@@ -242,7 +242,12 @@ export default function BerthMap({
         }
         .berth-map__canvas {
           width: 100%;
-          height: 320px;
+          /* 2026-05-23 — Audit pass: was a fixed 320px, which on
+             iPhone SE2 (375×667) ate ~48% of viewport AFTER the user
+             scrolled to it. clamp() respects small screens (min
+             220px so the pin always has room) and grows up to 380px
+             on tall screens — never more than 45% of viewport. */
+          height: clamp(220px, 45vh, 380px);
           background: #e9e4d4;
           position: relative;
         }

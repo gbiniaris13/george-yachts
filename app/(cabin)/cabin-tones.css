@@ -226,20 +226,36 @@ html body [data-cabin-mode] .cbr-submit__cta:disabled {
 /* 2026-05-20 — Pass 4 (Tyler, iPhone Pro Max 430×932):
  *   "Welcome line breaks like this: 'Welcom / e, / Dimingo / .'"
  *   "Auto-hyphenation in wrong places."
- * Force humane wrapping on every cabin heading + body. iOS
- * sometimes inherits aggressive break behavior; kill it. */
+ *
+ * 2026-05-23 — Eleanna round 4 audit: the original rule was scoped
+ * to "headings + p" which overshoots — body paragraphs with long
+ * phone numbers, "Disembarkation"-class words, or any tightly
+ * wrapped 360px viewport produced very ragged short lines. Now
+ * scoped to HEADINGS ONLY (where mid-word hyphenation was the
+ * original bug). Body p tags get overflow-wrap: anywhere as a
+ * safety net so long tokens (phone numbers, URLs, email addresses)
+ * never overflow the container — they just break at the edge. */
 [data-cabin-mode] h1,
 [data-cabin-mode] h2,
 [data-cabin-mode] h3,
 [data-cabin-mode] .cabin-home__greeting,
 [data-cabin-mode] .cabin-home__primary-title,
 [data-cabin-mode] .cabin-home__progress-title,
-[data-cabin-mode] .cabin-brief__title,
-[data-cabin-mode] p {
+[data-cabin-mode] .cabin-brief__title {
   word-break: keep-all !important;
   overflow-wrap: normal !important;
   hyphens: none !important;
   -webkit-hyphens: none !important;
+}
+/* Body text: humane wrapping. Long unbreakable tokens (phone
+ * numbers, URLs) break at the container edge instead of overflowing. */
+[data-cabin-mode] p,
+[data-cabin-mode] dd,
+[data-cabin-mode] li {
+  overflow-wrap: anywhere;
+  word-break: normal;
+  hyphens: none;
+  -webkit-hyphens: none;
 }
 /* On very narrow phone viewports, the H1 was occasionally being
    squeezed to break a name character-by-character. Force ample
