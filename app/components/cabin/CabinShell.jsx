@@ -232,11 +232,10 @@ export default function CabinShell({
               className="cabin-shell__left-brand"
               aria-label="The Cabin — home"
             >
-              <span className="cabin-shell__left-title">
-                The Cabin <em>· Filotimo</em>
-              </span>
+              <span className="cabin-shell__left-title">The Cabin</span>
+              <span className="cabin-shell__left-mark">Filotimo</span>
               <span className="cabin-shell__left-tagline">
-                By invitation · in confidence
+                By invitation, in confidence
               </span>
             </Link>
           </div>
@@ -251,7 +250,7 @@ export default function CabinShell({
             )}
             <span className="cabin-shell__charter-meta">
               {dates ? dates : null}
-              {dates && viewerName ? <span aria-hidden> · </span> : null}
+              {dates && viewerName ? <span aria-hidden> — </span> : null}
               {viewerName ? <em>{viewerName}</em> : null}
             </span>
           </div>
@@ -435,21 +434,34 @@ export default function CabinShell({
           color: var(--gy-ivory);
           border-bottom: 1px solid rgba(201, 168, 76, 0.32);
         }
+        /* ─────────────────────────────────────────────────────────
+           MOBILE MASTHEAD — Eleanna round 4 (2026-05-23, after a
+           paying client saw it).
+
+           CRITICAL CONTEXT for any future maintainer:
+
+           cabin-luxury.css § 14 (line 714) forces the cabin header
+           background to a cream/ivory frosted glass — NOT navy. This
+           is intentional (Apple-style backdrop blur). EVERY header
+           text color must therefore be NAVY-based for legibility on
+           cream. Ivory text on cream = invisible. (That bug shipped
+           in round 3 — only the gold "Filotimo" wordmark stayed
+           readable; "THE CABIN" disappeared into the cream.)
+
+           Also: cabin-tones.css line 264 forces grid-template-columns
+           to "auto 1fr" at <560px, which beats unprefixed selectors.
+           We use [data-cabin-mode] prefix throughout this @media
+           block to match its specificity — and since this <style jsx
+           global> injects AFTER the static stylesheets, we win the
+           tiebreaker.
+
+           Layout: vertical masthead (Vogue cover, Loro Piana shop
+           sign). Logo centred top, "THE CABIN" navy small caps,
+           hairline gold rule, "Filotimo" gold italic, vessel chip
+           below. Back arrow floats top-left.
+           ───────────────────────────────────────────────────────── */
         @media (max-width: 767.98px) {
-          .cabin-shell__header {
-            /* 2026-05-23 — Eleanna round 3 (George, after a client
-               saw the cabin live and the logo was tiny next to the
-               "THE CABIN · Filotimo" wordmark which was eating the
-               whole left column).
-               Full vertical masthead now: logo on top centred and
-               BIG, then "The Cabin · Filotimo" + brand tagline
-               beneath it (also centred), vessel chip below that.
-               Back arrow gets positioned absolute top-left so it
-               doesn't push the masthead off-centre. This is the
-               boutique-magazine cover layout — Vogue masthead,
-               Loro Piana store sign — not the Bootstrap navbar
-               we had before. */
-            position: sticky;
+          [data-cabin-mode] .cabin-shell__header {
             grid-template-columns: 1fr !important;
             grid-template-areas:
               "center"
@@ -458,69 +470,121 @@ export default function CabinShell({
             row-gap: 10px !important;
             justify-items: center !important;
             text-align: center !important;
-            padding: 18px 22px 16px !important;
-            padding-top: calc(18px + env(safe-area-inset-top, 0)) !important;
+            padding: 16px 22px 18px !important;
+            padding-top: calc(16px + env(safe-area-inset-top, 0)) !important;
           }
-          .cabin-shell__left {
+          [data-cabin-mode] .cabin-shell__left {
             grid-area: left;
-            flex-direction: column;
+            flex-direction: column !important;
             align-items: center !important;
-            gap: 4px !important;
+            gap: 0 !important;
             justify-self: center !important;
           }
-          .cabin-shell__brand-slot { grid-area: center; }
-          .cabin-shell__charter {
-            grid-area: charter;
+          [data-cabin-mode] .cabin-shell__brand-slot {
+            grid-area: center;
+          }
+          [data-cabin-mode] .cabin-shell__charter {
+            grid-area: charter !important;
             justify-self: center !important;
             align-items: center !important;
             text-align: center !important;
+            display: flex !important;
+            flex-direction: column !important;
           }
-          .cabin-shell__left-brand {
+          [data-cabin-mode] .cabin-shell__left-brand {
             align-items: center !important;
             text-align: center !important;
+            gap: 6px !important;
           }
-          .cabin-shell__left-title {
-            font-size: 11.5px !important;
-            letter-spacing: 0.36em !important;
-            color: rgba(248, 245, 240, 0.78) !important;
-          }
-          .cabin-shell__left-title em {
-            font-size: 13.5px !important;
-            margin-left: 6px !important;
-          }
-          .cabin-shell__left-tagline {
+          /* THE CABIN — navy small-caps on cream */
+          [data-cabin-mode] .cabin-shell__left-title {
             font-size: 10.5px !important;
-            letter-spacing: 0.08em !important;
-            margin-top: 2px !important;
-            color: rgba(248, 245, 240, 0.48) !important;
+            letter-spacing: 0.36em !important;
+            color: rgba(13, 27, 42, 0.82) !important;
+            font-weight: 500 !important;
           }
-          .cabin-shell__charter-vessel {
-            font-size: 17px !important;
+          /* Gold hairline divider between THE CABIN and Filotimo */
+          [data-cabin-mode] .cabin-shell__left-mark {
+            position: relative;
+            display: block;
+            font-family: var(--gy-font-editorial, Georgia, serif);
+            font-style: italic;
+            font-size: 14.5px !important;
+            color: var(--gy-gold) !important;
+            letter-spacing: 0.04em !important;
+            margin-top: 8px !important;
+            padding-top: 8px !important;
           }
-          .cabin-shell__charter-meta {
+          [data-cabin-mode] .cabin-shell__left-mark::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 28px;
+            height: 1px;
+            background: linear-gradient(
+              to right,
+              transparent,
+              rgba(201, 168, 76, 0.75) 50%,
+              transparent
+            );
+          }
+          [data-cabin-mode] .cabin-shell__left-tagline {
+            display: none !important;
+          }
+          /* Vessel chip — navy text on cream, centred */
+          [data-cabin-mode] .cabin-shell__charter-vessel {
+            font-size: 16px !important;
+            color: var(--gy-navy) !important;
+            max-width: 88vw !important;
+          }
+          [data-cabin-mode] .cabin-shell__charter-meta {
             font-size: 9px !important;
-            letter-spacing: 2.2px !important;
+            letter-spacing: 2px !important;
             margin-top: 4px !important;
+            color: rgba(13, 27, 42, 0.6) !important;
           }
-          /* Back arrow floats top-left so it never offsets the
-             centred masthead. */
-          .cabin-shell__back {
+          [data-cabin-mode] .cabin-shell__charter-meta em {
+            color: var(--gy-gold) !important;
+            font-style: normal !important;
+            font-weight: 500 !important;
+          }
+          /* Back arrow: navy outline on cream, floated top-left so
+             it never offsets the centred masthead. */
+          [data-cabin-mode] .cabin-shell__back {
             position: absolute !important;
-            top: calc(14px + env(safe-area-inset-top, 0)) !important;
-            left: 16px !important;
-            width: 32px !important;
-            height: 32px !important;
+            top: calc(12px + env(safe-area-inset-top, 0)) !important;
+            left: 14px !important;
+            width: 34px !important;
+            height: 34px !important;
             font-size: 16px !important;
             z-index: 2 !important;
+            color: var(--gy-navy) !important;
+            border-color: rgba(13, 27, 42, 0.22) !important;
+          }
+          [data-cabin-mode] .cabin-shell__back:hover,
+          [data-cabin-mode] .cabin-shell__back:focus-visible {
+            background: rgba(13, 27, 42, 0.05) !important;
+            border-color: var(--gy-gold) !important;
           }
         }
-        @media (max-width: 479.98px) {
-          .cabin-shell__left-tagline {
-            display: none;
+        /* On the narrowest phones (Galaxy S base ~360px, iPhone SE
+           375px, iPhone Pro mini 375px) tighten everything one
+           notch and drop the vessel chip dates line if it would
+           wrap onto a third row. */
+        @media (max-width: 389.98px) {
+          [data-cabin-mode] .cabin-shell__header {
+            padding: 14px 16px 16px !important;
+            padding-top: calc(14px + env(safe-area-inset-top, 0)) !important;
+            row-gap: 8px !important;
           }
-          .cabin-shell__charter:empty,
-          .cabin-shell__charter:not(:has(*)) {
-            display: none;
+          [data-cabin-mode] .cabin-shell__charter-vessel {
+            font-size: 15px !important;
+          }
+          [data-cabin-mode] .cabin-shell__charter-meta {
+            font-size: 8.5px !important;
+            letter-spacing: 1.8px !important;
           }
         }
 

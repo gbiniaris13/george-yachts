@@ -249,22 +249,14 @@ html body [data-cabin-mode] .cbr-submit__cta:disabled {
   word-spacing: normal;
 }
 
-/* Pass 4 (Tyler): "M/Y TEST 1 · 17 MAY – 24 MAY" header wraps
-   each word onto its own line on iPhone. Also "D..." truncation
-   of the name in the top right.
-
-   Fix: hide the entire charter strip in the sticky header on
-   narrow viewports. The same info renders one screen down in
-   the CharterAtAGlance block on /cabin home, so it's not lost. */
-@media (max-width: 560px) {
-  [data-cabin-mode] .cabin-shell__charter {
-    display: none !important;
-  }
-  /* Two-column header on phone: back arrow (if present) + brand. */
-  [data-cabin-mode] .cabin-shell__header {
-    grid-template-columns: auto 1fr !important;
-  }
-}
+/* 2026-05-23 — Pass 4 (Tyler)'s old fix is OBSOLETE; the round-4
+   masthead in CabinShell.jsx handles narrow viewports correctly
+   by stacking everything centred (vessel chip wraps cleanly on
+   its own row, not into the brand strip). The old rules below
+   forced display:none on .cabin-shell__charter and reset the
+   grid to "auto 1fr" — both fought the masthead, hiding the
+   vessel context customers WANT to see and breaking the centred
+   logo. Kept the comment for archaeology; the rules are removed. */
 /* Desktop: relax the harsh ellipsize on the name — show ~22
    chars before truncating, not ~3. */
 [data-cabin-mode] .cabin-shell__charter-name {
