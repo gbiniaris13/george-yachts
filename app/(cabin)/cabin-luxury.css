@@ -1039,3 +1039,58 @@
 html:has([data-cabin-mode]) {
   scroll-behavior: smooth;
 }
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 24  CENTERING DISCIPLINE — every centred block holds together
+ *
+ * 2026-05-23 — George: "Δεν είναι κεντραρισμένα τα γράμματα με
+ * το από κάτω. Θα ψάξεις εκατοστό εκατοστό όλη την Καμπίνα."
+ *
+ * The .cabin-home__welcome block already centres its <h1> via
+ * `text-align: center` (§5), but children that are themselves
+ * block-level with `max-width` need `margin: 0 auto` to centre
+ * the BLOCK (not just the text inside). Without this, an
+ * `IntroParagraph` (max-width: 540px, margin: 0) sits flush left
+ * inside the centred welcome block — visually off.
+ *
+ * Apply across every centred header on every cabin page.
+ * ───────────────────────────────────────────────────────────── */
+
+[data-cabin-mode] .cabin-home__welcome p,
+[data-cabin-mode] .cabin-home__welcome .cabin-intro-paragraph {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+}
+
+/* Welcome onboarding gate (/cabin/welcome): the intro + lede
+   should sit centred above the form, but the form fields stay
+   left-aligned (forms always read better left-aligned). */
+[data-cabin-mode] .cabin-shell main > article > .cabin-intro-paragraph,
+[data-cabin-mode] .cabin-shell main > article > p:first-of-type {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Mood board, time capsule, vessel, voyage carousel — all the
+   editorial "front-of-house" surfaces that have a centred header
+   above a content grid. Make sure their intros are properly
+   centred too. */
+[data-cabin-mode] .cabin-section-header,
+[data-cabin-mode] .cabin-section-header p,
+[data-cabin-mode] .mood-board__intro,
+[data-cabin-mode] .voyage-carousel__intro,
+[data-cabin-mode] .gwotd__intro,
+[data-cabin-mode] .cabin-vessel-teaser__intro {
+  text-align: center;
+}
+[data-cabin-mode] .cabin-section-header p,
+[data-cabin-mode] .mood-board__intro,
+[data-cabin-mode] .voyage-carousel__intro,
+[data-cabin-mode] .gwotd__intro,
+[data-cabin-mode] .cabin-vessel-teaser__intro {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 60ch;
+}
