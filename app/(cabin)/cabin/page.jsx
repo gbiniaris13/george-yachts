@@ -40,6 +40,7 @@ import CabinIcon from "../../components/cabin/CabinIcon";
 import VesselBrochureBlock from "../../components/cabin/VesselBrochureBlock";
 import PreVoyageSteps from "../../components/cabin/PreVoyageSteps";
 import BerthMap from "../../components/cabin/BerthMap";
+import BerthNearby from "../../components/cabin/BerthNearby";
 import GhostCredit from "../../components/cabin/GhostCredit";
 import { titleCaseName, firstNameFromDisplayName, crewRoles, joinNouns, prettyDate } from "@/lib/cabin/format";
 
@@ -88,6 +89,11 @@ const CABIN_CLIENT_COLUMNS = [
   "berth_label",
   "berth_lat",
   "berth_lng",
+  // 2026-05-23 — Berth Map Phase 2: cached "around your berth"
+  // info (airport / helipad / ATMs / hospital / pharmacy).
+  // Populated by the CRM at save-time, read here at render-time —
+  // zero runtime third-party calls.
+  "berth_nearby",
   "created_at",
   "updated_at",
 ].join(", ");
@@ -363,6 +369,14 @@ export default async function CabinHomePage() {
         label={cabin?.berth_label}
         vesselName={cabin?.vessel_name}
       />
+
+      {/* 2026-05-23 — Berth Map Phase 2 — "Around your berth"
+          museum-plate block: airport, helipad, ATMs, hospital,
+          pharmacy. Data pre-fetched server-side by the CRM at
+          save-time; this just reads the JSONB. Renders nothing
+          if no nearby data, so cabins without berth coords (or
+          pre-Phase-2 cabins) see no change. */}
+      <BerthNearby nearby={cabin?.berth_nearby} />
 
       {/* 2026-05-22 — Step 02 (Charter Brief) folded into the
           PreVoyageSteps block above. */}
