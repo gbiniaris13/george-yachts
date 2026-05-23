@@ -30,6 +30,7 @@ import { useEffect, useMemo, useState } from "react";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
 import { firstNameFromDisplayName } from "@/lib/cabin/format";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
+import DateOfBirthPicker from "../../../components/cabin/DateOfBirthPicker";
 
 const SWIMS_OPTIONS = [
   { value: "confident", label: "Confident swimmer" },
@@ -322,12 +323,16 @@ export default function CabinMePage() {
 
           <label className="me-field">
             <span>Date of birth</span>
-            <input
-              type="date"
+            {/* 2026-05-23 — Olga friend-test: the native HTML
+                date picker forced her to click month-arrows back
+                year-by-year to reach 1991. Replaced with a
+                3-field Day / Month / Year control that lets her
+                type the year directly. Emits the same ISO date
+                string format the server expects. */}
+            <DateOfBirthPicker
               value={form.date_of_birth}
-              max={new Date().toISOString().slice(0, 10)}
-              onChange={(e) =>
-                setForm({ ...form, date_of_birth: e.target.value })
+              onChange={(iso) =>
+                setForm({ ...form, date_of_birth: iso })
               }
               required
             />

@@ -19,6 +19,7 @@
 import { useEffect, useState } from "react";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
+import DateOfBirthPicker from "../../../components/cabin/DateOfBirthPicker";
 // 2026-05-21 — Pass 7 prep: use shared en-GB date formatter so the
 // "signed in" / "invited" badges match /cabin/your-data and /cabin/me.
 // Bare `new Date().toLocaleDateString()` defaulted to the browser
@@ -116,11 +117,12 @@ function MinorAdder({ onAdded }) {
           </div>
           <label className="minor-adder__field">
             <span>Date of birth (for life-jacket sizing)</span>
-            <input
-              type="date"
+            {/* 2026-05-23 — Same DOB-picker upgrade as /cabin/me +
+                /cabin/welcome. Even for children, the native HTML
+                date picker is fiddly; typeable Year is friendlier. */}
+            <DateOfBirthPicker
               value={dob}
-              onChange={(e) => setDob(e.target.value)}
-              max={new Date().toISOString().slice(0, 10)}
+              onChange={(iso) => setDob(iso)}
             />
           </label>
           <label className="minor-adder__field">

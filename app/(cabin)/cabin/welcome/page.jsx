@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
+import DateOfBirthPicker from "../../../components/cabin/DateOfBirthPicker";
 
 function splitFullName(full) {
   if (!full) return { first: "", last: "" };
@@ -161,11 +162,10 @@ export default function WelcomePage() {
         <div className="wlc-row">
           <label className="wlc-field">
             <span>Date of birth</span>
-            <input
-              type="date"
+            {/* 2026-05-23 — Olga friend-test: typeable Year. */}
+            <DateOfBirthPicker
               value={dob}
-              onChange={(e) => setDob(e.target.value)}
-              max={new Date().toISOString().slice(0, 10)}
+              onChange={(iso) => setDob(iso)}
               required
             />
           </label>
@@ -214,10 +214,11 @@ export default function WelcomePage() {
             </label>
             <label className="wlc-field">
               <span>Anniversary date <em>optional</em></span>
-              <input
-                type="date"
+              {/* Same Olga fix — anniversary years also need
+                  typeable year entry. */}
+              <DateOfBirthPicker
                 value={anniversary}
-                onChange={(e) => setAnniversary(e.target.value)}
+                onChange={(iso) => setAnniversary(iso)}
               />
             </label>
           </div>
