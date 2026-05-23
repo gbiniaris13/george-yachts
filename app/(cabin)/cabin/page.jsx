@@ -533,7 +533,7 @@ export default async function CabinHomePage() {
             </p>
           ) : (
             <p>
-              You are a <strong>{TIERS[circle.tier].label}</strong> of the
+              You are a <strong>{TIERS[circle.tier]?.label ?? "Friend"}</strong> of the
               Circle{circle.joined_at ? `, since ${new Date(circle.joined_at).getFullYear()}` : ""}.
               {goal?.kind === "voyages" &&
                 goal.voyages_to_go > 0 &&

@@ -1042,6 +1042,58 @@ html:has([data-cabin-mode]) {
 
 
 /* ─────────────────────────────────────────────────────────────
+ * § 23b  iOS INPUT ZOOM FIX
+ *
+ * 2026-05-23 — Deep QA found: many cabin inputs/textareas at
+ * 14-15px. iOS Safari auto-zooms (175%) on focus when input
+ * font-size < 16px AND never zooms back — layout permanently
+ * broken. Force 16px minimum on every form control inside the
+ * cabin, on mobile only (desktop keeps the editorial sizing).
+ *
+ * Touched components in scope: brief-textarea, brief-input,
+ * me-field inputs, voyage-album caption, guests bulk-invite
+ * textarea, etc. Catches every current + future case.
+ * ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 760px) {
+  [data-cabin-mode] input[type="text"],
+  [data-cabin-mode] input[type="email"],
+  [data-cabin-mode] input[type="tel"],
+  [data-cabin-mode] input[type="number"],
+  [data-cabin-mode] input[type="search"],
+  [data-cabin-mode] input[type="url"],
+  [data-cabin-mode] input[type="password"],
+  [data-cabin-mode] input:not([type]),
+  [data-cabin-mode] textarea,
+  [data-cabin-mode] select {
+    font-size: 16px !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+ * § 23c  TOUCH-DEVICE VISIBILITY for hover-only controls
+ *
+ * 2026-05-23 — Deep QA found: voyage-album delete × button is
+ * `opacity: 0` until hover. No hover on touch devices → guest
+ * who uploads the wrong photo has no way to remove it.
+ *
+ * Generic rule: any cabin element classified as a delete /
+ * close / remove control that hides until hover must be ALWAYS
+ * visible on touch devices.
+ * ───────────────────────────────────────────────────────────── */
+
+@media (hover: none) and (pointer: coarse) {
+  [data-cabin-mode] [class*="__del"],
+  [data-cabin-mode] [class*="__delete"],
+  [data-cabin-mode] [class*="__remove"],
+  [data-cabin-mode] .va-card__del {
+    opacity: 0.85 !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
  * § 24  CENTERING DISCIPLINE — every centred block holds together
  *
  * 2026-05-23 — George: "Δεν είναι κεντραρισμένα τα γράμματα με

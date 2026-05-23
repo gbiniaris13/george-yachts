@@ -117,7 +117,7 @@ export default async function PreferenceSharePage({ params }) {
   const children = getSection(sections, "children");
 
   return (
-    <div style={{ background: IVORY, minHeight: "100vh" }}>
+    <div style={{ background: IVORY, minHeight: "100dvh" }}>
       <style>{`
         body { font-family: ${FONT_EDITORIAL}; color: ${NAVY}; background: ${IVORY}; }
         h1, h2, h3 { font-weight: 300; }
