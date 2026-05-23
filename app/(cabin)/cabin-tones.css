@@ -43,15 +43,35 @@
  *   3. Expand the selector list to every label / kicker we render
  *      (gwotd__eyebrow was missing — that's the Greek word block).
  */
-html body [data-cabin-mode] .cabin-home__eyebrow,
+/* 2026-05-23 — SYSTEMIC FIX. George (after the Nth one-off):
+ *   "Σαν μια εντολή Η οποία υπάρχει στο σύστημα Ότι δεν θα
+ *    χρησιμοποιείς αυτά τα γράμματα Θα χρησιμοποιείς αυτά."
+ *
+ * Every new component we ship picks up the gold-on-cream eyebrow
+ * because the default class pattern is `*__eyebrow`. We were
+ * playing whack-a-mole, adding each new class to the navy
+ * override list. This rule catches THEM ALL — current AND future
+ * — in a single wildcard:
+ *
+ *   - [class*="eyebrow"]  — any class with "eyebrow" in its name
+ *   - [class*="kicker"]   — same family (vs-hero__kicker etc.)
+ *
+ * Exclusions (where gold IS correct, by design):
+ *   • .cabin-vessel-hero__eyebrow — sits on a dark photo with
+ *     overlay; gold reads cleanly there. Hero context wins.
+ *
+ * If a NEW eyebrow ever needs to keep its gold (e.g. on a dark
+ * panel), add it to the :not() list below. Default is navy.
+ *
+ * The non-eyebrow tracked-label classes (subhead, section-name,
+ * legend, dt, etc.) stay listed explicitly — they don't share
+ * a substring we can wildcard against. */
+html body [data-cabin-mode] [class*="eyebrow"]:not(.cabin-vessel-hero__eyebrow),
+html body [data-cabin-mode] [class*="kicker"],
 html body [data-cabin-mode] .cabin-home__section-label,
-html body [data-cabin-mode] .cabin-brief__eyebrow,
 html body [data-cabin-mode] .brief-subhead,
 html body [data-cabin-mode] .brief-subhead-sm,
-html body [data-cabin-mode] .smp__eyebrow,
 html body [data-cabin-mode] .smp__section-name,
-html body [data-cabin-mode] .gy-install__eyebrow,
-html body [data-cabin-mode] .install-eyebrow,
 html body [data-cabin-mode] .guests-section,
 html body [data-cabin-mode] .wlc-field > span,
 html body [data-cabin-mode] .me-subhead,
@@ -61,72 +81,21 @@ html body [data-cabin-mode] .brief-label,
 html body [data-cabin-mode] .brief-matrix legend,
 html body [data-cabin-mode] .brief-freq legend,
 html body [data-cabin-mode] .brief-freq-row .brief-freq-item,
-html body [data-cabin-mode] .gwotd__eyebrow,
-html body [data-cabin-mode] .voyage-carousel__eyebrow,
-html body [data-cabin-mode] .smp__toggle .smp__eyebrow,
 html body [data-cabin-mode] .bys-label,
 html body [data-cabin-mode] .bys-region__head em,
 html body [data-cabin-mode] .yd-block h2,
 html body [data-cabin-mode] .filotimo__status-label,
 html body [data-cabin-mode] .guests-list__head em,
 html body [data-cabin-mode] .crew-card__role,
-html body [data-cabin-mode] .vs-hero__kicker,
-html body [data-cabin-mode] .install-card .install-eyebrow,
 html body [data-cabin-mode] .chat-card__role,
-/* 2026-05-22 — George flagged the new brochure block's eyebrow
-   ("SAILING CATAMARAN") and chapter labels ("Key features",
-   "Specifications", "Accommodation", "On board", etc.) as
-   gold-on-white, unreadable. Adding them to the existing tracked-
-   label navy override.
-   Also covers the standalone /cabin/vessel page (vs-block__label,
-   vs-specs dt) which uses the same pattern.
-   Deliberately EXCLUDED:
-   • cabin-vessel-hero__eyebrow — sits on a dark photo with
-     overlay, gold is correctly readable there.
-   • cabin-ghost-credit__link — the GHOST_ build credit is meant
-     to read as gold/amber tech-mark, branded by design. */
-html body [data-cabin-mode] .cabin-vessel-block__eyebrow,
 html body [data-cabin-mode] .cabin-vessel-block__chapter-label,
 html body [data-cabin-mode] .cabin-vessel-block__year,
 html body [data-cabin-mode] .cabin-vessel-block__specs dt,
 html body [data-cabin-mode] .vs-block__label,
 html body [data-cabin-mode] .vs-specs dt,
-html body [data-cabin-mode] .brief-section-title__eyebrow,
-html body [data-cabin-mode] .filotimo__eyebrow,
-html body [data-cabin-mode] .voyage-carousel__eyebrow,
 html body [data-cabin-mode] .bys-weather__label,
 html body [data-cabin-mode] .tc-sealed__label,
-/* 2026-05-23 — George re-flagged eyebrow/label contrast on the
-   Send-to-George review panel (CREW LIST STILL PENDING …) and a
-   handful of newer surfaces built this week. Adding them to the
-   master navy override so they win against any styled-jsx scope
-   or cream-tinted parent background.
-   • cbr-submit__pending-eyebrow — pending crew-list panel
-   • cbr-submit__ready-eyebrow   — "Everyone's in" green panel
-   • cbr-modal__eyebrow          — "One last look" modal
-   • cabin-brief-review__eyebrow + sub-eyebrows  — review header
-   • cabin-pre-voyage__eyebrow  — "Before you sail" intro
-   • me-crewlist__eyebrow        — /cabin/me Crew List required
-   • member-details__eyebrow     — principal's guest details panel
-   • cabin-login__eyebrow        — login page
-*/
-html body [data-cabin-mode] .cbr-submit__pending-eyebrow,
-html body [data-cabin-mode] .cbr-submit__ready-eyebrow,
-html body [data-cabin-mode] .cbr-modal__eyebrow,
-html body [data-cabin-mode] .cabin-brief-review__eyebrow,
-html body [data-cabin-mode] .cabin-brief-review__group-eyebrow,
-html body [data-cabin-mode] .cabin-brief-review__locked-eyebrow,
-html body [data-cabin-mode] .cabin-pre-voyage__eyebrow,
-html body [data-cabin-mode] .me-crewlist__eyebrow,
-html body [data-cabin-mode] .member-details__eyebrow,
-html body [data-cabin-mode] .cabin-login__eyebrow,
-/* 2026-05-23 — /cabin/menu used its own .mn-section__* classes
-   (separate from .smp__*) and was rendering with gold-on-cream
-   section names. Same navy override pattern. */
-html body [data-cabin-mode] .mn-section__name,
-/* 2026-05-23 — Berth Map block (Phase 1) — eyebrow + the marina
-   label both fell into the gold-on-white wash on Effie Star. */
-html body [data-cabin-mode] .berth-map__eyebrow {
+html body [data-cabin-mode] .mn-section__name {
   color: #1f2937 !important;
   font-weight: 600 !important;
 }
@@ -222,13 +191,11 @@ html body [data-cabin-mode] .cbr-submit__cta:disabled {
 
 /* Bump tracked-label readability across the board: 10px is too
    small at the brand letter-spacing. 11px buys real legibility
-   without breaking the calm rhythm. */
-[data-cabin-mode] .cabin-home__eyebrow,
+   without breaking the calm rhythm. Same wildcard family as
+   the navy override above so future eyebrows inherit the size. */
+[data-cabin-mode] [class*="eyebrow"]:not(.cabin-vessel-hero__eyebrow),
+[data-cabin-mode] [class*="kicker"],
 [data-cabin-mode] .cabin-home__section-label,
-[data-cabin-mode] .cabin-brief__eyebrow,
-[data-cabin-mode] .smp__eyebrow,
-[data-cabin-mode] .gy-install__eyebrow,
-[data-cabin-mode] .install-eyebrow,
 [data-cabin-mode] .guests-section {
   font-size: 11px !important;
   letter-spacing: 2.5px !important;
