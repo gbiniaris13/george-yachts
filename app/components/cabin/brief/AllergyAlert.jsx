@@ -157,17 +157,26 @@ export default function AllergyAlert({ source = "health" }) {
                 </span>
                 {sectionAllergies && (
                   <p>
-                    <strong>Allergies / dietary:</strong> {sectionAllergies}
+                    <span className="cabin-allergy-alert__label">
+                      Allergies / dietary
+                    </span>{" "}
+                    — {sectionAllergies}
                   </p>
                 )}
                 {sectionConditions && (
                   <p>
-                    <strong>Medical conditions:</strong> {sectionConditions}
+                    <span className="cabin-allergy-alert__label">
+                      Medical conditions
+                    </span>{" "}
+                    — {sectionConditions}
                   </p>
                 )}
                 {sectionMeds && (
                   <p>
-                    <strong>Medications on board:</strong> {sectionMeds}
+                    <span className="cabin-allergy-alert__label">
+                      Medications on board
+                    </span>{" "}
+                    — {sectionMeds}
                   </p>
                 )}
               </div>
@@ -183,7 +192,8 @@ export default function AllergyAlert({ source = "health" }) {
                   const both = [m.allergies, dietary].filter(Boolean).join(" · ");
                   return (
                     <p key={m.memberId}>
-                      <strong>{m.name}:</strong> {both}
+                      <em className="cabin-allergy-alert__name">{m.name}</em>{" "}
+                      — {both}
                     </p>
                   );
                 })}
@@ -277,14 +287,21 @@ export default function AllergyAlert({ source = "health" }) {
         <p className="cabin-allergy-alert__empty">{emptyCopy}</p>
       )}
 
-      <style jsx>{styles}</style>
+      <style jsx global>{styles}</style>
     </aside>
   );
 }
 
-// Single source of truth — both render paths (health/self and
-// aggregate) mount this string into <style jsx>. Adding new
-// classes here is the only place we maintain styles.
+// 2026-05-24 — Was `<style jsx>{styles}</style>` (scoped). When
+// styled-jsx receives a template literal stored in a module
+// const (not inline at the JSX site), the class-scoping pass
+// can't rewrite the rules to match the auto-generated jsx-XXX
+// class names. The card lost its background, border and
+// padding — George saw it as plain unstyled text. Switching
+// to `<style jsx global>` makes the rules unscoped — they
+// match the literal class names I use (.cabin-allergy-alert*)
+// without any auto-rewriting. Safe: AllergyAlert is the only
+// component using these class names anywhere in the codebase.
 const styles = `
   .cabin-allergy-alert {
     margin: 0 0 28px 0;
@@ -305,11 +322,11 @@ const styles = `
   }
   .cabin-allergy-alert__chip {
     font-family: var(--gy-font-ui);
-    font-size: 11px;
-    letter-spacing: 2.5px;
+    font-size: 10.5px;
+    letter-spacing: 2.6px;
     text-transform: uppercase;
-    color: var(--gy-navy);
-    font-weight: 600;
+    color: var(--gy-gold);
+    font-weight: 500;
   }
   .cabin-allergy-alert__edit {
     font-family: var(--gy-font-ui);
@@ -336,26 +353,43 @@ const styles = `
   }
   .cabin-allergy-alert__section-eyebrow {
     display: block;
-    font-family: var(--gy-font-ui);
-    font-size: 10px;
-    letter-spacing: 2.2px;
-    text-transform: uppercase;
-    color: var(--gy-gold);
-    font-weight: 600;
-    margin-bottom: 6px;
+    font-family: var(--gy-font-editorial, Georgia, serif);
+    font-style: italic;
+    font-size: 12.5px;
+    letter-spacing: 0.2px;
+    text-transform: none;
+    color: rgba(13, 27, 42, 0.55);
+    font-weight: 400;
+    margin-bottom: 8px;
   }
   .cabin-allergy-alert__body p,
   .cabin-allergy-alert__section p {
-    font-family: var(--gy-font-body);
+    font-family: var(--gy-font-editorial, Georgia, serif);
     font-size: 14.5px;
     color: var(--gy-navy);
-    line-height: 1.55;
-    margin: 4px 0;
+    line-height: 1.65;
+    margin: 5px 0;
+    font-weight: 400;
   }
-  .cabin-allergy-alert__body strong,
-  .cabin-allergy-alert__section strong {
-    font-weight: 600;
+  /* 2026-05-24 — Replaced heavy <strong> labels with quieter
+     small-caps spans + em-dash separators. Per George: heavy
+     bold reads as out of style. The label name now carries
+     weight via tracking + small caps, not stroke weight. */
+  .cabin-allergy-alert__label {
+    font-family: var(--gy-font-ui);
+    font-size: 11px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: rgba(13, 27, 42, 0.75);
+    font-weight: 500;
+  }
+  .cabin-allergy-alert__name {
+    font-family: var(--gy-font-editorial, Georgia, serif);
+    font-style: italic;
+    font-size: 15.5px;
     color: var(--gy-navy);
+    font-weight: 400;
+    letter-spacing: 0.1px;
   }
   .cabin-allergy-alert__footer {
     margin-top: 10px !important;
