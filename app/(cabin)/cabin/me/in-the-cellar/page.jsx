@@ -14,6 +14,7 @@ import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
 import BeveragesFields from "../../../../components/cabin/brief/BeveragesFields";
+import GroupVoicesPanel from "../../../../components/cabin/brief/GroupVoicesPanel";
 
 export default function InTheCellarContributionPage() {
   return (
@@ -29,6 +30,8 @@ export default function InTheCellarContributionPage() {
         rest of the group&apos;s when they review the brief with George.
         No quantities, no spreadsheets — just what you actually drink.
       </IntroParagraph>
+
+      <GroupVoicesPanel sectionKey="beverages" />
 
       <BriefFormShell
         sectionKey="beverages"

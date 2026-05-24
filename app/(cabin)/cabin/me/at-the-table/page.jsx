@@ -30,6 +30,7 @@ import AllergyAlert from "../../../../components/cabin/brief/AllergyAlert";
 import SampleMenuPreview from "../../../../components/cabin/brief/SampleMenuPreview";
 import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
 import DiningFields from "../../../../components/cabin/brief/DiningFields";
+import GroupVoicesPanel from "../../../../components/cabin/brief/GroupVoicesPanel";
 
 export default function AtTheTableContributionPage() {
   // Same hasMinors fetch as the principal route — the children
@@ -76,6 +77,7 @@ export default function AtTheTableContributionPage() {
           safety hazard George caught on the friend test. */}
       <AllergyAlert source="self" />
       <SampleMenuPreview />
+      <GroupVoicesPanel sectionKey="dining" />
 
       <BriefFormShell
         sectionKey="dining"

@@ -35,6 +35,7 @@ import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
 import BeveragesFields from "../../../../components/cabin/brief/BeveragesFields";
+import GroupVoicesPanel from "../../../../components/cabin/brief/GroupVoicesPanel";
 
 export default function BeveragesSectionPage() {
   return (
@@ -50,6 +51,11 @@ export default function BeveragesSectionPage() {
         labels that matter to you. The hostess buys the rest. No quantities
         to count, ever.
       </IntroParagraph>
+
+      {/* 2026-05-23 — Multi-user Brief (Phase 3, MUB-A): live group
+          voices panel. Principal sees guest cellar contributions
+          before settling their own beverages picks. */}
+      <GroupVoicesPanel sectionKey="beverages" />
 
       <BriefFormShell
         sectionKey="beverages"

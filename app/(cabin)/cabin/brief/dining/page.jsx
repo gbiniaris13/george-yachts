@@ -23,6 +23,7 @@ import AllergyAlert from "../../../../components/cabin/brief/AllergyAlert";
 import SampleMenuPreview from "../../../../components/cabin/brief/SampleMenuPreview";
 import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
 import DiningFields from "../../../../components/cabin/brief/DiningFields";
+import GroupVoicesPanel from "../../../../components/cabin/brief/GroupVoicesPanel";
 
 export default function DiningSectionPage() {
   // 2026-05-21 — Pass 7 prep (Domingo): the Children block below
@@ -73,6 +74,11 @@ export default function DiningSectionPage() {
           uploaded in GY Command shows BEFORE the preference ticks so
           the charterer isn't filling in a vacuum. */}
       <SampleMenuPreview />
+
+      {/* 2026-05-23 — Multi-user Brief (Phase 3, MUB-A): live group
+          voices panel. Principal sees what guests have already
+          contributed before filling/adjusting their own brief. */}
+      <GroupVoicesPanel sectionKey="dining" />
 
       <BriefFormShell
         sectionKey="dining"
