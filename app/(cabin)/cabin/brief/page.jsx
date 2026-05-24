@@ -146,6 +146,30 @@ export default async function CabinBriefOverviewPage() {
     sections?.filter((s) => s.completed).map((s) => s.section_key)
   );
 
+  // 2026-05-24 — Angeliki pass: Life Aboard now writes per-member
+  // (cabin_members.personal_details.life_aboard_brief) instead of
+  // the shared cabin_brief_sections row. Stitch its completion
+  // signal in here so the overview's progress UI still works:
+  // "complete" if at least one member has filled in anything.
+  const memberLifeAboard = await dbQuery(
+    db
+      .from("cabin_members")
+      .select("personal_details")
+      .eq("cabin_id", cabinId),
+  );
+  const lifeAboardHasAny = (memberLifeAboard ?? []).some((m) => {
+    const lab = m?.personal_details?.life_aboard_brief;
+    if (!lab || typeof lab !== "object") return false;
+    return Object.values(lab).some((v) => {
+      if (v == null) return false;
+      if (typeof v === "string") return v.trim().length > 0;
+      if (Array.isArray(v)) return v.length > 0;
+      if (typeof v === "object") return Object.keys(v).length > 0;
+      return true;
+    });
+  });
+  if (lifeAboardHasAny) completedKeys.add("life_aboard");
+
   // 2026-05-22 — Build "Last edited by [Name]" lookup. Pulls
   // display_name for every member referenced by any section's
   // last_edited_by_member_id, plus the submission member id.

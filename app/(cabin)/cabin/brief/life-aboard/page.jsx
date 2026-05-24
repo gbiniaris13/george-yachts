@@ -1,5 +1,17 @@
 "use client";
 
+// 2026-05-24 — Angeliki pass (item 3): Life Aboard is now per-member.
+// Storage moved to cabin_members.personal_details.life_aboard_brief
+// via /api/cabin/me/life-aboard. Each member sees ONLY their own
+// answers — empty form on first open, their own filled-in answers
+// on return. The principal (and George) see the full per-member
+// aggregate on the review page.
+//
+// Mechanism: same BriefFormShell as the shared sections, just
+// pointed at a different endpoint via endpointBase. backHref +
+// hideSubmit keep the navigation honest — no shared "Next" button
+// because the answer set is intentionally member-local.
+
 import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 import {
@@ -17,6 +29,23 @@ export default function LifeAboardSectionPage() {
         title="Your days"
         italic="at sea."
       />
+      {/* 2026-05-24 — Angeliki pass: privacy banner. Each member
+          fills this section privately — no-one else aboard sees
+          another member's answers. George + the crew see the
+          per-member roll-up before embarkation. */}
+      <aside className="la-private" role="note">
+        <span className="la-private__chip">Private to you</span>
+        <p className="la-private__copy">
+          <em>
+            This section is per person — no-one else in your group
+            sees what you write here. Tell us how YOU&apos;d like the
+            crew around you, the activities YOU love. The captain
+            and chef see every member&apos;s answers when George
+            briefs the boat — that&apos;s how the week feels right
+            for everyone, not just whoever organised it.
+          </em>
+        </p>
+      </aside>
       {/* 2026-05-24 — Christos pass: intro rewritten to a single
           calm question about crew presence. The "tell us your
           tempo" preamble was abstract and overlapped with the
@@ -29,7 +58,8 @@ export default function LifeAboardSectionPage() {
       </IntroParagraph>
 
       <BriefFormShell
-        sectionKey="life_aboard"
+        sectionKey="life-aboard"
+        endpointBase="/api/cabin/me"
         prevSection={{ key: "itinerary", title: "Itinerary" }}
         nextSection={{ key: "dining", title: "At the Table" }}
       >
@@ -137,6 +167,37 @@ export default function LifeAboardSectionPage() {
         /* 2026-05-20 — .la-extras-note styles removed alongside the
            "Most of these are included… management company" disclaimer
            it used to apply to. */
+        /* 2026-05-24 — Angeliki pass: per-member privacy banner. */
+        .la-private {
+          margin: 0 0 22px 0;
+          padding: 14px 18px;
+          background: #FCFAF4;
+          border: 1px solid rgba(201, 168, 76, 0.32);
+          border-left: 3px solid var(--gy-gold);
+          border-radius: 3px;
+          display: flex;
+          align-items: baseline;
+          gap: 14px;
+          flex-wrap: wrap;
+        }
+        .la-private__chip {
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 2.4px;
+          text-transform: uppercase;
+          color: var(--gy-gold);
+          font-weight: 600;
+          flex-shrink: 0;
+        }
+        .la-private__copy {
+          margin: 0;
+          flex: 1;
+          min-width: 0;
+          font-family: var(--gy-font-editorial);
+          font-size: 13.5px;
+          color: var(--gy-navy);
+          line-height: 1.6;
+        }
       `}</style>
     </article>
   );
