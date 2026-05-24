@@ -531,17 +531,23 @@ export function LikeDislikeMatrix({ name, label, hint, items, register }) {
         {items.map((it) => (
           <div key={it.value} className="brief-matrix-row">
             {/* 2026-05-22 — George re-reported the labels as invisible
-                on Effie Star (Fish/Shellfish/Beef/Pork etc.). Despite
-                the navy-on-ivory CSS rule in cabin-tones, the first
-                column read empty in his screenshot. Belt-and-braces:
-                inline style with explicit RGB so no theme override
-                or scoped-CSS quirk can hide them again. */}
+                on Effie Star.
+                2026-05-23 — Reported again on desktop Chrome: faint
+                gold rendering instead of bold navy. Root: General Sans
+                weight 700 wasn't loaded by the fontshare URL, so the
+                browser synthesised a thin fake-bold. layout.jsx now
+                loads 700, AND the inline style here pins a system
+                fallback so even on a cold-cache load the bold glyph
+                is real, not synthesised. */}
             <span
               className="brief-matrix-label"
               style={{
                 color: "#0D1B2A",
                 fontWeight: 700,
                 fontSize: "16px",
+                fontFamily:
+                  '"Inter", "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "General Sans", sans-serif',
+                textShadow: "0 0 0.4px #0D1B2A",
               }}
             >
               {it.label}

@@ -216,15 +216,39 @@ html body [data-cabin-mode] .cbr-submit__cta:disabled {
   letter-spacing: 2.4px !important;
 }
 
-/* Food matrix row labels — George flagged Fish/Beef/Pork as
-   "δεν φαίνονται" repeatedly. Push to weight 700 and force pure
-   navy. Mobile fallback bumps from 13→15px. */
+/* 2026-05-23 — Bulletproof matrix-label rendering after George's
+   desktop Chrome screenshot showed Fish/Beef/etc. as faint
+   illegible gold-on-white instead of bold navy.
+   ROOT CAUSE: app/layout.jsx loaded General Sans with weights
+   200-600 only — NO 700. CSS asked for weight 700, browser
+   synthesised a fake bold from weight 600 which renders pale
+   and thin on macOS Chrome (looks gold because of subpixel
+   anti-aliasing on a near-white grid).
+   FIX layered defence-in-depth:
+     1. layout.jsx now loads General Sans 700 too (real bold glyph).
+     2. Matrix label uses Inter/system-ui as the FIRST family in
+        the fallback chain so even if Fontshare 500's or is slow,
+        the label renders in a guaranteed-bold system font instead
+        of falling back to a synthesised one.
+     3. Force pure-navy with maximum priority + minimum-font-weight
+        of 700 (when real glyph exists, browser uses it; otherwise
+        system bold).
+   Mobile fallback bumps from 13→15px. */
 [data-cabin-mode] .brief-matrix-label {
+  font-family: "Inter", "Helvetica Neue", -apple-system,
+               BlinkMacSystemFont, "Segoe UI", Roboto,
+               "General Sans", sans-serif !important;
   color: #0D1B2A !important;
   font-weight: 700 !important;
   font-size: 16px !important;
+  letter-spacing: 0.1px !important;
+  /* Tiny stroke-style boost: a sub-pixel text-shadow in the same
+     navy adds visual weight without colour shift on retina + non-
+     retina. Cheap, safe, makes 700 read as 700 even when the
+     loaded glyph is borderline. */
+  text-shadow: 0 0 0.4px currentColor !important;
 }
-@media (max-width: 560px) {
+@media (max-width: 599.98px) {
   [data-cabin-mode] .brief-matrix-label {
     font-size: 15px !important;
     padding: 12px 12px !important;

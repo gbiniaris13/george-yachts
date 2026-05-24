@@ -316,7 +316,7 @@ export default async function RootLayout({ children }) {
             ships the italic fix. */}
         <link
           rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f[]=sentient@400,500&f[]=general-sans@200,300,400,500,600&f[]=switzer@200,300,400,500,600,700&display=swap"
+          href="https://api.fontshare.com/v2/css?f[]=sentient@400,500&f[]=general-sans@200,300,400,500,600,700&f[]=switzer@200,300,400,500,600,700&display=swap"
         />
 
         {/* theme-color + apple-mobile-web-app-* now emitted by Next's
