@@ -45,7 +45,17 @@ function isPreviewMode() {
     .some((c) => c.trim().startsWith("gy_cabin_preview="));
 }
 
-export default function useBriefAutosave(sectionKey) {
+// 2026-05-23 — Multi-user Brief (Phase 3). endpointBase added so
+// the same autosave engine drives BOTH:
+//   • Principal brief sections   → /api/cabin/brief/:section
+//     (writes to cabin_brief_sections, per-cabin canonical row)
+//   • Guest contribution pages   → /api/cabin/me/contribution/:section
+//     (writes to cabin_brief_contributions, per-member row)
+// The hook itself is endpoint-agnostic; the caller picks which.
+export default function useBriefAutosave(
+  sectionKey,
+  endpointBase = "/api/cabin/brief",
+) {
   const [initialData, setInitialData] = useState(null);
   const [state, setState] = useState("loading");
   const seqRef = useRef(0);
@@ -64,7 +74,7 @@ export default function useBriefAutosave(sectionKey) {
     (async () => {
       try {
         const r = await fetch(
-          `/api/cabin/brief/${sectionKey}`,
+          `${endpointBase}/${sectionKey}`,
           { credentials: "same-origin" }
         );
         if (!r.ok) throw new Error("load-failed");
@@ -139,7 +149,7 @@ export default function useBriefAutosave(sectionKey) {
     abortRef.current = ctrl;
 
     async function attempt() {
-      const r = await fetch(`/api/cabin/brief/${sectionKey}`, {
+      const r = await fetch(`${endpointBase}/${sectionKey}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "same-origin",

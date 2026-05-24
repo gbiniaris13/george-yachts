@@ -1,22 +1,29 @@
 "use client";
 
-// /cabin/brief/dining — At the Table (principal-owned section).
+// /cabin/me/at-the-table — Guest's personal "At the Table"
+// contribution.
 //
-// 2026-05-23 — Multi-user Brief (Phase 3): the field bodies moved
-// out to <DiningFields /> so the SAME field set powers both the
-// principal route here AND the guest-contribution route at
-// /cabin/me/at-the-table. No fields changed; this file is now a
-// thin wrapper.
+// 2026-05-23 — Multi-user Brief (Phase 3, George friend-test 4).
 //
-// Industry-grade preference capture: per-item Like/Dislike/Indifferent
-// matrix for proteins + sides, granular breakfast checklist with
-// "kind of cereal / cheese / jam" specifics, coffee/tea matrix,
-// service preferences per meal (light/cold/hot/family style),
-// dessert/snacks/afternoon-tea sections, kids' meal arrangement
-// with baby cot + high chair + baby food specifics. This is what
-// the chef and provisioning team print and shop from.
+// Mounts the SAME <DiningFields /> form the principal sees on
+// /cabin/brief/dining, but routes save traffic to
+// /api/cabin/me/contribution/dining (cabin_brief_contributions
+// per-member row) instead of the per-cabin canonical brief.
+//
+// Why: George wants guests to share their menu/food preferences
+// alongside the principal's, so the principal can see "Vasilis
+// likes lamb + Greek meze, Eleanna prefers Mediterranean light"
+// at review time and the chef arrives with the full picture.
+//
+// Same fields, same validation, same autosave UX as the principal
+// brief — the only differences are:
+//   1. Endpoint base → /api/cabin/me/contribution
+//   2. Header: "Your contribution" eyebrow, no section number
+//   3. Nav: back to /cabin/me (no Submit, that's the principal's)
+//   4. Page intro: explains the personal-contribution context
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 import AllergyAlert from "../../../../components/cabin/brief/AllergyAlert";
@@ -24,14 +31,11 @@ import SampleMenuPreview from "../../../../components/cabin/brief/SampleMenuPrev
 import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
 import DiningFields from "../../../../components/cabin/brief/DiningFields";
 
-export default function DiningSectionPage() {
-  // 2026-05-21 — Pass 7 prep (Domingo): the Children block below
-  // was rendered unconditionally. It's now gated on a server signal
-  // sourced from cabin_guests_manifest. Sailing with no minors →
-  // no kids subheading, no cot/high-chair toggles, no baby-food
-  // prompt. With minors → the block surfaces with a soft intro so
-  // it doesn't appear out of nowhere.
-  const [hasMinors, setHasMinors] = useState(null); // null = unknown
+export default function AtTheTableContributionPage() {
+  // Same hasMinors fetch as the principal route — the children
+  // block is a fixed slice of the form and respects the manifest
+  // either way.
+  const [hasMinors, setHasMinors] = useState(null);
   useEffect(() => {
     let cancelled = false;
     fetch("/api/cabin/has-minors")
@@ -52,35 +56,34 @@ export default function DiningSectionPage() {
   return (
     <article>
       <SectionTitle
-        kicker="Section Six · At the Table"
+        kicker="Your contribution · At the Table"
         title="At the"
         italic="table."
       />
       <IntroParagraph>
-        Your chef builds every menu from scratch — there is no fixed list of
-        dishes. The more you share, the more thoughtfully your meals can be
-        designed. Don&apos;t worry about being too specific. We would rather know
-        too much than too little.
+        Your host has invited everyone in the group to share their own
+        food preferences. The principal charterer will see your answers
+        alongside the rest of the group&apos;s when they review the brief
+        with George. Every field is optional — leave what doesn&apos;t
+        apply.
       </IntroParagraph>
 
-      {/* 2026-05-20 — Da$k friend-test asked for an allergy banner
-          on every food-related page, prominently. AllergyAlert mounts
-          at top of dining, beverages, and children sections so the
-          context follows wherever a chef/hostess will be reading. */}
       <AllergyAlert />
-
-      {/* 2026-05-20 — Friend-test pass 3 (George): the sample menu
-          uploaded in GY Command shows BEFORE the preference ticks so
-          the charterer isn't filling in a vacuum. */}
       <SampleMenuPreview />
 
       <BriefFormShell
         sectionKey="dining"
-        prevSection={{ key: "life_aboard", title: "Life Aboard" }}
-        nextSection={{ key: "beverages", title: "In the Cellar" }}
+        endpointBase="/api/cabin/me/contribution"
+        backHref="/cabin/me"
+        backLabel="Back to your details"
+        hideSubmit
       >
         {({ register }) => <DiningFields register={register} hasMinors={hasMinors} />}
       </BriefFormShell>
+
+      <p className="contribution-footnote">
+        Next: <Link href="/cabin/me/in-the-cellar">In the Cellar →</Link>
+      </p>
 
       <style jsx>{`
         .brief-subhead {
@@ -101,19 +104,11 @@ export default function DiningSectionPage() {
           margin: 18px 0 10px 0;
           font-weight: 500;
         }
-        .brief-grid-3 {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 0;
-        }
+        .brief-grid-3 { display: grid; grid-template-columns: 1fr; gap: 0; }
         @media (min-width: 560px) {
           .brief-grid-3 { grid-template-columns: 1fr 1fr 1fr; gap: 0 24px; }
         }
-        .brief-grid-2 {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 0;
-        }
+        .brief-grid-2 { display: grid; grid-template-columns: 1fr; gap: 0; }
         @media (min-width: 560px) {
           .brief-grid-2 { grid-template-columns: 1fr 1fr; gap: 0 24px; }
         }
@@ -134,6 +129,25 @@ export default function DiningSectionPage() {
           cursor: pointer;
         }
         .brief-toggle input { width: 18px; height: 18px; accent-color: var(--gy-gold); }
+        .contribution-footnote {
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 13px;
+          color: rgba(13, 27, 42, 0.65);
+          margin: 28px 0 0 0;
+          text-align: center;
+        }
+        .contribution-footnote a {
+          color: var(--gy-navy);
+          text-decoration: none;
+          background-image: linear-gradient(
+            to right, var(--gy-gold), var(--gy-gold)
+          );
+          background-size: 100% 1px;
+          background-position: 0 100%;
+          background-repeat: no-repeat;
+          padding-bottom: 1px;
+        }
       `}</style>
     </article>
   );

@@ -30,6 +30,7 @@ import {
 } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import ReviewSubmit from "./ReviewSubmit";
+import { summariseContribution } from "@/lib/cabin/contributions";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Review your brief · The Cabin" };
@@ -102,10 +103,32 @@ export default async function BriefReviewPage() {
       .eq("cabin_id", cabinId),
   );
 
+  // 2026-05-23 — Multi-user Brief (Phase 3): pull every group
+  // contribution so the principal sees each guest's own picks
+  // for dining + beverages inline below the corresponding
+  // section row. Per Vasilis-on-iPhone-13-Pro-Max friend test —
+  // George needs the full group consensus before signing off.
+  const contributions = await dbQuery(
+    db
+      .from("cabin_brief_contributions")
+      .select("section_key, member_id, data, updated_at")
+      .eq("cabin_id", cabinId),
+  );
+  // Add contribution member ids to the name-lookup set so the
+  // single cabin_members select below pulls them in one query.
+  for (const c of contributions ?? []) {
+    if (c.member_id) {
+      // Defer until after `ids` is declared (next block).
+    }
+  }
+
   // Pull display names for any member referenced
   const ids = new Set();
   for (const s of sections ?? []) {
     if (s.last_edited_by_member_id) ids.add(s.last_edited_by_member_id);
+  }
+  for (const c of contributions ?? []) {
+    if (c.member_id) ids.add(c.member_id);
   }
   if (cabin.brief_submitted_by_member_id) {
     ids.add(cabin.brief_submitted_by_member_id);
@@ -126,6 +149,21 @@ export default async function BriefReviewPage() {
   const sectionsByKey = Object.fromEntries(
     (sections ?? []).map((s) => [s.section_key, s]),
   );
+
+  // Bucket contributions: section_key → array of { name, data, updated_at }
+  const contributionsBySection = {};
+  for (const c of contributions ?? []) {
+    if (!contributionsBySection[c.section_key]) {
+      contributionsBySection[c.section_key] = [];
+    }
+    contributionsBySection[c.section_key].push({
+      memberId: c.member_id,
+      name:
+        (c.member_id && nameById[c.member_id]) || "(member)",
+      data: c.data ?? {},
+      updatedAt: c.updated_at,
+    });
+  }
 
   // 2026-05-22 — Brief admins (delegated) + opted-out guests + the
   // readiness check on the Send-to-George modal. The principal sees:
@@ -264,6 +302,7 @@ export default async function BriefReviewPage() {
                 month: "short",
               })
             : "";
+          const groupContribs = contributionsBySection[s.key] || [];
           return (
             <li key={s.key} className="cabin-brief-review__item">
               <div className="cabin-brief-review__item-num">
@@ -290,6 +329,51 @@ export default async function BriefReviewPage() {
                     </span>
                   )}
                 </div>
+
+                {/* 2026-05-23 — Multi-user Brief (Phase 3).
+                    For dining + beverages sections, show every
+                    guest contribution as its own card below the
+                    principal's section row. Principal scans the
+                    group's voices at a glance before pressing
+                    Send to George. */}
+                {groupContribs.length > 0 && (
+                  <div className="cabin-brief-review__group-voices">
+                    <div className="cabin-brief-review__group-voices-eyebrow">
+                      Voices from your group ({groupContribs.length})
+                    </div>
+                    {groupContribs.map((c) => {
+                      const highlights = summariseContribution(s.key, c.data);
+                      return (
+                        <details
+                          key={c.memberId}
+                          className="cabin-brief-review__voice"
+                        >
+                          <summary>
+                            <strong>{c.name}</strong>
+                            {highlights.length > 0 && (
+                              <span className="cabin-brief-review__voice-glance">
+                                {" — "}
+                                {highlights.slice(0, 2).join(" · ")}
+                              </span>
+                            )}
+                            {highlights.length === 0 && (
+                              <span className="cabin-brief-review__voice-glance cabin-brief-review__voice-empty">
+                                {" — opened but hasn't picked anything yet"}
+                              </span>
+                            )}
+                          </summary>
+                          {highlights.length > 0 && (
+                            <ul className="cabin-brief-review__voice-list">
+                              {highlights.map((line, idx) => (
+                                <li key={idx}>{line}</li>
+                              ))}
+                            </ul>
+                          )}
+                        </details>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
               {!isSubmitted && (
                 <Link
@@ -480,6 +564,82 @@ export default async function BriefReviewPage() {
         .cabin-brief-review__item-edit:hover {
           background: var(--gy-navy);
           color: var(--gy-ivory);
+        }
+
+        /* 2026-05-23 — Multi-user Brief (Phase 3) — group voices. */
+        .cabin-brief-review__group-voices {
+          margin-top: 14px;
+          padding-top: 12px;
+          border-top: 1px dashed rgba(13, 27, 42, 0.1);
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+        .cabin-brief-review__group-voices-eyebrow {
+          font-family: var(--gy-font-ui);
+          font-size: 10px;
+          letter-spacing: 2.4px;
+          text-transform: uppercase;
+          color: var(--gy-gold);
+          font-weight: 600;
+          margin-bottom: 4px;
+        }
+        .cabin-brief-review__voice {
+          background: #FCFAF4;
+          border: 1px solid rgba(201, 168, 76, 0.22);
+          border-radius: 3px;
+          padding: 0;
+        }
+        .cabin-brief-review__voice > summary {
+          cursor: pointer;
+          list-style: none;
+          padding: 10px 14px;
+          font-family: var(--gy-font-editorial);
+          font-size: 13.5px;
+          color: var(--gy-navy);
+          line-height: 1.45;
+        }
+        .cabin-brief-review__voice > summary::before {
+          content: "+ ";
+          color: var(--gy-gold);
+          font-weight: 600;
+        }
+        .cabin-brief-review__voice[open] > summary::before { content: "− "; }
+        .cabin-brief-review__voice > summary strong {
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          color: var(--gy-navy);
+          font-weight: 600;
+        }
+        .cabin-brief-review__voice-glance {
+          font-style: italic;
+          color: rgba(13, 27, 42, 0.6);
+        }
+        .cabin-brief-review__voice-empty {
+          color: rgba(13, 27, 42, 0.4);
+        }
+        .cabin-brief-review__voice-list {
+          list-style: none;
+          margin: 0;
+          padding: 0 14px 14px 28px;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          font-family: var(--gy-font-editorial);
+          font-size: 13px;
+          color: rgba(13, 27, 42, 0.78);
+          line-height: 1.55;
+        }
+        .cabin-brief-review__voice-list li {
+          position: relative;
+        }
+        .cabin-brief-review__voice-list li::before {
+          content: "·";
+          position: absolute;
+          left: -12px;
+          color: var(--gy-gold);
         }
       `}</style>
     </article>

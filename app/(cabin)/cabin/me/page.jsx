@@ -534,56 +534,109 @@ export default function CabinMePage() {
         </label>
 
         {member?.role && member.role !== "principal_charterer" && (
-          <div className="me-optout">
-            <h2 className="me-subhead">Group orders & cellar</h2>
-            <p className="me-optout__intro">
+          <div className="me-contribute">
+            {/* 2026-05-23 — Multi-user Brief (Phase 3, George friend
+                test 4 with Vasilis on iPhone 13 Pro Max):
+                "Δεν γίνεται μόνο ο main charterer να επιλέγει την καύα.
+                 Όλοι θέλουμε να έχουν πρόσβαση." Two contribution
+                cards offer guests their own pass through At the Table
+                + In the Cellar. Their answers land in
+                cabin_brief_contributions per-member and surface for
+                the principal at /cabin/brief/review. The opt-out
+                button below is the alternative for guests who'd
+                rather defer entirely. */}
+            <h2 className="me-subhead">Add your preferences</h2>
+            <p className="me-contribute__intro">
               <em>
-                Allergies, dietary notes, swimming and passport details
-                above stay with you — they keep the chef and captain
-                safe. But for the broader brief (orders, cellar
-                selections, menu themes) you can hand the wheel to the
-                rest of your party.
+                Your host invited the whole group to share their own
+                menu and cellar tastes. Your picks land alongside
+                everyone else&apos;s — the principal charterer reviews
+                them all before George sees the final brief.
+                {member?.brief_opt_out_at
+                  ? " (You've opted out; toggle below to opt back in.)"
+                  : ""}
               </em>
             </p>
-            {member?.brief_opt_out_at ? (
-              <>
-                <div className="me-optout__badge">
-                  You&apos;ve opted out — the group decides on orders &
-                  cellar.
-                </div>
-                <button
-                  type="button"
-                  className="me-optout__back"
-                  onClick={() => onSetOptOut(false)}
-                  disabled={optOutBusy}
+
+            {!member?.brief_opt_out_at && (
+              <div className="me-contribute__cards">
+                <Link
+                  href="/cabin/me/at-the-table"
+                  className="me-contribute__card"
                 >
-                  {optOutBusy ? "Saving…" : "Opt back in"}
-                </button>
-              </>
-            ) : (
-              <>
-                <label className="me-field">
-                  <span>Anything you&apos;d like noted (optional)</span>
-                  <input
-                    type="text"
-                    value={optOutNote}
-                    placeholder="e.g. I trust whatever Patricia picks"
-                    maxLength={240}
-                    onChange={(e) => setOptOutNote(e.target.value)}
-                  />
-                </label>
-                <button
-                  type="button"
-                  className="me-optout__btn"
-                  onClick={() => onSetOptOut(true)}
-                  disabled={optOutBusy}
+                  <span className="me-contribute__card-eyebrow">
+                    At the Table
+                  </span>
+                  <strong>Your food &amp; menu picks</strong>
+                  <em>
+                    Breakfast style, foods you love or skip,
+                    service preferences, dessert. ~5 minutes.
+                  </em>
+                  <span className="me-contribute__card-cta">Open →</span>
+                </Link>
+                <Link
+                  href="/cabin/me/in-the-cellar"
+                  className="me-contribute__card"
                 >
-                  {optOutBusy
-                    ? "Saving…"
-                    : "I'll leave orders & cellar to the group"}
-                </button>
-              </>
+                  <span className="me-contribute__card-eyebrow">
+                    In the Cellar
+                  </span>
+                  <strong>Your wine &amp; bar picks</strong>
+                  <em>
+                    Champagne, wines, spirits, beers, cocktails —
+                    no quantities. ~4 minutes.
+                  </em>
+                  <span className="me-contribute__card-cta">Open →</span>
+                </Link>
+              </div>
             )}
+
+            {/* The original opt-out path is preserved as a quieter
+                alternative beneath the contribution cards. A guest
+                who genuinely wants to defer can still do so, just
+                not as the headline action. */}
+            <details className="me-contribute__optout">
+              <summary>
+                {member?.brief_opt_out_at
+                  ? "You've opted out of orders & cellar choices"
+                  : "Or, leave orders & cellar entirely to the group"}
+              </summary>
+              <div className="me-contribute__optout-body">
+                {member?.brief_opt_out_at ? (
+                  <button
+                    type="button"
+                    className="me-optout__back"
+                    onClick={() => onSetOptOut(false)}
+                    disabled={optOutBusy}
+                  >
+                    {optOutBusy ? "Saving…" : "Opt back in"}
+                  </button>
+                ) : (
+                  <>
+                    <label className="me-field">
+                      <span>Anything you&apos;d like noted (optional)</span>
+                      <input
+                        type="text"
+                        value={optOutNote}
+                        placeholder="e.g. I trust whatever Patricia picks"
+                        maxLength={240}
+                        onChange={(e) => setOptOutNote(e.target.value)}
+                      />
+                    </label>
+                    <button
+                      type="button"
+                      className="me-optout__btn"
+                      onClick={() => onSetOptOut(true)}
+                      disabled={optOutBusy}
+                    >
+                      {optOutBusy
+                        ? "Saving…"
+                        : "I'll leave orders & cellar to the group"}
+                    </button>
+                  </>
+                )}
+              </div>
+            </details>
           </div>
         )}
 
@@ -809,6 +862,105 @@ export default function CabinMePage() {
         .me-save:disabled {
           opacity: 0.6;
           cursor: default;
+        }
+        /* 2026-05-23 — Multi-user Brief (Phase 3). Contribute block
+           styles: two prominent boutique cards (At the Table + In
+           the Cellar) with a quieter <details> below for the
+           opt-out alternative. */
+        .me-contribute {
+          margin-top: 16px;
+          padding-top: 18px;
+          border-top: 1px dashed rgba(13,27,42,0.14);
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+        .me-contribute__intro {
+          margin: 0;
+          font-family: var(--gy-font-editorial);
+          font-size: 13.5px;
+          color: rgba(13,27,42,0.7);
+          line-height: 1.6;
+        }
+        .me-contribute__cards {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 14px;
+        }
+        @media (max-width: 599.98px) {
+          .me-contribute__cards { grid-template-columns: 1fr; }
+        }
+        .me-contribute__card {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          padding: 18px 18px 22px;
+          background: #FCFAF4;
+          border: 1px solid rgba(201, 168, 76, 0.32);
+          border-radius: 4px;
+          text-decoration: none;
+          color: var(--gy-navy);
+          transition: border-color 160ms ease, transform 160ms ease;
+        }
+        .me-contribute__card:hover {
+          border-color: var(--gy-gold);
+          transform: translateY(-1px);
+        }
+        .me-contribute__card-eyebrow {
+          font-family: var(--gy-font-ui);
+          font-size: 10px;
+          letter-spacing: 2.6px;
+          text-transform: uppercase;
+          color: var(--gy-gold);
+          font-weight: 600;
+          margin-bottom: 2px;
+        }
+        .me-contribute__card strong {
+          font-family: var(--gy-font-editorial);
+          font-size: 17px;
+          font-weight: 400;
+          color: var(--gy-navy);
+        }
+        .me-contribute__card em {
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 13px;
+          color: rgba(13,27,42,0.62);
+          line-height: 1.55;
+          margin-bottom: 8px;
+        }
+        .me-contribute__card-cta {
+          font-family: var(--gy-font-ui);
+          font-size: 10px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--gy-navy);
+          align-self: flex-start;
+          padding-top: 4px;
+          border-top: 1px solid rgba(201, 168, 76, 0.4);
+          padding-right: 12px;
+        }
+        .me-contribute__card:hover .me-contribute__card-cta {
+          color: var(--gy-gold);
+        }
+        .me-contribute__optout {
+          margin-top: 4px;
+        }
+        .me-contribute__optout > summary {
+          cursor: pointer;
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 13px;
+          color: rgba(13,27,42,0.5);
+          padding: 8px 0;
+          list-style: none;
+        }
+        .me-contribute__optout > summary:hover { color: var(--gy-navy); }
+        .me-contribute__optout-body {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          padding-top: 8px;
         }
         .me-optout {
           margin-top: 16px;

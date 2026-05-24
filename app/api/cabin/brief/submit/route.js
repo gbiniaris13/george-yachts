@@ -19,6 +19,7 @@ import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import { writeAudit, AUDIT_ACTIONS } from "@/lib/cabin/audit";
 import { notifyGeorge } from "@/lib/cabin/notify";
 import { sendBriefSubmittedEmail } from "@/lib/cabin/email";
+import { summariseContribution } from "@/lib/cabin/contributions";
 
 export const runtime = "nodejs";
 
@@ -162,6 +163,73 @@ export async function POST() {
   // Both best-effort. The submission has ALREADY been recorded —
   // a failed nudge must not block the client's response.
 
+  // 2026-05-23 — Multi-user Brief (Phase 3). Pull every group
+  // contribution + member names so the notifications can present
+  // each guest's voice alongside the principal's brief.
+  const contribRows = await dbQuery(
+    db
+      .from("cabin_brief_contributions")
+      .select("section_key, member_id, data")
+      .eq("cabin_id", cabinId),
+  );
+  const contributorIds = new Set(
+    (contribRows ?? [])
+      .map((r) => r.member_id)
+      .filter((id) => Boolean(id)),
+  );
+  let contributorNameById = {};
+  if (contributorIds.size > 0) {
+    const nameRows = await dbQuery(
+      db
+        .from("cabin_members")
+        .select("id, display_name, email")
+        .in("id", Array.from(contributorIds)),
+    );
+    contributorNameById = Object.fromEntries(
+      (nameRows ?? []).map((m) => [
+        m.id,
+        m.display_name || m.email || "(member)",
+      ]),
+    );
+  }
+
+  // Bucket per section then build the email's voices payload.
+  const SECTION_TITLES = {
+    dining: "At the Table",
+    beverages: "In the Cellar",
+  };
+  const groupContributions = [];
+  for (const sectionKey of ["dining", "beverages"]) {
+    const voices = (contribRows ?? [])
+      .filter((r) => r.section_key === sectionKey)
+      .map((r) => ({
+        name: contributorNameById[r.member_id] || "(member)",
+        highlights: summariseContribution(sectionKey, r.data ?? {}),
+      }));
+    if (voices.length > 0) {
+      groupContributions.push({
+        sectionTitle: SECTION_TITLES[sectionKey],
+        voices,
+      });
+    }
+  }
+
+  // Telegram lines — short, scannable. Each voice gets one line
+  // with up to two highlights (the rest land in the email body).
+  const telegramVoiceLines = [];
+  for (const section of groupContributions) {
+    if (telegramVoiceLines.length === 0) {
+      telegramVoiceLines.push(""); // visual gap before voices
+      telegramVoiceLines.push("Voices from the group:");
+    }
+    for (const v of section.voices) {
+      const tail = (v.highlights || []).slice(0, 2).join(" · ");
+      telegramVoiceLines.push(
+        `· ${v.name} (${section.sectionTitle})${tail ? " — " + tail : ""}`,
+      );
+    }
+  }
+
   void notifyGeorge({
     icon: "✅",
     title: "Charter Brief submitted",
@@ -171,6 +239,7 @@ export async function POST() {
       existing.charter_period_from && existing.charter_period_to
         ? `Dates: ${existing.charter_period_from} → ${existing.charter_period_to}`
         : null,
+      ...telegramVoiceLines,
     ],
     link: `/dashboard/cabins/${cabinId}`,
   });
@@ -188,6 +257,7 @@ export async function POST() {
         to_date: existing.charter_period_to,
         submittedAt,
         cabinUrl: `${crmBase}/dashboard/cabins/${cabinId}`,
+        groupContributions,
       });
     } catch (mailErr) {
       console.warn(

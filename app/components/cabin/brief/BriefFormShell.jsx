@@ -39,6 +39,15 @@ export default function BriefFormShell({
   // When true, the last-section "Submit Brief" CTA appears in
   // place of "Next →". Used on /cabin/brief/little-things.
   isLastSection = false,
+  // 2026-05-23 — Multi-user Brief (Phase 3). When the same form is
+  // mounted on a guest-contribution page (/cabin/me/at-the-table or
+  // /cabin/me/in-the-cellar), it must save to a different API and
+  // navigate to a different overview. Defaults preserve the
+  // principal-brief behaviour for every existing caller.
+  endpointBase = "/api/cabin/brief",
+  backHref = null,           // when set, replaces the auto /cabin/brief link
+  backLabel = "Back to overview",
+  hideSubmit = false,        // contribution pages never submit the brief
 }) {
   useScrollToTopOnMount();
   const router = useRouter();
@@ -62,7 +71,7 @@ export default function BriefFormShell({
       setSubmitting(false);
     }
   }
-  const { initialData, state, save } = useBriefAutosave(sectionKey);
+  const { initialData, state, save } = useBriefAutosave(sectionKey, endpointBase);
 
   const form = useForm({
     mode: "onBlur",
@@ -124,7 +133,9 @@ export default function BriefFormShell({
     >
       {children({ register: form.register, watch: form.watch, control: form.control })}
       <nav className="brief-shell__nav">
-        {prevSection ? (
+        {backHref ? (
+          <Link href={backHref}>← {backLabel}</Link>
+        ) : prevSection ? (
           <Link href={`/cabin/brief/${prevSection.key.replace(/_/g, "-")}`}>
             ← {prevSection.title}
           </Link>
@@ -136,7 +147,7 @@ export default function BriefFormShell({
             Next · {nextSection.title} →
           </Link>
         )}
-        {!nextSection && isLastSection && (
+        {!nextSection && isLastSection && !hideSubmit && (
           <button
             type="button"
             className="brief-shell__submit"
