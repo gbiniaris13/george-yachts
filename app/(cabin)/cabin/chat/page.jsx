@@ -21,6 +21,7 @@ import { redirect } from "next/navigation";
 import {
   readSessionFromCookies,
   pickActiveCabinId,
+  resolveMembership,
 } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import { titleCaseName, prettyDate, firstNameFromDisplayName } from "@/lib/cabin/format";
@@ -42,6 +43,15 @@ export default async function ChatPage() {
 
   const cabinId = pickActiveCabinId(session);
   let cabin = null;
+  // 2026-05-24 — Angeliki pass: WhatsApp prefill was reading
+  // cabin.principal_charterer_name for EVERY user, so every
+  // guest's WhatsApp opened "Hello George, it's Patricia from
+  // M/Y NOOR" — Angeliki, Christos, Vasilis all looked like
+  // Patricia (the principal) to George. Now we resolve the
+  // current member's display_name via cabin_members and fall
+  // back to the principal name + email username only if the
+  // member row can't be loaded.
+  let currentMemberDisplayName = null;
   if (cabinId) {
     const db = getCabinDb();
     cabin = await dbQuery(
@@ -51,13 +61,28 @@ export default async function ChatPage() {
         .eq("id", cabinId)
         .maybeSingle()
     );
+    const membership = resolveMembership(session, cabinId);
+    if (membership?.member_id) {
+      const memberRow = await dbQuery(
+        db
+          .from("cabin_members")
+          .select("display_name")
+          .eq("id", membership.member_id)
+          .maybeSingle(),
+      );
+      currentMemberDisplayName = memberRow?.display_name ?? null;
+    }
   }
 
   // 2026-05-21 — Use honorific-stripping helper so the WhatsApp
   // prefill "it's <FirstName> from <vessel>" reads correctly on
   // cabins whose name still carries the MYBA-style "Ms." prefix.
+  // 2026-05-24 — Angeliki pass: prefer the current member's
+  // display_name; only fall back to the principal/email if we
+  // genuinely couldn't resolve one.
   const firstName = titleCaseName(
-    firstNameFromDisplayName(cabin?.principal_charterer_name) ||
+    firstNameFromDisplayName(currentMemberDisplayName) ||
+      firstNameFromDisplayName(cabin?.principal_charterer_name) ||
       session.email.split("@")[0],
   );
   const vessel = cabin?.vessel_name || "the charter";

@@ -73,9 +73,14 @@ export default function useBriefAutosave(
     let cancelled = false;
     (async () => {
       try {
+        // 2026-05-24 — Angeliki pass: cache: "no-store" so the
+        // browser disk cache never feeds the form stale section
+        // data. (Same root cause as /cabin/me: she filled the
+        // section, navigated away, came back to a form that
+        // looked empty even though Supabase had the data.)
         const r = await fetch(
           `${endpointBase}/${sectionKey}`,
-          { credentials: "same-origin" }
+          { credentials: "same-origin", cache: "no-store" }
         );
         if (!r.ok) throw new Error("load-failed");
         const json = await r.json();

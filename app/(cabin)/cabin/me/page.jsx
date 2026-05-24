@@ -120,7 +120,14 @@ export default function CabinMePage() {
     let cancelled = false;
     (async () => {
       try {
-        const r = await fetch("/api/cabin/me");
+        // 2026-05-24 — Angeliki pass: she filled in the form,
+        // saved, navigated back and the fields LOOKED empty.
+        // Most likely cause: browser disk cache on a GET that
+        // shouldn't be cached. cache: "no-store" guarantees a
+        // fresh read of personal_details every time the page
+        // mounts. (The data was persisting fine in Supabase;
+        // the UI just wasn't seeing the latest copy.)
+        const r = await fetch("/api/cabin/me", { cache: "no-store" });
         const j = await r.json();
         if (cancelled) return;
         if (!r.ok || !j.ok) throw new Error(j?.error || "load-failed");

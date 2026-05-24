@@ -102,6 +102,14 @@ export async function PUT(req, ctx) {
     // emergency contact ashore. The principal owns it; guests
     // don't fill someone else's emergency person.
     "health",
+    // 2026-05-24 — Angeliki pass: "Section Two · Your Group" is
+    // the group composition + tone-of-week narrative. Same logic
+    // as arrival/itinerary — the principal decides who is sailing,
+    // what kind of week it is, photos yes/no, pets. Five guests
+    // editing the same "what would make this charter perfect"
+    // field would be incoherent. Guests can read; only the
+    // principal (or delegated brief admin) writes.
+    "guests",
   ]);
   if (PRINCIPAL_ONLY_SECTIONS.has(a.section)) {
     let isAuthorized = a.member.role === "principal_charterer";

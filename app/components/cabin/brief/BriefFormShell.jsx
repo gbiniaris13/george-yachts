@@ -132,18 +132,41 @@ export default function BriefFormShell({
       noValidate
     >
       {children({ register: form.register, watch: form.watch, control: form.control })}
+      {/* 2026-05-24 — Angeliki pass: she asked "πού κάνω save,
+          πού είναι το next?" — the original nav was two flat
+          uppercase text links of equal weight, indistinguishable
+          from any other caption on the page. Re-rendered so
+          Next is a real navy/gold button (cannot miss it),
+          while Back stays a quiet text link. Also added a
+          permanent "✓ saved as you type" reassurance line so
+          the user understands they don't have to hunt for a
+          Save button — autosave is the contract. */}
       <nav className="brief-shell__nav">
         {backHref ? (
-          <Link href={backHref}>← {backLabel}</Link>
+          <Link href={backHref} className="brief-shell__back">
+            ← {backLabel}
+          </Link>
         ) : prevSection ? (
-          <Link href={`/cabin/brief/${prevSection.key.replace(/_/g, "-")}`}>
+          <Link
+            href={`/cabin/brief/${prevSection.key.replace(/_/g, "-")}`}
+            className="brief-shell__back"
+          >
             ← {prevSection.title}
           </Link>
         ) : (
-          <Link href="/cabin/brief">← Back to overview</Link>
+          <Link href="/cabin/brief" className="brief-shell__back">
+            ← Back to overview
+          </Link>
         )}
+        <span className="brief-shell__autosave" aria-live="polite">
+          <span className="brief-shell__autosave-dot" aria-hidden />
+          Your answers save automatically
+        </span>
         {nextSection && (
-          <Link href={`/cabin/brief/${nextSection.key.replace(/_/g, "-")}`}>
+          <Link
+            href={`/cabin/brief/${nextSection.key.replace(/_/g, "-")}`}
+            className="brief-shell__next"
+          >
             Next · {nextSection.title} →
           </Link>
         )}
@@ -181,27 +204,78 @@ export default function BriefFormShell({
           padding-top: 24px;
           border-top: 1px solid rgba(13, 27, 42, 0.08);
           flex-wrap: wrap;
+          align-items: center;
         }
-        .brief-shell__nav a {
+        .brief-shell__back {
           font-family: var(--gy-font-ui);
           font-size: 10px;
           letter-spacing: 2.5px;
           text-transform: uppercase;
-          color: var(--gy-navy);
+          color: rgba(13, 27, 42, 0.55);
           text-decoration: none;
-          padding: 10px 0;
+          padding: 12px 0;
+          flex-shrink: 0;
         }
+        .brief-shell__back:hover { color: var(--gy-navy); }
+        /* "Your answers save automatically" — a passive
+           reassurance line in the middle of the nav so the user
+           never wonders where the Save button is. */
+        .brief-shell__autosave {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-family: var(--gy-font-editorial);
+          font-style: italic;
+          font-size: 12.5px;
+          color: rgba(13, 27, 42, 0.55);
+          flex: 1 1 auto;
+          justify-content: center;
+          min-width: 0;
+        }
+        .brief-shell__autosave-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #4C8A58;
+          flex-shrink: 0;
+        }
+        @media (max-width: 599.98px) {
+          .brief-shell__autosave { display: none; }
+        }
+        /* Next is a real navy/gold button — luxury but
+           unmistakably the primary action. Min-height 48 for
+           touch-target compliance. */
+        .brief-shell__next {
+          background: var(--gy-navy);
+          color: var(--gy-ivory);
+          border: 1px solid var(--gy-gold);
+          padding: 14px 24px;
+          font-family: var(--gy-font-ui);
+          font-size: 11.5px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          text-decoration: none;
+          font-weight: 600;
+          min-height: 48px;
+          display: inline-flex;
+          align-items: center;
+          transition: background 160ms ease;
+          flex-shrink: 0;
+        }
+        .brief-shell__next:hover { background: #142233; }
         .brief-shell__submit {
           background: var(--gy-navy);
           color: var(--gy-ivory);
           font-family: var(--gy-font-ui);
-          font-size: 11px;
+          font-size: 11.5px;
           letter-spacing: 2.5px;
           text-transform: uppercase;
-          padding: 12px 22px;
+          padding: 14px 24px;
           border: 1px solid var(--gy-gold);
           cursor: pointer;
           transition: background 160ms ease;
+          font-weight: 600;
+          min-height: 48px;
         }
         .brief-shell__submit:hover:not(:disabled) { background: #142233; }
         .brief-shell__submit:disabled { opacity: 0.7; cursor: default; }
@@ -211,7 +285,6 @@ export default function BriefFormShell({
           font-style: italic;
           margin: 12px 0 0 0;
         }
-        .brief-shell__nav a:hover { color: var(--gy-gold); }
       `}</style>
     </form>
   );

@@ -35,6 +35,9 @@ const SECTION_META = [
     title: "Your Group",
     intro: "Who is sailing — and the spirit of the week.",
     minutes: 3,
+    // 2026-05-24 — Angeliki pass: now principal-only, see
+    // app/api/cabin/brief/[section]/route.js PRINCIPAL_ONLY_SECTIONS.
+    principalOnly: true,
   },
   {
     key: "health",

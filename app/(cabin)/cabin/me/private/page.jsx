@@ -66,7 +66,7 @@ export default function CabinMePrivatePage() {
     let cancelled = false;
     (async () => {
       try {
-        const r = await fetch("/api/cabin/me");
+        const r = await fetch("/api/cabin/me", { cache: "no-store" });
         const j = await r.json();
         if (cancelled) return;
         if (!r.ok || !j.ok) throw new Error(j?.error || "load-failed");
