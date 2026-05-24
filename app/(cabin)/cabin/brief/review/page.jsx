@@ -388,6 +388,50 @@ export default async function BriefReviewPage() {
         })}
       </ol>
 
+      {/* 2026-05-23 — Multi-user Brief (Phase 3, MUB-B): APA
+          disclaimer block. George's spec for friend test 4:
+            "Μια υποσημείωση εκεί, λόγω του Advanced Provisioning
+             Allowance, APA, να τον προστατεύουμε ουσιαστικά και
+             να του λέμε ότι κοίταξε να δεις όσο πιο ακριβά είναι
+             τόσο πιο πολλά θα πληρώστε."
+          Boutique navy/gold band — same visual weight as the
+          submitted banner, just calmer. Sits ABOVE the ReviewSubmit
+          modal so the principal reads it before any "Send" click.
+          The Send modal itself acts as the explicit acknowledgement
+          (pressing it = accepting the APA mechanics described here). */}
+      {!isSubmitted && (
+        <section className="cabin-brief-review__apa">
+          <div className="cabin-brief-review__apa-eyebrow">
+            Before you send — about your APA
+          </div>
+          <p className="cabin-brief-review__apa-copy">
+            Charter yachts work on an <strong>Advanced Provisioning
+            Allowance</strong> (APA): a refundable float held aside for
+            food, drink, fuel, marina fees and the small day-to-day
+            costs of your week aboard. Whatever isn&apos;t spent comes
+            back to you at the end of the charter.
+          </p>
+          <p className="cabin-brief-review__apa-copy">
+            <strong>How your picks shape the APA:</strong> the more
+            premium tiers you&apos;ve chosen (Champagne, wines, spirits),
+            the more specific labels you&apos;ve named, and the longer
+            any &quot;specific items&quot; list you&apos;ve added, the
+            more the hostess will spend at provisioning — and the
+            higher your APA will draw down. None of this is added
+            silently to your tab: anything materially above your
+            stated tiers, or any rare/specialty bottle outside a
+            typical charter bar, the hostess confirms by phone first.
+          </p>
+          <p className="cabin-brief-review__apa-copy cabin-brief-review__apa-copy--muted">
+            By pressing &quot;Send to George&quot; below, you confirm
+            you&apos;ve read your group&apos;s picks (yours + voices)
+            and you&apos;re comfortable with the spending direction
+            they imply. If anything feels off, hop back into the
+            relevant section and adjust before sending.
+          </p>
+        </section>
+      )}
+
       {!isSubmitted && (
         <ReviewSubmit
           vesselName={cabin.vessel_name}
@@ -564,6 +608,44 @@ export default async function BriefReviewPage() {
         .cabin-brief-review__item-edit:hover {
           background: var(--gy-navy);
           color: var(--gy-ivory);
+        }
+
+        /* 2026-05-23 — MUB-B: APA disclaimer. Boutique block with
+           navy headline + cream body, gold rule on the left so it
+           reads as advisory (not error/warning). Sits visually
+           between the section list and the Send button. */
+        .cabin-brief-review__apa {
+          background: #FCFAF4;
+          border: 1px solid rgba(201, 168, 76, 0.32);
+          border-left: 3px solid var(--gy-gold);
+          padding: 22px 24px 18px;
+          border-radius: 4px;
+        }
+        .cabin-brief-review__apa-eyebrow {
+          font-family: var(--gy-font-ui);
+          font-size: 11px;
+          letter-spacing: 2.6px;
+          text-transform: uppercase;
+          color: var(--gy-navy);
+          font-weight: 600;
+          margin-bottom: 12px;
+        }
+        .cabin-brief-review__apa-copy {
+          font-family: var(--gy-font-editorial);
+          font-size: 14px;
+          color: var(--gy-navy);
+          line-height: 1.6;
+          margin: 0 0 12px 0;
+        }
+        .cabin-brief-review__apa-copy strong {
+          color: var(--gy-navy);
+          font-weight: 600;
+        }
+        .cabin-brief-review__apa-copy--muted {
+          font-size: 13px;
+          color: rgba(13, 27, 42, 0.7);
+          font-style: italic;
+          margin-top: 4px;
         }
 
         /* 2026-05-23 — Multi-user Brief (Phase 3) — group voices. */
