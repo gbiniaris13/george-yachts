@@ -17,10 +17,15 @@ export default function LifeAboardSectionPage() {
         title="Your days"
         italic="at sea."
       />
+      {/* 2026-05-24 — Christos pass: intro rewritten to a single
+          calm question about crew presence. The "tell us your
+          tempo" preamble was abstract and overlapped with the
+          itinerary section. */}
       <IntroParagraph>
-        A week aboard is different from any other holiday. Some guests want
-        music, water sports, late nights; others want silence, books, dawn
-        swims. Tell us your tempo.
+        One simple question first — how would you like the crew to
+        be around you, and to address you, during the week? After
+        that, a quiet list of generic things many groups enjoy at
+        sea. Tick anything that appeals; skip whatever doesn&apos;t.
       </IntroParagraph>
 
       <BriefFormShell
@@ -32,42 +37,42 @@ export default function LifeAboardSectionPage() {
           <>
             <RadioGroup
               name="crew_interaction"
-              label="How present would you like the crew?"
+              label="How would you like the crew to be around you and to address you?"
+              hint="Sets the tone for the whole week — invisible service, warm professional, or chatty-friendly."
               register={register}
               options={[
-                { value: "always_around", label: "Always around", description: "Chatty, attentive, like family." },
-                { value: "balanced",      label: "A balance", description: "Present when needed, invisible when not." },
-                { value: "discreet",      label: "Discreet", description: "Let us know you’re there, but stay back." },
+                { value: "always_around", label: "Warm and chatty", description: "Crew on first-name terms, attentive throughout the day, like family at the table." },
+                { value: "balanced",      label: "Warm but discreet", description: "Crew present when needed, invisible when not. Polite address (Sir / Ma'am at first, then by name when invited)." },
+                { value: "discreet",      label: "Quiet & formal", description: "Service-first, minimal small-talk, Sir / Ma'am throughout the week." },
               ]}
             />
 
+            {/* 2026-05-24 — Christos pass: activities list trimmed
+                to GENERIC items only — no per-vessel water toys
+                (scuba, jet ski, wakeboarding etc.) which create a
+                trap when a vessel doesn't carry them. The vessel
+                brochure on the cabin home already lists the actual
+                toys this yacht carries. */}
             <CheckboxGroup
               name="activities"
               label="What does your group love?"
-              hint="Tick anything that appeals. Your vessel and itinerary determine what’s possible; we’ll let you know."
+              hint="Generic moments only — the water toys your vessel actually carries are shown on your cabin home. The crew will fold in whatever matches what you've ticked here."
               register={register}
               twoColumn
               options={[
                 { value: "swimming_snorkel", label: "Swimming & snorkeling" },
-                { value: "paddleboarding",   label: "Stand-up paddleboarding" },
-                { value: "kayaking",         label: "Kayaking" },
-                { value: "water_skiing",     label: "Water skiing" },
-                { value: "wakeboarding",     label: "Wakeboarding" },
-                { value: "tubing",           label: "Tubing" },
-                { value: "scuba_rendezvous", label: "Scuba diving (rendezvous)" },
-                { value: "jet_ski",          label: "Jet ski" },
-                { value: "fishing",          label: "Fishing" },
-                { value: "sailing_under_sail", label: "Sailing under sail" },
                 { value: "sunbathing",       label: "Sunbathing" },
-                { value: "island_hikes",     label: "Island hikes" },
-                { value: "shopping_ashore",  label: "Shopping ashore" },
-                { value: "cultural_tours",   label: "Cultural tours" },
                 { value: "sunset_cocktails", label: "Sunset cocktails" },
                 { value: "stargazing",       label: "Stargazing" },
+                { value: "shopping_ashore",  label: "Shopping ashore" },
+                { value: "island_hikes",     label: "Island walks" },
+                { value: "cultural_tours",   label: "Cultural moments ashore" },
+                { value: "sailing_under_sail", label: "Time under sail" },
               ]}
             />
             <OpenTextarea
-              label="Anything else you love that we didn’t list"
+              label="Anything else your group loves — write freely"
+              hint="Specific water toys, scuba experiences, fishing — anything we haven't listed. The crew will tell you what your vessel can and can't carry."
               name="activities_other"
               register={register}
               rows={2}
