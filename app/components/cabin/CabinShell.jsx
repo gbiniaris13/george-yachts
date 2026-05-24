@@ -193,8 +193,13 @@ export default function CabinShell({
   // nav has no business covering the "Save and enter the Cabin"
   // CTA — and the principal hasn't entered the cabin yet so there's
   // nowhere to navigate to. Hide bottom nav on welcome explicitly.
-  const showBottomNav =
-    showChrome && !pathname.endsWith("/cabin/welcome");
+  // 2026-05-24 — Christos pass: bottom navigation bar removed
+  // entirely. George flagged it as crowding the mobile viewport
+  // with secondary chrome ("τη βγάζεις τελείως"). Cabin home
+  // already exposes every destination as a tile, and the top-of-
+  // page NextStep wizard guides each member to what they need
+  // to do next. The bottom nav was redundant.
+  const showBottomNav = false;
 
   return (
     <div className="cabin-shell">

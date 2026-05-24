@@ -617,11 +617,11 @@ export default async function CabinHomePage() {
               creates two competing entries for the same content.
               The standalone /cabin/vessel route still exists for
               direct deep-linking + print views. */}
-          <Link href="/cabin/mood-board" className="cabin-home__tile">
-            <CabinIcon name="mood" className="cabin-home__tile-glyph" />
-            <strong>Mood Board</strong>
-            <em>Save photos that capture the vibe you want.</em>
-          </Link>
+          {/* 2026-05-24 — Christos pass: Mood Board / Pin the Vibe
+              tile removed from the cabin home grid. George: "το λες
+              Μουτ Μπορντ, βγάλ' το, μπερδεύονται οι άνθρωποι." Page
+              and route stay live for any saved links, just no longer
+              advertised from the home menu. */}
           <Link href="/cabin/before-you-sail" className="cabin-home__tile">
             <CabinIcon name="before" className="cabin-home__tile-glyph" />
             <strong>Before You Sail</strong>

@@ -42,21 +42,26 @@ export default function GuestsSectionPage() {
                 rows={4}
               />
 
-              <h2 className="brief-subhead">What kind of week is this?</h2>
+              {/* 2026-05-24 — Christos pass: "What kind of week" +
+                  "A few quick taps about your group" were two very
+                  similar prompts back-to-back. Merged under one
+                  heading; the group-type checkboxes + group-scenarios
+                  checkboxes both contribute to the same "about your
+                  group" picture. "Friends celebrating" → just
+                  "Friends" (no-one's obliged to celebrate). New
+                  generic "Just friends, just sailing" option added
+                  to scenarios. */}
+              <h2 className="brief-subhead">About your group & the week</h2>
               <CheckboxGroup
                 name="group_type"
-                label="Tick any that apply"
-                /* 2026-05-21 — Pass 7 (Helen, David):
-                   was "The crew, chef and hostess…" but many of our
-                   vessels carry no hostess. Generic "your crew" reads
-                   the same on every cabin without promising a role. */
+                label="What kind of week is this? Tick any that apply"
                 hint="Your crew calibrates around this."
                 register={register}
                 twoColumn
                 options={[
                   { value: "family_with_children",  label: "Family with children" },
                   { value: "couples_retreat",       label: "Couples retreat" },
-                  { value: "friends_celebrating",   label: "Friends celebrating" },
+                  { value: "friends_celebrating",   label: "Friends" },
                   { value: "honeymoon",             label: "Honeymoon" },
                   { value: "multi_generational",    label: "Multi-generational" },
                   { value: "corporate_retreat",     label: "Corporate retreat" },
@@ -68,27 +73,24 @@ export default function GuestsSectionPage() {
               <RadioGroup
                 name="energy_level"
                 label="Overall energy of the group"
-                /* 2026-05-21 — Pass 7: was "the chef … the hostess
-                   … the captain". Generic phrasing avoids promising
-                   a hostess we don't always carry. */
                 hint="Helps the chef weight menus and the captain choose anchorages."
                 register={register}
                 options={[
                   { value: "calm_restorative",      label: "Calm & restorative", description: "Quiet bays, early nights, slower mornings." },
-                  { value: "mixed",                 label: "Mixed", description: "A balance of restful days and social evenings." },
-                  { value: "very_social_late_nights", label: "Very social, late nights", description: "Music, drinks, often after midnight." },
+                  { value: "mixed",                 label: "Mixed", description: "A combination of calm and very social." },
+                  { value: "very_social_late_nights", label: "Very social", description: "Music, drinks, lively evenings." },
                 ]}
               />
 
-              <h2 className="brief-subhead">A few quick taps about your group</h2>
               <CheckboxGroup
                 name="group_scenarios"
-                label="Tick anything that applies"
+                label="Anything else worth noting? Tick any that apply"
                 hint="A short list to help the crew prepare in advance. None mandatory."
                 register={register}
                 twoColumn
                 options={[
-                  { value: "celebrating_anniversary", label: "Celebrating an anniversary" },
+                  { value: "just_friends_sailing",     label: "Just friends, just sailing" },
+                  { value: "celebrating_anniversary",  label: "Celebrating an anniversary" },
                   { value: "celebrating_birthday",     label: "Celebrating a birthday" },
                   { value: "first_time_charter",       label: "First time chartering" },
                   { value: "returning_clients",        label: "Returning clients" },
@@ -97,7 +99,6 @@ export default function GuestsSectionPage() {
                   { value: "business_dinners",         label: "Some closed-door business dinners" },
                   { value: "early_risers",             label: "Some early risers" },
                   { value: "late_nights",              label: "Some late-night types" },
-                  { value: "vegan_vegetarian",         label: "One or more vegan/vegetarian" },
                   { value: "fitness_routine",          label: "Daily fitness routine to keep" },
                 ]}
               />
@@ -151,14 +152,18 @@ export default function GuestsSectionPage() {
                 ]}
               />
 
+              {/* 2026-05-24 — Christos pass: was duplicating
+                  "Pair-ups (who's sharing a cabin)" which Crew List
+                  asks earlier per-member. Replaced the hint with a
+                  generic "anything else from what you've picked
+                  above, or anything we haven't covered" — no more
+                  duplicate questions. */}
               <h2 className="brief-subhead">Anything else for the crew?</h2>
               <OpenTextarea
-                /* 2026-05-21 — Pass 7: dropped "and hostess" so the
-                   label is true for every vessel composition. */
                 label="A few sentences the captain reads to the rest of the crew"
-                hint="The small things that don't fit the questions above. Pair-ups (who's sharing a cabin), kids' ages, anyone who tires easily, a guest with a fear of water, a couple celebrating quietly while the others party loudly. Skip if you've already said it elsewhere."
+                hint="If anything from what you've picked above needs more colour — or if there's something we simply haven't asked about — write it freely here. Skip if it's all in the boxes."
                 name="group_notes"
-                placeholder="e.g. My mother-in-law is 78 — she'll need an easy boarding ramp and a calm anchorage on the last night. Two of the kids (8 and 10) only just learned to swim. We're trying to keep my brother's surprise birthday under wraps until Thursday."
+                placeholder="e.g. We'd like the last night to feel quiet — slow anchor, candles, no music. A surprise birthday on Thursday for my brother, please keep it discreet until then."
                 rows={5}
                 register={register}
               />

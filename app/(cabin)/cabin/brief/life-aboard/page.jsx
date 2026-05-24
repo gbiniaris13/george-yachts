@@ -73,23 +73,14 @@ export default function LifeAboardSectionPage() {
               rows={2}
             />
 
-            {/* 2026-05-22 — Music taste — a single, careful question.
-                Pass 2 removed the per-time-of-day soundtrack fields
-                (morning / lunch / sunset / late night) because the
-                hostess can't guarantee specific track delivery and
-                we don't want "you said Sinatra at sunset, got Lo-Fi"
-                complaints. This freeform replacement asks for the
-                room's general taste — the crew uses it as a sense
-                of direction for background music, not a playlist. */}
-            <h2 className="brief-subhead">Music taste</h2>
-            <OpenTextarea
-              label="What does this group enjoy in the background?"
-              hint="The captain and hostess use this to set a tasteful tone — bossa nova at lunch, soft rock at sundown, that sort of thing. We can't promise specific tracks, just a general direction that suits the room."
-              name="music_taste"
-              register={register}
-              rows={3}
-              placeholder="e.g. mostly jazz and bossa nova during the day, anything but house at dinner. We'll bring our own playlists for late nights."
-            />
+            {/* 2026-05-24 — Music Taste removed entirely per George
+                friend test 4 (Christos pass): with 6-12 voices in
+                a shared brief, music taste becomes a swamp ("rock
+                / jazz / electronic / Greek / nothing late at night"
+                all from different members on the same field — the
+                crew can't read intent from that). Schema field
+                music_taste stays registered in lib/cabin/schemas.js
+                for back-compat. */}
             {/* 2026-05-20 — Wellness on board section (yoga, massage,
                 stargazing nights, sunrise meditation, personal trainer)
                 removed in pass 2. George: "Καλύτερα να βγει — στην
