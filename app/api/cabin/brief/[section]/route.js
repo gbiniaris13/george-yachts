@@ -95,7 +95,14 @@ export async function PUT(req, ctx) {
   // disaster. The other sections (health, life_aboard, dining,
   // beverages, guests narrative, children) stay shared so the
   // group can collaborate on them.
-  const PRINCIPAL_ONLY_SECTIONS = new Set(["arrival", "itinerary"]);
+  const PRINCIPAL_ONLY_SECTIONS = new Set([
+    "arrival",
+    "itinerary",
+    // 2026-05-24 — Christos pass: Health section is now just the
+    // emergency contact ashore. The principal owns it; guests
+    // don't fill someone else's emergency person.
+    "health",
+  ]);
   if (PRINCIPAL_ONLY_SECTIONS.has(a.section)) {
     let isAuthorized = a.member.role === "principal_charterer";
     if (!isAuthorized) {

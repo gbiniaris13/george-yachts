@@ -30,6 +30,7 @@ import {
 } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import ReviewSubmit from "./ReviewSubmit";
+import AllergyAlert from "@/components/cabin/brief/AllergyAlert";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Review your brief · The Cabin" };
@@ -295,6 +296,14 @@ export default async function BriefReviewPage() {
           )}
         </section>
       )}
+
+      {/* 2026-05-24 — Christos pass: principal sees the full
+          aggregate group allergies HERE (review page is principal-
+          only), since the brief section pages no longer show
+          aggregate to guests for GDPR reasons. The chef briefing
+          still surfaces every member's health info — just at the
+          one place where only the principal reads it. */}
+      <AllergyAlert source="aggregate" />
 
       <ol className="cabin-brief-review__list">
         {visible.map((s, i) => {

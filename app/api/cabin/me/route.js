@@ -78,6 +78,9 @@ function sanitisePersonalDetails(body) {
       400
     ),
     anything_else: cleanStr(body?.anything_else, 600),
+    // 2026-05-24 — Christos pass: explicit GDPR consent for sharing
+    // the personal health info above with the captain/chef/hostess.
+    consent_share_with_crew: Boolean(body?.consent_share_with_crew),
   };
 }
 

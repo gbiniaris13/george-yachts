@@ -86,6 +86,7 @@ export default function CabinMePage() {
     cabin_pairing: "",
     special_dates_during_charter: "",
     anything_else: "",
+    consent_share_with_crew: false,
   });
   const [initial, setInitial] = useState(form);
 
@@ -114,6 +115,7 @@ export default function CabinMePage() {
           cabin_pairing: pd.cabin_pairing ?? "",
           special_dates_during_charter: pd.special_dates_during_charter ?? "",
           anything_else: pd.anything_else ?? "",
+          consent_share_with_crew: Boolean(pd.consent_share_with_crew),
         };
         setMember(j.member);
         setForm(next);
@@ -419,7 +421,25 @@ export default function CabinMePage() {
           </p>
         </div>
 
-        <h2 className="me-subhead">For the chef &amp; the captain</h2>
+        {/* 2026-05-24 — Christos pass (GDPR): all the health and
+            dietary fields below are PRIVATE to this member. Other
+            members of the cabin never see them. They reach George
+            and the captain/chef only — for safety planning. */}
+        <div className="me-private-banner">
+          <span className="me-private-banner__chip">Private to you</span>
+          <p className="me-private-banner__copy">
+            <em>
+              Everything below stays between you, George and the
+              crew — the rest of your group never sees these
+              answers. We need them for safety: the chef cooks
+              around your allergies, the captain plans for the
+              swim level your guests have, the hostess respects
+              the things you&apos;d rather not have aboard.
+            </em>
+          </p>
+        </div>
+
+        <h2 className="me-subhead">Health, allergies &amp; dietary</h2>
 
         <label className="me-field">
           <span>Allergies & dietary notes</span>
@@ -532,6 +552,33 @@ export default function CabinMePage() {
             }
           />
         </label>
+
+        {/* 2026-05-24 — Christos pass (GDPR consent). One explicit
+            tick the member adds to acknowledge they're sharing this
+            information with George Yachts and the captain/chef for
+            safety planning. Captured for our own audit; non-blocking
+            UI (Save still works without it) but visibly present. */}
+        <div className="me-consent">
+          <label>
+            <input
+              type="checkbox"
+              checked={Boolean(form.consent_share_with_crew)}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  consent_share_with_crew: e.target.checked,
+                })
+              }
+            />
+            <span className="me-consent__copy">
+              <strong>I agree</strong> that George Yachts may share
+              the personal health and dietary information above
+              with my captain, chef and hostess for the duration of
+              this charter, for safety and provisioning planning.
+              The rest of my group does not see these answers.
+            </span>
+          </label>
+        </div>
 
         {member?.role && member.role !== "principal_charterer" && (
           <div className="me-contribute">
@@ -842,6 +889,66 @@ export default function CabinMePage() {
            CTA replaces the two contribution cards. Same boutique
            visual weight as the principal's Save button so guests
            feel invited to participate, not relegated. */
+        .me-private-banner {
+          margin: 24px 0 18px 0;
+          padding: 14px 18px;
+          background: #FCFAF4;
+          border: 1px solid rgba(201, 168, 76, 0.32);
+          border-left: 3px solid var(--gy-gold);
+          border-radius: 3px;
+          display: flex;
+          align-items: baseline;
+          gap: 14px;
+          flex-wrap: wrap;
+        }
+        .me-private-banner__chip {
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 2.4px;
+          text-transform: uppercase;
+          color: var(--gy-gold);
+          font-weight: 600;
+          flex-shrink: 0;
+        }
+        .me-private-banner__copy {
+          margin: 0;
+          flex: 1;
+          min-width: 0;
+          font-family: var(--gy-font-editorial);
+          font-size: 13.5px;
+          color: var(--gy-navy);
+          line-height: 1.6;
+        }
+        .me-consent {
+          margin: 24px 0 12px 0;
+          padding: 14px 16px;
+          background: rgba(13, 27, 42, 0.03);
+          border: 1px solid rgba(13, 27, 42, 0.1);
+          border-radius: 3px;
+        }
+        .me-consent label {
+          display: flex;
+          align-items: flex-start;
+          gap: 12px;
+          cursor: pointer;
+        }
+        .me-consent input {
+          margin-top: 4px;
+          width: 18px;
+          height: 18px;
+          flex-shrink: 0;
+          accent-color: var(--gy-gold);
+        }
+        .me-consent__copy {
+          flex: 1;
+          font-family: var(--gy-font-editorial);
+          font-size: 13.5px;
+          color: var(--gy-navy);
+          line-height: 1.55;
+        }
+        .me-consent__copy strong {
+          font-weight: 600;
+        }
         .me-contribute {
           margin-top: 16px;
           padding-top: 18px;

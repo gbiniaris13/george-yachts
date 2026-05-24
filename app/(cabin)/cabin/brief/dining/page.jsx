@@ -75,7 +75,14 @@ export default function DiningSectionPage() {
             • every guest's personal_details allergies + dietary
           and surfaces them attributed by name. Chef sees the
           full group picture without opening guests one-by-one. */}
-      <AllergyAlert source="aggregate" />
+      {/* 2026-05-24 — Christos pass (GDPR): switched aggregate
+          → self. Brief/dining is editable by EVERYONE in the
+          shared brief model, so an aggregate allergy view would
+          leak each member's medical info to every other member.
+          Self-only respects privacy. The principal still sees
+          the full aggregate on /cabin/brief/review (principal-
+          only page) so the chef briefing is complete. */}
+      <AllergyAlert source="self" />
 
       {/* 2026-05-20 — Friend-test pass 3 (George): the sample menu
           uploaded in GY Command shows BEFORE the preference ticks so

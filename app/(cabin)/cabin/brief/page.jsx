@@ -38,10 +38,11 @@ const SECTION_META = [
   },
   {
     key: "health",
-    title: "Health & Safety",
-    intro: "Allergies, conditions, the emergency contact ashore.",
-    minutes: 3,
+    title: "Emergency Contact",
+    intro: "One person ashore the captain can reach in an emergency.",
+    minutes: 1,
     importance: "high",
+    principalOnly: true,
   },
   {
     key: "itinerary",
