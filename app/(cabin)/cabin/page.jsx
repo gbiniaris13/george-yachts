@@ -192,7 +192,7 @@ export default async function CabinHomePage() {
   const allMembers = await dbQuery(
     db2
       .from("cabin_members")
-      .select("id, role, email, display_name, invite_sent_at, last_login_at, personal_details_completed_at, brief_participation_opt_out_at")
+      .select("id, role, email, display_name, invite_sent_at, last_login_at, personal_details_completed_at, brief_participation_opt_out_at, brief_confirmed_at")
       .eq("cabin_id", cabinId)
       .is("deleted_at", null)
   );
@@ -296,39 +296,18 @@ export default async function CabinHomePage() {
     (k) => !completedBriefKeys.has(k),
   );
 
-  // Brief participation: unique members who have edited any
-  // dining/beverages row of cabin_brief_sections, PLUS anyone
-  // who has a pre-shared-model contribution row (legacy).
-  // Excludes opted-out members from both numerator and denominator.
-  const briefContributorIds = new Set();
-  for (const row of briefSectionsRows ?? []) {
-    if (
-      (row.section_key === "dining" || row.section_key === "beverages") &&
-      row.last_edited_by_member_id
-    ) {
-      briefContributorIds.add(row.last_edited_by_member_id);
-    }
-  }
-  const legacyContribRows = await dbQuery(
-    db2
-      .from("cabin_brief_contributions")
-      .select("member_id")
-      .eq("cabin_id", cabinId),
-  );
-  for (const row of legacyContribRows ?? []) {
-    if (row.member_id) briefContributorIds.add(row.member_id);
-  }
-  // Filter contributors to active, non-opted-out members only
-  // (denominator matches crewListRows).
-  const activeMemberIds = new Set(
-    crewListRows.map((m) => m.id),
-  );
-  const briefVoicesReady = Array.from(briefContributorIds).filter((id) =>
-    activeMemberIds.has(id),
+  // 2026-05-24 — Brief CONFIRMATIONS (explicit, not detected).
+  // George friend test 4 final: "Πρέπει να υπάρχει κουμπί ...
+  // confirm για να καταλάβουμε εμείς μπροστά ότι το συμπληρώσανε
+  // όλα." Each member presses Confirm on /cabin/brief; we count
+  // members with a non-null brief_confirmed_at.
+  // Denominator matches crewListRows (excludes opted-out).
+  const briefVoicesReady = crewListRows.filter(
+    (m) => m.brief_confirmed_at,
   ).length;
   const briefVoicesTotal = crewListRows.length;
   const pendingBriefVoiceMembers = crewListRows
-    .filter((m) => !briefContributorIds.has(m.id))
+    .filter((m) => !m.brief_confirmed_at)
     .map((m) => ({
       name: m.display_name || m.email || "(member)",
       role: m.role,
@@ -354,14 +333,15 @@ export default async function CabinHomePage() {
   const groupReadinessPercent = Math.round(
     (crewListPercent + briefVoicesPercent) / 2,
   );
-  // Send-to-George gate stays based on the strict completion
-  // signals so we don't ship an undercooked brief to the chef.
-  // The home bar is honesty about participation; the Send gate
-  // is the protection for George (broker).
+  // Send-to-George gate: every member confirmed crew list AND
+  // every member confirmed brief AND every section technically
+  // complete. Three signals; all must be green.
   const briefSectionsAllComplete =
     REQUIRED_BRIEF_SECTIONS.every((k) => completedBriefKeys.has(k));
   const groupFullyReady =
-    crewListPercent === 100 && briefSectionsAllComplete;
+    crewListPercent === 100 &&
+    briefVoicesPercent === 100 &&
+    briefSectionsAllComplete;
   const briefSubmittedAt = cabin.brief_submitted_at || null;
 
   // 2026-05-21 — Pass 7: extracted to lib/cabin/format so this

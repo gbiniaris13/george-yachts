@@ -97,10 +97,10 @@ export default function GroupReadiness({
         <>
           <p className="gr__copy">
             The bar combines two member-level signals: who&apos;s
-            shared their crew-list line, and who&apos;s added their
-            voice to the brief at least once. Patricia, Bill and
-            Eleanna edit the same shared brief together — every
-            new voice moves this bar.
+            shared their crew-list line, and who&apos;s pressed
+            Confirm on their brief picks. Patricia, Bill and
+            Eleanna edit the same shared brief together — each
+            person presses Confirm once when they&apos;re done.
           </p>
 
           <div className="gr__lanes">
@@ -136,10 +136,10 @@ export default function GroupReadiness({
               )}
             </div>
 
-            {/* Lane 2 — Brief participation (member voices) */}
+            {/* Lane 2 — Brief confirmations (explicit per-member) */}
             <div className="gr__lane">
               <div className="gr__lane-head">
-                <strong>Brief voices</strong>
+                <strong>Brief confirmed</strong>
                 <span>
                   {briefVoicesReady} of {briefVoicesTotal}
                 </span>
@@ -164,7 +164,7 @@ export default function GroupReadiness({
                 </ul>
               )}
               {(!pendingBriefVoiceMembers || pendingBriefVoiceMembers.length === 0) && (
-                <p className="gr__lane-done">Everyone&apos;s voiced. ✓</p>
+                <p className="gr__lane-done">Everyone confirmed. ✓</p>
               )}
             </div>
           </div>

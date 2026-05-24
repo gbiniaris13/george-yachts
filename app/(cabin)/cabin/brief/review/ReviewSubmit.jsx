@@ -30,6 +30,9 @@ export default function ReviewSubmit({
   // confirmation modal so the lock decision is informed.
   guestsTotal = 0,
   pendingGuests = [],
+  // 2026-05-24 — pending brief confirmations (per-member explicit
+  // Confirm CTA on /cabin/brief). Send gate also requires these.
+  pendingBriefConfirmMembers = [],
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -37,14 +40,16 @@ export default function ReviewSubmit({
   const [error, setError] = useState(null);
 
   const pendingCount = pendingGuests.length;
-  // 2026-05-24 — Hard gate now requires BOTH:
+  const pendingBriefConfirmCount = pendingBriefConfirmMembers.length;
+  // 2026-05-24 — Hard gate requires THREE green signals:
   //   (1) every non-opted-out member has crew list done
-  //   (2) every visible brief section is marked complete (the
-  //       core dining + beverages picks the chef and hostess need)
-  // George friend test 4 final: "Δεν μπορείς να μου το στείλεις
-  // αν δεν το έχουν συμπληρώσει όλοι ... στα ποτά και στα crew
-  // list και στα φαγητά."
-  const canSend = pendingCount === 0 && allDone;
+  //   (2) every visible brief section is marked complete
+  //   (3) every non-opted-out member has pressed Confirm on
+  //       /cabin/brief (explicit per-member acknowledgement)
+  const canSend =
+    pendingCount === 0 &&
+    allDone &&
+    pendingBriefConfirmCount === 0;
   const everyoneIn =
     guestsTotal === 0 || (pendingCount === 0 && guestsTotal > 0);
 
@@ -178,6 +183,57 @@ export default function ReviewSubmit({
         </div>
       )}
 
+      {/* 2026-05-24 — Brief-confirmation gate panel. */}
+      {pendingBriefConfirmCount > 0 && (
+        <div
+          className="cbr-submit__pending"
+          style={{ background: "#ffffff", marginBottom: 14 }}
+        >
+          <div
+            className="cbr-submit__pending-eyebrow"
+            style={{ color: "#9a3a2c", fontWeight: 700 }}
+          >
+            Brief confirmations still pending — required before sending
+          </div>
+          <p
+            className="cbr-submit__pending-copy"
+            style={{ color: "#0D1B2A" }}
+          >
+            <strong>{pendingBriefConfirmCount}</strong>{" "}
+            {pendingBriefConfirmCount === 1 ? "person" : "people"} in
+            your group {pendingBriefConfirmCount === 1 ? "hasn't" : "haven't"} pressed
+            Confirm on their brief picks yet. Each person opens{" "}
+            <a href="/cabin/brief" style={{ color: "#8a7327", borderBottom: "1px solid rgba(201, 168, 76, 0.55)" }}>The Brief</a>
+            , adds what they want, then taps Confirm at the bottom.
+            The Send button below unlocks the moment everyone has
+            confirmed.
+          </p>
+          <ul
+            className="cbr-submit__pending-list"
+            style={{ color: "#0D1B2A" }}
+          >
+            {pendingBriefConfirmMembers.slice(0, 8).map((g, i) => (
+              <li key={`bc-${g.name}-${i}`} style={{ color: "#0D1B2A" }}>
+                {g.name}
+                {g.role === "principal_charterer" && (
+                  <em
+                    className="cbr-submit__pending-tag"
+                    style={{ color: "#5a4a1f", fontStyle: "italic" }}
+                  >
+                    {" "}· you
+                  </em>
+                )}
+              </li>
+            ))}
+            {pendingBriefConfirmMembers.length > 8 && (
+              <li>
+                <em>and {pendingBriefConfirmMembers.length - 8} more…</em>
+              </li>
+            )}
+          </ul>
+        </div>
+      )}
+
       {everyoneIn && guestsTotal > 0 && (
         <div className="cbr-submit__ready">
           <div className="cbr-submit__ready-eyebrow">Everyone's in</div>
@@ -216,9 +272,11 @@ export default function ReviewSubmit({
       >
         {pendingCount > 0
           ? `Waiting on ${pendingCount} crew-list ${pendingCount === 1 ? "line" : "lines"}`
-          : !allDone
-            ? "Waiting on brief sections"
-            : "Send to George →"}
+          : pendingBriefConfirmCount > 0
+            ? `Waiting on ${pendingBriefConfirmCount} brief ${pendingBriefConfirmCount === 1 ? "confirmation" : "confirmations"}`
+            : !allDone
+              ? "Waiting on brief sections"
+              : "Send to George →"}
       </button>
       <p className="cbr-submit__after">
         {!canSend

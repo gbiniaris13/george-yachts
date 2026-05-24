@@ -10,6 +10,7 @@ import { readSessionFromCookies, pickActiveCabinId, resolveMembership } from "@/
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import { crewRoles, joinNouns, theyAllOrBoth } from "@/lib/cabin/format";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
+import BriefConfirmCta from "../../../components/cabin/brief/BriefConfirmCta";
 
 export const metadata = { title: "The Charter Brief" };
 
@@ -188,6 +189,20 @@ export default async function CabinBriefOverviewPage() {
   //   draft      — normal section list, no ribbon
   // The ribbon is shown only to the principal_charterer (the
   // role that actually owns the Submit button).
+  // 2026-05-24 — Fetch this member's own brief_confirmed_at so
+  // the Confirm CTA at the bottom reflects current state.
+  let myBriefConfirmedAt = null;
+  if (membership?.member_id) {
+    const meRow = await dbQuery(
+      db
+        .from("cabin_members")
+        .select("brief_confirmed_at")
+        .eq("id", membership.member_id)
+        .maybeSingle(),
+    );
+    myBriefConfirmedAt = meRow?.brief_confirmed_at || null;
+  }
+
   const isSubmitted = Boolean(cabinRecord?.brief_submitted_at);
   const allDone =
     visibleSections.length > 0 &&
@@ -313,6 +328,19 @@ export default async function CabinBriefOverviewPage() {
           );
         })}
       </ul>
+
+      {/* 2026-05-24 — Explicit per-member confirmation CTA.
+          George friend test 4 final: "Πρέπει να υπάρχει κουμπί
+          είτε να λέει save σε κάθε χρήστη είτε confirm." Visible
+          to EVERYONE (principal + guest). Toggles brief_confirmed_at
+          on the calling member's row. The readiness card on /cabin
+          home counts confirmations; the Send-to-George gate
+          requires everyone confirmed (or opted out). */}
+      {!isSubmitted && (
+        <BriefConfirmCta
+          confirmedAt={myBriefConfirmedAt}
+        />
+      )}
 
       <style>{`
         .cabin-brief { display: flex; flex-direction: column; gap: 36px; }

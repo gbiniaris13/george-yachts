@@ -96,7 +96,7 @@ export async function POST() {
     db
       .from("cabin_members")
       .select(
-        "id, display_name, email, role, personal_details_completed_at, brief_participation_opt_out_at",
+        "id, display_name, email, role, personal_details_completed_at, brief_participation_opt_out_at, brief_confirmed_at",
       )
       .eq("cabin_id", cabinId)
       .is("deleted_at", null),
@@ -115,6 +115,30 @@ export async function POST() {
           "The brief cannot be sent until every member of the group has finished their Crew List essentials.",
         pending_count: stillOweCrewList.length,
         pending: stillOweCrewList.map((m) => ({
+          name: m.display_name || m.email,
+          role: m.role,
+        })),
+      },
+      { status: 409 },
+    );
+  }
+
+  // 2026-05-24 — HARD brief-confirmation gate. Every non-opted-
+  // out member must have pressed Confirm on /cabin/brief.
+  const stillOweBriefConfirm = (allActiveMembers ?? []).filter(
+    (m) =>
+      !m.brief_participation_opt_out_at &&
+      !m.brief_confirmed_at,
+  );
+  if (stillOweBriefConfirm.length > 0) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "brief-confirmation-incomplete",
+        message:
+          "The brief cannot be sent until every member has pressed Confirm on their brief picks.",
+        pending_count: stillOweBriefConfirm.length,
+        pending: stillOweBriefConfirm.map((m) => ({
           name: m.display_name || m.email,
           role: m.role,
         })),

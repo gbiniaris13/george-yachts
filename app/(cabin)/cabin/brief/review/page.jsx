@@ -175,7 +175,7 @@ export default async function BriefReviewPage() {
     db
       .from("cabin_members")
       .select(
-        "id, display_name, email, role, is_brief_admin, brief_participation_opt_out_at, brief_participation_opt_out_note, personal_details_completed_at, last_login_at",
+        "id, display_name, email, role, is_brief_admin, brief_participation_opt_out_at, brief_participation_opt_out_note, personal_details_completed_at, brief_confirmed_at, last_login_at",
       )
       .eq("cabin_id", cabinId)
       .is("deleted_at", null),
@@ -206,6 +206,13 @@ export default async function BriefReviewPage() {
       name: m.display_name || m.email,
       role: m.role,
       hasLoggedIn: Boolean(m.last_login_at),
+    }));
+  // 2026-05-24 — Brief confirmation pending list.
+  const pendingBriefConfirmMembers = allMembersForReadiness
+    .filter((m) => !m.brief_confirmed_at)
+    .map((m) => ({
+      name: m.display_name || m.email,
+      role: m.role,
     }));
   // Back-compat alias used by ReviewSubmit's existing copy paths.
   const pendingGuests = pendingMembers;
@@ -427,6 +434,7 @@ export default async function BriefReviewPage() {
           allDone={allDone}
           guestsTotal={guestRows.length}
           pendingGuests={pendingGuests}
+          pendingBriefConfirmMembers={pendingBriefConfirmMembers}
         />
       )}
 
