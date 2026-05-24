@@ -37,6 +37,14 @@ export default function ReviewSubmit({
   const [error, setError] = useState(null);
 
   const pendingCount = pendingGuests.length;
+  // 2026-05-24 — Hard gate now requires BOTH:
+  //   (1) every non-opted-out member has crew list done
+  //   (2) every visible brief section is marked complete (the
+  //       core dining + beverages picks the chef and hostess need)
+  // George friend test 4 final: "Δεν μπορείς να μου το στείλεις
+  // αν δεν το έχουν συμπληρώσει όλοι ... στα ποτά και στα crew
+  // list και στα φαγητά."
+  const canSend = pendingCount === 0 && allDone;
   const everyoneIn =
     guestsTotal === 0 || (pendingCount === 0 && guestsTotal > 0);
 
@@ -62,12 +70,34 @@ export default function ReviewSubmit({
 
   return (
     <div className="cbr-submit">
+      {/* 2026-05-24 — Sections-incomplete is now HARD-BLOCKING
+          (was soft-warning before). Surface it loudly so the
+          principal knows what to chase. */}
       {!allDone && (
-        <p className="cbr-submit__hint">
-          {completionPercent
-            ? `Your brief is ${completionPercent}% complete. Some sections still have blanks. You can still send it — George will read what's here and follow up if anything is missing.`
-            : "Some sections still have blanks. You can still send it — George will read what's here and follow up if anything is missing."}
-        </p>
+        <div
+          className="cbr-submit__pending"
+          style={{ background: "#ffffff", marginBottom: 14 }}
+        >
+          <div
+            className="cbr-submit__pending-eyebrow"
+            style={{ color: "#9a3a2c", fontWeight: 700 }}
+          >
+            Brief sections still pending — required before sending
+          </div>
+          <p
+            className="cbr-submit__pending-copy"
+            style={{ color: "#0D1B2A" }}
+          >
+            Your brief is{" "}
+            <strong>{completionPercent || 0}%</strong> complete.
+            The chef and hostess need every section filled — food
+            picks, drinks, the lot — before George can plan
+            provisioning. Hop back into any section marked&nbsp;
+            <em>Not yet filled</em> above and add what&apos;s
+            missing. The button below unlocks the moment every
+            section flips to <em>Filled</em>.
+          </p>
+        </div>
       )}
 
       {/* 2026-05-22 — HARD readiness gate. Per George's directive
@@ -162,19 +192,19 @@ export default function ReviewSubmit({
 
       <button
         type="button"
-        onClick={() => pendingCount === 0 && setOpen(true)}
+        onClick={() => canSend && setOpen(true)}
         className="cbr-submit__cta"
-        disabled={pendingCount > 0}
+        disabled={!canSend}
         title={
-          pendingCount > 0
-            ? "The crew list must be complete before you can send the brief."
+          !canSend
+            ? "Every crew list AND every brief section must be complete before you can send."
             : undefined
         }
         /* 2026-05-23 — Inline contrast guarantee so the disabled
             button text is always readable even if a theme override
             tries to wash it out. */
         style={
-          pendingCount > 0
+          !canSend
             ? {
                 background: "rgba(13, 27, 42, 0.08)",
                 color: "#0D1B2A",
@@ -186,11 +216,13 @@ export default function ReviewSubmit({
       >
         {pendingCount > 0
           ? `Waiting on ${pendingCount} crew-list ${pendingCount === 1 ? "line" : "lines"}`
-          : "Send to George →"}
+          : !allDone
+            ? "Waiting on brief sections"
+            : "Send to George →"}
       </button>
       <p className="cbr-submit__after">
-        {pendingCount > 0
-          ? "The brief unlocks the moment everyone's Crew List is in. You'll get a quiet ping."
+        {!canSend
+          ? "The brief unlocks the moment crew lists AND every brief section are in. You'll see the green light here."
           : "Once you send, only George can re-open the brief."}
       </p>
 

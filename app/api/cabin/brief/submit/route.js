@@ -123,6 +123,48 @@ export async function POST() {
     );
   }
 
+  // 2026-05-24 — HARD brief-sections gate. Per George friend test
+  // 4 final: "και στα ποτά και στα crew list και στα φαγητά."
+  // Every visible brief section must be marked completed before
+  // the brief locks. UI hard-disables the Send button too; this
+  // is the defence-in-depth so a curl can't bypass.
+  const REQUIRED_SECTION_KEYS = [
+    "arrival",
+    "guests",
+    "health",
+    "itinerary",
+    "life_aboard",
+    "dining",
+    "beverages",
+  ];
+  const sectionsRows = await dbQuery(
+    db
+      .from("cabin_brief_sections")
+      .select("section_key, completed")
+      .eq("cabin_id", cabinId)
+      .in("section_key", REQUIRED_SECTION_KEYS),
+  );
+  const completedKeys = new Set(
+    (sectionsRows ?? [])
+      .filter((s) => s.completed)
+      .map((s) => s.section_key),
+  );
+  const missingSections = REQUIRED_SECTION_KEYS.filter(
+    (k) => !completedKeys.has(k),
+  );
+  if (missingSections.length > 0) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "brief-sections-incomplete",
+        message:
+          "The brief cannot be sent until every section (dining, beverages, health, itinerary, etc.) is marked complete.",
+        missing_sections: missingSections,
+      },
+      { status: 409 },
+    );
+  }
+
   const submittedAt = new Date().toISOString();
 
   await dbQuery(

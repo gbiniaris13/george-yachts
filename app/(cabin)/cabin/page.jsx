@@ -42,6 +42,7 @@ import PreVoyageSteps from "../../components/cabin/PreVoyageSteps";
 import BerthMap from "../../components/cabin/BerthMap";
 import BerthNearby from "../../components/cabin/BerthNearby";
 import GhostCredit from "../../components/cabin/GhostCredit";
+import GroupReadiness from "../../components/cabin/GroupReadiness";
 import { titleCaseName, firstNameFromDisplayName, crewRoles, joinNouns, prettyDate } from "@/lib/cabin/format";
 
 export const metadata = {
@@ -248,6 +249,65 @@ export default async function CabinHomePage() {
 
   const percent = cabin.brief_completion_percent ?? 0;
 
+  // 2026-05-24 — Group readiness for the principal's home page.
+  // George friend test 4 final: "θα πρέπει να με ενημερώσει όταν
+  // όλοι ... μια μαλακή από το 0 μέχρι το 100 σε ποσοστό ... μόλις
+  // όλοι οι users το κάνουν θα είναι στο 100% και τότε μόνο θα
+  // ξεκλειδώνετε και θα μπορώ να το στείλω στον Γιώργο."
+  //
+  // Composition:
+  //   crew_list_progress = members with personal_details complete
+  //                        / total non-opted-out members
+  //   brief_sections_progress = completed sections / total required
+  //   overall = weighted average (50/50)
+  const REQUIRED_BRIEF_SECTIONS = [
+    "arrival",
+    "guests",
+    "health",
+    "itinerary",
+    "life_aboard",
+    "dining",
+    "beverages",
+  ];
+  const briefSectionsRows = await dbQuery(
+    db
+      .from("cabin_brief_sections")
+      .select("section_key, completed")
+      .eq("cabin_id", cabinId)
+      .in("section_key", REQUIRED_BRIEF_SECTIONS),
+  );
+  const completedBriefKeys = new Set(
+    (briefSectionsRows ?? [])
+      .filter((s) => s.completed)
+      .map((s) => s.section_key),
+  );
+  const briefSectionsTotal = REQUIRED_BRIEF_SECTIONS.length;
+  const briefSectionsReady = REQUIRED_BRIEF_SECTIONS.filter((k) =>
+    completedBriefKeys.has(k),
+  ).length;
+  const missingBriefSections = REQUIRED_BRIEF_SECTIONS.filter(
+    (k) => !completedBriefKeys.has(k),
+  );
+  const pendingCrewListMembers = crewListRows
+    .filter((m) => !m.personal_details_completed_at)
+    .map((m) => ({
+      name: m.display_name || m.email || "(member)",
+      role: m.role,
+    }));
+  const crewListPercent = crewListTotal === 0
+    ? 100
+    : Math.round((crewListReady / crewListTotal) * 100);
+  const briefPercent = Math.round(
+    (briefSectionsReady / briefSectionsTotal) * 100,
+  );
+  // 50/50 weighted average — both halves matter equally to George.
+  const groupReadinessPercent = Math.round(
+    (crewListPercent + briefPercent) / 2,
+  );
+  const groupFullyReady =
+    crewListPercent === 100 && briefPercent === 100;
+  const briefSubmittedAt = cabin.brief_submitted_at || null;
+
   // 2026-05-21 — Pass 7: extracted to lib/cabin/format so this
   // page, /cabin/brief and /cabin/brief/guests share one canonical
   // noun list. crewRoles() returns ["captain","chef","hostess"] /
@@ -336,6 +396,26 @@ export default async function CabinHomePage() {
           sees only Step 01 (their own /me details). Pressureless
           luxury framing, status indicators on each card.
           ============================================================ */}
+      {/* 2026-05-24 — Group readiness card (principal-only).
+          George friend test 4 final: a soft 0-100% indicator at
+          the top of /cabin home so the principal always knows
+          where the group stands, who hasn't filled yet, and when
+          the brief is finally ready to send. Sits ABOVE the
+          PreVoyageSteps so it's the first thing the principal
+          sees on every cabin home visit. */}
+      <GroupReadiness
+        isPrincipal={isPrincipal}
+        briefSubmittedAt={briefSubmittedAt}
+        groupReadinessPercent={groupReadinessPercent}
+        groupFullyReady={groupFullyReady}
+        crewListTotal={crewListTotal}
+        crewListReady={crewListReady}
+        pendingCrewListMembers={pendingCrewListMembers}
+        briefSectionsTotal={briefSectionsTotal}
+        briefSectionsReady={briefSectionsReady}
+        missingBriefSections={missingBriefSections}
+      />
+
       <PreVoyageSteps
         isPrincipal={isPrincipal}
         invitedCount={invitedCount}
