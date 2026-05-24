@@ -30,7 +30,6 @@ import {
 } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import ReviewSubmit from "./ReviewSubmit";
-import { summariseContribution } from "@/lib/cabin/contributions";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Review your brief · The Cabin" };
@@ -103,20 +102,16 @@ export default async function BriefReviewPage() {
       .eq("cabin_id", cabinId),
   );
 
-  // 2026-05-23 — Multi-user Brief (Phase 3): pull every group
-  // contribution so the principal sees each guest's own picks
-  // for dining + beverages inline below the corresponding
-  // section row. Per Vasilis-on-iPhone-13-Pro-Max friend test —
-  // George needs the full group consensus before signing off.
-  const contributions = await dbQuery(
-    db
-      .from("cabin_brief_contributions")
-      .select("section_key, member_id, data, updated_at")
-      .eq("cabin_id", cabinId),
-  );
-
-  // MUB-C: also pull every wishlist item so the principal sees
-  // who has asked for specific bottles/dishes before sending.
+  // 2026-05-23 — SHARED BRIEF MODEL: the per-member contributions
+  // display is removed from the review page. The canonical brief
+  // (cabin_brief_sections) is now the single source of truth —
+  // every member edits it together and the section row's "edited
+  // by" + completed status already captures the group's work.
+  // Bill's pre-switch contributions remain in DB as archeology
+  // but no longer surface in the review.
+  //
+  // MUB-C: wishlist items stay — they ARE shared per-section
+  // and add real value below the canonical brief view.
   const wishlistItems = await dbQuery(
     db
       .from("cabin_brief_wishlist_items")
@@ -129,9 +124,6 @@ export default async function BriefReviewPage() {
   const ids = new Set();
   for (const s of sections ?? []) {
     if (s.last_edited_by_member_id) ids.add(s.last_edited_by_member_id);
-  }
-  for (const c of contributions ?? []) {
-    if (c.member_id) ids.add(c.member_id);
   }
   for (const w of wishlistItems ?? []) {
     if (w.added_by_member_id) ids.add(w.added_by_member_id);
@@ -155,21 +147,6 @@ export default async function BriefReviewPage() {
   const sectionsByKey = Object.fromEntries(
     (sections ?? []).map((s) => [s.section_key, s]),
   );
-
-  // Bucket contributions: section_key → array of { name, data, updated_at }
-  const contributionsBySection = {};
-  for (const c of contributions ?? []) {
-    if (!contributionsBySection[c.section_key]) {
-      contributionsBySection[c.section_key] = [];
-    }
-    contributionsBySection[c.section_key].push({
-      memberId: c.member_id,
-      name:
-        (c.member_id && nameById[c.member_id]) || "(member)",
-      data: c.data ?? {},
-      updatedAt: c.updated_at,
-    });
-  }
 
   // MUB-C: bucket wishlist items by section.
   const wishlistBySection = {};
@@ -325,7 +302,6 @@ export default async function BriefReviewPage() {
                 month: "short",
               })
             : "";
-          const groupContribs = contributionsBySection[s.key] || [];
           const wishlist = wishlistBySection[s.key] || [];
           return (
             <li key={s.key} className="cabin-brief-review__item">
@@ -386,50 +362,6 @@ export default async function BriefReviewPage() {
                   </div>
                 )}
 
-                {/* 2026-05-23 — Multi-user Brief (Phase 3).
-                    For dining + beverages sections, show every
-                    guest contribution as its own card below the
-                    principal's section row. Principal scans the
-                    group's voices at a glance before pressing
-                    Send to George. */}
-                {groupContribs.length > 0 && (
-                  <div className="cabin-brief-review__group-voices">
-                    <div className="cabin-brief-review__group-voices-eyebrow">
-                      Voices from your group ({groupContribs.length})
-                    </div>
-                    {groupContribs.map((c) => {
-                      const highlights = summariseContribution(s.key, c.data);
-                      return (
-                        <details
-                          key={c.memberId}
-                          className="cabin-brief-review__voice"
-                        >
-                          <summary>
-                            <strong>{c.name}</strong>
-                            {highlights.length > 0 && (
-                              <span className="cabin-brief-review__voice-glance">
-                                {" — "}
-                                {highlights.slice(0, 2).join(" · ")}
-                              </span>
-                            )}
-                            {highlights.length === 0 && (
-                              <span className="cabin-brief-review__voice-glance cabin-brief-review__voice-empty">
-                                {" — opened but hasn't picked anything yet"}
-                              </span>
-                            )}
-                          </summary>
-                          {highlights.length > 0 && (
-                            <ul className="cabin-brief-review__voice-list">
-                              {highlights.map((line, idx) => (
-                                <li key={idx}>{line}</li>
-                              ))}
-                            </ul>
-                          )}
-                        </details>
-                      );
-                    })}
-                  </div>
-                )}
               </div>
               {!isSubmitted && (
                 <Link

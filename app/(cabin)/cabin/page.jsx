@@ -409,18 +409,22 @@ export default async function CabinHomePage() {
           Tiles are role-aware:
             - principal/assistant → "Your Group" (links to /cabin/guests)
             - guest                → "My Details" (links to /cabin/me)
-          Brief tile is hidden for guests (they don't fill the brief).
+          2026-05-23 — SHARED BRIEF MODEL (George friend test 4
+          clarification): the brief is now a single common document
+          every cabin member can edit together. Tile visible to all.
           ============================================================ */}
       <section className="cabin-home__map">
         <div className="cabin-home__section-label">Your Cabin, at a glance</div>
         <div className="cabin-home__grid">
-          {isPrincipal && (
-            <Link href="/cabin/brief" className="cabin-home__tile">
-              <CabinIcon name="brief" className="cabin-home__tile-glyph" />
-              <strong>The Brief</strong>
-              <em>Tell us about your week — pace, food, what to celebrate.</em>
-            </Link>
-          )}
+          <Link href="/cabin/brief" className="cabin-home__tile">
+            <CabinIcon name="brief" className="cabin-home__tile-glyph" />
+            <strong>The Brief</strong>
+            <em>
+              {isPrincipal
+                ? "Tell us about your week — pace, food, what to celebrate. Everyone in the group helps fill it."
+                : "Help fill your group's brief — add your food, drink and life-aboard picks alongside everyone else's."}
+            </em>
+          </Link>
           <Link href="/cabin/chat" className="cabin-home__tile">
             <CabinIcon name="chat" className="cabin-home__tile-glyph" />
             <strong>Chat with George</strong>

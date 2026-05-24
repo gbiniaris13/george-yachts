@@ -535,23 +535,22 @@ export default function CabinMePage() {
 
         {member?.role && member.role !== "principal_charterer" && (
           <div className="me-contribute">
-            {/* 2026-05-23 — Multi-user Brief (Phase 3, George friend
-                test 4 with Vasilis on iPhone 13 Pro Max):
-                "Δεν γίνεται μόνο ο main charterer να επιλέγει την καύα.
-                 Όλοι θέλουμε να έχουν πρόσβαση." Two contribution
-                cards offer guests their own pass through At the Table
-                + In the Cellar. Their answers land in
-                cabin_brief_contributions per-member and surface for
-                the principal at /cabin/brief/review. The opt-out
-                button below is the alternative for guests who'd
-                rather defer entirely. */}
-            <h2 className="me-subhead">Add your preferences</h2>
+            {/* 2026-05-23 — SHARED BRIEF MODEL.
+                George's clarification: the brief is now a single
+                common document everyone fills together — "σαν να
+                έχουν ένα ρε παιδί μου όλοι και το συμπληρώνουν
+                ένας-ένας ξεχωριστά από το κινητό τους". Pre-Phase-3
+                per-member contribution pages removed; everyone
+                edits the same /cabin/brief/dining etc. */}
+            <h2 className="me-subhead">Help fill the group brief</h2>
             <p className="me-contribute__intro">
               <em>
-                Your host invited the whole group to share their own
-                menu and cellar tastes. Your picks land alongside
-                everyone else&apos;s — the principal charterer reviews
-                them all before George sees the final brief.
+                Your group&apos;s brief is one shared document —
+                anyone aboard can add to it. Open it from your cabin
+                home (&quot;The Brief&quot; tile) or jump straight
+                in below. Last edits show whose pen wrote what, so
+                you can see at a glance what&apos;s been added
+                before you and pick up where the others left off.
                 {member?.brief_opt_out_at
                   ? " (You've opted out; toggle below to opt back in.)"
                   : ""}
@@ -559,42 +558,18 @@ export default function CabinMePage() {
             </p>
 
             {!member?.brief_opt_out_at && (
-              <div className="me-contribute__cards">
-                <Link
-                  href="/cabin/me/at-the-table"
-                  className="me-contribute__card"
-                >
-                  <span className="me-contribute__card-eyebrow">
-                    At the Table
-                  </span>
-                  <strong>Your food &amp; menu picks</strong>
-                  <em>
-                    Breakfast style, foods you love or skip,
-                    service preferences, dessert. ~5 minutes.
-                  </em>
-                  <span className="me-contribute__card-cta">Open →</span>
-                </Link>
-                <Link
-                  href="/cabin/me/in-the-cellar"
-                  className="me-contribute__card"
-                >
-                  <span className="me-contribute__card-eyebrow">
-                    In the Cellar
-                  </span>
-                  <strong>Your wine &amp; bar picks</strong>
-                  <em>
-                    Champagne, wines, spirits, beers, cocktails —
-                    no quantities. ~4 minutes.
-                  </em>
-                  <span className="me-contribute__card-cta">Open →</span>
-                </Link>
-              </div>
+              <Link
+                href="/cabin/brief"
+                className="me-contribute__open"
+              >
+                Open the brief →
+              </Link>
             )}
 
-            {/* The original opt-out path is preserved as a quieter
-                alternative beneath the contribution cards. A guest
-                who genuinely wants to defer can still do so, just
-                not as the headline action. */}
+            {/* The opt-out path is preserved as a quieter
+                alternative: a guest who genuinely wants to defer
+                entirely can step aside, and the principal review
+                shows their opt-out badge. */}
             <details className="me-contribute__optout">
               <summary>
                 {member?.brief_opt_out_at
@@ -863,17 +838,17 @@ export default function CabinMePage() {
           opacity: 0.6;
           cursor: default;
         }
-        /* 2026-05-23 — Multi-user Brief (Phase 3). Contribute block
-           styles: two prominent boutique cards (At the Table + In
-           the Cellar) with a quieter <details> below for the
-           opt-out alternative. */
+        /* 2026-05-23 — SHARED BRIEF MODEL. Single open-the-brief
+           CTA replaces the two contribution cards. Same boutique
+           visual weight as the principal's Save button so guests
+           feel invited to participate, not relegated. */
         .me-contribute {
           margin-top: 16px;
           padding-top: 18px;
           border-top: 1px dashed rgba(13,27,42,0.14);
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 14px;
         }
         .me-contribute__intro {
           margin: 0;
@@ -882,67 +857,24 @@ export default function CabinMePage() {
           color: rgba(13,27,42,0.7);
           line-height: 1.6;
         }
-        .me-contribute__cards {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 14px;
-        }
-        @media (max-width: 599.98px) {
-          .me-contribute__cards { grid-template-columns: 1fr; }
-        }
-        .me-contribute__card {
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-          padding: 18px 18px 22px;
-          background: #FCFAF4;
-          border: 1px solid rgba(201, 168, 76, 0.32);
-          border-radius: 4px;
-          text-decoration: none;
-          color: var(--gy-navy);
-          transition: border-color 160ms ease, transform 160ms ease;
-        }
-        .me-contribute__card:hover {
-          border-color: var(--gy-gold);
-          transform: translateY(-1px);
-        }
-        .me-contribute__card-eyebrow {
-          font-family: var(--gy-font-ui);
-          font-size: 10px;
-          letter-spacing: 2.6px;
-          text-transform: uppercase;
-          color: var(--gy-gold);
-          font-weight: 600;
-          margin-bottom: 2px;
-        }
-        .me-contribute__card strong {
-          font-family: var(--gy-font-editorial);
-          font-size: 17px;
-          font-weight: 400;
-          color: var(--gy-navy);
-        }
-        .me-contribute__card em {
-          font-family: var(--gy-font-editorial);
-          font-style: italic;
-          font-size: 13px;
-          color: rgba(13,27,42,0.62);
-          line-height: 1.55;
-          margin-bottom: 8px;
-        }
-        .me-contribute__card-cta {
-          font-family: var(--gy-font-ui);
-          font-size: 10px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: var(--gy-navy);
+        .me-contribute__open {
           align-self: flex-start;
-          padding-top: 4px;
-          border-top: 1px solid rgba(201, 168, 76, 0.4);
-          padding-right: 12px;
+          background: var(--gy-navy);
+          color: var(--gy-ivory);
+          border: 1px solid var(--gy-gold);
+          padding: 14px 22px;
+          font-family: var(--gy-font-ui);
+          font-size: 11px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          text-decoration: none;
+          font-weight: 500;
+          min-height: 44px;
+          display: inline-flex;
+          align-items: center;
+          transition: background 160ms ease;
         }
-        .me-contribute__card:hover .me-contribute__card-cta {
-          color: var(--gy-gold);
-        }
+        .me-contribute__open:hover { background: #142233; }
         .me-contribute__optout {
           margin-top: 4px;
         }

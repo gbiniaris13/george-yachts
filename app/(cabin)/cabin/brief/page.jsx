@@ -220,18 +220,22 @@ export default async function CabinBriefOverviewPage() {
         </h1>
         <div className="cabin-brief__rule" aria-hidden />
         <IntroParagraph>
-          {/* 2026-05-20 — Pass 6 (Margaret, Helen): "Only your name
-              and email are truly required" was stale copy from the
-              old onboarding (which now sits behind the Welcome
-              flow). In the Brief itself, every field is optional —
-              and the principal already filled name + email at sign
-              up. Rewritten to say what's true now. */}
-          A handful of short sections. Every blank is optional —
-          leave what doesn&apos;t apply. Save as you go; come back
-          days, weeks, or months later. The more you share, the
-          more thoughtfully your week can be designed — and you
-          won&apos;t have to repeat yourself to your {crewNouns}.
-          They {crewQuantifier} read from here.
+          {/* 2026-05-23 — SHARED BRIEF MODEL. Intro rewritten to
+              tell every member they're editing the same document.
+              George's analogy: "Σαν να έχουν ένα ρε παιδί μου
+              όλοι και το συμπληρώνουν ένας-ένας ξεχωριστά." */}
+          This brief is one shared document — everyone in your
+          group can open any section and add to it from their own
+          phone or laptop. Patricia writes a few picks, Bill opens
+          the cellar next and sees what&apos;s already there, adds
+          his bottles; Eleanna comes in later and adds hers. Every
+          section shows the last person who edited it, so you
+          always know what you&apos;re picking up. When the brief
+          feels complete, {isPrincipal
+            ? "you"
+            : "the principal charterer"}{" "}
+          reviews it once and sends it to George — the brief locks
+          and your {crewNouns} {crewQuantifier} read from here.
         </IntroParagraph>
         <p className="cabin-brief__time">
           Around <strong>{remainingMinutes || totalMinutes} minutes</strong>{" "}

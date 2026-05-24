@@ -35,7 +35,7 @@ import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
 import BeveragesFields from "../../../../components/cabin/brief/BeveragesFields";
-import GroupVoicesPanel from "../../../../components/cabin/brief/GroupVoicesPanel";
+import SharedBriefIndicator from "../../../../components/cabin/brief/SharedBriefIndicator";
 import WishlistPanel from "../../../../components/cabin/brief/WishlistPanel";
 
 export default function BeveragesSectionPage() {
@@ -53,10 +53,9 @@ export default function BeveragesSectionPage() {
         to count, ever.
       </IntroParagraph>
 
-      {/* 2026-05-23 — Multi-user Brief (Phase 3, MUB-A): live group
-          voices panel. Principal sees guest cellar contributions
-          before settling their own beverages picks. */}
-      <GroupVoicesPanel sectionKey="beverages" />
+      {/* 2026-05-23 — SHARED BRIEF MODEL: form below IS the
+          shared document; this indicator shows who edited last. */}
+      <SharedBriefIndicator sectionKey="beverages" />
 
       <BriefFormShell
         sectionKey="beverages"

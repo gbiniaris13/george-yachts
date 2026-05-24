@@ -19,7 +19,6 @@ import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import { writeAudit, AUDIT_ACTIONS } from "@/lib/cabin/audit";
 import { notifyGeorge } from "@/lib/cabin/notify";
 import { sendBriefSubmittedEmail } from "@/lib/cabin/email";
-import { summariseContribution } from "@/lib/cabin/contributions";
 
 export const runtime = "nodejs";
 
@@ -163,16 +162,11 @@ export async function POST() {
   // Both best-effort. The submission has ALREADY been recorded —
   // a failed nudge must not block the client's response.
 
-  // 2026-05-23 — Multi-user Brief (Phase 3). Pull every group
-  // contribution + member names so the notifications can present
-  // each guest's voice alongside the principal's brief.
-  const contribRows = await dbQuery(
-    db
-      .from("cabin_brief_contributions")
-      .select("section_key, member_id, data")
-      .eq("cabin_id", cabinId),
-  );
-  // MUB-C: also pull wishlist items.
+  // 2026-05-23 — SHARED BRIEF MODEL: the canonical brief now
+  // contains everyone's edits (last-edit wins, attributed). We
+  // only need to pull the wishlist items here — they're the one
+  // truly per-member additive surface, and George wants them
+  // surfaced explicitly so the hostess can shop them.
   const wishlistRows = await dbQuery(
     db
       .from("cabin_brief_wishlist_items")
@@ -182,9 +176,6 @@ export async function POST() {
   );
 
   const contributorIds = new Set();
-  for (const r of contribRows ?? []) {
-    if (r.member_id) contributorIds.add(r.member_id);
-  }
   for (const w of wishlistRows ?? []) {
     if (w.added_by_member_id) contributorIds.add(w.added_by_member_id);
   }
@@ -204,22 +195,18 @@ export async function POST() {
     );
   }
 
-  // Bucket per section then build the email's voices payload.
+  // Bundle wishlist items per section as a single pseudo-voice
+  // each so the existing sendBriefSubmittedEmail "voices" UI
+  // renders them as bullet lists. The shape stays the same as
+  // before — the absence of per-member contributions just means
+  // fewer voices.
   const SECTION_TITLES = {
     dining: "At the Table",
     beverages: "In the Cellar",
   };
   const groupContributions = [];
   for (const sectionKey of ["dining", "beverages"]) {
-    const voices = (contribRows ?? [])
-      .filter((r) => r.section_key === sectionKey)
-      .map((r) => ({
-        name: contributorNameById[r.member_id] || "(member)",
-        highlights: summariseContribution(sectionKey, r.data ?? {}),
-      }));
-    // MUB-C: append a "Specific items requested" voice when the
-    // wishlist has entries for this section. Renders as a single
-    // pseudo-voice in the same group with the items as highlights.
+    const voices = [];
     const wishlistForSection = (wishlistRows ?? []).filter(
       (w) => w.section_key === sectionKey,
     );
@@ -245,18 +232,17 @@ export async function POST() {
     }
   }
 
-  // Telegram lines — short, scannable. Each voice gets one line
-  // with up to two highlights (the rest land in the email body).
+  // Telegram lines — short summary of any wishlist requests.
   const telegramVoiceLines = [];
   for (const section of groupContributions) {
     if (telegramVoiceLines.length === 0) {
-      telegramVoiceLines.push(""); // visual gap before voices
-      telegramVoiceLines.push("Voices from the group:");
+      telegramVoiceLines.push("");
+      telegramVoiceLines.push("Specific items requested:");
     }
     for (const v of section.voices) {
       const tail = (v.highlights || []).slice(0, 2).join(" · ");
       telegramVoiceLines.push(
-        `· ${v.name} (${section.sectionTitle})${tail ? " — " + tail : ""}`,
+        `· ${section.sectionTitle}${tail ? " — " + tail : ""}`,
       );
     }
   }

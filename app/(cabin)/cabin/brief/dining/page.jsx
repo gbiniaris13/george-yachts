@@ -23,7 +23,7 @@ import AllergyAlert from "../../../../components/cabin/brief/AllergyAlert";
 import SampleMenuPreview from "../../../../components/cabin/brief/SampleMenuPreview";
 import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
 import DiningFields from "../../../../components/cabin/brief/DiningFields";
-import GroupVoicesPanel from "../../../../components/cabin/brief/GroupVoicesPanel";
+import SharedBriefIndicator from "../../../../components/cabin/brief/SharedBriefIndicator";
 import WishlistPanel from "../../../../components/cabin/brief/WishlistPanel";
 
 export default function DiningSectionPage() {
@@ -82,10 +82,12 @@ export default function DiningSectionPage() {
           the charterer isn't filling in a vacuum. */}
       <SampleMenuPreview />
 
-      {/* 2026-05-23 — Multi-user Brief (Phase 3, MUB-A): live group
-          voices panel. Principal sees what guests have already
-          contributed before filling/adjusting their own brief. */}
-      <GroupVoicesPanel sectionKey="dining" />
+      {/* 2026-05-23 — SHARED BRIEF MODEL: the form below IS the
+          shared document. A small "Last edited by X · Y ago" line
+          tells whoever opened the page what's been added before
+          them. Replaces the previous GroupVoicesPanel — now the
+          form itself is the live group voice. */}
+      <SharedBriefIndicator sectionKey="dining" />
 
       <BriefFormShell
         sectionKey="dining"
