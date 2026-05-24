@@ -68,7 +68,13 @@ export default function AtTheTableContributionPage() {
         apply.
       </IntroParagraph>
 
-      <AllergyAlert />
+      {/* 2026-05-23 — source="self" reads the calling guest's
+          OWN allergies from /api/cabin/me (personal_details).
+          Without this prop the alert would fetch the principal's
+          /api/cabin/brief/health — Vasilis would see "none" even
+          though he'd written "Nuts" in his own /me page, a real
+          safety hazard George caught on the friend test. */}
+      <AllergyAlert source="self" />
       <SampleMenuPreview />
 
       <BriefFormShell

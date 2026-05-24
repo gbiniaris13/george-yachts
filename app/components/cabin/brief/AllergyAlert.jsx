@@ -25,7 +25,20 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-export default function AllergyAlert() {
+// 2026-05-23 — Multi-user Brief (Phase 3): the alert now has two
+// data sources.
+//   • source="health" (default) — the principal's brief health
+//     section. Shows the group's collective allergy / medical
+//     info on every food-related page of the principal brief.
+//   • source="self"             — the calling member's OWN
+//     personal_details from /api/cabin/me. Used on the guest
+//     contribution pages (/cabin/me/at-the-table,
+//     /cabin/me/in-the-cellar) so a guest like Vasilis who
+//     entered "Nuts" in his /me page sees HIS allergy reflected
+//     at the top — not the principal's (which would read as
+//     blank to him and create a dangerous false sense that the
+//     boat doesn't know about his allergy).
+export default function AllergyAlert({ source = "health" }) {
   const [data, setData] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
@@ -33,6 +46,37 @@ export default function AllergyAlert() {
     let cancelled = false;
     (async () => {
       try {
+        if (source === "self") {
+          const r = await fetch("/api/cabin/me", {
+            credentials: "same-origin",
+          });
+          if (!r.ok) throw new Error("load-failed");
+          const j = await r.json();
+          if (cancelled) return;
+          const pd = j?.member?.personal_details ?? {};
+          // Compose the guest-side payload into the same shape the
+          // render code below expects. medications + medical
+          // conditions don't live on /me yet — leave them blank.
+          // dietary_preferences is an array; render alongside the
+          // free-text allergies field as a comma-joined sentence.
+          const dietary = Array.isArray(pd.dietary_preferences)
+            ? pd.dietary_preferences.filter(Boolean).join(", ")
+            : "";
+          const allergiesText = [
+            (pd.allergies_dietary || "").trim(),
+            dietary,
+          ]
+            .filter(Boolean)
+            .join(" · ");
+          setData({
+            allergies_dietary: allergiesText,
+            medical_conditions: "",
+            medications_onboard: "",
+          });
+          setLoaded(true);
+          return;
+        }
+
         const r = await fetch("/api/cabin/brief/health", {
           credentials: "same-origin",
         });
@@ -52,7 +96,7 @@ export default function AllergyAlert() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [source]);
 
   if (!loaded) return null;
 
@@ -61,15 +105,35 @@ export default function AllergyAlert() {
   const conditions = (data?.medical_conditions || "").trim();
   const anyContent = allergies || meds || conditions;
 
+  // Copy + edit-link targets differ between the two sources.
+  const isSelf = source === "self";
+  const chipLabel = isSelf
+    ? "Your allergies & dietary"
+    : "Allergies & medical";
+  const editHref = isSelf ? "/cabin/me" : "/cabin/brief/health";
+  const editLabel = isSelf
+    ? anyContent
+      ? "Edit in your details"
+      : "Add in your details"
+    : anyContent
+      ? "Edit in Health & Safety"
+      : "Add in Health & Safety";
+  const emptyCopy = isSelf
+    ? "You haven't recorded any allergies or dietary notes in your own details yet. If you eat freely with no concerns, that's information too — leave your details blank and the chef will treat you as a clean sheet."
+    : "You haven't added any allergies or medical notes yet. If everyone in the group eats freely with no concerns, that's information too — leave Health & Safety blank and we'll treat it as a clean sheet.";
+  const footerCopy = isSelf
+    ? "The chef and hostess read this before every meal. If anything here is life-threatening, please add it to your details — the captain's printed crew-list copy lives there."
+    : "The chef and hostess read this before every meal. If any of it is life-threatening, please add it to Health & Safety as well — that's where the captain's printed copy lives.";
+
   return (
     <aside
       className={"cabin-allergy-alert" + (anyContent ? " has-content" : "")}
       role="note"
     >
       <header>
-        <span className="cabin-allergy-alert__chip">Allergies & medical</span>
-        <Link href="/cabin/brief/health" className="cabin-allergy-alert__edit">
-          {anyContent ? "Edit in Health & Safety" : "Add in Health & Safety"}
+        <span className="cabin-allergy-alert__chip">{chipLabel}</span>
+        <Link href={editHref} className="cabin-allergy-alert__edit">
+          {editLabel}
         </Link>
       </header>
       {anyContent ? (
@@ -89,19 +153,10 @@ export default function AllergyAlert() {
               <strong>Medications on board:</strong> {meds}
             </p>
           )}
-          <p className="cabin-allergy-alert__footer">
-            The chef and hostess read this before every meal. If any of
-            it is life-threatening, please add it to Health & Safety as
-            well — that's where the captain's printed copy lives.
-          </p>
+          <p className="cabin-allergy-alert__footer">{footerCopy}</p>
         </div>
       ) : (
-        <p className="cabin-allergy-alert__empty">
-          You haven&apos;t added any allergies or medical notes yet. If
-          everyone in the group eats freely with no concerns, that&apos;s
-          information too — leave Health & Safety blank and we&apos;ll
-          treat it as a clean sheet.
-        </p>
+        <p className="cabin-allergy-alert__empty">{emptyCopy}</p>
       )}
 
       <style jsx>{`
