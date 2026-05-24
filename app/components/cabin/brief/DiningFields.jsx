@@ -76,6 +76,16 @@ export default function DiningFields({ register, hasMinors }) {
           { value: "light_healthy",  label: "Light & healthy — fruit, granola, smoothies" },
         ]}
       />
+      {/* 2026-05-24 — Christos pass: free-text "other" after each
+          multiple-choice food subsection. We may not have included
+          your style on the list. */}
+      <OpenTextarea
+        label="Other breakfast styles or special requests"
+        name="breakfast_styles_other"
+        register={register}
+        rows={2}
+        placeholder="e.g. Açai bowls, Israeli shakshuka, Japanese rice & miso, anything we missed"
+      />
 
       <CheckboxGroup
         name="breakfast_items"
@@ -145,31 +155,20 @@ export default function DiningFields({ register, hasMinors }) {
           { value: "juice",           label: "Juice (kind in specifics)" },
         ]}
       />
+      <OpenTextarea
+        label="Other coffees, teas, or specific drink requests"
+        name="coffee_tea_other"
+        register={register}
+        rows={2}
+        placeholder="e.g. matcha latte, chai, specific tea brand, oat-milk flat white"
+      />
 
-      <h2 className="brief-subhead">Service preferences</h2>
-      <p className="brief-note"><em>How the chef plates your meals.</em></p>
-      <RadioGroup
-        name="lunch_service"
-        label="Lunch"
-        register={register}
-        options={[
-          { value: "light",        label: "Light — grazing platters, salads" },
-          { value: "cold",         label: "Cold — gazpacho, carpaccio, ceviche" },
-          { value: "hot",          label: "Hot — plated entrée" },
-          { value: "family_style", label: "Family style — served in the centre" },
-        ]}
-      />
-      <RadioGroup
-        name="dinner_service"
-        label="Dinner"
-        register={register}
-        options={[
-          { value: "light",        label: "Light — appetisers, mezze" },
-          { value: "cold",         label: "Cold — tartare, summer dishes" },
-          { value: "hot",          label: "Hot — plated entrée" },
-          { value: "family_style", label: "Family style — served in the centre" },
-        ]}
-      />
+      {/* 2026-05-24 — Christos pass: service preferences removed
+          from the shared dining brief. George: "Service preferences,
+          το βγάζεις τελείως, θα το έχει μόνο ο main charterer ...
+          γιατί αν πούνε πέντε διαφορετικά τι θα κάνει το crew."
+          Schema fields lunch_service / dinner_service stay in
+          lib/cabin/schemas.js for back-compat. */}
 
       <h2 className="brief-subhead">Lunch & dinner — what your group enjoys</h2>
       <p className="brief-note">

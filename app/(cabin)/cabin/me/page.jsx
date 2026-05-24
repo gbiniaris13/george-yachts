@@ -52,6 +52,47 @@ const DIETARY_OPTIONS = [
   "No red meat",
 ];
 
+// 2026-05-24 — Christos pass: country-code picker for the mobile
+// field. Common GY-clientele dial codes first (Greece for hosts,
+// US/UK/EU for typical guests), then a long tail for everywhere
+// else. The select stores the +CC; the local number lives in a
+// separate text input; we join them with a space for storage.
+const COUNTRY_CODES = [
+  { code: "+30",  flag: "🇬🇷", label: "Greece" },
+  { code: "+1",   flag: "🇺🇸", label: "US / Canada" },
+  { code: "+44",  flag: "🇬🇧", label: "United Kingdom" },
+  { code: "+33",  flag: "🇫🇷", label: "France" },
+  { code: "+49",  flag: "🇩🇪", label: "Germany" },
+  { code: "+39",  flag: "🇮🇹", label: "Italy" },
+  { code: "+34",  flag: "🇪🇸", label: "Spain" },
+  { code: "+41",  flag: "🇨🇭", label: "Switzerland" },
+  { code: "+31",  flag: "🇳🇱", label: "Netherlands" },
+  { code: "+32",  flag: "🇧🇪", label: "Belgium" },
+  { code: "+43",  flag: "🇦🇹", label: "Austria" },
+  { code: "+45",  flag: "🇩🇰", label: "Denmark" },
+  { code: "+46",  flag: "🇸🇪", label: "Sweden" },
+  { code: "+47",  flag: "🇳🇴", label: "Norway" },
+  { code: "+351", flag: "🇵🇹", label: "Portugal" },
+  { code: "+353", flag: "🇮🇪", label: "Ireland" },
+  { code: "+357", flag: "🇨🇾", label: "Cyprus" },
+  { code: "+90",  flag: "🇹🇷", label: "Türkiye" },
+  { code: "+972", flag: "🇮🇱", label: "Israel" },
+  { code: "+971", flag: "🇦🇪", label: "UAE" },
+  { code: "+966", flag: "🇸🇦", label: "Saudi Arabia" },
+  { code: "+974", flag: "🇶🇦", label: "Qatar" },
+  { code: "+965", flag: "🇰🇼", label: "Kuwait" },
+  { code: "+852", flag: "🇭🇰", label: "Hong Kong" },
+  { code: "+65",  flag: "🇸🇬", label: "Singapore" },
+  { code: "+61",  flag: "🇦🇺", label: "Australia" },
+  { code: "+7",   flag: "🇷🇺", label: "Russia" },
+  { code: "+86",  flag: "🇨🇳", label: "China" },
+  { code: "+81",  flag: "🇯🇵", label: "Japan" },
+  { code: "+91",  flag: "🇮🇳", label: "India" },
+  { code: "+55",  flag: "🇧🇷", label: "Brazil" },
+  { code: "+52",  flag: "🇲🇽", label: "Mexico" },
+  { code: "+27",  flag: "🇿🇦", label: "South Africa" },
+];
+
 // 2026-05-22 — Crew List (port-authority) gender options.
 const GENDER_OPTIONS = [
   { value: "female",         label: "Female" },
@@ -78,6 +119,7 @@ export default function CabinMePage() {
     passport_number: "",
     passport_expiry: "",
     mobile: "",
+    mobile_cc: "+30",
     // ----- Chef + captain niceties (optional)
     allergies_dietary: "",
     dietary_preferences: [],
@@ -106,6 +148,12 @@ export default function CabinMePage() {
           passport_number: pd.passport_number ?? "",
           passport_expiry: pd.passport_expiry ?? "",
           mobile: pd.mobile ?? "",
+          // Derive CC from the stored mobile string if it starts
+          // with a +; default to +30 (most of our customers).
+          mobile_cc: (() => {
+            const m = (pd.mobile || "").match(/^(\+\d{1,4})/);
+            return m ? m[1] : "+30";
+          })(),
           allergies_dietary: pd.allergies_dietary ?? "",
           dietary_preferences: Array.isArray(pd.dietary_preferences)
             ? pd.dietary_preferences
@@ -401,19 +449,57 @@ export default function CabinMePage() {
             </label>
           </div>
 
-          <label className="me-field">
+          {/* 2026-05-24 — Christos pass: country-code picker.
+              Christos typed +30 in the mobile field, the number
+              never picked it up — phone numbers without an
+              explicit country code aren't dialable from a Greek
+              SIM if the captain is calling from abroad. Split
+              into a Greek/US/UK/etc. picker + local-number field.
+              Combined value persists as a single string in DB so
+              the existing GET/PUT contract is unchanged. */}
+          <div className="me-field">
             <span>Mobile phone</span>
-            <input
-              type="tel"
-              inputMode="tel"
-              autoComplete="tel"
-              value={form.mobile}
-              placeholder="e.g. +30 694 000 0000"
-              maxLength={32}
-              onChange={(e) => setForm({ ...form, mobile: e.target.value })}
-              required
-            />
-          </label>
+            <div className="me-mobile-row">
+              <select
+                className="me-mobile-cc"
+                aria-label="Country code"
+                value={form.mobile_cc || "+30"}
+                onChange={(e) => {
+                  const cc = e.target.value;
+                  const local = form.mobile.replace(/^\+\d{1,4}\s*/, "");
+                  setForm({
+                    ...form,
+                    mobile_cc: cc,
+                    mobile: `${cc} ${local}`.trim(),
+                  });
+                }}
+              >
+                {COUNTRY_CODES.map((c) => (
+                  <option key={c.code} value={c.code}>
+                    {c.flag} {c.code} {c.label}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel-national"
+                className="me-mobile-num"
+                value={form.mobile.replace(/^\+\d{1,4}\s*/, "")}
+                placeholder="6940 000 000"
+                maxLength={24}
+                onChange={(e) => {
+                  const local = e.target.value;
+                  const cc = form.mobile_cc || "+30";
+                  setForm({
+                    ...form,
+                    mobile: local ? `${cc} ${local}` : "",
+                  });
+                }}
+                required
+              />
+            </div>
+          </div>
 
           <p className="me-hint" style={{ marginTop: 4 }}>
             Stored encrypted in your Cabin — visible to you, decrypted
@@ -889,6 +975,30 @@ export default function CabinMePage() {
            CTA replaces the two contribution cards. Same boutique
            visual weight as the principal's Save button so guests
            feel invited to participate, not relegated. */
+        /* 2026-05-24 — Country-code + local mobile split. The
+           select carries the +CC; the input holds the local part.
+           16px font on both so iOS Safari doesn't auto-zoom. */
+        .me-mobile-row {
+          display: flex;
+          gap: 8px;
+          align-items: stretch;
+        }
+        .me-mobile-cc {
+          flex: 0 0 auto;
+          min-width: 110px;
+          max-width: 160px;
+          font-size: 16px;
+          padding: 10px 8px;
+          border: 1px solid rgba(13, 27, 42, 0.18);
+          background: #ffffff;
+          color: var(--gy-navy);
+          font-family: var(--gy-font-body);
+          border-radius: 3px;
+        }
+        .me-mobile-num {
+          flex: 1;
+          min-width: 0;
+        }
         .me-private-banner {
           margin: 24px 0 18px 0;
           padding: 14px 18px;
