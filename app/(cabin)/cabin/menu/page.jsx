@@ -145,6 +145,24 @@ export default async function MenuPage() {
           border: 1px solid rgba(13,27,42,0.08);
           padding: 32px 28px 28px;
         }
+        /* 2026-05-24 — Christos pass: on phones the inner padding
+           felt cramped against the section headers + the page
+           wrap padding (18px) outside it, making dish names look
+           stuck to the left edge. Bump inner padding and centre
+           the headers a touch so they breathe. */
+        @media (max-width: 599.98px) {
+          .mn-wrap {
+            padding: 24px 18px 20px;
+          }
+          .mn-section__name {
+            text-align: center;
+            letter-spacing: 3px;
+          }
+          .mn-section__dishes li,
+          .mn-section__dish-with-photo {
+            padding: 0 4px;
+          }
+        }
         .mn-title {
           font-family: var(--gy-font-editorial);
           font-size: 26px;

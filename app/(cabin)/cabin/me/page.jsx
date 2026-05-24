@@ -749,19 +749,29 @@ export default function CabinMePage() {
         )}
 
         {err && <p className="me-err" role="alert">{err}</p>}
-        {ok && <p className="me-ok">Saved — thank you.</p>}
+
+        {/* 2026-05-24 — Christos pass: after a successful save,
+            render a green confirmation panel with a clear "Go
+            back to the Cabin" CTA so the guest knows what to do
+            next. Replaces the silent inline "Saved" message. */}
+        {ok && (
+          <div className="me-saved-panel" aria-live="polite">
+            <div className="me-saved-panel__eyebrow">Saved</div>
+            <p className="me-saved-panel__copy">
+              Your information is saved — thank you. The principal
+              charterer reviews every member&apos;s details before
+              the brief goes to George.
+            </p>
+            <Link href="/cabin" className="me-saved-panel__cta">
+              Go back to the Cabin →
+            </Link>
+          </div>
+        )}
 
         <div className="me-actions">
           <Link href="/cabin" className="me-back">
             ← Back to your Cabin
           </Link>
-          {/* 2026-05-20 — Pass 6 (Domingo, Tyler): the saved state
-              still rendered as a full navy CTA — just slightly
-              dimmed. To a tester it looked clickable, and they
-              tapped Save again expecting confirmation. The saved
-              state is now a calm checkmark badge that is visibly a
-              status (not a button), while the dirty button keeps
-              its CTA weight. */}
           {!dirty && !busy ? (
             <span className="me-saved" aria-live="polite">
               <svg viewBox="0 0 20 20" width="14" height="14" aria-hidden focusable="false">
@@ -771,7 +781,7 @@ export default function CabinMePage() {
             </span>
           ) : (
             <button type="submit" disabled={busy} className="me-save">
-              {busy ? "Saving…" : "Save my details"}
+              {busy ? "Saving…" : "Save my information"}
             </button>
           )}
         </div>
@@ -978,6 +988,53 @@ export default function CabinMePage() {
         /* 2026-05-24 — Country-code + local mobile split. The
            select carries the +CC; the input holds the local part.
            16px font on both so iOS Safari doesn't auto-zoom. */
+        /* 2026-05-24 — Christos pass: post-save confirmation panel
+           with a clear "go back to Cabin" CTA. Green tone signals
+           success without competing with the navy Save button. */
+        .me-saved-panel {
+          margin: 18px 0 0 0;
+          padding: 18px 20px;
+          background: #F5FAF5;
+          border: 1px solid rgba(76, 138, 88, 0.55);
+          border-left: 3px solid #4C8A58;
+          border-radius: 3px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+        .me-saved-panel__eyebrow {
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 2.4px;
+          text-transform: uppercase;
+          color: #2D5C36;
+          font-weight: 700;
+        }
+        .me-saved-panel__copy {
+          margin: 0;
+          font-family: var(--gy-font-editorial);
+          font-size: 14px;
+          color: var(--gy-navy);
+          line-height: 1.6;
+        }
+        .me-saved-panel__cta {
+          align-self: flex-start;
+          background: #2D5C36;
+          color: #ffffff;
+          border: 1px solid #4C8A58;
+          padding: 13px 22px;
+          font-family: var(--gy-font-ui);
+          font-size: 11px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          text-decoration: none;
+          font-weight: 700;
+          border-radius: 3px;
+          min-height: 44px;
+          display: inline-flex;
+          align-items: center;
+        }
+        .me-saved-panel__cta:hover { background: #1F4426; }
         .me-mobile-row {
           display: flex;
           gap: 8px;

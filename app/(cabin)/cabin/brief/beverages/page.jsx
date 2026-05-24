@@ -57,10 +57,17 @@ export default function BeveragesSectionPage() {
           shared document; this indicator shows who edited last. */}
       <SharedBriefIndicator sectionKey="beverages" />
 
+      {/* 2026-05-24 — Christos pass: dropped `isLastSection` so
+          the "I'm done — send to George" button no longer renders
+          here for ANY caller. Guests saw it and were misled into
+          thinking they could submit on the principal's behalf;
+          the API rejected, the UI looked broken. Send-to-George
+          properly lives on /cabin/brief/review (principal-only),
+          which the NextStep wizard + readiness card both point
+          the principal to when the brief is ready. */}
       <BriefFormShell
         sectionKey="beverages"
         prevSection={{ key: "dining", title: "At the Table" }}
-        isLastSection
       >
         {({ register }) => <BeveragesFields register={register} />}
       </BriefFormShell>
