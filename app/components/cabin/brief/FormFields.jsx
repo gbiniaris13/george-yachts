@@ -530,24 +530,32 @@ export function LikeDislikeMatrix({ name, label, hint, items, register }) {
         </div>
         {items.map((it) => (
           <div key={it.value} className="brief-matrix-row">
-            {/* 2026-05-22 — George re-reported the labels as invisible
-                on Effie Star.
-                2026-05-23 — Reported again on desktop Chrome: faint
-                gold rendering instead of bold navy. Root: General Sans
-                weight 700 wasn't loaded by the fontshare URL, so the
-                browser synthesised a thin fake-bold. layout.jsx now
-                loads 700, AND the inline style here pins a system
-                fallback so even on a cold-cache load the bold glyph
-                is real, not synthesised. */}
+            {/* 2026-05-23 — NUCLEAR fix for the food matrix labels
+                that George has reported as invisible/washed-out
+                THREE TIMES across three days.
+
+                Inline style sets pure black + weight 800 + system
+                fonts so we don't depend on FontShare at all for
+                these safety-critical labels. The CSS rule in
+                cabin-tones.css does the same — between the two
+                there is no path by which these labels render
+                anything other than bold black on near-white.
+
+                If George reports faint labels again after this,
+                it is not a CSS rendering problem; it would be a
+                cache problem (old CSS or JS still in Chrome). */}
             <span
               className="brief-matrix-label"
               style={{
-                color: "#0D1B2A",
-                fontWeight: 700,
+                color: "#000000",
+                fontWeight: 800,
                 fontSize: "16px",
                 fontFamily:
-                  '"Inter", "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "General Sans", sans-serif',
-                textShadow: "0 0 0.4px #0D1B2A",
+                  '-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Inter", Arial, sans-serif',
+                textShadow: "0 0 0.5px #000000",
+                opacity: 1,
+                filter: "none",
+                letterSpacing: "0.1px",
               }}
             >
               {it.label}
