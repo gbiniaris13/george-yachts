@@ -24,6 +24,7 @@ import SampleMenuPreview from "../../../../components/cabin/brief/SampleMenuPrev
 import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
 import DiningFields from "../../../../components/cabin/brief/DiningFields";
 import SharedBriefIndicator from "../../../../components/cabin/brief/SharedBriefIndicator";
+import GuestAdditiveBanner from "../../../../components/cabin/brief/GuestAdditiveBanner";
 import WishlistPanel from "../../../../components/cabin/brief/WishlistPanel";
 
 export default function DiningSectionPage() {
@@ -109,6 +110,11 @@ export default function DiningSectionPage() {
           them. Replaces the previous GroupVoicesPanel — now the
           form itself is the live group voice. */}
       <SharedBriefIndicator sectionKey="dining" />
+
+      {/* 2026-05-24 — Angeliki pass: explain to guests that their
+          edits ADD to the group's picks; only the principal can
+          remove on review. Server-side mergeForGuest enforces. */}
+      <GuestAdditiveBanner />
 
       <BriefFormShell
         sectionKey="dining"

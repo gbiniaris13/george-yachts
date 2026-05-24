@@ -13,6 +13,7 @@ import { readSessionFromCookies, pickActiveCabinId, resolveMembership } from "@/
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import { SECTION_SCHEMAS, sectionCompleteness } from "@/lib/cabin/schemas";
 import { normalizeBriefPayload } from "@/lib/cabin/brief-normalize";
+import { mergeForGuest, SECTION_PRINCIPAL_ONLY_FIELDS } from "@/lib/cabin/brief-merge";
 import { writeAudit, AUDIT_ACTIONS } from "@/lib/cabin/audit";
 import { recomputeCabinCompletion } from "@/lib/cabin/prefill";
 
@@ -171,7 +172,45 @@ export async function PUT(req, ctx) {
     );
   }
 
-  const completeness = sectionCompleteness(a.section, parsed.data);
+  // 2026-05-24 — Angeliki pass: for non-principal saves on a
+  // SHARED section, merge additively into existing data instead
+  // of overwriting. Guests can ADD their choices (fruits in
+  // snacks, lamb in proteins) but can never silently delete
+  // what another member added. The principal still gets full
+  // replace semantics — they're the editor of last resort on
+  // /cabin/brief/review.
+  let dataToSave = parsed.data;
+  const isPrincipalActor =
+    a.member.role === "principal_charterer" ||
+    (await (async () => {
+      const dbRoleCheck = getCabinDb();
+      const memberRow = await dbQuery(
+        dbRoleCheck
+          .from("cabin_members")
+          .select("is_brief_admin")
+          .eq("id", a.member.member_id)
+          .maybeSingle(),
+      );
+      return Boolean(memberRow?.is_brief_admin);
+    })());
+  if (!isPrincipalActor) {
+    const existing = await dbQuery(
+      getCabinDb()
+        .from("cabin_brief_sections")
+        .select("data")
+        .eq("cabin_id", a.cabinId)
+        .eq("section_key", a.section)
+        .maybeSingle(),
+    );
+    const principalOnlyKeys = SECTION_PRINCIPAL_ONLY_FIELDS[a.section] ?? [];
+    dataToSave = mergeForGuest(
+      existing?.data ?? {},
+      parsed.data,
+      principalOnlyKeys,
+    );
+  }
+
+  const completeness = sectionCompleteness(a.section, dataToSave);
   // 2026-05-22 — Threshold dropped from 30 → 21 (≥3 populated
   // values per section). George filled the entire Itinerary
   // section after the activities-extras removal — pace,
@@ -190,7 +229,7 @@ export async function PUT(req, ctx) {
       {
         cabin_id: a.cabinId,
         section_key: a.section,
-        data: parsed.data,
+        data: dataToSave,
         completed,
         last_edited_at: new Date().toISOString(),
         last_edited_by_email: a.session.email,

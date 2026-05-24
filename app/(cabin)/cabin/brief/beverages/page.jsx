@@ -48,6 +48,7 @@ import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
 import BeveragesFields from "../../../../components/cabin/brief/BeveragesFields";
 import SharedBriefIndicator from "../../../../components/cabin/brief/SharedBriefIndicator";
+import GuestAdditiveBanner from "../../../../components/cabin/brief/GuestAdditiveBanner";
 import WishlistPanel from "../../../../components/cabin/brief/WishlistPanel";
 
 export default function BeveragesSectionPage() {
@@ -88,6 +89,11 @@ export default function BeveragesSectionPage() {
       {/* 2026-05-23 — SHARED BRIEF MODEL: form below IS the
           shared document; this indicator shows who edited last. */}
       <SharedBriefIndicator sectionKey="beverages" />
+
+      {/* 2026-05-24 — Angeliki pass: explain to guests that their
+          edits ADD to the group's picks; only the principal can
+          remove on review. Server-side mergeForGuest enforces. */}
+      <GuestAdditiveBanner />
 
       {/* 2026-05-24 — Christos pass: dropped `isLastSection` so
           the "I'm done — send to George" button no longer renders
