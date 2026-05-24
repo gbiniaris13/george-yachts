@@ -270,7 +270,7 @@ export default async function CabinHomePage() {
     "beverages",
   ];
   const briefSectionsRows = await dbQuery(
-    db
+    db2
       .from("cabin_brief_sections")
       .select("section_key, completed")
       .eq("cabin_id", cabinId)
