@@ -34,6 +34,11 @@ export default function DiningSectionPage() {
   // prompt. With minors → the block surfaces with a soft intro so
   // it doesn't appear out of nowhere.
   const [hasMinors, setHasMinors] = useState(null); // null = unknown
+  // 2026-05-24 — Christos pass (item 3): fetch the viewer's role so
+  // we can render the principal-only service-style block at the
+  // bottom of the form ONLY for the principal charterer. Guests
+  // never see it.
+  const [isPrincipal, setIsPrincipal] = useState(false);
   useEffect(() => {
     let cancelled = false;
     fetch("/api/cabin/has-minors")
@@ -46,6 +51,15 @@ export default function DiningSectionPage() {
       .catch(() => {
         if (!cancelled) setHasMinors(false);
       });
+    fetch("/api/cabin/me")
+      .then((r) => r.json())
+      .then((j) => {
+        if (cancelled) return;
+        if (j?.ok && j?.member?.role === "principal_charterer") {
+          setIsPrincipal(true);
+        }
+      })
+      .catch(() => {});
     return () => {
       cancelled = true;
     };
@@ -101,7 +115,13 @@ export default function DiningSectionPage() {
         prevSection={{ key: "life_aboard", title: "Life Aboard" }}
         nextSection={{ key: "beverages", title: "In the Cellar" }}
       >
-        {({ register }) => <DiningFields register={register} hasMinors={hasMinors} />}
+        {({ register }) => (
+          <DiningFields
+            register={register}
+            hasMinors={hasMinors}
+            isPrincipal={isPrincipal}
+          />
+        )}
       </BriefFormShell>
 
       {/* 2026-05-23 — MUB-C: shared specific-items wishlist. */}

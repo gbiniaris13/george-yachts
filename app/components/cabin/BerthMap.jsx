@@ -215,11 +215,54 @@ export default function BerthMap({
       }
 
       mapRef.current = map;
+
+      // 2026-05-24 — Christos pass: bulletproof tile rendering.
+      // Common Leaflet issue — if the container measures 0×0 at
+      // init (because a parent is still animating in, or display
+      // changed after first paint), tiles never render until we
+      // call invalidateSize(). We trigger it on the next paint
+      // tick AND on a ResizeObserver so any subsequent layout
+      // change (orientation flip, cabin-shell mount cascade,
+      // CSS grid reflow) re-asks Leaflet to remeasure and paint.
+      const armInvalidate = () => {
+        if (mapRef.current) {
+          try {
+            mapRef.current.invalidateSize();
+          } catch {
+            /* map may already be removed */
+          }
+        }
+      };
+      // Defer to next paint so layout has settled.
+      const rafId = requestAnimationFrame(() => {
+        armInvalidate();
+        // Belt-and-braces: also re-check ~600ms later for any
+        // delayed cascade animations finishing after RAF.
+        setTimeout(armInvalidate, 600);
+      });
+      // ResizeObserver re-paints tiles on container resize
+      // (orientation change, address-bar collapse on iOS, etc.).
+      let ro = null;
+      if (typeof ResizeObserver !== "undefined" && containerRef.current) {
+        ro = new ResizeObserver(armInvalidate);
+        ro.observe(containerRef.current);
+      }
+      // Stash cleanup refs on the map instance so the return
+      // function below can tear them down without a new closure.
+      map._gyInvalidateCleanup = () => {
+        cancelAnimationFrame(rafId);
+        if (ro) ro.disconnect();
+      };
     })();
 
     return () => {
       cancelled = true;
       if (mapRef.current) {
+        try {
+          mapRef.current._gyInvalidateCleanup?.();
+        } catch {
+          /* ignore */
+        }
         mapRef.current.remove();
         mapRef.current = null;
       }
@@ -321,10 +364,16 @@ export default function BerthMap({
              iPhone SE2 (375×667) ate ~48% of viewport AFTER the user
              scrolled to it. clamp() respects small screens (min
              220px so the pin always has room) and grows up to 380px
-             on tall screens — never more than 45% of viewport. */
+             on tall screens — never more than 45% of viewport.
+             2026-05-24 — Christos pass: explicit min-height + width
+             belt-and-braces. If any future luxury rule shrinks the
+             container, Leaflet still has a paintable canvas. */
           height: clamp(220px, 45vh, 380px);
+          min-height: 220px;
+          width: 100%;
           background: #e9e4d4;
           position: relative;
+          display: block;
         }
         .berth-map--full .berth-map__canvas {
           height: 62vh;

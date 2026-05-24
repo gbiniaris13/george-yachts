@@ -32,25 +32,9 @@ import { firstNameFromDisplayName } from "@/lib/cabin/format";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
 import DateOfBirthPicker from "../../../components/cabin/DateOfBirthPicker";
 
-const SWIMS_OPTIONS = [
-  { value: "confident", label: "Confident swimmer" },
-  { value: "some",      label: "Some — comfortable with help" },
-  { value: "non_swimmer", label: "Non-swimmer" },
-  { value: "prefer_not_say", label: "Prefer not to say" },
-];
-
-const DIETARY_OPTIONS = [
-  "Vegetarian",
-  "Vegan",
-  "Pescatarian",
-  "Gluten-free",
-  "Lactose-free",
-  "Halal",
-  "Kosher",
-  "No pork",
-  "No shellfish",
-  "No red meat",
-];
+// 2026-05-24 — Christos pass (item 2): SWIMS_OPTIONS and
+// DIETARY_OPTIONS moved to /cabin/me/private — they only matter
+// for the private health/dietary form which now lives there.
 
 // 2026-05-24 — Christos pass: country-code picker for the mobile
 // field. Common GY-clientele dial codes first (Greece for hosts,
@@ -111,6 +95,11 @@ export default function CabinMePage() {
 
   // Local form state — initialised from server on mount, diffed
   // against initial below to drive the disabled state of Save.
+  // 2026-05-24 — Christos pass (item 2): private health/dietary
+  // fields (allergies_dietary, dietary_preferences, swims,
+  // mobility_notes, consent_share_with_crew) live on
+  // /cabin/me/private. NOT tracked here so this page's Save
+  // cannot accidentally overwrite them.
   const [form, setForm] = useState({
     // ----- Crew-list essentials (mandatory)
     date_of_birth: "",
@@ -120,15 +109,10 @@ export default function CabinMePage() {
     passport_expiry: "",
     mobile: "",
     mobile_cc: "+30",
-    // ----- Chef + captain niceties (optional)
-    allergies_dietary: "",
-    dietary_preferences: [],
-    swims: "",
-    mobility_notes: "",
+    // ----- Aboard the yacht (social, OK to be visible across group)
     cabin_pairing: "",
     special_dates_during_charter: "",
     anything_else: "",
-    consent_share_with_crew: false,
   });
   const [initial, setInitial] = useState(form);
 
@@ -154,16 +138,9 @@ export default function CabinMePage() {
             const m = (pd.mobile || "").match(/^(\+\d{1,4})/);
             return m ? m[1] : "+30";
           })(),
-          allergies_dietary: pd.allergies_dietary ?? "",
-          dietary_preferences: Array.isArray(pd.dietary_preferences)
-            ? pd.dietary_preferences
-            : [],
-          swims: pd.swims ?? "",
-          mobility_notes: pd.mobility_notes ?? "",
           cabin_pairing: pd.cabin_pairing ?? "",
           special_dates_during_charter: pd.special_dates_during_charter ?? "",
           anything_else: pd.anything_else ?? "",
-          consent_share_with_crew: Boolean(pd.consent_share_with_crew),
         };
         setMember(j.member);
         setForm(next);
@@ -221,17 +198,8 @@ export default function CabinMePage() {
     }
   }
 
-  function toggleDietary(label) {
-    setForm((f) => {
-      const has = f.dietary_preferences.includes(label);
-      return {
-        ...f,
-        dietary_preferences: has
-          ? f.dietary_preferences.filter((v) => v !== label)
-          : [...f.dietary_preferences, label],
-      };
-    });
-  }
+  // 2026-05-24 — Christos pass (item 2): toggleDietary helper
+  // moved to /cabin/me/private alongside the dietary chips.
 
   async function onSave(e) {
     e.preventDefault();
@@ -507,98 +475,35 @@ export default function CabinMePage() {
           </p>
         </div>
 
-        {/* 2026-05-24 — Christos pass (GDPR): all the health and
-            dietary fields below are PRIVATE to this member. Other
-            members of the cabin never see them. They reach George
-            and the captain/chef only — for safety planning. */}
-        <div className="me-private-banner">
-          <span className="me-private-banner__chip">Private to you</span>
-          <p className="me-private-banner__copy">
-            <em>
-              Everything below stays between you, George and the
-              crew — the rest of your group never sees these
-              answers. We need them for safety: the chef cooks
-              around your allergies, the captain plans for the
-              swim level your guests have, the hostess respects
-              the things you&apos;d rather not have aboard.
-            </em>
-          </p>
+        {/* 2026-05-24 — Christos pass (item 2): the health /
+            allergies / dietary / mobility / consent block was
+            moved off this page onto a dedicated /cabin/me/private
+            route. Christos wanted the privacy boundary to be a
+            wholly separate page rather than a banner-on-the-same-
+            page — that way it's visually obvious the answers
+            below it are for the crew's eyes only, not for the
+            other guests.
+
+            This page keeps: crew-list essentials (top, mandatory)
+            and the "Aboard the yacht" social bits (cabin pairing,
+            celebration, anything-else) which are perfectly fine
+            to be visible across the group. */}
+        <div className="me-private-link">
+          <div>
+            <div className="me-private-link__eyebrow">Private to you</div>
+            <p className="me-private-link__copy">
+              <em>
+                Health, allergies, dietary preferences and swimming
+                ability live on a separate page — only George and
+                the crew see those answers, never the rest of your
+                group.
+              </em>
+            </p>
+          </div>
+          <Link href="/cabin/me/private" className="me-private-link__cta">
+            Open my private notes →
+          </Link>
         </div>
-
-        <h2 className="me-subhead">Health, allergies &amp; dietary</h2>
-
-        <label className="me-field">
-          <span>Allergies & dietary notes</span>
-          <textarea
-            rows={3}
-            value={form.allergies_dietary}
-            placeholder="e.g. severe shellfish allergy · lactose intolerant · no nuts"
-            onChange={(e) =>
-              setForm({ ...form, allergies_dietary: e.target.value })
-            }
-          />
-          <em className="me-hint">
-            The chef adapts every menu around this — please be specific.
-          </em>
-        </label>
-
-        <fieldset className="me-fieldset">
-          <legend>Dietary preferences (tap any that apply)</legend>
-          <div className="me-chip-grid">
-            {DIETARY_OPTIONS.map((label) => {
-              const selected = form.dietary_preferences.includes(label);
-              return (
-                <button
-                  key={label}
-                  type="button"
-                  className={`me-chip${selected ? " me-chip--on" : ""}`}
-                  onClick={() => toggleDietary(label)}
-                >
-                  {label}
-                </button>
-              );
-            })}
-          </div>
-        </fieldset>
-
-        <fieldset className="me-fieldset">
-          <legend>Swimming</legend>
-          <div className="me-radio-stack">
-            {SWIMS_OPTIONS.map((opt) => (
-              <label key={opt.value} className="me-radio">
-                <input
-                  type="radio"
-                  name="swims"
-                  value={opt.value}
-                  checked={form.swims === opt.value}
-                  onChange={() => setForm({ ...form, swims: opt.value })}
-                />
-                <span>{opt.label}</span>
-              </label>
-            ))}
-          </div>
-          <em className="me-hint">
-            Helps the crew quietly look out for everyone in the water.
-          </em>
-        </fieldset>
-
-        <label className="me-field">
-          <span>Mobility or medical notes (private to the crew)</span>
-          <textarea
-            rows={2}
-            value={form.mobility_notes}
-            placeholder="e.g. recent knee surgery — slow with the swim ladder"
-            onChange={(e) =>
-              setForm({ ...form, mobility_notes: e.target.value })
-            }
-          />
-        </label>
-
-        {/* 2026-05-22 — Old "For marina paperwork (optional)" block
-            removed. Nationality / passport number / passport expiry
-            / mobile all moved up into the mandatory Crew List block
-            at the top of the form. The privacy hint is now rendered
-            inside that block too. */}
 
         <h2 className="me-subhead">Aboard the yacht</h2>
 
@@ -639,32 +544,9 @@ export default function CabinMePage() {
           />
         </label>
 
-        {/* 2026-05-24 — Christos pass (GDPR consent). One explicit
-            tick the member adds to acknowledge they're sharing this
-            information with George Yachts and the captain/chef for
-            safety planning. Captured for our own audit; non-blocking
-            UI (Save still works without it) but visibly present. */}
-        <div className="me-consent">
-          <label>
-            <input
-              type="checkbox"
-              checked={Boolean(form.consent_share_with_crew)}
-              onChange={(e) =>
-                setForm({
-                  ...form,
-                  consent_share_with_crew: e.target.checked,
-                })
-              }
-            />
-            <span className="me-consent__copy">
-              <strong>I agree</strong> that George Yachts may share
-              the personal health and dietary information above
-              with my captain, chef and hostess for the duration of
-              this charter, for safety and provisioning planning.
-              The rest of my group does not see these answers.
-            </span>
-          </label>
-        </div>
+        {/* 2026-05-24 — GDPR consent checkbox moved to /cabin/me/
+            private alongside the health fields it gates. Keeps the
+            consent literally adjacent to what it covers. */}
 
         {member?.role && member.role !== "principal_charterer" && (
           <div className="me-contribute">
@@ -1056,6 +938,63 @@ export default function CabinMePage() {
           flex: 1;
           min-width: 0;
         }
+        /* 2026-05-24 — Christos pass (item 2): "Open my private
+           notes" panel replaces the inline health banner. Same
+           gold tone family as the crew-list block so the page
+           reads as two warm sections (mandatory paperwork +
+           private notes link) before the social bits. */
+        .me-private-link {
+          margin: 22px 0 6px 0;
+          padding: 18px 20px;
+          background: #FCFAF4;
+          border: 1px solid rgba(201, 168, 76, 0.32);
+          border-left: 3px solid var(--gy-gold);
+          border-radius: 3px;
+          display: flex;
+          gap: 18px;
+          align-items: center;
+          flex-wrap: wrap;
+          justify-content: space-between;
+        }
+        .me-private-link > div {
+          flex: 1;
+          min-width: 240px;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+        .me-private-link__eyebrow {
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 2.4px;
+          text-transform: uppercase;
+          color: var(--gy-gold);
+          font-weight: 600;
+        }
+        .me-private-link__copy {
+          margin: 0;
+          font-family: var(--gy-font-editorial);
+          font-size: 13.5px;
+          color: var(--gy-navy);
+          line-height: 1.6;
+        }
+        .me-private-link__cta {
+          background: var(--gy-navy);
+          color: var(--gy-ivory);
+          border: 1px solid var(--gy-gold);
+          padding: 13px 22px;
+          font-family: var(--gy-font-ui);
+          font-size: 11px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          text-decoration: none;
+          font-weight: 500;
+          min-height: 44px;
+          display: inline-flex;
+          align-items: center;
+          flex-shrink: 0;
+        }
+        .me-private-link__cta:hover { background: #142233; }
         .me-private-banner {
           margin: 24px 0 18px 0;
           padding: 14px 18px;

@@ -29,6 +29,17 @@ import {
   LikeDislikeMatrix,
 } from "./FormFields";
 
+// 2026-05-24 — Christos pass (item 3): service preferences (lunch
+// + dinner service style) came back as a PRINCIPAL-ONLY block at
+// the bottom. George's logic stands — "αν πούνε πέντε διαφορετικά
+// τι θα κάνει το crew" — so guests never see or change it. The
+// principal sees the block in their /cabin/brief/dining view and
+// chooses one tone per meal that the whole table follows.
+//
+// isPrincipal=true → renders the service-style RadioGroups.
+// isPrincipal=false (default) → block is omitted entirely so
+// guests never even see that the field exists.
+
 const FOOD_MATRIX_ITEMS = [
   { value: "fish",        label: "Fish" },
   { value: "shellfish",   label: "Shellfish" },
@@ -45,7 +56,7 @@ const FOOD_MATRIX_ITEMS = [
   { value: "salad",       label: "Salad" },
 ];
 
-export default function DiningFields({ register, hasMinors }) {
+export default function DiningFields({ register, hasMinors, isPrincipal = false }) {
   return (
     <>
       <h2 className="brief-subhead">When do you like to eat?</h2>
@@ -163,12 +174,68 @@ export default function DiningFields({ register, hasMinors }) {
         placeholder="e.g. matcha latte, chai, specific tea brand, oat-milk flat white"
       />
 
-      {/* 2026-05-24 — Christos pass: service preferences removed
-          from the shared dining brief. George: "Service preferences,
-          το βγάζεις τελείως, θα το έχει μόνο ο main charterer ...
-          γιατί αν πούνε πέντε διαφορετικά τι θα κάνει το crew."
-          Schema fields lunch_service / dinner_service stay in
-          lib/cabin/schemas.js for back-compat. */}
+      {/* 2026-05-24 — Christos pass (item 3): service-style block
+          re-introduced as PRINCIPAL-ONLY. George wanted it gone
+          from the shared form ("αν πούνε πέντε διαφορετικά τι θα
+          κάνει το crew") but kept in the principal's view so ONE
+          voice picks the tone of the table. Hidden entirely for
+          guests; their copy of /cabin/brief/dining doesn't even
+          render this section. */}
+      {isPrincipal && (
+        <>
+          <h2
+            className="brief-subhead"
+            style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}
+          >
+            <span>Service preferences</span>
+            <span
+              style={{
+                fontFamily: "var(--gy-font-ui)",
+                fontSize: 9.5,
+                letterSpacing: 2,
+                textTransform: "uppercase",
+                color: "var(--gy-gold)",
+                background: "rgba(201,168,76,0.12)",
+                border: "1px solid rgba(201,168,76,0.45)",
+                padding: "3px 8px",
+                borderRadius: 2,
+                fontWeight: 600,
+              }}
+            >
+              Principal only
+            </span>
+          </h2>
+          <p className="brief-note">
+            <em>
+              One tone per meal — the whole table follows. Only you
+              see and answer this block; your group is spared the
+              choice so the crew gets a single, clear signal.
+            </em>
+          </p>
+          <RadioGroup
+            name="lunch_service"
+            label="Lunch service style"
+            register={register}
+            options={[
+              { value: "light",        label: "Light — salads, mezze, something easy after a swim" },
+              { value: "cold",         label: "Cold — platters, charcuterie, marinated dishes" },
+              { value: "hot",          label: "Hot — proper cooked plates" },
+              { value: "family_style", label: "Family style — shared bowls down the centre" },
+            ]}
+          />
+          <RadioGroup
+            name="dinner_service"
+            label="Dinner service style"
+            register={register}
+            options={[
+              { value: "light",        label: "Light — keep it simple, especially after a long day" },
+              { value: "cold",         label: "Cold — refined platters in the cockpit" },
+              { value: "hot",          label: "Hot — courses brought to the table" },
+              { value: "family_style", label: "Family style — shared bowls, everyone serves themselves" },
+            ]}
+          />
+        </>
+      )}
 
       <h2 className="brief-subhead">Lunch & dinner — what your group enjoys</h2>
       <p className="brief-note">
