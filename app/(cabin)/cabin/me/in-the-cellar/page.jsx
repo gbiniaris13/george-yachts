@@ -15,6 +15,7 @@ import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
 import BeveragesFields from "../../../../components/cabin/brief/BeveragesFields";
 import GroupVoicesPanel from "../../../../components/cabin/brief/GroupVoicesPanel";
+import WishlistPanel from "../../../../components/cabin/brief/WishlistPanel";
 
 export default function InTheCellarContributionPage() {
   return (
@@ -42,6 +43,8 @@ export default function InTheCellarContributionPage() {
       >
         {({ register }) => <BeveragesFields register={register} />}
       </BriefFormShell>
+
+      <WishlistPanel sectionKey="beverages" />
 
       <p className="contribution-footnote">
         <Link href="/cabin/me">← Back to your details</Link>

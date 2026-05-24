@@ -36,6 +36,7 @@ import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
 import BeveragesFields from "../../../../components/cabin/brief/BeveragesFields";
 import GroupVoicesPanel from "../../../../components/cabin/brief/GroupVoicesPanel";
+import WishlistPanel from "../../../../components/cabin/brief/WishlistPanel";
 
 export default function BeveragesSectionPage() {
   return (
@@ -64,6 +65,9 @@ export default function BeveragesSectionPage() {
       >
         {({ register }) => <BeveragesFields register={register} />}
       </BriefFormShell>
+
+      {/* 2026-05-23 — MUB-C: shared specific-items wishlist. */}
+      <WishlistPanel sectionKey="beverages" />
 
       <style jsx>{`
         .brief-subhead {

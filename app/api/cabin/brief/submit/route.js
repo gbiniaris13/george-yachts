@@ -172,11 +172,22 @@ export async function POST() {
       .select("section_key, member_id, data")
       .eq("cabin_id", cabinId),
   );
-  const contributorIds = new Set(
-    (contribRows ?? [])
-      .map((r) => r.member_id)
-      .filter((id) => Boolean(id)),
+  // MUB-C: also pull wishlist items.
+  const wishlistRows = await dbQuery(
+    db
+      .from("cabin_brief_wishlist_items")
+      .select("section_key, label, quantity, notes, added_by_member_id, added_at")
+      .eq("cabin_id", cabinId)
+      .order("added_at", { ascending: false }),
   );
+
+  const contributorIds = new Set();
+  for (const r of contribRows ?? []) {
+    if (r.member_id) contributorIds.add(r.member_id);
+  }
+  for (const w of wishlistRows ?? []) {
+    if (w.added_by_member_id) contributorIds.add(w.added_by_member_id);
+  }
   let contributorNameById = {};
   if (contributorIds.size > 0) {
     const nameRows = await dbQuery(
@@ -206,6 +217,26 @@ export async function POST() {
         name: contributorNameById[r.member_id] || "(member)",
         highlights: summariseContribution(sectionKey, r.data ?? {}),
       }));
+    // MUB-C: append a "Specific items requested" voice when the
+    // wishlist has entries for this section. Renders as a single
+    // pseudo-voice in the same group with the items as highlights.
+    const wishlistForSection = (wishlistRows ?? []).filter(
+      (w) => w.section_key === sectionKey,
+    );
+    if (wishlistForSection.length > 0) {
+      const wishlistHighlights = wishlistForSection.map((w) => {
+        const qty = w.quantity ? ` (${w.quantity})` : "";
+        const who = w.added_by_member_id
+          ? ` — added by ${contributorNameById[w.added_by_member_id] || "(member)"}`
+          : "";
+        const note = w.notes ? ` · note: ${w.notes}` : "";
+        return `${w.label}${qty}${who}${note}`;
+      });
+      voices.push({
+        name: "Specific items requested",
+        highlights: wishlistHighlights,
+      });
+    }
     if (voices.length > 0) {
       groupContributions.push({
         sectionTitle: SECTION_TITLES[sectionKey],

@@ -24,6 +24,7 @@ import SampleMenuPreview from "../../../../components/cabin/brief/SampleMenuPrev
 import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
 import DiningFields from "../../../../components/cabin/brief/DiningFields";
 import GroupVoicesPanel from "../../../../components/cabin/brief/GroupVoicesPanel";
+import WishlistPanel from "../../../../components/cabin/brief/WishlistPanel";
 
 export default function DiningSectionPage() {
   // 2026-05-21 — Pass 7 prep (Domingo): the Children block below
@@ -87,6 +88,9 @@ export default function DiningSectionPage() {
       >
         {({ register }) => <DiningFields register={register} hasMinors={hasMinors} />}
       </BriefFormShell>
+
+      {/* 2026-05-23 — MUB-C: shared specific-items wishlist. */}
+      <WishlistPanel sectionKey="dining" />
 
       <style jsx>{`
         .brief-subhead {

@@ -31,6 +31,7 @@ import SampleMenuPreview from "../../../../components/cabin/brief/SampleMenuPrev
 import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
 import DiningFields from "../../../../components/cabin/brief/DiningFields";
 import GroupVoicesPanel from "../../../../components/cabin/brief/GroupVoicesPanel";
+import WishlistPanel from "../../../../components/cabin/brief/WishlistPanel";
 
 export default function AtTheTableContributionPage() {
   // Same hasMinors fetch as the principal route — the children
@@ -88,6 +89,13 @@ export default function AtTheTableContributionPage() {
       >
         {({ register }) => <DiningFields register={register} hasMinors={hasMinors} />}
       </BriefFormShell>
+
+      {/* 2026-05-23 — MUB-C: shared specific-items wishlist sits at
+          the bottom of the form. Collapsed by default — never
+          demands interaction. The hostess provisions from the
+          frequency picks above; this is the optional escape for
+          named items. */}
+      <WishlistPanel sectionKey="dining" />
 
       <p className="contribution-footnote">
         Next: <Link href="/cabin/me/in-the-cellar">In the Cellar →</Link>

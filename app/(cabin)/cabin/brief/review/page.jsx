@@ -114,13 +114,16 @@ export default async function BriefReviewPage() {
       .select("section_key, member_id, data, updated_at")
       .eq("cabin_id", cabinId),
   );
-  // Add contribution member ids to the name-lookup set so the
-  // single cabin_members select below pulls them in one query.
-  for (const c of contributions ?? []) {
-    if (c.member_id) {
-      // Defer until after `ids` is declared (next block).
-    }
-  }
+
+  // MUB-C: also pull every wishlist item so the principal sees
+  // who has asked for specific bottles/dishes before sending.
+  const wishlistItems = await dbQuery(
+    db
+      .from("cabin_brief_wishlist_items")
+      .select("id, section_key, label, quantity, notes, added_by_member_id, added_at")
+      .eq("cabin_id", cabinId)
+      .order("added_at", { ascending: false }),
+  );
 
   // Pull display names for any member referenced
   const ids = new Set();
@@ -129,6 +132,9 @@ export default async function BriefReviewPage() {
   }
   for (const c of contributions ?? []) {
     if (c.member_id) ids.add(c.member_id);
+  }
+  for (const w of wishlistItems ?? []) {
+    if (w.added_by_member_id) ids.add(w.added_by_member_id);
   }
   if (cabin.brief_submitted_by_member_id) {
     ids.add(cabin.brief_submitted_by_member_id);
@@ -162,6 +168,23 @@ export default async function BriefReviewPage() {
         (c.member_id && nameById[c.member_id]) || "(member)",
       data: c.data ?? {},
       updatedAt: c.updated_at,
+    });
+  }
+
+  // MUB-C: bucket wishlist items by section.
+  const wishlistBySection = {};
+  for (const w of wishlistItems ?? []) {
+    if (!wishlistBySection[w.section_key]) {
+      wishlistBySection[w.section_key] = [];
+    }
+    wishlistBySection[w.section_key].push({
+      id: w.id,
+      label: w.label,
+      quantity: w.quantity,
+      notes: w.notes,
+      addedByName: w.added_by_member_id
+        ? nameById[w.added_by_member_id] || "(removed member)"
+        : "(removed member)",
     });
   }
 
@@ -303,6 +326,7 @@ export default async function BriefReviewPage() {
               })
             : "";
           const groupContribs = contributionsBySection[s.key] || [];
+          const wishlist = wishlistBySection[s.key] || [];
           return (
             <li key={s.key} className="cabin-brief-review__item">
               <div className="cabin-brief-review__item-num">
@@ -329,6 +353,38 @@ export default async function BriefReviewPage() {
                     </span>
                   )}
                 </div>
+
+                {/* 2026-05-23 — MUB-C: shared wishlist items
+                    (specific bottles/dishes the group named). */}
+                {wishlist.length > 0 && (
+                  <div className="cabin-brief-review__wishlist">
+                    <div className="cabin-brief-review__wishlist-eyebrow">
+                      Specific items requested ({wishlist.length})
+                    </div>
+                    <ul>
+                      {wishlist.map((w) => (
+                        <li key={w.id}>
+                          <strong>{w.label}</strong>
+                          {w.quantity && (
+                            <span className="cabin-brief-review__wishlist-qty">
+                              {" · "}
+                              {w.quantity}
+                            </span>
+                          )}
+                          {w.notes && (
+                            <span className="cabin-brief-review__wishlist-notes">
+                              {" — "}
+                              <em>{w.notes}</em>
+                            </span>
+                          )}
+                          <span className="cabin-brief-review__wishlist-by">
+                            {" "}— added by {w.addedByName}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 {/* 2026-05-23 — Multi-user Brief (Phase 3).
                     For dining + beverages sections, show every
@@ -722,6 +778,53 @@ export default async function BriefReviewPage() {
           position: absolute;
           left: -12px;
           color: var(--gy-gold);
+        }
+
+        /* MUB-C: wishlist items in review */
+        .cabin-brief-review__wishlist {
+          margin-top: 14px;
+          padding: 12px 14px;
+          background: rgba(201, 168, 76, 0.06);
+          border: 1px solid rgba(201, 168, 76, 0.28);
+          border-radius: 3px;
+        }
+        .cabin-brief-review__wishlist-eyebrow {
+          font-family: var(--gy-font-ui);
+          font-size: 10px;
+          letter-spacing: 2.4px;
+          text-transform: uppercase;
+          color: var(--gy-gold);
+          font-weight: 600;
+          margin-bottom: 6px;
+        }
+        .cabin-brief-review__wishlist ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+        .cabin-brief-review__wishlist li {
+          font-family: var(--gy-font-editorial);
+          font-size: 13.5px;
+          color: var(--gy-navy);
+          line-height: 1.5;
+        }
+        .cabin-brief-review__wishlist strong { font-weight: 500; }
+        .cabin-brief-review__wishlist-qty {
+          color: rgba(13, 27, 42, 0.7);
+          font-style: italic;
+        }
+        .cabin-brief-review__wishlist-notes {
+          color: rgba(13, 27, 42, 0.65);
+        }
+        .cabin-brief-review__wishlist-by {
+          font-family: var(--gy-font-ui);
+          font-size: 10px;
+          letter-spacing: 1.6px;
+          text-transform: uppercase;
+          color: rgba(13, 27, 42, 0.5);
         }
       `}</style>
     </article>
