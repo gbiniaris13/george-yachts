@@ -201,6 +201,21 @@ html body [data-cabin-mode] .cbr-submit__cta:disabled {
   letter-spacing: 2.5px !important;
 }
 
+/* 2026-05-23 — Systemic E from the mobile audit. Multiple small
+   tracked-uppercase labels (role/badge/status/category) were sitting
+   at 9-10px — borderline legibility on phones, and once an iPhone
+   user has the system font scaled up these become unreadable. The
+   wildcard family bumps them all to the same 11px / 2.4px tracking
+   that eyebrows now use. Future labels using these conventions
+   inherit the readable floor automatically. */
+[data-cabin-mode] [class*="__role"],
+[data-cabin-mode] [class*="__badge"],
+[data-cabin-mode] [class*="__status"],
+[data-cabin-mode] [class*="__category"] {
+  font-size: 11px !important;
+  letter-spacing: 2.4px !important;
+}
+
 /* Food matrix row labels — George flagged Fish/Beef/Pork as
    "δεν φαίνονται" repeatedly. Push to weight 700 and force pure
    navy. Mobile fallback bumps from 13→15px. */

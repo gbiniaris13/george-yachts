@@ -137,6 +137,15 @@ html:has([data-cabin-mode]) body {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.05  0 0 0 0 0.05  0 0 0 0 0.05  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   background-size: 240px 240px;
 }
+/* 2026-05-23 — Audit pass: on phones the per-character grain is
+   more perceptible (smaller fonts, less surface area). Drop opacity
+   to 0.10 so the texture stays present but doesn't fight legibility
+   over running body text on 360-430px screens. */
+@media (max-width: 599.98px) {
+  [data-cabin-mode]::before {
+    opacity: 0.10;
+  }
+}
 
 /* Make sure content stacks above the grain. */
 [data-cabin-mode] > * {

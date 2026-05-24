@@ -557,14 +557,15 @@ export default function CabinShell({
             font-weight: 500 !important;
           }
           /* Back arrow: navy outline on cream, floated top-left so
-             it never offsets the centred masthead. */
+             it never offsets the centred masthead. 44×44 meets
+             Apple HIG (was 32×32 → too small to tap reliably). */
           [data-cabin-mode] .cabin-shell__back {
             position: absolute !important;
-            top: calc(12px + env(safe-area-inset-top, 0)) !important;
-            left: 14px !important;
-            width: 34px !important;
-            height: 34px !important;
-            font-size: 16px !important;
+            top: calc(10px + env(safe-area-inset-top, 0)) !important;
+            left: 12px !important;
+            width: 44px !important;
+            height: 44px !important;
+            font-size: 18px !important;
             z-index: 2 !important;
             color: var(--gy-navy) !important;
             border-color: rgba(13, 27, 42, 0.22) !important;

@@ -43,10 +43,17 @@ export default function CabinBrandMark({ href = "/cabin" }) {
       aria-label="George Yachts · Home"
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
+      {/* 2026-05-23 — Audit pass: explicit width/height stops the
+          layout shift (CLS) on slow networks. SVG intrinsic ratio
+          is 4:3 so width:160 / height:120 matches the desktop
+          tier. CSS height rules below override at narrower tiers
+          (aspect-ratio preserved by width: auto). */}
       <img
         src="/images/gy-logo-real.svg"
         alt="George Yachts · Brokerage House"
         className="cabin-brandmark__logo"
+        width="160"
+        height="120"
       />
 
       <style>{`
