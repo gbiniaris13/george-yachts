@@ -98,26 +98,101 @@ export default function BerthMap({
       });
 
       // 2026-05-23 — Eleanna's iPhone test: berth map had the pin
-      // visible but NO TILES. The OSM raster tile servers
-      // (tile.openstreetmap.org) are community-funded and routinely
-      // slow / timeout from Greek mobile networks. Switched to
-      // CartoDB Voyager: same OSM data, served from a global
-      // CloudFront CDN with sub-200ms latency from Athens.
-      // Free forever, no API key, no billing, no quota for the
-      // usage volumes we'll ever see.
+      // visible but NO TILES. Switched OSM → CartoDB Voyager.
       //
-      // Attribution stays per their TOS — both OSM (data) and
-      // CARTO (tile rendering) credited in the Leaflet attribution
-      // control. Both links visible at the bottom of the map.
-      L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+      // 2026-05-23 (pm) — Vasilis on iPhone 13 Pro Max: tiles AGAIN
+      // not loading even with CartoDB. Different Greek mobile
+      // carrier than Eleanna; some carriers throttle/block specific
+      // CDNs (Cosmote vs Vodafone GR vs Wind have different
+      // upstream peering). We can't predict which provider works
+      // for each customer, so we ship THREE tile providers with
+      // automatic failover:
+      //
+      //   1. CartoDB Voyager (CloudFront, usually fastest)
+      //   2. OSM France mirror (different infra, different upstream)
+      //   3. Standard OSM (slowest but most reliable globally)
+      //
+      // Strategy: load primary. Count tileerror events for ~5 sec.
+      // If we cross a failure threshold (>= 6 errors) before the
+      // map's view has fully tiled, treat the provider as dead,
+      // remove it and try the next. Each escalation logs once so
+      // we can see in browser telemetry which providers are
+      // failing for which carriers.
+      const TILE_PROVIDERS = [
         {
-          maxZoom: 20,
+          name: "carto-voyager",
+          url: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
           subdomains: "abcd",
+          maxZoom: 20,
           attribution:
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
         },
-      ).addTo(map);
+        {
+          name: "osm-france",
+          url: "https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png",
+          subdomains: "abc",
+          maxZoom: 19,
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap France</a>',
+        },
+        {
+          name: "osm-standard",
+          url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+          subdomains: "abc",
+          maxZoom: 19,
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        },
+      ];
+
+      let tileLayer = null;
+      let providerIndex = 0;
+      let errorCount = 0;
+      let escalationScheduled = false;
+
+      function attachProvider(idx) {
+        if (idx >= TILE_PROVIDERS.length) {
+          // Out of providers. Map still shows the pin + frame; the
+          // tiles will remain blank. Better than infinite retries.
+          // eslint-disable-next-line no-console
+          console.warn(
+            "[BerthMap] all tile providers failed — pin shown without basemap",
+          );
+          return;
+        }
+        const p = TILE_PROVIDERS[idx];
+        errorCount = 0;
+        escalationScheduled = false;
+        if (tileLayer) map.removeLayer(tileLayer);
+        tileLayer = L.tileLayer(p.url, {
+          maxZoom: p.maxZoom,
+          subdomains: p.subdomains,
+          attribution: p.attribution,
+          // Helps OSM servers identify us per their tile-usage policy.
+          crossOrigin: true,
+        });
+        tileLayer.on("tileerror", () => {
+          errorCount += 1;
+          // 6 failures within the rolling window → escalate. We
+          // schedule the escalation on the next tick so we don't
+          // race with successful retries that may come in milliseconds
+          // later from the same provider.
+          if (errorCount >= 6 && !escalationScheduled) {
+            escalationScheduled = true;
+            // eslint-disable-next-line no-console
+            console.warn(
+              `[BerthMap] provider ${p.name} failing — escalating to ${
+                TILE_PROVIDERS[idx + 1]?.name || "(none)"
+              }`,
+            );
+            setTimeout(() => attachProvider(idx + 1), 100);
+          }
+        });
+        tileLayer.addTo(map);
+        providerIndex = idx;
+      }
+
+      attachProvider(0);
 
       const icon = L.divIcon({
         className: "berth-pin",
