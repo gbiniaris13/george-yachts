@@ -43,6 +43,7 @@ import BerthMap from "../../components/cabin/BerthMap";
 import BerthNearby from "../../components/cabin/BerthNearby";
 import GhostCredit from "../../components/cabin/GhostCredit";
 import GroupReadiness from "../../components/cabin/GroupReadiness";
+import NextStep from "../../components/cabin/NextStep";
 import { titleCaseName, firstNameFromDisplayName, crewRoles, joinNouns, prettyDate } from "@/lib/cabin/format";
 
 export const metadata = {
@@ -423,6 +424,26 @@ export default async function CabinHomePage() {
         )}
       </header>
 
+      {/* 2026-05-24 — NextStep wizard banner (everyone sees one).
+          Auto-detects this member's first incomplete action and
+          surfaces it as a single big "Do this next" card with a
+          navy CTA. Walks principal + guests through invite → crew
+          list → brief → confirm → send. Hidden once the brief is
+          shipped to George. */}
+      <NextStep
+        isPrincipal={isPrincipal}
+        briefSubmittedAt={briefSubmittedAt}
+        myDetailsComplete={myDetailsComplete}
+        myBriefConfirmedAt={myRow?.brief_confirmed_at || null}
+        invitedCount={invitedCount}
+        crewListReady={crewListReady}
+        crewListTotal={crewListTotal}
+        briefSectionsAllComplete={briefSectionsAllComplete}
+        groupFullyReady={groupFullyReady}
+        pendingCrewListMembers={pendingCrewListMembers}
+        pendingBriefConfirmMembers={pendingBriefVoiceMembers}
+      />
+
       {/* ============================================================
           PRE-VOYAGE STEPS — 2026-05-22 (George):
           The cabin's two onboarding inputs (invite group · brief)
@@ -432,13 +453,22 @@ export default async function CabinHomePage() {
           sees only Step 01 (their own /me details). Pressureless
           luxury framing, status indicators on each card.
           ============================================================ */}
+      <PreVoyageSteps
+        isPrincipal={isPrincipal}
+        invitedCount={invitedCount}
+        completedCount={completedCount}
+        crewListTotal={crewListTotal}
+        crewListReady={crewListReady}
+        myDetailsComplete={myDetailsComplete}
+        briefPercent={percent}
+        briefSubmitted={Boolean(cabin?.brief_submitted_at)}
+      />
+
       {/* 2026-05-24 — Group readiness card (principal-only).
-          George friend test 4 final: a soft 0-100% indicator at
-          the top of /cabin home so the principal always knows
-          where the group stands, who hasn't filled yet, and when
-          the brief is finally ready to send. Sits ABOVE the
-          PreVoyageSteps so it's the first thing the principal
-          sees on every cabin home visit. */}
+          George friend test 4: moved here from above PreVoyageSteps
+          so the principal first reads the step-by-step instructions
+          (invite → crew list → brief), THEN sees the picture of
+          who's done what. Hidden once brief is submitted. */}
       <GroupReadiness
         isPrincipal={isPrincipal}
         briefSubmittedAt={briefSubmittedAt}
@@ -453,17 +483,6 @@ export default async function CabinHomePage() {
         briefSectionsTotal={briefSectionsTotal}
         briefSectionsReady={briefSectionsReady}
         missingBriefSections={missingBriefSections}
-      />
-
-      <PreVoyageSteps
-        isPrincipal={isPrincipal}
-        invitedCount={invitedCount}
-        completedCount={completedCount}
-        crewListTotal={crewListTotal}
-        crewListReady={crewListReady}
-        myDetailsComplete={myDetailsComplete}
-        briefPercent={percent}
-        briefSubmitted={Boolean(cabin?.brief_submitted_at)}
       />
 
       {/* 2026-05-22 — George rejected the small teaser:
