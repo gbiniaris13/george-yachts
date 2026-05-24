@@ -18,7 +18,8 @@ import {
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import { writeAudit, AUDIT_ACTIONS } from "@/lib/cabin/audit";
 import { notifyGeorge } from "@/lib/cabin/notify";
-import { sendBriefSubmittedEmail } from "@/lib/cabin/email";
+import { sendBriefSubmittedEmail, sendBriefMemberConfirmation } from "@/lib/cabin/email";
+import { firstNameFromDisplayName } from "@/lib/cabin/format";
 
 export const runtime = "nodejs";
 
@@ -346,6 +347,53 @@ export async function POST() {
       console.warn(
         "[cabin/brief/submit] Resend send failed (non-fatal):",
         mailErr,
+      );
+    }
+  })();
+
+  // 2026-05-24 — Angeliki pass (item 7): broadcast a per-member
+  // confirmation email to every cabin_member. Each guest gets a
+  // personalised note ("Patricia has sent the final brief; the
+  // principal made the final call on the shared choices") so:
+  //   • Everyone knows the brief is out the door
+  //   • Everyone sees their private answers were honoured
+  //   • George + GY are visibly "καλυμμένοι" — the principal's
+  //     authority on shared choices is documented in writing
+  // Best-effort: a failed email doesn't roll back the submit.
+  void (async () => {
+    try {
+      const members = await dbQuery(
+        db
+          .from("cabin_members")
+          .select("email, display_name")
+          .eq("cabin_id", cabinId),
+      );
+      const principalDisplayName =
+        existing.principal_charterer_name || session.email;
+      for (const m of members ?? []) {
+        if (!m?.email) continue;
+        const firstName = firstNameFromDisplayName(m.display_name);
+        try {
+          await sendBriefMemberConfirmation({
+            to: m.email,
+            firstName,
+            vesselName: existing.vessel_name,
+            principalName: principalDisplayName,
+            fromDate: existing.charter_period_from,
+            toDate: existing.charter_period_to,
+          });
+        } catch (memberMailErr) {
+          console.warn(
+            "[cabin/brief/submit] member confirmation failed for",
+            m.email,
+            memberMailErr,
+          );
+        }
+      }
+    } catch (broadcastErr) {
+      console.warn(
+        "[cabin/brief/submit] member-broadcast failed (non-fatal):",
+        broadcastErr,
       );
     }
   })();
