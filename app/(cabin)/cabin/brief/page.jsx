@@ -28,6 +28,7 @@ const SECTION_META = [
     title: "Arrival & Departure",
     intro: "Your flights into Greece, transfers, where you’re staying first.",
     minutes: 3,
+    principalOnly: true,
   },
   {
     key: "guests",
@@ -47,6 +48,7 @@ const SECTION_META = [
     title: "Your Itinerary",
     intro: "Pace of the week, marina or anchor, any celebrations.",
     minutes: 3,
+    principalOnly: true,
   },
   {
     key: "life_aboard",
@@ -314,6 +316,14 @@ export default async function CabinBriefOverviewPage() {
                 <span className="cabin-brief__body">
                   <strong>{s.title}</strong>
                   <em>{s.intro}</em>
+                  {/* 2026-05-24 — Quiet "Principal only" tag for
+                      arrival + itinerary when the caller is a
+                      guest. Read-only experience explained. */}
+                  {s.principalOnly && !isPrincipal && (
+                    <span className="cabin-brief__principal-only">
+                      Principal only — you&apos;ll see it as read-only
+                    </span>
+                  )}
                   {edited?.name && (
                     <span className="cabin-brief__last-edited">
                       Last edited by {edited.name}
@@ -461,6 +471,20 @@ export default async function CabinBriefOverviewPage() {
           color: rgba(13, 27, 42, 0.45);
           font-style: normal;
           font-weight: 500;
+        }
+        .cabin-brief__principal-only {
+          display: inline-block;
+          margin-top: 6px;
+          padding: 3px 8px;
+          font-family: var(--gy-font-ui);
+          font-size: 9.5px;
+          letter-spacing: 1.6px;
+          text-transform: uppercase;
+          color: var(--gy-gold);
+          font-style: normal;
+          font-weight: 600;
+          border: 1px solid rgba(201, 168, 76, 0.4);
+          border-radius: 2px;
         }
         .cabin-brief__item.is-locked a {
           opacity: 0.7;

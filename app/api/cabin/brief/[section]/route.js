@@ -87,6 +87,42 @@ export async function PUT(req, ctx) {
     );
   }
 
+  // 2026-05-24 — Per-section role gate. George friend test 4:
+  // Alexandros could change Patricia's flight number from his
+  // guest account. Two sections carry logistics that ONLY the
+  // principal charterer (or a delegated brief admin) should be
+  // able to touch — wrong-number-on-a-flight is a charter-day
+  // disaster. The other sections (health, life_aboard, dining,
+  // beverages, guests narrative, children) stay shared so the
+  // group can collaborate on them.
+  const PRINCIPAL_ONLY_SECTIONS = new Set(["arrival", "itinerary"]);
+  if (PRINCIPAL_ONLY_SECTIONS.has(a.section)) {
+    let isAuthorized = a.member.role === "principal_charterer";
+    if (!isAuthorized) {
+      const dbRoleCheck = getCabinDb();
+      const memberRow = await dbQuery(
+        dbRoleCheck
+          .from("cabin_members")
+          .select("is_brief_admin")
+          .eq("id", a.member.member_id)
+          .maybeSingle(),
+      );
+      isAuthorized = Boolean(memberRow?.is_brief_admin);
+    }
+    if (!isAuthorized) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: "principal-only-section",
+          message:
+            "Only the principal charterer can edit this section. Ask them to make the change for you.",
+          section: a.section,
+        },
+        { status: 403 },
+      );
+    }
+  }
+
   let body;
   try {
     body = await req.json();
