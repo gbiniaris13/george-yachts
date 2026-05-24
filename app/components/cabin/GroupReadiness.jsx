@@ -41,6 +41,15 @@ export default function GroupReadiness({
   crewListTotal,
   crewListReady,
   pendingCrewListMembers,
+  // 2026-05-24 — Per-member brief participation: how many cabin
+  // members have ACTUALLY edited the shared brief (vs the
+  // technical "sections marked complete" signal below).
+  briefVoicesTotal,
+  briefVoicesReady,
+  pendingBriefVoiceMembers,
+  // Technical signal: which sections are marked completed. Still
+  // shown as a tiny footnote because the Send gate needs all
+  // sections complete, but no longer drives the headline %.
   briefSectionsTotal,
   briefSectionsReady,
   missingBriefSections,
@@ -87,12 +96,11 @@ export default function GroupReadiness({
       ) : (
         <>
           <p className="gr__copy">
-            Send-to-George unlocks at 100%. Two halves combine:
-            crew-list essentials from every guest, and every
-            brief section marked complete (food, drinks, health,
-            itinerary, the lot). Patricia, Bill and Eleanna
-            edit the same shared brief together — anyone&apos;s
-            edits move this bar.
+            The bar combines two member-level signals: who&apos;s
+            shared their crew-list line, and who&apos;s added their
+            voice to the brief at least once. Patricia, Bill and
+            Eleanna edit the same shared brief together — every
+            new voice moves this bar.
           </p>
 
           <div className="gr__lanes">
@@ -128,40 +136,65 @@ export default function GroupReadiness({
               )}
             </div>
 
-            {/* Lane 2 — Brief sections */}
+            {/* Lane 2 — Brief participation (member voices) */}
             <div className="gr__lane">
               <div className="gr__lane-head">
-                <strong>Brief sections</strong>
+                <strong>Brief voices</strong>
                 <span>
-                  {briefSectionsReady} of {briefSectionsTotal}
+                  {briefVoicesReady} of {briefVoicesTotal}
                 </span>
               </div>
-              {missingBriefSections.length > 0 && (
+              {pendingBriefVoiceMembers && pendingBriefVoiceMembers.length > 0 && (
                 <ul className="gr__lane-list">
-                  {missingBriefSections.slice(0, 6).map((k) => (
-                    <li key={k}>{pretty(k)}</li>
+                  {pendingBriefVoiceMembers.slice(0, 6).map((m, i) => (
+                    <li key={`bv-${m.name}-${i}`}>
+                      {m.name}
+                      {m.role === "principal_charterer" && (
+                        <em> · you</em>
+                      )}
+                    </li>
                   ))}
-                  {missingBriefSections.length > 6 && (
+                  {pendingBriefVoiceMembers.length > 6 && (
                     <li>
                       <em>
-                        + {missingBriefSections.length - 6} more
+                        + {pendingBriefVoiceMembers.length - 6} more
                       </em>
                     </li>
                   )}
                 </ul>
               )}
-              {missingBriefSections.length === 0 && (
-                <p className="gr__lane-done">All filled. ✓</p>
+              {(!pendingBriefVoiceMembers || pendingBriefVoiceMembers.length === 0) && (
+                <p className="gr__lane-done">Everyone&apos;s voiced. ✓</p>
               )}
             </div>
           </div>
+
+          {/* Tiny technical footnote — Send-to-George also needs
+              every section marked complete, not just members
+              having touched it. Keeps the principal informed
+              without competing for visual weight. */}
+          <p className="gr__sections-line">
+            <em>
+              Brief sections marked complete: {briefSectionsReady} of {briefSectionsTotal}
+              {missingBriefSections.length > 0 && (
+                <>
+                  {" "}— still pending:{" "}
+                  {missingBriefSections.slice(0, 4).map((k) => pretty(k)).join(", ")}
+                  {missingBriefSections.length > 4 && (
+                    <> + {missingBriefSections.length - 4} more</>
+                  )}
+                  .
+                </>
+              )}
+            </em>
+          </p>
 
           <p className="gr__nudge">
             Need to nudge someone? Open{" "}
             <Link href="/cabin/guests">Your Group</Link>{" "}
             to resend their invite, or open{" "}
             <Link href="/cabin/brief">The Brief</Link>{" "}
-            to fill the missing sections together.
+            so everyone can add their voice.
           </p>
         </>
       )}
@@ -299,6 +332,16 @@ export default function GroupReadiness({
           font-size: 13px;
           color: #2D5C36;
           font-style: italic;
+        }
+        .gr__sections-line {
+          margin: 0 0 12px 0;
+          padding: 8px 0 0;
+          border-top: 1px dashed rgba(13, 27, 42, 0.08);
+          font-family: var(--gy-font-editorial, Georgia, serif);
+          font-style: italic;
+          font-size: 12.5px;
+          color: rgba(13, 27, 42, 0.6);
+          line-height: 1.5;
         }
         .gr__nudge {
           margin: 0;

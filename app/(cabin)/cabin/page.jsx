@@ -250,16 +250,23 @@ export default async function CabinHomePage() {
   const percent = cabin.brief_completion_percent ?? 0;
 
   // 2026-05-24 — Group readiness for the principal's home page.
-  // George friend test 4 final: "θα πρέπει να με ενημερώσει όταν
-  // όλοι ... μια μαλακή από το 0 μέχρι το 100 σε ποσοστό ... μόλις
-  // όλοι οι users το κάνουν θα είναι στο 100% και τότε μόνο θα
-  // ξεκλειδώνετε και θα μπορώ να το στείλω στον Γιώργο."
+  // First version showed brief at 100% the moment the principal
+  // had filled all sections solo — even with zero guest input.
+  // George (rightly): "σε καμία περίπτωση το νούμερο δεν είναι
+  // σωστό ... 2 από τους 9 έχουν βάλει τι θέλουν να φάνε."
   //
-  // Composition:
+  // New composition reflects MEMBER PARTICIPATION, not technical
+  // section completion:
+  //
   //   crew_list_progress = members with personal_details complete
   //                        / total non-opted-out members
-  //   brief_sections_progress = completed sections / total required
-  //   overall = weighted average (50/50)
+  //   brief_voices_progress = unique members who have edited the
+  //                           shared brief (dining or beverages)
+  //                           / total non-opted-out members
+  //   overall = average of the two member-level percentages
+  //
+  // Brief-section completion stays a separate signal feeding the
+  // Send gate below (Send still requires every section completed).
   const REQUIRED_BRIEF_SECTIONS = [
     "arrival",
     "guests",
@@ -272,7 +279,7 @@ export default async function CabinHomePage() {
   const briefSectionsRows = await dbQuery(
     db2
       .from("cabin_brief_sections")
-      .select("section_key, completed")
+      .select("section_key, completed, last_edited_by_member_id")
       .eq("cabin_id", cabinId)
       .in("section_key", REQUIRED_BRIEF_SECTIONS),
   );
@@ -288,24 +295,73 @@ export default async function CabinHomePage() {
   const missingBriefSections = REQUIRED_BRIEF_SECTIONS.filter(
     (k) => !completedBriefKeys.has(k),
   );
+
+  // Brief participation: unique members who have edited any
+  // dining/beverages row of cabin_brief_sections, PLUS anyone
+  // who has a pre-shared-model contribution row (legacy).
+  // Excludes opted-out members from both numerator and denominator.
+  const briefContributorIds = new Set();
+  for (const row of briefSectionsRows ?? []) {
+    if (
+      (row.section_key === "dining" || row.section_key === "beverages") &&
+      row.last_edited_by_member_id
+    ) {
+      briefContributorIds.add(row.last_edited_by_member_id);
+    }
+  }
+  const legacyContribRows = await dbQuery(
+    db2
+      .from("cabin_brief_contributions")
+      .select("member_id")
+      .eq("cabin_id", cabinId),
+  );
+  for (const row of legacyContribRows ?? []) {
+    if (row.member_id) briefContributorIds.add(row.member_id);
+  }
+  // Filter contributors to active, non-opted-out members only
+  // (denominator matches crewListRows).
+  const activeMemberIds = new Set(
+    crewListRows.map((m) => m.id),
+  );
+  const briefVoicesReady = Array.from(briefContributorIds).filter((id) =>
+    activeMemberIds.has(id),
+  ).length;
+  const briefVoicesTotal = crewListRows.length;
+  const pendingBriefVoiceMembers = crewListRows
+    .filter((m) => !briefContributorIds.has(m.id))
+    .map((m) => ({
+      name: m.display_name || m.email || "(member)",
+      role: m.role,
+    }));
+
   const pendingCrewListMembers = crewListRows
     .filter((m) => !m.personal_details_completed_at)
     .map((m) => ({
       name: m.display_name || m.email || "(member)",
       role: m.role,
     }));
+
   const crewListPercent = crewListTotal === 0
     ? 100
     : Math.round((crewListReady / crewListTotal) * 100);
-  const briefPercent = Math.round(
-    (briefSectionsReady / briefSectionsTotal) * 100,
-  );
-  // 50/50 weighted average — both halves matter equally to George.
+  const briefVoicesPercent = briefVoicesTotal === 0
+    ? 100
+    : Math.round((briefVoicesReady / briefVoicesTotal) * 100);
+  // 50/50 weighted average of the two member-level metrics.
+  // This is what the home-page readiness bar shows George — it
+  // honestly reflects "how many of your group have participated
+  // so far", not the technical "are sections marked complete".
   const groupReadinessPercent = Math.round(
-    (crewListPercent + briefPercent) / 2,
+    (crewListPercent + briefVoicesPercent) / 2,
   );
+  // Send-to-George gate stays based on the strict completion
+  // signals so we don't ship an undercooked brief to the chef.
+  // The home bar is honesty about participation; the Send gate
+  // is the protection for George (broker).
+  const briefSectionsAllComplete =
+    REQUIRED_BRIEF_SECTIONS.every((k) => completedBriefKeys.has(k));
   const groupFullyReady =
-    crewListPercent === 100 && briefPercent === 100;
+    crewListPercent === 100 && briefSectionsAllComplete;
   const briefSubmittedAt = cabin.brief_submitted_at || null;
 
   // 2026-05-21 — Pass 7: extracted to lib/cabin/format so this
@@ -411,6 +467,9 @@ export default async function CabinHomePage() {
         crewListTotal={crewListTotal}
         crewListReady={crewListReady}
         pendingCrewListMembers={pendingCrewListMembers}
+        briefVoicesTotal={briefVoicesTotal}
+        briefVoicesReady={briefVoicesReady}
+        pendingBriefVoiceMembers={pendingBriefVoiceMembers}
         briefSectionsTotal={briefSectionsTotal}
         briefSectionsReady={briefSectionsReady}
         missingBriefSections={missingBriefSections}
