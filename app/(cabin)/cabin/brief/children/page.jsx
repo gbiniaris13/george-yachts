@@ -28,8 +28,11 @@ export default function ChildrenSectionPage() {
 
       {/* 2026-05-20 — Allergy banner — children food allergies are
           the highest-stakes case (insulin, peanut, anaphylactic
-          shellfish). Da$k friend-test flagged this explicitly. */}
-      <AllergyAlert />
+          shellfish). Da$k friend-test flagged this explicitly.
+          2026-05-23 — Aggregate mode merges the principal's Health
+          section + every guest's /me allergies so a child's
+          allergy entered via the guest /me surfaces here too. */}
+      <AllergyAlert source="aggregate" />
 
       <BriefFormShell sectionKey="children" prevSection={{ key: "little_things", title: "The Little Things" }}>
         {({ register, watch }) => (

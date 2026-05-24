@@ -28,35 +28,65 @@ import { useEffect, useState } from "react";
 export default function GroupVoicesPanel({ sectionKey }) {
   const [voices, setVoices] = useState(null); // null = loading, [] = none
   const [error, setError] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  async function load() {
+    setRefreshing(true);
+    setError(false);
+    try {
+      // 2026-05-23 — Cache-busting query param + no-store. Friend
+      // test 4: Vasilis's browser was serving a stale empty
+      // response from his earlier visit (before Patricia had
+      // saved her brief). The query param + headers force a
+      // fresh trip to our origin every mount + every Refresh
+      // click — costs nothing (the API is also force-dynamic).
+      const r = await fetch(
+        `/api/cabin/brief/${sectionKey}/group-voices?_=${Date.now()}`,
+        {
+          credentials: "same-origin",
+          cache: "no-store",
+          headers: { "Cache-Control": "no-cache" },
+        },
+      );
+      if (!r.ok) throw new Error("load-failed");
+      const j = await r.json();
+      setVoices(Array.isArray(j?.voices) ? j.voices : []);
+    } catch {
+      setVoices([]);
+      setError(true);
+    } finally {
+      setRefreshing(false);
+    }
+  }
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      try {
-        const r = await fetch(
-          `/api/cabin/brief/${sectionKey}/group-voices`,
-          { credentials: "same-origin" },
-        );
-        if (!r.ok) throw new Error("load-failed");
-        const j = await r.json();
-        if (cancelled) return;
-        setVoices(Array.isArray(j?.voices) ? j.voices : []);
-      } catch {
-        if (!cancelled) {
-          setVoices([]);
-          setError(true);
-        }
+      await load();
+      if (cancelled) {
+        // no-op; setVoices already ran but the user navigated away
       }
     })();
     return () => {
       cancelled = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionKey]);
 
-  // Don't render while loading — avoids a layout shift when the
-  // panel resolves to "no voices yet". The form below loads
-  // independently so the page isn't blocked on this.
-  if (voices === null) return null;
+  // 2026-05-23 — Friend test 4: render a small loading skeleton
+  // instead of null so the panel ALWAYS occupies space. Previous
+  // null-return meant a member would see nothing while loading and
+  // assume the feature wasn't there. Plus a cream chip flashes
+  // "LIVE — your group" so it's obviously the live area.
+  if (voices === null) {
+    return (
+      <aside className="gvp gvp--loading" aria-label="Your group, loading">
+        <span className="gvp__eyebrow">Your group so far · loading</span>
+        <div className="gvp__skel" />
+        <style jsx>{styles}</style>
+      </aside>
+    );
+  }
 
   // No voices yet: render a single line of quiet copy so the
   // member knows the feature exists, then the form below takes
@@ -64,7 +94,18 @@ export default function GroupVoicesPanel({ sectionKey }) {
   if (voices.length === 0) {
     return (
       <aside className="gvp gvp--empty" aria-label="Your group">
-        <span className="gvp__eyebrow">Your group so far</span>
+        <header className="gvp__head">
+          <span className="gvp__eyebrow">Your group so far</span>
+          <button
+            type="button"
+            className="gvp__refresh"
+            onClick={load}
+            disabled={refreshing}
+            aria-label="Refresh group voices"
+          >
+            {refreshing ? "Refreshing…" : "Refresh ↻"}
+          </button>
+        </header>
         <p className="gvp__empty-copy">
           {error
             ? "Couldn't load what others have shared just now. Your own answers below still save normally."
@@ -82,6 +123,15 @@ export default function GroupVoicesPanel({ sectionKey }) {
         <span className="gvp__eyebrow">Your group so far</span>
         <span className="gvp__count">
           {voices.length} voice{voices.length === 1 ? "" : "s"} added
+          <button
+            type="button"
+            className="gvp__refresh"
+            onClick={load}
+            disabled={refreshing}
+            aria-label="Refresh group voices"
+          >
+            {refreshing ? "↻ refreshing…" : "↻ refresh"}
+          </button>
         </span>
       </header>
       <p className="gvp__intro">
@@ -165,6 +215,48 @@ const styles = `
     text-transform: uppercase;
     color: rgba(13, 27, 42, 0.6);
     font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  /* Refresh button — same family as the count, but the icon
+     gives it a tap-able feel without competing visually. */
+  .gvp__refresh {
+    background: transparent;
+    border: 1px solid rgba(13, 27, 42, 0.18);
+    color: rgba(13, 27, 42, 0.65);
+    font-family: var(--gy-font-ui);
+    font-size: 9.5px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 2px;
+    min-height: 28px;
+  }
+  .gvp__refresh:hover:not(:disabled) {
+    color: var(--gy-navy);
+    border-color: var(--gy-gold);
+  }
+  .gvp__refresh:disabled { opacity: 0.55; cursor: default; }
+  /* Loading skeleton — keeps the panel's footprint stable while
+     the first fetch completes. */
+  .gvp__skel {
+    height: 60px;
+    background: linear-gradient(
+      90deg,
+      rgba(13,27,42,0.04) 25%,
+      rgba(13,27,42,0.10) 37%,
+      rgba(13,27,42,0.04) 63%
+    );
+    background-size: 400% 100%;
+    animation: gvp-shimmer 1.4s infinite;
+    margin-top: 8px;
+    border-radius: 3px;
+  }
+  @keyframes gvp-shimmer {
+    0%   { background-position: 100% 0; }
+    100% { background-position: 0 0; }
   }
   .gvp__intro {
     margin: 4px 0 12px 0;

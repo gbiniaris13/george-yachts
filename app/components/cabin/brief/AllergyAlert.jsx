@@ -25,27 +25,43 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-// 2026-05-23 — Multi-user Brief (Phase 3): the alert now has two
-// data sources.
+// 2026-05-23 — Multi-user Brief (Phase 3): the alert has three
+// data sources now.
 //   • source="health" (default) — the principal's brief health
-//     section. Shows the group's collective allergy / medical
-//     info on every food-related page of the principal brief.
+//     section ONLY. Kept for back-compat but no longer used on
+//     any cabin surface (replaced by "aggregate").
 //   • source="self"             — the calling member's OWN
 //     personal_details from /api/cabin/me. Used on the guest
-//     contribution pages (/cabin/me/at-the-table,
-//     /cabin/me/in-the-cellar) so a guest like Vasilis who
-//     entered "Nuts" in his /me page sees HIS allergy reflected
-//     at the top — not the principal's (which would read as
-//     blank to him and create a dangerous false sense that the
-//     boat doesn't know about his allergy).
+//     contribution pages (/cabin/me/at-the-table etc.) so each
+//     guest sees their own allergy reflected at the top.
+//   • source="aggregate"        — pulls /api/cabin/brief/group-
+//     allergies which combines the principal's Health section AND
+//     every member's personal_details. Renders one block per
+//     member with their name so the chef knows "Nuts (Bill),
+//     pineapple (Olga)". This is what George needs on the
+//     principal's brief pages so the group's full allergy picture
+//     surfaces in one place.
 export default function AllergyAlert({ source = "health" }) {
   const [data, setData] = useState(null);
+  const [aggregate, setAggregate] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
+        if (source === "aggregate") {
+          const r = await fetch("/api/cabin/brief/group-allergies", {
+            credentials: "same-origin",
+          });
+          if (!r.ok) throw new Error("load-failed");
+          const j = await r.json();
+          if (cancelled) return;
+          setAggregate(j);
+          setLoaded(true);
+          return;
+        }
+
         if (source === "self") {
           const r = await fetch("/api/cabin/me", {
             credentials: "same-origin",
@@ -54,11 +70,6 @@ export default function AllergyAlert({ source = "health" }) {
           const j = await r.json();
           if (cancelled) return;
           const pd = j?.member?.personal_details ?? {};
-          // Compose the guest-side payload into the same shape the
-          // render code below expects. medications + medical
-          // conditions don't live on /me yet — leave them blank.
-          // dietary_preferences is an array; render alongside the
-          // free-text allergies field as a comma-joined sentence.
           const dietary = Array.isArray(pd.dietary_preferences)
             ? pd.dietary_preferences.filter(Boolean).join(", ")
             : "";
@@ -100,6 +111,113 @@ export default function AllergyAlert({ source = "health" }) {
 
   if (!loaded) return null;
 
+  // -------------------- AGGREGATE PATH --------------------
+  // Render path is different enough from health/self that we
+  // branch early. Header + footer copy adapted for the group
+  // perspective.
+  if (source === "aggregate") {
+    const sectionAllergies = (aggregate?.section?.allergies || "").trim();
+    const sectionConditions = (aggregate?.section?.medical_conditions || "").trim();
+    const sectionMeds = (aggregate?.section?.medications_onboard || "").trim();
+    const memberLines = Array.isArray(aggregate?.members)
+      ? aggregate.members
+      : [];
+    const counts = aggregate?.counts || { total: 0, withData: 0, clean: 0 };
+    const anyContent =
+      sectionAllergies ||
+      sectionConditions ||
+      sectionMeds ||
+      memberLines.length > 0;
+
+    return (
+      <aside
+        className={
+          "cabin-allergy-alert" + (anyContent ? " has-content" : "")
+        }
+        role="note"
+      >
+        <header>
+          <span className="cabin-allergy-alert__chip">
+            Group allergies & medical
+          </span>
+          <Link
+            href="/cabin/brief/health"
+            className="cabin-allergy-alert__edit"
+          >
+            Edit Health & Safety
+          </Link>
+        </header>
+
+        {anyContent ? (
+          <div className="cabin-allergy-alert__body">
+            {(sectionAllergies || sectionConditions || sectionMeds) && (
+              <div className="cabin-allergy-alert__section">
+                <span className="cabin-allergy-alert__section-eyebrow">
+                  From the group&apos;s Health &amp; Safety section
+                </span>
+                {sectionAllergies && (
+                  <p>
+                    <strong>Allergies / dietary:</strong> {sectionAllergies}
+                  </p>
+                )}
+                {sectionConditions && (
+                  <p>
+                    <strong>Medical conditions:</strong> {sectionConditions}
+                  </p>
+                )}
+                {sectionMeds && (
+                  <p>
+                    <strong>Medications on board:</strong> {sectionMeds}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {memberLines.length > 0 && (
+              <div className="cabin-allergy-alert__section">
+                <span className="cabin-allergy-alert__section-eyebrow">
+                  From individual guests
+                </span>
+                {memberLines.map((m) => {
+                  const dietary = (m.dietary || []).join(", ");
+                  const both = [m.allergies, dietary].filter(Boolean).join(" · ");
+                  return (
+                    <p key={m.memberId}>
+                      <strong>{m.name}:</strong> {both}
+                    </p>
+                  );
+                })}
+              </div>
+            )}
+
+            <p className="cabin-allergy-alert__footer">
+              The chef and hostess read this before every meal.{" "}
+              {counts.clean > 0 && (
+                <>
+                  ({counts.clean} of {counts.total}{" "}
+                  {counts.total === 1 ? "member has" : "members have"} no
+                  allergy or dietary preference on file — invite anyone
+                  missing to share their details from the cabin home.)
+                </>
+              )}
+            </p>
+          </div>
+        ) : (
+          <p className="cabin-allergy-alert__empty">
+            No-one in your group has shared allergies, dietary or
+            medical info yet. As guests fill in their details (or as
+            you fill the Health &amp; Safety section), their facts
+            will surface here so the chef and hostess have the full
+            picture in one place.
+          </p>
+        )}
+
+        <style jsx>{styles}</style>
+      </aside>
+    );
+  }
+
+  // -------------------- HEALTH / SELF PATH --------------------
   const allergies = (data?.allergies_dietary || "").trim();
   const meds = (data?.medications_onboard || "").trim();
   const conditions = (data?.medical_conditions || "").trim();
@@ -159,70 +277,98 @@ export default function AllergyAlert({ source = "health" }) {
         <p className="cabin-allergy-alert__empty">{emptyCopy}</p>
       )}
 
-      <style jsx>{`
-        .cabin-allergy-alert {
-          margin: 0 0 28px 0;
-          border-left: 3px solid var(--gy-gold);
-          background: rgba(201, 168, 76, 0.05);
-          padding: 16px 18px 14px 18px;
-        }
-        .cabin-allergy-alert.has-content {
-          background: rgba(201, 168, 76, 0.1);
-        }
-        .cabin-allergy-alert header {
-          display: flex;
-          justify-content: space-between;
-          align-items: baseline;
-          gap: 12px;
-          flex-wrap: wrap;
-          margin-bottom: 8px;
-        }
-        .cabin-allergy-alert__chip {
-          font-family: var(--gy-font-ui);
-          font-size: 10px;
-          letter-spacing: 2.5px;
-          text-transform: uppercase;
-          color: var(--gy-gold);
-          font-weight: 600;
-        }
-        .cabin-allergy-alert__edit {
-          font-family: var(--gy-font-ui);
-          font-size: 10px;
-          letter-spacing: 1.8px;
-          text-transform: uppercase;
-          color: rgba(13, 27, 42, 0.6);
-          text-decoration: none;
-          border-bottom: 1px solid rgba(13, 27, 42, 0.2);
-        }
-        .cabin-allergy-alert__edit:hover {
-          color: var(--gy-navy);
-          border-bottom-color: var(--gy-gold);
-        }
-        .cabin-allergy-alert__body p {
-          font-family: var(--gy-font-body);
-          font-size: 14.5px;
-          color: var(--gy-navy);
-          line-height: 1.55;
-          margin: 4px 0;
-        }
-        .cabin-allergy-alert__body strong {
-          font-weight: 600;
-        }
-        .cabin-allergy-alert__footer {
-          margin-top: 10px !important;
-          font-style: italic;
-          color: rgba(13, 27, 42, 0.6) !important;
-          font-size: 13px !important;
-        }
-        .cabin-allergy-alert__empty {
-          font-family: var(--gy-font-editorial);
-          font-size: 14px;
-          font-style: italic;
-          color: rgba(13, 27, 42, 0.65);
-          line-height: 1.55;
-          margin: 0;
-        }
-      `}</style>
+      <style jsx>{styles}</style>
     </aside>
   );
 }
+
+// Single source of truth — both render paths (health/self and
+// aggregate) mount this string into <style jsx>. Adding new
+// classes here is the only place we maintain styles.
+const styles = `
+  .cabin-allergy-alert {
+    margin: 0 0 28px 0;
+    border-left: 3px solid var(--gy-gold);
+    background: rgba(201, 168, 76, 0.05);
+    padding: 16px 18px 14px 18px;
+  }
+  .cabin-allergy-alert.has-content {
+    background: rgba(201, 168, 76, 0.1);
+  }
+  .cabin-allergy-alert header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .cabin-allergy-alert__chip {
+    font-family: var(--gy-font-ui);
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gy-navy);
+    font-weight: 600;
+  }
+  .cabin-allergy-alert__edit {
+    font-family: var(--gy-font-ui);
+    font-size: 10.5px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: rgba(13, 27, 42, 0.6);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(13, 27, 42, 0.2);
+  }
+  .cabin-allergy-alert__edit:hover {
+    color: var(--gy-navy);
+    border-bottom-color: var(--gy-gold);
+  }
+  /* Aggregate sub-blocks: principal-section facts + per-member
+     facts each get their own quiet eyebrow + paragraph stack. */
+  .cabin-allergy-alert__section {
+    margin: 4px 0 10px 0;
+  }
+  .cabin-allergy-alert__section + .cabin-allergy-alert__section {
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(201, 168, 76, 0.32);
+  }
+  .cabin-allergy-alert__section-eyebrow {
+    display: block;
+    font-family: var(--gy-font-ui);
+    font-size: 10px;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+    color: var(--gy-gold);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .cabin-allergy-alert__body p,
+  .cabin-allergy-alert__section p {
+    font-family: var(--gy-font-body);
+    font-size: 14.5px;
+    color: var(--gy-navy);
+    line-height: 1.55;
+    margin: 4px 0;
+  }
+  .cabin-allergy-alert__body strong,
+  .cabin-allergy-alert__section strong {
+    font-weight: 600;
+    color: var(--gy-navy);
+  }
+  .cabin-allergy-alert__footer {
+    margin-top: 10px !important;
+    font-style: italic;
+    color: rgba(13, 27, 42, 0.6) !important;
+    font-size: 13px !important;
+  }
+  .cabin-allergy-alert__empty {
+    font-family: var(--gy-font-editorial);
+    font-size: 14px;
+    font-style: italic;
+    color: rgba(13, 27, 42, 0.65);
+    line-height: 1.55;
+    margin: 0;
+  }
+`;

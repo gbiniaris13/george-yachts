@@ -41,6 +41,13 @@ import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import { summariseContribution } from "@/lib/cabin/contributions";
 
 export const runtime = "nodejs";
+// 2026-05-23 — Live panel: response must never be cached by the
+// browser or any edge intermediary. Vasilis logs in 30 min after
+// Patricia edits her brief — he MUST see the fresh state. Without
+// this, Chrome can serve a stale "no voices" response and the
+// panel renders empty.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 const ALLOWED_SECTIONS = new Set(["dining", "beverages"]);
 

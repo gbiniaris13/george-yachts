@@ -66,10 +66,16 @@ export default function DiningSectionPage() {
       </IntroParagraph>
 
       {/* 2026-05-20 — Da$k friend-test asked for an allergy banner
-          on every food-related page, prominently. AllergyAlert mounts
-          at top of dining, beverages, and children sections so the
-          context follows wherever a chef/hostess will be reading. */}
-      <AllergyAlert />
+          on every food-related page, prominently.
+          2026-05-23 — George friend test 4 (Bill nuts, Olga
+          pineapple): the principal-only Health-section data was
+          missing every guest's /me allergy. Switched to "aggregate"
+          mode so the alert merges:
+            • the principal's Health section
+            • every guest's personal_details allergies + dietary
+          and surfaces them attributed by name. Chef sees the
+          full group picture without opening guests one-by-one. */}
+      <AllergyAlert source="aggregate" />
 
       {/* 2026-05-20 — Friend-test pass 3 (George): the sample menu
           uploaded in GY Command shows BEFORE the preference ticks so
