@@ -93,7 +93,7 @@ export default function CabinInstallPage() {
           sign-in email entirely.
         </IntroParagraph>
         <Link href="/cabin" className="install-back">← Back to your Cabin</Link>
-        <style jsx>{styles}</style>
+        <style dangerouslySetInnerHTML={{ __html: styles }} />
       </article>
     );
   }
@@ -244,7 +244,7 @@ export default function CabinInstallPage() {
 
       <Link href="/cabin" className="install-back">← Back to your Cabin</Link>
 
-      <style jsx>{styles}</style>
+      <style dangerouslySetInnerHTML={{ __html: styles }} />
     </article>
   );
 }

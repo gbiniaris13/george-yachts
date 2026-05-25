@@ -83,7 +83,7 @@ export default function GroupVoicesPanel({ sectionKey }) {
       <aside className="gvp gvp--loading" aria-label="Your group, loading">
         <span className="gvp__eyebrow">Your group so far · loading</span>
         <div className="gvp__skel" />
-        <style jsx>{styles}</style>
+        <style dangerouslySetInnerHTML={{ __html: styles }} />
       </aside>
     );
   }
@@ -112,7 +112,7 @@ export default function GroupVoicesPanel({ sectionKey }) {
             : "No-one else has shared their picks for this section yet. As they do, their voices will appear here so you can see what's been added before you."}
         </p>
 
-        <style jsx>{styles}</style>
+        <style dangerouslySetInnerHTML={{ __html: styles }} />
       </aside>
     );
   }
@@ -174,7 +174,7 @@ export default function GroupVoicesPanel({ sectionKey }) {
         ))}
       </div>
 
-      <style jsx>{styles}</style>
+      <style dangerouslySetInnerHTML={{ __html: styles }} />
     </aside>
   );
 }

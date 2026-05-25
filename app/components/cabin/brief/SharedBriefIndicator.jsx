@@ -108,7 +108,7 @@ export default function SharedBriefIndicator({ sectionKey }) {
       <aside className="sbi sbi--loading" aria-label="Shared brief, loading">
         <span className="sbi__chip">Shared brief</span>
         <span className="sbi__copy sbi__copy--muted">loading…</span>
-        <style jsx>{styles}</style>
+        <style dangerouslySetInnerHTML={{ __html: styles }} />
       </aside>
     );
   }
@@ -145,7 +145,7 @@ export default function SharedBriefIndicator({ sectionKey }) {
         {state.refreshing ? "↻" : "↻"}
       </button>
 
-      <style jsx>{styles}</style>
+      <style dangerouslySetInnerHTML={{ __html: styles }} />
     </aside>
   );
 }

@@ -222,7 +222,17 @@ export default function AllergyAlert({ source = "health" }) {
           </p>
         )}
 
-        <style jsx>{styles}</style>
+        {/* 2026-05-25 — Phase 4: was `<style jsx>{styles}</style>`.
+            styled-jsx can't extract CSS when the children expression
+            is a variable reference to a module-level const (verified
+            in browser: zero matching rules in any stylesheet → all
+            .cabin-allergy-alert* selectors un-styled, content
+            collapsed to browser defaults, "Your allergies & dietary"
+            ran straight into "Edit in your details" with no space).
+            Plain `<style dangerouslySetInnerHTML />` always works:
+            React renders a real DOM <style> tag the browser parses
+            normally, no styled-jsx transform needed. */}
+        <style dangerouslySetInnerHTML={{ __html: styles }} />
       </aside>
     );
   }
@@ -287,7 +297,7 @@ export default function AllergyAlert({ source = "health" }) {
         <p className="cabin-allergy-alert__empty">{emptyCopy}</p>
       )}
 
-      <style jsx global>{styles}</style>
+      <style dangerouslySetInnerHTML={{ __html: styles }} />
     </aside>
   );
 }
