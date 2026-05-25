@@ -77,6 +77,29 @@ const COUNTRY_CODES = [
   { code: "+27",  flag: "🇿🇦", label: "South Africa" },
 ];
 
+// 2026-05-25 — Phase 2 follow-up. Longest-prefix match against
+// COUNTRY_CODES so that "+306970380999" parses as "+30" (not the
+// greedy-regex "+3069" the previous /^(\+\d{1,4})/ pulled). Sorts
+// descending by code length so "+357" beats "+35", "+972" beats
+// "+97" etc. Returns null if no prefix matches.
+const COUNTRY_CODE_LIST_BY_LENGTH = COUNTRY_CODES
+  .map((c) => c.code)
+  .sort((a, b) => b.length - a.length);
+function matchKnownCountryCode(mobile) {
+  if (typeof mobile !== "string") return null;
+  const trimmed = mobile.trim();
+  for (const cc of COUNTRY_CODE_LIST_BY_LENGTH) {
+    if (trimmed.startsWith(cc)) return cc;
+  }
+  return null;
+}
+function stripKnownCountryCode(mobile) {
+  if (typeof mobile !== "string") return "";
+  const cc = matchKnownCountryCode(mobile);
+  if (!cc) return mobile;
+  return mobile.slice(cc.length).replace(/^\s+/, "");
+}
+
 // 2026-05-22 — Crew List (port-authority) gender options.
 const GENDER_OPTIONS = [
   { value: "female",         label: "Female" },
@@ -139,12 +162,15 @@ export default function CabinMePage() {
           passport_number: pd.passport_number ?? "",
           passport_expiry: pd.passport_expiry ?? "",
           mobile: pd.mobile ?? "",
-          // Derive CC from the stored mobile string if it starts
-          // with a +; default to +30 (most of our customers).
-          mobile_cc: (() => {
-            const m = (pd.mobile || "").match(/^(\+\d{1,4})/);
-            return m ? m[1] : "+30";
-          })(),
+          // 2026-05-25 — Phase 2 follow-up. Earlier code used a
+          // greedy /^(\+\d{1,4})/ regex which for a Greek number
+          // like "+306970380999" matched "+3069" instead of "+30",
+          // dropping the wrong country code into the picker and
+          // corrupting the next save. Replaced with a longest-
+          // prefix match against the known COUNTRY_CODES list so
+          // every supported dial code parses correctly regardless
+          // of length (+1, +30, +44, +351, +972 etc.).
+          mobile_cc: matchKnownCountryCode(pd.mobile) ?? "+30",
           cabin_pairing: pd.cabin_pairing ?? "",
           special_dates_during_charter: pd.special_dates_during_charter ?? "",
           anything_else: pd.anything_else ?? "",
@@ -306,6 +332,86 @@ export default function CabinMePage() {
     );
   }
 
+  // 2026-05-25 — Phase 2: when the initial GET failed (member is
+  // null AND we have an err set), we MUST NOT render the empty
+  // form — Angeliki's bug-report symptom was "I saved fields and
+  // they came back empty", which is exactly what an empty form
+  // looks like when a load silently failed and the err pill was
+  // invisible below the fold. Render a clear error card with a
+  // Retry button so the user understands what happened and can
+  // do something about it. (The actual data is safe in Supabase;
+  // it's the read path that failed, not a write.)
+  if (err && !member) {
+    return (
+      <article>
+        <SectionTitle
+          kicker="A few details about you"
+          title="Just enough"
+          italic="for the captain and the chef."
+        />
+        <div className="me-load-error" role="alert">
+          <div className="me-load-error__eyebrow">Couldn&apos;t load</div>
+          <p className="me-load-error__copy">
+            We couldn&apos;t load your saved details just now —
+            <strong> your information is still safe</strong>, this
+            is only a connection hiccup between your browser and
+            the Cabin. Tap reload below and your fields will come
+            back as you left them.
+          </p>
+          <button
+            type="button"
+            className="me-load-error__retry"
+            onClick={() => {
+              if (typeof window !== "undefined") window.location.reload();
+            }}
+          >
+            Reload my details
+          </button>
+        </div>
+        <style>{`
+          .me-load-error {
+            margin: 28px 0 0 0;
+            padding: 22px 22px 20px;
+            background: #ffffff;
+            border: 1px solid rgba(177, 74, 58, 0.45);
+            border-left: 3px solid #b14a3a;
+          }
+          .me-load-error__eyebrow {
+            font-family: var(--gy-font-ui);
+            font-size: 10.5px;
+            letter-spacing: 2.4px;
+            text-transform: uppercase;
+            color: #b14a3a;
+            font-weight: 700;
+            margin-bottom: 8px;
+          }
+          .me-load-error__copy {
+            margin: 0 0 16px 0;
+            font-family: var(--gy-font-editorial);
+            font-size: 14.5px;
+            line-height: 1.7;
+            color: var(--gy-navy);
+          }
+          .me-load-error__copy strong { font-weight: 600; }
+          .me-load-error__retry {
+            background: var(--gy-navy);
+            color: var(--gy-ivory);
+            border: 1px solid var(--gy-gold);
+            padding: 13px 22px;
+            font-family: var(--gy-font-ui);
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-weight: 600;
+            min-height: 44px;
+          }
+          .me-load-error__retry:hover { background: #142233; }
+        `}</style>
+      </article>
+    );
+  }
+
   // 2026-05-21 — Pass 7: honorific-stripping helper. Was
   // split(/[\s@]/)[0] which yielded "Ms." on MYBA-style names.
   const firstName =
@@ -441,7 +547,11 @@ export default function CabinMePage() {
                 value={form.mobile_cc || "+30"}
                 onChange={(e) => {
                   const cc = e.target.value;
-                  const local = form.mobile.replace(/^\+\d{1,4}\s*/, "");
+                  // 2026-05-25 — use longest-prefix helper so Greek
+                  // numbers (+30 prefix, country code length 3 chars)
+                  // strip cleanly instead of losing the first digit
+                  // of the local part to the old greedy regex.
+                  const local = stripKnownCountryCode(form.mobile);
                   setForm({
                     ...form,
                     mobile_cc: cc,
@@ -460,7 +570,7 @@ export default function CabinMePage() {
                 inputMode="tel"
                 autoComplete="tel-national"
                 className="me-mobile-num"
-                value={form.mobile.replace(/^\+\d{1,4}\s*/, "")}
+                value={stripKnownCountryCode(form.mobile)}
                 placeholder="6940 000 000"
                 maxLength={24}
                 onChange={(e) => {
