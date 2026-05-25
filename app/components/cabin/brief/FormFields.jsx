@@ -286,7 +286,18 @@ export function CheckboxGroup({
   options,
   register,
   twoColumn = false,
+  // 2026-05-25 — Phase 5: array of values pre-set by other cabin
+  // members that this user is not allowed to un-tick. Rendered
+  // as disabled checkboxes with a small "set by your group" tag,
+  // so the guest can ADD new picks but can't appear to remove
+  // someone else's. Passed in from the page level (DiningFields
+  // computes it from initialData when isPrincipal === false).
+  lockedValues = [],
 }) {
+  const lockedSet =
+    lockedValues && lockedValues.length > 0
+      ? new Set(lockedValues.map(String))
+      : null;
   return (
     <fieldset className="brief-check-group">
       <legend>
@@ -294,17 +305,33 @@ export function CheckboxGroup({
         {hint && <em>{hint}</em>}
       </legend>
       <div className={"brief-check-list" + (twoColumn ? " is-two" : "")}>
-        {options.map((opt) => (
-          <label key={opt.value} className="brief-check-item">
-            <input
-              type="checkbox"
-              value={opt.value}
-              {...(register ? register(name) : { name })}
-            />
-            <span className="brief-check-box" aria-hidden />
-            <span>{opt.label}</span>
-          </label>
-        ))}
+        {options.map((opt) => {
+          const isLocked = lockedSet ? lockedSet.has(String(opt.value)) : false;
+          return (
+            <label
+              key={opt.value}
+              className={
+                "brief-check-item" +
+                (isLocked ? " brief-check-item--locked" : "")
+              }
+              title={isLocked ? "Added by your group — only the principal can remove it on the review page" : undefined}
+            >
+              <input
+                type="checkbox"
+                value={opt.value}
+                disabled={isLocked || undefined}
+                {...(register ? register(name) : { name })}
+              />
+              <span className="brief-check-box" aria-hidden />
+              <span>{opt.label}</span>
+              {isLocked && (
+                <span className="brief-check-locked-tag" aria-hidden>
+                  group
+                </span>
+              )}
+            </label>
+          );
+        })}
       </div>
 
       <style>{`
@@ -378,6 +405,28 @@ export function CheckboxGroup({
           border: solid var(--gy-navy);
           border-width: 0 1.8px 1.8px 0;
           transform: rotate(45deg);
+        }
+        /* 2026-05-25 — Phase 5: locked-by-group state. Cursor
+           becomes "not-allowed", the row dims, and a small
+           gold tag sits at the end so it reads "ticked by your
+           group, not me". Still legible; just clearly not
+           interactive for this guest. */
+        .brief-check-item--locked {
+          cursor: not-allowed;
+          opacity: 0.82;
+        }
+        .brief-check-item--locked .brief-check-box {
+          border-color: rgba(201, 168, 76, 0.55);
+        }
+        .brief-check-locked-tag {
+          margin-left: auto;
+          padding-left: 10px;
+          font-family: var(--gy-font-ui);
+          font-size: 9.5px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--gy-gold);
+          font-weight: 600;
         }
       `}</style>
     </fieldset>

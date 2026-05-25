@@ -107,7 +107,13 @@ export default function BeveragesSectionPage() {
         sectionKey="beverages"
         prevSection={{ key: "dining", title: "At the Table" }}
       >
-        {({ register }) => <BeveragesFields register={register} />}
+        {({ register, initialData }) => (
+          <BeveragesFields
+            register={register}
+            isPrincipal={isPrincipal}
+            initialData={initialData}
+          />
+        )}
       </BriefFormShell>
 
       {/* 2026-05-23 — MUB-C: shared specific-items wishlist. */}

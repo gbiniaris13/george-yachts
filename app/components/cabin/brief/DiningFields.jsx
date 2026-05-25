@@ -56,7 +56,26 @@ const FOOD_MATRIX_ITEMS = [
   { value: "salad",       label: "Salad" },
 ];
 
-export default function DiningFields({ register, hasMinors, isPrincipal = false }) {
+export default function DiningFields({
+  register,
+  hasMinors,
+  isPrincipal = false,
+  // 2026-05-25 — Phase 5: server-loaded initial data. For
+  // non-principals we lock checkbox values already ticked by
+  // other members so a stray un-tick can't even appear to
+  // succeed (Angeliki: "if I un-tick fruits, the server keeps
+  // them via mergeForGuest, refresh re-shows them → confusing").
+  // Defaults to {} when the form hasn't loaded yet — empty means
+  // nothing locked, all options interactive.
+  initialData = {},
+}) {
+  // Helper: array of values pre-ticked by the group for this
+  // field. Principal sees nothing locked (they own /review).
+  const lockedArray = (name) => {
+    if (isPrincipal) return [];
+    const v = initialData[name];
+    return Array.isArray(v) ? v : [];
+  };
   return (
     <>
       {/* 2026-05-24 — Angeliki pass: meal TIMES are now principal-
@@ -119,6 +138,7 @@ export default function DiningFields({ register, hasMinors, isPrincipal = false 
       <h2 className="brief-subhead">Breakfast</h2>
       <CheckboxGroup
         name="breakfast_styles"
+        lockedValues={lockedArray("breakfast_styles")}
         label="Style (tick any that apply)"
         register={register}
         twoColumn
@@ -144,6 +164,7 @@ export default function DiningFields({ register, hasMinors, isPrincipal = false 
 
       <CheckboxGroup
         name="breakfast_items"
+        lockedValues={lockedArray("breakfast_items")}
         label="Items to have available"
         hint="If you don't tick anything in a row, the chef carries the boat's normal stock for that item."
         register={register}
@@ -192,6 +213,7 @@ export default function DiningFields({ register, hasMinors, isPrincipal = false 
       <h2 className="brief-subhead">Coffee, tea & cold drinks</h2>
       <CheckboxGroup
         name="coffee_tea"
+        lockedValues={lockedArray("coffee_tea")}
         label="Tick any that apply"
         register={register}
         twoColumn
@@ -305,6 +327,7 @@ export default function DiningFields({ register, hasMinors, isPrincipal = false 
       <h2 className="brief-subhead">Dessert</h2>
       <CheckboxGroup
         name="dessert_styles"
+        lockedValues={lockedArray("dessert_styles")}
         label="Styles you enjoy"
         register={register}
         twoColumn

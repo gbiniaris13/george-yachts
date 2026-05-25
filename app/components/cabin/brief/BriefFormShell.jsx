@@ -131,7 +131,18 @@ export default function BriefFormShell({
       onSubmit={(e) => e.preventDefault()}
       noValidate
     >
-      {children({ register: form.register, watch: form.watch, control: form.control })}
+      {children({
+        register: form.register,
+        watch: form.watch,
+        control: form.control,
+        // 2026-05-25 — Phase 5: expose the server-loaded initial
+        // data so guest forms can compute "what came from others"
+        // and lock those values at the UI level (CheckboxGroup
+        // disabledValues, free-text disabled+notice, etc.). The
+        // principal-only check happens at the page level; this
+        // shell stays role-agnostic.
+        initialData: initialData ?? {},
+      })}
       {/* 2026-05-24 — Angeliki pass: she asked "πού κάνω save,
           πού είναι το next?" — the original nav was two flat
           uppercase text links of equal weight, indistinguishable

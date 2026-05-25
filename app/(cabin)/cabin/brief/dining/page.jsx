@@ -121,11 +121,12 @@ export default function DiningSectionPage() {
         prevSection={{ key: "life_aboard", title: "Life Aboard" }}
         nextSection={{ key: "beverages", title: "In the Cellar" }}
       >
-        {({ register }) => (
+        {({ register, initialData }) => (
           <DiningFields
             register={register}
             hasMinors={hasMinors}
             isPrincipal={isPrincipal}
+            initialData={initialData}
           />
         )}
       </BriefFormShell>

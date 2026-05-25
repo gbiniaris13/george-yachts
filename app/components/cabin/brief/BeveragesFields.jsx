@@ -46,12 +46,26 @@ const WINE_COLOR_OPTIONS = [
   { value: "orange", label: "Orange / amber (when available)" },
 ];
 
-export default function BeveragesFields({ register }) {
+export default function BeveragesFields({
+  register,
+  // 2026-05-25 — Phase 5: see DiningFields for the rationale.
+  // Locks already-set checkbox values for non-principals so
+  // they can ADD picks but never appear to un-tick what the
+  // group already chose. Empty {} = nothing locked.
+  isPrincipal = false,
+  initialData = {},
+}) {
+  const lockedArray = (name) => {
+    if (isPrincipal) return [];
+    const v = initialData[name];
+    return Array.isArray(v) ? v : [];
+  };
   return (
     <>
       <h2 className="brief-subhead">Bottled water</h2>
       <CheckboxGroup
         name="water_type"
+        lockedValues={lockedArray("water_type")}
         label="Type your group prefers"
         register={register}
         twoColumn
@@ -141,6 +155,7 @@ export default function BeveragesFields({ register }) {
       />
       <CheckboxGroup
         name="wine_colors"
+        lockedValues={lockedArray("wine_colors")}
         label="Colours your group enjoys"
         register={register}
         twoColumn
