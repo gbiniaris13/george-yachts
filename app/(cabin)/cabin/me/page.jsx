@@ -26,7 +26,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { SectionTitle } from "../../../components/cabin/brief/FormFields";
 import { firstNameFromDisplayName } from "@/lib/cabin/format";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
@@ -234,6 +235,76 @@ export default function CabinMePage() {
   // 2026-05-24 — Christos pass (item 2): toggleDietary helper
   // moved to /cabin/me/private alongside the dietary chips.
 
+  // 2026-05-25 — Phase 2 race-condition guard.
+  //
+  // Angeliki's bug class (real risk): user types in a field, clicks
+  // Save, then IMMEDIATELY clicks "Back to your Cabin" before the
+  // PUT round-trips. Two real failure modes:
+  //   • If the user comes back to /cabin/me FAST enough, the GET
+  //     fires while the PUT is still in flight → form populates
+  //     with stale data → user thinks their save was lost.
+  //   • If the user hits a hard navigation (closing tab, refresh,
+  //     external link) mid-PUT, modern browsers may abort
+  //     in-flight fetch requests, so the save genuinely never
+  //     lands.
+  //
+  // Guards:
+  //   1. router.push for in-app back-link — we intercept the click;
+  //      if a save is in flight, we queue the destination and
+  //      navigate only after the save resolves.
+  //   2. beforeunload warning when dirty + not currently saving —
+  //      stops the user from closing the tab on top of unsaved
+  //      typing.
+  //
+  // Both guards are unobtrusive when the page is calm (no save
+  // running + nothing dirty): zero side-effects.
+
+  const router = useRouter();
+  const [pendingNav, setPendingNav] = useState(null);
+  // pendingNavRef mirrors pendingNav so the async onSave path can
+  // read the latest value (state isn't visible inside an in-flight
+  // closure; ref is). State drives re-render, ref drives logic.
+  const pendingNavRef = useRef(null);
+  const busyRef = useRef(false);
+  useEffect(() => {
+    busyRef.current = busy;
+  }, [busy]);
+  useEffect(() => {
+    pendingNavRef.current = pendingNav;
+  }, [pendingNav]);
+
+  // Hard navigation guard (close tab / refresh / external link)
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+    function onBeforeUnload(e) {
+      if (busyRef.current || dirty) {
+        // Modern browsers ignore custom messages but the default
+        // "Leave site?" dialog still fires when this is set.
+        e.preventDefault();
+        e.returnValue = "";
+        return "";
+      }
+      return undefined;
+    }
+    window.addEventListener("beforeunload", onBeforeUnload);
+    return () => window.removeEventListener("beforeunload", onBeforeUnload);
+  }, [dirty]);
+
+  // In-app navigation guard via the Back button. Click handler
+  // sees busy → defers the navigation until onSave finishes.
+  function onBackClick(e) {
+    e.preventDefault();
+    const target = "/cabin";
+    if (busyRef.current) {
+      // Set ref FIRST so the in-flight onSave can read it
+      // synchronously without waiting for the next render.
+      pendingNavRef.current = target;
+      setPendingNav(target);
+      return;
+    }
+    router.push(target);
+  }
+
   async function onSave(e) {
     e.preventDefault();
     setBusy(true);
@@ -251,8 +322,35 @@ export default function CabinMePage() {
       setOk(true);
       // Tuck the "saved" message away after a beat — no need to nag.
       setTimeout(() => setOk(false), 3500);
+      // If the user clicked Back while we were saving, honour it
+      // now that the save has actually landed. Read from the ref
+      // (not the closure-captured state) so we see the LATEST
+      // value queued by onBackClick.
+      //
+      // 2026-05-25 — Use window.location.assign instead of
+      // router.push. router.push() inside the in-flight save's
+      // async callback was being silently dropped in Next.js 15
+      // App Router prod build (confirmed via localStorage trace:
+      // the code path executed with the correct target, the
+      // push call returned, but the page stayed on /cabin/me).
+      // location.assign is the unambiguous escape hatch — it
+      // triggers a real navigation that nothing in the SPA can
+      // intercept or coalesce. Slightly slower (full reload)
+      // but the user is leaving anyway.
+      const target = pendingNavRef.current;
+      if (target) {
+        pendingNavRef.current = null;
+        setPendingNav(null);
+        if (typeof window !== "undefined") {
+          window.location.assign(target);
+        }
+      }
     } catch {
       setErr("Could not save just now. Please try again.");
+      // Clear any pending nav so the user isn't yanked away with
+      // an unsaved error — they need to see the message first.
+      pendingNavRef.current = null;
+      setPendingNav(null);
     } finally {
       setBusy(false);
     }
@@ -768,8 +866,20 @@ export default function CabinMePage() {
         )}
 
         <div className="me-actions">
-          <Link href="/cabin" className="me-back">
-            ← Back to your Cabin
+          {/* 2026-05-25 — Race guard: intercept the click so we
+              can defer navigation until any in-flight save lands.
+              href="/cabin" stays so right-click "open in new tab"
+              still works and so screen readers/search engines see
+              a real link target. */}
+          <Link
+            href="/cabin"
+            className={`me-back${busy ? " me-back--waiting" : ""}`}
+            onClick={onBackClick}
+            aria-disabled={busy}
+          >
+            {busy && pendingNav
+              ? "Saving — leaving when done…"
+              : "← Back to your Cabin"}
           </Link>
           {!dirty && !busy ? (
             <span className="me-saved" aria-live="polite">
@@ -964,6 +1074,14 @@ export default function CabinMePage() {
           color: rgba(13,27,42,0.55);
           text-decoration: none;
           padding: 11px 0;
+        }
+        /* 2026-05-25 — Race guard visual state: while a save is in
+           flight AND the user has clicked Back, surface a calm
+           "Saving — leaving when done" label so they know the
+           navigation is queued, not ignored. */
+        .me-back--waiting {
+          color: var(--gy-gold);
+          cursor: progress;
         }
         .me-save {
           background: var(--gy-navy);
