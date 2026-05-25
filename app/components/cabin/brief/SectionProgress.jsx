@@ -2,7 +2,7 @@
 
 // app/components/cabin/brief/SectionProgress.jsx
 // =============================================================
-// 2026-05-25 — Phase 6.
+// 2026-05-25 — Phase 6 (with closeout pass).
 //
 // Angeliki on her test pass: "θέλουμε τα βήματα να τους οδηγάμε
 // όλους να ξέρουν ακριβώς τι κάνουν και μετά να ξέρουν ακριβώς
@@ -13,35 +13,76 @@
 // the sense of "where am I" + "how far to go". This component
 // renders a small boutique strip at the top of every brief
 // section page: gold "STEP X OF Y" caps + a row of small dots
-// (one filled per completed step, current step ringed). The
-// strip is sticky-ish (no JS scrolling logic — just a quiet
-// header card with the same boutique aesthetic as the rest of
-// the cabin). Adds no extra interaction, just orientation.
+// (one filled per completed step, current step ringed).
 //
-// Pure presentation. Caller passes `stepNumber`, `stepTotal`,
-// and `stepLabel`. We assume current-step centered, prior
-// filled, future hollow.
+// The TOTAL adapts to the cabin's actual visible flow:
+//   • 7 sections when no minors aboard (arrival → beverages)
+//   • 8 sections when minors aboard (… → children)
+// We fetch /api/cabin/has-minors so the caller doesn't have to.
+// While the fetch is in flight the strip uses the prop's
+// `stepTotalMax` (default 8) as a non-committal placeholder
+// so SSR markup matches.
 // =============================================================
 
-export default function SectionProgress({ stepNumber, stepTotal, stepLabel }) {
+import { useEffect, useState } from "react";
+
+export default function SectionProgress({
+  stepNumber,
+  stepTotal,
+  stepLabel,
+  // Optional fallback used until the has-minors fetch resolves.
+  // Defaults to 8 (max). Pages can override but normally don't.
+  stepTotalMax = 8,
+}) {
+  // 2026-05-25 — Phase 6 closeout: dynamic total based on cabin
+  // composition. Without this, a cabin with no minors saw "Step
+  // 07 of 08" on beverages with a dot that would never fill —
+  // honest enough but slightly misleading. Now: 7 when no
+  // minors, 8 when minors aboard.
+  const [adjustedTotal, setAdjustedTotal] = useState(
+    Number.isFinite(stepTotal) ? stepTotal : stepTotalMax,
+  );
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/cabin/has-minors", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((j) => {
+        if (cancelled) return;
+        const hasMinors = Boolean(j?.hasMinors);
+        setAdjustedTotal(hasMinors ? 8 : 7);
+      })
+      .catch(() => {
+        // Stay at the SSR placeholder on failure.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  const effectiveTotal = adjustedTotal;
   if (
     !Number.isFinite(stepNumber) ||
-    !Number.isFinite(stepTotal) ||
-    stepTotal < 1
+    !Number.isFinite(effectiveTotal) ||
+    effectiveTotal < 1
   ) {
     return null;
   }
-  const dots = Array.from({ length: stepTotal }, (_, i) => {
+  // Guard: if stepNumber exceeds the adjusted total (e.g. on
+  // /children for a cabin that does have minors, total=8), it's
+  // still valid. But if a stale prop comes in higher than total,
+  // clamp the rendering total upward so we never hide the user's
+  // own step.
+  const safeTotal = Math.max(effectiveTotal, stepNumber);
+  const dots = Array.from({ length: safeTotal }, (_, i) => {
     const idx = i + 1;
     if (idx < stepNumber) return "filled";
     if (idx === stepNumber) return "current";
     return "empty";
   });
   return (
-    <aside className="section-progress" aria-label={`Step ${stepNumber} of ${stepTotal}`}>
+    <aside className="section-progress" aria-label={`Step ${stepNumber} of ${safeTotal}`}>
       <div className="section-progress__row">
         <span className="section-progress__eyebrow">
-          Step {String(stepNumber).padStart(2, "0")} of {String(stepTotal).padStart(2, "0")}
+          Step {String(stepNumber).padStart(2, "0")} of {String(safeTotal).padStart(2, "0")}
         </span>
         {stepLabel && (
           <span className="section-progress__divider" aria-hidden>·</span>
