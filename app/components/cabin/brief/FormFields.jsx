@@ -61,13 +61,24 @@ export function TextField({
   inputMode,
   autoComplete,
   register,
+  // 2026-05-25 — Phase 5 closeout: when true, the field is
+  // disabled with a small "group" tag so non-principals see
+  // that the value was already set by the group and the server
+  // will refuse to overwrite (mergeForGuest keep-existing). The
+  // page-level caller computes this from initialData[name].
+  lockedByGroup = false,
 }) {
   const id = useId();
   const props = register ? register(name) : { name };
   return (
-    <div className="brief-field">
+    <div className={"brief-field" + (lockedByGroup ? " brief-field--locked" : "")}>
       <FieldLabel htmlFor={id} required={required} hint={hint}>
         {label}
+        {lockedByGroup && (
+          <span className="brief-field__locked-tag" aria-hidden>
+            group
+          </span>
+        )}
       </FieldLabel>
       <input
         id={id}
@@ -76,6 +87,8 @@ export function TextField({
         autoComplete={autoComplete}
         placeholder={placeholder}
         {...props}
+        disabled={lockedByGroup || undefined}
+        title={lockedByGroup ? "Set by your group — only the principal can change it on the review page" : undefined}
         className="brief-input"
       />
       <style>{`
@@ -102,6 +115,20 @@ export function TextField({
         .brief-input:focus {
           border-bottom-color: var(--gy-gold);
         }
+        .brief-input:disabled {
+          cursor: not-allowed;
+          color: rgba(13, 27, 42, 0.72);
+          border-bottom-color: rgba(201, 168, 76, 0.4);
+        }
+        .brief-field__locked-tag {
+          font-family: var(--gy-font-ui);
+          font-size: 9.5px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--gy-gold);
+          font-weight: 600;
+          margin-left: 8px;
+        }
       `}</style>
     </div>
   );
@@ -116,19 +143,28 @@ export function OpenTextarea({
   placeholder,
   rows = 3,
   register,
+  // 2026-05-25 — Phase 5 closeout: same lock-by-group as TextField.
+  lockedByGroup = false,
 }) {
   const id = useId();
   const props = register ? register(name) : { name };
   return (
-    <div className="brief-field">
+    <div className={"brief-field" + (lockedByGroup ? " brief-field--locked" : "")}>
       <FieldLabel htmlFor={id} required={required} hint={hint}>
         {label}
+        {lockedByGroup && (
+          <span className="brief-field__locked-tag" aria-hidden>
+            group
+          </span>
+        )}
       </FieldLabel>
       <textarea
         id={id}
         rows={rows}
         placeholder={placeholder}
         {...props}
+        disabled={lockedByGroup || undefined}
+        title={lockedByGroup ? "Written by your group — only the principal can change it on the review page" : undefined}
         className="brief-textarea"
       />
       <style>{`
@@ -154,6 +190,12 @@ export function OpenTextarea({
           border-color: var(--gy-gold);
           background: #ffffff;
         }
+        .brief-textarea:disabled {
+          cursor: not-allowed;
+          color: rgba(13, 27, 42, 0.72);
+          border-color: rgba(201, 168, 76, 0.4);
+          background: rgba(201, 168, 76, 0.05);
+        }
       `}</style>
     </div>
   );
@@ -168,29 +210,59 @@ export function RadioGroup({
   options,
   required,
   register,
+  // 2026-05-25 — Phase 5 closeout: when a single value is set
+  // (the group's existing pick), all options are disabled and
+  // the row carrying the locked value shows a small "group" tag.
+  // For non-principals this stops a stray click that the server
+  // would silently keep-existing on anyway.
+  lockedValue = null,
 }) {
+  const isLocked = lockedValue != null && lockedValue !== "";
   return (
-    <fieldset className="brief-radio-group">
+    <fieldset className={"brief-radio-group" + (isLocked ? " brief-radio-group--locked" : "")}>
       <legend>
         {required && <RequiredDot />}
         {label}
+        {isLocked && (
+          <span className="brief-field__locked-tag" aria-hidden>
+            group
+          </span>
+        )}
         {hint && <em>{hint}</em>}
       </legend>
       <div className="brief-radio-list">
-        {options.map((opt) => (
-          <label key={opt.value} className="brief-radio-item">
-            <input
-              type="radio"
-              value={opt.value}
-              {...(register ? register(name) : { name })}
-            />
-            <span className="brief-radio-circle" aria-hidden />
-            <span className="brief-radio-text">
-              <strong>{opt.label}</strong>
-              {opt.description && <em>{opt.description}</em>}
-            </span>
-          </label>
-        ))}
+        {options.map((opt) => {
+          const optLocked = isLocked;
+          const isThisLocked =
+            isLocked && String(opt.value) === String(lockedValue);
+          return (
+            <label
+              key={opt.value}
+              className={
+                "brief-radio-item" +
+                (optLocked ? " brief-radio-item--locked" : "")
+              }
+              title={optLocked ? "Set by your group — only the principal can change it on the review page" : undefined}
+            >
+              <input
+                type="radio"
+                value={opt.value}
+                disabled={optLocked || undefined}
+                {...(register ? register(name) : { name })}
+              />
+              <span className="brief-radio-circle" aria-hidden />
+              <span className="brief-radio-text">
+                <strong>{opt.label}</strong>
+                {opt.description && <em>{opt.description}</em>}
+              </span>
+              {isThisLocked && (
+                <span className="brief-radio-locked-tag" aria-hidden>
+                  group
+                </span>
+              )}
+            </label>
+          );
+        })}
       </div>
 
       <style>{`
@@ -272,6 +344,23 @@ export function RadioGroup({
           font-size: 12.5px;
           color: rgba(13, 27, 42, 0.55);
           margin-top: 2px;
+        }
+        /* 2026-05-25 — Phase 5 closeout: locked radio rows */
+        .brief-radio-item--locked {
+          cursor: not-allowed;
+          opacity: 0.82;
+        }
+        .brief-radio-item--locked:hover {
+          background: #ffffff;
+        }
+        .brief-radio-locked-tag {
+          align-self: center;
+          font-family: var(--gy-font-ui);
+          font-size: 9.5px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--gy-gold);
+          font-weight: 600;
         }
       `}</style>
     </fieldset>
@@ -562,7 +651,11 @@ export function SectionTitle({ kicker, title, italic }) {
 // and we register child radios as `food_matrix.fish` etc.
 //
 // items: [{ value: "fish", label: "Fish" }, ...]
-export function LikeDislikeMatrix({ name, label, hint, items, register }) {
+export function LikeDislikeMatrix({ name, label, hint, items, register, lockedKeys = {} }) {
+  // lockedKeys: { fish: "like", lamb: "dislike", ... } — per-row
+  // values already set by the group. For non-principals the row
+  // is disabled (can't change the verdict) and a "group" tag
+  // shows. Empty {} = nothing locked.
   return (
     <fieldset className="brief-matrix">
       <legend>
@@ -577,8 +670,16 @@ export function LikeDislikeMatrix({ name, label, hint, items, register }) {
           <span>Dislike</span>
           <span>Indifferent</span>
         </div>
-        {items.map((it) => (
-          <div key={it.value} className="brief-matrix-row">
+        {items.map((it) => {
+          const rowLocked = lockedKeys && lockedKeys[it.value];
+          return (
+          <div
+            key={it.value}
+            className={
+              "brief-matrix-row" + (rowLocked ? " brief-matrix-row--locked" : "")
+            }
+            title={rowLocked ? "Set by your group — only the principal can change it on the review page" : undefined}
+          >
             {/* 2026-05-23 — NUCLEAR fix for the food matrix labels
                 that George has reported as invisible/washed-out
                 THREE TIMES across three days.
@@ -614,6 +715,7 @@ export function LikeDislikeMatrix({ name, label, hint, items, register }) {
                 <input
                   type="radio"
                   value={v}
+                  disabled={rowLocked || undefined}
                   {...(register ? register(`${name}.${it.value}`) : { name: `${name}.${it.value}` })}
                 />
                 <span className="brief-matrix-dot" aria-hidden />
@@ -621,7 +723,8 @@ export function LikeDislikeMatrix({ name, label, hint, items, register }) {
               </label>
             ))}
           </div>
-        ))}
+          );
+        })}
       </div>
 
       <style>{`
@@ -678,6 +781,16 @@ export function LikeDislikeMatrix({ name, label, hint, items, register }) {
           border-top: 1px solid rgba(13, 27, 42, 0.05);
         }
         .brief-matrix-row:first-of-type { border-top: 0; }
+        /* 2026-05-25 — Phase 5 closeout: row already set by the
+           group. Dim the radios; cursor signals not-interactive. */
+        .brief-matrix-row--locked {
+          cursor: not-allowed;
+          opacity: 0.82;
+          background: rgba(201, 168, 76, 0.05);
+        }
+        .brief-matrix-row--locked .brief-matrix-cell {
+          cursor: not-allowed;
+        }
         /* 2026-05-20 — Eleanna friend-test: "Είμαι πολύ αχνα" + "δεν
            φαίνονται οι επιλογές που πρέπει να τσεκάρω". Both the row
            labels (food names) and the radio circles were too low-

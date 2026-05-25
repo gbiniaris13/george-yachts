@@ -60,6 +60,19 @@ export default function BeveragesFields({
     const v = initialData[name];
     return Array.isArray(v) ? v : [];
   };
+  // 2026-05-25 — Phase 5 closeout: per-type lock helpers,
+  // same shape as DiningFields. For non-principals, any
+  // already-loaded value is "locked by the group".
+  const lockedText = (name) => {
+    if (isPrincipal) return false;
+    const v = initialData[name];
+    return typeof v === "string" && v.trim().length > 0;
+  };
+  const lockedRadio = (name) => {
+    if (isPrincipal) return null;
+    const v = initialData[name];
+    return typeof v === "string" && v.trim().length > 0 ? v : null;
+  };
   return (
     <>
       <h2 className="brief-subhead">Bottled water</h2>
@@ -78,6 +91,7 @@ export default function BeveragesFields({
       <TextField
         label="Brand preferences (optional)"
         name="water_brand"
+        lockedByGroup={lockedText("water_brand")}
         placeholder="e.g. Pellegrino at meals, anything else for everyday"
         register={register}
       />
@@ -85,6 +99,7 @@ export default function BeveragesFields({
       <h2 className="brief-subhead">Champagne</h2>
       <RadioGroup
         name="champagne_wanted"
+        lockedValue={lockedRadio("champagne_wanted")}
         label="Would you like champagne stocked?"
         register={register}
         options={[
@@ -95,6 +110,7 @@ export default function BeveragesFields({
       />
       <RadioGroup
         name="champagne_tier"
+        lockedValue={lockedRadio("champagne_tier")}
         label="If yes — what level"
         hint="The hostess matches the boat's house list to your level. Anything materially above your stated tier is confirmed by phone before ordering — never silently added to your tab."
         register={register}
@@ -126,6 +142,7 @@ export default function BeveragesFields({
       <OpenTextarea
         label="Specific labels you love (optional)"
         name="champagne_specifics"
+        lockedByGroup={lockedText("champagne_specifics")}
         register={register}
         rows={2}
         placeholder="e.g. Krug Grande Cuvée · Dom Pérignon · Ruinart Blanc de Blancs"
@@ -134,6 +151,7 @@ export default function BeveragesFields({
       <h2 className="brief-subhead">Wines</h2>
       <RadioGroup
         name="wine_wanted"
+        lockedValue={lockedRadio("wine_wanted")}
         label="Would you like wine stocked?"
         register={register}
         options={[
@@ -144,6 +162,7 @@ export default function BeveragesFields({
       />
       <RadioGroup
         name="wine_greek_vineyards"
+        lockedValue={lockedRadio("wine_greek_vineyards")}
         label="Greek wines from the best vineyards?"
         hint="Greece offers exceptional wines — Assyrtiko, Xinomavro, old-vine reds. The crew recommends warmly."
         register={register}
@@ -165,12 +184,14 @@ export default function BeveragesFields({
         label="Grape varieties you love (optional)"
         hint="Sauvignon Blanc, Pinot Noir, Assyrtiko, Agiorgitiko — the crew will look these out."
         name="wine_grapes"
+        lockedByGroup={lockedText("wine_grapes")}
         register={register}
         rows={2}
         placeholder="e.g. Burgundy reds, Sancerre whites, Greek Assyrtiko"
       />
       <RadioGroup
         name="wine_tier"
+        lockedValue={lockedRadio("wine_tier")}
         label="Overall level"
         hint="Same ceiling logic as champagne — anything materially above the stated tier is confirmed by phone first."
         register={register}
@@ -202,6 +223,7 @@ export default function BeveragesFields({
       <OpenTextarea
         label="Specific labels you love (optional)"
         name="wine_specifics"
+        lockedByGroup={lockedText("wine_specifics")}
         register={register}
         rows={3}
         placeholder="e.g. Sancerre Henri Bourgeois · any Domaine Gerovassiliou white · Châteauneuf-du-Pape if a vintage is around"
@@ -230,6 +252,7 @@ export default function BeveragesFields({
         label="Specific labels you love (optional)"
         hint="Single malts, particular gins, dark rums — anything the hostess should hunt for at provisioning."
         name="spirits_brands"
+        lockedByGroup={lockedText("spirits_brands")}
         register={register}
         rows={3}
         placeholder="e.g. Hendrick's gin · Talisker 10 · Don Julio Reposado · Aperol for spritz at sunset"
@@ -238,6 +261,7 @@ export default function BeveragesFields({
       <h2 className="brief-subhead">Beers</h2>
       <RadioGroup
         name="beers_frequency"
+        lockedValue={lockedRadio("beers_frequency")}
         label="How often does your group drink beer?"
         register={register}
         options={[
@@ -249,6 +273,7 @@ export default function BeveragesFields({
       />
       <RadioGroup
         name="beers_origin"
+        lockedValue={lockedRadio("beers_origin")}
         label="International or Greek?"
         register={register}
         options={[
@@ -261,6 +286,7 @@ export default function BeveragesFields({
       <OpenTextarea
         label="Specific labels (optional)"
         name="beers_specifics"
+        lockedByGroup={lockedText("beers_specifics")}
         register={register}
         rows={2}
         placeholder="e.g. Corona with lime at lunch · happy to try Mythos and Septem"
@@ -286,6 +312,7 @@ export default function BeveragesFields({
       <OpenTextarea
         label="Specific brands (optional)"
         name="soft_drinks_brands"
+        lockedByGroup={lockedText("soft_drinks_brands")}
         register={register}
         rows={2}
         placeholder="e.g. Fever-Tree tonic · Schweppes ginger ale · only Coca-Cola Light, not Zero"
@@ -296,6 +323,7 @@ export default function BeveragesFields({
         label="Cocktails the hostess should know"
         hint="How you like them prepared — ice, garnish, glassware."
         name="cocktails"
+        lockedByGroup={lockedText("cocktails")}
         register={register}
         rows={3}
         placeholder="e.g. Negroni 1:1:1 over a single large cube · Margarita on the rocks with salt"
@@ -304,6 +332,7 @@ export default function BeveragesFields({
         label="Mocktails"
         hint="Non-alcoholic versions for kids or non-drinkers."
         name="mocktails"
+        lockedByGroup={lockedText("mocktails")}
         register={register}
         rows={2}
         placeholder="e.g. Virgin mojitos · fresh juice spritzers · ginger cooler"

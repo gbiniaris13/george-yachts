@@ -76,6 +76,27 @@ export default function DiningFields({
     const v = initialData[name];
     return Array.isArray(v) ? v : [];
   };
+  // 2026-05-25 — Phase 5 closeout: same idea, applied across
+  // every field type — free-text (TextField, OpenTextarea),
+  // single-select (RadioGroup), and the food_matrix object
+  // (per-key locks). For guests, any value already loaded from
+  // the server is locked so the merge keep-existing semantics
+  // can't silently swallow a guest's edit.
+  const lockedText = (name) => {
+    if (isPrincipal) return false;
+    const v = initialData[name];
+    return typeof v === "string" && v.trim().length > 0;
+  };
+  const lockedRadio = (name) => {
+    if (isPrincipal) return null;
+    const v = initialData[name];
+    return typeof v === "string" && v.trim().length > 0 ? v : null;
+  };
+  const lockedMatrix = (name) => {
+    if (isPrincipal) return {};
+    const v = initialData[name];
+    return v && typeof v === "object" && !Array.isArray(v) ? v : {};
+  };
   return (
     <>
       {/* 2026-05-24 — Angeliki pass: meal TIMES are now principal-
@@ -157,6 +178,7 @@ export default function DiningFields({
       <OpenTextarea
         label="Other breakfast styles or special requests"
         name="breakfast_styles_other"
+        lockedByGroup={lockedText("breakfast_styles_other")}
         register={register}
         rows={2}
         placeholder="e.g. Açai bowls, Israeli shakshuka, Japanese rice & miso, anything we missed"
@@ -196,15 +218,16 @@ export default function DiningFields({
 
       <h3 className="brief-subhead-sm">Specifics (kinds & brands)</h3>
       <div className="brief-grid-2">
-        <TextField label="Cheese kind"  name="breakfast_cheese_kind"  placeholder="e.g. Feta, Graviera, brie" register={register} />
-        <TextField label="Cereal kind"  name="breakfast_cereal_kind"  placeholder="e.g. Granola, raisin bran" register={register} />
-        <TextField label="Jam kind"     name="breakfast_jam_kind"     placeholder="e.g. Strawberry, fig, marmalade" register={register} />
-        <TextField label="Tea kind"     name="breakfast_tea_kind"     placeholder="e.g. English breakfast, green, herbal" register={register} />
-        <TextField label="Juice kind"   name="breakfast_juice_kind"   placeholder="e.g. Fresh OJ, apple, multivitamin" register={register} />
+        <TextField label="Cheese kind"  name="breakfast_cheese_kind"  lockedByGroup={lockedText("breakfast_cheese_kind")} placeholder="e.g. Feta, Graviera, brie" register={register} />
+        <TextField label="Cereal kind"  name="breakfast_cereal_kind"  lockedByGroup={lockedText("breakfast_cereal_kind")} placeholder="e.g. Granola, raisin bran" register={register} />
+        <TextField label="Jam kind"     name="breakfast_jam_kind"     lockedByGroup={lockedText("breakfast_jam_kind")} placeholder="e.g. Strawberry, fig, marmalade" register={register} />
+        <TextField label="Tea kind"     name="breakfast_tea_kind"     lockedByGroup={lockedText("breakfast_tea_kind")} placeholder="e.g. English breakfast, green, herbal" register={register} />
+        <TextField label="Juice kind"   name="breakfast_juice_kind"   lockedByGroup={lockedText("breakfast_juice_kind")} placeholder="e.g. Fresh OJ, apple, multivitamin" register={register} />
       </div>
       <OpenTextarea
         label="Anything else for breakfast"
         name="breakfast_specifics"
+        lockedByGroup={lockedText("breakfast_specifics")}
         register={register}
         rows={2}
         placeholder="e.g. Açai bowls, smoked salmon on Sundays, vegan options for one guest"
@@ -235,6 +258,7 @@ export default function DiningFields({
       <OpenTextarea
         label="Other coffees, teas, or specific drink requests"
         name="coffee_tea_other"
+        lockedByGroup={lockedText("coffee_tea_other")}
         register={register}
         rows={2}
         placeholder="e.g. matcha latte, chai, specific tea brand, oat-milk flat white"
@@ -320,6 +344,7 @@ export default function DiningFields({
       </p>
       <LikeDislikeMatrix
         name="food_matrix"
+        lockedKeys={lockedMatrix("food_matrix")}
         items={FOOD_MATRIX_ITEMS}
         register={register}
       />
@@ -343,6 +368,7 @@ export default function DiningFields({
       <OpenTextarea
         label="Special dessert requests"
         name="dessert_specifics"
+        lockedByGroup={lockedText("dessert_specifics")}
         register={register}
         rows={2}
         placeholder="e.g. Custom birthday cake for the 19th, chocolate soufflé, fruit platters daily"
@@ -351,6 +377,7 @@ export default function DiningFields({
       <h2 className="brief-subhead">Snacks between meals</h2>
       <RadioGroup
         name="snacks_yes_no"
+        lockedValue={lockedRadio("snacks_yes_no")}
         label=""
         register={register}
         options={[
@@ -362,6 +389,7 @@ export default function DiningFields({
       <OpenTextarea
         label="What kind of snacks"
         name="snacks_details"
+        lockedByGroup={lockedText("snacks_details")}
         register={register}
         rows={2}
         placeholder="e.g. Cured meats & cheeses, fruits, salami, parmigiano, crackers, breads"
@@ -370,6 +398,7 @@ export default function DiningFields({
       <h2 className="brief-subhead">Afternoon tea</h2>
       <RadioGroup
         name="afternoon_tea_yes_no"
+        lockedValue={lockedRadio("afternoon_tea_yes_no")}
         label=""
         register={register}
         options={[
@@ -381,6 +410,7 @@ export default function DiningFields({
       <OpenTextarea
         label="Tea details"
         name="afternoon_tea_details"
+        lockedByGroup={lockedText("afternoon_tea_details")}
         register={register}
         rows={2}
         placeholder="e.g. Earl Grey with scones and clotted cream around 17:00"
@@ -391,6 +421,7 @@ export default function DiningFields({
         label="Restaurants or places you'd like to try"
         hint="Anywhere you've heard of, anywhere you've loved before, or any vibe (waterfront tavernas / a Michelin night / quiet local spot). The captain knows the islands and will fold them in. Leave blank if you'd rather decide week-of."
         name="dining_ashore_notes"
+        lockedByGroup={lockedText("dining_ashore_notes")}
         register={register}
         placeholder="e.g. We've heard about Spondi in Athens before embarkation, and we'd love at least one quiet taverna night in the Cyclades — the kind with grandma in the kitchen."
         rows={4}
@@ -409,6 +440,7 @@ export default function DiningFields({
           </p>
           <RadioGroup
             name="kids_meal_arrangement"
+            lockedValue={lockedRadio("kids_meal_arrangement")}
             label="When do the children eat?"
             register={register}
             options={[
@@ -420,6 +452,7 @@ export default function DiningFields({
           <OpenTextarea
             label="What the children love"
             name="kids_meal_specifics"
+            lockedByGroup={lockedText("kids_meal_specifics")}
             register={register}
             rows={2}
             placeholder="e.g. Pasta & butter, grilled cheese, tomato soup, chicken nuggets, fries"
@@ -437,6 +470,7 @@ export default function DiningFields({
           <OpenTextarea
             label="Baby food / formula"
             name="kids_baby_food_specifics"
+            lockedByGroup={lockedText("kids_baby_food_specifics")}
             register={register}
             rows={2}
             placeholder="e.g. The brand of formula we use, any baby food jars or pouches we'd like stocked"
@@ -448,6 +482,7 @@ export default function DiningFields({
         label="A note to the chef"
         hint="Favourite dishes from past travels, a meal you've always wanted to try in Greece, surprises you would welcome."
         name="chef_open_note"
+        lockedByGroup={lockedText("chef_open_note")}
         register={register}
         rows={4}
       />
