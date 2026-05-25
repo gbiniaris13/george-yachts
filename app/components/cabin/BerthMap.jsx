@@ -216,15 +216,126 @@ export default function BerthMap({
 
       mapRef.current = map;
 
-      // 2026-05-24 — Christos pass: bulletproof tile rendering.
-      // Common Leaflet issue — if the container measures 0×0 at
-      // init (because a parent is still animating in, or display
-      // changed after first paint), tiles never render until we
-      // call invalidateSize(). We trigger it on the next paint
-      // tick AND on a ResizeObserver so any subsequent layout
-      // change (orientation flip, cabin-shell mount cascade,
-      // CSS grid reflow) re-asks Leaflet to remeasure and paint.
-      const armInvalidate = () => {
+      // 2026-05-25 — Angeliki pass Phase 1 — REAL FIX (verified
+      // live in browser at /test-berth-map).
+      //
+      // ROOT CAUSE (proven, not guessed):
+      //   • Network: 200 OK from CartoDB for every tile.
+      //   • DOM:    6 img.leaflet-tile elements present.
+      //   • Image:  img.complete === true, naturalWidth === 256.
+      //   • CSS:    .leaflet-tile { visibility: hidden; }
+      //             .leaflet-tile-loaded { visibility: inherit; }
+      //   • Bug:    `.leaflet-tile-loaded` is NEVER added.
+      //
+      // Leaflet's GridLayer._tileReady is the function that adds
+      // that class. It does not run here. Manually adding the
+      // class via DevTools makes the map render perfectly — so
+      // tiles, transforms, blend modes and CSS are all fine.
+      // The hole is purely in the class-toggle path.
+      //
+      // Several causes are possible in different environments
+      // (React Strict Mode double-mount races, browser cache
+      // serving images before listeners attach, Leaflet 1.9.x
+      // GridLayer prune behaviour, turbopack HMR side-effects,
+      // some interaction with cabin-tones.css globals). Rather
+      // than chase Leaflet internals across every browser/cache
+      // permutation Angeliki, Eleanna, Vasilis and Christos can
+      // hit, we install a SAFETY NET: whenever a tile img is in
+      // the DOM and the image is genuinely loaded (complete +
+      // naturalWidth > 0), we ensure the .leaflet-tile-loaded
+      // class is present. Idempotent; co-operates with Leaflet
+      // when Leaflet's logic does fire, and rescues the page
+      // when it doesn't.
+      //
+      // Three layers in concert:
+      //   1. MutationObserver on the container — catches every
+      //      tile img inserted by Leaflet, marks it loaded
+      //      immediately if cached, and attaches a one-time
+      //      load listener for the not-yet-decoded ones.
+      //   2. Initial sweep on next macrotask — catches any
+      //      tiles Leaflet inserted before our observer wired
+      //      up (the very first frame after mount).
+      //   3. A short polling pass (every 200ms for ~3s) — a
+      //      last-resort safety in case both above missed
+      //      anything during HMR remount or React Strict Mode
+      //      double-effect-cycles.
+      //
+      // Plus: the same ResizeObserver as before, suppressed for
+      // its priming callback, fires invalidateSize only on real
+      // dimension deltas (orientation flip, iOS address-bar
+      // collapse). The original preemptive RAF + 600ms invalidate
+      // calls are removed — they could orphan in-flight tiles
+      // by clearing GridLayer._tiles and were unnecessary now
+      // that the safety net handles the orphan case directly.
+      const ensureTileVisible = (img) => {
+        if (!img || img.tagName !== "IMG") return;
+        if (img.classList.contains("leaflet-tile-loaded")) return;
+        if (img.complete && img.naturalWidth > 0) {
+          img.classList.add("leaflet-tile-loaded");
+        }
+      };
+
+      const watchTile = (img) => {
+        if (!img || img.tagName !== "IMG") return;
+        if (!img.classList.contains("leaflet-tile")) return;
+        ensureTileVisible(img);
+        if (img.classList.contains("leaflet-tile-loaded")) return;
+        const onLoad = () => ensureTileVisible(img);
+        img.addEventListener("load", onLoad, { once: true });
+        // Some browsers fire 'load' for cached images before
+        // listener attaches. Re-check on the next microtask.
+        queueMicrotask(() => ensureTileVisible(img));
+      };
+
+      const sweepContainer = () => {
+        if (!containerRef.current) return;
+        for (const img of containerRef.current.querySelectorAll(
+          "img.leaflet-tile",
+        )) {
+          watchTile(img);
+        }
+      };
+
+      // Layer 1: MutationObserver on the container.
+      const tileObs = new MutationObserver((muts) => {
+        for (const m of muts) {
+          for (const node of m.addedNodes) {
+            if (node.nodeType !== 1) continue;
+            if (
+              node.tagName === "IMG" &&
+              node.classList?.contains("leaflet-tile")
+            ) {
+              watchTile(node);
+            } else if (node.querySelectorAll) {
+              for (const img of node.querySelectorAll("img.leaflet-tile")) {
+                watchTile(img);
+              }
+            }
+          }
+        }
+      });
+      tileObs.observe(containerRef.current, {
+        subtree: true,
+        childList: true,
+      });
+
+      // Layer 2: initial sweep on next macrotask.
+      const initialSweepTimer = setTimeout(sweepContainer, 0);
+
+      // Layer 3: short polling fallback (5 passes, 200ms apart).
+      let pollsLeft = 5;
+      const pollTimer = setInterval(() => {
+        sweepContainer();
+        pollsLeft -= 1;
+        if (pollsLeft <= 0) {
+          clearInterval(pollTimer);
+        }
+      }, 200);
+
+      // ResizeObserver for real dimension changes only.
+      let ro = null;
+      let oneTimeRaf = 0;
+      const safeInvalidate = () => {
         if (mapRef.current) {
           try {
             mapRef.current.invalidateSize();
@@ -233,25 +344,48 @@ export default function BerthMap({
           }
         }
       };
-      // Defer to next paint so layout has settled.
-      const rafId = requestAnimationFrame(() => {
-        armInvalidate();
-        // Belt-and-braces: also re-check ~600ms later for any
-        // delayed cascade animations finishing after RAF.
-        setTimeout(armInvalidate, 600);
-      });
-      // ResizeObserver re-paints tiles on container resize
-      // (orientation change, address-bar collapse on iOS, etc.).
-      let ro = null;
+
+      const initW = containerRef.current.offsetWidth;
+      const initH = containerRef.current.offsetHeight;
+      if (initW === 0 || initH === 0) {
+        // 0×0 case: no tiles requested yet, safe to invalidate.
+        oneTimeRaf = requestAnimationFrame(safeInvalidate);
+      }
+
       if (typeof ResizeObserver !== "undefined" && containerRef.current) {
-        ro = new ResizeObserver(armInvalidate);
+        let lastW = initW;
+        let lastH = initH;
+        let primed = false;
+        ro = new ResizeObserver((entries) => {
+          if (!mapRef.current) return;
+          const r = entries[0]?.contentRect;
+          if (!r) return;
+          const w = Math.round(r.width);
+          const h = Math.round(r.height);
+          if (!primed) {
+            primed = true;
+            lastW = w;
+            lastH = h;
+            return;
+          }
+          if (w === lastW && h === lastH) return;
+          lastW = w;
+          lastH = h;
+          safeInvalidate();
+          // After resize, Leaflet requests new tiles — sweep again
+          // in case the safety net needs to rescue any of them.
+          setTimeout(sweepContainer, 50);
+          setTimeout(sweepContainer, 300);
+        });
         ro.observe(containerRef.current);
       }
-      // Stash cleanup refs on the map instance so the return
-      // function below can tear them down without a new closure.
+
       map._gyInvalidateCleanup = () => {
-        cancelAnimationFrame(rafId);
+        if (oneTimeRaf) cancelAnimationFrame(oneTimeRaf);
         if (ro) ro.disconnect();
+        if (tileObs) tileObs.disconnect();
+        clearTimeout(initialSweepTimer);
+        clearInterval(pollTimer);
       };
     })();
 
