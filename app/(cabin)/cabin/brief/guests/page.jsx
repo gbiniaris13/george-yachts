@@ -9,9 +9,12 @@ import {
   RadioGroup,
 } from "../../../../components/cabin/brief/FormFields";
 
+import SectionProgress from "../../../../components/cabin/brief/SectionProgress";
+
 export default function GuestsSectionPage() {
   return (
     <article>
+      <SectionProgress stepNumber={2} stepTotal={8} stepLabel="Your Group" />
       <SectionTitle
         kicker="Section Two · Your Group"
         title="Who is sailing"

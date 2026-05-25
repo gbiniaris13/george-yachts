@@ -14,6 +14,7 @@
 
 import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
+import SectionProgress from "../../../../components/cabin/brief/SectionProgress";
 import {
   SectionTitle,
   OpenTextarea,
@@ -24,6 +25,7 @@ import {
 export default function LifeAboardSectionPage() {
   return (
     <article>
+      <SectionProgress stepNumber={5} stepTotal={8} stepLabel="Life Aboard" />
       <SectionTitle
         kicker="Section Five · Life Aboard"
         title="Your days"

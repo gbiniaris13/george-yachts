@@ -44,9 +44,12 @@ import {
   RadioGroup,
 } from "../../../../components/cabin/brief/FormFields";
 
+import SectionProgress from "../../../../components/cabin/brief/SectionProgress";
+
 export default function ArrivalSectionPage() {
   return (
     <article>
+      <SectionProgress stepNumber={1} stepTotal={8} stepLabel="Arrival & Departure" />
       <SectionTitle
         kicker="Section One · Arrival & Departure"
         title="Getting there,"

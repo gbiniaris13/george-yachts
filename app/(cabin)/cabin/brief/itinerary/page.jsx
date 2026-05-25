@@ -9,9 +9,12 @@ import {
   CheckboxGroup,
 } from "../../../../components/cabin/brief/FormFields";
 
+import SectionProgress from "../../../../components/cabin/brief/SectionProgress";
+
 export default function ItinerarySectionPage() {
   return (
     <article>
+      <SectionProgress stepNumber={4} stepTotal={8} stepLabel="Itinerary" />
       <SectionTitle
         kicker="Section Four · Itinerary"
         title="The shape"

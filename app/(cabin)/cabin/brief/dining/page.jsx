@@ -22,6 +22,7 @@ import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 import AllergyAlert from "../../../../components/cabin/brief/AllergyAlert";
 import SampleMenuPreview from "../../../../components/cabin/brief/SampleMenuPreview";
 import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
+import SectionProgress from "../../../../components/cabin/brief/SectionProgress";
 import DiningFields from "../../../../components/cabin/brief/DiningFields";
 import SharedBriefIndicator from "../../../../components/cabin/brief/SharedBriefIndicator";
 import GuestAdditiveBanner from "../../../../components/cabin/brief/GuestAdditiveBanner";
@@ -68,6 +69,7 @@ export default function DiningSectionPage() {
 
   return (
     <article>
+      <SectionProgress stepNumber={6} stepTotal={8} stepLabel="At the Table" />
       <SectionTitle
         kicker="Section Six · At the Table"
         title="At the"

@@ -143,15 +143,23 @@ export default function BriefFormShell({
         // shell stays role-agnostic.
         initialData: initialData ?? {},
       })}
-      {/* 2026-05-24 — Angeliki pass: she asked "πού κάνω save,
-          πού είναι το next?" — the original nav was two flat
-          uppercase text links of equal weight, indistinguishable
-          from any other caption on the page. Re-rendered so
-          Next is a real navy/gold button (cannot miss it),
-          while Back stays a quiet text link. Also added a
-          permanent "✓ saved as you type" reassurance line so
-          the user understands they don't have to hunt for a
-          Save button — autosave is the contract. */}
+      {/* 2026-05-24 — Angeliki pass: Next button = navy/gold,
+          autosave reassurance line in the middle. Phase 6 (today)
+          adds the "Ready for the next step?" microcopy above the
+          nav so the user reads a clear instruction BEFORE the
+          button — boutique handoff between content and action. */}
+      {nextSection && (
+        <div className="brief-shell__handoff" role="note">
+          <div className="brief-shell__handoff-eyebrow">Next step</div>
+          <p className="brief-shell__handoff-copy">
+            <em>
+              When you&apos;re happy with what you&apos;ve added on this page,
+              tap <strong>Next · {nextSection.title}</strong> below. Your
+              answers are already saved — nothing to lose.
+            </em>
+          </p>
+        </div>
+      )}
       <nav className="brief-shell__nav">
         {backHref ? (
           <Link href={backHref} className="brief-shell__back">
@@ -295,6 +303,37 @@ export default function BriefFormShell({
           font-family: var(--gy-font-editorial);
           font-style: italic;
           margin: 12px 0 0 0;
+        }
+        /* 2026-05-25 — Phase 6: the "Ready for the next step?"
+           handoff card. Quiet boutique tone, gold rule on the
+           left so it reads as guidance rather than warning. */
+        .brief-shell__handoff {
+          margin: 32px 0 0 0;
+          padding: 14px 18px;
+          background: rgba(201, 168, 76, 0.06);
+          border-left: 2px solid var(--gy-gold);
+          border-radius: 3px;
+        }
+        .brief-shell__handoff-eyebrow {
+          font-family: var(--gy-font-ui);
+          font-size: 10px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          color: var(--gy-gold);
+          font-weight: 600;
+          margin-bottom: 6px;
+        }
+        .brief-shell__handoff-copy {
+          margin: 0;
+          font-family: var(--gy-font-editorial);
+          font-size: 13.5px;
+          line-height: 1.65;
+          color: rgba(13, 27, 42, 0.78);
+        }
+        .brief-shell__handoff-copy strong {
+          color: var(--gy-navy);
+          font-style: normal;
+          font-weight: 600;
         }
       `}</style>
     </form>

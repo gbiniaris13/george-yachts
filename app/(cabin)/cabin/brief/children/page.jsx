@@ -11,9 +11,12 @@ import {
   CheckboxGroup,
 } from "../../../../components/cabin/brief/FormFields";
 
+import SectionProgress from "../../../../components/cabin/brief/SectionProgress";
+
 export default function ChildrenSectionPage() {
   return (
     <article>
+      <SectionProgress stepNumber={8} stepTotal={8} stepLabel="Children" />
       <SectionTitle
         kicker="For your youngest guests"
         title="The little"

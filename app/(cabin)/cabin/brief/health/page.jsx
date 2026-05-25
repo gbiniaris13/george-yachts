@@ -7,9 +7,12 @@ import {
   TextField,
 } from "../../../../components/cabin/brief/FormFields";
 
+import SectionProgress from "../../../../components/cabin/brief/SectionProgress";
+
 export default function HealthSectionPage() {
   return (
     <article>
+      <SectionProgress stepNumber={3} stepTotal={8} stepLabel="Emergency Contact" />
       <SectionTitle
         kicker="Section Three · Emergency Contact"
         title="One person,"

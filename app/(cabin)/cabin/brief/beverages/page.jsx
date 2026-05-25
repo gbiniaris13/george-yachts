@@ -46,6 +46,7 @@ import { useEffect, useState } from "react";
 import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
+import SectionProgress from "../../../../components/cabin/brief/SectionProgress";
 import BeveragesFields from "../../../../components/cabin/brief/BeveragesFields";
 import SharedBriefIndicator from "../../../../components/cabin/brief/SharedBriefIndicator";
 import GuestAdditiveBanner from "../../../../components/cabin/brief/GuestAdditiveBanner";
@@ -74,6 +75,7 @@ export default function BeveragesSectionPage() {
 
   return (
     <article>
+      <SectionProgress stepNumber={7} stepTotal={8} stepLabel="In the Cellar" />
       <SectionTitle
         kicker="Section Seven · In the Cellar"
         title="In the"
