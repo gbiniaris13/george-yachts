@@ -31,6 +31,10 @@ import {
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import ReviewSubmit from "./ReviewSubmit";
 import AllergyAlert from "@/components/cabin/brief/AllergyAlert";
+import {
+  formatLifeAboardHighlights,
+  lifeAboardHasContent,
+} from "@/lib/cabin/life-aboard-format";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Review your brief · The Cabin" };
@@ -176,11 +180,39 @@ export default async function BriefReviewPage() {
     db
       .from("cabin_members")
       .select(
-        "id, display_name, email, role, is_brief_admin, brief_participation_opt_out_at, brief_participation_opt_out_note, personal_details_completed_at, brief_confirmed_at, last_login_at",
+        // 2026-05-25 — Phase 3: personal_details added so we can
+        // surface each member's per-member Life Aboard answers
+        // (cabin_members.personal_details.life_aboard_brief)
+        // as a roll-up inside the section list below.
+        "id, display_name, email, role, is_brief_admin, brief_participation_opt_out_at, brief_participation_opt_out_note, personal_details_completed_at, brief_confirmed_at, last_login_at, personal_details",
       )
       .eq("cabin_id", cabinId)
       .is("deleted_at", null),
   );
+
+  // 2026-05-25 — Phase 3 roll-up: collect per-member Life Aboard
+  // briefs in the order members appear on the cabin (principal
+  // first feels natural). Empty briefs are kept in the array so
+  // the chef sees "Vasilis hasn't filled this yet" rather than
+  // silently missing the row — useful before the brief is sent.
+  const lifeAboardVoices = (groupRows ?? [])
+    .slice()
+    .sort((a, b) => {
+      // Principal first, then guests by creation order (id sort
+      // is a stable proxy when display_name is missing).
+      if (a.role === "principal_charterer" && b.role !== "principal_charterer") return -1;
+      if (b.role === "principal_charterer" && a.role !== "principal_charterer") return 1;
+      return (a.display_name || a.email || "").localeCompare(
+        b.display_name || b.email || "",
+      );
+    })
+    .map((m) => ({
+      memberId: m.id,
+      name: m.display_name || m.email || "(member)",
+      role: m.role,
+      highlights: formatLifeAboardHighlights(m.personal_details?.life_aboard_brief),
+      hasContent: lifeAboardHasContent(m.personal_details?.life_aboard_brief),
+    }));
   const delegatedAdmins = (groupRows ?? []).filter(
     (m) => m.is_brief_admin && m.role !== "principal_charterer",
   );
@@ -232,9 +264,18 @@ export default async function BriefReviewPage() {
     ? nameById[cabin.brief_submitted_by_member_id] || ""
     : "";
 
+  // 2026-05-25 — Phase 3: Life Aboard now writes per-member, so
+  // cabin_brief_sections never carries a completed=true row for
+  // it. Synthesise the section's "done" signal from per-member
+  // briefs (at least one member with content = filled).
+  const lifeAboardDoneAny = lifeAboardVoices.some((v) => v.hasContent);
+
   const allDone =
     visible.length > 0 &&
-    visible.every((s) => sectionsByKey[s.key]?.completed);
+    visible.every((s) => {
+      if (s.key === "life_aboard") return lifeAboardDoneAny;
+      return Boolean(sectionsByKey[s.key]?.completed);
+    });
   const completionPercent = cabin.brief_completion_percent ?? 0;
 
   return (
@@ -308,7 +349,11 @@ export default async function BriefReviewPage() {
       <ol className="cabin-brief-review__list">
         {visible.map((s, i) => {
           const row = sectionsByKey[s.key];
-          const done = row?.completed;
+          // 2026-05-25 — Phase 3: Life Aboard "done" is computed
+          // from per-member content, not the empty canonical row.
+          const done = s.key === "life_aboard"
+            ? lifeAboardDoneAny
+            : Boolean(row?.completed);
           const editedBy = row?.last_edited_by_member_id
             ? nameById[row.last_edited_by_member_id] || ""
             : "";
@@ -345,6 +390,51 @@ export default async function BriefReviewPage() {
                     </span>
                   )}
                 </div>
+
+                {/* 2026-05-25 — Phase 3: per-member Life Aboard
+                    roll-up. Life Aboard is per-person (Angeliki
+                    pass batch 3), so the canonical row in
+                    cabin_brief_sections is empty for this section
+                    — the answers live on each member. Show them
+                    here so the principal (and chef/captain after
+                    the email) can read every voice. Empty
+                    members are surfaced quietly so it's clear
+                    who still owes an answer. */}
+                {s.key === "life_aboard" && lifeAboardVoices.length > 0 && (
+                  <div className="cabin-brief-review__group-voices">
+                    <div className="cabin-brief-review__group-voices-eyebrow">
+                      Voices from your group ({lifeAboardVoices.filter((v) => v.hasContent).length} of {lifeAboardVoices.length} filled)
+                    </div>
+                    {lifeAboardVoices.map((v) => (
+                      <details
+                        key={v.memberId}
+                        className="cabin-brief-review__voice"
+                        open={v.hasContent}
+                      >
+                        <summary>
+                          <strong>{v.name}</strong>
+                          {v.role === "principal_charterer" ? " (you)" : ""}
+                          {v.hasContent ? (
+                            <span className="cabin-brief-review__voice-glance">
+                              {" — "}{v.highlights.length} note{v.highlights.length === 1 ? "" : "s"}
+                            </span>
+                          ) : (
+                            <span className="cabin-brief-review__voice-empty">
+                              {" — not yet filled"}
+                            </span>
+                          )}
+                        </summary>
+                        {v.hasContent && (
+                          <ul className="cabin-brief-review__voice-list">
+                            {v.highlights.map((h, hi) => (
+                              <li key={hi}>{h}</li>
+                            ))}
+                          </ul>
+                        )}
+                      </details>
+                    ))}
+                  </div>
+                )}
 
                 {/* 2026-05-23 — MUB-C: shared wishlist items
                     (specific bottles/dishes the group named). */}

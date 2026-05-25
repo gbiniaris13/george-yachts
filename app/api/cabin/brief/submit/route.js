@@ -20,6 +20,7 @@ import { writeAudit, AUDIT_ACTIONS } from "@/lib/cabin/audit";
 import { notifyGeorge } from "@/lib/cabin/notify";
 import { sendBriefSubmittedEmail, sendBriefMemberConfirmation } from "@/lib/cabin/email";
 import { firstNameFromDisplayName } from "@/lib/cabin/format";
+import { formatLifeAboardHighlights } from "@/lib/cabin/life-aboard-format";
 
 export const runtime = "nodejs";
 
@@ -174,6 +175,36 @@ export async function POST() {
       .filter((s) => s.completed)
       .map((s) => s.section_key),
   );
+
+  // 2026-05-25 — Phase 3: life_aboard no longer writes to
+  // cabin_brief_sections (it's per-member, see Angeliki batch 3).
+  // The completion signal for this section comes from any member
+  // having content in personal_details.life_aboard_brief. We
+  // injected the synthetic flag into completedKeys BEFORE the
+  // missing-sections diff runs, so the existing gate stays
+  // valid without a special-case branch below.
+  if (!completedKeys.has("life_aboard")) {
+    const memberLifeAboard = await dbQuery(
+      db
+        .from("cabin_members")
+        .select("personal_details")
+        .eq("cabin_id", cabinId)
+        .is("deleted_at", null),
+    );
+    const anyMemberFilledLifeAboard = (memberLifeAboard ?? []).some((m) => {
+      const lab = m?.personal_details?.life_aboard_brief;
+      if (!lab || typeof lab !== "object") return false;
+      return Object.values(lab).some((v) => {
+        if (v == null) return false;
+        if (typeof v === "string") return v.trim().length > 0;
+        if (Array.isArray(v)) return v.length > 0;
+        if (typeof v === "object") return Object.keys(v).length > 0;
+        return true;
+      });
+    });
+    if (anyMemberFilledLifeAboard) completedKeys.add("life_aboard");
+  }
+
   const missingSections = REQUIRED_SECTION_KEYS.filter(
     (k) => !completedKeys.has(k),
   );
@@ -270,6 +301,7 @@ export async function POST() {
   const SECTION_TITLES = {
     dining: "At the Table",
     beverages: "In the Cellar",
+    life_aboard: "Life Aboard",
   };
   const groupContributions = [];
   for (const sectionKey of ["dining", "beverages"]) {
@@ -299,17 +331,84 @@ export async function POST() {
     }
   }
 
-  // Telegram lines — short summary of any wishlist requests.
+  // 2026-05-25 — Phase 3: per-member Life Aboard answers. Each
+  // cabin_member has their own answers under
+  // personal_details.life_aboard_brief (Angeliki batch 3 — see
+  // /api/cabin/me/life-aboard). Surface one voice per member
+  // who actually filled in something, so the chef + crew see
+  // who likes what BEFORE the principal even forwards the
+  // brief. Empty members are skipped — no need to clutter
+  // George's inbox with "Vasilis didn't fill it".
+  const memberRowsForLifeAboard = await dbQuery(
+    db
+      .from("cabin_members")
+      .select("id, display_name, email, role, personal_details")
+      .eq("cabin_id", cabinId)
+      .is("deleted_at", null),
+  );
+  const lifeAboardVoices = (memberRowsForLifeAboard ?? [])
+    .slice()
+    .sort((a, b) => {
+      // Principal first so George reads their tone first.
+      if (a.role === "principal_charterer" && b.role !== "principal_charterer") return -1;
+      if (b.role === "principal_charterer" && a.role !== "principal_charterer") return 1;
+      return (a.display_name || a.email || "").localeCompare(
+        b.display_name || b.email || "",
+      );
+    })
+    .map((m) => {
+      const highlights = formatLifeAboardHighlights(
+        m.personal_details?.life_aboard_brief,
+      );
+      return {
+        name: m.display_name || m.email || "(member)",
+        highlights,
+      };
+    })
+    .filter((v) => v.highlights.length > 0);
+
+  if (lifeAboardVoices.length > 0) {
+    groupContributions.push({
+      sectionTitle: SECTION_TITLES.life_aboard,
+      voices: lifeAboardVoices,
+    });
+  }
+
+  // Telegram lines — short summary of group contributions.
+  // 2026-05-25 — Phase 3: Life Aboard voices added a separate
+  // header so the summary clearly differentiates "items the chef
+  // shops" (wishlist) from "how each guest wants the week to
+  // feel" (life-aboard).
   const telegramVoiceLines = [];
-  for (const section of groupContributions) {
-    if (telegramVoiceLines.length === 0) {
-      telegramVoiceLines.push("");
-      telegramVoiceLines.push("Specific items requested:");
+  const wishlistSections = groupContributions.filter(
+    (s) => s.sectionTitle !== SECTION_TITLES.life_aboard,
+  );
+  const lifeAboardSection = groupContributions.find(
+    (s) => s.sectionTitle === SECTION_TITLES.life_aboard,
+  );
+
+  if (wishlistSections.length > 0) {
+    telegramVoiceLines.push("");
+    telegramVoiceLines.push("Specific items requested:");
+    for (const section of wishlistSections) {
+      for (const v of section.voices) {
+        const tail = (v.highlights || []).slice(0, 2).join(" · ");
+        telegramVoiceLines.push(
+          `· ${section.sectionTitle}${tail ? " — " + tail : ""}`,
+        );
+      }
     }
-    for (const v of section.voices) {
-      const tail = (v.highlights || []).slice(0, 2).join(" · ");
+  }
+
+  if (lifeAboardSection) {
+    telegramVoiceLines.push("");
+    telegramVoiceLines.push("Life Aboard voices:");
+    for (const v of lifeAboardSection.voices) {
+      // First highlight is usually the crew-tone preference —
+      // the most chef/crew-actionable piece per member.
+      const lead = (v.highlights || [])[0] || "";
       telegramVoiceLines.push(
-        `· ${section.sectionTitle}${tail ? " — " + tail : ""}`,
+        `· ${v.name}${lead ? " — " + lead : ""}`,
       );
     }
   }
