@@ -568,6 +568,24 @@ export default function CabinMePage() {
         title="Just enough"
         italic="for the captain and the chef."
       />
+      {/* 2026-05-26 — Brief 02 (A3.4): explicit 2-step indicator.
+          Domingo's friend-test feedback was "I didn't realise there
+          was a second page". The force-save Continue link (added in
+          A3.2) only became visible once you scrolled past the
+          Aboard block — too easy to miss. A boutique step pill at
+          the top of the form makes the journey legible from the
+          first paint: Step 1 (this page) → Step 2 (Private notes). */}
+      <div className="me-stepper" role="navigation" aria-label="Two-step form">
+        <span className="me-stepper__step me-stepper__step--active">
+          <span className="me-stepper__num">1</span>
+          <span className="me-stepper__label">Your details &amp; Aboard</span>
+        </span>
+        <span className="me-stepper__sep" aria-hidden>·</span>
+        <span className="me-stepper__step">
+          <span className="me-stepper__num">2</span>
+          <span className="me-stepper__label">Private notes</span>
+        </span>
+      </div>
       <IntroParagraph>
         Hello, {firstName}. Everything here is optional — but the few
         fields you fill in mean the chef knows what not to cook, the
@@ -776,7 +794,7 @@ export default function CabinMePage() {
           >
             {busy && pendingNav === "/cabin/me/private"
               ? "Saving — opening when done…"
-              : "Continue to Private notes →"}
+              : "Next: Private notes  →"}
           </a>
         </div>
 
@@ -913,6 +931,55 @@ export default function CabinMePage() {
       </form>
 
       <style>{`
+        /* 2026-05-26 — Brief 02 (A3.4): 2-step indicator at the top. */
+        .me-stepper {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
+          margin: 14px 0 4px 0;
+          font-family: var(--gy-font-ui);
+        }
+        .me-stepper__step {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 5px 10px;
+          border: 1px solid rgba(13, 27, 42, 0.14);
+          color: rgba(13, 27, 42, 0.55);
+          background: rgba(13, 27, 42, 0.02);
+        }
+        .me-stepper__step--active {
+          border-color: rgba(201, 168, 76, 0.55);
+          background: rgba(201, 168, 76, 0.08);
+          color: var(--gy-navy);
+        }
+        .me-stepper__num {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 20px;
+          height: 20px;
+          border-radius: 999px;
+          background: rgba(13, 27, 42, 0.08);
+          color: rgba(13, 27, 42, 0.6);
+          font-size: 11px;
+          font-weight: 700;
+        }
+        .me-stepper__step--active .me-stepper__num {
+          background: var(--gy-gold);
+          color: #fff;
+        }
+        .me-stepper__label {
+          font-size: 10.5px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          font-weight: 600;
+        }
+        .me-stepper__sep {
+          color: rgba(13, 27, 42, 0.28);
+          font-size: 14px;
+        }
         .me-form {
           display: flex;
           flex-direction: column;

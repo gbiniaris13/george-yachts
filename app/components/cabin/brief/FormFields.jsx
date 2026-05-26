@@ -74,11 +74,6 @@ export function TextField({
     <div className={"brief-field" + (lockedByGroup ? " brief-field--locked" : "")}>
       <FieldLabel htmlFor={id} required={required} hint={hint}>
         {label}
-        {lockedByGroup && (
-          <span className="brief-field__locked-tag" aria-hidden>
-            group
-          </span>
-        )}
       </FieldLabel>
       <input
         id={id}
@@ -88,7 +83,6 @@ export function TextField({
         placeholder={placeholder}
         {...props}
         disabled={lockedByGroup || undefined}
-        title={lockedByGroup ? "Set by your group — only the principal can change it on the review page" : undefined}
         className="brief-input"
       />
       <style>{`
@@ -152,11 +146,6 @@ export function OpenTextarea({
     <div className={"brief-field" + (lockedByGroup ? " brief-field--locked" : "")}>
       <FieldLabel htmlFor={id} required={required} hint={hint}>
         {label}
-        {lockedByGroup && (
-          <span className="brief-field__locked-tag" aria-hidden>
-            group
-          </span>
-        )}
       </FieldLabel>
       <textarea
         id={id}
@@ -164,7 +153,6 @@ export function OpenTextarea({
         placeholder={placeholder}
         {...props}
         disabled={lockedByGroup || undefined}
-        title={lockedByGroup ? "Written by your group — only the principal can change it on the review page" : undefined}
         className="brief-textarea"
       />
       <style>{`
@@ -223,18 +211,11 @@ export function RadioGroup({
       <legend>
         {required && <RequiredDot />}
         {label}
-        {isLocked && (
-          <span className="brief-field__locked-tag" aria-hidden>
-            group
-          </span>
-        )}
         {hint && <em>{hint}</em>}
       </legend>
       <div className="brief-radio-list">
         {options.map((opt) => {
           const optLocked = isLocked;
-          const isThisLocked =
-            isLocked && String(opt.value) === String(lockedValue);
           return (
             <label
               key={opt.value}
@@ -242,7 +223,6 @@ export function RadioGroup({
                 "brief-radio-item" +
                 (optLocked ? " brief-radio-item--locked" : "")
               }
-              title={optLocked ? "Set by your group — only the principal can change it on the review page" : undefined}
             >
               <input
                 type="radio"
@@ -255,11 +235,6 @@ export function RadioGroup({
                 <strong>{opt.label}</strong>
                 {opt.description && <em>{opt.description}</em>}
               </span>
-              {isThisLocked && (
-                <span className="brief-radio-locked-tag" aria-hidden>
-                  group
-                </span>
-              )}
             </label>
           );
         })}
@@ -403,7 +378,6 @@ export function CheckboxGroup({
                 "brief-check-item" +
                 (isLocked ? " brief-check-item--locked" : "")
               }
-              title={isLocked ? "Added by your group — only the principal can remove it on the review page" : undefined}
             >
               <input
                 type="checkbox"
@@ -413,11 +387,6 @@ export function CheckboxGroup({
               />
               <span className="brief-check-box" aria-hidden />
               <span>{opt.label}</span>
-              {isLocked && (
-                <span className="brief-check-locked-tag" aria-hidden>
-                  group
-                </span>
-              )}
             </label>
           );
         })}
@@ -678,7 +647,6 @@ export function LikeDislikeMatrix({ name, label, hint, items, register, lockedKe
             className={
               "brief-matrix-row" + (rowLocked ? " brief-matrix-row--locked" : "")
             }
-            title={rowLocked ? "Set by your group — only the principal can change it on the review page" : undefined}
           >
             {/* 2026-05-23 — NUCLEAR fix for the food matrix labels
                 that George has reported as invisible/washed-out

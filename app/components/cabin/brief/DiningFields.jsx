@@ -100,61 +100,35 @@ export default function DiningFields({
   return (
     <>
       {/* 2026-05-24 — Angeliki pass: meal TIMES are now principal-
-          only. Angeliki: "δεν μπορεί ο καθένας να λέει ότι θα τρώει
-          διαφορετικές ώρες, ο σεφ δεν θα μπορεί να το υπολογίσει."
-          One eat-schedule per table — set by the principal, shown
-          to guests as read-only. The rest of dining (food matrix,
-          breakfast styles, snacks, etc.) stays shared, so the
-          group's preferences still feed the chef collectively. */}
-      <h2 className="brief-subhead" style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-        <span>When do you like to eat?</span>
-        {isPrincipal && (
-          <span
-            style={{
-              fontFamily: "var(--gy-font-ui)",
-              fontSize: 9.5,
-              letterSpacing: 2,
-              textTransform: "uppercase",
-              color: "var(--gy-gold)",
-              background: "rgba(201,168,76,0.12)",
-              border: "1px solid rgba(201,168,76,0.45)",
-              padding: "3px 8px",
-              borderRadius: 2,
-              fontWeight: 600,
-            }}
-          >
-            Principal only
-          </span>
-        )}
-      </h2>
+          only. One eat-schedule per table — set by the principal,
+          shown to guests via GuestBriefReadOnly upstream. The rest
+          of dining (food matrix, breakfast styles, snacks, etc.)
+          stays shared, so the group's preferences still feed the
+          chef collectively.
+
+          2026-05-26 — Brief 02 (bug-pass): the guest "read-only"
+          fieldset branch was dead code post-CP1 (guests never
+          reach DiningFields — the dining page returns early with
+          GuestBriefReadOnly when isPrincipal === false). The
+          orphaned aria-label "Meal times — read-only (principal
+          only)" was also being mis-read as visible page copy by
+          assistive tools + browser hover. Branch removed; the
+          "Principal only" chip is removed too because the viewer
+          IS the principal (or delegated brief-admin) — calling
+          out the obvious added noise. */}
+      <h2 className="brief-subhead">When do you like to eat?</h2>
       <p className="brief-note">
         <em>
-          {isPrincipal ? (
-            <>Either format is fine — write &quot;9am&quot; or &quot;09:00&quot;, whichever feels natural. The whole table follows these times so the chef can plan one rhythm for the week.</>
-          ) : (
-            <>One eating rhythm per table — the principal sets the meal times so the chef can plan a single coherent service. If anything below needs changing, ask the principal directly.</>
-          )}
+          Either format is fine — write &quot;9am&quot; or &quot;09:00&quot;,
+          whichever feels natural. The whole table follows these
+          times so the chef can plan one rhythm for the week.
         </em>
       </p>
-      {isPrincipal ? (
-        <div className="brief-grid-3">
-          <TextField label="Breakfast typically" name="breakfast_time" placeholder="e.g. 9am or 09:00" register={register} />
-          <TextField label="Lunch typically" name="lunch_time" placeholder="e.g. 2pm or 14:00" register={register} />
-          <TextField label="Dinner typically" name="dinner_time" placeholder="e.g. 8:30pm or 20:30" register={register} />
-        </div>
-      ) : (
-        <fieldset
-          disabled
-          style={{ border: 0, padding: 0, margin: 0, opacity: 0.78 }}
-          aria-label="Meal times — read-only (principal only)"
-        >
-          <div className="brief-grid-3">
-            <TextField label="Breakfast typically" name="breakfast_time" placeholder="—" register={register} />
-            <TextField label="Lunch typically" name="lunch_time" placeholder="—" register={register} />
-            <TextField label="Dinner typically" name="dinner_time" placeholder="—" register={register} />
-          </div>
-        </fieldset>
-      )}
+      <div className="brief-grid-3">
+        <TextField label="Breakfast typically" name="breakfast_time" placeholder="e.g. 9am or 09:00" register={register} />
+        <TextField label="Lunch typically" name="lunch_time" placeholder="e.g. 2pm or 14:00" register={register} />
+        <TextField label="Dinner typically" name="dinner_time" placeholder="e.g. 8:30pm or 20:30" register={register} />
+      </div>
 
       <h2 className="brief-subhead">Breakfast</h2>
       <CheckboxGroup
