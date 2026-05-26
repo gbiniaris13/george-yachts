@@ -45,6 +45,15 @@ export default function WelcomePage() {
   const [moreOpen, setMoreOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState(null);
+  // 2026-05-26 — Brief 02 (A4, bug-pass v3, Domingo): the redirect
+  // after save now branches by role. A guest's one task is their
+  // Crew List, so they go straight to /cabin/me rather than via
+  // /cabin home (where NextStep would re-route them anyway — saves
+  // one hop). Principal still lands on /cabin so they see the
+  // invite-your-group NextStep card first. Fetched alongside the
+  // profile prefill so we already know the role by the time the
+  // user taps Save.
+  const [isPrincipal, setIsPrincipal] = useState(null);
 
   useEffect(() => {
     fetch("/api/cabin/profile")
@@ -67,6 +76,26 @@ export default function WelcomePage() {
       })
       .catch(() => {})
       .finally(() => setLoading(false));
+    // Parallel role lookup. /api/cabin/me returns the calling
+    // member's row (role + is_brief_admin). If anything goes
+    // wrong, default to guest behaviour (route to /cabin/me) —
+    // safer than dumping a principal onto a Crew List they may
+    // not yet need.
+    fetch("/api/cabin/me", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((j) => {
+        if (!j?.ok) {
+          setIsPrincipal(false);
+          return;
+        }
+        const m = j.member;
+        const canEdit =
+          m?.role === "principal_charterer" ||
+          m?.role === "designated_assistant" ||
+          m?.is_brief_admin === true;
+        setIsPrincipal(Boolean(canEdit));
+      })
+      .catch(() => setIsPrincipal(false));
   }, []);
 
   const requiredFilled =
@@ -119,7 +148,18 @@ export default function WelcomePage() {
       // master DB (not a replica) and sees the just-saved row. No
       // race. The user lands on /cabin and sees "Welcome on board,
       // Eleanna." properly.
-      window.location.assign("/cabin");
+      //
+      // 2026-05-26 — Brief 02 (A4, bug-pass v3, Domingo): a fresh
+      // guest's ONLY task is their Crew List. Route them directly
+      // to /cabin/me after welcome so they land on the right page,
+      // not /cabin home where NextStep would just redirect them.
+      // Principal still goes to /cabin to see the invite-group
+      // step. Defaults to /cabin/me when isPrincipal hasn't yet
+      // resolved — the cabin-home gate handles the rare race
+      // (principal who somehow lands on /cabin/me will be fine,
+      // they own that page too).
+      const target = isPrincipal === true ? "/cabin" : "/cabin/me";
+      window.location.assign(target);
     } catch {
       setErr("Could not save right now. Please try again.");
       setBusy(false);

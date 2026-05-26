@@ -67,19 +67,23 @@ export default function BriefConfirmCta({ confirmedAt }) {
       <p className="bcc__copy">
         {isConfirmed ? (
           <>
-            You&apos;ve marked your brief picks as confirmed. The
-            principal charterer sees this on their readiness card
-            — the group&apos;s brief unlocks for sending once
-            everyone has confirmed. If anything changes, you can
-            revoke below and come back to edit.
+            You&apos;ve marked your brief as confirmed. You can
+            still revoke and edit any section right up until you
+            review &amp; send it to George.
           </>
         ) : (
           <>
-            Add what you want above — your favourite drinks, the
-            food you love, anything else for the chef. When you
-            feel finished, press Confirm. The brief is shared, so
-            everyone in your group does this once each before the
-            principal charterer can send it to George.
+            {/* 2026-05-26 — Brief 02 (bug-pass v3, Domingo):
+                additive-model "add your favourite drinks / food
+                you love" copy removed. Under the single-
+                responsibility model, only the principal sees this
+                CTA (page.jsx gates by isPrincipal) and they own
+                the whole brief — so the prompt now describes
+                their own checkpoint before review-and-send. */}
+            When every section looks the way you want it for your
+            group, mark the brief as confirmed. You&apos;ll still
+            be able to revoke and edit until you review &amp; send
+            it to George.
           </>
         )}
       </p>
@@ -103,7 +107,7 @@ export default function BriefConfirmCta({ confirmedAt }) {
           onClick={toggle}
           disabled={busy}
         >
-          {busy ? "Saving…" : "I'm done — confirm my brief picks"}
+          {busy ? "Saving…" : "I'm done — confirm the brief"}
         </button>
       )}
 

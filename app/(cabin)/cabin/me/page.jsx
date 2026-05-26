@@ -765,6 +765,28 @@ export default function CabinMePage() {
           </p>
         </div>
 
+        {/* 2026-05-26 — Brief 02 (A5, bug-pass v3, Domingo): guest
+            reassurance line. Under the single-responsibility model
+            the Crew List is a guest's ONLY task — once they're
+            through it, they're done. The Main Charterer owns the
+            itinerary, dining and cellar decisions for the whole
+            group. Shown only to non-principals / non-DAs (who DO
+            have brief edit rights and don't need the reassurance). */}
+        {member &&
+          member.role !== "principal_charterer" &&
+          member.role !== "designated_assistant" && (
+            <aside className="me-guest-reassure" role="note">
+              <span className="me-guest-reassure__eyebrow">For you</span>
+              <p className="me-guest-reassure__copy">
+                <em>
+                  That&apos;s everything we need from you. The Main
+                  Charterer is arranging the itinerary, dining and
+                  the cellar for the whole group.
+                </em>
+              </p>
+            </aside>
+          )}
+
         {/* 2026-05-24 — Christos pass (item 2): the health /
             allergies / dietary / mobility / consent block was
             moved off this page onto a dedicated /cabin/me/private
@@ -1268,6 +1290,37 @@ export default function CabinMePage() {
         .me-mobile-num {
           flex: 1;
           min-width: 0;
+        }
+        /* 2026-05-26 — Brief 02 (A5, bug-pass v3): guest reassurance.
+           Calm cream panel between the Crew List block and the
+           "Private notes" CTA, telling the guest their one task
+           is done. Same tonal family as the crew-list block so
+           the page reads as one continuous, warm message. */
+        .me-guest-reassure {
+          margin: 22px 0 6px 0;
+          padding: 16px 20px;
+          background: rgba(201, 168, 76, 0.05);
+          border: 1px solid rgba(201, 168, 76, 0.32);
+          border-left: 3px solid var(--gy-gold);
+          border-radius: 3px;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+        .me-guest-reassure__eyebrow {
+          font-family: var(--gy-font-ui);
+          font-size: 10.5px;
+          letter-spacing: 3.2px;
+          text-transform: uppercase;
+          color: #8a7327;
+          font-weight: 700;
+        }
+        .me-guest-reassure__copy {
+          margin: 0;
+          font-family: var(--gy-font-editorial);
+          font-size: 14px;
+          line-height: 1.65;
+          color: rgba(13, 27, 42, 0.78);
         }
         /* 2026-05-24 — Christos pass (item 2): "Open my private
            notes" panel replaces the inline health banner. Same

@@ -59,18 +59,26 @@ const SECTION_META = [
     title: "Life Aboard",
     intro: "Activities you love, anything else for the captain to know.",
     minutes: 3,
+    // 2026-05-26 — Brief 02 (bug-pass v3, Domingo fresh-guest test):
+    // life_aboard / dining / beverages are principal-only under the
+    // single-responsibility model. PRINCIPAL_ONLY_SECTIONS server
+    // gate already 403s any guest PUT; this UI flag surfaces the
+    // "Principal only — read-only" chip on the guest's brief index.
+    principalOnly: true,
   },
   {
     key: "dining",
     title: "At the Table",
     intro: "Times of day, the food matrix, snacks, kids.",
     minutes: 5,
+    principalOnly: true,
   },
   {
     key: "beverages",
     title: "In the Cellar",
     intro: "Champagne, wines, spirits, beers, soft drinks — by feel.",
     minutes: 4,
+    principalOnly: true,
   },
   // 2026-05-20 — Friend-test pass 3: "The Little Things" removed
   // from the section list. George: "βγάλετε τελείως, μόνο χρόνο
@@ -265,22 +273,35 @@ export default async function CabinBriefOverviewPage() {
         </h1>
         <div className="cabin-brief__rule" aria-hidden />
         <IntroParagraph>
-          {/* 2026-05-23 — SHARED BRIEF MODEL. Intro rewritten to
-              tell every member they're editing the same document.
-              George's analogy: "Σαν να έχουν ένα ρε παιδί μου
-              όλοι και το συμπληρώνουν ένας-ένας ξεχωριστά." */}
-          This brief is one shared document — everyone in your
-          group can open any section and add to it from their own
-          phone or laptop. Patricia writes a few picks, Bill opens
-          the cellar next and sees what&apos;s already there, adds
-          his bottles; Eleanna comes in later and adds hers. Every
-          section shows the last person who edited it, so you
-          always know what you&apos;re picking up. When the brief
-          feels complete, {isPrincipal
-            ? "you"
-            : "the principal charterer"}{" "}
-          reviews it once and sends it to George — the brief locks
-          and your {crewNouns} {crewQuantifier} read from here.
+          {/* 2026-05-26 — Brief 02 (bug-pass v3, Domingo): old
+              additive-model intro removed. Under the new single-
+              responsibility model the Main Charterer owns every
+              brief section; guests fill ONLY their own Crew List
+              on /cabin/me. Two copies — one for the principal,
+              one for the guest reader. */}
+          {isPrincipal ? (
+            <>
+              Eight quiet sections. You write the picks for the
+              whole week — arrival, your group, the itinerary,
+              what life aboard should feel like, what your table
+              should look like, what your cellar should hold. Your
+              group sees each section as read-only so they know
+              what you&apos;ve planned. When the brief feels
+              complete, you review it once and send it to George —
+              the brief locks and your {crewNouns} {crewQuantifier}{" "}
+              read from here.
+            </>
+          ) : (
+            <>
+              The Main Charterer is shaping the brief — your
+              arrival paperwork, your itinerary, life aboard, the
+              table and the cellar. You can read what they&apos;ve
+              decided in any section below, but the only thing
+              you&apos;re asked to fill yourself is your own Crew
+              List, on the page about you. Once you&apos;re done
+              there, you&apos;re set — enjoy your Cabin.
+            </>
+          )}
         </IntroParagraph>
         <p className="cabin-brief__time">
           Around <strong>{remainingMinutes || totalMinutes} minutes</strong>{" "}
@@ -369,12 +390,14 @@ export default async function CabinBriefOverviewPage() {
 
       {/* 2026-05-24 — Explicit per-member confirmation CTA.
           George friend test 4 final: "Πρέπει να υπάρχει κουμπί
-          είτε να λέει save σε κάθε χρήστη είτε confirm." Visible
-          to EVERYONE (principal + guest). Toggles brief_confirmed_at
-          on the calling member's row. The readiness card on /cabin
-          home counts confirmations; the Send-to-George gate
-          requires everyone confirmed (or opted out). */}
-      {!isSubmitted && (
+          είτε να λέει save σε κάθε χρήστη είτε confirm."
+          2026-05-26 — Brief 02 (bug-pass v3, Domingo): under the
+          single-responsibility model guests don't add anything to
+          the brief, so a per-guest "confirm my picks" prompt is
+          dead UI. Hidden for non-principals. The Send-to-George
+          gate on /cabin/brief/review remains the principal's own
+          single Confirm/Send moment. */}
+      {!isSubmitted && isPrincipal && (
         <BriefConfirmCta
           confirmedAt={myBriefConfirmedAt}
         />

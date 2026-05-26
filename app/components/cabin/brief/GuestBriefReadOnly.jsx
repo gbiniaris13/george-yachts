@@ -104,6 +104,46 @@ const BEVERAGES_LABELS = {
   mocktails: "Mocktails",
 };
 
+const LIFE_ABOARD_LABELS = {
+  crew_interaction: "Crew style",
+  activities: "Activities the group loves",
+  activities_other: "Other activities",
+  extras_freeform: "Small touches for the captain",
+};
+
+const CREW_INTERACTION_LABELS = {
+  always_around: "Warm and chatty",
+  balanced: "Warm but discreet",
+  discreet: "Quiet & formal",
+};
+
+const FREQUENCY_LABEL = {
+  often: "Often",
+  sometimes: "Sometimes",
+  rarely: "Rarely but keep some",
+  skip: "Skip",
+};
+
+// 2026-05-26 — Brief 02 (bug-pass v3): soft_drinks_frequency,
+// spirits_frequency, beers_frequency etc. are stored as
+// { coca_cola_light: "often", sprite: "skip", ... } — keyed
+// per-item. Without a special case they hit the "plain primitive"
+// formatter → String({}) → "[object Object]". Pretty-printed
+// per-item labels live alongside the value renderer.
+const SOFT_DRINK_ITEM_LABELS = {
+  coca_cola: "Coca-Cola",
+  coca_cola_light: "Coca-Cola Light",
+  coca_cola_zero: "Coca-Cola Zero",
+  sprite: "Sprite",
+  fanta: "Fanta",
+  ginger_ale: "Ginger ale",
+  tonic: "Tonic",
+  soda_water: "Soda water",
+  bitter_lemon: "Bitter lemon",
+  cranberry_juice: "Cranberry juice",
+  energy_drink: "Energy drink",
+};
+
 const FOOD_MATRIX_LABELS = {
   fish: "Fish",
   shellfish: "Shellfish",
@@ -144,6 +184,11 @@ function isEmpty(v) {
 
 function formatPrimitive(v) {
   if (typeof v === "boolean") return v ? "Yes" : "No";
+  // 2026-05-26 — Defensive: never render "[object Object]" in
+  // production. Any future field that arrives as a bare object
+  // without a dedicated renderer above falls through to here;
+  // returning empty string lets the parent .filter(!isEmpty) drop it.
+  if (v != null && typeof v === "object") return "";
   return String(v);
 }
 
@@ -282,9 +327,19 @@ export default function GuestBriefReadOnly({ sectionKey, kind }) {
     };
   }, [sectionKey]);
 
-  const labels = kind === "beverages" ? BEVERAGES_LABELS : DINING_LABELS;
+  const labels =
+    kind === "beverages"
+      ? BEVERAGES_LABELS
+      : kind === "life_aboard"
+      ? LIFE_ABOARD_LABELS
+      : DINING_LABELS;
+  // 2026-05-26 — Brief 02 (bug-pass v3): kind-specific intro so the
+  // copy matches what the principal owns. Life Aboard isn't about
+  // "the table and the cellar".
   const introCopy =
-    "The Main Charterer is arranging the table and the cellar for the whole group. Here is what they have chosen so far.";
+    kind === "life_aboard"
+      ? "The Main Charterer is arranging life aboard for the whole group. Here is what they have chosen so far."
+      : "The Main Charterer is arranging the table and the cellar for the whole group. Here is what they have chosen so far.";
 
   if (state === "loading") {
     return (
@@ -324,6 +379,61 @@ export default function GuestBriefReadOnly({ sectionKey, kind }) {
         <dl className="gbr__dl">
           {entries.map(([key, value]) => {
             const label = labels[key] || titleCase(key);
+
+            // 2026-05-26 — Brief 02 (bug-pass v3, Domingo): frequency-
+            // picker objects like soft_drinks_frequency, spirits_frequency
+            // and beers_frequency store as { item: enum-string } per item.
+            // Without this case they fell through to formatPrimitive →
+            // String({}) → "[object Object]". Render each non-skip
+            // entry as "Coca-Cola — Often" in a sublist; mirrors the
+            // food_matrix block one level above.
+            const isFrequencyKey =
+              key === "soft_drinks_frequency" ||
+              key === "spirits_frequency" ||
+              key === "beers_frequency";
+            if (
+              isFrequencyKey &&
+              value &&
+              typeof value === "object" &&
+              !Array.isArray(value)
+            ) {
+              const freqEntries = Object.entries(value).filter(
+                ([, verdict]) =>
+                  typeof verdict === "string" &&
+                  verdict.length > 0 &&
+                  verdict !== "skip",
+              );
+              if (freqEntries.length === 0) return null;
+              return (
+                <div key={key} className="gbr__row">
+                  <dt className="gbr__dt">{label}</dt>
+                  <dd className="gbr__dd">
+                    <ul className="gbr__sublist">
+                      {freqEntries.map(([itemKey, verdict]) => (
+                        <li key={itemKey} className="gbr__subli">
+                          {SOFT_DRINK_ITEM_LABELS[itemKey] || titleCase(itemKey)}{" "}
+                          <em>
+                            {FREQUENCY_LABEL[verdict] || titleCase(verdict)}
+                          </em>
+                        </li>
+                      ))}
+                    </ul>
+                  </dd>
+                </div>
+              );
+            }
+
+            // 2026-05-26 — Brief 02 (bug-pass v3): life_aboard's
+            // crew_interaction is a plain enum string. Pretty-print it.
+            if (key === "crew_interaction" && typeof value === "string") {
+              const pretty = CREW_INTERACTION_LABELS[value] || titleCase(value);
+              return (
+                <div key={key} className="gbr__row">
+                  <dt className="gbr__dt">{label}</dt>
+                  <dd className="gbr__dd">{pretty}</dd>
+                </div>
+              );
+            }
 
             // food_matrix: render verdict per item as a sub-grid
             if (

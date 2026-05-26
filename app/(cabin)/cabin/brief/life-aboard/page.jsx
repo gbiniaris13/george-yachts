@@ -4,31 +4,25 @@
 // Main-Charterer decision under the new single-responsibility
 // model. Storage moved BACK to the shared cabin_brief_sections
 // row (sectionKey "life_aboard") via the standard
-// /api/cabin/brief/life_aboard endpoint. Guests see the
-// principal-only banner via <PrincipalOnlyGate> and the form is
-// rendered inside a disabled fieldset so they can read but not
-// type. Server gate already in place (CP1 added "life_aboard" to
-// PRINCIPAL_ONLY_SECTIONS).
+// /api/cabin/brief/life_aboard endpoint.
 //
-// The OLD per-member endpoint (/api/cabin/me/life-aboard) is
-// still mounted but principal-only and unused by this page;
-// kept for back-compat with any rogue caller. Existing
-// per-member data in cabin_members.personal_details
-// .life_aboard_brief becomes vestigial but is not deleted —
-// George's per-member roll-up on /cabin/brief/review can still
-// surface it for historical cabins.
-//
-// 2026-05-24 — Angeliki pass (item 3) HISTORICAL: Life Aboard was
-// per-member, storage at cabin_members.personal_details
-// .life_aboard_brief via /api/cabin/me/life-aboard. Replaced by
-// the model above on 2026-05-26.
+// 2026-05-26 — Brief 02 (bug-pass v3, Domingo fresh-guest test):
+// The original CP3 implementation wrapped this page in
+// PrincipalOnlyGate (server component) which uses <fieldset
+// disabled> to read-only the form. Domingo's test confirmed
+// the form below STILL had 13 live interactive elements — the
+// disabled-fieldset semantics weren't propagating through the
+// RHF-driven form tree on the live build. Replaced the
+// PrincipalOnlyGate wrap with the SAME tri-state isPrincipal
+// pattern that dining/beverages already use: for guests we
+// return GuestBriefReadOnly EARLY so the editable form never
+// mounts in the DOM at all (0 inputs, exactly like dining).
+// Server-side gate at /api/cabin/brief/life_aboard PUT (403
+// for non-principals, added CP1) is the actual protection;
+// this is the polite, correct UI.
 
-// 2026-05-26 — Brief 02 (A4.1): the PrincipalOnlyGate wrap lives
-// in app/(cabin)/cabin/brief/life-aboard/layout.jsx — the layout is
-// a server component (where async server components can run), the
-// page below is a client component (RHF + hooks). Mirrors the
-// existing pattern used for arrival/itinerary/health/guests.
-
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 import SectionProgress from "../../../../components/cabin/brief/SectionProgress";
@@ -38,8 +32,111 @@ import {
   RadioGroup,
   CheckboxGroup,
 } from "../../../../components/cabin/brief/FormFields";
+import GuestBriefReadOnly from "../../../../components/cabin/brief/GuestBriefReadOnly";
 
 export default function LifeAboardSectionPage() {
+  // Tri-state: null = loading, true = principal, false = guest.
+  // Mirrors the resolved-role pattern in dining/beverages so the
+  // first paint never flashes the wrong tree at the viewer.
+  const [isPrincipal, setIsPrincipal] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/cabin/me", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((j) => {
+        if (cancelled) return;
+        if (!j?.ok) {
+          setIsPrincipal(false);
+          return;
+        }
+        const m = j?.member;
+        const canEdit =
+          m?.role === "principal_charterer" || m?.is_brief_admin === true;
+        setIsPrincipal(Boolean(canEdit));
+      })
+      .catch(() => {
+        if (!cancelled) setIsPrincipal(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (isPrincipal === null) {
+    return (
+      <article>
+        <SectionTitle
+          kicker="Section Five · Life Aboard"
+          title="Your days"
+          italic="at sea."
+        />
+        <div
+          aria-busy="true"
+          aria-label="Loading"
+          style={{
+            marginTop: 22,
+            height: 120,
+            borderRadius: 3,
+            background:
+              "linear-gradient(90deg, rgba(13,27,42,0.05) 25%, rgba(13,27,42,0.1) 37%, rgba(13,27,42,0.05) 63%)",
+            backgroundSize: "400% 100%",
+            animation: "gbr-shimmer 1.4s infinite",
+          }}
+        />
+        <style jsx>{`
+          @keyframes gbr-shimmer {
+            0% { background-position: 100% 0; }
+            100% { background-position: 0 0; }
+          }
+        `}</style>
+      </article>
+    );
+  }
+
+  // GUEST READ-ONLY BRANCH — return early so the editable form
+  // never mounts.
+  if (isPrincipal === false) {
+    return (
+      <article>
+        <SectionTitle
+          kicker="Section Five · Life Aboard"
+          title="Your days"
+          italic="at sea."
+        />
+        <GuestBriefReadOnly sectionKey="life_aboard" kind="life_aboard" />
+        <nav className="guest-back-nav">
+          <Link href="/cabin" className="guest-back-link">
+            ← Back to your Cabin
+          </Link>
+        </nav>
+        <style jsx>{`
+          .guest-back-nav {
+            margin: 28px 0 0 0;
+            padding-top: 22px;
+            border-top: 1px solid rgba(13, 27, 42, 0.08);
+            display: flex;
+            justify-content: flex-start;
+          }
+          .guest-back-link {
+            font-family: var(--gy-font-ui);
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(13, 27, 42, 0.65);
+            text-decoration: none;
+            padding: 14px 0;
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+          }
+          .guest-back-link:hover { color: var(--gy-navy); }
+        `}</style>
+      </article>
+    );
+  }
+
+  // isPrincipal === true → render the editable form below.
   return (
     <article>
       <SectionProgress stepNumber={5} stepTotal={8} stepLabel="Life Aboard" />
@@ -48,22 +145,12 @@ export default function LifeAboardSectionPage() {
         title="Your days"
         italic="at sea."
       />
-      {/* 2026-05-26 — Brief 02 (A4.1): Per-member "Private to you"
-          banner removed. Life Aboard is now a single Main-Charterer
-          decision for the whole group, not a per-person form.
-          Guests get the principal-only banner from PrincipalOnlyGate
-          below instead. */}
       <IntroParagraph>
         How would you like the crew to be around the group, and a
         quiet list of generic things many groups enjoy at sea —
         tick what appeals to your party, skip what doesn&apos;t.
       </IntroParagraph>
 
-      {/* 2026-05-26 — Brief 02 (A4.1): the surrounding layout.jsx
-          wraps this page in <PrincipalOnlyGate sectionTitle="Life
-          Aboard"> so guests see the cream "Principal only" banner +
-          a disabled fieldset. The server also 403s any guest PUT
-          to /api/cabin/brief/life_aboard (CP1) — belt-and-braces. */}
       <BriefFormShell
         sectionKey="life_aboard"
         prevSection={{ key: "itinerary", title: "Itinerary" }}
@@ -83,12 +170,6 @@ export default function LifeAboardSectionPage() {
               ]}
             />
 
-            {/* 2026-05-24 — Christos pass: activities list trimmed
-                to GENERIC items only — no per-vessel water toys
-                (scuba, jet ski, wakeboarding etc.) which create a
-                trap when a vessel doesn't carry them. The vessel
-                brochure on the cabin home already lists the actual
-                toys this yacht carries. */}
             <CheckboxGroup
               name="activities"
               label="What does your group love?"
@@ -114,21 +195,6 @@ export default function LifeAboardSectionPage() {
               rows={2}
             />
 
-            {/* 2026-05-24 — Music Taste removed entirely per George
-                friend test 4 (Christos pass): with 6-12 voices in
-                a shared brief, music taste becomes a swamp ("rock
-                / jazz / electronic / Greek / nothing late at night"
-                all from different members on the same field — the
-                crew can't read intent from that). Schema field
-                music_taste stays registered in lib/cabin/schemas.js
-                for back-compat. */}
-            {/* 2026-05-20 — Wellness on board section (yoga, massage,
-                stargazing nights, sunrise meditation, personal trainer)
-                removed in pass 2. George: "Καλύτερα να βγει — στην
-                τελική αν κάποιος είναι κολλημένος με τη γιόγκα μπορεί
-                να το γράψει από μόνος του." Schema field
-                (wellness_onboard) stays for back-compat. */}
-
             <OpenTextarea
               label="A few small touches we should ask the crew about"
               hint="Anything that would make a small difference — write freely. The captain will come back with a quick yes/no on each."
@@ -136,12 +202,6 @@ export default function LifeAboardSectionPage() {
               register={register}
               rows={4}
             />
-
-            {/* 2026-05-20 — Removed the "Most of these are included…
-                management company" disclaimer. George: "Δεν θέλουμε να
-                ξέρουν οι πελάτες μας αν έχουμε εταιρεία management, αν
-                το σκάφος είναι δικό μας. Είμαστε brokers — αυτές οι
-                πληροφορίες δεν εκτίθενται." */}
           </>
         )}
       </BriefFormShell>
@@ -170,12 +230,6 @@ export default function LifeAboardSectionPage() {
           color: rgba(13, 27, 42, 0.55);
           margin: 0 0 14px 0;
         }
-        /* 2026-05-20 — .la-extras-note styles removed alongside the
-           "Most of these are included… management company" disclaimer
-           it used to apply to.
-           2026-05-26 — Brief 02 (A4.1): .la-private + chip + copy
-           styles removed alongside the per-member "Private to you"
-           banner. PrincipalOnlyGate ships its own boutique banner. */
       `}</style>
     </article>
   );
