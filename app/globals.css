@@ -3851,25 +3851,22 @@ h4, h5, h6, button, input, select, textarea, label {
    app/(cabin)/layout.jsx on its root div.
    Uses :has() — Safari 15.4+ / Chrome 105+ / Firefox 121+.
    ============================================================= */
+/* 2026-05-26 — Domingo bug-report: the four CONTACT widgets
+   (WhatsApp, ContactDrawer/Speak-to-George, AskGeorgeWidget AI
+   concierge, AmbientPlayer ambient-sound) used to be hidden in
+   cabin mode under the "cabin owns the viewport" rule. That
+   defeated the whole purpose — WhatsApp is the primary path
+   clients use to reach George. The hide-rules below are now
+   restricted to top-bar / footer / sticky-inquiry-bar / live-
+   ticker chrome that are genuinely distractions. The four
+   contact widgets stay visible. */
 body:has([data-cabin-mode]) .gy-forbes-bar,
 body:has([data-cabin-mode]) .gy-nav,
 body:has([data-cabin-mode]) .gy-sticky-inquiry-bar,
 body:has([data-cabin-mode]) [data-live-ticker],
 body:has([data-cabin-mode]) [data-route-transition],
 body:has([data-cabin-mode]) .gy-footer,
-body:has([data-cabin-mode]) footer:not([data-cabin-mode] footer),
-body:has([data-cabin-mode]) a[href*="wa.me"][class*="fixed"],
-body:has([data-cabin-mode]) button[aria-label*="WhatsApp"],
-body:has([data-cabin-mode]) [aria-label="Open WhatsApp"],
-body:has([data-cabin-mode]) [class*="WhatsApp"][class*="fixed"] {
-  display: none !important;
-}
-
-/* Belt-and-braces: hide every fixed/sticky FAB-ish element that
-   isn't inside the cabin wrapper. Targets the WhatsApp greeter
-   bubble + the contact cascade drawer + any greet-in animation. */
-body:has([data-cabin-mode]) > div.fixed:not(:has([data-cabin-mode])),
-body:has([data-cabin-mode]) .animate-gy-greet-in {
+body:has([data-cabin-mode]) footer:not([data-cabin-mode] footer) {
   display: none !important;
 }
 
@@ -3887,34 +3884,15 @@ body:has([data-cabin-mode]) [data-scroll-progress] {
    uses inline styles, etc).
    ============================================================= */
 
-/* Hide named chrome components by class. */
+/* Hide named chrome components by class.
+   2026-05-26 — WhatsApp / ContactDrawer / AskGeorge / AmbientPlayer
+   intentionally NOT hidden inside cabin mode — they are George's
+   direct contact channels and must remain available to charter
+   clients while inside The Cabin. See Domingo bug-pass note. */
 body.cabin-mode .gy-forbes-bar,
 body.cabin-mode .gy-nav,
 body.cabin-mode .gy-sticky-inquiry-bar,
 body.cabin-mode .gy-footer {
-  display: none !important;
-}
-
-/* Hide any element that sits as a direct child of <body> using
-   position: fixed — covers LiveTicker, WhatsAppButton, the
-   ContactCascade drawer, GoldCurtain etc. The cabin's own shell
-   is wrapped in a [data-cabin-mode] div so it survives. */
-body.cabin-mode > [style*="position: fixed"]:not([data-cabin-mode] *),
-body.cabin-mode > [style*="position:fixed"]:not([data-cabin-mode] *) {
-  display: none !important;
-}
-
-/* Tailwind-positioned chrome (WhatsAppButton + greet bubble) */
-body.cabin-mode .fixed:where(.z-\[51\], .z-\[52\], .z-\[60\]):not([data-cabin-mode] *) {
-  display: none !important;
-}
-
-/* WhatsApp specifically — multiple sub-components */
-body.cabin-mode a[href*="wa.me"][class*="fixed"],
-body.cabin-mode button[aria-label*="WhatsApp" i],
-body.cabin-mode .animate-gy-greet-in,
-body.cabin-mode [data-contact-cascade],
-body.cabin-mode [data-whatsapp-fab] {
   display: none !important;
 }
 

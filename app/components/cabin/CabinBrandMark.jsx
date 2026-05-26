@@ -26,8 +26,6 @@
 // the optional back arrow.
 // =============================================================
 
-import Link from "next/link";
-
 // 2026-05-22 — Trimmed back to just the logo.
 // George's directive after seeing the first layout: the brand
 // logo should breathe at the centre of the header, as large as
@@ -35,10 +33,41 @@ import Link from "next/link";
 // tagline now live in the LEFT slot of the header (handled by
 // CabinShell). The right slot keeps the vessel/date/principal
 // chip. This component just renders the logo, big and centered.
+//
+// 2026-05-26 — Domingo bug-report (3 confirmations): clicking
+// the logo on /cabin/brief/* did nothing, URL stayed put. Same
+// silent router.push drop documented in /cabin/me/page.jsx
+// (Next.js 15 App Router prod build coalescing router.push
+// inside certain client trees). Switched from <Link> to a
+// raw <a> with onClick → window.location.assign. Trades the
+// SPA in-place navigation for a guaranteed full page-load.
+// Acceptable trade because clicking the logo from a brief page
+// is a "leave the form context" action — a fresh paint of
+// /cabin is the user's intent anyway. The href stays so
+// right-click / cmd-click "open in new tab" still works.
 export default function CabinBrandMark({ href = "/cabin" }) {
+  function onClick(e) {
+    // Let modifier-clicks (cmd/ctrl/shift/middle-button) keep
+    // their default browser semantics — open-in-new-tab etc.
+    if (
+      e.defaultPrevented ||
+      e.button !== 0 ||
+      e.metaKey ||
+      e.ctrlKey ||
+      e.shiftKey ||
+      e.altKey
+    ) {
+      return;
+    }
+    e.preventDefault();
+    if (typeof window !== "undefined") {
+      window.location.assign(href);
+    }
+  }
   return (
-    <Link
+    <a
       href={href}
+      onClick={onClick}
       className="cabin-brandmark"
       aria-label="George Yachts · Home"
     >
@@ -105,6 +134,6 @@ export default function CabinBrandMark({ href = "/cabin" }) {
           .cabin-brandmark__logo { height: 56px; }
         }
       `}</style>
-    </Link>
+    </a>
   );
 }

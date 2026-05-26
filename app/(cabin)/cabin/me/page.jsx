@@ -298,6 +298,14 @@ export default function CabinMePage() {
 
   // In-app navigation guard via the Back button. Click handler
   // sees busy → defers the navigation until onSave finishes.
+  //
+  // 2026-05-26 — Domingo bug-report: clicking "← Back to your Cabin"
+  // did nothing on the live site. Same router.push silent-drop the
+  // onSave tail (line 384 below) already works around. Replaces
+  // the clean-path router.push("/cabin") with window.location.assign
+  // — guaranteed full-page navigation, no SPA coalescing path. We're
+  // leaving the form context anyway, so the slight cost of a full
+  // reload is fine.
   function onBackClick(e) {
     e.preventDefault();
     const target = "/cabin";
@@ -308,7 +316,9 @@ export default function CabinMePage() {
       setPendingNav(target);
       return;
     }
-    router.push(target);
+    if (typeof window !== "undefined") {
+      window.location.assign(target);
+    }
   }
 
   // 2026-05-26 — Brief 02 (A3.2): the Eleanna data-loss bug. Before
@@ -346,7 +356,10 @@ export default function CabinMePage() {
       return;
     }
     // Clean and idle — navigate immediately.
-    router.push(target);
+    // 2026-05-26 — Same router.push silent-drop guard as onBackClick.
+    if (typeof window !== "undefined") {
+      window.location.assign(target);
+    }
   }
 
   async function onSave(e) {

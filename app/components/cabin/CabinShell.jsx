@@ -188,6 +188,31 @@ export default function CabinShell({
     cabin?.charter_period_to,
   );
 
+  // 2026-05-26 — Domingo bug-report (3 confirmations): clicking the
+  // back arrow + "The Cabin · Filotimo" left brand on a /cabin/brief/*
+  // page did nothing — URL stayed put. Same Next.js 15 router.push
+  // silent-drop documented in /cabin/me/page.jsx (App Router prod
+  // build coalescing router.push inside some client trees). Replaces
+  // the previous <Link href="/cabin"> with a raw <a> + onClick →
+  // window.location.assign so navigation is guaranteed. Modifier
+  // clicks fall through to the browser default (open in new tab).
+  function onCabinHomeClick(e) {
+    if (
+      e.defaultPrevented ||
+      e.button !== 0 ||
+      e.metaKey ||
+      e.ctrlKey ||
+      e.shiftKey ||
+      e.altKey
+    ) {
+      return;
+    }
+    e.preventDefault();
+    if (typeof window !== "undefined") {
+      window.location.assign("/cabin");
+    }
+  }
+
   const showChrome = !pathname.endsWith("/cabin/login");
   // 2026-05-23 — /cabin/welcome is the pre-onboarding gate. Bottom
   // nav has no business covering the "Save and enter the Cabin"
@@ -230,16 +255,18 @@ export default function CabinShell({
               balance evenly. */}
           <div className="cabin-shell__left">
             {pathname !== "/cabin" && (
-              <Link
+              <a
                 href="/cabin"
+                onClick={onCabinHomeClick}
                 className="cabin-shell__back"
                 aria-label="Back to Cabin home"
               >
                 <span aria-hidden>←</span>
-              </Link>
+              </a>
             )}
-            <Link
+            <a
               href="/cabin"
+              onClick={onCabinHomeClick}
               className="cabin-shell__left-brand"
               aria-label="The Cabin — home"
             >
@@ -248,7 +275,7 @@ export default function CabinShell({
               <span className="cabin-shell__left-tagline">
                 By invitation, in confidence
               </span>
-            </Link>
+            </a>
           </div>
           <div className="cabin-shell__brand-slot">
             <CabinBrandMark href="/cabin" />
@@ -404,14 +431,20 @@ export default function CabinShell({
           /* hide global site chrome inside the Cabin */
           background: var(--gy-ivory, #f8f5f0);
         }
+        /* 2026-05-26 — Domingo bug-report: WhatsApp + ContactDrawer
+           ("Speak to George") + AskGeorgeWidget (AI concierge) +
+           AmbientPlayer (ambient sound) used to be hidden inside
+           The Cabin under the "cabin owns the viewport" doctrine.
+           Customer-side test surfaced the gap: WhatsApp is HOW the
+           client reaches George — hiding it inside the Cabin defeats
+           the whole purpose. The four widgets stay visible now.
+           We keep nav/wishlist/sticky-CTA/exit-intent hidden because
+           those ARE distractions; the four below are contact tools. */
         body:has([data-cabin-mode]) #wishlist-fab,
         body:has([data-cabin-mode]) [data-global-nav],
         body:has([data-cabin-mode]) .smart-welcome,
         body:has([data-cabin-mode]) .sticky-fleet-cta,
-        body:has([data-cabin-mode]) .sticky-inquiry-bar,
-        body:has([data-cabin-mode]) [data-component="WhatsAppButton"],
-        body:has([data-cabin-mode]) [data-component="ContactDrawer"],
-        body:has([data-cabin-mode]) [data-component="ExitIntentModal"] {
+        body:has([data-cabin-mode]) .sticky-inquiry-bar {
           display: none !important;
         }
 
