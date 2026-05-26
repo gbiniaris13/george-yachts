@@ -3870,6 +3870,25 @@ body:has([data-cabin-mode]) footer:not([data-cabin-mode] footer) {
   display: none !important;
 }
 
+/* 2026-05-26 — Domingo bug-pass v2 (stacking-context trap).
+   The [data-cabin-mode] wrapper in app/(cabin)/layout.jsx sets
+   `position: relative; z-index: 100`, creating its own stacking
+   context. The three FABs that sit OUTSIDE that wrapper render
+   below it because their z-indices (WhatsAppButton z-50/51,
+   ContactDrawer z-50, AmbientPlayer z-60) are < 100. Symptom
+   confirmed via elementFromPoint at each button's centre — it
+   returned the cabin-shell overlay, not the button. AskGeorge
+   works because its z-index is 9998. We bump the three trapped
+   FABs to 9997 inside cabin mode (just below AskGeorge's tier
+   so it stays on top) without changing their default behaviour
+   on the public site. */
+body:has([data-cabin-mode]) a[aria-label="Contact us on WhatsApp"],
+body:has([data-cabin-mode]) [aria-label="A quick message from George"],
+body:has([data-cabin-mode]) [aria-label^="Speak to George"],
+body:has([data-cabin-mode]) .gy-ambient-pill {
+  z-index: 9997 !important;
+}
+
 /* Cabin pages own the viewport — no global scroll-progress bar */
 body:has([data-cabin-mode]) [class*="ScrollProgress"],
 body:has([data-cabin-mode]) [data-scroll-progress] {
