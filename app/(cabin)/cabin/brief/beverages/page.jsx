@@ -193,10 +193,11 @@ export default function BeveragesSectionPage() {
           shared document; this indicator shows who edited last. */}
       <SharedBriefIndicator sectionKey="beverages" />
 
-      {/* 2026-05-24 — Angeliki pass: explain to guests that their
-          edits ADD to the group's picks; only the principal can
-          remove on review. Server-side mergeForGuest enforces. */}
-      <GuestAdditiveBanner />
+      {/* 2026-05-26 — Brief 02 (Task A8.1): GuestAdditiveBanner
+          mount removed. Same rationale as dining/page.jsx — guests
+          can't write here anymore, so the additive-merge banner is
+          no longer accurate. The component file is kept on disk
+          for back-compat / archeology. */}
 
       {/* 2026-05-24 — Christos pass: dropped `isLastSection` so
           the "I'm done — send to George" button no longer renders

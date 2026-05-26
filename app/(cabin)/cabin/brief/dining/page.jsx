@@ -221,10 +221,14 @@ export default function DiningSectionPage() {
           form itself is the live group voice. */}
       <SharedBriefIndicator sectionKey="dining" />
 
-      {/* 2026-05-24 — Angeliki pass: explain to guests that their
-          edits ADD to the group's picks; only the principal can
-          remove on review. Server-side mergeForGuest enforces. */}
-      <GuestAdditiveBanner />
+      {/* 2026-05-26 — Brief 02 (Task A8.1): GuestAdditiveBanner
+          mount removed. Under the new single-responsibility model
+          guests no longer write to dining at all — they 403 at the
+          server (CP1) and see a read-only render upstream (CP2's
+          A2 branch above). The "your edits ADD to the group's
+          picks" message is no longer accurate for anyone, so the
+          banner is unmounted from every page. The component file
+          is kept on disk for back-compat / archeology. */}
 
       <BriefFormShell
         sectionKey="dining"

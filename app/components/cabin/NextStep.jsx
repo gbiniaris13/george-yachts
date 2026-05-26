@@ -11,10 +11,13 @@
 //
 // Decision tree (top-down — first match wins):
 //
-//   IF guest:
+//   IF guest (Brief 02, A4.2 + A5.3, 2026-05-26):
 //     1. Crew list not done           → /cabin/me
-//     2. Brief not confirmed           → /cabin/brief
-//     3. Everyone done                 → calm "you're set" state
+//     2. Done                          → calm "you're set" state
+//   (No brief / dining / beverages / life-aboard / confirm step
+//    for guests anymore. Under the new single-responsibility
+//    model the Main Charterer owns every decision; guests fill
+//    ONLY their Crew List.)
 //
 //   IF principal:
 //     1. Hasn't invited any guest      → /cabin/guests
@@ -29,7 +32,9 @@
 //
 // Style: large boutique cream-and-gold card with a single
 // prominent navy CTA. Sits ABOVE PreVoyageSteps so it's the
-// first thing every member sees on cabin home.
+// first thing every member sees on cabin home. Brief 02 also
+// suppresses the duplicate crew-list nag on PreVoyageSteps for
+// guests so the prompt is shown exactly once.
 // =============================================================
 
 import Link from "next/link";
@@ -55,31 +60,26 @@ export default function NextStep({
   let step = null;
 
   if (!isPrincipal) {
-    // ─────────────── GUEST PATH ───────────────
+    // ─────────────── GUEST PATH (Brief 02, A4.2 + A5.3) ───────────
+    // Guests fill ONLY their Crew List under the new model. They do
+    // NOT add brief picks, do NOT confirm anything, do NOT touch
+    // dining/beverages/life-aboard. So there's exactly one prompt
+    // followed by a calm done state.
     if (!myDetailsComplete) {
       step = {
         tone: "active",
-        eyebrow: "Step 1 of 2 — your part of the brief",
+        eyebrow: "Your part — one short form",
         title: "Share your crew-list line.",
-        copy: "Five quiet fields — date of birth, gender, nationality, passport or ID, mobile. The harbour authorities need them for every person aboard. Two minutes.",
+        copy: "Six quiet fields — date of birth, gender, nationality, passport or ID, mobile, and a few details about yourself. The harbour authorities need them for every person aboard. Two minutes.",
         ctaLabel: "Open your details →",
         ctaHref: "/cabin/me",
-      };
-    } else if (!myBriefConfirmedAt) {
-      step = {
-        tone: "active",
-        eyebrow: "Step 2 of 2 — your voice in the brief",
-        title: "Add your food & drink picks, then confirm.",
-        copy: "Open the shared brief. Add the things you love (and the things you skip), then press Confirm at the bottom so the principal knows you're done. Skip whatever doesn't apply.",
-        ctaLabel: "Open the brief →",
-        ctaHref: "/cabin/brief",
       };
     } else {
       step = {
         tone: "done",
-        eyebrow: "You're set",
-        title: "Your part of the brief is in.",
-        copy: "Thank you. The principal charterer will review the whole group's picks and send the brief to George. Nothing else for you to do — enjoy the build-up to your week.",
+        eyebrow: "That's everything we need from you",
+        title: "Your details are in — thank you.",
+        copy: "The Main Charterer is taking care of the rest of the arrangements (itinerary, food, the cellar). Your allergies and details have already been passed to the crew exactly as you entered them. Enjoy your Cabin in the meantime — the berth map, your crew, the album are all below.",
         ctaLabel: null,
         ctaHref: null,
       };

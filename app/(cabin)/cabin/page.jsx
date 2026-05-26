@@ -452,17 +452,26 @@ export default async function CabinHomePage() {
           Renders role-aware: principal sees Step 01 + 02; guest
           sees only Step 01 (their own /me details). Pressureless
           luxury framing, status indicators on each card.
+
+          2026-05-26 — Brief 02 (Task A5.2): suppressed for guests.
+          NextStep already prompts the guest's Crew List (the only
+          thing they do under the new single-responsibility model),
+          and PreVoyageSteps Card 01 was a duplicate of that prompt
+          while Card 02 (the brief) no longer applies to guests at
+          all. Principals still see both cards.
           ============================================================ */}
-      <PreVoyageSteps
-        isPrincipal={isPrincipal}
-        invitedCount={invitedCount}
-        completedCount={completedCount}
-        crewListTotal={crewListTotal}
-        crewListReady={crewListReady}
-        myDetailsComplete={myDetailsComplete}
-        briefPercent={percent}
-        briefSubmitted={Boolean(cabin?.brief_submitted_at)}
-      />
+      {isPrincipal && (
+        <PreVoyageSteps
+          isPrincipal={isPrincipal}
+          invitedCount={invitedCount}
+          completedCount={completedCount}
+          crewListTotal={crewListTotal}
+          crewListReady={crewListReady}
+          myDetailsComplete={myDetailsComplete}
+          briefPercent={percent}
+          briefSubmitted={Boolean(cabin?.brief_submitted_at)}
+        />
+      )}
 
       {/* 2026-05-24 — Group readiness card (principal-only).
           George friend test 4: moved here from above PreVoyageSteps

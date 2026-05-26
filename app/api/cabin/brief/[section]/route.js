@@ -125,6 +125,11 @@ export async function PUT(req, ctx) {
     "life_aboard",
     "dining",
     "beverages",
+    // 2026-05-26 — Brief 02 (Task A6.1): children section is a
+    // decision about minors aboard — cot/high-chair, baby food,
+    // children-at-table arrangements. The Main Charterer owns it.
+    // Guests never edit it.
+    "children",
   ]);
   if (PRINCIPAL_ONLY_SECTIONS.has(a.section)) {
     let isAuthorized = a.member.role === "principal_charterer";

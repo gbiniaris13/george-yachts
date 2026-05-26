@@ -840,87 +840,26 @@ export default function CabinMePage() {
             private alongside the health fields it gates. Keeps the
             consent literally adjacent to what it covers. */}
 
-        {member?.role && member.role !== "principal_charterer" && (
-          <div className="me-contribute">
-            {/* 2026-05-23 — SHARED BRIEF MODEL.
-                George's clarification: the brief is now a single
-                common document everyone fills together — "σαν να
-                έχουν ένα ρε παιδί μου όλοι και το συμπληρώνουν
-                ένας-ένας ξεχωριστά από το κινητό τους". Pre-Phase-3
-                per-member contribution pages removed; everyone
-                edits the same /cabin/brief/dining etc. */}
-            <h2 className="me-subhead">Help fill the group brief</h2>
-            <p className="me-contribute__intro">
-              <em>
-                Your group&apos;s brief is one shared document —
-                anyone aboard can add to it. Open it from your cabin
-                home (&quot;The Brief&quot; tile) or jump straight
-                in below. Last edits show whose pen wrote what, so
-                you can see at a glance what&apos;s been added
-                before you and pick up where the others left off.
-                {member?.brief_opt_out_at
-                  ? " (You've opted out; toggle below to opt back in.)"
-                  : ""}
-              </em>
-            </p>
+        {/* 2026-05-26 — Brief 02 (Task A8.5): the entire guest-only
+            "Help fill the group brief" block is unmounted under the
+            new single-responsibility model. Guests no longer write
+            to ANY brief section (dining/beverages/life-aboard/
+            itinerary/etc.) — so there is nothing to "help fill"
+            anymore. The opt-out toggle is also removed (guests have
+            nothing to opt out OF; their Crew List is mandatory for
+            port authorities). NextStep on /cabin home shows them a
+            calm done-state when their Crew List is complete.
 
-            {!member?.brief_opt_out_at && (
-              <Link
-                href="/cabin/brief"
-                className="me-contribute__open"
-              >
-                Open the brief →
-              </Link>
-            )}
-
-            {/* The opt-out path is preserved as a quieter
-                alternative: a guest who genuinely wants to defer
-                entirely can step aside, and the principal review
-                shows their opt-out badge. */}
-            <details className="me-contribute__optout">
-              <summary>
-                {member?.brief_opt_out_at
-                  ? "You've opted out of orders & cellar choices"
-                  : "Or, leave orders & cellar entirely to the group"}
-              </summary>
-              <div className="me-contribute__optout-body">
-                {member?.brief_opt_out_at ? (
-                  <button
-                    type="button"
-                    className="me-optout__back"
-                    onClick={() => onSetOptOut(false)}
-                    disabled={optOutBusy}
-                  >
-                    {optOutBusy ? "Saving…" : "Opt back in"}
-                  </button>
-                ) : (
-                  <>
-                    <label className="me-field">
-                      <span>Anything you&apos;d like noted (optional)</span>
-                      <input
-                        type="text"
-                        value={optOutNote}
-                        placeholder="e.g. I trust whatever Patricia picks"
-                        maxLength={240}
-                        onChange={(e) => setOptOutNote(e.target.value)}
-                      />
-                    </label>
-                    <button
-                      type="button"
-                      className="me-optout__btn"
-                      onClick={() => onSetOptOut(true)}
-                      disabled={optOutBusy}
-                    >
-                      {optOutBusy
-                        ? "Saving…"
-                        : "I'll leave orders & cellar to the group"}
-                    </button>
-                  </>
-                )}
-              </div>
-            </details>
-          </div>
-        )}
+            DATA: the brief_participation_opt_out_at column on
+            cabin_members is intentionally LEFT IN PLACE so the CRM
+            preference sheet (gy-command/dashboard/cabins/[id]/
+            preference-sheet) and PART B Task B2 can still surface
+            historical opt-outs. The submit-gate logic that reads
+            it is also preserved. We just stop CREATING new opt-outs
+            from this UI — onSetOptOut() + optOutBusy/optOutNote
+            state are now unused but kept on disk for now (so any
+            other call site continues to compile). Schedule a
+            follow-up cleanup if those become truly orphaned. */}
 
         {err && <p className="me-err" role="alert">{err}</p>}
 

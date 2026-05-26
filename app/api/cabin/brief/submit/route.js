@@ -374,6 +374,58 @@ export async function POST() {
     });
   }
 
+  // 2026-05-26 — Brief 02 (Task A6.2): per-member allergy roll-up.
+  // Under the new single-responsibility model the principal owns
+  // every brief decision, BUT allergies are a safety fact each
+  // member files in their own /cabin/me/private (writes to
+  // cabin_members.personal_details.allergies_dietary +
+  // dietary_preferences). They MUST reach the chef regardless of
+  // what the principal typed into the Health section. Reuses the
+  // memberRowsForLifeAboard load above — no extra DB round-trip.
+  // Members with no allergy/dietary info on file are skipped to
+  // keep the broker email signal-dense; their absence is captured
+  // in the `clean` count below.
+  const allergyRollupRaw = (memberRowsForLifeAboard ?? []).map((m) => {
+    const pd = m.personal_details ?? {};
+    const allergies = String(pd.allergies_dietary || "").trim();
+    const dietary = Array.isArray(pd.dietary_preferences)
+      ? pd.dietary_preferences.filter(Boolean)
+      : [];
+    const hasAny =
+      (allergies && allergies.toLowerCase() !== "none") || dietary.length > 0;
+    return {
+      memberId: m.id,
+      name: m.display_name || m.email || "(member)",
+      role: m.role,
+      allergies: allergies && allergies.toLowerCase() !== "none" ? allergies : null,
+      dietary,
+      hasAny,
+    };
+  });
+  const allergyRollupMembers = allergyRollupRaw
+    .filter((r) => r.hasAny)
+    // Principal first so George reads their note first.
+    .sort((a, b) => {
+      if (a.role === "principal_charterer" && b.role !== "principal_charterer") return -1;
+      if (b.role === "principal_charterer" && a.role !== "principal_charterer") return 1;
+      return (a.name || "").localeCompare(b.name || "");
+    })
+    .map(({ memberId, name, role, allergies, dietary }) => ({
+      memberId,
+      name,
+      role,
+      allergies,
+      dietary,
+    }));
+  const allergyRollup = {
+    members: allergyRollupMembers,
+    totals: {
+      total: allergyRollupRaw.length,
+      withData: allergyRollupMembers.length,
+      clean: allergyRollupRaw.length - allergyRollupMembers.length,
+    },
+  };
+
   // Telegram lines — short summary of group contributions.
   // 2026-05-25 — Phase 3: Life Aboard voices added a separate
   // header so the summary clearly differentiates "items the chef
@@ -413,6 +465,24 @@ export async function POST() {
     }
   }
 
+  // 2026-05-26 — Brief 02 (Task A6.2): per-member allergy roll-up
+  // for the chef. Telegram bullet lines so George gets the chef-
+  // critical facts in his pocket before he even opens the email.
+  if (allergyRollup.members.length > 0) {
+    telegramVoiceLines.push("");
+    telegramVoiceLines.push("Allergies & dietary (per member):");
+    for (const m of allergyRollup.members) {
+      const parts = [];
+      if (m.allergies) parts.push(m.allergies);
+      if (m.dietary && m.dietary.length > 0) parts.push(m.dietary.join(", "));
+      const tail = parts.join(" · ");
+      telegramVoiceLines.push(`· ${m.name}${tail ? " — " + tail : ""}`);
+    }
+  } else if (allergyRollup.totals.total > 0) {
+    telegramVoiceLines.push("");
+    telegramVoiceLines.push("No allergies reported by the party.");
+  }
+
   void notifyGeorge({
     icon: "✅",
     title: "Charter Brief submitted",
@@ -441,6 +511,11 @@ export async function POST() {
         submittedAt,
         cabinUrl: `${crmBase}/dashboard/cabins/${cabinId}`,
         groupContributions,
+        // 2026-05-26 — Brief 02 (Task A6.2): per-member allergy
+        // roll-up. Each member's self-filled allergies + dietary
+        // (from personal_details). Reaches the chef regardless
+        // of what the principal wrote in the Health section.
+        allergyRollup,
       });
     } catch (mailErr) {
       console.warn(

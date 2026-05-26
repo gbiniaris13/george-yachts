@@ -1,16 +1,33 @@
 "use client";
 
-// 2026-05-24 — Angeliki pass (item 3): Life Aboard is now per-member.
-// Storage moved to cabin_members.personal_details.life_aboard_brief
-// via /api/cabin/me/life-aboard. Each member sees ONLY their own
-// answers — empty form on first open, their own filled-in answers
-// on return. The principal (and George) see the full per-member
-// aggregate on the review page.
+// 2026-05-26 — Brief 02 (Task A4.1) — Life Aboard is now a
+// Main-Charterer decision under the new single-responsibility
+// model. Storage moved BACK to the shared cabin_brief_sections
+// row (sectionKey "life_aboard") via the standard
+// /api/cabin/brief/life_aboard endpoint. Guests see the
+// principal-only banner via <PrincipalOnlyGate> and the form is
+// rendered inside a disabled fieldset so they can read but not
+// type. Server gate already in place (CP1 added "life_aboard" to
+// PRINCIPAL_ONLY_SECTIONS).
 //
-// Mechanism: same BriefFormShell as the shared sections, just
-// pointed at a different endpoint via endpointBase. backHref +
-// hideSubmit keep the navigation honest — no shared "Next" button
-// because the answer set is intentionally member-local.
+// The OLD per-member endpoint (/api/cabin/me/life-aboard) is
+// still mounted but principal-only and unused by this page;
+// kept for back-compat with any rogue caller. Existing
+// per-member data in cabin_members.personal_details
+// .life_aboard_brief becomes vestigial but is not deleted —
+// George's per-member roll-up on /cabin/brief/review can still
+// surface it for historical cabins.
+//
+// 2026-05-24 — Angeliki pass (item 3) HISTORICAL: Life Aboard was
+// per-member, storage at cabin_members.personal_details
+// .life_aboard_brief via /api/cabin/me/life-aboard. Replaced by
+// the model above on 2026-05-26.
+
+// 2026-05-26 — Brief 02 (A4.1): the PrincipalOnlyGate wrap lives
+// in app/(cabin)/cabin/brief/life-aboard/layout.jsx — the layout is
+// a server component (where async server components can run), the
+// page below is a client component (RHF + hooks). Mirrors the
+// existing pattern used for arrival/itinerary/health/guests.
 
 import BriefFormShell from "../../../../components/cabin/brief/BriefFormShell";
 import IntroParagraph from "../../../../components/cabin/IntroParagraph";
@@ -31,37 +48,24 @@ export default function LifeAboardSectionPage() {
         title="Your days"
         italic="at sea."
       />
-      {/* 2026-05-24 — Angeliki pass: privacy banner. Each member
-          fills this section privately — no-one else aboard sees
-          another member's answers. George + the crew see the
-          per-member roll-up before embarkation. */}
-      <aside className="la-private" role="note">
-        <span className="la-private__chip">Private to you</span>
-        <p className="la-private__copy">
-          <em>
-            This section is per person — no-one else in your group
-            sees what you write here. Tell us how YOU&apos;d like the
-            crew around you, the activities YOU love. The captain
-            and chef see every member&apos;s answers when George
-            briefs the boat — that&apos;s how the week feels right
-            for everyone, not just whoever organised it.
-          </em>
-        </p>
-      </aside>
-      {/* 2026-05-24 — Christos pass: intro rewritten to a single
-          calm question about crew presence. The "tell us your
-          tempo" preamble was abstract and overlapped with the
-          itinerary section. */}
+      {/* 2026-05-26 — Brief 02 (A4.1): Per-member "Private to you"
+          banner removed. Life Aboard is now a single Main-Charterer
+          decision for the whole group, not a per-person form.
+          Guests get the principal-only banner from PrincipalOnlyGate
+          below instead. */}
       <IntroParagraph>
-        One simple question first — how would you like the crew to
-        be around you, and to address you, during the week? After
-        that, a quiet list of generic things many groups enjoy at
-        sea. Tick anything that appeals; skip whatever doesn&apos;t.
+        How would you like the crew to be around the group, and a
+        quiet list of generic things many groups enjoy at sea —
+        tick what appeals to your party, skip what doesn&apos;t.
       </IntroParagraph>
 
+      {/* 2026-05-26 — Brief 02 (A4.1): the surrounding layout.jsx
+          wraps this page in <PrincipalOnlyGate sectionTitle="Life
+          Aboard"> so guests see the cream "Principal only" banner +
+          a disabled fieldset. The server also 403s any guest PUT
+          to /api/cabin/brief/life_aboard (CP1) — belt-and-braces. */}
       <BriefFormShell
-        sectionKey="life-aboard"
-        endpointBase="/api/cabin/me"
+        sectionKey="life_aboard"
         prevSection={{ key: "itinerary", title: "Itinerary" }}
         nextSection={{ key: "dining", title: "At the Table" }}
       >
@@ -168,38 +172,10 @@ export default function LifeAboardSectionPage() {
         }
         /* 2026-05-20 — .la-extras-note styles removed alongside the
            "Most of these are included… management company" disclaimer
-           it used to apply to. */
-        /* 2026-05-24 — Angeliki pass: per-member privacy banner. */
-        .la-private {
-          margin: 0 0 22px 0;
-          padding: 14px 18px;
-          background: #FCFAF4;
-          border: 1px solid rgba(201, 168, 76, 0.32);
-          border-left: 3px solid var(--gy-gold);
-          border-radius: 3px;
-          display: flex;
-          align-items: baseline;
-          gap: 14px;
-          flex-wrap: wrap;
-        }
-        .la-private__chip {
-          font-family: var(--gy-font-ui);
-          font-size: 10.5px;
-          letter-spacing: 2.4px;
-          text-transform: uppercase;
-          color: var(--gy-gold);
-          font-weight: 600;
-          flex-shrink: 0;
-        }
-        .la-private__copy {
-          margin: 0;
-          flex: 1;
-          min-width: 0;
-          font-family: var(--gy-font-editorial);
-          font-size: 13.5px;
-          color: var(--gy-navy);
-          line-height: 1.6;
-        }
+           it used to apply to.
+           2026-05-26 — Brief 02 (A4.1): .la-private + chip + copy
+           styles removed alongside the per-member "Private to you"
+           banner. PrincipalOnlyGate ships its own boutique banner. */
       `}</style>
     </article>
   );
