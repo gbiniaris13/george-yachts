@@ -73,6 +73,12 @@ function sanitisePersonalDetails(body) {
     swims: cleanEnum(body?.swims, SWIMS_VALUES),
     mobility_notes: cleanStr(body?.mobility_notes, 600),
     cabin_pairing: cleanStr(body?.cabin_pairing, 120),
+    // 2026-05-26 — Brief 02 (Task A3.3): shoe_size lives in the
+    // Aboard step of the /cabin/me wizard. It's a string (not a
+    // number) so charterers can enter "EU 42", "US 9", "UK 7"
+    // etc. without us guessing a unit. ~12 chars is enough for
+    // "EU 42 / US 9".
+    shoe_size: cleanStr(body?.shoe_size, 24),
     special_dates_during_charter: cleanStr(
       body?.special_dates_during_charter,
       400

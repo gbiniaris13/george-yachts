@@ -135,6 +135,11 @@ export default function CabinMePage() {
     mobile_cc: "+30",
     // ----- Aboard the yacht (social, OK to be visible across group)
     cabin_pairing: "",
+    // 2026-05-26 — Brief 02 (A3.3): shoe_size lives in the Aboard
+    // block — the hostess sets out flip-flops sized right when guests
+    // come back from the beach. Free string so charterers can write
+    // "EU 42", "US 9", "UK 7" etc.
+    shoe_size: "",
     special_dates_during_charter: "",
     anything_else: "",
   });
@@ -173,6 +178,7 @@ export default function CabinMePage() {
           // of length (+1, +30, +44, +351, +972 etc.).
           mobile_cc: matchKnownCountryCode(pd.mobile) ?? "+30",
           cabin_pairing: pd.cabin_pairing ?? "",
+          shoe_size: pd.shoe_size ?? "",
           special_dates_during_charter: pd.special_dates_during_charter ?? "",
           anything_else: pd.anything_else ?? "",
         };
@@ -302,6 +308,44 @@ export default function CabinMePage() {
       setPendingNav(target);
       return;
     }
+    router.push(target);
+  }
+
+  // 2026-05-26 — Brief 02 (A3.2): the Eleanna data-loss bug. Before
+  // today, the "Open my private notes →" link was a vanilla Next.js
+  // Link. Eleanna typed her DOB + passport in Step 1, clicked the
+  // link to go to Step 2 (private notes), came back to Step 1 and
+  // her data was gone — the link navigated BEFORE any save fired.
+  //
+  // New behaviour: clicking "Continue to Private notes →" is a
+  // step-aware force-save. The handler:
+  //   1. If clean + idle: navigate immediately to /cabin/me/private.
+  //   2. If dirty + idle: kick off onSave (which PUTs the current
+  //      form), set the pending nav target, and let onSave's
+  //      post-save tail navigate.
+  //   3. If a save is already in flight: just queue the target;
+  //      onSave's tail will pick it up.
+  // Same idempotent pattern as onBackClick — extended to
+  // "drive a save first" when the form is dirty.
+  function onContinueToPrivate(e) {
+    e.preventDefault();
+    const target = "/cabin/me/private";
+    if (busyRef.current) {
+      pendingNavRef.current = target;
+      setPendingNav(target);
+      return;
+    }
+    if (dirty) {
+      pendingNavRef.current = target;
+      setPendingNav(target);
+      // Trigger a save now. onSave's tail reads pendingNavRef and
+      // navigates via window.location.assign once the PUT lands.
+      // We synthesize a preventable Event so onSave's e.preventDefault
+      // call doesn't throw.
+      void onSave({ preventDefault: () => {} });
+      return;
+    }
+    // Clean and idle — navigate immediately.
     router.push(target);
   }
 
@@ -715,9 +759,25 @@ export default function CabinMePage() {
               </em>
             </p>
           </div>
-          <Link href="/cabin/me/private" className="me-private-link__cta">
-            Open my private notes →
-          </Link>
+          {/* 2026-05-26 — Brief 02 (A3.2): force-save Next.
+              Vanilla Link replaced by an <a> + onClick handler
+              (onContinueToPrivate) that drives a save FIRST when
+              the form is dirty, then navigates. Eleanna's data-
+              loss path: typed → clicked Private link → typing
+              gone — is closed. href stays so right-click
+              "Open in new tab" + screen-readers still see a real
+              target. aria-disabled while saving so assistive tech
+              announces the wait. */}
+          <a
+            href="/cabin/me/private"
+            className="me-private-link__cta"
+            onClick={onContinueToPrivate}
+            aria-disabled={busy}
+          >
+            {busy && pendingNav === "/cabin/me/private"
+              ? "Saving — opening when done…"
+              : "Continue to Private notes →"}
+          </a>
         </div>
 
         <h2 className="me-subhead">Aboard the yacht</h2>
@@ -731,6 +791,23 @@ export default function CabinMePage() {
             maxLength={120}
             onChange={(e) =>
               setForm({ ...form, cabin_pairing: e.target.value })
+            }
+          />
+        </label>
+
+        {/* 2026-05-26 — Brief 02 (A3.3): shoe size for the hostess's
+            flip-flop / spa-slipper set. Free string so charterers can
+            write "EU 42", "US 9", "UK 7" etc. without us guessing
+            their unit. */}
+        <label className="me-field">
+          <span>Shoe size</span>
+          <input
+            type="text"
+            value={form.shoe_size}
+            placeholder="e.g. EU 42 / US 9"
+            maxLength={24}
+            onChange={(e) =>
+              setForm({ ...form, shoe_size: e.target.value })
             }
           />
         </label>

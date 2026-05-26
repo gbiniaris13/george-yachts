@@ -49,29 +49,130 @@ import { SectionTitle } from "../../../../components/cabin/brief/FormFields";
 import SectionProgress from "../../../../components/cabin/brief/SectionProgress";
 import BeveragesFields from "../../../../components/cabin/brief/BeveragesFields";
 import SharedBriefIndicator from "../../../../components/cabin/brief/SharedBriefIndicator";
+// 2026-05-26 — Brief 02 (A2 + A8): GuestAdditiveBanner + WishlistPanel
+// imports kept; not mounted on the guest branch and slated for full
+// removal in Task A8.
 import GuestAdditiveBanner from "../../../../components/cabin/brief/GuestAdditiveBanner";
 import WishlistPanel from "../../../../components/cabin/brief/WishlistPanel";
+import GuestBriefReadOnly from "../../../../components/cabin/brief/GuestBriefReadOnly";
 
 export default function BeveragesSectionPage() {
-  // 2026-05-24 — Angeliki pass: role-aware finishing CTA. We
-  // fetch the viewer's role so principals see "Continue to
-  // Review →" and guests see "All done — back to the Cabin".
-  const [isPrincipal, setIsPrincipal] = useState(false);
+  // 2026-05-26 — Brief 02 (A2): tri-state isPrincipal — see
+  // /cabin/brief/dining/page.jsx for the full rationale.
+  //   null  = role not yet resolved → loading skeleton
+  //   true  = principal (or delegated brief-admin) → full edit tree
+  //   false = guest → read-only view + "Back to your Cabin"
+  // The check accepts is_brief_admin = true so delegated admins see
+  // the edit tree, mirroring the server gate in
+  // app/api/cabin/brief/[section]/route.js.
+  const [isPrincipal, setIsPrincipal] = useState(null);
   useEffect(() => {
     let cancelled = false;
     fetch("/api/cabin/me", { cache: "no-store" })
       .then((r) => r.json())
       .then((j) => {
         if (cancelled) return;
-        if (j?.ok && j?.member?.role === "principal_charterer") {
-          setIsPrincipal(true);
+        if (!j?.ok) {
+          setIsPrincipal(false);
+          return;
         }
+        const m = j?.member;
+        const canEdit =
+          m?.role === "principal_charterer" || m?.is_brief_admin === true;
+        setIsPrincipal(Boolean(canEdit));
       })
-      .catch(() => {});
+      .catch(() => {
+        if (!cancelled) setIsPrincipal(false);
+      });
     return () => {
       cancelled = true;
     };
   }, []);
+
+  // Loading skeleton — until the role resolves we render the title
+  // + a shimmer card so first paint never shows form controls to a
+  // guest (and never shows read-only text to the principal).
+  if (isPrincipal === null) {
+    return (
+      <article>
+        <SectionTitle
+          kicker="Section Seven · In the Cellar"
+          title="In the"
+          italic="cellar."
+        />
+        <div
+          aria-busy="true"
+          aria-label="Loading"
+          style={{
+            marginTop: 22,
+            height: 120,
+            borderRadius: 3,
+            background:
+              "linear-gradient(90deg, rgba(13,27,42,0.05) 25%, rgba(13,27,42,0.1) 37%, rgba(13,27,42,0.05) 63%)",
+            backgroundSize: "400% 100%",
+            animation: "gbr-shimmer 1.4s infinite",
+          }}
+        />
+        <style jsx>{`
+          @keyframes gbr-shimmer {
+            0% { background-position: 100% 0; }
+            100% { background-position: 0 0; }
+          }
+        `}</style>
+      </article>
+    );
+  }
+
+  // 2026-05-26 — Brief 02 (A2): GUEST READ-ONLY BRANCH. The
+  // Main Charterer owns the cellar under the new model. The
+  // server 403s any guest PUT to /api/cabin/brief/beverages
+  // (Task A1). On the UI side we render zero form controls:
+  // section title, a read-only snapshot of the principal's
+  // beverage choices, and a calm "Back to your Cabin" link.
+  // No SectionProgress (guests don't step through), no
+  // GuestAdditiveBanner, no WishlistPanel, no Save/Next CTA,
+  // no SaveStatus.
+  if (isPrincipal === false) {
+    return (
+      <article>
+        <SectionTitle
+          kicker="Section Seven · In the Cellar"
+          title="In the"
+          italic="cellar."
+        />
+        <GuestBriefReadOnly sectionKey="beverages" kind="beverages" />
+        <nav className="guest-back-nav">
+          <Link href="/cabin" className="guest-back-link">
+            ← Back to your Cabin
+          </Link>
+        </nav>
+        <style jsx>{`
+          .guest-back-nav {
+            margin: 28px 0 0 0;
+            padding-top: 22px;
+            border-top: 1px solid rgba(13, 27, 42, 0.08);
+            display: flex;
+            justify-content: flex-start;
+          }
+          .guest-back-link {
+            font-family: var(--gy-font-ui);
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(13, 27, 42, 0.65);
+            text-decoration: none;
+            padding: 14px 0;
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+          }
+          .guest-back-link:hover { color: var(--gy-navy); }
+        `}</style>
+      </article>
+    );
+  }
+
+  // isPrincipal === true → fall through to existing principal tree below.
 
   return (
     <article>
