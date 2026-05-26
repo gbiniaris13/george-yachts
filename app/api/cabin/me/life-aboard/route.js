@@ -78,6 +78,41 @@ export async function PUT(req) {
   const a = await authorize();
   if (a.error) return a.error;
 
+  // 2026-05-26 — Brief 02 (single-responsibility rework, Task A1.3).
+  // Life Aboard is now a Main-Charterer decision under the new
+  // model. Guests must not be able to write
+  // personal_details.life_aboard_brief — only the principal
+  // charterer (or a delegated brief-admin) may PUT here. The GET
+  // stays open so the principal's own UI can still read back
+  // their own past answers if needed. (A4 will rewire the
+  // principal's life-aboard writes to the shared
+  // cabin_brief_sections.life_aboard row; until then this
+  // endpoint is the principal-only fallback.)
+  const isPrincipalActor =
+    a.membership.role === "principal_charterer" ||
+    (await (async () => {
+      const db = getCabinDb();
+      const row = await dbQuery(
+        db
+          .from("cabin_members")
+          .select("is_brief_admin")
+          .eq("id", a.membership.member_id)
+          .maybeSingle(),
+      );
+      return Boolean(row?.is_brief_admin);
+    })());
+  if (!isPrincipalActor) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "principal-only-section",
+        message:
+          "Only the Main Charterer decides life aboard. Ask them to fill this section.",
+      },
+      { status: 403 },
+    );
+  }
+
   let body;
   try {
     body = await req.json();

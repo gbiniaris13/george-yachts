@@ -111,6 +111,20 @@ export async function PUT(req, ctx) {
     // field would be incoherent. Guests can read; only the
     // principal (or delegated brief admin) writes.
     "guests",
+    // 2026-05-26 — Brief 02 (single-responsibility rework, Task A1).
+    // Under the new model the Main Charterer (or a delegated
+    // brief-admin) owns EVERY decision: arrival, guests, health,
+    // itinerary, dining, beverages, children, life-aboard. Guests
+    // fill ONLY their own Crew List (cabin_members.personal_details)
+    // + their own allergies. They may VIEW dining/beverages
+    // read-only on the brief pages, but every write to these
+    // sections is rejected at the server boundary. The UI lock
+    // (read-only render for guests on dining/beverages, the
+    // PrincipalOnlyGate on life-aboard) is secondary; this Set is
+    // the security boundary.
+    "life_aboard",
+    "dining",
+    "beverages",
   ]);
   if (PRINCIPAL_ONLY_SECTIONS.has(a.section)) {
     let isAuthorized = a.member.role === "principal_charterer";
