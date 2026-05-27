@@ -875,6 +875,26 @@ export default async function CabinHomePage() {
            Each rule is scoped by media query so the nth-child
            calculation matches the active column count.
         */
+        /* 2026-05-26 — Brief 04 / T7 (Domingo guest audit): the
+           previous rules only handled the case where the last tile
+           SAT ALONE on its row (1 of N occupants). The guest grid
+           has 10 tiles in 4 cols → row 3 = 2 tiles + 2 empty cells
+           ("orphan cell after Add to phone"). The principal grid
+           has 11 tiles in 4 cols → row 3 = 3 tiles + 1 empty cell.
+           Both leave visible empty white cells.
+
+           Extended rules now fill every partial-row configuration
+           by spanning the trailing tiles so the grid never shows
+           an empty cell:
+
+             4-col last row of 2 (positions 4n+1, 4n+2):
+               second-to-last tile spans 2, last tile spans 2.
+             4-col last row of 3 (positions 4n+1, 4n+2, 4n+3):
+               last tile spans 2 (fills the single trailing gap).
+             3-col last row of 2 (positions 3n+1, 3n+2):
+               last tile spans 2.
+             2-col last row of 1: existing :nth-child(odd) rule.
+        */
         @media (max-width: 639.98px) {
           .cabin-home__tile:last-child:nth-child(odd) {
             grid-column: 1 / -1;
@@ -884,10 +904,23 @@ export default async function CabinHomePage() {
           .cabin-home__tile:last-child:nth-child(3n+1) {
             grid-column: 1 / -1;
           }
+          /* Partial last row of 2 in a 3-col grid → span the gap. */
+          .cabin-home__tile:last-child:nth-child(3n+2) {
+            grid-column: span 2;
+          }
         }
         @media (min-width: 1024px) {
           .cabin-home__tile:last-child:nth-child(4n+1) {
             grid-column: 1 / -1;
+          }
+          /* Partial last row of 3 in a 4-col grid → span the gap. */
+          .cabin-home__tile:last-child:nth-child(4n+3) {
+            grid-column: span 2;
+          }
+          /* Partial last row of 2 in a 4-col grid → both span 2. */
+          .cabin-home__tile:nth-last-child(2):nth-child(4n+1),
+          .cabin-home__tile:nth-last-child(1):nth-child(4n+2) {
+            grid-column: span 2;
           }
         }
         .cabin-home__tile {
@@ -938,16 +971,22 @@ export default async function CabinHomePage() {
           display: flex;
           justify-content: center;
         }
+        /* 2026-05-26 — Brief 04 / T1 (Domingo guest audit): the
+           Sign-out button at the bottom of /cabin home was 0.45
+           navy on cream — too pale to read as "this is the logout
+           button". Bumped to 0.7 for proper contrast; hover still
+           goes full navy. */
         .cabin-home__signout {
           background: transparent;
           border: 0;
-          color: rgba(13, 27, 42, 0.45);
+          color: rgba(13, 27, 42, 0.7);
           font-family: var(--gy-font-ui);
           font-size: 10.5px;
           letter-spacing: 2.5px;
           text-transform: uppercase;
           cursor: pointer;
           padding: 10px 18px;
+          font-weight: 600;
         }
         .cabin-home__signout:hover {
           color: var(--gy-navy);

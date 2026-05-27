@@ -339,6 +339,35 @@ function statusFor(member) {
   return "unsent";
 }
 
+// 2026-05-26 — Brief 04 / T2 (Domingo guest audit): guest rows were
+// rendering the raw email as the headline name when display_name
+// was null ("konstantinos.papanastasiou@hotmail.com" etc.). Ugly
+// on a luxury guest list. Friendly fallback:
+//   • display_name present → use it as-is.
+//   • email looks like "first.last" / "first-last" / "first_last"
+//     → title-case each part, join with a space.
+//   • otherwise → "Awaiting name" (the raw email still appears
+//     small in the meta line below, so the operator can still
+//     identify which row it is).
+function headlineName(member) {
+  const display = (member.display_name || "").trim();
+  if (display) return display;
+  const local = (member.email || "").split("@")[0] || "";
+  if (!local) return "Awaiting name";
+  if (/[._-]/.test(local)) {
+    const parts = local
+      .split(/[._-]+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+    if (parts.length >= 2) {
+      return parts
+        .map((p) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase())
+        .join(" ");
+    }
+  }
+  return "Awaiting name";
+}
+
 const STATUS_BADGE = {
   ready:   { label: "Details ready", tone: "ok" },
   joined:  { label: "Joined — waiting on details", tone: "warm" },
@@ -656,16 +685,23 @@ export default function GuestsPage() {
             return (
               <li key={m.id}>
                 <div className="guests-list__head">
-                  <strong>{m.display_name || m.email}</strong>
+                  {/* 2026-05-26 — Brief 04 / T2: headlineName() falls
+                      back gracefully when display_name is null;
+                      raw email is no longer used as the headline. */}
+                  <strong>{headlineName(m)}</strong>
                   <em>{ROLE_LABEL[m.role] ?? m.role}</em>
                 </div>
                 <div className="guests-list__meta">
+                  {/* 2026-05-26 — Brief 04 / T2: " · " separator now
+                      carries explicit spaces on BOTH sides so it
+                      renders as "@gmail.com · signed in 24 May"
+                      instead of "@gmail.com· signed in 24 May". */}
                   <span>{m.email}</span>
                   {m.last_login_at
-                    ? <span>· signed in {prettyDateShort(m.last_login_at)}</span>
+                    ? <span>{" · signed in "}{prettyDateShort(m.last_login_at)}</span>
                     : m.invite_sent_at
-                      ? <span>· invited {prettyDateShort(m.invite_sent_at)}</span>
-                      : <span>· not invited yet</span>}
+                      ? <span>{" · invited "}{prettyDateShort(m.invite_sent_at)}</span>
+                      : <span>{" · not invited yet"}</span>}
                 </div>
                 {m.role !== "principal_charterer" && (
                   <div className={`guests-list__badge guests-list__badge--${badge.tone}`}>

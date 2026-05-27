@@ -167,18 +167,43 @@ export default function TimeCapsulePage() {
           font-size: 13px;
           margin: 12px 0 0 0;
         }
+        /* 2026-05-26 — Brief 04 / T6 (Domingo guest audit): "SEAL IN
+           MY CABIN" looked dead — pale grey text on a medium grey
+           button. Root cause: when the textarea is empty (the
+           default state on page load), the button is disabled
+           and previous styling was just opacity 0.55 on the
+           navy CTA, which read as a broken button rather than a
+           form gate. Now: two distinct visual states.
+             • Disabled (no content): cream ghost outline, muted
+               navy text, "wait for content" cursor.
+             • Enabled (≥4 chars typed): full navy CTA with gold
+               border + ivory text — the brand's primary action
+               style, matching "NEXT: PRIVATE NOTES" / "ADD PHOTOS".
+           Behaviour untouched. */
         .tc-form__row button {
           background: var(--gy-navy);
           color: var(--gy-ivory);
-          padding: 10px 18px;
+          padding: 11px 22px;
           border: 1px solid var(--gy-gold);
           font-family: var(--gy-font-ui);
           font-size: 10.5px;
           letter-spacing: 2.5px;
           text-transform: uppercase;
+          font-weight: 600;
           cursor: pointer;
+          transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
         }
-        .tc-form__row button:disabled { opacity: 0.55; cursor: not-allowed; }
+        .tc-form__row button:hover:not(:disabled) {
+          background: var(--gy-gold);
+          color: var(--gy-navy);
+        }
+        .tc-form__row button:disabled {
+          background: transparent;
+          color: rgba(13, 27, 42, 0.42);
+          border-color: rgba(13, 27, 42, 0.18);
+          cursor: not-allowed;
+          opacity: 1;
+        }
 
         .tc-sealed {
           margin-top: 28px;

@@ -598,14 +598,15 @@ export default async function CabinBriefOverviewPage() {
           color: var(--gy-gold);
           font-size: 14px;
         }
-        .cabin-brief__item.is-important .cabin-brief__num::after {
-          content: "·";
-          color: var(--gy-gold);
-          margin-left: 4px;
-          font-size: 28px;
-          vertical-align: super;
-          line-height: 0.5;
-        }
+        /* 2026-05-26 — Brief 04 / T4 (Domingo guest audit): the
+           ::after gold "·" was meant to flag row 03 (Emergency
+           Contact) as high-priority, but rendered as a detached
+           floating glyph to the right of the row number with no
+           anchor — read as an unfinished required-field marker.
+           Removed; the "Emergency Contact" title is self-evidently
+           important and doesn't need an additional glyph. The
+           importance:"high" data field on SECTION_META stays
+           intact for any future surface that wants to act on it. */
       `}</style>
     </div>
   );

@@ -13,10 +13,40 @@ export const metadata = { title: "Your crew" };
 
 function paragraphs(bio, firstName) {
   if (!bio || typeof bio !== "string") return [];
-  return redactSurname(scrubBio(bio), firstName)
+  return dedupeLeadingFirstName(redactSurname(scrubBio(bio), firstName), firstName)
     .split(/\n\s*\n/)
     .map((p) => p.trim())
     .filter(Boolean);
+}
+
+// 2026-05-26 — Brief 04 / T3 (Domingo guest audit): the crew card
+// renders <h2>{first_name}</h2> immediately above the bio paragraphs.
+// When the bio's first paragraph also opens with "{first_name} was/
+// is/has…" the reader's eye scans "Leonora / Leonora was born in 1978"
+// as a stutter — exactly Domingo's "Cook/Hostess Leonora Leonora was
+// born in 1978…" report. Some bios in the booklet ALSO contain the
+// literal duplication ("Leonora Leonora was born…") from a clean-up
+// glitch upstream.
+//
+// Defensive fix: strip every leading "{first_name}\s+" from the bio
+// before render. Works whether the bio has 0, 1, or N leading
+// first-name tokens. The next word is upper-cased so the paragraph
+// still starts with a capital ("was born…" → "Was born…").
+//
+// Storage stays verbatim; this only affects the display.
+function dedupeLeadingFirstName(bio, firstName) {
+  if (!bio || !firstName) return bio;
+  const fn = escapeRegExp(String(firstName).trim());
+  if (!fn) return bio;
+  // Match one or more leading "{first_name}\s+" runs at the start
+  // of the bio (after any leading whitespace). Case-insensitive so
+  // "leonora leonora" gets caught too.
+  const re = new RegExp(`^(\\s*)(?:${fn}\\s+)+`, "i");
+  const stripped = bio.replace(re, "$1");
+  if (stripped === bio) return bio;
+  // Re-capitalise the first letter of the remaining text so the
+  // paragraph doesn't start mid-sentence with a lowercase verb.
+  return stripped.replace(/^(\s*)([a-zà-ÿ])/, (_, ws, ch) => ws + ch.toUpperCase());
 }
 
 // 2026-05-21 — Roberto's brief (v1):

@@ -647,13 +647,23 @@ export default function CabinShell({
           color: inherit;
           min-width: 0;
         }
+        /* 2026-05-26 — Brief 04 / T1 (Domingo guest audit): the
+           DESKTOP / TABLET base styles below were the last cream-on-
+           cream offenders. The mobile-masthead block above (≤599.98px)
+           was already navy-corrected — but on every viewport ≥600px,
+           "THE CABIN" wordmark + tagline + back arrow + vessel chip +
+           dates/meta were rendering in ivory on the cream backdrop-
+           blurred header (cabin-luxury.css §14), effectively invisible.
+           All five corrected to navy with the same hairline-divider
+           treatment the mobile block uses. "Filotimo" stays gold —
+           that one always read. */
         .cabin-shell__left-title {
           font-family: var(--gy-font-editorial, Georgia, serif);
           font-size: 13.5px;
           letter-spacing: 0.32em;
           text-transform: uppercase;
-          color: var(--gy-ivory);
-          font-weight: 400;
+          color: rgba(13, 27, 42, 0.82);
+          font-weight: 500;
           white-space: nowrap;
         }
         .cabin-shell__left-title em {
@@ -669,7 +679,7 @@ export default function CabinShell({
           font-style: italic;
           font-size: 11.5px;
           letter-spacing: 0.04em;
-          color: rgba(248, 245, 240, 0.55);
+          color: rgba(13, 27, 42, 0.55);
           margin-top: 4px;
           white-space: nowrap;
         }
@@ -690,9 +700,10 @@ export default function CabinShell({
           justify-content: center;
           width: 36px;
           height: 36px;
-          border: 1px solid rgba(248, 245, 240, 0.25);
+          /* Brief 04 / T1 — navy outline on cream. */
+          border: 1px solid rgba(13, 27, 42, 0.22);
           border-radius: 2px;
-          color: var(--gy-ivory);
+          color: var(--gy-navy);
           text-decoration: none;
           font-size: 18px;
           line-height: 1;
@@ -701,7 +712,7 @@ export default function CabinShell({
         }
         .cabin-shell__back:hover,
         .cabin-shell__back:focus-visible {
-          background: rgba(248, 245, 240, 0.08);
+          background: rgba(13, 27, 42, 0.05);
           border-color: var(--gy-gold);
           outline: none;
         }
@@ -727,7 +738,8 @@ export default function CabinShell({
           font-style: italic;
           font-weight: 300;
           letter-spacing: 0.4px;
-          color: var(--gy-ivory);
+          /* Brief 04 / T1 — navy on cream. */
+          color: var(--gy-navy);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -737,7 +749,8 @@ export default function CabinShell({
           font-family: var(--gy-font-ui);
           font-size: 9.5px;
           letter-spacing: 2.4px;
-          color: rgba(248, 245, 240, 0.55);
+          /* Brief 04 / T1 — navy on cream. */
+          color: rgba(13, 27, 42, 0.6);
           text-transform: uppercase;
           margin-top: 6px;
         }

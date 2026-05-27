@@ -139,10 +139,17 @@ export default async function MenuPage() {
           line-height: 1.8;
           margin-top: 28px;
         }
+        /* 2026-05-26 — Brief 04 / T5 (Domingo guest audit): the
+           menu panel used pure #ffffff while every other Cabin
+           page uses the cream body surface. The white card broke
+           the cream palette and read as borrowed from a different
+           UI. Brought into line with the rest of the Cabin —
+           soft cream tint over the ivory body, same hairline gold
+           that the crew card / cabin-at-a-glance use. */
         .mn-wrap {
           margin-top: 30px;
-          background: #ffffff;
-          border: 1px solid rgba(13,27,42,0.08);
+          background: rgba(255, 252, 244, 0.85);
+          border: 1px solid rgba(201, 168, 76, 0.22);
           padding: 32px 28px 28px;
         }
         /* 2026-05-24 — Christos pass: on phones the inner padding
