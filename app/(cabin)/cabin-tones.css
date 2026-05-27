@@ -77,6 +77,14 @@ html body [data-cabin-mode] .wlc-field > span,
 html body [data-cabin-mode] .me-subhead,
 html body [data-cabin-mode] .me-field > span,
 html body [data-cabin-mode] .me-fieldset > legend,
+/* 2026-05-26 — Brief 05 / T2 (Domingo principal audit): the
+   /cabin/me/private page (.mp-* classes) was the sibling of
+   /cabin/me (.me-* classes) but its labels never made the
+   navy-override list — they kept their gold inline default.
+   Section labels there now match every other brief page. */
+html body [data-cabin-mode] .mp-banner__chip,
+html body [data-cabin-mode] .mp-field > span,
+html body [data-cabin-mode] .mp-fieldset > legend,
 html body [data-cabin-mode] .brief-label,
 html body [data-cabin-mode] .brief-matrix legend,
 html body [data-cabin-mode] .brief-freq legend,
@@ -386,4 +394,17 @@ html [data-cabin-mode] .brief-matrix-grid * {
   color: rgba(13, 27, 42, 0.8) !important;
   font-size: 11px !important;
   font-weight: 600 !important;
+}
+
+/* 2026-05-26 — Brief 05 / T1 (Domingo principal audit): the
+   LikeDislikeMatrix on /cabin/brief/dining hid its native radio
+   via opacity:0 and the iOS Safari accent leaked through as
+   browser-default blue. The visible-radio path is now fixed at
+   source (display:none, see FormFields.jsx), but this global
+   rule is the belt-and-braces — any cabin-side radio or
+   checkbox that ever shows its native control will paint in
+   brand gold, not the OS default blue/green. */
+[data-cabin-mode] input[type="radio"],
+[data-cabin-mode] input[type="checkbox"] {
+  accent-color: var(--gy-gold, #C9A84C);
 }

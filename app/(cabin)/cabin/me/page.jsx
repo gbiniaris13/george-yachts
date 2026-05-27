@@ -1275,18 +1275,38 @@ export default function CabinMePage() {
           gap: 8px;
           align-items: stretch;
         }
+        /* 2026-05-26 — Brief 05 / T3 (Domingo principal audit): the
+           country-code <select> rendered with OS-default chrome
+           (boxed white bg, full border, native dropdown arrow) while
+           every other input on this form is an underlined text
+           field with transparent bg. Stripped the OS chrome via
+           appearance:none + a custom gold caret SVG, matched the
+           font-family / font-size / border-bottom / padding rhythm
+           of .me-field input so the select sits cleanly beside the
+           number input. Caret added so users still see it's a
+           dropdown after the native arrow is gone. */
         .me-mobile-cc {
           flex: 0 0 auto;
           min-width: 110px;
           max-width: 160px;
-          font-size: 16px;
-          padding: 10px 8px;
-          border: 1px solid rgba(13, 27, 42, 0.18);
-          background: #ffffff;
-          color: var(--gy-navy);
           font-family: var(--gy-font-body);
-          border-radius: 3px;
+          font-size: 16px;
+          color: var(--gy-navy);
+          background-color: transparent;
+          background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='none' stroke='%23C9A84C' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round' d='M1 1l4 4 4-4'/></svg>");
+          background-repeat: no-repeat;
+          background-position: right 4px center;
+          border: 0;
+          border-bottom: 1px solid rgba(13, 27, 42, 0.18);
+          border-radius: 0;
+          padding: 11px 18px 13px 0;
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          outline: none;
+          cursor: pointer;
         }
+        .me-mobile-cc:focus { border-bottom-color: var(--gy-gold); }
         .me-mobile-num {
           flex: 1;
           min-width: 0;

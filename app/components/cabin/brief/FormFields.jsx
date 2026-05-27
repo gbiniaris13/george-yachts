@@ -784,10 +784,21 @@ export function LikeDislikeMatrix({ name, label, hint, items, register, lockedKe
           cursor: pointer;
           position: relative;
         }
+        /* 2026-05-26 — Brief 05 / T1 (Domingo principal audit):
+           was opacity:0 + position:absolute + pointer-events:none.
+           That hides the input visually on desktop Chrome/Firefox,
+           but on iOS Safari + some Android builds the native blue
+           radio accent + focus ring still leaked through (visible
+           as a small blue dot + ring on top of the custom gold
+           .brief-matrix-dot). The sibling RadioGroup uses
+           display:none and renders perfectly — matching that
+           pattern here. The label wraps the input so the
+           implicit label/input association still toggles on tap.
+           accent-color is also set (belt-and-braces) so any
+           browser that still renders the input ghost paints it
+           gold, not the system default blue. */
         .brief-matrix-cell input {
-          position: absolute;
-          opacity: 0;
-          pointer-events: none;
+          display: none;
         }
         .brief-matrix-dot {
           width: 20px;
