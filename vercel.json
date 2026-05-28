@@ -79,6 +79,10 @@
     {
       "path": "/api/cron/cabin-time-capsules",
       "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/cron/outreach-silent-check",
+      "schedule": "0 14 * * *"
     }
   ],
   "headers": [
