@@ -50,25 +50,6 @@ export async function GET(request) {
     process.env.OUTREACH_SECRET || process.env.CRON_SECRET;
   if (!expected || token !== expected) return unauthorized();
 
-  // ROBERTO 2026-05-03 — EMERGENCY PAUSE.
-  // George flagged that the IG account has been actioned by Meta and
-  // the outreach email bots may also be on shaky ground. Hard-pause
-  // BOTH outreach scripts (eleanna + george) until manually cleared.
-  // Restore: delete this block + redeploy.
-  return new Response(
-    JSON.stringify({
-      paused: true,
-      reason: 'emergency_manual',
-      // Verbose message kept here for authenticated bots only.
-      message:
-        'Manually paused 2026-05-03. Restore by deleting the ' +
-        'emergency block in app/api/outreach/health/route.js.',
-    }),
-    { status: 200, headers: { 'content-type': 'application/json' } },
-  );
-
-  // eslint-disable-next-line no-unreachable
-
   // If a human has pre-paused, skip all computation and say so.
   const manualPause = await kvGet('outreach:paused');
   if (manualPause) {
