@@ -475,97 +475,148 @@ export async function POST() {
     telegramVoiceLines.push("No allergies reported by the party.");
   }
 
-  void notifyGeorge({
-    icon: "✅",
-    title: "Charter Brief submitted",
-    lines: [
-      `From: ${existing.principal_charterer_name ?? session.email}`,
-      `Re: ${existing.vessel_name ?? "—"}`,
-      existing.charter_period_from && existing.charter_period_to
-        ? `Dates: ${existing.charter_period_from} → ${existing.charter_period_to}`
-        : null,
-      ...telegramVoiceLines,
-    ],
-    link: `/dashboard/cabins/${cabinId}`,
-  });
+  // 2026-06-01 — Brief 06 / G1-A + G1-C. These notifications used to
+  // be fired with `void` (un-awaited) AFTER the response returned.
+  // On Vercel serverless the function is FROZEN the moment the
+  // Response is sent, so those background promises were dropped —
+  // the dummy submit returned 200 with the brief locked, but NO
+  // email + NO Telegram ever went out, and (because the work never
+  // ran to completion) NOT EVEN an error was logged. Fix: AWAIT all
+  // three notification paths before returning, capture each result,
+  // and write a durable BRIEF_NOTIFICATIONS audit row so a silent
+  // delivery failure can never recur unseen. The added ~1–2s on the
+  // one-time "Send to George" click is acceptable (the UI shows
+  // "Sending…"); the submit itself is already committed above, so a
+  // notification failure still never rolls back the lock.
 
   const brokerEmail = process.env.BROKER_EMAIL || "george@georgeyachts.com";
   const crmBase =
     process.env.GY_COMMAND_URL || "https://command.georgeyachts.com";
-  void (async () => {
-    try {
-      await sendBriefSubmittedEmail({
-        to: brokerEmail,
-        vesselName: existing.vessel_name,
-        charterer: existing.principal_charterer_name || session.email,
-        from: existing.charter_period_from,
-        to_date: existing.charter_period_to,
-        submittedAt,
-        cabinUrl: `${crmBase}/dashboard/cabins/${cabinId}`,
-        groupContributions,
-        // 2026-05-26 — Brief 02 (Task A6.2): per-member allergy
-        // roll-up. Each member's self-filled allergies + dietary
-        // (from personal_details). Reaches the chef regardless
-        // of what the principal wrote in the Health section.
-        allergyRollup,
-      });
-    } catch (mailErr) {
-      console.warn(
-        "[cabin/brief/submit] Resend send failed (non-fatal):",
-        mailErr,
-      );
-    }
-  })();
 
-  // 2026-05-24 — Angeliki pass (item 7): broadcast a per-member
-  // confirmation email to every cabin_member. Each guest gets a
-  // personalised note ("Patricia has sent the final brief; the
-  // principal made the final call on the shared choices") so:
-  //   • Everyone knows the brief is out the door
-  //   • Everyone sees their private answers were honoured
-  //   • George + GY are visibly "καλυμμένοι" — the principal's
-  //     authority on shared choices is documented in writing
-  // Best-effort: a failed email doesn't roll back the submit.
-  void (async () => {
-    try {
-      const members = await dbQuery(
-        db
-          .from("cabin_members")
-          .select("email, display_name")
-          .eq("cabin_id", cabinId),
-      );
-      const principalDisplayName =
-        existing.principal_charterer_name || session.email;
-      for (const m of members ?? []) {
-        if (!m?.email) continue;
-        const firstName = firstNameFromDisplayName(m.display_name);
-        try {
-          await sendBriefMemberConfirmation({
-            to: m.email,
-            firstName,
-            vesselName: existing.vessel_name,
-            principalName: principalDisplayName,
-            fromDate: existing.charter_period_from,
-            toDate: existing.charter_period_to,
-          });
-        } catch (memberMailErr) {
-          console.warn(
-            "[cabin/brief/submit] member confirmation failed for",
-            m.email,
-            memberMailErr,
-          );
-        }
+  // 1) Telegram + the lightweight notify email (notifyGeorge handles
+  //    both channels internally and never throws).
+  let notifyResult = null;
+  try {
+    notifyResult = await notifyGeorge({
+      icon: "✅",
+      title: "Charter Brief submitted",
+      lines: [
+        `From: ${existing.principal_charterer_name ?? session.email}`,
+        `Re: ${existing.vessel_name ?? "—"}`,
+        existing.charter_period_from && existing.charter_period_to
+          ? `Dates: ${existing.charter_period_from} → ${existing.charter_period_to}`
+          : null,
+        ...telegramVoiceLines,
+      ],
+      link: `/dashboard/cabins/${cabinId}`,
+    });
+  } catch (notifyErr) {
+    console.error("[cabin/brief/submit] notifyGeorge threw:", notifyErr);
+    notifyResult = { ok: false, error: String(notifyErr?.message || notifyErr) };
+  }
+
+  // 2) The rich broker email (sendBriefSubmittedEmail throws on a
+  //    non-2xx Resend response — capture it instead of swallowing).
+  let brokerEmailResult = { ok: false };
+  try {
+    await sendBriefSubmittedEmail({
+      to: brokerEmail,
+      vesselName: existing.vessel_name,
+      charterer: existing.principal_charterer_name || session.email,
+      from: existing.charter_period_from,
+      to_date: existing.charter_period_to,
+      submittedAt,
+      cabinUrl: `${crmBase}/dashboard/cabins/${cabinId}`,
+      groupContributions,
+      // Per-member allergy roll-up — reaches the chef regardless of
+      // what the principal wrote in the Health section.
+      allergyRollup,
+    });
+    brokerEmailResult = { ok: true };
+  } catch (mailErr) {
+    console.error(
+      "[cabin/brief/submit] broker email failed:",
+      mailErr?.message || mailErr,
+    );
+    brokerEmailResult = { ok: false, error: String(mailErr?.message || mailErr) };
+  }
+
+  // 3) Per-member confirmation emails. Parallelised (was a serial
+  //    await loop) so awaiting the whole set stays ~one round-trip.
+  //    Each guest gets a personalised note; the principal's
+  //    authority over the shared choices is documented in writing.
+  let memberConfirmResult = { sent: 0, failed: 0 };
+  try {
+    const members = await dbQuery(
+      db
+        .from("cabin_members")
+        .select("email, display_name")
+        .eq("cabin_id", cabinId),
+    );
+    const principalDisplayName =
+      existing.principal_charterer_name || session.email;
+    const recipients = (members ?? []).filter((m) => m?.email);
+    const settled = await Promise.allSettled(
+      recipients.map((m) =>
+        sendBriefMemberConfirmation({
+          to: m.email,
+          firstName: firstNameFromDisplayName(m.display_name),
+          vesselName: existing.vessel_name,
+          principalName: principalDisplayName,
+          fromDate: existing.charter_period_from,
+          toDate: existing.charter_period_to,
+        }),
+      ),
+    );
+    memberConfirmResult = {
+      sent: settled.filter((s) => s.status === "fulfilled").length,
+      failed: settled.filter((s) => s.status === "rejected").length,
+    };
+    for (const s of settled) {
+      if (s.status === "rejected") {
+        console.error(
+          "[cabin/brief/submit] member confirmation failed:",
+          String(s.reason?.message || s.reason),
+        );
       }
-    } catch (broadcastErr) {
-      console.warn(
-        "[cabin/brief/submit] member-broadcast failed (non-fatal):",
-        broadcastErr,
-      );
     }
-  })();
+  } catch (broadcastErr) {
+    console.error(
+      "[cabin/brief/submit] member-broadcast failed:",
+      broadcastErr?.message || broadcastErr,
+    );
+    memberConfirmResult = { sent: 0, failed: -1, error: String(broadcastErr?.message || broadcastErr) };
+  }
+
+  // G1-C — durable signal. If ANY critical channel failed, this row
+  // is the queryable proof so a silent miss is impossible to repeat.
+  const telegramOk = Boolean(notifyResult?.telegram?.ok || notifyResult?.channel === "console");
+  const notifyEmailOk = Boolean(notifyResult?.email?.ok || notifyResult?.channel === "console");
+  const allOk = telegramOk && notifyEmailOk && brokerEmailResult.ok && memberConfirmResult.failed === 0;
+  try {
+    await writeAudit({
+      cabinId,
+      actorEmail: session.email,
+      actorRole: member.role,
+      action: AUDIT_ACTIONS.BRIEF_NOTIFICATIONS,
+      metadata: {
+        all_ok: allOk,
+        telegram_ok: telegramOk,
+        notify_email_ok: notifyEmailOk,
+        broker_email_ok: brokerEmailResult.ok,
+        broker_email_error: brokerEmailResult.error ?? null,
+        member_confirmations_sent: memberConfirmResult.sent,
+        member_confirmations_failed: memberConfirmResult.failed,
+        broker_recipient: brokerEmail,
+      },
+    });
+  } catch (auditErr) {
+    console.error("[cabin/brief/submit] notification audit write failed:", auditErr);
+  }
 
   return NextResponse.json({
     ok: true,
     submitted_at: submittedAt,
+    notifications_ok: allOk,
   });
 }
