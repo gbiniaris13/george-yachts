@@ -602,7 +602,12 @@ export async function POST() {
       metadata: {
         all_ok: allOk,
         telegram_ok: telegramOk,
+        // Sub-detail so a failure says WHY (skipped = env var
+        // missing; status/error = provider rejected). Same for the
+        // notifyGeorge email channel.
+        telegram_detail: notifyResult?.telegram ?? notifyResult ?? null,
         notify_email_ok: notifyEmailOk,
+        notify_email_detail: notifyResult?.email ?? null,
         broker_email_ok: brokerEmailResult.ok,
         broker_email_error: brokerEmailResult.error ?? null,
         member_confirmations_sent: memberConfirmResult.sent,
