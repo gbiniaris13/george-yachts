@@ -78,16 +78,24 @@ export async function POST(req) {
       .eq("id", cabinId)
       .maybeSingle()
   );
-  void notifyGeorge({
-    icon: "💌",
-    title: "Time Capsule sealed",
-    lines: [
-      `From: ${cabin?.principal_charterer_name ?? session.email}`,
-      `Re: ${cabin?.vessel_name ?? "—"}`,
-      `Reveal date: ${reveal.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`,
-    ],
-    link: `/dashboard/cabins/${cabinId}`,
-  });
+  // 2026-06-01 — Brief 06 cabin-closeout (S3). Was `void notifyGeorge`
+  // (fire-and-forget) → dropped on Vercel serverless freeze. AWAIT it,
+  // guarded so a notify failure can never fail the seal (the capsule
+  // is already persisted above).
+  try {
+    await notifyGeorge({
+      icon: "💌",
+      title: "Time Capsule sealed",
+      lines: [
+        `From: ${cabin?.principal_charterer_name ?? session.email}`,
+        `Re: ${cabin?.vessel_name ?? "—"}`,
+        `Reveal date: ${reveal.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`,
+      ],
+      link: `/dashboard/cabins/${cabinId}`,
+    });
+  } catch (notifyErr) {
+    console.error("[cabin/time-capsule] notifyGeorge threw:", notifyErr);
+  }
 
   return NextResponse.json({ ok: true, capsule: row });
 }

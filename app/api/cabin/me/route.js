@@ -232,20 +232,51 @@ export async function PUT(req) {
   const firstCompletion =
     !existing?.personal_details_completed_at && Boolean(stampedCompletedAt);
   if (firstCompletion) {
-    void notifyGeorge({
-      icon: "🪪",
-      title: "Cabin member shared their details",
-      lines: [
-        `From: ${session.email}`,
-        membership.role === "principal_charterer"
-          ? "Role: principal charterer"
-          : "Role: guest",
-        cleaned.allergies_dietary
-          ? `Allergies/dietary: ${cleaned.allergies_dietary.slice(0, 100)}${cleaned.allergies_dietary.length > 100 ? "…" : ""}`
-          : null,
-      ],
-      link: `/dashboard/cabins/${cabinId}`,
-    });
+    // 2026-06-01 — Brief 06 cabin-closeout (S2). Was `void notifyGeorge`
+    // (fire-and-forget) → silently dropped on Vercel serverless freeze,
+    // so George's heads-up that a member shared their details + any
+    // allergies/dietary never reliably arrived (the data still reaches
+    // the brief + preference sheet, but the real-time ping was lost).
+    // AWAIT it, guard it, and leave a durable MEMBER_DETAILS_NOTIFICATION
+    // audit row — same pattern as the delivery fix.
+    let notifyResult = null;
+    try {
+      notifyResult = await notifyGeorge({
+        icon: "🪪",
+        title: "Cabin member shared their details",
+        lines: [
+          `From: ${session.email}`,
+          membership.role === "principal_charterer"
+            ? "Role: principal charterer"
+            : "Role: guest",
+          cleaned.allergies_dietary
+            ? `Allergies/dietary: ${cleaned.allergies_dietary.slice(0, 100)}${cleaned.allergies_dietary.length > 100 ? "…" : ""}`
+            : null,
+        ],
+        link: `/dashboard/cabins/${cabinId}`,
+      });
+    } catch (notifyErr) {
+      console.error("[cabin/me] notifyGeorge threw:", notifyErr);
+      notifyResult = { ok: false, error: String(notifyErr?.message || notifyErr) };
+    }
+    try {
+      await writeAudit({
+        cabinId,
+        actorEmail: session.email,
+        actorRole: membership.role,
+        action: AUDIT_ACTIONS.MEMBER_DETAILS_NOTIFICATION,
+        metadata: {
+          ok: Boolean(notifyResult?.ok),
+          channel: notifyResult?.channel ?? null,
+          telegram: notifyResult?.telegram ?? null,
+          email: notifyResult?.email ?? null,
+          error: notifyResult?.error ?? null,
+          has_allergies: Boolean(cleaned.allergies_dietary),
+        },
+      });
+    } catch (auditErr) {
+      console.error("[cabin/me] member-details-notification audit failed:", auditErr);
+    }
   }
 
   return NextResponse.json({

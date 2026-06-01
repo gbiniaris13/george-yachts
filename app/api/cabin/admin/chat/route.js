@@ -42,8 +42,14 @@ export async function POST(req) {
       senderRole: "admin",
       body: body?.body ?? "",
     });
-    // Throttled email notification to the charterer
-    void maybeNotifyOnNewMessage({ cabinId, senderRole: "admin" });
+    // 2026-06-01 — Brief 06 cabin-closeout (S4). Await the throttled
+    // charterer email notification (was fire-and-forget → dropped on
+    // serverless freeze), guarded so it can't fail the admin reply.
+    try {
+      await maybeNotifyOnNewMessage({ cabinId, senderRole: "admin" });
+    } catch (notifyErr) {
+      console.error("[cabin/admin/chat] notify failed:", notifyErr);
+    }
     return NextResponse.json({ ok: true, message: row });
   } catch (e) {
     return NextResponse.json({ ok: false, error: e.message }, { status: 400 });
