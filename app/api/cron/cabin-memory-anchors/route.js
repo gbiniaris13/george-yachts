@@ -26,6 +26,19 @@ const FROM = process.env.CABIN_FROM_ADDRESS || "George Yachts <cabin@georgeyacht
 const REPLY_TO = process.env.CABIN_REPLY_TO || "george@georgeyachts.com";
 const PUBLIC_BASE = process.env.CABIN_PUBLIC_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://georgeyachts.com";
 
+// 2026-06-01 — Brief 06 after-sales STEP 1 (empty-album guard).
+// Anchors whose copy promises "your photos / the album are waiting".
+// These must NEVER be sent to a cabin with an empty voyage album —
+// "here are your photos" to an empty album is the one unforgivable
+// after-sales email. day1_album is the headline case; the other three
+// reference photos in the same way, so the same guard covers them.
+const PHOTO_DEPENDENT = new Set([
+  "day1_album",
+  "day30_reminder",
+  "month3_random_photo",
+  "month6_random_photo",
+]);
+
 function authorized(req) {
   // Vercel marks cron requests with x-vercel-cron in production.
   if (req.headers.get("x-vercel-cron")) return true;
@@ -80,6 +93,38 @@ export async function GET(req) {
   const results = [];
   for (const anchor of due) {
     const cabin = anchor.cabin;
+
+    // Empty-album guard: never send a photo-promising anchor to a
+    // cabin with no (non-redacted) voyage photos. Defer (leave it
+    // scheduled so a later run sends it once photos exist); after a
+    // 30-day grace the album moment has passed, so cancel rather than
+    // retry forever.
+    if (PHOTO_DEPENDENT.has(anchor.anchor_kind)) {
+      const photos = await dbQuery(
+        db.from("cabin_voyage_photos")
+          .select("id")
+          .eq("cabin_id", cabin.id)
+          .is("redacted_at", null)
+          .limit(1)
+      );
+      const hasPhotos = (photos?.length ?? 0) > 0;
+      if (!hasPhotos) {
+        const ageDays =
+          (Date.now() - new Date(anchor.scheduled_for).getTime()) / 86400000;
+        if (ageDays > 30) {
+          await dbQuery(
+            db.from("cabin_memory_anchors")
+              .update({ status: "cancelled" })
+              .eq("id", anchor.id)
+          );
+          results.push({ id: anchor.id, ok: false, reason: "empty-album-cancelled", kind: anchor.anchor_kind });
+        } else {
+          results.push({ id: anchor.id, ok: false, reason: "deferred-empty-album", kind: anchor.anchor_kind });
+        }
+        continue;
+      }
+    }
+
     const link = `${PUBLIC_BASE}/cabin`;
     const email = renderAnchorEmail(anchor, cabin, link);
 
