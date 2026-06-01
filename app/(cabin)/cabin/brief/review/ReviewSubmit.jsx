@@ -30,8 +30,14 @@ export default function ReviewSubmit({
   // confirmation modal so the lock decision is informed.
   guestsTotal = 0,
   pendingGuests = [],
-  // 2026-05-24 — pending brief confirmations (per-member explicit
-  // Confirm CTA on /cabin/brief). Send gate also requires these.
+  // 2026-05-27 — Brief 06 (#1+#2): the per-member brief-confirmation
+  // gate is REMOVED. Under the single-writer model (the Main
+  // Charterer is the only one who writes the brief; guests are
+  // read-only and have no Confirm button), requiring every member
+  // to press Confirm was structurally impossible — guests could
+  // never satisfy it, so Review & Send never unlocked. The prop is
+  // kept in the signature (ignored) only so the server page doesn't
+  // break if it still passes it; nothing reads it now.
   pendingBriefConfirmMembers = [],
 }) {
   const router = useRouter();
@@ -40,16 +46,21 @@ export default function ReviewSubmit({
   const [error, setError] = useState(null);
 
   const pendingCount = pendingGuests.length;
-  const pendingBriefConfirmCount = pendingBriefConfirmMembers.length;
-  // 2026-05-24 — Hard gate requires THREE green signals:
-  //   (1) every non-opted-out member has crew list done
+  // 2026-05-27 — Brief 06 (#1+#2): the send gate now requires TWO
+  // green signals, not three. The old third signal — "every member
+  // pressed Confirm on /cabin/brief" — was a deadlock: under the
+  // single-writer model guests have no Confirm button (read-only
+  // brief), so that count never reached zero and the principal
+  // could never send. Dropped entirely. The remaining two gates
+  // are both legitimate and satisfiable:
+  //   (1) every non-opted-out member has their Crew List done
+  //       (port authorities need every passenger's passport line)
   //   (2) every visible brief section is marked complete
-  //   (3) every non-opted-out member has pressed Confirm on
-  //       /cabin/brief (explicit per-member acknowledgement)
+  // The server (/api/cabin/brief/submit) drops the same third gate
+  // in lockstep — see that route.
   const canSend =
     pendingCount === 0 &&
-    allDone &&
-    pendingBriefConfirmCount === 0;
+    allDone;
   const everyoneIn =
     guestsTotal === 0 || (pendingCount === 0 && guestsTotal > 0);
 
@@ -183,56 +194,10 @@ export default function ReviewSubmit({
         </div>
       )}
 
-      {/* 2026-05-24 — Brief-confirmation gate panel. */}
-      {pendingBriefConfirmCount > 0 && (
-        <div
-          className="cbr-submit__pending"
-          style={{ background: "#ffffff", marginBottom: 14 }}
-        >
-          <div
-            className="cbr-submit__pending-eyebrow"
-            style={{ color: "#9a3a2c", fontWeight: 700 }}
-          >
-            Brief confirmations still pending — required before sending
-          </div>
-          <p
-            className="cbr-submit__pending-copy"
-            style={{ color: "#0D1B2A" }}
-          >
-            <strong>{pendingBriefConfirmCount}</strong>{" "}
-            {pendingBriefConfirmCount === 1 ? "person" : "people"} in
-            your group {pendingBriefConfirmCount === 1 ? "hasn't" : "haven't"} pressed
-            Confirm on their brief picks yet. Each person opens{" "}
-            <a href="/cabin/brief" style={{ color: "#8a7327", borderBottom: "1px solid rgba(201, 168, 76, 0.55)" }}>The Brief</a>
-            , adds what they want, then taps Confirm at the bottom.
-            The Send button below unlocks the moment everyone has
-            confirmed.
-          </p>
-          <ul
-            className="cbr-submit__pending-list"
-            style={{ color: "#0D1B2A" }}
-          >
-            {pendingBriefConfirmMembers.slice(0, 8).map((g, i) => (
-              <li key={`bc-${g.name}-${i}`} style={{ color: "#0D1B2A" }}>
-                {g.name}
-                {g.role === "principal_charterer" && (
-                  <em
-                    className="cbr-submit__pending-tag"
-                    style={{ color: "#5a4a1f", fontStyle: "italic" }}
-                  >
-                    {" "}· you
-                  </em>
-                )}
-              </li>
-            ))}
-            {pendingBriefConfirmMembers.length > 8 && (
-              <li>
-                <em>and {pendingBriefConfirmMembers.length - 8} more…</em>
-              </li>
-            )}
-          </ul>
-        </div>
-      )}
+      {/* 2026-05-27 — Brief 06 (#1+#2): the brief-confirmation gate
+          panel is removed. Guests don't confirm anything under the
+          single-writer model, so there was nothing here that the
+          principal could ever clear. */}
 
       {everyoneIn && guestsTotal > 0 && (
         <div className="cbr-submit__ready">
@@ -272,11 +237,9 @@ export default function ReviewSubmit({
       >
         {pendingCount > 0
           ? `Waiting on ${pendingCount} crew-list ${pendingCount === 1 ? "line" : "lines"}`
-          : pendingBriefConfirmCount > 0
-            ? `Waiting on ${pendingBriefConfirmCount} brief ${pendingBriefConfirmCount === 1 ? "confirmation" : "confirmations"}`
-            : !allDone
-              ? "Waiting on brief sections"
-              : "Send to George →"}
+          : !allDone
+            ? "Waiting on brief sections"
+            : "Send to George →"}
       </button>
       <p className="cbr-submit__after">
         {!canSend

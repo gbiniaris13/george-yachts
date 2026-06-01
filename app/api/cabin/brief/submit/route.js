@@ -125,29 +125,21 @@ export async function POST() {
     );
   }
 
-  // 2026-05-24 — HARD brief-confirmation gate. Every non-opted-
-  // out member must have pressed Confirm on /cabin/brief.
-  const stillOweBriefConfirm = (allActiveMembers ?? []).filter(
-    (m) =>
-      !m.brief_participation_opt_out_at &&
-      !m.brief_confirmed_at,
-  );
-  if (stillOweBriefConfirm.length > 0) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: "brief-confirmation-incomplete",
-        message:
-          "The brief cannot be sent until every member has pressed Confirm on their brief picks.",
-        pending_count: stillOweBriefConfirm.length,
-        pending: stillOweBriefConfirm.map((m) => ({
-          name: m.display_name || m.email,
-          role: m.role,
-        })),
-      },
-      { status: 409 },
-    );
-  }
+  // 2026-05-27 — Brief 06 (#1+#2): the HARD brief-confirmation gate
+  // is REMOVED. It required every non-opted-out member to have set
+  // brief_confirmed_at by pressing Confirm on /cabin/brief — but
+  // under the single-writer model guests are read-only on the brief
+  // and have NO Confirm button (removed in Brief 02). So guests
+  // could never satisfy this, the count never hit zero, and the
+  // principal's POST here always 409'd with "brief-confirmation-
+  // incomplete" — Review & Send was permanently deadlocked.
+  // Dropped in lockstep with the client gate in
+  // app/(cabin)/cabin/brief/review/ReviewSubmit.jsx.
+  //
+  // The two remaining gates are legitimate and satisfiable and
+  // STILL ENFORCED below: (1) every member's Crew List complete
+  // (port-authority requirement, checked just above) and (2) every
+  // required brief section marked complete (checked just below).
 
   // 2026-05-24 — HARD brief-sections gate. Per George friend test
   // 4 final: "και στα ποτά και στα crew list και στα φαγητά."
