@@ -264,11 +264,26 @@ export default async function BriefReviewPage() {
     ? nameById[cabin.brief_submitted_by_member_id] || ""
     : "";
 
-  // 2026-05-25 — Phase 3: Life Aboard now writes per-member, so
-  // cabin_brief_sections never carries a completed=true row for
-  // it. Synthesise the section's "done" signal from per-member
-  // briefs (at least one member with content = filled).
-  const lifeAboardDoneAny = lifeAboardVoices.some((v) => v.hasContent);
+  // 2026-05-27 — Brief 06 (#6): Life Aboard completion signal fixed.
+  // The 2026-05-25 Phase-3 code read ONLY the per-member field
+  // personal_details.life_aboard_brief. But Brief 02 / CP3 (A4.1)
+  // made Life Aboard single-writer again — the Main Charterer writes
+  // it to the SHARED cabin_brief_sections row (section_key
+  // "life_aboard"), not to any per-member field. So the per-member
+  // field is empty under the current model → lifeAboardDoneAny was
+  // always false → allDone false → "Send to George" stayed disabled
+  // with "Waiting on brief sections", and the review panel showed a
+  // false "0 of N voices filled". This was a phantom gate.
+  //
+  // Fix: mirror the SERVER (app/api/cabin/brief/submit/route.js),
+  // which already checks the section row FIRST and only falls back
+  // to per-member content. Section row wins; per-member voices are
+  // a legacy fallback so old cabins that wrote per-member still pass.
+  const lifeAboardSectionComplete = Boolean(
+    sectionsByKey["life_aboard"]?.completed,
+  );
+  const lifeAboardDoneAny =
+    lifeAboardSectionComplete || lifeAboardVoices.some((v) => v.hasContent);
 
   const allDone =
     visible.length > 0 &&
@@ -400,7 +415,18 @@ export default async function BriefReviewPage() {
                     the email) can read every voice. Empty
                     members are surfaced quietly so it's clear
                     who still owes an answer. */}
-                {s.key === "life_aboard" && lifeAboardVoices.length > 0 && (
+                {/* 2026-05-27 — Brief 06 (#6): only render this
+                    per-member "voices" roll-up when at least one
+                    member actually has per-member content (legacy
+                    cabins from the Phase-3 multi-writer era). Under
+                    the current single-writer model Life Aboard lives
+                    in the shared section row, so per-member content
+                    is empty and showing "0 of N filled" was a
+                    misleading false-negative. When there's no
+                    per-member content, the section's normal
+                    "✓ Filled" status (driven by the section row)
+                    already tells the principal it's done. */}
+                {s.key === "life_aboard" && lifeAboardVoices.some((v) => v.hasContent) && (
                   <div className="cabin-brief-review__group-voices">
                     <div className="cabin-brief-review__group-voices-eyebrow">
                       Voices from your group ({lifeAboardVoices.filter((v) => v.hasContent).length} of {lifeAboardVoices.length} filled)
