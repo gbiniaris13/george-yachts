@@ -23,9 +23,12 @@
 //     1. Hasn't invited any guest      → /cabin/guests
 //     2. Own crew list not done        → /cabin/me
 //     3. Brief sections incomplete     → /cabin/brief
-//     4. Own brief not confirmed       → /cabin/brief (confirm CTA)
-//     5. Group still pending           → calm "waiting on N people"
-//     6. Ready to ship                 → /cabin/brief/review (Send)
+//     4. Group crew lists pending      → calm "waiting on N people"
+//     5. Ready to ship                 → /cabin/brief/review (Send)
+//   (2026-06-01 — Brief 06 readiness-display fix: the old "confirm
+//    your brief" step is gone. The single-writer brief needs no
+//    per-member confirmation, so it never gated the Send and the
+//    step only created a confirm dead-end on the home page.)
 //
 // Hidden when:
 //   • brief_submitted_at is set (charter is shipped to George)
@@ -44,7 +47,6 @@ export default function NextStep({
   briefSubmittedAt,
   // Guest-side signals
   myDetailsComplete,
-  myBriefConfirmedAt,
   // Principal-side signals
   invitedCount,
   crewListReady,
@@ -52,7 +54,6 @@ export default function NextStep({
   briefSectionsAllComplete,
   groupFullyReady,
   pendingCrewListMembers,
-  pendingBriefConfirmMembers,
 }) {
   // Charter already shipped — nothing to do.
   if (briefSubmittedAt) return null;
@@ -113,30 +114,25 @@ export default function NextStep({
         ctaLabel: "Open the brief →",
         ctaHref: "/cabin/brief",
       };
-    } else if (!myBriefConfirmedAt) {
-      step = {
-        tone: "active",
-        eyebrow: "Step 4 — confirm your brief",
-        title: "Mark your brief picks as confirmed.",
-        copy: "Every section's filled. Scroll to the bottom of the brief and press Confirm so the readiness bar moves to green.",
-        ctaLabel: "Open the brief →",
-        ctaHref: "/cabin/brief",
-      };
     } else if (!groupFullyReady) {
-      // Waiting on others
+      // 2026-06-01 — Brief 06 (readiness-display fix). Removed the
+      // old "Step 4 — confirm your brief" step and the brief-confirm
+      // half of this waiting state. Under the single-writer model the
+      // brief needs no per-member confirmation, so once sections are
+      // complete the only thing that can still be pending here is a
+      // guest's crew-list line.
       const pcCount = pendingCrewListMembers?.length || 0;
-      const bcCount = pendingBriefConfirmMembers?.length || 0;
       step = {
         tone: "waiting",
         eyebrow: "Waiting on your group",
         title:
-          pcCount + bcCount === 1
-            ? "One last person to finish."
-            : `${pcCount + bcCount} of your group still to finish.`,
+          pcCount === 1
+            ? "One last crew-list line to come."
+            : `${pcCount} crew-list lines still to come.`,
         copy:
-          pcCount + bcCount === 1
-            ? "Almost there. You can nudge them from Your Group, or let them get to it in their own time."
-            : "Each person needs their crew-list line in AND their brief picks confirmed. Nudge them from Your Group, or wait — the readiness bar below shows you exactly who.",
+          pcCount === 1
+            ? "Almost there — one person still needs to add their crew-list essentials (date of birth, passport, mobile). Nudge them from Your Group, or give them a little time."
+            : "A few people still need to add their crew-list essentials — date of birth, passport, mobile. Nudge them from Your Group, or wait; the readiness bar below shows exactly who.",
         ctaLabel: "Open Your Group →",
         ctaHref: "/cabin/guests",
       };
@@ -145,7 +141,7 @@ export default function NextStep({
         tone: "ready",
         eyebrow: "Ready to send",
         title: "Your brief is ready for George.",
-        copy: "Every crew list is in. Every brief section is filled. Every voice has confirmed. Read it through one last time — then send it to George.",
+        copy: "Every crew list is in and every brief section is filled. Read it through one last time — then send it to George.",
         ctaLabel: "Review & send to George →",
         ctaHref: "/cabin/brief/review",
       };

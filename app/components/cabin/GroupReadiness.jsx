@@ -41,15 +41,12 @@ export default function GroupReadiness({
   crewListTotal,
   crewListReady,
   pendingCrewListMembers,
-  // 2026-05-24 — Per-member brief participation: how many cabin
-  // members have ACTUALLY edited the shared brief (vs the
-  // technical "sections marked complete" signal below).
-  briefVoicesTotal,
-  briefVoicesReady,
-  pendingBriefVoiceMembers,
-  // Technical signal: which sections are marked completed. Still
-  // shown as a tiny footnote because the Send gate needs all
-  // sections complete, but no longer drives the headline %.
+  // 2026-06-01 — Brief 06 (readiness-display fix). Lane 2 is now
+  // brief-SECTION completion (the real Send gate). It replaced the
+  // old per-member "Brief confirmed" lane, which counted
+  // brief_confirmed_at — meaningless under the single-writer model
+  // (guests are read-only on the brief and have no Confirm button),
+  // so it sat permanently at 0/N and made this card never go green.
   briefSectionsTotal,
   briefSectionsReady,
   missingBriefSections,
@@ -96,11 +93,11 @@ export default function GroupReadiness({
       ) : (
         <>
           <p className="gr__copy">
-            The bar combines two member-level signals: who&apos;s
-            shared their crew-list line, and who&apos;s pressed
-            Confirm on their brief picks. Patricia, Bill and
-            Eleanna edit the same shared brief together — each
-            person presses Confirm once when they&apos;re done.
+            The bar tracks the two things George needs before the
+            brief can sail: every guest&apos;s crew-list line, and
+            every section of the brief filled in. When both reach
+            100%, you&apos;re ready to send — no separate confirm
+            step, and nothing for your guests to press.
           </p>
 
           <div className="gr__lanes">
@@ -136,58 +133,37 @@ export default function GroupReadiness({
               )}
             </div>
 
-            {/* Lane 2 — Brief confirmations (explicit per-member) */}
+            {/* Lane 2 — Brief sections complete (the real Send gate).
+                2026-06-01 — replaced the old "Brief confirmed (X of N)"
+                lane (per-member brief_confirmed_at), which was stuck at
+                0/N under the single-writer model. This mirrors exactly
+                what Send-to-George requires: every section marked done. */}
             <div className="gr__lane">
               <div className="gr__lane-head">
-                <strong>Brief confirmed</strong>
+                <strong>Brief sections</strong>
                 <span>
-                  {briefVoicesReady} of {briefVoicesTotal}
+                  {briefSectionsReady} of {briefSectionsTotal}
                 </span>
               </div>
-              {pendingBriefVoiceMembers && pendingBriefVoiceMembers.length > 0 && (
+              {missingBriefSections && missingBriefSections.length > 0 && (
                 <ul className="gr__lane-list">
-                  {pendingBriefVoiceMembers.slice(0, 6).map((m, i) => (
-                    <li key={`bv-${m.name}-${i}`}>
-                      {m.name}
-                      {m.role === "principal_charterer" && (
-                        <em> · you</em>
-                      )}
-                    </li>
+                  {missingBriefSections.slice(0, 6).map((k, i) => (
+                    <li key={`bs-${k}-${i}`}>{pretty(k)}</li>
                   ))}
-                  {pendingBriefVoiceMembers.length > 6 && (
+                  {missingBriefSections.length > 6 && (
                     <li>
                       <em>
-                        + {pendingBriefVoiceMembers.length - 6} more
+                        + {missingBriefSections.length - 6} more
                       </em>
                     </li>
                   )}
                 </ul>
               )}
-              {(!pendingBriefVoiceMembers || pendingBriefVoiceMembers.length === 0) && (
-                <p className="gr__lane-done">Everyone confirmed. ✓</p>
+              {(!missingBriefSections || missingBriefSections.length === 0) && (
+                <p className="gr__lane-done">All sections in. ✓</p>
               )}
             </div>
           </div>
-
-          {/* Tiny technical footnote — Send-to-George also needs
-              every section marked complete, not just members
-              having touched it. Keeps the principal informed
-              without competing for visual weight. */}
-          <p className="gr__sections-line">
-            <em>
-              Brief sections marked complete: {briefSectionsReady} of {briefSectionsTotal}
-              {missingBriefSections.length > 0 && (
-                <>
-                  {" "}— still pending:{" "}
-                  {missingBriefSections.slice(0, 4).map((k) => pretty(k)).join(", ")}
-                  {missingBriefSections.length > 4 && (
-                    <> + {missingBriefSections.length - 4} more</>
-                  )}
-                  .
-                </>
-              )}
-            </em>
-          </p>
 
           <p className="gr__nudge">
             Need to nudge someone? Open{" "}
