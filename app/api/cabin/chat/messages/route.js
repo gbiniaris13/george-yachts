@@ -61,8 +61,15 @@ export async function POST(req) {
       senderRole: "charterer",
       body: body?.body ?? "",
     });
-    // Fire-and-forget Telegram nudge to George
-    void maybeNotifyOnNewMessage({ cabinId: a.cabinId, senderRole: "charterer" });
+    // 2026-06-01 — Brief 06 cabin-closeout (S4). Was `void …` → the
+    // Telegram nudge to George was dropped on serverless freeze. AWAIT
+    // it in its OWN try/catch so a notify failure can never fail the
+    // message send (the message is already persisted above).
+    try {
+      await maybeNotifyOnNewMessage({ cabinId: a.cabinId, senderRole: "charterer" });
+    } catch (notifyErr) {
+      console.error("[cabin/chat] notify failed:", notifyErr);
+    }
     return NextResponse.json({ ok: true, message: row });
   } catch (e) {
     // Log the underlying detail server-side; expose a stable code

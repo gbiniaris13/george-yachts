@@ -129,20 +129,55 @@ export async function PUT(req) {
   // Notify George when someone (especially a newly-invited guest)
   // fills in personal details — so he can capture birthdays,
   // hometowns and names without asking again.
+  //
+  // 2026-06-01 — Brief 06 cabin-closeout (S1). This was `void notifyGeorge`
+  // (fire-and-forget). On Vercel serverless the function is FROZEN the
+  // instant the Response is sent, so this welcome-onboarding ping — the
+  // DOB / hometown / mobile / anniversary George relies on for birthday
+  // outreach — was silently dropped, with no error and no audit trail
+  // (the exact failure mode as the brief-submit delivery bug). Now AWAIT
+  // it, guard so a notify failure can NEVER fail the profile save, and
+  // write a durable WELCOME_NOTIFICATION audit row with the per-channel
+  // result so a silent miss is queryable.
   if (filledFields.length > 0) {
-    void notifyGeorge({
-      icon: "👤",
-      title: "Cabin profile updated",
-      lines: [
-        `From: ${patch.display_name || session.email}`,
-        `Email: ${session.email}`,
-        patch.date_of_birth ? `DOB: ${patch.date_of_birth}` : null,
-        patch.hometown ? `Hometown: ${patch.hometown}` : null,
-        patch.mobile ? `Mobile: ${patch.mobile}` : null,
-        patch.anniversary_date ? `Anniversary: ${patch.anniversary_date}` : null,
-      ],
-      link: cabinId ? `/dashboard/cabins/${cabinId}` : "",
-    });
+    let notifyResult = null;
+    try {
+      notifyResult = await notifyGeorge({
+        icon: "👤",
+        title: "Cabin profile updated",
+        lines: [
+          `From: ${patch.display_name || session.email}`,
+          `Email: ${session.email}`,
+          patch.date_of_birth ? `DOB: ${patch.date_of_birth}` : null,
+          patch.hometown ? `Hometown: ${patch.hometown}` : null,
+          patch.mobile ? `Mobile: ${patch.mobile}` : null,
+          patch.anniversary_date ? `Anniversary: ${patch.anniversary_date}` : null,
+        ],
+        link: cabinId ? `/dashboard/cabins/${cabinId}` : "",
+      });
+    } catch (notifyErr) {
+      console.error("[cabin/profile] notifyGeorge threw:", notifyErr);
+      notifyResult = { ok: false, error: String(notifyErr?.message || notifyErr) };
+    }
+    // Durable observability — never let an audit hiccup fail the save.
+    try {
+      await writeAudit({
+        cabinId: cabinId ?? null,
+        actorEmail: session.email,
+        actorRole: member?.role ?? "charterer",
+        action: AUDIT_ACTIONS.WELCOME_NOTIFICATION,
+        metadata: {
+          ok: Boolean(notifyResult?.ok),
+          channel: notifyResult?.channel ?? null,
+          telegram: notifyResult?.telegram ?? null,
+          email: notifyResult?.email ?? null,
+          error: notifyResult?.error ?? null,
+          fields: filledFields,
+        },
+      });
+    } catch (auditErr) {
+      console.error("[cabin/profile] welcome-notification audit failed:", auditErr);
+    }
   }
 
   return NextResponse.json({ ok: true });

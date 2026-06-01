@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  :root{
+    --cream:#F3EEE3;        /* warm ivory card stock */
+    --navy:#37444F;         /* front headline / name */
+    --gold:#B0915C;         /* tagline + accents */
+    --grey:#5C5C57;         /* credentials body */
+    --taupe:#8A6F52;        /* BACK: all text + icon circles (exact match) */
+    --taupe-dk:#5B4A37;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:#cfcabf;}
+  .stage{display:flex;gap:60px;padding:60px;justify-content:center;align-items:flex-start;
+    font-family:"Futura","Avenir Next","Helvetica Neue",Arial,sans-serif;}
+  .card{width:650px;height:1004px;background:var(--cream);position:relative;overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.28);border-radius:8px;}
+
+  .serif{font-family:"Didot","Bodoni 72",Georgia,"Times New Roman",serif;}
+  .caps{text-transform:uppercase;}
+
+  /* ===================== FRONT ===================== */
+  .front{display:flex;flex-direction:column;align-items:center;text-align:center;height:100%;
+    padding:72px 54px 60px;}
+  .front .logo{width:340px;margin-top:18px;}
+  .front .logo img{width:100%;display:block;}
+
+  .tagline{margin-top:14px;font-size:14px;letter-spacing:.28em;color:var(--gold);
+    font-style:italic;font-family:"Didot",Georgia,serif;}
+  .tagline .dot{margin:0 .35em;}
+
+  .name{margin-top:52px;font-size:27px;letter-spacing:.10em;color:var(--navy);
+    font-family:"Didot","Bodoni 72",Georgia,serif;font-weight:400;}
+
+  .rule{width:118px;height:1px;background:var(--gold);opacity:.7;margin:16px auto 18px;}
+
+  .creds{display:flex;flex-direction:column;gap:9px;color:var(--grey);}
+  .creds .role{font-size:12px;letter-spacing:.22em;color:var(--navy);}
+  .creds .ln{font-size:10.5px;letter-spacing:.18em;line-height:1.5;}
+
+  .filotimo{margin-top:auto;font-size:12.5px;letter-spacing:.2em;line-height:1.85;color:var(--grey);}
+
+  /* ===================== BACK ===================== */
+  .back{display:flex;flex-direction:column;align-items:center;text-align:center;height:100%;
+    padding:74px 56px 64px;}
+  .intro{font-size:13px;letter-spacing:.16em;line-height:1.95;color:var(--taupe);max-width:470px;}
+  .qr{width:208px;height:208px;margin:42px 0 30px;}
+  .qr img{width:100%;height:100%;display:block;}
+  .book{font-size:27px;letter-spacing:.16em;color:var(--taupe);font-weight:400;margin-bottom:34px;}
+
+  .contacts{display:flex;flex-direction:column;gap:17px;width:100%;max-width:404px;}
+  .row{display:flex;align-items:center;gap:16px;text-align:left;}
+  .ic{flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:var(--taupe);
+    display:flex;align-items:center;justify-content:center;}
+  .ic svg{width:16px;height:16px;fill:#F3EEE3;}
+  .row .v{font-size:12px;letter-spacing:.10em;color:var(--taupe);}
+  .row .sub{display:block;font-size:9px;letter-spacing:.18em;color:#A99878;text-transform:uppercase;margin-bottom:1px;}
+  .ph{color:#B89A6A;}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ===== FRONT ===== -->
+  <div class="card">
+    <div class="front">
+      <div class="logo"><img src="file:///tmp/gy-logo.svg"></div>
+      <div class="tagline serif">Exclusively<span class="dot">·</span>Greek<span class="dot">·</span>Waters</div>
+
+      <div class="name serif">GEORGE&nbsp;P.&nbsp;BINIARIS</div>
+      <div class="rule"></div>
+
+      <div class="creds">
+        <div class="role caps">FOUNDER &amp; CEO</div>
+        <div class="ln caps">BACHELOR IN SHIPPING MANAGEMENT &amp;<br>OPERATIONS LONDON METROPOLITAN<br>UNIVERSITY</div>
+        <div class="ln caps">SKIPPER LICENSE</div>
+        <div class="ln caps">OLYMPIACOS SAILING ACADEMY</div>
+        <div class="ln caps">MOTORBOAT LICENSE</div>
+      </div>
+
+      <div class="filotimo caps">IN GEORGE YACHTS WE ARE<br>SAILING WITH &ldquo; FILOTIMO &rdquo;</div>
+    </div>
+  </div>
+
+  <!-- ===== BACK ===== -->
+  <div class="card">
+    <div class="back">
+      <div class="intro caps">CONNECTING YACHT OWNERS,<br>CHARTERERS, AND BROKERS TO<br>GREECE&rsquo;S STUNNING SAILING<br>DESTINATIONS.</div>
+
+      <div class="qr"><img src="file:///tmp/gy-qr-taupe.png"></div>
+      <div class="book caps">BOOK YOUR BOAT</div>
+
+      <div class="contacts">
+        <div class="row">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"/></svg></span>
+          <div><span class="sub">Athens</span><span class="v ph">+30 &nbsp;9XX XXX XXXX</span></div>
+        </div>
+        <div class="row">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.4-5.6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.1-.2 0-.4.1-.5l.5-.6c.1-.2.1-.3 0-.5l-.7-1.7c-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.5.1-.7.3-.7.7-.9 1.7-.6 2.7a8.6 8.6 0 0 0 4.6 4.6c1.2.5 2.2.4 3-.1.4-.3.7-.7.8-1.1.1-.4.1-.7 0-.8l-.1-.1z"/></svg></span>
+          <div><span class="sub">WhatsApp &middot; Miami</span><span class="v ph">+1 &nbsp;3XX XXX XXXX</span></div>
+        </div>
+        <div class="row">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M3 5h18c.6 0 1 .4 1 1v12c0 .6-.4 1-1 1H3c-.6 0-1-.4-1-1V6c0-.6.4-1 1-1zm9 7L4.5 7h15L12 12zm0 2.3L4 8.8V18h16V8.8l-8 5.5z"/></svg></span>
+          <div><span class="v" style="letter-spacing:.06em;">INFO@GEORGEYACHTS.COM</span></div>
+        </div>
+        <div class="row">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5V9h3v10zM6.5 7.7a1.8 1.8 0 1 1 0-3.6 1.8 1.8 0 0 1 0 3.6zM19 19h-3v-5.3c0-1.3-.5-2.1-1.6-2.1-.9 0-1.4.6-1.6 1.2-.1.2-.1.5-.1.8V19h-3V9h3v1.3c.4-.6 1.1-1.5 2.8-1.5 2 0 3.5 1.3 3.5 4.2V19z"/></svg></span>
+          <div><span class="v" style="letter-spacing:.10em;">GEORGE YACHTS</span></div>
+        </div>
+        <div class="row">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm6.9 6h-3a15 15 0 0 0-1.1-3.5A8 8 0 0 1 18.9 8zM12 4c.8 1.1 1.4 2.5 1.7 4h-3.4C10.6 6.5 11.2 5.1 12 4zM4.3 14a8 8 0 0 1 0-4h3.3a17 17 0 0 0 0 4H4.3zm.8 2h3a15 15 0 0 0 1.1 3.5A8 8 0 0 1 5.1 16zm3-8h-3a8 8 0 0 1 4.1-3.5A15 15 0 0 0 8.1 8zM12 20c-.8-1.1-1.4-2.5-1.7-4h3.4c-.3 1.5-.9 2.9-1.7 4zm2.3-6H9.7a15 15 0 0 1 0-4h4.6a15 15 0 0 1 0 4zm.6 5.5c.5-1.1.9-2.3 1.1-3.5h3a8 8 0 0 1-4.1 3.5zM16.4 14a17 17 0 0 0 0-4h3.3a8 8 0 0 1 0 4h-3.3z"/></svg></span>
+          <div><span class="v" style="letter-spacing:.10em;">GEORGEYACHTS.COM</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

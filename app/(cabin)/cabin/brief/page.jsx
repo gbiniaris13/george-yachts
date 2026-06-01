@@ -10,7 +10,6 @@ import { readSessionFromCookies, pickActiveCabinId, resolveMembership } from "@/
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
 import { crewRoles, joinNouns, theyAllOrBoth } from "@/lib/cabin/format";
 import IntroParagraph from "../../../components/cabin/IntroParagraph";
-import BriefConfirmCta from "../../../components/cabin/brief/BriefConfirmCta";
 
 export const metadata = { title: "The Charter Brief" };
 
@@ -227,19 +226,12 @@ export default async function CabinBriefOverviewPage() {
   //   draft      — normal section list, no ribbon
   // The ribbon is shown only to the principal_charterer (the
   // role that actually owns the Submit button).
-  // 2026-05-24 — Fetch this member's own brief_confirmed_at so
-  // the Confirm CTA at the bottom reflects current state.
-  let myBriefConfirmedAt = null;
-  if (membership?.member_id) {
-    const meRow = await dbQuery(
-      db
-        .from("cabin_members")
-        .select("brief_confirmed_at")
-        .eq("id", membership.member_id)
-        .maybeSingle(),
-    );
-    myBriefConfirmedAt = meRow?.brief_confirmed_at || null;
-  }
+  // 2026-06-01 — Brief 06 cabin-closeout (C1). The per-member
+  // brief_confirmed_at fetch + the BriefConfirmCta it fed were removed:
+  // under the single-writer model that flag gates nothing (the Send gate
+  // is crew-list + sections complete) and the readiness bar no longer
+  // reads it, so the "I'm done — confirm the brief" button was a
+  // vestigial confirm dead-end that only confused new principals.
 
   const isSubmitted = Boolean(cabinRecord?.brief_submitted_at);
   const allDone =
@@ -388,20 +380,12 @@ export default async function CabinBriefOverviewPage() {
         })}
       </ul>
 
-      {/* 2026-05-24 — Explicit per-member confirmation CTA.
-          George friend test 4 final: "Πρέπει να υπάρχει κουμπί
-          είτε να λέει save σε κάθε χρήστη είτε confirm."
-          2026-05-26 — Brief 02 (bug-pass v3, Domingo): under the
-          single-responsibility model guests don't add anything to
-          the brief, so a per-guest "confirm my picks" prompt is
-          dead UI. Hidden for non-principals. The Send-to-George
-          gate on /cabin/brief/review remains the principal's own
-          single Confirm/Send moment. */}
-      {!isSubmitted && isPrincipal && (
-        <BriefConfirmCta
-          confirmedAt={myBriefConfirmedAt}
-        />
-      )}
+      {/* 2026-06-01 — Brief 06 cabin-closeout (C1): the per-member
+          "I'm done — confirm the brief" CTA was removed. It set a
+          brief_confirmed_at flag that nothing reads anymore (the Send
+          gate is crew-list + sections complete; readiness mirrors
+          that), so it was a vestigial confirm dead-end. The principal's
+          single Confirm/Send moment lives on /cabin/brief/review. */}
 
       <style>{`
         .cabin-brief { display: flex; flex-direction: column; gap: 36px; }

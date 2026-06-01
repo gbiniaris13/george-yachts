@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  :root{
+    --ivory:#FBF9F3;
+    --ink:#2B2B2B;
+    --muted:#6E6E6E;
+    --soft:#8A8A8A;
+    --gold-1:#9E7A2E;
+    --gold-2:#D9B65C;
+    --gold-3:#B8893B;
+    --silver-1:#3A3A3A;
+    --silver-2:#8C8C8C;
+    --silver-3:#C9C9C9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:#D9D6CE;}
+  .stage{
+    display:flex;gap:60px;padding:60px;justify-content:center;align-items:flex-start;
+    font-family:"Avenir Next","Helvetica Neue",Arial,sans-serif;
+  }
+  /* trim = 55mm x 85mm portrait -> 650 x 1004 @300dpi */
+  .card{
+    width:650px;height:1004px;background:var(--ivory);
+    position:relative;overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.30);
+    border-radius:10px;
+  }
+  /* thin gold inner frame */
+  .frame{position:absolute;inset:26px;border:1px solid rgba(184,137,59,.35);border-radius:4px;pointer-events:none;}
+
+  /* ---------- shared type ---------- */
+  .caps{font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);}
+  .serif{font-family:"Didot","Bodoni 72",Georgia,"Times New Roman",serif;}
+
+  .gold-rule{height:1px;border:0;background:linear-gradient(90deg,transparent,var(--gold-2),var(--gold-3),transparent);}
+
+  /* ---------- FRONT ---------- */
+  .front{display:flex;flex-direction:column;align-items:center;padding:70px 52px 56px;text-align:center;height:100%;}
+  .front .logo{width:430px;margin-top:24px;}
+  .front .logo img{width:100%;height:auto;display:block;}
+
+  .name{
+    margin-top:30px;
+    font-family:"Didot","Bodoni 72",Georgia,serif;
+    font-size:39px;letter-spacing:.06em;font-weight:400;
+    background:linear-gradient(180deg,#5a5a5a 0%,#2b2b2b 38%,#7d7d7d 60%,#3a3a3a 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    -webkit-text-fill-color:transparent;
+  }
+  .name-rule{width:200px;margin:18px auto 22px;}
+
+  .creds{display:flex;flex-direction:column;gap:13px;}
+  .creds .role{font-size:16px;letter-spacing:.30em;color:var(--gold-3);}
+  .creds .line{font-size:12.5px;line-height:1.55;letter-spacing:.22em;color:var(--muted);}
+
+  .filotimo{margin-top:auto;padding-top:34px;}
+  .filotimo .txt{font-size:14px;letter-spacing:.22em;line-height:1.7;color:var(--silver-1);}
+  .filotimo b{color:var(--gold-3);font-weight:600;}
+
+  /* ---------- BACK ---------- */
+  .back{display:flex;flex-direction:column;align-items:center;padding:74px 52px 60px;text-align:center;height:100%;}
+  .intro{font-size:13.5px;letter-spacing:.20em;line-height:1.85;color:var(--muted);text-transform:uppercase;max-width:480px;}
+  .qr-wrap{margin:46px 0 14px;}
+  .qr{width:230px;height:230px;background:#fff;padding:14px;border:1px solid rgba(184,137,59,.30);border-radius:6px;}
+  .qr svg,.qr img{display:block;width:100%;height:100%;}
+  .book{font-family:"Didot","Bodoni 72",Georgia,serif;font-size:30px;letter-spacing:.12em;color:var(--silver-1);margin:8px 0 30px;}
+
+  .contacts{display:flex;flex-direction:column;gap:18px;width:100%;max-width:430px;margin-top:6px;}
+  .row{display:flex;align-items:center;gap:18px;text-align:left;}
+  .ic{flex:0 0 38px;width:38px;height:38px;border-radius:50%;
+      background:linear-gradient(135deg,var(--gold-1),var(--gold-2));
+      display:flex;align-items:center;justify-content:center;}
+  .ic svg{width:18px;height:18px;fill:#fff;}
+  .row .label{font-size:13px;letter-spacing:.14em;color:var(--ink);text-transform:uppercase;}
+  .row .sub{font-size:10.5px;letter-spacing:.16em;color:var(--soft);text-transform:uppercase;display:block;margin-bottom:2px;}
+
+  .back .logo-mini{width:150px;margin-top:auto;opacity:.9;}
+  .back .logo-mini img{width:100%;display:block;}
+
+  .ph{color:#B07A3A;}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ============ FRONT ============ -->
+  <div class="card">
+    <div class="frame"></div>
+    <div class="front">
+      <div class="logo"><img src="file:///tmp/gy-logo.svg"></div>
+
+      <div class="name serif">GEORGE&nbsp;P.&nbsp;BINIARIS</div>
+      <hr class="gold-rule name-rule">
+
+      <div class="creds">
+        <div class="role">FOUNDER &amp; CEO</div>
+        <div class="line">BACHELOR IN SHIPPING MANAGEMENT &amp; OPERATIONS<br>LONDON METROPOLITAN UNIVERSITY</div>
+        <div class="line">SKIPPER LICENSE</div>
+        <div class="line">OLYMPIACOS SAILING ACADEMY</div>
+        <div class="line">MOTORBOAT LICENSE</div>
+      </div>
+
+      <div class="filotimo">
+        <div class="txt">IN GEORGE YACHTS WE ARE<br>SAILING WITH &ldquo;<b>FILOTIMO</b>&rdquo;</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BACK ============ -->
+  <div class="card">
+    <div class="frame"></div>
+    <div class="back">
+      <div class="intro">Connecting yacht owners, charterers, and brokers to Greece&rsquo;s most stunning sailing destinations.</div>
+
+      <div class="qr-wrap">
+        <div class="qr"><img src="file:///tmp/gy-qr.png" alt="QR georgeyachts.com"></div>
+      </div>
+      <div class="book">BOOK YOUR BOAT</div>
+
+      <div class="contacts">
+        <div class="row">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"/></svg></span>
+          <div><span class="sub">Athens</span><span class="label ph">+30 &nbsp;9XX XXX XXXX</span></div>
+        </div>
+        <div class="row">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.4-5.6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.1-.2 0-.4.1-.5l.5-.6c.1-.2.1-.3 0-.5l-.7-1.7c-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.5.1-.7.3-.7.7-.9 1.7-.6 2.7a8.6 8.6 0 0 0 4.6 4.6c1.2.5 2.2.4 3-.1.4-.3.7-.7.8-1.1.1-.4.1-.7 0-.8l-.1-.1z"/></svg></span>
+          <div><span class="sub">WhatsApp &middot; Miami</span><span class="label ph">+1 &nbsp;3XX XXX XXXX</span></div>
+        </div>
+        <div class="row">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M3 5h18c.6 0 1 .4 1 1v12c0 .6-.4 1-1 1H3c-.6 0-1-.4-1-1V6c0-.6.4-1 1-1zm9 7L4.5 7h15L12 12zm0 2.3L4 8.8V18h16V8.8l-8 5.5z"/></svg></span>
+          <div><span class="label" style="text-transform:none;letter-spacing:.08em;">george@georgeyachts.com</span></div>
+        </div>
+        <div class="row">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm6.9 6h-3a15 15 0 0 0-1.1-3.5A8 8 0 0 1 18.9 8zM12 4c.8 1.1 1.4 2.5 1.7 4h-3.4C10.6 6.5 11.2 5.1 12 4zM4.3 14a8 8 0 0 1 0-4h3.3a17 17 0 0 0 0 4H4.3zm.8 2h3a15 15 0 0 0 1.1 3.5A8 8 0 0 1 5.1 16zm3-8h-3a8 8 0 0 1 4.1-3.5A15 15 0 0 0 8.1 8zM12 20c-.8-1.1-1.4-2.5-1.7-4h3.4c-.3 1.5-.9 2.9-1.7 4zm2.3-6H9.7a15 15 0 0 1 0-4h4.6a15 15 0 0 1 0 4zm.6 5.5c.5-1.1.9-2.3 1.1-3.5h3a8 8 0 0 1-4.1 3.5zM16.4 14a17 17 0 0 0 0-4h3.3a8 8 0 0 1 0 4h-3.3z"/></svg></span>
+          <div><span class="label" style="text-transform:none;letter-spacing:.08em;">www.georgeyachts.com</span></div>
+        </div>
+      </div>
+
+      <div class="logo-mini"><img src="file:///tmp/gy-logo.svg"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// deterministic QR-style placeholder (finder patterns + pseudo modules)
+(function(){
+  const N=29, svg=document.getElementById('qr');
+  function rect(x,y,w,h,fill){const r=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    r.setAttribute('x',x);r.setAttribute('y',y);r.setAttribute('width',w);r.setAttribute('height',h);r.setAttribute('fill',fill);svg.appendChild(r);}
+  rect(0,0,N,N,'#fff');
+  // pseudo-random modules
+  let s=12345; const rnd=()=>{s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff;};
+  function inFinder(x,y){const f=(x<8&&y<8)||(x>N-9&&y<8)||(x<8&&y>N-9);return f;}
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){if(inFinder(x,y))continue;if(rnd()>0.52)rect(x,y,1,1,'#1c1c1c');}
+  function finder(ox,oy){rect(ox,oy,7,7,'#1c1c1c');rect(ox+1,oy+1,5,5,'#fff');rect(ox+2,oy+2,3,3,'#1c1c1c');}
+  finder(0,0);finder(N-7,0);finder(0,N-7);
+})();
+</script>
+</body>
+</html>
