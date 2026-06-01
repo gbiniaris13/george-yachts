@@ -49,6 +49,13 @@ export async function POST(req) {
   const body = await req.json().catch(() => null);
   const cabinId = body?.cabin_id;
   const adminEmail = body?.admin_email || null;
+  // 2026-05-27 — Brief 06 (#3): optional "preview as guest". When
+  // as_member_id is supplied the preview session "is" THAT member
+  // (any role) instead of the principal, so the operator can see
+  // exactly what a given guest sees — the read-only brief, their
+  // own Crew List, the guest done-state. Omitted → unchanged
+  // behaviour: preview as the principal charterer (back-compat).
+  const asMemberId = body?.as_member_id || null;
   if (!cabinId) {
     return NextResponse.json(
       { ok: false, error: "cabin_id-required" },
@@ -56,40 +63,60 @@ export async function POST(req) {
     );
   }
 
-  // Look up the principal charterer. The preview session "is"
-  // that person — same memberships, same role resolution, same
-  // viewer-display-name. That guarantees the admin sees exactly
-  // what the principal will see (e.g. their own first name in
-  // the header chip, the correct guest list, the same banner
-  // toggles).
+  // Resolve the member the preview session "is". The session
+  // mirrors that person — same memberships, role resolution, and
+  // viewer-display-name — so the admin sees exactly what they see.
   const db = getCabinDb();
-  const principal = await dbQuery(
-    db
-      .from("cabin_members")
-      .select("id, email, role, display_name, assists_member_id, cabin_id")
-      .eq("cabin_id", cabinId)
-      .eq("role", "principal_charterer")
-      .is("deleted_at", null)
-      .maybeSingle(),
-  );
-
-  if (!principal) {
-    return NextResponse.json(
-      { ok: false, error: "no-principal-found" },
-      { status: 404 },
+  const memberSelect =
+    "id, email, role, display_name, assists_member_id, cabin_id";
+  let target;
+  if (asMemberId) {
+    // Preview-as-guest: look the member up by id, SCOPED to this
+    // cabin so a stray id from another cabin can't be targeted.
+    target = await dbQuery(
+      db
+        .from("cabin_members")
+        .select(memberSelect)
+        .eq("cabin_id", cabinId)
+        .eq("id", asMemberId)
+        .is("deleted_at", null)
+        .maybeSingle(),
     );
+    if (!target) {
+      return NextResponse.json(
+        { ok: false, error: "member-not-found" },
+        { status: 404 },
+      );
+    }
+  } else {
+    // Default (original behaviour): the principal charterer.
+    target = await dbQuery(
+      db
+        .from("cabin_members")
+        .select(memberSelect)
+        .eq("cabin_id", cabinId)
+        .eq("role", "principal_charterer")
+        .is("deleted_at", null)
+        .maybeSingle(),
+    );
+    if (!target) {
+      return NextResponse.json(
+        { ok: false, error: "no-principal-found" },
+        { status: 404 },
+      );
+    }
   }
 
   // The session blob expects "memberships" — one entry, pinned
   // to this cabin so pickActiveCabinId resolves correctly.
   const { token, ttl_seconds } = await createPreviewSession({
-    email: principal.email,
+    email: target.email,
     memberships: [
       {
-        cabin_id: principal.cabin_id,
-        role: principal.role,
-        id: principal.id,
-        assists_member_id: principal.assists_member_id,
+        cabin_id: target.cabin_id,
+        role: target.role,
+        id: target.id,
+        assists_member_id: target.assists_member_id,
       },
     ],
     activeCabinId: cabinId,
@@ -105,7 +132,9 @@ export async function POST(req) {
       actorRole: "admin",
       action: "admin_preview_session_created",
       metadata: {
-        preview_target_email: principal.email,
+        preview_target_email: target.email,
+        preview_target_role: target.role,
+        preview_target_member_id: target.id,
         ttl_seconds,
       },
     });
