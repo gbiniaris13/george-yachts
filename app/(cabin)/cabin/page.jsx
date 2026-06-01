@@ -324,24 +324,28 @@ export default async function CabinHomePage() {
   const crewListPercent = crewListTotal === 0
     ? 100
     : Math.round((crewListReady / crewListTotal) * 100);
-  const briefVoicesPercent = briefVoicesTotal === 0
+  // 2026-06-01 — Brief 06 (readiness-display fix). The home-page
+  // bar used to average crew-list% with brief-CONFIRMATION% (how
+  // many members had pressed Confirm). But under the single-writer
+  // model (Brief 02 + Brief 06 #1/#2) guests are read-only on the
+  // brief and have NO Confirm button — so brief-confirmation% is
+  // structurally stuck at 0/N and dragged the bar to a permanent
+  // ~50% even when the brief was fully sendable. It also flipped
+  // groupFullyReady to never-green, which pushed the principal
+  // toward a phantom "confirm your brief" dead-end (the same trap
+  // Caroline hit). The actual Send gate only needs (1) every crew
+  // list complete and (2) every brief section complete — so the
+  // bar + ready flag now mirror EXACTLY those two real gates.
+  const briefSectionsPercent = briefSectionsTotal === 0
     ? 100
-    : Math.round((briefVoicesReady / briefVoicesTotal) * 100);
-  // 50/50 weighted average of the two member-level metrics.
-  // This is what the home-page readiness bar shows George — it
-  // honestly reflects "how many of your group have participated
-  // so far", not the technical "are sections marked complete".
+    : Math.round((briefSectionsReady / briefSectionsTotal) * 100);
   const groupReadinessPercent = Math.round(
-    (crewListPercent + briefVoicesPercent) / 2,
+    (crewListPercent + briefSectionsPercent) / 2,
   );
-  // Send-to-George gate: every member confirmed crew list AND
-  // every member confirmed brief AND every section technically
-  // complete. Three signals; all must be green.
   const briefSectionsAllComplete =
     REQUIRED_BRIEF_SECTIONS.every((k) => completedBriefKeys.has(k));
   const groupFullyReady =
     crewListPercent === 100 &&
-    briefVoicesPercent === 100 &&
     briefSectionsAllComplete;
   const briefSubmittedAt = cabin.brief_submitted_at || null;
 
