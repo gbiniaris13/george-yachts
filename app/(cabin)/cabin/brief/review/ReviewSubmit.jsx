@@ -437,7 +437,12 @@ export default function ReviewSubmit({
         .cbr-modal {
           position: fixed;
           inset: 0;
-          z-index: 80;
+          /* 2026-06-02 — was z-index:80, which sat BELOW the page-content
+             wrapper (z:100) and every cabin FAB (z:9997-9999) + third-party
+             overlays. The modal mounted into <body> but painted UNDERNEATH
+             them, so "Send to George" opened an invisible dialog and the
+             submit could never be reached. Lift it to the top of the stack. */
+          z-index: 2147483647;
           background: rgba(13, 27, 42, 0.55);
           display: flex;
           align-items: center;
