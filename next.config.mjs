@@ -260,25 +260,24 @@ const nextConfig = {
         destination: "/yacht-charter-skiathos",
         permanent: true,
       },
-      // 2026-05-04 link audit fix — 3 broken outgoing links inside
-      // blog/airport-hell-2026 pointed at posts that exist as drafts
+      // 2026-05-04 link audit fix — broken outgoing links inside
+      // blog/airport-hell-2026 pointed at posts that existed as drafts
       // in Sanity but were never published. Send the ghost URLs to
       // /blog so visitors land somewhere coherent, and so the audit
       // stops flagging the parent post as broken. Marked
       // `permanent: false` (307) so we can publish the real posts at
       // these slugs later without a stuck redirect.
+      //
+      // 2026-06-04 — oil-spike-smart-money-yacht-charter-greece and
+      // dubai-exodus-yacht-charter-greece-2026 have now been published
+      // in Sanity at these exact slugs, so their 307s were shadowing
+      // live articles (every request bounced to /blog). Both entries
+      // removed here AND from sitemap.js RETIRED_SLUGS — they now
+      // resolve 200 and re-enter the sitemap. last-cabin-standing
+      // stays retired: it is an expired "March 2026 final chance"
+      // urgency post.
       {
         source: "/blog/last-cabin-standing-book-crewed-yacht-greece-summer-2026",
-        destination: "/blog",
-        permanent: false,
-      },
-      {
-        source: "/blog/oil-spike-smart-money-yacht-charter-greece",
-        destination: "/blog",
-        permanent: false,
-      },
-      {
-        source: "/blog/dubai-exodus-yacht-charter-greece-2026",
         destination: "/blog",
         permanent: false,
       },
