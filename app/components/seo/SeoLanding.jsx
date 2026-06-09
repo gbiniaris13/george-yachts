@@ -100,7 +100,7 @@ function ServiceJsonLd({ pageData, yachts }) {
     description: pageData.whyBody.slice(0, 280),
     provider: {
       "@type": "Organization",
-      "@id": "https://georgeyachts.com#organization",
+      "@id": "https://georgeyachts.com/#organization",
       name: "George Yachts Brokerage House LLC",
       url: "https://georgeyachts.com",
     },

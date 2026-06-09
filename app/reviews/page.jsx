@@ -23,7 +23,7 @@ function ReviewJsonLd({ reviews, aggregate }) {
   const json = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://georgeyachts.com#organization",
+    "@id": "https://georgeyachts.com/#organization",
     name: "George Yachts Brokerage House",
     ...(aggregate ? {
       aggregateRating: {

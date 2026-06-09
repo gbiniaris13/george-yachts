@@ -29,7 +29,7 @@ function ArticleAndTouristTripJsonLd({ data }) {
     },
     publisher: {
       "@type": "Organization",
-      "@id": "https://georgeyachts.com#organization",
+      "@id": "https://georgeyachts.com/#organization",
       name: "George Yachts Brokerage House LLC",
       url: "https://georgeyachts.com",
     },
@@ -60,7 +60,7 @@ function ArticleAndTouristTripJsonLd({ data }) {
       offerCount: data.yachtRecs?.length || 1,
       seller: {
         "@type": "Organization",
-        "@id": "https://georgeyachts.com#organization",
+        "@id": "https://georgeyachts.com/#organization",
         name: "George Yachts Brokerage House",
       },
     },

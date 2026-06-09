@@ -19,7 +19,7 @@ This doc walks through both.
 
 `lib/organizationSchema.js` already declares:
 - `@type: ["Organization", "LocalBusiness", "TravelAgency"]`
-- Real Athens address: Charilaou Trikoupi 190A, Nea Kifisia 14564
+- Real Athens address: Charilaou Trikoupi 190A, Kifisia 14564
 - `geo` with lat/lng (approx 38.0833 N, 23.8167 E)
 - `openingHoursSpecification` (Mon-Sun 09:00-21:00)
 - `hasMap` Google Maps deep link
@@ -37,7 +37,7 @@ crawler already sees this data.
    - Primary: Yacht Broker
    - Secondary: Travel Agency
    - Secondary: Boat Charter Service
-5. Address: Charilaou Trikoupi 190A, Nea Kifisia 14564, Attica, Greece
+5. Address: Charilaou Trikoupi 190A, Kifisia 14564, Attica, Greece
    - Important: confirm exact address matches organizationSchema.js
 6. Service area: Greece (and any specific countries you serve)
 7. Phone: +30 6970380999

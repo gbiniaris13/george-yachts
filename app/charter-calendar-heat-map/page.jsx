@@ -38,7 +38,7 @@ function CalendarJsonLd() {
     offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
     publisher: {
       "@type": "Organization",
-      "@id": "https://georgeyachts.com#organization",
+      "@id": "https://georgeyachts.com/#organization",
       name: "George Yachts Brokerage House LLC",
     },
   };

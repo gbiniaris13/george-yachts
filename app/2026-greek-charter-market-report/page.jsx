@@ -49,7 +49,7 @@ function ArticleJsonLd() {
     },
     publisher: {
       "@type": "Organization",
-      "@id": "https://georgeyachts.com#organization",
+      "@id": "https://georgeyachts.com/#organization",
       name: "George Yachts Brokerage House LLC",
       url: "https://georgeyachts.com",
     },

@@ -6,7 +6,7 @@
 //     Googlebot + no-JS visitors saw "0+ Curated Yachts / 100% Client
 //     Satisfaction", a catastrophic first-impression for UHNW.
 //   • Hardcode target values in JSX so SSR HTML literally contains
-//     "66+", "4", "360°".
+//     "63+", "4", "360°".
 //   • Reduce 4 → 3 stats (drop "100% Client Satisfaction" — we cannot
 //     back the claim until real client testimonials land).
 //   • Rename "Greek Regions" → "Greek Waters" (more accurate +
