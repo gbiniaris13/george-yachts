@@ -18,6 +18,8 @@ import { ISLANDS, getIslandBySlug } from "@/lib/islands";
 import { sanityCardImg, sanityHeroImg } from "@/lib/sanity-image";
 import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import LastUpdated from "@/app/components/seo/LastUpdated";
+import { LAST_REFRESH } from "@/lib/contentFreshness";
 import IslandPageTracker from "./IslandPageTracker";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import QuizCtaCard from "@/app/components/QuizCtaCard";
@@ -214,6 +216,7 @@ export default async function IslandPage({ params }) {
             >
               {island.tagline}
             </p>
+            <LastUpdated date={LAST_REFRESH.ISLANDS} />
           </div>
         </header>
 

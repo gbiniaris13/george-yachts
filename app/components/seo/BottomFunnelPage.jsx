@@ -7,6 +7,7 @@ import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import InlineCalendlySection from "@/app/components/InlineCalendlySection";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
+import LastUpdated from "@/app/components/seo/LastUpdated";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -156,6 +157,7 @@ export default function BottomFunnelPage({ pageData }) {
             >
               {d.tagline}
             </p>
+            <LastUpdated date={LAST_REFRESH.BOTTOM_FUNNEL} />
           </div>
         </header>
 

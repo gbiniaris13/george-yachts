@@ -6,6 +6,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import InlineCalendlySection from "@/app/components/InlineCalendlySection";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
+import LastUpdated from "@/app/components/seo/LastUpdated";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -104,6 +105,7 @@ export default function BestYachtsPage({ pageData }) {
             <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(16px, 2vw, 19px)", fontStyle: "italic", fontWeight: 300, color: "rgba(248,245,240,0.78)", margin: 0, lineHeight: 1.55 }}>
               {d.tagline}
             </p>
+            <LastUpdated date={LAST_REFRESH.BEST_YACHTS} />
           </div>
         </header>
 
