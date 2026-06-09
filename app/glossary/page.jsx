@@ -14,6 +14,7 @@
 import Link from "next/link";
 import { GLOSSARY_TERMS, GLOSSARY_CATEGORIES } from "@/lib/glossarySeo";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import { LAST_REFRESH } from "@/lib/contentFreshness";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -50,6 +51,7 @@ function DefinedTermSetJsonLd() {
     description:
       "The definitive UHNW yacht charter glossary. 30 terms covering pricing, contracts, yacht types, operations, crew, and specifications. Maintained by George P. Biniaris, George Yachts Brokerage House.",
     url: "https://georgeyachts.com/glossary",
+    dateModified: LAST_REFRESH.GLOSSARY,
     publisher: {
       "@type": "Organization",
       "@id": "https://georgeyachts.com/#organization",

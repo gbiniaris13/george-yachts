@@ -14,6 +14,7 @@
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import { LAST_REFRESH } from "@/lib/contentFreshness";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -32,7 +33,7 @@ function CollectionAndArticleJsonLd({ data }) {
     description: data.intro.slice(0, 280),
     url: `https://georgeyachts.com${data.urlPath}`,
     datePublished: "2026-05-12",
-    dateModified: "2026-05-12",
+    dateModified: LAST_REFRESH.ANCHORAGES,
     author: {
       "@type": "Person",
       "@id": "https://georgeyachts.com/about/george-p-biniaris#person",

@@ -6,6 +6,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import InlineCalendlySection from "@/app/components/InlineCalendlySection";
 import { relatedFor } from "@/lib/seoInternalLinks";
+import { LAST_REFRESH } from "@/lib/contentFreshness";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -20,7 +21,7 @@ function ArticleAndTouristTripJsonLd({ data }) {
     description: data.quickAnswerA,
     url: `https://georgeyachts.com${data.urlPath}`,
     datePublished: "2026-05-12",
-    dateModified: "2026-05-12",
+    dateModified: LAST_REFRESH.BOTTOM_FUNNEL,
     author: {
       "@type": "Person",
       "@id": "https://georgeyachts.com/about/george-p-biniaris#person",

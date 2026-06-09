@@ -17,6 +17,7 @@ import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { getGlossaryTermBySlug } from "@/lib/glossarySeo";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import { LAST_REFRESH } from "@/lib/contentFreshness";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -38,6 +39,7 @@ function DefinedTermJsonLd({ term }) {
       "@id": "https://georgeyachts.com/glossary#set",
       name: "George Yachts Yacht Charter Glossary",
       url: "https://georgeyachts.com/glossary",
+      dateModified: LAST_REFRESH.GLOSSARY,
     },
     url: `https://georgeyachts.com/glossary/${term.slug}`,
   };

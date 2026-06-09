@@ -11,6 +11,7 @@ import { relatedFor } from "@/lib/seoInternalLinks";
 import InlineCalendlySection from "@/app/components/InlineCalendlySection";
 import QuizCtaCard from "@/app/components/QuizCtaCard";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import { LAST_REFRESH } from "@/lib/contentFreshness";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -48,7 +49,7 @@ function ArticleJsonLd({ data }) {
     description: data.shortAnswer,
     url: `https://georgeyachts.com${data.urlPath}`,
     datePublished: "2026-05-12",
-    dateModified: "2026-05-12",
+    dateModified: LAST_REFRESH.DEST_COMPARISONS,
     author: {
       "@type": "Person",
       "@id": "https://georgeyachts.com/team/george-biniaris#person",

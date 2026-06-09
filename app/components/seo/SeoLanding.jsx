@@ -42,6 +42,7 @@ import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import { SITE_UPDATED } from "@/lib/contentFreshness";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -66,6 +67,7 @@ function FaqJsonLd({ faq }) {
   const json = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    dateModified: SITE_UPDATED,
     mainEntity: faq.map((f) => ({
       "@type": "Question",
       name: f.q,
