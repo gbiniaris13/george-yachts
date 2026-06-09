@@ -241,8 +241,31 @@ const ArticlePage = async ({ params }) => {
     })),
   } : null;
 
-  // Auto-link keywords (Cyclades, APA, MYBA, etc.) to internal pages
-  const enhancedBody = autoLinkPortableText(post.body);
+  // Stage 2 (Extra IA) - auto-link yacht NAMES in the body to their detail
+  // pages, sourced live from Sanity so the map never goes stale. Clean name
+  // (type prefix stripped) >= 5 chars only - the same substring threshold the
+  // engine already uses for island/term names, so no new false-match risk.
+  let yachtTerms = [];
+  try {
+    const fleet = await sanityClient.fetch(
+      `*[_type == "yacht" && defined(slug.current)]{ name, "slug": slug.current }`
+    );
+    const seen = new Set();
+    for (const y of fleet || []) {
+      const clean = (y.name || "")
+        .replace(/^(M\/Y|S\/Y|S\/CAT|P\/CAT|M\/S|M\/C|S\/C|M\/V)\s+/i, "")
+        .trim();
+      if (clean.length >= 5 && !seen.has(clean)) {
+        seen.add(clean);
+        yachtTerms.push([clean, `/yachts/${y.slug}`]);
+      }
+    }
+  } catch {
+    yachtTerms = [];
+  }
+
+  // Auto-link keywords (Cyclades, APA, MYBA, etc.) + yacht names to internal pages
+  const enhancedBody = autoLinkPortableText(post.body, yachtTerms);
 
   const date = new Date(post.publishedAt).toLocaleDateString("en-US", {
     month: "long",
