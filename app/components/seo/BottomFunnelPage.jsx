@@ -71,6 +71,10 @@ function ArticleAndTouristTripJsonLd({ data }) {
   const faqPage = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: [".gy-qa-text"],
+    },
     mainEntity: [
       {
         "@type": "Question",

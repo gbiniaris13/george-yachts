@@ -25,6 +25,10 @@ function FaqJsonLd({ faq }) {
   const json = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: [".gy-qa-text"],
+    },
     mainEntity: faq.map((f) => ({
       "@type": "Question",
       name: f.q,
@@ -53,7 +57,7 @@ function ArticleJsonLd({ data }) {
     dateModified: LAST_REFRESH.DEST_COMPARISONS,
     author: {
       "@type": "Person",
-      "@id": "https://georgeyachts.com/team/george-biniaris#person",
+      "@id": "https://georgeyachts.com/about/george-p-biniaris#person",
       name: "George P. Biniaris",
       url: "https://georgeyachts.com/team/george-biniaris",
     },

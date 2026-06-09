@@ -119,6 +119,13 @@ function FaqJsonLd({ island }) {
   const json = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    // Task 8 - cheap voice-answer hedge. The front-loaded QuickAnswerBlock
+    // renders with .gy-qa-text; flag it speakable so AI voice agents lift
+    // the curated answer. (Google support is experimental; near-zero cost.)
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: [".gy-qa-text"],
+    },
     mainEntity: island.faq.map((f) => ({
       "@type": "Question",
       name: f.q,
@@ -131,6 +138,64 @@ function FaqJsonLd({ island }) {
       dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
     />
   );
+}
+
+// Task 4 - TouristTrip per sample itinerary (day-by-day route), with the
+// itinerary as an ItemList and the yacht's Offer nested. Lets AI engines
+// cite a concrete "[island] 7-day route" and Google read a travel itinerary.
+function TouristTripJsonLd({ island, itineraries }) {
+  const trips = (itineraries || [])
+    .filter((it) => it.sampleItinerary?.days?.length)
+    .map((it, idx) => {
+      const url = `https://georgeyachts.com/yacht-charter-${island.slug}`;
+      const days = it.sampleItinerary.days;
+      return {
+        "@context": "https://schema.org",
+        "@type": "TouristTrip",
+        "@id": `${url}#trip-${it.slug || idx}`,
+        name: `${island.name} sample yacht charter itinerary aboard ${it.name}`,
+        description:
+          `A sample crewed yacht charter itinerary around ${island.name}, ` +
+          `${island.region}, Greece` +
+          (it.sampleItinerary.totalDistance ? ` (${it.sampleItinerary.totalDistance}).` : "."),
+        touristType: ["UHNW families", "Couples", "Luxury travellers"],
+        itinerary: {
+          "@type": "ItemList",
+          numberOfItems: days.length,
+          itemListElement: days.map((d, i) => ({
+            "@type": "ListItem",
+            position: d.day || i + 1,
+            item: {
+              "@type": "TouristAttraction",
+              name: d.to || d.from || `Day ${d.day || i + 1}`,
+              description:
+                d.narrative ||
+                `${d.from || ""}${d.to ? ` to ${d.to}` : ""}${d.distance ? ` (${d.distance})` : ""}`.trim(),
+            },
+          })),
+        },
+        offers: {
+          "@type": "Offer",
+          "@id": `https://georgeyachts.com/yachts/${it.slug}#offer`,
+          url: `https://georgeyachts.com/yachts/${it.slug}`,
+          priceCurrency: "EUR",
+          availability: "https://schema.org/InStock",
+          seller: {
+            "@type": "Organization",
+            "@id": "https://georgeyachts.com/#organization",
+            name: "George Yachts Brokerage House",
+          },
+        },
+      };
+    });
+  if (!trips.length) return null;
+  return trips.map((t) => (
+    <script
+      key={t["@id"]}
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(t) }}
+    />
+  ));
 }
 
 export default async function IslandPage({ params }) {
@@ -156,6 +221,7 @@ export default async function IslandPage({ params }) {
     <>
       <PlaceJsonLd island={island} />
       <FaqJsonLd island={island} />
+      <TouristTripJsonLd island={island} itineraries={itineraries} />
       <BreadcrumbSchema items={breadcrumbs} />
       <IslandPageTracker slug={island.slug} name={island.name} />
 

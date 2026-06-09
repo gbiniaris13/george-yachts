@@ -63,6 +63,7 @@ export default function QuickAnswerBlock({ question, answer, attribution = true 
       </p>
       <p
         itemProp="description"
+        className="gy-qa-text"
         style={{
           fontFamily: "var(--gy-font-editorial)",
           fontSize: "clamp(17px, 2.1vw, 20px)",
@@ -97,7 +98,7 @@ export default function QuickAnswerBlock({ question, answer, attribution = true 
           >
             George P. Biniaris
           </Link>
-          , Managing Broker
+          , Founder and Managing Broker
         </p>
       )}
     </aside>

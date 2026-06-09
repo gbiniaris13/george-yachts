@@ -57,6 +57,10 @@ function FaqJsonLd({ faq }) {
   const json = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: [".gy-qa-text"],
+    },
     mainEntity: faq.map((f) => ({
       "@type": "Question",
       name: f.q,
