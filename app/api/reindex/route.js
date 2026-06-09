@@ -212,6 +212,8 @@ function getRevalidationPaths(type, slug) {
     paths.push(`/yacht-itineraries-greece/${slug}`, "/yacht-itineraries-greece");
   } else if (type === "teamMember") {
     paths.push(`/team/${slug}`, "/team");
+  } else if (type === "dataReport") {
+    paths.push("/greek-charter-index-2026", "/sitemap.xml", "/llms.txt");
   }
 
   return paths;
@@ -237,6 +239,8 @@ function buildUrl(type, slug) {
     // sends destination docs they'll just no-op (path = null)
     itinerary: `/yacht-itineraries-greece/${slug}`,
     teamMember: `/team/${slug}`,
+    // Stage 2 (Task 6) - fixed route for the current edition; ignores slug.
+    dataReport: `/greek-charter-index-2026`,
   };
 
   const path = routes[type];

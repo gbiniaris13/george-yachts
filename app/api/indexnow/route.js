@@ -130,6 +130,12 @@ export async function POST(request) {
     urls.push(`https://${HOST}/private-fleet`);
     urls.push(`https://${HOST}/explorer-fleet`);
     urls.push(`https://${HOST}/sitemap.xml`);
+  } else if (type === "dataReport") {
+    // Stage 2 (Task 6) - the Greek Charter Index page (fixed route) renders
+    // the published data report. Ping it + the AI manifest on publish.
+    urls.push(`https://${HOST}/greek-charter-index-2026`);
+    urls.push(`https://${HOST}/llms.txt`);
+    urls.push(`https://${HOST}/sitemap.xml`);
   } else {
     return NextResponse.json(
       { ok: false, error: "unknown-type-or-missing-slug", payload },

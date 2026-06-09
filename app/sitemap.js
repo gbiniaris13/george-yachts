@@ -212,6 +212,26 @@ export default async function sitemap() {
     console.error("Sitemap: failed to fetch blog posts", error);
   }
 
+  // Stage 2 (Task 6) - include the Greek Charter Index page ONLY once a real
+  // dataReport is published in Sanity. While it is a draft the page is
+  // noindex, so keeping it out of the sitemap is the correct signal.
+  let dataReportEntries = [];
+  try {
+    const report = await sanityClient.fetch(
+      `*[_type == "dataReport" && slug.current == "greek-charter-index-2026"][0]{ dataModified, publishedAt }`
+    );
+    if (report) {
+      dataReportEntries = [{
+        url: `${BASE_URL}/greek-charter-index-2026`,
+        lastModified: report.dataModified || report.publishedAt || LAST_REFRESH.HUBS,
+        changeFrequency: "monthly",
+        priority: 0.9,
+      }];
+    }
+  } catch (error) {
+    console.error("Sitemap: failed to fetch dataReport", error);
+  }
+
   // F.4 (Roberto brief) — topic-cluster landing pages.
   const journalClusterEntries = JOURNAL_CLUSTERS.map((c) => ({
     url: `${BASE_URL}/journal/${c.slug}`,
@@ -406,6 +426,7 @@ export default async function sitemap() {
 
   return [
     ...staticEntries,
+    ...dataReportEntries,
     ...journalClusterEntries,
     ...islandEntries,
     ...yachtTypeEntries,
