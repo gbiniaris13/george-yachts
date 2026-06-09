@@ -8,6 +8,7 @@ import BriefGeorgeBanner from "@/app/components/BriefGeorgeBanner";
 // for the background, and no other Image instances live in this file.
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import BrowseSeoCategories from "@/app/components/seo/BrowseSeoCategories";
+import { extractPriceRange } from "@/lib/pricing";
 import "./fleet-page.css";
 
 // ISR - revalidate every hour
@@ -100,11 +101,14 @@ function generateFleetSchema(yachts) {
 // matches what's on the page; falls back to the published spread
 // when fleet fetch fails.
 function generateServiceSchema(yachts) {
-  const prices = yachts
-    .map((y) => y.weeklyRatePrice)
-    .filter((p) => typeof p === "number" && p > 0);
-  const low = prices.length ? Math.min(...prices) : 10000;
-  const high = prices.length ? Math.max(...prices) : 235000;
+  // weeklyRatePrice is free-text (e.g. "€56,000 - €79,000 | plus VAT &
+  // APA"), NOT a number - parse it so the AggregateOffer reflects the real
+  // fleet spread instead of always falling back to 10000/235000.
+  const ranges = yachts
+    .map((y) => extractPriceRange(y.weeklyRatePrice))
+    .filter((r) => r.low);
+  const low = ranges.length ? Math.min(...ranges.map((r) => r.low)) : 10000;
+  const high = ranges.length ? Math.max(...ranges.map((r) => r.high)) : 235000;
   return {
     "@context": "https://schema.org",
     "@type": "Service",

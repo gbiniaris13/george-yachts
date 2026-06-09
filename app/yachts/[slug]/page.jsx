@@ -4,6 +4,7 @@ import YachtPageContent from './YachtPageContent';
 import BreadcrumbSchema from '@/app/components/BreadcrumbSchema';
 import SimilarYachts from './SimilarYachts';
 import { similarYachts } from '@/lib/yacht-similarity';
+import { extractPriceRange } from '@/lib/pricing';
 import './yacht-page.css';
 
 // ISR - revalidate every hour
@@ -75,19 +76,9 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// Extract the lowest numeric EUR value from a free-text price string
-// like "From €150,000/week" or "€150,000 — €220,000" → 150000. Used to
-// populate schema.org Offer.price so Google can render rich results
-// with a starting price. Returns null when no number is parseable.
-function extractLowPrice(raw) {
-  if (!raw || typeof raw !== 'string') return null;
-  const matches = raw.match(/[\d][\d.,]*/g);
-  if (!matches) return null;
-  const nums = matches
-    .map(m => Number(m.replace(/[.,]/g, '')))
-    .filter(n => Number.isFinite(n) && n >= 1000);
-  return nums.length ? Math.min(...nums) : null;
-}
+// Price parsing (low + high) lives in lib/pricing.js extractPriceRange so
+// the per-yacht Offer here and the /charter-yacht-greece AggregateOffer
+// parse the free-text weekly rate identically. Imported above.
 
 // =============================================================
 // Yacht schema — marine-specific (Product + Vehicle + Boat).
@@ -225,7 +216,8 @@ function YachtSchema({ yacht, imageUrl, slug }) {
     // keeps rendering the existing rich-result price badge. seller
     // and @id still ref the canonical Organization.
     offers: (() => {
-      const low = extractLowPrice(yacht.weeklyRatePrice);
+      const { low, high } = extractPriceRange(yacht.weeklyRatePrice);
+      const perPerson = yacht.priceModel === 'per_person_week';
       const base = {
         '@type': 'Offer',
         '@id': `https://georgeyachts.com/yachts/${slug}#offer`,
@@ -243,22 +235,39 @@ function YachtSchema({ yacht, imageUrl, slug }) {
           url: 'https://georgeyachts.com',
         },
       };
+      // Graceful: only attach price data when a real number parsed from
+      // the free-text weekly rate. "Price on request" yachts emit a valid
+      // Offer (availability + seller) with NO fabricated price.
       if (low) {
         base.price = String(low);
         base.priceSpecification = {
           '@type': 'UnitPriceSpecification',
           price: String(low),
           priceCurrency: 'EUR',
-          unitText: 'week',
+          // priceModel-aware: whole-yacht vs per-guest weekly rate.
+          unitText: perPerson ? 'per guest per week' : 'per week',
           referenceQuantity: {
             '@type': 'QuantitativeValue',
             value: 7,
             unitCode: 'DAY',
           },
+          // Most rates are a low-high spread; emit both so Google and AI
+          // engines read the full weekly range, not just the "from" price.
+          ...(high && high > low
+            ? { minPrice: String(low), maxPrice: String(high) }
+            : {}),
         };
       }
       return base;
     })(),
+
+    // Review / AggregateRating: intentionally OMITTED - no verified guest
+    // reviews exist yet and fabricating ratings is forbidden. READY HOOK:
+    // when >=3 real reviews for this yacht are published in Sanity, attach
+    //   aggregateRating: { '@type': 'AggregateRating', ratingValue,
+    //     reviewCount, bestRating: 5, worstRating: 1 }
+    //   review: [ { '@type': 'Review', author, reviewRating, reviewBody } ]
+    // gated through lib/reviewsAggregate.js (same >=3 gate as serviceSchema).
 
     // additionalProperty retains the human-readable PropertyValue
     // rows for marine-specific fields that don't have a first-class
