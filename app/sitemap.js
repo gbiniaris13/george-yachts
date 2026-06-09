@@ -15,47 +15,15 @@ import { MARKET_REPORTS } from "@/lib/marketReportsSeo";
 import { ISLAND_ANCHORAGES } from "@/lib/islandAnchoragesSeo";
 import { BOTTOM_FUNNEL_PAGES } from "@/lib/bottomFunnelSeo";
 import { BEST_YACHTS_PAGES } from "@/lib/bestYachtsSeo";
+import { LAST_REFRESH } from "@/lib/contentFreshness";
 
 const BASE_URL = "https://georgeyachts.com";
 
-// 2026-05-18 — Per-collection lastmod constants. The previous
-// `new Date().toISOString()` everywhere meant the build time was
-// stamped on every URL — so each deploy looked like a full-site
-// content refresh to Google, which is noise that dilutes Google's
-// signal of when to recrawl.
-//
-// Now each collection carries the date of its last meaningful
-// content edit. Bump these when the underlying lib/*Seo.js arrays
-// (or the static content on the matching pages) actually change.
-// Sanity-backed entries (yachts, blog posts) keep using their
-// real `_updatedAt` value — those are accurate per-document.
-//
-// Format: ISO 8601 date-only (YYYY-MM-DD). Google accepts this
-// and it's the most readable form for humans editing this list.
-const LAST_REFRESH = {
-  // Static marketing / tools / legal — these change rarely.
-  // Bump when copy on those pages is edited.
-  STATIC: "2026-05-18",
-  // Programmatic SEO families — bump when the corresponding
-  // lib/*Seo.js data file gets new entries or refreshed copy.
-  ISLANDS: "2026-05-12",
-  YACHT_TYPES: "2026-05-11",
-  USE_CASES: "2026-05-11",
-  LONG_TAIL: "2026-05-11",
-  COMPARISONS: "2026-05-11",
-  LINKABLE: "2026-05-11",
-  COMBOS: "2026-05-11",
-  ARTICLES: "2026-05-11",
-  DURATION: "2026-05-11",
-  GLOSSARY: "2026-05-12",
-  DEST_COMPARISONS: "2026-05-12",
-  ANCHORAGES: "2026-05-12",
-  BOTTOM_FUNNEL: "2026-05-12",
-  BEST_YACHTS: "2026-05-12",
-  JOURNAL: "2026-05-18",
-  // Hubs that aggregate other content — bump weekly-ish.
-  HUBS: "2026-05-18",
-};
+// Per-collection lastmod dates now live in lib/contentFreshness.js as the
+// single source of truth shared with the JSON-LD `dateModified` on each
+// page, so sitemap lastmod and structured data never diverge. Bump dates
+// there when a family's content actually changes. (LAST_REFRESH imported
+// above.)
 
 const staticRoutes = [
   // Core pages

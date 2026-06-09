@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import HomeClient from "./HomeClient";
 import { sanityClient } from "@/lib/sanity";
+import { SITE_UPDATED } from "@/lib/contentFreshness";
 
 // Re-render at most once an hour. The homepage uses weekly-rotating
 // photography on the Explorer fleet panel; at the week-boundary the
@@ -45,6 +46,7 @@ function HomepageFaqSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    dateModified: SITE_UPDATED,
     mainEntity: [
       {
         "@type": "Question",
