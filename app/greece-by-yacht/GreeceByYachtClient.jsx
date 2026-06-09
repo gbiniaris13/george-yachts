@@ -74,7 +74,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
           >
             <Image
               src={heroBackdrop}
-              alt=""
+              alt="Luxury crewed yacht charter in the Greek islands"
               fill
               priority
               sizes="100vw"
@@ -545,7 +545,7 @@ function StopBackdrop({ stop }) {
       {(!videoOk || true) && fallback && (
         <Image
           src={fallback}
-          alt=""
+          alt="Crewed luxury yacht cruising Greek island waters"
           fill
           sizes="100vw"
           style={{

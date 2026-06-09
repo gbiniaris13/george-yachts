@@ -8,6 +8,7 @@
 // B.6 (Roberto brief, May 2026) — Homepage blog teaser.
 
 import Link from "next/link";
+import Image from "next/image";
 import { sanityCardImg } from "@/lib/sanity-image";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 import ConstellationBackdrop from "./ConstellationBackdrop";
@@ -123,12 +124,22 @@ export default function HomeJournalTeaser({ posts = [] }) {
                 {p.imageUrl && (
                   <div
                     style={{
+                      position: "relative",
                       width: "100%",
                       aspectRatio: "16 / 10",
-                      background: `#0D1B2A url(${sanityCardImg(p.imageUrl, 720)}) center/cover no-repeat`,
+                      background: "#0D1B2A",
+                      overflow: "hidden",
                     }}
-                    aria-hidden="true"
-                  />
+                  >
+                    <Image
+                      src={sanityCardImg(p.imageUrl, 720)}
+                      alt={p.title || "George Yachts journal"}
+                      fill
+                      sizes="(max-width: 768px) 92vw, 360px"
+                      loading="lazy"
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
                 )}
                 <div style={{ padding: "20px 22px 24px" }}>
                   {date && (

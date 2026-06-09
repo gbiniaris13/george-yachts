@@ -22,6 +22,7 @@
 //   • Each card: hero image, name, length · sleeps · price/wk
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRef } from "react";
 import { priceUnitBadge, isPerPerson, sortAllFleet } from "@/lib/pricing";
 import { sanityCardImg } from "@/lib/sanity-image";
@@ -183,14 +184,24 @@ export default function TrendingYachts({ yachts }) {
                   source. */}
               <div
                 style={{
+                  position: "relative",
                   width: "100%",
                   aspectRatio: "4 / 3",
-                  background: y.image
-                    ? `#0D1B2A url(${sanityCardImg(y.image, 640)}) center/cover no-repeat`
-                    : "#0D1B2A",
+                  background: "#0D1B2A",
+                  overflow: "hidden",
                 }}
-                aria-hidden={!y.image}
-              />
+              >
+                {y.image && (
+                  <Image
+                    src={sanityCardImg(y.image, 640)}
+                    alt={`${y.name} - luxury yacht charter in Greece`}
+                    fill
+                    sizes="(max-width: 768px) 80vw, 320px"
+                    loading="lazy"
+                    style={{ objectFit: "cover" }}
+                  />
+                )}
+              </div>
               {/* Body */}
               <div style={{ padding: "16px 18px 20px" }}>
                 <p
