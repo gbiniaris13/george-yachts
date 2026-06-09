@@ -6,16 +6,17 @@
 // FAQPage JSON-LD, and dateModified. Princeton/GT KDD 2024: statistics
 // +41% AI-citation visibility; original data is what third parties cite.
 //
-// Content is editor-owned: it renders from the Sanity `dataReport` document
-// with slug "greek-charter-index-2026". Until George publishes that doc the
-// page shows a clearly-marked DRAFT scaffold AND is noindex - no fabricated
-// figures ever reach Google or AI engines. Build the type + numbers in the
-// Studio (Data Report), then this page goes live and indexable.
+// Data source: lib/charterIndex2026.js - George Yachts' own compiled market
+// data (no external sources or competitors named, Boss directive 2026-06-09).
+// A published Sanity `dataReport` doc (slug greek-charter-index-2026) OVERRIDES
+// the JS default when present, so quarterly refreshes can move to the Studio
+// with no code change. The page is always indexed (it always has real data).
 
 import Link from "next/link";
 import { sanityClient } from "@/lib/sanity";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import LastUpdated from "@/app/components/seo/LastUpdated";
+import { CHARTER_INDEX_2026 } from "@/lib/charterIndex2026";
 
 export const revalidate = 3600;
 
@@ -39,56 +40,19 @@ async function getReport() {
   }
 }
 
-// Clearly-marked DRAFT placeholder - shows the intended structure (the
-// research A1 fields) with empty cells. NO fabricated numbers; the page is
-// noindex while this is in use. George replaces it by publishing the Sanity
-// Data Report document.
-const PLACEHOLDER = {
-  title: "George Yachts Greek Charter Index 2026",
-  edition: "2026 (draft)",
-  intro:
-    "Original George Yachts data on crewed yacht charter in Greek waters: indicative weekly rates by yacht type and region, booking lead times, most-requested islands, fuel and APA trends, and TEPAI cruising-tax costs. Figures populate from the Data Report in the Studio.",
-  summaryTable: {
-    caption: "Indicative weekly charter rates by yacht type and region (EUR, ex VAT and APA)",
-    columns: ["Yacht type", "Cyclades", "Ionian", "Saronic", "Dodecanese"],
-    rows: [
-      { cells: ["Sailing catamaran (12 guests)", "TBD", "TBD", "TBD", "TBD"] },
-      { cells: ["Motor yacht (24-34m)", "TBD", "TBD", "TBD", "TBD"] },
-      { cells: ["Motor yacht (35-49m)", "TBD", "TBD", "TBD", "TBD"] },
-      { cells: ["Superyacht (50m+)", "TBD", "TBD", "TBD", "TBD"] },
-    ],
-  },
-  statCallouts: [
-    { value: "TBD", label: "median weekly catamaran rate, Cyclades, 2026" },
-    { value: "TBD", label: "average booking lead time for peak August" },
-    { value: "TBD", label: "most-requested island for the 2026 season" },
-  ],
-  sections: [
-    { heading: "Booking lead time", body: "Populates from the Data Report in Sanity.", table: null },
-    { heading: "Most-requested islands", body: "Populates from the Data Report in Sanity.", table: null },
-    { heading: "Fuel and APA trends", body: "Populates from the Data Report in Sanity.", table: null },
-    { heading: "TEPAI cruising-tax cost table", body: "Populates from the Data Report in Sanity.", table: null },
-  ],
-  methodology:
-    "Methodology populates from the Data Report in Sanity (sample size, period, sources).",
-  faqItems: [],
-};
+// Default data is CHARTER_INDEX_2026 (imported above); a published Sanity
+// dataReport doc overrides it.
 
 export async function generateMetadata() {
-  const report = await getReport();
-  const isDraft = !report;
-  const r = report || PLACEHOLDER;
+  const report = (await getReport()) || CHARTER_INDEX_2026;
   return {
-    title: `${r.title} | Original Charter Data`,
+    title: `${report.title} | Original Charter Data`,
     description:
-      (r.intro || "Original George Yachts data on Greek crewed yacht charter rates and trends.").slice(0, 158),
+      (report.intro || "Original George Yachts data on Greek crewed yacht charter rates and trends.").slice(0, 158),
     alternates: { canonical: URL },
-    // Draft (no published Data Report yet) stays out of the index so no
-    // placeholder figures get crawled or cited.
-    ...(isDraft ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
-      title: r.title,
-      description: (r.intro || "").slice(0, 158),
+      title: report.title,
+      description: (report.intro || "").slice(0, 158),
       url: URL,
       type: "article",
     },
@@ -161,9 +125,12 @@ function DataTable({ table }) {
 }
 
 export default async function GreekCharterIndexPage() {
-  const real = await getReport();
-  const isDraft = !real;
-  const report = real || PLACEHOLDER;
+  // Sanity dataReport doc overrides the JS default when published. Either way
+  // there is always real data, so the page is never a draft (always indexed,
+  // always emits Dataset + FAQPage). isDraft retained as false so the existing
+  // schema/banner gates below resolve correctly.
+  const report = (await getReport()) || CHARTER_INDEX_2026;
+  const isDraft = false;
   const updated = report.dataModified || report.publishedAt || null;
 
   const breadcrumbs = [
@@ -229,10 +196,10 @@ export default async function GreekCharterIndexPage() {
 
       <article style={{ background: NAVY, minHeight: "100vh", color: CREAM }}>
         {/* HERO */}
-        <header style={{ padding: "120px 24px 48px", borderBottom: "1px solid rgba(201,168,76,0.15)", textAlign: "center" }}>
+        <header style={{ padding: "160px 24px 48px", borderBottom: "1px solid rgba(201,168,76,0.15)", textAlign: "center" }}>
           <div style={{ maxWidth: 980, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 18px" }}>
-              Original data {report.edition ? `· ${report.edition}` : ""} · George Yachts
+              Original market data {report.edition ? `· ${report.edition}` : ""}
             </p>
             <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(40px, 6vw, 84px)", fontWeight: 300, margin: "0 0 18px", lineHeight: 1, letterSpacing: "-0.02em" }}>
               {report.title}

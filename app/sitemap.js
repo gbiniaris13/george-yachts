@@ -16,6 +16,7 @@ import { ISLAND_ANCHORAGES } from "@/lib/islandAnchoragesSeo";
 import { BOTTOM_FUNNEL_PAGES } from "@/lib/bottomFunnelSeo";
 import { BEST_YACHTS_PAGES } from "@/lib/bestYachtsSeo";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
+import { CHARTER_INDEX_2026 } from "@/lib/charterIndex2026";
 
 const BASE_URL = "https://georgeyachts.com";
 
@@ -212,25 +213,24 @@ export default async function sitemap() {
     console.error("Sitemap: failed to fetch blog posts", error);
   }
 
-  // Stage 2 (Task 6) - include the Greek Charter Index page ONLY once a real
-  // dataReport is published in Sanity. While it is a draft the page is
-  // noindex, so keeping it out of the sitemap is the correct signal.
-  let dataReportEntries = [];
+  // Stage 2 (Task 6) - the Greek Charter Index page always renders real data
+  // (lib/charterIndex2026.js default; a published Sanity dataReport doc
+  // overrides it), so it is always indexable and always in the sitemap.
+  let charterIndexDate = CHARTER_INDEX_2026.dataModified || LAST_REFRESH.HUBS;
   try {
     const report = await sanityClient.fetch(
       `*[_type == "dataReport" && slug.current == "greek-charter-index-2026"][0]{ dataModified, publishedAt }`
     );
-    if (report) {
-      dataReportEntries = [{
-        url: `${BASE_URL}/greek-charter-index-2026`,
-        lastModified: report.dataModified || report.publishedAt || LAST_REFRESH.HUBS,
-        changeFrequency: "monthly",
-        priority: 0.9,
-      }];
-    }
+    if (report) charterIndexDate = report.dataModified || report.publishedAt || charterIndexDate;
   } catch (error) {
-    console.error("Sitemap: failed to fetch dataReport", error);
+    console.error("Sitemap: failed to fetch dataReport date", error);
   }
+  const dataReportEntries = [{
+    url: `${BASE_URL}/greek-charter-index-2026`,
+    lastModified: charterIndexDate,
+    changeFrequency: "monthly",
+    priority: 0.9,
+  }];
 
   // F.4 (Roberto brief) — topic-cluster landing pages.
   const journalClusterEntries = JOURNAL_CLUSTERS.map((c) => ({
