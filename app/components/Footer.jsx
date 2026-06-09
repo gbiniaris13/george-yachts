@@ -105,12 +105,14 @@ const Footer = () => {
         { name: "Under €100,000", href: "/yacht-charter-greece-under-100000" },
         { name: "With Stabilizers", href: "/yacht-charter-greece-with-stabilizers" },
         { name: "Compare Yachts", href: "/compare" },
+        { name: "Greece vs Other Destinations →", href: "/comparisons" },
         { name: "Crewed Charter Greek Islands", href: "/crewed-yacht-charter-greek-islands-2026" },
       ],
     },
     {
       heading: "Explore by Island",
       links: [
+        { name: "All Greek Islands →", href: "/islands" },
         { name: "Mykonos Anchorages", href: "/yacht-charter-mykonos-anchorages" },
         { name: "Santorini Anchorages", href: "/yacht-charter-santorini-anchorages" },
         { name: "Hydra Anchorages", href: "/yacht-charter-hydra-anchorages" },
@@ -131,6 +133,8 @@ const Footer = () => {
     {
       heading: "Yacht Type & Itinerary",
       links: [
+        { name: "All Yacht Types →", href: "/yacht-types" },
+        { name: "All Best-Yacht Guides →", href: "/best-yachts" },
         { name: "Best Catamarans", href: "/best-catamarans-greece-charter" },
         { name: "Best Gulets", href: "/best-gulets-greece-authentic-experience" },
         { name: "Best Motor Yachts", href: "/best-motor-yachts-greece-speed" },

@@ -63,6 +63,12 @@ const staticRoutes = [
   { path: "/destinations/ionian", priority: 0.9, changeFrequency: "weekly" },
   { path: "/destinations/saronic", priority: 0.9, changeFrequency: "weekly" },
 
+  // Stage 2 (Extra Z) - family hub / index pages (CollectionPage + ItemList).
+  { path: "/islands", priority: 0.86, changeFrequency: "weekly" },
+  { path: "/yacht-types", priority: 0.86, changeFrequency: "weekly" },
+  { path: "/best-yachts", priority: 0.84, changeFrequency: "weekly" },
+  { path: "/comparisons", priority: 0.84, changeFrequency: "weekly" },
+
   // Interactive tools.
   // E.3 (Roberto master rebuild brief, May 2026): /cost-calculator
   // is back as a real interactive page (no longer a redirect to

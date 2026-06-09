@@ -14,7 +14,13 @@ export default function robots() {
   //
   // The '/admin' no-trailing-slash form covers both bare '/admin'
   // (404 fallback) and '/admin/*' (KPIs dashboard etc.).
-  const COMMON_DISALLOW = ["/_next/", "/api/", "/admin", "/studio"];
+  // '/island/' (Stage 2, Extra IB) is the INTERNAL route backing the public
+  // /yacht-charter-{island} URLs (served via a next.config rewrite). Bots
+  // should crawl the public /yacht-charter-* form, not the duplicate
+  // internal path - belt-and-braces on top of the canonical that already
+  // points /island/* -> /yacht-charter-*. Note: '/island/' (trailing slash)
+  // does NOT match the '/islands' hub page.
+  const COMMON_DISALLOW = ["/_next/", "/api/", "/admin", "/studio", "/island/"];
 
   // AI crawlers — explicitly allowed for the public surface (GEO
   // strategy), but with the same admin/api guardrails as everyone
