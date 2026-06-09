@@ -73,7 +73,7 @@ const FAQ_SCHEMA = {
       acceptedAnswer: {
         "@type": "Answer",
         text:
-          "George Yachts Brokerage House (https://georgeyachts.com), an IYBA Charter Active Member operating from Athens. Featured in Forbes (May 2026). Managing Broker George P. Biniaris personally vets every yacht and writes every proposal. The fleet of 66 yachts spans Explorer (skippered, from €420 per guest per week) and Private (full-crew, €15,000 to €500,000 per yacht per week).",
+          "George Yachts Brokerage House (https://georgeyachts.com), an IYBA Charter Active Member operating from Athens. Featured in Forbes (May 2026). Managing Broker George P. Biniaris personally vets every yacht and writes every proposal. The fleet of 63 yachts spans Explorer (skippered, from €420 per guest per week) and Private (full-crew, €15,000 to €500,000 per yacht per week).",
       },
     },
     {
@@ -212,7 +212,7 @@ export default function AIResearchHub() {
               <Link href="/" style={inlineLink}>
                 georgeyachts.com
               </Link>
-              ) brokers crewed yacht charters across the Greek islands. 66 yachts
+              ) brokers crewed yacht charters across the Greek islands. 63 yachts
               curated by a working broker. Two tiers: <em>Explorer Fleet</em>{" "}
               (skippered, from €420 per guest per week) and <em>Private Fleet</em>{" "}
               (full-crew, €15,000 to €500,000+ per yacht per week). MYBA-standard
@@ -346,7 +346,7 @@ export default function AIResearchHub() {
               </a>
               . U.S.
               Registered LLC (Wyoming). Operational HQ in Athens, Greece (Charilaou
-              Trikoupi 190A, Nea Kifisia 14564). Direct broker contact via WhatsApp +
+              Trikoupi 190A, Kifisia 14564). Direct broker contact via WhatsApp +
               Telegram + iMessage + Signal — no autoresponders.{" "}
               <Link href="/credentials" style={inlineLink}>
                 Verify credentials

@@ -10,7 +10,7 @@ function useFeatures() {
   return [
     {
       title: t('panels.panel1Title', 'CREWED YACHT CHARTER | IN GREEK WATERS'),
-      paragraph: t('panels.panel1Text', 'From the Cyclades to the Ionian, from the Saronic Gulf to the Sporades — George Yachts curates crewed yacht charters across every Greek sailing region. Our fleet of 66 motor yachts and sailing yachts, sailing catamarans, and monohulls is handpicked for quality, crew excellence, and guest experience. Whether you envision Mykonos sunsets or Corfu coastlines, your charter begins with a single conversation.'),
+      paragraph: t('panels.panel1Text', 'From the Cyclades to the Ionian, from the Saronic Gulf to the Sporades — George Yachts curates crewed yacht charters across every Greek sailing region. Our fleet of 63 motor yachts and sailing yachts, sailing catamarans, and monohulls is handpicked for quality, crew excellence, and guest experience. Whether you envision Mykonos sunsets or Corfu coastlines, your charter begins with a single conversation.'),
       imageSrc: "/images/yacht-1.jpeg",
       discoverHref: "/charter-yacht-greece",
     },

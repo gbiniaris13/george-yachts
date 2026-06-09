@@ -18,7 +18,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ConstellationBackdrop from "./ConstellationBackdrop";
 
-export default function HomeStats({ yachtCount = 66 }) {
+export default function HomeStats({ yachtCount = 63 }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
 

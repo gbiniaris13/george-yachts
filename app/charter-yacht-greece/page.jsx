@@ -23,7 +23,7 @@ export const metadata = {
   openGraph: {
     title: "Charter Fleet | George Yachts Brokerage House",
     description:
-      "66 curated yachts for charter in Greek waters. From 14m sailing catamarans to 64m superyachts.",
+      "63 curated yachts for charter in Greek waters. From 14m sailing catamarans to 64m superyachts.",
     url: "https://georgeyachts.com/charter-yacht-greece",
     images: [
       "https://cdn.sanity.io/images/ecqr94ey/production/5a1d2f46e69d3e21c61aa3950deb11085e725b9d-1024x768.jpg",
@@ -68,7 +68,7 @@ function generateFleetSchema(yachts) {
     "@type": "ItemList",
     name: "George Yachts Charter Fleet Greece",
     description:
-      "Curated fleet of 66 luxury yachts for charter in Greek waters",
+      "Curated fleet of 63 luxury yachts for charter in Greek waters",
     numberOfItems: yachts.length,
     itemListElement: yachts.slice(0, 20).map((yacht, index) => ({
       "@type": "ListItem",

@@ -584,7 +584,7 @@ export default function AboutContent() {
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="22"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg>
               ),
               title: "Yacht Charter",
-              desc: "66 curated yachts — Private Fleet (full crew) + Explorer Fleet (skippered) — across all Greek waters.",
+              desc: "63 curated yachts — Private Fleet (full crew) + Explorer Fleet (skippered) — across all Greek waters.",
             },
             {
               icon: (

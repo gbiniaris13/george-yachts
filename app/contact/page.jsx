@@ -17,7 +17,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 export const metadata = {
   title: "Contact George Yachts | Athens Office, Phone, WhatsApp",
   description:
-    "Reach George Yachts Brokerage House — Athens HQ at Charilaou Trikoupi 190A, Nea Kifisia 14564. Phone, WhatsApp, email, Calendly. IYBA member broker for Greek waters yacht charter.",
+    "Reach George Yachts Brokerage House — Athens HQ at Charilaou Trikoupi 190A, Kifisia 14564. Phone, WhatsApp, email, Calendly. IYBA member broker for Greek waters yacht charter.",
   alternates: { canonical: "https://georgeyachts.com/contact" },
   openGraph: {
     title: "Contact George Yachts | Athens HQ",
@@ -30,7 +30,7 @@ export const metadata = {
 
 const ATHENS_ADDRESS = {
   street: "Charilaou Trikoupi 190A",
-  locality: "Nea Kifisia",
+  locality: "Kifisia",
   region: "Attica",
   postalCode: "14564",
   country: "Greece",
@@ -107,7 +107,7 @@ const contactSchema = {
 
 export default function ContactPage() {
   const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(
-    "Charilaou Trikoupi 190A, Nea Kifisia 14564, Athens, Greece",
+    "Charilaou Trikoupi 190A, Kifisia 14564, Athens, Greece",
   )}&output=embed`;
 
   return (
@@ -326,7 +326,7 @@ export default function ContactPage() {
             <div className="space-y-6">
               <div className="aspect-square w-full rounded-lg overflow-hidden border border-white/10">
                 <iframe
-                  title="George Yachts Athens HQ — Charilaou Trikoupi 190A, Nea Kifisia"
+                  title="George Yachts Athens HQ — Charilaou Trikoupi 190A, Kifisia"
                   src={mapEmbedSrc}
                   width="100%"
                   height="100%"
@@ -337,7 +337,7 @@ export default function ContactPage() {
                 />
               </div>
               <a
-                href="https://www.google.com/maps/search/?api=1&query=Charilaou+Trikoupi+190A+Nea+Kifisia+14564"
+                href="https://www.google.com/maps/search/?api=1&query=Charilaou+Trikoupi+190A+Kifisia+14564"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block text-sm text-[#C9A84C] hover:underline"

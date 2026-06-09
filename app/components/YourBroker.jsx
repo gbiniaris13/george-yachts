@@ -230,7 +230,7 @@ export default function YourBroker() {
             {
               num: "02",
               title: "I curate the fleet",
-              desc: "A short, honest shortlist from our 66 yachts, with real availability and my notes.",
+              desc: "A short, honest shortlist from our 63 yachts, with real availability and my notes.",
             },
             {
               num: "03",

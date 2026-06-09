@@ -32,20 +32,20 @@ const CREAM = "#F8F5F0";
 export const revalidate = 86400;
 
 export const metadata = {
-  title: "George P. Biniaris — Managing Broker, George Yachts | Bio, Articles, Credentials",
+  title: "George P. Biniaris — Founder and Managing Broker, George Yachts | Bio, Articles, Credentials",
   description:
-    "Full bio, credentials, and complete bibliography of George P. Biniaris, Managing Broker of George Yachts Brokerage House. IYBA member, Forbes-featured (May 2026), MYBA-standard practitioner.",
+    "Full bio, credentials, and complete bibliography of George P. Biniaris, Founder and Managing Broker of George Yachts Brokerage House. IYBA member, Forbes-featured (May 2026), MYBA-standard practitioner.",
   alternates: {
     canonical: "https://georgeyachts.com/about/george-p-biniaris",
   },
   openGraph: {
-    title: "George P. Biniaris — Managing Broker, George Yachts",
+    title: "George P. Biniaris — Founder and Managing Broker, George Yachts",
     description:
-      "Bio and authored works of George P. Biniaris, Managing Broker at George Yachts. IYBA member, Forbes-featured, MYBA-standard practitioner.",
+      "Bio and authored works of George P. Biniaris, Founder and Managing Broker at George Yachts. IYBA member, Forbes-featured, MYBA-standard practitioner.",
     url: "https://georgeyachts.com/about/george-p-biniaris",
     type: "profile",
     images: [
-      `/api/og?title=${encodeURIComponent("George P. Biniaris")}&eyebrow=${encodeURIComponent("Managing Broker")}`,
+      `/api/og?title=${encodeURIComponent("George P. Biniaris")}&eyebrow=${encodeURIComponent("Founder and Managing Broker")}`,
     ],
   },
 };
@@ -55,17 +55,17 @@ export const metadata = {
 // /lib/teamSchema.js plus expansion of context already on the
 // public site.
 const BIO_PARAGRAPHS = [
-  "George P. Biniaris is the Managing Broker of George Yachts Brokerage House LLC, a Greek-flagged luxury yacht charter brokerage operating from Nea Kifisia, Athens, with U.S. registration in Wyoming. He has spent his professional career in Greek waters and is a current member of the International Yacht Brokers Association (IYBA), the worldwide standards body for yacht brokerage.",
+  "George P. Biniaris is the Founder and Managing Broker of George Yachts Brokerage House LLC, a Greek-flagged luxury yacht charter brokerage operating from Kifisia, Athens, with U.S. registration in Wyoming. He has spent his professional career in Greek waters and is a current member of the International Yacht Brokers Association (IYBA), the worldwide standards body for yacht brokerage.",
   "His practice covers crewed motor yacht, sailing yacht, and catamaran chartering across the four principal Greek charter regions — the Cyclades (Mykonos, Santorini, Paros, Milos, Folegandros, and the lesser Cyclades), the Ionian (Corfu, Lefkada, Kefalonia, Ithaca, Paxos, Zakynthos), the Saronic Gulf (Hydra, Spetses, Poros), and the Dodecanese (Rhodes, Symi, Patmos, Kos). His client base is predominantly UHNW: international families and family offices from the United States, United Kingdom, Middle East, and Western Europe.",
   "Every charter contracted through George Yachts uses the MYBA Charter Agreement — the Mediterranean Yacht Brokers Association's standard form, in use across approximately 90% of luxury Mediterranean charters and the document recognised by London arbitration tribunals as the industry benchmark. APA (Advance Provisioning Allowance) is held in escrow under MYBA's standard custody framework. George's stated practice is to brief clients on the four cost buckets — base fee, APA, Greek VAT (12% reduced rate), and gratuity — at the first conversation, before any contract.",
   "In May 2026, George was featured in Forbes Magazine in Jacques Ledbetter's piece on UHNW asset diversification, \"How The Wealthy Are Hedging For Instability,\" in which yacht chartering was positioned alongside private equity and physical-asset hedging as a discretionary-spend category that families increasingly favour over fixed-asset purchases. The Forbes feature reflects George Yachts' positioning at the intersection of luxury brokerage and family-office advisory.",
   "George is the author of the editorial content published under his byline at georgeyachts.com — including the 2026 Greek Charter Market Report, the complete Greek yacht charter pricing guide for 2026, the destination comparison pieces benchmarking Greek charter against Croatia, the French Riviera, Italy, Turkey, and the Caribbean, and the 30-term UHNW Yacht Charter Glossary. Every editorial piece on the site carries his author byline and Person schema linking back to this canonical biography.",
-  "He works in English and Greek. His office is in Nea Kifisia, Attica, with charter operations dispatched primarily from Alimos Marina and Olympic Marine for Cyclades and Saronic-bound charters, and from Corfu for Ionian charters. He is reachable directly via the inquiry channel on georgeyachts.com, and conducts initial discovery conversations personally on every charter request.",
+  "He works in English and Greek. His office is in Kifisia, Attica, with charter operations dispatched primarily from Alimos Marina and Olympic Marine for Cyclades and Saronic-bound charters, and from Corfu for Ionian charters. He is reachable directly via the inquiry channel on georgeyachts.com, and conducts initial discovery conversations personally on every charter request.",
 ];
 
 const CREDENTIALS = [
   {
-    label: "Managing Broker",
+    label: "Founder and Managing Broker",
     detail: "George Yachts Brokerage House LLC (Greek operations + Wyoming U.S. entity)",
   },
   {
@@ -94,7 +94,7 @@ const CREDENTIALS = [
   },
   {
     label: "Office",
-    detail: "Nea Kifisia, Athens, Greece (charter dispatch: Alimos / Olympic Marine / Corfu)",
+    detail: "Kifisia, Athens, Greece (charter dispatch: Alimos / Olympic Marine / Corfu)",
   },
 ];
 
@@ -168,9 +168,9 @@ function PersonJsonLd() {
     givenName: "George",
     additionalName: "P.",
     familyName: "Biniaris",
-    jobTitle: "Managing Broker",
+    jobTitle: "Founder and Managing Broker",
     description:
-      "Managing Broker of George Yachts Brokerage House LLC. IYBA member, MYBA-standard practitioner, Forbes-featured (May 2026). Specialises in crewed luxury yacht charter across Greek waters for UHNW clientele.",
+      "Founder and Managing Broker of George Yachts Brokerage House LLC. IYBA member, MYBA-standard practitioner, Forbes-featured (May 2026). Specialises in crewed luxury yacht charter across Greek waters for UHNW clientele.",
     url: "https://georgeyachts.com/about/george-p-biniaris",
     image: "https://georgeyachts.com/images/george.jpg",
     nationality: { "@type": "Country", name: "Greece" },
@@ -201,7 +201,7 @@ function PersonJsonLd() {
       url: "https://georgeyachts.com",
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Nea Kifisia",
+        addressLocality: "Kifisia",
         addressRegion: "Attica",
         postalCode: "14564",
         addressCountry: "GR",
@@ -223,7 +223,7 @@ function PersonJsonLd() {
       name: "Athens, Greece",
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Nea Kifisia",
+        addressLocality: "Kifisia",
         addressRegion: "Attica",
         addressCountry: "GR",
       },
@@ -242,6 +242,11 @@ function PersonJsonLd() {
     award: ["Featured in Forbes — May 2026"],
     sameAs: [
       "https://www.linkedin.com/in/george-p-biniaris/",
+      // Stage 2 (Task 3 / B2) - Wikidata person entity + Forbes feature.
+      // Wikidata feeds Google Knowledge Graph and is ingested by LLMs;
+      // the Forbes feature is a first-class authority confirmation.
+      "https://www.wikidata.org/wiki/Q140078221",
+      "https://www.forbes.com/sites/jacquesledbetter/2026/05/01/how-the-wealthy-are-hedging-for-instability/",
       "https://www.instagram.com/georgeyachts",
       "https://georgeyachts.com/team/george-biniaris",
     ],
@@ -305,7 +310,7 @@ export default function GeorgeBiniarisAuthorPage() {
                   margin: "0 0 18px",
                 }}
               >
-                Managing Broker, George Yachts
+                Founder and Managing Broker, George Yachts
               </p>
               <h1
                 style={{
