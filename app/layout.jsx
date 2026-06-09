@@ -277,6 +277,19 @@ export default async function RootLayout({ children }) {
     // fall through to static schema
   }
 
+  // Stage 2 (Extra IG) - consolidate the three site-wide entities into ONE
+  // @graph so crawlers read a single connected knowledge graph. The @ids
+  // already cross-reference each other (Phase A fix); @context moves to the
+  // wrapper and is stripped from each node. Imports are NOT mutated (the map
+  // returns rest-spread copies).
+  const entityGraph = {
+    "@context": "https://schema.org",
+    "@graph": [organizationSchema, liveServiceSchema, websiteSchema].map((s) => {
+      const { "@context": _ctx, ...node } = s;
+      return node;
+    }),
+  };
+
   return (
     <html lang="en">
       <head>
@@ -384,14 +397,13 @@ export default async function RootLayout({ children }) {
             decision. Skipped on touch + reduced-motion. */}
         <MouseParallax />
 
-        <JsonLd data={organizationSchema} />
-        {/* Phase 27 — Service + WebSite schema for #1 ranking on
-            "yacht charter Greece" + AI-search citations + Google
-            sitelinks search box. Service schema is the live variant
-            with AggregateRating attached when 3+ real reviews exist
-            in Sanity (Phase 27e). */}
-        <JsonLd data={liveServiceSchema} />
-        <JsonLd data={websiteSchema} />
+        {/* Stage 2 (Extra IG) - Organization + Service + WebSite consolidated
+            into ONE @graph so AI engines and Google read a single connected
+            entity graph (the @ids cross-reference each other). Per-page schemas
+            (FAQPage, Article, Product, BreadcrumbList, etc.) intentionally stay
+            as their own blocks - they are page-specific. Service is the live
+            variant (AggregateRating attaches when 3+ real reviews exist). */}
+        <JsonLd data={entityGraph} />
         {/* 1. Critical External Scripts */}
         {recaptchaKey && (
           <Script
