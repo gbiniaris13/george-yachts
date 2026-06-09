@@ -249,10 +249,11 @@ export default function WhatsAppButton() {
         {/* Main button - Brief 1C: WhatsApp brand green #25D366
             with 56px mobile / 48px desktop. */}
         <div
-          className="relative flex items-center justify-center rounded-full transition-all duration-500 overflow-hidden gy-wa-fab"
+          className="relative flex items-center justify-center transition-all duration-500 overflow-hidden gy-wa-fab"
           style={{
             width: 56,
             height: 56,
+            borderRadius: 0,
             background: WA_BRAND_GREEN,
             border: `2px solid rgba(255,255,255,0.15)`,
             boxShadow: hovered
@@ -319,14 +320,16 @@ export default function WhatsAppButton() {
 
         <style jsx global>{`
           /* Brief 1C: 56px mobile, 48px desktop diameter */
+          /* Stage 2 (George): match the gold "GY" + SPEAK squares - 56px on
+             desktop too (was 48px, which read as a smaller, misaligned FAB). */
           @media (min-width: 768px) {
             .gy-wa-fab {
-              width: 48px !important;
-              height: 48px !important;
+              width: 56px !important;
+              height: 56px !important;
             }
             .gy-wa-fab svg {
-              width: 24px !important;
-              height: 24px !important;
+              width: 28px !important;
+              height: 28px !important;
             }
           }
           @keyframes whatsappShimmer {

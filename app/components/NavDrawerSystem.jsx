@@ -224,7 +224,11 @@ export default function NavDrawerSystem() {
   // Reverted 2026-05-08 — Boss kept the original yacht-icon-only.svg
   // lockup. Restored the prior masthead heights it was tuned for.
   const navHeight = scrolled ? 104 : 196;
-  const logoHeight = scrolled ? 72 : "clamp(140px, 16.5vw, 220px)";
+  // Stage 2 (George): unscrolled logo was up to 220px - TALLER than the
+  // 196px nav, so it overflowed downward and the wordmark collided with the
+  // hero H1 on desktop. Trimmed so it sits within the masthead. Paired with
+  // a small hero content paddingTop (VideoSection) so the H1 clears it.
+  const logoHeight = scrolled ? 72 : "clamp(120px, 13vw, 180px)";
 
   const toggleMobile = useCallback(() => setMobileOpen((p) => !p), []);
   const closeMobile = useCallback(() => setMobileOpen(false), []);

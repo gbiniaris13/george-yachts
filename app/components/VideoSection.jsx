@@ -180,7 +180,7 @@ export default function VideoSection() {
 
       {/* Content */}
       <div
-        className="relative z-10 flex h-full w-full items-center justify-center px-6 md:px-10"
+        className="relative z-10 flex h-full w-full items-center justify-center px-6 md:px-10 pt-6 md:pt-20"
         style={{
           opacity: revealed ? 1 : 0,
           transition: "opacity 800ms cubic-bezier(0.2, 0.8, 0.2, 1)",

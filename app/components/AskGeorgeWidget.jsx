@@ -174,7 +174,7 @@ export default function AskGeorgeWidget() {
           zIndex: 9998,
         }}
       >
-        {open ? "✕" : "G"}
+        {open ? "✕" : "GY"}
         {!open && (
           <span
             aria-hidden="true"
