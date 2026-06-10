@@ -343,13 +343,16 @@ export default async function RootLayout({ children }) {
         {/* Phase 27 (Forbes-launch eve, 2026-05-05) — SEO/GEO push for
             #1 ranking on "yacht charter Greece". Geo meta tags help
             Google + Bing + AI search engines (Perplexity / ChatGPT /
-            Claude / Gemini) anchor the site to Athens/Greece for
-            local-intent queries. The schema additions below feed
-            Google's Knowledge Graph + AI search citations directly. */}
+            Claude / Gemini) anchor the site to Kifisia/Greece for
+            local-intent queries. Coordinates must match the Google
+            Business Profile pin exactly (38.0876, 23.8084 — Charilaou
+            Trikoupi 190A, Kifisia) so Google can reconcile NAP across
+            site meta, JSON-LD, and Maps. The schema additions below
+            feed Google's Knowledge Graph + AI search citations. */}
         <meta name="geo.region" content="GR-A1" />
-        <meta name="geo.placename" content="Athens, Greece" />
-        <meta name="geo.position" content="38.0833;23.8167" />
-        <meta name="ICBM" content="38.0833, 23.8167" />
+        <meta name="geo.placename" content="Kifisia, Greece" />
+        <meta name="geo.position" content="38.0876;23.8084" />
+        <meta name="ICBM" content="38.0876, 23.8084" />
         <meta name="distribution" content="global" />
         <meta name="rating" content="general" />
         <meta name="revisit-after" content="3 days" />
