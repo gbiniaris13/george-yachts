@@ -109,6 +109,26 @@ const Footer = () => {
         { name: "Crewed Charter Greek Islands", href: "/crewed-yacht-charter-greek-islands-2026" },
       ],
     },
+    // 2026-06-10 (GSC-driven). The cost/pricing cluster was absent
+    // from the site index even though "motor yacht charter greece
+    // prices" (pos 12.8) and "athens yacht charter cost" (pos 16.5)
+    // are the closest commercial queries to page one. These pages are
+    // also the site's strongest AI-citation surfaces (Perplexity cites
+    // the Index 6x for cost queries), so site-wide inbound links help
+    // both engines map the cluster.
+    {
+      heading: "Pricing & Charter Data",
+      links: [
+        { name: "Greek Charter Index 2026", href: "/greek-charter-index-2026" },
+        { name: "Complete Pricing Guide 2026", href: "/greek-yacht-charter-2026-complete-pricing-guide" },
+        { name: "Charter Cost Calculator", href: "/tools/charter-cost-calculator" },
+        { name: "What's Included in a Charter", href: "/whats-included-in-greek-yacht-charter-complete-2026-guide" },
+        { name: "APA Explained", href: "/advance-provisioning-allowance-apa-greek-yacht-charter-explained" },
+        { name: "Greek VAT Explained", href: "/greek-yacht-charter-vat-explained-2026" },
+        { name: "Chartering with 12+ Guests", href: "/blog/12-passenger-rule-greek-yacht-charter-groups-of-14" },
+        { name: "Market Reports →", href: "/market-reports" },
+      ],
+    },
     {
       heading: "Explore by Island",
       links: [
