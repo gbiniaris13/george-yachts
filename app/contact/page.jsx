@@ -60,10 +60,14 @@ const contactSchema = {
       postalCode: ATHENS_ADDRESS.postalCode,
       addressCountry: "GR",
     },
+    // 2026-06-10: geo aligned to the Google Business Profile pin
+    // (38.0876, 23.8084) and hours to 24/7, matching
+    // lib/organizationSchema.js exactly so the two schemas never
+    // disagree in Google's eyes.
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 38.0833,
-      longitude: 23.8167,
+      latitude: 38.0876,
+      longitude: 23.8084,
     },
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
@@ -76,8 +80,8 @@ const contactSchema = {
         "Saturday",
         "Sunday",
       ],
-      opens: "09:00",
-      closes: "21:00",
+      opens: "00:00",
+      closes: "23:59",
     },
     contactPoint: [
       {
@@ -301,11 +305,12 @@ export default function ContactPage() {
                   Hours
                 </h2>
                 <p className="text-white/80">
-                  Daily 09:00 – 21:00 Athens time (EET / EEST)
+                  Around the clock, seven days a week
                 </p>
                 <p className="mt-2 text-sm text-white/50">
-                  Hot inquiries answered within 60 minutes during business
-                  hours, within 4 hours otherwise.
+                  A broker answers on the Athens, London and New York
+                  lines at any hour. Hot inquiries within 60 minutes,
+                  everything else within 4 hours.
                 </p>
               </div>
 
