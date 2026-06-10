@@ -411,12 +411,22 @@ const Footer = () => {
               >
                 Book a Consultation
               </a>
+              {/* 2026-06-10 George's decision: lead with the U.S.
+                  registration (American clients feel at home with a US
+                  company + US law contracts) but the public address is
+                  the Athens office — the bare Wyoming registered-agent
+                  address read as a shell company and broke NAP
+                  consistency with GBP/schema (both say Kifisia). UK
+                  number removed sitewide (unanswerable Sonetel line);
+                  US number doubles as the WhatsApp line. */}
               <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", color: "rgba(248, 245, 240,0.3)", lineHeight: 1.8 }}>
                 <span className="block" style={{ fontWeight: 500, color: "rgba(248, 245, 240,0.5)", letterSpacing: "0.1em", textTransform: "uppercase", fontSize: "9px", marginBottom: "8px" }}>
                   <span className="notranslate">George Yachts Brokerage House LLC</span>
                 </span>
-                30 N Gould St, STE R<br />
-                Sheridan, WY 82801, USA
+                A U.S.-registered company (Wyoming, USA)<br />
+                Athens office: Charilaou Trikoupi 190A,<br />
+                Kifisia 145 64, Greece<br />
+                GR +30 697 038 0999 · US +1 786 798 8798 (WhatsApp)
               </div>
             </div>
           </div>

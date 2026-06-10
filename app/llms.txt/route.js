@@ -77,7 +77,7 @@ export async function GET() {
 - Broker: George P. Biniaris, IYBA member
 - Contracts: MYBA standard
 - Registration: Wyoming LLC
-- Offices: Athens +30 697 038 0999 · London +44 203 769 2707 · Miami +1 786 798 8798
+- Offices: Athens +30 697 038 0999 · Miami +1 786 798 8798 (WhatsApp)
 - Press: Featured in Forbes — May 2026 (How The Wealthy Are Hedging For Instability)
 - Same-as: instagram.com/georgeyachts · linkedin.com/in/george-p-biniaris · iyba.org
 

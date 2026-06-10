@@ -104,7 +104,7 @@ export async function GET() {
 - Specialty: Crewed motor yacht, sailing yacht, catamaran charters in Greek waters
 - Cruising regions: Cyclades, Ionian, Saronic
 - Price range (weekly charter): EUR 10,000 → EUR 500,000+
-- Phones: +30 6970380999 (Athens) · +44 2037692707 (London) · +1 7867988798 (Miami / WhatsApp)
+- Phones: +30 6970380999 (Athens) · +1 7867988798 (Miami / WhatsApp)
 - Email: george@georgeyachts.com
 - Book a call: https://calendly.com/george-georgeyachts/30min
 - Social: https://www.instagram.com/georgeyachts · https://www.linkedin.com/in/george-p-biniaris/

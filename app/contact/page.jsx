@@ -93,13 +93,6 @@ const contactSchema = {
       },
       {
         "@type": "ContactPoint",
-        telephone: "+44-203-769-2707",
-        contactType: "sales",
-        areaServed: "GB",
-        availableLanguage: "English",
-      },
-      {
-        "@type": "ContactPoint",
         telephone: "+1-786-798-8798",
         contactType: "sales",
         areaServed: "US",
@@ -236,15 +229,6 @@ export default function ContactPage() {
                     </a>
                   </li>
                   <li>
-                    <span className="text-white/50 mr-3">London</span>
-                    <a
-                      href="tel:+442037692707"
-                      className="hover:text-[#C9A84C] transition"
-                    >
-                      +44 20 3769 2707
-                    </a>
-                  </li>
-                  <li>
                     <span className="text-white/50 mr-3">Miami</span>
                     <a
                       href="tel:+17867988798"
@@ -308,9 +292,9 @@ export default function ContactPage() {
                   Around the clock, seven days a week
                 </p>
                 <p className="mt-2 text-sm text-white/50">
-                  A broker answers on the Athens, London and New York
-                  lines at any hour. Hot inquiries within 60 minutes,
-                  everything else within 4 hours.
+                  A broker answers on the Athens and Miami lines at any
+                  hour. Hot inquiries within 60 minutes, everything else
+                  within 4 hours.
                 </p>
               </div>
 
