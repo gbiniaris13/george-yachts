@@ -426,7 +426,24 @@ const Footer = () => {
                 A U.S.-registered company (Wyoming, USA)<br />
                 Athens office: Charilaou Trikoupi 190A,<br />
                 Kifisia 145 64, Greece<br />
-                GR +30 697 038 0999 · US +1 786 798 8798 (WhatsApp)
+                {/* 2026-06-11: numbers became tappable (tel: / wa.me) —
+                    visually identical, but one thumb-tap now starts the
+                    call/chat. VisitorTracker classifyCTA picks both up
+                    (phone_call / whatsapp) and mirrors them to GA4. */}
+                GR{" "}
+                <a href="tel:+306970380999" style={{ color: "inherit", textDecoration: "none" }} data-cursor="Call">
+                  +30 697 038 0999
+                </a>{" "}
+                · US{" "}
+                <a
+                  href={`https://wa.me/17867988798?text=${encodeURIComponent("Hello George, I'm interested in chartering a yacht in Greece.")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "inherit", textDecoration: "none" }}
+                  data-cursor="WhatsApp"
+                >
+                  +1 786 798 8798 (WhatsApp)
+                </a>
               </div>
             </div>
           </div>

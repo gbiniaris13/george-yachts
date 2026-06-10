@@ -521,6 +521,16 @@ export default function VisitorTracker({ onHotLead }) {
         cta,
         isTest: false,
       });
+      // 2026-06-11: mirror the same click into GA4. The beacon feeds
+      // the CRM lead-scoring only — without this, GA4 can't answer
+      // "which pages produce WhatsApp/call/email clicks". One unified
+      // event (cta_click) + cta_type dimension; existing handcrafted
+      // events (inquiry_submit, calendly_click) keep their names.
+      try {
+        window.gtag?.('event', 'cta_click', { cta_type: cta, page_path: pathname });
+      } catch {
+        /* GA blocked or absent — never break the click */
+      }
     };
     document.addEventListener('click', handler, true);
     return () => document.removeEventListener('click', handler, true);
