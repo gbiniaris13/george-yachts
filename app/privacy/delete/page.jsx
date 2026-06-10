@@ -10,7 +10,7 @@ import Footer from "@/app/components/Footer";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 
 export const metadata = {
-  title: "Request Data Deletion | George Yachts",
+  title: "Request Data Deletion",
   description:
     "Request deletion of your personal data held by George Yachts Brokerage House. We action requests within 30 days per GDPR.",
   alternates: { canonical: "https://georgeyachts.com/privacy/delete" },

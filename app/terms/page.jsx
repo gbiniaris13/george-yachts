@@ -3,7 +3,7 @@ import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
-  title: "Terms of Service | George Yachts",
+  title: "Terms of Service",
   description:
     "Terms of Service for George Yachts Brokerage House LLC — website usage, charter brokerage engagement, and third-party platform integrations.",
   alternates: {

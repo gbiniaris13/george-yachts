@@ -149,7 +149,11 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const post = await getPost(slug);
 
-  if (!post) return { title: "Article Not Found | George Yachts" };
+  // No manual "| George Yachts" here — the layout's title.template
+  // ("%s | George Yachts") appends the brand once. Adding it manually
+  // produced "... | George Yachts | George Yachts" on every post
+  // (found live 2026-06-10).
+  if (!post) return { title: "Article Not Found" };
 
   let description = post.excerpt || null;
 
@@ -176,7 +180,7 @@ export async function generateMetadata({ params }) {
   const canonicalUrl = `https://georgeyachts.com/blog/${slug}`;
 
   return {
-    title: `${post.title} | The Journal | George Yachts`,
+    title: `${post.title} | The Journal`,
     description,
     alternates: {
       canonical: canonicalUrl,

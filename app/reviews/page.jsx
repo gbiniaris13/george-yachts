@@ -13,7 +13,7 @@ const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
 
 export const metadata = {
-  title: "Charter Reviews | George Yachts",
+  title: "Charter Reviews",
   description: "Verified yacht charter reviews from George Yachts clients across Greek waters. IYBA member, MYBA-standard contracts.",
   alternates: { canonical: "https://georgeyachts.com/reviews" },
 };

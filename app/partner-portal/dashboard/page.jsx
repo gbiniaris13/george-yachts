@@ -10,7 +10,7 @@ import LogoutButton from "./LogoutButton";
 import { readSession, SESSION_COOKIE } from "@/lib/partner-portal";
 
 export const metadata = {
-  title: "Partner Dashboard | George Yachts",
+  title: "Partner Dashboard",
   robots: { index: false, follow: false },
 };
 

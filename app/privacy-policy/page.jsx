@@ -4,7 +4,7 @@ import { pageMeta } from "@/lib/pageMeta";
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
-  title: "Privacy Policy | George Yachts",
+  title: "Privacy Policy",
   description:
     "Master Privacy & Data Protection Policy for George Yachts Brokerage House LLC.",
   path: "/privacy-policy",

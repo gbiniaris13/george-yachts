@@ -6,7 +6,7 @@ import { pageMeta } from "@/lib/pageMeta";
 
 // 2026-05-14 — title trimmed 73→55 chars.
 export const metadata = pageMeta({
-  title: "Chris Daskalopoulos — ISO & Insurance | George Yachts",
+  title: "Chris Daskalopoulos — ISO & Insurance",
   description:
     "Meet Chris Daskalopoulos, Marine Insurance & ISO Maritime Compliance Advisor for George Yachts, ensuring safety protocols and international best practices.",
   path: "/team/chris-daskalopoulos",

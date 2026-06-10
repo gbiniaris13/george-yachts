@@ -12,7 +12,7 @@ export async function generateMetadata() {
     if (pp.length) { low = Math.min(...pp); high = Math.max(...pp); }
   } catch {}
   return {
-    title: `Explorer Fleet — Skippered Yacht Charter | George Yachts`,
+    title: `Explorer Fleet — Skippered Yacht Charter`,
     description: `Skippered yacht charters in Greek waters from €${low.toLocaleString()}/person/week. More islands, more adventure — Cyclades, Ionian, Saronic. Brief George.`,
     openGraph: {
       title: "Explorer Fleet | George Yachts",

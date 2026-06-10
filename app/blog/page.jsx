@@ -19,7 +19,7 @@ const freshClient = createClient({
 export const revalidate = 60;
 
 export const metadata = {
-  title: "The Journal | Luxury Yacht Charter Insights | George Yachts",
+  title: "The Journal | Luxury Yacht Charter Insights",
   description:
     "Expert editorial, market analysis, and insider insights on luxury yacht charter in Greece. Booking guides, itinerary tips, industry trends. By George P. Biniaris, Managing Broker.",
   alternates: { canonical: "https://georgeyachts.com/blog" },

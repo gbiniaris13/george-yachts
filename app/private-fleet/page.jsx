@@ -14,7 +14,7 @@ export async function generateMetadata() {
     if (prices.length) { low = Math.min(...prices); high = Math.max(...prices); }
   } catch {}
   return {
-    title: "Private Fleet | Luxury Yacht Charter Greece | George Yachts",
+    title: "Private Fleet | Luxury Yacht Charter Greece",
     description: `Your own world at sea. Full crew. Total discretion. Premium crewed yacht charters in Greek waters — from €${low.toLocaleString()} to €${high.toLocaleString()}/week.`,
     openGraph: {
       title: "Private Fleet | George Yachts",

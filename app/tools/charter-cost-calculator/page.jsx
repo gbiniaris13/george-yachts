@@ -20,7 +20,7 @@ const CREAM = "#F8F5F0";
 export const revalidate = 86400;
 
 export const metadata = {
-  title: "Greek Yacht Charter Cost Calculator 2026 | George Yachts",
+  title: "Greek Yacht Charter Cost Calculator 2026",
   description:
     "Calculate the full cost of a Greek yacht charter - base fee + VAT 13% + APA + delivery + gratuity. Free tool by George Yachts, IYBA member, MYBA-standard contracts.",
   alternates: { canonical: "https://georgeyachts.com/tools/charter-cost-calculator" },

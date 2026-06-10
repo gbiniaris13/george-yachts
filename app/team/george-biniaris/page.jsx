@@ -5,7 +5,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { pageMeta } from "@/lib/pageMeta";
 
 export const metadata = pageMeta({
-  title: "George P. Biniaris — Managing Broker | George Yachts",
+  title: "George P. Biniaris — Managing Broker",
   description:
     "Meet George P. Biniaris, Managing Broker of George Yachts Brokerage House. IYBA member specializing in crewed yacht charters across Greek waters.",
   path: "/team/george-biniaris",

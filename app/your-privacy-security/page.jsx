@@ -5,7 +5,7 @@ import { pageMeta } from "@/lib/pageMeta";
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
-  title: "How We Protect Your Information | George Yachts",
+  title: "How We Protect Your Information",
   description:
     "Learn how George Yachts Brokerage House protects your personal data, documents, and privacy with bank-grade encryption and strict confidentiality protocols.",
   path: "/your-privacy-security",

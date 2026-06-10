@@ -9,7 +9,7 @@ export const revalidate = 86400;
 const URL = "https://georgeyachts.com/yacht-types";
 
 export const metadata = {
-  title: "Yacht Types for Charter in Greece | George Yachts",
+  title: "Yacht Types for Charter in Greece",
   description:
     "Motor yachts, sailing yachts, catamarans, gulets and more - the yacht types we charter in Greek waters, with the trade-offs of each and who they suit.",
   alternates: { canonical: URL },

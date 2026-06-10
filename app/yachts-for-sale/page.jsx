@@ -7,7 +7,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import "@/styles/service-page.css";
 
 export const metadata = {
-  title: "Buy a Yacht in Greece | Off-Market Listings | George Yachts Brokerage",
+  title: "Buy a Yacht in Greece | Off-Market Listings",
   description:
     "Looking to buy a yacht in Greece or the Mediterranean? George Yachts sources off-market and partner listings based on your exact specifications. IYBA member broker, discreet acquisition advisory.",
   alternates: { canonical: "https://georgeyachts.com/yachts-for-sale" },

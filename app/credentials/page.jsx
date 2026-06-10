@@ -26,7 +26,7 @@ import Footer from "@/app/components/Footer";
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
-  title: "Credentials | Forbes · IYBA · MYBA · Wyoming-Athens | George Yachts",
+  title: "Credentials | Forbes · IYBA · MYBA · Wyoming-Athens",
   description:
     "George Yachts is featured in Forbes (May 2026), is an IYBA Charter Active Member, uses MYBA-standard charter contracts, and operates as a Wyoming-registered LLC with Athens-based brokerage operations.",
   alternates: { canonical: "https://georgeyachts.com/credentials" },

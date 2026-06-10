@@ -10,7 +10,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 // 2026-05-14 — title trimmed 65→55 chars (Ahrefs flag); migrated to
 // pageMeta() so og:url/canonical/twitter stay in lockstep.
 export const metadata = pageMeta({
-  title: "Private Jet & Helicopter Charter Greece | George Yachts",
+  title: "Private Jet & Helicopter Charter Greece",
   description:
     "Book private jets and helicopters in Greece with George Yachts. 24/7 bespoke aviation for Athens, Greek islands, and the Mediterranean. Seamless yacht-to-jet coordination.",
   path: "/private-jet-charter",

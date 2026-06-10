@@ -10,7 +10,7 @@ export const revalidate = 86400;
 const URL = "https://georgeyachts.com/islands";
 
 export const metadata = {
-  title: "Yacht Charter by Greek Island | George Yachts",
+  title: "Yacht Charter by Greek Island",
   description:
     "Every Greek island we charter, by region - Cyclades, Ionian, Saronic, Dodecanese, Sporades. Matched yachts, sample routes, and seasonality for each.",
   alternates: { canonical: URL },

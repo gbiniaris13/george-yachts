@@ -5,7 +5,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { pageMeta } from "@/lib/pageMeta";
 
 export const metadata = pageMeta({
-  title: "George Katrantzos — U.S. Partner | George Yachts",
+  title: "George Katrantzos — U.S. Partner",
   description:
     "Meet George Katrantzos, U.S. Partner & Sales Director for George Yachts. Bridging Greek luxury with the sophistication of the U.S. market.",
   path: "/team/george-katrantzos",

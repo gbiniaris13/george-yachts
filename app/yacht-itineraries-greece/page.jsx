@@ -9,7 +9,7 @@ import { pageMeta } from "@/lib/pageMeta";
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 // 2026-05-14 — title trimmed 67→55 chars (Ahrefs flag).
 export const metadata = pageMeta({
-  title: "Signature Yacht Itineraries Greece | George Yachts",
+  title: "Signature Yacht Itineraries Greece",
   description:
     "3 signature Greek yacht charter itineraries personally sailed by George Biniaris. Cyclades Classic, Saronic Elegance, Ionian Dream. Day-by-day routes with insider tips.",
   path: "/yacht-itineraries-greece",

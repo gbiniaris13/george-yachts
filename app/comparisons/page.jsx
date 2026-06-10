@@ -9,7 +9,7 @@ export const revalidate = 86400;
 const URL = "https://georgeyachts.com/comparisons";
 
 export const metadata = {
-  title: "Greece vs Other Charter Destinations | George Yachts",
+  title: "Greece vs Other Charter Destinations",
   description:
     "How Greek yacht charter compares to Croatia, the French Riviera, Italy, Turkey and the Caribbean - honest UHNW decision guides on price, weather and crowds.",
   alternates: { canonical: URL },

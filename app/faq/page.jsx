@@ -9,7 +9,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 // canonical stay in lockstep. Ahrefs flagged this page as inheriting
 // the homepage OG (title/description/url all wrong).
 export const metadata = pageMeta({
-  title: "Yacht Charter FAQ | George Yachts",
+  title: "Yacht Charter FAQ",
   description:
     "Answers to the questions UHNW guests ask before booking a crewed yacht charter in Greece — booking process, APA, MYBA contracts, costs, itineraries.",
   path: "/faq",

@@ -24,9 +24,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { cluster: clusterSlug } = await params;
   const cluster = getClusterBySlug(clusterSlug);
-  if (!cluster) return { title: "Topic | George Yachts" };
+  if (!cluster) return { title: "Topic" };
   return {
-    title: `${cluster.title} | George Yachts Journal`,
+    title: `${cluster.title} | The Journal`,
     description: cluster.intro.slice(0, 158),
     openGraph: {
       title: `${cluster.title} | George Yachts`,

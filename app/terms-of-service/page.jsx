@@ -3,7 +3,7 @@ import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
 import { pageMeta } from "@/lib/pageMeta";
 
 export const metadata = pageMeta({
-  title: "Terms of Service | George Yachts",
+  title: "Terms of Service",
   description:
     "Global Terms of Service & Brokerage Agreement for George Yachts Brokerage House LLC.",
   path: "/terms-of-service",

@@ -9,7 +9,7 @@ import { pageMeta } from "@/lib/pageMeta";
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 // 2026-05-14 — title trimmed from 67→48 chars (Ahrefs flag).
 export const metadata = pageMeta({
-  title: "Our Team | George Yachts",
+  title: "Our Team",
   description:
     "Meet the brokers, luxury travel liaisons, and maritime advisors behind George Yachts Brokerage House — boutique yacht brokerage based in Athens.",
   path: "/team",

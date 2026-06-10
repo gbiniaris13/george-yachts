@@ -9,7 +9,7 @@ export const revalidate = 86400;
 const URL = "https://georgeyachts.com/best-yachts";
 
 export const metadata = {
-  title: "Best Yachts in Greece by Use Case | George Yachts",
+  title: "Best Yachts in Greece by Use Case",
   description:
     "Curated 'best yacht for...' guides for Greek charter - large groups, families, couples, corporate, speed, August superyachts and more.",
   alternates: { canonical: URL },

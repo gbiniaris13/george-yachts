@@ -9,7 +9,7 @@ import { pageMeta } from "@/lib/pageMeta";
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 // 2026-05-14 — title trimmed 64→52 chars (Ahrefs flag).
 export const metadata = pageMeta({
-  title: "Luxury Villas Greece | Curated | George Yachts",
+  title: "Luxury Villas Greece | Curated",
   description:
     "Luxury villas in Mykonos, Paros, Santorini, Athens Riviera. Curated privately through our partner network. Beachfront estates, chef service, yacht+villa packages.",
   path: "/luxury-villas-greece",

@@ -3,7 +3,7 @@ import LoginForm from "./LoginForm";
 import Footer from "@/app/components/Footer";
 
 export const metadata = {
-  title: "Partner Portal | George Yachts",
+  title: "Partner Portal",
   description:
     "Approved travel-trade partners — sign in to access white-label assets, commission updates, and priority allocation.",
   robots: { index: false, follow: false },

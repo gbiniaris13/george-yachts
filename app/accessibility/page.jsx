@@ -5,7 +5,7 @@ import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
 import { pageMeta } from "@/lib/pageMeta";
 
 export const metadata = pageMeta({
-  title: "Accessibility Statement | George Yachts",
+  title: "Accessibility Statement",
   description:
     "George Yachts is committed to ensuring digital accessibility for people with disabilities. Learn about our accessibility standards and ongoing efforts.",
   path: "/accessibility",

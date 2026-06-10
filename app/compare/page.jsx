@@ -78,7 +78,7 @@ export async function generateMetadata({ searchParams }) {
   const names = yachts.map((y) => y.name).join(" vs ");
   const titleNames = names || "Yachts";
   return pageMeta({
-    title: `${titleNames} — Charter Comparison | George Yachts`,
+    title: `${titleNames} — Charter Comparison`,
     description: `Honest specs and weekly-rate comparison of ${titleNames} for crewed charter in Greek waters. Built by IYBA-member brokers at George Yachts.`,
     path: `/compare?yachts=${slugs.join(",")}`,
   });

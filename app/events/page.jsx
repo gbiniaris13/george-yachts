@@ -8,7 +8,7 @@ import { pageMeta } from "@/lib/pageMeta";
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
-  title: "Yacht Shows & Events 2026 | George Yachts",
+  title: "Yacht Shows & Events 2026",
   description:
     "Meet George Yachts at the world's leading yacht shows — Monaco Yacht Show, MEDYS Athens, Cannes Yachting Festival, Antibes Yacht Show, and more.",
   path: "/events",

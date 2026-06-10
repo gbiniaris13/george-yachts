@@ -9,7 +9,7 @@ import { pageMeta } from "@/lib/pageMeta";
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 // 2026-05-14 — title trimmed 71→55 chars (Ahrefs flag).
 export const metadata = pageMeta({
-  title: "VIP Transfers Greece | Luxury Chauffeur | George Yachts",
+  title: "VIP Transfers Greece | Luxury Chauffeur",
   description:
     "Luxury VIP transfers in Athens, Mykonos, Santorini, and across Greece. Professional chauffeurs, premium vehicles. Airport to marina, seamless coordination with yacht charters.",
   path: "/vip-transfers-greece",

@@ -2,7 +2,7 @@ import Footer from "@/components/Footer";
 import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
 
 export const metadata = {
-  title: "Privacy Policy | George Yachts",
+  title: "Privacy Policy",
   description:
     "Privacy Policy for George Yachts Brokerage House LLC — data handling, GDPR / CCPA compliance, and third-party platform integrations.",
   alternates: {
