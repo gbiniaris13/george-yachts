@@ -1,6 +1,7 @@
 // Bridge (clients) full-auto newsletter cron.
 //
-// Fires every Tuesday 13:00 UTC (~16:00 Athens). The cadence gate inside
+// Tuesday send day for the clients stream (the wake/advisors stream
+// fires Thursdays). Fires every Tuesday 13:00 UTC (~16:00 Athens). The cadence gate inside
 // runAutoSend decides whether to actually send (2/month Jan–Mar, else
 // 1/month). Sends nothing unless AUTO_SEND_ENABLED=true (else dry-run
 // preview email to George). Append ?force=1 with the CRON_SECRET to
