@@ -37,12 +37,12 @@
       "schedule": "30 0 * * *"
     },
     {
-      "path": "/api/cron/newsletter-bridge-auto",
-      "schedule": "0 6 * * 4"
+      "path": "/api/cron/newsletter-bridge-autosend",
+      "schedule": "0 13 * * 2"
     },
     {
-      "path": "/api/cron/newsletter-wake-auto",
-      "schedule": "0 6 15 * *"
+      "path": "/api/cron/newsletter-wake-autosend",
+      "schedule": "0 13 * * 4"
     },
     {
       "path": "/api/cron/newsletter-compass-auto",

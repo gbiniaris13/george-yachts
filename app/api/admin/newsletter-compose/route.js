@@ -167,7 +167,11 @@ async function buildOneDraft({
   // Telegram approval card. If validator blocked, fire a different
   // card explaining WHY (with evidence) without action buttons.
   let tg;
-  if (!validation.ok) {
+  if (payload.suppress_telegram) {
+    // Full-auto path (auto-send orchestrator) notifies George by email
+    // instead — skip the Telegram card entirely.
+    tg = { ok: true, message_id: null };
+  } else if (!validation.ok) {
     // Build per-violation lines with evidence so George knows EXACTLY
     // which sentence/phrase tripped the rule. Without this he has to
     // guess, which is the diagnostic gap that surfaced 2026-04-29.
@@ -303,19 +307,26 @@ export async function POST(request) {
   // Type-specific slot validation.
   let yacht = null;
   let post = null;
-  if (content_type === "announcement" || content_type === "offer") {
+  if (
+    content_type === "announcement" ||
+    content_type === "offer" ||
+    content_type === "spotlight"
+  ) {
     if (payload.yacht_slug) {
       const r = await getYachtForNewsletter(payload.yacht_slug);
       if (!r.ok) {
         return NextResponse.json(
           { error: r.error },
-          { status: content_type === "announcement" ? 404 : 400 },
+          { status: content_type === "offer" ? 400 : 404 },
         );
       }
       yacht = r.yacht;
-    } else if (content_type === "announcement") {
+    } else if (
+      content_type === "announcement" ||
+      content_type === "spotlight"
+    ) {
       return NextResponse.json(
-        { error: "yacht_slug required for announcement" },
+        { error: `yacht_slug required for ${content_type}` },
         { status: 400 },
       );
     }
