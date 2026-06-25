@@ -83,13 +83,13 @@ const CookiePolicy = () => {
           <ul className="list-disc pl-5 space-y-2 mt-2" style={{ color: "rgba(248, 245, 240,0.5)" }}>
             <li><strong className="text-white">Cloudflare</strong> — network security, bot mitigation, and reliable delivery of the Site.</li>
             <li><strong className="text-white">Session and consent storage</strong> — remembers your cookie choices and keeps the Site working.</li>
+            <li><strong className="text-white">Google reCAPTCHA</strong> — protects our forms from spam and abuse; loaded for security on a legitimate-interest basis.</li>
           </ul>
         </Section>
 
-        <Section number={4} title="Functional — consent required">
+        <Section number={4} title="Functional — loaded on request">
           <ul className="list-disc pl-5 space-y-2 mt-2" style={{ color: "rgba(248, 245, 240,0.5)" }}>
-            <li><strong className="text-white">Calendly</strong> — when you open the scheduling tool to book a consultation.</li>
-            <li><strong className="text-white">Google reCAPTCHA</strong> — protects our forms from spam and bots.</li>
+            <li><strong className="text-white">Calendly</strong> — loaded only when you open the scheduling tool to book a consultation.</li>
           </ul>
         </Section>
 

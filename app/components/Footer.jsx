@@ -651,6 +651,16 @@ const Footer = () => {
                 {link.name}
               </Link>
             ))}
+            {/* 2026-06-25 — re-open the self-hosted cookie-consent banner
+                (replaces Cookiebot's renewal link). */}
+            <button
+              type="button"
+              onClick={() => { if (typeof window !== "undefined" && window.gyOpenCookieSettings) window.gyOpenCookieSettings(); }}
+              className="text-white/30 hover:text-[#C9A84C] transition-colors duration-300"
+              style={{ fontFamily: "var(--gy-font-ui)", fontSize: "8px", letterSpacing: "0.12em", textTransform: "uppercase", background: "none", border: "none", cursor: "pointer", padding: 0 }}
+            >
+              Cookie Settings
+            </button>
           </div>
 
           {/* Copyright */}

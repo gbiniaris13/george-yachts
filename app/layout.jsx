@@ -24,6 +24,7 @@ import SoundFx from "./components/SoundFx";
 import ScrollToTop from "./components/ScrollToTop";
 import WhatsAppButton from "./components/WhatsAppButton";
 import PushOptIn from "./components/PushOptIn";
+import CookieConsent from "./components/CookieConsent";
 // 2026-05-18 — PostHog provider (free 1M events/mo). Inert until
 // NEXT_PUBLIC_POSTHOG_KEY env var is set in Vercel.
 import PostHogProvider from "./components/PostHogProvider";
@@ -362,14 +363,12 @@ export default async function RootLayout({ children }) {
         {/* AI-search hints (non-standard but parsed by some AI crawlers) */}
         <meta name="ai-content-declaration" content="human-authored" />
         <meta name="ai-search-priority" content="yacht-charter-greece, luxury-yacht-charter-greek-islands, crewed-yacht-charter-cyclades, motor-yacht-charter-mykonos, sailing-yacht-charter-ionian, superyacht-charter-greece" />
-        <Script
-          id="Cookiebot"
-          src="https://consent.cookiebot.com/uc.js"
-          strategy="lazyOnload"
-          data-cbid="68bdc358-3b91-4c4e-a5e8-b0b4c2cbd294"
-          data-blockingmode="auto"
-          type="text/javascript"
-        />
+        {/* 2026-06-25 — Cookiebot REMOVED (paid dependency beyond its
+            50-page free tier; George: "no subscriptions"). Replaced by a
+            free, self-hosted consent system: <CookieConsent /> banner +
+            Google Consent Mode v2 defaults (set with the GA4 init below)
+            + the consent-gated <MicrosoftClarity />. Zero cost, covers all
+            pages, fully owned, brand-matched. */}
       </head>
 
       <body
@@ -512,6 +511,9 @@ export default async function RootLayout({ children }) {
         {/* Visitor Intelligence: real-time tracking + hot lead popup */}
         <VisitorIntelligence />
 
+        {/* Free, self-hosted cookie-consent banner (replaces Cookiebot). */}
+        <CookieConsent />
+
         {/* 3. Analytics & Tracking */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-CM483Z0JT5"
@@ -522,6 +524,29 @@ export default async function RootLayout({ children }) {
           window.dataLayer = window.dataLayer || [];
           function gtag(){window.dataLayer.push(arguments);}
           gtag('js', new Date());
+          // Google Consent Mode v2 — DENY analytics/ads storage by default
+          // so GA4 sets no identifying cookies until the visitor opts in via
+          // <CookieConsent />. If they already consented (prior visit), grant
+          // immediately from the stored decision. The banner calls
+          // gtag('consent','update',...) on Accept (see lib/consent.js).
+          gtag('consent', 'default', {
+            analytics_storage: 'denied',
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            wait_for_update: 500
+          });
+          try {
+            var __c = JSON.parse(localStorage.getItem('gy_cookie_consent') || 'null');
+            if (__c && __c.version === 1 && __c.analytics) {
+              gtag('consent', 'update', {
+                analytics_storage: 'granted',
+                ad_storage: 'granted',
+                ad_user_data: 'granted',
+                ad_personalization: 'granted'
+              });
+            }
+          } catch (e) {}
           gtag('config', 'G-CM483Z0JT5');
           `}
         </Script>
