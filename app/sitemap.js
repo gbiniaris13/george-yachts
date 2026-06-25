@@ -91,6 +91,13 @@ const staticRoutes = [
   { path: "/charter-calendar-heat-map", priority: 0.78, changeFrequency: "monthly" },
   { path: "/charter-cost-estimator", priority: 0.78, changeFrequency: "monthly" },
   { path: "/island-quiz", priority: 0.8, changeFrequency: "monthly" },
+  // 2026-06-25: both were live + indexable (robots index,follow) but
+  // absent from the sitemap, so Ahrefs flagged them "indexable not in
+  // sitemap". /yacht-finder is a high-intent matching tool; /newsletter
+  // is the signup landing. Both self-canonical with no duplicate twin —
+  // safe to fold into the canonical sitemap.
+  { path: "/yacht-finder", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/newsletter", priority: 0.5, changeFrequency: "monthly" },
   { path: "/yacht-size-visualizer", priority: 0.8, changeFrequency: "monthly" },
   { path: "/proposal-generator", priority: 0.7, changeFrequency: "monthly" },
   { path: "/pricing-calendar", priority: 0.8, changeFrequency: "weekly" },
@@ -410,16 +417,32 @@ export default async function sitemap() {
 
   let yachtEntries = [];
   try {
+    // 2026-06-25: image sitemap. The fleet's professional photography is
+    // the strongest visual asset on the site, but the yacht entries
+    // shipped URL-only — so Google Images had no declared images to index
+    // for "luxury yacht greece"-type visual searches, and AI engines that
+    // read sitemaps got no image signal. Pull up to 3 real photos per
+    // yacht and attach them via Next.js's `images` field (rendered as
+    // <image:image> tags). Real Sanity CDN URLs only — no placeholders.
     const yachts = await sanityClient.fetch(
-      `*[_type == "yacht" && defined(slug.current)]{ "slug": slug.current, _updatedAt }`
+      `*[_type == "yacht" && defined(slug.current)]{
+        "slug": slug.current, _updatedAt,
+        "images": images[0..2].asset->url
+      }`
     );
-    yachtEntries = yachts.map((yacht) => ({
-      url: `${BASE_URL}/yachts/${yacht.slug}`,
-      // Sanity always populates _updatedAt; the fallback is defensive.
-      lastModified: yacht._updatedAt || LAST_REFRESH.STATIC,
-      changeFrequency: "weekly",
-      priority: 0.75,
-    }));
+    yachtEntries = yachts.map((yacht) => {
+      const imgs = Array.isArray(yacht.images)
+        ? yacht.images.filter((u) => typeof u === "string" && u)
+        : [];
+      return {
+        url: `${BASE_URL}/yachts/${yacht.slug}`,
+        // Sanity always populates _updatedAt; the fallback is defensive.
+        lastModified: yacht._updatedAt || LAST_REFRESH.STATIC,
+        changeFrequency: "weekly",
+        priority: 0.75,
+        ...(imgs.length ? { images: imgs } : {}),
+      };
+    });
   } catch (error) {
     console.error("Sitemap: failed to fetch yachts", error);
   }

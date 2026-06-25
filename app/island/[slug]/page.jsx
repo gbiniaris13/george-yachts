@@ -24,6 +24,7 @@ import IslandPageTracker from "./IslandPageTracker";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import QuizCtaCard from "@/app/components/QuizCtaCard";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import { pageMeta } from "@/lib/pageMeta";
 
 export const revalidate = 3600;
 
@@ -35,17 +36,25 @@ export async function generateMetadata({ params }) {
   const { slug: islandSlug } = await params;
   const island = getIslandBySlug(islandSlug);
   if (!island) return { title: "Yacht Charter Greece" };
-  return {
-    title: `Yacht Charter ${island.name}`,
+  // 2026-06-25: islands were the bulk of Ahrefs "Open Graph tags
+  // incomplete" (135 pages). They hand-rolled an openGraph block with
+  // NO image, so every shared /yacht-charter-<island> link previewed
+  // imageless on WhatsApp/LinkedIn/Slack — a lost click each time.
+  // Route through pageMeta() (the canonical helper that already powers
+  // the compare/glossary pages) with a per-island branded OG image from
+  // the dynamic /api/og generator, so each link previews with the island
+  // name set in the Cinzel/Trajan card. pageMeta also adds the twitter
+  // card + locale the hand-rolled block was missing.
+  const title = `Yacht Charter ${island.name}`;
+  const ogImage = `https://georgeyachts.com/api/og?title=${encodeURIComponent(
+    title,
+  )}&eyebrow=${encodeURIComponent(island.region || "Luxury Yacht Charter Greece")}`;
+  return pageMeta({
+    title,
     description: island.whyVisit.slice(0, 158),
-    openGraph: {
-      title: `Yacht Charter ${island.name}`,
-      description: island.whyVisit.slice(0, 158),
-      type: "website",
-      url: `https://georgeyachts.com/yacht-charter-${island.slug}`,
-    },
-    alternates: { canonical: `https://georgeyachts.com/yacht-charter-${island.slug}` },
-  };
+    path: `/yacht-charter-${island.slug}`,
+    image: ogImage,
+  });
 }
 
 async function loadIslandData(island) {
