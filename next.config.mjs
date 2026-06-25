@@ -296,6 +296,29 @@ const nextConfig = {
         destination: "/best-motor-yachts-greece-speed",
         permanent: true,
       },
+      // 2026-06-25 — legal-page consolidation (per legal research).
+      // The site had duplicate legal pages: /privacy + /privacy-policy,
+      // /terms + /terms-of-service, plus a thin /your-privacy-security.
+      // The footer + sitemap already point at /privacy-policy and
+      // /terms-of-service as canonical, so 301 the duplicates into them.
+      // This removes the duplicate-content/legal-clarity risk. (The
+      // NEW consolidated legal COPY is held for attorney sign-off + the
+      // real EIN before it replaces the canonical pages' text.)
+      {
+        source: "/privacy",
+        destination: "/privacy-policy",
+        permanent: true,
+      },
+      {
+        source: "/terms",
+        destination: "/terms-of-service",
+        permanent: true,
+      },
+      {
+        source: "/your-privacy-security",
+        destination: "/privacy-policy",
+        permanent: true,
+      },
     ];
   },
 };

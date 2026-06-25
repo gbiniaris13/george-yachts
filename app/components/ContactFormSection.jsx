@@ -507,7 +507,7 @@ const ContactFormSection = () => {
                 </div>
               </div>
               <p className="text-center text-[9px] text-white/50 mt-4 tracking-wider">
-                Your data is protected with bank-grade encryption. <a href="/your-privacy-security" className="text-[#C9A84C]/70 hover:text-[#C9A84C] underline transition-colors">Learn how we protect your information</a>
+                Your data is protected with bank-grade encryption. <a href="/privacy-policy" className="text-[#C9A84C]/70 hover:text-[#C9A84C] underline transition-colors">Learn how we protect your information</a>
               </p>
             </div>
 

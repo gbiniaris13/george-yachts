@@ -163,7 +163,8 @@ const staticRoutes = [
   { path: "/terms-of-service", priority: 0.2, changeFrequency: "yearly" },
   { path: "/cookie-policy", priority: 0.2, changeFrequency: "yearly" },
   { path: "/privacy-policy", priority: 0.2, changeFrequency: "yearly" },
-  { path: "/your-privacy-security", priority: 0.2, changeFrequency: "yearly" },
+  // 2026-06-25: /your-privacy-security now 301-redirects to /privacy-policy
+  // (legal-page consolidation), so it is dropped from the sitemap.
 ];
 
 export default async function sitemap() {
