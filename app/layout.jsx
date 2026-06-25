@@ -23,6 +23,7 @@ import ScrollProgress from "./components/ScrollProgress";
 import SoundFx from "./components/SoundFx";
 import ScrollToTop from "./components/ScrollToTop";
 import WhatsAppButton from "./components/WhatsAppButton";
+import PushOptIn from "./components/PushOptIn";
 // 2026-05-18 — PostHog provider (free 1M events/mo). Inert until
 // NEXT_PUBLIC_POSTHOG_KEY env var is set in Vercel.
 import PostHogProvider from "./components/PostHogProvider";
@@ -451,6 +452,12 @@ export default async function RootLayout({ children }) {
             strip — cleaner placement, no floating pill clashing with
             social icons or the hero content. */}
         <WhatsAppButton />
+        {/* 2026-06-25 — Web Push opt-in. Discreet, contextual (high-intent
+            pages only), dismissible; bottom-LEFT so it never clashes with
+            the WhatsApp FAB bottom-right. Push-only service worker, so it
+            cannot affect page loads. Free owned channel for last-minute
+            availability. Needs VAPID_PRIVATE_KEY in Vercel to send. */}
+        <PushOptIn />
         {/* Phase 1 / B2 (luxury rebuild, 2026-05-05) — multi-channel
             contact drawer (WhatsApp / iMessage / Signal / direct call).
             Sits above the WhatsApp FAB; one tap surfaces every channel

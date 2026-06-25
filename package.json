@@ -37,6 +37,7 @@
     "swiper": "^12.0.3",
     "three": "^0.184.0",
     "topojson-client": "^3.1.0",
+    "web-push": "^3.6.7",
     "yet-another-react-lightbox": "^3.28.0",
     "zod": "^4.4.3"
   },
