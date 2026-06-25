@@ -20,7 +20,13 @@ export async function generateMetadata({ params }) {
   const term = getGlossaryTermBySlug(slug);
   if (!term) return {};
   return {
-    title: term.seoTitle,
+    // 2026-06-25: `absolute` suppresses the site-wide "%s | George Yachts"
+    // template suffix (+16 chars) on these deep glossary definition pages.
+    // The seoTitles are self-descriptive and keyword-front-loaded; the brand
+    // lives in og:site_name + the OG image, so repeating it in the <title>
+    // only pushed every term page past Google's ~60-char display limit
+    // (Ahrefs "Title too long"). Recency "(2026)" is kept in each seoTitle.
+    title: { absolute: term.seoTitle },
     description: term.seoDescription,
     alternates: { canonical: term.canonical },
     openGraph: {

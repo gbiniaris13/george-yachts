@@ -46,7 +46,10 @@ async function getReport() {
 export async function generateMetadata() {
   const report = (await getReport()) || CHARTER_INDEX_2026;
   return {
-    title: `${report.title} | Original Charter Data`,
+    // 2026-06-25: `absolute` — report.title already leads with the brand
+    // ("George Yachts Greek Charter Index 2026"), so the descriptor tail +
+    // the site-wide template suffix pushed this to 78 chars with brand twice.
+    title: { absolute: report.title },
     description:
       (report.intro || "Original George Yachts data on Greek crewed yacht charter rates and trends.").slice(0, 158),
     alternates: { canonical: URL },

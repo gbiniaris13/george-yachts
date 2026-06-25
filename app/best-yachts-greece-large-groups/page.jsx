@@ -7,7 +7,7 @@ const PAGE = getBestYachtsPageBySlug(SLUG);
 export const revalidate = 86400;
 
 export const metadata = {
-  title: PAGE.seoTitle,
+  title: { absolute: PAGE.seoTitle },
   description: PAGE.seoDescription,
   alternates: { canonical: `https://georgeyachts.com/best-yachts-greece-large-groups` },
   openGraph: {

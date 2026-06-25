@@ -7,7 +7,7 @@ const PAGE = getMarketReportBySlug(SLUG);
 export const revalidate = 86400;
 
 export const metadata = {
-  title: PAGE.seoTitle,
+  title: { absolute: PAGE.seoTitle },
   description: PAGE.seoDescription,
   alternates: { canonical: PAGE.canonical },
   openGraph: {

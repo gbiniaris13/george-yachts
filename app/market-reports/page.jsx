@@ -21,7 +21,9 @@ const CREAM = "#F8F5F0";
 export const revalidate = 86400;
 
 export const metadata = {
-  title: "Greek Yacht Charter Market Reports | George Yachts Research",
+  // 2026-06-25: `absolute` to avoid the double brand the site-wide
+  // "%s | George Yachts" template otherwise appends (was 75 chars).
+  title: { absolute: "Greek Yacht Charter Market Reports | George Yachts" },
   description:
     "Quarterly and forecast research on the Greek yacht charter market — original data from George Yachts Brokerage House. Authored by George P. Biniaris.",
   alternates: { canonical: "https://georgeyachts.com/market-reports" },
