@@ -25,6 +25,17 @@
 4. **First-time charter:** Τι περιλαμβάνεται, τι όχι (τα 6 hidden costs από τον οδηγό), πότε να κλείσεις (lead times).
 5. **Meltemi/seasickness:** Stabilisers 101 (fins vs zero-speed gyros), ποιες περιοχές είναι wind-protected, routing tricks.
 
-## Cadence
+## Cadence + ΔΙΟΡΘΩΣΗ (2026-06-25)
 
-2-3 απαντήσεις/εβδομάδα, 15' με τα drafts έτοιμα. Εγώ σκανάρω εβδομαδιαία για νέα threads υψηλής αξίας (στο εβδομαδιαίο GSC routine) και σου στέλνω λίστα + draft.
+**ΣΗΜΑΝΤΙΚΟ — το Reddit ΔΕΝ σκανάρεται αυτόματα:** το μπλοκάρει το Chrome
+extension (safety), το JSON API απορρίπτει το curl, και το Reddit απαγορεύει
+τον crawler της Anthropic. Η παλιά υπόσχεση «σκανάρω εβδομαδιαία το Reddit»
+ΔΕΝ ισχύει. Ο πραγματικός, ασφαλής loop:
+
+1. Ο George βλέπει thread (κανονική περιήγηση) Ή κάνει paste το thread στον Claude.
+2. Επαναλαμβανόμενη ερώτηση → paste έτοιμη πλήρη απάντηση από το
+   **reddit-ready-answers.md** (30''), ελαφρώς προσαρμοσμένη.
+3. Νέα ερώτηση → ο Claude γράφει tailored απάντηση, ο George ποστάρει.
+
+Ρυθμός: 2-3 απαντήσεις/εβδομάδα. Το ποστάρισμα είναι ΠΑΝΤΑ ανθρώπινο — ο μόνος
+ασφαλής + αποδοτικός τρόπος (τα bots τρώνε ban).
