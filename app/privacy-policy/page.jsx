@@ -6,7 +6,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: "Privacy Policy",
   description:
-    "Master Privacy & Data Protection Policy for George Yachts Brokerage House LLC.",
+    "How George Yachts Brokerage House LLC collects, uses, and protects your personal data — GDPR, Greek law, UK GDPR, and CCPA rights.",
   path: "/privacy-policy",
 });
 
@@ -43,7 +43,7 @@ const PrivacyPolicy = () => {
             Data Protection
           </p>
           <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#F8F5F0", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "16px" }}>
-            Master Privacy & Data Protection Policy
+            Privacy Policy
           </h1>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", letterSpacing: "0.2em", color: "rgba(248, 245, 240,0.35)", textTransform: "uppercase", marginBottom: "32px" }}>
             George Yachts Brokerage House LLC
@@ -55,236 +55,225 @@ const PrivacyPolicy = () => {
 
       {/* --- CONTENT SECTION --- */}
       <div className="container mx-auto max-w-3xl px-6 py-24">
-        <Section number={1} title="I. EXECUTIVE PRIVACY STATEMENT & FIDUCIARY DUTY">
+        <Section number={1} title="Who we are">
           <p>
-            GEORGE YACHTS BROKERAGE HOUSE LLC (the "Company") operates at the
-            highest echelon of the international maritime brokerage industry. We
-            strictly recognize that our discerning global clientele requires
-            absolute discretion and unparalleled digital security. This Master
-            Policy delineates our rigorous, institutional-grade protocols for
-            the collection, cryptographic encryption, and professional
-            processing of personally identifiable information (PII) and
-            sensitive financial documentation.
+            George Yachts Brokerage House LLC ("George Yachts", "we", "us") is
+            the data controller for personal data collected through
+            georgeyachts.com (the "Site"). We are a limited liability company
+            registered in Wyoming, USA, operating from our office at Charilaou
+            Trikoupi 190A, Kifisia 145 64, Athens, Greece.
+          </p>
+          <p>
+            George Yachts is a luxury crewed yacht charter broker and
+            intermediary. We arrange charters between clients and third-party
+            yacht owners and central agents; we do not own or operate the
+            yachts, and we do not take payments or process bookings on this
+            Site. The Site generates inquiries only. Any charter is contracted
+            separately, offline, under a MYBA-standard Charter Agreement.
+          </p>
+          <p>
+            Because we operate from an establishment in Greece, our processing
+            is governed by the EU General Data Protection Regulation (GDPR),
+            Greek Law 4624/2019, and Greek Law 3471/2006 (ePrivacy). Visitors in
+            the United Kingdom are additionally protected by the UK GDPR.
           </p>
         </Section>
 
-        <Section number={2} title="II. GLOBAL REGULATORY COMPLIANCE">
-          <p>
-            As a Wyoming-domiciled limited liability company facilitating
-            bespoke charter operations across the Mediterranean and
-            internationally, our data infrastructure is engineered to comply
-            with the most stringent global privacy frameworks. This encompasses:
-          </p>
+        <Section number={2} title="The personal data we collect">
+          <p>We deliberately collect minimal data:</p>
           <ul className="list-disc pl-5 space-y-2 mt-4" style={{ color: "rgba(248, 245, 240,0.5)" }}>
             <li>
-              <strong className="text-white">
-                The General Data Protection Regulation (GDPR)
-              </strong>{" "}
-              for our European clientele.
+              <strong className="text-white">Inquiry form:</strong> your name,
+              email, phone number, number of guests, indicative budget, and the
+              content of your message.
             </li>
             <li>
-              <strong className="text-white">
-                The California Consumer Privacy Act (CCPA/CPRA)
-              </strong>{" "}
-              for our US-based network.
+              <strong className="text-white">Newsletter signup:</strong> your
+              email address (and which journal you subscribed to).
             </li>
             <li>
-              <strong className="text-white">The Statutory Mandates</strong> of
-              the State of Wyoming, USA.
+              <strong className="text-white">Consultation booking (Calendly):</strong>{" "}
+              name, email, and scheduling details.
+            </li>
+            <li>
+              <strong className="text-white">Automatically:</strong> IP address,
+              device/browser information, and usage data — for non-essential
+              analytics, only with your consent (see our{" "}
+              <a href="/cookie-policy" className="text-[#C9A84C] hover:underline">Cookie Policy</a>).
             </li>
           </ul>
-        </Section>
-
-        <Section number={3} title="III. TAXONOMY OF PROCESSED DATA">
-          <p>
-            To deliver a seamless, high-end advisory service, we classify and
-            process data under strict confidentiality protocols:
+          <p className="mt-4">
+            We do not intentionally collect special categories of data (GDPR
+            Art. 9). Please do not include health, political, or other sensitive
+            information in free-text fields. Where a charter proceeds, any
+            identity or compliance documentation is handled offline by the
+            relevant central agent or owner under the charter agreement, not
+            collected through this Site.
           </p>
-          <div className="space-y-6 mt-4">
-            <div>
-              <h3 className="text-white font-bold tracking-wider mb-2">
-                Inquiry & CRM Coordinates
-              </h3>
-              <p>
-                Contact details, preferred cruising itineraries (e.g., Ionian,
-                Cyclades, Saronic), and vessel preferences voluntarily submitted
-                via our encrypted digital portals.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-white font-bold tracking-wider mb-2">
-                Highly Confidential Client Data (KYC/AML)
-              </h3>
-              <p>
-                During the advanced stages of formal charter execution,
-                international maritime law and financial regulatory bodies
-                mandate the collection of precise documentation. This includes
-                passport copies, official identification, and financial
-                coordinates strictly for Know Your Customer (KYC) and Anti-Money
-                Laundering (AML) compliance.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-white font-bold tracking-wider mb-2">
-                Digital Telemetry
-              </h3>
-              <p>
-                Aggregated diagnostic data (IP addresses, session behavior)
-                utilized solely to optimize the user experience and
-                architectural performance of our platform.
-              </p>
-            </div>
-          </div>
         </Section>
 
-        <Section number={4} title="IV. STRATEGIC THIRD-PARTY ARCHITECTURE">
+        <Section number={3} title="Why we process your data, and our legal bases">
+          <ul className="list-disc pl-5 space-y-3 mt-2" style={{ color: "rgba(248, 245, 240,0.5)" }}>
+            <li>
+              <strong className="text-white">To respond to your inquiry</strong>{" "}
+              and take steps at your request before a charter is arranged —
+              GDPR Art. 6(1)(b) (pre-contractual steps).
+            </li>
+            <li>
+              <strong className="text-white">To send our newsletter</strong> —
+              Art. 6(1)(a) (consent); withdraw anytime via the unsubscribe link.
+            </li>
+            <li>
+              <strong className="text-white">Analytics</strong> (Google
+              Analytics 4, Microsoft Clarity) — Art. 6(1)(a) (consent), loaded
+              only after you opt in.
+            </li>
+            <li>
+              <strong className="text-white">Site security</strong> (Google
+              reCAPTCHA, Cloudflare) and prompt internal lead notification to
+              our broker (Telegram) — Art. 6(1)(f) (legitimate interests),
+              limited to what is necessary and never used to profile you for
+              advertising.
+            </li>
+            <li>
+              <strong className="text-white">Legal, tax, and anti-money-laundering compliance</strong>{" "}
+              — Art. 6(1)(c); and to establish or defend legal claims —
+              Art. 6(1)(f).
+            </li>
+          </ul>
+          <p className="mt-4">
+            We do not carry out automated decision-making or profiling that
+            produces legal effects.
+          </p>
+        </Section>
+
+        <Section number={4} title="Service providers and international transfers">
           <p>
-            We integrate elite, enterprise-grade systems to manage our
-            proprietary advisory database and bespoke marketing initiatives.
+            We share data only with vetted providers acting on our instructions
+            under GDPR Art. 28 terms. Some are in, or transfer data to, the
+            United States; those transfers rely on the EU-US Data Privacy
+            Framework where the provider is certified, or on the European
+            Commission's Standard Contractual Clauses otherwise.
           </p>
           <ul className="list-disc pl-5 space-y-2 mt-4" style={{ color: "rgba(248, 245, 240,0.5)" }}>
-            <li>
-              <strong className="text-white">Analytics & Engagement:</strong> We
-              utilize Google Analytics and Google Ads to ensure our digital
-              presence precisely meets the expectations of our market,
-              delivering relevant opportunities across the digital landscape.
-            </li>
-            <li>
-              <strong className="text-white">CRM & Lead Intelligence:</strong>{" "}
-              We deploy professional-grade solutions, including HubSpot and
-              Apollo.io, to securely manage client relationships and verify
-              global network accuracy.
-            </li>
+            <li><strong className="text-white">Vercel</strong> — website hosting</li>
+            <li><strong className="text-white">Sanity</strong> — content management</li>
+            <li><strong className="text-white">Resend</strong> — transactional and newsletter email delivery</li>
+            <li><strong className="text-white">Google Analytics 4</strong> — website analytics (consent-gated)</li>
+            <li><strong className="text-white">Microsoft Clarity</strong> — heatmaps and session analytics (consent-gated)</li>
+            <li><strong className="text-white">Google reCAPTCHA</strong> — spam and bot protection</li>
+            <li><strong className="text-white">Calendly</strong> — consultation scheduling</li>
+            <li><strong className="text-white">Cloudflare</strong> — network and security</li>
+            <li><strong className="text-white">Telegram / WhatsApp</strong> — internal notification and client communication you initiate</li>
           </ul>
           <div className="mt-4 p-4 border border-[#C9A84C]/20 bg-[#C9A84C]/5">
             <p>
-              <strong className="text-[#C9A84C]">
-                Non-Monetization Guarantee:
-              </strong>{" "}
-              These third-party environments are bound by rigorous Data
-              Processing Agreements (DPAs). We explicitly declare that the
-              Company does not, and will never, monetize, lease, or broker your
-              personal or financial data to unauthorized external entities.
+              <strong className="text-[#C9A84C]">We do not sell your data.</strong>{" "}
+              We do not, and will never, sell, rent, or trade your personal data,
+              and we do not share it for cross-context behavioral advertising.
             </p>
           </div>
         </Section>
 
-        <Section number={5} title="V. CRYPTOGRAPHIC SECURITY & DATA RETENTION">
-          <p>
-            Client data is fortified utilizing industry-standard cryptographic
-            protocols and secure server environments. Highly Confidential Client
-            Data (such as KYC documentation) is retained strictly for the
-            duration necessitated by international maritime law, tax compliance,
-            and financial auditing standards, after which it is systematically
-            and securely expunged from our active infrastructure.
-          </p>
-        </Section>
-
-        <Section number={6} title="VI. DATA SUBJECT RIGHTS (DSRs) & SOVEREIGNTY">
-          <p>
-            In accordance with overarching international laws, our clients
-            retain ultimate sovereignty over their digital footprint. You
-            possess the statutory right to:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 mt-4" style={{ color: "rgba(248, 245, 240,0.5)" }}>
-            <li>
-              <strong className="text-white">
-                Request a comprehensive audit
-              </strong>{" "}
-              of your data currently held by the Company.
-            </li>
-            <li>
-              <strong className="text-white">
-                Demand the rectification or immediate erasure
-              </strong>{" "}
-              ("Right to be Forgotten") of your records, subject to overriding
-              legal retention mandates.
-            </li>
-            <li>
-              <strong className="text-white">Opt-out</strong> of any strategic
-              marketing communications or digital tracking.
-            </li>
+        <Section number={5} title="How long we keep your data">
+          <ul className="list-disc pl-5 space-y-2 mt-2" style={{ color: "rgba(248, 245, 240,0.5)" }}>
+            <li>Inquiries where no charter proceeds: up to <strong className="text-white">24 months</strong> from last contact.</li>
+            <li>Where a charter is arranged: for the duration of the relationship plus the period required to meet tax and legal obligations.</li>
+            <li>Newsletter email: until you unsubscribe; inactive subscribers are pruned after 24 months.</li>
+            <li>Analytics (GA4): 14 months. Microsoft Clarity recordings: 30 days.</li>
+            <li>Server and security logs: up to 12 months.</li>
           </ul>
         </Section>
 
-        <Section number={7} title="VII. NEWSLETTER & DIRECT CORRESPONDENCE">
+        <Section number={6} title="Your rights">
           <p>
-            When you subscribe to one of our journals (The Bridge, The Wake,
-            The Compass, or Από την Ελλάδα) we collect a minimal data
-            footprint to deliver and audit those communications:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 mt-4">
-            <li>Your email address</li>
-            <li>The journal(s) you actively subscribed to</li>
-            <li>The date and method of subscription (form, re-engagement, or hand-added invitation)</li>
-            <li>Engagement signals — whether each issue was opened or whether links were clicked</li>
-          </ul>
-          <p className="mt-6">
-            <strong>Legal basis:</strong> explicit consent for self-served
-            signups; legitimate interest for prior business contacts engaged
-            within the last twelve months and given a clear, frictionless
-            opt-out at every touchpoint.
+            Under the GDPR (Arts. 15-22) you have the right to access,
+            rectification, erasure ("right to be forgotten"), restriction, data
+            portability, and to object to processing based on legitimate
+            interests. Where processing is based on consent, you may withdraw it
+            at any time without affecting prior processing.
           </p>
           <p className="mt-4">
-            <strong>Service providers.</strong> We rely on{" "}
-            <a
-              href="https://resend.com"
-              className="text-[#C9A84C] hover:underline"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Resend
-            </a>{" "}
-            for email delivery; Resend is GDPR-compliant and operates under
-            EU/US Standard Contractual Clauses, retaining engagement metadata
-            for up to thirty (30) days. We do not share newsletter data with
-            any party other than Resend.
+            To request erasure you may use our dedicated page at{" "}
+            <a href="/privacy/delete" className="text-[#C9A84C] hover:underline">georgeyachts.com/privacy/delete</a>{" "}
+            or email{" "}
+            <ObfuscatedEmail className="text-[#C9A84C] hover:underline" />. We
+            respond within one month.
           </p>
           <p className="mt-4">
-            <strong>Retention.</strong> Active subscribers' data is retained
-            while their subscription is active. Unsubscribed addresses are
-            kept on a suppression list to prevent re-mailing. Subscribers
-            who do not open any issue for twenty-four (24) months are
-            automatically pruned.
-          </p>
-          <p className="mt-4">
-            <strong>Your rights.</strong> Every email contains a one-click
-            unsubscribe link. You may request data export or deletion by
-            writing to{" "}
-            <ObfuscatedEmail className="text-[#C9A84C] hover:underline" />.
-            Tracking pixels for opens and clicks are server-side only — no
-            cookies are placed on subscribers' devices via newsletter emails.
+            <strong className="text-white">California residents:</strong> while
+            we believe we fall below the CCPA's thresholds, we honor your rights
+            to know, delete, and correct your information, and to opt out of any
+            sale or sharing. As stated above, we do not sell or share your
+            personal information, and we do not discriminate against you for
+            exercising these rights.
           </p>
         </Section>
 
-        <Section number={8} title="VIII. CORPORATE COMPLIANCE CONTACT">
+        <Section number={7} title="Cookies">
           <p>
-            For the execution of Data Subject Rights, formal inquiries
-            concerning our privacy posture, or to update your records, please
-            direct correspondence to our Compliance Office:
+            We use cookies and similar technologies as described in our{" "}
+            <a href="/cookie-policy" className="text-[#C9A84C] hover:underline">Cookie Policy</a>.
+            Non-essential cookies (analytics, session analysis) are set only
+            after you give consent via our cookie banner, which you can change
+            at any time.
+          </p>
+        </Section>
+
+        <Section number={8} title="Children">
+          <p>
+            The Site and our services are not directed to children, and we do
+            not knowingly collect data from anyone under 16. If you believe a
+            child has provided data, contact us and we will delete it.
+          </p>
+        </Section>
+
+        <Section number={9} title="Security">
+          <p>
+            We apply appropriate technical and organizational measures to the
+            risk, including TLS/HTTPS encryption in transit, access controls,
+            data minimization, and data-processing terms with our providers. No
+            method of transmission is perfectly secure, but we work to protect
+            your data and review our measures regularly.
+          </p>
+        </Section>
+
+        <Section number={10} title="Complaints and contact">
+          <p>
+            For any privacy question or to exercise a right, contact us at{" "}
+            <ObfuscatedEmail className="text-[#C9A84C] hover:underline" /> or
+            +30 697 038 0999.
+          </p>
+          <p className="mt-4">
+            You have the right (GDPR Art. 77) to lodge a complaint with a
+            supervisory authority, in particular the{" "}
+            <strong className="text-white">Hellenic Data Protection Authority</strong>{" "}
+            (1-3 Kifissias Avenue, 115 23 Athens; +30 210 6475600;
+            contact@dpa.gr; www.dpa.gr/en). UK residents may alternatively
+            complain to the UK Information Commissioner's Office (ico.org.uk).
           </p>
           <div className="mt-6 text-white space-y-2" style={{ background: "rgba(201,168,76,0.03)", border: "1px solid rgba(201,168,76,0.15)", padding: "32px" }}>
+            <div><strong>Data controller:</strong> George Yachts Brokerage House LLC</div>
+            <div><strong>Registered:</strong> Wyoming, USA</div>
+            <div><strong>Operating office:</strong> Charilaou Trikoupi 190A, Kifisia 145 64, Athens, Greece</div>
             <div>
-              <strong>Legal Entity:</strong> GEORGE YACHTS BROKERAGE HOUSE LLC
-            </div>
-            <div>
-              <strong>Registered Office Address:</strong> 30 N Gould St, STE R,
-              Sheridan, WY 82801, USA
-            </div>
-            <div>
-              <strong>Operational Scope:</strong> Mediterranean Operations
-            </div>
-            <div>
-              <strong>Primary Contact:</strong>{" "}
+              <strong>Contact:</strong>{" "}
               <ObfuscatedEmail className="hover:text-[#C9A84C] transition-colors" />
             </div>
           </div>
         </Section>
 
+        <Section number={11} title="Changes to this Policy">
+          <p>
+            We may update this Policy. The "Last updated" date below will change
+            and material changes will be highlighted on the Site.
+          </p>
+        </Section>
+
         <div className="mt-32 pt-16 text-center" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
           <div className="w-8 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", letterSpacing: "0.3em", color: "rgba(248, 245, 240,0.2)", textTransform: "uppercase" }}>
-            Last Updated: April 2026
+            Last Updated: June 2026
           </p>
         </div>
       </div>

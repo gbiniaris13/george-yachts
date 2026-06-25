@@ -5,7 +5,7 @@ import { pageMeta } from "@/lib/pageMeta";
 export const metadata = pageMeta({
   title: "Terms of Service",
   description:
-    "Global Terms of Service & Brokerage Agreement for George Yachts Brokerage House LLC.",
+    "Terms governing use of georgeyachts.com — George Yachts acts as a yacht charter broker and intermediary; the Site is for inquiries only.",
   path: "/terms-of-service",
 });
 
@@ -41,7 +41,7 @@ const TermsOfService = () => {
             Legal Agreement
           </p>
           <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#F8F5F0", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "16px" }}>
-            Global Terms of Service & Brokerage Agreement
+            Terms of Service
           </h1>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", letterSpacing: "0.2em", color: "rgba(248, 245, 240,0.35)", textTransform: "uppercase", marginBottom: "32px" }}>
             George Yachts Brokerage House LLC
@@ -53,94 +53,155 @@ const TermsOfService = () => {
 
       {/* --- CONTENT SECTION --- */}
       <div className="container mx-auto max-w-3xl px-6 py-24">
-        <Section number={1} title="I. CORPORATE MANDATE & OPERATIONAL SCOPE">
+        <Section number={1} title="About us and these Terms">
           <p>
-            By accessing the digital infrastructure and utilizing the
-            professional services of GEORGE YACHTS BROKERAGE HOUSE LLC (the
-            "Company," "we," or "our"), a limited liability entity registered in
-            Wyoming, USA, you enter into a binding agreement governed by these
-            Global Terms of Service. The Company operates exclusively as a
-            premier yacht charter brokerage, acting as a strategic intermediary
-            between discerning charterers and vessel ownership or management
-            entities.
+            This website, georgeyachts.com (the "Site"), is operated by George
+            Yachts Brokerage House LLC ("George Yachts", "we", "us"), a limited
+            liability company registered in Wyoming, USA, operating from
+            Charilaou Trikoupi 190A, Kifisia 145 64, Athens, Greece. These Terms
+            govern your use of the Site. By using the Site you agree to them. If
+            you do not agree, please do not use the Site.
           </p>
         </Section>
 
-        <Section number={2} title="II. LIMITATION OF BROKERAGE LIABILITY">
+        <Section number={2} title="What George Yachts is — and is not">
           <p>
-            The Company does not own, physically manage, or operate the vessels
-            showcased on our digital platform. All vessel specifications,
-            high-resolution imagery, itineraries, and pricing structures are
-            provided in good faith for informational and guidance purposes only.
-            The Company disclaims all absolute warranties regarding the exact
-            technical condition or real-time availability of the vessels. Final
-            specifications must be strictly verified prior to the execution of a
-            formal Charter Agreement.
+            George Yachts is a luxury crewed yacht charter broker and
+            intermediary, and a member of the International Yacht Brokers
+            Association (IYBA). We arrange charters by introducing clients to
+            third-party yacht owners and central agents.
+          </p>
+          <p>
+            We are <strong className="text-white">not</strong> the owner,
+            operator, manager, master, or crew of any yacht; we are not a party
+            to any charter contract between you and a yacht owner; and we are not
+            the provider of the charter services themselves. We act solely as an
+            intermediary that facilitates introductions and inquiries.
           </p>
         </Section>
 
-        <Section number={3} title="III. CHARTER AGREEMENTS & MYBA FRAMEWORK">
+        <Section number={3} title="No transactions on this Site — inquiries only">
           <p>
-            All luxury charters facilitated by the Company are subject to
-            formal, legally binding contracts. We predominantly utilize
-            industry-standard MYBA (Worldwide Yachting Association) frameworks
-            or equivalent prevailing legal documentation. The digital inquiry
-            and consultation process does not constitute a finalized charter
-            agreement until all contractual addendums are signed by the
-            respective parties and the initial financial disbursements have
-            cleared.
+            No bookings, reservations, payments, or binding charter commitments
+            are made through this Site. The Site lets you submit inquiries,
+            subscribe to a newsletter, and request a consultation. Any charter is
+            the subject of a separate written charter agreement (typically a
+            MYBA-standard Charter Agreement) negotiated and signed offline, to
+            which George Yachts is not a contracting party. Yacht details,
+            availability, indicative pricing, and itineraries shown on the Site
+            are supplied by third parties, are for general information only, may
+            change without notice, and do not constitute an offer.
           </p>
         </Section>
 
-        <Section number={4} title="IV. FINANCIAL PROVISIONS: APA & VAT">
+        <Section number={4} title="Relationship to the charter agreement">
           <p>
-            Charter pricing listed on the platform generally reflects the base
-            charter fee. Clients and their representatives acknowledge that
-            total fiscal obligations will invariably include the Advance
-            Provisioning Allowance (APA)—typically ranging from 25% to 40% of
-            the base charter fee to cover fuel, provisions, and operational
-            logistics—as well as applicable Value Added Tax (VAT) dictated by
-            the jurisdiction of the vessel's embarkation and cruising itinerary.
+            Where you proceed to charter a yacht, your rights and obligations
+            regarding that charter are governed by the separate Charter Agreement
+            and not by these Terms. The MYBA-standard Charter Agreement is
+            typically governed by English law with arbitration in London. These
+            Site Terms govern only your use of the Site and your dealings with us
+            as your broker; for the charter itself, the Charter Agreement
+            prevails.
           </p>
         </Section>
 
-        <Section number={5} title="V. INTELLECTUAL PROPERTY & DIGITAL ASSETS">
+        <Section number={5} title="Disclaimers">
           <p>
-            The architectural design, proprietary branding, compiled market
-            data, and aggregated digital content on georgeyachts.com are the
-            exclusive intellectual property of the Company. Unauthorized
-            scraping, reproduction, or commercial distribution of our fleet data
-            and aesthetic assets is strictly prohibited and will be aggressively
-            pursued under applicable corporate law.
+            To the fullest extent permitted by applicable law, we give no
+            warranty or representation as to: the availability, condition,
+            seaworthiness, safety, specifications, pricing, or suitability of any
+            third-party yacht; the accuracy or completeness of third-party
+            content; or the performance of any yacht owner, operator, crew, or
+            central agent. Availability and pricing are controlled by third
+            parties and may change or be withdrawn at any time. Nothing here
+            limits any liability that cannot lawfully be excluded.
           </p>
         </Section>
 
-        <Section number={6} title="VI. JURISDICTIONAL GOVERNANCE & DISPUTE RESOLUTION">
-          <p>
-            These Terms shall be governed by, and construed strictly in
-            accordance with, the corporate and commercial laws of the State of
-            Wyoming, USA. Any legal action, fiduciary dispute, or proceeding
-            arising from the use of our digital services or brokerage operations
-            shall be instituted exclusively in the competent courts of Sheridan,
-            Wyoming.
+        <Section number={6} title="Limitation of liability">
+          <p>As an intermediary, and to the fullest extent permitted by applicable law:</p>
+          <ul className="list-disc pl-5 space-y-2 mt-4" style={{ color: "rgba(248, 245, 240,0.5)" }}>
+            <li>We are not liable for the acts, omissions, defaults, or insolvency of any yacht owner, operator, crew, central agent, or other third party.</li>
+            <li>We are not liable for any loss arising from your charter, the condition or operation of any yacht, or any third-party services.</li>
+            <li>We exclude liability for indirect or consequential loss to the extent the law allows.</li>
+          </ul>
+          <p className="mt-4">
+            Nothing in these Terms excludes or limits liability for death or
+            personal injury caused by negligence, for fraud, or for any liability
+            that cannot be excluded under applicable mandatory law — including the
+            mandatory consumer-protection rules referenced in Section 11.
           </p>
         </Section>
 
-        <Section number={7} title="VII. CORPORATE CONTACT & LEGAL CORRESPONDENCE">
+        <Section number={7} title="Acceptable use">
           <p>
-            For formal inquiries regarding our brokerage operations or these
-            Terms, please contact our administrative office:
+            You agree not to: use the Site unlawfully; submit false, misleading,
+            or another person's data without authority; introduce malware;
+            scrape, harvest, or copy content other than for personal,
+            non-commercial reference; attempt unauthorized access; or use the
+            Site to infringe any third party's rights. We may suspend or restrict
+            access for breach.
+          </p>
+        </Section>
+
+        <Section number={8} title="Intellectual property">
+          <p>
+            All content on the Site — including the "George Yachts" name and
+            branding, text, photographs, video, design, and layout — is owned by
+            or licensed to George Yachts and protected by intellectual-property
+            laws. You may not reproduce, distribute, or create derivative works
+            without our prior written consent. Yacht imagery and brochures may
+            belong to third parties and are used under licence.
+          </p>
+        </Section>
+
+        <Section number={9} title="Privacy and cookies">
+          <p>
+            Our handling of personal data is described in our{" "}
+            <a href="/privacy-policy" className="text-[#C9A84C] hover:underline">Privacy Policy</a>{" "}
+            and{" "}
+            <a href="/cookie-policy" className="text-[#C9A84C] hover:underline">Cookie Policy</a>,
+            which form part of these Terms.
+          </p>
+        </Section>
+
+        <Section number={10} title="Third-party links">
+          <p>
+            The Site may link to third-party sites and tools (for example,
+            Calendly). We are not responsible for their content or practices.
+          </p>
+        </Section>
+
+        <Section number={11} title="Governing law and dispute resolution">
+          <p>
+            These Terms, and any non-contractual obligations arising from them,
+            are governed by the laws of Greece, and the courts of Athens, Greece
+            have jurisdiction.
+          </p>
+          <p className="mt-4">
+            <strong className="text-white">Consumer protection.</strong> If you
+            are a consumer habitually resident in the EU or the UK, this
+            governing-law choice does not deprive you of the protection of the
+            mandatory provisions of the law of your country of residence that
+            cannot be derogated from by agreement, and you may bring proceedings
+            in the courts of your home country where the law so provides. Nothing
+            in these Terms affects your mandatory statutory rights as a consumer.
+          </p>
+        </Section>
+
+        <Section number={12} title="Changes; severability; contact">
+          <p>
+            We may update these Terms; continued use after changes constitutes
+            acceptance. If any provision is held unenforceable, the remainder
+            continues in effect. These Terms, with the Privacy Policy and Cookie
+            Policy, are the entire agreement regarding your use of the Site.
           </p>
           <div className="mt-6 text-white space-y-2" style={{ background: "rgba(201,168,76,0.03)", border: "1px solid rgba(201,168,76,0.15)", padding: "32px" }}>
+            <div><strong>George Yachts Brokerage House LLC</strong></div>
+            <div>Charilaou Trikoupi 190A, Kifisia 145 64, Athens, Greece</div>
+            <div>+30 697 038 0999</div>
             <div>
-              <strong>Legal Entity:</strong> GEORGE YACHTS BROKERAGE HOUSE LLC
-            </div>
-            <div>
-              <strong>Registered Office:</strong> 30 N Gould St, STE R,
-              Sheridan, WY 82801, USA
-            </div>
-            <div>
-              <strong>Primary Contact:</strong>{" "}
               <ObfuscatedEmail className="hover:text-[#C9A84C] transition-colors" />
             </div>
           </div>
@@ -149,7 +210,7 @@ const TermsOfService = () => {
         <div className="mt-32 pt-16 text-center" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
           <div className="w-8 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", letterSpacing: "0.3em", color: "rgba(248, 245, 240,0.2)", textTransform: "uppercase" }}>
-            Last Updated: February 2026
+            Last Updated: June 2026
           </p>
         </div>
       </div>

@@ -6,7 +6,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: "Cookie Policy",
   description:
-    "Global Digital Tracking & Cookie Disclosure for George Yachts Brokerage House LLC.",
+    "How georgeyachts.com uses cookies and similar technologies, and how to control them — analytics and session tools load only with your consent.",
   path: "/cookie-policy",
 });
 
@@ -43,7 +43,7 @@ const CookiePolicy = () => {
             Digital Transparency
           </p>
           <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#F8F5F0", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "16px" }}>
-            Global Digital Tracking & Cookie Disclosure
+            Cookie Policy
           </h1>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", letterSpacing: "0.2em", color: "rgba(248, 245, 240,0.35)", textTransform: "uppercase", marginBottom: "32px" }}>
             George Yachts Brokerage House LLC
@@ -55,173 +55,86 @@ const CookiePolicy = () => {
 
       {/* --- CONTENT SECTION --- */}
       <div className="container mx-auto max-w-3xl px-6 py-24">
-        <Section number={1} title="I. JURISDICTIONAL FRAMEWORK & CORPORATE MANDATE">
+        <Section number={1} title="About cookies">
           <p>
-            GEORGE YACHTS BROKERAGE HOUSE LLC, a Wyoming Limited Liability
-            Company (the "Company"), operates a premier digital brokerage
-            platform designed for High-Net-Worth Individuals (HNWIs). In
-            alignment with global privacy imperatives, including the General
-            Data Protection Regulation (GDPR), the California Consumer Privacy
-            Act (CCPA/CPRA), and the statutory requirements of the State of
-            Wyoming, this disclosure articulates our methodologies regarding
-            digital identifiers and tracking telemetry.
+            Cookies and similar technologies (pixels, local storage) store or
+            access information on your device. Under Greek Law 3471/2006
+            (implementing the EU ePrivacy Directive) and the GDPR, we set
+            non-essential cookies only with your prior consent. Strictly
+            necessary cookies do not require consent.
           </p>
         </Section>
 
-        <Section number={2} title="II. TECHNICAL TAXONOMY OF TRACKING TECHNOLOGIES">
+        <Section number={2} title="How we ask for consent">
           <p>
-            The Company utilizes an integrated stack of Tracking Technologies to
-            maintain operational excellence:
+            When you first visit georgeyachts.com, a cookie banner lets you
+            accept or reject non-essential cookies, or set preferences by
+            category. In line with Hellenic Data Protection Authority guidance:
           </p>
           <ul className="list-disc pl-5 space-y-2 mt-4" style={{ color: "rgba(248, 245, 240,0.5)" }}>
+            <li>Non-essential cookies are not set before you consent.</li>
+            <li>You can accept or reject with equal ease and equal prominence — no pre-ticked boxes, and continued browsing is not treated as consent.</li>
+            <li>You can change or withdraw your choice at any time via the "Cookie settings" link in the footer.</li>
+            <li>There is no "cookie wall": you can use the Site even if you reject non-essential cookies.</li>
+          </ul>
+        </Section>
+
+        <Section number={3} title="Strictly necessary — no consent required">
+          <ul className="list-disc pl-5 space-y-2 mt-2" style={{ color: "rgba(248, 245, 240,0.5)" }}>
+            <li><strong className="text-white">Cloudflare</strong> — network security, bot mitigation, and reliable delivery of the Site.</li>
+            <li><strong className="text-white">Session and consent storage</strong> — remembers your cookie choices and keeps the Site working.</li>
+          </ul>
+        </Section>
+
+        <Section number={4} title="Functional — consent required">
+          <ul className="list-disc pl-5 space-y-2 mt-2" style={{ color: "rgba(248, 245, 240,0.5)" }}>
+            <li><strong className="text-white">Calendly</strong> — when you open the scheduling tool to book a consultation.</li>
+            <li><strong className="text-white">Google reCAPTCHA</strong> — protects our forms from spam and bots.</li>
+          </ul>
+        </Section>
+
+        <Section number={5} title="Analytics & session analysis — consent required">
+          <ul className="list-disc pl-5 space-y-2 mt-2" style={{ color: "rgba(248, 245, 240,0.5)" }}>
             <li>
-              <strong className="text-white">
-                HTTP Cookies & Local Storage:
-              </strong>{" "}
-              Sophisticated data packets facilitating state management and
-              secure user authentication.
+              <strong className="text-white">Google Analytics 4</strong> —
+              aggregate website analytics (pages, sources, performance). Loaded
+              only after you consent.
             </li>
             <li>
-              <strong className="text-white">Web Beacons & Pixel Tags:</strong>{" "}
-              Transparent graphic identifiers utilized to audit the efficacy of
-              our bespoke marketing campaigns and high-fidelity content
-              delivery.
-            </li>
-            <li>
-              <strong className="text-white">
-                Cryptographic Session Identifiers:
-              </strong>{" "}
-              Secure tokens ensuring that client interactions with our fleet
-              remain encrypted and private.
+              <strong className="text-white">Microsoft Clarity</strong> —
+              heatmaps and session analysis. This is the most privacy-sensitive
+              tool we use; we load it only after you consent, and we disclose it
+              here for full transparency.
             </li>
           </ul>
         </Section>
 
-        <Section number={3} title="III. OPERATIONAL CLASSIFICATION">
+        <Section number={6} title="Managing cookies">
           <p>
-            To ensure total transparency, we categorize our digital assets as
-            follows:
-          </p>
-          <div className="space-y-6 mt-4">
-            <div>
-              <h3 className="text-white font-bold tracking-wider mb-2">
-                Strictly Necessary & Systemic
-              </h3>
-              <p>
-                These technologies are indispensable for the structural
-                integrity of georgeyachts.com. They govern SSL/TLS handshakes,
-                load balancing, and the rendering of high-resolution maritime
-                imagery.
-              </p>
-              <p className="text-xs text-[#C9A84C] mt-1 uppercase tracking-widest">
-                (Legal Basis: Essential for the provision of requested digital
-                services).
-              </p>
-            </div>
-            <div>
-              <h3 className="text-white font-bold tracking-wider mb-2">
-                Advanced Behavioral Analytics
-              </h3>
-              <p>
-                Utilizing industry-standard diagnostic tools (e.g., Google
-                Analytics), we aggregate anonymized telemetry to optimize fleet
-                navigation and user-experience (UX) flows.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-white font-bold tracking-wider mb-2">
-                Cross-Platform Functional Personalization
-              </h3>
-              <p>
-                These cookies preserve the "user state," remembering specific
-                yacht preferences, geographical interest (Ionian, Cyclades,
-                Saronic), and language settings to ensure a frictionless
-                transition between sessions.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-white font-bold tracking-wider mb-2">
-                Institutional CRM & Lead Intelligence
-              </h3>
-              <p>
-                In coordination with professional-grade systems (HubSpot,
-                Apollo.io, and Google Ads), these identifiers synchronize
-                visitor engagement with our proprietary advisory database. This
-                ensures that our communications are precise, relevant, and meet
-                the exacting standards of our global network.
-              </p>
-            </div>
-          </div>
-        </Section>
-
-        <Section number={4} title="IV. CONSENT ARCHITECTURE (THE COOKIEBOT PROTOCOL)">
-          <p>
-            The Company has deployed the Cookiebot Consent Management Platform
-            (CMP), a gold-standard regulatory solution. This interface provides
-            users with granular, real-time control over their data footprint.
-            You hold the statutory right to:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 mt-4" style={{ color: "rgba(248, 245, 240,0.5)" }}>
-            <li>
-              <strong className="text-white">Affirmative Opt-In:</strong> Active
-              consent for the full bespoke experience.
-            </li>
-            <li>
-              <strong className="text-white">Granular Selection:</strong>{" "}
-              Targeted consent for specific categories.
-            </li>
-            <li>
-              <strong className="text-white">The Right to Erasure:</strong>{" "}
-              Independent management of your digital trail via browser-level
-              clearing or our manual compliance portal.
-            </li>
-          </ul>
-        </Section>
-
-        <Section number={5} title="V. DATA TRANSFERS & SOVEREIGNTY">
-          <p>
-            As a Wyoming-domiciled entity, data captured via our platform is
-            processed within the United States. We maintain rigorous data
-            processing agreements (DPAs) with our third-party providers to
-            ensure that all transfers meet or exceed international adequacy
-            standards.
+            Use the footer "Cookie settings" link at any time, or your browser
+            settings, to block or delete cookies. Disabling strictly necessary
+            cookies may impair how the Site works.
           </p>
         </Section>
 
-        <Section number={6} title="VI. COMPLIANCE & GOVERNANCE CONTACT">
+        <Section number={7} title="Contact">
           <p>
-            For inquiries regarding our privacy posture or the exercise of your
-            data subject rights (DSRs), please direct all formal correspondence
-            to:
+            Questions about this policy:{" "}
+            <ObfuscatedEmail className="text-[#C9A84C] hover:underline" />. You may
+            also contact the Hellenic Data Protection Authority (1-3 Kifissias
+            Avenue, 115 23 Athens; +30 210 6475600; contact@dpa.gr). See also our{" "}
+            <a href="/privacy-policy" className="text-[#C9A84C] hover:underline">Privacy Policy</a>.
           </p>
-          <div className="mt-6 text-white space-y-2" style={{ background: "rgba(201,168,76,0.03)", border: "1px solid rgba(201,168,76,0.15)", padding: "32px" }}>
-            <div>
-              <strong>Compliance Office</strong>
-            </div>
-            <div>
-              <strong>Entity:</strong> GEORGE YACHTS BROKERAGE HOUSE LLC
-            </div>
-            <div>
-              <strong>Registered Office:</strong> 30 N Gould St, STE R,
-              Sheridan, WY 82801, USA
-            </div>
-            <div>
-              <strong>Email:</strong>{" "}
-              <ObfuscatedEmail className="hover:text-[#C9A84C] transition-colors" />
-            </div>
-            <div>
-              <strong>Attention:</strong> Data Protection Officer (DPO)
-            </div>
-          </div>
         </Section>
 
         <div className="mt-32 pt-16 text-center" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
           <div className="w-8 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", letterSpacing: "0.3em", color: "rgba(248, 245, 240,0.2)", textTransform: "uppercase" }}>
-            Last Updated: February 2026
+            Last Updated: June 2026
           </p>
         </div>
       </div>
+
       <Footer />
     </div>
   );
