@@ -218,11 +218,22 @@ function YachtSchema({ yacht, imageUrl, slug }) {
     offers: (() => {
       const { low, high } = extractPriceRange(yacht.weeklyRatePrice);
       const perPerson = yacht.priceModel === 'per_person_week';
+      // validThrough rolls with the Greek charter-season booking horizon
+      // (the season ends ~Oct 31). This page is ISR (revalidate 3600) so the
+      // value recomputes hourly and can never fall into the past - which is
+      // exactly what Google/AI want from Offer.validThrough + priceValidUntil.
+      const _now = new Date();
+      const _seasonEnd = new Date(_now.getFullYear(), 9, 31);
+      const validThrough = (_now > _seasonEnd
+        ? new Date(_now.getFullYear() + 1, 9, 31)
+        : _seasonEnd
+      ).toISOString().slice(0, 10);
       const base = {
         '@type': 'Offer',
         '@id': `https://georgeyachts.com/yachts/${slug}#offer`,
         priceCurrency: 'EUR',
         availability: 'https://schema.org/InStock',
+        validThrough,
         url: `https://georgeyachts.com/yachts/${slug}`,
         areaServed: {
           '@type': 'Place',
@@ -240,6 +251,9 @@ function YachtSchema({ yacht, imageUrl, slug }) {
       // Offer (availability + seller) with NO fabricated price.
       if (low) {
         base.price = String(low);
+        // priceValidUntil is the field Google reads to know when a price
+        // badge expires; mirror the rolling season-end date above.
+        base.priceValidUntil = validThrough;
         base.priceSpecification = {
           '@type': 'UnitPriceSpecification',
           price: String(low),

@@ -32,6 +32,11 @@ export default function robots() {
     "anthropic-ai",
     "Claude-Web",
     "ClaudeBot",
+    // 2026-06-26 — Claude-SearchBot is Anthropic's dedicated AI-SEARCH
+    // fetcher (distinct from ClaudeBot=training and Claude-Web). It gates
+    // whether Claude can cite georgeyachts.com in answers, so it must be
+    // explicitly allowed alongside OAI-SearchBot and PerplexityBot.
+    "Claude-SearchBot",
     "PerplexityBot",
     "Perplexity-User",
     "Google-Extended",

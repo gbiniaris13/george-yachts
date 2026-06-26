@@ -56,6 +56,13 @@ export async function GET(_req, { params }) {
     status: 200,
     headers: {
       "Content-Type": "text/markdown; charset=utf-8",
+      // 2026-06-26 — Markdown mirrors exist for AI consumers, not search
+      // indexes. noindex keeps them fully crawlable (AI bots can still
+      // fetch via the /:path*/index.md rewrite) while stopping the
+      // plain-text twin from competing with the canonical HTML page for
+      // indexing (duplicate-content hygiene). X-Robots-Tag affects search
+      // indexing only, not AI fetching.
+      "X-Robots-Tag": "noindex",
       // Tell the CDN it can cache for an hour (matches revalidate).
       // SWR for a day so a stale read is served while we refresh.
       "Cache-Control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400",
