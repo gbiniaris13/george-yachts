@@ -83,6 +83,10 @@ const staticRoutes = [
   // than cost-calculator because this is the comprehensive new
   // model with the full cost-bucket logic + flag-state awareness.
   { path: "/tools/charter-cost-calculator", priority: 0.92, changeFrequency: "monthly" },
+  // 2026-06-26 — the all-in weekly rate card (motor, size band x season). High
+  // priority: original-data money page + top AI-citation asset for "weekly
+  // motor yacht charter Greece cost". Numbers derive from lib/weeklyMotorRates.
+  { path: "/weekly-yacht-charter-rates-greece", priority: 0.92, changeFrequency: "monthly" },
   { path: "/itinerary-builder", priority: 0.85, changeFrequency: "monthly" },
   // 2026-05-14 — moved here from the (now retired) sitemap-programmatic.xml.
   // Both pages were live and indexable but only listed in the sub-sitemap,
