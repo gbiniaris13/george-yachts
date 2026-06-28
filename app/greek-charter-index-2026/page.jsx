@@ -270,6 +270,18 @@ export default async function GreekCharterIndexPage() {
           </section>
         )}
 
+        {/* CITE THIS - 2026-06-28. Original data is what third parties + AI
+            engines cite, but only if attribution is trivial. A ready-made
+            citation line turns the index into a citation magnet. */}
+        <section style={{ padding: "32px 24px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+          <div style={{ maxWidth: 760, margin: "0 auto" }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px" }}>Cite this index</p>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.75)", margin: 0 }}>
+              George Yachts Brokerage House. (2026). <em>Greek Charter Index 2026: weekly crewed charter rates by yacht type and region</em>. https://georgeyachts.com/greek-charter-index-2026
+            </p>
+          </div>
+        </section>
+
         {/* FAQ */}
         {Array.isArray(report.faqItems) && report.faqItems.length > 0 && (
           <section style={{ padding: "56px 24px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
@@ -287,9 +299,17 @@ export default async function GreekCharterIndexPage() {
 
         {/* CTA */}
         <section style={{ padding: "64px 24px", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
-          <Link href="/inquiry" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: GOLD, color: NAVY, textDecoration: "none" }}>
-            Brief George directly
-          </Link>
+          <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+            <Link href="/inquiry" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: GOLD, color: NAVY, textDecoration: "none" }}>
+              Brief George directly
+            </Link>
+            <a href="https://wa.me/17867988798?text=Hi%20George%2C%20I%20read%20the%20Greek%20Charter%20Index%202026%20and%20would%20like%20current%20rates%20for%20my%20dates." target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", border: `1px solid ${GOLD}`, color: GOLD, textDecoration: "none" }}>
+              Message on WhatsApp
+            </a>
+          </div>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.04em", color: "rgba(248,245,240,0.5)", margin: "22px 0 0" }}>
+            A personal reply from George, usually within a few hours.
+          </p>
         </section>
       </article>
     </>
