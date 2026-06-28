@@ -1,26 +1,16 @@
 "use client";
 
-// Exit-intent modal — Boss-spec rewrite (2026-05-08).
+// Email-capture modal (2026-06-28 retiming + copy rewrite).
 //
-// Rules from the pop-up audit:
-//   • Desktop only. Mobile scroll-trigger removed entirely — it
-//     fired on visitors who briefly put the phone down, which is
-//     not real exit intent.
-//   • Trigger: cursor leaves the top of the viewport, AND the
-//     visitor has been on the page ≥ 3 minutes (180 s). Anything
-//     less is too aggressive for a UHNW reading-pace.
-//   • Copy is editorial, not e-commerce. No "subscribe", no
-//     urgency, no discounts.
-//       Headline: "Before you go — George sends one briefing per
-//                 month. Market intelligence, not marketing."
-//       Field:    email only.
-//       Button:   "Send it to me".
-//   • Visual: backdrop rgba(13,27,42,0.95) so the page reads as
-//     paused, not obscured. Modal frame keeps the existing gold
-//     corner accents and a 1 px gold top border.
-//   • Once subscribed (localStorage gy_exit_intent_subscribed) or
-//     once seen this session (sessionStorage gy_exit_intent_seen),
-//     never fires again.
+//   Trigger (desktop only): fires on the FIRST of 8s dwell, 40% scroll, or
+//     exit-intent (5s floor). Sweet spot per popup research; the old 3-minute
+//     gate meant it almost never showed. Mobile stays off to avoid Google's
+//     intrusive-interstitial mobile-SEO penalty.
+//   Copy: value is first access to the fleet / offers and openings, not a
+//     newsletter. No "subscribe", no urgency, no discounts. Email only.
+//   Visual: backdrop rgba(13,27,42,0.95), gold corner accents, 1px gold top.
+//   Gated once-per-session (sessionStorage gy_exit_intent_seen) + once-captured
+//     (localStorage gy_exit_intent_subscribed); coordinated via popup-coordinator.
 
 import { useEffect, useState, useRef } from "react";
 import {
@@ -32,8 +22,16 @@ import {
 
 const SESSION_KEY = "gy_exit_intent_seen";
 const SUBSCRIBED_KEY = "gy_exit_intent_subscribed";
-// Boss spec: 3 min minimum dwell (was 60 s).
-const DESKTOP_MIN_TIME_MS = 180_000;
+// 2026-06-28 retiming. The old 3-minute + exit-intent-only gate meant the
+// modal almost never appeared. Research (Omnisend 1.24B popups, Popupsmart):
+// the 6-10s delay is the conversion sweet spot and a 30-50% scroll trigger
+// converts 15-20% better still. So it now fires on the FIRST of: 8s dwell,
+// 40% scroll, or exit-intent (with a 5s floor so an instant bounce never pops).
+// Desktop only - mobile stays off to avoid Google's intrusive-interstitial
+// mobile-SEO penalty.
+const DELAY_MS = 8_000;
+const SCROLL_PCT = 0.4;
+const EXIT_MIN_MS = 5_000;
 
 export default function ExitIntentModal() {
   const [open, setOpen] = useState(false);
@@ -61,21 +59,34 @@ export default function ExitIntentModal() {
     const mountedAt = Date.now();
     const trigger = () => {
       if (firedRef.current) return;
-      if (Date.now() - mountedAt < DESKTOP_MIN_TIME_MS) return;
       if (!canShow()) return;
       firedRef.current = true;
       markActive();
       setOpen(true);
     };
 
+    // 1) Time delay (research sweet spot).
+    const timer = setTimeout(trigger, DELAY_MS);
+
+    // 2) Scroll depth — engaged visitors convert best.
+    const onScroll = () => {
+      const sc = window.scrollY || document.documentElement.scrollTop || 0;
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      if (h > 0 && sc / h >= SCROLL_PCT) trigger();
+    };
+
+    // 3) Exit intent — catch the leavers (after a 5s floor).
     const onMouseOut = (e) => {
-      if (e.clientY <= 2 && !e.relatedTarget) {
+      if (e.clientY <= 2 && !e.relatedTarget && Date.now() - mountedAt >= EXIT_MIN_MS) {
         trigger();
       }
     };
 
+    window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("mouseout", onMouseOut);
     return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("mouseout", onMouseOut);
     };
   }, []);
@@ -228,7 +239,7 @@ export default function ExitIntentModal() {
               marginBottom: "32px",
             }}
           >
-            Before you go — George sends one briefing per month.
+            First access to the fleet.
             <br />
             <span
               style={{
@@ -236,9 +247,24 @@ export default function ExitIntentModal() {
                 color: "#C9A84C",
               }}
             >
-              Market intelligence, not marketing.
+              Offers and openings, before they go public.
             </span>
           </h2>
+
+          <p
+            style={{
+              fontFamily: "var(--gy-font-ui)",
+              fontSize: "15px",
+              lineHeight: 1.65,
+              fontWeight: 300,
+              color: "rgba(248,245,240,0.72)",
+              marginBottom: "28px",
+            }}
+          >
+            Leave your email and George tells you first when the right yachts
+            and best weeks open across the Greek charter network, and where the
+            real value is. No noise, only what matters for your charter.
+          </p>
 
           {status === "success" ? (
             <div
@@ -257,7 +283,7 @@ export default function ExitIntentModal() {
                   marginBottom: "4px",
                 }}
               >
-                On its way.
+                You are on the list.
               </p>
               <p
                 style={{
@@ -268,7 +294,7 @@ export default function ExitIntentModal() {
                   fontWeight: 300,
                 }}
               >
-                Your first briefing will arrive within the week.
+                We will reach out the moment something worth your week comes up.
               </p>
             </div>
           ) : (
@@ -310,7 +336,7 @@ export default function ExitIntentModal() {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {status === "submitting" ? "Sending…" : "Send it to me"}
+                  {status === "submitting" ? "Sending…" : "Keep me posted"}
                 </button>
               </div>
 
