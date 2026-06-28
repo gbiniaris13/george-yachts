@@ -8,6 +8,7 @@ import VideoSection from "./components/VideoSection";
 // (La Pellegrina 1 + Errant Vagabond). The SignatureYacht component
 // file stays on disk for any future use.
 import GeorgesSelection from "./components/GeorgesSelection";
+import ClientReviews from "./components/ClientReviews";
 import FleetCTAs from "./components/FleetCTAs";
 import HomeStats from "./components/HomeStats";
 import Footer from "./components/Footer";
@@ -138,6 +139,12 @@ const HomeClient = ({
           privateCount={privateCount}
           explorerCount={explorerCount}
         />
+      </section>
+
+      {/* 2026-06-28 — real five-star Google reviews made visible (stars +
+          aggregate), high on the page as social proof right after the fleet. */}
+      <section id="reviews-proof" data-gy-reveal="up">
+        <ClientReviews />
       </section>
 
       {/* Chapter 08 (2026-05-08) — George's Selection. Replaces the

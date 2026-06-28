@@ -53,7 +53,7 @@ function HomepageFaqSchema() {
         name: "How much does a crewed yacht charter in Greece cost in 2026?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Crewed yacht charter rates in Greece typically range from €13,000/week for entry-level catamarans up to €500,000+/week for 50m+ motor yachts. The base weekly rate covers the yacht and crew; an APA (Advance Provisioning Allowance) of 25–35% on top covers fuel, food, dockage, and consumables. VAT in Greece is 12% on the charter fee for itineraries that begin in Greek waters.",
+          text: "Crewed yacht charter rates in Greece typically range from €13,000/week for entry-level catamarans up to €500,000+/week for 50m+ motor yachts. The base weekly rate covers the yacht and crew; an APA (Advance Provisioning Allowance) of 25–35% on top covers fuel, food, dockage, and consumables. Greek VAT is 13% on the charter fee for commercial charters over 48 hours that operate primarily in Greek waters.",
         },
       },
       {
