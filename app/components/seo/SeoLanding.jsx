@@ -500,7 +500,18 @@ export default async function SeoLanding({ pageData }) {
               >
                 Or write to George
               </Link>
+              <a
+                href={`https://wa.me/17867988798?text=${encodeURIComponent(`Hi George, I am interested in ${pageData.h1 || "a Greek yacht charter"}. Could you share availability and rates?`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", background: "transparent", color: "#C9A84C", border: "1px solid #C9A84C", textDecoration: "none" }}
+              >
+                Message on WhatsApp
+              </a>
             </div>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.04em", color: "rgba(248, 245, 240,0.5)", margin: "22px 0 0" }}>
+              A personal reply from George, usually within a few hours.
+            </p>
           </div>
         </section>
       </article>

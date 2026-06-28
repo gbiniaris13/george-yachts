@@ -277,9 +277,17 @@ export default function WeeklyRatesPage() {
 
         {/* CTA */}
         <section style={{ padding: "56px 24px 80px", textAlign: "center" }}>
-          <Link href="/inquiry" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: GOLD, color: NAVY, textDecoration: "none" }}>
-            Brief George directly
-          </Link>
+          <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+            <Link href="/inquiry" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: GOLD, color: NAVY, textDecoration: "none" }}>
+              Brief George directly
+            </Link>
+            <a href="https://wa.me/17867988798?text=Hi%20George%2C%20I%20would%20like%20a%20weekly%20motor%20yacht%20charter%20quote%20for%20Greece." target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", border: `1px solid ${GOLD}`, color: GOLD, textDecoration: "none" }}>
+              Message on WhatsApp
+            </a>
+          </div>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.04em", color: "rgba(248,245,240,0.5)", margin: "22px 0 0" }}>
+            A personal reply from George, usually within a few hours.
+          </p>
         </section>
       </article>
     </>
