@@ -41,6 +41,10 @@ export default function robots() {
     "Perplexity-User",
     "Google-Extended",
     "Applebot-Extended",
+    // 2026-06-28 - Bingbot made explicit (also powers ChatGPT/Copilot's Bing
+    // index). It was already allowed via the wildcard; an explicit block makes
+    // intent clear and matches the Phase 1 brief's crawler checklist.
+    "Bingbot",
     "FacebookBot",
     "Amazonbot",
     "CCBot",
