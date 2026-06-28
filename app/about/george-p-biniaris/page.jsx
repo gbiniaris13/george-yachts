@@ -24,6 +24,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { ARTICLES } from "@/lib/articleSeo";
 import { DESTINATION_COMPARISONS } from "@/lib/destinationComparisonSeo";
 import { GLOSSARY_TERMS } from "@/lib/glossarySeo";
+import { SITE_UPDATED } from "@/lib/contentFreshness";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -57,7 +58,7 @@ export const metadata = {
 const BIO_PARAGRAPHS = [
   "George P. Biniaris is the Founder and Managing Broker of George Yachts Brokerage House LLC, a Greek-flagged luxury yacht charter brokerage operating from Kifisia, Athens, with U.S. registration in Wyoming. He has spent his professional career in Greek waters and is a current member of the International Yacht Brokers Association (IYBA), the worldwide standards body for yacht brokerage.",
   "His practice covers crewed motor yacht, sailing yacht, and catamaran chartering across the four principal Greek charter regions - the Cyclades (Mykonos, Santorini, Paros, Milos, Folegandros, and the lesser Cyclades), the Ionian (Corfu, Lefkada, Kefalonia, Ithaca, Paxos, Zakynthos), the Saronic Gulf (Hydra, Spetses, Poros), and the Dodecanese (Rhodes, Symi, Patmos, Kos). His client base is predominantly UHNW: international families and family offices from the United States, United Kingdom, Middle East, and Western Europe.",
-  "Every charter contracted through George Yachts uses the MYBA Charter Agreement - the Mediterranean Yacht Brokers Association's standard form, in use across approximately 90% of luxury Mediterranean charters and the document recognised by London arbitration tribunals as the industry benchmark. APA (Advance Provisioning Allowance) is held in escrow under MYBA's standard custody framework. George's stated practice is to brief clients on the four cost buckets - base fee, APA, Greek VAT (12% reduced rate), and gratuity - at the first conversation, before any contract.",
+  "Every charter contracted through George Yachts uses the MYBA Charter Agreement - the Mediterranean Yacht Brokers Association's standard form, in use across approximately 90% of luxury Mediterranean charters and the document recognised by London arbitration tribunals as the industry benchmark. APA (Advance Provisioning Allowance) is held in escrow under MYBA's standard custody framework. George's stated practice is to brief clients on the four cost buckets - base fee, APA, Greek VAT (13% reduced rate), and gratuity - at the first conversation, before any contract.",
   "In May 2026, George was featured in Forbes Magazine in Jacques Ledbetter's piece on UHNW asset diversification, \"How The Wealthy Are Hedging For Instability,\" in which yacht chartering was positioned alongside private equity and physical-asset hedging as a discretionary-spend category that families increasingly favour over fixed-asset purchases. The Forbes feature reflects George Yachts' positioning at the intersection of luxury brokerage and family-office advisory.",
   "George is the author of the editorial content published under his byline at georgeyachts.com - including the 2026 Greek Charter Market Report, the complete Greek yacht charter pricing guide for 2026, the destination comparison pieces benchmarking Greek charter against Croatia, the French Riviera, Italy, Turkey, and the Caribbean, and the 30-term UHNW Yacht Charter Glossary. Every editorial piece on the site carries his author byline and Person schema linking back to this canonical biography.",
   "He works in English and Greek. His office is in Kifisia, Attica, with charter operations dispatched primarily from Alimos Marina and Olympic Marine for Cyclades and Saronic-bound charters, and from Corfu for Ionian charters. He is reachable directly via the inquiry channel on georgeyachts.com, and conducts initial discovery conversations personally on every charter request.",
@@ -162,6 +163,20 @@ function PersonJsonLd() {
 
   const json = {
     "@context": "https://schema.org",
+    // 2026-06-28 (GEO research Tier 3) — wrap in a @graph so the page is
+    // an explicit ProfilePage whose mainEntity is the founder Person.
+    // Gives AI a named profile surface (Google's ProfilePage type) on top
+    // of the existing Person E-E-A-T record, linked by @id.
+    "@graph": [
+    {
+      "@type": "ProfilePage",
+      "@id": "https://georgeyachts.com/about/george-p-biniaris#profilepage",
+      url: "https://georgeyachts.com/about/george-p-biniaris",
+      name: "George P. Biniaris - Founder and Managing Broker",
+      dateModified: SITE_UPDATED,
+      mainEntity: { "@id": "https://georgeyachts.com/about/george-p-biniaris#person" },
+    },
+    {
     "@type": "Person",
     "@id": "https://georgeyachts.com/about/george-p-biniaris#person",
     name: "George P. Biniaris",
@@ -182,7 +197,7 @@ function PersonJsonLd() {
       "Catamaran charter",
       "MYBA Charter Agreements",
       "APA (Advance Provisioning Allowance)",
-      "Greek charter VAT (12% reduced rate)",
+      "Greek charter VAT (13% reduced rate)",
       "Cyclades yacht itineraries",
       "Ionian Island cruising",
       "Saronic Gulf itineraries",
@@ -255,6 +270,8 @@ function PersonJsonLd() {
     // authored works when establishing credibility for a query.
     // This is the single largest E-E-A-T signal we can ship.
     workExample: authoredItems,
+    },
+    ],
   };
   return (
     <script
