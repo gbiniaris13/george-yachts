@@ -256,6 +256,10 @@ export default function WeeklyRatesPage() {
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 16px" }}>Go deeper</p>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 12 }}>
               <li>
+                <Link href="/weekly-motor-yacht-charter-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>Weekly motor yacht charter Greece</Link>
+                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.6)" }}> - the full guide to a 7-night motor week: cost, what is included, where to embark, a sample route.</span>
+              </li>
+              <li>
                 <Link href="/motor-yacht-charter-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>Motor yacht charter Greece</Link>
                 <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.6)" }}> - the fleet, builders and what a motor week is really like.</span>
               </li>
