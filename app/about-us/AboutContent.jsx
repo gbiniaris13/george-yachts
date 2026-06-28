@@ -142,13 +142,13 @@ export default function AboutContent() {
           </h2>
           <div className="about-philosophy__line" />
           <p className="about-philosophy__text">
-            George Yachts is led by George P. Biniaris, Managing Broker and IYBA member, operating from Athens with a hands-on approach built from years on the water. From crewed sailing charters in the Ionian to complex MYBA-contract superyacht operations in the Cyclades, every recommendation comes from first-hand experience &mdash; not a database.
+            George Yachts is led by George P. Biniaris, Managing Broker and IYBA member, operating from Athens with a hands-on approach built from years on the water. From crewed sailing charters in the Ionian to complex MYBA-contract superyacht operations in the Cyclades, every recommendation comes from first-hand experience - not a database.
           </p>
           <p className="about-philosophy__text">
-            As a boutique brokerage, we do one thing and we do it properly: crewed yacht charters in Greek waters. The Cyclades, the Ionian, the Saronic Gulf &mdash; every region, every season, every type of vessel. One broker, one relationship, one standard.
+            As a boutique brokerage, we do one thing and we do it properly: crewed yacht charters in Greek waters. The Cyclades, the Ionian, the Saronic Gulf - every region, every season, every type of vessel. One broker, one relationship, one standard.
           </p>
           <p className="about-philosophy__text">
-            Every yacht in our fleet is personally vetted. Every captain is known by name. Itineraries are crafted from real routes sailed in these waters &mdash; not copied from brochures. We work exclusively with MYBA-standard contracts, transparent APA and VAT breakdowns, and fast, detailed proposals.
+            Every yacht in our fleet is personally vetted. Every captain is known by name. Itineraries are crafted from real routes sailed in these waters - not copied from brochures. We work exclusively with MYBA-standard contracts, transparent APA and VAT breakdowns, and fast, detailed proposals.
           </p>
           <p className="about-philosophy__text">
             George Yachts is registered in the United States (Wyoming LLC) and operates from Athens, Greece. We serve an international clientele who expect discretion, precision, and a level of personal attention that larger platforms simply cannot provide.
@@ -165,7 +165,7 @@ export default function AboutContent() {
           NOT a rewrite — purely additive.
       */}
       <section
-        aria-label="Featured in Forbes — May 2026"
+        aria-label="Featured in Forbes - May 2026"
         style={{
           padding: "60px 24px 70px",
           textAlign: "center",
@@ -208,7 +208,7 @@ export default function AboutContent() {
             >
               Forbes
             </span>{" "}
-            — 1 May 2026
+            - 1 May 2026
           </p>
           <p
             style={{
@@ -273,7 +273,7 @@ export default function AboutContent() {
               <div style={{ position: "relative", aspectRatio: "3/4", overflow: "hidden" }}>
                 <img
                   src="/images/george.jpg"
-                  alt="George P. Biniaris — Managing Broker, George Yachts Brokerage House"
+                  alt="George P. Biniaris - Managing Broker, George Yachts Brokerage House"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%", background: "linear-gradient(to top, rgba(13, 27, 42,0.6), transparent)" }} />
@@ -287,7 +287,7 @@ export default function AboutContent() {
                 title="International Yacht Brokers Association"
                 style={{ textDecoration: "none", marginTop: "20px", display: "flex", alignItems: "center", gap: "12px", padding: "16px", border: "1px solid rgba(201,168,76,0.15)", background: "rgba(201,168,76,0.03)" }}
               >
-                <img src="/images/iyba-official-white.png" alt="IYBA — International Yacht Brokers Association" style={{ height: "32px", width: "auto", opacity: 0.85 }} />
+                <img src="/images/iyba-official-white.png" alt="IYBA - International Yacht Brokers Association" style={{ height: "32px", width: "auto", opacity: 0.85 }} />
                 <div>
                   <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.2em", color: "rgba(248, 245, 240,0.4)", textTransform: "uppercase", margin: 0 }}>Charter Active Member</p>
                   <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", letterSpacing: "0.1em", color: "#C9A84C", margin: 0 }}>International Yacht Brokers Association</p>
@@ -309,7 +309,7 @@ export default function AboutContent() {
                 detail of your experience.
               </p>
               <p className="about-george__bio">
-                George knows these waters first-hand &mdash; every anchorage, every crew,
+                George knows these waters first-hand - every anchorage, every crew,
                 every restaurant worth the taxi ride. His recommendations come from personal
                 experience aboard the yachts, not from a brochure or a database.
               </p>
@@ -331,22 +331,22 @@ export default function AboutContent() {
 
           <div style={{ borderLeft: "4px solid #C9A84C", paddingLeft: "28px" }}>
             <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(18px, 2vw, 22px)", fontWeight: 400, fontStyle: "italic", lineHeight: 1.85, color: "rgba(248, 245, 240,0.75)", marginBottom: "20px" }}>
-              I grew up on my uncle&apos;s Ferretti, crossing from Athens to Syros, to Mykonos, to wherever the Cyclades took us. My mother is from Syros &mdash; the sea was never a hobby. It was home.
+              I grew up on my uncle&apos;s Ferretti, crossing from Athens to Syros, to Mykonos, to wherever the Cyclades took us. My mother is from Syros - the sea was never a hobby. It was home.
             </p>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248, 245, 240,0.55)", marginBottom: "20px" }}>
-              I studied shipping. I became a skipper in Corfu. I earned my motor yacht licence. I managed charters across the Ionian and the Cyclades &mdash; briefing captains, building itineraries, solving problems at midnight.
+              I studied shipping. I became a skipper in Corfu. I earned my motor yacht licence. I managed charters across the Ionian and the Cyclades - briefing captains, building itineraries, solving problems at midnight.
             </p>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248, 245, 240,0.55)", marginBottom: "20px" }}>
-              I built George Yachts because I wanted to do this properly. Not as another name on a platform. Not as a cold transaction. But as someone who knows these waters first-hand, who has untangled an anchor under pressure in Paxos, and who has watched a family of twelve cry at disembarkation &mdash; not because something went wrong, but because they didn&apos;t want it to end.
+              I built George Yachts because I wanted to do this properly. Not as another name on a platform. Not as a cold transaction. But as someone who knows these waters first-hand, who has untangled an anchor under pressure in Paxos, and who has watched a family of twelve cry at disembarkation - not because something went wrong, but because they didn&apos;t want it to end.
             </p>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248, 245, 240,0.55)", marginBottom: "20px" }}>
-              That moment &mdash; when your clients hold you and tell you this was unlike anything they&apos;ve ever experienced &mdash; that is why I do this.
+              That moment - when your clients hold you and tell you this was unlike anything they&apos;ve ever experienced - that is why I do this.
             </p>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248, 245, 240,0.55)", marginBottom: "28px" }}>
               Greece is not one destination. It is hundreds. And if you have the right person guiding you, every voyage reveals something new. I am that person.
             </p>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", fontWeight: 600, letterSpacing: "0.15em", color: "#C9A84C" }}>
-              &mdash; George P. Biniaris, Managing Broker
+              - George P. Biniaris, Managing Broker
             </p>
           </div>
         </RevealSection>
@@ -455,7 +455,7 @@ export default function AboutContent() {
                   >
                     <Image
                       src={m.imageUrl}
-                      alt={`${m.name} — ${m.title} at George Yachts`}
+                      alt={`${m.name} - ${m.title} at George Yachts`}
                       fill
                       className="about-team__img"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 240px"
@@ -573,7 +573,7 @@ export default function AboutContent() {
           <h2 className="about-services__title">360&deg; Luxury Services</h2>
           <p className="about-services__subtitle">
             Yachts are our core. Around them, we deliver a seamless layer
-            of lifestyle services &mdash; ensuring your journey is effortless from touchdown to sunset.
+            of lifestyle services - ensuring your journey is effortless from touchdown to sunset.
           </p>
         </RevealSection>
 
@@ -584,7 +584,7 @@ export default function AboutContent() {
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="22"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg>
               ),
               title: "Yacht Charter",
-              desc: "63 curated yachts — Private Fleet (full crew) + Explorer Fleet (skippered) — across all Greek waters.",
+              desc: "63 curated yachts - Private Fleet (full crew) + Explorer Fleet (skippered) - across all Greek waters.",
             },
             {
               icon: (
@@ -657,7 +657,7 @@ export default function AboutContent() {
           <p className="about-cta__eyebrow">Ready?</p>
           <h2 className="about-cta__title">Let&apos;s Plan Your Charter</h2>
           <p className="about-cta__text">
-            Share your vision and we&apos;ll handle every detail &mdash; from yacht
+            Share your vision and we&apos;ll handle every detail - from yacht
             selection to sunset anchorages.
           </p>
           <a

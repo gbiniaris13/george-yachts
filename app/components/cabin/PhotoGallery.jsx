@@ -168,7 +168,7 @@ export default function PhotoGallery({
         <img
           key={openAt} /* re-mount on change so the fade-in plays */
           src={current.url}
-          alt={current.caption || `${vesselName} — photo ${openAt + 1}`}
+          alt={current.caption || `${vesselName} - photo ${openAt + 1}`}
           className="cabin-lightbox__img"
         />
         {(current.caption || current.credit) && (
@@ -220,8 +220,8 @@ export default function PhotoGallery({
       {modal && portalTarget ? createPortal(modal, portalTarget) : null}
 
       <style>{`
-        /* 2026-05-23 — Lightbox lives at document.body via portal.
-           Controls use position:fixed against the viewport — guaranteed
+        /* 2026-05-23 - Lightbox lives at document.body via portal.
+           Controls use position:fixed against the viewport - guaranteed
            visible regardless of viewport scroll or image height. */
         .cabin-lightbox {
           position: fixed;
@@ -282,7 +282,7 @@ export default function PhotoGallery({
         }
         .cabin-lightbox__caption em { color: rgba(201, 168, 76, 0.92); font-style: normal; }
 
-        /* CLOSE — fixed to viewport top-right, always visible. */
+        /* CLOSE - fixed to viewport top-right, always visible. */
         .cabin-lightbox__close {
           position: fixed;
           top: 24px;
@@ -308,7 +308,7 @@ export default function PhotoGallery({
           transform: scale(1.06);
         }
 
-        /* NAV — fixed to viewport sides, vertically centred. */
+        /* NAV - fixed to viewport sides, vertically centred. */
         .cabin-lightbox__nav {
           position: fixed;
           top: 50%;
@@ -336,7 +336,7 @@ export default function PhotoGallery({
         .cabin-lightbox__nav--prev { left: 24px; }
         .cabin-lightbox__nav--next { right: 24px; }
 
-        /* COUNTER — fixed top-centre, editorial. */
+        /* COUNTER - fixed top-centre, editorial. */
         .cabin-lightbox__counter {
           position: fixed;
           top: 28px;
@@ -367,7 +367,7 @@ export default function PhotoGallery({
           color: rgba(248, 245, 240, 0.6);
         }
 
-        /* HINT — fixed bottom-centre, small keyboard reminder. */
+        /* HINT - fixed bottom-centre, small keyboard reminder. */
         .cabin-lightbox__hint {
           position: fixed;
           bottom: 26px;
@@ -389,7 +389,7 @@ export default function PhotoGallery({
         }
         .cabin-lightbox__hint-divider { opacity: 0.4; }
 
-        /* 2026-05-23 — Audit pass:
+        /* 2026-05-23 - Audit pass:
              · close button was 40×40 (under Apple HIG 44px)
              · close + counter sat at top:12-14px which on iPhone
                14/15 Pro/Pro Max collides with Dynamic Island.

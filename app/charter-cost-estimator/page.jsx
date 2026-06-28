@@ -166,14 +166,14 @@ export default function CharterCostEstimatorPage() {
                 <strong style={{ color: "#F8F5F0" }}>Greek VAT.</strong>{" "}
                 12% applied to the charter base (not APA) for charters
                 operating primarily in Greek waters. Charters with significant
-                non-Greek cruising can attract the 24% standard rate — confirm
+                non-Greek cruising can attract the 24% standard rate - confirm
                 with your broker if your itinerary crosses into Turkey or Italy.
               </p>
               <p>
                 <strong style={{ color: "#F8F5F0" }}>Crew gratuity.</strong>{" "}
                 17.5% of the base is the customary midpoint (15-20% range).
                 Paid in cash or wire directly to the captain at end of week;
-                he distributes among crew. Non-negotiable as a real cost —
+                he distributes among crew. Non-negotiable as a real cost -
                 budget it from the start.
               </p>
               <p>

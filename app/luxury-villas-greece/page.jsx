@@ -53,8 +53,8 @@ export default function LuxuryVillasPage() {
           <p className="svc-intro__eyebrow">Curated Collection</p>
           <h2 className="svc-intro__title">How Does Villa Sourcing Work with George Yachts?</h2>
           <div className="svc-intro__line" />
-          <p className="svc-intro__text">We don&apos;t publish a public villa inventory &mdash; we curate options based on your dates, destination, group size, and preferred style. Through our partner network, we source handpicked villas in Mykonos, Paros, Antiparos, Santorini, the Athens Riviera and beyond.</p>
-          <p className="svc-intro__text">Expect discreet handling, fast turnaround, and clear recommendations &mdash; not endless links. Whether you need a beachfront retreat, a private estate with staff, or a villa perfectly paired with your yacht itinerary, we&apos;ll tailor options that match your standard.</p>
+          <p className="svc-intro__text">We don&apos;t publish a public villa inventory - we curate options based on your dates, destination, group size, and preferred style. Through our partner network, we source handpicked villas in Mykonos, Paros, Antiparos, Santorini, the Athens Riviera and beyond.</p>
+          <p className="svc-intro__text">Expect discreet handling, fast turnaround, and clear recommendations - not endless links. Whether you need a beachfront retreat, a private estate with staff, or a villa perfectly paired with your yacht itinerary, we&apos;ll tailor options that match your standard.</p>
           <p className="svc-intro__text svc-intro__highlight">Share your requirements and we&apos;ll return with a shortlist of suitable villas and availability.</p>
         </Reveal>
       </section>
@@ -77,7 +77,7 @@ export default function LuxuryVillasPage() {
         <Reveal>
           <p className="svc-cta__eyebrow">Your Private Retreat</p>
           <h2 className="svc-cta__title">Let&apos;s Find Your Villa</h2>
-          <p className="svc-cta__text">Tell us your dates, destination, and style &mdash; we&apos;ll curate the perfect shortlist.</p>
+          <p className="svc-cta__text">Tell us your dates, destination, and style - we&apos;ll curate the perfect shortlist.</p>
           <a href="https://calendly.com/george-georgeyachts/30min" target="_blank" rel="noopener noreferrer" className="svc-cta__button">Book a Free Consultation</a>
         </Reveal>
       </section>

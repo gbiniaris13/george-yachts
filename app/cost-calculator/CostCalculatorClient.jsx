@@ -19,9 +19,9 @@ function gtagEventDebounced(name, payload, delay = 800) {
 const GOLD = '#C9A84C';
 
 const SEASONS = [
-  { id: 'low', label: 'Low Season', months: 'Apr–May, Oct', desc: 'Quieter waters, cooler weather, best rates' },
+  { id: 'low', label: 'Low Season', months: 'Apr-May, Oct', desc: 'Quieter waters, cooler weather, best rates' },
   { id: 'mid', label: 'Mid Season', months: 'Jun, Sep', desc: 'Warm weather, moderate crowds' },
-  { id: 'high', label: 'High Season', months: 'Jul–Aug', desc: 'Peak summer, busiest, premium rates' },
+  { id: 'high', label: 'High Season', months: 'Jul-Aug', desc: 'Peak summer, busiest, premium rates' },
 ];
 
 const TRANSFER_OPTIONS = [
@@ -148,7 +148,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
               <option value="" style={{ background: '#0D1B2A' }}>{t('calculator.chooseYacht', 'Choose a yacht...')}</option>
               {YACHT_DATA.map(y => (
                 <option key={y.slug} value={y.slug} style={{ background: '#0D1B2A' }}>
-                  {y.name} — {fmt(y.low)}{y.high !== y.low ? ` to ${fmt(y.high)}` : ''}/week — up to {y.guests} guests
+                  {y.name} - {fmt(y.low)}{y.high !== y.low ? ` to ${fmt(y.high)}` : ''}/week - up to {y.guests} guests
                 </option>
               ))}
             </select>
@@ -267,8 +267,8 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 16 }}>
                 {[
                   { label: `${t('calculator.charterRate', 'Charter Rate')} (${breakdown.weeks}w)`, value: breakdown.charterRate, note: t('calculator.charterRateNote', 'Base weekly rate × duration') },
-                  { label: `${t('calculator.vat', 'VAT')} (12%)`, value: breakdown.vat, note: t('calculator.vatNote', 'Greek charter VAT — applied to charter rate only') },
-                  { label: `${t('calculator.apa', 'APA')} (30%)`, value: breakdown.apa, note: t('calculator.apaNote', 'Advance Provisioning Allowance — fuel, food, marina fees (not taxed)') },
+                  { label: `${t('calculator.vat', 'VAT')} (12%)`, value: breakdown.vat, note: t('calculator.vatNote', 'Greek charter VAT - applied to charter rate only') },
+                  { label: `${t('calculator.apa', 'APA')} (30%)`, value: breakdown.apa, note: t('calculator.apaNote', 'Advance Provisioning Allowance - fuel, food, marina fees (not taxed)') },
                 ].map((item, i) => (
                   <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingBottom: 16, borderBottom: '1px solid rgba(248, 245, 240,0.05)' }}>
                     <div>
@@ -319,7 +319,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                     <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, color: '#F8F5F0', fontWeight: 500 }}>{fmt(breakdown.totalTransfer)}</div>
                   </div>
                   <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.2)' }}>
-                    {fmt(breakdown.transferCostPP)}/{t('calculator.person', 'person')} × {breakdown.guests} {t('calculator.guestsLabel', 'guests')} — {t('calculator.separateFromCharter', 'separate from charter cost')}
+                    {fmt(breakdown.transferCostPP)}/{t('calculator.person', 'person')} × {breakdown.guests} {t('calculator.guestsLabel', 'guests')} - {t('calculator.separateFromCharter', 'separate from charter cost')}
                   </div>
                 </div>
               )}
@@ -418,7 +418,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                     transition: 'all 0.3s ease',
                   }}
                 >
-                  {t('calculator.viewDetails', 'View Details')} — {breakdown.yacht.name}
+                  {t('calculator.viewDetails', 'View Details')} - {breakdown.yacht.name}
                 </Link>
               </div>
             </div>

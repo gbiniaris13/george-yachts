@@ -59,10 +59,10 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>George Yachts — The Journal</title>
+    <title>George Yachts - The Journal</title>
     <link>${BASE}/blog</link>
     <atom:link href="${BASE}/feed.xml" rel="self" type="application/rss+xml" />
-    <description>Editorial from George Yachts Brokerage House — luxury yacht charter in Greek waters. Working brokers, honest analysis, real 2026 market intel.</description>
+    <description>Editorial from George Yachts Brokerage House - luxury yacht charter in Greek waters. Working brokers, honest analysis, real 2026 market intel.</description>
     <language>en-us</language>
     <copyright>© George Yachts Brokerage House LLC</copyright>
     <managingEditor>george@georgeyachts.com (George P. Biniaris)</managingEditor>
@@ -71,7 +71,7 @@ export async function GET() {
     <generator>Next.js + Sanity</generator>
     <image>
       <url>${BASE}/images/yacht-icon-only.svg</url>
-      <title>George Yachts — The Journal</title>
+      <title>George Yachts - The Journal</title>
       <link>${BASE}/blog</link>
     </image>
 ${items}

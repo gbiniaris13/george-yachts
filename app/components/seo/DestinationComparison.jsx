@@ -347,7 +347,7 @@ export default function DestinationComparison({ pageData }) {
                   fontStyle: "italic",
                 }}
               >
-                Data: George Yachts client analysis 2025–2026. "Edge" reflects typical UHNW priority, not absolute superiority.
+                Data: George Yachts client analysis 2025-2026. "Edge" reflects typical UHNW priority, not absolute superiority.
               </p>
             </div>
           </section>

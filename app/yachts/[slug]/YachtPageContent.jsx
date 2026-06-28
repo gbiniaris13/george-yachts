@@ -475,7 +475,7 @@ function MatterportSection({ url, yachtName }) {
                   margin: 0,
                 }}
               >
-                A full 360° walkthrough of every cabin, salon, and deck — powered by Matterport. Loads on click to keep the page fast.
+                A full 360° walkthrough of every cabin, salon, and deck - powered by Matterport. Loads on click to keep the page fast.
               </p>
             </div>
           </button>
@@ -613,7 +613,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   every detail page opens like a film, not a catalog page. */}
               <Image
                 src={heroImage.url}
-                alt={heroImage.alt || `${yacht.name} ${yacht.subtitle} — luxury yacht charter Greece`}
+                alt={heroImage.alt || `${yacht.name} ${yacht.subtitle} - luxury yacht charter Greece`}
                 fill
                 priority
                 className="yacht-hero__image"
@@ -699,7 +699,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   Request a personal proposal →
                 </button>
                 <a
-                  href={`https://wa.me/306970380999?text=${encodeURIComponent(`Hi George — could you share availability and rates for ${yacht.name}?`)}`}
+                  href={`https://wa.me/306970380999?text=${encodeURIComponent(`Hi George - could you share availability and rates for ${yacht.name}?`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   data-cursor="WhatsApp"
@@ -822,7 +822,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   &ldquo;{yacht.georgeInsiderTip}&rdquo;
                 </blockquote>
                 <p className="yacht-insider__signature">
-                  — <span itemProp="author">George P. Biniaris</span>, {t('yacht.managingBroker', 'Managing Broker')} &amp; <a href="https://iyba.org" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}>IYBA {t('yacht.member', 'Member')}</a>
+                  - <span itemProp="author">George P. Biniaris</span>, {t('yacht.managingBroker', 'Managing Broker')} &amp; <a href="https://iyba.org" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}>IYBA {t('yacht.member', 'Member')}</a>
                 </p>
               </div>
             </div>
@@ -1063,7 +1063,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   fontStyle: 'italic',
                 }}
               >
-                Indicative only — every charter is shaped around your group, the wind, and the season.
+                Indicative only - every charter is shaped around your group, the wind, and the season.
               </p>
 
               {/* D.7 brief — CTA below the timeline */}
@@ -1119,7 +1119,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                 Request a personal proposal
               </button>
               <a
-                href={`https://wa.me/306970380999?text=${encodeURIComponent(`Hi, I'm interested in chartering ${yacht.name} — could you share availability and rates?`)}`}
+                href={`https://wa.me/306970380999?text=${encodeURIComponent(`Hi, I'm interested in chartering ${yacht.name} - could you share availability and rates?`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-secondary"

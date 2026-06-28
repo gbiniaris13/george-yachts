@@ -83,7 +83,7 @@ export default function GroupReadiness({
         <>
           <p className="gr__copy">
             Every crew list is in. Every brief section is filled.
-            Your group is ready to send the brief to George — one
+            Your group is ready to send the brief to George - one
             final read, then off it goes.
           </p>
           <Link href="/cabin/brief/review" className="gr__cta">
@@ -96,7 +96,7 @@ export default function GroupReadiness({
             The bar tracks the two things George needs before the
             brief can sail: every guest&apos;s crew-list line, and
             every section of the brief filled in. When both reach
-            100%, you&apos;re ready to send — no separate confirm
+            100%, you&apos;re ready to send - no separate confirm
             step, and nothing for your guests to press.
           </p>
 

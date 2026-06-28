@@ -44,8 +44,8 @@ const reasons = [
 /* ─── FLEET TIERS ─── */
 const fleets = [
   { name: "Explorer Fleet", price: "from €375/person/week", count: "14 vessels" },
-  { name: "Private Fleet", price: "€13K–€90K/week", count: "30+ vessels" },
-  { name: "Superyacht Collection", price: "€90K–€235K+/week", count: "Motor yachts 100–210 ft" },
+  { name: "Private Fleet", price: "€13K-€90K/week", count: "30+ vessels" },
+  { name: "Superyacht Collection", price: "€90K-€235K+/week", count: "Motor yachts 100-210 ft" },
 ];
 
 /* ─── TESTIMONIALS ─── */
@@ -214,7 +214,7 @@ export default function PartnersClient() {
                 marginBottom: "36px",
               }}
             >
-              Commission structure, white-label proposal deck and priority lane — unlocked once we know who we&rsquo;re talking to.
+              Commission structure, white-label proposal deck and priority lane - unlocked once we know who we&rsquo;re talking to.
             </p>
 
             <form
@@ -484,7 +484,7 @@ export default function PartnersClient() {
                 </p>
               </blockquote>
               <p className="text-center" style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#C9A84C" }}>
-                — {t.role}
+                - {t.role}
               </p>
               {i < testimonials.length - 1 && (
                 <div className="flex justify-center my-14">
@@ -537,7 +537,7 @@ export default function PartnersClient() {
               },
               {
                 q: "How fast is payment?",
-                a: "Within 7-10 days of the signed MYBA-standard contract — not after the charter, not after the season, not after a clearing cycle. Payment by SEPA or international wire in EUR. We send you a written confirmation the day the contract is signed so you know it's coming.",
+                a: "Within 7-10 days of the signed MYBA-standard contract - not after the charter, not after the season, not after a clearing cycle. Payment by SEPA or international wire in EUR. We send you a written confirmation the day the contract is signed so you know it's coming.",
               },
               {
                 q: "Can I co-broker on a deal?",
@@ -545,11 +545,11 @@ export default function PartnersClient() {
               },
               {
                 q: "Do I need a partnership agreement before sending a client?",
-                a: "No. We've structured the programme so a first introduction can happen instantly — you write to George with the brief, we come back with a curated proposal, the commission is documented at proposal time. The formal partnership programme exists for partners who want priority allocation, white-label assets, and direct WhatsApp/Telegram channel.",
+                a: "No. We've structured the programme so a first introduction can happen instantly - you write to George with the brief, we come back with a curated proposal, the commission is documented at proposal time. The formal partnership programme exists for partners who want priority allocation, white-label assets, and direct WhatsApp/Telegram channel.",
               },
               {
                 q: "What happens if my client doesn't book?",
-                a: "Nothing happens. No fees, no penalty, no awkward conversation. We treat every introduction with the same care — if it doesn't close this season, we keep the relationship warm for next year. About 35% of our partner introductions convert; the rest become future deals or long-term referral relationships.",
+                a: "Nothing happens. No fees, no penalty, no awkward conversation. We treat every introduction with the same care - if it doesn't close this season, we keep the relationship warm for next year. About 35% of our partner introductions convert; the rest become future deals or long-term referral relationships.",
               },
             ].map((f, i) => (
               <details

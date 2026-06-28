@@ -10,25 +10,25 @@ function useFeatures() {
   return [
     {
       title: t('panels.panel1Title', 'CREWED YACHT CHARTER | IN GREEK WATERS'),
-      paragraph: t('panels.panel1Text', 'From the Cyclades to the Ionian, from the Saronic Gulf to the Sporades — George Yachts curates crewed yacht charters across every Greek sailing region. Our fleet of 63 motor yachts and sailing yachts, sailing catamarans, and monohulls is handpicked for quality, crew excellence, and guest experience. Whether you envision Mykonos sunsets or Corfu coastlines, your charter begins with a single conversation.'),
+      paragraph: t('panels.panel1Text', 'From the Cyclades to the Ionian, from the Saronic Gulf to the Sporades - George Yachts curates crewed yacht charters across every Greek sailing region. Our fleet of 63 motor yachts and sailing yachts, sailing catamarans, and monohulls is handpicked for quality, crew excellence, and guest experience. Whether you envision Mykonos sunsets or Corfu coastlines, your charter begins with a single conversation.'),
       imageSrc: "/images/yacht-1.jpeg",
       discoverHref: "/charter-yacht-greece",
     },
     {
       title: t('panels.panel2Title', 'WHY CHOOSE | A BOUTIQUE BROKER?'),
-      paragraph: t('panels.panel2Text', 'Unlike aggregator platforms with thousands of listings and no personal touch, George Yachts operates as a boutique brokerage — one broker, one relationship, one standard. Every yacht is personally vetted. Every captain is known by name. Every itinerary is crafted from real experience sailing these waters. IYBA member, MYBA contracts, transparent pricing with APA and VAT explained upfront. No surprises, no middlemen.'),
+      paragraph: t('panels.panel2Text', 'Unlike aggregator platforms with thousands of listings and no personal touch, George Yachts operates as a boutique brokerage - one broker, one relationship, one standard. Every yacht is personally vetted. Every captain is known by name. Every itinerary is crafted from real experience sailing these waters. IYBA member, MYBA contracts, transparent pricing with APA and VAT explained upfront. No surprises, no middlemen.'),
       imageSrc: "/images/yacht-2.jpeg",
       discoverHref: "/about-us",
     },
     {
       title: t('panels.panel3Title', '360° LUXURY | BEYOND THE YACHT'),
-      paragraph: t('panels.panel3Text', 'Your experience extends far beyond the deck. Through our network of trusted partners across Greece, we arrange private jet and helicopter transfers, VIP ground transport, luxury villa stays in Mykonos, Santorini, and the Athens Riviera, Michelin-level dining reservations, and bespoke island itineraries. One point of contact for everything — from touchdown at Athens International to your final sunset anchorage.'),
+      paragraph: t('panels.panel3Text', 'Your experience extends far beyond the deck. Through our network of trusted partners across Greece, we arrange private jet and helicopter transfers, VIP ground transport, luxury villa stays in Mykonos, Santorini, and the Athens Riviera, Michelin-level dining reservations, and bespoke island itineraries. One point of contact for everything - from touchdown at Athens International to your final sunset anchorage.'),
       imageSrc: "/images/yacht-3.jpeg",
       discoverHref: "/private-jet-charter",
     },
     {
       title: t('panels.panel4Title', 'CHARTER WITH | CONFIDENCE'),
-      paragraph: t('panels.panel4Text', 'George Yachts brings a new standard to Mediterranean yacht charter — combining international professionalism with deep local expertise in Greek waters. Weekly rates from €5,900 for intimate sailing catamarans to €235,000 for flagship superyachts. Clear contracts, fast proposals, and an IYBA member broker who answers the phone personally. This is yacht charter as it should be — precise, discreet, and genuinely personal.'),
+      paragraph: t('panels.panel4Text', 'George Yachts brings a new standard to Mediterranean yacht charter - combining international professionalism with deep local expertise in Greek waters. Weekly rates from €5,900 for intimate sailing catamarans to €235,000 for flagship superyachts. Clear contracts, fast proposals, and an IYBA member broker who answers the phone personally. This is yacht charter as it should be - precise, discreet, and genuinely personal.'),
       imageSrc: "/images/yacht-4.jpeg",
       discoverHref: "/faq",
     },
@@ -90,7 +90,7 @@ const DiagonalWipePanel = ({ item, index, total }) => {
       >
         <Image
           src={item.imageSrc}
-          alt={`${item.title.replace('|', '–')} - George Yachts luxury yacht charter Greece`}
+          alt={`${item.title.replace('|', '-')} - George Yachts luxury yacht charter Greece`}
           fill
           className="object-cover"
           sizes="100vw"

@@ -297,12 +297,12 @@ export default function MarketReportPage() {
               <StatCard
                 stat="32%"
                 label="US market share"
-                note="US-source charters as a percentage of total bookings — up from 24% in 2024."
+                note="US-source charters as a percentage of total bookings - up from 24% in 2024."
               />
               <StatCard
                 stat="8 mo"
                 label="Lead time"
-                note="Median booking lead time for peak August weeks — up from 6 months in 2025."
+                note="Median booking lead time for peak August weeks - up from 6 months in 2025."
               />
               <StatCard
                 stat="+7%"
@@ -333,7 +333,7 @@ export default function MarketReportPage() {
             <strong style={{ color: "#F8F5F0" }}>The UK and Northern European market is flat to slightly down</strong>,
             reflecting general softness in UK luxury-travel spend through 2025-2026. The
             GCC market (UAE, Saudi Arabia, Qatar) is up 3 points and now represents 11% of
-            our booked charters — a meaningful change from 7% in 2024.
+            our booked charters - a meaningful change from 7% in 2024.
           </p>
           <p>
             <strong style={{ color: "#F8F5F0" }}>Repeat-client share is up to 38%</strong>, the highest in our records.
@@ -357,7 +357,7 @@ export default function MarketReportPage() {
             typically gone by February. Below 25 metres, availability is better but
             quality-tier yachts (recent refits, top crews) are still booking 6+ months
             ahead. The 50+ metre megayacht segment has 8-12 weeks of peak inventory
-            remaining as of May 2026 — limited but possible for clients who can decide
+            remaining as of May 2026 - limited but possible for clients who can decide
             quickly.
           </p>
           <p>

@@ -160,7 +160,7 @@ export default function ProposalClient({ yachts = [] }) {
           lineHeight: 1.7, color: "rgba(248, 245, 240,0.7)",
           maxWidth: 640, margin: "0 auto",
         }}>
-          Each page in the proposal is a real yacht from the live fleet — hero photo, specs, price, and
+          Each page in the proposal is a real yacht from the live fleet - hero photo, specs, price, and
           George&rsquo;s insider note. Submit and you&rsquo;ll receive the PDF by email plus a written
           quote within the day.
         </p>
@@ -373,7 +373,7 @@ export default function ProposalClient({ yachts = [] }) {
                     style={inputStyle}
                   />
                   <input
-                    type="text" placeholder="Dates (optional, e.g. 12–19 July)"
+                    type="text" placeholder="Dates (optional, e.g. 12-19 July)"
                     value={dates} onChange={(e) => setDates(e.target.value)}
                     style={inputStyle}
                   />
@@ -436,7 +436,7 @@ export default function ProposalClient({ yachts = [] }) {
                 }}>
                   {result.emailSent
                     ? `The PDF is on its way to ${email}. George will reach out within the day.`
-                    : `Your PDF is ready below. (Email delivery wasn't available right now — George has been notified separately.)`}
+                    : `Your PDF is ready below. (Email delivery wasn't available right now - George has been notified separately.)`}
                 </p>
                 <a
                   href={result.dataUrl} download={result.filename}

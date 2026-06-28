@@ -52,8 +52,8 @@ const ISLANDS = [
   // the site. Re-add only on explicit owner direction.
 
   // Key mainland ports
-  { id: 'athens', name: 'Athens (Alimos)', region: 'Mainland', x: 430, y: 380, lat: 37.9838, lng: 23.7275, desc: 'Alimos Marina — main charter base, easy airport access' },
-  { id: 'lavrio', name: 'Lavrio', region: 'Mainland', x: 470, y: 400, lat: 37.7265, lng: 24.0548, desc: 'Lavrion Marina — closest port to Cyclades, fast access to Kea' },
+  { id: 'athens', name: 'Athens (Alimos)', region: 'Mainland', x: 430, y: 380, lat: 37.9838, lng: 23.7275, desc: 'Alimos Marina - main charter base, easy airport access' },
+  { id: 'lavrio', name: 'Lavrio', region: 'Mainland', x: 470, y: 400, lat: 37.7265, lng: 24.0548, desc: 'Lavrion Marina - closest port to Cyclades, fast access to Kea' },
   { id: 'nea-peramos', name: 'Nea Peramos', region: 'Mainland', x: 440, y: 370, lat: 37.9667, lng: 23.9167, desc: 'Quiet port near Athens, sheltered anchorage' },
   { id: 'nafplio', name: 'Nafplio', region: 'Mainland', x: 400, y: 430, lat: 37.5675, lng: 22.7958, desc: 'Greece\'s first capital, Palamidi fortress' },
   { id: 'porto-heli', name: 'Porto Heli', region: 'Mainland', x: 420, y: 455, lat: 37.3187, lng: 23.1456, desc: 'Greek Hamptons, Amanzoe resort' },
@@ -703,7 +703,7 @@ export default function ItineraryBuilderClient() {
                     style={modalInput}
                   />
                   <textarea
-                    placeholder="Anything George should know? (group size, dates, vibe — optional)"
+                    placeholder="Anything George should know? (group size, dates, vibe - optional)"
                     value={saveMessage} onChange={(e) => setSaveMessage(e.target.value)}
                     rows={3}
                     style={{ ...modalInput, fontFamily: "var(--gy-font-ui)", resize: 'vertical' }}

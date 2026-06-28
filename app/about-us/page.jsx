@@ -9,7 +9,7 @@ import "./about-us.css";
 export const metadata = {
   title: "About George Yachts | Boutique Brokerage in Greek Waters",
   description:
-    "George P. Biniaris — Managing Broker, IYBA Member. Boutique yacht brokerage in Greek waters. Personal broker relationship. 360° luxury services. Athens HQ.",
+    "George P. Biniaris - Managing Broker, IYBA Member. Boutique yacht brokerage in Greek waters. Personal broker relationship. 360° luxury services. Athens HQ.",
   alternates: {
     canonical: "https://georgeyachts.com/about-us",
   },
@@ -52,7 +52,7 @@ export default function AboutUsPage() {
       <section className="about-hero">
         <Image
           src="/images/about-hero-santorini.jpg"
-          alt="Santorini Greece — George Yachts luxury yacht charter brokerage Greek islands"
+          alt="Santorini Greece - George Yachts luxury yacht charter brokerage Greek islands"
           fill
           priority
           className="about-hero__bg"

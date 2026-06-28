@@ -386,7 +386,7 @@ const ContactFormSection = () => {
                   <option value="Sailing Catamaran" className="bg-black">Sailing Catamaran</option>
                   <option value="Power Catamaran" className="bg-black">Power Catamaran</option>
                   <option value="Sailing Monohull" className="bg-black">Sailing Monohull</option>
-                  <option value="Not Sure - Advise Me" className="bg-black">Not Sure &mdash; Advise Me</option>
+                  <option value="Not Sure - Advise Me" className="bg-black">Not Sure - Advise Me</option>
                 </select>
               </Field>
 
@@ -406,11 +406,11 @@ const ContactFormSection = () => {
                 <select id="budget" name="budget" required className={selectBase} defaultValue="">
                   <option value="" disabled className="text-white/30">Weekly Budget (All-In) *</option>
                   <option value="Under €15,000" className="bg-black">Under &euro;15,000</option>
-                  <option value="€15,000 – €30,000" className="bg-black">&euro;15,000 &ndash; &euro;30,000</option>
-                  <option value="€30,000 – €50,000" className="bg-black">&euro;30,000 &ndash; &euro;50,000</option>
-                  <option value="€50,000 – €100,000" className="bg-black">&euro;50,000 &ndash; &euro;100,000</option>
+                  <option value="€15,000 - €30,000" className="bg-black">&euro;15,000 - &euro;30,000</option>
+                  <option value="€30,000 - €50,000" className="bg-black">&euro;30,000 - &euro;50,000</option>
+                  <option value="€50,000 - €100,000" className="bg-black">&euro;50,000 - &euro;100,000</option>
                   <option value="€100,000+" className="bg-black">&euro;100,000+</option>
-                  <option value="Flexible" className="bg-black">Flexible &mdash; Advise Me</option>
+                  <option value="Flexible" className="bg-black">Flexible - Advise Me</option>
                 </select>
               </Field>
 
@@ -435,7 +435,7 @@ const ContactFormSection = () => {
                   <option value="Lefkada" className="bg-black">Lefkada</option>
                   <option value="Rhodes" className="bg-black">Rhodes</option>
                   <option value="Kos" className="bg-black">Kos</option>
-                  <option value="Flexible" className="bg-black">Flexible &mdash; Advise Me</option>
+                  <option value="Flexible" className="bg-black">Flexible - Advise Me</option>
                 </select>
               </Field>
 
@@ -449,7 +449,7 @@ const ContactFormSection = () => {
                   <option value="Santorini" className="bg-black">Santorini</option>
                   <option value="Corfu" className="bg-black">Corfu</option>
                   <option value="Lefkada" className="bg-black">Lefkada</option>
-                  <option value="Flexible" className="bg-black">Flexible &mdash; Advise Me</option>
+                  <option value="Flexible" className="bg-black">Flexible - Advise Me</option>
                 </select>
               </Field>
             </div>
@@ -481,7 +481,7 @@ const ContactFormSection = () => {
                 id="message"
                 name="message"
                 rows="6"
-                placeholder="Tell us about your dream charter — special occasions, preferred islands, dining preferences, activities..."
+                placeholder="Tell us about your dream charter - special occasions, preferred islands, dining preferences, activities..."
                 className={`${inputBase} resize-none`}
               />
             </Field>

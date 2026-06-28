@@ -17,7 +17,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 export const metadata = {
   title: "Contact George Yachts | Athens Office, Phone, WhatsApp",
   description:
-    "Reach George Yachts Brokerage House — Athens HQ at Charilaou Trikoupi 190A, Kifisia 14564. Phone, WhatsApp, email, Calendly. IYBA member broker for Greek waters yacht charter.",
+    "Reach George Yachts Brokerage House - Athens HQ at Charilaou Trikoupi 190A, Kifisia 14564. Phone, WhatsApp, email, Calendly. IYBA member broker for Greek waters yacht charter.",
   alternates: { canonical: "https://georgeyachts.com/contact" },
   openGraph: {
     title: "Contact George Yachts | Athens HQ",
@@ -42,7 +42,7 @@ const contactSchema = {
   name: "Contact George Yachts",
   url: "https://georgeyachts.com/contact",
   description:
-    "Contact George Yachts Brokerage House — Athens HQ, three regional phone lines, WhatsApp, email, Calendly.",
+    "Contact George Yachts Brokerage House - Athens HQ, three regional phone lines, WhatsApp, email, Calendly.",
   mainEntity: {
     "@type": "LocalBusiness",
     "@id": "https://georgeyachts.com/#organization",
@@ -187,7 +187,7 @@ export default function ContactPage() {
               George Yachts is a boutique IYBA-member brokerage based in
               Athens. Every inquiry lands in front of a working broker
               who knows the Greek waters firsthand. Pick the channel
-              that suits you — we answer all of them personally.
+              that suits you - we answer all of them personally.
             </p>
           </header>
 
@@ -209,7 +209,7 @@ export default function ContactPage() {
                 </address>
                 <p className="mt-3 text-sm text-white/50">
                   Visits by appointment only. Most charter consultations
-                  happen by phone, WhatsApp, or video — we cover Greek
+                  happen by phone, WhatsApp, or video - we cover Greek
                   waters end to end without you needing to fly to Athens.
                 </p>
               </div>
@@ -315,7 +315,7 @@ export default function ContactPage() {
             <div className="space-y-6">
               <div className="aspect-square w-full rounded-lg overflow-hidden border border-white/10">
                 <iframe
-                  title="George Yachts Athens HQ — Charilaou Trikoupi 190A, Kifisia"
+                  title="George Yachts Athens HQ - Charilaou Trikoupi 190A, Kifisia"
                   src={mapEmbedSrc}
                   width="100%"
                   height="100%"

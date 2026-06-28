@@ -164,7 +164,7 @@ export default function CalendarHeatMap() {
                 border: "1px solid rgba(248, 245, 240, 0.15)",
               }}
             />
-            {s} — {scoreLabel(s)}
+            {s} - {scoreLabel(s)}
           </div>
         ))}
       </div>
@@ -189,7 +189,7 @@ export default function CalendarHeatMap() {
               margin: "0 0 14px",
             }}
           >
-            {activeData.island.name} in {activeData.month.label} — {scoreLabel(activeData.score)}
+            {activeData.island.name} in {activeData.month.label} - {scoreLabel(activeData.score)}
           </p>
           <p
             style={{

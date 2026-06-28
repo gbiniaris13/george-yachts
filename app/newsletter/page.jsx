@@ -13,9 +13,9 @@ import NewsletterSignupClient from "./NewsletterSignupClient";
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
-  title: "Subscribe — The George Yachts Journals",
+  title: "Subscribe - The George Yachts Journals",
   description:
-    "Four short letters from the Greek waters. Pick the one that fits — or more than one. Insider, never noisy. Always reply-to-george.",
+    "Four short letters from the Greek waters. Pick the one that fits - or more than one. Insider, never noisy. Always reply-to-george.",
   alternates: { canonical: "https://georgeyachts.com/newsletter" },
   robots: { index: true, follow: true },
 };
@@ -27,7 +27,7 @@ const STREAMS = [
     audience: "For the charter client",
     cadence: "Bi-weekly · Thursdays",
     description:
-      "A short read every other Thursday. One thing worth knowing — a market signal, a story from a charter, a quiet piece of insider intel. No pitches. No calendars of yachts. The kind of thing a working broker would tell a friend.",
+      "A short read every other Thursday. One thing worth knowing - a market signal, a story from a charter, a quiet piece of insider intel. No pitches. No calendars of yachts. The kind of thing a working broker would tell a friend.",
     voice: "Insider letter, never sales.",
     recommended: true,
   },
@@ -129,7 +129,7 @@ export default function NewsletterPage() {
             fontStyle: "italic",
           }}
         >
-          Four short letters from the Greek waters. Pick the one that fits —
+          Four short letters from the Greek waters. Pick the one that fits -
           or more than one. Insider, never noisy. Always reply-to-george.
         </p>
       </header>
@@ -148,7 +148,7 @@ export default function NewsletterPage() {
       >
         <p style={{ margin: "0 0 6px 0" }}>
           You can unsubscribe with one click from any letter we send. We never
-          share your address. Reply directly any time —{" "}
+          share your address. Reply directly any time -{" "}
           <a
             href="mailto:george@georgeyachts.com"
             style={{ color: "#0D1B2A", textDecoration: "underline" }}

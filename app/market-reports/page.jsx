@@ -25,7 +25,7 @@ export const metadata = {
   // "%s | George Yachts" template otherwise appends (was 75 chars).
   title: { absolute: "Greek Yacht Charter Market Reports | George Yachts" },
   description:
-    "Quarterly and forecast research on the Greek yacht charter market — original data from George Yachts Brokerage House. Authored by George P. Biniaris.",
+    "Quarterly and forecast research on the Greek yacht charter market - original data from George Yachts Brokerage House. Authored by George P. Biniaris.",
   alternates: { canonical: "https://georgeyachts.com/market-reports" },
   openGraph: {
     title: "Greek Yacht Charter Market Reports",
@@ -139,7 +139,7 @@ export default function MarketReportsHub() {
                 lineHeight: 1.5,
               }}
             >
-              Original quarterly and forecast research on the Greek yacht charter market. No marketing fluff — booking data, pricing trends, fleet movements.
+              Original quarterly and forecast research on the Greek yacht charter market. No marketing fluff - booking data, pricing trends, fleet movements.
             </p>
           </div>
         </header>
@@ -339,7 +339,7 @@ export default function MarketReportsHub() {
                 margin: "0 0 28px",
               }}
             >
-              Methodology, source data, or how the numbers apply to your specific charter — speak with George directly.
+              Methodology, source data, or how the numbers apply to your specific charter - speak with George directly.
             </p>
             <Link
               href="/inquiry"

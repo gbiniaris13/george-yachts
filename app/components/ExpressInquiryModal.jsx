@@ -95,7 +95,7 @@ export default function ExpressInquiryModal({
         await new Promise((r) => setTimeout(r, 100));
       }
       if (!window.grecaptcha?.enterprise?.execute) {
-        setError("Please wait a moment — security check loading.");
+        setError("Please wait a moment - security check loading.");
         setSubmitting(false);
         return;
       }
@@ -105,7 +105,7 @@ export default function ExpressInquiryModal({
         });
       } catch {}
       if (!recaptchaToken) {
-        setError("Please wait a moment — security check loading.");
+        setError("Please wait a moment - security check loading.");
         setSubmitting(false);
         return;
       }
@@ -293,7 +293,7 @@ export default function ExpressInquiryModal({
               />
               <FormField
                 label="Approximate dates (optional)"
-                placeholder="e.g. 5–12 July 2026"
+                placeholder="e.g. 5-12 July 2026"
                 value={dates}
                 onChange={setDates}
               />

@@ -116,7 +116,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
               color: "rgba(248,245,240,0.78)",
             }}
           >
-            Not a destination guide — a working broker's diary of the routes
+            Not a destination guide - a working broker's diary of the routes
             we plan over and over for our most particular guests. Read it
             slowly. Pick the week you want. Brief George with the rest.
           </p>
@@ -358,7 +358,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                         {y.imageUrl ? (
                           <Image
                             src={y.imageUrl}
-                            alt={y.imageAlt || `${y.name} — luxury yacht charter Greece`}
+                            alt={y.imageAlt || `${y.name} - luxury yacht charter Greece`}
                             fill
                             sizes="(max-width: 700px) 100vw, 280px"
                             style={{ objectFit: "cover" }}
@@ -451,7 +451,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
           className="gy-display-md"
           style={{ margin: "16px auto 0", maxWidth: "20ch" }}
         >
-          Pick the week you want — we'll route the rest.
+          Pick the week you want - we'll route the rest.
         </h2>
         <p
           className="gy-lede"
@@ -462,7 +462,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
           }}
         >
           Six quick questions. A real broker reply within 24 hours. No AI
-          proposals — just our honest pick of three yachts we'd put on your
+          proposals - just our honest pick of three yachts we'd put on your
           shortlist for this week.
         </p>
         <Link

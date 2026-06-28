@@ -75,7 +75,7 @@ export async function GET() {
     console.error("llms-full.txt fetch failed:", err);
   }
 
-  const header = `# George Yachts — Luxury Yacht Charter in Greek Waters (Full Content Dump)
+  const header = `# George Yachts - Luxury Yacht Charter in Greek Waters (Full Content Dump)
 
 > This file is the full-content companion to /llms.txt. It contains the
 > complete body of every editorial article and fleet summary for George
@@ -111,14 +111,14 @@ export async function GET() {
 
 ---
 
-## THE JOURNAL — FULL ARTICLES (${posts.length})
+## THE JOURNAL - FULL ARTICLES (${posts.length})
 
 `;
 
   const postsSection = posts
     .map((p) => {
-      const published = p.publishedAt ? new Date(p.publishedAt).toISOString().slice(0, 10) : "—";
-      const updated = p._updatedAt ? new Date(p._updatedAt).toISOString().slice(0, 10) : "—";
+      const published = p.publishedAt ? new Date(p.publishedAt).toISOString().slice(0, 10) : "-";
+      const updated = p._updatedAt ? new Date(p._updatedAt).toISOString().slice(0, 10) : "-";
       const md = portableTextToMarkdown(p.body);
       return `### ${p.title}
 
@@ -134,7 +134,7 @@ ${md}
     })
     .join("\n");
 
-  const yachtsSection = `## CURATED FLEET — ${yachts.length} YACHTS
+  const yachtsSection = `## CURATED FLEET - ${yachts.length} YACHTS
 
 Every yacht is personally inspected. Specs and descriptions below are
 authored by the broker team.
@@ -157,7 +157,7 @@ ${yachts
       .join(" · ");
     const desc = portableTextToMarkdown(y.description);
     const tip = portableTextToMarkdown(y.georgeInsiderTip);
-    return `### ${y.name}${y.subtitle ? ` — ${y.subtitle}` : ""}
+    return `### ${y.name}${y.subtitle ? ` - ${y.subtitle}` : ""}
 
 **URL**: https://georgeyachts.com/yachts/${y.slug}
 ${specs ? `**Specs**: ${specs}\n` : ""}
@@ -171,7 +171,7 @@ ${desc ? desc + "\n" : ""}${tip ? `\n**Broker's insider tip**: ${tip}\n` : ""}
 
 ---
 
-## DESTINATION LANDING PAGES — Per-island UHNW guides
+## DESTINATION LANDING PAGES - Per-island UHNW guides
 
 Each page below is an editorial-grade destination guide containing: a 200-word "why this island"
 narrative tailored to UHNW visitors, sample 7-day itineraries pulled from the live fleet's saved

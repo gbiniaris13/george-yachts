@@ -65,9 +65,9 @@ const STEPS = [
     label: "Which waters call you?",
     type: "choice",
     options: [
-      { value: "cyclades", label: "Cyclades — Mykonos, Santorini, Paros" },
-      { value: "ionian", label: "Ionian — Corfu, Lefkada, Kefalonia" },
-      { value: "saronic", label: "Saronic Gulf — Hydra, Spetses" },
+      { value: "cyclades", label: "Cyclades - Mykonos, Santorini, Paros" },
+      { value: "ionian", label: "Ionian - Corfu, Lefkada, Kefalonia" },
+      { value: "saronic", label: "Saronic Gulf - Hydra, Spetses" },
       { value: "mix", label: "A mix / I'd like a recommendation" },
     ],
   },
@@ -83,8 +83,8 @@ const STEPS = [
     type: "choice",
     options: [
       { value: "under-30k",  label: "Under €30,000 / week" },
-      { value: "30-60k",     label: "€30,000 – €60,000" },
-      { value: "60-120k",    label: "€60,000 – €120,000" },
+      { value: "30-60k",     label: "€30,000 - €60,000" },
+      { value: "60-120k",    label: "€60,000 - €120,000" },
       { value: "120k-plus",  label: "€120,000+" },
       { value: "per-person", label: "I think per person (Explorer Fleet)" },
       { value: "discuss",    label: "I'd rather discuss with George" },
@@ -101,7 +101,7 @@ const STEPS = [
       { value: "honeymoon",   label: "Honeymoon" },
       { value: "family",      label: "Family reunion" },
       { value: "corporate",   label: "Corporate / private group" },
-      { value: "other",       label: "Other — we'll tell George" },
+      { value: "other",       label: "Other - we'll tell George" },
     ],
   },
   {
@@ -129,7 +129,7 @@ const STEPS = [
     key: "notes",
     label: "Anything else we should know?",
     type: "textarea",
-    placeholder: "Optional — birthdays, dietary needs, destinations already shortlisted…",
+    placeholder: "Optional - birthdays, dietary needs, destinations already shortlisted…",
   },
 ];
 
@@ -262,7 +262,7 @@ export default function InquiryClient() {
         } catch {}
       }
     } catch {
-      setError("Network hiccup. Please try again — if it keeps failing, WhatsApp george@georgeyachts.com directly.");
+      setError("Network hiccup. Please try again - if it keeps failing, WhatsApp george@georgeyachts.com directly.");
     } finally {
       setSubmitting(false);
     }
@@ -303,7 +303,7 @@ export default function InquiryClient() {
           <p style={eyebrow}>Inquiry received</p>
           <h1 style={{ ...question, marginBottom: 18 }}>Thank you.</h1>
           <p style={subtext}>
-            George reads every brief personally. You'll hear back within 24 hours — usually much sooner.
+            George reads every brief personally. You'll hear back within 24 hours - usually much sooner.
           </p>
 
           {/* Generative editorial cover */}
@@ -436,7 +436,7 @@ export default function InquiryClient() {
                   Pick one or "I'm flexible" below
                 </option>
                 <option value="flexible">
-                  I'm flexible — show me what fits
+                  I'm flexible - show me what fits
                 </option>
                 {yachtOptions.length === 0 ? (
                   <option value="" disabled>
@@ -460,7 +460,7 @@ export default function InquiryClient() {
                 }}
               >
                 {yachtOptions.length > 0
-                  ? `${yachtOptions.length} yachts in our 2026 fleet — pick the one you've been thinking about, or stay flexible.`
+                  ? `${yachtOptions.length} yachts in our 2026 fleet - pick the one you've been thinking about, or stay flexible.`
                   : "Loading the fleet…"}
               </p>
             </div>

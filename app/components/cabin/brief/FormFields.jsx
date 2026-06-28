@@ -320,7 +320,7 @@ export function RadioGroup({
           color: rgba(13, 27, 42, 0.55);
           margin-top: 2px;
         }
-        /* 2026-05-25 — Phase 5 closeout: locked radio rows */
+        /* 2026-05-25 - Phase 5 closeout: locked radio rows */
         .brief-radio-item--locked {
           cursor: not-allowed;
           opacity: 0.82;
@@ -464,7 +464,7 @@ export function CheckboxGroup({
           border-width: 0 1.8px 1.8px 0;
           transform: rotate(45deg);
         }
-        /* 2026-05-25 — Phase 5: locked-by-group state. Cursor
+        /* 2026-05-25 - Phase 5: locked-by-group state. Cursor
            becomes "not-allowed", the row dims, and a small
            gold tag sits at the end so it reads "ticked by your
            group, not me". Still legible; just clearly not
@@ -749,7 +749,7 @@ export function LikeDislikeMatrix({ name, label, hint, items, register, lockedKe
           border-top: 1px solid rgba(13, 27, 42, 0.05);
         }
         .brief-matrix-row:first-of-type { border-top: 0; }
-        /* 2026-05-25 — Phase 5 closeout: row already set by the
+        /* 2026-05-25 - Phase 5 closeout: row already set by the
            group. Dim the radios; cursor signals not-interactive. */
         .brief-matrix-row--locked {
           cursor: not-allowed;
@@ -759,13 +759,13 @@ export function LikeDislikeMatrix({ name, label, hint, items, register, lockedKe
         .brief-matrix-row--locked .brief-matrix-cell {
           cursor: not-allowed;
         }
-        /* 2026-05-20 — Eleanna friend-test: "Είμαι πολύ αχνα" + "δεν
+        /* 2026-05-20 - Eleanna friend-test: "Είμαι πολύ αχνα" + "δεν
            φαίνονται οι επιλογές που πρέπει να τσεκάρω". Both the row
            labels (food names) and the radio circles were too low-
            contrast for over-40 eyes. Pushed font weight + size up
            on labels; tightened radio border. */
-        /* 2026-05-20 — Friend-test pass 3: George flagged the food
-           matrix as "πολύ αχνά" — first column labels invisible.
+        /* 2026-05-20 - Friend-test pass 3: George flagged the food
+           matrix as "πολύ αχνά" - first column labels invisible.
            Pushed font-size 15→16, weight 500→600, removed the
            half-tone navy in favour of full var(--gy-navy). Cell
            padding bumped so labels don't kiss the radio cells. */
@@ -784,14 +784,14 @@ export function LikeDislikeMatrix({ name, label, hint, items, register, lockedKe
           cursor: pointer;
           position: relative;
         }
-        /* 2026-05-26 — Brief 05 / T1 (Domingo principal audit):
+        /* 2026-05-26 - Brief 05 / T1 (Domingo principal audit):
            was opacity:0 + position:absolute + pointer-events:none.
            That hides the input visually on desktop Chrome/Firefox,
            but on iOS Safari + some Android builds the native blue
            radio accent + focus ring still leaked through (visible
            as a small blue dot + ring on top of the custom gold
            .brief-matrix-dot). The sibling RadioGroup uses
-           display:none and renders perfectly — matching that
+           display:none and renders perfectly - matching that
            pattern here. The label wraps the input so the
            implicit label/input association still toggles on tap.
            accent-color is also set (belt-and-braces) so any
@@ -821,8 +821,8 @@ export function LikeDislikeMatrix({ name, label, hint, items, register, lockedKe
           position: absolute;
           left: -10000px;
         }
-        /* 2026-05-23 — Audit pass: the 4-column grid (label + 3
-           radios) crowds badly at 360px Galaxy S — each cell ~62px,
+        /* 2026-05-23 - Audit pass: the 4-column grid (label + 3
+           radios) crowds badly at 360px Galaxy S - each cell ~62px,
            tracked uppercase header overlaps. Two-stage breakpoint:
              ≤599: tighter columns, smaller label
              ≤389: matrix header text smaller still (Like/Dislike/
@@ -1173,9 +1173,9 @@ export function LabelQuantityRows({
           cursor: pointer;
         }
         .brief-lq-add:hover { border-color: var(--gy-gold); }
-        /* 2026-05-23 — Audit pass:
+        /* 2026-05-23 - Audit pass:
            At 360px viewport the old "1fr 0.7fr 0.9fr 36px" with-price
-           layout gave the wine-label input ~80px wide — typing
+           layout gave the wine-label input ~80px wide - typing
            "Ruinart Brut Blanc de Blancs" was impossible. Now: hide
            the table header on phones, stack each row vertically
            (label full-width on its own row, then qty + price + remove

@@ -5,7 +5,7 @@ import Footer from "@/app/components/Footer";
 export const metadata = {
   title: "Partner Portal",
   description:
-    "Approved travel-trade partners — sign in to access white-label assets, commission updates, and priority allocation.",
+    "Approved travel-trade partners - sign in to access white-label assets, commission updates, and priority allocation.",
   robots: { index: false, follow: false },
   alternates: { canonical: "https://georgeyachts.com/partner-portal" },
 };
@@ -58,7 +58,7 @@ export default function PartnerPortalPage() {
               margin: "0 auto",
             }}
           >
-            For approved travel-trade partners. Enter the email George registered for your agency &mdash; we&rsquo;ll send a magic-link to your inbox.
+            For approved travel-trade partners. Enter the email George registered for your agency - we&rsquo;ll send a magic-link to your inbox.
           </p>
         </header>
 

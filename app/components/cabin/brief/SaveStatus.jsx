@@ -46,7 +46,7 @@ export default function SaveStatus({ state }) {
       : state === "saved"
         ? "Saved"
         : state === "error"
-          ? "Couldn’t save — keep typing to retry"
+          ? "Couldn’t save - keep typing to retry"
           : state === "preview"
             ? "Admin preview · changes won’t be saved"
             : "";
@@ -102,7 +102,7 @@ export default function SaveStatus({ state }) {
           animation: cabin-save-pulse 1.1s ease-in-out infinite;
         }
         .cabin-save-status--error .cabin-save-status__dot { background: #E0BA77; }
-        /* 2026-05-22 — Preview state: same teal as the in-cabin
+        /* 2026-05-22 - Preview state: same teal as the in-cabin
            preview banner (#0E7C7B). Calm presence, not alarming. */
         .cabin-save-status--preview {
           background: #0E7C7B;

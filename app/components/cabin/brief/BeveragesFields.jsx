@@ -111,15 +111,15 @@ export default function BeveragesFields({
       <RadioGroup
         name="champagne_tier"
         lockedValue={lockedRadio("champagne_tier")}
-        label="If yes — what level"
-        hint="The hostess matches the boat's house list to your level. Anything materially above your stated tier is confirmed by phone before ordering — never silently added to your tab."
+        label="If yes - what level"
+        hint="The hostess matches the boat's house list to your level. Anything materially above your stated tier is confirmed by phone before ordering - never silently added to your tab."
         register={register}
         options={[
           {
             value: "premium",
             label: "Premium",
             description:
-              "Vintage, grandes maisons. This is our most generous tier — selecting it noticeably shapes your APA usage.",
+              "Vintage, grandes maisons. This is our most generous tier - selecting it noticeably shapes your APA usage.",
           },
           {
             value: "standard",
@@ -131,7 +131,7 @@ export default function BeveragesFields({
             value: "classic",
             label: "Classic",
             description:
-              "House pour for toasts. The lightest tier on your APA — most likely to leave a refund at week's end.",
+              "House pour for toasts. The lightest tier on your APA - most likely to leave a refund at week's end.",
           },
           {
             value: "leave_to_captain",
@@ -164,11 +164,11 @@ export default function BeveragesFields({
         name="wine_greek_vineyards"
         lockedValue={lockedRadio("wine_greek_vineyards")}
         label="Greek wines from the best vineyards?"
-        hint="Greece offers exceptional wines — Assyrtiko, Xinomavro, old-vine reds. The crew recommends warmly."
+        hint="Greece offers exceptional wines - Assyrtiko, Xinomavro, old-vine reds. The crew recommends warmly."
         register={register}
         options={[
           { value: "yes",     label: "Yes please" },
-          { value: "open_to", label: "Open to a few — mixed with our own picks" },
+          { value: "open_to", label: "Open to a few - mixed with our own picks" },
           { value: "no",      label: "No, only our own selections" },
         ]}
       />
@@ -182,7 +182,7 @@ export default function BeveragesFields({
       />
       <OpenTextarea
         label="Grape varieties you love (optional)"
-        hint="Sauvignon Blanc, Pinot Noir, Assyrtiko, Agiorgitiko — the crew will look these out."
+        hint="Sauvignon Blanc, Pinot Noir, Assyrtiko, Agiorgitiko - the crew will look these out."
         name="wine_grapes"
         lockedByGroup={lockedText("wine_grapes")}
         register={register}
@@ -193,14 +193,14 @@ export default function BeveragesFields({
         name="wine_tier"
         lockedValue={lockedRadio("wine_tier")}
         label="Overall level"
-        hint="Same ceiling logic as champagne — anything materially above the stated tier is confirmed by phone first."
+        hint="Same ceiling logic as champagne - anything materially above the stated tier is confirmed by phone first."
         register={register}
         options={[
           {
             value: "premium",
             label: "Premium",
             description:
-              "Crus, vintages, vineyard-rare bottles. This is our most generous tier — selecting it noticeably shapes your APA usage.",
+              "Crus, vintages, vineyard-rare bottles. This is our most generous tier - selecting it noticeably shapes your APA usage.",
           },
           {
             value: "standard",
@@ -212,7 +212,7 @@ export default function BeveragesFields({
             value: "classic",
             label: "Classic",
             description:
-              "House red & white. The lightest tier on your APA — most likely to leave a refund at week's end.",
+              "House red & white. The lightest tier on your APA - most likely to leave a refund at week's end.",
           },
           {
             value: "leave_to_captain",
@@ -232,7 +232,7 @@ export default function BeveragesFields({
       <h2 className="brief-subhead">Spirits</h2>
       <p className="brief-note">
         <em>
-          The bar already carries the core categories — gin, vodka,
+          The bar already carries the core categories - gin, vodka,
           whisky, rum, tequila, liqueurs. If your group has strong
           preferences, set them per category below; otherwise leave
           everything closed and the hostess provisions from her usual
@@ -250,7 +250,7 @@ export default function BeveragesFields({
       </details>
       <OpenTextarea
         label="Specific labels you love (optional)"
-        hint="Single malts, particular gins, dark rums — anything the hostess should hunt for at provisioning."
+        hint="Single malts, particular gins, dark rums - anything the hostess should hunt for at provisioning."
         name="spirits_brands"
         lockedByGroup={lockedText("spirits_brands")}
         register={register}
@@ -268,7 +268,7 @@ export default function BeveragesFields({
           { value: "often",     label: "Often" },
           { value: "sometimes", label: "Sometimes" },
           { value: "rarely",    label: "Rarely, but keep some" },
-          { value: "skip",      label: "Skip — we don't drink beer" },
+          { value: "skip",      label: "Skip - we don't drink beer" },
         ]}
       />
       <RadioGroup
@@ -279,7 +279,7 @@ export default function BeveragesFields({
         options={[
           { value: "international",    label: "International (Corona, Heineken, IPA, etc.)" },
           { value: "greek",            label: "Greek (Mythos, Alfa, Vergina, Septem)" },
-          { value: "both",             label: "Both — a mix" },
+          { value: "both",             label: "Both - a mix" },
           { value: "leave_to_captain", label: "Leave it to the captain" },
         ]}
       />
@@ -321,7 +321,7 @@ export default function BeveragesFields({
       <h2 className="brief-subhead">Cocktails & mocktails</h2>
       <OpenTextarea
         label="Cocktails the hostess should know"
-        hint="How you like them prepared — ice, garnish, glassware."
+        hint="How you like them prepared - ice, garnish, glassware."
         name="cocktails"
         lockedByGroup={lockedText("cocktails")}
         register={register}
@@ -340,8 +340,8 @@ export default function BeveragesFields({
 
       <p className="bev-extras-note">
         <strong>A small note on rare bottles.</strong> Vintage champagnes,
-        high-end Bordeaux, very rare spirits — anything outside a typical
-        charter bar — may carry a cost outside what&apos;s included. We&apos;ll
+        high-end Bordeaux, very rare spirits - anything outside a typical
+        charter bar - may carry a cost outside what&apos;s included. We&apos;ll
         come back with the exact figure before anything is ordered, so
         the choice is entirely yours.
       </p>

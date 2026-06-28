@@ -49,7 +49,7 @@ const ISLANDS = [
   { id: 'symi', name: 'Symi', region: 'Dodecanese', x: 760, y: 500, lat: 36.6170, lng: 27.8370, desc: 'Pastel harbour, sponge diving, Panormitis' },
 
   // Key mainland ports
-  { id: 'athens', name: 'Athens', region: 'Mainland', x: 430, y: 380, lat: 37.9838, lng: 23.7275, desc: 'Lavrion & Alimos — main charter bases' },
+  { id: 'athens', name: 'Athens', region: 'Mainland', x: 430, y: 380, lat: 37.9838, lng: 23.7275, desc: 'Lavrion & Alimos - main charter bases' },
   { id: 'nafplio', name: 'Nafplio', region: 'Mainland', x: 400, y: 430, lat: 37.5675, lng: 22.7958, desc: 'Greece\'s first capital, Palamidi fortress' },
   { id: 'porto-heli', name: 'Porto Heli', region: 'Mainland', x: 420, y: 455, lat: 37.3187, lng: 23.1456, desc: 'Greek Hamptons, Amanzoe resort' },
 ];

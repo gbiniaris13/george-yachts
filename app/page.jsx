@@ -53,7 +53,7 @@ function HomepageFaqSchema() {
         name: "How much does a crewed yacht charter in Greece cost in 2026?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Crewed yacht charter rates in Greece typically range from €13,000/week for entry-level catamarans up to €500,000+/week for 50m+ motor yachts. The base weekly rate covers the yacht and crew; an APA (Advance Provisioning Allowance) of 25–35% on top covers fuel, food, dockage, and consumables. Greek VAT is 13% on the charter fee for commercial charters over 48 hours that operate primarily in Greek waters.",
+          text: "Crewed yacht charter rates in Greece typically range from €13,000/week for entry-level catamarans up to €500,000+/week for 50m+ motor yachts. The base weekly rate covers the yacht and crew; an APA (Advance Provisioning Allowance) of 25-35% on top covers fuel, food, dockage, and consumables. Greek VAT is 13% on the charter fee for commercial charters over 48 hours that operate primarily in Greek waters.",
         },
       },
       {
@@ -61,7 +61,7 @@ function HomepageFaqSchema() {
         name: "When is the best time to charter a yacht in Greece?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "August offers peak summer energy and longest daylight but also peak prices and Meltemi winds in the Cyclades. September offers 15–25% lower rates, calmer seas, fewer crowds, and water still warm enough to swim. June and July are ideal for the Ionian; May and October work best for the Saronic Gulf.",
+          text: "August offers peak summer energy and longest daylight but also peak prices and Meltemi winds in the Cyclades. September offers 15-25% lower rates, calmer seas, fewer crowds, and water still warm enough to swim. June and July are ideal for the Ionian; May and October work best for the Saronic Gulf.",
         },
       },
       {
@@ -69,7 +69,7 @@ function HomepageFaqSchema() {
         name: "What is APA in a yacht charter?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "APA stands for Advance Provisioning Allowance. It is a deposit paid before boarding (typically 25–35% of the charter fee) that the captain uses to pay for fuel, food, drinks, dockage fees, and any guest-requested provisioning during the charter. Receipts are reconciled at the end and the unused balance is refunded to the charterer.",
+          text: "APA stands for Advance Provisioning Allowance. It is a deposit paid before boarding (typically 25-35% of the charter fee) that the captain uses to pay for fuel, food, drinks, dockage fees, and any guest-requested provisioning during the charter. Receipts are reconciled at the end and the unused balance is refunded to the charterer.",
         },
       },
       {
@@ -77,7 +77,7 @@ function HomepageFaqSchema() {
         name: "Do I need a broker to charter a yacht in Greece?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Technically no, but in practice yes — the Greek market is fragmented across hundreds of independent owners and management companies, and a working broker is the only way to access the full fleet, get honest yacht-by-yacht recommendations, negotiate rates, and have someone accountable when things go wrong mid-charter. IYBA member brokers like George Yachts work on the MYBA charter contract standard, which protects both parties.",
+          text: "Technically no, but in practice yes - the Greek market is fragmented across hundreds of independent owners and management companies, and a working broker is the only way to access the full fleet, get honest yacht-by-yacht recommendations, negotiate rates, and have someone accountable when things go wrong mid-charter. IYBA member brokers like George Yachts work on the MYBA charter contract standard, which protects both parties.",
         },
       },
       {
@@ -93,7 +93,7 @@ function HomepageFaqSchema() {
         name: "How far in advance should I book a yacht charter in Greece?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "For peak August on the most-requested yachts, 6–9 months ahead — by March of the same year you should be confirming. For shoulder months (June, September), 3–4 months is usually fine. Last-minute charters are possible (sometimes at lower rates) but limit you to whatever yacht remains available rather than the right yacht for your group.",
+          text: "For peak August on the most-requested yachts, 6-9 months ahead - by March of the same year you should be confirming. For shoulder months (June, September), 3-4 months is usually fine. Last-minute charters are possible (sometimes at lower rates) but limit you to whatever yacht remains available rather than the right yacht for your group.",
         },
       },
     ],

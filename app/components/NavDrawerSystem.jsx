@@ -453,7 +453,7 @@ export default function NavDrawerSystem() {
       </div>
 
       <style jsx global>{`
-        /* Mobile overlay — slide-in from right per Boss spec. */
+        /* Mobile overlay - slide-in from right per Boss spec. */
         .gy-nav-overlay {
           transform: translateX(100%);
           opacity: 0;
@@ -472,7 +472,7 @@ export default function NavDrawerSystem() {
           }
         }
 
-        /* Chapter 02 — desktop hover dropdown.
+        /* Chapter 02 - desktop hover dropdown.
            The trigger has bottom padding so the cursor crosses the
            panel without unhovering. Anchor flips to LEFT for items
            on the left half of the masthead (CHARTER, EXPLORE
@@ -518,7 +518,7 @@ export default function NavDrawerSystem() {
           padding-left: 6px;
         }
 
-        /* Explore Greece dropdown — rich editorial cards using
+        /* Explore Greece dropdown - rich editorial cards using
            DESTINATIONS data so the nav surfaces the same copy as
            the homepage Three Greek Worlds section. Wider panel,
            per-item gap, vertical layout per card. */

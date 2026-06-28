@@ -127,7 +127,7 @@ function PreVoyageShell({ title, lede, steps }) {
           again as a quiet reminder once the recipient steps inside. */}
       <p className="cabin-pre-voyage__deadline">
         We invite you to bring these to a quiet close within seven
-        days of your invitation arriving — so the chef can stock,
+        days of your invitation arriving - so the chef can stock,
         the cellar can be set, and every harbour quietly noted.
       </p>
 
@@ -268,9 +268,9 @@ function StepCard({ step, ordinal, totalSteps }) {
           border-left-color: rgba(13, 27, 42, 0.25);
           background: rgba(13, 27, 42, 0.02);
         }
-        /* 2026-05-23 — Audit pass: was 540px which left a 541-599
+        /* 2026-05-23 - Audit pass: was 540px which left a 541-599
            collision zone where the 96px magazine-number column ate
-           ~30% of the card body width — title + CTA crowded on
+           ~30% of the card body width - title + CTA crowded on
            Pro Max viewports. Canonical cabin phone breakpoint is
            600px, matches every other component. */
         @media (max-width: 599.98px) {
@@ -413,7 +413,7 @@ function deriveInviteStep({ invitedCount, completedCount }) {
     return {
       title: "Invite the people sailing with you.",
       body:
-        "Paste their email addresses — each guest gets their own quiet sign-in to share allergies, swimming, anything the captain and chef should know. Five minutes from each, on their own time.",
+        "Paste their email addresses - each guest gets their own quiet sign-in to share allergies, swimming, anything the captain and chef should know. Five minutes from each, on their own time.",
       status: "0 invited",
       cta: "Invite your group",
       ctaHref: "/cabin/guests",
@@ -423,7 +423,7 @@ function deriveInviteStep({ invitedCount, completedCount }) {
   const allDone = completedCount >= invitedCount && invitedCount > 0;
   if (allDone) {
     return {
-      title: "Your whole group is aboard — beautifully done.",
+      title: "Your whole group is aboard - beautifully done.",
       body:
         "Every guest has shared their details. The captain and the chef have what they need to look after each of you personally.",
       status: `All ${invitedCount} aboard`,
@@ -446,7 +446,7 @@ function deriveInviteStep({ invitedCount, completedCount }) {
 function deriveGuestCrewListStep({ myDetailsComplete }) {
   if (myDetailsComplete) {
     return {
-      title: "Your crew-list line is in — thank you.",
+      title: "Your crew-list line is in - thank you.",
       body:
         "The captain has what the marinas ask for. You can revisit your details anytime; share allergies or anything else for the chef whenever it feels right.",
       status: "Crew list ready",
@@ -458,7 +458,7 @@ function deriveGuestCrewListStep({ myDetailsComplete }) {
   return {
     title: "Add your line to the crew list.",
     body:
-      "Five quiet fields — date of birth, gender, nationality, ID or passport number, and mobile. The harbour authorities ask for these for every person aboard. Two minutes, and you're done.",
+      "Five quiet fields - date of birth, gender, nationality, ID or passport number, and mobile. The harbour authorities ask for these for every person aboard. Two minutes, and you're done.",
     status: "Not yet shared",
     cta: "Open my crew-list line",
     ctaHref: "/cabin/me",
@@ -490,7 +490,7 @@ function deriveCrewListStep({
     return {
       title: "Add your own line to the crew list.",
       body:
-        "Five quiet fields — date of birth, gender, nationality, ID or passport, mobile. Your own first, then your guests as you invite them.",
+        "Five quiet fields - date of birth, gender, nationality, ID or passport, mobile. Your own first, then your guests as you invite them.",
       status: "Not yet shared",
       cta: "Open my crew-list line",
       ctaHref: "/cabin/me",
@@ -500,7 +500,7 @@ function deriveCrewListStep({
   // Edge: no group invited yet, but principal's line is in.
   if (invitedCount === 0 && myDetailsComplete) {
     return {
-      title: "Your line is in — invite your group when you're ready.",
+      title: "Your line is in - invite your group when you're ready.",
       body:
         "Each guest will be asked for the same five fields. The brief locks only when everyone is in (or has formally stepped aside).",
       status: "Yours is in · 1 of 1",
@@ -516,7 +516,7 @@ function deriveCrewListStep({
     return {
       title: "Your whole group's crew list is in.",
       body:
-        "Every line — yours and every guest's — is with us. The captain has the harbour paperwork. Whenever you're ready, the brief can be locked.",
+        "Every line - yours and every guest's - is with us. The captain has the harbour paperwork. Whenever you're ready, the brief can be locked.",
       status: `All ${crewListTotal} aboard`,
       cta: "Review the crew list",
       ctaHref: "/cabin/guests",
@@ -527,9 +527,9 @@ function deriveCrewListStep({
   // first if they're the one missing.
   if (!myDetailsComplete) {
     return {
-      title: `Start with your own line — ${crewListReady} of ${crewListTotal} are in.`,
+      title: `Start with your own line - ${crewListReady} of ${crewListTotal} are in.`,
       body:
-        "Your guests will follow once you've shown them the way. Five quiet fields — date of birth, gender, nationality, ID or passport, mobile.",
+        "Your guests will follow once you've shown them the way. Five quiet fields - date of birth, gender, nationality, ID or passport, mobile.",
       status: `${crewListReady} of ${crewListTotal} ready`,
       cta: "Add my line",
       ctaHref: "/cabin/me",
@@ -571,9 +571,9 @@ function deriveBriefStep({
   // actually allowed to send.
   if (briefSubmitted) {
     return {
-      title: "Your brief is with us — thank you.",
+      title: "Your brief is with us - thank you.",
       body:
-        "The captain, the chef, the hostess and George have all read it. You can revisit any section anytime — last-minute additions are always welcome.",
+        "The captain, the chef, the hostess and George have all read it. You can revisit any section anytime - last-minute additions are always welcome.",
       status: "Brief delivered · locked",
       cta: "Revisit the brief",
       ctaHref: "/cabin/brief",
@@ -588,11 +588,11 @@ function deriveBriefStep({
 
   if (pct >= 100 && crewIncomplete) {
     return {
-      title: `Brief is in — waiting on ${crewPendingN} crew-list ${
+      title: `Brief is in - waiting on ${crewPendingN} crew-list ${
         crewPendingN === 1 ? "line" : "lines"
       }.`,
       body:
-        "Every brief section is filled and the words are yours. The Send button on the review screen unlocks the moment every member's crew-list is in — until then, the brief stays open for everyone to edit. You can still review what you've written.",
+        "Every brief section is filled and the words are yours. The Send button on the review screen unlocks the moment every member's crew-list is in - until then, the brief stays open for everyone to edit. You can still review what you've written.",
       status: `${crewListReady} of ${crewListTotal} ready · Send locked`,
       cta: "Review the brief",
       ctaHref: "/cabin/brief/review",
@@ -602,7 +602,7 @@ function deriveBriefStep({
   }
   if (pct >= 100) {
     return {
-      title: "Everyone's in — your brief is ready to send.",
+      title: "Everyone's in - your brief is ready to send.",
       body:
         "All sections filled. Everyone's crew-list line is in. When you press Send to George on the review screen, the brief is locked and only George can re-open it.",
       status: "Ready to review & send",
@@ -616,7 +616,7 @@ function deriveBriefStep({
     return {
       title: `${pct}% of the brief is yours so far.`,
       body:
-        "Take your time across as many sittings as you want. The captain and the chef read every line — it shapes how the boat is stocked, which coves we choose, the small touches that turn a week into yours.",
+        "Take your time across as many sittings as you want. The captain and the chef read every line - it shapes how the boat is stocked, which coves we choose, the small touches that turn a week into yours.",
       status: `${pct}% so far`,
       cta: "Continue the brief",
       ctaHref: "/cabin/brief",
@@ -625,7 +625,7 @@ function deriveBriefStep({
     };
   }
   return {
-    title: "Tell us about your week — in your own words.",
+    title: "Tell us about your week - in your own words.",
     body:
       "This is the heart of preparing your charter. The captain and the chef read it. Your hostess reads it. I read it. It shapes how the boat is stocked, which coves we choose, the small touches that turn a week into yours. Half an hour, across as many sittings as you want.",
     status: "Not started",

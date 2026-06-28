@@ -5,7 +5,7 @@ import { pageMeta } from "@/lib/pageMeta";
 export const metadata = pageMeta({
   title: "Terms of Service",
   description:
-    "Terms governing use of georgeyachts.com — George Yachts acts as a yacht charter broker and intermediary; the Site is for inquiries only.",
+    "Terms governing use of georgeyachts.com - George Yachts acts as a yacht charter broker and intermediary; the Site is for inquiries only.",
   path: "/terms-of-service",
 });
 
@@ -64,7 +64,7 @@ const TermsOfService = () => {
           </p>
         </Section>
 
-        <Section number={2} title="What George Yachts is — and is not">
+        <Section number={2} title="What George Yachts is - and is not">
           <p>
             George Yachts is a luxury crewed yacht charter broker and
             intermediary, and a member of the International Yacht Brokers
@@ -80,7 +80,7 @@ const TermsOfService = () => {
           </p>
         </Section>
 
-        <Section number={3} title="No transactions on this Site — inquiries only">
+        <Section number={3} title="No transactions on this Site - inquiries only">
           <p>
             No bookings, reservations, payments, or binding charter commitments
             are made through this Site. The Site lets you submit inquiries,
@@ -129,7 +129,7 @@ const TermsOfService = () => {
           <p className="mt-4">
             Nothing in these Terms excludes or limits liability for death or
             personal injury caused by negligence, for fraud, or for any liability
-            that cannot be excluded under applicable mandatory law — including the
+            that cannot be excluded under applicable mandatory law - including the
             mandatory consumer-protection rules referenced in Section 11.
           </p>
         </Section>
@@ -147,8 +147,8 @@ const TermsOfService = () => {
 
         <Section number={8} title="Intellectual property">
           <p>
-            All content on the Site — including the "George Yachts" name and
-            branding, text, photographs, video, design, and layout — is owned by
+            All content on the Site - including the "George Yachts" name and
+            branding, text, photographs, video, design, and layout - is owned by
             or licensed to George Yachts and protected by intellectual-property
             laws. You may not reproduce, distribute, or create derivative works
             without our prior written consent. Yacht imagery and brochures may

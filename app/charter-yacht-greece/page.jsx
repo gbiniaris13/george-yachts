@@ -15,9 +15,9 @@ import "./fleet-page.css";
 export const revalidate = 3600;
 
 export const metadata = {
-  title: "Charter Yacht Greece — 63 Curated Yachts",
+  title: "Charter Yacht Greece - 63 Curated Yachts",
   description:
-    "Curated fleet of 63 yachts in Greek waters — Private Fleet (full crew) + Explorer Fleet (skippered). Motor, sailing, catamaran. Cyclades, Ionian, Saronic.",
+    "Curated fleet of 63 yachts in Greek waters - Private Fleet (full crew) + Explorer Fleet (skippered). Motor, sailing, catamaran. Cyclades, Ionian, Saronic.",
   alternates: {
     canonical: "https://georgeyachts.com/charter-yacht-greece",
   },
@@ -51,7 +51,7 @@ const FLEET_QUERY = `*[_type == "yacht" && defined(slug.current)] {
   cruisingRegion,
   fleetTier,
   priceModel,
-  // C.6 (Roberto master rebuild brief) — UHNW filter fields
+  // C.6 (Roberto master rebuild brief) - UHNW filter fields
   yearRefit,
   waterToys,
   toys,
@@ -116,7 +116,7 @@ function generateServiceSchema(yachts) {
     serviceType: "Luxury Yacht Charter",
     description:
       "Boutique luxury crewed yacht charter brokerage specialising " +
-      "exclusively in Greek waters — Cyclades, Ionian, Saronic Gulf, " +
+      "exclusively in Greek waters - Cyclades, Ionian, Saronic Gulf, " +
       "Sporades. Curated fleet of motor yachts, sailing yachts, and " +
       "catamarans. Personal broker service via George P. Biniaris.",
     provider: {
@@ -148,14 +148,14 @@ function generateServiceSchema(yachts) {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Private Fleet — full crew",
+            name: "Private Fleet - full crew",
           },
         },
         {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Explorer Fleet — skippered or lightly crewed",
+            name: "Explorer Fleet - skippered or lightly crewed",
           },
         },
       ],
@@ -240,7 +240,7 @@ export default async function CharterFleetPage() {
           loop
           muted
           playsInline
-          aria-label="George Yachts Charter Fleet Greece — catamarans in Greek waters"
+          aria-label="George Yachts Charter Fleet Greece - catamarans in Greek waters"
           style={{
             position: "absolute",
             inset: 0,
@@ -259,7 +259,7 @@ export default async function CharterFleetPage() {
           <h1 className="fleet-hero__title">Charter Fleet</h1>
           <div className="fleet-hero__line" />
           <p className="fleet-hero__desc">
-            {yachts.length} curated vessels &mdash; from intimate sailing catamarans
+            {yachts.length} curated vessels - from intimate sailing catamarans
             to 64-meter superyachts. Cyclades &middot; Ionian &middot; Saronic.
           </p>
         </div>

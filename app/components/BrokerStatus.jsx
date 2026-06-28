@@ -69,7 +69,7 @@ function deriveStatus() {
   if (athensDay >= 1 && athensDay <= 6 && athensHour >= 19.5 && athensHour < 23) {
     return {
       key: "water",
-      label: "Dockside — replies within the hour",
+      label: "Dockside - replies within the hour",
       tone: "live",
     };
   }
@@ -77,7 +77,7 @@ function deriveStatus() {
   // Off the desk
   return {
     key: "off",
-    label: "Off the desk — replies within 12 hours",
+    label: "Off the desk - replies within 12 hours",
     tone: "rest",
   };
 }
@@ -158,7 +158,7 @@ export default function BrokerStatus() {
           to   { opacity: 1; transform: translateX(0); }
         }
         @media (max-width: 700px) {
-          /* Phase 27 (mobile audit) — hide entirely on mobile. The
+          /* Phase 27 (mobile audit) - hide entirely on mobile. The
              StickyFleetCTA full-width gold bar covers anything below
              ~76px on the bottom edge anyway, so the pill was sitting
              flush against / under it on every iPhone. The "On the

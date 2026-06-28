@@ -5,7 +5,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
   title: "Terms of Service",
   description:
-    "Terms of Service for George Yachts Brokerage House LLC — website usage, charter brokerage engagement, and third-party platform integrations.",
+    "Terms of Service for George Yachts Brokerage House LLC - website usage, charter brokerage engagement, and third-party platform integrations.",
   alternates: {
     canonical: "https://georgeyachts.com/terms",
   },
@@ -83,9 +83,9 @@ const TermsOfService = () => {
 
         <Section number={3} title="III. INTELLECTUAL PROPERTY">
           <p>
-            All content on the Site — including photography, video, written
+            All content on the Site - including photography, video, written
             editorial, yacht descriptions, itineraries, branding, and
-            underlying code — is the property of the Company or used under
+            underlying code - is the property of the Company or used under
             license, and is protected by international copyright and
             trademark law. Reproduction, distribution, or commercial reuse
             without prior written consent is prohibited.
@@ -192,7 +192,7 @@ const TermsOfService = () => {
             <ObfuscatedEmail user="legal" domain="georgeyachts.com" />
           </p>
           <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", marginTop: "32px" }}>
-            Last updated: 22 April 2026 (v2 — legal review)
+            Last updated: 22 April 2026 (v2 - legal review)
           </p>
         </Section>
       </div>

@@ -352,7 +352,7 @@ export const RichTextComponents = {
               fontWeight: 300,
             }}
           >
-            — George P. Biniaris in{" "}
+            - George P. Biniaris in{" "}
             <a
               href={FORBES_ARTICLE_URL}
               target="_blank"

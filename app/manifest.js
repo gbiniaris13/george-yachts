@@ -19,7 +19,7 @@ export default function manifest() {
     name: "The Cabin · George Yachts",
     short_name: "The Cabin",
     description:
-      "Your private space at George Yachts — Filotimo · Φιλότιμο.",
+      "Your private space at George Yachts - Filotimo · Φιλότιμο.",
     start_url: "/cabin",
     scope: "/cabin",
     display: "standalone",

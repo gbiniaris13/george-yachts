@@ -96,7 +96,7 @@ export default function CabinBrandMark({ href = "/cabin" }) {
         }
         .cabin-brandmark__logo {
           display: block;
-          /* 2026-05-22 — George: "Μεγάλωσε το λογότυπο στη μέση,
+          /* 2026-05-22 - George: "Μεγάλωσε το λογότυπο στη μέση,
              μας παίρνει κι άλλο. Νομίζω μπορεί να γίνει και
              διπλό." Doubled the desktop height; the others
              step down proportionally so the brand mark stays
@@ -112,18 +112,18 @@ export default function CabinBrandMark({ href = "/cabin" }) {
         @media (max-width: 1023.98px) {
           .cabin-brandmark__logo { height: 120px; }
         }
-        /* 2026-05-23 — Eleanna round 4 (audit pass): the 120-140px
+        /* 2026-05-23 - Eleanna round 4 (audit pass): the 120-140px
            mobile logo turned the sticky header into 30% of the
            viewport on every cabin page. Audit measured iPhone SE2
            with the old sizing → 53% of viewport was chrome before
            any content. New canonical sizes balance brand presence
            against content room:
-             • Tablet (≤1024px)   — 120px
-             • Phone (≤600px)     — 64px   (~16% of viewport on
+             • Tablet (≤1024px)   - 120px
+             • Phone (≤600px)     - 64px   (~16% of viewport on
                                     iPhone SE2; still distinctly
                                     visible, no longer crushes
                                     page content)
-             • Tiny (≤360px)      — 56px   (Galaxy S base)
+             • Tiny (≤360px)      - 56px   (Galaxy S base)
            Pairs with the tighter mobile header padding + dropped
            tagline in CabinShell.jsx for a header total of ~140px
            on phones instead of ~280-320px. */

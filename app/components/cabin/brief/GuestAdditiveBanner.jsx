@@ -49,7 +49,7 @@ export default function GuestAdditiveBanner() {
       <span className="gab__chip">Shared with your group</span>
       <p className="gab__copy">
         <em>
-          The choices below are the whole group&apos;s — what you see
+          The choices below are the whole group&apos;s - what you see
           already-ticked was added by others. Anything you tick
           here{" "}<strong>adds</strong> to the group&apos;s choices.
           You can&apos;t un-tick someone else&apos;s pick; only the

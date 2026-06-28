@@ -73,7 +73,7 @@ export default function VesselHero({ photos, vesselName, makeModel, dates }) {
         .cabin-vessel-hero__frame {
           position: relative;
           width: 100%;
-          /* Cinematic 21:9 on desktop, 4:3 on phones — the
+          /* Cinematic 21:9 on desktop, 4:3 on phones - the
              yacht's broadside is the shot we want to land. */
           aspect-ratio: 21 / 9;
           max-height: 56vh;

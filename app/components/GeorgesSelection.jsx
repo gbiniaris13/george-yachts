@@ -47,7 +47,7 @@ const SELECTION = [
     name: "S/CAT Errant Vagabond",
     specs: "15.35 m · 10 Guests · 5 Cabins",
     price: "From €11,500 / week",
-    note: "The flybridge at sunset, anchored off Sifnos — that is what this yacht was built for.",
+    note: "The flybridge at sunset, anchored off Sifnos - that is what this yacht was built for.",
     image: ERRANT_VAGABOND_IMG,
     overlay: 0.45,
   },
@@ -98,7 +98,7 @@ export default function GeorgesSelection() {
   return (
     <section
       className="gy-selection-section"
-      aria-label="George's Selection — Private Fleet flagship + Explorer Fleet flagship"
+      aria-label="George's Selection - Private Fleet flagship + Explorer Fleet flagship"
       style={{ background: "#0D1B2A", padding: "96px 0 80px" }}
     >
       <div className="gy-selection-header">
@@ -166,7 +166,7 @@ export default function GeorgesSelection() {
           height: 480px;
           color: #F8F5F0;
         }
-        /* Mobile (≤ 600 px) — Boss spec: 320 px height; collection
+        /* Mobile (≤ 600 px) - Boss spec: 320 px height; collection
            label hidden (the card hierarchy already establishes
            Private vs Explorer); George's italic note hidden because
            it lives on the yacht page. Yacht name + specs + price +
@@ -240,7 +240,7 @@ export default function GeorgesSelection() {
           margin: 0 0 6px;
           max-width: 36ch;
         }
-        /* < 375 px — hide the italic note so the rest of the card
+        /* < 375 px - hide the italic note so the rest of the card
            stays composed (Boss spec). */
         @media (max-width: 374px) {
           .gy-selection-card__note { display: none; }

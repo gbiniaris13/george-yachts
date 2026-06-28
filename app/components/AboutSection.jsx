@@ -5,8 +5,8 @@ const GOLD_HEX = "#C9A84C";
 const AboutSection = ({
   paragraphs = [
     "George Yachts is a premier boutique brokerage house specializing in high-end motor-yacht charters across Greece and the Mediterranean.",
-    "We bridge international operational standards with deep local expertise to craft bespoke maritime experiences. Yachts are our core. Around them, we deliver a seamless 360° layer of lifestyle services—private aviation (helicopters & jets), VIP ground transfers, luxury villa stays, and discreet real-estate advisory—ensuring your journey is effortless from touchdown to sunset.",
-    "We leverage a global network of captains, owners, and licensed operators to secure the perfect vessel and crew, alongside the right villa and flight—all through a single, professional point of contact.",
+    "We bridge international operational standards with deep local expertise to craft bespoke maritime experiences. Yachts are our core. Around them, we deliver a seamless 360° layer of lifestyle services-private aviation (helicopters & jets), VIP ground transfers, luxury villa stays, and discreet real-estate advisory-ensuring your journey is effortless from touchdown to sunset.",
+    "We leverage a global network of captains, owners, and licensed operators to secure the perfect vessel and crew, alongside the right villa and flight-all through a single, professional point of contact.",
     "Our Commitment: Clear pricing (APA/VAT), fast proposals, and precise itineraries. Calm power, clear results.",
   ],
 }) => {

@@ -46,31 +46,31 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 const QUICK_FACTS = {
   cyclades: {
     region: "Cyclades, Greece",
-    bestSeason: "May–June, September–early October",
-    duration: "7–10 days",
+    bestSeason: "May-June, September-early October",
+    duration: "7-10 days",
     departurePorts: "Athens (Lavrion / Alimos), Mykonos, Paros",
     yachtTypes: "Motor yachts, sailing catamarans, sailing yachts",
-    weeklyRange: "€13,000 – €235,000",
+    weeklyRange: "€13,000 - €235,000",
     weatherNote:
       "Meltemi (NW) blows strongest mid-July through end-August; June and September are the calm-weather sweet spots.",
   },
   ionian: {
     region: "Ionian Islands, Greece",
-    bestSeason: "Late May – early October",
+    bestSeason: "Late May - early October",
     duration: "7 days",
     departurePorts: "Corfu, Lefkada, Athens repositioning",
     yachtTypes: "Sailing catamarans, sailing yachts, motor yachts",
-    weeklyRange: "€11,500 – €180,000",
+    weeklyRange: "€11,500 - €180,000",
     weatherNote:
       "Sheltered waters, no Meltemi. Light afternoon thermals; the calmest sailing region in Greece.",
   },
   saronic: {
     region: "Saronic Gulf, Greece",
-    bestSeason: "April – October (longest season of the three regions)",
-    duration: "3–7 days",
+    bestSeason: "April - October (longest season of the three regions)",
+    duration: "3-7 days",
     departurePorts: "Athens (Alimos / Flisvos / Vouliagmeni)",
     yachtTypes: "Motor yachts, catamarans, sailing yachts",
-    weeklyRange: "€12,000 – €200,000",
+    weeklyRange: "€12,000 - €200,000",
     weatherNote:
       "Sheltered by the Peloponnese; sailable even when the Aegean Meltemi peaks.",
   },
@@ -81,7 +81,7 @@ function buildTouristDestinationSchema(d, facts) {
   return {
     "@context": "https://schema.org",
     "@type": "TouristDestination",
-    name: `${d.label} — Yacht Charter`,
+    name: `${d.label} - Yacht Charter`,
     description: `${d.cardSubline} ${d.pageTagline}`,
     url,
     image: d.heroImage
@@ -116,7 +116,7 @@ export async function generateMetadata({ params }) {
   const { region } = await params;
   const d = getDestination(region);
   if (!d) return { title: "Destination" };
-  const title = `${d.label} Yacht Charter — ${d.cardTitle}`;
+  const title = `${d.label} Yacht Charter - ${d.cardTitle}`;
   const description = `${d.cardSubline} ${d.pageTagline}`;
   const canonical = `https://georgeyachts.com/destinations/${d.slug}`;
   return {
@@ -318,7 +318,7 @@ export default async function DestinationPage({ params }) {
           .gy-dest-hero__title { font-size: 36px; }
         }
 
-        /* QUICK FACTS — narrow, calm, machine-readable. */
+        /* QUICK FACTS - narrow, calm, machine-readable. */
         .gy-dest-facts {
           max-width: 780px;
           margin: 0 auto;

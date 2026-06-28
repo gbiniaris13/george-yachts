@@ -11,7 +11,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: "Our Team",
   description:
-    "Meet the brokers, luxury travel liaisons, and maritime advisors behind George Yachts Brokerage House — boutique yacht brokerage based in Athens.",
+    "Meet the brokers, luxury travel liaisons, and maritime advisors behind George Yachts Brokerage House - boutique yacht brokerage based in Athens.",
   path: "/team",
 });
 

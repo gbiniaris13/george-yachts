@@ -54,7 +54,7 @@ export default function FlyPrivatePage() {
           <p className="svc-intro__eyebrow">Seamless Aviation</p>
           <h2 className="svc-intro__title">How Does Private Aviation Work with George Yachts?</h2>
           <div className="svc-intro__line" />
-          <p className="svc-intro__text">Skip the ferry queues and commercial flights. We coordinate private jets and helicopters that connect seamlessly with your yacht charter schedule &mdash; from international arrivals to island-hopping transfers.</p>
+          <p className="svc-intro__text">Skip the ferry queues and commercial flights. We coordinate private jets and helicopters that connect seamlessly with your yacht charter schedule - from international arrivals to island-hopping transfers.</p>
           <p className="svc-intro__text">Through our trusted aviation partners, we arrange everything from light helicopters for Mykonos transfers to long-range jets for international travel. One point of contact, zero hassle.</p>
           <p className="svc-intro__text svc-intro__highlight">Contact George Yachts to fully customize your aviation experience.</p>
         </Reveal>
@@ -78,7 +78,7 @@ export default function FlyPrivatePage() {
         <Reveal>
           <p className="svc-cta__eyebrow">Arrive in Style</p>
           <h2 className="svc-cta__title">Let&apos;s Arrange Your Flight</h2>
-          <p className="svc-cta__text">Tell us your dates, route, and passenger count &mdash; we&apos;ll handle the rest.</p>
+          <p className="svc-cta__text">Tell us your dates, route, and passenger count - we&apos;ll handle the rest.</p>
           <a href="https://calendly.com/george-georgeyachts/30min" target="_blank" rel="noopener noreferrer" className="svc-cta__button">Book a Free Consultation</a>
         </Reveal>
       </section>

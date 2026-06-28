@@ -24,7 +24,7 @@ function PageSchema() {
     "@type": "Service",
     name: "Yacht Acquisition Advisory",
     provider: { "@type": "Organization", name: "George Yachts Brokerage House LLC", url: "https://georgeyachts.com" },
-    description: "Discreet yacht acquisition advisory — off-market listings, pricing guidance, surveys, and closing coordination in Greek and Mediterranean waters.",
+    description: "Discreet yacht acquisition advisory - off-market listings, pricing guidance, surveys, and closing coordination in Greek and Mediterranean waters.",
     areaServed: { "@type": "Place", name: "Greece & Mediterranean" },
     serviceType: "Yacht Brokerage & Acquisition",
   };
@@ -52,7 +52,7 @@ export default function BuyYachtPage() {
           <p className="svc-hero__eyebrow">Acquisition &amp; Advisory</p>
           <h1 className="svc-hero__title">Buy a Yacht</h1>
           <div className="svc-hero__line" />
-          <p className="svc-hero__subtitle">Off-market opportunities &amp; partner listings &mdash; tell us your specs and we&apos;ll source options.</p>
+          <p className="svc-hero__subtitle">Off-market opportunities &amp; partner listings - tell us your specs and we&apos;ll source options.</p>
         </div>
       </section>
 
@@ -61,7 +61,7 @@ export default function BuyYachtPage() {
           <p className="svc-intro__eyebrow">Discreet Sourcing</p>
           <h2 className="svc-intro__title">How Does Buying a Yacht Through George Yachts Work?</h2>
           <div className="svc-intro__line" />
-          <p className="svc-intro__text">We keep yacht sourcing discreet &mdash; many of the best opportunities are off-market or shared privately through trusted broker networks.</p>
+          <p className="svc-intro__text">We keep yacht sourcing discreet - many of the best opportunities are off-market or shared privately through trusted broker networks.</p>
           <p className="svc-intro__text">If you&apos;re exploring a purchase, we can present curated options based on your length range, preferred brands, usage profile, and timeline. From the first shortlist to negotiation support, surveys, and closing coordination, we help you move with clarity and confidence.</p>
           <p className="svc-intro__text svc-intro__highlight">Share your target specifications and we&apos;ll return with relevant options and market guidance, without noise or wasted time.</p>
         </Reveal>
@@ -85,7 +85,7 @@ export default function BuyYachtPage() {
         <Reveal>
           <p className="svc-cta__eyebrow">Ready to Explore?</p>
           <h2 className="svc-cta__title">Let&apos;s Find Your Yacht</h2>
-          <p className="svc-cta__text">Share your vision &mdash; budget, length, brand preference &mdash; and we&apos;ll return with curated options.</p>
+          <p className="svc-cta__text">Share your vision - budget, length, brand preference - and we&apos;ll return with curated options.</p>
           <a href="https://calendly.com/george-georgeyachts/30min" target="_blank" rel="noopener noreferrer" className="svc-cta__button">Book a Free Consultation</a>
         </Reveal>
       </section>

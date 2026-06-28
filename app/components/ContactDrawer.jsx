@@ -31,8 +31,8 @@ import { useState, useEffect, useRef } from "react";
 const CONTACT = {
   whatsappPhone: "+17867988798",          // US — WhatsApp only
   greekPhone:    "+306970380999",          // Greek — SMS / iMessage / Signal / call
-  smsBody:       "Hi George — I'd like to chat about a Greek charter.",
-  whatsappMsg:   "Hello George — exploring Greek charter options. Can I ask a few questions?",
+  smsBody:       "Hi George - I'd like to chat about a Greek charter.",
+  whatsappMsg:   "Hello George - exploring Greek charter options. Can I ask a few questions?",
   email:         "george@georgeyachts.com",
 };
 
@@ -138,7 +138,7 @@ export default function ContactDrawer() {
       <button
         type="button"
         className="gy-fab-desktop-only"
-        aria-label="Speak to George — multi-channel"
+        aria-label="Speak to George - multi-channel"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         onMouseEnter={() => setHovered(true)}

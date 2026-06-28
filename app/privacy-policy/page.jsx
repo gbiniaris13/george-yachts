@@ -6,7 +6,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: "Privacy Policy",
   description:
-    "How George Yachts Brokerage House LLC collects, uses, and protects your personal data — GDPR, Greek law, UK GDPR, and CCPA rights.",
+    "How George Yachts Brokerage House LLC collects, uses, and protects your personal data - GDPR, Greek law, UK GDPR, and CCPA rights.",
   path: "/privacy-policy",
 });
 
@@ -97,7 +97,7 @@ const PrivacyPolicy = () => {
             </li>
             <li>
               <strong className="text-white">Automatically:</strong> IP address,
-              device/browser information, and usage data — for non-essential
+              device/browser information, and usage data - for non-essential
               analytics, only with your consent (see our{" "}
               <a href="/cookie-policy" className="text-[#C9A84C] hover:underline">Cookie Policy</a>).
             </li>
@@ -116,28 +116,28 @@ const PrivacyPolicy = () => {
           <ul className="list-disc pl-5 space-y-3 mt-2" style={{ color: "rgba(248, 245, 240,0.5)" }}>
             <li>
               <strong className="text-white">To respond to your inquiry</strong>{" "}
-              and take steps at your request before a charter is arranged —
+              and take steps at your request before a charter is arranged -
               GDPR Art. 6(1)(b) (pre-contractual steps).
             </li>
             <li>
-              <strong className="text-white">To send our newsletter</strong> —
+              <strong className="text-white">To send our newsletter</strong> -
               Art. 6(1)(a) (consent); withdraw anytime via the unsubscribe link.
             </li>
             <li>
               <strong className="text-white">Analytics</strong> (Google
-              Analytics 4, Microsoft Clarity) — Art. 6(1)(a) (consent), loaded
+              Analytics 4, Microsoft Clarity) - Art. 6(1)(a) (consent), loaded
               only after you opt in.
             </li>
             <li>
               <strong className="text-white">Site security</strong> (Google
               reCAPTCHA, Cloudflare) and prompt internal lead notification to
-              our broker (Telegram) — Art. 6(1)(f) (legitimate interests),
+              our broker (Telegram) - Art. 6(1)(f) (legitimate interests),
               limited to what is necessary and never used to profile you for
               advertising.
             </li>
             <li>
               <strong className="text-white">Legal, tax, and anti-money-laundering compliance</strong>{" "}
-              — Art. 6(1)(c); and to establish or defend legal claims —
+              - Art. 6(1)(c); and to establish or defend legal claims -
               Art. 6(1)(f).
             </li>
           </ul>
@@ -156,15 +156,15 @@ const PrivacyPolicy = () => {
             Commission's Standard Contractual Clauses otherwise.
           </p>
           <ul className="list-disc pl-5 space-y-2 mt-4" style={{ color: "rgba(248, 245, 240,0.5)" }}>
-            <li><strong className="text-white">Vercel</strong> — website hosting</li>
-            <li><strong className="text-white">Sanity</strong> — content management</li>
-            <li><strong className="text-white">Resend</strong> — transactional and newsletter email delivery</li>
-            <li><strong className="text-white">Google Analytics 4</strong> — website analytics (consent-gated)</li>
-            <li><strong className="text-white">Microsoft Clarity</strong> — heatmaps and session analytics (consent-gated)</li>
-            <li><strong className="text-white">Google reCAPTCHA</strong> — spam and bot protection</li>
-            <li><strong className="text-white">Calendly</strong> — consultation scheduling</li>
-            <li><strong className="text-white">Cloudflare</strong> — network and security</li>
-            <li><strong className="text-white">Telegram / WhatsApp</strong> — internal notification and client communication you initiate</li>
+            <li><strong className="text-white">Vercel</strong> - website hosting</li>
+            <li><strong className="text-white">Sanity</strong> - content management</li>
+            <li><strong className="text-white">Resend</strong> - transactional and newsletter email delivery</li>
+            <li><strong className="text-white">Google Analytics 4</strong> - website analytics (consent-gated)</li>
+            <li><strong className="text-white">Microsoft Clarity</strong> - heatmaps and session analytics (consent-gated)</li>
+            <li><strong className="text-white">Google reCAPTCHA</strong> - spam and bot protection</li>
+            <li><strong className="text-white">Calendly</strong> - consultation scheduling</li>
+            <li><strong className="text-white">Cloudflare</strong> - network and security</li>
+            <li><strong className="text-white">Telegram / WhatsApp</strong> - internal notification and client communication you initiate</li>
           </ul>
           <div className="mt-4 p-4 border border-[#C9A84C]/20 bg-[#C9A84C]/5">
             <p>

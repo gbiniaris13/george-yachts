@@ -119,7 +119,7 @@ export default function DiningFields({
       <h2 className="brief-subhead">When do you like to eat?</h2>
       <p className="brief-note">
         <em>
-          Either format is fine — write &quot;9am&quot; or &quot;09:00&quot;,
+          Either format is fine - write &quot;9am&quot; or &quot;09:00&quot;,
           whichever feels natural. The whole table follows these
           times so the chef can plan one rhythm for the week.
         </em>
@@ -138,12 +138,12 @@ export default function DiningFields({
         register={register}
         twoColumn
         options={[
-          { value: "continental",    label: "Continental — pastries, bread, jams, butter" },
-          { value: "american",       label: "American — pancakes, bacon, sausages, eggs" },
-          { value: "british",        label: "British — eggs, beans, bacon, porridge" },
-          { value: "european",       label: "European — cold meats, cheese, yoghurt, fruit" },
-          { value: "mediterranean",  label: "Mediterranean — Greek yoghurt, honey, olives, tomato" },
-          { value: "light_healthy",  label: "Light & healthy — fruit, granola, smoothies" },
+          { value: "continental",    label: "Continental - pastries, bread, jams, butter" },
+          { value: "american",       label: "American - pancakes, bacon, sausages, eggs" },
+          { value: "british",        label: "British - eggs, beans, bacon, porridge" },
+          { value: "european",       label: "European - cold meats, cheese, yoghurt, fruit" },
+          { value: "mediterranean",  label: "Mediterranean - Greek yoghurt, honey, olives, tomato" },
+          { value: "light_healthy",  label: "Light & healthy - fruit, granola, smoothies" },
         ]}
       />
       {/* 2026-05-24 — Christos pass: free-text "other" after each
@@ -177,12 +177,12 @@ export default function DiningFields({
           { value: "toast",           label: "Toast" },
           { value: "cheese",          label: "Cheese" },
           { value: "cream_cheese",    label: "Cream cheese" },
-          { value: "milk_low_fat",    label: "Milk — low fat" },
-          { value: "milk_full_fat",   label: "Milk — full fat" },
+          { value: "milk_low_fat",    label: "Milk - low fat" },
+          { value: "milk_full_fat",   label: "Milk - full fat" },
           { value: "milk_oat",        label: "Oat milk" },
           { value: "milk_almond",     label: "Almond milk" },
-          { value: "yogurt_low_fat",  label: "Yoghurt — low fat" },
-          { value: "yogurt_full_fat", label: "Yoghurt — full fat" },
+          { value: "yogurt_low_fat",  label: "Yoghurt - low fat" },
+          { value: "yogurt_full_fat", label: "Yoghurt - full fat" },
           { value: "honey",           label: "Honey" },
           { value: "cereal",          label: "Cereal" },
           { value: "jam",             label: "Jam" },
@@ -271,7 +271,7 @@ export default function DiningFields({
           </h2>
           <p className="brief-note">
             <em>
-              One tone per meal — the whole table follows. Only you
+              One tone per meal - the whole table follows. Only you
               see and answer this block; your group is spared the
               choice so the crew gets a single, clear signal.
             </em>
@@ -281,10 +281,10 @@ export default function DiningFields({
             label="Lunch service style"
             register={register}
             options={[
-              { value: "light",        label: "Light — salads, mezze, something easy after a swim" },
-              { value: "cold",         label: "Cold — platters, charcuterie, marinated dishes" },
-              { value: "hot",          label: "Hot — proper cooked plates" },
-              { value: "family_style", label: "Family style — shared bowls down the centre" },
+              { value: "light",        label: "Light - salads, mezze, something easy after a swim" },
+              { value: "cold",         label: "Cold - platters, charcuterie, marinated dishes" },
+              { value: "hot",          label: "Hot - proper cooked plates" },
+              { value: "family_style", label: "Family style - shared bowls down the centre" },
             ]}
           />
           <RadioGroup
@@ -292,16 +292,16 @@ export default function DiningFields({
             label="Dinner service style"
             register={register}
             options={[
-              { value: "light",        label: "Light — keep it simple, especially after a long day" },
-              { value: "cold",         label: "Cold — refined platters in the cockpit" },
-              { value: "hot",          label: "Hot — courses brought to the table" },
-              { value: "family_style", label: "Family style — shared bowls, everyone serves themselves" },
+              { value: "light",        label: "Light - keep it simple, especially after a long day" },
+              { value: "cold",         label: "Cold - refined platters in the cockpit" },
+              { value: "hot",          label: "Hot - courses brought to the table" },
+              { value: "family_style", label: "Family style - shared bowls, everyone serves themselves" },
             ]}
           />
         </>
       )}
 
-      <h2 className="brief-subhead">Lunch & dinner — what your group enjoys</h2>
+      <h2 className="brief-subhead">Lunch & dinner - what your group enjoys</h2>
       <p className="brief-note">
         <em>
           The chef provisions and plans around this. Three signals
@@ -309,7 +309,7 @@ export default function DiningFields({
           {" "}<strong>Dislike</strong> (please skip it), and
           {" "}<strong>Indifferent</strong> (we eat it, doesn&apos;t
           need to be central). Unmarked rows mean &quot;chef&apos;s
-          judgement&quot; — neither a yes nor a no.
+          judgement&quot; - neither a yes nor a no.
           {" "}<strong>Allergies and intolerances always override
           Like</strong>: anything flagged on Health & Safety or on
           a guest&apos;s personal page is never served to that
@@ -397,7 +397,7 @@ export default function DiningFields({
         name="dining_ashore_notes"
         lockedByGroup={lockedText("dining_ashore_notes")}
         register={register}
-        placeholder="e.g. We've heard about Spondi in Athens before embarkation, and we'd love at least one quiet taverna night in the Cyclades — the kind with grandma in the kitchen."
+        placeholder="e.g. We've heard about Spondi in Athens before embarkation, and we'd love at least one quiet taverna night in the Cyclades - the kind with grandma in the kitchen."
         rows={4}
       />
 
@@ -407,7 +407,7 @@ export default function DiningFields({
           <p className="brief-note">
             <em>
               These few fields appear because your group includes a
-              child or infant. They&apos;re entirely optional — the
+              child or infant. They&apos;re entirely optional - the
               chef will quietly check in with you on day one in any
               case.
             </em>
@@ -420,7 +420,7 @@ export default function DiningFields({
             options={[
               { value: "with_adults", label: "With the adults" },
               { value: "separate",    label: "Separately, earlier" },
-              { value: "mixed",       label: "A mix — depends on the day" },
+              { value: "mixed",       label: "A mix - depends on the day" },
             ]}
           />
           <OpenTextarea

@@ -34,13 +34,13 @@ const SECTION_COPY = {
   dining: {
     title: "Specific dishes you'd like named",
     intro:
-      "Optional. The chef provisions from your group's food preferences above — but if there's a dish, brand, or cut you'd like to name explicitly (a particular wagyu cut, a specific cheese, the brand of olive oil you love), add it here. The whole group sees the list as it grows.",
+      "Optional. The chef provisions from your group's food preferences above - but if there's a dish, brand, or cut you'd like to name explicitly (a particular wagyu cut, a specific cheese, the brand of olive oil you love), add it here. The whole group sees the list as it grows.",
     placeholder: "e.g. Wagyu A5 ribeye · Maldon flaky salt · La Tourangelle walnut oil",
   },
   beverages: {
     title: "Specific bottles, brands or labels",
     intro:
-      "Optional. The hostess provisions from your group's frequency picks above — but if there's a bottle, brand or label you'd like named explicitly (a particular tequila, a vintage champagne, a single malt you love), add it here. The whole group sees the list as it grows.",
+      "Optional. The hostess provisions from your group's frequency picks above - but if there's a bottle, brand or label you'd like named explicitly (a particular tequila, a vintage champagne, a single malt you love), add it here. The whole group sees the list as it grows.",
     placeholder: "e.g. Don Julio 1942 · Krug Grande Cuvée · Talisker 10",
   },
 };
@@ -95,7 +95,7 @@ export default function WishlistPanel({ sectionKey }) {
       const j = await r.json();
       if (r.status === 423) {
         setLocked(true);
-        setError("The brief is locked — no more changes for now.");
+        setError("The brief is locked - no more changes for now.");
         return;
       }
       if (!r.ok || !j.ok) {
@@ -123,7 +123,7 @@ export default function WishlistPanel({ sectionKey }) {
       );
       if (r.status === 423) {
         setLocked(true);
-        setError("The brief is locked — items can no longer be removed.");
+        setError("The brief is locked - items can no longer be removed.");
         return;
       }
       if (!r.ok) throw new Error("remove-failed");
@@ -144,7 +144,7 @@ export default function WishlistPanel({ sectionKey }) {
         <span className="wlp__eyebrow">{copy.title}</span>
         <span className="wlp__count">
           {items.length === 0
-            ? "Optional — open to add"
+            ? "Optional - open to add"
             : `${items.length} added${
                 items.length === 1 ? "" : ""
               } · open to add more`}

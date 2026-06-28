@@ -59,7 +59,7 @@ export default function Filotimon({ filotimoImage = null }) {
     <section
       className="relative w-full overflow-hidden"
       style={{ background: "#0D1B2A" }}
-      aria-label="Filotimo — the Greek philosophy that shapes George Yachts"
+      aria-label="Filotimo - the Greek philosophy that shapes George Yachts"
     >
       {/* Ambient gold wash — drifts slowly on scroll (A4 ambient parallax) */}
       <div
@@ -239,8 +239,8 @@ export default function Filotimon({ filotimoImage = null }) {
                 letterSpacing: "0.04em",
               }}
             >
-              φίλος <span className="text-[#C9A84C]/50">(philos)</span> — friend, love &nbsp;·&nbsp;
-              τιμή <span className="text-[#C9A84C]/50">(timi)</span> — honour, worth
+              φίλος <span className="text-[#C9A84C]/50">(philos)</span> - friend, love &nbsp;·&nbsp;
+              τιμή <span className="text-[#C9A84C]/50">(timi)</span> - honour, worth
             </p>
 
             {/* Intro paragraph — full i18n string, long-form */}
@@ -407,7 +407,7 @@ export default function Filotimon({ filotimoImage = null }) {
                 fontWeight: 500,
               }}
             >
-              — Thales, Ancient Greek philosopher
+              - Thales, Ancient Greek philosopher
             </p>
 
             {/* Signature diamond */}
@@ -421,7 +421,7 @@ export default function Filotimon({ filotimoImage = null }) {
       <style jsx global>{`
         * { border-radius: 0 !important; }
 
-        /* Mobile (≤ 600 px) — Boss spec: each strand becomes a
+        /* Mobile (≤ 600 px) - Boss spec: each strand becomes a
            full-width card with border-left 2 px gold + 1 rem padding.
            Number kept as decorative top-line, not the leading column. */
         @media (max-width: 600px) {

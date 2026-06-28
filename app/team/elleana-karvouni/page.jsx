@@ -5,7 +5,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { pageMeta } from "@/lib/pageMeta";
 
 export const metadata = pageMeta({
-  title: "Elleana Karvouni — Operations & Finance",
+  title: "Elleana Karvouni - Operations & Finance",
   description:
     "Meet Elleana Karvouni, Head of Business Operations & Finance at George Yachts, ensuring every transaction meets the highest standards of clarity and trust.",
   path: "/team/elleana-karvouni",

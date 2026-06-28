@@ -15,7 +15,7 @@ export async function generateMetadata() {
   } catch {}
   return {
     title: "Private Fleet | Luxury Yacht Charter Greece",
-    description: `Your own world at sea. Full crew. Total discretion. Premium crewed yacht charters in Greek waters — from €${low.toLocaleString()} to €${high.toLocaleString()}/week.`,
+    description: `Your own world at sea. Full crew. Total discretion. Premium crewed yacht charters in Greek waters - from €${low.toLocaleString()} to €${high.toLocaleString()}/week.`,
     openGraph: {
       title: "Private Fleet | George Yachts",
       description: `Your own world at sea. Full crew. Total discretion. From €${low.toLocaleString()} to €${high.toLocaleString()}/week.`,

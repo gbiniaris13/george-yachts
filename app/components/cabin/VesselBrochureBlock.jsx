@@ -185,7 +185,7 @@ export default function VesselBrochureBlock({ cabin, photos, asPage = false }) {
                     <img
                       key={i}
                       src={p.url}
-                      alt={p.caption || `${name} — ${i + 2}`}
+                      alt={p.caption || `${name} - ${i + 2}`}
                       className="cabin-vessel-block__gallery-tile"
                       loading="lazy"
                       onClick={() => open(i + 1)}
@@ -269,9 +269,9 @@ export default function VesselBrochureBlock({ cabin, photos, asPage = false }) {
             ) : null}
             {(accommodation.crew_count || accommodation.crew_summary) && (
               <p>
-                <strong>Crew of {accommodation.crew_count || "—"}</strong>
+                <strong>Crew of {accommodation.crew_count || "-"}</strong>
                 {accommodation.crew_summary
-                  ? ` — ${accommodation.crew_summary}`
+                  ? ` - ${accommodation.crew_summary}`
                   : null}
               </p>
             )}

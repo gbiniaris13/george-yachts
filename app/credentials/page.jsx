@@ -33,7 +33,7 @@ export const metadata = {
   openGraph: {
     title: "Credentials | George Yachts",
     description:
-      "Independent journalism, professional broker membership, MYBA-standard contracts, US/Greek dual residency — the four trust surfaces that matter.",
+      "Independent journalism, professional broker membership, MYBA-standard contracts, US/Greek dual residency - the four trust surfaces that matter.",
     url: "https://georgeyachts.com/credentials",
     type: "article",
   },
@@ -80,7 +80,7 @@ export default function CredentialsPage() {
             style={{ color: "rgba(248,245,240,0.78)", maxWidth: "62ch" }}
           >
             UHNW guests verify before they deposit. So do their family offices,
-            their lawyers, and their advisers. Here is the documentary trail —
+            their lawyers, and their advisers. Here is the documentary trail -
             independent journalism, professional broker membership, contract
             framework, and the legal entity that signs your agreement.
           </p>
@@ -136,7 +136,7 @@ export default function CredentialsPage() {
                 }}
               >
                 George P. Biniaris is quoted in Jacques Ledbetter's Forbes
-                feature on how UHNW families are hedging against instability —
+                feature on how UHNW families are hedging against instability -
                 the geopolitical pressures shifting yacht charter demand from
                 volatile regions toward Greek waters. Editorial mention,
                 independent journalism, no paid placement.
@@ -171,7 +171,7 @@ export default function CredentialsPage() {
                     letterSpacing: "0.04em",
                   }}
                 >
-                  — George P. Biniaris, in{" "}
+                  - George P. Biniaris, in{" "}
                   <span
                     style={{
                       fontFamily: "'Times New Roman', Times, serif",
@@ -307,7 +307,7 @@ export default function CredentialsPage() {
               >
                 <Image
                   src="/images/iyba-official-white.png"
-                  alt="IYBA — International Yacht Brokers Association"
+                  alt="IYBA - International Yacht Brokers Association"
                   width={240}
                   height={56}
                   style={{ height: "auto", width: 240 }}
@@ -361,7 +361,7 @@ export default function CredentialsPage() {
                   maxWidth: "60ch",
                 }}
               >
-                Every charter we write uses the MYBA Charter Agreement — the
+                Every charter we write uses the MYBA Charter Agreement - the
                 Mediterranean industry's standard contract framework.
                 Definitions, deposit handling, advance provisioning allowance
                 (APA), force-majeure language, and dispute resolution all
@@ -454,7 +454,7 @@ export default function CredentialsPage() {
                       fontWeight: 300,
                     }}
                   >
-                    Wyoming, United States — registered LLC. Charter agreements
+                    Wyoming, United States - registered LLC. Charter agreements
                     are written and signed under U.S. company law, giving
                     non-Greek guests the legal recourse they expect from a
                     U.S. counterparty.

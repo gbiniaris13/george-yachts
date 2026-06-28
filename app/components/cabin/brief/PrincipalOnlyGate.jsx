@@ -57,7 +57,7 @@ export default async function PrincipalOnlyGate({ sectionTitle, children }) {
         <p className="pog-banner__copy">
           Only the principal charterer can edit{" "}
           <strong>{sectionTitle}</strong>. You can read what&apos;s
-          here so you know the plan — but the fields are locked
+          here so you know the plan - but the fields are locked
           for everyone except the person who organised the
           charter. If something needs changing (a different
           flight, a different island), let them know directly.
@@ -67,7 +67,7 @@ export default async function PrincipalOnlyGate({ sectionTitle, children }) {
       <fieldset
         className="pog-readonly"
         disabled
-        aria-label={`${sectionTitle} — read-only`}
+        aria-label={`${sectionTitle} - read-only`}
       >
         {children}
       </fieldset>
@@ -109,7 +109,7 @@ export default async function PrincipalOnlyGate({ sectionTitle, children }) {
         }
         /* Disabled fieldset visually mutes the form to signal
            that it's not for editing. Keeps everything readable
-           — just clearly not interactive. */
+           - just clearly not interactive. */
         .pog-readonly {
           margin: 0;
           padding: 0;

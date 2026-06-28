@@ -172,7 +172,7 @@ const GOLD = '#C9A84C';
 const QUESTIONS = [
   {
     id: 'group',
-    eyebrow: "Hi — I'm George.",
+    eyebrow: "Hi - I'm George.",
     intro: 'Before I match you with the right yacht, tell me one thing.',
     title: "Who's coming with you?",
     options: [
@@ -191,17 +191,17 @@ const QUESTIONS = [
       {
         value: 'cyclades',
         label: 'Cyclades',
-        sub: 'Mykonos, Santorini, Paros — energetic, iconic',
+        sub: 'Mykonos, Santorini, Paros - energetic, iconic',
       },
       {
         value: 'ionian',
         label: 'Ionian',
-        sub: 'Corfu, Lefkada, Kefalonia — calm, family-friendly',
+        sub: 'Corfu, Lefkada, Kefalonia - calm, family-friendly',
       },
       {
         value: 'saronic',
         label: 'Saronic',
-        sub: 'Hydra, Spetses — short charters from Athens',
+        sub: 'Hydra, Spetses - short charters from Athens',
       },
       { value: 'any', label: 'I want George to recommend', sub: '' },
     ],
@@ -237,10 +237,10 @@ const QUESTIONS = [
       {
         value: 'under-15',
         label: 'Under €15K',
-        sub: 'Explorer Fleet — skippered cats',
+        sub: 'Explorer Fleet - skippered cats',
       },
-      { value: '15-40', label: '€15K – €40K', sub: 'Mid-tier crewed' },
-      { value: '40-100', label: '€40K – €100K', sub: 'Premium crewed' },
+      { value: '15-40', label: '€15K - €40K', sub: 'Mid-tier crewed' },
+      { value: '40-100', label: '€40K - €100K', sub: 'Premium crewed' },
       { value: 'over-100', label: '€100K+', sub: 'Superyachts' },
       { value: 'discuss', label: "I'd rather discuss with George", sub: '' },
     ],
@@ -307,9 +307,9 @@ function buildReasoning(yacht, answers) {
   if (answers.group === 'family' && yacht.guests >= 8) {
     bits.push(`Sleeps ${yacht.guests}, ideal for a family of your size`);
   } else if (answers.group === 'couple' && yacht.guests <= 6) {
-    bits.push('Quietly sized for two — no wasted space');
+    bits.push('Quietly sized for two - no wasted space');
   } else if (answers.group === 'friends' && yacht.guests >= 8) {
-    bits.push(`Sleeps ${yacht.guests} comfortably — your group, your yacht`);
+    bits.push(`Sleeps ${yacht.guests} comfortably - your group, your yacht`);
   } else if (yacht.guests) {
     bits.push(`Sleeps ${yacht.guests}`);
   }
@@ -451,7 +451,7 @@ export default function YachtFinderQuiz({ fleet = [] }) {
       } catch {}
       setDone(true);
     } catch {
-      setError('Network error — please try again.');
+      setError('Network error - please try again.');
       setSubmitting(false);
     }
   };
@@ -579,7 +579,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
             type="text"
             value={value || ''}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="e.g. 5–12 July 2026, or July 2026"
+            placeholder="e.g. 5-12 July 2026, or July 2026"
             aria-label="Approximate dates"
             style={{
               width: '100%',
@@ -868,7 +868,7 @@ function ResultScreen({ matches, answers }) {
 
       {matches.length === 0 ? (
         <p style={{ color: 'rgba(248, 245, 240,0.7)' }}>
-          I couldn&rsquo;t find an exact match in our active fleet — but that&rsquo;s
+          I couldn&rsquo;t find an exact match in our active fleet - but that&rsquo;s
           why I do this work personally. Watch for an email from me shortly.
         </p>
       ) : (

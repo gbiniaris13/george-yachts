@@ -138,7 +138,7 @@ export default function ForbesReferrerWelcome() {
           letterSpacing: "0.005em",
         }}
       >
-        Welcome from Forbes — you&apos;ve read the story.
+        Welcome from Forbes - you&apos;ve read the story.
       </p>
 
       <p

@@ -275,7 +275,7 @@ export default function AmbientPlayer() {
         @media (prefers-reduced-motion: reduce) {
           [aria-pressed="true"] [aria-hidden="true"] span { animation: none !important; }
         }
-        /* Phase 27d — keep the icon visible on mobile too (since it's
+        /* Phase 27d - keep the icon visible on mobile too (since it's
            tiny now). It sits in the top-right corner, same band as
            the nav search icon, so it doesn't interfere with content. */
       `}</style>

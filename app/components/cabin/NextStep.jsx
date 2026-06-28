@@ -69,9 +69,9 @@ export default function NextStep({
     if (!myDetailsComplete) {
       step = {
         tone: "active",
-        eyebrow: "Your part — one short form",
+        eyebrow: "Your part - one short form",
         title: "Share your crew-list line.",
-        copy: "Six quiet fields — date of birth, gender, nationality, passport or ID, mobile, and a few details about yourself. The harbour authorities need them for every person aboard. Two minutes.",
+        copy: "Six quiet fields - date of birth, gender, nationality, passport or ID, mobile, and a few details about yourself. The harbour authorities need them for every person aboard. Two minutes.",
         ctaLabel: "Open your details →",
         ctaHref: "/cabin/me",
       };
@@ -79,8 +79,8 @@ export default function NextStep({
       step = {
         tone: "done",
         eyebrow: "That's everything we need from you",
-        title: "Your details are in — thank you.",
-        copy: "The Main Charterer is taking care of the rest of the arrangements (itinerary, food, the cellar). Your allergies and details have already been passed to the crew exactly as you entered them. Enjoy your Cabin in the meantime — the berth map, your crew, the album are all below.",
+        title: "Your details are in - thank you.",
+        copy: "The Main Charterer is taking care of the rest of the arrangements (itinerary, food, the cellar). Your allergies and details have already been passed to the crew exactly as you entered them. Enjoy your Cabin in the meantime - the berth map, your crew, the album are all below.",
         ctaLabel: null,
         ctaHref: null,
       };
@@ -90,27 +90,27 @@ export default function NextStep({
     if (invitedCount === 0) {
       step = {
         tone: "active",
-        eyebrow: "Step 1 — start with your group",
+        eyebrow: "Step 1 - start with your group",
         title: "Invite the people sailing with you.",
-        copy: "Each person gets a quiet sign-in to share their own crew-list essentials and brief picks. You don't fill it in for them — they each take two minutes.",
+        copy: "Each person gets a quiet sign-in to share their own crew-list essentials and brief picks. You don't fill it in for them - they each take two minutes.",
         ctaLabel: "Invite your group →",
         ctaHref: "/cabin/guests",
       };
     } else if (!myDetailsComplete) {
       step = {
         tone: "active",
-        eyebrow: "Step 2 — your crew-list line",
+        eyebrow: "Step 2 - your crew-list line",
         title: "Share your own crew-list essentials.",
-        copy: "Date of birth, gender, nationality, passport or ID, mobile. The harbour authorities need them from every person aboard — including you.",
+        copy: "Date of birth, gender, nationality, passport or ID, mobile. The harbour authorities need them from every person aboard - including you.",
         ctaLabel: "Open your details →",
         ctaHref: "/cabin/me",
       };
     } else if (!briefSectionsAllComplete) {
       step = {
         tone: "active",
-        eyebrow: "Step 3 — fill the brief together",
+        eyebrow: "Step 3 - fill the brief together",
         title: "Open the shared brief.",
-        copy: "Arrival, itinerary, health, food, drinks — every section. Your group can add their picks alongside yours; together you shape the week the chef and hostess will design.",
+        copy: "Arrival, itinerary, health, food, drinks - every section. Your group can add their picks alongside yours; together you shape the week the chef and hostess will design.",
         ctaLabel: "Open the brief →",
         ctaHref: "/cabin/brief",
       };
@@ -131,8 +131,8 @@ export default function NextStep({
             : `${pcCount} crew-list lines still to come.`,
         copy:
           pcCount === 1
-            ? "Almost there — one person still needs to add their crew-list essentials (date of birth, passport, mobile). Nudge them from Your Group, or give them a little time."
-            : "A few people still need to add their crew-list essentials — date of birth, passport, mobile. Nudge them from Your Group, or wait; the readiness bar below shows exactly who.",
+            ? "Almost there - one person still needs to add their crew-list essentials (date of birth, passport, mobile). Nudge them from Your Group, or give them a little time."
+            : "A few people still need to add their crew-list essentials - date of birth, passport, mobile. Nudge them from Your Group, or wait; the readiness bar below shows exactly who.",
         ctaLabel: "Open Your Group →",
         ctaHref: "/cabin/guests",
       };
@@ -141,7 +141,7 @@ export default function NextStep({
         tone: "ready",
         eyebrow: "Ready to send",
         title: "Your brief is ready for George.",
-        copy: "Every crew list is in and every brief section is filled. Read it through one last time — then send it to George.",
+        copy: "Every crew list is in and every brief section is filled. Read it through one last time - then send it to George.",
         ctaLabel: "Review & send to George →",
         ctaHref: "/cabin/brief/review",
       };

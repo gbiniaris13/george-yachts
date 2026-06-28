@@ -137,7 +137,7 @@ export default async function DashboardPage() {
           >
             This is the V1 partner portal. Per-lead pipeline view, commission ledger UI, and downloadable brand
             kits are on the next-quarter roadmap. If there&rsquo;s a specific tool that would change your week,
-            tell George — partner feedback shapes the priority list.
+            tell George - partner feedback shapes the priority list.
           </p>
         </section>
       </article>

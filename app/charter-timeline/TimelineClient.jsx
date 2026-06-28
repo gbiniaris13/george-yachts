@@ -10,28 +10,28 @@ const STEPS = [
     day: 'Day 1',
     title: 'First Conversation',
     icon: '💬',
-    desc: 'You reach out — by WhatsApp, email, or our inquiry form. George responds personally within hours. No automated replies, no junior staff. Just a straightforward conversation about what you have in mind.',
-    details: ['Share your dates, group size, and preferences', 'Discuss regions, yacht types, and budget range', 'Ask anything — no commitment at this stage'],
+    desc: 'You reach out - by WhatsApp, email, or our inquiry form. George responds personally within hours. No automated replies, no junior staff. Just a straightforward conversation about what you have in mind.',
+    details: ['Share your dates, group size, and preferences', 'Discuss regions, yacht types, and budget range', 'Ask anything - no commitment at this stage'],
   },
   {
     day: '24 Hours',
     title: 'Your Proposal Arrives',
     icon: '📋',
-    desc: 'Within 24 hours, you receive a curated proposal — not a mass-market list, but a handpicked selection of 3–5 yachts chosen specifically for your group, with pricing, photos, and George\'s personal notes on each.',
+    desc: 'Within 24 hours, you receive a curated proposal - not a mass-market list, but a handpicked selection of 3-5 yachts chosen specifically for your group, with pricing, photos, and George\'s personal notes on each.',
     details: ['Detailed yacht profiles with crew information', 'Transparent pricing: charter rate + APA + VAT breakdown', 'Suggested itinerary based on your dates and interests'],
   },
   {
     day: 'Week 1',
     title: 'Yacht Secured',
     icon: '✍️',
-    desc: 'Once you choose your yacht, we prepare the MYBA charter agreement — the international gold standard. Everything is transparent: charter rate, APA estimate, VAT, payment schedule. No hidden clauses.',
+    desc: 'Once you choose your yacht, we prepare the MYBA charter agreement - the international gold standard. Everything is transparent: charter rate, APA estimate, VAT, payment schedule. No hidden clauses.',
     details: ['MYBA-standard charter agreement', 'Clear payment terms (typically 50% deposit, 50% balance)', 'APA explained line by line', 'Full cancellation terms laid out'],
   },
   {
     day: '60 Days Before',
     title: 'Preference Sheets',
     icon: '📝',
-    desc: 'We send you preference sheets — detailed questionnaires about your tastes. Dietary requirements, favorite drinks, music preferences, pillow firmness, allergies, children\'s needs. The crew uses these to prepare everything to your standard.',
+    desc: 'We send you preference sheets - detailed questionnaires about your tastes. Dietary requirements, favorite drinks, music preferences, pillow firmness, allergies, children\'s needs. The crew uses these to prepare everything to your standard.',
     details: ['Food & beverage preferences for every guest', 'Activity interests and fitness levels', 'Special occasions (birthdays, anniversaries)', 'Medical information and allergies', 'Children\'s ages and needs'],
   },
   {
@@ -52,14 +52,14 @@ const STEPS = [
     day: 'Day 1',
     title: 'Welcome Aboard',
     icon: '🚢',
-    desc: 'You arrive. The crew is waiting with cold towels and welcome drinks. Your cabin is prepared exactly as you requested. The lines are cast, and the Aegean opens before you. Everything else — forgotten.',
-    details: ['Private transfer from airport to marina', 'Welcome cocktails and yacht tour', 'Captain presents the suggested itinerary', 'First swim — usually within the hour', 'Dinner under the stars, night one'],
+    desc: 'You arrive. The crew is waiting with cold towels and welcome drinks. Your cabin is prepared exactly as you requested. The lines are cast, and the Aegean opens before you. Everything else - forgotten.',
+    details: ['Private transfer from airport to marina', 'Welcome cocktails and yacht tour', 'Captain presents the suggested itinerary', 'First swim - usually within the hour', 'Dinner under the stars, night one'],
   },
   {
     day: 'During Charter',
     title: 'George Is Always Available',
     icon: '📱',
-    desc: 'Throughout your charter, George remains a WhatsApp message away. Restaurant reservations, last-minute requests, weather re-routing, birthday surprises — anything you need, handled quietly and immediately.',
+    desc: 'Throughout your charter, George remains a WhatsApp message away. Restaurant reservations, last-minute requests, weather re-routing, birthday surprises - anything you need, handled quietly and immediately.',
     details: ['24/7 WhatsApp support from George personally', 'Restaurant reservations at short notice', 'Concierge services: spa, helicopter, guides', 'Weather-based itinerary adjustments', 'Any issue resolved within the hour'],
   },
 ];
@@ -78,7 +78,7 @@ export default function TimelineClient() {
           Charter Experience Timeline
         </h1>
         <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.4)', maxWidth: 500, margin: '0 auto', lineHeight: 1.8 }}>
-          From first message to stepping aboard — every step, every detail, handled personally.
+          From first message to stepping aboard - every step, every detail, handled personally.
         </p>
       </div>
 

@@ -154,7 +154,7 @@ const SPEED_OPTIONS = [
   { id: 'all', label: 'Any speed' },
   { id: 'sail', label: 'Sailing-paced (≤10 kn)' },
   { id: 'to15', label: 'Up to 15 kn' },
-  { id: '15to25', label: '15–25 kn' },
+  { id: '15to25', label: '15-25 kn' },
   { id: 'over25', label: '25 kn+' },
 ];
 
@@ -333,7 +333,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
             <>
               <Image
                 src={`${imageUrl}?w=600&h=400&fit=crop&auto=format`}
-                alt={yacht.imageAlt || `${name} — charter yacht in Greece`}
+                alt={yacht.imageAlt || `${name} - charter yacht in Greece`}
                 width={600}
                 height={400}
                 loading={index < 6 ? 'eager' : 'lazy'}
@@ -439,7 +439,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
                 <span className="fleet-card__per-person-label">{t('fleet.totalPerPerson', 'Total per person/week')}</span>
                 {perPersonWeekly.low === perPersonWeekly.high
                   ? perPersonWeekly.low
-                  : `${perPersonWeekly.low} – ${perPersonWeekly.high}`
+                  : `${perPersonWeekly.low} - ${perPersonWeekly.high}`
                 }
                 <span className="fleet-card__per-person-note">{t('fleet.inclApaVat', 'incl. APA & VAT')}</span>
               </div>
@@ -467,7 +467,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
           {/* Secondary direct WhatsApp link for visitors who only want
               the messaging-app channel (skips the modal entirely). */}
           <a
-            href={`https://wa.me/306970380999?text=${encodeURIComponent(`Hi, I'm interested in chartering ${name} — could you share availability and rates?`)}`}
+            href={`https://wa.me/306970380999?text=${encodeURIComponent(`Hi, I'm interested in chartering ${name} - could you share availability and rates?`)}`}
             target="_blank"
             rel="noopener noreferrer"
             data-cursor="WhatsApp"
@@ -596,9 +596,9 @@ export default function FleetGrid({ yachts }) {
       const override = YACHT_OVERRIDES[yacht.slug] || {};
       const name = yacht.name || override.name || yacht.slug?.replace(/-/g, ' ').toUpperCase();
       const price = yacht.weeklyRatePrice || override.price || 'On Request';
-      const guestCount = yacht.sleeps || override.guests || '–';
-      const cabinCount = yacht.cabins || override.cabins || '–';
-      const crewInfo = yacht.crew || override.crew || '–';
+      const guestCount = yacht.sleeps || override.guests || '-';
+      const cabinCount = yacht.cabins || override.cabins || '-';
+      const crewInfo = yacht.crew || override.crew || '-';
       // Per person per week with APA + VAT
       let ppwLow = null;
       let ppwHigh = null;
@@ -621,13 +621,13 @@ export default function FleetGrid({ yachts }) {
       return [...prev, {
         title: name,
         slug: yacht.slug,
-        builder: yacht.subtitle || override.builder || yacht.builder || '–',
-        length: yacht.length || '–',
+        builder: yacht.subtitle || override.builder || yacht.builder || '-',
+        length: yacht.length || '-',
         guests: guestCount,
         cabins: cabinCount,
         crew: crewInfo,
-        cruiseSpeed: yacht.cruiseSpeed || '–',
-        maxSpeed: yacht.maxSpeed || '–',
+        cruiseSpeed: yacht.cruiseSpeed || '-',
+        maxSpeed: yacht.maxSpeed || '-',
         weeklyRate: price,
         perPersonWeekLow: ppwLow,
         perPersonWeekHigh: ppwHigh,
@@ -816,7 +816,7 @@ export default function FleetGrid({ yachts }) {
   const PRESETS = [
     {
       id: 'family-cat',
-      label: 'Family-friendly catamaran · 8–10 guests',
+      label: 'Family-friendly catamaran · 8-10 guests',
       apply: () => {
         setActiveCategory('sailing-catamarans');
         setGuestFilter('10');

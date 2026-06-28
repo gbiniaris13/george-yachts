@@ -18,7 +18,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
       </div>
       {/* Hero */}
       <section style={{ position: "relative", height: "80vh", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-        <Image src="/images/explorer-fleet-hero.jpg" alt="Explorer Fleet — group yacht charter Greece" fill style={{ objectFit: "cover", objectPosition: "center 30%", filter: "grayscale(100%) contrast(1.2) brightness(0.4)" }} sizes="100vw" priority />
+        <Image src="/images/explorer-fleet-hero.jpg" alt="Explorer Fleet - group yacht charter Greece" fill style={{ objectFit: "cover", objectPosition: "center 30%", filter: "grayscale(100%) contrast(1.2) brightness(0.4)" }} sizes="100vw" priority />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(13, 27, 42,0.8) 0%, transparent 40%, rgba(13, 27, 42,0.4) 100%)" }} />
         <div style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px" }}>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: "0.5em", color: "#C9A84C", textTransform: "uppercase", marginBottom: 24 }}>
@@ -125,7 +125,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
                 <Link key={yacht._id} href={`/yachts/${yacht.slug}`} style={{ textDecoration: "none", display: "block", border: "1px solid rgba(248, 245, 240,0.06)", borderRadius: 4, overflow: "hidden" }}>
                   <div style={{ position: "relative", aspectRatio: "16/10", overflow: "hidden" }}>
                     {yacht.imageUrl && (
-                      <Image src={yacht.imageUrl} alt={`${yacht.name} — yacht charter Greece`} fill style={{ objectFit: "cover" }} sizes="400px" />
+                      <Image src={yacht.imageUrl} alt={`${yacht.name} - yacht charter Greece`} fill style={{ objectFit: "cover" }} sizes="400px" />
                     )}
                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(13, 27, 42,0.8) 0%, transparent 60%)" }} />
                     <div style={{ position: "absolute", bottom: 16, left: 16, right: 16 }}>

@@ -4,7 +4,7 @@ import ProposalClient from "./ProposalClient";
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
   title: "Instant Charter Proposal",
-  description: "Generate a personalized yacht charter proposal in seconds. Select your yacht, dates, and preferences — receive a complete breakdown instantly.",
+  description: "Generate a personalized yacht charter proposal in seconds. Select your yacht, dates, and preferences - receive a complete breakdown instantly.",
 };
 
 export const revalidate = 3600;

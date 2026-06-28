@@ -56,7 +56,7 @@ export default function YourPrivacySecurity() {
         {/* Intro */}
         <div className="text-center mb-20">
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "15px", lineHeight: 2.2, color: "rgba(248, 245, 240,0.5)", maxWidth: "700px", margin: "0 auto" }}>
-            We understand that chartering a yacht involves sharing sensitive information — from travel dates and preferences to passport copies and financial details. Unlike a generic booking platform, we handle every piece of data with the discretion you&apos;d expect from a private brokerage.
+            We understand that chartering a yacht involves sharing sensitive information - from travel dates and preferences to passport copies and financial details. Unlike a generic booking platform, we handle every piece of data with the discretion you&apos;d expect from a private brokerage.
           </p>
         </div>
 
@@ -65,7 +65,7 @@ export default function YourPrivacySecurity() {
           <Card
             icon={<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>}
             title="Bank-Grade Encryption"
-            description="Every form submission, email, and file transfer is protected with 256-bit TLS encryption — the same standard used by major banks and financial institutions. Your data cannot be intercepted in transit."
+            description="Every form submission, email, and file transfer is protected with 256-bit TLS encryption - the same standard used by major banks and financial institutions. Your data cannot be intercepted in transit."
           />
           <Card
             icon={<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="13" x2="17" y2="13"/></svg>}
@@ -80,7 +80,7 @@ export default function YourPrivacySecurity() {
           <Card
             icon={<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>}
             title="GDPR & CCPA Compliant"
-            description="Whether you're based in Europe, the US, or anywhere else, your data rights are fully respected. You can request access to, correction of, or deletion of your personal data at any time — no questions asked."
+            description="Whether you're based in Europe, the US, or anywhere else, your data rights are fully respected. You can request access to, correction of, or deletion of your personal data at any time - no questions asked."
           />
           <Card
             icon={<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>}
@@ -90,29 +90,29 @@ export default function YourPrivacySecurity() {
           <Card
             icon={<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>}
             title="Private Communications"
-            description="All client communications — whether by email, WhatsApp, or phone — are treated as strictly confidential. We never discuss your charter plans, budget, or personal details with anyone outside your booking."
+            description="All client communications - whether by email, WhatsApp, or phone - are treated as strictly confidential. We never discuss your charter plans, budget, or personal details with anyone outside your booking."
           />
         </div>
 
         {/* Personal Promise */}
         <div className="py-16 px-8 md:px-16 text-center mb-24" style={{ background: "rgba(201,168,76,0.03)", borderLeft: "3px solid rgba(201,168,76,0.3)" }}>
           <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.5rem", fontWeight: 300, color: "rgba(248, 245, 240,0.7)", fontStyle: "italic", lineHeight: 1.8, marginBottom: "24px" }}>
-            &ldquo;In yacht brokerage, discretion isn&apos;t a feature — it&apos;s the foundation. Our clients trust us with their most personal moments, and we honour that trust with absolute confidentiality.&rdquo;
+            &ldquo;In yacht brokerage, discretion isn&apos;t a feature - it&apos;s the foundation. Our clients trust us with their most personal moments, and we honour that trust with absolute confidentiality.&rdquo;
           </p>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", letterSpacing: "0.2em", color: "#C9A84C", textTransform: "uppercase" }}>
-            — George P. Biniaris, Managing Broker
+            - George P. Biniaris, Managing Broker
           </p>
         </div>
 
         {/* Your Rights */}
         <div className="mb-24">
           <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "2rem", fontWeight: 300, color: "#F8F5F0", textAlign: "center", marginBottom: "40px" }}>
-            Your Rights — In Plain Language
+            Your Rights - In Plain Language
           </h2>
           <div className="space-y-6 max-w-2xl mx-auto">
             {[
               { right: "See your data", desc: "Ask us what information we hold about you. We'll provide a clear summary within 48 hours." },
-              { right: "Fix your data", desc: "If anything is incorrect — wrong email, outdated phone number — tell us and we'll update it immediately." },
+              { right: "Fix your data", desc: "If anything is incorrect - wrong email, outdated phone number - tell us and we'll update it immediately." },
               { right: "Delete your data", desc: "Want us to erase everything? Just ask. We'll remove your records from all our systems permanently." },
               { right: "Stop marketing", desc: "Unsubscribe from any email with one click. No waiting periods, no hoops to jump through." },
               { right: "Take your data", desc: "Request a copy of your data in a standard format to take with you. It's yours." },

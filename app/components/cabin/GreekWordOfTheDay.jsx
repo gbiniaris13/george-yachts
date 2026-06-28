@@ -15,18 +15,18 @@
 // =============================================================
 
 const PHRASES = [
-  { gr: "Καλημέρα",       en: "Kaliméra",       gloss: "Good morning — literally 'good day'" },
-  { gr: "Καλησπέρα",      en: "Kalispéra",      gloss: "Good evening — used from late afternoon" },
-  { gr: "Ευχαριστώ",      en: "Efharistó",      gloss: "Thank you — formal or warm" },
+  { gr: "Καλημέρα",       en: "Kaliméra",       gloss: "Good morning - literally 'good day'" },
+  { gr: "Καλησπέρα",      en: "Kalispéra",      gloss: "Good evening - used from late afternoon" },
+  { gr: "Ευχαριστώ",      en: "Efharistó",      gloss: "Thank you - formal or warm" },
   { gr: "Παρακαλώ",       en: "Parakaló",       gloss: "Please / you're welcome / 'how can I help?'" },
-  { gr: "Γεια μας",       en: "Yiá mas",        gloss: "Cheers — literally 'to our health'" },
-  { gr: "Στην υγειά σας", en: "Stin iyiá sas",  gloss: "To your health — the formal toast" },
+  { gr: "Γεια μας",       en: "Yiá mas",        gloss: "Cheers - literally 'to our health'" },
+  { gr: "Στην υγειά σας", en: "Stin iyiá sas",  gloss: "To your health - the formal toast" },
   { gr: "Ωραίο",          en: "Oréo",           gloss: "Beautiful · lovely · just right" },
-  { gr: "Νόστιμο",        en: "Nóstimo",        gloss: "Delicious — say it after the first bite" },
-  { gr: "Σιγά σιγά",      en: "Sigá sigá",      gloss: "Slowly, slowly — a way of life on the islands" },
+  { gr: "Νόστιμο",        en: "Nóstimo",        gloss: "Delicious - say it after the first bite" },
+  { gr: "Σιγά σιγά",      en: "Sigá sigá",      gloss: "Slowly, slowly - a way of life on the islands" },
   { gr: "Φιλότιμο",       en: "Filotimo · fee-LO-tee-mo", gloss: "Doing the right thing because of who you are" },
-  { gr: "Καλό ταξίδι",    en: "Kaló taxídi",    gloss: "Have a good journey — what we wish you" },
-  { gr: "Αντίο",          en: "Adío",           gloss: "Goodbye — and 'until again'" },
+  { gr: "Καλό ταξίδι",    en: "Kaló taxídi",    gloss: "Have a good journey - what we wish you" },
+  { gr: "Αντίο",          en: "Adío",           gloss: "Goodbye - and 'until again'" },
 ];
 
 function pickForToday() {

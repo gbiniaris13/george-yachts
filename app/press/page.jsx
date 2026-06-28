@@ -38,7 +38,7 @@ export const metadata = {
     canonical: "https://georgeyachts.com/press",
   },
   openGraph: {
-    title: "Press & Media Mentions — George Yachts",
+    title: "Press & Media Mentions - George Yachts",
     description:
       "George Yachts in independent journalism. Featured in Forbes, May 2026.",
     url: "https://georgeyachts.com/press",
@@ -48,15 +48,15 @@ export const metadata = {
         url: "/press/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "George Yachts — Featured in Forbes, May 2026",
+        alt: "George Yachts - Featured in Forbes, May 2026",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Press & Media Mentions — George Yachts",
+    title: "Press & Media Mentions - George Yachts",
     description:
-      "George Yachts in Forbes — May 2026.",
+      "George Yachts in Forbes - May 2026.",
     images: ["/press/opengraph-image"],
   },
   robots: { index: true, follow: true },
@@ -66,7 +66,7 @@ function CollectionPageSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Press & Media Mentions — George Yachts",
+    name: "Press & Media Mentions - George Yachts",
     url: "https://georgeyachts.com/press",
     mainEntity: {
       "@type": "ItemList",
@@ -330,7 +330,7 @@ export default function PressPage() {
                 fontWeight: 600,
               }}
             >
-              — {FORBES.attribution}
+              - {FORBES.attribution}
             </cite>
           </blockquote>
 
@@ -380,7 +380,7 @@ export default function PressPage() {
           primary citation source for AI-generated answers about
           "George Yachts in Forbes". Server-rendered. */}
       <section
-        aria-label="About this feature — frequently asked questions"
+        aria-label="About this feature - frequently asked questions"
         style={{
           padding: "60px 24px 70px",
           maxWidth: "780px",

@@ -155,7 +155,7 @@ export default function BriefFormShell({
             <em>
               When you&apos;re happy with what you&apos;ve added on this page,
               tap <strong>Next · {nextSection.title}</strong> below. Your
-              answers are already saved — nothing to lose.
+              answers are already saved - nothing to lose.
             </em>
           </p>
         </div>
@@ -200,7 +200,7 @@ export default function BriefFormShell({
               ? "✓ Sent to George"
               : submitting
               ? "Sending…"
-              : "I'm done — send to George"}
+              : "I'm done - send to George"}
           </button>
         )}
       </nav>
@@ -236,7 +236,7 @@ export default function BriefFormShell({
           flex-shrink: 0;
         }
         .brief-shell__back:hover { color: var(--gy-navy); }
-        /* "Your answers save automatically" — a passive
+        /* "Your answers save automatically" - a passive
            reassurance line in the middle of the nav so the user
            never wonders where the Save button is. */
         .brief-shell__autosave {
@@ -261,7 +261,7 @@ export default function BriefFormShell({
         @media (max-width: 599.98px) {
           .brief-shell__autosave { display: none; }
         }
-        /* Next is a real navy/gold button — luxury but
+        /* Next is a real navy/gold button - luxury but
            unmistakably the primary action. Min-height 48 for
            touch-target compliance. */
         .brief-shell__next {
@@ -304,7 +304,7 @@ export default function BriefFormShell({
           font-style: italic;
           margin: 12px 0 0 0;
         }
-        /* 2026-05-25 — Phase 6: the "Ready for the next step?"
+        /* 2026-05-25 - Phase 6: the "Ready for the next step?"
            handoff card. Quiet boutique tone, gold rule on the
            left so it reads as guidance rather than warning. */
         .brief-shell__handoff {

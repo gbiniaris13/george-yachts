@@ -34,7 +34,7 @@ const FEATURED_COMPARISONS = [
   {
     title: "Flagship Motor Yachts",
     slugs: ["la-pellegrina", "filotimo"],
-    description: "When a guest count of 10+ and full crew matter more than budget — head-to-head on space, range, and toys.",
+    description: "When a guest count of 10+ and full crew matter more than budget - head-to-head on space, range, and toys.",
   },
   {
     title: "Sailing Yacht vs Catamaran (Saronic Gulf)",
@@ -59,7 +59,7 @@ export async function generateMetadata({ searchParams }) {
     return pageMeta({
       title: "Compare Yachts for Charter in Greece",
       description:
-        "Side-by-side comparison of luxury yachts available for charter in Greek waters. Specs, weekly rates, regions, and capacity — built by working brokers at George Yachts.",
+        "Side-by-side comparison of luxury yachts available for charter in Greek waters. Specs, weekly rates, regions, and capacity - built by working brokers at George Yachts.",
       path: "/compare",
     });
   }
@@ -78,7 +78,7 @@ export async function generateMetadata({ searchParams }) {
   const names = yachts.map((y) => y.name).join(" vs ");
   const titleNames = names || "Yachts";
   return pageMeta({
-    title: `${titleNames} — Charter Comparison`,
+    title: `${titleNames} - Charter Comparison`,
     description: `Honest specs and weekly-rate comparison of ${titleNames} for crewed charter in Greek waters. Built by IYBA-member brokers at George Yachts.`,
     path: `/compare?yachts=${slugs.join(",")}`,
   });
@@ -89,7 +89,7 @@ function ComparisonSchema({ yachts, slugs }) {
   const itemList = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: `Yacht Charter Comparison — ${yachts.map((y) => y.name).join(" vs ")}`,
+    name: `Yacht Charter Comparison - ${yachts.map((y) => y.name).join(" vs ")}`,
     description: `Side-by-side specs comparison of ${yachts.length} luxury yachts available for charter in Greek waters.`,
     url: `https://georgeyachts.com/compare?yachts=${slugs.join(",")}`,
     numberOfItems: yachts.length,
@@ -260,7 +260,7 @@ export default async function ComparePage({ searchParams }) {
               }}
             >
               {yachtsByOrder.length > 0
-                ? `Honest specs comparison built by working IYBA brokers — no marketing copy, just the numbers and notes that matter for ${yachtsByOrder.length === 2 ? "either" : "any"} charter in Greek waters.`
+                ? `Honest specs comparison built by working IYBA brokers - no marketing copy, just the numbers and notes that matter for ${yachtsByOrder.length === 2 ? "either" : "any"} charter in Greek waters.`
                 : "Compare any 2-4 yachts in our curated fleet on weekly rate, capacity, region, builder, and toys. Start with one of the broker-curated comparisons below or build your own."}
             </p>
           </header>
@@ -278,7 +278,7 @@ export default async function ComparePage({ searchParams }) {
                       {y.imageUrl ? (
                         <Image
                           src={y.imageUrl}
-                          alt={`${y.name} — luxury yacht charter Greek waters`}
+                          alt={`${y.name} - luxury yacht charter Greek waters`}
                           fill
                           sizes="(max-width: 768px) 50vw, 25vw"
                           className="object-cover group-hover:scale-105 transition"
@@ -310,7 +310,7 @@ export default async function ComparePage({ searchParams }) {
                             key={y._id}
                             className="p-4 text-white/90 align-top text-sm"
                           >
-                            {y[row.key] || <span className="text-white/30">—</span>}
+                            {y[row.key] || <span className="text-white/30">-</span>}
                           </td>
                         ))}
                       </tr>
@@ -344,7 +344,7 @@ export default async function ComparePage({ searchParams }) {
                     boxShadow: "0 14px 35px -10px rgba(201,168,76,0.5), inset 0 1px 0 rgba(248, 245, 240,0.3)",
                   }}
                 >
-                  Brief George — reply within 24h →
+                  Brief George - reply within 24h →
                 </Link>
                 <a
                   href="https://calendly.com/george-georgeyachts/30min"

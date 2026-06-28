@@ -7,18 +7,18 @@ const GOLD = '#C9A84C';
 
 const MONTHS = [
   { month: 'April', temp: 19, sea: 17, wind: 'Light', meltemi: false, crowds: 'Low', pricing: 'Low Season', rating: 3, desc: 'Spring awakening. Wildflowers cover the islands. Cool evenings, warm days. Perfect for hiking and exploring without crowds. Some restaurants still opening.' },
-  { month: 'May', temp: 24, sea: 19, wind: 'Light–Moderate', meltemi: false, crowds: 'Low–Medium', pricing: 'Low Season', rating: 4, desc: 'The sweet spot for many. Warm enough to swim, empty enough to feel exclusive. Locals consider this the most beautiful month. Best rates of the warm season.' },
-  { month: 'June', temp: 28, sea: 22, wind: 'Moderate', meltemi: false, crowds: 'Medium', pricing: 'Mid Season', rating: 5, desc: 'Early summer perfection. Long golden days, warm sea, everything open. No Meltemi yet. This is when experienced charterers book — before the peak rush.' },
-  { month: 'July', temp: 32, sea: 25, wind: 'Strong', meltemi: true, crowds: 'High', pricing: 'High Season', rating: 4, desc: 'Peak summer. The Meltemi arrives — strong northerly winds in the Cyclades (15–25 knots). Exciting sailing but challenging for newcomers. Ionian stays calmer. Busy everywhere.' },
-  { month: 'August', temp: 33, sea: 26, wind: 'Strong', meltemi: true, crowds: 'Very High', pricing: 'Peak Season', rating: 3, desc: 'The busiest month. Meltemi at its strongest. Marinas crowded, restaurants full, premium pricing. But the energy is unmatched — if you thrive on buzz, this is your month.' },
+  { month: 'May', temp: 24, sea: 19, wind: 'Light-Moderate', meltemi: false, crowds: 'Low-Medium', pricing: 'Low Season', rating: 4, desc: 'The sweet spot for many. Warm enough to swim, empty enough to feel exclusive. Locals consider this the most beautiful month. Best rates of the warm season.' },
+  { month: 'June', temp: 28, sea: 22, wind: 'Moderate', meltemi: false, crowds: 'Medium', pricing: 'Mid Season', rating: 5, desc: 'Early summer perfection. Long golden days, warm sea, everything open. No Meltemi yet. This is when experienced charterers book - before the peak rush.' },
+  { month: 'July', temp: 32, sea: 25, wind: 'Strong', meltemi: true, crowds: 'High', pricing: 'High Season', rating: 4, desc: 'Peak summer. The Meltemi arrives - strong northerly winds in the Cyclades (15-25 knots). Exciting sailing but challenging for newcomers. Ionian stays calmer. Busy everywhere.' },
+  { month: 'August', temp: 33, sea: 26, wind: 'Strong', meltemi: true, crowds: 'Very High', pricing: 'Peak Season', rating: 3, desc: 'The busiest month. Meltemi at its strongest. Marinas crowded, restaurants full, premium pricing. But the energy is unmatched - if you thrive on buzz, this is your month.' },
   { month: 'September', temp: 28, sea: 24, wind: 'Moderate', meltemi: false, crowds: 'Medium', pricing: 'Mid Season', rating: 5, desc: 'The insider\'s choice. Meltemi fades, sea is at its warmest, crowds thin out, prices drop. Many brokers consider this the single best month for Greek charter.' },
-  { month: 'October', temp: 23, sea: 22, wind: 'Light–Moderate', meltemi: false, crowds: 'Low', pricing: 'Low Season', rating: 4, desc: 'Indian summer. Still warm enough for swimming. Harvest season — wine, olives, figs. The light turns golden. Some establishments begin closing late month.' },
+  { month: 'October', temp: 23, sea: 22, wind: 'Light-Moderate', meltemi: false, crowds: 'Low', pricing: 'Low Season', rating: 4, desc: 'Indian summer. Still warm enough for swimming. Harvest season - wine, olives, figs. The light turns golden. Some establishments begin closing late month.' },
 ];
 
 const REGIONS = [
-  { name: 'Cyclades', wind: 'Strong Meltemi Jul–Aug (15–30 kn)', best: 'Jun, Sep', note: 'The Meltemi makes July–August challenging for sailing beginners. Experienced sailors love it. Sheltered bays exist but require local knowledge.', icon: '🏛️' },
-  { name: 'Ionian', wind: 'Gentle (5–15 kn year-round)', best: 'May–Oct', note: 'The calmest sailing ground in Greece. Protected waters, gentle thermal winds. Perfect for first-time charterers and families with children.', icon: '🌿' },
-  { name: 'Saronic', wind: 'Light–Moderate (5–15 kn)', best: 'May–Oct', note: 'Close to Athens, sheltered by the Peloponnese. Short passages between islands. Ideal for weekend charters and short trips.', icon: '⚓' },
+  { name: 'Cyclades', wind: 'Strong Meltemi Jul-Aug (15-30 kn)', best: 'Jun, Sep', note: 'The Meltemi makes July-August challenging for sailing beginners. Experienced sailors love it. Sheltered bays exist but require local knowledge.', icon: '🏛️' },
+  { name: 'Ionian', wind: 'Gentle (5-15 kn year-round)', best: 'May-Oct', note: 'The calmest sailing ground in Greece. Protected waters, gentle thermal winds. Perfect for first-time charterers and families with children.', icon: '🌿' },
+  { name: 'Saronic', wind: 'Light-Moderate (5-15 kn)', best: 'May-Oct', note: 'Close to Athens, sheltered by the Peloponnese. Short passages between islands. Ideal for weekend charters and short trips.', icon: '⚓' },
 ];
 
 export default function WeatherClient() {
@@ -35,7 +35,7 @@ export default function WeatherClient() {
           When to Charter in Greece
         </h1>
         <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.4)', maxWidth: 500, margin: '0 auto', lineHeight: 1.8 }}>
-          Wind, weather, crowds, and pricing — month by month. Know exactly when to go.
+          Wind, weather, crowds, and pricing - month by month. Know exactly when to go.
         </p>
       </div>
 
@@ -131,10 +131,10 @@ export default function WeatherClient() {
         <div style={{ background: 'rgba(201,168,76,0.05)', borderLeft: `3px solid ${GOLD}`, borderRadius: '0 12px 12px 0', padding: 24 }}>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: GOLD, marginBottom: 8 }}>George's Tip</p>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.6)', lineHeight: 1.8, margin: '0 0 8px', fontStyle: 'italic' }}>
-            "If I had to choose one month to charter in Greece, it would be June or September. June gives you long days and warm seas before the Meltemi arrives. September gives you the warmest water of the year after the crowds have gone. Both offer mid-season pricing — significantly less than July and August."
+            "If I had to choose one month to charter in Greece, it would be June or September. June gives you long days and warm seas before the Meltemi arrives. September gives you the warmest water of the year after the crowds have gone. Both offer mid-season pricing - significantly less than July and August."
           </p>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, color: `${GOLD}80`, margin: 0 }}>
-            — George P. Biniaris, Managing Broker
+            - George P. Biniaris, Managing Broker
           </p>
         </div>
       </div>

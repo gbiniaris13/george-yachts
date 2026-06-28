@@ -10,7 +10,7 @@ import ContactFormSection from "@/components/ContactFormSection";
 const georgeParagraphs = [
   "Managing Broker of George Yachts and member of the International Yacht Brokers Association (IYBA), George specializes in high-end motor yacht charters across the Mediterranean.",
   "With an extensive background in luxury hospitality, leadership, and client relations, he approaches every charter with discretion, precision, and a deep understanding of UHNWI expectations.",
-  "Strategically focused on the East Med—including the Ionian, Cyclades, and Saronic islands—George is trusted by international families and private brokers from the U.S., U.K., and Middle East. He bridges local expertise with international operational standards to deliver seamless maritime experiences.",
+  "Strategically focused on the East Med-including the Ionian, Cyclades, and Saronic islands-George is trusted by international families and private brokers from the U.S., U.K., and Middle East. He bridges local expertise with international operational standards to deliver seamless maritime experiences.",
   "“Smooth seas & sharp suits.”",
 ];
 

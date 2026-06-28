@@ -99,7 +99,7 @@ export default function VesselTeaser({ cabin, photos: resolvedPhotos }) {
         A first look at the boat carrying you.
       </h3>
       <p className="cabin-vessel-teaser__lede">
-        The full tour — every cabin, every deck, every quiet detail — lives a
+        The full tour - every cabin, every deck, every quiet detail - lives a
         click away. For now, a few quick lines.
       </p>
 
@@ -124,7 +124,7 @@ export default function VesselTeaser({ cabin, photos: resolvedPhotos }) {
             <img
               key={p.url + i}
               src={p.url}
-              alt={p.caption || `${cabin.vessel_name || "Your yacht"} — photo ${i + 2}`}
+              alt={p.caption || `${cabin.vessel_name || "Your yacht"} - photo ${i + 2}`}
               className="cabin-vessel-teaser__photo"
               loading="lazy"
               decoding="async"
@@ -215,7 +215,7 @@ export default function VesselTeaser({ cabin, photos: resolvedPhotos }) {
           display: grid;
           /* Three square-ish tiles, side by side on desktop, stacked
              pair-and-tall on mobile. We use aspect-ratio so the
-             images never stretch — object-fit: cover crops to fill. */
+             images never stretch - object-fit: cover crops to fill. */
           grid-template-columns: repeat(3, 1fr);
           gap: 10px;
         }

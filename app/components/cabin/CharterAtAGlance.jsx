@@ -11,7 +11,7 @@
 import ForceDarkLabel from "./ForceDarkLabel";
 
 function dateLine(iso) {
-  if (!iso) return "—";
+  if (!iso) return "-";
   const d = new Date(iso + "T00:00:00Z");
   return d.toLocaleDateString("en-GB", {
     day: "numeric",
@@ -41,7 +41,7 @@ export default function CharterAtAGlance({ summary }) {
       //    semantic clash with the section header.
       group: "Vessel",
       items: [
-        ["Name", `${vessel.name || "—"}${vessel.make_model ? " · " + vessel.make_model : ""}`],
+        ["Name", `${vessel.name || "-"}${vessel.make_model ? " · " + vessel.make_model : ""}`],
         ["Length", vessel.length],
         ["Homeport", vessel.homeport],
       ],
@@ -97,7 +97,7 @@ export default function CharterAtAGlance({ summary }) {
               {g.items.map(([k, v]) => (
                 <div key={k} className="cabin-at-a-glance__row">
                   <ForceDarkLabel as="dt">{k}</ForceDarkLabel>
-                  <dd>{v || <span className="muted">—</span>}</dd>
+                  <dd>{v || <span className="muted">-</span>}</dd>
                 </div>
               ))}
             </dl>
@@ -108,7 +108,7 @@ export default function CharterAtAGlance({ summary }) {
           <a href="mailto:george@georgeyachts.com?subject=Cabin%20correction">
             Tell George
           </a>{" "}
-          — we will fix it before you do anything else.
+          - we will fix it before you do anything else.
         </p>
         {/* 2026-05-20 — Pass 4 (Tyler): "A real .ics download
             anywhere." Single quiet link beneath the glance card. */}
@@ -120,7 +120,7 @@ export default function CharterAtAGlance({ summary }) {
       </div>
 
       <style>{`
-        /* 2026-05-23 — Graphic-designer pass after George flagged the
+        /* 2026-05-23 - Graphic-designer pass after George flagged the
            previous layout as "πρόχειρο, δεν μ' αρέσει εκεί που κάθονται
            τα γράμματα". Reworked into a boutique catalogue page:
              • Cream/ivory inner with hairline gold border
@@ -246,7 +246,7 @@ export default function CharterAtAGlance({ summary }) {
           color: rgba(13, 27, 42, 0.32);
           font-style: italic;
         }
-        /* Vessel name (first row of VESSEL group) — display headline. */
+        /* Vessel name (first row of VESSEL group) - display headline. */
         .cabin-at-a-glance__group:first-of-type .cabin-at-a-glance__row:first-of-type dd {
           font-family: var(--gy-font-display), "Fraunces", Georgia, serif;
           font-size: 22px;
@@ -304,14 +304,14 @@ export default function CharterAtAGlance({ summary }) {
         .cabin-at-a-glance__ics a:hover {
           background-size: 100% 2px;
         }
-        /* 2026-05-23 — Eleanna iPhone 15 Pro Max test caught a
+        /* 2026-05-23 - Eleanna iPhone 15 Pro Max test caught a
            critical mobile-layout bug: at 430px width, the 110px
            right-aligned label column ("DISEMBARKATION", "CALLS
            (ATHENS)", "WHATSAPP (US)") + the value column ("Athens,
            Greece", "+30 6970 380 999", "+1 786 798 8798") were
            cramming side-by-side and overflowing the cabin frame.
            Customer saw text spilling off the right edge of the page.
-           Stack vertically at <620px — the labels go above the
+           Stack vertically at <620px - the labels go above the
            values, full width each, no overflow possible. */
         @media (max-width: 620px) {
           .cabin-at-a-glance__card {

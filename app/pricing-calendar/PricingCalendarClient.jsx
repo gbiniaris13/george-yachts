@@ -8,40 +8,40 @@ const GOLD = '#C9A84C';
 // 1=low, 2=mid-low, 3=mid, 4=mid-high, 5=peak
 const WEEKS_2026 = [
   // April
-  { week: 'Apr 4–10', tier: 1, label: 'Low', month: 'April' },
-  { week: 'Apr 11–17', tier: 1, label: 'Low', month: 'April' },
-  { week: 'Apr 18–24', tier: 1, label: 'Low', month: 'April' },
-  { week: 'Apr 25–May 1', tier: 1, label: 'Low', month: 'April' },
+  { week: 'Apr 4-10', tier: 1, label: 'Low', month: 'April' },
+  { week: 'Apr 11-17', tier: 1, label: 'Low', month: 'April' },
+  { week: 'Apr 18-24', tier: 1, label: 'Low', month: 'April' },
+  { week: 'Apr 25-May 1', tier: 1, label: 'Low', month: 'April' },
   // May
-  { week: 'May 2–8', tier: 1, label: 'Low', month: 'May' },
-  { week: 'May 9–15', tier: 2, label: 'Value', month: 'May' },
-  { week: 'May 16–22', tier: 2, label: 'Value', month: 'May' },
-  { week: 'May 23–29', tier: 2, label: 'Value', month: 'May' },
+  { week: 'May 2-8', tier: 1, label: 'Low', month: 'May' },
+  { week: 'May 9-15', tier: 2, label: 'Value', month: 'May' },
+  { week: 'May 16-22', tier: 2, label: 'Value', month: 'May' },
+  { week: 'May 23-29', tier: 2, label: 'Value', month: 'May' },
   // June
-  { week: 'Jun 6–12', tier: 3, label: 'Mid', month: 'June' },
-  { week: 'Jun 13–19', tier: 3, label: 'Mid', month: 'June' },
-  { week: 'Jun 20–26', tier: 3, label: 'Mid', month: 'June' },
-  { week: 'Jun 27–Jul 3', tier: 4, label: 'High', month: 'June' },
+  { week: 'Jun 6-12', tier: 3, label: 'Mid', month: 'June' },
+  { week: 'Jun 13-19', tier: 3, label: 'Mid', month: 'June' },
+  { week: 'Jun 20-26', tier: 3, label: 'Mid', month: 'June' },
+  { week: 'Jun 27-Jul 3', tier: 4, label: 'High', month: 'June' },
   // July
-  { week: 'Jul 4–10', tier: 4, label: 'High', month: 'July' },
-  { week: 'Jul 11–17', tier: 5, label: 'Peak', month: 'July' },
-  { week: 'Jul 18–24', tier: 5, label: 'Peak', month: 'July' },
-  { week: 'Jul 25–31', tier: 5, label: 'Peak', month: 'July' },
+  { week: 'Jul 4-10', tier: 4, label: 'High', month: 'July' },
+  { week: 'Jul 11-17', tier: 5, label: 'Peak', month: 'July' },
+  { week: 'Jul 18-24', tier: 5, label: 'Peak', month: 'July' },
+  { week: 'Jul 25-31', tier: 5, label: 'Peak', month: 'July' },
   // August
-  { week: 'Aug 1–7', tier: 5, label: 'Peak', month: 'August' },
-  { week: 'Aug 8–14', tier: 5, label: 'Peak', month: 'August' },
-  { week: 'Aug 15–21', tier: 5, label: 'Peak', month: 'August' },
-  { week: 'Aug 22–28', tier: 4, label: 'High', month: 'August' },
+  { week: 'Aug 1-7', tier: 5, label: 'Peak', month: 'August' },
+  { week: 'Aug 8-14', tier: 5, label: 'Peak', month: 'August' },
+  { week: 'Aug 15-21', tier: 5, label: 'Peak', month: 'August' },
+  { week: 'Aug 22-28', tier: 4, label: 'High', month: 'August' },
   // September
-  { week: 'Sep 5–11', tier: 3, label: 'Mid', month: 'September' },
-  { week: 'Sep 12–18', tier: 3, label: 'Mid', month: 'September' },
-  { week: 'Sep 19–25', tier: 2, label: 'Value', month: 'September' },
-  { week: 'Sep 26–Oct 2', tier: 2, label: 'Value', month: 'September' },
+  { week: 'Sep 5-11', tier: 3, label: 'Mid', month: 'September' },
+  { week: 'Sep 12-18', tier: 3, label: 'Mid', month: 'September' },
+  { week: 'Sep 19-25', tier: 2, label: 'Value', month: 'September' },
+  { week: 'Sep 26-Oct 2', tier: 2, label: 'Value', month: 'September' },
   // October
-  { week: 'Oct 3–9', tier: 1, label: 'Low', month: 'October' },
-  { week: 'Oct 10–16', tier: 1, label: 'Low', month: 'October' },
-  { week: 'Oct 17–23', tier: 1, label: 'Low', month: 'October' },
-  { week: 'Oct 24–30', tier: 1, label: 'Low', month: 'October' },
+  { week: 'Oct 3-9', tier: 1, label: 'Low', month: 'October' },
+  { week: 'Oct 10-16', tier: 1, label: 'Low', month: 'October' },
+  { week: 'Oct 17-23', tier: 1, label: 'Low', month: 'October' },
+  { week: 'Oct 24-30', tier: 1, label: 'Low', month: 'October' },
 ];
 
 const TIER_COLORS = {
@@ -137,10 +137,10 @@ export default function PricingCalendarClient() {
         <div style={{ marginTop: 40, borderLeft: `3px solid ${GOLD}`, paddingLeft: 24, paddingTop: 8, paddingBottom: 8 }}>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: GOLD, marginBottom: 8 }}>George's Tip</p>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.5)', lineHeight: 1.8, margin: '0 0 4px', fontStyle: 'italic' }}>
-            "The sweet spots are late May, early June, and September. You get perfect weather, warm sea, empty islands — and save 30-50% compared to July and August. If your dates are flexible, these weeks deliver the best experience at the best price."
+            "The sweet spots are late May, early June, and September. You get perfect weather, warm sea, empty islands - and save 30-50% compared to July and August. If your dates are flexible, these weeks deliver the best experience at the best price."
           </p>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, color: `${GOLD}60`, margin: 0 }}>
-            — George P. Biniaris, Managing Broker
+            - George P. Biniaris, Managing Broker
           </p>
         </div>
       </div>

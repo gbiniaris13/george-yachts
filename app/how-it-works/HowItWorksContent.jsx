@@ -100,7 +100,7 @@ export default function HowItWorksContent() {
     {
       number: 1,
       title: t('hiw.s1Title', 'Share Your Vision'),
-      description: t('hiw.s1Desc', 'Tell us what matters to you — dates, group size, budget, preferred islands, pace, interests. A 15-minute call or a simple form is all it takes. No commitment, no pressure.'),
+      description: t('hiw.s1Desc', 'Tell us what matters to you - dates, group size, budget, preferred islands, pace, interests. A 15-minute call or a simple form is all it takes. No commitment, no pressure.'),
       detail: t('hiw.s1Detail', "George personally handles every inquiry. You'll never speak to a call centre."),
       icon: (
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
@@ -111,7 +111,7 @@ export default function HowItWorksContent() {
     {
       number: 2,
       title: t('hiw.s2Title', 'Receive Your Proposal'),
-      description: t('hiw.s2Desc', "Within 24–48 hours, you'll receive a curated shortlist of 3–5 yachts — each personally vetted, with photos, crew profiles, pricing breakdown, and George's honest assessment of each option."),
+      description: t('hiw.s2Desc', "Within 24-48 hours, you'll receive a curated shortlist of 3-5 yachts - each personally vetted, with photos, crew profiles, pricing breakdown, and George's honest assessment of each option."),
       detail: t('hiw.s2Detail', 'We include APA and VAT estimates upfront. No surprises after you commit.'),
       icon: (
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
@@ -125,7 +125,7 @@ export default function HowItWorksContent() {
     {
       number: 3,
       title: t('hiw.s3Title', 'Secure Your Yacht'),
-      description: t('hiw.s3Desc', "Once you've chosen, we handle the MYBA charter contract — the industry standard used worldwide. Clear terms, transparent pricing, professional protection for both parties."),
+      description: t('hiw.s3Desc', "Once you've chosen, we handle the MYBA charter contract - the industry standard used worldwide. Clear terms, transparent pricing, professional protection for both parties."),
       detail: t('hiw.s3Detail', 'A 50% deposit secures your dates. Balance due 4 weeks before embarkation.'),
       icon: (
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
@@ -150,7 +150,7 @@ export default function HowItWorksContent() {
     {
       number: 5,
       title: t('hiw.s5Title', 'Your Week Begins'),
-      description: t('hiw.s5Desc', "Step aboard, meet your crew, and forget everything else. Your captain knows the route. Your chef knows your preferences. Your broker is a phone call away if you need anything — but you won't."),
+      description: t('hiw.s5Desc', "Step aboard, meet your crew, and forget everything else. Your captain knows the route. Your chef knows your preferences. Your broker is a phone call away if you need anything - but you won't."),
       detail: t('hiw.s5Detail', 'This is what you came for. The rest is handled.'),
       icon: (
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">

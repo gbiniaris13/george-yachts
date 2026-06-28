@@ -170,7 +170,7 @@ export default function Lightbox({ images, yachtName }) {
               tabIndex={i === currentIdx ? 0 : -1}
               aria-label={
                 i === currentIdx
-                  ? `Photo ${i + 1} of ${count} — click to enlarge`
+                  ? `Photo ${i + 1} of ${count} - click to enlarge`
                   : undefined
               }
               onClick={() => {

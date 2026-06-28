@@ -93,7 +93,7 @@ export default function NotFound() {
           }}
         >
           Perhaps the link weathered. Perhaps a section retired. Either
-          way — we know the waters from here. Pick a heading.
+          way - we know the waters from here. Pick a heading.
         </p>
       </div>
 

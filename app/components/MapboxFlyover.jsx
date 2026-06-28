@@ -349,7 +349,7 @@ export default function MapboxFlyover() {
                   fontSize: "clamp(18px, 2vw, 24px)",
                 }}
               >
-                Five regions, hundreds of anchorages — every charter
+                Five regions, hundreds of anchorages - every charter
                 shaped around the waters that suit you best.
               </p>
               <div
@@ -440,7 +440,7 @@ export default function MapboxFlyover() {
             maxWidth: "62ch",
           }}
         >
-          Click any island for the yachts that work that itinerary best —
+          Click any island for the yachts that work that itinerary best -
           or message George directly to brief a custom route.
         </p>
         <div style={{ display: "flex", gap: 28, flexWrap: "wrap" }}>

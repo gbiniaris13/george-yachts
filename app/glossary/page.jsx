@@ -25,7 +25,7 @@ export const revalidate = 86400;
 export const metadata = {
   title: "Yacht Charter Glossary: 30 UHNW Terms Explained",
   description:
-    "From APA to flybridge — every yacht charter term a luxury buyer needs to know, defined by George P. Biniaris. The definitive 2026 UHNW yacht charter glossary.",
+    "From APA to flybridge - every yacht charter term a luxury buyer needs to know, defined by George P. Biniaris. The definitive 2026 UHNW yacht charter glossary.",
   alternates: { canonical: "https://georgeyachts.com/glossary" },
   openGraph: {
     title: "Yacht Charter Glossary: 30 UHNW Terms Explained",
@@ -134,7 +134,7 @@ export default function GlossaryIndexPage() {
                 lineHeight: 1.5,
               }}
             >
-              Every term a UHNW yacht buyer needs to know — defined precisely, with real 2026 Greek-market numbers. Curated by George P. Biniaris.
+              Every term a UHNW yacht buyer needs to know - defined precisely, with real 2026 Greek-market numbers. Curated by George P. Biniaris.
             </p>
           </div>
         </header>
@@ -197,7 +197,7 @@ export default function GlossaryIndexPage() {
                 margin: "0 0 18px",
               }}
             >
-              Yacht chartering has its own vocabulary — and at the price point George Yachts brokers operate in, a single misunderstood term can cost €30,000. APA is not a deposit. Gratuity is not in the charter fee. The 12-passenger rule has no exceptions. Most first-time charter buyers learn these distinctions the hard way.
+              Yacht chartering has its own vocabulary - and at the price point George Yachts brokers operate in, a single misunderstood term can cost €30,000. APA is not a deposit. Gratuity is not in the charter fee. The 12-passenger rule has no exceptions. Most first-time charter buyers learn these distinctions the hard way.
             </p>
             <p
               style={{

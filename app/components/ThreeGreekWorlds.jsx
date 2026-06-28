@@ -65,7 +65,7 @@ export default function ThreeGreekWorlds() {
   return (
     <section
       className="gy-three-worlds relative w-full"
-      aria-label="Three Greek Worlds — Cyclades, Ionian, Saronic"
+      aria-label="Three Greek Worlds - Cyclades, Ionian, Saronic"
       style={{ background: "#0D1B2A", padding: "96px 0 80px" }}
     >
       {/* Section header */}
@@ -85,7 +85,7 @@ export default function ThreeGreekWorlds() {
 
       {/* Footnote */}
       <p className="gy-three-worlds__footnote">
-        Specialising exclusively in the Cyclades, Ionian, and Saronic Gulf —
+        Specialising exclusively in the Cyclades, Ionian, and Saronic Gulf -
         with bespoke arrangements available throughout the broader
         Mediterranean, including Italy, Turkey, and beyond.{" "}
         <Link href="/inquiry" className="gy-three-worlds__footnote-link">
@@ -143,7 +143,7 @@ export default function ThreeGreekWorlds() {
           color: #F8F5F0;
         }
         @media (max-width: 1024px) { .gy-world-card { height: 380px; } }
-        /* Mobile (≤ 600 px) — Boss spec: 260 px height. CTA stays
+        /* Mobile (≤ 600 px) - Boss spec: 260 px height. CTA stays
            always visible (not hover-gated) and the whole card is
            wrapped in <Link> so any tap navigates. */
         @media (max-width: 600px)  { .gy-world-card { height: 260px; } }

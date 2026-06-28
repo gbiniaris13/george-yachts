@@ -122,7 +122,7 @@ export default function GreekWatersMap() {
     <section
       className="relative w-full overflow-hidden"
       style={{ background: "#0D1B2A" }}
-      aria-label="Greek waters — four cruising regions"
+      aria-label="Greek waters - four cruising regions"
     >
       {/* Soft radial wash — reads as moonlight on water */}
       <div

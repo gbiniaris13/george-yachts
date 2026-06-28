@@ -6,7 +6,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: "Cookie Policy",
   description:
-    "How georgeyachts.com uses cookies and similar technologies, and how to control them — analytics and session tools load only with your consent.",
+    "How georgeyachts.com uses cookies and similar technologies, and how to control them - analytics and session tools load only with your consent.",
   path: "/cookie-policy",
 });
 
@@ -73,35 +73,35 @@ const CookiePolicy = () => {
           </p>
           <ul className="list-disc pl-5 space-y-2 mt-4" style={{ color: "rgba(248, 245, 240,0.5)" }}>
             <li>Non-essential cookies are not set before you consent.</li>
-            <li>You can accept or reject with equal ease and equal prominence — no pre-ticked boxes, and continued browsing is not treated as consent.</li>
+            <li>You can accept or reject with equal ease and equal prominence - no pre-ticked boxes, and continued browsing is not treated as consent.</li>
             <li>You can change or withdraw your choice at any time via the "Cookie settings" link in the footer.</li>
             <li>There is no "cookie wall": you can use the Site even if you reject non-essential cookies.</li>
           </ul>
         </Section>
 
-        <Section number={3} title="Strictly necessary — no consent required">
+        <Section number={3} title="Strictly necessary - no consent required">
           <ul className="list-disc pl-5 space-y-2 mt-2" style={{ color: "rgba(248, 245, 240,0.5)" }}>
-            <li><strong className="text-white">Cloudflare</strong> — network security, bot mitigation, and reliable delivery of the Site.</li>
-            <li><strong className="text-white">Session and consent storage</strong> — remembers your cookie choices and keeps the Site working.</li>
-            <li><strong className="text-white">Google reCAPTCHA</strong> — protects our forms from spam and abuse; loaded for security on a legitimate-interest basis.</li>
+            <li><strong className="text-white">Cloudflare</strong> - network security, bot mitigation, and reliable delivery of the Site.</li>
+            <li><strong className="text-white">Session and consent storage</strong> - remembers your cookie choices and keeps the Site working.</li>
+            <li><strong className="text-white">Google reCAPTCHA</strong> - protects our forms from spam and abuse; loaded for security on a legitimate-interest basis.</li>
           </ul>
         </Section>
 
-        <Section number={4} title="Functional — loaded on request">
+        <Section number={4} title="Functional - loaded on request">
           <ul className="list-disc pl-5 space-y-2 mt-2" style={{ color: "rgba(248, 245, 240,0.5)" }}>
-            <li><strong className="text-white">Calendly</strong> — loaded only when you open the scheduling tool to book a consultation.</li>
+            <li><strong className="text-white">Calendly</strong> - loaded only when you open the scheduling tool to book a consultation.</li>
           </ul>
         </Section>
 
-        <Section number={5} title="Analytics & session analysis — consent required">
+        <Section number={5} title="Analytics & session analysis - consent required">
           <ul className="list-disc pl-5 space-y-2 mt-2" style={{ color: "rgba(248, 245, 240,0.5)" }}>
             <li>
-              <strong className="text-white">Google Analytics 4</strong> —
+              <strong className="text-white">Google Analytics 4</strong> -
               aggregate website analytics (pages, sources, performance). Loaded
               only after you consent.
             </li>
             <li>
-              <strong className="text-white">Microsoft Clarity</strong> —
+              <strong className="text-white">Microsoft Clarity</strong> -
               heatmaps and session analysis. This is the most privacy-sensitive
               tool we use; we load it only after you consent, and we disclose it
               here for full transparency.

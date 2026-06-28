@@ -17,7 +17,7 @@ import { useEffect, useRef, useState } from "react";
 const QUICK_REPLIES = [
   "Recommend a yacht for a family of 8",
   "How much does a Cyclades charter cost?",
-  "When should I go — August or September?",
+  "When should I go - August or September?",
 ];
 
 function gtagEvent(name, payload) {
@@ -107,7 +107,7 @@ export default function AskGeorgeWidget() {
         const last = copy[copy.length - 1];
         if (last && last.role === "assistant" && !last.content) {
           last.content =
-            "I had trouble reaching the model. Please write to George at /inquiry — he'll respond personally, usually within the day.";
+            "I had trouble reaching the model. Please write to George at /inquiry - he'll respond personally, usually within the day.";
         }
         return copy;
       });
@@ -288,7 +288,7 @@ export default function AskGeorgeWidget() {
                 }}
               >
                 <p style={{ margin: "0 0 14px" }}>
-                  Hi — I&apos;m an AI concierge trained on the George Yachts fleet, regions, and itineraries. Ask me anything about chartering in Greek waters, and I&apos;ll point you toward yachts that actually fit.
+                  Hi - I&apos;m an AI concierge trained on the George Yachts fleet, regions, and itineraries. Ask me anything about chartering in Greek waters, and I&apos;ll point you toward yachts that actually fit.
                 </p>
                 <p
                   style={{

@@ -4,7 +4,7 @@ import ObfuscatedEmail from "@/app/components/ObfuscatedEmail";
 export const metadata = {
   title: "Privacy Policy",
   description:
-    "Privacy Policy for George Yachts Brokerage House LLC — data handling, GDPR / CCPA compliance, and third-party platform integrations.",
+    "Privacy Policy for George Yachts Brokerage House LLC - data handling, GDPR / CCPA compliance, and third-party platform integrations.",
   alternates: {
     canonical: "https://georgeyachts.com/privacy",
   },
@@ -74,7 +74,7 @@ const PrivacyPolicy = () => {
             <strong className="text-white">Information you give us.</strong>{" "}
             When you submit an enquiry, subscribe to our newsletter, book a
             consultation, or correspond with our team, we collect the
-            information you choose to provide — typically name, email,
+            information you choose to provide - typically name, email,
             phone number, country, charter preferences, and any context you
             include in your message.
           </p>
@@ -137,7 +137,7 @@ const PrivacyPolicy = () => {
             </li>
             <li>
               <strong className="text-white">Consent.</strong> For marketing
-              communications and non-essential cookies — withdrawable at
+              communications and non-essential cookies - withdrawable at
               any time.
             </li>
             <li>
@@ -210,7 +210,7 @@ const PrivacyPolicy = () => {
 
         <Section number={10} title="X. SECURITY">
           <p>
-            We maintain reasonable technical and organisational measures —
+            We maintain reasonable technical and organisational measures -
             HTTPS everywhere, encryption at rest for sensitive tokens,
             least-privilege access controls, audit logging, and regular
             review of our processors. No system is perfectly secure; if a
@@ -241,7 +241,7 @@ const PrivacyPolicy = () => {
             </a>
           </p>
           <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", marginTop: "32px" }}>
-            Last updated: 22 April 2026 (v2 — legal review)
+            Last updated: 22 April 2026 (v2 - legal review)
           </p>
         </Section>
       </div>

@@ -24,7 +24,7 @@ export default function GhostCredit() {
       >
         This private cabin platform was designed and built by{" "}
         <strong className="cabin-ghost-credit__mark">GHOST_</strong>
-        {" "}—{" "}
+        {" "}-{" "}
         <em className="cabin-ghost-credit__tagline">
           premium digital agency for the discerning few
         </em>

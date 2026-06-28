@@ -163,7 +163,7 @@ export default function CalendarHeatMapPage() {
               <p>
                 <strong style={{ color: "#F8F5F0" }}>The Ionian rarely drops below 4</strong>{" "}
                 because it doesn't have a Meltemi. The thermal wind is a daily
-                15-18 knots from June through September — the conditions never
+                15-18 knots from June through September - the conditions never
                 break the routine. This is why the Ionian is the most-loved
                 family-charter region in Greece.
               </p>

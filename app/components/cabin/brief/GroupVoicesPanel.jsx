@@ -135,7 +135,7 @@ export default function GroupVoicesPanel({ sectionKey }) {
         </span>
       </header>
       <p className="gvp__intro">
-        Every voice keeps its own picks — yours go below. The hostess
+        Every voice keeps its own picks - yours go below. The hostess
         sees them all together when the brief is sent. You don&apos;t
         need to match anyone; just share what feels right for you.
       </p>
@@ -153,13 +153,13 @@ export default function GroupVoicesPanel({ sectionKey }) {
               )}
               {v.highlights?.length > 0 && (
                 <span className="gvp__glance">
-                  {" — "}
+                  {" - "}
                   {v.highlights.slice(0, 2).join(" · ")}
                 </span>
               )}
               {(!v.highlights || v.highlights.length === 0) && (
                 <span className="gvp__glance gvp__glance--empty">
-                  {" — opened but hasn't picked anything yet"}
+                  {" - opened but hasn't picked anything yet"}
                 </span>
               )}
             </summary>
@@ -219,7 +219,7 @@ const styles = `
     align-items: center;
     gap: 10px;
   }
-  /* Refresh button — same family as the count, but the icon
+  /* Refresh button - same family as the count, but the icon
      gives it a tap-able feel without competing visually. */
   .gvp__refresh {
     background: transparent;
@@ -239,7 +239,7 @@ const styles = `
     border-color: var(--gy-gold);
   }
   .gvp__refresh:disabled { opacity: 0.55; cursor: default; }
-  /* Loading skeleton — keeps the panel's footprint stable while
+  /* Loading skeleton - keeps the panel's footprint stable while
      the first fetch completes. */
   .gvp__skel {
     height: 60px;

@@ -84,7 +84,7 @@ export default function DeletionForm() {
         style={inputStyle}
       />
       <textarea
-        placeholder="Anything we should know? (optional — e.g., which channel you contacted us through)"
+        placeholder="Anything we should know? (optional - e.g., which channel you contacted us through)"
         value={reason} onChange={(e) => setReason(e.target.value)} rows={3}
         style={{ ...inputStyle, fontFamily: "var(--gy-font-ui)", resize: "vertical" }}
       />
@@ -118,7 +118,7 @@ export default function DeletionForm() {
         }}
       >
         We may need to verify the request comes from you (a confirmation email or a quick call). Some records
-        — signed charter agreements, financial transactions — carry a legal-hold obligation we&rsquo;ll
+        - signed charter agreements, financial transactions - carry a legal-hold obligation we&rsquo;ll
         explain in our reply.
       </p>
     </form>

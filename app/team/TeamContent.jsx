@@ -210,7 +210,7 @@ export default function TeamContent() {
           </h2>
           <div className="team-intro__line" />
           <p className="team-intro__text">
-            Every member of our team shares one commitment &mdash; delivering an
+            Every member of our team shares one commitment - delivering an
             experience that exceeds expectations. No call centers. No automated
             responses. Real people, real expertise, real relationships.
           </p>

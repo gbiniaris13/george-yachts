@@ -160,7 +160,7 @@ export default function AllergyAlert({ source = "health" }) {
                     <span className="cabin-allergy-alert__label">
                       Allergies / dietary
                     </span>{" "}
-                    — {sectionAllergies}
+                    - {sectionAllergies}
                   </p>
                 )}
                 {sectionConditions && (
@@ -168,7 +168,7 @@ export default function AllergyAlert({ source = "health" }) {
                     <span className="cabin-allergy-alert__label">
                       Medical conditions
                     </span>{" "}
-                    — {sectionConditions}
+                    - {sectionConditions}
                   </p>
                 )}
                 {sectionMeds && (
@@ -176,7 +176,7 @@ export default function AllergyAlert({ source = "health" }) {
                     <span className="cabin-allergy-alert__label">
                       Medications on board
                     </span>{" "}
-                    — {sectionMeds}
+                    - {sectionMeds}
                   </p>
                 )}
               </div>
@@ -193,7 +193,7 @@ export default function AllergyAlert({ source = "health" }) {
                   return (
                     <p key={m.memberId}>
                       <em className="cabin-allergy-alert__name">{m.name}</em>{" "}
-                      — {both}
+                      - {both}
                     </p>
                   );
                 })}
@@ -206,7 +206,7 @@ export default function AllergyAlert({ source = "health" }) {
                 <>
                   ({counts.clean} of {counts.total}{" "}
                   {counts.total === 1 ? "member has" : "members have"} no
-                  allergy or dietary preference on file — invite anyone
+                  allergy or dietary preference on file - invite anyone
                   missing to share their details from the cabin home.)
                 </>
               )}
@@ -257,11 +257,11 @@ export default function AllergyAlert({ source = "health" }) {
       ? "Edit in Health & Safety"
       : "Add in Health & Safety";
   const emptyCopy = isSelf
-    ? "You haven't recorded any allergies or dietary notes in your own details yet. If you eat freely with no concerns, that's information too — leave your details blank and the chef will treat you as a clean sheet."
-    : "You haven't added any allergies or medical notes yet. If everyone in the group eats freely with no concerns, that's information too — leave Health & Safety blank and we'll treat it as a clean sheet.";
+    ? "You haven't recorded any allergies or dietary notes in your own details yet. If you eat freely with no concerns, that's information too - leave your details blank and the chef will treat you as a clean sheet."
+    : "You haven't added any allergies or medical notes yet. If everyone in the group eats freely with no concerns, that's information too - leave Health & Safety blank and we'll treat it as a clean sheet.";
   const footerCopy = isSelf
-    ? "The chef and hostess read this before every meal. If anything here is life-threatening, please add it to your details — the captain's printed crew-list copy lives there."
-    : "The chef and hostess read this before every meal. If any of it is life-threatening, please add it to Health & Safety as well — that's where the captain's printed copy lives.";
+    ? "The chef and hostess read this before every meal. If anything here is life-threatening, please add it to your details - the captain's printed crew-list copy lives there."
+    : "The chef and hostess read this before every meal. If any of it is life-threatening, please add it to Health & Safety as well - that's where the captain's printed copy lives.";
 
   return (
     <aside
@@ -381,7 +381,7 @@ const styles = `
     margin: 5px 0;
     font-weight: 400;
   }
-  /* 2026-05-24 — Replaced heavy <strong> labels with quieter
+  /* 2026-05-24 - Replaced heavy <strong> labels with quieter
      small-caps spans + em-dash separators. Per George: heavy
      bold reads as out of style. The label name now carries
      weight via tracking + small caps, not stroke weight. */

@@ -46,12 +46,12 @@ function inputLabel() {
 }
 
 function fmt(n) {
-  if (n == null) return "—";
+  if (n == null) return "-";
   return Math.round(n).toLocaleString("en-US");
 }
 
 function fmtHours(decimalHours) {
-  if (decimalHours == null) return "—";
+  if (decimalHours == null) return "-";
   const total = Math.round(decimalHours * 10) / 10;
   const h = Math.floor(total);
   const m = Math.round((total - h) * 60);
@@ -178,7 +178,7 @@ export default function SailingDistanceCalculator() {
         >
           {Object.entries(YACHT_SPEEDS).map(([key, y]) => (
             <option key={key} value={key}>
-              {y.name} — {y.speed} kt cruise
+              {y.name} - {y.speed} kt cruise
             </option>
           ))}
         </select>

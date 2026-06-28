@@ -45,7 +45,7 @@ const DINING_LABELS = {
   coffee_tea_other: "Coffee/tea (other)",
   lunch_service: "Lunch service style",
   dinner_service: "Dinner service style",
-  food_matrix: "Foods — like / dislike",
+  food_matrix: "Foods - like / dislike",
   food_loves: "Foods loved",
   food_avoid: "Foods to avoid",
   dessert_styles: "Dessert styles",
@@ -56,8 +56,8 @@ const DINING_LABELS = {
   afternoon_tea_details: "Afternoon tea details",
   dining_ashore_evenings: "Evenings ashore",
   dining_ashore_notes: "Ashore notes",
-  kids_meal_arrangement: "Children — meal arrangement",
-  kids_meal_specifics: "Children — meal specifics",
+  kids_meal_arrangement: "Children - meal arrangement",
+  kids_meal_specifics: "Children - meal specifics",
   kids_needs_baby_cot: "Baby cot needed",
   kids_needs_high_chair: "High chair needed",
   kids_baby_food_specifics: "Baby food specifics",
@@ -79,18 +79,18 @@ const BEVERAGES_LABELS = {
   wine_greek_vineyards: "Greek vineyards",
   wine_price_range: "Wine price range",
   wine_style: "Wine style",
-  wines: "Wine — specific labels",
-  spirits_frequency: "Spirits — frequency",
-  spirits_brands: "Spirits — brands",
+  wines: "Wine - specific labels",
+  spirits_frequency: "Spirits - frequency",
+  spirits_brands: "Spirits - brands",
   spirits_notes: "Spirits notes",
-  beers_frequency: "Beers — frequency",
-  beers_origin: "Beers — origin",
+  beers_frequency: "Beers - frequency",
+  beers_origin: "Beers - origin",
   beers_specifics: "Beers labels",
   beers_notes: "Beers notes",
-  beers: "Beers — international",
-  beers_local: "Beers — local Greek",
-  soft_drinks_frequency: "Soft drinks — frequency",
-  soft_drinks_brands: "Soft drinks — brands",
+  beers: "Beers - international",
+  beers_local: "Beers - local Greek",
+  soft_drinks_frequency: "Soft drinks - frequency",
+  soft_drinks_brands: "Soft drinks - brands",
   soft_drinks: "Soft drinks",
   standard_bar_items: "Standard bar items",
   specific_preferences: "Specific preferences",
@@ -478,7 +478,7 @@ export default function GuestBriefReadOnly({ sectionKey, kind }) {
                   const lab = row?.label?.trim?.() || "";
                   const qty = row?.quantity?.trim?.() || "";
                   if (!lab && !qty) return null;
-                  return [lab, qty].filter(Boolean).join(" — ");
+                  return [lab, qty].filter(Boolean).join(" - ");
                 })
                 .filter(Boolean);
               if (items.length === 0) return null;

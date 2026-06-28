@@ -272,7 +272,7 @@ export default function TrendingYachts({ yachts }) {
         .gy-trending-scroller::-webkit-scrollbar {
           display: none;
         }
-        /* Phase 7 (luxury rebuild) — TrendingYachts cards inherit the F5
+        /* Phase 7 (luxury rebuild) - TrendingYachts cards inherit the F5
            3D tilt + gold border lift on hover, so the homepage carousel
            reads as cinematic instead of catalog. Skipped on touch +
            reduced-motion. */

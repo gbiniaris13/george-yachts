@@ -175,7 +175,7 @@ export default function RegionalYachtMap({ yachts = [] }) {
 
   return (
     <section
-      aria-label="Where the fleet sails — Greek waters"
+      aria-label="Where the fleet sails - Greek waters"
       className="gy-region-map-section"
       data-sound-reveal
     >
@@ -216,7 +216,7 @@ export default function RegionalYachtMap({ yachts = [] }) {
                 className="gy-region-pin"
                 data-cursor="View"
                 onClick={() => onPinClick(region.slug)}
-                aria-label={`${region.name} — ${count} yacht${count === 1 ? "" : "s"}`}
+                aria-label={`${region.name} - ${count} yacht${count === 1 ? "" : "s"}`}
                 style={{
                   // Projected geographic position so the pin sits on
                   // the visible coast in the SVG backdrop.
@@ -245,7 +245,7 @@ export default function RegionalYachtMap({ yachts = [] }) {
       <p className="gy-region-map-footnote">
         These counts show each port's home base. Yachts relocate on
         client request, and most summer charters itinerate across
-        regions — a vessel based in Athens may begin your week there
+        regions - a vessel based in Athens may begin your week there
         and end it in the Cyclades.
       </p>
 
@@ -400,7 +400,7 @@ function RegionModal({ region, yachts, flying = false, onClose, onPrev, onNext }
               ))}
               {yachts.length > 12 && (
                 <p className="gy-region-yacht-more">
-                  + {yachts.length - 12} more —{" "}
+                  + {yachts.length - 12} more -{" "}
                   <Link href="/charter-yacht-greece">browse the fleet</Link>
                 </p>
               )}

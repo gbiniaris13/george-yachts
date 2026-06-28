@@ -48,12 +48,12 @@ const WHO_OPTIONS = [
 // most-requested combinations + an "advise me" escape hatch.
 // Removed Sporades / Dodecanese (out of core book).
 const WHERE_OPTIONS = [
-  { value: "Cyclades — Mykonos, Folegandros, Milos, Sifnos", label: "Cyclades" },
-  { value: "Saronic — Hydra, Spetses, Aegina", label: "Saronic" },
-  { value: "Ionian — Lefkada, Kefalonia, Ithaca", label: "Ionian" },
+  { value: "Cyclades - Mykonos, Folegandros, Milos, Sifnos", label: "Cyclades" },
+  { value: "Saronic - Hydra, Spetses, Aegina", label: "Saronic" },
+  { value: "Ionian - Lefkada, Kefalonia, Ithaca", label: "Ionian" },
   { value: "a mix of Cyclades and Saronic", label: "Cyclades + Saronic" },
   { value: "a mix of Cyclades and Ionian", label: "Cyclades + Ionian" },
-  { value: "open — let the broker advise based on dates and guests", label: "Advise Me" },
+  { value: "open - let the broker advise based on dates and guests", label: "Advise Me" },
 ];
 
 export default function ItineraryPreview() {
@@ -92,7 +92,7 @@ export default function ItineraryPreview() {
       if (!res.ok) {
         if (res.status === 429) {
           setError(
-            "We've sent a lot of previews this hour — write George directly for your own."
+            "We've sent a lot of previews this hour - write George directly for your own."
           );
         } else {
           setError("Preview unavailable right now. Brief George directly.");
@@ -126,7 +126,7 @@ export default function ItineraryPreview() {
       }
     } catch (e) {
       if (e?.name !== "AbortError") {
-        setError("Connection lost — brief George directly.");
+        setError("Connection lost - brief George directly.");
       }
     } finally {
       setStreaming(false);
@@ -177,8 +177,8 @@ export default function ItineraryPreview() {
           }}
         >
           A 60-second taste of the prose a broker drafts for guests like you.
-          This is a sample. The real proposal — three yachts, real availability,
-          real prices — comes from George within twenty-four hours of your brief.
+          This is a sample. The real proposal - three yachts, real availability,
+          real prices - comes from George within twenty-four hours of your brief.
         </p>
 
         {/* The form — compact horizontal row on desktop, stacked on mobile */}

@@ -102,7 +102,7 @@ export default function NewsletterSignupClient({ streams }) {
           }}
         >
           A welcome note is on its way to your inbox. The first proper issue
-          will follow soon &mdash; quietly, no fuss. Reply any time; that goes
+          will follow soon - quietly, no fuss. Reply any time; that goes
           to George directly.
         </p>
         <a

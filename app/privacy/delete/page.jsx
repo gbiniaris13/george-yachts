@@ -72,7 +72,7 @@ export default function DeletionPage() {
               maxWidth: 640,
             }}
           >
-            You can ask us to delete the personal data we hold about you — this is your right under the
+            You can ask us to delete the personal data we hold about you - this is your right under the
             EU General Data Protection Regulation (Article 17, &ldquo;the right to be forgotten&rdquo;) and
             equivalent UK / Greek transposition. We action verified requests within 30 days. Some records
             (signed charter agreements, financial transactions) carry a legal-hold obligation we&rsquo;ll

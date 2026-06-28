@@ -333,7 +333,7 @@ export default function ProposalDocument({ name, dates, notes, yachts }) {
   const list = (yachts || []).filter(Boolean).slice(0, 5);
 
   return (
-    <Document author="George P. Biniaris" title={`George Yachts — Proposal for ${safeName}`}>
+    <Document author="George P. Biniaris" title={`George Yachts - Proposal for ${safeName}`}>
       {/* COVER */}
       <Page size="A4" style={styles.cover}>
         <View>
@@ -344,7 +344,7 @@ export default function ProposalDocument({ name, dates, notes, yachts }) {
           <Text style={styles.coverIntro}>
             {safeName.split(" ")[0] || "Friend"}, this is a curated shortlist drawn from the live fleet.
             {"\n\n"}
-            Each of the following pages is a yacht we believe fits how you described your week — not a generic
+            Each of the following pages is a yacht we believe fits how you described your week - not a generic
             catalogue dump. The numbers here are indicative ranges; the exact figure follows in a written
             quote with availability for the dates you have in mind.
             {dates ? `\n\nRequested dates: ${dates}` : ""}
@@ -379,7 +379,7 @@ export default function ProposalDocument({ name, dates, notes, yachts }) {
               <Text style={styles.yachtEyebrow}>
                 Yacht {i + 1} of {list.length} · {y.fleetTier === "explorer" ? "Explorer Fleet" : "Private Fleet"}
               </Text>
-              <Text style={styles.yachtName}>{y.name || "—"}</Text>
+              <Text style={styles.yachtName}>{y.name || "-"}</Text>
               {y.subtitle && <Text style={styles.yachtSubtitle}>{y.subtitle}</Text>}
 
               <View style={styles.specsRow}>
@@ -448,7 +448,7 @@ export default function ProposalDocument({ name, dates, notes, yachts }) {
           <Text style={styles.coverEyebrow}>Continue the conversation</Text>
           <Text style={styles.finalHeading}>Talk to George.</Text>
           <Text style={styles.finalParagraph}>
-            Reply to this email or pick whichever channel works for you. I usually come back the same day —
+            Reply to this email or pick whichever channel works for you. I usually come back the same day -
             often within the hour. The numbers in this proposal are honest ranges; the exact figure for your
             dates and group lands in a written quote.
           </Text>
@@ -479,7 +479,7 @@ export default function ProposalDocument({ name, dates, notes, yachts }) {
         <View>
           <View style={styles.coverGoldLine} />
           <Text style={styles.coverIntro}>
-            George P. Biniaris — Managing Broker, IYBA Member.
+            George P. Biniaris - Managing Broker, IYBA Member.
             {"\n"}
             George Yachts Brokerage House · MYBA-standard contracts · Independent broker.
           </Text>

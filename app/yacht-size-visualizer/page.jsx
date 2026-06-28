@@ -8,7 +8,7 @@ export const revalidate = 3600;
 export const metadata = pageMeta({
   title: 'Yacht Size Visualizer | George Yachts',
   description:
-    'See how big each yacht really is — compared to tennis courts, hotel suites, and swimming pools. Interactive size comparison tool.',
+    'See how big each yacht really is - compared to tennis courts, hotel suites, and swimming pools. Interactive size comparison tool.',
   path: '/yacht-size-visualizer',
 });
 

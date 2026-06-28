@@ -63,7 +63,7 @@ export default function KpisPage() {
         </h1>
         <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248, 245, 240,0.65)", margin: "0 0 32px", maxWidth: 640 }}>
           Last {days} days, sourced from our own KV counters. Looker Studio (linked to GA4) remains the canonical
-          place for the full Monday review. Paste the KPI admin key to unlock this view — it&rsquo;s never stored.
+          place for the full Monday review. Paste the KPI admin key to unlock this view - it&rsquo;s never stored.
         </p>
 
         <form onSubmit={load} style={{ display: "flex", gap: 10, marginBottom: 32, flexWrap: "wrap" }}>

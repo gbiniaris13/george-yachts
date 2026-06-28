@@ -156,7 +156,7 @@ export default function BerthMap({
           // tiles will remain blank. Better than infinite retries.
           // eslint-disable-next-line no-console
           console.warn(
-            "[BerthMap] all tile providers failed — pin shown without basemap",
+            "[BerthMap] all tile providers failed - pin shown without basemap",
           );
           return;
         }
@@ -181,7 +181,7 @@ export default function BerthMap({
             escalationScheduled = true;
             // eslint-disable-next-line no-console
             console.warn(
-              `[BerthMap] provider ${p.name} failing — escalating to ${
+              `[BerthMap] provider ${p.name} failing - escalating to ${
                 TILE_PROVIDERS[idx + 1]?.name || "(none)"
               }`,
             );
@@ -449,7 +449,7 @@ export default function BerthMap({
         <p className="berth-map__note">
           <em>
             This is your vessel&apos;s current berth. The port authority
-            may adjust the position at the marina&apos;s discretion —
+            may adjust the position at the marina&apos;s discretion -
             should that happen before embarkation, you&apos;ll hear it
             from us first.
           </em>
@@ -494,12 +494,12 @@ export default function BerthMap({
         }
         .berth-map__canvas {
           width: 100%;
-          /* 2026-05-23 — Audit pass: was a fixed 320px, which on
+          /* 2026-05-23 - Audit pass: was a fixed 320px, which on
              iPhone SE2 (375×667) ate ~48% of viewport AFTER the user
              scrolled to it. clamp() respects small screens (min
              220px so the pin always has room) and grows up to 380px
-             on tall screens — never more than 45% of viewport.
-             2026-05-24 — Christos pass: explicit min-height + width
+             on tall screens - never more than 45% of viewport.
+             2026-05-24 - Christos pass: explicit min-height + width
              belt-and-braces. If any future luxury rule shrinks the
              container, Leaflet still has a paintable canvas. */
           height: clamp(220px, 45vh, 380px);
@@ -569,7 +569,7 @@ export default function BerthMap({
           .berth-map__open { padding: 10px 18px; font-size: 10.5px; letter-spacing: 2px; }
           .berth-map__note { padding: 14px 20px 18px; font-size: 12px; }
         }
-        /* Leaflet popup look — tighter, branded. */
+        /* Leaflet popup look - tighter, branded. */
         :global(.leaflet-popup-content-wrapper) {
           background: #ffffff !important;
           border: 1px solid rgba(201, 168, 76, 0.6) !important;
@@ -585,7 +585,7 @@ export default function BerthMap({
         /* SVG pin shouldn't be filtered/dimmed by Leaflet's marker
            default opacity transitions. */
         :global(.berth-pin svg) { display: block; }
-        /* Leaflet attribution — legally required, visually deferred.
+        /* Leaflet attribution - legally required, visually deferred.
            Tiny, low-opacity, off-white background. The Google Maps
            CTA is the visible primary action; this is fine-print. */
         :global(.berth-map .leaflet-control-attribution) {

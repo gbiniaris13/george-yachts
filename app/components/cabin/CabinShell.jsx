@@ -79,7 +79,7 @@ function PreviewBanner({ adminEmail, expiresAt }) {
       </span>
       <span className="cabin-shell__preview-banner-copy">
         <strong>Admin preview</strong>
-        {adminEmail ? <> — viewing as the principal charterer · {adminEmail}</> : null}
+        {adminEmail ? <> - viewing as the principal charterer · {adminEmail}</> : null}
         <em className="cabin-shell__preview-banner-timer">
           {" "}· read-only · expires in {mins}:{secs}
         </em>
@@ -151,7 +151,7 @@ function formatDateRange(from, to) {
       timeZone: "UTC",
     });
   };
-  return `${fmt(from)} – ${fmt(to)}`;
+  return `${fmt(from)} - ${fmt(to)}`;
 }
 
 export default function CabinShell({
@@ -268,7 +268,7 @@ export default function CabinShell({
               href="/cabin"
               onClick={onCabinHomeClick}
               className="cabin-shell__left-brand"
-              aria-label="The Cabin — home"
+              aria-label="The Cabin - home"
             >
               <span className="cabin-shell__left-title">The Cabin</span>
               <span className="cabin-shell__left-mark">Filotimo</span>
@@ -288,7 +288,7 @@ export default function CabinShell({
             )}
             <span className="cabin-shell__charter-meta">
               {dates ? dates : null}
-              {dates && viewerName ? <span aria-hidden> — </span> : null}
+              {dates && viewerName ? <span aria-hidden> - </span> : null}
               {viewerName ? <em>{viewerName}</em> : null}
             </span>
           </div>
@@ -331,7 +331,7 @@ export default function CabinShell({
           /cabin replaces this; Sign-out lives in /cabin footer. */}
 
       <style jsx global>{`
-        /* 2026-05-21 — Admin preview banner.
+        /* 2026-05-21 - Admin preview banner.
            Teal (#0E7C7B) keeps it unmistakable: gold = concierge,
            navy = header, teal = "you are an admin previewing".
            Sticks above everything else (z-index 30) so it stays
@@ -431,12 +431,12 @@ export default function CabinShell({
           /* hide global site chrome inside the Cabin */
           background: var(--gy-ivory, #f8f5f0);
         }
-        /* 2026-05-26 — Domingo bug-report: WhatsApp + ContactDrawer
+        /* 2026-05-26 - Domingo bug-report: WhatsApp + ContactDrawer
            ("Speak to George") + AskGeorgeWidget (AI concierge) +
            AmbientPlayer (ambient sound) used to be hidden inside
            The Cabin under the "cabin owns the viewport" doctrine.
            Customer-side test surfaced the gap: WhatsApp is HOW the
-           client reaches George — hiding it inside the Cabin defeats
+           client reaches George - hiding it inside the Cabin defeats
            the whole purpose. The four widgets stay visible now.
            We keep nav/wishlist/sticky-CTA/exit-intent hidden because
            those ARE distractions; the four below are contact tools. */
@@ -455,9 +455,9 @@ export default function CabinShell({
           padding-bottom: env(safe-area-inset-bottom);
         }
 
-        /* 2026-05-21 — Pass 7 redesign (George):
+        /* 2026-05-21 - Pass 7 redesign (George):
            "Multi-billion εταιρεία, Vogue feel, για πλούσιους
-           πελάτες." Header now breathes — bigger vertical
+           πελάτες." Header now breathes - bigger vertical
            padding, brand on left (monogram + wordmark +
            strapline), vessel name on right as the right-side
            lead, dates + viewer name in a smaller secondary line.
@@ -479,23 +479,23 @@ export default function CabinShell({
           border-bottom: 1px solid rgba(201, 168, 76, 0.32);
         }
         /* ─────────────────────────────────────────────────────────
-           MOBILE MASTHEAD — Eleanna round 4 (2026-05-23, after a
+           MOBILE MASTHEAD - Eleanna round 4 (2026-05-23, after a
            paying client saw it).
 
            CRITICAL CONTEXT for any future maintainer:
 
            cabin-luxury.css § 14 (line 714) forces the cabin header
-           background to a cream/ivory frosted glass — NOT navy. This
+           background to a cream/ivory frosted glass - NOT navy. This
            is intentional (Apple-style backdrop blur). EVERY header
            text color must therefore be NAVY-based for legibility on
            cream. Ivory text on cream = invisible. (That bug shipped
-           in round 3 — only the gold "Filotimo" wordmark stayed
+           in round 3 - only the gold "Filotimo" wordmark stayed
            readable; "THE CABIN" disappeared into the cream.)
 
            Also: cabin-tones.css line 264 forces grid-template-columns
            to "auto 1fr" at <560px, which beats unprefixed selectors.
            We use [data-cabin-mode] prefix throughout this @media
-           block to match its specificity — and since this <style jsx
+           block to match its specificity - and since this <style jsx
            global> injects AFTER the static stylesheets, we win the
            tiebreaker.
 
@@ -540,7 +540,7 @@ export default function CabinShell({
             text-align: center !important;
             gap: 6px !important;
           }
-          /* THE CABIN — navy small-caps on cream */
+          /* THE CABIN - navy small-caps on cream */
           [data-cabin-mode] .cabin-shell__left-title {
             font-size: 10.5px !important;
             letter-spacing: 0.36em !important;
@@ -577,7 +577,7 @@ export default function CabinShell({
           [data-cabin-mode] .cabin-shell__left-tagline {
             display: none !important;
           }
-          /* Vessel chip — navy text on cream, centred */
+          /* Vessel chip - navy text on cream, centred */
           [data-cabin-mode] .cabin-shell__charter-vessel {
             font-size: 16px !important;
             color: var(--gy-navy) !important;
@@ -647,15 +647,15 @@ export default function CabinShell({
           color: inherit;
           min-width: 0;
         }
-        /* 2026-05-26 — Brief 04 / T1 (Domingo guest audit): the
+        /* 2026-05-26 - Brief 04 / T1 (Domingo guest audit): the
            DESKTOP / TABLET base styles below were the last cream-on-
            cream offenders. The mobile-masthead block above (≤599.98px)
-           was already navy-corrected — but on every viewport ≥600px,
+           was already navy-corrected - but on every viewport ≥600px,
            "THE CABIN" wordmark + tagline + back arrow + vessel chip +
            dates/meta were rendering in ivory on the cream backdrop-
            blurred header (cabin-luxury.css §14), effectively invisible.
            All five corrected to navy with the same hairline-divider
-           treatment the mobile block uses. "Filotimo" stays gold —
+           treatment the mobile block uses. "Filotimo" stays gold -
            that one always read. */
         .cabin-shell__left-title {
           font-family: var(--gy-font-editorial, Georgia, serif);
@@ -700,7 +700,7 @@ export default function CabinShell({
           justify-content: center;
           width: 36px;
           height: 36px;
-          /* Brief 04 / T1 — navy outline on cream. */
+          /* Brief 04 / T1 - navy outline on cream. */
           border: 1px solid rgba(13, 27, 42, 0.22);
           border-radius: 2px;
           color: var(--gy-navy);
@@ -738,7 +738,7 @@ export default function CabinShell({
           font-style: italic;
           font-weight: 300;
           letter-spacing: 0.4px;
-          /* Brief 04 / T1 — navy on cream. */
+          /* Brief 04 / T1 - navy on cream. */
           color: var(--gy-navy);
           white-space: nowrap;
           overflow: hidden;
@@ -749,7 +749,7 @@ export default function CabinShell({
           font-family: var(--gy-font-ui);
           font-size: 9.5px;
           letter-spacing: 2.4px;
-          /* Brief 04 / T1 — navy on cream. */
+          /* Brief 04 / T1 - navy on cream. */
           color: rgba(13, 27, 42, 0.6);
           text-transform: uppercase;
           margin-top: 6px;

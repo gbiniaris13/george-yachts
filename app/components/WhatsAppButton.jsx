@@ -134,7 +134,7 @@ export default function WhatsAppButton() {
                 marginBottom: "16px",
               }}
             >
-              Hello <span style={{ color: "#C9A84C" }}>&#128075;</span> —
+              Hello <span style={{ color: "#C9A84C" }}>&#128075;</span> -
               questions about a Greek charter? Ask us straight on WhatsApp,
               we reply within minutes.
             </p>

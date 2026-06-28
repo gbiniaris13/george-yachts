@@ -18,7 +18,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
       </div>
       {/* Hero */}
       <section style={{ position: "relative", height: "80vh", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-        <Image src="/images/private-fleet-hero.jpg" alt="Private Fleet — luxury yacht charter Greece" fill style={{ objectFit: "cover", objectPosition: "center 40%", filter: "grayscale(100%) contrast(1.2) brightness(0.4)" }} sizes="100vw" priority />
+        <Image src="/images/private-fleet-hero.jpg" alt="Private Fleet - luxury yacht charter Greece" fill style={{ objectFit: "cover", objectPosition: "center 40%", filter: "grayscale(100%) contrast(1.2) brightness(0.4)" }} sizes="100vw" priority />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(13, 27, 42,0.8) 0%, transparent 40%, rgba(13, 27, 42,0.4) 100%)" }} />
         <div style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px" }}>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: "0.5em", color: "#C9A84C", textTransform: "uppercase", marginBottom: 24 }}>
@@ -89,7 +89,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
                 {/* Image */}
                 <div style={{ position: "relative", aspectRatio: "16/10", overflow: "hidden" }}>
                   {yacht.imageUrl && (
-                    <Image src={yacht.imageUrl} alt={`${yacht.name} — luxury yacht charter Greece`} fill style={{ objectFit: "cover" }} sizes="400px" />
+                    <Image src={yacht.imageUrl} alt={`${yacht.name} - luxury yacht charter Greece`} fill style={{ objectFit: "cover" }} sizes="400px" />
                   )}
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(13, 27, 42,0.75) 0%, transparent 55%)" }} />
                   <div style={{ position: "absolute", bottom: 20, left: 20, right: 20 }}>

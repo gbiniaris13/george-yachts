@@ -32,7 +32,7 @@ const FORBES_URL =
 export default function PressStrip() {
   return (
     <section
-      aria-label="Trust signals — independent journalism, professional standards"
+      aria-label="Trust signals - independent journalism, professional standards"
       style={{
         background: "rgba(13, 27, 42, 0.92)",
         borderTop: "1px solid rgba(248, 245, 240,0.04)",
@@ -150,7 +150,7 @@ export default function PressStrip() {
             </span>
             <Image
               src="/images/iyba-official-white.png"
-              alt="IYBA — International Yacht Brokers Association"
+              alt="IYBA - International Yacht Brokers Association"
               width={120}
               height={28}
               style={{ height: "28px", width: "auto" }}

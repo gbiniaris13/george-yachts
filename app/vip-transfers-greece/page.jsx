@@ -76,7 +76,7 @@ export default function VipTransfersPage() {
         <Reveal>
           <p className="svc-cta__eyebrow">Effortless Arrivals</p>
           <h2 className="svc-cta__title">Let&apos;s Arrange Your Transfer</h2>
-          <p className="svc-cta__text">Share your schedule and we&apos;ll coordinate everything &mdash; airport to marina and beyond.</p>
+          <p className="svc-cta__text">Share your schedule and we&apos;ll coordinate everything - airport to marina and beyond.</p>
           <a href="https://calendly.com/george-georgeyachts/30min" target="_blank" rel="noopener noreferrer" className="svc-cta__button">Book a Free Consultation</a>
         </Reveal>
       </section>

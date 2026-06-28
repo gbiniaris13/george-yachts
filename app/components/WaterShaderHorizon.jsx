@@ -70,7 +70,7 @@ const FRAG = /* glsl */ `
   }
 
   void main() {
-    // Aspect-correct UV — without this the noise stretches on wide
+    // Aspect-correct UV - without this the noise stretches on wide
     // viewports and reads as horizontal stripes.
     vec2 uv = vec2(vUv.x * uAspect, vUv.y);
 
@@ -82,7 +82,7 @@ const FRAG = /* glsl */ `
     float n2 = fbm(uv * vec2(3.4, 7.0) - vec2(t * 0.7, t * 0.3));
     float ripple = mix(n1, n2, 0.5);
 
-    // Sharpen the highlights — power curve concentrates the bright
+    // Sharpen the highlights - power curve concentrates the bright
     // bands so they read as caustic light, not haze.
     float caustic = pow(ripple, 3.5);
 
@@ -95,7 +95,7 @@ const FRAG = /* glsl */ `
     vec3 base   = mix(deep, mid, smoothstep(0.0, 0.55, vUv.y));
     base        = mix(base, horiz, smoothstep(0.65, 1.0, vUv.y));
 
-    // Caustic light — gold tint at higher y, ivory tint near bottom
+    // Caustic light - gold tint at higher y, ivory tint near bottom
     // ripples to read like moonlit water.
     vec3 goldHi = vec3(0.854, 0.647, 0.125);     // #C9A84C
     vec3 ivoryHi = vec3(0.961, 0.937, 0.882);    // #F8F5F0

@@ -232,7 +232,7 @@ export default function ItinerariesContent() {
             </h2>
             <div style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, #C9A84C, #C9A84C)", margin: "0 auto 32px" }} />
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", color: "rgba(248, 245, 240,0.45)", lineHeight: 1.9, fontWeight: 300 }}>
-              Every route below has been personally sailed and refined by George Biniaris &mdash; drawing on deep local knowledge of Greek waters. These are not generic suggestions. They are tested, trusted, and designed to deliver the best possible week aboard.
+              Every route below has been personally sailed and refined by George Biniaris - drawing on deep local knowledge of Greek waters. These are not generic suggestions. They are tested, trusted, and designed to deliver the best possible week aboard.
             </p>
           </div>
         </Reveal>
@@ -253,7 +253,7 @@ export default function ItinerariesContent() {
             Let&apos;s Design Your Perfect Week
           </h2>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", color: "rgba(248, 245, 240,0.4)", lineHeight: 1.7, fontWeight: 300, maxWidth: "550px", margin: "0 auto 40px" }}>
-            These routes are starting points. Every charter is personally tailored by George &mdash; your preferences, your pace, your islands. Tell us your dream and we&apos;ll design your perfect week in Greek waters.
+            These routes are starting points. Every charter is personally tailored by George - your preferences, your pace, your islands. Tell us your dream and we&apos;ll design your perfect week in Greek waters.
           </p>
           <a href="#contact" style={{ display: "inline-block", background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)", color: "#0D1B2A", padding: "16px 48px", fontFamily: "var(--gy-font-ui)", fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none", fontWeight: 700 }}>
             Start Planning

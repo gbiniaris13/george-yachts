@@ -117,20 +117,20 @@ export default function SharedBriefIndicator({ sectionKey }) {
   const ago = formatAgo(state.editedAt);
 
   return (
-    <aside className="sbi" aria-label="Shared brief — last activity">
+    <aside className="sbi" aria-label="Shared brief - last activity">
       <span className="sbi__chip">Shared brief</span>
       <span className="sbi__copy">
         {hasEditor ? (
           <>
             <strong>{state.editorName}</strong> edited this section
             {ago ? <> {ago}</> : null}. Your edits land on the same
-            page — last to write wins, so check the form below
+            page - last to write wins, so check the form below
             before changing anything you didn&apos;t add.
           </>
         ) : (
           <>
             Nobody has touched this section yet. You&apos;re the
-            first — anything you fill in becomes the starting point
+            first - anything you fill in becomes the starting point
             for everyone in your group.
           </>
         )}

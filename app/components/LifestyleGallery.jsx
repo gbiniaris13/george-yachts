@@ -82,7 +82,7 @@ export default function LifestyleGallery({ heading = "Moments aboard", showCta =
         >
           {hasPhotos
             ? "Unposed photographs from real charters our brokers have organised. No stock imagery. No models."
-            : "Real photographs from past charters arrive here as guests share them. In the meantime — brief George and we'll route your week."}
+            : "Real photographs from past charters arrive here as guests share them. In the meantime - brief George and we'll route your week."}
         </p>
 
         {hasPhotos ? (
@@ -107,7 +107,7 @@ export default function LifestyleGallery({ heading = "Moments aboard", showCta =
               >
                 <Image
                   src={p.src}
-                  alt={p.alt || `Aboard a George Yachts charter — moment ${i + 1}`}
+                  alt={p.alt || `Aboard a George Yachts charter - moment ${i + 1}`}
                   fill
                   sizes="(max-width: 700px) 50vw, (max-width: 1100px) 33vw, 280px"
                   style={{ objectFit: "cover" }}

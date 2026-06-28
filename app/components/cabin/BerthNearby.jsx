@@ -107,14 +107,14 @@ export default function BerthNearby({ nearby }) {
 
         <p className="berth-nearby__note">
           <em>
-            Indicative distances only. For anything beyond — we&apos;re
+            Indicative distances only. For anything beyond - we&apos;re
             a message away.
           </em>
         </p>
       </div>
 
       <style>{`
-        /* 2026-05-23 — tight gap above (8px) so this block reads as
+        /* 2026-05-23 - tight gap above (8px) so this block reads as
            a continuation of the BerthMap above it, not a separate
            panel floating in whitespace. The BerthMap's bottom
            margin (36px) is the dominant gap; we pull up here with

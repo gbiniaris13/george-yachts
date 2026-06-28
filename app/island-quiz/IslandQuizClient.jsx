@@ -7,12 +7,12 @@ const GOLD = '#C9A84C';
 
 const ISLANDS = {
   mykonos: { name: 'Mykonos', emoji: '🎉', tagline: 'The Cosmopolitan Soul', desc: 'You thrive on energy, style, and being where the world gathers. Mykonos matches your love for vibrant nightlife, world-class dining, and beautiful people. You want your yacht anchored at Psarou Bay, cocktails flowing, and Little Venice glowing at sunset.', region: 'Cyclades', bestFor: 'Beach clubs, nightlife, celebrity spotting, cosmopolitan dining', yacht: "S/Y Genny or M/Y La Pellegrina 1" },
-  hydra: { name: 'Hydra', emoji: '🎨', tagline: 'The Artistic Minimalist', desc: "You appreciate beauty in simplicity. No cars, no noise, no pretension — just stone mansions, donkey paths, and the sound of the sea. Hydra is Leonard Cohen's island, and it suits those who find luxury in what's absent rather than what's added.", region: 'Saronic', bestFor: 'Art, tranquility, walking, authentic Greek character', yacht: "S/Y Gigreca or S/Y Nadamas" },
-  santorini: { name: 'Santorini', emoji: '🌅', tagline: 'The Romantic Dreamer', desc: "You believe in magic hours — that moment when the caldera turns gold and the world holds its breath. Santorini is where proposals happen, where wine tastes better at altitude, and where the volcanic landscape makes everything feel cinematic.", region: 'Cyclades', bestFor: 'Sunsets, wine tasting, caldera views, romance', yacht: "S/Y Above & Beyond or S/Y Ad Astra" },
+  hydra: { name: 'Hydra', emoji: '🎨', tagline: 'The Artistic Minimalist', desc: "You appreciate beauty in simplicity. No cars, no noise, no pretension - just stone mansions, donkey paths, and the sound of the sea. Hydra is Leonard Cohen's island, and it suits those who find luxury in what's absent rather than what's added.", region: 'Saronic', bestFor: 'Art, tranquility, walking, authentic Greek character', yacht: "S/Y Gigreca or S/Y Nadamas" },
+  santorini: { name: 'Santorini', emoji: '🌅', tagline: 'The Romantic Dreamer', desc: "You believe in magic hours - that moment when the caldera turns gold and the world holds its breath. Santorini is where proposals happen, where wine tastes better at altitude, and where the volcanic landscape makes everything feel cinematic.", region: 'Cyclades', bestFor: 'Sunsets, wine tasting, caldera views, romance', yacht: "S/Y Above & Beyond or S/Y Ad Astra" },
   paxos: { name: 'Paxos', emoji: '🌿', tagline: 'The Gentle Escapist', desc: "You don't need a crowd to feel alive. A horseshoe bay surrounded by olive groves, turquoise water so clear it barely looks real, and a taverna where the owner knows your name by day two. Paxos is for those who understand that the best-kept secrets are the quietest ones.", region: 'Ionian', bestFor: 'Privacy, nature, slow pace, hidden coves', yacht: "S/Y Kimata or S/Y Serenissima" },
-  milos: { name: 'Milos', emoji: '🌊', tagline: 'The Explorer', desc: "You want to discover what others haven't found yet. Volcanic shores sculpted by wind and time, sea caves that glow turquoise from within, and beaches with names you can't pronounce. Milos rewards the curious — those willing to sail a little further for something extraordinary.", region: 'Cyclades', bestFor: 'Geology, unique beaches, photography, off-the-beaten-path', yacht: "S/Y World's End or S/Y Odyssey" },
-  kefalonia: { name: 'Kefalonia', emoji: '⛰️', tagline: 'The Connoisseur', desc: "You appreciate depth — in wine, in conversation, in landscape. Kefalonia delivers on all counts: dramatic mountains plunging into wine-dark seas, Fiskardo's Venetian elegance, and Captain Tassia's legendary cooking. This is the island for those who know what quality looks like.", region: 'Ionian', bestFor: 'Wine, fine dining, dramatic scenery, sophistication', yacht: "S/Y Crazy Horse or S/Y Huayra" },
-  koufonisia: { name: 'Koufonisia', emoji: '🏝️', tagline: 'The Free Spirit', desc: "You believe the best things are the simplest: bare feet on white sand, swimming in water that belongs in a dream, and a sky full of stars that makes you forget your phone exists. Koufonisia is tiny, car-free, and achingly beautiful — the Greek Caribbean, without trying to be anything else.", region: 'Cyclades', bestFor: 'Beaches, simplicity, barefoot luxury, stargazing', yacht: "S/Y Helidoni or S/Y Alegria" },
+  milos: { name: 'Milos', emoji: '🌊', tagline: 'The Explorer', desc: "You want to discover what others haven't found yet. Volcanic shores sculpted by wind and time, sea caves that glow turquoise from within, and beaches with names you can't pronounce. Milos rewards the curious - those willing to sail a little further for something extraordinary.", region: 'Cyclades', bestFor: 'Geology, unique beaches, photography, off-the-beaten-path', yacht: "S/Y World's End or S/Y Odyssey" },
+  kefalonia: { name: 'Kefalonia', emoji: '⛰️', tagline: 'The Connoisseur', desc: "You appreciate depth - in wine, in conversation, in landscape. Kefalonia delivers on all counts: dramatic mountains plunging into wine-dark seas, Fiskardo's Venetian elegance, and Captain Tassia's legendary cooking. This is the island for those who know what quality looks like.", region: 'Ionian', bestFor: 'Wine, fine dining, dramatic scenery, sophistication', yacht: "S/Y Crazy Horse or S/Y Huayra" },
+  koufonisia: { name: 'Koufonisia', emoji: '🏝️', tagline: 'The Free Spirit', desc: "You believe the best things are the simplest: bare feet on white sand, swimming in water that belongs in a dream, and a sky full of stars that makes you forget your phone exists. Koufonisia is tiny, car-free, and achingly beautiful - the Greek Caribbean, without trying to be anything else.", region: 'Cyclades', bestFor: 'Beaches, simplicity, barefoot luxury, stargazing', yacht: "S/Y Helidoni or S/Y Alegria" },
 };
 
 const QUESTIONS = [
@@ -31,14 +31,14 @@ const QUESTIONS = [
       { text: "Energy, style, and being where things are happening", islands: ['mykonos', 'santorini'] },
       { text: "Silence, space, and the absence of crowds", islands: ['paxos', 'koufonisia'] },
       { text: "History, culture, and places with stories to tell", islands: ['hydra', 'kefalonia'] },
-      { text: "Raw beauty — landscapes that stop you in your tracks", islands: ['milos', 'kefalonia'] },
+      { text: "Raw beauty - landscapes that stop you in your tracks", islands: ['milos', 'kefalonia'] },
     ],
   },
   {
     q: "Your perfect beach is...",
     options: [
       { text: "Organised with sunbeds, a bar, and beautiful people nearby", islands: ['mykonos', 'santorini'] },
-      { text: "Completely empty — just you and the water", islands: ['koufonisia', 'paxos'] },
+      { text: "Completely empty - just you and the water", islands: ['koufonisia', 'paxos'] },
       { text: "A pebble cove with a taverna serving fresh fish", islands: ['hydra', 'paxos'] },
       { text: "A volcanic shore that looks like another planet", islands: ['milos', 'kefalonia'] },
     ],
@@ -55,10 +55,10 @@ const QUESTIONS = [
   {
     q: "If you could only bring one thing on the yacht...",
     options: [
-      { text: "My camera — I need to capture everything", islands: ['santorini', 'milos'] },
-      { text: "A great book — I want to disappear into it on deck", islands: ['paxos', 'hydra'] },
-      { text: "My playlist — music makes every moment better", islands: ['mykonos', 'santorini'] },
-      { text: "Nothing — the sea is enough", islands: ['koufonisia', 'kefalonia'] },
+      { text: "My camera - I need to capture everything", islands: ['santorini', 'milos'] },
+      { text: "A great book - I want to disappear into it on deck", islands: ['paxos', 'hydra'] },
+      { text: "My playlist - music makes every moment better", islands: ['mykonos', 'santorini'] },
+      { text: "Nothing - the sea is enough", islands: ['koufonisia', 'kefalonia'] },
     ],
   },
 ];
@@ -184,7 +184,7 @@ export default function IslandQuizClient() {
           {/* Share + CTAs */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <a
-              href={`https://wa.me/?text=${encodeURIComponent(`I just took the George Yachts island quiz and I'm ${result.name}! 🏝️ "${result.tagline}" — Take the quiz: https://georgeyachts.com/island-quiz`)}`}
+              href={`https://wa.me/?text=${encodeURIComponent(`I just took the George Yachts island quiz and I'm ${result.name}! 🏝️ "${result.tagline}" - Take the quiz: https://georgeyachts.com/island-quiz`)}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{

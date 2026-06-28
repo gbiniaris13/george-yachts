@@ -52,7 +52,7 @@ export default function YourBroker() {
         <div style={{ position: "relative", aspectRatio: "3/4", overflow: "hidden", minHeight: "300px" }}>
           <Image
             src="/images/george.jpg"
-            alt="George P. Biniaris — Managing Broker, George Yachts"
+            alt="George P. Biniaris - Managing Broker, George Yachts"
             fill
             className="object-cover"
             sizes="(max-width: 768px) 250px, 280px"
@@ -225,7 +225,7 @@ export default function YourBroker() {
             {
               num: "01",
               title: "You share the dream",
-              desc: "A quick call — dates, group, islands you love, islands you'd skip.",
+              desc: "A quick call - dates, group, islands you love, islands you'd skip.",
             },
             {
               num: "02",

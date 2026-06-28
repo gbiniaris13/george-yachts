@@ -32,14 +32,14 @@ const CREAM = "#F8F5F0";
 export const revalidate = 86400;
 
 export const metadata = {
-  title: "George P. Biniaris — Founder and Managing Broker, George Yachts | Bio, Articles, Credentials",
+  title: "George P. Biniaris - Founder and Managing Broker, George Yachts | Bio, Articles, Credentials",
   description:
     "Full bio, credentials, and complete bibliography of George P. Biniaris, Founder and Managing Broker of George Yachts Brokerage House. IYBA member, Forbes-featured (May 2026), MYBA-standard practitioner.",
   alternates: {
     canonical: "https://georgeyachts.com/about/george-p-biniaris",
   },
   openGraph: {
-    title: "George P. Biniaris — Founder and Managing Broker, George Yachts",
+    title: "George P. Biniaris - Founder and Managing Broker, George Yachts",
     description:
       "Bio and authored works of George P. Biniaris, Founder and Managing Broker at George Yachts. IYBA member, Forbes-featured, MYBA-standard practitioner.",
     url: "https://georgeyachts.com/about/george-p-biniaris",
@@ -56,10 +56,10 @@ export const metadata = {
 // public site.
 const BIO_PARAGRAPHS = [
   "George P. Biniaris is the Founder and Managing Broker of George Yachts Brokerage House LLC, a Greek-flagged luxury yacht charter brokerage operating from Kifisia, Athens, with U.S. registration in Wyoming. He has spent his professional career in Greek waters and is a current member of the International Yacht Brokers Association (IYBA), the worldwide standards body for yacht brokerage.",
-  "His practice covers crewed motor yacht, sailing yacht, and catamaran chartering across the four principal Greek charter regions — the Cyclades (Mykonos, Santorini, Paros, Milos, Folegandros, and the lesser Cyclades), the Ionian (Corfu, Lefkada, Kefalonia, Ithaca, Paxos, Zakynthos), the Saronic Gulf (Hydra, Spetses, Poros), and the Dodecanese (Rhodes, Symi, Patmos, Kos). His client base is predominantly UHNW: international families and family offices from the United States, United Kingdom, Middle East, and Western Europe.",
-  "Every charter contracted through George Yachts uses the MYBA Charter Agreement — the Mediterranean Yacht Brokers Association's standard form, in use across approximately 90% of luxury Mediterranean charters and the document recognised by London arbitration tribunals as the industry benchmark. APA (Advance Provisioning Allowance) is held in escrow under MYBA's standard custody framework. George's stated practice is to brief clients on the four cost buckets — base fee, APA, Greek VAT (12% reduced rate), and gratuity — at the first conversation, before any contract.",
+  "His practice covers crewed motor yacht, sailing yacht, and catamaran chartering across the four principal Greek charter regions - the Cyclades (Mykonos, Santorini, Paros, Milos, Folegandros, and the lesser Cyclades), the Ionian (Corfu, Lefkada, Kefalonia, Ithaca, Paxos, Zakynthos), the Saronic Gulf (Hydra, Spetses, Poros), and the Dodecanese (Rhodes, Symi, Patmos, Kos). His client base is predominantly UHNW: international families and family offices from the United States, United Kingdom, Middle East, and Western Europe.",
+  "Every charter contracted through George Yachts uses the MYBA Charter Agreement - the Mediterranean Yacht Brokers Association's standard form, in use across approximately 90% of luxury Mediterranean charters and the document recognised by London arbitration tribunals as the industry benchmark. APA (Advance Provisioning Allowance) is held in escrow under MYBA's standard custody framework. George's stated practice is to brief clients on the four cost buckets - base fee, APA, Greek VAT (12% reduced rate), and gratuity - at the first conversation, before any contract.",
   "In May 2026, George was featured in Forbes Magazine in Jacques Ledbetter's piece on UHNW asset diversification, \"How The Wealthy Are Hedging For Instability,\" in which yacht chartering was positioned alongside private equity and physical-asset hedging as a discretionary-spend category that families increasingly favour over fixed-asset purchases. The Forbes feature reflects George Yachts' positioning at the intersection of luxury brokerage and family-office advisory.",
-  "George is the author of the editorial content published under his byline at georgeyachts.com — including the 2026 Greek Charter Market Report, the complete Greek yacht charter pricing guide for 2026, the destination comparison pieces benchmarking Greek charter against Croatia, the French Riviera, Italy, Turkey, and the Caribbean, and the 30-term UHNW Yacht Charter Glossary. Every editorial piece on the site carries his author byline and Person schema linking back to this canonical biography.",
+  "George is the author of the editorial content published under his byline at georgeyachts.com - including the 2026 Greek Charter Market Report, the complete Greek yacht charter pricing guide for 2026, the destination comparison pieces benchmarking Greek charter against Croatia, the French Riviera, Italy, Turkey, and the Caribbean, and the 30-term UHNW Yacht Charter Glossary. Every editorial piece on the site carries his author byline and Person schema linking back to this canonical biography.",
   "He works in English and Greek. His office is in Kifisia, Attica, with charter operations dispatched primarily from Alimos Marina and Olympic Marine for Cyclades and Saronic-bound charters, and from Corfu for Ionian charters. He is reachable directly via the inquiry channel on georgeyachts.com, and conducts initial discovery conversations personally on every charter request.",
 ];
 
@@ -70,15 +70,15 @@ const CREDENTIALS = [
   },
   {
     label: "Member",
-    detail: "International Yacht Brokers Association (IYBA) — global brokerage standards body",
+    detail: "International Yacht Brokers Association (IYBA) - global brokerage standards body",
   },
   {
     label: "Contract framework",
-    detail: "MYBA Charter Agreement standard — used on every chartered yacht",
+    detail: "MYBA Charter Agreement standard - used on every chartered yacht",
   },
   {
     label: "Press recognition",
-    detail: "Featured in Forbes (May 2026) — Jacques Ledbetter's UHNW hedging piece",
+    detail: "Featured in Forbes (May 2026) - Jacques Ledbetter's UHNW hedging piece",
   },
   {
     label: "Languages",
@@ -90,7 +90,7 @@ const CREDENTIALS = [
   },
   {
     label: "Charter specialisations",
-    detail: "Crewed motor yachts, sailing yachts, catamarans, gulets (all sizes 24m–95m+)",
+    detail: "Crewed motor yachts, sailing yachts, catamarans, gulets (all sizes 24m-95m+)",
   },
   {
     label: "Office",
@@ -140,7 +140,7 @@ function getBibliography() {
       group: "Yacht Charter Glossary",
       items: [
         {
-          title: "Yacht Charter Glossary — 30 UHNW terms defined",
+          title: "Yacht Charter Glossary - 30 UHNW terms defined",
           url: "/glossary",
           eyebrow: "Reference",
         },
@@ -239,7 +239,7 @@ function PersonJsonLd() {
       },
       datePublished: "2026-05-01",
     },
-    award: ["Featured in Forbes — May 2026"],
+    award: ["Featured in Forbes - May 2026"],
     sameAs: [
       "https://www.linkedin.com/in/george-p-biniaris/",
       // Stage 2 (Task 3 / B2) - Wikidata person entity + Forbes feature.
@@ -756,7 +756,7 @@ export default function GeorgeBiniarisAuthorPage() {
                 margin: "0 0 30px",
               }}
             >
-              Every charter request starts with a direct conversation with George — no intermediaries, no junior staff handoff. Inquiries are answered within 24 hours.
+              Every charter request starts with a direct conversation with George - no intermediaries, no junior staff handoff. Inquiries are answered within 24 hours.
             </p>
             <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
               <Link

@@ -137,7 +137,7 @@ export const metadata = {
     template: "%s | George Yachts",
   },
   description:
-    "Featured in Forbes (May 2026). George Yachts Brokerage House — boutique luxury yacht charter in Greek waters. 63 curated yachts. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Cyclades, Ionian, Saronic. Personal broker service from Athens.",
+    "Featured in Forbes (May 2026). George Yachts Brokerage House - boutique luxury yacht charter in Greek waters. 63 curated yachts. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Cyclades, Ionian, Saronic. Personal broker service from Athens.",
   applicationName: "George Yachts",
   authors: [{ name: "George P. Biniaris", url: "https://georgeyachts.com" }],
   generator: "Next.js",
@@ -194,7 +194,7 @@ export const metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "George Yachts — Featured in Forbes · Luxury Yacht Charter Greece",
+        alt: "George Yachts - Featured in Forbes · Luxury Yacht Charter Greece",
       },
     ],
   },
@@ -358,7 +358,7 @@ export default async function RootLayout({ children }) {
         <meta name="distribution" content="global" />
         <meta name="rating" content="general" />
         <meta name="revisit-after" content="3 days" />
-        <meta name="coverage" content="Worldwide — service area Greek waters" />
+        <meta name="coverage" content="Worldwide - service area Greek waters" />
         <meta name="target" content="UHNW yacht charter clients globally" />
         {/* AI-search hints (non-standard but parsed by some AI crawlers) */}
         <meta name="ai-content-declaration" content="human-authored" />
@@ -524,7 +524,7 @@ export default async function RootLayout({ children }) {
           window.dataLayer = window.dataLayer || [];
           function gtag(){window.dataLayer.push(arguments);}
           gtag('js', new Date());
-          // Google Consent Mode v2 — DENY analytics/ads storage by default
+          // Google Consent Mode v2 - DENY analytics/ads storage by default
           // so GA4 sets no identifying cookies until the visitor opts in via
           // <CookieConsent />. If they already consented (prior visit), grant
           // immediately from the stored decision. The banner calls

@@ -71,7 +71,7 @@ export default function SampleMenuPreview() {
 
       <p className="smp__intro">
         <em>
-          This is the chef’s working menu for vessels like yours — a starting
+          This is the chef’s working menu for vessels like yours - a starting
           point. Read it through, then mark below what your group enjoys and
           what to leave aside. The menu adapts to you.
         </em>
@@ -93,7 +93,7 @@ export default function SampleMenuPreview() {
                           {label}
                           {gloss && (
                             <em className="smp__dish-gloss">
-                              {" "}— {gloss}
+                              {" "}- {gloss}
                             </em>
                           )}
                         </li>

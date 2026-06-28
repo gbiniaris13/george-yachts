@@ -37,7 +37,7 @@ export default function ForbesTopBar() {
   return (
     <div
       role="region"
-      aria-label="George Yachts featured in Forbes — May 2026"
+      aria-label="George Yachts featured in Forbes - May 2026"
       style={{
         position: "fixed",
         top: 0,

@@ -189,7 +189,7 @@ export default function FAQClient() {
           <p className="svc-intro__eyebrow">Yacht Charter Essentials</p>
           <h2 className="svc-intro__title">What Should You Know Before Chartering a Yacht in Greece?</h2>
           <div className="svc-intro__line" />
-          <p className="svc-intro__text">From booking process and costs to onboard life and itineraries &mdash; find clear, honest answers to the most common questions about luxury yacht charter.</p>
+          <p className="svc-intro__text">From booking process and costs to onboard life and itineraries - find clear, honest answers to the most common questions about luxury yacht charter.</p>
         </Reveal>
       </section>
 

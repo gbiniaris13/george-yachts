@@ -31,12 +31,12 @@ export const revalidate = 3600;
 export const metadata = {
   title: "Greece by Yacht | Ten Stops Across the Aegean",
   description:
-    "A broker's diary across ten places we keep returning to with charter clients — Mykonos, Folegandros, Milos, Hydra, Symi and beyond. Editorial stops with the yachts that do each route best.",
+    "A broker's diary across ten places we keep returning to with charter clients - Mykonos, Folegandros, Milos, Hydra, Symi and beyond. Editorial stops with the yachts that do each route best.",
   alternates: { canonical: "https://georgeyachts.com/greece-by-yacht" },
   openGraph: {
     title: "Greece by Yacht | George Yachts",
     description:
-      "Ten cinematic stops across the Aegean — editorial routes with the yachts that do each one best.",
+      "Ten cinematic stops across the Aegean - editorial routes with the yachts that do each one best.",
     url: "https://georgeyachts.com/greece-by-yacht",
     type: "article",
   },

@@ -11,7 +11,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: "Yacht Charter FAQ",
   description:
-    "Answers to the questions UHNW guests ask before booking a crewed yacht charter in Greece — booking process, APA, MYBA contracts, costs, itineraries.",
+    "Answers to the questions UHNW guests ask before booking a crewed yacht charter in Greece - booking process, APA, MYBA contracts, costs, itineraries.",
   path: "/faq",
 });
 
