@@ -16,11 +16,11 @@ const NAVY = "#0D1B2A";
 
 export const metadata = {
   title: "Greek Yacht Charter Cost Estimator 2026",
-  description: "Estimate your Greek yacht charter cost 2026. Base + APA + 12% VAT + crew gratuity. Motor yachts, sailing, catamaran, gulet, superyacht. Honest 2026 rates.",
+  description: "Estimate your Greek yacht charter cost 2026. Base + APA + 13% VAT + crew gratuity. Motor yachts, sailing, catamaran, gulet, superyacht. Honest 2026 rates.",
   alternates: { canonical: "https://georgeyachts.com/charter-cost-estimator" },
   openGraph: {
     title: "Greek Yacht Charter Cost Estimator",
-    description: "Estimate your Greek yacht charter cost: base + APA + 12% VAT + crew gratuity. Honest 2026 market rates.",
+    description: "Estimate your Greek yacht charter cost: base + APA + 13% VAT + crew gratuity. Honest 2026 market rates.",
     url: "https://georgeyachts.com/charter-cost-estimator",
     type: "website",
     images: [`/api/og?title=${encodeURIComponent("Greek Charter Cost Estimator")}&eyebrow=${encodeURIComponent("Charter planning tool")}`],
@@ -109,7 +109,7 @@ export default function CharterCostEstimatorPage() {
                 lineHeight: 1.5,
               }}
             >
-              Honest 2026 market rates. Base charter + APA + 12% Greek VAT + crew gratuity.
+              Honest 2026 market rates. Base charter + APA + 13% Greek VAT + crew gratuity.
               No assumptions, no marketing markup.
             </p>
           </div>
@@ -164,10 +164,10 @@ export default function CharterCostEstimatorPage() {
               </p>
               <p>
                 <strong style={{ color: "#F8F5F0" }}>Greek VAT.</strong>{" "}
-                12% applied to the charter base (not APA) for charters
-                operating primarily in Greek waters. Charters with significant
-                non-Greek cruising can attract the 24% standard rate - confirm
-                with your broker if your itinerary crosses into Turkey or Italy.
+                13% applied to the charter base (not APA), the reduced rate for
+                commercial crewed charters over 48 hours, which every weekly
+                charter is. Short charters under 48 hours, static charters, and
+                bareboat (no crew) are taxed at the standard 24%.
               </p>
               <p>
                 <strong style={{ color: "#F8F5F0" }}>Crew gratuity.</strong>{" "}

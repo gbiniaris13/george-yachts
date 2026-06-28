@@ -271,7 +271,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
   const imageUrl = yacht.imageUrl;
   const lengthShort = yacht.length ? yacht.length.split('/')[0].trim() : '\u2013';
 
-  // Calculate per-person per-week cost with APA (30%) + VAT (12%) included
+  // Calculate per-person per-week cost with APA (30%) + VAT (13%) included
   const perPersonWeekly = useMemo(() => {
     const priceStr = yacht.weeklyRatePrice || override.price || '';
     const guestCount = parseInt(guests) || 0;
@@ -288,8 +288,8 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
     if (numbers.length === 0) return null;
     const lowBase = numbers[0];
     const highBase = numbers.length > 1 ? numbers[numbers.length - 1] : lowBase;
-    // Add APA (30%) + VAT (12%) = total multiplier 1.456
-    const multiplier = 1.42; // 30% APA + 12% VAT on charter
+    // Add APA (30%) + VAT (13%) = total multiplier 1.43
+    const multiplier = 1.43; // 30% APA + 13% VAT on charter
     const lowTotal = Math.round((lowBase * multiplier) / guestCount);
     const highTotal = Math.round((highBase * multiplier) / guestCount);
     if (lowTotal <= 0) return null;
@@ -613,7 +613,7 @@ export default function FleetGrid({ yachts }) {
           if (!isNaN(n) && n > 100) nums.push(n);
         }
         if (nums.length > 0) {
-          const mult = 1.42;
+          const mult = 1.43; // 30% APA + 13% VAT on charter
           ppwLow = `€${Math.round((nums[0] * mult) / gn).toLocaleString('en-US')}`;
           ppwHigh = nums.length > 1 ? `€${Math.round((nums[nums.length - 1] * mult) / gn).toLocaleString('en-US')}` : ppwLow;
         }

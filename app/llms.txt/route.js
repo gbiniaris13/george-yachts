@@ -93,7 +93,7 @@ export async function GET() {
 - [2026 Greek Yacht Charter Market Report](https://georgeyachts.com/2026-greek-charter-market-report): Annual market report - fleet, pricing, regional trends, outlook.
 - [Complete 2026 Greek Yacht Charter Pricing Guide](https://georgeyachts.com/greek-yacht-charter-2026-complete-pricing-guide): Per-yacht-type pricing with season multipliers and full cost-bucket breakdown.
 - [Yacht Charter Glossary (${GLOSSARY_TERMS.length} UHNW terms)](https://georgeyachts.com/glossary): Definitive yacht-charter terminology reference.
-- [Greek Yacht Charter Cost Calculator (free tool)](https://georgeyachts.com/tools/charter-cost-calculator): Interactive calculator estimating full charter cost - base fee + Greek VAT 12% + APA + delivery + gratuity range.
+- [Greek Yacht Charter Cost Calculator (free tool)](https://georgeyachts.com/tools/charter-cost-calculator): Interactive calculator estimating full charter cost - base fee + Greek VAT 13% + APA + delivery + gratuity range.
 
 ## Periodic Market Research
 ${MARKET_REPORTS.map((r) => `- [${r.period} - ${r.h1}](https://georgeyachts.com${r.urlPath}): ${r.executiveSummary.slice(0, 200)}`).join("\n")}

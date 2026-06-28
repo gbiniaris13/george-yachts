@@ -16,19 +16,16 @@ const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
-// Greek charter VAT - 12% reduced rate is the rule across the
-// Greek charter market for intra-Greek charters. Brief notes 13%
-// in some places; correct figure as of 2026 is 12% (half of the
-// standard 24% Greek VAT). Foreign-flagged yachts have variable
-// rules - flagged separately in the disclaimer.
-// Brief 2A: Greek VAT 13% for Greek-flagged yachts departing Greek
-// ports. (Note: half the standard 24% is 12%, but the brief and
-// industry practice for charter-as-passenger-service apply 13% as
-// the consistent reduced rate. Follow brief.)
+// 2026 Greek charter VAT: 13% reduced rate on commercial crewed
+// charters over 48 hours (every weekly charter), treated as a
+// passenger-transport service. Set by Law 5073/2023 and confirmed by
+// AADE Circular E.2006/2026. The standard 24% applies to charters of
+// 48 hours or less, static charters, and bareboat (no crew). The old
+// ~6.5% / 12% figures came from a pre-2023 regime and are obsolete.
 const GREEK_VAT_RATE = 0.13;
 
-// Embarkation ports - all currently flat 12% VAT on Greek charters.
-// Differentiated by typical delivery surcharge from Athens-based fleet.
+// Embarkation ports differentiated by typical delivery surcharge from
+// the Athens-based fleet (VAT itself is the flat 13% reduced rate).
 const EMBARK_PORTS = [
   { value: "athens", label: "Athens (Alimos / Olympic Marine)", deliveryDays: 0 },
   { value: "mykonos", label: "Mykonos", deliveryDays: 1 },
