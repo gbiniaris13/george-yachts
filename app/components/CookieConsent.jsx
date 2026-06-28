@@ -1,18 +1,18 @@
 "use client";
 
-// CookieConsent — free, self-hosted, brand-matched consent banner.
+// CookieConsent - free, self-hosted, brand-matched consent banner.
 // Replaces the paid Cookiebot dependency (George: "no subscriptions").
 //
 // Compliance posture (HDPA Recommendation 1/2020 / ePrivacy):
 //   • Non-essential trackers (GA4, Microsoft Clarity) load ONLY after
-//     opt-in — enforced by Google Consent Mode defaults (layout.jsx,
+//     opt-in - enforced by Google Consent Mode defaults (layout.jsx,
 //     analytics_storage:'denied') + the consent-gated MicrosoftClarity.
 //   • "Accept" and "Decline" have EQUAL prominence (same size/weight),
 //     no pre-ticked boxes, no cookie wall, no "scrolling = consent".
 //   • Granular: a Preferences panel with a real Analytics toggle.
 //   • Re-openable anytime via the footer "Cookie settings" link
 //     (window.gyOpenCookieSettings).
-// Restrained luxury styling to fit the brand — not a loud nag.
+// Restrained luxury styling to fit the brand - not a loud nag.
 
 import { useEffect, useState } from "react";
 import { getConsent, setConsent } from "@/lib/consent";
@@ -89,8 +89,8 @@ export default function CookieConsent() {
               margin: 0,
             }}
           >
-            We use essential cookies to run the site, and — only with your
-            consent — analytics to understand how it is used. You decide.{" "}
+            We use essential cookies to run the site, and - only with your
+            consent - analytics to understand how it is used. You decide.{" "}
             <a
               href="/cookie-policy"
               style={{ color: GOLD, textDecoration: "underline" }}
@@ -105,7 +105,7 @@ export default function CookieConsent() {
               <label style={{ display: "flex", alignItems: "center", gap: "12px", opacity: 0.6 }}>
                 <input type="checkbox" checked disabled readOnly />
                 <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", color: "rgba(248,245,240,0.7)" }}>
-                  Strictly necessary — always on (security, site function)
+                  Strictly necessary - always on (security, site function)
                 </span>
               </label>
               <label style={{ display: "flex", alignItems: "center", gap: "12px", cursor: "pointer" }}>
@@ -115,7 +115,7 @@ export default function CookieConsent() {
                   onChange={(e) => setAnalytics(e.target.checked)}
                 />
                 <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", color: "rgba(248,245,240,0.7)" }}>
-                  Analytics — Google Analytics, Microsoft Clarity
+                  Analytics - Google Analytics, Microsoft Clarity
                 </span>
               </label>
             </div>

@@ -17,10 +17,10 @@ const Footer = () => {
   const { t } = useI18n();
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState("");
-  const [website, setWebsite] = useState(""); // honeypot — bots autofill, humans never see
+  const [website, setWebsite] = useState(""); // honeypot - bots autofill, humans never see
   const [subscribed, setSubscribed] = useState(false);
 
-  // 2026-05-12 — trailing slashes removed. Next.js normalises
+  // 2026-05-12 - trailing slashes removed. Next.js normalises
   // /path/ → /path via 308 redirect (audited Item 33), so each
   // footer click was costing an extra roundtrip + leaking link
   // equity. Targets now hit the canonical no-slash URLs directly.
@@ -37,14 +37,14 @@ const Footer = () => {
     { name: "About Us", href: "/about-us" },
     { name: "Our Team", href: "/team" },
     { name: "Credentials", href: "/credentials" },
-    // 2026-05-14 (Ahrefs orphan-page audit) — /press, /partners,
+    // 2026-05-14 (Ahrefs orphan-page audit) - /press, /partners,
     // /events had zero incoming internal links. All three are real,
     // indexable, and high-trust surfaces, so they belong here under
     // Company alongside Credentials.
     { name: "Press", href: "/press" },
     { name: "Partners", href: "/partners" },
     { name: "Events", href: "/events" },
-    // 2026-05-14 — /ai-research is the AI-search citation hub
+    // 2026-05-14 - /ai-research is the AI-search citation hub
     // (engineered for ChatGPT/Perplexity/Claude/Gemini extraction)
     // and was orphaned per Ahrefs. Surfacing it under Company so it
     // gets the same site-wide inbound as the rest of the trust pages.
@@ -54,11 +54,11 @@ const Footer = () => {
     { name: "FAQ", href: "/faq" },
   ];
 
-  // 2026-05-14 — Site Index (Ahrefs orphan-page fix).
+  // 2026-05-14 - Site Index (Ahrefs orphan-page fix).
   //
   // The Ahrefs 2026-05-14 crawl flagged 57 orphan pages (no incoming
   // internal links). They were all real, indexable, programmatic-SEO
-  // landing pages targeting high-intent long-tail queries — Google
+  // landing pages targeting high-intent long-tail queries - Google
   // and the AI search engines (Perplexity / ChatGPT / Claude /
   // Gemini) couldn't reach them because nothing on the site linked
   // to them. PageRank was effectively zero across 57 high-value URLs.
@@ -66,14 +66,14 @@ const Footer = () => {
   // The fix is the canonical luxury-publication pattern (NYT,
   // Bloomberg, Vogue): a discrete "More from George Yachts" tiered
   // sitemap block at the bottom of the footer. Every link is real
-  // anchor text — no nofollow, no obfuscation — so each orphan now
+  // anchor text - no nofollow, no obfuscation - so each orphan now
   // has a site-wide inbound link from every page on the domain.
   //
   // Categorisation matches search-intent groupings:
-  //   1. Charter by Occasion         — life-event keywords
-  //   2. Charter by Audience & Budget — qualifying-filter keywords
-  //   3. Explore by Island            — destination long-tail
-  //   4. Yacht-Type & Itinerary       — vessel-class + duration combos
+  //   1. Charter by Occasion         - life-event keywords
+  //   2. Charter by Audience & Budget - qualifying-filter keywords
+  //   3. Explore by Island            - destination long-tail
+  //   4. Yacht-Type & Itinerary       - vessel-class + duration combos
   //
   // Visual register: muted ivory/45 labels + grid layout that
   // matches the existing footer column rhythm so it reads as a
@@ -165,7 +165,7 @@ const Footer = () => {
         { name: "Best for Corporate Events", href: "/best-yachts-greece-corporate-events" },
         { name: "Best for Families & Children", href: "/best-yachts-greece-families-children" },
         { name: "Best with Stabilizers", href: "/best-yachts-greece-stabilizers-smooth-sailing" },
-        { name: "Superyacht Greece — August", href: "/superyacht-charter-greece-august" },
+        { name: "Superyacht Greece - August", href: "/superyacht-charter-greece-august" },
         { name: "Mykonos · 8 Guests", href: "/yacht-charter-mykonos-8-guests" },
         { name: "Mykonos · 12 Guests", href: "/yacht-charter-mykonos-12-guests" },
         { name: "Santorini for Couples", href: "/yacht-charter-santorini-couples" },
@@ -187,7 +187,7 @@ const Footer = () => {
 
   return (
     <footer className="relative w-full bg-black text-white overflow-hidden">
-      {/* Chapter 01 (2026-05-08) — Boss-curated footer ambient video.
+      {/* Chapter 01 (2026-05-08) - Boss-curated footer ambient video.
           Two sunset-water close-ups (13992647 → 14079402) concat'd
           into a single 68 s loop:
             • WebM VP9  900 kbps 2-pass → 7.3 MB
@@ -204,11 +204,11 @@ const Footer = () => {
         aria-hidden="true"
         style={{ zIndex: 0 }}
       >
-        {/* 2026-05-08 follow-up — Boss couldn't see the ambient at
+        {/* 2026-05-08 follow-up - Boss couldn't see the ambient at
             the original opacity 0.22 + dark overlay 0.85 (combined
             visible blend ~3%, effectively invisible at footer
             scale). Bumped video opacity to 0.55 and dropped the
-            overlay to a 0.45–0.55 wash so the sunset reflections
+            overlay to a 0.45-0.55 wash so the sunset reflections
             now read clearly behind the content. The overlay still
             keeps the footer copy readable but no longer drowns
             the video. */}
@@ -238,7 +238,7 @@ const Footer = () => {
           single relative wrapper. Avoids touching every child's
           z-index individually. */}
       <div className="relative" style={{ zIndex: 1 }}>
-      {/* A.5 — Press strip with trust signals (IYBA + MYBA-standard
+      {/* A.5 - Press strip with trust signals (IYBA + MYBA-standard
           + U.S. Registered). Forbes intentionally omitted until the
           article is actually published. */}
       <PressStrip />
@@ -249,7 +249,7 @@ const Footer = () => {
       {/* Main footer content */}
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 pt-20 pb-16">
 
-        {/* Top section — Brand + Links */}
+        {/* Top section - Brand + Links */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-16 lg:gap-8 mb-20">
 
           {/* Brand Column */}
@@ -296,7 +296,7 @@ const Footer = () => {
               </a>
             </div>
 
-            {/* IYBA — official logo, link to iyba.org per legal directive
+            {/* IYBA - official logo, link to iyba.org per legal directive
                 §3 backlink-required clause. */}
             <a
               href="https://iyba.org"
@@ -308,7 +308,7 @@ const Footer = () => {
             >
               <Image
                 src="/images/iyba-official-white.png"
-                alt="IYBA — International Yacht Brokers Association"
+                alt="IYBA - International Yacht Brokers Association"
                 width={120}
                 height={28}
                 className="h-7 w-auto opacity-60 hover:opacity-100 transition-opacity duration-500"
@@ -318,11 +318,11 @@ const Footer = () => {
               </span>
             </a>
 
-            {/* Roberto 2026-05-02 (Site UX Batch 6) — last-chance
+            {/* Roberto 2026-05-02 (Site UX Batch 6) - last-chance
                 browse-fleet CTA. Visitors who scroll all the way to
                 the footer have already passed the hero, FleetCTAs,
                 Trending carousel, two InlineYachtStrip spotlights
-                and the SignatureYacht — but a small fraction still
+                and the SignatureYacht - but a small fraction still
                 end up clicking out via the legal links instead of
                 browsing yachts. Adding a prominent gold pill here
                 gives them one more clean exit to the fleet rather
@@ -414,7 +414,7 @@ const Footer = () => {
               {/* 2026-06-10 George's decision: lead with the U.S.
                   registration (American clients feel at home with a US
                   company + US law contracts) but the public address is
-                  the Athens office — the bare Wyoming registered-agent
+                  the Athens office - the bare Wyoming registered-agent
                   address read as a shell company and broke NAP
                   consistency with GBP/schema (both say Kifisia). UK
                   number removed sitewide (unanswerable Sonetel line);
@@ -426,7 +426,7 @@ const Footer = () => {
                 A U.S.-registered company (Wyoming, USA)<br />
                 Athens office: Charilaou Trikoupi 190A,<br />
                 Kifisia 145 64, Greece<br />
-                {/* 2026-06-11: numbers became tappable (tel: / wa.me) —
+                {/* 2026-06-11: numbers became tappable (tel: / wa.me) -
                     visually identical, but one thumb-tap now starts the
                     call/chat. VisitorTracker classifyCTA picks both up
                     (phone_call / whatsapp) and mirrors them to GA4. */}
@@ -449,7 +449,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Newsletter Section — Phase 23 (luxury rebuild, 2026-05-05).
+        {/* Newsletter Section - Phase 23 (luxury rebuild, 2026-05-05).
             Reframed as an editorial moment: gold rule, Cinzel eyebrow,
             larger Cormorant headline, dignified body copy. The
             subscribe is now an "invitation" instead of a generic
@@ -474,7 +474,7 @@ const Footer = () => {
               The George Yachts Journal
             </p>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontStyle: "italic", fontSize: "15px", color: "rgba(248,245,240,0.65)", marginBottom: "32px", lineHeight: 1.65, fontWeight: 300, maxWidth: "44ch", marginInline: "auto" }}>
-              An invitation, not a list. Market intelligence and curated charter opportunities, delivered the day they matter — never more often.
+              An invitation, not a list. Market intelligence and curated charter opportunities, delivered the day they matter - never more often.
             </p>
             {subscribed ? (
               <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", color: "#F8F5F0", letterSpacing: "0.15em" }}>
@@ -493,12 +493,12 @@ const Footer = () => {
                     });
                     if (res.ok) setSubscribed(true);
                   } catch {
-                    setSubscribed(true); // Show success anyway — George gets notified via Telegram
+                    setSubscribed(true); // Show success anyway - George gets notified via Telegram
                   }
                 }}
                 className="flex flex-col sm:flex-row items-stretch gap-2 sm:gap-0 max-w-md mx-auto"
               >
-                {/* Honeypot — hidden from real users, bots autofill it */}
+                {/* Honeypot - hidden from real users, bots autofill it */}
                 <input
                   type="text"
                   name="website"
@@ -526,7 +526,7 @@ const Footer = () => {
                     color: "#F8F5F0",
                     padding: "14px 16px",
                     fontFamily: "var(--gy-font-ui)",
-                    /* Phase 27 (mobile audit) — was 11px which triggered
+                    /* Phase 27 (mobile audit) - was 11px which triggered
                        iOS Safari auto-zoom on focus. Bumped to 16px. */
                     fontSize: "16px",
                     outline: "none",
@@ -559,8 +559,8 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* 2026-05-14 — Site Index (Ahrefs orphan-page fix).
-            Discrete editorial index — 4 columns, muted ivory labels,
+        {/* 2026-05-14 - Site Index (Ahrefs orphan-page fix).
+            Discrete editorial index - 4 columns, muted ivory labels,
             same tracking/spacing language as the rest of the footer
             so it reads as the sober "More from us" block luxury
             publications run at the bottom of every page. The full
@@ -631,7 +631,7 @@ const Footer = () => {
 
         {/* Bottom section */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Legal links — Roberto 2026-05-02 (Site UX Batch 6):
+          {/* Legal links - Roberto 2026-05-02 (Site UX Batch 6):
               Per GA4, /privacy-policy got 7 visits / 30d (more than
               fleet pages combined). Footer was steering attention to
               legal pages instead of inventory. Reduced opacity 50→25%
@@ -651,7 +651,7 @@ const Footer = () => {
                 {link.name}
               </Link>
             ))}
-            {/* 2026-06-25 — re-open the self-hosted cookie-consent banner
+            {/* 2026-06-25 - re-open the self-hosted cookie-consent banner
                 (replaces Cookiebot's renewal link). */}
             <button
               type="button"
@@ -669,7 +669,7 @@ const Footer = () => {
           </span>
         </div>
 
-        {/* GHOST_ build credit — full-width attribution row.
+        {/* GHOST_ build credit - full-width attribution row.
             Boss directive: make it crystal clear that THIS site was
             designed and built by GHOST_, and span the row edge to
             edge so the gold reads across the full footer width (not
@@ -703,13 +703,13 @@ const Footer = () => {
           >
             This website was designed and built by{" "}
             <span style={{ fontWeight: 700, color: "#F4E4B8", letterSpacing: "0.22em" }}>GHOST_</span>
-            {" "}—{" "}
+            {" "}-{" "}
             <span style={{ fontStyle: "italic", opacity: 0.92 }}>premium digital agency for the discerning few</span>
             {" "}↗
           </a>
         </div>
 
-        {/* A.8 — Anti-fraud notice (Roberto brief, May 2026).
+        {/* A.8 - Anti-fraud notice (Roberto brief, May 2026).
             Wire-fraud impersonation attacks targeting brokerage clients
             have grown rapidly in 2025/2026; surfacing the legitimate-
             payment protocol on every page protects clients from
@@ -735,11 +735,11 @@ const Footer = () => {
           <span className="notranslate">George Yachts</span> will only ever request payment via signed MYBA-standard charter agreement, with bank details provided directly by our company in writing. We will never request wire transfers via email, messaging app, or unverified channels. If you receive any communication asking for payment that does not match this protocol, contact us immediately to verify.
         </p>
 
-        {/* 2026-05-08 — Boss directive: replaces the masthead currency
+        {/* 2026-05-08 - Boss directive: replaces the masthead currency
             switcher with a single subtle line on every page so visitors
             always see prices in EUR (the contract currency) and a
             spread between view-time and signature never lands as our
-            liability. Same visual register as the anti-fraud note — a
+            liability. Same visual register as the anti-fraud note - a
             small editorial card, not a banner. */}
         <p
           className="mt-6 text-center"
@@ -762,7 +762,7 @@ const Footer = () => {
           All charter rates are quoted in <strong style={{ color: "#C9A84C" }}>EUR (€)</strong> and the MYBA-standard charter agreement is signed in EUR. Conversion to USD, GBP or any other currency is provided by your own bank at the time of payment; <span className="notranslate">George Yachts</span> assumes no responsibility for exchange-rate movement between view, quote and contract execution.
         </p>
 
-        {/* O.2 — GDPR data residency + deletion line. Reinforces the
+        {/* O.2 - GDPR data residency + deletion line. Reinforces the
             cookie/privacy posture set by Cookiebot + the privacy
             policy page. Linked deletion form lives at /privacy/delete. */}
         <p

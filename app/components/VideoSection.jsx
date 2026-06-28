@@ -1,12 +1,12 @@
 "use client";
 
-// Chapter 01 (Boss-spec hero rebuild, 2026-05-08) — full rewrite.
+// Chapter 01 (Boss-spec hero rebuild, 2026-05-08) - full rewrite.
 //
 // Replaces the multi-line "GEORGE YACHTS / EXCLUSIVELY GREEK WATERS /
 // BROKERAGE HOUSE LLC / Boutique Luxury Yacht Charter / seasonal /
 // fleet-snapshot pill / dual CTAs + whisper hint / Scroll text /
-// chevron / desktop category nav" hero — too much above-the-fold
-// reading for a UHNW visitor — with a Burgess/Fraser-tier minimal
+// chevron / desktop category nav" hero - too much above-the-fold
+// reading for a UHNW visitor - with a Burgess/Fraser-tier minimal
 // hero: video, 6-word headline, 1-line subline, 2 restrained CTAs,
 // a chevron scroll cue. Nothing else.
 //
@@ -37,23 +37,23 @@
 // bar (which Chapter 01 also makes non-dismissible).
 //
 // Video swap: Boss-tightened 6-clip cinematic loop. New 4th clip
-// added at slot 2 (snorkeler swimming forward toward the camera —
+// added at slot 2 (snorkeler swimming forward toward the camera -
 // 5607894), motorboat-wake clip dropped, and per-clip durations
 // re-balanced for a snappier 37.4 s loop.
 //
 // Final order:
-//   1. 8303143  — golden-hour motor yacht aerial   (4 s, trimmed)
-//   2. 5607894  — snorkeler swims toward camera    (10.4 s, full) ★ NEW
-//   3. 14545703 — superyacht rocky-shore anchorage (4 s, trimmed)
-//   4. 854344   — snorkeler on sandy bottom        (4 s, trimmed)
-//   5. 4612166  — freediver over seagrass meadow   (10 s, trimmed)
-//   6. 8824586  — yacht hull splashing waves       (5 s, trimmed)
+//   1. 8303143  - golden-hour motor yacht aerial   (4 s, trimmed)
+//   2. 5607894  - snorkeler swims toward camera    (10.4 s, full) ★ NEW
+//   3. 14545703 - superyacht rocky-shore anchorage (4 s, trimmed)
+//   4. 854344   - snorkeler on sandy bottom        (4 s, trimmed)
+//   5. 4612166  - freediver over seagrass meadow   (10 s, trimmed)
+//   6. 8824586  - yacht hull splashing waves       (5 s, trimmed)
 //
 // Total 37.4 s loop (down from 63.7 s). The fresh 5607894 clip
 // becomes the long-form moment after a snappy 4 s opening; the rest
 // of the loop punches through three quick transitions and a 10 s
 // freediving beat before closing on the splash. Speed normalised
-// to 1920×1080 30 fps via ffmpeg concat filter — every clip plays
+// to 1920×1080 30 fps via ffmpeg concat filter - every clip plays
 // at the same apparent real-time pace. Encoded:
 //   • WebM VP9  1000 kbps 2-pass → 4.5 MB (Chrome / Firefox / Edge)
 //   • MP4  H.264 1500 kbps 2-pass → 6.9 MB (Safari fallback)
@@ -65,7 +65,7 @@ const HERO_VIDEO_BASE = "/videos/hero-loop";
 
 function HeroBackgroundVideo() {
   const ref = useRef(null);
-  // Chapter 06 (mobile, 2026-05-08) — iOS fallback. If autoplay is
+  // Chapter 06 (mobile, 2026-05-08) - iOS fallback. If autoplay is
   // blocked (Low Power Mode, Safari aggressive media policies, etc.)
   // we surface the frame-1 poster as a static image and never end up
   // with an empty hero. The fallback also fires on any video-load
@@ -80,7 +80,7 @@ function HeroBackgroundVideo() {
     const playPromise = video.play?.();
     if (playPromise && typeof playPromise.then === "function") {
       playPromise.catch(() => {
-        // Autoplay denied — fall back to the poster image.
+        // Autoplay denied - fall back to the poster image.
         setFailed(true);
       });
     }
@@ -106,10 +106,10 @@ function HeroBackgroundVideo() {
   return (
     <video
       ref={ref}
-      // 2026-05-08 (Chapter 01 follow-up) — poster matches frame 1
+      // 2026-05-08 (Chapter 01 follow-up) - poster matches frame 1
       // of the trio video so the swap is invisible. preload="auto"
       // so the browser starts downloading bytes immediately and the
-      // visitor doesn't see the poster freeze for 1–2 s on slower
+      // visitor doesn't see the poster freeze for 1-2 s on slower
       // connections. See the matching change in the fleet page.
       poster="/images/posters/hero-loop-frame1.jpg"
       preload="auto"
@@ -138,7 +138,7 @@ function HeroBackgroundVideo() {
 }
 
 export default function VideoSection() {
-  // Single fade-up reveal — kept minimal compared to the prior 8-stage
+  // Single fade-up reveal - kept minimal compared to the prior 8-stage
   // choreography. The whole hero settles in around 800 ms then breathes
   // with the chevron pulse and the looping video.
   const [revealed, setRevealed] = useState(false);
@@ -150,13 +150,13 @@ export default function VideoSection() {
   return (
     <section
       className="gy-hero relative w-full overflow-hidden bg-black"
-      aria-label="George Yachts — Greek waters charter"
+      aria-label="George Yachts - Greek waters charter"
       style={{ height: "100svh", marginTop: 0, paddingTop: 0 }}
     >
       {/* Video background */}
       <HeroBackgroundVideo />
 
-      {/* Overlay gradient — Boss spec exactly: rgba(13,27,42,0.45) at
+      {/* Overlay gradient - Boss spec exactly: rgba(13,27,42,0.45) at
           the top settling to rgba(13,27,42,0.75) at the bottom. The
           deep-navy hue (13,27,42) is brand "Aegean midnight". */}
       <div
@@ -169,7 +169,7 @@ export default function VideoSection() {
         }}
       />
 
-      {/* Slow-cinema film grain — kept from the prior hero, ~5 % opacity
+      {/* Slow-cinema film grain - kept from the prior hero, ~5 % opacity
           via .gy-film-grain in globals.css. Reads only at the edges
           of the frame, never as visible noise. */}
       <div
@@ -190,9 +190,9 @@ export default function VideoSection() {
           className="flex w-full max-w-[1100px] flex-col items-center text-center"
           style={{ transform: revealed ? "translateY(0)" : "translateY(8px)", transition: "transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1)" }}
         >
-          {/* Headline — Boss-spec exactly: "Greek Waters. One Broker.
+          {/* Headline - Boss-spec exactly: "Greek Waters. One Broker.
               Total Discretion." Six words. Three propositions. Reads
-              with the deliberate punctuation pause — exclusivity →
+              with the deliberate punctuation pause - exclusivity →
               personal service → UHNW priority. Font lands on the
               Phase 28 display tier (Fraunces Thin 100) via the
               .gy-hero-headline mapping in globals.css. */}
@@ -211,10 +211,10 @@ export default function VideoSection() {
             Greek Waters. One Broker. Total Discretion.
           </h1>
 
-          {/* Subline — Boss-spec: 1 line, Switzer Light 300, 16 px,
+          {/* Subline - Boss-spec: 1 line, Switzer Light 300, 16 px,
               tracking 0.04em, ivory white at 70 % opacity. Lands on
               the Phase 28 UI tier via inline font-family. Hidden on
-              ≤ 600 px (mobile) per Boss directive — at that width it
+              ≤ 600 px (mobile) per Boss directive - at that width it
               wraps to 3+ lines and crowds the CTAs. */}
           <p
             className="gy-hero-subline"
@@ -228,10 +228,10 @@ export default function VideoSection() {
               maxWidth: "62ch",
             }}
           >
-            Exclusively crewed yacht charter in Greece — since the beginning.
+            Exclusively crewed yacht charter in Greece - since the beginning.
           </p>
 
-          {/* CTA pair — primary (gold-bordered transparent) + secondary
+          {/* CTA pair - primary (gold-bordered transparent) + secondary
               (text-only with underline on hover). 16 px gap on desktop,
               stacks on mobile full-width with 12 px gap and 52 px min
               height per Boss mobile spec. */}
@@ -292,7 +292,7 @@ export default function VideoSection() {
         </div>
       </div>
 
-      {/* Chevron scroll cue — Boss spec: 20 px white at 50 % opacity,
+      {/* Chevron scroll cue - Boss spec: 20 px white at 50 % opacity,
           gentle 2 s pulse, absolute bottom center. Replaces the prior
           "Scroll" text + breathing vertical line. */}
       <div
@@ -315,7 +315,7 @@ export default function VideoSection() {
       </div>
 
       <style jsx global>{`
-        /* Chapter 01 — hero CTA hover states + chevron pulse.
+        /* Chapter 01 - hero CTA hover states + chevron pulse.
            Primary CTA on hover fills with gold and flips text to black.
            Secondary CTA on hover keeps the text white but reveals an
            underline (no border, just the underline cue Boss specified).
@@ -327,10 +327,10 @@ export default function VideoSection() {
           justify-content: center;
           gap: 16px;
         }
-        /* Mobile (≤ 600 px) — full-width stacked CTAs, 52 px min
+        /* Mobile (≤ 600 px) - full-width stacked CTAs, 52 px min
            height, 12 px gap, primary first per Boss spec. Subline
            hides because it wraps to 3+ lines at this width. Chevron
-           also hides — swipe is the natural gesture. */
+           also hides - swipe is the natural gesture. */
         @media (max-width: 600px) {
           .gy-hero-headline {
             font-size: 38px !important;

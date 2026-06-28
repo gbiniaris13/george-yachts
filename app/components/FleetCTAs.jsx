@@ -1,6 +1,6 @@
 "use client";
 
-// Move #2 — split-screen fleet showcase.
+// Move #2 - split-screen fleet showcase.
 //
 // Replaces the old 2-card boxy CTA strip with a full-viewport
 // editorial diptych:
@@ -12,16 +12,16 @@
 //   • Mobile stacks vertically with a horizontal gold divider.
 //
 // Keeps the same URLs (/private-fleet, /explorer-fleet) so the
-// behaviour downstream is identical — it's only the entrance
+// behaviour downstream is identical - it's only the entrance
 // experience that gets upgraded.
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
-// Chapter 06.5 (2026-05-08) — looping video backgrounds for the
+// Chapter 06.5 (2026-05-08) - looping video backgrounds for the
 // FleetCTAs split-screen panels (Private + Explorer). Same iOS-
-// safe pattern as the homepage hero — autoplay/muted/loop/
+// safe pattern as the homepage hero - autoplay/muted/loop/
 // playsInline plus an `onError` + `play().catch()` handler that
 // falls back to the frame-1 poster image if iOS Low Power Mode
 // (or any other policy) blocks autoplay. Pointer-events-none on
@@ -108,7 +108,7 @@ function FleetPanel({
   image,
   gradientFallback,
   ctaLabel,
-  // Chapter 06.5 (2026-05-08) — optional Boss-curated background
+  // Chapter 06.5 (2026-05-08) - optional Boss-curated background
   // video. When `videoBase` is set we render <video> + overlay at
   // `overlayOpacity` per Boss spec (0.55 Private / 0.45 Explorer).
   // The image prop continues to work as a poster + fallback so any
@@ -122,7 +122,7 @@ function FleetPanel({
       href={href}
       className="group gy-fleet-panel relative block flex-1 min-h-[50dvh] md:min-h-[100dvh] overflow-hidden"
     >
-      {/* Background — video if provided, else image, else gradient. */}
+      {/* Background - video if provided, else image, else gradient. */}
       {videoBase ? (
         <PanelBackgroundVideo videoBase={videoBase} posterSrc={posterSrc} />
       ) : (
@@ -137,7 +137,7 @@ function FleetPanel({
         />
       )}
 
-      {/* Dark overlay — Boss spec exact opacity per panel; lifts a touch
+      {/* Dark overlay - Boss spec exact opacity per panel; lifts a touch
           on hover to reveal the video underneath. */}
       <div
         className="absolute inset-0 transition-colors duration-700"
@@ -178,7 +178,7 @@ function FleetPanel({
           {collectionLabel}
         </p>
 
-        {/* Name — Cormorant Garamond editorial */}
+        {/* Name - Cormorant Garamond editorial */}
         <h2
           className="text-white mb-6"
           style={{
@@ -223,7 +223,7 @@ function FleetPanel({
           {descriptor}
         </p>
 
-        {/* CTA — inline gold-on-hover with sliding arrow */}
+        {/* CTA - inline gold-on-hover with sliding arrow */}
         <span
           className="group inline-flex items-center gap-3 text-white/70 group-hover:text-[#C9A84C] transition-colors duration-500 pb-1 border-b border-white/20 group-hover:border-[#C9A84C]"
           style={{
@@ -283,7 +283,7 @@ export default function FleetCTAs({
           image={privateHeroImage}
           gradientFallback="linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)"
           ctaLabel="View the Fleet"
-          // Chapter 06.5 — Boss-curated background video for this
+          // Chapter 06.5 - Boss-curated background video for this
           // panel. WebM 1.7 MB / MP4 2.5 MB / poster 155 KB
           // (1080×1920 → 720×1280, 30 fps, 2-pass, audio stripped).
           videoBase="private-fleet-bg"
@@ -291,7 +291,7 @@ export default function FleetCTAs({
           overlayOpacity={0.55}
         />
 
-        {/* Divider — diagonal gold seam on desktop, horizontal on mobile */}
+        {/* Divider - diagonal gold seam on desktop, horizontal on mobile */}
         <div aria-hidden="true" className="gy-fleet-divider" />
 
         <FleetPanel
@@ -304,11 +304,11 @@ export default function FleetCTAs({
           image={explorerHeroImage}
           gradientFallback="linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)"
           ctaLabel="View the Fleet"
-          // Chapter 06.5 — Boss-curated Explorer Fleet background
-          // video (underwater swimmer in red, 26 s loop —
+          // Chapter 06.5 - Boss-curated Explorer Fleet background
+          // video (underwater swimmer in red, 26 s loop -
           // captures the "snorkel / explore / lightly crewed"
           // adventure mood). WebM 3.4 MB / MP4 5.3 MB / poster
-          // 126 KB. Overlay 0.45 per Boss spec — slightly more
+          // 126 KB. Overlay 0.45 per Boss spec - slightly more
           // luminous than Private (0.55) to keep the underwater
           // turquoise readable behind the copy without losing
           // text contrast.
@@ -318,8 +318,8 @@ export default function FleetCTAs({
         />
       </div>
 
-      {/* All Fleet bridge — George 2026-04-20:
-          "Private Fleet και Explorer Fleet στο hero είναι πολύ μεγάλα —
+      {/* All Fleet bridge - George 2026-04-20:
+          "Private Fleet και Explorer Fleet στο hero είναι πολύ μεγάλα -
           θέλω να μπει All Fleet ώστε να μπορούν να δουν όλο τον στόλο."
           A thin gold band under the two panels with a single link to
           the unified charter catalogue so nobody gets locked into one
@@ -383,7 +383,7 @@ export default function FleetCTAs({
       </div>
 
       <style jsx global>{`
-        /* Sibling darkening — hover one panel, the other dims.
+        /* Sibling darkening - hover one panel, the other dims.
            Works both directions thanks to :has(). */
         .gy-fleet-panel:hover ~ .gy-fleet-panel,
         .gy-fleet-panel:has(~ .gy-fleet-panel:hover) {
@@ -396,7 +396,7 @@ export default function FleetCTAs({
           transition: opacity 700ms ease, filter 700ms ease;
         }
 
-        /* Divider — a hairline gold seam between the two panels.
+        /* Divider - a hairline gold seam between the two panels.
            Horizontal on mobile, vertical on desktop. */
         .gy-fleet-divider {
           flex-shrink: 0;
@@ -424,7 +424,7 @@ export default function FleetCTAs({
           }
         }
 
-        /* Respect reduced-motion — no zoom, no overlay fade drama */
+        /* Respect reduced-motion - no zoom, no overlay fade drama */
         @media (prefers-reduced-motion: reduce) {
           .gy-fleet-panel ~ .gy-fleet-panel,
           .gy-fleet-panel:has(~ .gy-fleet-panel:hover) {

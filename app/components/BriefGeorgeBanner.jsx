@@ -1,17 +1,17 @@
-// Phase 2 / B1 (Boss luxury rebuild brief, 2026-05-05) —
+// Phase 2 / B1 (Boss luxury rebuild brief, 2026-05-05) -
 // "Brief George" banner sitting alongside fleet filters.
 //
-// Boss directive: keep filters AS IS — don't replace with AI quiz —
+// Boss directive: keep filters AS IS - don't replace with AI quiz -
 // but add a parallel path where UHNW guests who don't want to filter
 // can brief the broker directly. Boutique brokerage tone: "we'll come
 // back to you personally" not "fill out this form".
 //
 // Click target = the existing /inquiry flow, which already collects
 // the 6 Boss fields (When / Who / Where / What excites / Budget /
-// Special occasion). NO AI in the response loop — broker writes the
+// Special occasion). NO AI in the response loop - broker writes the
 // proposal personally.
 //
-// Server component — no JS payload.
+// Server component - no JS payload.
 
 import Link from "next/link";
 
@@ -39,7 +39,7 @@ export default function BriefGeorgeBanner() {
           flexWrap: "wrap",
         }}
       >
-        {/* Left — narrative */}
+        {/* Left - narrative */}
         <div style={{ flex: "1 1 360px", minWidth: 280 }}>
           <p
             className="gy-eyebrow-sm"
@@ -58,7 +58,7 @@ export default function BriefGeorgeBanner() {
               letterSpacing: "-0.01em",
             }}
           >
-            Tell us about your week — <em style={{ color: "#C9A84C", fontStyle: "italic" }}>George replies personally</em>.
+            Tell us about your week - <em style={{ color: "#C9A84C", fontStyle: "italic" }}>George replies personally</em>.
           </h2>
           <p
             style={{
@@ -71,14 +71,14 @@ export default function BriefGeorgeBanner() {
               lineHeight: 1.55,
             }}
           >
-            A short brief — when, who, where, your style, your budget,
+            A short brief - when, who, where, your style, your budget,
             any special occasion. We'll come back with the three yachts our
-            brokers would actually pick for your week. No AI proposals —
+            brokers would actually pick for your week. No AI proposals -
             just real human curation from inside the Greek charter network.
           </p>
         </div>
 
-        {/* Right — CTA */}
+        {/* Right - CTA */}
         <div
           style={{
             flex: "0 0 auto",

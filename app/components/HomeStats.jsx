@@ -2,17 +2,17 @@
 
 // A.1 (Roberto brief, May 2026):
 //   • SSR was rendering `<span>0</span>` because Counter used
-//     useState(0) and only animated after IntersectionObserver fired —
+//     useState(0) and only animated after IntersectionObserver fired -
 //     Googlebot + no-JS visitors saw "0+ Curated Yachts / 100% Client
 //     Satisfaction", a catastrophic first-impression for UHNW.
 //   • Hardcode target values in JSX so SSR HTML literally contains
 //     "63+", "4", "360°".
-//   • Reduce 4 → 3 stats (drop "100% Client Satisfaction" — we cannot
+//   • Reduce 4 → 3 stats (drop "100% Client Satisfaction" - we cannot
 //     back the claim until real client testimonials land).
 //   • Rename "Greek Regions" → "Greek Waters" (more accurate +
 //     poetic; we operate in waters, not administrative regions).
 //   • Parent fade-in stays as the only animation. Number values are
-//     final from first paint — no count-up flash.
+//     final from first paint - no count-up flash.
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
@@ -54,7 +54,7 @@ export default function HomeStats({ yachtCount = 63 }) {
       {/* Subtle gold gradient line at top */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/20 to-transparent" />
 
-      {/* Phase 27i.18 (2026-05-08) — constellation backdrop. Same
+      {/* Phase 27i.18 (2026-05-08) - constellation backdrop. Same
           night-sky register as Filotimon, kept very low intensity
           here so it sits behind the stats numbers without competing
           for the eye. Closes the "constellation between sections"
@@ -97,7 +97,7 @@ export default function HomeStats({ yachtCount = 63 }) {
         ))}
       </div>
 
-      {/* Credentials — merged from the standalone CredentialsStrip
+      {/* Credentials - merged from the standalone CredentialsStrip
           section 2026-04-21 (Proposal A). Same icons, now flowing
           directly below the stat counters so "Proof" lives on one
           screen instead of two stacked sections.
@@ -116,7 +116,7 @@ export default function HomeStats({ yachtCount = 63 }) {
               icon: (
                 <Image
                   src="/images/iyba-official-white.png"
-                  alt="IYBA — International Yacht Brokers Association"
+                  alt="IYBA - International Yacht Brokers Association"
                   width={120}
                   height={28}
                   className="opacity-75 group-hover:opacity-100 transition-opacity duration-500"
@@ -161,7 +161,7 @@ export default function HomeStats({ yachtCount = 63 }) {
             const isIyba = cred.label === "IYBA Member Broker";
             const Wrap = isIyba ? "a" : "div";
             const wrapProps = isIyba
-              ? { href: "https://iyba.org", target: "_blank", rel: "noopener noreferrer", "aria-label": "Verify on iyba.org — opens in new tab" }
+              ? { href: "https://iyba.org", target: "_blank", rel: "noopener noreferrer", "aria-label": "Verify on iyba.org - opens in new tab" }
               : {};
             return (
               <Wrap
