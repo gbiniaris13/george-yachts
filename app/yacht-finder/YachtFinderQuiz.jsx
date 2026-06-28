@@ -433,7 +433,7 @@ export default function YachtFinderQuiz({ fleet = [] }) {
           shortlist: matches.map((y) => ({
             slug: y.slug,
             name: y.name,
-            weeklyRatePrice: `€${y.price.toLocaleString()}`,
+            weeklyRatePrice: `€${y.price.toLocaleString('en-US')}`,
           })),
           source: 'smart_match_quiz',
           preferredChannel: contact.channel,
@@ -917,7 +917,7 @@ function ResultScreen({ matches, answers }) {
                     margin: '0 0 8px',
                   }}
                 >
-                  {y.length} · {y.guests} guests · €{y.price.toLocaleString()}/week
+                  {y.length} · {y.guests} guests · €{y.price.toLocaleString('en-US')}/week
                 </p>
                 <p
                   style={{

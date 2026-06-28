@@ -32,7 +32,7 @@ const TRANSFER_OPTIONS = [
 ];
 
 function fmt(n) {
-  return '€' + Math.round(n).toLocaleString();
+  return '€' + Math.round(n).toLocaleString('en-US');
 }
 
 export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {

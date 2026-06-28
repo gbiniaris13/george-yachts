@@ -39,7 +39,7 @@ function formatPrice(weeklyRatePrice) {
   const n = Number(s.replace(/[^\d]/g, ""));
   if (!Number.isFinite(n) || n <= 0) return null;
   if (n >= 1000) return `€${Math.round(n / 1000)}K/wk`;
-  return `€${n.toLocaleString()}/wk`;
+  return `€${n.toLocaleString('en-US')}/wk`;
 }
 
 export default function TrendingYachts({ yachts }) {

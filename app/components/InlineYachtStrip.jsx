@@ -23,7 +23,7 @@ function priceLabel(weeklyRatePrice) {
   if (s.includes("€") || s.toLowerCase().includes("week")) return s;
   const n = Number(s.replace(/[^\d]/g, ""));
   if (!Number.isFinite(n) || n <= 0) return null;
-  return n >= 1000 ? `From €${Math.round(n / 1000)}K/week` : `From €${n.toLocaleString()}/week`;
+  return n >= 1000 ? `From €${Math.round(n / 1000)}K/week` : `From €${n.toLocaleString('en-US')}/week`;
 }
 
 export default function InlineYachtStrip({ yacht, eyebrow }) {

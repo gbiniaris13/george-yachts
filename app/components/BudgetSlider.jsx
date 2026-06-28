@@ -50,7 +50,7 @@ export default function BudgetSlider({ yachts = [] }) {
         {/* Budget display */}
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
           <div style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 48, color: GOLD, fontWeight: 300 }}>
-            €{budget.toLocaleString()}
+            €{budget.toLocaleString('en-US')}
           </div>
           <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.25)', marginTop: 4 }}>
             per week · charter rate
@@ -78,8 +78,8 @@ export default function BudgetSlider({ yachts = [] }) {
             }}
           />
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-            <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.2)' }}>€{sliderMin.toLocaleString()}</span>
-            <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.2)' }}>€{sliderMax.toLocaleString()}</span>
+            <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.2)' }}>€{sliderMin.toLocaleString('en-US')}</span>
+            <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.2)' }}>€{sliderMax.toLocaleString('en-US')}</span>
           </div>
         </div>
 
@@ -115,7 +115,7 @@ export default function BudgetSlider({ yachts = [] }) {
                   {yacht.type} · {yacht.length} · {yacht.guests} guests
                 </p>
                 <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: GOLD, margin: 0, fontWeight: 500 }}>
-                  €{yacht.price.toLocaleString()}/week
+                  €{yacht.price.toLocaleString('en-US')}/week
                 </p>
               </Link>
             ))}

@@ -293,7 +293,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
     const lowTotal = Math.round((lowBase * multiplier) / guestCount);
     const highTotal = Math.round((highBase * multiplier) / guestCount);
     if (lowTotal <= 0) return null;
-    return { low: `€${lowTotal.toLocaleString()}`, high: `€${highTotal.toLocaleString()}` };
+    return { low: `€${lowTotal.toLocaleString('en-US')}`, high: `€${highTotal.toLocaleString('en-US')}` };
   }, [yacht.weeklyRatePrice, override.price, guests]);
 
   return (
@@ -614,8 +614,8 @@ export default function FleetGrid({ yachts }) {
         }
         if (nums.length > 0) {
           const mult = 1.42;
-          ppwLow = `€${Math.round((nums[0] * mult) / gn).toLocaleString()}`;
-          ppwHigh = nums.length > 1 ? `€${Math.round((nums[nums.length - 1] * mult) / gn).toLocaleString()}` : ppwLow;
+          ppwLow = `€${Math.round((nums[0] * mult) / gn).toLocaleString('en-US')}`;
+          ppwHigh = nums.length > 1 ? `€${Math.round((nums[nums.length - 1] * mult) / gn).toLocaleString('en-US')}` : ppwLow;
         }
       }
       return [...prev, {

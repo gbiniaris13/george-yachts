@@ -47,7 +47,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
       <section style={{ padding: "80px 24px", background: "#0D1B2A", textAlign: "center" }}>
         <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 40px", border: "1px solid rgba(201,168,76,0.15)", borderRadius: 4 }}>
           <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(1.6rem, 4vw, 2.4rem)", color: "#C9A84C", margin: "0 0 16px 0" }}>
-            From €{lowestPrice.toLocaleString()} to €{highestPrice.toLocaleString()} / week
+            From €{lowestPrice.toLocaleString('en-US')} to €{highestPrice.toLocaleString('en-US')} / week
           </p>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, color: "rgba(248, 245, 240,0.4)", lineHeight: 1.8, margin: 0, letterSpacing: "0.05em" }}>
             Full crew included · APA & expenses extra · curated for Greek waters

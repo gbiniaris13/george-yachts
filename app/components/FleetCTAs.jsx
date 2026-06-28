@@ -76,7 +76,7 @@ function PanelBackgroundVideo({ videoBase, posterSrc }) {
   );
 }
 
-const fmtK = (n) => (n >= 1000 ? `€${Math.round(n / 1000)}K` : `€${n.toLocaleString()}`);
+const fmtK = (n) => (n >= 1000 ? `€${Math.round(n / 1000)}K` : `€${n.toLocaleString('en-US')}`);
 
 // Panel arrow icon, re-used in both panels.
 function ArrowLine() {
@@ -298,7 +298,7 @@ export default function FleetCTAs({
           href="/explorer-fleet"
           collectionLabel="Collection II"
           name="Explorer Fleet"
-          priceLine={`From €${explorerRange.low.toLocaleString()} to €${explorerRange.high.toLocaleString()} / person`}
+          priceLine={`From €${explorerRange.low.toLocaleString('en-US')} to €${explorerRange.high.toLocaleString('en-US')} / person`}
           descriptor="Skippered or lightly crewed. More islands, more adventure."
           footer={explorerCount > 0 ? `${explorerCount} Yachts · Sailing & Power Cats` : null}
           image={explorerHeroImage}
