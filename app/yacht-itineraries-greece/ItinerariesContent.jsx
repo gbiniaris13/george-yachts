@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
+import { itineraries } from "@/lib/signatureItineraries";
 
 function Reveal({ children, className = "", delay = 0 }) {
   const ref = useRef(null);
@@ -38,85 +39,9 @@ function useParallax() {
   }, []);
 }
 
-const itineraries = [
-  {
-    id: "cyclades",
-    title: "The Cyclades Classic",
-    subtitle: "Athens to Mykonos & Beyond",
-    duration: "7 Days / 6 Nights",
-    embarkation: "Athens (Lavrion Marina)",
-    season: "June \u2013 September",
-    idealFor: "First-time charterers, couples, families",
-    days: [
-      { day: 1, title: "Athens \u2192 Kea (Tzia)", nm: "25 NM", desc: "The closest Cycladic island to Athens. Arrive at Vourkari bay for a quiet first evening. Swim at Koundouros beach. Dinner at a waterfront taverna \u2014 grilled octopus, local wine, the slow pace beginning." },
-      { day: 2, title: "Kea \u2192 Syros", nm: "35 NM", desc: "The \u201ccapital\u201d of the Cyclades. Ermoupoli\u2019s neoclassical architecture feels more Italian than Greek. Explore the town, visit the Apollon Theater (a miniature La Scala), dine at the harbour under fairy lights." },
-      { day: 3, title: "Syros \u2192 Mykonos", nm: "20 NM", desc: "Arrive at the island of the winds. Anchor at Ornos or Psarou Bay. Little Venice for sunset cocktails. Dinner at Nammos or Kiki\u2019s Taverna (arrive early \u2014 no reservations). The nightlife starts after midnight." },
-      { day: 4, title: "Mykonos \u2192 Paros", nm: "18 NM", desc: "Cross to Paros \u2014 the Cyclades\u2019 best-kept balance of beauty and authenticity. Naoussa harbour for lunch. Explore the Old Town\u2019s narrow marble streets. Sunset from the hilltop church, dinner at Mario." },
-      { day: 5, title: "Paros \u2192 Antiparos \u2192 Koufonisia", nm: "30 NM", desc: "Morning stop at Antiparos \u2014 the cave of stalactites, lunch at Captain Pipinos. Then sail to Koufonisia \u2014 crystal-clear turquoise water, white sand, zero cars. Anchor overnight." },
-      { day: 6, title: "Koufonisia \u2192 Naxos", nm: "15 NM", desc: "The largest Cycladic island. Visit the Portara (Temple of Apollo). Long sandy beaches. The best local cuisine in the Cyclades \u2014 Naxos cheese, potatoes, fresh fish. Dinner in the Old Town." },
-      { day: 7, title: "Naxos \u2192 Kea \u2192 Athens", nm: "60 NM", desc: "Final cruise back via Kea. Farewell breakfast aboard. Arrive Lavrion by afternoon." },
-    ],
-    highlights: "Mykonos nightlife, Koufonisia beaches, Syros architecture, Naxos cuisine",
-    yachts: [
-      { name: "M/Y Can\u2019t Remember", slug: "cant-remember" },
-      { name: "S/Y World\u2019s End", slug: "worlds-end" },
-      { name: "M/Y Vista", slug: "vista" },
-    ],
-  },
-  {
-    id: "saronic",
-    title: "Saronic Elegance",
-    subtitle: "The Athens Riviera Circuit",
-    duration: "7 Days / 6 Nights",
-    embarkation: "Athens (Alimos Marina)",
-    season: "May \u2013 October",
-    idealFor: "Couples, history lovers, first-time charterers",
-    days: [
-      { day: 1, title: "Athens \u2192 Aegina", nm: "17 NM", desc: "Sail from Alimos to Aegina \u2014 the pistachio island. Visit the Temple of Aphaia (one of the best-preserved Greek temples). Walk the harbour, try the local pistachio ice cream. Easy first day." },
-      { day: 2, title: "Aegina \u2192 Hydra", nm: "20 NM", desc: "The jewel of the Saronic. No cars, no motorbikes \u2014 only donkeys and water taxis. Swim at Vlychos beach. Sundowners at the harbour. Dinner at Omilos or Sunset." },
-      { day: 3, title: "Hydra \u2192 Dokos", nm: "5 NM", desc: "The uninhabited island between Hydra and the Peloponnese. Anchor in the bay \u2014 crystal water, absolute silence, just you and the sea. Lunch aboard, afternoon swimming, stargazing at night." },
-      { day: 4, title: "Dokos \u2192 Spetses", nm: "12 NM", desc: "Pine-covered island with elegant mansions. Horse-drawn carriages around the port. Dinner at On The Verandah or Liotrivi. Walk the coastal path at sunset." },
-      { day: 5, title: "Spetses \u2192 Porto Heli", nm: "8 NM", desc: "Cross to the Peloponnese coast. Porto Heli is the Greek Hamptons \u2014 luxury villas, Amanzoe resort nearby. Lunch at Aman Beach Club, swim at Hinitsa Bay." },
-      { day: 6, title: "Porto Heli \u2192 Nafplio", nm: "25 NM", desc: "Greece\u2019s first capital. The most romantic town in the Peloponnese. Palamidi Fortress (999 steps). Bourtzi castle in the harbour. Old Town dinner \u2014 some of the best food in Greece." },
-      { day: 7, title: "Nafplio \u2192 Poros \u2192 Athens", nm: "35 NM", desc: "Stop at Poros \u2014 the island so close to the mainland you could swim. Clock tower views. Then final cruise to Athens. Farewell lunch aboard." },
-    ],
-    highlights: "Hydra\u2019s car-free charm, Nafplio\u2019s romance, Dokos isolation, Porto Heli luxury",
-    yachts: [
-      { name: "M/Y Shero", slug: "shero" },
-      { name: "M/Y M Five", slug: "m-five" },
-      { name: "M/Y Vista", slug: "vista" },
-      { name: "S/Y Sahana", slug: "sahana" },
-    ],
-  },
-  {
-    id: "ionian",
-    title: "The Ionian Dream",
-    subtitle: "Corfu to Kefalonia",
-    duration: "7 Days / 6 Nights",
-    embarkation: "Corfu (Gouvia Marina)",
-    season: "May \u2013 October",
-    idealFor: "Families with children, sailing enthusiasts, nature lovers",
-    days: [
-      { day: 1, title: "Corfu \u2192 Paxos", nm: "30 NM", desc: "Sail south to the tiny island of Paxos. Anchor at Lakka \u2014 a horseshoe bay surrounded by olive groves. Swim in turquoise water, dine at the harbour. The Ionian pace begins." },
-      { day: 2, title: "Paxos \u2192 Antipaxos \u2192 Parga", nm: "15 NM", desc: "Morning at Antipaxos \u2014 Voutoumi beach (Caribbean-blue water, white pebbles). Then cross to Parga on the mainland \u2014 a Venetian fortress town cascading down to the sea." },
-      { day: 3, title: "Parga \u2192 Lefkada (Sivota Bay)", nm: "25 NM", desc: "Sail to Lefkada\u2019s east coast. Sivota Bay is one of the most protected anchorages in Greece \u2014 perfect for a lazy day. Swim, paddleboard, explore by tender." },
-      { day: 4, title: "Lefkada \u2192 Meganisi", nm: "8 NM", desc: "The secret island. Tiny Meganisi has 3 villages, zero tourist buses, and some of the clearest water in Greece. Anchor in Atherinos Bay. Lunch at Tropicana in Vathy." },
-      { day: 5, title: "Meganisi \u2192 Ithaca", nm: "15 NM", desc: "Odysseus\u2019 homeland. Anchor in Kioni \u2014 a postcard-perfect fishing village. Walk the hillside path to ancient ruins. Dinner in the harbour \u2014 the kind of meal you remember for years." },
-      { day: 6, title: "Ithaca \u2192 Kefalonia (Fiskardo)", nm: "10 NM", desc: "The crown jewel. Fiskardo is the only Kefalonian village that survived the 1953 earthquake. Venetian architecture, pastel-coloured houses. Dinner at Tassia \u2014 legendary cooking." },
-      { day: 7, title: "Kefalonia \u2192 Corfu", nm: "65 NM", desc: "Long final passage back to Corfu (or arrange one-way disembarkation). Farewell breakfast aboard." },
-    ],
-    highlights: "Antipaxos beaches, Meganisi serenity, Fiskardo elegance, Parga fortress views",
-    yachts: [
-      { name: "S/Y Kimata", slug: "kimata" },
-      { name: "S/Y Alexandra II", slug: "alexandra-ii" },
-      { name: "S/Y Huayra", slug: "huayra" },
-      { name: "S/Y Serenissima", slug: "serenissima" },
-    ],
-  },
-  // Sporades Escape itinerary retired 2026-05-08 \u2014 Boss directive:
-  // Sporades + Dodecanese are no longer surfaced anywhere on the
-  // site. Re-add only on explicit owner direction.
-];
+// itineraries now live in lib/signatureItineraries.js so the page-level
+// TouristTrip JSON-LD (a server component) can share the exact same data.
+// Imported at the top of this file.
 
 function ItineraryCard({ itin, index }) {
   const [expanded, setExpanded] = useState(false);
