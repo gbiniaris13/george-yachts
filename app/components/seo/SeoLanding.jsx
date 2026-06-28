@@ -44,6 +44,7 @@ import { relatedFor } from "@/lib/seoInternalLinks";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import { SITE_UPDATED } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
+import { buildTouristTrip } from "@/lib/touristTripSchema";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -155,6 +156,21 @@ export default async function SeoLanding({ pageData }) {
       <ServiceJsonLd pageData={pageData} yachts={yachts} />
       <FaqJsonLd faq={pageData.faq} />
       <BreadcrumbSchema items={breadcrumbs} />
+      {/* TouristTrip - only on itinerary pages (gated on structured stops) so
+          yacht-type / combo / comparison pages never emit a spurious trip. */}
+      {Array.isArray(pageData.itineraryStops) && pageData.itineraryStops.length > 0 && (() => {
+        const trip = buildTouristTrip({
+          name: pageData.h1,
+          description: pageData.seoDescription,
+          url: `https://georgeyachts.com${pageData.urlPath || `/${pageData.slug}`}`,
+          stops: pageData.itineraryStops,
+          touristType: pageData.touristType,
+          region: pageData.itineraryRegion,
+        });
+        return trip ? (
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(trip).replace(/</g, "\\u003c") }} />
+        ) : null;
+      })()}
 
       <article style={{ background: NAVY, minHeight: "100vh" }}>
         {/* QUICK ANSWER - Phase 7 R27 (technical brief Priority 2B).
