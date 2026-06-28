@@ -37,21 +37,22 @@ LAST	P1813	"George Yachts"
 
 # ─────────────────────────────────────────────────────────────────
 # ENTITY 2: George P. Biniaris (Managing Broker)
+# 2026-06-28 UPDATE: this person entity ALREADY EXISTS as Q140078221
+# (verified live; it carries P31/P21/P27/P106 + en label/description and
+# is already referenced from the site's sameAs). So do NOT CREATE a second
+# one - that would be a duplicate Wikidata flags and merges. Instead the
+# lines below ENRICH the existing Q140078221 with the properties it is
+# missing (website, residence, social/LinkedIn usernames, aliases).
+# Adding a statement it already has is a harmless no-op in QuickStatements.
 # ─────────────────────────────────────────────────────────────────
 
-CREATE
-LAST	Len	"George P. Biniaris"
-LAST	Den	"Greek yacht charter broker. Managing Broker of George Yachts Brokerage House LLC. IYBA member. Featured in Forbes (May 2026)."
-LAST	Aen	"George Biniaris"
-LAST	Aen	"George Petros Biniaris"
-LAST	P31	Q5	S854	"https://georgeyachts.com/about/george-p-biniaris"
-LAST	P21	Q6581097	S854	"https://georgeyachts.com/about/george-p-biniaris"
-LAST	P27	Q41	S854	"https://georgeyachts.com/about/george-p-biniaris"
-LAST	P106	Q43845	S854	"https://georgeyachts.com/about/george-p-biniaris"
-LAST	P551	Q1524	S854	"https://georgeyachts.com/about/george-p-biniaris"
-LAST	P856	"https://georgeyachts.com/about/george-p-biniaris"
-LAST	P6634	"george-p-biniaris"
-LAST	P2003	"george_p.biniaris"
+Q140078221	Den	"Greek yacht charter broker. Managing Broker of George Yachts Brokerage House LLC. IYBA member. Featured in Forbes (May 2026)."
+Q140078221	Aen	"George Biniaris"
+Q140078221	Aen	"George Petros Biniaris"
+Q140078221	P551	Q1524	S854	"https://georgeyachts.com/about/george-p-biniaris"
+Q140078221	P856	"https://georgeyachts.com/about/george-p-biniaris"
+Q140078221	P6634	"george-p-biniaris"
+Q140078221	P2003	"georgeyachts"
 
 # ─────────────────────────────────────────────────────────────────
 # Property reference key (for review before running):
@@ -107,11 +108,14 @@ LAST	P2003	"george_p.biniaris"
 #      // existing entries...
 #    ]
 #
-# 4. (Optional) Edit each entity manually in Wikidata to add:
-#    - Organization.founder (P112) -> link Person Q-number
-#    - Person.employer (P108) -> link Organization Q-number
-#    - These cross-references can't be done in V1 QuickStatements
-#      because the Q-numbers don't exist when the batch starts.
+# 4. Cross-link the two entities (the person Q-number is already known:
+#    Q140078221; only the new org Q-number, call it Q<ORG>, is fresh):
+#    - Organization.founder (P112) -> Q140078221
+#    - Organization P127 (owner) / P169 (CEO) -> Q140078221 if desired
+#    - Person Q140078221 employer (P108) -> Q<ORG>
+#      QuickStatements line you can run in a second batch once Q<ORG> exists:
+#        Q140078221	P108	Q<ORG>	S854	"https://georgeyachts.com/about-us"
+#        Q<ORG>	P112	Q140078221	S854	"https://georgeyachts.com/about-us"
 #
 # 5. Commit + deploy:
 #    git add lib/organizationSchema.js lib/teamSchema.js

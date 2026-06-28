@@ -35,7 +35,7 @@ greece", "greece sailing catamaran", "greek islands boat", "flotilla greece".
 > It splits into four buckets, and the headline weekly rate is only the first.
 > For a ~26m crewed motor yacht in peak season you're looking at roughly
 > €45-50k/week base. On top: APA (Advance Provisioning Allowance) ~30% for
-> fuel, food, berths; Greek VAT (12% on crewed charters over 48h); and crew
+> fuel, food, berths; Greek VAT (13% on crewed charters over 48h); and crew
 > gratuity (the MYBA guideline is ~10-15% of the base). So a €47k base lands
 > nearer €75-80k all-in. The big lever nobody mentions: **season**. The same
 > boat in late September/October can be 35-45% cheaper, with warmer water and
@@ -72,7 +72,7 @@ greece", "greece sailing catamaran", "greek islands boat", "flotilla greece".
 ## 4 — "First time chartering in Greece — what do we need to know?"
 > The things that surprise first-timers: (1) **APA** — you pre-pay ~30% of the
 > base into a running-cost float (fuel/food/berths); leftover is refunded.
-> (2) **VAT** — 12% on crewed charters over 48h (lower than France/Italy).
+> (2) **VAT** — 13% on crewed charters over 48h (lower than France/Italy).
 > (3) **Gratuity** — cash to the captain on the last night, ~10-15% of base,
 > split among crew. (4) **Lead time** — peak weeks (late July/August) book out
 > by spring; shoulder season is easier and cheaper. (5) The **MYBA contract**
