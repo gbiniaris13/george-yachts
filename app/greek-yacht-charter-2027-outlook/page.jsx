@@ -38,8 +38,6 @@ const SOURCES = {
   nj: { pub: "Northrop & Johnson", url: "https://www.northropandjohnson.com/navigator-news/charter/2026-yacht-charter-market-trends-show-last-minute-booking-surge" },
   knightFrank: { pub: "Boat International, Knight Frank Wealth Report", url: "https://www.boatinternational.com/boat-pro/superyacht-insight/knight-frank-wealth-report-2026-superyacht-industry" },
   iyc: { pub: "IYC", url: "https://iyc.com/blog/review-of-2025-yacht-sales-charter-performance/" },
-  twohulls: { pub: "2Hulls", url: "https://www.2hulls.com/understanding-the-catamaran-charter-market/" },
-  wiyachts: { pub: "WI Yachts", url: "https://www.wiyachts.com/blog/how-to-dodge-fuel-costs-geopolitics-on-your-2026-yacht-charter/" },
   boataround: { pub: "Boataround", url: "https://www.boataround.com/blog/boatarounds-2024-in-numbers-sailing-trends-and-customer-insights" },
   bookingMgr: { pub: "Booking Manager", url: "https://www.booking-manager.com/en/blog/state-of-the-yacht-charter-industry-2025.html" },
   traveler: { pub: "The Traveler", url: "https://www.thetraveler.org/greece-commands-global-yacht-charter-market-in-2025/" },
@@ -58,8 +56,8 @@ const SECTIONS = [
       { t: "The Greek government allocated 260 million euros across 30 island ports (180 million from the NSRF Transport 2021-2027 programme, 80 million from the Recovery and Resilience Fund) to upgrade yachting infrastructure through 2027.", s: "gtpPorts" },
       { t: "Yachting contributes an estimated 5 to 6 billion euros a year to the Greek economy, roughly 2.5% of GDP, according to the Piraeus Chamber of Commerce and Industry.", s: "gtpStrategy" },
       { t: "Greece ranks 2nd globally in recreational vessel traffic and 3rd in the Mediterranean for superyachts over 24 metres.", s: "gtpStrategy" },
-      { t: "The Greek Yachting Association elected a new 2026-2029 board on 28 January 2026, with Ioannis Kourounis as President and Spiros Galanakis as Vice President.", s: "gtpBoard" },
-      { t: "The Mediterranean Yacht Show drew 106 yachts, 485 brokers, 39 exhibitors and 24 countries to Nafplio in May 2026, and returns there 8 to 12 May 2027 for its 12th edition.", s: "mys" },
+      { t: "The Greek Yachting Association elected a new 2026-2029 board in early 2026, with Ioannis Kourounis as President and Spiros Galanakis as Vice President.", s: "gtpBoard" },
+      { t: "The 11th Mediterranean Yacht Show drew 106 yachts, 485 brokers, 39 exhibitors and 24 countries to Nafplio on 2 to 6 May 2026.", s: "mys" },
     ],
   },
   {
@@ -75,14 +73,11 @@ const SECTIONS = [
     ],
   },
   {
-    heading: "Catamarans, motor yachts, and the fuel question",
+    heading: "Catamarans vs motor yachts: where the demand sits",
     facts: [
-      { t: "Catamarans are far more fuel-economical: roughly 80 to 120 litres a week on a comparable route, against 400 to 600 litres for a motor yacht.", s: "twohulls" },
-      { t: "Fuel is typically 50 to 60% of APA spend on a motor yacht, but only 10 to 20% on a sailing catamaran.", s: "wiyachts" },
-      { t: "A 50 metre motor yacht burns 4,500 to 7,500 litres on a standard Mediterranean charter week, roughly 8,000 to 18,000 US dollars as of May 2026.", s: "wiyachts" },
-      { t: "The Lagoon 42 was the single most-booked charter model of 2025, the first time a catamaran took the top spot, with bookings up more than 60% year on year.", s: "boataround" },
+      { t: "The Lagoon 42 was the most-booked charter model of 2025 on Boataround, the first time a catamaran topped that platform's ranking, with bookings up more than 60% year on year.", s: "boataround" },
       { t: "Catamarans are about 26% of the global charter fleet and 30% of all booked weeks, yet motor yachts still accounted for 57.52% of the 2025 charter revenue pool.", s: "bookingMgr" },
-      { t: "In 2025, peak-season occupancy of monohulls was higher than catamarans for the first time in several years.", s: "bookingMgr" },
+      { t: "In 2025, peak-season occupancy of monohulls was higher than catamarans for the first time in several years, a shift within the sail segment rather than a motor-versus-sail move.", s: "bookingMgr" },
       { t: "Greece had 904 catamarans out of 3,030 charter vessels in 2025 (about 30% of the fleet), with luxury catamarans among the fastest-growing segments.", s: "traveler" },
       { t: "The global catamaran market was worth 4.7 billion US dollars in 2024 and is projected to grow at a 7.4% annual rate through 2034.", s: "mordor" },
     ],
@@ -100,7 +95,7 @@ const SECTIONS = [
 function FaqJsonLd() {
   const faq = [
     { q: "Is Greek yacht charter growing into 2027?", a: "The verifiable record points up, not down. Greece recorded a 24% rise in yachting demand in 2025 and took 40% of Eastern Mediterranean charter bookings, and the state is investing 260 million euros in island ports through 2027. Mediterranean crewed charter demand held strong into 2026." },
-    { q: "Are catamarans really cheaper to run than motor yachts?", a: "Yes, on fuel. Independent figures put a catamaran at roughly 80 to 120 litres a week against 400 to 600 for a comparable motor yacht, so fuel is 10 to 20% of APA on a catamaran versus 50 to 60% on a motor yacht. That economics helped the Lagoon 42 become the most-booked model of 2025." },
+    { q: "Are catamarans cheaper to run than motor yachts?", a: "Directionally yes: a sailing catamaran burns far less fuel than a comparable motor yacht, so fuel is a smaller share of the catamaran's running cost. We do not publish a precise litre or percentage split, because the figures vary widely by yacht and route and we could not independently verify a single industry standard. What is documented is that the Lagoon 42 was the most-booked charter model of 2025 on Boataround, the first catamaran to top that platform's ranking." },
     { q: "Did motor-yacht charter demand collapse in 2026?", a: "Not according to the public record. Motor yachts were still 57.52% of the 2025 charter revenue pool and monohull peak occupancy actually overtook catamarans that year. Catamarans gained share by volume, but motor yachts remained the revenue core. Our own forward view on a 2027 motor recovery is stated as opinion below." },
     { q: "What could push the 2027 Greek charter market?", a: "Documented tailwinds include a 260 million euro Greek port programme through 2027, a Mediterranean that is 76% of world charter, falling booking lead times, and a 2026 travel shift toward the Southern Mediterranean. The main watch-item is marine fuel, which spiked above 650 US dollars per ton in March 2026." },
   ];
@@ -171,7 +166,7 @@ export default function Outlook2027Page() {
           <div style={{ maxWidth: 880, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 18px" }}>George Yachts house view (opinion, not fact)</p>
             <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(20px, 3vw, 27px)", fontWeight: 300, lineHeight: 1.4, color: CREAM, margin: "0 0 18px" }}>
-              Catamarans have been winning charter share partly because they are far more fuel-economical than motor yachts. Our own read of the Greek motor segment is that it softened under high 2026 fuel costs even as the wider Greek market grew, and we expect that as Middle East tensions ease through 2027, motor-yacht charter demand in Greece recovers and strengthens.
+              Independent data show the wider Greek and Mediterranean market holding firm or growing through 2025 and 2026, with motor yachts still the revenue core; what shifted was shorter booking lead times, a softer average spend, and a reshuffle within the sail segment. Our own read from the desk is that the Greek motor segment felt the high 2026 fuel costs more than the headline numbers show, and we expect that as Middle East tensions ease through 2027, motor-yacht charter demand in Greece firms up.
             </p>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.6)", fontWeight: 300, margin: 0 }}>
               This paragraph is George Yachts' forward-looking opinion, offered as a broker's read of the market, not an established fact. The public record above shows Greek yachting growing overall in 2025 and motor yachts still leading charter revenue; our motor-segment and recovery view is a judgement, and we will revise it as the data does.
