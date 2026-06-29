@@ -3919,3 +3919,55 @@ body.cabin-mode .gy-footer {
 body.cabin-mode [data-cabin-mode] {
   isolation: isolate;
 }
+
+/* ──────────────────────────────────────────────────────────────
+   Custom cursor (2026-06-29) — gold ring follower that shows the
+   data-cursor word on hover. Desktop fine-pointer only; the media
+   query + the component's own guard keep the native cursor on touch.
+   ────────────────────────────────────────────────────────────── */
+html.gy-custom-cursor,
+html.gy-custom-cursor * { cursor: none !important; }
+html.gy-custom-cursor input,
+html.gy-custom-cursor textarea,
+html.gy-custom-cursor select,
+html.gy-custom-cursor [contenteditable="true"] { cursor: auto !important; }
+
+.gy-cursor-dot {
+  position: fixed; top: 0; left: 0; width: 6px; height: 6px;
+  margin: -3px 0 0 -3px; border-radius: 50%; background: #C9A84C;
+  pointer-events: none; z-index: 2147483600; will-change: transform;
+  opacity: 0; transition: opacity .3s ease;
+}
+html.gy-cursor-live .gy-cursor-dot,
+html.gy-cursor-live .gy-cursor-ring { opacity: 1; }
+.gy-cursor-ring {
+  position: fixed; top: 0; left: 0; width: 36px; height: 36px;
+  margin: -18px 0 0 -18px; border: 1px solid rgba(201,168,76,0.7);
+  border-radius: 999px; pointer-events: none; z-index: 2147483600;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  transition: width .25s cubic-bezier(.16,1,.3,1),
+              height .25s cubic-bezier(.16,1,.3,1),
+              margin .25s cubic-bezier(.16,1,.3,1),
+              background-color .25s ease, border-color .25s ease,
+              opacity .3s ease;
+  will-change: transform;
+}
+.gy-cursor-ring.is-link {
+  width: 50px; height: 50px; margin: -25px 0 0 -25px;
+  border-color: rgba(201,168,76,0.95);
+}
+.gy-cursor-ring.is-active {
+  width: 86px; height: 86px; margin: -43px 0 0 -43px;
+  background-color: rgba(201,168,76,0.94); border-color: transparent;
+}
+.gy-cursor-label {
+  font-family: var(--gy-font-ui); font-size: 9px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: #0D1B2A; opacity: 0;
+  transition: opacity .18s ease; white-space: nowrap; font-weight: 600;
+}
+.gy-cursor-ring.is-active .gy-cursor-label { opacity: 1; }
+@media (max-width: 1024px), (pointer: coarse) {
+  .gy-cursor-dot, .gy-cursor-ring { display: none !important; }
+  html.gy-custom-cursor, html.gy-custom-cursor * { cursor: auto !important; }
+}
