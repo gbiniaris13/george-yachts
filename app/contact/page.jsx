@@ -15,7 +15,7 @@ import JsonLd from "@/app/components/JsonLd";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 
 export const metadata = {
-  title: "Contact George Yachts | Athens Office, Phone, WhatsApp",
+  title: { absolute: "Contact George Yachts | Athens Office, Phone, WhatsApp" },
   description:
     "Reach George Yachts Brokerage House - Athens HQ at Charilaou Trikoupi 190A, Kifisia 14564. Phone, WhatsApp, email, Calendly. IYBA member broker for Greek waters yacht charter.",
   alternates: { canonical: "https://georgeyachts.com/contact" },

@@ -29,12 +29,12 @@ export const revalidate = 3600;
 const REGION_DATA = {
   cyclades: {
     title: "Yacht Charter Cyclades",
-    h1: "Yacht Charter — Cyclades",
+    h1: "Yacht Charter · Cyclades",
     metaTitle: "Yacht Charter Cyclades 2026 | Mykonos · Santorini · Paros",
     metaDescription:
-      "Crewed yacht charter across the Cyclades — Mykonos, Santorini, Paros, Milos, Naxos. Real broker advice from George Yachts (IYBA member). 2026 rates, weather notes, itineraries.",
+      "Crewed yacht charter across the Cyclades: Mykonos, Santorini, Paros, Milos, Naxos. Real broker advice from George Yachts (IYBA member). 2026 rates, weather notes, itineraries.",
     intro:
-      "The Cyclades — Mykonos, Santorini, Paros, Milos, Naxos, Ios, Folegandros, Antiparos — is the most photographed yacht charter region in the world. It is also the most weather-dependent: the Meltemi wind shapes every itinerary July through August. We charter here every week of the season and write the itineraries that account for the weather, not the brochure.",
+      "The Cyclades (Mykonos, Santorini, Paros, Milos, Naxos, Ios, Folegandros, Antiparos) is the most photographed yacht charter region in the world. It is also the most weather-dependent: the Meltemi wind shapes every itinerary July through August. We charter here every week of the season and write the itineraries that account for the weather, not the brochure.",
     queries: [
       "yacht charter Cyclades",
       "Mykonos yacht charter",
@@ -43,19 +43,19 @@ const REGION_DATA = {
       "Paros yacht charter",
     ],
     bestFor:
-      "First-time charterers wanting iconic scenery + UHNW guests requesting maximum privacy in coves like Antiparos and Despotiko. Best months: late May–June and September–early October (calmer winds, lower rates).",
+      "First-time charterers wanting iconic scenery + UHNW guests requesting maximum privacy in coves like Antiparos and Despotiko. Best months: late May to June and September to early October (calmer winds, lower rates).",
     weatherNote:
-      "The Meltemi (NW seasonal wind) blows strongest mid-July through end-August, occasionally Force 6–7. The right captain re-routes around it; the wrong captain locks you in port. We staff the right captains.",
+      "The Meltemi (NW seasonal wind) blows strongest mid-July through end-August, occasionally Force 6 to 7. The right captain re-routes around it; the wrong captain locks you in port. We staff the right captains.",
     sanityRegionMatch: ["Cyclades", "Cyclades, Greece", "Greek Islands"],
   },
   ionian: {
     title: "Yacht Charter Ionian",
-    h1: "Yacht Charter — Ionian Islands",
+    h1: "Yacht Charter · Ionian Islands",
     metaTitle: "Yacht Charter Ionian Islands 2026 | Corfu · Lefkada · Kefalonia",
     metaDescription:
-      "Crewed yacht charter in the Ionian — Corfu, Lefkada, Kefalonia, Zakynthos, Ithaca. Calm waters, family-friendly. George Yachts IYBA broker advice + 2026 rates.",
+      "Crewed yacht charter in the Ionian: Corfu, Lefkada, Kefalonia, Zakynthos, Ithaca. Calm waters, family-friendly. George Yachts IYBA broker advice + 2026 rates.",
     intro:
-      "The Ionian is the calm-waters Greek charter region. Corfu, Lefkada, Kefalonia, Zakynthos, Ithaca, Paxos — short hops, sheltered anchorages, family-friendly conditions. Where the Cyclades demand weather-aware planning, the Ionian forgives. The trade-off: less of the iconic white-and-blue Cycladic scenery, more pine-fringed coves and Italian-influenced architecture.",
+      "The Ionian is the calm-waters Greek charter region. Corfu, Lefkada, Kefalonia, Zakynthos, Ithaca, Paxos: short hops, sheltered anchorages, family-friendly conditions. Where the Cyclades demand weather-aware planning, the Ionian forgives. The trade-off: less of the iconic white-and-blue Cycladic scenery, more pine-fringed coves and Italian-influenced architecture.",
     queries: [
       "yacht charter Ionian",
       "Corfu yacht charter",
@@ -64,19 +64,19 @@ const REGION_DATA = {
       "family yacht charter Greece",
     ],
     bestFor:
-      "Families with young children, multi-generational groups, first-time charterers anxious about seasickness. Best months: late May–early October. Almost no Meltemi this side of mainland Greece.",
+      "Families with young children, multi-generational groups, first-time charterers anxious about seasickness. Best months: late May to early October. Almost no Meltemi this side of mainland Greece.",
     weatherNote:
-      "Localized afternoon thermals occasionally, but no equivalent of the Cycladic Meltemi. Most days flat-calm mornings, light afternoon breezes — ideal for sailing and water-sports days.",
+      "Localized afternoon thermals occasionally, but no equivalent of the Cycladic Meltemi. Most days flat-calm mornings, light afternoon breezes, ideal for sailing and water-sports days.",
     sanityRegionMatch: ["Ionian", "Ionian Islands", "Ionian, Greece"],
   },
   saronic: {
     title: "Yacht Charter Saronic Gulf",
-    h1: "Yacht Charter — Saronic Gulf",
+    h1: "Yacht Charter · Saronic Gulf",
     metaTitle: "Yacht Charter Saronic Gulf 2026 | Hydra · Spetses · Aegina",
     metaDescription:
-      "Crewed yacht charter in the Saronic Gulf — Hydra, Spetses, Aegina, Poros. The 5-day Greek charter that starts 45 minutes from Athens airport.",
+      "Crewed yacht charter in the Saronic Gulf: Hydra, Spetses, Aegina, Poros. The 5-day Greek charter that starts 45 minutes from Athens airport.",
     intro:
-      "The Saronic Gulf — Hydra, Spetses, Aegina, Poros, Agistri — is the closest charter region to Athens, which makes it the smartest choice for short charters (3–5 nights) or guests with limited time. From Athens airport you can land at noon and be aboard by 1:30 PM. Hydra has no cars and no high-rises; Spetses keeps the same scale; Aegina serves the best fish in the Saronic.",
+      "The Saronic Gulf (Hydra, Spetses, Aegina, Poros, Agistri) is the closest charter region to Athens, which makes it the smartest choice for short charters (3 to 5 nights) or guests with limited time. From Athens airport you can land at noon and be aboard by 1:30 PM. Hydra has no cars and no high-rises; Spetses keeps the same scale; Aegina serves the best fish in the Saronic.",
     queries: [
       "yacht charter Saronic",
       "Hydra yacht charter",
@@ -85,7 +85,7 @@ const REGION_DATA = {
       "short yacht charter Athens",
     ],
     bestFor:
-      "Time-constrained UHNW clients, Athens-arrival families, first-time charterers wanting a sample before committing to a 7+ day Cyclades trip. Best months: April–October — the Saronic season runs longer than the Cyclades.",
+      "Time-constrained UHNW clients, Athens-arrival families, first-time charterers wanting a sample before committing to a 7+ day Cyclades trip. Best months: April to October. The Saronic season runs longer than the Cyclades.",
     weatherNote:
       "Sheltered enough for almost any conditions. Even when the Aegean Meltemi peaks, the Saronic stays sailable. Water temps are charter-friendly from May.",
     sanityRegionMatch: ["Saronic", "Saronic Gulf", "Saronic, Greece"],
@@ -139,7 +139,7 @@ function ServiceSchema({ region, data, yachtCount }) {
     },
     areaServed: {
       "@type": "Place",
-      name: data.h1.replace("Yacht Charter — ", ""),
+      name: data.h1.replace("Yacht Charter · ", ""),
       address: { "@type": "PostalAddress", addressCountry: "GR" },
     },
     offers: {
@@ -383,7 +383,7 @@ export default async function RegionPage({ params }) {
                   textAlign: "center",
                 }}
               >
-                The fleet — {data.h1.replace("Yacht Charter — ", "")}
+                The fleet · {data.h1.replace("Yacht Charter · ", "")}
               </p>
               <h2
                 style={{
@@ -432,7 +432,7 @@ export default async function RegionPage({ params }) {
                       >
                         <Image
                           src={y.imageUrl}
-                          alt={`${y.name} yacht charter ${data.h1.replace("Yacht Charter — ", "")}`}
+                          alt={`${y.name} yacht charter ${data.h1.replace("Yacht Charter · ", "")}`}
                           fill
                           sizes="(max-width: 768px) 50vw, 33vw"
                           style={{
@@ -624,7 +624,7 @@ export default async function RegionPage({ params }) {
                   "0 14px 35px -10px rgba(201,168,76,0.5), inset 0 1px 0 rgba(248, 245, 240,0.3)",
               }}
             >
-              Brief George — reply within 24h →
+              Brief George · reply within 24h →
             </Link>
             <a
               href="https://calendly.com/george-georgeyachts/30min"

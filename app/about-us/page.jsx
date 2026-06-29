@@ -7,7 +7,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 import "./about-us.css";
 
 export const metadata = {
-  title: "About George Yachts | Boutique Brokerage in Greek Waters",
+  title: { absolute: "About George Yachts | Boutique Brokerage in Greek Waters" },
   description:
     "George P. Biniaris - Managing Broker, IYBA Member. Boutique yacht brokerage in Greek waters. Personal broker relationship. 360° luxury services. Athens HQ.",
   alternates: {
