@@ -1,4 +1,5 @@
 import React from "react";
+import { FLEET_COUNT } from "@/lib/fleetCount";
 import ReactDOM from "react-dom";
 import HomeClient from "./HomeClient";
 import { sanityClient } from "@/lib/sanity";
@@ -14,13 +15,13 @@ export const metadata = {
   // Boss Ch.1B — title ≤ 60, description 150–160 for SERP rendering.
   title: "Luxury Yacht Charter Greece | George Yachts Brokerage",
   description:
-    "Boutique IYBA-member yacht brokerage in Greek waters. 63 curated yachts across Cyclades, Ionian, Saronic. Featured in Forbes 2026. Brief George directly.",
+    `Boutique IYBA-member yacht brokerage in Greek waters. ${FLEET_COUNT} curated yachts across Cyclades, Ionian, Saronic. Featured in Forbes 2026. Brief George directly.`,
   alternates: {
     canonical: "https://georgeyachts.com",
   },
   openGraph: {
     title: "George Yachts | Featured in Forbes · Luxury Yacht Charter Greece",
-    description: "Featured in Forbes (May 2026). 63 curated yachts in Greek waters. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Personal broker service from Athens.",
+    description: `Featured in Forbes (May 2026). ${FLEET_COUNT} curated yachts in Greek waters. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Personal broker service from Athens.`,
     url: "https://georgeyachts.com",
     type: "website",
     siteName: "George Yachts Brokerage House",
@@ -116,7 +117,7 @@ export default async function HomePage() {
     fetchPriority: "high",
   });
 
-  let yachtCount = 60;
+  let yachtCount = FLEET_COUNT;
   let privateRange = { low: 13000, high: 180000 };
   let explorerRange = { low: 420, high: 1800 };
   let budgetYachts = [];

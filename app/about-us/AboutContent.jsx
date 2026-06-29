@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { FLEET_COUNT } from "@/lib/fleetCount";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -248,7 +249,7 @@ export default function AboutContent() {
       <section className="about-stats">
         <div className="about-stats__grid">
           {[
-            { number: 63, suffix: "+", label: "Curated Yachts" },
+            { number: FLEET_COUNT, suffix: "+", label: "Curated Yachts" },
             { number: 4, suffix: "", label: "Sailing Regions" },
             { number: 360, suffix: "\u00b0", label: "Luxury Services" },
             { number: 100, suffix: "%", label: "Greek Waters" },
@@ -555,7 +556,7 @@ export default function AboutContent() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "32px", textAlign: "left" }}>
             {[
               { label: "Large Aggregator", value: "Thousands of yachts, generic filters, algorithm-matched", vs: "vs" },
-              { label: "George Yachts", value: "63 personally vetted yachts, hand-selected for you by someone who has been aboard each one", highlight: true },
+              { label: "George Yachts", value: `${FLEET_COUNT} personally vetted yachts, hand-selected for you by someone who has been aboard each one`, highlight: true },
             ].map((item, i) => (
               <div key={i} style={{ padding: "32px", border: item.highlight ? "1px solid rgba(201,168,76,0.3)" : "1px solid rgba(248, 245, 240,0.08)", background: item.highlight ? "rgba(201,168,76,0.05)" : "transparent" }}>
                 <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.3em", color: item.highlight ? "#C9A84C" : "rgba(248, 245, 240,0.3)", textTransform: "uppercase", marginBottom: "16px" }}>{item.label}</p>
@@ -584,7 +585,7 @@ export default function AboutContent() {
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="22"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg>
               ),
               title: "Yacht Charter",
-              desc: "63 curated yachts - Private Fleet (full crew) + Explorer Fleet (skippered) - across all Greek waters.",
+              desc: `${FLEET_COUNT} curated yachts - Private Fleet (full crew) + Explorer Fleet (skippered) - across all Greek waters.`,
             },
             {
               icon: (

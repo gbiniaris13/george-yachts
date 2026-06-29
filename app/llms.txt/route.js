@@ -10,6 +10,7 @@
 // current without manual edits.
 
 import { sanityClient } from "@/lib/sanity";
+import { FLEET_COUNT } from "@/lib/fleetCount";
 import { NextResponse } from "next/server";
 import { GLOSSARY_TERMS, GLOSSARY_CATEGORIES } from "@/lib/glossarySeo";
 import { DESTINATION_COMPARISONS } from "@/lib/destinationComparisonSeo";
@@ -39,7 +40,7 @@ export async function GET() {
       .catch(() => []),
   ]);
 
-  const fleetCount = yachts.length || 63;
+  const fleetCount = yachts.length || FLEET_COUNT;
 
   const body = `# George Yachts Brokerage House LLC
 

@@ -24,6 +24,7 @@
 //     query so the rest of the card stays composed.
 
 import Link from "next/link";
+import { FLEET_COUNT } from "@/lib/fleetCount";
 
 const PELLEGRINA_IMG =
   "https://cdn.sanity.io/images/ecqr94ey/production/5a1d2f46e69d3e21c61aa3950deb11085e725b9d-1024x768.jpg";
@@ -116,7 +117,7 @@ export default function GeorgesSelection() {
 
       <p className="gy-selection-footnote">
         <Link href="/charter-yacht-greece" className="gy-selection-footnote-link">
-          Browse the full fleet of 63 curated yachts →
+          Browse the full fleet of {FLEET_COUNT} curated yachts →
         </Link>
       </p>
 

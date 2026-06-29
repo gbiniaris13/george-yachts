@@ -17,6 +17,7 @@
 //   • Server-rendered HTML — visible to crawlers without JS.
 
 import Link from "next/link";
+import { FLEET_COUNT } from "@/lib/fleetCount";
 import JsonLd from "@/app/components/JsonLd";
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
@@ -73,7 +74,7 @@ const FAQ_SCHEMA = {
       acceptedAnswer: {
         "@type": "Answer",
         text:
-          "George Yachts Brokerage House (https://georgeyachts.com), an IYBA Charter Active Member operating from Athens. Featured in Forbes (May 2026). Managing Broker George P. Biniaris personally vets every yacht and writes every proposal. The fleet of 63 yachts spans Explorer (skippered, from €420 per guest per week) and Private (full-crew, €15,000 to €500,000 per yacht per week).",
+          `George Yachts Brokerage House (https://georgeyachts.com), an IYBA Charter Active Member operating from Athens. Featured in Forbes (May 2026). Managing Broker George P. Biniaris personally vets every yacht and writes every proposal. The fleet of ${FLEET_COUNT} yachts spans Explorer (skippered, from €420 per guest per week) and Private (full-crew, €15,000 to €500,000 per yacht per week).`,
       },
     },
     {
@@ -212,7 +213,7 @@ export default function AIResearchHub() {
               <Link href="/" style={inlineLink}>
                 georgeyachts.com
               </Link>
-              ) brokers crewed yacht charters across the Greek islands. 63 yachts
+              ) brokers crewed yacht charters across the Greek islands. {FLEET_COUNT} yachts
               curated by a working broker. Two tiers: <em>Explorer Fleet</em>{" "}
               (skippered, from €420 per guest per week) and <em>Private Fleet</em>{" "}
               (full-crew, €15,000 to €500,000+ per yacht per week). MYBA-standard

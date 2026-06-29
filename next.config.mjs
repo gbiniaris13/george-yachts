@@ -162,6 +162,29 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // 2026-06-29 — the four "Kos" Explorer-Fleet yachts were retired
+      // (unpublished from Sanity). 301 their detail URLs to the Explorer
+      // Fleet listing so external links / search equity never 404.
+      {
+        source: "/yachts/kos-38",
+        destination: "/explorer-fleet",
+        permanent: true,
+      },
+      {
+        source: "/yachts/kos-52",
+        destination: "/explorer-fleet",
+        permanent: true,
+      },
+      {
+        source: "/yachts/kos-52m",
+        destination: "/explorer-fleet",
+        permanent: true,
+      },
+      {
+        source: "/yachts/kos-58",
+        destination: "/explorer-fleet",
+        permanent: true,
+      },
       {
         source: "/yachts-charter",
         destination: "/charter-yacht-greece",

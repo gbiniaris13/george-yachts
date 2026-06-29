@@ -1,4 +1,5 @@
 import React from "react";
+import { FLEET_COUNT } from "@/lib/fleetCount";
 import { sanityClient } from "@/lib/sanity";
 import Footer from "@/components/Footer";
 import FleetGrid from "./FleetGrid";
@@ -15,16 +16,16 @@ import "./fleet-page.css";
 export const revalidate = 3600;
 
 export const metadata = {
-  title: "Charter Yacht Greece - 63 Curated Yachts",
+  title: `Charter Yacht Greece - ${FLEET_COUNT} Curated Yachts`,
   description:
-    "Curated fleet of 63 yachts in Greek waters - Private Fleet (full crew) + Explorer Fleet (skippered). Motor, sailing, catamaran. Cyclades, Ionian, Saronic.",
+    `Curated fleet of ${FLEET_COUNT} yachts in Greek waters - Private Fleet (full crew) + Explorer Fleet (skippered). Motor, sailing, catamaran. Cyclades, Ionian, Saronic.`,
   alternates: {
     canonical: "https://georgeyachts.com/charter-yacht-greece",
   },
   openGraph: {
     title: "Charter Fleet | George Yachts Brokerage House",
     description:
-      "63 curated yachts for charter in Greek waters. From 14m sailing catamarans to 64m superyachts.",
+      `${FLEET_COUNT} curated yachts for charter in Greek waters. From 14m sailing catamarans to 64m superyachts.`,
     url: "https://georgeyachts.com/charter-yacht-greece",
     images: [
       "https://cdn.sanity.io/images/ecqr94ey/production/5a1d2f46e69d3e21c61aa3950deb11085e725b9d-1024x768.jpg",
@@ -69,7 +70,7 @@ function generateFleetSchema(yachts) {
     "@type": "ItemList",
     name: "George Yachts Charter Fleet Greece",
     description:
-      "Curated fleet of 63 luxury yachts for charter in Greek waters",
+      `Curated fleet of ${FLEET_COUNT} luxury yachts for charter in Greek waters`,
     numberOfItems: yachts.length,
     itemListElement: yachts.slice(0, 20).map((yacht, index) => ({
       "@type": "ListItem",
@@ -137,7 +138,7 @@ function generateServiceSchema(yachts) {
       priceCurrency: "EUR",
       lowPrice: low,
       highPrice: high,
-      offerCount: yachts.length || 63,
+      offerCount: yachts.length || FLEET_COUNT,
       availability: "https://schema.org/InStock",
     },
     hasOfferCatalog: {

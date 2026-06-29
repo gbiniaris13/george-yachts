@@ -17,6 +17,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ConstellationBackdrop from "./ConstellationBackdrop";
+import { FLEET_COUNT } from "@/lib/fleetCount";
 
 // Count-up restored 2026-06-29 (George: "the numbers used to run on scroll").
 // Done SSR-safe to keep the A.1 fix intact: the FIRST render (and the SSR HTML
@@ -81,7 +82,7 @@ function StatNumber({ value }) {
   );
 }
 
-export default function HomeStats({ yachtCount = 63 }) {
+export default function HomeStats({ yachtCount = FLEET_COUNT }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
 

@@ -23,6 +23,7 @@
 // AI call.
 
 import { sendTelegram } from "@/lib/telegram";
+import { FLEET_COUNT } from "@/lib/fleetCount";
 import { sanityClient } from "@/lib/sanity";
 import { kvIncr, kvExpire, kvLpush, kvLtrim } from "@/lib/kv";
 
@@ -40,7 +41,7 @@ WHO IS GEORGE:
 - He works hands-on with charter clients and central agents across Greek waters.
 
 YOUR KNOWLEDGE:
-- 63 curated yachts in our fleet (Private Fleet — per yacht/week pricing; Explorer Fleet — per person/week pricing).
+- ${FLEET_COUNT} curated yachts in our fleet (Private Fleet — per yacht/week pricing; Explorer Fleet — per person/week pricing).
 - Greek regions: Cyclades, Ionian, Saronic Gulf.
 - Sample itineraries on 10+ yachts.
 - MYBA-standard charter contracts, APA, VAT logic.

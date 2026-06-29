@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { FLEET_COUNT } from "@/lib/fleetCount";
 import Image from "next/image";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
@@ -230,7 +231,7 @@ export default function YourBroker() {
             {
               num: "02",
               title: "I curate the fleet",
-              desc: "A short, honest shortlist from our 63 yachts, with real availability and my notes.",
+              desc: `A short, honest shortlist from our ${FLEET_COUNT} yachts, with real availability and my notes.`,
             },
             {
               num: "03",

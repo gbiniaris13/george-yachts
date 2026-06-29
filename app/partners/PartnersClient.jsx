@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { FLEET_COUNT } from "@/lib/fleetCount";
 import Link from "next/link";
 
 const GATE_KEY = "gy_partners_unlocked";
@@ -518,7 +519,7 @@ export default function PartnersClient() {
             ))}
           </div>
           <p className="text-center" style={{ fontFamily: "var(--gy-font-ui)", fontSize: "13px", fontWeight: 300, color: "rgba(248, 245, 240,0.5)", letterSpacing: "0.1em" }}>
-            63+ curated vessels across all Greek waters
+            {FLEET_COUNT}+ curated vessels across all Greek waters
           </p>
         </div>
       </section>
