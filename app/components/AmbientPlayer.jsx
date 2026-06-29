@@ -31,13 +31,13 @@ const SUPPRESSED_PREFIXES = ["/admin", "/partner-portal", "/privacy/delete", "/a
 // George just drops a CC0 ocean.mp3 into /public/audio/ and the site
 // auto-upgrades on next deploy. Three free CC0 sources documented in
 // /public/audio/README.md.
-const OCEAN_MP3 = "/audio/ocean.mp3";
+const AMBIENT_MP3 = "/audio/ambient-lounge.mp3";
 const TRY_MP3_TIMEOUT_MS = 1500;
 
 async function tryMp3(audioRef, masterGainRef) {
   try {
     if (!audioRef.current) {
-      audioRef.current = new Audio(OCEAN_MP3);
+      audioRef.current = new Audio(AMBIENT_MP3);
       audioRef.current.loop = true;
       audioRef.current.preload = "auto";
       audioRef.current.crossOrigin = "anonymous";
@@ -55,8 +55,11 @@ async function tryMp3(audioRef, masterGainRef) {
       try { a.load(); } catch {}
     });
     await a.play();
-    // Fade gain in
-    const target = TARGET_VOLUME * 0.7;
+    // Fade gain in. 0.2 is a deliberate "background music" level - present
+    // enough to set a calm, classy mood without ever competing with the page
+    // (the synth's TARGET_VOLUME was tuned for ambient noise, too low for an
+    // actual music track).
+    const target = 0.2;
     const fadeMs = FADE_MS;
     const startTs = performance.now();
     const fade = () => {
@@ -126,22 +129,13 @@ export default function AmbientPlayer() {
     return ok;
   };
 
-  // Phase 17d (luxury rebuild, 2026-05-05) — autoplay path retired.
-  //
-  // Two compounding realities forced this:
-  //   1. Browser autoplay policy: Chrome/Safari/Firefox require an
-  //      ACTIVE click / tap / keydown gesture before audio can play.
-  //      Mousemove + scroll + wheel do NOT satisfy the autoplay gate.
-  //      No site on the planet autoplays audio on first visit.
-  //   2. The Web-Audio-synthesised soundscape (regardless of how many
-  //      passes I tuned it) doesn't read as real ocean — Boss's
-  //      tester literally said "από το διάστημα" (sounds like outer
-  //      space). Synthesis can't fake hydrophone-grade ocean.
-  //
-  // Plan when assets land: drop a real CC0 ocean recording into
-  // /public/audio/, switch to HTML5 <audio src loop>, trigger play()
-  // from the pill onClick. For now the pill stays as the explicit
-  // opt-in. No pre-emptive listeners.
+  // Phase 17d (2026-05-05) retired autoplay because (1) browser policy needs a
+  // real gesture and (2) the synthesised soundscape sounded "από το διάστημα".
+  // 2026-06-29 — both resolved: a real royalty-free track now lives at
+  // /audio/ambient-lounge.mp3 (smooth jazz lounge, Pixabay content licence,
+  // no attribution), and the first-gesture autostart effect below begins it on
+  // the visitor's first real interaction (respecting session mute). The synth
+  // graph remains only as a fallback if the MP3 ever fails to load.
 
   // Cleanup on unmount.
   useEffect(() => {
@@ -195,6 +189,43 @@ export default function AmbientPlayer() {
     } catch {}
   };
 
+  // First-gesture autostart (2026-06-29 — George wants the music to set the
+  // mood, not hide behind a tap). Autoplay-with-sound still needs a real
+  // gesture, so we begin on the visitor's first click / key / tap anywhere,
+  // UNLESS they muted earlier this session, or the gesture is the mute pill
+  // itself (onToggle owns that). The pill still turns it off at any time.
+  useEffect(() => {
+    if (suppressed) return;
+    let muted = false;
+    try { muted = sessionStorage.getItem(SESSION_MUTE_KEY) === "1"; } catch {}
+    if (muted) return;
+    let done = false;
+    const remove = () => {
+      window.removeEventListener("pointerdown", start, true);
+      window.removeEventListener("keydown", start, true);
+      window.removeEventListener("touchstart", start, true);
+    };
+    const start = async (e) => {
+      if (done) return;
+      if (e && e.target && e.target.closest && e.target.closest("[data-gy-ambient-toggle]")) return;
+      done = true;
+      remove();
+      const ok = await buildAndPlay();
+      if (ok) {
+        try { sessionStorage.removeItem(SESSION_MUTE_KEY); } catch {}
+        setPlaying(true);
+        try { window.dispatchEvent(new CustomEvent("gy:ambient-mute-changed")); } catch {}
+      } else {
+        done = false;
+      }
+    };
+    window.addEventListener("pointerdown", start, true);
+    window.addEventListener("keydown", start, true);
+    window.addEventListener("touchstart", start, true);
+    return remove;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [suppressed]);
+
   if (suppressed) return null;
 
   // Phase 27d (Forbes-launch eve, 2026-05-05) — Boss directive:
@@ -212,8 +243,9 @@ export default function AmbientPlayer() {
   return (
     <button
       type="button"
+      data-gy-ambient-toggle
       onClick={onToggle}
-      aria-label={playing ? "Mute Greek summer ambient sound" : "Play Greek summer ambient sound"}
+      aria-label={playing ? "Mute background music" : "Play background music"}
       aria-pressed={playing}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
