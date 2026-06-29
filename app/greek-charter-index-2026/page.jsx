@@ -270,6 +270,21 @@ export default async function GreekCharterIndexPage() {
           </section>
         )}
 
+        {/* RELATED - 2026-06-29. Close the internal-link loop: the index was a
+            dead end (0 outbound links to the money pages). These feed crawl
+            depth + topical clustering across the motor-charter cluster. */}
+        <section style={{ padding: "40px 24px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+          <div style={{ maxWidth: 760, margin: "0 auto" }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 16px" }}>Go deeper</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <Link href="/weekly-yacht-charter-rates-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.25)", paddingBottom: 10 }}>Weekly charter rates, all-in: base, APA, 13% VAT and gratuity by yacht size and season</Link>
+              <Link href="/motor-yacht-charter-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.25)", paddingBottom: 10 }}>Motor yacht charter in Greece: the full 2026 guide</Link>
+              <Link href="/charter-cost-estimator" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.25)", paddingBottom: 10 }}>Charter cost estimator</Link>
+              <Link href="/glossary/greek-vat" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.25)", paddingBottom: 10 }}>Greek charter VAT in 2026, explained</Link>
+            </div>
+          </div>
+        </section>
+
         {/* CITE THIS - 2026-06-28. Original data is what third parties + AI
             engines cite, but only if attribution is trivial. A ready-made
             citation line turns the index into a citation magnet. */}
