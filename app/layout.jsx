@@ -217,6 +217,14 @@ export const metadata = {
   robots: {
     index: true,
     follow: true,
+    // 2026-06-29 — lifted the max-* directives to the top level (they were
+    // googleBot-only). Bing/Copilot, DuckDuckGo, and the other non-Google
+    // crawlers read the generic robots meta, so they now also get
+    // full-length text snippets and large image previews, not just Googlebot.
+    // ChatGPT and Copilot lean on Bing's index, so this widens AI-snippet reach.
+    "max-image-preview": "large",
+    "max-snippet": -1,
+    "max-video-preview": -1,
     googleBot: {
       index: true,
       follow: true,
