@@ -3971,3 +3971,18 @@ html.gy-cursor-live .gy-cursor-ring { opacity: 1; }
   .gy-cursor-dot, .gy-cursor-ring { display: none !important; }
   html.gy-custom-cursor, html.gy-custom-cursor * { cursor: auto !important; }
 }
+
+/* ──────────────────────────────────────────────────────────────
+   Round floating buttons + cursor (2026-06-29, George).
+   The site uses a global `* { border-radius: 0 !important }` reset
+   for its sharp editorial look, which also squared the floating
+   action buttons and the custom-cursor ring. George asked for the
+   FABs to be round/soft/glassy, so we re-round just those nodes
+   with an equally-!important but more specific selector.
+   ────────────────────────────────────────────────────────────── */
+.gy-fab-desktop-only,
+.gy-fab-desktop-only span[style*="border-radius"],
+.gy-wa-fab,
+.gy-wa-fab * ,
+.gy-cursor-ring { border-radius: 999px !important; }
+.gy-cursor-dot { border-radius: 50% !important; }

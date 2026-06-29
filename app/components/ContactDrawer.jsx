@@ -143,7 +143,7 @@ export default function ContactDrawer() {
         onClick={() => setOpen((v) => !v)}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        data-cursor="Speak"
+        data-cursor="Contact"
         style={{
           position: "fixed",
           bottom: FAB_BOTTOM,
@@ -151,11 +151,13 @@ export default function ContactDrawer() {
           zIndex: 50,
           width: 56,
           height: 56,
-          borderRadius: 0,
+          borderRadius: "50%",
           background: hovered
             ? "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)"
-            : "linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)",
-          border: `1px solid ${hovered ? "#C9A84C" : "rgba(201,168,76,0.35)"}`,
+            : "rgba(13,27,42,0.55)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          border: `1px solid ${hovered ? "#C9A84C" : "rgba(201,168,76,0.45)"}`,
           color: hovered ? "#0D1B2A" : "#C9A84C",
           fontFamily: "var(--gy-font-ui)",
           fontSize: 9,
@@ -170,7 +172,7 @@ export default function ContactDrawer() {
           gap: 2,
           boxShadow: hovered
             ? "0 12px 36px rgba(13, 27, 42,0.5), 0 0 24px rgba(201,168,76,0.18)"
-            : "0 6px 20px rgba(13, 27, 42,0.35)",
+            : "0 6px 20px rgba(13, 27, 42,0.35), inset 0 1px 0 rgba(255,255,255,0.18)",
           transform: hovered ? "translateY(-2px)" : "translateY(0)",
           transition: "all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
         }}
@@ -178,7 +180,7 @@ export default function ContactDrawer() {
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
         </svg>
-        <span style={{ fontSize: 7 }}>Speak</span>
+        <span style={{ fontSize: 7 }}>Contact</span>
       </button>
 
       {/* Backdrop + Drawer */}

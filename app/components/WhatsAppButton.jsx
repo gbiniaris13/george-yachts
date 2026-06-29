@@ -253,12 +253,12 @@ export default function WhatsAppButton() {
           style={{
             width: 56,
             height: 56,
-            borderRadius: 0,
+            borderRadius: "50%",
             background: WA_BRAND_GREEN,
-            border: `2px solid rgba(255,255,255,0.15)`,
+            border: `2px solid rgba(255,255,255,0.2)`,
             boxShadow: hovered
-              ? "0 8px 32px rgba(37, 211, 102, 0.4), 0 0 20px rgba(37, 211, 102, 0.25)"
-              : "0 4px 16px rgba(13, 27, 42, 0.3)",
+              ? "0 8px 32px rgba(37, 211, 102, 0.4), 0 0 20px rgba(37, 211, 102, 0.25), inset 0 1px 0 rgba(255,255,255,0.3)"
+              : "0 4px 16px rgba(13, 27, 42, 0.3), inset 0 1px 0 rgba(255,255,255,0.3)",
             transform: hovered ? "scale(1.08) translateY(-2px)" : "scale(1)",
           }}
         >

@@ -18,6 +18,69 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ConstellationBackdrop from "./ConstellationBackdrop";
 
+// Count-up restored 2026-06-29 (George: "the numbers used to run on scroll").
+// Done SSR-safe to keep the A.1 fix intact: the FIRST render (and the SSR HTML
+// Googlebot sees) is the FINAL value, so no "0+" ever ships. On the client, if
+// the stat is below the fold on load (the normal case), we silently reset to 0
+// while off-screen - no flash - and ease it up to the target when it scrolls
+// into view. If it is already on screen at load, we leave the final value as-is
+// (no flash, no reset). Reduced-motion users keep the static final value.
+function StatNumber({ value }) {
+  const m = String(value).match(/^(\d+)(.*)$/);
+  const target = m ? parseInt(m[1], 10) : 0;
+  const suffix = m ? m[2] : "";
+  const [display, setDisplay] = useState(target);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !m) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const rect = el.getBoundingClientRect();
+    const alreadyInView = rect.top < window.innerHeight && rect.bottom > 0;
+    if (alreadyInView) return; // keep final value, never flash 0
+
+    setDisplay(0);
+    let raf = 0;
+    let startTs = 0;
+    const DURATION = 1300;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        obs.disconnect();
+        const step = (ts) => {
+          if (!startTs) startTs = ts;
+          const p = Math.min(1, (ts - startTs) / DURATION);
+          const eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
+          setDisplay(Math.round(eased * target));
+          if (p < 1) raf = requestAnimationFrame(step);
+        };
+        raf = requestAnimationFrame(step);
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => {
+      obs.disconnect();
+      if (raf) cancelAnimationFrame(raf);
+    };
+    // Depend ONLY on the stable `value` string. Depending on `m` (a fresh
+    // regex-match array every render) re-ran this effect on every setDisplay
+    // during the count, whose cleanup cancelled the rAF and bailed early once
+    // the element was in view - freezing the number at 0. eslint-disable is
+    // intentional: target/suffix/m are all derived from `value`.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  return (
+    <span ref={ref}>
+      {display}
+      {suffix}
+    </span>
+  );
+}
+
 export default function HomeStats({ yachtCount = 63 }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -85,7 +148,7 @@ export default function HomeStats({ yachtCount = 63 }) {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              {stat.value}
+              <StatNumber value={stat.value} />
             </div>
             <div
               className="text-[10px] tracking-[0.3em] uppercase text-white/65 font-medium"

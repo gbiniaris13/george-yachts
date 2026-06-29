@@ -166,15 +166,27 @@ export default function AskGeorgeWidget() {
           color: "#0D1B2A",
           border: "none",
           cursor: "pointer",
-          boxShadow: "0 6px 24px rgba(13, 27, 42,0.4)",
-          fontFamily: "var(--gy-font-editorial)",
+          boxShadow: "0 8px 28px rgba(13, 27, 42,0.45), inset 0 1px 0 rgba(255,255,255,0.4)",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: 18,
           fontWeight: 600,
           letterSpacing: "0.04em",
           zIndex: 9998,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        {open ? "✕" : "GY"}
+        {open ? (
+          "✕"
+        ) : (
+          <span style={{ display: "flex", flexDirection: "column", alignItems: "center", lineHeight: 1, gap: 2 }} aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l1.7 6.3L20 10l-6.3 1.7L12 18l-1.7-6.3L4 10l6.3-1.7z" />
+            </svg>
+            <span style={{ fontSize: 8, letterSpacing: "0.2em", fontWeight: 700 }}>AI</span>
+          </span>
+        )}
         {!open && (
           <span
             aria-hidden="true"
