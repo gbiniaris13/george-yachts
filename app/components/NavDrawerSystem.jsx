@@ -119,19 +119,36 @@ const navLabelStyle = {
 // (ABOUT). Stops the panel from clipping off the viewport when the
 // trigger sits near an edge — Boss flagged the CHARTER dropdown
 // going off-screen on the left under the original centered anchor.
-function NavItem({ section, color = "rgba(248, 245, 240,0.85)", anchor = "left" }) {
+function NavItem({ section, color = "rgba(248, 245, 240,0.85)", anchor = "left", isOpen = false, onEnter, onLeave }) {
   const isExplore = section.label === "Explore Greece";
   return (
-    <div className={`gy-nav-item gy-nav-item--anchor-${anchor} ${isExplore ? "gy-nav-item--rich" : ""} relative`}>
+    <div
+      className={`gy-nav-item gy-nav-item--anchor-${anchor} ${isExplore ? "gy-nav-item--rich" : ""} ${isOpen ? "is-open" : ""} relative`}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+    >
       <button
         className="gy-nav-item__trigger"
         aria-haspopup="true"
+        aria-expanded={isOpen}
+        onFocus={onEnter}
         style={{ ...navLabelStyle, color, cursor: "pointer", background: "transparent", border: 0, padding: "10px 4px" }}
         data-cursor="Menu"
       >
         {section.label}
       </button>
-      <div className="gy-nav-item__panel" role="menu">
+      {/* React-controlled visibility (inline so it is correct at first paint,
+          which kills the dropdown-flash FOUC; one open at a time so opening
+          another closes this one). */}
+      <div
+        className="gy-nav-item__panel"
+        role="menu"
+        style={{
+          opacity: isOpen ? 1 : 0,
+          visibility: isOpen ? "visible" : "hidden",
+          pointerEvents: isOpen ? "auto" : "none",
+        }}
+      >
         {section.items.map((item) => {
           // Boss directive (2026-05-08): the Explore Greece dropdown
           // pulls its copy from DESTINATIONS so the nav surfaces the
@@ -180,6 +197,7 @@ export default function NavDrawerSystem() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openSection, setOpenSection] = useState(null);
+  const [openDesktop, setOpenDesktop] = useState(null);
   const pathname = usePathname();
 
   // Close mobile overlay on route change (otherwise tapping a link
@@ -205,6 +223,9 @@ export default function NavDrawerSystem() {
       const y = window.scrollY;
       const isScrolled = y > 50;
       setScrolled(isScrolled);
+      // Close any open desktop dropdown on scroll so it never floats over
+      // the page when the cursor hasn't moved off the trigger.
+      setOpenDesktop(null);
       document.body.classList.toggle("gy-nav-scrolled", isScrolled);
       document.body.classList.toggle(
         "gy-scrolled",
@@ -280,8 +301,17 @@ export default function NavDrawerSystem() {
 
           {/* DESKTOP — left cluster: CHARTER + EXPLORE GREECE */}
           <div className="hidden md:flex items-center gap-10">
-            <NavItem section={NAV_SECTIONS[0]} anchor="left" />
-            <NavItem section={NAV_SECTIONS[1]} anchor="left" />
+            <NavItem section={NAV_SECTIONS[0]} anchor="left" isOpen={openDesktop === NAV_SECTIONS[0].label} onEnter={() => setOpenDesktop(NAV_SECTIONS[0].label)} onLeave={() => setOpenDesktop(null)} />
+            <NavItem section={NAV_SECTIONS[1]} anchor="left" isOpen={openDesktop === NAV_SECTIONS[1].label} onEnter={() => setOpenDesktop(NAV_SECTIONS[1].label)} onLeave={() => setOpenDesktop(null)} />
+            <Link
+              href="/blog"
+              className="gy-nav-item__trigger"
+              style={{ ...navLabelStyle, color: "rgba(248, 245, 240,0.85)", textDecoration: "none", padding: "10px 4px" }}
+              data-cursor="Read"
+              onMouseEnter={() => setOpenDesktop(null)}
+            >
+              Journal
+            </Link>
           </div>
 
           {/* CENTER — logo */}
@@ -307,7 +337,7 @@ export default function NavDrawerSystem() {
 
           {/* DESKTOP — right cluster: ABOUT + BRIEF GEORGE CTA */}
           <div className="hidden md:flex items-center gap-10">
-            <NavItem section={NAV_SECTIONS[2]} anchor="right" />
+            <NavItem section={NAV_SECTIONS[2]} anchor="right" isOpen={openDesktop === NAV_SECTIONS[2].label} onEnter={() => setOpenDesktop(NAV_SECTIONS[2].label)} onLeave={() => setOpenDesktop(null)} />
             <Link
               href={BRIEF_GEORGE.href}
               className="gy-nav-cta"
@@ -421,6 +451,25 @@ export default function NavDrawerSystem() {
                 </div>
               );
             })}
+            {/* Journal / blog — top-level link, no dropdown */}
+            <div className="w-full max-w-md text-center">
+              <Link
+                href="/blog"
+                onClick={closeMobile}
+                className="block w-full transition-colors"
+                style={{
+                  fontFamily: "var(--gy-font-editorial)",
+                  fontWeight: 300,
+                  fontSize: "32px",
+                  letterSpacing: "-0.005em",
+                  color: "#FFFFFF",
+                  padding: "14px 0",
+                  minHeight: 56,
+                }}
+              >
+                Journal
+              </Link>
+            </div>
           </div>
 
           {/* BRIEF GEORGE — gold, 36 px Cormorant per Boss spec */}

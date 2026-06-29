@@ -7,7 +7,7 @@
 
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
-import { REVIEWS, getOverallAggregateRating } from "@/lib/reviewsData";
+import { REVIEWS, getOverallAggregateRating, initials } from "@/lib/reviewsData";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -36,7 +36,7 @@ function ReviewJsonLd({ reviews, aggregate }) {
     } : {}),
     review: reviews.map((r) => ({
       "@type": "Review",
-      author: { "@type": "Person", name: r.author },
+      author: { "@type": "Person", name: initials(r.author) },
       datePublished: r.date,
       reviewRating: {
         "@type": "Rating",
@@ -123,7 +123,7 @@ function ReviewCard({ review }) {
           flexWrap: "wrap",
         }}
       >
-        <span itemProp="author">{review.author}</span>
+        <span itemProp="author">{initials(review.author)}</span>
         {review.country && <span style={{ color: "rgba(248, 245, 240, 0.45)" }}>{review.country}</span>}
         <span style={{ color: "rgba(248, 245, 240, 0.45)" }}>·</span>
         <time itemProp="datePublished" dateTime={review.date} style={{ color: "rgba(248, 245, 240, 0.55)" }}>

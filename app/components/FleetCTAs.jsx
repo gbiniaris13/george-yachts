@@ -206,6 +206,7 @@ function FleetPanel({
             letterSpacing: "0.2em",
             textTransform: "uppercase",
             fontWeight: 500,
+            textShadow: "0 1px 10px rgba(13,27,42,0.7)",
           }}
         >
           {priceLine}
@@ -241,13 +242,14 @@ function FleetPanel({
         {/* Bottom-right footer (yacht count + length range) */}
         {footer && (
           <p
-            className="absolute bottom-10 text-white/35"
+            className="absolute bottom-10 text-white/75"
             style={{
               fontFamily: "var(--gy-font-ui)",
-              fontSize: "9px",
-              letterSpacing: "0.35em",
+              fontSize: "10px",
+              letterSpacing: "0.32em",
               textTransform: "uppercase",
-              fontWeight: 300,
+              fontWeight: 400,
+              textShadow: "0 1px 10px rgba(13,27,42,0.85), 0 1px 3px rgba(13,27,42,0.6)",
             }}
           >
             {footer}

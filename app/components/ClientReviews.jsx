@@ -6,7 +6,7 @@
 // proof. Renders nothing until at least one real review exists (no fabrication).
 
 import Link from "next/link";
-import { REVIEWS, getOverallAggregateRating } from "@/lib/reviewsData";
+import { REVIEWS, getOverallAggregateRating, initials } from "@/lib/reviewsData";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -37,18 +37,19 @@ export default function ClientReviews() {
   return (
     <section className="relative py-24 md:py-28" style={{ backgroundColor: CREAM }} aria-label="Client reviews">
       <div className="max-w-5xl mx-auto px-6 md:px-12">
-        {/* Aggregate header */}
-        <div className="text-center" style={{ marginBottom: "48px" }}>
+        {/* Aggregate header — centered via inline styles (not reliant on
+            utility classes) so the stars + rating + count always sit centred. */}
+        <div style={{ textAlign: "center", marginBottom: "48px", display: "flex", flexDirection: "column", alignItems: "center" }}>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, fontWeight: 400, letterSpacing: "clamp(0.2em, 0.8vw, 0.4em)", textTransform: "uppercase", color: NAVY, opacity: 0.5, margin: "0 0 18px" }}>
             What our clients say
           </p>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
             <Stars n={5} size={22} />
             <span style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 30, fontWeight: 300, color: NAVY, lineHeight: 1 }}>
               {agg.ratingValue}
             </span>
           </div>
-          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, letterSpacing: "0.08em", color: "rgba(13,27,42,0.6)", margin: "14px 0 0" }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, letterSpacing: "0.08em", color: "rgba(13,27,42,0.6)", margin: "14px 0 0", textAlign: "center" }}>
             {agg.reviewCount} five-star reviews on Google
           </p>
         </div>
@@ -62,7 +63,7 @@ export default function ClientReviews() {
                 &ldquo;{trim(r.body)}&rdquo;
               </blockquote>
               <figcaption style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.06em", color: "rgba(13,27,42,0.7)" }}>
-                <span style={{ fontWeight: 600 }}>{r.author}</span>
+                <span style={{ fontWeight: 600 }}>{initials(r.author)}</span>
                 <span style={{ opacity: 0.6 }}> · Google review</span>
               </figcaption>
             </figure>
