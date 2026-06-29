@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { sanityClient } from "@/lib/sanity";
+import { sanityClient, withRetry } from "@/lib/sanity";
 import { createClient } from "@sanity/client";
 import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
@@ -8,13 +8,17 @@ import BlogGrid from "./BlogGrid";
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 import "@/styles/blog.css";
 
-// Non-CDN client for server-side fetches that need real-time data
-const freshClient = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2023-11-09",
-  useCdn: false,
-});
+// Non-CDN client for server-side fetches that need real-time data.
+// withRetry — see lib/sanity.js: rides out transient CDN connect-timeouts
+// at build time so one blip can't abort the whole deploy.
+const freshClient = withRetry(
+  createClient({
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+    apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2023-11-09",
+    useCdn: false,
+  })
+);
 
 export const revalidate = 60;
 
@@ -58,7 +62,7 @@ function BlogListSchema(posts) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "The Journal — George Yachts Maritime Intelligence",
+    name: "The Journal - George Yachts Maritime Intelligence",
     description: "Expert editorial, market analysis, and insider insights on luxury yacht charter in Greece.",
     url: "https://georgeyachts.com/blog",
     publisher: {

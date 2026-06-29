@@ -1,6 +1,6 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import { sanityClient, urlFor } from "@/lib/sanity";
+import { sanityClient, urlFor, withRetry } from "@/lib/sanity";
 import { createClient } from "@sanity/client";
 import { PortableText } from "@portabletext/react";
 import { RichTextComponents } from "@/components/RichTextComponents";
@@ -15,13 +15,17 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import BlogPostFooter from "@/components/BlogPostFooter";
 import { autoLinkPortableText } from "@/lib/auto-link-content";
 
-// Non-CDN client for real-time content fetching
-const freshClient = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2023-11-09",
-  useCdn: false,
-});
+// Non-CDN client for real-time content fetching.
+// withRetry — see lib/sanity.js: rides out transient CDN connect-timeouts
+// at build time so one blip can't abort the whole deploy.
+const freshClient = withRetry(
+  createClient({
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+    apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2023-11-09",
+    useCdn: false,
+  })
+);
 
 export const revalidate = 60;
 

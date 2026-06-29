@@ -48,10 +48,23 @@ async function loadClusterData(cluster) {
     weeklyRatePrice, fleetTier, priceModel,
     "image": images[0].asset->url
   }`;
-  const [articles, yachts] = await Promise.all([
-    sanityClient.fetch(articleQuery, { slugs: cluster.articles }),
-    sanityClient.fetch(yachtQuery),
-  ]);
+  // 2026-06-23 — Sanity outage resilience (matches island/[slug]). The shared
+  // client retries transient CDN blips (see lib/sanity.js withRetry); if those
+  // are still exhausted, return empty arrays so this page degrades gracefully
+  // instead of crashing the prerender and aborting the whole 470-page deploy.
+  // The header + CTA come from the hard-coded cluster, so the page still renders
+  // a valid shell; the article/yacht sections (both guarded by `.length > 0`)
+  // simply omit, and ISR (revalidate=3600) repopulates them within the hour.
+  let articles = [];
+  let yachts = [];
+  try {
+    [articles, yachts] = await Promise.all([
+      sanityClient.fetch(articleQuery, { slugs: cluster.articles }),
+      sanityClient.fetch(yachtQuery),
+    ]);
+  } catch (err) {
+    console.error(`journal/[cluster] fetch failed for ${cluster.slug}:`, err);
+  }
   // Reorder articles to match cluster.articles order, drop any unpublished/missing
   const articleMap = new Map((articles || []).map((a) => [a.slug, a]));
   const orderedArticles = cluster.articles.map((s) => articleMap.get(s)).filter(Boolean);
@@ -416,7 +429,7 @@ export default async function ClusterPage({ params }) {
                 textDecoration: "none",
               }}
             >
-              Brief George — reply within 24h →
+              Brief George - reply within 24h →
             </Link>
             <Link
               href="/inquiry"
