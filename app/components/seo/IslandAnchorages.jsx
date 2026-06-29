@@ -321,7 +321,7 @@ export default function IslandAnchorages({ guideData }) {
                       { label: "Holding", value: a.holding },
                       { label: "Shelter", value: a.shelter },
                       { label: "Ashore", value: a.ashore },
-                    ].map((spec) => (
+                    ].filter((spec) => spec.value).map((spec) => (
                       <div key={spec.label}>
                         <p
                           style={{
