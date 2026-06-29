@@ -90,6 +90,8 @@ const staticRoutes = [
   // 2026-06-26 — the weekly motor pillar/hub (query "weekly motor yacht charter
   // Greece"). Hubs the motor cluster + the rate card; angle is the 7-night unit.
   { path: "/weekly-motor-yacht-charter-greece", priority: 0.93, changeFrequency: "weekly" },
+  // 2026-06-29 — fully-sourced 2027 market outlook (citation magnet).
+  { path: "/greek-yacht-charter-2027-outlook", priority: 0.9, changeFrequency: "monthly" },
   { path: "/itinerary-builder", priority: 0.85, changeFrequency: "monthly" },
   // 2026-05-14 — moved here from the (now retired) sitemap-programmatic.xml.
   // Both pages were live and indexable but only listed in the sub-sitemap,
