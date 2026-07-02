@@ -207,7 +207,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative w-full bg-black text-white overflow-hidden">
+    <footer className="relative w-full bg-black gy-footer-depth text-white overflow-hidden">
       {/* Chapter 01 (2026-05-08) - Boss-curated footer ambient video.
           Two sunset-water close-ups (13992647 → 14079402) concat'd
           into a single 68 s loop:

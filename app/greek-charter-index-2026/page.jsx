@@ -108,6 +108,10 @@ function DataTable({ table }) {
               {(row.cells || []).map((cell, ci) => (
                 <td
                   key={ci}
+                  // gy-tnum (2026-07-02, ASK B section 4.2): tabular
+                  // lining figures so the rate columns align like a
+                  // bank statement - this IS the citable data table.
+                  className={ci === 0 ? undefined : "gy-tnum"}
                   style={{
                     textAlign: ci === 0 ? "left" : "right",
                     padding: "12px 16px",

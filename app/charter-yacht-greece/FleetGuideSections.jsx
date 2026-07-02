@@ -202,21 +202,21 @@ export default function FleetGuideSections({ yachts }) {
                   <tr>
                     <td style={tdStyle}>Private Fleet, full crew</td>
                     <td style={tdStyle}>per yacht</td>
-                    <td style={tdStyle}>{fmt(tiers.private.low)} to {fmt(tiers.private.high)}</td>
+                    <td className="gy-tnum" style={tdStyle}>{fmt(tiers.private.low)} to {fmt(tiers.private.high)}</td>
                   </tr>
                 )}
                 {tiers.explorerPP && (
                   <tr>
                     <td style={tdStyle}>Explorer Fleet, skippered</td>
                     <td style={tdStyle}>per person</td>
-                    <td style={tdStyle}>from {fmt(tiers.explorerPP)}</td>
+                    <td className="gy-tnum" style={tdStyle}>from {fmt(tiers.explorerPP)}</td>
                   </tr>
                 )}
                 {tiers.explorerYacht && (
                   <tr>
                     <td style={tdStyle}>Explorer Fleet, whole yacht</td>
                     <td style={tdStyle}>per yacht</td>
-                    <td style={tdStyle}>from {fmt(tiers.explorerYacht)}</td>
+                    <td className="gy-tnum" style={tdStyle}>from {fmt(tiers.explorerYacht)}</td>
                   </tr>
                 )}
               </tbody>

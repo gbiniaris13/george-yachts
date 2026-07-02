@@ -47,8 +47,18 @@
   --gy-gold:    #C9A84C;  /* Antique Gold — accents only */
   --gy-ivory:   #F8F5F0;  /* Ivory White — text on dark */
   --gy-card:    #142233;  /* Card bg — slightly lighter than navy */
-  --gy-white:   #FFFFFF;  /* Pure white — light sections */
+  --gy-white:   #FFFFFF;  /* Pure white — imagery borders only (see vellum) */
   --gy-muted:   #9CA3AF;  /* Muted gray — secondary text on dark */
+  /* 2026-07-02 (ASK B colour Option A, "Midnight and Vellum") —
+     two new steps in the ladder. Vellum replaces pure white for any
+     LIGHT content surface (paper stock, not screen white; navy text
+     on vellum ≈ 14:1 contrast, AA+). Depth is the step BELOW navy
+     for footer and modal scrims, giving the dark side a proper
+     three-step ladder: page #0D1B2A, card #142233, depth #091320.
+     Pure white retires to imagery borders. The Cabin guest portal
+     keeps its own light system - do not vellum-ify it. */
+  --gy-vellum:  #F4EFE6;  /* Vellum — light sections read as paper */
+  --gy-depth:   #091320;  /* Depth — footer / modal scrims, below navy */
   /* Boss rule: gold appears only on (a) CTA button borders,
      (b) 0.5 px section divider lines, (c) George's Inside Info
      left border, (d) hover states. Nowhere else. The restraint of
@@ -61,6 +71,43 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  /* 2026-07-02 (ASK B section 4.1) — Fraunces now loads as a true
+     variable font with the opsz axis (layout.jsx); optical sizing
+     lets the browser serve the text cut at body sizes and the
+     display cut on heroes, the metal-type behaviour. No-op for
+     fonts without an opsz axis. */
+  font-optical-sizing: auto;
+}
+
+/* ── B1 typography utilities (ASK B section 4, 2026-07-02) ─────────
+   Codified so numeral style and measure stop being re-decided per
+   component. Apply, never restyle inline. */
+
+/* Bank-statement numerals: prices, rate tables, the Charter Index.
+   Tabular lining figures align columns digit-for-digit. */
+.gy-tnum {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+/* Oldstyle figures for running editorial prose (dates, depths inside
+   sentences, like a printed guidebook). Apply to article bodies only,
+   never to UI or tables. Silently no-op where the face lacks onum. */
+.gy-onum {
+  font-variant-numeric: oldstyle-nums;
+}
+
+/* The editorial measure: 65-70ch is the book-page line length.
+   Whitespace is the status signal; a fixed measure buys it on every
+   long-form page at once. */
+.gy-measure {
+  max-width: 68ch;
+}
+
+/* Print-grade hanging punctuation on pull quotes (Safari honours it,
+   others ignore it - free where it works, invisible where it doesn't). */
+blockquote {
+  hanging-punctuation: first;
 }
 
 /* A.12 (Roberto brief): every anchored section gets enough scroll
@@ -3492,6 +3539,16 @@ figcaption,
 [class*="bg-[#0D1B2A]"],
 [class*="bg-[#0D1B2A]"] {
   background-color: var(--gy-navy, #0D1B2A) !important;
+}
+
+/* 2026-07-02 (ASK B colour Option A) — the depth step. The footer
+   sits one step BELOW the navy page so the dark side reads as a
+   three-step ladder (page → card → depth) instead of one flat
+   plane. Declared after the .bg-black remap so it wins on the
+   footer element specifically. */
+footer.gy-footer-depth,
+.gy-footer-depth {
+  background-color: var(--gy-depth, #091320) !important;
 }
 
 /* Tailwind .text-white → ivory. 217 occurrences in the codebase

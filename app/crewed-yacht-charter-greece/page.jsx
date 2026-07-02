@@ -395,7 +395,7 @@ export default async function CrewedCharterPage() {
                 {CHARTER_INDEX_2026.summaryTable.rows.map((row, i) => (
                   <tr key={i}>
                     {row.cells.map((cell, j) => (
-                      <td key={j} style={{ ...tdStyle, fontStyle: j === 0 ? "normal" : "normal", whiteSpace: j === 0 ? "normal" : "nowrap" }}>
+                      <td key={j} className="gy-tnum" style={{ ...tdStyle, whiteSpace: j === 0 ? "normal" : "nowrap" }}>
                         {cell}
                       </td>
                     ))}

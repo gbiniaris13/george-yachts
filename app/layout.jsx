@@ -120,9 +120,17 @@ const fraunces = Fraunces({
   // read "πρόχειρο/παιδικό" at Light 300. Fraunces 100 is the
   // editorial-thin axis used by Vogue / NYT Cooking on display
   // headlines — much closer to Canela Thin's air-and-grace feel.
-  // Added 100 to the weight set + kept the rest for non-display
-  // contexts that benefit from a touch more body.
-  weight: ["100", "200", "300", "400", "500", "600"],
+  //
+  // 2026-07-02 (ASK B section 4.1) — switched from six static weights
+  // (12 files with italics) to the TRUE VARIABLE font with the opsz
+  // (optical size) axis. Every font-weight 100-600 used across the
+  // site keeps working (the variable wght axis serves any value), and
+  // opsz + `font-optical-sizing: auto` (globals.css) gives body-size
+  // Fraunces real text cuts and the thin hero cut ink-like contrast,
+  // the way metal-type optical sizes worked. SOFT/WONK axes are NOT
+  // requested: WONK would stay at 0 everywhere, and loading an axis
+  // that never moves is dead weight.
+  axes: ["opsz"],
   style: ["normal", "italic"],
   variable: "--gy-font-display",
   display: "swap",

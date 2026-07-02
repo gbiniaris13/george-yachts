@@ -433,7 +433,7 @@ export default async function SeoLanding({ pageData }) {
                     {pageData.rateTable.rows.map((row, i) => (
                       <tr key={i}>
                         {row.cells.map((cell, j) => (
-                          <td key={j} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13.5, color: "rgba(248, 245, 240,0.85)", padding: "11px 14px", borderBottom: "1px solid rgba(248,245,240,0.08)", verticalAlign: "top" }}>
+                          <td key={j} className="gy-tnum" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13.5, color: "rgba(248, 245, 240,0.85)", padding: "11px 14px", borderBottom: "1px solid rgba(248,245,240,0.08)", verticalAlign: "top" }}>
                             {cell}
                           </td>
                         ))}
