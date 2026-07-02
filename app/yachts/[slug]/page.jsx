@@ -5,6 +5,7 @@ import BreadcrumbSchema from '@/app/components/BreadcrumbSchema';
 import SimilarYachts from './SimilarYachts';
 import { similarYachts } from '@/lib/yacht-similarity';
 import { extractPriceRange } from '@/lib/pricing';
+import QuickAnswerBlock from '@/app/components/QuickAnswerBlock';
 import './yacht-page.css';
 
 // ISR - revalidate every hour
@@ -495,6 +496,16 @@ export default async function YachtPage({ params }) {
         heroImage={heroImage}
         description={yacht.description}
       />
+      {/* 2026-07-02 (ASK A Move 3b) — the Quick Answer above existed
+          only as JSON-LD; engines extract from VISIBLE HTML (schema-only
+          showed no citation uplift in Ahrefs' 1,885-page experiment).
+          Rendering the same Q/A as an on-page essentials recap makes the
+          FAQPage speakable selector (.gy-qa-text) resolve to real text. */}
+      <section aria-label="Charter essentials" style={{ background: "#0D1B2A", padding: "56px 24px 8px" }}>
+        <div style={{ maxWidth: 980, margin: "0 auto" }}>
+          <QuickAnswerBlock question={quickAnswerQ} answer={quickAnswerA} />
+        </div>
+      </section>
       <SimilarYachts items={similar} />
     </>
   );

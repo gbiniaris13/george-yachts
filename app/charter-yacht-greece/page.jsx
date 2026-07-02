@@ -9,6 +9,7 @@ import BriefGeorgeBanner from "@/app/components/BriefGeorgeBanner";
 // for the background, and no other Image instances live in this file.
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import BrowseSeoCategories from "@/app/components/seo/BrowseSeoCategories";
+import FleetGuideSections from "./FleetGuideSections";
 import { extractPriceRange } from "@/lib/pricing";
 import "./fleet-page.css";
 
@@ -278,6 +279,14 @@ export default async function CharterFleetPage() {
           don't want to filter through 60+ yachts. */}
       <BriefGeorgeBanner />
       <FleetGrid yachts={yachts} />
+
+      {/* 2026-07-02 (ASK A Move 3c) — the guide layer: live per-tier
+          cost table, Index stat callouts, sample week, seasons,
+          reviews, 10-question FAQ with FAQPage schema. Closes the
+          editorial-depth gap against the ranking competitor category
+          pages (they run 3,200-5,000 words + 10-20 FAQs; this page
+          ran a grid and a trust strip). */}
+      <FleetGuideSections yachts={yachts} />
 
       {/* Phase 7 (2026-05-11) — SEO internal-link block. Pushes
           authority from the fleet page (high traffic, ranking well)

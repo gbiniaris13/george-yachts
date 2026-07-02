@@ -304,15 +304,16 @@ const nextConfig = {
         destination: "/blog",
         permanent: false,
       },
-      // 2026-07-02 Ahrefs audit — the insurance guide's body links to
-      // a TEPAI-tax article that was drafted but never published, so
-      // the URL hard-404'd. Same ghost-URL treatment as above:
-      // `permanent: false` (307) so the real TEPAI article can publish
-      // at this slug later without a stuck redirect.
+      // 2026-07-02 Ahrefs audit — the insurance guide's body linked a
+      // TEPAI blog slug that never existed. The REAL TEPAI article is
+      // live as a programmatic page (lib/articleSeo.js) at
+      // /tepai-tax-greece-yacht-charter-2026, so the ghost URL 301s
+      // there permanently. (The Sanity body link was also retargeted
+      // to the real page directly, 2026-07-02.)
       {
         source: "/blog/tepai-tax-greece-2026-yacht-charter-complete-breakdown",
-        destination: "/blog",
-        permanent: false,
+        destination: "/tepai-tax-greece-yacht-charter-2026",
+        permanent: true,
       },
       // 2026-05-14 Ahrefs audit — 2 hard 404s flagged. Both had
       // legitimate inbound interest (one external blog citation, one
