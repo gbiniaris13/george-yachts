@@ -255,14 +255,18 @@ function PersonJsonLd() {
       datePublished: "2026-05-01",
     },
     award: ["Featured in Forbes - May 2026"],
+    // 2026-07-02 entity-hygiene audit (ASK A Section 4): sameAs holds
+    // ONLY profiles of George the PERSON. The Forbes article moved out
+    // (it stays asserted in subjectOf above - coverage, not identity);
+    // the @georgeyachts Instagram moved to the Organization node (it
+    // is the company account). Connectively expert profile added
+    // (live, George-owned: created 2026-06-10).
     sameAs: [
       "https://www.linkedin.com/in/george-p-biniaris/",
-      // Stage 2 (Task 3 / B2) - Wikidata person entity + Forbes feature.
-      // Wikidata feeds Google Knowledge Graph and is ingested by LLMs;
-      // the Forbes feature is a first-class authority confirmation.
+      // Stage 2 (Task 3 / B2) - Wikidata person entity. Wikidata feeds
+      // Google Knowledge Graph and is ingested by LLMs.
       "https://www.wikidata.org/wiki/Q140078221",
-      "https://www.forbes.com/sites/jacquesledbetter/2026/05/01/how-the-wealthy-are-hedging-for-instability/",
-      "https://www.instagram.com/georgeyachts",
+      "https://connectively.us/p/george-p-biniaris",
       "https://georgeyachts.com/team/george-biniaris",
     ],
     // The bibliography — every editorial piece George is the byline
