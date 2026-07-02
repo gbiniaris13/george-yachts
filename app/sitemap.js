@@ -17,6 +17,7 @@ import { BOTTOM_FUNNEL_PAGES } from "@/lib/bottomFunnelSeo";
 import { BEST_YACHTS_PAGES } from "@/lib/bestYachtsSeo";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
 import { CHARTER_INDEX_2026 } from "@/lib/charterIndex2026";
+import { RETIRED_SLUGS } from "@/lib/retiredSlugs";
 
 const BASE_URL = "https://georgeyachts.com";
 
@@ -210,9 +211,10 @@ export default async function sitemap() {
     // posts are published). They resolve 200 again, so they belong
     // back in the sitemap and are no longer excluded here. Only
     // last-cabin-standing remains retired (expired urgency post).
-    const RETIRED_SLUGS = [
-      "last-cabin-standing-book-crewed-yacht-greece-summer-2026",
-    ];
+    //
+    // 2026-07-02 — list moved to lib/retiredSlugs.js so the /blog
+    // listing excludes the same slugs (Ahrefs: the blog index was
+    // still rendering the retired post's card, a link into a 307).
     const posts = await sanityClient.fetch(
       `*[_type == "post" && defined(slug.current) && defined(publishedAt) && !(slug.current in $retired)]{ "slug": slug.current, _updatedAt }`,
       { retired: RETIRED_SLUGS }

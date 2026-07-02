@@ -176,6 +176,25 @@ const Footer = () => {
         { name: "Family with Catamarans", href: "/catamaran-charter-greece-family" },
       ],
     },
+    // 2026-07-02 (Ahrefs orphan-page audit, same fix pattern as
+    // 2026-05-14 above). These are real, indexable planning tools and
+    // research pages that had zero server-rendered inbound links:
+    // the quiz, calendar, weather and proposal tools, the newsletter
+    // signup, and two research/comparison pages that live outside
+    // the /market-reports and /comparisons hub data.
+    {
+      heading: "Plan & Research",
+      links: [
+        { name: "Island Match Quiz", href: "/island-quiz" },
+        { name: "Pricing Calendar", href: "/pricing-calendar" },
+        { name: "Weather in Greek Waters", href: "/weather-greece" },
+        { name: "Instant Charter Proposal", href: "/proposal-generator" },
+        { name: "The Journals · Subscribe", href: "/newsletter" },
+        { name: "2027 Season Outlook", href: "/greek-yacht-charter-2027-outlook" },
+        { name: "UHNW Charter Trends 2026", href: "/uhnw-yacht-charter-trends-greek-market-2026" },
+        { name: "Greece vs Spain", href: "/greece-vs-spain-yacht-charter" },
+      ],
+    },
   ];
 
   const legalLinks = [

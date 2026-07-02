@@ -15,6 +15,12 @@ export const metadata = {
     "Request deletion of your personal data held by George Yachts Brokerage House. We action requests within 30 days per GDPR.",
   alternates: { canonical: "https://georgeyachts.com/privacy/delete" },
   robots: { index: true, follow: true },
+  openGraph: {
+    title: "Request Data Deletion | George Yachts",
+    description:
+      "Request deletion of your personal data held by George Yachts Brokerage House. We action requests within 30 days per GDPR.",
+    url: "https://georgeyachts.com/privacy/delete",
+  },
 };
 
 const GOLD = "#C9A84C";

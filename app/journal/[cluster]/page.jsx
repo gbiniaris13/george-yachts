@@ -28,6 +28,7 @@ export async function generateMetadata({ params }) {
   return {
     title: `${cluster.title} | The Journal`,
     description: cluster.intro.slice(0, 158),
+    alternates: { canonical: `https://georgeyachts.com/journal/${cluster.slug}` },
     openGraph: {
       title: `${cluster.title} | George Yachts`,
       description: cluster.intro.slice(0, 158),

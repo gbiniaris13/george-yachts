@@ -4,9 +4,11 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
   title: { absolute: 'Which Greek Island Are You? | George Yachts' },
   description: 'Take our fun personality quiz and discover which Greek island matches your travel style. Are you Mykonos, Hydra, Santorini, or Paxos?',
+  alternates: { canonical: 'https://georgeyachts.com/island-quiz' },
   openGraph: {
     title: 'Which Greek Island Are You? | George Yachts',
     description: 'Discover your perfect Greek island match - take the quiz!',
+    url: 'https://georgeyachts.com/island-quiz',
   },
 };
 

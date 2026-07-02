@@ -6,20 +6,36 @@
 // engines when users ask "where to anchor in Mykonos" type queries.
 //
 // Topical-cluster effect: every anchorage page links back to the
-// island root page (/yacht-charter-{island}), the region page
-// (/destinations/{region}), and related islands. Internal authority
-// flows toward the island root, deepening Google's perception that
-// George Yachts is the topical authority on that island.
+// island root page (/yacht-charter-{island}) WHEN that page exists
+// (only the 26 lib/islands.js islands have one - 2026-07-02 Ahrefs
+// audit: the unconditional link 404'd on the other 23 guides), the
+// region page (/destinations/{region}), and every other guide via
+// the anchorage-library index. Internal authority flows toward the
+// island root, deepening Google's perception that George Yachts is
+// the topical authority on that island.
 
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
+import { getIslandBySlug } from "@/lib/islands";
+import { ISLAND_ANCHORAGES } from "@/lib/islandAnchoragesSeo";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
+
+// Fallback surfaces for guides whose island has no root page. The
+// three editorial region pages cover most; Sporades/Dodecanese/Crete
+// guides fall back to the anchorage database hub.
+const REGION_HUBS = {
+  cyclades: { href: "/destinations/cyclades", label: "Cyclades charters" },
+  ionian: { href: "/destinations/ionian", label: "Ionian charters" },
+  saronic: { href: "/destinations/saronic", label: "Saronic charters" },
+};
+
+const REGION_ORDER = ["Cyclades", "Saronic", "Ionian", "Sporades", "Dodecanese", "Crete"];
 
 function CollectionAndArticleJsonLd({ data }) {
   // The guide page itself is an Article. Each anchorage is a Place
@@ -96,9 +112,30 @@ function CollectionAndArticleJsonLd({ data }) {
 
 export default function IslandAnchorages({ guideData }) {
   const g = guideData;
+
+  // Parent surface: the island root page when it exists, otherwise
+  // the region page, otherwise the anchorage database. Never a 404.
+  const hasIslandPage = Boolean(getIslandBySlug(g.slug));
+  const regionHub = REGION_HUBS[(g.region || "").toLowerCase()];
+  const parentHref = hasIslandPage
+    ? `/yacht-charter-${g.slug}`
+    : regionHub
+      ? regionHub.href
+      : "/greek-anchorages-database";
+  const parentLabel = hasIslandPage
+    ? `${g.islandName} charter`
+    : regionHub
+      ? regionHub.label
+      : "All Greek anchorages";
+  const parentCrumbName = hasIslandPage
+    ? g.islandName
+    : regionHub
+      ? g.region
+      : "Greek Anchorages";
+
   const breadcrumbs = [
     { name: "Home", url: "https://georgeyachts.com/" },
-    { name: g.islandName, url: `https://georgeyachts.com/yacht-charter-${g.slug}` },
+    { name: parentCrumbName, url: `https://georgeyachts.com${parentHref}` },
     { name: "Anchorages", url: `https://georgeyachts.com${g.urlPath}` },
   ];
 
@@ -112,7 +149,7 @@ export default function IslandAnchorages({ guideData }) {
         <header style={{ padding: "120px 24px 56px", borderBottom: "1px solid rgba(201,168,76,0.15)" }}>
           <div style={{ maxWidth: 880, margin: "0 auto" }}>
             <Link
-              href={`/yacht-charter-${g.slug}`}
+              href={parentHref}
               style={{
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 10,
@@ -127,7 +164,7 @@ export default function IslandAnchorages({ guideData }) {
                 display: "inline-block",
               }}
             >
-              ← {g.islandName} charter
+              ← {parentLabel}
             </Link>
             <p
               style={{
@@ -503,6 +540,105 @@ export default function IslandAnchorages({ guideData }) {
           </section>
         )}
 
+        {/* ANCHORAGE LIBRARY — 2026-07-02. Guides for islands without
+            a /yacht-charter-{island} root page had zero server-rendered
+            inbound links (Ahrefs: orphan pages). Every guide now links
+            every other guide, so each one carries 40+ crawlable inbound
+            routes and the series reads as one library. */}
+        <section
+          style={{
+            borderTop: "1px solid rgba(201,168,76,0.15)",
+            padding: "72px 24px",
+          }}
+        >
+          <div style={{ maxWidth: 880, margin: "0 auto" }}>
+            <p
+              style={{
+                fontFamily: "var(--gy-font-ui)",
+                fontSize: 9,
+                letterSpacing: "0.42em",
+                textTransform: "uppercase",
+                color: GOLD,
+                fontWeight: 600,
+                margin: "0 0 10px",
+                textAlign: "center",
+              }}
+            >
+              The anchorage library
+            </p>
+            <p
+              style={{
+                fontFamily: "var(--gy-font-editorial)",
+                fontSize: 15,
+                fontStyle: "italic",
+                color: "rgba(248, 245, 240, 0.6)",
+                margin: "0 0 8px",
+                textAlign: "center",
+              }}
+            >
+              Every island guide in the series - documented depth, holding and shelter.
+            </p>
+            {REGION_ORDER.map((region) => {
+              const guides = ISLAND_ANCHORAGES.filter(
+                (a) => a.region === region && a.slug !== g.slug
+              );
+              if (guides.length === 0) return null;
+              return (
+                <div key={region} style={{ marginTop: 26 }}>
+                  <p
+                    style={{
+                      fontFamily: "var(--gy-font-ui)",
+                      fontSize: 9,
+                      letterSpacing: "0.32em",
+                      textTransform: "uppercase",
+                      color: "rgba(201,168,76,0.7)",
+                      fontWeight: 600,
+                      margin: "0 0 10px",
+                    }}
+                  >
+                    {region}
+                  </p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 20px" }}>
+                    {guides.map((a) => (
+                      <Link
+                        key={a.slug}
+                        href={a.urlPath}
+                        style={{
+                          fontFamily: "var(--gy-font-ui)",
+                          fontSize: 13,
+                          letterSpacing: "0.08em",
+                          color: "rgba(248, 245, 240, 0.75)",
+                          textDecoration: "none",
+                        }}
+                      >
+                        {a.islandName}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+            <div style={{ textAlign: "center", marginTop: 40 }}>
+              <Link
+                href="/greek-anchorages-database"
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 11,
+                  letterSpacing: "0.32em",
+                  textTransform: "uppercase",
+                  fontWeight: 600,
+                  color: GOLD,
+                  textDecoration: "none",
+                  paddingBottom: 3,
+                  borderBottom: `1px solid ${GOLD}`,
+                }}
+              >
+                The full anchorage database →
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* CTA */}
         <section
           style={{
@@ -554,7 +690,7 @@ export default function IslandAnchorages({ guideData }) {
                 Write to George
               </Link>
               <Link
-                href={`/yacht-charter-${g.slug}`}
+                href={parentHref}
                 style={{
                   display: "inline-block",
                   fontFamily: "var(--gy-font-ui)",
@@ -569,7 +705,7 @@ export default function IslandAnchorages({ guideData }) {
                   textDecoration: "none",
                 }}
               >
-                {g.islandName} charter →
+                {parentLabel} →
               </Link>
             </div>
           </div>

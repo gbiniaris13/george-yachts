@@ -5,6 +5,12 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
   title: "Instant Charter Proposal",
   description: "Generate a personalized yacht charter proposal in seconds. Select your yacht, dates, and preferences - receive a complete breakdown instantly.",
+  alternates: { canonical: "https://georgeyachts.com/proposal-generator" },
+  openGraph: {
+    title: "Instant Charter Proposal | George Yachts",
+    description: "Generate a personalized yacht charter proposal in seconds. Select your yacht, dates, and preferences - receive a complete breakdown instantly.",
+    url: "https://georgeyachts.com/proposal-generator",
+  },
 };
 
 export const revalidate = 3600;

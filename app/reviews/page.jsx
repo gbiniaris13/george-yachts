@@ -16,6 +16,11 @@ export const metadata = {
   title: "Charter Reviews",
   description: "Verified yacht charter reviews from George Yachts clients across Greek waters. IYBA member, MYBA-standard contracts.",
   alternates: { canonical: "https://georgeyachts.com/reviews" },
+  openGraph: {
+    title: "Charter Reviews | George Yachts",
+    description: "Verified yacht charter reviews from George Yachts clients across Greek waters. IYBA member, MYBA-standard contracts.",
+    url: "https://georgeyachts.com/reviews",
+  },
 };
 
 function ReviewJsonLd({ reviews, aggregate }) {

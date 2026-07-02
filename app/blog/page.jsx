@@ -6,6 +6,8 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import BlogGrid from "./BlogGrid";
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
+import { RETIRED_SLUGS } from "@/lib/retiredSlugs";
+import { JOURNAL_CLUSTERS } from "@/lib/journal-clusters";
 import "@/styles/blog.css";
 
 // Non-CDN client for server-side fetches that need real-time data.
@@ -35,7 +37,11 @@ export const metadata = {
   },
 };
 
-const BLOG_QUERY = `*[_type == "post"] | order(publishedAt desc){
+// 2026-07-02 — exclude retired slugs (lib/retiredSlugs.js). The
+// retired post stayed published in Sanity, so this listing kept
+// rendering its card and every click 307'd back here (Ahrefs:
+// "page has links to redirect" on the blog index).
+const BLOG_QUERY = `*[_type == "post" && !(slug.current in $retired)] | order(publishedAt desc){
   _id,
   title,
   "slug": slug.current,
@@ -103,7 +109,7 @@ export default async function BlogPage() {
   let fleetTeaser = [];
   try {
     [posts, fleetTeaser] = await Promise.all([
-      freshClient.fetch(BLOG_QUERY, {}, { next: { tags: ['posts'], revalidate: 60 } }),
+      freshClient.fetch(BLOG_QUERY, { retired: RETIRED_SLUGS }, { next: { tags: ['posts'], revalidate: 60 } }),
       sanityClient.fetch(FLEET_TEASER_QUERY),
     ]);
   } catch (error) {
@@ -135,6 +141,77 @@ export default async function BlogPage() {
 
       {/* BLOG GRID (Client Component for animations) */}
       <BlogGrid posts={posts} />
+
+      {/* 2026-07-02 — reading paths. The 7 /journal/[cluster] topic
+          hubs had zero server-rendered inbound links anywhere on the
+          site (Ahrefs: orphan pages). This strip gives each cluster a
+          crawlable route from its natural parent, the Journal index. */}
+      <section
+        aria-label="Reading paths"
+        style={{
+          background: "#0D1B2A",
+          padding: "64px 24px",
+          borderTop: "1px solid rgba(201,168,76,0.12)",
+        }}
+      >
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 32 }}>
+            <p
+              style={{
+                fontFamily: "var(--gy-font-ui)",
+                fontSize: 10,
+                letterSpacing: "0.4em",
+                color: "#C9A84C",
+                textTransform: "uppercase",
+                fontWeight: 600,
+                marginBottom: 14,
+              }}
+            >
+              Reading Paths
+            </p>
+            <h2
+              style={{
+                fontFamily: "var(--gy-font-editorial)",
+                fontSize: "clamp(26px, 3.5vw, 38px)",
+                fontWeight: 300,
+                color: "#F8F5F0",
+                margin: 0,
+                lineHeight: 1.05,
+              }}
+            >
+              The Journal, by Theme
+            </h2>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: 12,
+            }}
+          >
+            {JOURNAL_CLUSTERS.map((c) => (
+              <Link
+                key={c.slug}
+                href={`/journal/${c.slug}`}
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 12,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: "#F8F5F0",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  border: "1px solid rgba(201,168,76,0.4)",
+                  padding: "12px 22px",
+                }}
+              >
+                {c.title}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Roberto 2026-05-04 — fleet teaser strip. Every yacht now has
           a second incoming internal link (from this hub page) on top

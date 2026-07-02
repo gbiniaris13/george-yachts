@@ -6,9 +6,11 @@ export const metadata = {
   // "%s | George Yachts" template = 84 chars). `absolute` keeps one brand.
   title: { absolute: 'Build Your Greek Islands Itinerary | George Yachts' },
   description: 'Design your perfect Greek island-hopping route. Click islands on our interactive map, see distances in nautical miles, and send your dream itinerary to George for a personalized proposal.',
+  alternates: { canonical: 'https://georgeyachts.com/itinerary-builder' },
   openGraph: {
     title: 'Build Your Greek Islands Itinerary | George Yachts',
     description: 'Interactive route planner for luxury yacht charters in Greek waters.',
+    url: 'https://georgeyachts.com/itinerary-builder',
   },
 };
 

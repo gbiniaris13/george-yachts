@@ -304,6 +304,16 @@ const nextConfig = {
         destination: "/blog",
         permanent: false,
       },
+      // 2026-07-02 Ahrefs audit — the insurance guide's body links to
+      // a TEPAI-tax article that was drafted but never published, so
+      // the URL hard-404'd. Same ghost-URL treatment as above:
+      // `permanent: false` (307) so the real TEPAI article can publish
+      // at this slug later without a stuck redirect.
+      {
+        source: "/blog/tepai-tax-greece-2026-yacht-charter-complete-breakdown",
+        destination: "/blog",
+        permanent: false,
+      },
       // 2026-05-14 Ahrefs audit — 2 hard 404s flagged. Both had
       // legitimate inbound interest (one external blog citation, one
       // internal glossary link that I'm also removing below) so we

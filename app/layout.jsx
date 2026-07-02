@@ -234,7 +234,14 @@ export const metadata = {
     },
   },
   alternates: {
-    canonical: "https://georgeyachts.com",
+    // 2026-07-02 SEO fix — DROPPED the global canonical that lived
+    // here. It cascaded to every page that didn't declare its own
+    // alternates.canonical (/private-fleet, /explorer-fleet, all
+    // /journal/* clusters), telling Google each of them "I am the
+    // homepage" and suppressing their indexing. The homepage sets its
+    // own canonical in app/page.jsx; every other indexable page must
+    // declare its own. No canonical tag is neutral; a wrong one is
+    // actively harmful.
     // 2026-05-07 SEO fix — DROPPED the languages: { ... } block.
     // The `?lang=xx` URLs share their canonical with the bare URL
     // (i18n is client-side, no server-side routing per locale), so

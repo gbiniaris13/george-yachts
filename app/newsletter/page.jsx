@@ -18,6 +18,12 @@ export const metadata = {
     "Four short letters from the Greek waters. Pick the one that fits - or more than one. Insider, never noisy. Always reply-to-george.",
   alternates: { canonical: "https://georgeyachts.com/newsletter" },
   robots: { index: true, follow: true },
+  openGraph: {
+    title: "Subscribe - The George Yachts Journals",
+    description:
+      "Four short letters from the Greek waters. Pick the one that fits - or more than one. Insider, never noisy. Always reply-to-george.",
+    url: "https://georgeyachts.com/newsletter",
+  },
 };
 
 const STREAMS = [
