@@ -59,6 +59,7 @@ export async function GET() {
 
 ## Key Pages
 - [Charter Fleet](https://georgeyachts.com/charter-yacht-greece)
+- [Crewed Yacht Charter Greece](https://georgeyachts.com/crewed-yacht-charter-greece)
 - [Private Fleet](https://georgeyachts.com/private-fleet)
 - [Explorer Fleet](https://georgeyachts.com/explorer-fleet)
 - [Cyclades](https://georgeyachts.com/destinations/cyclades)

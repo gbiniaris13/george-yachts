@@ -12,6 +12,9 @@ import Link from "next/link";
 const GOLD = "#C9A84C";
 
 const TYPE_LINKS = [
+  // 2026-07-02 (ASK A Move 3a) - the crewed head page, first in the
+  // ladder: it is the highest-intent term the block can push to.
+  { label: "Crewed yacht charter", href: "/crewed-yacht-charter-greece" },
   { label: "Motor yacht charter", href: "/motor-yacht-charter-greece" },
   { label: "Sailing yacht charter", href: "/sailing-yacht-charter-greece" },
   { label: "Catamaran charter", href: "/catamaran-charter-greece" },

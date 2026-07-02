@@ -99,6 +99,7 @@ const Footer = () => {
     {
       heading: "Charter by Audience & Budget",
       links: [
+        { name: "Crewed Yacht Charter →", href: "/crewed-yacht-charter-greece" },
         { name: "American Clients", href: "/yacht-charter-greece-american-clients" },
         { name: "UK Clients", href: "/yacht-charter-greece-uk-clients" },
         { name: "Under €50,000", href: "/yacht-charter-greece-under-50000" },
