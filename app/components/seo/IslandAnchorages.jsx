@@ -618,7 +618,7 @@ export default function IslandAnchorages({ guideData }) {
                 </div>
               );
             })}
-            <div style={{ textAlign: "center", marginTop: 40 }}>
+            <div style={{ textAlign: "center", marginTop: 40, display: "flex", gap: 28, justifyContent: "center", flexWrap: "wrap" }}>
               <Link
                 href="/greek-anchorages-database"
                 style={{
@@ -634,6 +634,24 @@ export default function IslandAnchorages({ guideData }) {
                 }}
               >
                 The full anchorage database →
+              </Link>
+              {/* 2026-07-02 (ASK A Section 2, Phase 2) — shallow-draft bays
+                  are catamaran water; the guides feed the catamaran page. */}
+              <Link
+                href="/catamaran-charter-greece"
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 11,
+                  letterSpacing: "0.32em",
+                  textTransform: "uppercase",
+                  fontWeight: 600,
+                  color: "rgba(248, 245, 240, 0.75)",
+                  textDecoration: "none",
+                  paddingBottom: 3,
+                  borderBottom: "1px solid rgba(248, 245, 240, 0.3)",
+                }}
+              >
+                Catamarans for shallow bays →
               </Link>
             </div>
           </div>

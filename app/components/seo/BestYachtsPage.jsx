@@ -46,6 +46,7 @@ function JsonLd({ data }) {
         "@type": "Product",
         name: y.spec,
         description: y.why,
+        ...(y.href ? { url: `https://georgeyachts.com${y.href}` } : {}),
         offers: {
           "@type": "Offer",
           priceCurrency: "EUR",
@@ -153,9 +154,18 @@ export default function BestYachtsPage({ pageData }) {
                       <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.32em", textTransform: "uppercase", color: GOLD, fontWeight: 700, margin: "0 0 8px" }}>
                         Option {i + 1}
                       </p>
-                      <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 20, color: CREAM, fontWeight: 400, margin: 0, lineHeight: 1.3 }}>
-                        {y.spec}
-                      </p>
+                      {/* 2026-07-02 — rows may carry href when the "spec"
+                          is a named fleet yacht; renders a link to the
+                          yacht page so the list passes authority inward. */}
+                      {y.href ? (
+                        <Link href={y.href} style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 20, color: CREAM, fontWeight: 400, margin: 0, lineHeight: 1.3, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.45)", display: "inline" }}>
+                          {y.spec}
+                        </Link>
+                      ) : (
+                        <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 20, color: CREAM, fontWeight: 400, margin: 0, lineHeight: 1.3 }}>
+                          {y.spec}
+                        </p>
+                      )}
                     </div>
                     <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 22, color: GOLD, fontWeight: 400, margin: 0, whiteSpace: "nowrap" }}>
                       {y.weekly}

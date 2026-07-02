@@ -27,6 +27,14 @@
 //     insiderTitle,          string ("George's insider notes")
 //     insiderTips,           [string] (5-7 tips)
 //     faq,                   [{q, a}] (5-8 questions)
+//     rateTable,             optional { eyebrow, heading, intro, caption,
+//                              columns: [], rows: [{cells: []}] } — visible
+//                              HTML pricing table (GEO: engines extract
+//                              tables from HTML, not JSON-LD). 2026-07-02.
+//     deepDive,              optional [{ eyebrow, heading, body }] — extra
+//                              long-form editorial sections. body supports
+//                              **bold** and [text](/path) internal links.
+//                              Renders nothing when absent. 2026-07-02.
 //     ctaTitle,              string ("Ready to ...?")
 //     ctaPrimary,            string ("Find a yacht")
 //     ctaPrimaryHref,        string (default /yacht-finder)
@@ -387,6 +395,81 @@ export default async function SeoLanding({ pageData }) {
             </div>
           </section>
         )}
+
+        {/* RATE TABLE — optional visible pricing table (2026-07-02, GEO:
+            engines extract facts from rendered HTML tables; JSON-LD alone
+            showed no citation uplift in Ahrefs' 1,885-page experiment). */}
+        {pageData.rateTable && Array.isArray(pageData.rateTable.rows) && pageData.rateTable.rows.length > 0 && (
+          <section style={{ padding: "72px 24px 0" }}>
+            <div style={{ maxWidth: 980, margin: "0 auto" }}>
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px", textAlign: "center" }}>
+                {pageData.rateTable.eyebrow || "Rates"}
+              </p>
+              <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(26px, 3.6vw, 38px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 16px", textAlign: "center" }}>
+                {pageData.rateTable.heading}
+              </h2>
+              {pageData.rateTable.intro && (
+                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.7, color: "rgba(248, 245, 240,0.75)", margin: "0 auto 32px", maxWidth: 720, textAlign: "center" }}>
+                  {pageData.rateTable.intro}
+                </p>
+              )}
+              <div style={{ overflowX: "auto" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 640 }}>
+                  {pageData.rateTable.caption && (
+                    <caption style={{ captionSide: "bottom", fontFamily: "var(--gy-font-ui)", fontSize: 11, color: "rgba(248,245,240,0.5)", padding: "12px 0 0", textAlign: "left" }}>
+                      {pageData.rateTable.caption}
+                    </caption>
+                  )}
+                  <thead>
+                    <tr>
+                      {(pageData.rateTable.columns || []).map((c) => (
+                        <th key={c} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: GOLD, fontWeight: 600, textAlign: "left", padding: "12px 14px", borderBottom: "1px solid rgba(201,168,76,0.35)", whiteSpace: "nowrap" }}>
+                          {c}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {pageData.rateTable.rows.map((row, i) => (
+                      <tr key={i}>
+                        {row.cells.map((cell, j) => (
+                          <td key={j} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13.5, color: "rgba(248, 245, 240,0.85)", padding: "11px 14px", borderBottom: "1px solid rgba(248,245,240,0.08)", verticalAlign: "top" }}>
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* DEEP DIVE — optional long-form editorial sections (2026-07-02).
+            Lets head pages carry guide-depth content without touching the
+            template contract of the other ~40 pages (renders nothing when
+            the field is absent). body supports **bold** + [text](/path). */}
+        {Array.isArray(pageData.deepDive) && pageData.deepDive.map((sec) => (
+          <section key={sec.heading} style={{ padding: "72px 24px 0" }}>
+            <div style={{ maxWidth: 720, margin: "0 auto" }}>
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 10px" }}>
+                {sec.eyebrow || "The Guide"}
+              </p>
+              <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(24px, 3.2vw, 34px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 18px", lineHeight: 1.2 }}>
+                {sec.heading}
+              </h2>
+              <div
+                style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.78, color: "rgba(248, 245, 240,0.82)" }}
+                dangerouslySetInnerHTML={{
+                  __html: sec.body
+                    .replace(/\*\*(.+?)\*\*/g, '<strong style="color:#F8F5F0">$1</strong>')
+                    .replace(/\[([^\]]+)\]\((\/[^)\s]*)\)/g, '<a href="$2" style="color:#C9A84C;text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.5)">$1</a>'),
+                }}
+              />
+            </div>
+          </section>
+        ))}
 
         {/* WHEN */}
         {pageData.whenBody && (
