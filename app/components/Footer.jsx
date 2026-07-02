@@ -186,6 +186,7 @@ const Footer = () => {
     {
       heading: "Plan & Research",
       links: [
+        { name: "Brokers, Explained", href: "/yacht-charter-brokers-greece" },
         { name: "Island Match Quiz", href: "/island-quiz" },
         { name: "Pricing Calendar", href: "/pricing-calendar" },
         { name: "Weather in Greek Waters", href: "/weather-greece" },
