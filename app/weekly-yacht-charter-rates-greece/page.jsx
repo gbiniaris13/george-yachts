@@ -1,4 +1,4 @@
-import { WHATSAPP_DOWN } from "@/lib/whatsappStatus";
+import { WHATSAPP_DOWN, WHATSAPP_NUMBER } from "@/lib/whatsappStatus";
 // Weekly Yacht Charter Rates Greece - the all-in rate card.
 //
 // 2026-06-26. The "weekly motor rates" data weapon. A real, crawlable HTML
@@ -282,7 +282,7 @@ export default function WeeklyRatesPage() {
             <Link href="/inquiry" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: GOLD, color: NAVY, textDecoration: "none" }}>
               Brief George directly
             </Link>
-            <a href={WHATSAPP_DOWN ? "/inquiry" : "https://wa.me/17867988798?text=Hi%20George%2C%20I%20would%20like%20a%20weekly%20motor%20yacht%20charter%20quote%20for%20Greece."} target={WHATSAPP_DOWN ? undefined : "_blank"} rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", border: `1px solid ${GOLD}`, color: GOLD, textDecoration: "none" }}>
+            <a href={WHATSAPP_DOWN ? "/inquiry" : `https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20George%2C%20I%20would%20like%20a%20weekly%20motor%20yacht%20charter%20quote%20for%20Greece.`} target={WHATSAPP_DOWN ? undefined : "_blank"} rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", border: `1px solid ${GOLD}`, color: GOLD, textDecoration: "none" }}>
               {WHATSAPP_DOWN ? "Message George Directly" : "Message on WhatsApp"}
             </a>
           </div>

@@ -1,5 +1,5 @@
 "use client";
-import { WHATSAPP_DOWN } from "@/lib/whatsappStatus";
+import { WHATSAPP_US_LOCKED } from "@/lib/whatsappStatus";
 
 import React, { useState } from "react";
 import { Instagram, Linkedin } from "lucide-react";
@@ -457,15 +457,19 @@ const Footer = () => {
                   +30 697 038 0999
                 </a>{" "}
                 · US{" "}
-                <a
-                  href={WHATSAPP_DOWN ? "/inquiry" : `https://wa.me/17867988798?text=${encodeURIComponent("Hello George, I'm interested in chartering a yacht in Greece.")}`}
-                  target={WHATSAPP_DOWN ? undefined : "_blank"}
-                  rel="noopener noreferrer"
-                  style={{ color: "inherit", textDecoration: "none" }}
-                  data-cursor={WHATSAPP_DOWN ? "Message" : "WhatsApp"}
-                >
-                  {WHATSAPP_DOWN ? "+1 786 798 8798" : "+1 786 798 8798 (WhatsApp)"}
-                </a>
+                {WHATSAPP_US_LOCKED ? (
+                  <span>+1 786 798 8798</span>
+                ) : (
+                  <a
+                    href={`https://wa.me/17867988798?text=${encodeURIComponent("Hello George, I'm interested in chartering a yacht in Greece.")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "inherit", textDecoration: "none" }}
+                    data-cursor="WhatsApp"
+                  >
+                    +1 786 798 8798 (WhatsApp)
+                  </a>
+                )}
               </div>
             </div>
           </div>

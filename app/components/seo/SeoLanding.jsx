@@ -56,7 +56,7 @@ import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import { SITE_UPDATED } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
 import { buildTouristTrip } from "@/lib/touristTripSchema";
-import { WHATSAPP_DOWN } from "@/lib/whatsappStatus";
+import { WHATSAPP_DOWN, WHATSAPP_NUMBER } from "@/lib/whatsappStatus";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -593,7 +593,7 @@ export default async function SeoLanding({ pageData }) {
               {/* 2026-07-03 TEMPORARY — WhatsApp under review; route
                   to /inquiry while WHATSAPP_DOWN (lib/whatsappStatus). */}
               <a
-                href={WHATSAPP_DOWN ? "/inquiry" : `https://wa.me/17867988798?text=${encodeURIComponent(`Hi George, I am interested in ${pageData.h1 || "a Greek yacht charter"}. Could you share availability and rates?`)}`}
+                href={WHATSAPP_DOWN ? "/inquiry" : `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi George, I am interested in ${pageData.h1 || "a Greek yacht charter"}. Could you share availability and rates?`)}`}
                 {...(WHATSAPP_DOWN ? {} : { target: "_blank", rel: "noopener noreferrer" })}
                 style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", background: "transparent", color: "#C9A84C", border: "1px solid #C9A84C", textDecoration: "none" }}
               >

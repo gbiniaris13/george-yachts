@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import { WHATSAPP_DOWN } from "@/lib/whatsappStatus";
+import { WHATSAPP_DOWN, WHATSAPP_US_LOCKED } from "@/lib/whatsappStatus";
 
 export const dynamic = "force-dynamic";
 
@@ -119,11 +119,12 @@ export async function GET(request) {
     const ctaPages = [BASE_URL, BASE_URL + "/greek-charter-index-2026", BASE_URL + "/weekly-yacht-charter-rates-greece", BASE_URL + "/crewed-catamaran-charter-greece"];
     const bodies = await Promise.all(ctaPages.map((u) => fetch(u, { cache: "no-store" }).then((r) => r.text()).catch(() => "")));
     const deadLinks = bodies.reduce((n, b) => n + (b.match(/wa\.me\/17867988798/g) || []).length, 0);
-    if (WHATSAPP_DOWN) {
-      results.push({ name: "WhatsApp failover (no dead wa.me links)", ok: deadLinks === 0, status: 200, ms: 0, message: deadLinks === 0 ? "OK" : deadLinks + " link(s) still point to the locked number" });
-    } else {
+    if (WHATSAPP_US_LOCKED) {
+      results.push({ name: "No links to locked US WhatsApp", ok: deadLinks === 0, status: 200, ms: 0, message: deadLinks === 0 ? "OK" : deadLinks + " link(s) still point to the locked number" });
+    }
+    if (!WHATSAPP_DOWN) {
       const hasWa = bodies.some((b) => b.includes("wa.me/"));
-      results.push({ name: "WhatsApp CTAs restored", ok: hasWa, status: 200, ms: 0, message: hasWa ? "OK" : "flag is OFF but no wa.me CTA found" });
+      results.push({ name: "WhatsApp CTAs live", ok: hasWa, status: 200, ms: 0, message: hasWa ? "OK" : "CTAs should be live but no wa.me link found" });
     }
   } catch {}
 
@@ -160,8 +161,8 @@ export async function GET(request) {
         "",
         ...results.map((r) => "✓ " + r.name + " — " + r.ms + "ms"),
         "",
-        ...(WHATSAPP_DOWN
-          ? ["⚠️ _Known state: company WhatsApp under review — all WhatsApp CTAs route to /inquiry (failover). Flip WHATSAPP_DOWN when restored._", ""]
+        ...(WHATSAPP_US_LOCKED
+          ? ["⚠️ _Known state: US WhatsApp (+1 786) under review — all WhatsApp CTAs use the Greek WhatsApp Business number. Restore per lib/whatsappStatus.js when unlocked._", ""]
           : []),
         "_georgeyachts.com fully operational._",
       ]

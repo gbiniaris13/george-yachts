@@ -1,4 +1,4 @@
-import { WHATSAPP_DOWN } from "@/lib/whatsappStatus";
+import { WHATSAPP_DOWN, WHATSAPP_NUMBER } from "@/lib/whatsappStatus";
 // Greek Yacht Charter 2027 Outlook - 2026-06-29.
 //
 // Original, fully-sourced market synthesis: a citation magnet built ONLY on
@@ -205,7 +205,7 @@ export default function Outlook2027Page() {
             <Link href="/inquiry" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: GOLD, color: NAVY, textDecoration: "none" }}>
               Brief George directly
             </Link>
-            <a href={WHATSAPP_DOWN ? "/inquiry" : "https://wa.me/17867988798?text=Hi%20George%2C%20I%20read%20your%202027%20Greek%20charter%20outlook%20and%20would%20like%20to%20talk%20about%20a%20motor%20yacht%20for%20next%20season."} target={WHATSAPP_DOWN ? undefined : "_blank"} rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", border: `1px solid ${GOLD}`, color: GOLD, textDecoration: "none" }}>
+            <a href={WHATSAPP_DOWN ? "/inquiry" : `https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20George%2C%20I%20read%20your%202027%20Greek%20charter%20outlook%20and%20would%20like%20to%20talk%20about%20a%20motor%20yacht%20for%20next%20season.`} target={WHATSAPP_DOWN ? undefined : "_blank"} rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", border: `1px solid ${GOLD}`, color: GOLD, textDecoration: "none" }}>
               {WHATSAPP_DOWN ? "Message George Directly" : "Message on WhatsApp"}
             </a>
           </div>

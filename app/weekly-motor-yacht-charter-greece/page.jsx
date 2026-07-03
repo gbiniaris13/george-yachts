@@ -1,4 +1,4 @@
-import { WHATSAPP_DOWN } from "@/lib/whatsappStatus";
+import { WHATSAPP_DOWN, WHATSAPP_NUMBER } from "@/lib/whatsappStatus";
 // Weekly Motor Yacht Charter Greece - the pillar/hub page.
 //
 // 2026-06-26. Wedge page for "weekly motor yacht charter Greece". Quick Answer
@@ -26,7 +26,7 @@ import {
 
 const URL = `https://georgeyachts.com/${SLUG}`;
 // 2026-07-03: while the company WhatsApp is under review, route to /inquiry
-const WHATSAPP = WHATSAPP_DOWN ? "/inquiry" : "https://wa.me/17867988798";
+const WHATSAPP = WHATSAPP_DOWN ? "/inquiry" : `https://wa.me/${WHATSAPP_NUMBER}`;
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
