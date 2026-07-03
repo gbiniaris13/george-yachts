@@ -83,7 +83,7 @@ export default function PriceBlock({
         >
           {isPerPerson(yacht)
             ? "All-in per person · APA + VAT included"
-            : "Plus 13% VAT (Greek itineraries) + APA 25-35%"}
+            : "Plus VAT at the yacht's certified rate + APA 25-35%"}
         </span>
       )}
     </div>

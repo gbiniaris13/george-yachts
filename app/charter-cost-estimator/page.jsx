@@ -16,11 +16,11 @@ const NAVY = "#0D1B2A";
 
 export const metadata = {
   title: "Greek Yacht Charter Cost Estimator 2026",
-  description: "Estimate your Greek yacht charter cost 2026. Base + APA + 13% VAT + crew gratuity. Motor yachts, sailing, catamaran, gulet, superyacht. Honest 2026 rates.",
+  description: "Estimate your Greek yacht charter cost 2026. Base + APA + VAT + crew gratuity. Motor yachts, sailing, catamaran, gulet, superyacht. Honest 2026 rates.",
   alternates: { canonical: "https://georgeyachts.com/charter-cost-estimator" },
   openGraph: {
     title: "Greek Yacht Charter Cost Estimator",
-    description: "Estimate your Greek yacht charter cost: base + APA + 13% VAT + crew gratuity. Honest 2026 market rates.",
+    description: "Estimate your Greek yacht charter cost: base + APA + VAT + crew gratuity. Honest 2026 market rates.",
     url: "https://georgeyachts.com/charter-cost-estimator",
     type: "website",
     images: [`/api/og?title=${encodeURIComponent("Greek Charter Cost Estimator")}&eyebrow=${encodeURIComponent("Charter planning tool")}`],
@@ -109,7 +109,7 @@ export default function CharterCostEstimatorPage() {
                 lineHeight: 1.5,
               }}
             >
-              Honest 2026 market rates. Base charter + APA + 13% Greek VAT + crew gratuity.
+              Honest 2026 market rates. Base charter + APA + Greek VAT + crew gratuity.
               No assumptions, no marketing markup.
             </p>
           </div>

@@ -65,7 +65,8 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
     const seasonMultiplier = season === 'low' ? 0 : season === 'mid' ? 0.5 : 1;
     const charterRate = yacht.low + (yacht.high - yacht.low) * seasonMultiplier;
     const weeklyCharter = charterRate * weeks;
-    // 2026 Greek charter VAT: 13% reduced rate on commercial crewed
+    // VAT estimated at the statutory 13% ceiling (real invoices run
+    // 5.2-12% by certification). Statutory: 13% reduced on commercial crewed
     // charters over 48 hours (every weekly charter), applied ONLY to the
     // charter rate, not APA. (24% applies to charters under 48h, static,
     // or bareboat.) Per Law 5073/2023 + AADE Circular E.2006/2026.
@@ -270,7 +271,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 16 }}>
                 {[
                   { label: `${t('calculator.charterRate', 'Charter Rate')} (${breakdown.weeks}w)`, value: breakdown.charterRate, note: t('calculator.charterRateNote', 'Base weekly rate × duration') },
-                  { label: `${t('calculator.vat', 'VAT')} (13%)`, value: breakdown.vat, note: t('calculator.vatNote', 'Greek charter VAT - applied to charter rate only') },
+                  { label: `${t('calculator.vat', 'VAT')} (est. max 13%)`, value: breakdown.vat, note: t('calculator.vatNote', 'Estimated at the statutory ceiling - most yachts invoice 5.2-12% by certification') },
                   { label: `${t('calculator.apa', 'APA')} (30%)`, value: breakdown.apa, note: t('calculator.apaNote', 'Advance Provisioning Allowance - fuel, food, marina fees (not taxed)') },
                 ].map((item, i) => (
                   <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingBottom: 16, borderBottom: '1px solid rgba(248, 245, 240,0.05)' }}>
@@ -337,7 +338,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
 
               {/* Disclaimer */}
               <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.2)', lineHeight: 1.8, marginBottom: 24 }}>
-                * {t('calculator.disclaimer', 'Estimates based on standard rates. Actual APA may vary by itinerary. VAT is 13% on the charter fee for commercial crewed charters over 48 hours; confirm the exact rate for your itinerary with your broker. Final pricing confirmed in your charter agreement.')}
+                * {t('calculator.disclaimer', 'Estimates based on standard rates. Actual APA may vary by itinerary. VAT is estimated at the statutory 13% ceiling for weekly crewed charters; most yachts are invoiced below it (5.2-12% by certification), so the true total is usually lower. Final pricing confirmed in your charter agreement.')}
               </p>
 
               {/* CTAs */}
@@ -374,7 +375,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                   Get exact pricing →
                 </Link>
                 <a
-                  href={`https://wa.me/306970380999?text=${encodeURIComponent(`Hi George, I used the cost calculator for ${breakdown.yacht.name}:\n\n${breakdown.guests} guests, ${breakdown.weeks} week(s), ${SEASONS.find(s => s.id === season)?.label}\nCharter all-in: ${fmt(breakdown.charterTotal)} (${fmt(breakdown.perPersonWeek)}/person/week)\nIncludes charter + VAT 13% + APA 30%\n\nCan we discuss availability?`)}`}
+                  href={`https://wa.me/306970380999?text=${encodeURIComponent(`Hi George, I used the cost calculator for ${breakdown.yacht.name}:\n\n${breakdown.guests} guests, ${breakdown.weeks} week(s), ${SEASONS.find(s => s.id === season)?.label}\nCharter all-in: ${fmt(breakdown.charterTotal)} (${fmt(breakdown.perPersonWeek)}/person/week)\nIncludes charter + VAT (est. max 13%) + APA 30%\n\nCan we discuss availability?`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => {

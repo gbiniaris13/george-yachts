@@ -152,8 +152,8 @@ export default async function DossierPage({ params }) {
                 <td style={{ ...value, padding: "8px 0", borderBottom: "1px solid rgba(13,27,42,0.1)", textAlign: "right" }}>typically 25-40% of base</td>
               </tr>
               <tr>
-                <td style={{ ...value, padding: "8px 0", borderBottom: "1px solid rgba(13,27,42,0.1)" }}>Greek VAT (standard weekly crewed charter)</td>
-                <td style={{ ...value, padding: "8px 0", borderBottom: "1px solid rgba(13,27,42,0.1)", textAlign: "right" }}>13%</td>
+                <td style={{ ...value, padding: "8px 0", borderBottom: "1px solid rgba(13,27,42,0.1)" }}>Greek VAT (at this yacht&apos;s certified rate, confirmed in your quote)</td>
+                <td style={{ ...value, padding: "8px 0", borderBottom: "1px solid rgba(13,27,42,0.1)", textAlign: "right" }}>5.2-13%</td>
               </tr>
               <tr>
                 <td style={{ ...value, padding: "8px 0" }}>Crew gratuity (customary, at your discretion)</td>

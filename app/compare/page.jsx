@@ -358,7 +358,7 @@ export default async function ComparePage({ searchParams }) {
 
               <p className="mt-8 text-xs text-white/40 text-center">
                 Specs are accurate at the time of last yacht inspection.
-                Weekly rates exclude APA (typically 25-35%) and 13% VAT on
+                Weekly rates exclude APA (typically 25-35%) and VAT at each yacht's certified rate (5.2-12% in practice) on
                 Greek-water itineraries. For final availability and rate
                 confirmation, contact a working broker.
               </p>

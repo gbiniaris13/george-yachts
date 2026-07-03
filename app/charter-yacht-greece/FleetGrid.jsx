@@ -271,7 +271,9 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
   const imageUrl = yacht.imageUrl;
   const lengthShort = yacht.length ? yacht.length.split('/')[0].trim() : '\u2013';
 
-  // Calculate per-person per-week cost with APA (30%) + VAT (13%) included
+  // Per-person per-week estimate at the CEILING: APA 30% + statutory-max VAT 13%.
+  // Most yachts invoice VAT below this (5.2-12% by certification), so the real
+  // figure is usually lower; the label says "from" the estimate is honest.
   const perPersonWeekly = useMemo(() => {
     const priceStr = yacht.weeklyRatePrice || override.price || '';
     const guestCount = parseInt(guests) || 0;
@@ -288,8 +290,9 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
     if (numbers.length === 0) return null;
     const lowBase = numbers[0];
     const highBase = numbers.length > 1 ? numbers[numbers.length - 1] : lowBase;
-    // Add APA (30%) + VAT (13%) = total multiplier 1.43
-    const multiplier = 1.43; // 30% APA + 13% VAT on charter
+    // Ceiling estimate: APA 30% + statutory-max VAT 13% = 1.43. Real invoices
+    // usually land lower (VAT 5.2-12% by the yacht's certification).
+    const multiplier = 1.43;
     const lowTotal = Math.round((lowBase * multiplier) / guestCount);
     const highTotal = Math.round((highBase * multiplier) / guestCount);
     if (lowTotal <= 0) return null;
@@ -613,7 +616,7 @@ export default function FleetGrid({ yachts }) {
           if (!isNaN(n) && n > 100) nums.push(n);
         }
         if (nums.length > 0) {
-          const mult = 1.43; // 30% APA + 13% VAT on charter
+          const mult = 1.43; // ceiling: 30% APA + statutory-max 13% VAT
           ppwLow = `€${Math.round((nums[0] * mult) / gn).toLocaleString('en-US')}`;
           ppwHigh = nums.length > 1 ? `€${Math.round((nums[nums.length - 1] * mult) / gn).toLocaleString('en-US')}` : ppwLow;
         }

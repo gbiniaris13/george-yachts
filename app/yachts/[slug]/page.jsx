@@ -441,7 +441,7 @@ export default async function YachtPage({ params }) {
   // yacht detail page. AI engines (Perplexity, ChatGPT, Claude)
   // extract Q/A pairs for citation. Derived from yacht specs.
   const quickAnswerQ = `What is the ${yacht.name} yacht and what does a charter cost?`;
-  const quickAnswerA = `The ${yacht.name} is a ${yacht.length || ""} ${yacht.subtitle ? yacht.subtitle.split("|")[0].trim() : "luxury"} yacht available for crewed charter in ${yacht.cruisingRegion || "Greek waters"}, sleeping ${yacht.sleeps || "up to 12"} guests across ${yacht.cabins || "multiple"} cabins. ${yacht.weeklyRatePrice ? `Weekly base charter rate: ${yacht.weeklyRatePrice}. ` : ""}Add 30% APA, 13% Greek VAT, and 10-15% crew gratuity for the fully loaded cost. MYBA-standard contract.`;
+  const quickAnswerA = `The ${yacht.name} is a ${yacht.length || ""} ${yacht.subtitle ? yacht.subtitle.split("|")[0].trim() : "luxury"} yacht available for crewed charter in ${yacht.cruisingRegion || "Greek waters"}, sleeping ${yacht.sleeps || "up to 12"} guests across ${yacht.cabins || "multiple"} cabins. ${yacht.weeklyRatePrice ? `Weekly base charter rate: ${yacht.weeklyRatePrice}. ` : ""}Add 30% APA, Greek VAT at the yacht's certified rate, and 10-15% crew gratuity for the fully loaded cost. MYBA-standard contract.`;
   const quickAnswerJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

@@ -186,7 +186,7 @@ export default function CharterCostEstimator() {
           >
             <BreakdownRow label="Charter base" value={fmtEUR(result.base)} />
             <BreakdownRow label="APA (33%)" value={fmtEUR(result.apa)} note="Fuel, food, port fees" />
-            <BreakdownRow label="VAT (13%)" value={fmtEUR(result.vat)} note="Reduced rate, charters over 48h" />
+            <BreakdownRow label="VAT (est. at 13% ceiling)" value={fmtEUR(result.vat)} note="Most yachts invoice 5.2-12% by certification; your quote states the exact rate" />
             <BreakdownRow label="Gratuity (17.5%)" value={fmtEUR(result.gratuity)} note="Crew tip" />
           </div>
         </div>

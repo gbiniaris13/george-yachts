@@ -95,7 +95,7 @@ function buildFaqs(tiers) {
     },
     {
       q: "What VAT applies to a Greek yacht charter in 2026?",
-      a: "13% for the standard commercial crewed charter longer than 48 hours, which is what a weekly charter is. Short, static or bareboat arrangements carry 24%. Figures of 12% or 6.5% still circulating online are obsolete.",
+      a: "The statutory rates are 13% for the standard commercial crewed charter longer than 48 hours (every weekly charter) and 24% for short, static or bareboat arrangements. In practice most yachts are invoiced below that ceiling: certification-based reductions produce the 5.2%, 6.5%, 7.8% and 12% figures you see on 2026 rate sheets, and the exact rate for each yacht is stated in your written quote.",
     },
     {
       q: "Is crew gratuity included?",
@@ -223,7 +223,7 @@ export default function FleetGuideSections({ yachts }) {
             </table>
           </div>
           <p style={{ ...bodyStyle, maxWidth: 720, margin: "28px auto 0" }}>
-            Two lines complete the true cost: <strong style={{ color: CREAM }}>13% VAT</strong> on
+            Two lines complete the true cost: <strong style={{ color: CREAM }}>VAT at the yacht's certified rate (5.2-12% in practice, 13% statutory cap)</strong> on
             the standard weekly crewed charter (short or bareboat arrangements
             carry 24%,{" "}
             <Link href="/greek-yacht-charter-vat-explained-2026" style={goldLink}>the 2026 VAT rules explained</Link>)

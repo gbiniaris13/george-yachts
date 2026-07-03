@@ -4,7 +4,7 @@
 // Before this page existed the site sat at position 69 on the term
 // with no URL targeting it in H1/title. Guide-plus-fleet format:
 // editorial depth + the live Private Fleet (full crew), real Charter
-// Index 2026 numbers, the 13% VAT wedge, per-person math, and the
+// Index 2026 numbers, the real VAT rates, per-person math, and the
 // "weekly charter, Saturday to Saturday" intent as a section (GSC
 // shows ~1 impression for that exact phrase, so it is a section
 // here, never its own URL).
@@ -40,12 +40,12 @@ const CANONICAL = "https://georgeyachts.com/crewed-yacht-charter-greece";
 export const metadata = {
   title: `Crewed Yacht Charter Greece - 2026 Rates & Curated Fleet`,
   description:
-    `Crewed yacht charter in Greece with a full professional crew: 2026 weekly rates by yacht type and region, the 13% VAT rule, per-person math, and George's curated Private Fleet. IYBA member, MYBA contracts.`,
+    `Crewed yacht charter in Greece with a full professional crew: 2026 weekly rates by yacht type and region, the real VAT rates, per-person math, and George's curated Private Fleet. IYBA member, MYBA contracts.`,
   alternates: { canonical: CANONICAL },
   openGraph: {
     title: "Crewed Yacht Charter Greece | George Yachts",
     description:
-      "Full-crew yacht charter in Greek waters: 2026 rates, the 13% VAT rule, and the curated Private Fleet. Personal broker service by George P. Biniaris.",
+      "Full-crew yacht charter in Greek waters: 2026 rates, the real VAT rates, and the curated Private Fleet. Personal broker service by George P. Biniaris.",
     url: CANONICAL,
     images: [
       `/api/og?title=${encodeURIComponent("Crewed Yacht Charter Greece")}&eyebrow=${encodeURIComponent("Full Crew · 2026")}`,
@@ -76,7 +76,7 @@ const CREAM = "#F8F5F0";
 const FAQS = [
   {
     q: "How much does a crewed yacht charter in Greece cost in 2026?",
-    a: "Per the George Yachts Greek Charter Index 2026: a crewed sailing catamaran for up to 12 guests runs roughly EUR 15,000 to 40,000 per week net base in peak season; crewed motor yachts of 24 to 34m around EUR 30,000 to 100,000; 35 to 49m about EUR 100,000 to 350,000; and 50m-plus superyachts from EUR 250,000 to over one million. Add 13% VAT for the standard weekly crewed charter and an APA of 25 to 40% for fuel, food and berthing.",
+    a: "Per the George Yachts Greek Charter Index 2026: a crewed sailing catamaran for up to 12 guests runs roughly EUR 15,000 to 40,000 per week net base in peak season; crewed motor yachts of 24 to 34m around EUR 30,000 to 100,000; 35 to 49m about EUR 100,000 to 350,000; and 50m-plus superyachts from EUR 250,000 to over one million. Add VAT at the yacht's certified rate, in practice 5.2% to 12% (statutory cap 13%), and an APA of 25 to 40% for fuel, food and berthing.",
   },
   {
     q: "What is included in the base charter rate?",
@@ -84,7 +84,7 @@ const FAQS = [
   },
   {
     q: "What VAT applies to a crewed charter in Greece in 2026?",
-    a: "13% for the standard commercial crewed charter longer than 48 hours, which is exactly what a weekly charter is. Short, static or bareboat arrangements are taxed at 24%. Older rates you may still find online (12% or 6.5%) are obsolete.",
+    a: "The statutory rates are 13% for the standard commercial crewed charter longer than 48 hours (every weekly charter) and 24% for short, static or bareboat arrangements. In practice most yachts are invoiced below that ceiling: certification-based reductions produce the 5.2%, 6.5%, 7.8% and 12% figures you see on 2026 rate sheets, and the exact rate for each yacht is stated in your written quote.",
   },
   {
     q: "How far ahead should I book?",
@@ -92,7 +92,7 @@ const FAQS = [
   },
   {
     q: "What does 'Saturday to Saturday' mean?",
-    a: "The Greek weekly charter convention: you embark on Saturday, cruise for seven nights, and disembark the following Saturday morning. It is the rhythm the fleet, the marinas and the crews are built around, and because the charter runs well beyond 48 hours it qualifies for the 13% VAT rate rather than 24%.",
+    a: "The Greek weekly charter convention: you embark on Saturday, cruise for seven nights, and disembark the following Saturday morning. It is the rhythm the fleet, the marinas and the crews are built around, and because the charter runs well beyond 48 hours it qualifies for the reduced VAT treatment: statutory 13% instead of 24%, and in practice 5.2% to 12% on certified yachts.",
   },
   {
     q: "What is the difference between crewed, skippered and bareboat?",
@@ -297,7 +297,7 @@ export default async function CrewedCharterPage() {
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <QuickAnswerBlock
             question="What is a crewed yacht charter in Greece, and what does it cost in 2026?"
-            answer={`A crewed yacht charter means the yacht comes with a full professional crew: captain, chef and service. Per the George Yachts Greek Charter Index 2026, weekly net base rates run roughly EUR 15,000-40,000 for a crewed sailing catamaran (up to 12 guests), EUR 30,000-100,000 for 24-34m motor yachts, EUR 100,000-350,000 for 35-49m, and EUR 250,000 to over one million for 50m-plus superyachts. Add 13% VAT (the weekly crewed rate) and 25-40% APA. George Yachts curates ${FLEET_COUNT} yachts in Greek waters, split between the fully crewed Private Fleet and the skippered Explorer Fleet.`}
+            answer={`A crewed yacht charter means the yacht comes with a full professional crew: captain, chef and service. Per the George Yachts Greek Charter Index 2026, weekly net base rates run roughly EUR 15,000-40,000 for a crewed sailing catamaran (up to 12 guests), EUR 30,000-100,000 for 24-34m motor yachts, EUR 100,000-350,000 for 35-49m, and EUR 250,000 to over one million for 50m-plus superyachts. Add VAT at the yacht's certified rate (in practice 5.2-12%; statutory cap 13%) and 25-40% APA. George Yachts curates ${FLEET_COUNT} yachts in Greek waters, split between the fully crewed Private Fleet and the skippered Explorer Fleet.`}
           />
         </div>
       </section>
@@ -408,12 +408,15 @@ export default async function CrewedCharterPage() {
           </div>
           <p style={{ ...bodyStyle, maxWidth: 720, margin: "32px auto 0" }}>
             On top of the base rate come two things, both transparent:{" "}
-            <strong style={{ color: CREAM, fontWeight: 600 }}>13% VAT</strong>{" "}
-            for the standard weekly crewed charter (
+            <strong style={{ color: CREAM, fontWeight: 600 }}>
+              VAT at the yacht&apos;s certified rate
+            </strong>
+            , in practice 5.2% to 12% for most weekly crewed charters,
+            statutory cap 13% (
             <Link href="/greek-yacht-charter-vat-explained-2026" style={goldLink}>
               the 2026 VAT rules explained
             </Link>
-            , short or bareboat arrangements are 24%), and the{" "}
+            , short or bareboat arrangements start from 24%), and the{" "}
             <Link href="/advance-provisioning-allowance-apa-greek-yacht-charter-explained" style={goldLink}>
               APA
             </Link>{" "}
@@ -447,9 +450,10 @@ export default async function CrewedCharterPage() {
             morning. The fleet, the marinas and the crews are all built around
             this rhythm, which is why a well-planned week feels effortless. It
             also matters fiscally: a commercial crewed charter longer than 48
-            hours, which every weekly charter is, carries the 13% VAT rate
-            rather than the 24% applied to short, static or bareboat
-            arrangements.
+            hours, which every weekly charter is, carries the reduced VAT
+            treatment: statutory 13% instead of the 24% applied to short,
+            static or bareboat arrangements, and in practice 5.2% to 12% on
+            certified yachts.
           </p>
           <p style={bodyStyle}>
             Peak July and August weeks book 6 to 12 months ahead, and the
