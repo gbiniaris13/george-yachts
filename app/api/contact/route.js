@@ -45,21 +45,17 @@ async function notifyTelegram(data) {
     `📅 ${data.check_in} → ${data.check_out}`,
     `🗺 ${data.embarkation} → ${data.disembarkation}`,
     ``,
-    `💬 _${data.message.substring(0, 200)}${data.message.length > 200 ? '...' : ''}_`,
+    // 2026-07-03 — FULL message, never truncated (was .substring(0,200)
+    // which hid what the customer actually asked; George's SOS rule:
+    // the complete text reaches every channel, always).
+    `💬 _${data.message}_`,
     ``,
     `⏱ _Reply within 2 hours!_`,
   ].join('\n');
 
   try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text,
-        parse_mode: 'Markdown',
-      }),
-    });
+    const { telegramGeorgeFull } = await import("@/lib/notifyGeorge");
+    await telegramGeorgeFull(text);
   } catch {}
 }
 
@@ -131,7 +127,15 @@ export async function POST(request) {
       disembarkation,
     } = payload;
 
-    // Updated Validation to check for new fields
+    // 2026-07-03 SOS FIX (second bug behind George's mobile report):
+    // embarkation/disembarkation are OPTIONAL in the form UI (the
+    // selects say "Preferred..." and carry no `required`), but this
+    // check rejected any submission that left them empty with a 400
+    // AFTER the customer had filled everything else. A completed
+    // form must never bounce on an optional preference - default to
+    // Flexible and let George advise, which is his job anyway.
+    const embark = embarkation || "Flexible - Advise Me";
+    const disembark = disembarkation || "Flexible - Advise Me";
     if (
       !name ||
       !email ||
@@ -143,9 +147,7 @@ export async function POST(request) {
       !guests ||
       !budget ||
       !check_in ||
-      !check_out ||
-      !embarkation ||
-      !disembarkation
+      !check_out
     ) {
       return NextResponse.json(
         { message: "Missing required fields or ReCAPTCHA token." },
@@ -195,7 +197,7 @@ export async function POST(request) {
         <p><strong>Guests:</strong> ${guests}</p>
         <p><strong>Budget/Week:</strong> ${budget}</p>
         <p><strong>Dates:</strong> ${check_in} to ${check_out}</p>
-        <p><strong>Route:</strong> ${embarkation} &rarr; ${disembarkation}</p>
+        <p><strong>Route:</strong> ${embark} &rarr; ${disembark}</p>
         
         <hr>
         
@@ -208,10 +210,21 @@ export async function POST(request) {
     });
 
     // Send Telegram notification + store for response tracking (non-blocking)
-    const inquiryData = { name, email, phone, country, message, yacht_type, guests, budget, check_in, check_out, embarkation, disembarkation };
+    const inquiryData = { name, email, phone, country, message, yacht_type, guests, budget, check_in, check_out, embarkation: embark, disembarkation: disembark };
     const inquiryId = `${Date.now()}_${name.replace(/\s/g, '_')}`;
+    // 2026-07-03 (George's SOS directive) — WhatsApp channel joins
+    // Telegram + email: full lead summary to the company US number
+    // via CallMeBot (skips silently until the env opt-in exists).
+    const waText = [
+      `New yacht inquiry (contact form)`,
+      `${name} · ${email}${phone ? ` · ${phone}` : ""}`,
+      yacht_type ? `Type: ${yacht_type} · Guests: ${guests || "?"} · Budget: ${budget || "?"}` : "",
+      check_in ? `Dates: ${check_in} -> ${check_out}` : "",
+      message ? `\n${message}` : "",
+    ].filter(Boolean).join("\n");
     await Promise.allSettled([
       notifyTelegram(inquiryData),
+      (async () => { const { whatsappGeorge } = await import("@/lib/notifyGeorge"); await whatsappGeorge(waText); })(),
       kvLpush('inquiries:pending', JSON.stringify({ id: inquiryId, name, email, yacht_type, ts: Date.now() })),
       (async () => { const { kvIncr } = await import("@/lib/kv"); await kvIncr(`stats:${todayKey()}:inquiries`); })(),
       writeCRMNotification({

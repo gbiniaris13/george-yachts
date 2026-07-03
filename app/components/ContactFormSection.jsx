@@ -95,8 +95,51 @@ const ContactFormSection = () => {
   const [step, setStep] = useState(1);
   const formRef = React.useRef(null);
 
+  // 2026-07-03 SOS FIX — the silent-death bug George hit on mobile.
+  // The form is 3 steps; steps hide via display:none. The Continue
+  // buttons did NO validation, so a visitor reached step 3 with empty
+  // required fields behind them. On submit the browser tries to focus
+  // the first invalid field, finds it display:none, and REFUSES the
+  // submission completely silently: no request, no message, nothing.
+  // (Reproduced locally: zero POST to /api/contact on submit click.)
+  // Fix: validate per step on Continue, and on submit jump BACK to
+  // the first step containing an invalid field and show the browser's
+  // own validation message on it.
+  const validateStep = (n) => {
+    const root = formRef.current?.querySelector(`[data-step="${n}"]`);
+    if (!root) return true;
+    const fields = root.querySelectorAll("input, select, textarea");
+    for (const el of fields) {
+      if (!el.checkValidity()) {
+        el.reportValidity();
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const goToStep = (n, from) => {
+    if (n > from && !validateStep(from)) return;
+    setStep(n);
+  };
+
   const handleVercelSubmit = async (e) => {
     e.preventDefault();
+
+    // Walk the steps; the first invalid field pulls the visitor back
+    // to its step with the native validation bubble visible.
+    for (const n of [1, 2, 3]) {
+      const root = formRef.current?.querySelector(`[data-step="${n}"]`);
+      if (!root) continue;
+      const bad = [...root.querySelectorAll("input, select, textarea")].find((el) => !el.checkValidity());
+      if (bad) {
+        setStep(n);
+        setStatus("Please complete the highlighted field.");
+        setTimeout(() => bad.reportValidity(), 60);
+        return;
+      }
+    }
+
     setStatus("Submitting...");
 
     let recaptchaToken = "no_recaptcha";
@@ -327,7 +370,10 @@ const ContactFormSection = () => {
         </div>
 
         {/* ── Form ── */}
-        <form ref={formRef} onSubmit={handleVercelSubmit}>
+        {/* noValidate: validation is handled by handleVercelSubmit /
+            goToStep so the browser never silently blocks a submit on
+            a field hidden in another step (the 2026-07-03 SOS bug). */}
+        <form ref={formRef} onSubmit={handleVercelSubmit} noValidate>
 
           {/* Honeypot — hidden from real users, bots autofill it */}
           <input
@@ -340,7 +386,7 @@ const ContactFormSection = () => {
           />
 
           {/* STEP 1: About You */}
-          <div className={step === 1 ? 'block' : 'hidden'}>
+          <div data-step="1" className={step === 1 ? 'block' : 'hidden'}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
               <Field icon={Icons.user} delay={0}>
                 <label htmlFor="name" className="sr-only">{t('contact.name')}</label>
@@ -366,7 +412,7 @@ const ContactFormSection = () => {
             <div className="flex justify-end mt-14">
               <button
                 type="button"
-                onClick={() => setStep(2)}
+                onClick={() => goToStep(2, 1)}
                 className="group flex items-center gap-3 text-[#C9A84C] text-xs tracking-[0.2em] uppercase hover:gap-5 transition-all duration-500"
               >
                 Continue
@@ -376,7 +422,7 @@ const ContactFormSection = () => {
           </div>
 
           {/* STEP 2: Charter Details */}
-          <div className={step === 2 ? 'block' : 'hidden'}>
+          <div data-step="2" className={step === 2 ? 'block' : 'hidden'}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
               <Field icon={Icons.anchor} delay={0}>
                 <label htmlFor="yacht_type" className="sr-only">Type of Yacht</label>
@@ -464,7 +510,7 @@ const ContactFormSection = () => {
               </button>
               <button
                 type="button"
-                onClick={() => setStep(3)}
+                onClick={() => goToStep(3, 2)}
                 className="group flex items-center gap-3 text-[#C9A84C] text-xs tracking-[0.2em] uppercase hover:gap-5 transition-all duration-500"
               >
                 Continue
@@ -474,7 +520,7 @@ const ContactFormSection = () => {
           </div>
 
           {/* STEP 3: Your Vision */}
-          <div className={step === 3 ? 'block' : 'hidden'}>
+          <div data-step="3" className={step === 3 ? 'block' : 'hidden'}>
             <Field icon={Icons.message} delay={0}>
               <label htmlFor="message" className="sr-only">Message</label>
               <textarea

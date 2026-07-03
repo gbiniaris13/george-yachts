@@ -18,7 +18,7 @@
 // validation passes so the user never sees a transient failure.
 
 import { NextResponse } from "next/server";
-import { sendTelegram } from "@/lib/telegram";
+import { notifyGeorge } from "@/lib/notifyGeorge";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { bumpKpi } from "@/lib/kpis";
 
@@ -46,9 +46,23 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || "").trim());
 }
 
-function escMd(s) {
-  // Telegram Markdown — escape the chars Telegram treats as syntax.
-  return String(s || "").replace(/([_*`\[])/g, "\\$1").slice(0, 280);
+// Telegram Markdown — escape the chars Telegram treats as syntax.
+// 2026-07-03 — the old version also did .slice(0, 280) on EVERY
+// field, which cut a real customer's message mid-sentence (the
+// budget line of a 2027 crewed-catamaran request was lost, and
+// nothing else stored the text). Short fields keep a sanity cap;
+// the MESSAGE is never truncated (lib/notifyGeorge chunks it).
+function escMd(s, max = 280) {
+  const out = String(s || "").replace(/([_*`\[])/g, "\\$1");
+  return max ? out.slice(0, max) : out;
+}
+
+function escHtml(s) {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 export async function POST(req) {
@@ -103,17 +117,18 @@ export async function POST(req) {
       );
     }
 
+    // 2026-07-03 SOS — recaptcha failure no longer REJECTS the lead.
+    // On mobile with content blockers grecaptcha often never loads;
+    // hard-403ing threw away real customers (George: "οι πελάτες μάς
+    // μιλάνε και εμείς δεν τους βλέπουμε"). Honeypot + 10/hour/IP
+    // rate limit still guard the door; an unverified submission is
+    // simply FLAGGED so George reads it with one raised eyebrow.
     const recaptchaOk = await verifyRecaptcha(recaptchaToken);
-    if (!recaptchaOk) {
-      return NextResponse.json(
-        { ok: false, error: "recaptcha_failed" },
-        { status: 403 },
-      );
-    }
 
     // Build Telegram message
     const lines = [
       `📩 *New ${source.replace(/_/g, " ")}*`,
+      ...(recaptchaOk ? [] : [`⚠️ _captcha unverified - judge the sender yourself_`]),
       ``,
       `👤 *${escMd(name)}*`,
       `📧 ${escMd(email)}`,
@@ -132,12 +147,57 @@ export async function POST(req) {
     }
     if (message) {
       lines.push(``);
-      lines.push(`💭 _${escMd(message)}_`);
+      // Full message — never truncated (chunked by notifyGeorge if long).
+      lines.push(`💭 _${escMd(message, 0)}_`);
     }
     lines.push(``);
     lines.push(`⏱ _Reply within 24h_`);
 
-    await sendTelegram(lines.join("\n"));
+    // 2026-07-03 (George's SOS directive) — every form reaches George
+    // on Telegram AND email AND WhatsApp, full text, plus the CRM
+    // notifications feed. The email carries replyTo=customer so one
+    // tap answers the lead; it is also the permanent record.
+    const sourceLabel = source.replace(/_/g, " ");
+    const shortlistHtml =
+      Array.isArray(shortlist) && shortlist.length > 0
+        ? `<h4>Shortlist (${shortlist.length}):</h4><ul>${shortlist
+            .slice(0, 10)
+            .map((y) => `<li>${escHtml(y.name || y.slug)}${y.weeklyRatePrice ? ` — ${escHtml(y.weeklyRatePrice)}` : ""}</li>`)
+            .join("")}</ul>`
+        : "";
+    const emailHtml = `
+      <h3>New ${escHtml(sourceLabel)}</h3>
+      <p><strong>Name:</strong> ${escHtml(name)}</p>
+      <p><strong>Email:</strong> ${escHtml(email)}</p>
+      ${phone ? `<p><strong>Phone:</strong> ${escHtml(phone)}</p>` : ""}
+      ${yachtName ? `<p><strong>Yacht:</strong> ${escHtml(yachtName)}</p>` : ""}
+      ${yachtSlug ? `<p><strong>Page:</strong> <a href="https://georgeyachts.com/yachts/${escHtml(yachtSlug)}">georgeyachts.com/yachts/${escHtml(yachtSlug)}</a></p>` : ""}
+      ${dates ? `<p><strong>Dates:</strong> ${escHtml(dates)}</p>` : ""}
+      ${preferredChannel ? `<p><strong>Prefers:</strong> ${escHtml(preferredChannel)}</p>` : ""}
+      ${shortlistHtml}
+      ${message ? `<hr><h4>Message (full):</h4><p style="white-space: pre-line;">${escHtml(message)}</p>` : ""}
+    `;
+    const waText = [
+      `New ${sourceLabel}`,
+      `${name} · ${email}${phone ? ` · ${phone}` : ""}`,
+      yachtName ? `Yacht: ${yachtName}` : "",
+      dates ? `Dates: ${dates}` : "",
+      message ? `\n${message}` : "",
+    ].filter(Boolean).join("\n");
+
+    await notifyGeorge({
+      telegramText: lines.join("\n"),
+      emailSubject: `[Lead] ${sourceLabel}${yachtName ? ` — ${yachtName}` : ""} — ${name}`,
+      emailHtml,
+      replyTo: email,
+      whatsappText: waText,
+      crm: {
+        type: "form_submission",
+        title: `📩 New ${sourceLabel} from ${name}`,
+        description: `${yachtName || "general"} · ${email}${dates ? ` · ${dates}` : ""}`,
+        link: "/dashboard/contacts",
+      },
+    });
 
     // N.3 — bump KPI counter
     bumpKpi("inquiry").catch(() => {});

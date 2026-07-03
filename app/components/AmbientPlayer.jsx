@@ -189,6 +189,31 @@ export default function AmbientPlayer() {
     } catch {}
   };
 
+  // 2026-07-03 (George's SOS list) — attempt to start THE MOMENT the
+  // site opens, mobile and desktop. Browser reality: unmuted autoplay
+  // is only granted when the visitor has prior engagement with the
+  // domain (Chrome's media-engagement index, Safari's per-site
+  // setting) - there is no way around that policy. So: try instantly;
+  // if the browser blocks it, the first-gesture effect below catches
+  // the very first tap/click/key anywhere and the music begins then.
+  // The mute pill always turns it off, and a session mute is honoured.
+  useEffect(() => {
+    if (suppressed) return;
+    let muted = false;
+    try { muted = sessionStorage.getItem(SESSION_MUTE_KEY) === "1"; } catch {}
+    if (muted) return;
+    let cancelled = false;
+    (async () => {
+      const ok = await buildAndPlay().catch(() => false);
+      if (!cancelled && ok) {
+        setPlaying(true);
+        try { window.dispatchEvent(new CustomEvent("gy:ambient-mute-changed")); } catch {}
+      }
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [suppressed]);
+
   // First-gesture autostart (2026-06-29 — George wants the music to set the
   // mood, not hide behind a tap). Autoplay-with-sound still needs a real
   // gesture, so we begin on the visitor's first click / key / tap anywhere,
@@ -207,6 +232,9 @@ export default function AmbientPlayer() {
     };
     const start = async (e) => {
       if (done) return;
+      // 2026-07-03 — the on-open attempt above may have already begun
+      // playback; the first gesture must not restart the fade.
+      if (masterGainRef.current) { done = true; remove(); return; }
       if (e && e.target && e.target.closest && e.target.closest("[data-gy-ambient-toggle]")) return;
       done = true;
       remove();
