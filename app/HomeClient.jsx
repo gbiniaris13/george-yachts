@@ -157,6 +157,24 @@ const HomeClient = ({
         <GeorgesSelection />
       </section>
 
+      {/* 2026-07-03 (Wave 2) — one quiet editorial line from the
+          strongest page on the site to the two head-term guides.
+          Boss homepage rules respected: no counts, no prices, no
+          cards - just type. */}
+      <section aria-label="Charter guides" style={{ background: "#0D1B2A", padding: "0 24px 64px", textAlign: "center" }}>
+        <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(15px, 1.8vw, 18px)", fontStyle: "italic", fontWeight: 300, color: "rgba(248,245,240,0.7)", margin: 0, lineHeight: 1.7 }}>
+          Two ways to take these waters:{" "}
+          <a href="/crewed-yacht-charter-greece" style={{ color: "#C9A84C", textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.5)" }}>
+            the fully crewed charter
+          </a>
+          , or{" "}
+          <a href="/catamaran-charter-greece" style={{ color: "#C9A84C", textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.5)" }}>
+            the catamaran
+          </a>
+          {" "}that anchors where others cannot.
+        </p>
+      </section>
+
       {/* Proof = Stats + Credentials merged (Proposal A) */}
       <div data-gy-reveal="up">
         <HomeStats yachtCount={yachtCount} />

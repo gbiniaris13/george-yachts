@@ -18,6 +18,7 @@ const TYPE_LINKS = [
   { label: "Motor yacht charter", href: "/motor-yacht-charter-greece" },
   { label: "Sailing yacht charter", href: "/sailing-yacht-charter-greece" },
   { label: "Catamaran charter", href: "/catamaran-charter-greece" },
+  { label: "Power catamaran charter", href: "/power-catamaran-charter-greece" },
   { label: "Sailing catamaran charter", href: "/sailing-catamaran-charter-greece" },
   { label: "Crewed catamaran charter", href: "/crewed-catamaran-charter-greece" },
   { label: "Superyacht charter", href: "/superyacht-charter-greece" },

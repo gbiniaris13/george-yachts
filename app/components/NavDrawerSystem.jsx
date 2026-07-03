@@ -69,6 +69,12 @@ const NAV_SECTIONS = [
     items: [
       { label: "Private Fleet", href: "/private-fleet" },
       { label: "Explorer Fleet", href: "/explorer-fleet" },
+      // 2026-07-03 (Wave 2) — the two head terms George is chasing
+      // get the heaviest link on the site: the main nav. Crewed is
+      // the flagship guide (built 2026-07-02); Catamarans is the
+      // biggest-volume query we track.
+      { label: "Crewed Charter", href: "/crewed-yacht-charter-greece" },
+      { label: "Catamarans", href: "/catamaran-charter-greece" },
       { label: "View All", href: "/charter-yacht-greece" },
     ],
   },

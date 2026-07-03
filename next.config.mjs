@@ -325,11 +325,12 @@ const nextConfig = {
         destination: "/blog",
         permanent: true,
       },
-      {
-        source: "/power-catamaran-charter-greece",
-        destination: "/best-motor-yachts-greece-speed",
-        permanent: true,
-      },
+      // 2026-07-03 — /power-catamaran-charter-greece redirect REMOVED
+      // (was 301 to /best-motor-yachts-greece-speed, a topically wrong
+      // target from the 2026-05-14 404 fix). The real power-catamaran
+      // page now ships (lib/yachtTypeSeo.js "power-catamaran") because
+      // the fleet genuinely runs 9+ power cats. Same precedent as the
+      // 2026-06-04 dubai-exodus un-redirect.
       // 2026-06-25 — legal-page consolidation (per legal research).
       // The site had duplicate legal pages: /privacy + /privacy-policy,
       // /terms + /terms-of-service, plus a thin /your-privacy-security.
