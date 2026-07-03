@@ -60,6 +60,7 @@
 // preload="auto" so the browser starts buffering immediately.
 
 import React, { useEffect, useRef, useState } from "react";
+import RevealHeading from "./RevealHeading";
 
 const HERO_VIDEO_BASE = "/videos/hero-loop";
 
@@ -196,7 +197,16 @@ export default function VideoSection() {
               personal service → UHNW priority. Font lands on the
               Phase 28 display tier (Fraunces Thin 100) via the
               .gy-hero-headline mapping in globals.css. */}
-          <h1
+          {/* 2026-07-03 (ASK B 2.2, DEMO pending George's yes) — the
+              headline rises line-by-line from a baseline mask via
+              RevealHeading (GSAP SplitText). Server HTML keeps the
+              text fully visible, so crawlers/no-JS/LCP see plain
+              type; `play={revealed}` syncs the rise with the block
+              fade. Revert = swap RevealHeading back to h1. */}
+          <RevealHeading
+            as="h1"
+            play={revealed}
+            delay={0.15}
             className="gy-hero-headline gy-pearl-white"
             style={{
               fontSize: "clamp(32px, 6.4vw, 84px)",
@@ -209,7 +219,7 @@ export default function VideoSection() {
             }}
           >
             Greek Waters. One Broker. Total Discretion.
-          </h1>
+          </RevealHeading>
 
           {/* Subline - Boss-spec: 1 line, Switzer Light 300, 16 px,
               tracking 0.04em, ivory white at 70 % opacity. Lands on
