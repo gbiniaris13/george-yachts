@@ -16,7 +16,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { buildAmbientGraph, TARGET_VOLUME, FADE_MS } from "@/lib/ambient-audio";
+import { FADE_MS } from "@/lib/ambient-audio";
 
 const SESSION_MUTE_KEY = "gy_ambient_session_muted";
 const LEGACY_KEY = "gy_ambient_pref";
@@ -32,7 +32,6 @@ const SUPPRESSED_PREFIXES = ["/admin", "/partner-portal", "/privacy/delete", "/a
 // auto-upgrades on next deploy. Three free CC0 sources documented in
 // /public/audio/README.md.
 const AMBIENT_MP3 = "/audio/ambient-lounge.mp3";
-const TRY_MP3_TIMEOUT_MS = 1500;
 
 async function tryMp3(audioRef, masterGainRef) {
   try {
@@ -41,19 +40,18 @@ async function tryMp3(audioRef, masterGainRef) {
       audioRef.current.loop = true;
       audioRef.current.preload = "auto";
       audioRef.current.crossOrigin = "anonymous";
+      // Kick off the fetch immediately so the track is already buffered
+      // by the time playback is allowed (on-open or first gesture).
+      try { audioRef.current.load(); } catch {}
     }
     const a = audioRef.current;
     a.volume = 0;
-    // Wait for the file to be decodable. If 404 / decode error, throw.
-    await new Promise((resolve, reject) => {
-      const t = setTimeout(() => reject(new Error("mp3 timeout")), TRY_MP3_TIMEOUT_MS);
-      const onCanPlay = () => { clearTimeout(t); a.removeEventListener("canplay", onCanPlay); resolve(); };
-      const onError = (e) => { clearTimeout(t); a.removeEventListener("error", onError); reject(e); };
-      a.addEventListener("canplay", onCanPlay, { once: true });
-      a.addEventListener("error", onError, { once: true });
-      // load() is required to actually fetch the file
-      try { a.load(); } catch {}
-    });
+    // 2026-07-03 — George: the jazz track is the ONLY sound this site
+    // makes. The old canplay wait had a 1.5s timeout that the MP3 lost
+    // at page open (cold cache), which dropped visitors into the synth
+    // waves. No gate, no timeout: play() itself waits for the browser
+    // to buffer enough, and rejects on 404/decode/autoplay-block — in
+    // which case we stay SILENT and the first-gesture path retries.
     await a.play();
     // Fade gain in. 0.2 is a deliberate "background music" level - present
     // enough to set a calm, classy mood without ever competing with the page
@@ -71,7 +69,8 @@ async function tryMp3(audioRef, masterGainRef) {
     masterGainRef.current = { source: "mp3", node: a };
     return true;
   } catch {
-    // Any failure (404, network, decode) → caller falls back to synth
+    // Any failure (404, network, decode, autoplay policy) → SILENCE.
+    // Never the synth. The first-gesture listener retries the MP3.
     return false;
   }
 }
@@ -115,18 +114,17 @@ export default function AmbientPlayer() {
     if (ctxRef.current) {
       try { ctxRef.current.close(); } catch {}
       ctxRef.current = null;
-      masterGainRef.current = null;
     }
+    masterGainRef.current = null;
   };
 
-  // Build helper — try MP3 first, fall back to synth.
-  // Returns boolean. Async because MP3 attempt awaits canplay.
+  // Build helper — 2026-07-03, George's order after the waves regression:
+  // the jazz MP3 is the ONLY audio path. The Web Audio synth fallback is
+  // permanently disconnected (lib/ambient-audio.js stays, nothing calls
+  // its graph builder from here). Jazz or silence.
   const buildAndPlay = async () => {
     if (suppressed) return false;
-    const mp3ok = await tryMp3(audioRef, masterGainRef);
-    if (mp3ok) return true;
-    const ok = buildAmbientGraph({ ctxRef, masterGainRef, cleanupRef });
-    return ok;
+    return tryMp3(audioRef, masterGainRef);
   };
 
   // Phase 17d (2026-05-05) retired autoplay because (1) browser policy needs a
@@ -134,8 +132,10 @@ export default function AmbientPlayer() {
   // 2026-06-29 — both resolved: a real royalty-free track now lives at
   // /audio/ambient-lounge.mp3 (smooth jazz lounge, Pixabay content licence,
   // no attribution), and the first-gesture autostart effect below begins it on
-  // the visitor's first real interaction (respecting session mute). The synth
-  // graph remains only as a fallback if the MP3 ever fails to load.
+  // the visitor's first real interaction (respecting session mute).
+  // 2026-07-03 — the synth fallback is GONE from the playback paths: it was
+  // reaching visitors' ears whenever the MP3 lost the old 1.5s canplay race
+  // at page open. Jazz or silence, nothing else.
 
   // Cleanup on unmount.
   useEffect(() => {
