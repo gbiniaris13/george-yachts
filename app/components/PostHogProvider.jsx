@@ -32,6 +32,23 @@ export default function PostHogProvider({ children }) {
     if (!key) return; // No key → don't init. SDK stays inert.
     if (typeof window === "undefined") return; // Belt + suspenders.
 
+    // 2026-07-02 (ASK B 2.4 guardrail) — Speculation Rules prerendering
+    // executes the full page JS before the visitor ever clicks. Without
+    // this gate every prerendered page fires a phantom pageview and
+    // pollutes the exact analytics the SEO project is judged by. Init
+    // waits until the page is actually shown (prerenderingchange).
+    const start = () => initPosthog(key);
+    if (document.prerendering) {
+      document.addEventListener("prerenderingchange", start, { once: true });
+      return () => document.removeEventListener("prerenderingchange", start);
+    }
+    start();
+  }, []);
+
+  return children;
+}
+
+function initPosthog(key) {
     posthog.init(key, {
       // EU host — visitor IPs and event data stay in the EU.
       // Free tier covers either host equally; we prefer EU for
@@ -65,7 +82,4 @@ export default function PostHogProvider({ children }) {
         }
       },
     });
-  }, []);
-
-  return children;
 }

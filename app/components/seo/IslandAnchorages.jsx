@@ -300,6 +300,10 @@ export default function IslandAnchorages({ guideData }) {
                 <div
                   key={a.name}
                   id={a.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}
+                  // reveal-up (2026-07-02): the pre-existing zero-JS
+                  // scroll-driven utility; each anchorage card settles
+                  // into place as it enters the viewport.
+                  className="reveal-up"
                   style={{
                     border: "1px solid rgba(201,168,76,0.2)",
                     padding: "28px 32px",

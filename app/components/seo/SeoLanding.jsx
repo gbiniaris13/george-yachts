@@ -44,6 +44,9 @@
 //   }
 
 import Link from "next/link";
+// 2026-07-02 (ASK B 2.1a) — fleet-match cards join the cover-open
+// view transition, pairing yacht-cover-<slug> with the detail hero.
+import ViewTransitionLink from "@/app/components/ViewTransitionLink";
 import { sanityClient } from "@/lib/sanity";
 import { sanityCardImg } from "@/lib/sanity-image";
 import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
@@ -360,14 +363,14 @@ export default async function SeoLanding({ pageData }) {
               </h2>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
                 {yachts.map((y) => (
-                  <Link
+                  <ViewTransitionLink
                     key={y.slug}
                     href={`/yachts/${y.slug}`}
                     data-cursor="View"
                     style={{ textDecoration: "none", color: "inherit", display: "block", background: "rgba(248, 245, 240,0.03)", border: "1px solid rgba(248, 245, 240,0.08)", overflow: "hidden", transition: "border-color 0.3s ease" }}
                     className="g1-yacht-card"
                   >
-                    <div style={{ width: "100%", aspectRatio: "4 / 3", background: y.image ? `${NAVY} url(${sanityCardImg(y.image, 600)}) center/cover no-repeat` : NAVY }} aria-hidden={!y.image} />
+                    <div style={{ width: "100%", aspectRatio: "4 / 3", background: y.image ? `${NAVY} url(${sanityCardImg(y.image, 600)}) center/cover no-repeat` : NAVY, viewTransitionName: `yacht-cover-${y.slug}` }} aria-hidden={!y.image} />
                     <div style={{ padding: "16px 18px 20px" }}>
                       <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 20, fontWeight: 400, color: "#F8F5F0", margin: "0 0 4px" }}>{y.name}</p>
                       {(y.length || y.sleeps) && (
@@ -384,7 +387,7 @@ export default async function SeoLanding({ pageData }) {
                         </div>
                       )}
                     </div>
-                  </Link>
+                  </ViewTransitionLink>
                 ))}
               </div>
               <p style={{ textAlign: "center", marginTop: 28 }}>
@@ -401,7 +404,7 @@ export default async function SeoLanding({ pageData }) {
             showed no citation uplift in Ahrefs' 1,885-page experiment). */}
         {pageData.rateTable && Array.isArray(pageData.rateTable.rows) && pageData.rateTable.rows.length > 0 && (
           <section style={{ padding: "72px 24px 0" }}>
-            <div style={{ maxWidth: 980, margin: "0 auto" }}>
+            <div className="reveal-up" style={{ maxWidth: 980, margin: "0 auto" }}>
               <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px", textAlign: "center" }}>
                 {pageData.rateTable.eyebrow || "Rates"}
               </p>
@@ -452,7 +455,10 @@ export default async function SeoLanding({ pageData }) {
             the field is absent). body supports **bold** + [text](/path). */}
         {Array.isArray(pageData.deepDive) && pageData.deepDive.map((sec) => (
           <section key={sec.heading} style={{ padding: "72px 24px 0" }}>
-            <div style={{ maxWidth: 720, margin: "0 auto" }}>
+            {/* reveal-up: the pre-existing scroll-driven utility
+                (GLOBAL PREMIUM EFFECTS), zero JS, @supports-gated,
+                reduced-motion aware. First applied 2026-07-02. */}
+            <div className="reveal-up" style={{ maxWidth: 720, margin: "0 auto" }}>
               <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 10px" }}>
                 {sec.eyebrow || "The Guide"}
               </p>

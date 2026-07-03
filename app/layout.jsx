@@ -30,6 +30,7 @@ import CookieConsent from "./components/CookieConsent";
 // 2026-05-18 — PostHog provider (free 1M events/mo). Inert until
 // NEXT_PUBLIC_POSTHOG_KEY env var is set in Vercel.
 import PostHogProvider from "./components/PostHogProvider";
+import SpeculationRules from "./components/SpeculationRules";
 import ContactDrawer from "./components/ContactDrawer";
 import VisitorGreeting from "./components/VisitorGreeting";
 import AmbientPlayer from "./components/AmbientPlayer";
@@ -459,6 +460,10 @@ export default async function RootLayout({ children }) {
         <ScrollToTop />
         {/* A4 — Ambient scroll parallax driver (publishes CSS vars) */}
         <AmbientScroll />
+        {/* 2026-07-02 (ASK B 2.4) — Speculation Rules prerender for the
+            two highest-intent destinations. Progressive enhancement;
+            PostHogProvider gates analytics on document.prerendering. */}
+        <SpeculationRules />
         {/* 2. Page Content */}
         <PostHogProvider>
         <I18nProvider>

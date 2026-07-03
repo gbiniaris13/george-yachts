@@ -27,6 +27,7 @@ import Footer from "@/components/Footer";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import BrowseSeoCategories from "@/app/components/seo/BrowseSeoCategories";
 import BriefGeorgeBanner from "@/app/components/BriefGeorgeBanner";
+import ViewTransitionLink from "@/app/components/ViewTransitionLink";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import LastUpdated from "@/app/components/seo/LastUpdated";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
@@ -523,7 +524,7 @@ export default async function CrewedCharterPage() {
               }}
             >
               {featured.map((y) => (
-                <Link
+                <ViewTransitionLink
                   key={y.slug}
                   href={`/yachts/${y.slug}`}
                   style={{
@@ -540,6 +541,7 @@ export default async function CrewedCharterPage() {
                       width: "100%",
                       aspectRatio: "4 / 3",
                       background: y.imageUrl ? `${NAVY} url(${y.imageUrl}?w=520&auto=format) center/cover no-repeat` : NAVY,
+                      viewTransitionName: `yacht-cover-${y.slug}`,
                     }}
                     aria-hidden={!y.imageUrl}
                   />
@@ -551,7 +553,7 @@ export default async function CrewedCharterPage() {
                       {[y.length, y.sleeps && `${y.sleeps} guests`, y.crew && `${y.crew} crew`].filter(Boolean).join(" · ")}
                     </p>
                   </div>
-                </Link>
+                </ViewTransitionLink>
               ))}
             </div>
             <div style={{ textAlign: "center", marginTop: 36, display: "flex", gap: 28, justifyContent: "center", flexWrap: "wrap" }}>

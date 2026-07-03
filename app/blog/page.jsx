@@ -8,6 +8,7 @@ import BlogGrid from "./BlogGrid";
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 import { RETIRED_SLUGS } from "@/lib/retiredSlugs";
 import { JOURNAL_CLUSTERS } from "@/lib/journal-clusters";
+import ViewTransitionLink from "@/app/components/ViewTransitionLink";
 import "@/styles/blog.css";
 
 // Non-CDN client for server-side fetches that need real-time data.
@@ -273,7 +274,7 @@ export default async function BlogPage() {
               }}
             >
               {fleetTeaser.map((y) => (
-                <Link
+                <ViewTransitionLink
                   key={y.slug}
                   href={`/yachts/${y.slug}`}
                   style={{
@@ -294,6 +295,7 @@ export default async function BlogPage() {
                       background: y.imageUrl
                         ? `#0D1B2A url(${y.imageUrl}) center/cover no-repeat`
                         : "#0D1B2A",
+                      viewTransitionName: `yacht-cover-${y.slug}`,
                     }}
                     aria-hidden={!y.imageUrl}
                   />
@@ -310,7 +312,7 @@ export default async function BlogPage() {
                       {y.name}
                     </p>
                   </div>
-                </Link>
+                </ViewTransitionLink>
               ))}
             </div>
             <div style={{ textAlign: "center", marginTop: 32 }}>

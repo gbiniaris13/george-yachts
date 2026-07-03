@@ -4,7 +4,9 @@
 // algorithmic matches — same fleet tier, same category, similar
 // length/guests/price. No LLM, no API calls, no extra runtime cost.
 
-import Link from "next/link";
+// 2026-07-02 (ASK B 2.1a) — similar-yacht cards join the cover-open
+// view transition: same yacht-cover-<slug> pairing as FleetGrid.
+import ViewTransitionLink from "@/app/components/ViewTransitionLink";
 
 export default function SimilarYachts({ items = [] }) {
   if (!items.length) return null;
@@ -53,7 +55,7 @@ export default function SimilarYachts({ items = [] }) {
           }}
         >
           {items.map((y) => (
-            <Link
+            <ViewTransitionLink
               key={y._id || y.slug}
               href={`/yachts/${y.slug}`}
               style={{
@@ -86,6 +88,7 @@ export default function SimilarYachts({ items = [] }) {
                       height: "100%",
                       objectFit: "cover",
                       display: "block",
+                      viewTransitionName: `yacht-cover-${y.slug}`,
                     }}
                   />
                 ) : null}
@@ -152,7 +155,7 @@ export default function SimilarYachts({ items = [] }) {
                   </p>
                 ) : null}
               </div>
-            </Link>
+            </ViewTransitionLink>
           ))}
         </div>
 

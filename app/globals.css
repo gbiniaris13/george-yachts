@@ -110,6 +110,23 @@ blockquote {
   hanging-punctuation: first;
 }
 
+/* ── B2: cross-document view transition (ASK B 2.1b, 2026-07-02) ──
+   Same-document transitions already run via ViewTransitionLink
+   (Phase 27i.16). This one line extends the courtesy to HARD
+   navigations (direct entry, back/forward, non-VTL links): a soft
+   crossfade instead of a white flash. Chrome 126+/Safari 18.2+,
+   ignored everywhere else. Disabled for reduced motion. */
+@view-transition {
+  navigation: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
 /* A.12 (Roberto brief): every anchored section gets enough scroll
    offset so the sticky mini-nav (≈140px tall on desktop) does not
    hide the section title when smooth-scrolling to an anchor link.
