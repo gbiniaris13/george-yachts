@@ -111,7 +111,7 @@ export default function ItineraryBuilderClient() {
   const handleSendToGeorge = () => {
     const route = selected.map((s) => s.name).join(' → ');
     const msg = `Hello George, I've designed a Greek island itinerary on your website:\n\n${route}\n\nTotal: ${routeStats.totalNM} NM (~${routeStats.hours} sailing hours)\n\nCan you suggest the best yacht for this route?`;
-    window.open(`https://wa.me/306970380999?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`https://wa.me/17867988798?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
   return (

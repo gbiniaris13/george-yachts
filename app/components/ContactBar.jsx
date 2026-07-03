@@ -39,7 +39,7 @@ export default function ContactBar() {
         <div style={{ width: "1px", height: "32px", background: "rgba(201,168,76,0.1)" }} className="hidden sm:block" />
 
         <a
-          href="https://wa.me/306970380999"
+          href="https://wa.me/17867988798"
           target="_blank"
           rel="noopener noreferrer"
           className="group flex items-center gap-3 transition-all duration-300"

@@ -32,7 +32,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
             Your own world at sea. Full crew. Total discretion.
           </p>
           <a
-            href="https://wa.me/306970380999?text=Hello%20George%20%E2%80%94%20I%27m%20interested%20in%20your%20Private%20Fleet%20for%20a%20Greek%20charter.%20Can%20we%20discuss%20options%3F"
+            href="https://wa.me/17867988798?text=Hello%20George%20%E2%80%94%20I%27m%20interested%20in%20your%20Private%20Fleet%20for%20a%20Greek%20charter.%20Can%20we%20discuss%20options%3F"
             target="_blank"
             rel="noopener noreferrer"
             style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--gy-font-ui)", fontSize: 11, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#0D1B2A", background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)", padding: "16px 48px", textDecoration: "none" }}
@@ -165,7 +165,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
           Begin Your Private Charter
         </h2>
         <a
-          href="https://wa.me/306970380999?text=Hello%20George%20%E2%80%94%20I%27d%20like%20to%20begin%20a%20Private%20Charter%20conversation.%20Which%20yachts%20are%20available%3F"
+          href="https://wa.me/17867988798?text=Hello%20George%20%E2%80%94%20I%27d%20like%20to%20begin%20a%20Private%20Charter%20conversation.%20Which%20yachts%20are%20available%3F"
           target="_blank"
           rel="noopener noreferrer"
           style={{ display: "inline-flex", alignItems: "center", gap: 12, fontFamily: "var(--gy-font-ui)", fontSize: 12, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#0D1B2A", background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)", padding: "18px 56px", textDecoration: "none" }}

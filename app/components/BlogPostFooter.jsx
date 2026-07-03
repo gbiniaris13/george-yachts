@@ -271,7 +271,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
                 Talk to George (30 min)
               </a>
               <a
-                href="https://wa.me/306970380999"
+                href="https://wa.me/17867988798"
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor="WhatsApp"

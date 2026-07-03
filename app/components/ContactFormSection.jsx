@@ -310,7 +310,7 @@ const ContactFormSection = () => {
             <span className="hidden sm:block w-px h-8" style={{ background: "rgba(201,168,76,0.12)" }} />
 
             <a
-              href="https://wa.me/306970380999"
+              href="https://wa.me/17867988798"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-3 transition-colors duration-300"

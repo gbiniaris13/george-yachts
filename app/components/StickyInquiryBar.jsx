@@ -30,7 +30,7 @@ const DISMISS_LOCK_MS = 24 * 60 * 60 * 1000; // 24 hours
 // Brief-specified Athens number for the new Sticky Bar. The existing
 // WhatsAppButton (auto-greeting FAB) keeps its US Miami number for
 // continuity of analytics; Boss can consolidate later.
-const WA_NUMBER = "306970380999";
+const WA_NUMBER = "17867988798"; // company WhatsApp Business (US)
 const CALENDLY_URL = "https://calendly.com/george-georgeyachts/30min";
 
 // Paths where the bar must NEVER show.

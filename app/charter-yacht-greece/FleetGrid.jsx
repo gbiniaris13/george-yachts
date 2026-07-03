@@ -470,7 +470,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
           {/* Secondary direct WhatsApp link for visitors who only want
               the messaging-app channel (skips the modal entirely). */}
           <a
-            href={`https://wa.me/306970380999?text=${encodeURIComponent(`Hi, I'm interested in chartering ${name} - could you share availability and rates?`)}`}
+            href={`https://wa.me/17867988798?text=${encodeURIComponent(`Hi, I'm interested in chartering ${name} - could you share availability and rates?`)}`}
             target="_blank"
             rel="noopener noreferrer"
             data-cursor="WhatsApp"

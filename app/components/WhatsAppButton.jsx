@@ -20,7 +20,7 @@ import { WHATSAPP_DOWN } from "@/lib/whatsappStatus";
 // #25D366 brand colour per brief spec. Previous values were US
 // Miami number + navy/gold styling. Updated under explicit Boss
 // approval to align with brief.
-const WA_NUMBER = "306970380999";
+const WA_NUMBER = "17867988798"; // company WhatsApp Business (US)
 const WA_BRAND_GREEN = "#25D366";
 const WA_DEFAULT_MSG =
   "Hello George, I'm interested in chartering a yacht in Greece.";

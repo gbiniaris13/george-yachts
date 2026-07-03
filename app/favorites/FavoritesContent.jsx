@@ -76,7 +76,7 @@ export default function FavoritesContent() {
       .map((y) => `• ${y.name} (${y.price || 'Price on request'})`)
       .join('\n');
     const msg = `Hello George, I'm ${name} (${email}). I've saved these yachts from your website and would like to discuss:\n\n${yachtList}\n\nPlease send me a proposal.`;
-    const waUrl = `https://wa.me/306970380999?text=${encodeURIComponent(msg)}`;
+    const waUrl = `https://wa.me/17867988798?text=${encodeURIComponent(msg)}`;
 
     window.open(waUrl, '_blank');
 
