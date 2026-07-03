@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { WHATSAPP_DOWN } from "@/lib/whatsappStatus";
 
 // WhatsApp button with a first-visit auto-greeting bubble.
 //
@@ -80,8 +81,14 @@ export default function WhatsAppButton() {
     }
   };
 
+  // 2026-07-03 TEMPORARY — while the company WhatsApp is under
+  // review (locked), clicks route to /inquiry so no guest writes
+  // into a line that cannot answer. Flip WHATSAPP_DOWN=false in
+  // lib/whatsappStatus.js when the account is restored.
   const buildHref = (msg) =>
-    `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+    WHATSAPP_DOWN
+      ? "/inquiry"
+      : `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
 
   return (
     <>
