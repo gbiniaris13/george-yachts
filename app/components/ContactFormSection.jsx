@@ -511,6 +511,12 @@ const ContactFormSection = () => {
               </p>
             </div>
 
+            {/* 2026-07-02 (ASK B 5.5) — the discretion signal. Old
+                money buys silence; say it plainly at the point of
+                trust. */}
+            <div className="text-[11px] text-white/60 tracking-widest text-center mb-3 leading-relaxed">
+              Your enquiry is read by George alone.
+            </div>
             {/* GDPR + reCAPTCHA notice */}
             <div className="text-[9px] text-white/50 tracking-widest text-center mb-8 leading-relaxed">
               By submitting this form you consent to George Yachts Brokerage House LLC processing your personal data to respond to your inquiry.

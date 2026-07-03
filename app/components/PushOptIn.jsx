@@ -22,11 +22,17 @@ import { VAPID_PUBLIC_KEY } from "@/lib/push/vapidPublicKey";
 // The value: a free, owned channel for the most time-sensitive thing in
 // charter — last-minute availability — straight to the device, no email.
 
+// 2026-07-02 (ASK B 5.1, George-approved) — yacht DETAIL pages left
+// the list: a guest reading a specific yacht's dossier is never
+// prompted for anything. The quiet card stays on the fleet LISTING
+// pages (browsing context, engagement-gated, once per 45 days),
+// because George's standing rule is that capture channels survive.
+// The crewed head page joined as a listing surface (built 2026-07-02).
 const HIGH_INTENT = (path) =>
-  path?.startsWith("/yachts/") ||
   path === "/private-fleet" ||
   path === "/explorer-fleet" ||
-  path === "/charter-yacht-greece";
+  path === "/charter-yacht-greece" ||
+  path === "/crewed-yacht-charter-greece";
 
 const DONE_KEY = "gy_push_done";          // subscribed or permission decided
 const DISMISS_KEY = "gy_push_dismissed_at";

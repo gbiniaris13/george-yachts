@@ -28,6 +28,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import BrowseSeoCategories from "@/app/components/seo/BrowseSeoCategories";
 import BriefGeorgeBanner from "@/app/components/BriefGeorgeBanner";
 import ViewTransitionLink from "@/app/components/ViewTransitionLink";
+import FirstAccessBand from "@/app/components/FirstAccessBand";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import LastUpdated from "@/app/components/seo/LastUpdated";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
@@ -693,6 +694,7 @@ export default async function CrewedCharterPage() {
       </section>
 
       <BriefGeorgeBanner />
+      <FirstAccessBand />
       <BrowseSeoCategories />
 
       {/* TRUST STRIP */}

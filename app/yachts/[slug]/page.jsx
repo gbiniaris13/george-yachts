@@ -6,6 +6,7 @@ import SimilarYachts from './SimilarYachts';
 import { similarYachts } from '@/lib/yacht-similarity';
 import { extractPriceRange } from '@/lib/pricing';
 import QuickAnswerBlock from '@/app/components/QuickAnswerBlock';
+import DossierRequest from './DossierRequest';
 import './yacht-page.css';
 
 // ISR - revalidate every hour
@@ -506,6 +507,10 @@ export default async function YachtPage({ params }) {
           <QuickAnswerBlock question={quickAnswerQ} answer={quickAnswerA} />
         </div>
       </section>
+      {/* 2026-07-02 (ASK B 5.2) — the premium email capture: guest
+          leaves an email, receives the forwardable dossier instantly.
+          Carries the 24h-personal-reply promise + discretion note. */}
+      <DossierRequest slug={slug} yachtName={yacht.name} />
       <SimilarYachts items={similar} />
     </>
   );

@@ -10,6 +10,7 @@ import BriefGeorgeBanner from "@/app/components/BriefGeorgeBanner";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import BrowseSeoCategories from "@/app/components/seo/BrowseSeoCategories";
 import FleetGuideSections from "./FleetGuideSections";
+import FirstAccessBand from "@/app/components/FirstAccessBand";
 import { extractPriceRange } from "@/lib/pricing";
 import "./fleet-page.css";
 
@@ -321,6 +322,11 @@ export default async function CharterFleetPage() {
           additional vessels.
         </p>
       </section>
+
+      {/* 2026-07-02 (ASK B 5.1) — quiet inline email capture; the
+          exit-intent modal is silenced on money pages, this band and
+          the footer form carry the capture instead. */}
+      <FirstAccessBand />
 
       {/* FROM THE JOURNAL — Cross-linking */}
       <section style={{ padding: "80px 24px", background: "#0D1B2A", borderTop: "1px solid rgba(201,168,76,0.06)" }}>

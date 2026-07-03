@@ -13,6 +13,8 @@
 //     (localStorage gy_exit_intent_subscribed); coordinated via popup-coordinator.
 
 import { useEffect, useState, useRef } from "react";
+import { usePathname } from "next/navigation";
+import { isMoneyPage } from "@/lib/moneyPages";
 import {
   canShow,
   markActive,
@@ -40,9 +42,15 @@ export default function ExitIntentModal() {
   const [errorMsg, setErrorMsg] = useState("");
   const inputRef = useRef(null);
   const firedRef = useRef(false);
+  const pathname = usePathname();
+  // 2026-07-02 (ASK B 5.1, George-approved) — silenced on money pages.
+  // The visitor evaluating a yacht is never interrupted; email capture
+  // on those routes moves to the inline FirstAccessBand + footer.
+  const suppressed = isMoneyPage(pathname);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (suppressed) return;
 
     // Mobile / coarse pointers — modal disabled entirely (Boss spec).
     const isCoarse = window.matchMedia?.("(pointer: coarse)")?.matches;
@@ -89,7 +97,7 @@ export default function ExitIntentModal() {
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("mouseout", onMouseOut);
     };
-  }, []);
+  }, [suppressed]);
 
   // Mark "seen" + focus input when opened
   useEffect(() => {
@@ -165,6 +173,7 @@ export default function ExitIntentModal() {
     }
   };
 
+  if (suppressed) return null;
   if (!open) return null;
 
   return (
