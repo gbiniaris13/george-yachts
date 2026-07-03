@@ -21,7 +21,12 @@ async function checkPage(name, url) {
   }
 }
 
-async function checkAPI(name, url, body) {
+// 2026-07-03 SOS UPGRADE — the old check counted ANY status under 500
+// as healthy, so the /api/contact 400 that was bouncing real
+// customers reported "✅ All OK" every morning. A form API that
+// rejects a well-formed submission is BROKEN: expectStatus pins the
+// exact success code per probe.
+async function checkAPI(name, url, body, expectStatus = 200) {
   const start = Date.now();
   try {
     const res = await fetch(url, {
@@ -29,7 +34,8 @@ async function checkAPI(name, url, body) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    return { name, ok: res.status > 0 && res.status < 500, status: res.status, ms: Date.now() - start };
+    const ok = expectStatus === "lenient" ? res.status > 0 && res.status < 500 : res.status === expectStatus;
+    return { name, ok, status: res.status, ms: Date.now() - start, message: ok ? "OK" : `expected ${expectStatus}, got ${res.status}` };
   } catch (err) {
     return { name, ok: false, status: 0, ms: Date.now() - start, message: err.message };
   }
@@ -54,27 +60,51 @@ export async function GET(request) {
 
   const results = [];
 
-  // Pages
+  // Pages — the money surfaces a customer actually lands on.
+  // 2026-07-03: crewed + catamaran head pages, a yacht page, and the
+  // ambient music asset joined the list (all customer-visible).
   const pages = [
     ["Homepage", BASE_URL],
     ["/partners", BASE_URL + "/partners"],
     ["/about-us", BASE_URL + "/about-us"],
     ["/charter-yacht-greece", BASE_URL + "/charter-yacht-greece"],
+    ["/crewed-yacht-charter-greece", BASE_URL + "/crewed-yacht-charter-greece"],
+    ["/catamaran-charter-greece", BASE_URL + "/catamaran-charter-greece"],
+    ["/yachts/genny", BASE_URL + "/yachts/genny"],
     ["/faq", BASE_URL + "/faq"],
+    ["Ambient music asset", BASE_URL + "/audio/ambient-lounge.mp3"],
   ];
   const pageResults = await Promise.all(pages.map(([n, u]) => checkPage(n, u)));
   results.push(...pageResults);
 
-  // APIs — use test data, expect non-500
-  results.push(await checkAPI("Contact API", BASE_URL + "/api/contact", {
-    name: "HEALTH_CHECK", email: "health@test.invalid", phone: "000",
-    country: "Test", message: "Health check", recaptchaToken: "no_recaptcha",
+  // Form APIs — honeypot probes: `website` filled makes every route
+  // return 200 {ok:true} WITHOUT sending Telegram/email/WhatsApp, so
+  // the daily check exercises routing + parsing with zero noise.
+  // Any 4xx/5xx here means customers are being bounced RIGHT NOW.
+  results.push(await checkAPI("Contact API (probe)", BASE_URL + "/api/contact", {
+    website: "health-probe", name: "HEALTH_CHECK", email: "health@test.invalid",
+    phone: "000", country: "Test", message: "probe", recaptchaToken: "no_recaptcha",
     yacht_type: "test", guests: "2", budget: "test",
     check_in: "2026-01-01", check_out: "2026-01-08",
-    embarkation: "test", disembarkation: "test",
   }));
-  results.push(await checkAPI("Newsletter API", BASE_URL + "/api/newsletter", { email: "health@test.invalid" }));
-  results.push(await checkAPI("Partner PDF API", BASE_URL + "/api/partner-request", { email: "health@test.invalid" }));
+  results.push(await checkAPI("Express Inquiry API (probe)", BASE_URL + "/api/inquiry", {
+    website: "health-probe", name: "HEALTH_CHECK", email: "health@test.invalid",
+    message: "probe", source: "health_check",
+  }));
+  results.push(await checkAPI("Newsletter API", BASE_URL + "/api/newsletter", { email: "health@test.invalid" }, "lenient"));
+  results.push(await checkAPI("Partner PDF API", BASE_URL + "/api/partner-request", { email: "health@test.invalid" }, "lenient"));
+
+  // Mondays: one REAL end-to-end submission through /api/inquiry so
+  // the full Telegram+email+WhatsApp delivery chain is proven weekly
+  // (clearly marked (TEST); George ignores it in 2 seconds).
+  const isMonday = new Date().toLocaleDateString("en-GB", { timeZone: "Europe/Athens", weekday: "short" }) === "Mon";
+  if (isMonday) {
+    results.push(await checkAPI("Weekly E2E lead delivery", BASE_URL + "/api/inquiry", {
+      name: "(TEST) Weekly form check", email: "test+forms@georgeyachts.com",
+      message: "(TEST) Automated Monday end-to-end check: if this arrived on Telegram AND email in full, the lead pipeline is healthy. Ignore.",
+      source: "weekly_health_e2e",
+    }));
+  }
 
   // Gmail SMTP
   let gmailOk = false;
