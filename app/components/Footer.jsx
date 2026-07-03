@@ -1,4 +1,5 @@
 "use client";
+import { WHATSAPP_DOWN } from "@/lib/whatsappStatus";
 
 import React, { useState } from "react";
 import { Instagram, Linkedin } from "lucide-react";
@@ -457,13 +458,13 @@ const Footer = () => {
                 </a>{" "}
                 · US{" "}
                 <a
-                  href={`https://wa.me/17867988798?text=${encodeURIComponent("Hello George, I'm interested in chartering a yacht in Greece.")}`}
-                  target="_blank"
+                  href={WHATSAPP_DOWN ? "/inquiry" : `https://wa.me/17867988798?text=${encodeURIComponent("Hello George, I'm interested in chartering a yacht in Greece.")}`}
+                  target={WHATSAPP_DOWN ? undefined : "_blank"}
                   rel="noopener noreferrer"
                   style={{ color: "inherit", textDecoration: "none" }}
-                  data-cursor="WhatsApp"
+                  data-cursor={WHATSAPP_DOWN ? "Message" : "WhatsApp"}
                 >
-                  +1 786 798 8798 (WhatsApp)
+                  {WHATSAPP_DOWN ? "+1 786 798 8798" : "+1 786 798 8798 (WhatsApp)"}
                 </a>
               </div>
             </div>

@@ -1,3 +1,4 @@
+import { WHATSAPP_DOWN } from "@/lib/whatsappStatus";
 // Weekly Motor Yacht Charter Greece - the pillar/hub page.
 //
 // 2026-06-26. Wedge page for "weekly motor yacht charter Greece". Quick Answer
@@ -24,7 +25,8 @@ import {
 } from "@/lib/weeklyMotorPillar";
 
 const URL = `https://georgeyachts.com/${SLUG}`;
-const WHATSAPP = "https://wa.me/17867988798";
+// 2026-07-03: while the company WhatsApp is under review, route to /inquiry
+const WHATSAPP = WHATSAPP_DOWN ? "/inquiry" : "https://wa.me/17867988798";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -171,7 +173,7 @@ export default function WeeklyMotorPillarPage() {
               Brief George directly
             </Link>
             <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", border: `1px solid ${GOLD}`, color: GOLD, textDecoration: "none" }}>
-              Message on WhatsApp
+              {WHATSAPP_DOWN ? "Message George Directly" : "Message on WhatsApp"}
             </a>
           </div>
         </section>

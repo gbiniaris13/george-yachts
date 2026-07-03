@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { WHATSAPP_DOWN } from "@/lib/whatsappStatus";
 
 export const dynamic = "force-dynamic";
 
@@ -106,6 +107,26 @@ export async function GET(request) {
     }));
   }
 
+  // WhatsApp CTA consistency (2026-07-03, George: "η αναφορά να μην μου
+  // λέει ποτέ ψέματα"). While the company WhatsApp is under review
+  // (WHATSAPP_DOWN=true), NO page may render a wa.me link to the locked
+  // +1 786 798 8798 number - a customer tapping it writes into the void.
+  // This catches the exact class of bug found on 2026-07-03 (five CTAs
+  // missed by the original failover). When the account is restored and
+  // the flag flipped, the same check inverts: the homepage MUST offer
+  // WhatsApp again.
+  try {
+    const ctaPages = [BASE_URL, BASE_URL + "/greek-charter-index-2026", BASE_URL + "/weekly-yacht-charter-rates-greece", BASE_URL + "/crewed-catamaran-charter-greece"];
+    const bodies = await Promise.all(ctaPages.map((u) => fetch(u, { cache: "no-store" }).then((r) => r.text()).catch(() => "")));
+    const deadLinks = bodies.reduce((n, b) => n + (b.match(/wa\.me\/17867988798/g) || []).length, 0);
+    if (WHATSAPP_DOWN) {
+      results.push({ name: "WhatsApp failover (no dead wa.me links)", ok: deadLinks === 0, status: 200, ms: 0, message: deadLinks === 0 ? "OK" : deadLinks + " link(s) still point to the locked number" });
+    } else {
+      const hasWa = bodies.some((b) => b.includes("wa.me/"));
+      results.push({ name: "WhatsApp CTAs restored", ok: hasWa, status: 200, ms: 0, message: hasWa ? "OK" : "flag is OFF but no wa.me CTA found" });
+    }
+  } catch {}
+
   // Gmail SMTP
   let gmailOk = false;
   try {
@@ -139,6 +160,9 @@ export async function GET(request) {
         "",
         ...results.map((r) => "✓ " + r.name + " — " + r.ms + "ms"),
         "",
+        ...(WHATSAPP_DOWN
+          ? ["⚠️ _Known state: company WhatsApp under review — all WhatsApp CTAs route to /inquiry (failover). Flip WHATSAPP_DOWN when restored._", ""]
+          : []),
         "_georgeyachts.com fully operational._",
       ]
     : [
