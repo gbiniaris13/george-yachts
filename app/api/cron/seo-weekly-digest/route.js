@@ -32,6 +32,67 @@ export const dynamic = "force-dynamic";
 
 const SITE_URL = "https://georgeyachts.com";
 
+// Visitor analytics live in the CRM Supabase (same DB the site's
+// /api/track writes every session to). Read-only here.
+const CRM_SUPABASE_URL = process.env.CRM_SUPABASE_URL;
+const CRM_SUPABASE_KEY = process.env.CRM_SUPABASE_SERVICE_KEY;
+
+// Bucket an already-classified referrer label into a channel group.
+function sourceGroup(label) {
+  const s = (label || "").toLowerCase();
+  if (/chatgpt|openai|perplexity|claude|gemini|copilot|you\.com|phind/.test(s)) return "ai";
+  if (/google|bing|duckduckgo|ecosia|yahoo|brave|search/.test(s)) return "search";
+  if (/linkedin|instagram|facebook|twitter|x\.com|tiktok|youtube|reddit|threads/.test(s)) return "social";
+  if (!label || s.includes("direct") || s.includes("bookmark")) return "direct";
+  if (s.includes("georgeyachts")) return "internal";
+  return "referral";
+}
+
+// Pull the last 7 days of visitor sessions and aggregate by source so
+// the digest can show WHERE real visitors came from and WHAT they did
+// on-site (yacht views, CTA taps, hot leads). First-party data — no
+// external API, no auth beyond the CRM key we already hold.
+// George (2026-07-03): "θέλω να ξέρω από πού μπήκανε και τι πατάνε."
+async function fetchTrafficSources() {
+  if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY) return null;
+  const since = new Date(Date.now() - 7 * 86_400_000).toISOString();
+  try {
+    const res = await fetch(
+      `${CRM_SUPABASE_URL}/rest/v1/sessions?select=referrer,cta_clicks,yachts_viewed,is_hot_lead,lead_captured&started_at=gte.${since}&limit=8000`,
+      {
+        headers: {
+          apikey: CRM_SUPABASE_KEY,
+          Authorization: `Bearer ${CRM_SUPABASE_KEY}`,
+        },
+        cache: "no-store",
+      },
+    );
+    if (!res.ok) return null;
+    const rows = await res.json();
+    if (!Array.isArray(rows)) return null;
+    const per = {};
+    const groups = { ai: 0, search: 0, social: 0, direct: 0, referral: 0, internal: 0 };
+    let totalVisits = 0, totalHot = 0, totalLeads = 0;
+    for (const r of rows) {
+      const label = r.referrer || "Direct / Bookmark";
+      const g = sourceGroup(label);
+      groups[g] = (groups[g] || 0) + 1;
+      totalVisits++;
+      if (r.is_hot_lead) totalHot++;
+      if (r.lead_captured) totalLeads++;
+      const p = (per[label] = per[label] || { visits: 0, yachtViews: 0, cta: 0, hot: 0, leads: 0 });
+      p.visits++;
+      p.yachtViews += Array.isArray(r.yachts_viewed) ? r.yachts_viewed.length : 0;
+      p.cta += r.cta_clicks || 0;
+      if (r.is_hot_lead) p.hot++;
+      if (r.lead_captured) p.leads++;
+    }
+    return { totalVisits, totalHot, totalLeads, groups, per };
+  } catch {
+    return null;
+  }
+}
+
 function fmt(n) {
   return new Intl.NumberFormat("en-US").format(n);
 }
@@ -112,6 +173,7 @@ export async function GET(request) {
     sitemapCount,
     gscData,
     bingData,
+    trafficData,
   ] = await Promise.all([
     sanityClient
       .fetch(
@@ -148,6 +210,7 @@ export async function GET(request) {
     countSitemapUrls(),
     fetchGscWeekly().catch(() => null),
     fetchBingWeekly().catch(() => null),
+    fetchTrafficSources().catch(() => null),
   ]);
 
   // 2026-05-11 — AI visibility check via Gemini free tier
@@ -234,6 +297,67 @@ export async function GET(request) {
     lines.push("🤖 *Bing* — last 7 days (feeds ChatGPT)");
     lines.push(
       `• ${fmt(bingData.clicks)} clicks · ${fmt(bingData.impressions)} impressions`,
+    );
+    lines.push("");
+  }
+
+  // ── Traffic sources: where visitors came from & what they did ───
+  // George (2026-07-03): "θέλω να ξέρω από πού μπήκανε και τι πατάνε."
+  // First-party session analytics, split by channel with the AI block
+  // always shown so the AI-referral channel stays visible even at zero.
+  if (trafficData && trafficData.totalVisits > 0) {
+    const t = trafficData;
+    const pick = (labels) =>
+      labels.map((l) => [l, t.per[l]]).filter(([, v]) => v && v.visits > 0);
+    const engStr = (v) =>
+      [v.yachtViews ? `${v.yachtViews} yacht views` : null, v.cta ? `${v.cta} CTA` : null, v.hot ? `${v.hot} hot` : null]
+        .filter(Boolean)
+        .join(", ");
+
+    lines.push("🌐 *Where visitors came from* — last 7 days");
+    lines.push(
+      `• ${fmt(t.totalVisits)} visits · ${t.totalHot} hot lead${t.totalHot === 1 ? "" : "s"}${t.totalLeads ? ` · ${t.totalLeads} captured` : ""}`,
+    );
+
+    // AI assistants — the channel George most wants to watch.
+    const ai = pick(["ChatGPT", "Gemini", "Perplexity", "Claude", "Copilot"]);
+    lines.push(`🤖 AI assistants: ${fmt(t.groups.ai || 0)} visit${(t.groups.ai || 0) === 1 ? "" : "s"}`);
+    if (ai.length) {
+      for (const [l, v] of ai) {
+        const e = engStr(v);
+        lines.push(`   — ${l}: ${v.visits}${e ? ` (${e})` : ""}`);
+      }
+    } else {
+      lines.push("   — none tracked this week (a share hides in Direct, see note)");
+    }
+
+    // Search
+    const search = pick(["Google Search", "Bing", "DuckDuckGo", "Ecosia"]);
+    if (search.length) {
+      lines.push(`🔍 Search: ${fmt(t.groups.search || 0)} visits`);
+      for (const [l, v] of search.slice(0, 3)) {
+        const e = engStr(v);
+        lines.push(`   — ${l}: ${v.visits}${e ? ` (${e})` : ""}`);
+      }
+    }
+
+    // Social
+    const social = pick(["LinkedIn", "Instagram", "Facebook", "Twitter/X", "TikTok", "YouTube", "Reddit"]);
+    if (social.length) {
+      lines.push(
+        `🔗 Social: ${social.slice(0, 5).map(([l, v]) => `${l} ${v.visits}`).join(" · ")}`,
+      );
+    }
+
+    // Direct / bookmark
+    const direct = t.per["Direct / Bookmark"];
+    if (direct) {
+      const e = engStr(direct);
+      lines.push(`📌 Direct / bookmark: ${direct.visits}${e ? ` (${e})` : ""}`);
+    }
+
+    lines.push(
+      "_Note: ChatGPT and some in-app browsers strip the referrer, so the AI number is a floor — a share of Direct is really AI-driven._",
     );
     lines.push("");
   }
