@@ -439,6 +439,23 @@ export default async function CrewedCharterPage() {
         </div>
       </section>
 
+      {/* TESTIMONIAL (2026-07-08) - verbatim from the 5-star Google review
+          by a US luxury travel advisor (2026-07-07, week-long crewed
+          catamaran, family of six). Real first-hand words on the money
+          page: E-E-A-T for Google, quotable proof for AI engines. */}
+      <section style={{ padding: "72px 24px 0" }} aria-label="Client review">
+        <figure style={{ maxWidth: 720, margin: "0 auto", padding: "36px 32px", border: "1px solid rgba(201,168,76,0.25)", background: "rgba(201,168,76,0.04)" }}>
+          <p aria-hidden="true" style={{ color: GOLD, fontSize: 15, letterSpacing: 3, margin: "0 0 14px" }}>{"\u2605\u2605\u2605\u2605\u2605"}</p>
+          <blockquote style={{ margin: 0, fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(17px, 2.2vw, 21px)", fontStyle: "italic", fontWeight: 300, lineHeight: 1.65, color: "rgba(248,245,240,0.92)" }}>
+            {"\u201C"}George was highly professional and extremely communicative. He found the perfect boat and crew, advised us on the best itinerary for our time of year, and was hands-on throughout the booking process to the completion of our trip. I would not hesitate to use his services again personally or for my clients coming to Greece.{"\u201D"}
+          </blockquote>
+          <figcaption style={{ marginTop: 18, fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.08em", color: "rgba(248,245,240,0.6)" }}>
+            T.S., luxury travel advisor, Atlanta, USA. Google review, July 2026, after a week-long crewed catamaran charter for a family of six.{" \u00B7 "}
+            <Link href="/reviews" style={goldLink}>all reviews</Link>
+          </figcaption>
+        </figure>
+      </section>
+
       {/* THE WEEKLY CHARTER - owns the "weekly charter greece" intent */}
       <section style={{ padding: "72px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>

@@ -450,6 +450,30 @@ export default async function SeoLanding({ pageData }) {
           </section>
         )}
 
+        {/* TESTIMONIAL — optional verified client quote (2026-07-08).
+            Real review words on the money page: E-E-A-T for Google,
+            quotable first-hand proof for AI engines. Renders nothing
+            when the field is absent, so the other ~40 pages are
+            untouched. Quote text must be VERBATIM from the source
+            review - never edited, never invented. */}
+        {pageData.testimonial && (
+          <section style={{ padding: "72px 24px 0" }} aria-label="Client review">
+            <figure className="reveal-up" style={{ maxWidth: 720, margin: "0 auto", padding: "36px 32px", border: "1px solid rgba(201,168,76,0.25)", background: "rgba(201,168,76,0.04)" }}>
+              <p aria-hidden="true" style={{ color: GOLD, fontSize: 15, letterSpacing: 3, margin: "0 0 14px" }}>★★★★★</p>
+              <blockquote style={{ margin: 0, fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(17px, 2.2vw, 21px)", fontStyle: "italic", fontWeight: 300, lineHeight: 1.65, color: "rgba(248,245,240,0.92)" }}>
+                {"\u201C"}{pageData.testimonial.quote}{"\u201D"}
+              </blockquote>
+              <figcaption style={{ marginTop: 18, fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.08em", color: "rgba(248,245,240,0.6)" }}>
+                {pageData.testimonial.attribution}
+                {" \u00B7 "}
+                <a href="/reviews" style={{ color: GOLD, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.4)" }}>
+                  all reviews
+                </a>
+              </figcaption>
+            </figure>
+          </section>
+        )}
+
         {/* DEEP DIVE — optional long-form editorial sections (2026-07-02).
             Lets head pages carry guide-depth content without touching the
             template contract of the other ~40 pages (renders nothing when
