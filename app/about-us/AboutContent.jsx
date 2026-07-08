@@ -215,7 +215,7 @@ export default function AboutContent() {
             style={{
               fontFamily: "var(--gy-font-ui)",
               fontSize: 14,
-              color: "rgba(248, 245, 240,0.65)",
+              color: "rgba(248,245,240,0.72)",
               fontWeight: 300,
               margin: "0 0 24px",
               lineHeight: 1.6,
@@ -331,19 +331,19 @@ export default function AboutContent() {
           </p>
 
           <div style={{ borderLeft: "4px solid #C9A84C", paddingLeft: "28px" }}>
-            <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(18px, 2vw, 22px)", fontWeight: 400, fontStyle: "italic", lineHeight: 1.85, color: "rgba(248, 245, 240,0.75)", marginBottom: "20px" }}>
+            <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(18px, 2vw, 22px)", fontWeight: 400, fontStyle: "italic", lineHeight: 1.85, color: "rgba(248,245,240,0.82)", marginBottom: "20px" }}>
               I grew up on my uncle&apos;s Ferretti, crossing from Athens to Syros, to Mykonos, to wherever the Cyclades took us. My mother is from Syros - the sea was never a hobby. It was home.
             </p>
-            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248, 245, 240,0.55)", marginBottom: "20px" }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248,245,240,0.6)", marginBottom: "20px" }}>
               I studied shipping. I became a skipper in Corfu. I earned my motor yacht licence. I managed charters across the Ionian and the Cyclades - briefing captains, building itineraries, solving problems at midnight.
             </p>
-            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248, 245, 240,0.55)", marginBottom: "20px" }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248,245,240,0.6)", marginBottom: "20px" }}>
               I built George Yachts because I wanted to do this properly. Not as another name on a platform. Not as a cold transaction. But as someone who knows these waters first-hand, who has untangled an anchor under pressure in Paxos, and who has watched a family of twelve cry at disembarkation - not because something went wrong, but because they didn&apos;t want it to end.
             </p>
-            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248, 245, 240,0.55)", marginBottom: "20px" }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248,245,240,0.6)", marginBottom: "20px" }}>
               That moment - when your clients hold you and tell you this was unlike anything they&apos;ve ever experienced - that is why I do this.
             </p>
-            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248, 245, 240,0.55)", marginBottom: "28px" }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248,245,240,0.6)", marginBottom: "28px" }}>
               Greece is not one destination. It is hundreds. And if you have the right person guiding you, every voyage reveals something new. I am that person.
             </p>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", fontWeight: 600, letterSpacing: "0.15em", color: "#C9A84C" }}>
@@ -412,7 +412,7 @@ export default function AboutContent() {
                 fontSize: "clamp(15px, 1.5vw, 18px)",
                 lineHeight: 1.7,
                 fontWeight: 300,
-                color: "rgba(248, 245, 240, 0.7)",
+                color: "rgba(248,245,240,0.78)",
                 maxWidth: "60ch",
                 margin: "0 auto",
               }}
@@ -495,7 +495,7 @@ export default function AboutContent() {
                         lineHeight: 1.5,
                         letterSpacing: "0.08em",
                         textTransform: "uppercase",
-                        color: "rgba(248, 245, 240, 0.55)",
+                        color: "rgba(248,245,240,0.6)",
                         margin: "0 0 14px",
                       }}
                     >
@@ -534,7 +534,7 @@ export default function AboutContent() {
             <Link
               href="/team"
               style={{
-                color: "rgba(248, 245, 240, 0.7)",
+                color: "rgba(248,245,240,0.78)",
                 textDecoration: "none",
                 borderBottom: "1px solid rgba(201, 168, 76, 0.4)",
                 paddingBottom: "2px",
@@ -560,7 +560,7 @@ export default function AboutContent() {
             ].map((item, i) => (
               <div key={i} style={{ padding: "32px", border: item.highlight ? "1px solid rgba(201,168,76,0.3)" : "1px solid rgba(248, 245, 240,0.08)", background: item.highlight ? "rgba(201,168,76,0.05)" : "transparent" }}>
                 <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.3em", color: item.highlight ? "#C9A84C" : "rgba(248, 245, 240,0.3)", textTransform: "uppercase", marginBottom: "16px" }}>{item.label}</p>
-                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", lineHeight: 1.9, color: item.highlight ? "rgba(248, 245, 240,0.7)" : "rgba(248, 245, 240,0.4)" }}>{item.value}</p>
+                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", lineHeight: 1.9, color: item.highlight ? "rgba(248,245,240,0.78)" : "rgba(248, 245, 240,0.4)" }}>{item.value}</p>
               </div>
             ))}
           </div>

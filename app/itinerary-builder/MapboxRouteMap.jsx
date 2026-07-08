@@ -320,7 +320,7 @@ export default function MapboxRouteMap({
                   fontWeight: 700,
                   padding: "8px 14px",
                   background: active ? "rgba(201,168,76,0.22)" : "transparent",
-                  color: active ? GOLD_BRIGHT : "rgba(248, 245, 240,0.65)",
+                  color: active ? GOLD_BRIGHT : "rgba(248,245,240,0.72)",
                   border: "none",
                   cursor: "pointer",
                   transition: "background 0.18s ease, color 0.18s ease",

@@ -75,7 +75,7 @@ export default function PriceBlock({
           style={{
             fontFamily: "var(--gy-font-ui)",
             fontSize: s.note,
-            color: "rgba(248, 245, 240,0.65)",
+            color: "rgba(248,245,240,0.72)",
             letterSpacing: "0.04em",
             lineHeight: 1.6,
             maxWidth: "32ch",

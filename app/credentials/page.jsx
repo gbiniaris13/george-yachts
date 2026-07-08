@@ -77,7 +77,7 @@ export default function CredentialsPage() {
           </h1>
           <p
             className="gy-lede"
-            style={{ color: "rgba(248,245,240,0.78)", maxWidth: "62ch" }}
+            style={{ color: "rgba(248,245,240,0.85)", maxWidth: "62ch" }}
           >
             UHNW guests verify before they deposit. So do their family offices,
             their lawyers, and their advisers. Here is the documentary trail -
@@ -130,7 +130,7 @@ export default function CredentialsPage() {
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 15,
                   lineHeight: 1.7,
-                  color: "rgba(248,245,240,0.82)",
+                  color: "rgba(248,245,240,0.88)",
                   fontWeight: 300,
                   maxWidth: "60ch",
                 }}
@@ -166,7 +166,7 @@ export default function CredentialsPage() {
                     fontStyle: "normal",
                     fontSize: 13,
                     fontWeight: 300,
-                    color: "rgba(248,245,240,0.6)",
+                    color: "rgba(248,245,240,0.66)",
                     marginTop: 18,
                     letterSpacing: "0.04em",
                   }}
@@ -241,7 +241,7 @@ export default function CredentialsPage() {
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 15,
                   lineHeight: 1.7,
-                  color: "rgba(248,245,240,0.82)",
+                  color: "rgba(248,245,240,0.88)",
                   fontWeight: 300,
                   maxWidth: "60ch",
                 }}
@@ -257,7 +257,7 @@ export default function CredentialsPage() {
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 14,
                   lineHeight: 1.65,
-                  color: "rgba(248,245,240,0.6)",
+                  color: "rgba(248,245,240,0.66)",
                   fontStyle: "italic",
                   fontWeight: 300,
                   margin: "20px 0 0",
@@ -315,7 +315,7 @@ export default function CredentialsPage() {
                 <span
                   className="gy-eyebrow-sm"
                   style={{
-                    color: "rgba(248,245,240,0.6)",
+                    color: "rgba(248,245,240,0.66)",
                     letterSpacing: "0.32em",
                   }}
                 >
@@ -356,7 +356,7 @@ export default function CredentialsPage() {
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 15,
                   lineHeight: 1.7,
-                  color: "rgba(248,245,240,0.82)",
+                  color: "rgba(248,245,240,0.88)",
                   fontWeight: 300,
                   maxWidth: "60ch",
                 }}
@@ -373,7 +373,7 @@ export default function CredentialsPage() {
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 14,
                   lineHeight: 1.65,
-                  color: "rgba(248,245,240,0.6)",
+                  color: "rgba(248,245,240,0.66)",
                   fontStyle: "italic",
                   fontWeight: 300,
                   margin: "20px 0 0",
@@ -429,7 +429,7 @@ export default function CredentialsPage() {
                 <div>
                   <p
                     className="gy-eyebrow-sm"
-                    style={{ color: "rgba(248,245,240,0.55)", marginBottom: 14 }}
+                    style={{ color: "rgba(248,245,240,0.6)", marginBottom: 14 }}
                   >
                     The legal entity
                   </p>
@@ -483,7 +483,7 @@ export default function CredentialsPage() {
                 <div>
                   <p
                     className="gy-eyebrow-sm"
-                    style={{ color: "rgba(248,245,240,0.55)", marginBottom: 14 }}
+                    style={{ color: "rgba(248,245,240,0.6)", marginBottom: 14 }}
                   >
                     The brokerage operation
                   </p>
@@ -548,7 +548,7 @@ export default function CredentialsPage() {
             style={{
               margin: "24px auto 36px",
               maxWidth: "52ch",
-              color: "rgba(248,245,240,0.7)",
+              color: "rgba(248,245,240,0.78)",
             }}
           >
             Six quick questions, one personal reply from George within

@@ -169,7 +169,7 @@ export default function Outlook2027Page() {
             <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(20px, 3vw, 27px)", fontWeight: 300, lineHeight: 1.4, color: CREAM, margin: "0 0 18px" }}>
               Independent data show the wider Greek and Mediterranean market holding firm or growing through 2025 and 2026, with motor yachts still the revenue core; what shifted was shorter booking lead times, a softer average spend, and a reshuffle within the sail segment. Our own read from the desk is that the Greek motor segment felt the high 2026 fuel costs more than the headline numbers show, and we expect that as Middle East tensions ease through 2027, motor-yacht charter demand in Greece firms up.
             </p>
-            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.6)", fontWeight: 300, margin: 0 }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.66)", fontWeight: 300, margin: 0 }}>
               This paragraph is George Yachts' forward-looking opinion, offered as a broker's read of the market, not an established fact. The public record above shows Greek yachting growing overall in 2025 and motor yachts still leading charter revenue; our motor-segment and recovery view is a judgement, and we will revise it as the data does.
             </p>
           </div>
@@ -181,8 +181,8 @@ export default function Outlook2027Page() {
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 16px" }}>Sources</p>
             <ol style={{ margin: 0, paddingLeft: 20, display: "flex", flexDirection: "column", gap: 8 }}>
               {sourceList.map((s, i) => (
-                <li key={i} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, color: "rgba(248,245,240,0.6)", fontWeight: 300 }}>
-                  <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(248,245,240,0.75)", textDecoration: "none" }}>{s.pub}</a>
+                <li key={i} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, color: "rgba(248,245,240,0.66)", fontWeight: 300 }}>
+                  <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(248,245,240,0.82)", textDecoration: "none" }}>{s.pub}</a>
                 </li>
               ))}
             </ol>
@@ -193,7 +193,7 @@ export default function Outlook2027Page() {
         <section style={{ padding: "32px 24px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
           <div style={{ maxWidth: 880, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px" }}>Cite this outlook</p>
-            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.75)", margin: 0 }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.82)", margin: 0 }}>
               George Yachts Brokerage House. (2026). <em>Greek Yacht Charter: The 2027 Outlook</em>. https://georgeyachts.com/greek-yacht-charter-2027-outlook
             </p>
           </div>

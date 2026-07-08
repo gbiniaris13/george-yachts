@@ -221,14 +221,14 @@ export default function GeorgesSelection() {
           font-size: 11px;
           letter-spacing: 0.10em;
           text-transform: uppercase;
-          color: rgba(248, 245, 240, 0.65);
+          color: rgba(248,245,240,0.72);
           margin: 0;
         }
         .gy-selection-card__price {
           font-family: var(--gy-font-ui);
           font-weight: 300;
           font-size: 13px;
-          color: rgba(248, 245, 240, 0.75);
+          color: rgba(248,245,240,0.82);
           margin: 0 0 6px;
         }
         .gy-selection-card__note {
@@ -275,7 +275,7 @@ export default function GeorgesSelection() {
           font-family: var(--gy-font-ui);
           font-weight: 300;
           font-size: 13px;
-          color: rgba(248, 245, 240, 0.55);
+          color: rgba(248,245,240,0.6);
           text-decoration: none;
           transition: color 260ms ease, text-decoration 260ms ease;
         }

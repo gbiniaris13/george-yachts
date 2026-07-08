@@ -121,7 +121,7 @@ export default async function Image() {
           style={{
             fontSize: 24,
             fontStyle: "italic",
-            color: "rgba(248,245,240,0.7)",
+            color: "rgba(248,245,240,0.78)",
             fontFamily: "Georgia, serif",
             marginTop: 32,
             textAlign: "center",
@@ -140,7 +140,7 @@ export default async function Image() {
             display: "flex",
             alignItems: "center",
             gap: 24,
-            color: "rgba(248,245,240,0.6)",
+            color: "rgba(248,245,240,0.66)",
             fontSize: 14,
             letterSpacing: "0.22em",
             textTransform: "uppercase",

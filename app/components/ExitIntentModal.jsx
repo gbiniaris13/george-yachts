@@ -299,7 +299,7 @@ export default function ExitIntentModal() {
                   fontFamily: "var(--gy-font-editorial)",
                   fontSize: "15px",
                   lineHeight: 1.55,
-                  color: "rgba(248, 245, 240,0.7)",
+                  color: "rgba(248,245,240,0.78)",
                   fontWeight: 300,
                 }}
               >

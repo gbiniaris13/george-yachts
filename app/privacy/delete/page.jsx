@@ -73,7 +73,7 @@ export default function DeletionPage() {
               fontFamily: "var(--gy-font-ui)",
               fontSize: 16,
               lineHeight: 1.7,
-              color: "rgba(248, 245, 240,0.78)",
+              color: "rgba(248,245,240,0.85)",
               margin: "0 auto",
               maxWidth: 640,
             }}
@@ -94,7 +94,7 @@ export default function DeletionPage() {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 12,
                 lineHeight: 1.7,
-                color: "rgba(248, 245, 240,0.55)",
+                color: "rgba(248,245,240,0.6)",
                 margin: "32px 0 0",
                 textAlign: "center",
               }}

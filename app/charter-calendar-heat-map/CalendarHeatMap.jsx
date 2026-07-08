@@ -151,7 +151,7 @@ export default function CalendarHeatMap() {
               gap: 8,
               fontFamily: "var(--gy-font-ui)",
               fontSize: 11,
-              color: "rgba(248, 245, 240, 0.7)",
+              color: "rgba(248,245,240,0.78)",
               letterSpacing: "0.06em",
             }}
           >
@@ -210,7 +210,7 @@ export default function CalendarHeatMap() {
           style={{
             fontFamily: "var(--gy-font-ui)",
             fontSize: 13,
-            color: "rgba(248, 245, 240, 0.6)",
+            color: "rgba(248,245,240,0.66)",
             textAlign: "center",
             margin: 0,
           }}

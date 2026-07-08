@@ -386,7 +386,7 @@ const ArticlePage = async ({ params }) => {
                 <Link
                   href="/team/george-biniaris"
                   className="hover:text-[#C9A84C] transition-colors"
-                  style={{ color: "rgba(248, 245, 240, 0.7)" }}
+                  style={{ color: "rgba(248,245,240,0.78)" }}
                 >
                   {post.author}
                 </Link>

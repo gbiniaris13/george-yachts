@@ -29,7 +29,7 @@ export default function ForbesBarDismiss({ cookieName }) {
         height: 28,
         background: "transparent",
         border: "none",
-        color: "rgba(248,245,240,0.55)",
+        color: "rgba(248,245,240,0.6)",
         fontSize: 16,
         cursor: "pointer",
         lineHeight: 1,
@@ -40,7 +40,7 @@ export default function ForbesBarDismiss({ cookieName }) {
         e.currentTarget.style.color = "#C9A84C";
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.color = "rgba(248,245,240,0.55)";
+        e.currentTarget.style.color = "rgba(248,245,240,0.6)";
       }}
     >
       ×

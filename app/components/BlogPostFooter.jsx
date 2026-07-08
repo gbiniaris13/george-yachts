@@ -121,7 +121,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
                           fontFamily: "var(--gy-font-ui)",
                           fontSize: 11,
                           letterSpacing: "0.12em",
-                          color: "rgba(248, 245, 240,0.65)",
+                          color: "rgba(248,245,240,0.72)",
                           margin: "0 0 8px",
                           textTransform: "uppercase",
                         }}
@@ -139,7 +139,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
                             fontSize: 8,
                             letterSpacing: "0.3em",
                             textTransform: "uppercase",
-                            color: isPerPerson(y) ? "rgba(248, 245, 240,0.65)" : GOLD,
+                            color: isPerPerson(y) ? "rgba(248,245,240,0.72)" : GOLD,
                             fontWeight: 600,
                             marginBottom: 2,
                           }}

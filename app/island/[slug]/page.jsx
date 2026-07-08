@@ -284,7 +284,7 @@ export default async function IslandPage({ params }) {
                 fontSize: "clamp(18px, 2.4vw, 22px)",
                 fontWeight: 300,
                 fontStyle: "italic",
-                color: "rgba(248, 245, 240,0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: 0,
                 lineHeight: 1.5,
               }}
@@ -332,7 +332,7 @@ export default async function IslandPage({ params }) {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 17,
                 lineHeight: 1.75,
-                color: "rgba(248, 245, 240,0.82)",
+                color: "rgba(248,245,240,0.88)",
                 margin: 0,
               }}
             >
@@ -429,7 +429,7 @@ export default async function IslandPage({ params }) {
                             fontFamily: "var(--gy-font-ui)",
                             fontSize: 11,
                             letterSpacing: "0.12em",
-                            color: "rgba(248, 245, 240,0.65)",
+                            color: "rgba(248,245,240,0.72)",
                             margin: "0 0 8px",
                             textTransform: "uppercase",
                           }}
@@ -445,7 +445,7 @@ export default async function IslandPage({ params }) {
                               fontSize: 8,
                               letterSpacing: "0.3em",
                               textTransform: "uppercase",
-                              color: isPerPerson(y) ? "rgba(248, 245, 240,0.65)" : GOLD,
+                              color: isPerPerson(y) ? "rgba(248,245,240,0.72)" : GOLD,
                               fontWeight: 600,
                               marginBottom: 2,
                             }}
@@ -536,7 +536,7 @@ export default async function IslandPage({ params }) {
                     >
                       {(y.sampleItinerary?.days || []).map((d) => d.to).filter(Boolean).slice(0, 3).join(" → ")} →&nbsp;…
                     </h3>
-                    <ol style={{ margin: 0, padding: "0 0 0 20px", color: "rgba(248, 245, 240,0.78)", fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7 }}>
+                    <ol style={{ margin: 0, padding: "0 0 0 20px", color: "rgba(248,245,240,0.85)", fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7 }}>
                       {(y.sampleItinerary?.days || []).map((d, i) => (
                         <li key={i}>
                           <strong style={{ color: "#F8F5F0" }}>Day {d.day}</strong> · {d.distance ? `${d.distance} · ` : ""}{d.from} → {d.to}
@@ -596,7 +596,7 @@ export default async function IslandPage({ params }) {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 16,
                 lineHeight: 1.75,
-                color: "rgba(248, 245, 240,0.82)",
+                color: "rgba(248,245,240,0.88)",
                 margin: 0,
               }}
               dangerouslySetInnerHTML={{ __html: island.seasonality.replace(/\*\*(.+?)\*\*/g, '<strong style="color:#F8F5F0">$1</strong>') }}
@@ -628,7 +628,7 @@ export default async function IslandPage({ params }) {
                     fontFamily: "var(--gy-font-ui)",
                     fontSize: 15,
                     lineHeight: 1.65,
-                    color: "rgba(248, 245, 240,0.82)",
+                    color: "rgba(248,245,240,0.88)",
                     paddingLeft: 22,
                     position: "relative",
                   }}
@@ -707,7 +707,7 @@ export default async function IslandPage({ params }) {
                       fontFamily: "var(--gy-font-ui)",
                       fontSize: 14,
                       lineHeight: 1.7,
-                      color: "rgba(248, 245, 240,0.78)",
+                      color: "rgba(248,245,240,0.85)",
                       margin: "12px 0 0",
                     }}
                   >

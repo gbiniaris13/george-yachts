@@ -61,7 +61,7 @@ export default function KpisPage() {
         <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(32px, 5vw, 44px)", fontWeight: 300, margin: "0 0 8px" }}>
           Conversion-funnel KPIs
         </h1>
-        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248, 245, 240,0.65)", margin: "0 0 32px", maxWidth: 640 }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.72)", margin: "0 0 32px", maxWidth: 640 }}>
           Last {days} days, sourced from our own KV counters. Looker Studio (linked to GA4) remains the canonical
           place for the full Monday review. Paste the KPI admin key to unlock this view - it&rsquo;s never stored.
         </p>

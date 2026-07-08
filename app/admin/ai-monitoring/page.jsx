@@ -73,7 +73,7 @@ export default async function AdminAiMonitoringPage({ searchParams }) {
     return (
       <main style={{ background: NAVY, color: CREAM, minHeight: "100vh", padding: 64 }}>
         <h1 style={{ fontFamily: "var(--gy-font-editorial)" }}>AI Monitoring</h1>
-        <p style={{ fontFamily: "var(--gy-font-ui)", color: "rgba(248,245,240,0.7)" }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", color: "rgba(248,245,240,0.78)" }}>
           The CRON_SECRET environment variable is not configured. Set it on Vercel
           to gate this dashboard.
         </p>
@@ -84,7 +84,7 @@ export default async function AdminAiMonitoringPage({ searchParams }) {
     return (
       <main style={{ background: NAVY, color: CREAM, minHeight: "100vh", padding: 64 }}>
         <h1 style={{ fontFamily: "var(--gy-font-editorial)" }}>Unauthorised</h1>
-        <p style={{ fontFamily: "var(--gy-font-ui)", color: "rgba(248,245,240,0.7)" }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", color: "rgba(248,245,240,0.78)" }}>
           Append <code>?token=YOUR_CRON_SECRET</code> to the URL.
         </p>
       </main>
@@ -135,7 +135,7 @@ export default async function AdminAiMonitoringPage({ searchParams }) {
             fontFamily: "var(--gy-font-ui)",
             fontSize: 14,
             lineHeight: 1.65,
-            color: "rgba(248,245,240,0.7)",
+            color: "rgba(248,245,240,0.78)",
             margin: "0 0 32px",
             maxWidth: 720,
           }}
@@ -164,7 +164,7 @@ export default async function AdminAiMonitoringPage({ searchParams }) {
           </div>
           <div style={{ padding: "20px 24px", border: "1px solid rgba(248,245,240,0.15)", background: "rgba(248,245,240,0.03)" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.32em", textTransform: "uppercase", color: GOLD, margin: 0 }}>Not yet checked</p>
-            <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 32, margin: "6px 0 0", color: "rgba(248,245,240,0.7)" }}>{queriesNeverChecked}</p>
+            <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 32, margin: "6px 0 0", color: "rgba(248,245,240,0.78)" }}>{queriesNeverChecked}</p>
           </div>
         </div>
 
@@ -248,7 +248,7 @@ export default async function AdminAiMonitoringPage({ searchParams }) {
                   <td style={{ padding: "14px" }}>{render("duckduckgo")}</td>
                   <td style={{ padding: "14px" }}>{render("perplexity")}</td>
                   <td style={{ padding: "14px" }}>{render("claude")}</td>
-                  <td style={{ padding: "14px", color: "rgba(248,245,240,0.6)", fontSize: 11, fontVariantNumeric: "tabular-nums" }}>
+                  <td style={{ padding: "14px", color: "rgba(248,245,240,0.66)", fontSize: 11, fontVariantNumeric: "tabular-nums" }}>
                     {row.timestamp ? new Date(row.timestamp).toLocaleString() : "-"}
                   </td>
                 </tr>
@@ -261,7 +261,7 @@ export default async function AdminAiMonitoringPage({ searchParams }) {
           style={{
             fontFamily: "var(--gy-font-ui)",
             fontSize: 12,
-            color: "rgba(248,245,240,0.55)",
+            color: "rgba(248,245,240,0.6)",
             margin: "24px 0 0",
             lineHeight: 1.65,
           }}

@@ -12,6 +12,7 @@ import ClientReviews from "./components/ClientReviews";
 import FleetCTAs from "./components/FleetCTAs";
 import HomeStats from "./components/HomeStats";
 import Footer from "./components/Footer";
+import TrustStrip from "@/app/components/TrustStrip";
 import StickyMiniNav from "./components/StickyMiniNav";
 import TrendingYachts from "./components/TrendingYachts";
 import InlineYachtStrip from "./components/InlineYachtStrip";
@@ -110,6 +111,11 @@ const HomeClient = ({
         explorerRange={explorerRange}
       />
 
+      {/* 2026-07-08 (George's UI wave #2) — one quiet line of proof in
+          the first three seconds: real 5.0 Google rating, Forbes 2026,
+          IYBA/MYBA. Every claim links to its evidence page. */}
+      <TrustStrip />
+
       {/* TrendingYachts ("This Week's Selection") removed 2026-05-07
           per Boss directive — the homepage was reading like a travel-
           agency carousel of bestsellers. Yacht discovery surface lives
@@ -162,7 +168,7 @@ const HomeClient = ({
           Boss homepage rules respected: no counts, no prices, no
           cards - just type. */}
       <section aria-label="Charter guides" style={{ background: "#0D1B2A", padding: "0 24px 64px", textAlign: "center" }}>
-        <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(15px, 1.8vw, 18px)", fontStyle: "italic", fontWeight: 300, color: "rgba(248,245,240,0.7)", margin: 0, lineHeight: 1.7 }}>
+        <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(15px, 1.8vw, 18px)", fontStyle: "italic", fontWeight: 300, color: "rgba(248,245,240,0.78)", margin: 0, lineHeight: 1.7 }}>
           Two ways to take these waters:{" "}
           <a href="/crewed-yacht-charter-greece" style={{ color: "#C9A84C", textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.5)" }}>
             the fully crewed charter

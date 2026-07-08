@@ -56,7 +56,7 @@ export default function PressStrip() {
             fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
             letterSpacing: "0.15em",
-            color: "rgba(248,245,240,0.6)",
+            color: "rgba(248,245,240,0.66)",
             fontWeight: 300,
             margin: 0,
             textAlign: "center",
@@ -142,7 +142,7 @@ export default function PressStrip() {
                 fontSize: 9,
                 letterSpacing: "0.28em",
                 textTransform: "uppercase",
-                color: "rgba(248,245,240,0.55)",
+                color: "rgba(248,245,240,0.6)",
                 fontWeight: 500,
               }}
             >
@@ -176,7 +176,7 @@ export default function PressStrip() {
                 fontSize: 9,
                 letterSpacing: "0.28em",
                 textTransform: "uppercase",
-                color: "rgba(248,245,240,0.55)",
+                color: "rgba(248,245,240,0.6)",
                 fontWeight: 500,
               }}
             >

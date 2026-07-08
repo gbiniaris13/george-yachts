@@ -64,7 +64,7 @@ export default function QuizCtaCard({ fromSlug, fromName }) {
           fontFamily: "var(--gy-font-ui)",
           fontSize: 15,
           lineHeight: 1.65,
-          color: "rgba(248, 245, 240, 0.78)",
+          color: "rgba(248,245,240,0.85)",
           margin: "0 0 22px",
         }}
       >

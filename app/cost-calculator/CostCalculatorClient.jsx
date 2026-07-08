@@ -276,7 +276,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                 ].map((item, i) => (
                   <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingBottom: 16, borderBottom: '1px solid rgba(248, 245, 240,0.05)' }}>
                     <div>
-                      <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: 'rgba(248, 245, 240,0.6)' }}>{item.label}</div>
+                      <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: 'rgba(248,245,240,0.66)' }}>{item.label}</div>
                       <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, color: 'rgba(248, 245, 240,0.2)', marginTop: 2 }}>{item.note}</div>
                     </div>
                     <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: '#F8F5F0', fontWeight: 500 }}>

@@ -85,7 +85,7 @@ export default function FirstAccessBand() {
             fontFamily: "var(--gy-font-ui)",
             fontSize: 14,
             lineHeight: 1.65,
-            color: "rgba(248,245,240,0.7)",
+            color: "rgba(248,245,240,0.78)",
             margin: "0 0 26px",
           }}
         >
@@ -165,7 +165,7 @@ export default function FirstAccessBand() {
           </form>
         )}
         {status === "error" && (
-          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: "rgba(248,245,240,0.6)", marginTop: 14 }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: "rgba(248,245,240,0.66)", marginTop: 14 }}>
             Something went wrong. The footer form below works, or simply write
             to george@georgeyachts.com.
           </p>

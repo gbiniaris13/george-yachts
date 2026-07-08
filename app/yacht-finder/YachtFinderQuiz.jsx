@@ -538,7 +538,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
             fontFamily: "var(--gy-font-editorial)",
             fontStyle: 'italic',
             fontSize: 18,
-            color: 'rgba(248,245,240,0.78)',
+            color: 'rgba(248,245,240,0.85)',
             margin: '0 0 18px',
             lineHeight: 1.5,
           }}
@@ -565,7 +565,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
             fontFamily: "var(--gy-font-editorial)",
             fontStyle: 'italic',
             fontSize: 16,
-            color: 'rgba(248,245,240,0.65)',
+            color: 'rgba(248,245,240,0.72)',
             margin: '-24px 0 28px',
           }}
         >
@@ -644,7 +644,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
                     fontFamily: "var(--gy-font-ui)",
                     fontStyle: 'normal',
                     fontSize: 11,
-                    color: 'rgba(248,245,240,0.55)',
+                    color: 'rgba(248,245,240,0.6)',
                     letterSpacing: '0.04em',
                     marginTop: 4,
                   }}
@@ -664,7 +664,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
           style={{
             background: 'transparent',
             border: 'none',
-            color: 'rgba(248, 245, 240,0.55)',
+            color: 'rgba(248,245,240,0.6)',
             fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
             letterSpacing: '0.32em',
@@ -714,7 +714,7 @@ function ContactStep({ contact, setContact, onBack, onSubmit, submitting, error,
           fontFamily: "var(--gy-font-editorial)",
           fontStyle: 'italic',
           fontSize: 16,
-          color: 'rgba(248,245,240,0.7)',
+          color: 'rgba(248,245,240,0.78)',
           margin: '0 0 32px',
           lineHeight: 1.5,
         }}
@@ -762,7 +762,7 @@ function ContactStep({ contact, setContact, onBack, onSubmit, submitting, error,
             fontSize: 9,
             letterSpacing: '0.32em',
             textTransform: 'uppercase',
-            color: 'rgba(248,245,240,0.65)',
+            color: 'rgba(248,245,240,0.72)',
             marginBottom: 10,
           }}
         >
@@ -782,7 +782,7 @@ function ContactStep({ contact, setContact, onBack, onSubmit, submitting, error,
                 fontWeight: 600,
                 border: `1px solid ${contact.channel === c ? GOLD : 'rgba(248, 245, 240,0.2)'}`,
                 background: contact.channel === c ? 'rgba(201,168,76,0.12)' : 'transparent',
-                color: contact.channel === c ? GOLD : 'rgba(248, 245, 240,0.75)',
+                color: contact.channel === c ? GOLD : 'rgba(248,245,240,0.82)',
                 cursor: 'pointer',
                 fontFamily: "var(--gy-font-ui)",
               }}
@@ -857,7 +857,7 @@ function ResultScreen({ matches, answers }) {
           fontFamily: "var(--gy-font-editorial)",
           fontStyle: 'italic',
           fontSize: 16,
-          color: 'rgba(248,245,240,0.78)',
+          color: 'rgba(248,245,240,0.85)',
           margin: '0 0 36px',
           lineHeight: 1.6,
         }}
@@ -867,7 +867,7 @@ function ResultScreen({ matches, answers }) {
       </p>
 
       {matches.length === 0 ? (
-        <p style={{ color: 'rgba(248, 245, 240,0.7)' }}>
+        <p style={{ color: 'rgba(248,245,240,0.78)' }}>
           I couldn&rsquo;t find an exact match in our active fleet - but that&rsquo;s
           why I do this work personally. Watch for an email from me shortly.
         </p>
@@ -911,7 +911,7 @@ function ResultScreen({ matches, answers }) {
                   style={{
                     fontFamily: "var(--gy-font-ui)",
                     fontSize: 11,
-                    color: 'rgba(248,245,240,0.65)',
+                    color: 'rgba(248,245,240,0.72)',
                     letterSpacing: '0.12em',
                     textTransform: 'uppercase',
                     margin: '0 0 8px',
@@ -924,7 +924,7 @@ function ResultScreen({ matches, answers }) {
                     fontFamily: "var(--gy-font-editorial)",
                     fontStyle: 'italic',
                     fontSize: 14,
-                    color: 'rgba(248,245,240,0.75)',
+                    color: 'rgba(248,245,240,0.82)',
                     margin: '0 0 12px',
                     lineHeight: 1.5,
                   }}
@@ -988,7 +988,7 @@ function Field({ label, type = 'text', value, onChange, required }) {
           fontSize: 9,
           letterSpacing: '0.32em',
           textTransform: 'uppercase',
-          color: 'rgba(248,245,240,0.65)',
+          color: 'rgba(248,245,240,0.72)',
           marginBottom: 6,
         }}
       >

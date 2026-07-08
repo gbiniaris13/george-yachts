@@ -73,7 +73,7 @@ function DataTable({ table }) {
             fontFamily: "var(--gy-font-ui)",
             fontSize: 12,
             letterSpacing: "0.04em",
-            color: "rgba(248,245,240,0.6)",
+            color: "rgba(248,245,240,0.66)",
             margin: "0 0 12px",
           }}
         >
@@ -243,7 +243,7 @@ export default async function GreekCharterIndexPage() {
               {report.statCallouts.map((s, i) => (
                 <div key={i} style={{ borderLeft: `2px solid ${GOLD}`, padding: "8px 0 8px 20px" }}>
                   <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 34, fontWeight: 300, color: GOLD, margin: "0 0 8px", lineHeight: 1 }}>{s.value}</p>
-                  <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, lineHeight: 1.45, color: "rgba(248,245,240,0.75)", margin: 0 }}>{s.label}</p>
+                  <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, lineHeight: 1.45, color: "rgba(248,245,240,0.82)", margin: 0 }}>{s.label}</p>
                 </div>
               ))}
             </div>
@@ -257,7 +257,7 @@ export default async function GreekCharterIndexPage() {
               {report.sections.map((sec, i) => (
                 <div key={i} style={{ marginBottom: 40 }}>
                   {sec.heading && <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(22px, 3vw, 30px)", fontWeight: 300, color: CREAM, margin: "0 0 14px" }}>{sec.heading}</h2>}
-                  {sec.body && <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.7, color: "rgba(248,245,240,0.82)", margin: "0 0 14px", maxWidth: 760 }}>{sec.body}</p>}
+                  {sec.body && <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.7, color: "rgba(248,245,240,0.88)", margin: "0 0 14px", maxWidth: 760 }}>{sec.body}</p>}
                   {sec.table && <DataTable table={sec.table} />}
                 </div>
               ))}
@@ -270,7 +270,7 @@ export default async function GreekCharterIndexPage() {
           <section style={{ padding: "32px 24px", background: "rgba(201,168,76,0.03)", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
             <div style={{ maxWidth: 760, margin: "0 auto" }}>
               <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px" }}>Methodology</p>
-              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.75)", margin: 0 }}>{report.methodology}</p>
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.82)", margin: 0 }}>{report.methodology}</p>
             </div>
           </section>
         )}
@@ -296,7 +296,7 @@ export default async function GreekCharterIndexPage() {
         <section style={{ padding: "32px 24px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px" }}>Cite this index</p>
-            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.75)", margin: 0 }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.82)", margin: 0 }}>
               George Yachts Brokerage House. (2026). <em>Greek Charter Index 2026: weekly crewed charter rates by yacht type and region</em>. https://georgeyachts.com/greek-charter-index-2026
             </p>
           </div>
@@ -310,7 +310,7 @@ export default async function GreekCharterIndexPage() {
               {report.faqItems.map((f, i) => (
                 <div key={i} style={{ borderBottom: "1px solid rgba(248,245,240,0.1)", padding: "18px 0" }}>
                   <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 18, color: CREAM, margin: "0 0 8px" }}>{f.question}</p>
-                  <p className="gy-qa-text" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.65, color: "rgba(248,245,240,0.78)", margin: 0 }}>{f.answer}</p>
+                  <p className="gy-qa-text" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.65, color: "rgba(248,245,240,0.85)", margin: 0 }}>{f.answer}</p>
                 </div>
               ))}
             </div>

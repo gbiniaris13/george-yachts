@@ -234,7 +234,7 @@ export default function VideoSection() {
               fontWeight: 300,
               fontSize: "clamp(13px, 1.2vw, 16px)",
               letterSpacing: "0.04em",
-              color: "rgba(248, 245, 240, 0.7)",
+              color: "rgba(248,245,240,0.78)",
               maxWidth: "62ch",
             }}
           >

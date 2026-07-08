@@ -96,7 +96,7 @@ export default function YourPrivacySecurity() {
 
         {/* Personal Promise */}
         <div className="py-16 px-8 md:px-16 text-center mb-24" style={{ background: "rgba(201,168,76,0.03)", borderLeft: "3px solid rgba(201,168,76,0.3)" }}>
-          <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.5rem", fontWeight: 300, color: "rgba(248, 245, 240,0.7)", fontStyle: "italic", lineHeight: 1.8, marginBottom: "24px" }}>
+          <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.5rem", fontWeight: 300, color: "rgba(248,245,240,0.78)", fontStyle: "italic", lineHeight: 1.8, marginBottom: "24px" }}>
             &ldquo;In yacht brokerage, discretion isn&apos;t a feature - it&apos;s the foundation. Our clients trust us with their most personal moments, and we honour that trust with absolute confidentiality.&rdquo;
           </p>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", letterSpacing: "0.2em", color: "#C9A84C", textTransform: "uppercase" }}>

@@ -18,7 +18,7 @@ const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 const GREEN_TICK = "#7DB48B";
-const NEUTRAL = "rgba(248, 245, 240, 0.55)";
+const NEUTRAL = "rgba(248,245,240,0.6)";
 
 function FaqJsonLd({ faq }) {
   if (!faq || faq.length === 0) return null;
@@ -165,7 +165,7 @@ export default function DestinationComparison({ pageData }) {
                 fontSize: "clamp(17px, 2.1vw, 21px)",
                 fontWeight: 300,
                 fontStyle: "italic",
-                color: "rgba(248, 245, 240, 0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: 0,
                 lineHeight: 1.5,
               }}
@@ -310,7 +310,7 @@ export default function DestinationComparison({ pageData }) {
                         color:
                           row.edge === "greece"
                             ? CREAM
-                            : "rgba(248, 245, 240, 0.78)",
+                            : "rgba(248,245,240,0.85)",
                         lineHeight: 1.5,
                         fontWeight: row.edge === "greece" ? 600 : 400,
                       }}
@@ -324,7 +324,7 @@ export default function DestinationComparison({ pageData }) {
                         color:
                           row.edge === "competitor"
                             ? CREAM
-                            : "rgba(248, 245, 240, 0.78)",
+                            : "rgba(248,245,240,0.85)",
                         lineHeight: 1.5,
                         fontWeight: row.edge === "competitor" ? 600 : 400,
                       }}
@@ -341,7 +341,7 @@ export default function DestinationComparison({ pageData }) {
                 style={{
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 12,
-                  color: "rgba(248, 245, 240, 0.55)",
+                  color: "rgba(248,245,240,0.6)",
                   margin: "16px 0 0",
                   textAlign: "center",
                   fontStyle: "italic",
@@ -677,7 +677,7 @@ export default function DestinationComparison({ pageData }) {
                         fontFamily: "var(--gy-font-ui)",
                         fontSize: 14,
                         lineHeight: 1.75,
-                        color: "rgba(248, 245, 240, 0.82)",
+                        color: "rgba(248,245,240,0.88)",
                         margin: "14px 0 0",
                       }}
                     >
@@ -807,7 +807,7 @@ export default function DestinationComparison({ pageData }) {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 16,
                 lineHeight: 1.65,
-                color: "rgba(248, 245, 240, 0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: "0 0 28px",
               }}
             >

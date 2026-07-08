@@ -54,7 +54,7 @@ export default function DeletionForm() {
         <p
           style={{
             fontFamily: "var(--gy-font-ui)",
-            fontSize: 14, lineHeight: 1.6, color: "rgba(248, 245, 240,0.78)", margin: 0,
+            fontSize: 14, lineHeight: 1.6, color: "rgba(248,245,240,0.85)", margin: 0,
           }}
         >
           George will personally review and respond within 30 days, in line with GDPR Article 17. If your

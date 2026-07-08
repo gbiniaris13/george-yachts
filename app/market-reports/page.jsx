@@ -133,7 +133,7 @@ export default function MarketReportsHub() {
                 fontSize: "clamp(18px, 2.2vw, 22px)",
                 fontWeight: 300,
                 fontStyle: "italic",
-                color: "rgba(248, 245, 240, 0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: "0 auto",
                 maxWidth: 640,
                 lineHeight: 1.5,
@@ -249,7 +249,7 @@ export default function MarketReportsHub() {
                           fontFamily: "var(--gy-font-ui)",
                           fontSize: 11,
                           letterSpacing: "0.16em",
-                          color: "rgba(248, 245, 240, 0.55)",
+                          color: "rgba(248,245,240,0.6)",
                           margin: 0,
                           textTransform: "uppercase",
                         }}
@@ -275,7 +275,7 @@ export default function MarketReportsHub() {
                           fontFamily: "var(--gy-font-editorial)",
                           fontSize: 16,
                           fontStyle: "italic",
-                          color: "rgba(248, 245, 240, 0.78)",
+                          color: "rgba(248,245,240,0.85)",
                           margin: "0 0 16px",
                           lineHeight: 1.55,
                         }}
@@ -335,7 +335,7 @@ export default function MarketReportsHub() {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 16,
                 lineHeight: 1.65,
-                color: "rgba(248, 245, 240, 0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: "0 0 28px",
               }}
             >

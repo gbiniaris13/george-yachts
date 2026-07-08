@@ -228,7 +228,7 @@ export default function TimeCapsulePage() {
         .tc-sealed__return {
           font-family: var(--gy-font-body);
           font-size: 14px;
-          color: rgba(248,245,240,0.7);
+          color: rgba(248,245,240,0.78);
           line-height: 1.7;
         }
         .tc-sealed__peek {

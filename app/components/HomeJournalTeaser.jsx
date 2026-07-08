@@ -76,7 +76,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
               fontFamily: "var(--gy-font-editorial)",
               fontStyle: "italic",
               fontSize: "clamp(14px, 1.4vw, 18px)",
-              color: "rgba(248, 245, 240,0.7)",
+              color: "rgba(248,245,240,0.78)",
               margin: 0,
             }}
           >
@@ -149,7 +149,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
                         fontSize: 9,
                         letterSpacing: "0.32em",
                         textTransform: "uppercase",
-                        color: "rgba(248, 245, 240,0.55)",
+                        color: "rgba(248,245,240,0.6)",
                         margin: "0 0 10px",
                         fontWeight: 500,
                       }}
@@ -175,7 +175,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
                         fontFamily: "var(--gy-font-editorial)",
                         fontSize: 15,
                         lineHeight: 1.6,
-                        color: "rgba(248, 245, 240,0.75)",
+                        color: "rgba(248,245,240,0.82)",
                         margin: "0 0 14px",
                       }}
                     >

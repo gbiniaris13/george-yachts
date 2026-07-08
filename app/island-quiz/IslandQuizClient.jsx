@@ -124,7 +124,7 @@ export default function IslandQuizClient() {
                   padding: '20px 24px',
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 13,
-                  color: 'rgba(248, 245, 240,0.7)',
+                  color: 'rgba(248,245,240,0.78)',
                   background: 'rgba(248, 245, 240,0.03)',
                   border: '1px solid rgba(201,168,76,0.1)',
                   borderRadius: 12,
@@ -141,7 +141,7 @@ export default function IslandQuizClient() {
                 onMouseLeave={(e) => {
                   e.target.style.borderColor = 'rgba(201,168,76,0.1)';
                   e.target.style.background = 'rgba(248, 245, 240,0.03)';
-                  e.target.style.color = 'rgba(248, 245, 240,0.7)';
+                  e.target.style.color = 'rgba(248,245,240,0.78)';
                 }}
               >
                 {t(`quiz.q${step + 1}o${i + 1}`, opt.text)}
@@ -162,7 +162,7 @@ export default function IslandQuizClient() {
           <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 20, color: GOLD, fontStyle: 'italic', marginBottom: 32 }}>
             {result.tagline}
           </p>
-          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.6)', lineHeight: 2, marginBottom: 32 }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248,245,240,0.66)', lineHeight: 2, marginBottom: 32 }}>
             {result.desc}
           </p>
 

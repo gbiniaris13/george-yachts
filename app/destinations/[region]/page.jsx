@@ -310,7 +310,7 @@ export default async function DestinationPage({ params }) {
           font-weight: 300;
           font-size: 15px;
           line-height: 1.5;
-          color: rgba(248, 245, 240, 0.75);
+          color: rgba(248,245,240,0.82);
           max-width: 48ch;
           margin: 0;
         }
@@ -342,7 +342,7 @@ export default async function DestinationPage({ params }) {
           font-size: 10px;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: rgba(248, 245, 240, 0.55);
+          color: rgba(248,245,240,0.6);
           margin: 0;
         }
         .gy-dest-facts__row dd {

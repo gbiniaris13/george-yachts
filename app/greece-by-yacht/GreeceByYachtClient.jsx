@@ -113,7 +113,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
             style={{
               marginTop: 32,
               maxWidth: "60ch",
-              color: "rgba(248,245,240,0.78)",
+              color: "rgba(248,245,240,0.85)",
             }}
           >
             Not a destination guide - a working broker's diary of the routes
@@ -124,7 +124,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
             <Link href="/inquiry" className="gy-link-editorial">
               Brief George →
             </Link>
-            <Link href="#stop-mykonos" className="gy-link-editorial" style={{ color: "rgba(248,245,240,0.6)" }}>
+            <Link href="#stop-mykonos" className="gy-link-editorial" style={{ color: "rgba(248,245,240,0.66)" }}>
               Begin the journey ↓
             </Link>
           </div>
@@ -170,7 +170,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                 fontSize: 9,
                 letterSpacing: "0.22em",
                 textTransform: "uppercase",
-                color: activeIdx === i ? "#F8F5F0" : "rgba(248,245,240,0.55)",
+                color: activeIdx === i ? "#F8F5F0" : "rgba(248,245,240,0.6)",
                 fontWeight: 600,
                 whiteSpace: "nowrap",
                 opacity: activeIdx === i ? 1 : 0,
@@ -249,7 +249,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                   fontFamily: "var(--gy-font-editorial)",
                   fontStyle: "italic",
                   fontSize: "clamp(18px, 1.7vw, 22px)",
-                  color: "rgba(248,245,240,0.7)",
+                  color: "rgba(248,245,240,0.78)",
                   margin: "16px 0 32px",
                   fontWeight: 300,
                 }}
@@ -328,7 +328,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
               >
                 <p
                   className="gy-eyebrow-sm"
-                  style={{ marginBottom: 18, color: "rgba(248,245,240,0.55)" }}
+                  style={{ marginBottom: 18, color: "rgba(248,245,240,0.6)" }}
                 >
                   Yachts we route through {stop.name}
                 </p>
@@ -393,7 +393,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                             fontSize: 10,
                             letterSpacing: "0.22em",
                             textTransform: "uppercase",
-                            color: "rgba(248,245,240,0.55)",
+                            color: "rgba(248,245,240,0.6)",
                             margin: "6px 0 0",
                           }}
                         >
@@ -458,7 +458,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
           style={{
             margin: "24px auto 36px",
             maxWidth: "52ch",
-            color: "rgba(248,245,240,0.7)",
+            color: "rgba(248,245,240,0.78)",
           }}
         >
           Six quick questions. A real broker reply within 24 hours. No AI

@@ -279,7 +279,7 @@ export default async function CrewedCharterPage() {
               fontSize: "clamp(17px, 2vw, 21px)",
               fontWeight: 300,
               fontStyle: "italic",
-              color: "rgba(248, 245, 240, 0.78)",
+              color: "rgba(248,245,240,0.85)",
               margin: 0,
               lineHeight: 1.55,
             }}
@@ -449,7 +449,7 @@ export default async function CrewedCharterPage() {
           <blockquote style={{ margin: 0, fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(17px, 2.2vw, 21px)", fontStyle: "italic", fontWeight: 300, lineHeight: 1.65, color: "rgba(248,245,240,0.92)" }}>
             {"\u201C"}George was highly professional and extremely communicative. He found the perfect boat and crew, advised us on the best itinerary for our time of year, and was hands-on throughout the booking process to the completion of our trip. I would not hesitate to use his services again personally or for my clients coming to Greece.{"\u201D"}
           </blockquote>
-          <figcaption style={{ marginTop: 18, fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.08em", color: "rgba(248,245,240,0.6)" }}>
+          <figcaption style={{ marginTop: 18, fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.08em", color: "rgba(248,245,240,0.66)" }}>
             T.S., luxury travel advisor, Atlanta, USA. Google review, July 2026, after a week-long crewed catamaran charter for a family of six.{" \u00B7 "}
             <Link href="/reviews" style={goldLink}>all reviews</Link>
           </figcaption>
@@ -571,7 +571,7 @@ export default async function CrewedCharterPage() {
                     <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 17, color: CREAM, margin: "0 0 6px", lineHeight: 1.2 }}>
                       {y.name}
                     </p>
-                    <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11.5, letterSpacing: "0.06em", color: "rgba(248,245,240,0.6)", margin: 0 }}>
+                    <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11.5, letterSpacing: "0.06em", color: "rgba(248,245,240,0.66)", margin: 0 }}>
                       {/* crew: Sanity stores "5 — Captain, Chef..." - render
                           the count only (no-dash rule + cleaner card). */}
                       {[y.length, y.sleeps && `${y.sleeps} guests`, parseInt(y.crew) ? `${parseInt(y.crew)} crew` : null].filter(Boolean).join(" · ")}
@@ -584,7 +584,7 @@ export default async function CrewedCharterPage() {
               <Link href="/private-fleet" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, color: GOLD, textDecoration: "none", paddingBottom: 4, borderBottom: `1px solid ${GOLD}` }}>
                 The Full Private Fleet →
               </Link>
-              <Link href="/charter-yacht-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, color: "rgba(248,245,240,0.75)", textDecoration: "none", paddingBottom: 4, borderBottom: "1px solid rgba(248,245,240,0.3)" }}>
+              <Link href="/charter-yacht-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, color: "rgba(248,245,240,0.82)", textDecoration: "none", paddingBottom: 4, borderBottom: "1px solid rgba(248,245,240,0.3)" }}>
                 Every Yacht We Charter →
               </Link>
             </div>
@@ -640,7 +640,7 @@ export default async function CrewedCharterPage() {
                   <blockquote style={{ margin: 0, fontFamily: "var(--gy-font-editorial)", fontSize: 15.5, fontStyle: "italic", lineHeight: 1.65, color: "rgba(248,245,240,0.88)" }}>
                     &ldquo;{r.body.length > 300 ? r.body.slice(0, r.body.lastIndexOf(" ", 300)) + " ..." : r.body}&rdquo;
                   </blockquote>
-                  <figcaption style={{ marginTop: 16, fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(248,245,240,0.6)" }}>
+                  <figcaption style={{ marginTop: 16, fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(248,245,240,0.66)" }}>
                     {initials(r.author)} · {new Date(r.date).toLocaleDateString("en-GB", { month: "long", year: "numeric" })}
                     {r.verified ? " · Verified charter" : ""}
                   </figcaption>
@@ -723,7 +723,7 @@ export default async function CrewedCharterPage() {
       {/* TRUST STRIP */}
       <section style={{ padding: "56px 24px 84px", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.06)" }}>
         <p style={{ ...eyebrowStyle, marginBottom: 18 }}>Trusted Brokerage</p>
-        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.14em", color: "rgba(248,245,240,0.7)", margin: "0 0 30px" }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.14em", color: "rgba(248,245,240,0.78)", margin: "0 0 30px" }}>
           IYBA Member · MYBA-Standard Contracts · Featured in Forbes, May 2026 · Greek Waters Exclusively
         </p>
         <Link
@@ -743,7 +743,7 @@ export default async function CrewedCharterPage() {
         >
           Write to George
         </Link>
-        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: "rgba(248,245,240,0.55)", marginTop: 18 }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: "rgba(248,245,240,0.6)", marginTop: 18 }}>
           George replies personally within 24 hours.
         </p>
       </section>

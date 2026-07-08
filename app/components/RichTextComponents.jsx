@@ -228,7 +228,7 @@ export const RichTextComponents = {
                     fontSize: 10,
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
-                    color: "rgba(248, 245, 240,0.6)",
+                    color: "rgba(248,245,240,0.66)",
                     margin: 0,
                   }}
                 >
@@ -245,7 +245,7 @@ export const RichTextComponents = {
                       fontSize: 8,
                       letterSpacing: "0.3em",
                       textTransform: "uppercase",
-                      color: isPerPerson(y) ? "rgba(248, 245, 240,0.7)" : "#C9A84C",
+                      color: isPerPerson(y) ? "rgba(248,245,240,0.78)" : "#C9A84C",
                       fontWeight: 600,
                     }}
                   >
@@ -348,7 +348,7 @@ export const RichTextComponents = {
             style={{
               fontFamily: "var(--gy-font-ui)",
               fontSize: 13,
-              color: "rgba(248,245,240,0.75)",
+              color: "rgba(248,245,240,0.82)",
               margin: 0,
               fontWeight: 300,
             }}

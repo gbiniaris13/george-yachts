@@ -273,7 +273,7 @@ export default function PhotoGallery({
         .cabin-lightbox__caption {
           font-family: var(--gy-font-editorial, Georgia, serif);
           font-style: italic;
-          color: rgba(248, 245, 240, 0.82);
+          color: rgba(248,245,240,0.88);
           font-size: 14.5px;
           line-height: 1.55;
           text-align: center;
@@ -364,7 +364,7 @@ export default function PhotoGallery({
           margin: 0 4px;
         }
         .cabin-lightbox__counter-total {
-          color: rgba(248, 245, 240, 0.6);
+          color: rgba(248,245,240,0.66);
         }
 
         /* HINT - fixed bottom-centre, small keyboard reminder. */
@@ -380,7 +380,7 @@ export default function PhotoGallery({
           font-size: 10.5px;
           letter-spacing: 2.5px;
           text-transform: uppercase;
-          color: rgba(248, 245, 240, 0.6);
+          color: rgba(248,245,240,0.66);
           z-index: 10001;
         }
         .cabin-lightbox__hint em {

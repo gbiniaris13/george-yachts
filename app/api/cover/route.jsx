@@ -114,7 +114,7 @@ export async function GET(request) {
           </div>
           <div
             style={{
-              color: "rgba(248,245,240,0.6)",
+              color: "rgba(248,245,240,0.66)",
               fontSize: 16,
               letterSpacing: "0.32em",
               textTransform: "uppercase",
@@ -150,7 +150,7 @@ export async function GET(request) {
             marginTop: 28,
             fontSize: 30,
             fontStyle: "italic",
-            color: "rgba(248,245,240,0.78)",
+            color: "rgba(248,245,240,0.85)",
             fontWeight: 300,
             display: "block",
             maxWidth: 880,

@@ -168,7 +168,7 @@ export default function CharterCostEstimator() {
             style={{
               fontFamily: "var(--gy-font-ui)",
               fontSize: 13,
-              color: "rgba(248, 245, 240, 0.65)",
+              color: "rgba(248,245,240,0.72)",
               margin: "0 0 28px",
             }}
           >
@@ -226,7 +226,7 @@ function BreakdownRow({ label, value, note }) {
           style={{
             fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
-            color: "rgba(248, 245, 240, 0.55)",
+            color: "rgba(248,245,240,0.6)",
             margin: 0,
             lineHeight: 1.4,
           }}

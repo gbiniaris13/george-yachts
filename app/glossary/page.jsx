@@ -128,7 +128,7 @@ export default function GlossaryIndexPage() {
                 fontSize: "clamp(18px, 2.2vw, 22px)",
                 fontWeight: 300,
                 fontStyle: "italic",
-                color: "rgba(248, 245, 240, 0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: "0 auto",
                 maxWidth: 660,
                 lineHeight: 1.5,
@@ -162,7 +162,7 @@ export default function GlossaryIndexPage() {
               <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 36, fontWeight: 300, color: GOLD, margin: 0 }}>
                 {GLOSSARY_TERMS.length}
               </p>
-              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(248, 245, 240, 0.65)", margin: "6px 0 0" }}>
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(248,245,240,0.72)", margin: "6px 0 0" }}>
                 Defined terms
               </p>
             </div>
@@ -170,7 +170,7 @@ export default function GlossaryIndexPage() {
               <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 36, fontWeight: 300, color: GOLD, margin: 0 }}>
                 {GLOSSARY_CATEGORIES.filter((c) => GLOSSARY_TERMS.some((t) => t.category === c.slug)).length}
               </p>
-              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(248, 245, 240, 0.65)", margin: "6px 0 0" }}>
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(248,245,240,0.72)", margin: "6px 0 0" }}>
                 Categories
               </p>
             </div>
@@ -178,7 +178,7 @@ export default function GlossaryIndexPage() {
               <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 36, fontWeight: 300, color: GOLD, margin: 0 }}>
                 2026
               </p>
-              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(248, 245, 240, 0.65)", margin: "6px 0 0" }}>
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(248,245,240,0.72)", margin: "6px 0 0" }}>
                 Market data
               </p>
             </div>
@@ -193,7 +193,7 @@ export default function GlossaryIndexPage() {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 16,
                 lineHeight: 1.78,
-                color: "rgba(248, 245, 240, 0.82)",
+                color: "rgba(248,245,240,0.88)",
                 margin: "0 0 18px",
               }}
             >
@@ -204,7 +204,7 @@ export default function GlossaryIndexPage() {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 16,
                 lineHeight: 1.78,
-                color: "rgba(248, 245, 240, 0.82)",
+                color: "rgba(248,245,240,0.88)",
                 margin: 0,
               }}
             >
@@ -283,7 +283,7 @@ export default function GlossaryIndexPage() {
                         style={{
                           fontFamily: "var(--gy-font-ui)",
                           fontSize: 13,
-                          color: "rgba(248, 245, 240, 0.7)",
+                          color: "rgba(248,245,240,0.78)",
                           margin: 0,
                           lineHeight: 1.6,
                         }}
@@ -326,7 +326,7 @@ export default function GlossaryIndexPage() {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 16,
                 lineHeight: 1.65,
-                color: "rgba(248, 245, 240, 0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: "0 0 28px",
               }}
             >

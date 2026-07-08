@@ -169,7 +169,7 @@ export default function LiveTicker() {
           <p className="notranslate" style={{
             fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
-            color: message.isBooking ? 'rgba(248, 245, 240,0.7)' : 'rgba(248, 245, 240,0.45)',
+            color: message.isBooking ? 'rgba(248,245,240,0.78)' : 'rgba(248, 245, 240,0.45)',
             margin: '0 0 3px',
             lineHeight: 1.4,
           }}>

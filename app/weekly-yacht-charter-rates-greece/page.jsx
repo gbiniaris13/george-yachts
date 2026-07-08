@@ -94,7 +94,7 @@ function DataTable({ table }) {
             fontSize: 12,
             lineHeight: 1.5,
             letterSpacing: "0.02em",
-            color: "rgba(248,245,240,0.55)",
+            color: "rgba(248,245,240,0.6)",
             margin: "12px 0 0",
           }}
         >
@@ -194,7 +194,7 @@ export default function WeeklyRatesPage() {
             >
               {qa}
             </p>
-            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.7, color: "rgba(248,245,240,0.82)", margin: "0 0 36px", maxWidth: 760 }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.7, color: "rgba(248,245,240,0.88)", margin: "0 0 36px", maxWidth: 760 }}>
               {INTRO}
             </p>
 
@@ -211,7 +211,7 @@ export default function WeeklyRatesPage() {
             {stats.map((s, i) => (
               <div key={i} style={{ borderLeft: `2px solid ${GOLD}`, padding: "8px 0 8px 20px" }}>
                 <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 32, fontWeight: 300, color: GOLD, margin: "0 0 8px", lineHeight: 1 }}>{s.value}</p>
-                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, lineHeight: 1.45, color: "rgba(248,245,240,0.75)", margin: 0 }}>{s.label}</p>
+                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, lineHeight: 1.45, color: "rgba(248,245,240,0.82)", margin: 0 }}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -223,7 +223,7 @@ export default function WeeklyRatesPage() {
             <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(22px, 3vw, 30px)", fontWeight: 300, color: CREAM, margin: "0 0 14px" }}>
               What is included in the all-in weekly rate?
             </h2>
-            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.7, color: "rgba(248,245,240,0.82)", margin: "0 0 24px" }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.7, color: "rgba(248,245,240,0.88)", margin: "0 0 24px" }}>
               The base charter fee covers the yacht, its full crew and insurance. APA is a pre-paid provisioning fund for fuel, food and drink, berths and incidentals, reconciled against actual spend at the end of the week. VAT and a discretionary crew gratuity complete the figure.
             </p>
             <DataTable table={breakdown} />
@@ -234,7 +234,7 @@ export default function WeeklyRatesPage() {
         <section style={{ padding: "32px 24px", background: "rgba(201,168,76,0.03)", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px" }}>Methodology and VAT basis</p>
-            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.75)", margin: 0 }}>{methodology()}</p>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.82)", margin: 0 }}>{methodology()}</p>
           </div>
         </section>
 
@@ -245,7 +245,7 @@ export default function WeeklyRatesPage() {
             {faqs.map((f, i) => (
               <div key={i} style={{ borderBottom: "1px solid rgba(248,245,240,0.1)", padding: "18px 0" }}>
                 <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 18, color: CREAM, margin: "0 0 8px" }}>{f.question}</p>
-                <p className="gy-qa-text" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.65, color: "rgba(248,245,240,0.78)", margin: 0 }}>{f.answer}</p>
+                <p className="gy-qa-text" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.65, color: "rgba(248,245,240,0.85)", margin: 0 }}>{f.answer}</p>
               </div>
             ))}
           </div>
@@ -258,19 +258,19 @@ export default function WeeklyRatesPage() {
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 12 }}>
               <li>
                 <Link href="/weekly-motor-yacht-charter-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>Weekly motor yacht charter Greece</Link>
-                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.6)" }}> - the full guide to a 7-night motor week: cost, what is included, where to embark, a sample route.</span>
+                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.66)" }}> - the full guide to a 7-night motor week: cost, what is included, where to embark, a sample route.</span>
               </li>
               <li>
                 <Link href="/motor-yacht-charter-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>Motor yacht charter Greece</Link>
-                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.6)" }}> - the fleet, builders and what a motor week is really like.</span>
+                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.66)" }}> - the fleet, builders and what a motor week is really like.</span>
               </li>
               <li>
                 <Link href="/greek-charter-index-2026" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>Greek Charter Index 2026</Link>
-                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.6)" }}> - our market data on rates by yacht type and region.</span>
+                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.66)" }}> - our market data on rates by yacht type and region.</span>
               </li>
               <li>
                 <Link href="/charter-cost-estimator" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>Charter cost estimator</Link>
-                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.6)" }}> - run your own all-in figure for any size, season and length.</span>
+                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.66)" }}> - run your own all-in figure for any size, season and length.</span>
               </li>
             </ul>
           </div>

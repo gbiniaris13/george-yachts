@@ -107,7 +107,7 @@ export default function BestYachtsPage({ pageData }) {
             <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(36px, 6vw, 72px)", fontWeight: 300, margin: "0 0 22px", lineHeight: 1, letterSpacing: "-0.02em" }}>
               {d.h1}
             </h1>
-            <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(16px, 2vw, 19px)", fontStyle: "italic", fontWeight: 300, color: "rgba(248,245,240,0.78)", margin: 0, lineHeight: 1.55 }}>
+            <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(16px, 2vw, 19px)", fontStyle: "italic", fontWeight: 300, color: "rgba(248,245,240,0.85)", margin: 0, lineHeight: 1.55 }}>
               {d.tagline}
             </p>
             <LastUpdated date={LAST_REFRESH.BEST_YACHTS} />
@@ -196,7 +196,7 @@ export default function BestYachtsPage({ pageData }) {
                     <summary style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 17, color: CREAM, cursor: "pointer", listStyle: "none", fontWeight: 400 }}>
                       {f.q}
                     </summary>
-                    <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.75, color: "rgba(248,245,240,0.82)", margin: "14px 0 0" }}>
+                    <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.75, color: "rgba(248,245,240,0.88)", margin: "14px 0 0" }}>
                       {f.a}
                     </p>
                   </details>

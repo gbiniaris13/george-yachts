@@ -157,7 +157,7 @@ export default function ProposalClient({ yachts = [] }) {
         </h1>
         <p style={{
           fontFamily: "var(--gy-font-ui)", fontSize: 16,
-          lineHeight: 1.7, color: "rgba(248, 245, 240,0.7)",
+          lineHeight: 1.7, color: "rgba(248,245,240,0.78)",
           maxWidth: 640, margin: "0 auto",
         }}>
           Each page in the proposal is a real yacht from the live fleet - hero photo, specs, price, and
@@ -239,7 +239,7 @@ export default function ProposalClient({ yachts = [] }) {
                   <p style={{
                     fontFamily: "var(--gy-font-ui)", fontSize: 10,
                     letterSpacing: "0.16em", textTransform: "uppercase",
-                    color: "rgba(248, 245, 240,0.55)", margin: "0 0 6px",
+                    color: "rgba(248,245,240,0.6)", margin: "0 0 6px",
                   }}>
                     {[y.length, y.sleeps && `${y.sleeps} guests`].filter(Boolean).join(" · ")}
                   </p>
@@ -249,7 +249,7 @@ export default function ProposalClient({ yachts = [] }) {
                     fontFamily: "var(--gy-font-ui)", fontSize: 11,
                     color: GOLD, fontWeight: 600, margin: 0,
                   }}>
-                    <span style={{ fontSize: 8, letterSpacing: "0.3em", color: isPerPerson(y) ? "rgba(248, 245, 240,0.6)" : GOLD, marginRight: 6 }}>
+                    <span style={{ fontSize: 8, letterSpacing: "0.3em", color: isPerPerson(y) ? "rgba(248,245,240,0.66)" : GOLD, marginRight: 6 }}>
                       {priceUnitBadge(y)}
                     </span>
                     {y.weeklyRatePrice}
@@ -290,7 +290,7 @@ export default function ProposalClient({ yachts = [] }) {
         <span style={{
           fontFamily: "var(--gy-font-ui)", fontSize: 11,
           letterSpacing: "0.2em", textTransform: "uppercase",
-          color: "rgba(248, 245, 240,0.7)",
+          color: "rgba(248,245,240,0.78)",
         }}>
           {picked.length === 0
             ? "Pick up to 5 yachts to start"
@@ -357,7 +357,7 @@ export default function ProposalClient({ yachts = [] }) {
                 </h3>
                 <p style={{
                   fontFamily: "var(--gy-font-ui)", fontSize: 13,
-                  lineHeight: 1.6, color: "rgba(248, 245, 240,0.7)", margin: "0 0 18px",
+                  lineHeight: 1.6, color: "rgba(248,245,240,0.78)", margin: "0 0 18px",
                 }}>
                   We&apos;ll generate the proposal, email it to you, and George will write back within the day with availability.
                 </p>
@@ -432,7 +432,7 @@ export default function ProposalClient({ yachts = [] }) {
                 </p>
                 <p style={{
                   fontFamily: "var(--gy-font-ui)", fontSize: 14,
-                  lineHeight: 1.6, color: "rgba(248, 245, 240,0.78)", margin: "0 0 22px",
+                  lineHeight: 1.6, color: "rgba(248,245,240,0.85)", margin: "0 0 22px",
                 }}>
                   {result.emailSent
                     ? `The PDF is on its way to ${email}. George will reach out within the day.`
@@ -509,7 +509,7 @@ function FilterGroup({ label, options, value, onChange }) {
                 letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600,
                 padding: "8px 12px",
                 background: active ? "rgba(201,168,76,0.16)" : "transparent",
-                color: active ? GOLD : "rgba(248, 245, 240,0.55)",
+                color: active ? GOLD : "rgba(248,245,240,0.6)",
                 border: `1px solid ${active ? GOLD : "rgba(248, 245, 240,0.15)"}`,
                 cursor: "pointer",
               }}

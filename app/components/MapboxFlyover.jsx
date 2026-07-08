@@ -447,7 +447,7 @@ export default function MapboxFlyover() {
           <Link href="/greece-by-yacht" className="gy-link-editorial">
             Read the ten stops →
           </Link>
-          <Link href="/inquiry" className="gy-link-editorial" style={{ color: "rgba(248,245,240,0.55)" }}>
+          <Link href="/inquiry" className="gy-link-editorial" style={{ color: "rgba(248,245,240,0.6)" }}>
             Brief George →
           </Link>
         </div>

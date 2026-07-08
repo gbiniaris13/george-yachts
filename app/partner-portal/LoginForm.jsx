@@ -48,7 +48,7 @@ export default function LoginForm() {
             fontFamily: "var(--gy-font-ui)",
             fontSize: 14,
             lineHeight: 1.6,
-            color: "rgba(248, 245, 240,0.78)",
+            color: "rgba(248,245,240,0.85)",
             margin: 0,
           }}
         >

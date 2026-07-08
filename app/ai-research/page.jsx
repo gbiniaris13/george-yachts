@@ -177,7 +177,7 @@ export default function AIResearchHub() {
             fontStyle: "italic",
             fontSize: "clamp(18px, 2vw, 22px)",
             lineHeight: 1.55,
-            color: "rgba(248,245,240,0.78)",
+            color: "rgba(248,245,240,0.85)",
             fontWeight: 300,
             margin: "0 0 36px",
             maxWidth: 720,
@@ -402,7 +402,7 @@ export default function AIResearchHub() {
             fontFamily: "var(--gy-font-editorial)",
             fontStyle: "italic",
             fontSize: 17,
-            color: "rgba(248,245,240,0.6)",
+            color: "rgba(248,245,240,0.66)",
             margin: 0,
             textAlign: "center",
           }}
@@ -465,7 +465,7 @@ function Section({ eyebrow, title, body }) {
           fontFamily: "var(--gy-font-ui)",
           fontSize: 16,
           lineHeight: 1.75,
-          color: "rgba(248,245,240,0.82)",
+          color: "rgba(248,245,240,0.88)",
           fontWeight: 300,
         }}
       >

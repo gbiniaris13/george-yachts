@@ -178,7 +178,7 @@ export default function ContactPage() {
                 fontStyle: "italic",
                 fontSize: "clamp(17px, 1.7vw, 22px)",
                 lineHeight: 1.7,
-                color: "rgba(248,245,240,0.78)",
+                color: "rgba(248,245,240,0.85)",
                 fontWeight: 300,
                 margin: "0 auto",
                 maxWidth: "62ch",

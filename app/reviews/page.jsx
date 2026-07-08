@@ -81,7 +81,7 @@ function ReviewCard({ review }) {
           fontFamily: "var(--gy-font-ui)",
           fontSize: 15,
           lineHeight: 1.7,
-          color: "rgba(248, 245, 240, 0.82)",
+          color: "rgba(248,245,240,0.88)",
           margin: "0 0 18px",
         }}
       >
@@ -104,7 +104,7 @@ function ReviewCard({ review }) {
         <span itemProp="author">{initials(review.author)}</span>
         {review.country && <span style={{ color: "rgba(248, 245, 240, 0.45)" }}>{review.country}</span>}
         <span style={{ color: "rgba(248, 245, 240, 0.45)" }}>·</span>
-        <time itemProp="datePublished" dateTime={review.date} style={{ color: "rgba(248, 245, 240, 0.55)" }}>
+        <time itemProp="datePublished" dateTime={review.date} style={{ color: "rgba(248,245,240,0.6)" }}>
           {new Date(review.date).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
         </time>
         {review.yachtSlug && (
@@ -121,7 +121,7 @@ function ReviewCard({ review }) {
         {review.verified && (
           <>
             <span style={{ color: "rgba(248, 245, 240, 0.45)" }}>·</span>
-            <span style={{ color: "rgba(248, 245, 240, 0.65)" }}>✓ Verified charter</span>
+            <span style={{ color: "rgba(248,245,240,0.72)" }}>✓ Verified charter</span>
           </>
         )}
       </div>
@@ -237,7 +237,7 @@ export default function ReviewsPage() {
                 fontSize: "clamp(18px, 2.4vw, 22px)",
                 fontWeight: 300,
                 fontStyle: "italic",
-                color: "rgba(248, 245, 240, 0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: 0,
                 lineHeight: 1.5,
               }}
@@ -268,7 +268,7 @@ export default function ReviewsPage() {
                     fontSize: 11,
                     letterSpacing: "0.32em",
                     textTransform: "uppercase",
-                    color: "rgba(248, 245, 240, 0.55)",
+                    color: "rgba(248,245,240,0.6)",
                   }}
                 >
                   {aggregate.reviewCount} verified charters
@@ -320,7 +320,7 @@ export default function ReviewsPage() {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 16,
                 lineHeight: 1.75,
-                color: "rgba(248, 245, 240, 0.82)",
+                color: "rgba(248,245,240,0.88)",
                 margin: "0 0 18px",
               }}
             >
@@ -335,7 +335,7 @@ export default function ReviewsPage() {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 16,
                 lineHeight: 1.75,
-                color: "rgba(248, 245, 240, 0.82)",
+                color: "rgba(248,245,240,0.88)",
                 margin: 0,
               }}
             >

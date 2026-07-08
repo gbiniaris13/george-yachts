@@ -267,7 +267,7 @@ export default function AskGeorgeWidget() {
               aria-label="Close"
               style={{
                 background: "transparent",
-                color: "rgba(248, 245, 240,0.6)",
+                color: "rgba(248,245,240,0.66)",
                 border: "none",
                 fontSize: 18,
                 cursor: "pointer",
@@ -296,7 +296,7 @@ export default function AskGeorgeWidget() {
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 13.5,
                   lineHeight: 1.6,
-                  color: "rgba(248, 245, 240,0.78)",
+                  color: "rgba(248,245,240,0.85)",
                 }}
               >
                 <p style={{ margin: "0 0 14px" }}>

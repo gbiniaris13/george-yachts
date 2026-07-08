@@ -86,7 +86,7 @@ export default function DossierRequest({ slug, yachtName }) {
             fontFamily: "var(--gy-font-ui)",
             fontSize: 13.5,
             lineHeight: 1.65,
-            color: "rgba(248,245,240,0.7)",
+            color: "rgba(248,245,240,0.78)",
             margin: "0 0 22px",
           }}
         >
@@ -115,7 +115,7 @@ export default function DossierRequest({ slug, yachtName }) {
             >
               Open the Dossier →
             </a>
-            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11.5, color: "rgba(248,245,240,0.55)", marginTop: 14 }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11.5, color: "rgba(248,245,240,0.6)", marginTop: 14 }}>
               Yours to print or save as PDF. George will also write to you
               personally.
             </p>
@@ -170,7 +170,7 @@ export default function DossierRequest({ slug, yachtName }) {
           </form>
         )}
         {status === "error" && (
-          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: "rgba(248,245,240,0.6)", marginTop: 12 }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: "rgba(248,245,240,0.66)", marginTop: 12 }}>
             Something went wrong. Write to george@georgeyachts.com and the
             dossier comes by reply.
           </p>

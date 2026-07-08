@@ -571,7 +571,7 @@ export default function ItineraryBuilderClient() {
                 style={{
                   width: '100%', padding: '11px 0',
                   fontFamily: "var(--gy-font-ui)", fontSize: 10,
-                  color: 'rgba(248, 245, 240,0.65)', background: 'none',
+                  color: 'rgba(248,245,240,0.72)', background: 'none',
                   border: '1px solid rgba(201,168,76,0.35)', borderRadius: 4, cursor: 'pointer',
                   letterSpacing: '0.15em', textTransform: 'uppercase',
                 }}
@@ -650,7 +650,7 @@ export default function ItineraryBuilderClient() {
                 <p style={{
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 13, lineHeight: 1.6,
-                  color: 'rgba(248, 245, 240,0.7)', margin: '0 0 18px',
+                  color: 'rgba(248,245,240,0.78)', margin: '0 0 18px',
                 }}>
                   We&apos;ll email you a copy of this route and George will come back within 24 hours with the yachts that fit it.
                 </p>
@@ -751,7 +751,7 @@ export default function ItineraryBuilderClient() {
                 <p style={{
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 14, lineHeight: 1.6,
-                  color: 'rgba(248, 245, 240,0.78)', margin: '0 0 22px',
+                  color: 'rgba(248,245,240,0.85)', margin: '0 0 22px',
                 }}>
                   A copy is on its way to {saveEmail || 'your inbox'}. George will reach out within 24 hours with two yachts that fit this route.
                 </p>

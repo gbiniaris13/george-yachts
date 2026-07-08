@@ -109,7 +109,7 @@ export default function YourBroker() {
             fontFamily: "var(--gy-font-ui)",
             fontSize: "15px",
             lineHeight: 2,
-            color: "rgba(248, 245, 240,0.55)",
+            color: "rgba(248,245,240,0.6)",
             marginBottom: "16px",
           }}>
             {t('broker.text1')}
@@ -119,7 +119,7 @@ export default function YourBroker() {
             fontFamily: "var(--gy-font-ui)",
             fontSize: "15px",
             lineHeight: 2,
-            color: "rgba(248, 245, 240,0.55)",
+            color: "rgba(248,245,240,0.6)",
             marginBottom: "40px",
           }}>
             {t('broker.text2')}

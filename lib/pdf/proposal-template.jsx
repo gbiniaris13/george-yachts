@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     fontFamily: "Cormorant",
     fontSize: 14,
     lineHeight: 1.7,
-    color: "rgba(248, 245, 240,0.78)",
+    color: "rgba(248,245,240,0.85)",
   },
   coverFooter: {
     flexDirection: "row",
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
     fontFamily: "Cormorant",
     fontSize: 14,
     lineHeight: 1.7,
-    color: "rgba(248, 245, 240,0.78)",
+    color: "rgba(248,245,240,0.85)",
     marginBottom: 24,
   },
   finalRow: {

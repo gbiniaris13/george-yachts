@@ -23,7 +23,7 @@ const Section = ({ number, title, children }) => (
           {title}
         </h2>
         <div className="w-12 h-px mb-8" style={{ background: "linear-gradient(90deg, #C9A84C, transparent)" }} />
-        <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", lineHeight: 2.2, color: "rgba(248, 245, 240,0.55)", letterSpacing: "0.02em" }} className="space-y-4">
+        <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", lineHeight: 2.2, color: "rgba(248,245,240,0.6)", letterSpacing: "0.02em" }} className="space-y-4">
           {children}
         </div>
       </div>

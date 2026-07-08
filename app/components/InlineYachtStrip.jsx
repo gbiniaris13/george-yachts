@@ -120,7 +120,7 @@ export default function InlineYachtStrip({ yacht, eyebrow }) {
                 fontSize: "11px",
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
-                color: "rgba(248, 245, 240,0.55)",
+                color: "rgba(248,245,240,0.6)",
                 margin: 0,
               }}
             >

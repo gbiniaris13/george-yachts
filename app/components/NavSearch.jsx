@@ -214,7 +214,7 @@ export default function NavSearch() {
                 style={{
                   background: "transparent",
                   border: "none",
-                  color: "rgba(248, 245, 240,0.55)",
+                  color: "rgba(248,245,240,0.6)",
                   fontSize: 20,
                   cursor: "pointer",
                 }}
@@ -242,7 +242,7 @@ export default function NavSearch() {
                 <p
                   style={{
                     fontSize: 13,
-                    color: "rgba(248, 245, 240,0.7)",
+                    color: "rgba(248,245,240,0.78)",
                     margin: 0,
                   }}
                 >
@@ -323,7 +323,7 @@ export default function NavSearch() {
                                 fontSize: 10,
                                 letterSpacing: "0.18em",
                                 textTransform: "uppercase",
-                                color: "rgba(248, 245, 240,0.55)",
+                                color: "rgba(248,245,240,0.6)",
                                 margin: 0,
                               }}
                             >
@@ -338,7 +338,7 @@ export default function NavSearch() {
                                 fontSize: 8,
                                 letterSpacing: "0.28em",
                                 textTransform: "uppercase",
-                                color: isPerPerson(y) ? "rgba(248, 245, 240,0.6)" : GOLD,
+                                color: isPerPerson(y) ? "rgba(248,245,240,0.66)" : GOLD,
                                 margin: "0 0 2px",
                                 fontWeight: 600,
                               }}

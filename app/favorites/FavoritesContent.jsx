@@ -247,7 +247,7 @@ export default function FavoritesContent() {
                 gap: 8,
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 11,
-                color: 'rgba(248, 245, 240,0.55)',
+                color: 'rgba(248,245,240,0.6)',
                 cursor: 'pointer',
                 marginBottom: 20,
               }}

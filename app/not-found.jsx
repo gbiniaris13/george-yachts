@@ -88,7 +88,7 @@ export default function NotFound() {
             margin: "0 auto 48px",
             maxWidth: "52ch",
             textAlign: "center",
-            color: "rgba(248,245,240,0.75)",
+            color: "rgba(248,245,240,0.82)",
             fontSize: "clamp(16px, 1.7vw, 19px)",
           }}
         >
@@ -174,7 +174,7 @@ function ExitCard({ href, eyebrow, title, primary }) {
     >
       <span
         className="gy-eyebrow-sm"
-        style={{ color: primary ? "#C9A84C" : "rgba(248,245,240,0.55)", margin: 0 }}
+        style={{ color: primary ? "#C9A84C" : "rgba(248,245,240,0.6)", margin: 0 }}
       >
         {eyebrow}
       </span>

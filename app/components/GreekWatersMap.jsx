@@ -215,7 +215,7 @@ export default function GreekWatersMap() {
                 x="405"
                 y="380"
                 textAnchor="end"
-                fill="rgba(248, 245, 240,0.55)"
+                fill="rgba(248,245,240,0.6)"
                 fontFamily="'Montserrat', sans-serif"
                 fontSize="16"
                 letterSpacing="3"
@@ -272,7 +272,7 @@ export default function GreekWatersMap() {
                       fill={
                         isActive
                           ? "rgba(201,168,76,0.85)"
-                          : "rgba(248, 245, 240,0.75)"
+                          : "rgba(248,245,240,0.82)"
                       }
                       stroke={
                         isActive

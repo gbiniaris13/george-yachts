@@ -130,7 +130,7 @@ export default function WeeklyMotorPillarPage() {
                         <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: GOLD, fontWeight: 700, margin: "0 0 4px" }}>
                           {d.day} · {d.title}
                         </p>
-                        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.6, color: "rgba(248,245,240,0.78)", margin: 0 }}>{d.body}</p>
+                        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.6, color: "rgba(248,245,240,0.85)", margin: 0 }}>{d.body}</p>
                       </li>
                     ))}
                   </ol>
@@ -156,7 +156,7 @@ export default function WeeklyMotorPillarPage() {
               {HUB_LINKS.map((l, i) => (
                 <Link key={i} href={l.href} style={{ textDecoration: "none", display: "block", border: "1px solid rgba(201,168,76,0.2)", padding: "18px 20px" }}>
                   <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, margin: "0 0 6px", fontWeight: 500 }}>{l.label}</p>
-                  <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, lineHeight: 1.45, color: "rgba(248,245,240,0.6)", margin: 0 }}>{l.blurb}</p>
+                  <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, lineHeight: 1.45, color: "rgba(248,245,240,0.66)", margin: 0 }}>{l.blurb}</p>
                 </Link>
               ))}
             </div>

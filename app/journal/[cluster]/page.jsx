@@ -126,7 +126,7 @@ export default async function ClusterPage({ params }) {
               fontFamily: "var(--gy-font-ui)",
               fontSize: 17,
               lineHeight: 1.7,
-              color: "rgba(248, 245, 240,0.78)",
+              color: "rgba(248,245,240,0.85)",
               margin: 0,
             }}
           >
@@ -221,7 +221,7 @@ export default async function ClusterPage({ params }) {
                             fontFamily: "var(--gy-font-ui)",
                             fontSize: 13,
                             lineHeight: 1.55,
-                            color: "rgba(248, 245, 240,0.65)",
+                            color: "rgba(248,245,240,0.72)",
                             margin: 0,
                           }}
                         >
@@ -325,7 +325,7 @@ export default async function ClusterPage({ params }) {
                           fontFamily: "var(--gy-font-ui)",
                           fontSize: 11,
                           letterSpacing: "0.12em",
-                          color: "rgba(248, 245, 240,0.65)",
+                          color: "rgba(248,245,240,0.72)",
                           margin: "0 0 8px",
                           textTransform: "uppercase",
                         }}
@@ -341,7 +341,7 @@ export default async function ClusterPage({ params }) {
                             fontSize: 8,
                             letterSpacing: "0.3em",
                             textTransform: "uppercase",
-                            color: isPerPerson(y) ? "rgba(248, 245, 240,0.65)" : GOLD,
+                            color: isPerPerson(y) ? "rgba(248,245,240,0.72)" : GOLD,
                             fontWeight: 600,
                             marginBottom: 2,
                           }}
@@ -407,7 +407,7 @@ export default async function ClusterPage({ params }) {
               fontFamily: "var(--gy-font-ui)",
               fontSize: 16,
               lineHeight: 1.7,
-              color: "rgba(248, 245, 240,0.78)",
+              color: "rgba(248,245,240,0.85)",
               margin: "0 0 32px",
             }}
           >

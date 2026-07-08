@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
+import FleetQuickFinder from "@/app/components/FleetQuickFinder";
 
 export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highestPrice = 235000 }) {
   const { t } = useI18n();
@@ -42,6 +43,12 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
           </a>
         </div>
       </section>
+
+      {/* 2026-07-08 (George's UI wave #3) — three answers instead of
+          scrolling every card. Deep-links to the filtered fleet grid. */}
+      <div style={{ background: "#0D1B2A", padding: "56px 0 8px" }}>
+        <FleetQuickFinder heading="Find your crewed yacht in three answers" />
+      </div>
 
       {/* Price Range */}
       <section style={{ padding: "80px 24px", background: "#0D1B2A", textAlign: "center" }}>

@@ -197,7 +197,7 @@ export default function IslandAnchorages({ guideData }) {
                 fontSize: "clamp(17px, 2vw, 21px)",
                 fontWeight: 300,
                 fontStyle: "italic",
-                color: "rgba(248, 245, 240, 0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: 0,
                 lineHeight: 1.55,
               }}
@@ -288,7 +288,7 @@ export default function IslandAnchorages({ guideData }) {
                 fontFamily: "var(--gy-font-editorial)",
                 fontSize: 16,
                 fontStyle: "italic",
-                color: "rgba(248, 245, 240, 0.6)",
+                color: "rgba(248,245,240,0.66)",
                 margin: "0 0 48px",
                 textAlign: "center",
               }}
@@ -338,7 +338,7 @@ export default function IslandAnchorages({ guideData }) {
                           fontFamily: "var(--gy-font-ui)",
                           fontSize: 11,
                           letterSpacing: "0.12em",
-                          color: "rgba(248, 245, 240, 0.55)",
+                          color: "rgba(248,245,240,0.6)",
                           margin: 0,
                           fontVariant: "tabular-nums",
                         }}
@@ -382,7 +382,7 @@ export default function IslandAnchorages({ guideData }) {
                             fontFamily: "var(--gy-font-ui)",
                             fontSize: 13,
                             lineHeight: 1.55,
-                            color: "rgba(248, 245, 240, 0.82)",
+                            color: "rgba(248,245,240,0.88)",
                             margin: 0,
                           }}
                         >
@@ -575,7 +575,7 @@ export default function IslandAnchorages({ guideData }) {
                 fontFamily: "var(--gy-font-editorial)",
                 fontSize: 15,
                 fontStyle: "italic",
-                color: "rgba(248, 245, 240, 0.6)",
+                color: "rgba(248,245,240,0.66)",
                 margin: "0 0 8px",
                 textAlign: "center",
               }}
@@ -611,7 +611,7 @@ export default function IslandAnchorages({ guideData }) {
                           fontFamily: "var(--gy-font-ui)",
                           fontSize: 13,
                           letterSpacing: "0.08em",
-                          color: "rgba(248, 245, 240, 0.75)",
+                          color: "rgba(248,245,240,0.82)",
                           textDecoration: "none",
                         }}
                       >
@@ -649,7 +649,7 @@ export default function IslandAnchorages({ guideData }) {
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
                   fontWeight: 600,
-                  color: "rgba(248, 245, 240, 0.75)",
+                  color: "rgba(248,245,240,0.82)",
                   textDecoration: "none",
                   paddingBottom: 3,
                   borderBottom: "1px solid rgba(248, 245, 240, 0.3)",
@@ -687,7 +687,7 @@ export default function IslandAnchorages({ guideData }) {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 16,
                 lineHeight: 1.65,
-                color: "rgba(248, 245, 240, 0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: "0 0 28px",
               }}
             >

@@ -331,44 +331,11 @@ const ContactFormSection = () => {
           </div>
         </div>
 
-        {/* ── Step Indicator ── */}
-        <div className="flex items-center justify-center gap-3 mb-16">
-          {[
-            { num: 1, label: t('common.aboutYou') },
-            { num: 2, label: t('common.yourCharter') },
-            { num: 3, label: t('common.details') },
-          ].map((s) => (
-            <React.Fragment key={s.num}>
-              {s.num > 1 && (
-                <div className={`w-12 h-px transition-colors duration-500 ${step >= s.num ? 'bg-[#C9A84C]/40' : 'bg-white/10'}`} />
-              )}
-              <button
-                type="button"
-                onClick={() => setStep(s.num)}
-                className="flex items-center gap-2 group"
-              >
-                <span className={`
-                  w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium transition-all duration-500 border
-                  ${step === s.num
-                    ? 'border-[#C9A84C] text-[#C9A84C] bg-[#C9A84C]/10'
-                    : step > s.num
-                      ? 'border-[#C9A84C]/40 text-[#C9A84C]/60 bg-[#C9A84C]/5'
-                      : 'border-white/30 text-white/50'
-                  }
-                `}>
-                  {step > s.num ? '✓' : s.num}
-                </span>
-                <span className={`
-                  text-[10px] tracking-[0.15em] uppercase hidden md:inline transition-colors duration-300
-                  ${step === s.num ? 'text-white/70' : 'text-white/50'}
-                `}>
-                  {s.label}
-                </span>
-              </button>
-            </React.Fragment>
-          ))}
-        </div>
-
+        {/* Step indicator removed 2026-07-08 (George's UI wave #4):
+            the form is now ONE screen - every step of a wizard loses
+            real enquiries, and the express form proved fewer clicks
+            convert better. The `step` state remains only for the
+            submit walk-back logic. */}
         {/* ── Form ── */}
         {/* noValidate: validation is handled by handleVercelSubmit /
             goToStep so the browser never silently blocks a submit on
@@ -385,8 +352,9 @@ const ContactFormSection = () => {
             style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", opacity: 0 }}
           />
 
-          {/* STEP 1: About You */}
-          <div data-step="1" className={step === 1 ? 'block' : 'hidden'}>
+          {/* GROUP 1: About You (always visible - single screen) */}
+          <div data-step="1" className="block">
+            <p className="text-[10px] tracking-[0.3em] uppercase text-[#C9A84C]/80 mb-8">{t('common.aboutYou')}</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
               <Field icon={Icons.user} delay={0}>
                 <label htmlFor="name" className="sr-only">{t('contact.name')}</label>
@@ -409,20 +377,11 @@ const ContactFormSection = () => {
               </Field>
             </div>
 
-            <div className="flex justify-end mt-14">
-              <button
-                type="button"
-                onClick={() => goToStep(2, 1)}
-                className="group flex items-center gap-3 text-[#C9A84C] text-xs tracking-[0.2em] uppercase hover:gap-5 transition-all duration-500"
-              >
-                Continue
-                <span className="inline-block transform group-hover:translate-x-1 transition-transform duration-300">&rarr;</span>
-              </button>
-            </div>
           </div>
 
-          {/* STEP 2: Charter Details */}
-          <div data-step="2" className={step === 2 ? 'block' : 'hidden'}>
+          {/* GROUP 2: Charter Details */}
+          <div data-step="2" className="block mt-14">
+            <p className="text-[10px] tracking-[0.3em] uppercase text-[#C9A84C]/80 mb-8">{t('common.yourCharter')}</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
               <Field icon={Icons.anchor} delay={0}>
                 <label htmlFor="yacht_type" className="sr-only">Type of Yacht</label>
@@ -500,27 +459,11 @@ const ContactFormSection = () => {
               </Field>
             </div>
 
-            <div className="flex justify-between mt-14">
-              <button
-                type="button"
-                onClick={() => setStep(1)}
-                className="text-white/30 text-xs tracking-[0.2em] uppercase hover:text-white/60 transition-colors duration-300"
-              >
-                &larr; Back
-              </button>
-              <button
-                type="button"
-                onClick={() => goToStep(3, 2)}
-                className="group flex items-center gap-3 text-[#C9A84C] text-xs tracking-[0.2em] uppercase hover:gap-5 transition-all duration-500"
-              >
-                Continue
-                <span className="inline-block transform group-hover:translate-x-1 transition-transform duration-300">&rarr;</span>
-              </button>
-            </div>
           </div>
 
-          {/* STEP 3: Your Vision */}
-          <div data-step="3" className={step === 3 ? 'block' : 'hidden'}>
+          {/* GROUP 3: Your Vision */}
+          <div data-step="3" className="block mt-14">
+            <p className="text-[10px] tracking-[0.3em] uppercase text-[#C9A84C]/80 mb-8">{t('common.details')}</p>
             <Field icon={Icons.message} delay={0}>
               <label htmlFor="message" className="sr-only">Message</label>
               <textarea

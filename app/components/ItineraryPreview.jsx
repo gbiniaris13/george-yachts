@@ -171,7 +171,7 @@ export default function ItineraryPreview() {
         <p
           className="gy-lede"
           style={{
-            color: "rgba(248,245,240,0.75)",
+            color: "rgba(248,245,240,0.82)",
             marginBottom: 40,
             maxWidth: "62ch",
           }}
@@ -368,7 +368,7 @@ function SelectField({ label, value, onChange, options }) {
     <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
       <span
         className="gy-eyebrow-sm"
-        style={{ color: "rgba(248,245,240,0.55)", letterSpacing: "0.32em" }}
+        style={{ color: "rgba(248,245,240,0.6)", letterSpacing: "0.32em" }}
       >
         {label}
       </span>
@@ -408,7 +408,7 @@ function TextField({ label, value, onChange, placeholder }) {
     <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
       <span
         className="gy-eyebrow-sm"
-        style={{ color: "rgba(248,245,240,0.55)", letterSpacing: "0.32em" }}
+        style={{ color: "rgba(248,245,240,0.6)", letterSpacing: "0.32em" }}
       >
         {label}
       </span>

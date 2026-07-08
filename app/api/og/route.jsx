@@ -49,7 +49,7 @@ export async function GET(request) {
               fontSize: 14,
               letterSpacing: "0.32em",
               textTransform: "uppercase",
-              color: "rgba(248,245,240,0.75)",
+              color: "rgba(248,245,240,0.82)",
             }}
           >
             <span
@@ -129,7 +129,7 @@ export async function GET(request) {
               style={{
                 fontSize: 16,
                 letterSpacing: "0.18em",
-                color: "rgba(248,245,240,0.6)",
+                color: "rgba(248,245,240,0.66)",
               }}
             >
               georgeyachts.com

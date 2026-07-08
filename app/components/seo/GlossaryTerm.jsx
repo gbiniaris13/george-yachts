@@ -145,7 +145,7 @@ export default function GlossaryTerm({ termData }) {
                 style={{
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 13,
-                  color: "rgba(248, 245, 240, 0.6)",
+                  color: "rgba(248,245,240,0.66)",
                   margin: "0 0 32px",
                   letterSpacing: "0.04em",
                 }}
@@ -292,7 +292,7 @@ export default function GlossaryTerm({ termData }) {
                         fontFamily: "var(--gy-font-ui)",
                         fontSize: 14,
                         lineHeight: 1.7,
-                        color: "rgba(248, 245, 240, 0.78)",
+                        color: "rgba(248,245,240,0.85)",
                         margin: 0,
                       }}
                     >
@@ -370,7 +370,7 @@ export default function GlossaryTerm({ termData }) {
                         fontFamily: "var(--gy-font-ui)",
                         fontSize: 14,
                         lineHeight: 1.75,
-                        color: "rgba(248, 245, 240, 0.82)",
+                        color: "rgba(248,245,240,0.88)",
                         margin: "14px 0 0",
                       }}
                     >
@@ -444,7 +444,7 @@ export default function GlossaryTerm({ termData }) {
                       style={{
                         fontFamily: "var(--gy-font-ui)",
                         fontSize: 13,
-                        color: "rgba(248, 245, 240, 0.65)",
+                        color: "rgba(248,245,240,0.72)",
                         margin: 0,
                         lineHeight: 1.55,
                       }}
@@ -527,7 +527,7 @@ export default function GlossaryTerm({ termData }) {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 16,
                 lineHeight: 1.65,
-                color: "rgba(248, 245, 240, 0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: "0 0 28px",
               }}
             >

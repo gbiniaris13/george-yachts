@@ -393,7 +393,7 @@ export default function CalculatorClient() {
             style={{
               fontFamily: "var(--gy-font-ui)",
               fontSize: 11,
-              color: "rgba(248, 245, 240, 0.55)",
+              color: "rgba(248,245,240,0.6)",
               margin: "8px 0 0",
               lineHeight: 1.5,
             }}
@@ -490,7 +490,7 @@ export default function CalculatorClient() {
             style={{
               fontFamily: "var(--gy-font-ui)",
               fontSize: 13,
-              color: "rgba(248, 245, 240, 0.65)",
+              color: "rgba(248,245,240,0.72)",
               margin: "10px 0 0",
               lineHeight: 1.5,
             }}
@@ -507,7 +507,7 @@ export default function CalculatorClient() {
             fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
             lineHeight: 1.6,
-            color: "rgba(248, 245, 240, 0.6)",
+            color: "rgba(248,245,240,0.66)",
             margin: "24px 0 18px",
             padding: "12px 14px",
             background: "rgba(13, 27, 42, 0.35)",
@@ -563,7 +563,7 @@ function BreakdownRow({ label, value, note, highlight }) {
           style={{
             fontFamily: "var(--gy-font-ui)",
             fontSize: 13,
-            color: highlight ? CREAM : "rgba(248, 245, 240, 0.78)",
+            color: highlight ? CREAM : "rgba(248,245,240,0.85)",
             fontWeight: highlight ? 600 : 400,
             letterSpacing: "0.04em",
           }}

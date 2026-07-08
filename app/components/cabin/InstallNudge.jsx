@@ -158,7 +158,7 @@ export default function InstallNudge() {
           height: 44px;
           background: transparent;
           border: 0;
-          color: rgba(248, 245, 240, 0.7);
+          color: rgba(248,245,240,0.78);
           font-size: 22px;
           line-height: 1;
           cursor: pointer;
@@ -210,7 +210,7 @@ export default function InstallNudge() {
         .gy-install__dismiss {
           background: transparent;
           border: 0;
-          color: rgba(248, 245, 240, 0.65);
+          color: rgba(248,245,240,0.72);
           font-family: var(--gy-font-ui);
           font-size: 10.5px;
           letter-spacing: 2px;

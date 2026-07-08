@@ -278,7 +278,7 @@ export default async function RegionPage({ params }) {
                 fontStyle: "italic",
                 fontSize: "clamp(17px, 1.7vw, 22px)",
                 lineHeight: 1.7,
-                color: "rgba(248,245,240,0.78)",
+                color: "rgba(248,245,240,0.85)",
                 fontWeight: 300,
                 margin: "0 auto",
                 maxWidth: "62ch",
@@ -351,7 +351,7 @@ export default async function RegionPage({ params }) {
                     fontFamily: "var(--gy-font-ui)",
                     fontSize: 15,
                     lineHeight: 1.75,
-                    color: "rgba(248,245,240,0.82)",
+                    color: "rgba(248,245,240,0.88)",
                     fontWeight: 300,
                     margin: 0,
                   }}
@@ -476,7 +476,7 @@ export default async function RegionPage({ params }) {
                         style={{
                           fontFamily: "var(--gy-font-ui)",
                           fontSize: 12,
-                          color: "rgba(248, 245, 240,0.6)",
+                          color: "rgba(248,245,240,0.66)",
                           lineHeight: 1.7,
                         }}
                       >
@@ -555,7 +555,7 @@ export default async function RegionPage({ params }) {
                     padding: "18px 22px",
                     background: "transparent",
                     border: "1px solid rgba(201,168,76,0.22)",
-                    color: "rgba(248,245,240,0.82)",
+                    color: "rgba(248,245,240,0.88)",
                     fontFamily: "var(--gy-font-editorial)",
                     fontSize: 17,
                     fontStyle: "italic",
@@ -583,7 +583,7 @@ export default async function RegionPage({ params }) {
               fontFamily: "var(--gy-font-editorial)",
               fontStyle: "italic",
               fontSize: "clamp(20px, 2.4vw, 28px)",
-              color: "rgba(248,245,240,0.78)",
+              color: "rgba(248,245,240,0.85)",
               fontWeight: 300,
               margin: "0 auto 36px",
               maxWidth: "44ch",

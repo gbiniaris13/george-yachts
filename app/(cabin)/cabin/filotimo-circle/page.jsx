@@ -210,7 +210,7 @@ export default async function FilotimoCirclePage() {
           display: block;
           font-family: var(--gy-font-editorial);
           font-style: italic;
-          color: rgba(248, 245, 240, 0.55);
+          color: rgba(248,245,240,0.6);
           font-size: 13px;
           margin-bottom: 4px;
         }
@@ -250,7 +250,7 @@ export default async function FilotimoCirclePage() {
           font-family: var(--gy-font-editorial);
           font-style: italic;
           font-size: 14px;
-          color: rgba(248, 245, 240, 0.75);
+          color: rgba(248,245,240,0.82);
           margin: 0;
         }
         .filotimo__next strong { color: var(--gy-gold); font-style: normal; }

@@ -499,7 +499,7 @@ const Footer = () => {
             <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 300, color: "#F8F5F0", marginBottom: "12px", lineHeight: 1.15, letterSpacing: "-0.015em" }}>
               The George Yachts Journal
             </p>
-            <p style={{ fontFamily: "var(--gy-font-ui)", fontStyle: "italic", fontSize: "15px", color: "rgba(248,245,240,0.65)", marginBottom: "32px", lineHeight: 1.65, fontWeight: 300, maxWidth: "44ch", marginInline: "auto" }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontStyle: "italic", fontSize: "15px", color: "rgba(248,245,240,0.72)", marginBottom: "32px", lineHeight: 1.65, fontWeight: 300, maxWidth: "44ch", marginInline: "auto" }}>
               An invitation, not a list. Market intelligence and curated charter opportunities, delivered the day they matter - never more often.
             </p>
             {subscribed ? (
@@ -580,7 +580,7 @@ const Footer = () => {
             )}
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "8px", color: "rgba(248, 245, 240,0.15)", marginTop: "12px", letterSpacing: "0.05em" }}>
               By subscribing you agree to receive occasional emails from <span className="notranslate">George Yachts Brokerage House LLC</span>.
-              Unsubscribe anytime. See our <Link href="/privacy-policy" style={{ color: "rgba(248,245,240,0.55)", textDecoration: "underline" }}>Privacy Policy</Link>.
+              Unsubscribe anytime. See our <Link href="/privacy-policy" style={{ color: "rgba(248,245,240,0.6)", textDecoration: "underline" }}>Privacy Policy</Link>.
             </p>
           </div>
         </div>
@@ -635,7 +635,7 @@ const Footer = () => {
                           fontFamily: "var(--gy-font-ui)",
                           fontSize: "11px",
                           letterSpacing: "0.04em",
-                          color: "rgba(248, 245, 240,0.55)",
+                          color: "rgba(248,245,240,0.6)",
                           textDecoration: "none",
                           lineHeight: 1.55,
                           transition: "color 0.25s ease",
@@ -745,7 +745,7 @@ const Footer = () => {
           style={{
             fontFamily: "var(--gy-font-ui)",
             fontSize: "9px",
-            color: "rgba(248, 245, 240,0.55)",
+            color: "rgba(248,245,240,0.6)",
             letterSpacing: "0.05em",
             lineHeight: 1.8,
             maxWidth: "820px",
@@ -772,7 +772,7 @@ const Footer = () => {
           style={{
             fontFamily: "var(--gy-font-ui)",
             fontSize: "9px",
-            color: "rgba(248, 245, 240,0.55)",
+            color: "rgba(248,245,240,0.6)",
             letterSpacing: "0.05em",
             lineHeight: 1.8,
             maxWidth: "820px",
@@ -804,7 +804,7 @@ const Footer = () => {
           }}
         >
           Data stored in EU-based servers (Vercel EU regions where applicable). All inquiries handled with discretion.{" "}
-          <Link href="/privacy/delete" style={{ color: "rgba(248,245,240,0.55)", textDecoration: "underline" }}>
+          <Link href="/privacy/delete" style={{ color: "rgba(248,245,240,0.6)", textDecoration: "underline" }}>
             Request data deletion →
           </Link>
         </p>

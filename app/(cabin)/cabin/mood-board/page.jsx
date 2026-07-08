@@ -536,7 +536,7 @@ export default function MoodBoardPage() {
           font-family: var(--gy-font-editorial);
           font-style: italic;
           font-size: 12.5px;
-          color: rgba(248, 245, 240, 0.7);
+          color: rgba(248,245,240,0.78);
         }
         /* Marble plate is light — invert caption veil so text stays
            white-on-dark instead of fighting cream. */

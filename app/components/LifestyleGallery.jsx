@@ -78,7 +78,7 @@ export default function LifestyleGallery({ heading = "Moments aboard", showCta =
         </h2>
         <p
           className="gy-lede"
-          style={{ marginBottom: 56, color: "rgba(248,245,240,0.7)" }}
+          style={{ marginBottom: 56, color: "rgba(248,245,240,0.78)" }}
         >
           {hasPhotos
             ? "Unposed photographs from real charters our brokers have organised. No stock imagery. No models."
@@ -130,7 +130,7 @@ export default function LifestyleGallery({ heading = "Moments aboard", showCta =
           >
             <p
               className="gy-eyebrow-sm"
-              style={{ color: "rgba(248,245,240,0.55)" }}
+              style={{ color: "rgba(248,245,240,0.6)" }}
             >
               The gallery is curating
             </p>

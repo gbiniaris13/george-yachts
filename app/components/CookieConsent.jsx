@@ -85,7 +85,7 @@ export default function CookieConsent() {
               fontFamily: "var(--gy-font-body, Georgia, serif)",
               fontSize: "14px",
               lineHeight: 1.6,
-              color: "rgba(248,245,240,0.82)",
+              color: "rgba(248,245,240,0.88)",
               margin: 0,
             }}
           >
@@ -104,7 +104,7 @@ export default function CookieConsent() {
             <div style={{ marginTop: "18px", display: "flex", flexDirection: "column", gap: "12px" }}>
               <label style={{ display: "flex", alignItems: "center", gap: "12px", opacity: 0.6 }}>
                 <input type="checkbox" checked disabled readOnly />
-                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", color: "rgba(248,245,240,0.7)" }}>
+                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", color: "rgba(248,245,240,0.78)" }}>
                   Strictly necessary - always on (security, site function)
                 </span>
               </label>
@@ -114,7 +114,7 @@ export default function CookieConsent() {
                   checked={analytics}
                   onChange={(e) => setAnalytics(e.target.checked)}
                 />
-                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", color: "rgba(248,245,240,0.7)" }}>
+                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", color: "rgba(248,245,240,0.78)" }}>
                   Analytics - Google Analytics, Microsoft Clarity
                 </span>
               </label>
@@ -151,7 +151,7 @@ export default function CookieConsent() {
               onClick={() => decide(analytics)}
               style={{
                 fontFamily: "var(--gy-font-ui)", fontSize: "10px", letterSpacing: "0.14em",
-                textTransform: "uppercase", color: "rgba(248,245,240,0.55)",
+                textTransform: "uppercase", color: "rgba(248,245,240,0.6)",
                 background: "none", border: "none", cursor: "pointer", padding: "12px 4px",
               }}
             >

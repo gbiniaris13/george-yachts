@@ -81,7 +81,7 @@ export default function QuickAnswerBlock({ question, answer, attribution = true 
             fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
             letterSpacing: "0.16em",
-            color: "rgba(248, 245, 240, 0.65)",
+            color: "rgba(248,245,240,0.72)",
             margin: 0,
             textTransform: "uppercase",
           }}

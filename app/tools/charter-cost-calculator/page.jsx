@@ -165,7 +165,7 @@ export default function ChartCostCalculatorPage() {
                 fontSize: "clamp(17px, 2vw, 21px)",
                 fontWeight: 300,
                 fontStyle: "italic",
-                color: "rgba(248, 245, 240, 0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: 0,
                 lineHeight: 1.55,
                 maxWidth: 640,
@@ -305,7 +305,7 @@ export default function ChartCostCalculatorPage() {
                     style={{
                       fontFamily: "var(--gy-font-ui)",
                       fontSize: 14,
-                      color: "rgba(248, 245, 240, 0.78)",
+                      color: "rgba(248,245,240,0.85)",
                       margin: 0,
                       lineHeight: 1.7,
                     }}
@@ -376,7 +376,7 @@ export default function ChartCostCalculatorPage() {
                       fontFamily: "var(--gy-font-ui)",
                       fontSize: 14,
                       lineHeight: 1.75,
-                      color: "rgba(248, 245, 240, 0.82)",
+                      color: "rgba(248,245,240,0.88)",
                       margin: "14px 0 0",
                     }}
                   >
@@ -414,7 +414,7 @@ export default function ChartCostCalculatorPage() {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 16,
                 lineHeight: 1.65,
-                color: "rgba(248, 245, 240, 0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: "0 0 28px",
               }}
             >

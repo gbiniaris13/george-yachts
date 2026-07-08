@@ -201,14 +201,14 @@ const styles = `
     font-family: var(--gy-font-body);
     line-height: 1.8;
     font-size: 14px;
-    color: rgba(248, 245, 240, 0.75);
+    color: rgba(248,245,240,0.82);
     margin: 0;
   }
   .cabin-login-form--sent p span { color: var(--gy-gold); }
   .cabin-login-form__retry {
     margin-top: 28px;
     background: transparent;
-    color: rgba(248, 245, 240, 0.65);
+    color: rgba(248,245,240,0.72);
     border: 1px solid rgba(248, 245, 240, 0.3);
     padding: 10px 18px;
     font-family: var(--gy-font-ui);

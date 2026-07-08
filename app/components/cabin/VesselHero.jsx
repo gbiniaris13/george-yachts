@@ -149,7 +149,7 @@ export default function VesselHero({ photos, vesselName, makeModel, dates }) {
         }
         .cabin-vessel-hero__model {
           font-style: italic;
-          color: rgba(248, 245, 240, 0.78);
+          color: rgba(248,245,240,0.85);
           font-size: 0.62em;
           letter-spacing: 0;
         }
@@ -158,7 +158,7 @@ export default function VesselHero({ photos, vesselName, makeModel, dates }) {
           font-size: 11px;
           letter-spacing: 2.4px;
           text-transform: uppercase;
-          color: rgba(248, 245, 240, 0.78);
+          color: rgba(248,245,240,0.85);
           margin-top: 12px;
         }
       `}</style>

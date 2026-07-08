@@ -102,7 +102,7 @@ export default async function CabinLoginPage({ searchParams }) {
           font-family: var(--gy-font-body);
           font-size: 14px;
           line-height: 1.75;
-          color: rgba(248, 245, 240, 0.7);
+          color: rgba(248,245,240,0.78);
           margin: 0;
         }
         .cabin-login__footer {
@@ -112,7 +112,7 @@ export default async function CabinLoginPage({ searchParams }) {
           color: rgba(248, 245, 240, 0.4);
           text-align: center;
         }
-        .cabin-login__footer span { color: rgba(248, 245, 240, 0.55); }
+        .cabin-login__footer span { color: rgba(248,245,240,0.6); }
       `}</style>
     </div>
   );

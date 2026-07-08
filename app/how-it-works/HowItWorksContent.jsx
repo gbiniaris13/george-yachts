@@ -175,7 +175,7 @@ export default function HowItWorksContent() {
       }}>
         <p style={{
           fontFamily: "var(--gy-font-editorial)",
-          fontSize: "1.5rem", fontWeight: 300, color: "rgba(248, 245, 240,0.7)",
+          fontSize: "1.5rem", fontWeight: 300, color: "rgba(248,245,240,0.78)",
           fontStyle: "italic", lineHeight: 1.8, marginBottom: "32px",
         }}>
           {t('hiw.closing', 'Five steps. One broker. Zero stress.')}

@@ -18,7 +18,7 @@ export default function PriceBlockFx({ eurDisplay, size = "md" }) {
       style={{
         fontFamily: "var(--gy-font-ui)",
         fontSize: fontSizes[size] || 12,
-        color: "rgba(248, 245, 240,0.55)",
+        color: "rgba(248,245,240,0.6)",
         letterSpacing: "0.04em",
       }}
       data-no-translate="true"

@@ -831,7 +831,7 @@ export default function CabinShell({
           font-size: 9.5px;
           letter-spacing: 1.5px;
           text-transform: uppercase;
-          color: rgba(248, 245, 240, 0.55);
+          color: rgba(248,245,240,0.6);
           text-decoration: none;
           transition: color 0.18s ease;
         }

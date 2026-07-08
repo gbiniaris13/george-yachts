@@ -186,7 +186,7 @@ export default function SailingDistanceCalculator() {
           style={{
             fontFamily: "var(--gy-font-ui)",
             fontSize: 11,
-            color: "rgba(248, 245, 240, 0.55)",
+            color: "rgba(248,245,240,0.6)",
             margin: "8px 0 0",
             lineHeight: 1.5,
           }}
@@ -208,7 +208,7 @@ export default function SailingDistanceCalculator() {
             style={{
               fontFamily: "var(--gy-font-editorial)",
               fontStyle: "italic",
-              color: "rgba(248, 245, 240, 0.6)",
+              color: "rgba(248,245,240,0.66)",
               margin: 0,
               textAlign: "center",
             }}
@@ -319,7 +319,7 @@ export default function SailingDistanceCalculator() {
         style={{
           fontFamily: "var(--gy-font-ui)",
           fontSize: 11,
-          color: "rgba(248, 245, 240, 0.55)",
+          color: "rgba(248,245,240,0.6)",
           margin: "20px 0 0",
           textAlign: "center",
           lineHeight: 1.6,

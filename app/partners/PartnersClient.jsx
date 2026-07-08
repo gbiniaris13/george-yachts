@@ -209,7 +209,7 @@ export default function PartnersClient() {
                 fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(15px, 1.5vw, 18px)",
                 fontWeight: 300,
-                color: "rgba(248, 245, 240,0.6)",
+                color: "rgba(248,245,240,0.66)",
                 lineHeight: 1.7,
                 fontStyle: "italic",
                 marginBottom: "36px",
@@ -388,7 +388,7 @@ export default function PartnersClient() {
               fontSize: "clamp(14px, 1.6vw, 18px)",
               fontWeight: 300,
               lineHeight: 1.7,
-              color: "rgba(248, 245, 240,0.6)",
+              color: "rgba(248,245,240,0.66)",
               maxWidth: "560px",
               margin: "0 auto",
             }}
@@ -462,7 +462,7 @@ export default function PartnersClient() {
                 >
                   {r.title}
                 </h3>
-                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", fontWeight: 300, color: "rgba(248, 245, 240,0.55)", lineHeight: 1.7 }}>
+                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", fontWeight: 300, color: "rgba(248,245,240,0.6)", lineHeight: 1.7 }}>
                   {r.desc}
                 </p>
               </div>
@@ -579,7 +579,7 @@ export default function PartnersClient() {
                     fontSize: 13.5,
                     fontWeight: 300,
                     lineHeight: 1.75,
-                    color: "rgba(248, 245, 240,0.7)",
+                    color: "rgba(248,245,240,0.78)",
                     margin: "12px 0 0",
                   }}
                 >

@@ -187,7 +187,7 @@ export default async function PreferenceSharePage({ params }) {
           >
             {cabin.vessel_name}
             {cabin.vessel_make_model ? (
-              <span style={{ fontStyle: "italic", color: "rgba(248,245,240,0.7)", fontSize: 28 }}>
+              <span style={{ fontStyle: "italic", color: "rgba(248,245,240,0.78)", fontSize: 28 }}>
                 {" · "}
                 {cabin.vessel_make_model}
               </span>
@@ -209,7 +209,7 @@ export default async function PreferenceSharePage({ params }) {
               fontFamily: FONT_UI,
               fontSize: 11,
               letterSpacing: 2,
-              color: "rgba(248,245,240,0.7)",
+              color: "rgba(248,245,240,0.78)",
               marginTop: 6,
               textTransform: "uppercase",
             }}
@@ -224,7 +224,7 @@ export default async function PreferenceSharePage({ params }) {
               fontFamily: FONT_EDITORIAL,
               fontSize: 13,
               fontStyle: "italic",
-              color: "rgba(248,245,240,0.7)",
+              color: "rgba(248,245,240,0.78)",
               lineHeight: 1.7,
               maxWidth: 540,
             }}

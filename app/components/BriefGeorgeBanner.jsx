@@ -64,7 +64,7 @@ export default function BriefGeorgeBanner() {
             style={{
               fontFamily: "var(--gy-font-ui)",
               fontSize: 14,
-              color: "rgba(248,245,240,0.65)",
+              color: "rgba(248,245,240,0.72)",
               fontWeight: 300,
               margin: 0,
               maxWidth: "60ch",

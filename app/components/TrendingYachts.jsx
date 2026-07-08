@@ -222,7 +222,7 @@ export default function TrendingYachts({ yachts }) {
                       fontFamily: "var(--gy-font-ui)",
                       fontSize: "11px",
                       letterSpacing: "0.12em",
-                      color: "rgba(248, 245, 240,0.55)",
+                      color: "rgba(248,245,240,0.6)",
                       margin: "0 0 10px",
                       textTransform: "uppercase",
                     }}
@@ -242,7 +242,7 @@ export default function TrendingYachts({ yachts }) {
                         fontSize: "8px",
                         letterSpacing: "0.3em",
                         textTransform: "uppercase",
-                        color: isPerPerson(y) ? "rgba(248, 245, 240,0.65)" : GOLD,
+                        color: isPerPerson(y) ? "rgba(248,245,240,0.72)" : GOLD,
                         fontWeight: 600,
                       }}
                     >

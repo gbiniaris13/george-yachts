@@ -68,7 +68,7 @@ export default function Testimonials() {
                 </div>
 
                 {/* Quote */}
-                <blockquote style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "16px", fontStyle: "italic", color: "rgba(248, 245, 240,0.6)", lineHeight: 1.8, margin: "0 0 24px", flex: 1 }}>
+                <blockquote style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "16px", fontStyle: "italic", color: "rgba(248,245,240,0.66)", lineHeight: 1.8, margin: "0 0 24px", flex: 1 }}>
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
 

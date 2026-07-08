@@ -442,7 +442,7 @@ export default function NavDrawerSystem() {
                             letterSpacing: "0.18em",
                             textTransform: "uppercase",
                             fontWeight: 300,
-                            color: "rgba(248,245,240,0.7)",
+                            color: "rgba(248,245,240,0.78)",
                             padding: "8px 0",
                             minHeight: 44,
                             display: "inline-flex",
@@ -562,7 +562,7 @@ export default function NavDrawerSystem() {
           transform: translateY(0);
         }
         .gy-nav-item__link {
-          color: rgba(248, 245, 240, 0.78);
+          color: rgba(248,245,240,0.85);
           padding: 4px 0;
           white-space: nowrap;
           text-decoration: none;
@@ -618,7 +618,7 @@ export default function NavDrawerSystem() {
           font-weight: 300;
           font-size: 12px;
           line-height: 1.5;
-          color: rgba(248, 245, 240, 0.6);
+          color: rgba(248,245,240,0.66);
           margin: 0 0 10px;
         }
         .gy-nav-item__rich-cta {

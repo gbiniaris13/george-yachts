@@ -28,7 +28,7 @@ export default async function AdminHaroPage({ searchParams }) {
     return (
       <main style={{ background: NAVY, color: CREAM, minHeight: "100vh", padding: 64 }}>
         <h1 style={{ fontFamily: "var(--gy-font-editorial)" }}>HARO Processor</h1>
-        <p style={{ fontFamily: "var(--gy-font-ui)", color: "rgba(248,245,240,0.7)" }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", color: "rgba(248,245,240,0.78)" }}>
           CRON_SECRET environment variable required to gate this page.
         </p>
       </main>
@@ -38,7 +38,7 @@ export default async function AdminHaroPage({ searchParams }) {
     return (
       <main style={{ background: NAVY, color: CREAM, minHeight: "100vh", padding: 64 }}>
         <h1 style={{ fontFamily: "var(--gy-font-editorial)" }}>Unauthorised</h1>
-        <p style={{ fontFamily: "var(--gy-font-ui)", color: "rgba(248,245,240,0.7)" }}>
+        <p style={{ fontFamily: "var(--gy-font-ui)", color: "rgba(248,245,240,0.78)" }}>
           Append <code>?token=YOUR_CRON_SECRET</code> to the URL.
         </p>
       </main>

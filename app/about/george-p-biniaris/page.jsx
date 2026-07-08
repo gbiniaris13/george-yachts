@@ -351,7 +351,7 @@ export default function GeorgeBiniarisAuthorPage() {
                   fontSize: "clamp(18px, 2.2vw, 22px)",
                   fontWeight: 300,
                   fontStyle: "italic",
-                  color: "rgba(248, 245, 240, 0.78)",
+                  color: "rgba(248,245,240,0.85)",
                   margin: 0,
                   lineHeight: 1.55,
                 }}
@@ -406,7 +406,7 @@ export default function GeorgeBiniarisAuthorPage() {
                   fontSize: 10,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
-                  color: "rgba(248, 245, 240, 0.65)",
+                  color: "rgba(248,245,240,0.72)",
                   margin: "6px 0 0",
                 }}
               >
@@ -431,7 +431,7 @@ export default function GeorgeBiniarisAuthorPage() {
                   fontSize: 10,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
-                  color: "rgba(248, 245, 240, 0.65)",
+                  color: "rgba(248,245,240,0.72)",
                   margin: "6px 0 0",
                 }}
               >
@@ -456,7 +456,7 @@ export default function GeorgeBiniarisAuthorPage() {
                   fontSize: 10,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
-                  color: "rgba(248, 245, 240, 0.65)",
+                  color: "rgba(248,245,240,0.72)",
                   margin: "6px 0 0",
                 }}
               >
@@ -481,7 +481,7 @@ export default function GeorgeBiniarisAuthorPage() {
                   fontSize: 10,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
-                  color: "rgba(248, 245, 240, 0.65)",
+                  color: "rgba(248,245,240,0.72)",
                   margin: "6px 0 0",
                 }}
               >
@@ -642,7 +642,7 @@ export default function GeorgeBiniarisAuthorPage() {
                 fontFamily: "var(--gy-font-editorial)",
                 fontSize: 17,
                 fontStyle: "italic",
-                color: "rgba(248, 245, 240, 0.7)",
+                color: "rgba(248,245,240,0.78)",
                 margin: "0 auto 48px",
                 textAlign: "center",
                 maxWidth: 580,
@@ -672,7 +672,7 @@ export default function GeorgeBiniarisAuthorPage() {
                       fontSize: 11,
                       letterSpacing: "0.22em",
                       textTransform: "uppercase",
-                      color: "rgba(248, 245, 240, 0.55)",
+                      color: "rgba(248,245,240,0.6)",
                       fontWeight: 600,
                       marginLeft: 8,
                     }}
@@ -773,7 +773,7 @@ export default function GeorgeBiniarisAuthorPage() {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 16,
                 lineHeight: 1.65,
-                color: "rgba(248, 245, 240, 0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: "0 0 30px",
               }}
             >

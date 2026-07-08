@@ -289,7 +289,7 @@ export default function PressPage() {
               fontFamily: "var(--gy-font-ui)",
               fontWeight: 300,
               fontSize: 14,
-              color: "rgba(248,245,240,0.7)",
+              color: "rgba(248,245,240,0.78)",
               margin: "0 0 36px",
               letterSpacing: "0.05em",
             }}

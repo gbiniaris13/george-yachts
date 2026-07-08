@@ -75,7 +75,7 @@ export default function HaroProcessClient() {
             fontFamily: "var(--gy-font-ui)",
             fontSize: 14,
             lineHeight: 1.65,
-            color: "rgba(248,245,240,0.7)",
+            color: "rgba(248,245,240,0.78)",
             margin: "0 0 32px",
             maxWidth: 720,
           }}
@@ -124,7 +124,7 @@ export default function HaroProcessClient() {
           >
             {status === "processing" ? "Processing…" : "Extract + draft"}
           </button>
-          <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: "rgba(248,245,240,0.55)" }}>
+          <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: "rgba(248,245,240,0.6)" }}>
             {emailBody.length.toLocaleString()} characters
           </span>
         </div>
@@ -152,7 +152,7 @@ export default function HaroProcessClient() {
             </p>
 
             {results.queries.length === 0 ? (
-              <p style={{ fontFamily: "var(--gy-font-ui)", color: "rgba(248,245,240,0.65)" }}>
+              <p style={{ fontFamily: "var(--gy-font-ui)", color: "rgba(248,245,240,0.72)" }}>
                 No yacht-charter-relevant queries in this digest.
               </p>
             ) : (
@@ -199,7 +199,7 @@ export default function HaroProcessClient() {
                       style={{
                         fontFamily: "var(--gy-font-ui)",
                         fontSize: 12,
-                        color: "rgba(248,245,240,0.65)",
+                        color: "rgba(248,245,240,0.72)",
                         margin: "0 0 14px",
                         lineHeight: 1.6,
                       }}

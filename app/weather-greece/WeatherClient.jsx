@@ -113,7 +113,7 @@ export default function WeatherClient() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 12 }}>
                 <div>
                   <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 8, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.25)', marginBottom: 4 }}>Typical Wind</div>
-                  <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: 'rgba(248, 245, 240,0.6)' }}>{r.wind}</div>
+                  <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: 'rgba(248,245,240,0.66)' }}>{r.wind}</div>
                 </div>
                 <div>
                   <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 8, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.25)', marginBottom: 4 }}>Best Months</div>
@@ -130,7 +130,7 @@ export default function WeatherClient() {
         {/* George's tip */}
         <div style={{ background: 'rgba(201,168,76,0.05)', borderLeft: `3px solid ${GOLD}`, borderRadius: '0 12px 12px 0', padding: 24 }}>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: GOLD, marginBottom: 8 }}>George's Tip</p>
-          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.6)', lineHeight: 1.8, margin: '0 0 8px', fontStyle: 'italic' }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248,245,240,0.66)', lineHeight: 1.8, margin: '0 0 8px', fontStyle: 'italic' }}>
             "If I had to choose one month to charter in Greece, it would be June or September. June gives you long days and warm seas before the Meltemi arrives. September gives you the warmest water of the year after the crowds have gone. Both offer mid-season pricing - significantly less than July and August."
           </p>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, color: `${GOLD}80`, margin: 0 }}>

@@ -154,7 +154,7 @@ export default function BottomFunnelPage({ pageData }) {
                 fontSize: "clamp(16px, 2vw, 19px)",
                 fontStyle: "italic",
                 fontWeight: 300,
-                color: "rgba(248,245,240,0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: 0,
                 lineHeight: 1.55,
               }}
@@ -241,7 +241,7 @@ export default function BottomFunnelPage({ pageData }) {
                       style={{
                         fontFamily: "var(--gy-font-ui)",
                         fontSize: 12,
-                        color: "rgba(248,245,240,0.65)",
+                        color: "rgba(248,245,240,0.72)",
                         margin: "0 0 6px",
                       }}
                     >
@@ -263,7 +263,7 @@ export default function BottomFunnelPage({ pageData }) {
                         fontFamily: "var(--gy-font-ui)",
                         fontSize: 13,
                         lineHeight: 1.6,
-                        color: "rgba(248,245,240,0.78)",
+                        color: "rgba(248,245,240,0.85)",
                         margin: 0,
                       }}
                     >
@@ -277,7 +277,7 @@ export default function BottomFunnelPage({ pageData }) {
                   style={{
                     fontFamily: "var(--gy-font-ui)",
                     fontSize: 12,
-                    color: "rgba(248,245,240,0.55)",
+                    color: "rgba(248,245,240,0.6)",
                     margin: "20px 0 0",
                     textAlign: "center",
                     fontStyle: "italic",
@@ -359,7 +359,7 @@ export default function BottomFunnelPage({ pageData }) {
                           fontFamily: "var(--gy-font-ui)",
                           fontSize: 14,
                           lineHeight: 1.65,
-                          color: "rgba(248,245,240,0.78)",
+                          color: "rgba(248,245,240,0.85)",
                           margin: 0,
                         }}
                       >
@@ -516,7 +516,7 @@ export default function BottomFunnelPage({ pageData }) {
                         fontFamily: "var(--gy-font-ui)",
                         fontSize: 14,
                         lineHeight: 1.75,
-                        color: "rgba(248,245,240,0.82)",
+                        color: "rgba(248,245,240,0.88)",
                         margin: "14px 0 0",
                       }}
                     >

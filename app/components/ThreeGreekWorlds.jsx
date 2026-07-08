@@ -172,7 +172,7 @@ export default function ThreeGreekWorlds() {
           font-weight: 300;
           font-size: 13px;
           line-height: 1.6;
-          color: rgba(248, 245, 240, 0.75);
+          color: rgba(248,245,240,0.82);
           max-width: 32ch;
           margin: 0 0 28px;
         }
@@ -202,7 +202,7 @@ export default function ThreeGreekWorlds() {
           font-weight: 300;
           font-size: 12px;
           line-height: 1.7;
-          color: rgba(248, 245, 240, 0.55);
+          color: rgba(248,245,240,0.6);
           text-align: center;
         }
         .gy-three-worlds__footnote-link {

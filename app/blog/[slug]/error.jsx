@@ -48,7 +48,7 @@ export default function BlogSlugError({ error, reset }) {
       </h1>
       <p
         style={{
-          color: "rgba(248, 245, 240,0.6)",
+          color: "rgba(248,245,240,0.66)",
           fontSize: 16,
           maxWidth: 560,
           textAlign: "center",

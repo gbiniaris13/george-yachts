@@ -256,7 +256,7 @@ export default async function SeoLanding({ pageData }) {
                 fontSize: "clamp(18px, 2.4vw, 22px)",
                 fontWeight: 300,
                 fontStyle: "italic",
-                color: "rgba(248, 245, 240,0.78)",
+                color: "rgba(248,245,240,0.85)",
                 margin: 0,
                 lineHeight: 1.5,
               }}
@@ -288,7 +288,7 @@ export default async function SeoLanding({ pageData }) {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 17,
                 lineHeight: 1.78,
-                color: "rgba(248, 245, 240,0.82)",
+                color: "rgba(248,245,240,0.88)",
               }}
               dangerouslySetInnerHTML={{ __html: pageData.whyBody.replace(/\*\*(.+?)\*\*/g, '<strong style="color:#F8F5F0">$1</strong>') }}
             />
@@ -305,20 +305,20 @@ export default async function SeoLanding({ pageData }) {
                 </p>
                 <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                   {pageData.prosAndCons.pros.map((p, i) => (
-                    <li key={i} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248, 245, 240,0.82)", paddingLeft: 18, position: "relative", marginBottom: 6 }}>
+                    <li key={i} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.88)", paddingLeft: 18, position: "relative", marginBottom: 6 }}>
                       <span aria-hidden="true" style={{ position: "absolute", left: 0, top: 0, color: GOLD }}>+</span>{p}
                     </li>
                   ))}
                 </ul>
               </div>
               <div style={{ border: "1px solid rgba(248, 245, 240,0.15)", padding: "24px 26px" }}>
-                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(248, 245, 240,0.65)", fontWeight: 600, margin: "0 0 14px" }}>
+                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(248,245,240,0.72)", fontWeight: 600, margin: "0 0 14px" }}>
                   Worth knowing
                 </p>
                 <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                   {pageData.prosAndCons.cons.map((c, i) => (
                     <li key={i} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248, 245, 240,0.72)", paddingLeft: 18, position: "relative", marginBottom: 6 }}>
-                      <span aria-hidden="true" style={{ position: "absolute", left: 0, top: 0, color: "rgba(248, 245, 240,0.55)" }}>·</span>{c}
+                      <span aria-hidden="true" style={{ position: "absolute", left: 0, top: 0, color: "rgba(248,245,240,0.6)" }}>·</span>{c}
                     </li>
                   ))}
                 </ul>
@@ -336,7 +336,7 @@ export default async function SeoLanding({ pageData }) {
               </p>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 10 }}>
                 {pageData.bestFor.map((b, i) => (
-                  <li key={i} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.6, color: "rgba(248, 245, 240,0.82)", paddingLeft: 22, position: "relative" }}>
+                  <li key={i} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.6, color: "rgba(248,245,240,0.88)", paddingLeft: 22, position: "relative" }}>
                     <span aria-hidden="true" style={{ position: "absolute", left: 0, top: 0, color: GOLD, fontWeight: 700 }}>·</span>{b}
                   </li>
                 ))}
@@ -375,13 +375,13 @@ export default async function SeoLanding({ pageData }) {
                     <div style={{ padding: "16px 18px 20px" }}>
                       <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 20, fontWeight: 400, color: "#F8F5F0", margin: "0 0 4px" }}>{y.name}</p>
                       {(y.length || y.sleeps) && (
-                        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.12em", color: "rgba(248, 245, 240,0.65)", margin: "0 0 8px", textTransform: "uppercase" }}>
+                        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.12em", color: "rgba(248,245,240,0.72)", margin: "0 0 8px", textTransform: "uppercase" }}>
                           {[y.length, y.sleeps && `${y.sleeps} guests`].filter(Boolean).join("  ·  ")}
                         </p>
                       )}
                       {y.weeklyRatePrice && (
                         <div style={{ marginTop: 6 }}>
-                          <span style={{ display: "block", fontSize: 8, letterSpacing: "0.3em", textTransform: "uppercase", color: isPerPerson(y) ? "rgba(248, 245, 240,0.65)" : GOLD, fontWeight: 600, marginBottom: 2 }}>
+                          <span style={{ display: "block", fontSize: 8, letterSpacing: "0.3em", textTransform: "uppercase", color: isPerPerson(y) ? "rgba(248,245,240,0.72)" : GOLD, fontWeight: 600, marginBottom: 2 }}>
                             {priceUnitBadge(y)}
                           </span>
                           <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: GOLD, fontWeight: 600, letterSpacing: "0.06em" }}>{y.weeklyRatePrice}</span>
@@ -413,7 +413,7 @@ export default async function SeoLanding({ pageData }) {
                 {pageData.rateTable.heading}
               </h2>
               {pageData.rateTable.intro && (
-                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.7, color: "rgba(248, 245, 240,0.75)", margin: "0 auto 32px", maxWidth: 720, textAlign: "center" }}>
+                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.7, color: "rgba(248,245,240,0.82)", margin: "0 auto 32px", maxWidth: 720, textAlign: "center" }}>
                   {pageData.rateTable.intro}
                 </p>
               )}
@@ -463,7 +463,7 @@ export default async function SeoLanding({ pageData }) {
               <blockquote style={{ margin: 0, fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(17px, 2.2vw, 21px)", fontStyle: "italic", fontWeight: 300, lineHeight: 1.65, color: "rgba(248,245,240,0.92)" }}>
                 {"\u201C"}{pageData.testimonial.quote}{"\u201D"}
               </blockquote>
-              <figcaption style={{ marginTop: 18, fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.08em", color: "rgba(248,245,240,0.6)" }}>
+              <figcaption style={{ marginTop: 18, fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.08em", color: "rgba(248,245,240,0.66)" }}>
                 {pageData.testimonial.attribution}
                 {" \u00B7 "}
                 <a href="/reviews" style={{ color: GOLD, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.4)" }}>
@@ -491,7 +491,7 @@ export default async function SeoLanding({ pageData }) {
                 {sec.heading}
               </h2>
               <div
-                style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.78, color: "rgba(248, 245, 240,0.82)" }}
+                style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.78, color: "rgba(248,245,240,0.88)" }}
                 dangerouslySetInnerHTML={{
                   __html: sec.body
                     .replace(/\*\*(.+?)\*\*/g, '<strong style="color:#F8F5F0">$1</strong>')
@@ -510,7 +510,7 @@ export default async function SeoLanding({ pageData }) {
                 {pageData.whenTitle}
               </p>
               <p
-                style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.75, color: "rgba(248, 245, 240,0.82)", margin: 0 }}
+                style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.75, color: "rgba(248,245,240,0.88)", margin: 0 }}
                 dangerouslySetInnerHTML={{ __html: pageData.whenBody.replace(/\*\*(.+?)\*\*/g, '<strong style="color:#F8F5F0">$1</strong>') }}
               />
             </div>
@@ -526,7 +526,7 @@ export default async function SeoLanding({ pageData }) {
               </p>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 14 }}>
                 {pageData.insiderTips.map((tip, i) => (
-                  <li key={i} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.65, color: "rgba(248, 245, 240,0.82)", paddingLeft: 22, position: "relative" }}>
+                  <li key={i} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.65, color: "rgba(248,245,240,0.88)", paddingLeft: 22, position: "relative" }}>
                     <span aria-hidden="true" style={{ position: "absolute", left: 0, top: 0, color: GOLD, fontWeight: 700 }}>{i + 1}.</span>{tip}
                   </li>
                 ))}
@@ -549,7 +549,7 @@ export default async function SeoLanding({ pageData }) {
                 {pageData.faq.map((f, i) => (
                   <details key={i} style={{ border: "1px solid rgba(248, 245, 240,0.1)", padding: "16px 20px" }}>
                     <summary style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 18, color: "#F8F5F0", cursor: "pointer", listStyle: "none", fontWeight: 400 }}>{f.q}</summary>
-                    <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248, 245, 240,0.78)", margin: "12px 0 0" }}>{f.a}</p>
+                    <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.85)", margin: "12px 0 0" }}>{f.a}</p>
                   </details>
                 ))}
               </div>

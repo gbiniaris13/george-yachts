@@ -93,7 +93,7 @@ function Column({ heading, items }) {
               style={{
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 14,
-                color: "rgba(248, 245, 240, 0.82)",
+                color: "rgba(248,245,240,0.88)",
                 textDecoration: "none",
                 borderBottom: "1px solid transparent",
                 transition: "color 0.3s ease, border-color 0.3s ease",

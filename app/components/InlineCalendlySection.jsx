@@ -130,7 +130,7 @@ export default function InlineCalendlySection({
             fontFamily: "var(--gy-font-ui)",
             fontSize: 16,
             lineHeight: 1.65,
-            color: "rgba(248, 245, 240, 0.78)",
+            color: "rgba(248,245,240,0.85)",
             margin: "0 0 32px",
             maxWidth: 640,
             marginLeft: "auto",
@@ -161,7 +161,7 @@ export default function InlineCalendlySection({
           style={{
             fontFamily: "var(--gy-font-ui)",
             fontSize: 12,
-            color: "rgba(248, 245, 240, 0.6)",
+            color: "rgba(248,245,240,0.66)",
             margin: "20px 0 0",
             letterSpacing: "0.06em",
           }}

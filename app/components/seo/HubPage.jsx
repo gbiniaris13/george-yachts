@@ -67,7 +67,7 @@ export default function HubPage({
               {h1}
             </h1>
             {intro && (
-              <p className="gy-qa-text" style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(17px, 2.1vw, 20px)", fontWeight: 300, fontStyle: "italic", color: "rgba(248,245,240,0.78)", margin: "0 auto", maxWidth: 640, lineHeight: 1.55 }}>
+              <p className="gy-qa-text" style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(17px, 2.1vw, 20px)", fontWeight: 300, fontStyle: "italic", color: "rgba(248,245,240,0.85)", margin: "0 auto", maxWidth: 640, lineHeight: 1.55 }}>
                 {intro}
               </p>
             )}
@@ -100,7 +100,7 @@ export default function HubPage({
                   {it.title}
                 </p>
                 {it.blurb && (
-                  <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, lineHeight: 1.5, color: "rgba(248,245,240,0.7)", margin: 0 }}>
+                  <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, lineHeight: 1.5, color: "rgba(248,245,240,0.78)", margin: 0 }}>
                     {it.blurb}
                   </p>
                 )}

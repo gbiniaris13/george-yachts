@@ -356,7 +356,7 @@ export default function FleetGuideSections({ yachts }) {
                   <blockquote style={{ margin: 0, fontFamily: "var(--gy-font-editorial)", fontSize: 15.5, fontStyle: "italic", lineHeight: 1.65, color: "rgba(248,245,240,0.88)" }}>
                     &ldquo;{r.body.length > 300 ? r.body.slice(0, r.body.lastIndexOf(" ", 300)) + " ..." : r.body}&rdquo;
                   </blockquote>
-                  <figcaption style={{ marginTop: 16, fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(248,245,240,0.6)" }}>
+                  <figcaption style={{ marginTop: 16, fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(248,245,240,0.66)" }}>
                     {initials(r.author)} · {new Date(r.date).toLocaleDateString("en-GB", { month: "long", year: "numeric" })}
                     {r.verified ? " · Verified charter" : ""}
                   </figcaption>

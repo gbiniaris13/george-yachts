@@ -323,7 +323,7 @@ export default function StickyInquiryBar() {
               style={{
                 background: "transparent",
                 border: "1px solid rgba(248, 245, 240, 0.18)",
-                color: "rgba(248, 245, 240, 0.55)",
+                color: "rgba(248,245,240,0.6)",
                 width: 32,
                 height: 32,
                 cursor: "pointer",

@@ -43,7 +43,7 @@ export default async function DashboardPage() {
               <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(34px, 5vw, 48px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 6px", lineHeight: 1.1 }}>
                 Welcome back, <em style={{ color: GOLD, fontStyle: "italic" }}>{partnerName}</em>
               </h1>
-              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248, 245, 240,0.65)", margin: 0 }}>
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.72)", margin: 0 }}>
                 Signed in as {session.email}
               </p>
             </div>
@@ -175,7 +175,7 @@ const cardBody = {
   fontFamily: "var(--gy-font-ui)",
   fontSize: 13.5,
   lineHeight: 1.6,
-  color: "rgba(248, 245, 240,0.75)",
+  color: "rgba(248,245,240,0.82)",
   margin: 0,
 };
 
