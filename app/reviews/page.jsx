@@ -23,43 +23,16 @@ export const metadata = {
   },
 };
 
-function ReviewJsonLd({ reviews, aggregate }) {
-  if (!reviews || reviews.length === 0) return null;
-  const json = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": "https://georgeyachts.com/#organization",
-    name: "George Yachts Brokerage House",
-    ...(aggregate ? {
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: aggregate.ratingValue,
-        reviewCount: aggregate.reviewCount,
-        bestRating: aggregate.bestRating,
-        worstRating: aggregate.worstRating,
-      },
-    } : {}),
-    review: reviews.map((r) => ({
-      "@type": "Review",
-      author: { "@type": "Person", name: initials(r.author) },
-      datePublished: r.date,
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: r.rating,
-        bestRating: 5,
-        worstRating: 1,
-      },
-      name: r.title,
-      reviewBody: r.body,
-      ...(r.yachtName ? { itemReviewed: { "@type": "Product", name: r.yachtName } } : {}),
-    })),
-  };
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
-    />
-  );
+// 2026-07-08 — Review/AggregateRating JSON-LD RETIRED from this page.
+// Google Search Console flagged it critical on 2026-06-30 ("Invalid
+// object type"): Organization is not a supported review-snippet parent,
+// and Google has ignored SELF-SERVING review markup (an entity marking
+// up reviews of itself on its own site) since 2019 - own-site org stars
+// were never going to render. The reviews stay fully VISIBLE below
+// (that is what AI engines quote); the only star markup Google accepts
+// from us is per-yacht Product reviews and the GBP profile itself.
+function ReviewJsonLd() {
+  return null;
 }
 
 function Star({ filled }) {
