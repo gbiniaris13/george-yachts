@@ -222,6 +222,11 @@ export async function POST(request) {
       check_in ? `Dates: ${check_in} -> ${check_out}` : "",
       message ? `\n${message}` : "",
     ].filter(Boolean).join("\n");
+    // 2026-07-08 — instant acknowledgment to the client (email only).
+    (async () => {
+      const { emailClient } = await import("@/lib/notifyGeorge");
+      await emailClient({ to: email, name });
+    })().catch(() => {});
     await Promise.allSettled([
       notifyTelegram(inquiryData),
       (async () => { const { whatsappGeorge } = await import("@/lib/notifyGeorge"); await whatsappGeorge(waText); })(),

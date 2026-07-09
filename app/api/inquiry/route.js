@@ -18,7 +18,7 @@
 // validation passes so the user never sees a transient failure.
 
 import { NextResponse } from "next/server";
-import { notifyGeorge } from "@/lib/notifyGeorge";
+import { notifyGeorge, emailClient } from "@/lib/notifyGeorge";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { bumpKpi } from "@/lib/kpis";
 
@@ -184,6 +184,11 @@ export async function POST(req) {
       dates ? `Dates: ${dates}` : "",
       message ? `\n${message}` : "",
     ].filter(Boolean).join("\n");
+
+    // Instant acknowledgment to the client (2026-07-08). Fire-and-forget;
+    // the visitor already trusted us with a five-figure plan, they must
+    // not stare at a silent inbox while competitors reply first.
+    emailClient({ to: email, name }).catch(() => {});
 
     await notifyGeorge({
       telegramText: lines.join("\n"),
