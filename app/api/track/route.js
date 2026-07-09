@@ -737,7 +737,15 @@ export async function POST(request) {
         `\u{1F3AF} *Score breakdown:*`,
         ...scoreLines.map(l => `  ${l}`),
         '',
-        `\u{26A0}️ _Popup shown to capture their details._`,
+        (row?.pages_visited || []).length
+          ? `\u{1F9ED} *Trail:* ${(row.pages_visited || []).slice(-6).join(' \u2192 ')}`
+          : null,
+        (yachtsViewed || []).length
+          ? `\u{1F517} *Open the yacht:* https://georgeyachts.com/yachts/${String(yachtsViewed[yachtsViewed.length - 1]).toLowerCase().replace(/\s+/g, '-')}`
+          : null,
+        `\u{1F4CA} *Live view:* gy-command \u2192 /dashboard/visitors`,
+        '',
+        `\u{1F3AF} _A concierge card just offered them WhatsApp or a one-field email. If a form or WhatsApp arrives in the next minutes, it is THIS person - answer first, win the week._`,
       ].filter(Boolean).join('\n');
 
       const hotLeadDesc = `${country}${decodedCity ? ` (${decodedCity})` : ''} — ${formatDuration(sanitisedTimeOnSite)} — ${(yachtsViewed || []).length} yachts (${premiumViews} premium) — score ${score}${ipEnrich?.company ? ` — ${ipEnrich.company}` : ''}`;
