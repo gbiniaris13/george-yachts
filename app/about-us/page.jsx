@@ -14,6 +14,7 @@ export const metadata = {
     canonical: "https://georgeyachts.com/about-us",
   },
   openGraph: {
+      type: "website",
     title: "About George Yachts | Boutique Yacht Brokerage",
     description: "Premier boutique yacht brokerage in Greek waters. Personal service, curated fleet, 360° luxury.",
     url: "https://georgeyachts.com/about-us",

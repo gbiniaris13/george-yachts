@@ -48,11 +48,14 @@ const ProfileSection = ({
         {/* Mobile Text Content (Below image) */}
         <div className={`relative z-10 p-8 text-start ${textColor}`}>
           <div className="max-w-xl">
-            <h1
+            {/* p, not h1: the desktop block below already renders the page's
+                single h1; both live in the DOM (CSS-hidden per breakpoint) and
+                two h1s tripped the crawl audit on every team page. */}
+            <p
               className={`text-4xl font-bold ${textColor} tracking-tight drop-shadow-lg mb-2`}
             >
               {heading}
-            </h1>
+            </p>
             <p
               className={`text-3xl font-normal ${accentColor} tracking-tight drop-shadow-lg mb-6`}
             >

@@ -95,6 +95,11 @@ export default function IslandQuizClient() {
     <div style={{ minHeight: '100vh', background: '#0D1B2A', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '160px 24px 80px' }}>
       {!result ? (
         <>
+          {/* Page h1 — visually hidden; the quiz UI leads with the question,
+              but the page needs exactly one h1 for crawlers and readers. */}
+          <h1 style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap', border: 0 }}>
+            Which Greek Island Are You?
+          </h1>
           {/* Progress */}
           <div style={{ display: 'flex', gap: 6, marginBottom: 40 }}>
             {QUESTIONS.map((_, i) => (

@@ -55,8 +55,17 @@ export async function generateMetadata({ params }) {
   // the leading segment. Verified on 8 sample yachts: rendered title
   // ~45-58 chars (was 76-108).
   const shortSubtitle = (yacht.subtitle || '').split('|')[0].trim();
-  const title = shortSubtitle ? `${yacht.name} | ${shortSubtitle}` : yacht.name;
-  const description = `Charter ${yacht.name}: ${yacht.length} ${shortSubtitle}, sleeps ${yacht.sleeps}. Crewed yacht charter in Greek waters. ${yacht.weeklyRatePrice}`;
+  // 2026-07-11 — 9 yachts still overshot 60 chars because their model
+  // segment alone is long. Budget: layout appends ' | George Yachts'
+  // (16 chars), so the base must stay <= 44 — otherwise the name stands
+  // alone, which reads cleaner than a chopped model string.
+  const base = shortSubtitle ? `${yacht.name} | ${shortSubtitle}` : yacht.name;
+  const title = base.length <= 44 ? base : yacht.name;
+  let description = `Charter ${yacht.name}: ${yacht.length} ${shortSubtitle}, sleeps ${yacht.sleeps}. Crewed yacht charter in Greek waters. ${yacht.weeklyRatePrice}`;
+  if (description.length > 158) {
+    const cut = description.slice(0, 158);
+    description = cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:]$/, '') + '...';
+  }
   const canonical = `https://georgeyachts.com/yachts/${slug}`;
 
   return {

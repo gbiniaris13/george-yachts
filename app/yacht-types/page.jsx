@@ -13,7 +13,7 @@ export const metadata = {
   description:
     "Motor yachts, sailing yachts, catamarans, gulets and more - the yacht types we charter in Greek waters, with the trade-offs of each and who they suit.",
   alternates: { canonical: URL },
-  openGraph: { title: "Yacht Types for Charter in Greece", url: URL, type: "website" },
+  openGraph: {  title: "Yacht Types for Charter in Greece", url: URL, type: "website", images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }] },
 };
 
 export default function YachtTypesHub() {

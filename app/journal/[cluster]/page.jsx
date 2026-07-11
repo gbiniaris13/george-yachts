@@ -34,6 +34,7 @@ export async function generateMetadata({ params }) {
       description: cluster.intro.slice(0, 158),
       type: "website",
       url: `https://georgeyachts.com/journal/${cluster.slug}`,
+      images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
     },
   };
 }

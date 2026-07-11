@@ -12,6 +12,8 @@ export const metadata = {
     "Looking to buy a yacht in Greece or the Mediterranean? George Yachts sources off-market and partner listings based on your exact specifications. IYBA member broker, discreet acquisition advisory.",
   alternates: { canonical: "https://georgeyachts.com/yachts-for-sale" },
   openGraph: {
+      type: "website",
+      images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
     title: "Buy a Yacht | Off-Market & Partner Listings | George Yachts",
     description: "Discreet yacht acquisition advisory. Off-market opportunities, pricing guidance, surveys, and closing coordination.",
     url: "https://georgeyachts.com/yachts-for-sale",

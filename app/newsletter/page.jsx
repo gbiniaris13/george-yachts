@@ -19,6 +19,8 @@ export const metadata = {
   alternates: { canonical: "https://georgeyachts.com/newsletter" },
   robots: { index: true, follow: true },
   openGraph: {
+      type: "website",
+      images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
     title: "Subscribe - The George Yachts Journals",
     description:
       "Four short letters from the Greek waters. Pick the one that fits - or more than one. Insider, never noisy. Always reply-to-george.",

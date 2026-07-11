@@ -69,6 +69,8 @@ export const metadata = {
     canonical: "https://georgeyachts.com/how-it-works",
   },
   openGraph: {
+      type: "website",
+      images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
     title: "How It Works | George Yachts Charter Process",
     description: "5 steps from vision to voyage. Personal broker service, MYBA contracts, transparent pricing.",
     url: "https://georgeyachts.com/how-it-works",

@@ -18,6 +18,7 @@ export async function generateMetadata() {
     description: `Your own world at sea. Full crew. Total discretion. Premium crewed yacht charters in Greek waters - from €${low.toLocaleString()} to €${high.toLocaleString()}/week.`,
     alternates: { canonical: "https://georgeyachts.com/private-fleet" },
     openGraph: {
+      type: "website",
       title: "Private Fleet | George Yachts",
       description: `Your own world at sea. Full crew. Total discretion. From €${low.toLocaleString()} to €${high.toLocaleString()}/week.`,
       url: "https://georgeyachts.com/private-fleet",

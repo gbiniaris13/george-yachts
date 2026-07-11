@@ -25,6 +25,7 @@ export const metadata = {
     canonical: "https://georgeyachts.com/charter-yacht-greece",
   },
   openGraph: {
+      type: "website",
     title: "Charter Fleet | George Yachts Brokerage House",
     description:
       `${FLEET_COUNT} curated yachts for charter in Greek waters. From 14m sailing catamarans to 64m superyachts.`,

@@ -20,6 +20,7 @@ export const metadata = {
     "Reach George Yachts Brokerage House - Athens HQ at Charilaou Trikoupi 190A, Kifisia 14564. Phone, WhatsApp, email, Calendly. IYBA member broker for Greek waters yacht charter.",
   alternates: { canonical: "https://georgeyachts.com/contact" },
   openGraph: {
+      images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
     title: "Contact George Yachts | Athens HQ",
     description:
       "Athens-based luxury yacht charter brokerage. Direct phone, WhatsApp, Calendly. IYBA member.",

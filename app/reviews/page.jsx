@@ -17,6 +17,8 @@ export const metadata = {
   description: "Verified yacht charter reviews from George Yachts clients across Greek waters. IYBA member, MYBA-standard contracts.",
   alternates: { canonical: "https://georgeyachts.com/reviews" },
   openGraph: {
+      type: "website",
+      images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
     title: "Charter Reviews | George Yachts",
     description: "Verified yacht charter reviews from George Yachts clients across Greek waters. IYBA member, MYBA-standard contracts.",
     url: "https://georgeyachts.com/reviews",

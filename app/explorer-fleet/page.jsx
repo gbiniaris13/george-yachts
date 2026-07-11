@@ -16,6 +16,7 @@ export async function generateMetadata() {
     description: `Skippered yacht charters in Greek waters from €${low.toLocaleString()}/person/week. More islands, more adventure - Cyclades, Ionian, Saronic. Brief George.`,
     alternates: { canonical: "https://georgeyachts.com/explorer-fleet" },
     openGraph: {
+      type: "website",
       title: "Explorer Fleet | George Yachts",
       description: `More islands. More adventure. From €${low.toLocaleString()} to €${high.toLocaleString()} per person per week.`,
       url: "https://georgeyachts.com/explorer-fleet",

@@ -161,6 +161,14 @@ export async function generateMetadata({ params }) {
 
   let description = post.excerpt || null;
 
+  // Ahrefs flags descriptions over ~160 chars and our excerpts often run
+  // long. Trim at a word boundary; the full excerpt still shows on-page.
+  const capDescription = (text) => {
+    if (!text || text.length <= 158) return text;
+    const cut = text.slice(0, 158);
+    return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:]$/, "") + "...";
+  };
+
   if (!description && post.body) {
     const firstTextBlock = post.body.find(
       (block) => block._type === "block" && block.children
@@ -179,17 +187,26 @@ export async function generateMetadata({ params }) {
 
   const ogImageUrl = post.mainImage
     ? urlFor(post.mainImage).width(1200).height(630).url()
-    : "https://georgeyachts.com/opengraph-image.png";
+    : "https://georgeyachts.com/opengraph-image";
 
   const canonicalUrl = `https://georgeyachts.com/blog/${slug}`;
 
+  description = capDescription(description);
+
   return {
-    title: `${post.title} | The Journal`,
+    // "| The Journal" dropped from the <title> (the layout template still
+    // appends "| George Yachts"): our AEO question-titles are long by
+    // design, and the extra 14 chars pushed 31 posts past the 60-char
+    // mark on the Ahrefs crawl. OG keeps the Journal branding.
+    title: post.title,
     description,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
+      type: "article",
+      publishedTime: post.publishedAt || undefined,
+      authors: [post.author || "George P. Biniaris"],
       title: `${post.title} | The Journal | George Yachts`,
       description,
       url: canonicalUrl,
