@@ -38,7 +38,7 @@ export const revalidate = 3600;
 const CANONICAL = "https://georgeyachts.com/crewed-yacht-charter-greece";
 
 export const metadata = {
-  title: `Crewed Yacht Charter Greece - Rates & Fleet 2026`,
+  title: `Crewed Yacht Charter Greece: Rates & Fleet`,
   description:
     `Crewed yacht charter in Greece with a full professional crew: 2026 weekly rates by yacht type and region, the real VAT rates, per-person math, and George's curated Private Fleet. IYBA member, MYBA contracts.`,
   alternates: { canonical: CANONICAL },
