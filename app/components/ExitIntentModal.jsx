@@ -33,7 +33,7 @@ const SUBSCRIBED_KEY = "gy_exit_intent_subscribed";
 // mobile-SEO penalty.
 const DELAY_MS = 8_000;
 const SCROLL_PCT = 0.4;
-const EXIT_MIN_MS = 5_000;
+const EXIT_MIN_MS = 30_000; // 30s floor (was 5s)
 
 export default function ExitIntentModal() {
   const [open, setOpen] = useState(false);
@@ -73,15 +73,13 @@ export default function ExitIntentModal() {
       setOpen(true);
     };
 
-    // 1) Time delay (research sweet spot).
-    const timer = setTimeout(trigger, DELAY_MS);
-
-    // 2) Scroll depth — engaged visitors convert best.
-    const onScroll = () => {
-      const sc = window.scrollY || document.documentElement.scrollTop || 0;
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      if (h > 0 && sc / h >= SCROLL_PCT) trigger();
-    };
+    // 2026-07-14 customer-audit retune (George): the 8s dwell + 40% scroll
+    // triggers meant a first-time UHNW visitor got a full-screen capture
+    // modal before seeing a single yacht - the opposite of the calm the
+    // brand sells. The modal is now TRUE exit-intent only, with a 30s
+    // floor. Conversion-rate "sweet spots" lose to brand posture here.
+    const timer = null;
+    const onScroll = () => {};
 
     // 3) Exit intent — catch the leavers (after a 5s floor).
     const onMouseOut = (e) => {
@@ -93,7 +91,7 @@ export default function ExitIntentModal() {
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("mouseout", onMouseOut);
     return () => {
-      clearTimeout(timer);
+      if (timer) clearTimeout(timer);
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("mouseout", onMouseOut);
     };

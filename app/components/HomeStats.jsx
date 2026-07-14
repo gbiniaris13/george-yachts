@@ -42,7 +42,13 @@ function StatNumber({ value }) {
     const alreadyInView = rect.top < window.innerHeight && rect.bottom > 0;
     if (alreadyInView) return; // keep final value, never flash 0
 
-    setDisplay(0);
+    // 2026-07-14 audit fix: do NOT park the value at 0 while waiting for
+    // the IntersectionObserver. In environments where the observer never
+    // fires (broken smooth-scroll, programmatic scrolling, some in-app
+    // browsers) the stats sat at "0+ Curated Yachts" forever. The number
+    // now stays at its FINAL value and the count-up runs only at the
+    // moment the observer actually fires (reset to 0 inside the callback,
+    // same visual effect, zero risk of a stuck zero).
     let raf = 0;
     let startTs = 0;
     const DURATION = 1300;
@@ -50,6 +56,7 @@ function StatNumber({ value }) {
       ([e]) => {
         if (!e.isIntersecting) return;
         obs.disconnect();
+        setDisplay(0); // zero-start only NOW, with the animation guaranteed to run
         const step = (ts) => {
           if (!startTs) startTs = ts;
           const p = Math.min(1, (ts - startTs) / DURATION);

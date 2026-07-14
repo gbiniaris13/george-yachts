@@ -758,7 +758,7 @@ const Footer = () => {
           <strong style={{ color: "#F8F5F0", letterSpacing: "0.12em", textTransform: "uppercase", fontSize: "8px", display: "block", marginBottom: "8px" }}>
             A note on payments
           </strong>
-          <span className="notranslate">George Yachts</span> will only ever request payment via signed MYBA-standard charter agreement, with bank details provided directly by our company in writing. We will never request wire transfers via email, messaging app, or unverified channels. If you receive any communication asking for payment that does not match this protocol, contact us immediately to verify.
+          <span className="notranslate">George Yachts</span> will only ever request payment via signed MYBA-standard charter agreement, with bank details provided directly by our company in writing. We will never request wire transfers via email, messaging app, or unverified channels. If you receive any communication asking for payment that does not match this protocol, contact us immediately to verify. All charter payments settle to the company account of George Yachts Brokerage House LLC, held in the United States.
         </p>
 
         {/* 2026-05-08 - Boss directive: replaces the masthead currency

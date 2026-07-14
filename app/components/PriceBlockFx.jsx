@@ -9,6 +9,11 @@ import { useCurrency } from "./CurrencyProvider";
 
 export default function PriceBlockFx({ eurDisplay, size = "md" }) {
   const { currency, convert } = useCurrency();
+  // 2026-07-14 (George): the site quotes EUR ONLY - the MYBA agreement is
+  // signed in EUR and a $-figure sets the wrong expectation. American trust
+  // comes from the U.S. company (Wyoming), not from currency conversion.
+  return null;
+  // eslint-disable-next-line no-unreachable
   if (!eurDisplay || currency === "EUR") return null;
   const converted = convert(eurDisplay);
   if (!converted) return null;

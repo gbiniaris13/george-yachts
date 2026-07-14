@@ -142,7 +142,7 @@ export default function Lightbox({ images, yachtName }) {
   const hasMeaningfulCaption =
     altText.length > 12 &&
     !altText.toLowerCase().includes(yachtName.toLowerCase());
-  const captionText = hasMeaningfulCaption ? altText : 'Tap photo to expand';
+  const captionText = hasMeaningfulCaption ? altText : 'View photo';
 
   return (
     <>

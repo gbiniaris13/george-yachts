@@ -1269,7 +1269,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
       />
 
       {/* Sticky WhatsApp Enquiry */}
-      <WhatsAppEnquiry yachtName={yacht.name} />
+      <WhatsAppEnquiry yachtName={yacht.name} mobileBar={false} />
     </>
   );
 }

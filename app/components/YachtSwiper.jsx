@@ -111,7 +111,7 @@ const YachtSwiper = ({ yachtData }) => {
 
   const specs = [
     { label: "LENGTH", value: yacht.length },
-    { label: "BUILDER", value: yacht.subtitle },
+    { label: "MODEL", value: yacht.subtitle }, // the subtitle carries the model line, not the shipyard
     { label: "GUESTS", value: yacht.sleeps },
     { label: "REGION", value: yacht.cruisingRegion },
   ];

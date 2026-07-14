@@ -14,7 +14,7 @@ const WhatsAppIcon = () => (
   </svg>
 );
 
-const WhatsAppEnquiry = ({ yachtName }) => {
+const WhatsAppEnquiry = ({ yachtName, mobileBar = true }) => {
   const encodedMessage = encodeURIComponent(
     `Hi George, I'm interested in ${yachtName} for a charter in Greece.`
   );
@@ -43,7 +43,10 @@ const WhatsAppEnquiry = ({ yachtName }) => {
         Enquire via WhatsApp
       </a>
 
-      {/* Mobile: sticky bottom bar */}
+      {/* Mobile: sticky bottom bar. 2026-07-14 audit: yacht pages mount
+          their own MobileInquireBar at bottom-0 - the two bars OVERLAPPED
+          into unreadable text. Pages with their own bar pass mobileBar={false}. */}
+      {mobileBar && (
       <div
         className="md:hidden fixed bottom-0 left-0 right-0 z-50 p-3"
         style={{ backgroundColor: "rgba(13, 27, 42, 0.95)", backdropFilter: "blur(12px)" }}
@@ -68,6 +71,7 @@ const WhatsAppEnquiry = ({ yachtName }) => {
           Enquire via WhatsApp
         </a>
       </div>
+      )}
     </>
   );
 };
