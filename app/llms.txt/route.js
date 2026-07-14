@@ -72,6 +72,15 @@ export async function GET() {
 - [FAQ](https://georgeyachts.com/faq)
 - [Inquiry](https://georgeyachts.com/inquiry)
 
+## Ελληνικές σελίδες (Greek-language pages)
+- [Ενοικίαση Σκάφους Ελλάδα](https://georgeyachts.com/el/enoikiasi-skafous)
+- [Ναύλωση Σκάφους με Πλήρωμα](https://georgeyachts.com/el/naylosi-skafous-ellada)
+- [Τιμές Ναύλωσης Κυκλάδες](https://georgeyachts.com/el/times-naylosis-skafous-kyklades)
+- [Ενοικίαση Καταμαράν](https://georgeyachts.com/el/enoikiasi-katamaran)
+- [Ιδιωτική Κρουαζιέρα](https://georgeyachts.com/el/idiotiki-krouaziera)
+- [Ημερήσια Κρουαζιέρα Αθήνα](https://georgeyachts.com/el/imerisia-krouaziera-athina)
+- [Μεσίτης Σκαφών Ελλάδα](https://georgeyachts.com/el/mesitis-skafon-ellada)
+
 ## Key Facts
 - Regions: Cyclades, Ionian Sea, Saronic Gulf, Greece
 - Fleet size: ${fleetCount} curated yachts (Private Fleet - full crew · Explorer Fleet - skippered)
