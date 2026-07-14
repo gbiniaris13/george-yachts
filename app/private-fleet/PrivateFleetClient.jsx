@@ -22,9 +22,8 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
         <Image src="/images/private-fleet-hero.jpg" alt="Private Fleet - luxury yacht charter Greece" fill style={{ objectFit: "cover", objectPosition: "center 40%", filter: "grayscale(100%) contrast(1.2) brightness(0.4)" }} sizes="100vw" priority />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(13, 27, 42,0.8) 0%, transparent 40%, rgba(13, 27, 42,0.4) 100%)" }} />
         <div style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px" }}>
-          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: "0.5em", color: "#C9A84C", textTransform: "uppercase", marginBottom: 24 }}>
-            George Yachts Brokerage House
-          </p>
+          {/* Brand identity lives in the nav logo (same rule as the
+              homepage hero) - repeating the wordmark here doubled it. */}
           <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(56px, 10vw, 130px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 18px 0", letterSpacing: "-0.035em", lineHeight: 0.95, textShadow: "0 6px 32px rgba(13, 27, 42,0.55)" }}>
             Private Fleet
           </h1>
