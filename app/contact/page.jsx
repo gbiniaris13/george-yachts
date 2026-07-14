@@ -119,7 +119,14 @@ export default function ContactPage() {
       />
 
       <main className="bg-black text-white min-h-screen">
-        <section className="max-w-6xl mx-auto px-6 py-24">
+        {/* 2026-07-14 — top padding raised from py-24 (96px): the fixed
+            nav's centered wordmark (clamp 120-180px tall + Forbes bar)
+            overlaid the centered masthead, logo colliding with the H1.
+            Clamp keeps clearance across breakpoints without a mobile gap. */}
+        <section
+          className="max-w-6xl mx-auto px-6 pb-24"
+          style={{ paddingTop: "clamp(180px, 18vw, 240px)" }}
+        >
           {/* Phase 27g (Forbes-launch day) — masthead upgraded to brand
               standard. Cinzel + .gy-luxe-enter via inline style + gold
               rules + italic Cormorant lede, matching homepage hero +

@@ -56,9 +56,12 @@ export const metadata = {
 // /lib/teamSchema.js plus expansion of context already on the
 // public site.
 const BIO_PARAGRAPHS = [
-  "George P. Biniaris is the Founder and Managing Broker of George Yachts Brokerage House LLC, a Greek-flagged luxury yacht charter brokerage operating from Kifisia, Athens, with U.S. registration in Wyoming. He has spent his professional career in Greek waters and is a current member of the International Yacht Brokers Association (IYBA), the worldwide standards body for yacht brokerage.",
-  "His practice covers crewed motor yacht, sailing yacht, and catamaran chartering across the four principal Greek charter regions - the Cyclades (Mykonos, Santorini, Paros, Milos, Folegandros, and the lesser Cyclades), the Ionian (Corfu, Lefkada, Kefalonia, Ithaca, Paxos, Zakynthos), the Saronic Gulf (Hydra, Spetses, Poros), and the Dodecanese (Rhodes, Symi, Patmos, Kos). His client base is predominantly UHNW: international families and family offices from the United States, United Kingdom, Middle East, and Western Europe.",
+  "George P. Biniaris is the Founder and Managing Broker of George Yachts Brokerage House LLC, a luxury yacht charter brokerage headquartered in the United States (Wyoming) and operated personally by George from Athens, Greece. The structure is deliberate: American corporate governance and a U.S. company account for the client, and the founder himself on the dock in Greece - boots on the ground where the charters actually happen. He is an IYBA Charter Active Member, the worldwide standards body for yacht brokerage.",
+  "His connection to these waters is not professional first - it is ancestral. His mother is from Syros, the administrative heart of the Cyclades, and he grew up crossing the Aegean on his uncle's Ferretti - Athens to Syros, to Mykonos, to wherever the islands called. The formal foundation followed: a BSc in Shipping Management and Operations from the Business College of Athens, with Shipping Law, Sale and Purchase, and Risk Management at its core, then licensed skipper seasons out of Corfu and charter operations across the Ionian, Cyclades, and Saronic. When he recommends an anchorage, it is because he has held a wheel there.",
+  "Before yachting, George spent a decade in luxury hospitality: F&B and Group Operations Manager in Mykonos for the Interni Group - The Wild Hotel (5*), Ftelia Beach Club - leading teams of over 200 across multiple venues for an international, high-profile clientele, and founder-owner of two premium venues in Kifisia, his hometown. Yacht chartering is hospitality at its most demanding, and that is precisely his training.",
+  "The craft is hands-on. George has personally run the full MYBA charter cycle - proposals and comparative decks, rate and terms negotiation, APA and VAT budgeting, contract coordination, captain briefings, and post-charter follow-up - delivering twelve MYBA charters in a single season before founding the firm. That is the discipline behind the George Yachts promise: every request answered by the Managing Broker himself, every yacht personally vetted, every itinerary drawn from routes actually sailed.",
   "Every charter contracted through George Yachts uses the MYBA Charter Agreement - the Mediterranean Yacht Brokers Association's standard form, in use across approximately 90% of luxury Mediterranean charters and the document recognised by London arbitration tribunals as the industry benchmark. APA (Advance Provisioning Allowance) is held in escrow under MYBA's standard custody framework. George's stated practice is to brief clients on the four cost buckets - base fee, APA, Greek VAT at the yacht's certified rate, and gratuity - at the first conversation, before any contract.",
+  "His practice covers crewed motor yacht, sailing yacht, and catamaran chartering across the four principal Greek charter regions - the Cyclades (Mykonos, Santorini, Paros, Milos, Folegandros, and the lesser Cyclades), the Ionian (Corfu, Lefkada, Kefalonia, Ithaca, Paxos, Zakynthos), the Saronic Gulf (Hydra, Spetses, Poros), and the Dodecanese (Rhodes, Symi, Patmos, Kos). His client base is predominantly UHNW: international families and family offices from the United States, United Kingdom, Middle East, and Western Europe.",
   "In May 2026, George was featured in Forbes Magazine in Jacques Ledbetter's piece on UHNW asset diversification, \"How The Wealthy Are Hedging For Instability,\" in which yacht chartering was positioned alongside private equity and physical-asset hedging as a discretionary-spend category that families increasingly favour over fixed-asset purchases. The Forbes feature reflects George Yachts' positioning at the intersection of luxury brokerage and family-office advisory.",
   "George is the author of the editorial content published under his byline at georgeyachts.com - including the 2026 Greek Charter Market Report, the complete Greek yacht charter pricing guide for 2026, the destination comparison pieces benchmarking Greek charter against Croatia, the French Riviera, Italy, Turkey, and the Caribbean, and the 30-term UHNW Yacht Charter Glossary. Every editorial piece on the site carries his author byline and Person schema linking back to this canonical biography.",
   "He works in English and Greek. His office is in Kifisia, Attica, with charter operations dispatched primarily from Alimos Marina and Olympic Marine for Cyclades and Saronic-bound charters, and from Corfu for Ionian charters. He is reachable directly via the inquiry channel on georgeyachts.com, and conducts initial discovery conversations personally on every charter request.",
@@ -67,11 +70,35 @@ const BIO_PARAGRAPHS = [
 const CREDENTIALS = [
   {
     label: "Founder and Managing Broker",
-    detail: "George Yachts Brokerage House LLC (Greek operations + Wyoming U.S. entity)",
+    detail: "George Yachts Brokerage House LLC - headquartered in the U.S. (Wyoming), operating from Athens",
+  },
+  {
+    label: "Education",
+    detail: "BSc Shipping Management & Operations, Business College of Athens - Shipping Law, Sale & Purchase, Risk Management",
+  },
+  {
+    label: "Sea background",
+    detail: "Licensed skipper (Olympiacos SFP Sailing Academy) with powerboat licence - charter seasons in Corfu, operations across Ionian, Cyclades & Saronic",
+  },
+  {
+    label: "Charter track record",
+    detail: "Twelve MYBA charters delivered in a single season - full cycle from proposal to post-charter follow-up",
+  },
+  {
+    label: "Hospitality pedigree",
+    detail: "A decade in luxury hospitality - Group Operations, Interni Group Mykonos (The Wild Hotel 5*, Ftelia Beach Club); founder of two premium Kifisia venues",
+  },
+  {
+    label: "Leadership",
+    detail: "Commissioned Reserve Infantry Officer, Hellenic Army - later Company Commander, National Guard",
+  },
+  {
+    label: "Roots",
+    detail: "Cycladic family, Syros - raised crossing the Aegean, Athens to Syros to Mykonos",
   },
   {
     label: "Member",
-    detail: "International Yacht Brokers Association (IYBA) - global brokerage standards body",
+    detail: "IYBA Charter Active Member - the global brokerage standards body",
   },
   {
     label: "Contract framework",
@@ -185,9 +212,13 @@ function PersonJsonLd() {
     familyName: "Biniaris",
     jobTitle: "Founder and Managing Broker",
     description:
-      "Founder and Managing Broker of George Yachts Brokerage House LLC. IYBA member, MYBA-standard practitioner, Forbes-featured (May 2026). Specialises in crewed luxury yacht charter across Greek waters for UHNW clientele.",
+      "Founder and Managing Broker of George Yachts Brokerage House LLC, headquartered in the U.S. (Wyoming) and operated from Athens. Cycladic roots (Syros); BSc in Shipping Management & Operations (Business College of Athens); licensed skipper and charter operations professional with twelve MYBA charters delivered in a single season before founding the firm; a decade in luxury hospitality management in Mykonos. IYBA Charter Active Member, MYBA-standard practitioner, Forbes-featured (May 2026). Specialises in crewed luxury yacht charter across Greek waters for UHNW clientele.",
     url: "https://georgeyachts.com/about/george-p-biniaris",
-    image: "https://georgeyachts.com/images/george.jpg",
+    image: "https://georgeyachts.com/images/george-syros-quay.jpg",
+    alumniOf: {
+      "@type": "CollegeOrUniversity",
+      name: "Business College of Athens (BCA)",
+    },
     nationality: { "@type": "Country", name: "Greece" },
     knowsLanguage: ["English", "Greek"],
     knowsAbout: [
@@ -362,10 +393,10 @@ export default function GeorgeBiniarisAuthorPage() {
             <div
               style={{
                 aspectRatio: "3 / 4",
-                background: `${NAVY} url(/images/george.jpg) center/cover no-repeat`,
+                background: `${NAVY} url(/images/george-syros-quay.jpg) center/cover no-repeat`,
                 border: "1px solid rgba(201,168,76,0.3)",
               }}
-              aria-label="Portrait of George P. Biniaris"
+              aria-label="George P. Biniaris on the quay in Syros, Cyclades, at sunset"
             />
           </div>
         </header>
