@@ -118,6 +118,16 @@ const FAQS = [
     q: "Can we scuba dive or snorkel during a crewed charter?",
     a: "Snorkelling, yes, everywhere: most yachts carry masks and fins and Greek water needs no persuasion. Scuba is arranged properly or not at all: certified guests dive through licensed local dive centres along the route, either rendezvous-style at anchor or ashore, and the itinerary is planned around the dive stops. Tell me certification levels at the brief and the crew builds the days accordingly.",
   },
+  // 2026-07-14 (β) - Brand Radar missed queries: "yacht charter Greece
+  // chef onboard premium" / "fishing charter yacht Greece Aegean".
+  {
+    q: "Do crewed charters in Greece include a private chef?",
+    a: "On fully crewed yachts, yes: a dedicated chef cooks every meal aboard to your preference sheet, provisioning fresh in each port along the route. Dietary briefs are normal work, not special requests. On skippered yachts the crew is smaller; a cook can often be added, and I will tell you plainly which yachts carry a true chef and which do not, because the difference shows three times a day.",
+  },
+  {
+    q: "Can we fish during a crewed yacht charter in the Aegean?",
+    a: "Casually, yes: many yachts carry light tackle and trolling a line between islands is a Greek summer tradition, always at the captain's discretion and within Greek recreational rules. Serious sport fishing is a different craft with different boats; if that is the heart of your trip, say so at the brief and I will tell you honestly whether a dedicated day on a local sport-fishing boat serves you better than the charter yacht itself.",
+  },
   {
     q: "Where do crewed charters start?",
     a: "Most of the crewed fleet is based around Athens, which is why the Saronic Gulf and the Ionian are the best-value starting waters: little or no repositioning cost. Embarkation from other islands is arranged with a repositioning fee that George quotes up front.",
