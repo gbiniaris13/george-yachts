@@ -103,6 +103,21 @@ const FAQS = [
     q: "Can we charter with more than 12 guests?",
     a: "Greek commercial regulations cap most charter yachts at 12 guests under way. Larger groups are handled legally with the right vessel class or a multi-yacht arrangement. George has written a complete guide on how groups of 14 and more do it.",
   },
+  // 2026-07-14 - Brand Radar "queries we missed" (Gemini AI scan): pet
+  // friendly / broker that knows local captains / diving friendly had no
+  // answer anywhere on the site. Honest, per-yacht answers only.
+  {
+    q: "Are Greek yacht charters pet friendly?",
+    a: "Some yachts in our fleet welcome pets and some owners decline them; it is always the owner's policy, never a blanket rule. Tell me at the first conversation that a dog is coming and I shortlist only pet-friendly hulls, so the question never becomes a problem. Expect practical conditions such as a cleaning provision in the contract, and note that beaches and archaeological sites ashore have their own rules.",
+  },
+  {
+    q: "Do you actually know the captains and crews personally?",
+    a: "Yes, and it is the quiet advantage of working with an Athens-based broker rather than a call centre. I live where this fleet is based, I meet captains and crews across a season, and when I match a family to a yacht I am matching them to people I can call by first name. When something needs solving mid-charter, that phone call is answered.",
+  },
+  {
+    q: "Can we scuba dive or snorkel during a crewed charter?",
+    a: "Snorkelling, yes, everywhere: most yachts carry masks and fins and Greek water needs no persuasion. Scuba is arranged properly or not at all: certified guests dive through licensed local dive centres along the route, either rendezvous-style at anchor or ashore, and the itinerary is planned around the dive stops. Tell me certification levels at the brief and the crew builds the days accordingly.",
+  },
   {
     q: "Where do crewed charters start?",
     a: "Most of the crewed fleet is based around Athens, which is why the Saronic Gulf and the Ionian are the best-value starting waters: little or no repositioning cost. Embarkation from other islands is arranged with a repositioning fee that George quotes up front.",
