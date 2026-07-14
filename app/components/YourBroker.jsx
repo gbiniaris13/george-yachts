@@ -52,8 +52,8 @@ export default function YourBroker() {
         {/* Photo */}
         <div style={{ position: "relative", aspectRatio: "3/4", overflow: "hidden", minHeight: "300px" }}>
           <Image
-            src="/images/george.jpg"
-            alt="George P. Biniaris - Managing Broker, George Yachts"
+            src="/images/george-syros-quay.jpg"
+            alt="George P. Biniaris on the quay in Syros at sunset - Managing Broker, George Yachts"
             fill
             className="object-cover"
             sizes="(max-width: 768px) 250px, 280px"
