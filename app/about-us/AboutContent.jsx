@@ -17,7 +17,7 @@ const CORE_TEAM = [
   {
     name: "George P. Biniaris",
     title: "Managing Broker",
-    imageUrl: "/images/george.jpg",
+    imageUrl: "/images/george-syros-quay.jpg",
     profileUrl: "/team/george-biniaris",
     lead: true,
   },
@@ -273,7 +273,7 @@ export default function AboutContent() {
             <RevealSection>
               <div style={{ position: "relative", aspectRatio: "3/4", overflow: "hidden" }}>
                 <img
-                  src="/images/george.jpg"
+                  src="/images/george-syros-quay.jpg"
                   alt="George P. Biniaris - Managing Broker, George Yachts Brokerage House"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />

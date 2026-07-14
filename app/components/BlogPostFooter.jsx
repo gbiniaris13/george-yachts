@@ -216,7 +216,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
             }}
           >
             <Image
-              src="/images/george.jpg"
+              src="/images/george-syros-quay.jpg"
               alt="George P. Biniaris, Managing Broker"
               fill
               sizes="88px"

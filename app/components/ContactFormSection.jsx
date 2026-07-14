@@ -215,7 +215,7 @@ const ContactFormSection = () => {
           </h3>
           <div className="flex items-center justify-center gap-4 mb-6">
             <img
-              src="/images/george.jpg"
+              src="/images/george-syros-quay.jpg"
               alt="George P. Biniaris"
               className="w-16 h-16 rounded-full object-cover border border-[#C9A84C]/30"
             />

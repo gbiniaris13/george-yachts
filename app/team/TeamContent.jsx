@@ -51,7 +51,7 @@ const teamMembers = [
   {
     name: "George P. Biniaris",
     title: "Managing Broker",
-    imageUrl: "/images/george.jpg",
+    imageUrl: "/images/george-syros-quay.jpg",
     instagram: "george_p.biniaris",
     email: "george@georgeyachts.com",
     linkedin: "https://www.linkedin.com/in/george-p-biniaris/",

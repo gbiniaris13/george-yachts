@@ -32,7 +32,7 @@ const personSchema = {
     "url": "https://georgeyachts.com"
   },
   "url": "https://georgeyachts.com/about-us",
-  "image": "https://georgeyachts.com/images/george.jpg",
+  "image": "https://georgeyachts.com/images/george-syros-quay.jpg",
   "sameAs": [
     "https://www.linkedin.com/in/george-p-biniaris/",
     "https://www.instagram.com/georgeyachts/"

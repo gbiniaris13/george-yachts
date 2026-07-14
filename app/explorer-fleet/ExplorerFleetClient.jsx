@@ -174,7 +174,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
       <section style={{ padding: "100px 24px", background: "#0D1B2A", borderTop: "1px solid rgba(201,168,76,0.08)" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", display: "flex", alignItems: "center", gap: 40, flexWrap: "wrap", justifyContent: "center" }}>
           <div style={{ position: "relative", width: 180, height: 180, borderRadius: "50%", overflow: "hidden", flexShrink: 0 }}>
-            <Image src="/images/george.jpg" alt="George P. Biniaris" fill style={{ objectFit: "cover" }} sizes="180px" />
+            <Image src="/images/george-syros-quay.jpg" alt="George P. Biniaris" fill style={{ objectFit: "cover" }} sizes="180px" />
           </div>
           <div style={{ textAlign: "center", flex: 1, minWidth: 250 }}>
             <h3 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.5rem", color: "#F8F5F0", marginBottom: 8 }}>Your Broker: George</h3>

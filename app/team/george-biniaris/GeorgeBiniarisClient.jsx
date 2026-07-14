@@ -22,7 +22,7 @@ const GeorgeBiniarisClient = () => {
       <ProfileSection
         heading="George P. Biniaris"
         subtitle="Managing Broker"
-        imageUrl="/images/george.jpg"
+        imageUrl="/images/george-syros-quay.jpg"
         altText="Portrait of George Biniaris"
         instagramUrl="https://instagram.com/george_p.biniaris"
         bgColor="bg-black"

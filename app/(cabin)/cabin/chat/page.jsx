@@ -122,7 +122,7 @@ export default async function ChatPage() {
           <span className="chat-card__avatar" aria-hidden>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/george.jpg"
+              src="/images/george-syros-quay.jpg"
               alt=""
               className="chat-card__avatar-photo"
             />

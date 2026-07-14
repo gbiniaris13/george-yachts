@@ -13,7 +13,7 @@ const teamMembers = [
   {
     name: "George P. Biniaris",
     title: "Managing Broker",
-    imageUrl: "/images/george.jpg",
+    imageUrl: "/images/george-syros-quay.jpg",
     instagram: "george_p.biniaris",
     profileUrl: "/team/george-biniaris", // Example link
   },
