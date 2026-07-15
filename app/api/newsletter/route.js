@@ -229,22 +229,29 @@ export async function POST(request) {
 
     // 2026-07-15 (George) — mirror every new subscriber into the GY
     // Command CRM as a contact, so the client file is complete in one
-    // place (Helm clients + site subscribers). Fire-and-forget: a CRM
-    // hiccup must never block or slow the signup.
+    // place (Helm clients + site subscribers). AWAITED with a hard
+    // 4s cap: a truly fire-and-forget fetch dies when the serverless
+    // function returns (verified in production — the request never
+    // left the lambda). The try/catch still guarantees a CRM hiccup
+    // never blocks the signup itself.
     try {
       const crmSecret = process.env.NEWSLETTER_PROXY_SECRET;
       if (crmSecret) {
-        fetch("https://gy-command.vercel.app/api/hooks/newsletter-subscriber", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${crmSecret}`,
+        await fetch(
+          "https://gy-command.vercel.app/api/hooks/newsletter-subscriber",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${crmSecret}`,
+            },
+            body: JSON.stringify({ email: normalized, streams: requested }),
+            signal: AbortSignal.timeout(4000),
           },
-          body: JSON.stringify({ email: normalized, streams: requested }),
-        }).catch(() => {});
+        );
       }
     } catch {
-      // best-effort only
+      // best-effort only — signup succeeds regardless
     }
 
     // 1. Notify George about the new subscriber
