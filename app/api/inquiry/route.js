@@ -207,6 +207,31 @@ export async function POST(req) {
     // N.3 — bump KPI counter
     bumpKpi("inquiry").catch(() => {});
 
+    // 2026-07-15 (George) — every website inquiry opens a Helm request
+    // AUTOMATICALLY, so nothing waits for manual re-typing into the CRM.
+    // Awaited with a hard 4s cap (a fire-and-forget fetch dies when the
+    // lambda returns); best-effort - a CRM hiccup never blocks the lead,
+    // which has already been delivered via notifyGeorge above.
+    try {
+      const crmSecret = process.env.NEWSLETTER_PROXY_SECRET;
+      if (crmSecret) {
+        await fetch("https://gy-command.vercel.app/api/hooks/website-inquiry", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${crmSecret}`,
+          },
+          body: JSON.stringify({
+            name, email, phone, dates, message, yachtName,
+            shortlist, source, preferredChannel,
+          }),
+          signal: AbortSignal.timeout(4000),
+        });
+      }
+    } catch {
+      // best-effort only — the lead is already in George's hands
+    }
+
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("inquiry route error:", err);
