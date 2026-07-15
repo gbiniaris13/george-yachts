@@ -37,7 +37,7 @@ async function notifyTelegram(email, welcomeResult) {
 
   const welcomeLine = welcomeResult
     ? welcomeResult.ok
-      ? `✅ Issue #1 sent automatically as welcome (Resend id: ${welcomeResult.message_id ?? "n/a"})`
+      ? `✅ Welcome email sent automatically (Resend id: ${welcomeResult.message_id ?? "n/a"})`
       : welcomeResult.suppressed
         ? `⚠️ Welcome NOT sent — address is on the suppression list`
         : `🚨 Welcome failed — ${String(welcomeResult.error ?? "unknown").slice(0, 200)}`
@@ -176,15 +176,21 @@ export async function POST(request) {
     //     primitive protects /approve and topup. Together they make
     //     it structurally impossible to double-send the same issue
     //     to the same address — no matter what entry point fires.
+    // 2026-07-15 (George) — the instant welcome is now a GENERIC warm
+    // thank-you (lib/newsletter/welcome.js), not Issue #1. It reads
+    // right for any audience, and new subscribers simply catch the
+    // next scheduled issue on the normal cadence. Same Resend
+    // template + suppression handling, same per-address dedup
+    // primitive (welcome_sent:bridge) so re-signups never double it.
     let welcomeResult = null;
     try {
       if (requested.includes("bridge")) {
-        const ISSUE_KEY = "issue_sent:bridge:1";
-        const already = await kvSismember(ISSUE_KEY, normalized).catch(() => 0);
+        const WELCOME_KEY = "welcome_sent:bridge";
+        const already = await kvSismember(WELCOME_KEY, normalized).catch(() => 0);
         if (already === 1 || already === "1") {
           welcomeResult = {
             ok: true,
-            skipped: "already_received_issue_1",
+            skipped: "already_welcomed",
             message_id: null,
           };
         } else {
@@ -192,26 +198,25 @@ export async function POST(request) {
             "@/lib/newsletter/resend"
           );
           const {
-            ISSUE_1_SUBJECT,
-            ISSUE_1_PREHEADER,
-            ISSUE_1_BODY_TEXT,
-            ISSUE_1_HERO_IMAGE_URL,
-          } = await import("@/lib/newsletter/issue-1");
+            WELCOME_SUBJECT,
+            WELCOME_PREHEADER,
+            WELCOME_BODY_TEXT,
+            WELCOME_HERO_IMAGE_URL,
+          } = await import("@/lib/newsletter/welcome");
           welcomeResult = await sendNewsletterFromTemplate({
             to: normalized,
             stream: "bridge",
-            subject: ISSUE_1_SUBJECT,
-            preheader: ISSUE_1_PREHEADER,
-            body_text: ISSUE_1_BODY_TEXT,
-            hero_image_url: ISSUE_1_HERO_IMAGE_URL,
+            subject: WELCOME_SUBJECT,
+            preheader: WELCOME_PREHEADER,
+            body_text: WELCOME_BODY_TEXT,
+            hero_image_url: WELCOME_HERO_IMAGE_URL,
             tags: [
               { name: "stream", value: "bridge" },
               { name: "kind", value: "welcome" },
-              { name: "issue", value: "1" },
             ],
           });
           if (welcomeResult.ok) {
-            await kvSadd(ISSUE_KEY, normalized).catch(() => {});
+            await kvSadd(WELCOME_KEY, normalized).catch(() => {});
           }
         }
       }
@@ -220,6 +225,26 @@ export async function POST(request) {
         ok: false,
         error: err instanceof Error ? err.message : "welcome import failed",
       };
+    }
+
+    // 2026-07-15 (George) — mirror every new subscriber into the GY
+    // Command CRM as a contact, so the client file is complete in one
+    // place (Helm clients + site subscribers). Fire-and-forget: a CRM
+    // hiccup must never block or slow the signup.
+    try {
+      const crmSecret = process.env.NEWSLETTER_PROXY_SECRET;
+      if (crmSecret) {
+        fetch("https://gy-command.vercel.app/api/hooks/newsletter-subscriber", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${crmSecret}`,
+          },
+          body: JSON.stringify({ email: normalized, streams: requested }),
+        }).catch(() => {});
+      }
+    } catch {
+      // best-effort only
     }
 
     // 1. Notify George about the new subscriber
