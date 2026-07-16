@@ -346,7 +346,7 @@ export default function InquiryClient() {
               Save the cover
             </a>
             <a
-              href="https://wa.me/17867988798?text=Hi%20George%20%E2%80%94%20I%20just%20submitted%20an%20inquiry%20on%20the%20site."
+              href="https://api.whatsapp.com/send/?phone=17867988798&text=Hi%20George%2C%20I%20just%20submitted%20an%20inquiry%20on%20the%20site."
               target="_blank"
               rel="noopener noreferrer"
               style={{ ...ctaPrimary, background: "transparent", border: "1px solid rgba(201,168,76,0.55)", color: "#C9A84C" }}

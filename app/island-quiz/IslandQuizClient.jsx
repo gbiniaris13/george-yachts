@@ -189,7 +189,7 @@ export default function IslandQuizClient() {
           {/* Share + CTAs */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <a
-              href={`https://wa.me/?text=${encodeURIComponent(`I just took the George Yachts island quiz and I'm ${result.name}! 🏝️ "${result.tagline}" - Take the quiz: https://georgeyachts.com/island-quiz`)}`}
+              href={`https://api.whatsapp.com/send/?text=${encodeURIComponent(`I just took the George Yachts island quiz and I'm ${result.name}! 🏝️ "${result.tagline}" - Take the quiz: https://georgeyachts.com/island-quiz`)}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{

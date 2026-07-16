@@ -415,7 +415,7 @@ export default function AIResearchHub() {
             georgeyachts.com/inquiry
           </Link>{" "}
           ·{" "}
-          <a href="https://wa.me/17867988798" style={inlineLink}>
+          <a href="https://api.whatsapp.com/send/?phone=17867988798" style={inlineLink}>
             WhatsApp
           </a>
           .

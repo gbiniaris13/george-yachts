@@ -193,7 +193,7 @@ export default function StickyInquiryBar() {
       ? document.title.replace(/\s*\|\s*George Yachts.*$/, "").trim()
       : "your page";
   const waText = `Hi George, I was reading your "${pageTitle}" page and have a question.`;
-  const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waText)}`;
+  const waUrl = `https://api.whatsapp.com/send/?phone=${WA_NUMBER}&text=${encodeURIComponent(waText)}`;
 
   return (
     <>

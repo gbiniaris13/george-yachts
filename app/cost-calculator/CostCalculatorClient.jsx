@@ -375,7 +375,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                   Get exact pricing →
                 </Link>
                 <a
-                  href={`https://wa.me/17867988798?text=${encodeURIComponent(`Hi George, I used the cost calculator for ${breakdown.yacht.name}:\n\n${breakdown.guests} guests, ${breakdown.weeks} week(s), ${SEASONS.find(s => s.id === season)?.label}\nCharter all-in: ${fmt(breakdown.charterTotal)} (${fmt(breakdown.perPersonWeek)}/person/week)\nIncludes charter + VAT (est. max 13%) + APA 30%\n\nCan we discuss availability?`)}`}
+                  href={`https://api.whatsapp.com/send/?phone=17867988798&text=${encodeURIComponent(`Hi George, I used the cost calculator for ${breakdown.yacht.name}:\n\n${breakdown.guests} guests, ${breakdown.weeks} week(s), ${SEASONS.find(s => s.id === season)?.label}\nCharter all-in: ${fmt(breakdown.charterTotal)} (${fmt(breakdown.perPersonWeek)}/person/week)\nIncludes charter + VAT (est. max 13%) + APA 30%\n\nCan we discuss availability?`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => {

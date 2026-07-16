@@ -323,7 +323,7 @@ export default async function GreekCharterIndexPage() {
             <Link href="/inquiry" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: GOLD, color: NAVY, textDecoration: "none" }}>
               Brief George directly
             </Link>
-            <a href={WHATSAPP_DOWN ? "/inquiry" : `https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20George%2C%20I%20read%20the%20Greek%20Charter%20Index%202026%20and%20would%20like%20current%20rates%20for%20my%20dates.`} target={WHATSAPP_DOWN ? undefined : "_blank"} rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", border: `1px solid ${GOLD}`, color: GOLD, textDecoration: "none" }}>
+            <a href={WHATSAPP_DOWN ? "/inquiry" : `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=Hi%20George%2C%20I%20read%20the%20Greek%20Charter%20Index%202026%20and%20would%20like%20current%20rates%20for%20my%20dates.`} target={WHATSAPP_DOWN ? undefined : "_blank"} rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", border: `1px solid ${GOLD}`, color: GOLD, textDecoration: "none" }}>
               {WHATSAPP_DOWN ? "Message George Directly" : "Message on WhatsApp"}
             </a>
           </div>

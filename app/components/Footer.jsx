@@ -202,6 +202,10 @@ const Footer = () => {
 
   const legalLinks = [
     { name: "Terms of Service", href: "/terms-of-service" },
+    // Single quiet doorway into the Greek /el/ cluster (2026-07-16 — Ahrefs
+    // flagged the 11 Greek pages as orphans; this link puts the cluster one
+    // hop from every page on the site).
+    { name: "Ελληνικά", href: "/el/naylosi-skafous-ellada" },
     { name: "Privacy Policy", href: "/privacy-policy" },
     { name: "Cookie Policy", href: "/cookie-policy" },
     { name: "Accessibility", href: "/accessibility" },
@@ -307,7 +311,7 @@ const Footer = () => {
                 <Linkedin className="w-4 h-4 text-white/50 group-hover:text-[#C9A84C] transition-colors duration-300" />
               </a>
               <a
-                href="https://wa.me/17867988798"
+                href="https://api.whatsapp.com/send/?phone=17867988798"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#C9A84C]/40 transition-all duration-500"
@@ -461,7 +465,7 @@ const Footer = () => {
                   <span>+1 786 798 8798</span>
                 ) : (
                   <a
-                    href={`https://wa.me/17867988798?text=${encodeURIComponent("Hello George, I'm interested in chartering a yacht in Greece.")}`}
+                    href={`https://api.whatsapp.com/send/?phone=17867988798&text=${encodeURIComponent("Hello George, I'm interested in chartering a yacht in Greece.")}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ color: "inherit", textDecoration: "none" }}

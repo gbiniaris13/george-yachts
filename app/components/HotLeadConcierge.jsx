@@ -61,7 +61,7 @@ export default function HotLeadConcierge({ signal }) {
   const waMsg = yacht
     ? `Hi George, I am looking at ${yacht} on your site. Could you tell me about availability and the week it does best?`
     : "Hi George, I am browsing your fleet. Could you help me find the right yacht for my week?";
-  const waHref = `https://wa.me/17867988798?text=${encodeURIComponent(waMsg)}`;
+  const waHref = `https://api.whatsapp.com/send/?phone=17867988798&text=${encodeURIComponent(waMsg)}`;
 
   const submit = async (e) => {
     e.preventDefault();

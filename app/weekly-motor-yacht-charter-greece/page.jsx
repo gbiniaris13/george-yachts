@@ -26,7 +26,7 @@ import {
 
 const URL = `https://georgeyachts.com/${SLUG}`;
 // 2026-07-03: while the company WhatsApp is under review, route to /inquiry
-const WHATSAPP = WHATSAPP_DOWN ? "/inquiry" : `https://wa.me/${WHATSAPP_NUMBER}`;
+const WHATSAPP = WHATSAPP_DOWN ? "/inquiry" : `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}`;
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";

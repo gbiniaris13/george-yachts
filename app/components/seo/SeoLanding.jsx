@@ -52,6 +52,7 @@ import { sanityCardImg } from "@/lib/sanity-image";
 import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { relatedFor } from "@/lib/seoInternalLinks";
+import { GREEK_PAGES } from "@/lib/greekSeo";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import { SITE_UPDATED } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
@@ -149,7 +150,20 @@ function ServiceJsonLd({ pageData, yachts }) {
 
 export default async function SeoLanding({ pageData }) {
   const yachts = await loadFleetMatches(pageData.yachtFilter);
-  const related = relatedFor(pageData.urlPath, { max: 6 });
+  // Greek pages cross-link each OTHER (2026-07-16 — Ahrefs flagged all 11 as
+  // orphans: relatedFor only knows the English catalog, so the /el/ cluster
+  // had zero incoming internal links). Cyclic window: each page links the
+  // next 6, so every Greek page RECEIVES exactly 6 incoming links too.
+  const isGreek = pageData.lang === "el";
+  const related = isGreek
+    ? (() => {
+        const idx = GREEK_PAGES.findIndex((p) => p.urlPath === pageData.urlPath);
+        return Array.from({ length: Math.min(6, GREEK_PAGES.length - 1) }, (_, k) => {
+          const p = GREEK_PAGES[(idx + 1 + k) % GREEK_PAGES.length];
+          return { urlPath: p.urlPath, eyebrow: p.eyebrow, title: p.h1 };
+        });
+      })()
+    : relatedFor(pageData.urlPath, { max: 6 });
 
   const breadcrumbs = [
     { name: "Home", url: "https://georgeyachts.com/" },
@@ -562,10 +576,10 @@ export default async function SeoLanding({ pageData }) {
           <section style={{ padding: "72px 24px", borderTop: "1px solid rgba(248, 245, 240,0.06)" }}>
             <div style={{ maxWidth: 1100, margin: "0 auto" }}>
               <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px", textAlign: "center" }}>
-                Continue exploring
+                {isGreek ? "Συνεχίστε την εξερεύνηση" : "Continue exploring"}
               </p>
               <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(24px, 3.4vw, 34px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 36px", textAlign: "center", lineHeight: 1.2 }}>
-                Closely related to this page
+                {isGreek ? "Σχετικές σελίδες" : "Closely related to this page"}
               </h2>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14 }}>
                 {related.map((r) => (
@@ -617,7 +631,7 @@ export default async function SeoLanding({ pageData }) {
               {/* 2026-07-03 TEMPORARY — WhatsApp under review; route
                   to /inquiry while WHATSAPP_DOWN (lib/whatsappStatus). */}
               <a
-                href={WHATSAPP_DOWN ? "/inquiry" : `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi George, I am interested in ${pageData.h1 || "a Greek yacht charter"}. Could you share availability and rates?`)}`}
+                href={WHATSAPP_DOWN ? "/inquiry" : `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(`Hi George, I am interested in ${pageData.h1 || "a Greek yacht charter"}. Could you share availability and rates?`)}`}
                 {...(WHATSAPP_DOWN ? {} : { target: "_blank", rel: "noopener noreferrer" })}
                 style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", background: "transparent", color: "#C9A84C", border: "1px solid #C9A84C", textDecoration: "none" }}
               >

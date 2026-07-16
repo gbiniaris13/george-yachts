@@ -255,7 +255,7 @@ export default function ContactPage() {
                 <ul className="space-y-3 text-white/80">
                   <li>
                     <a
-                      href="https://wa.me/17867988798"
+                      href="https://api.whatsapp.com/send/?phone=17867988798"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-[#C9A84C] transition"

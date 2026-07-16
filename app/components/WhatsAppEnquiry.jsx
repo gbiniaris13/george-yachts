@@ -18,7 +18,7 @@ const WhatsAppEnquiry = ({ yachtName, mobileBar = true }) => {
   const encodedMessage = encodeURIComponent(
     `Hi George, I'm interested in ${yachtName} for a charter in Greece.`
   );
-  const whatsappUrl = `https://wa.me/17867988798?text=${encodedMessage}`;
+  const whatsappUrl = `https://api.whatsapp.com/send/?phone=17867988798&text=${encodedMessage}`;
 
   return (
     <>

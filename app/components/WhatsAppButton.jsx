@@ -88,7 +88,7 @@ export default function WhatsAppButton() {
   const buildHref = (msg) =>
     WHATSAPP_DOWN
       ? "/inquiry"
-      : `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+      : `https://api.whatsapp.com/send/?phone=${WA_NUMBER}&text=${encodeURIComponent(msg)}`;
 
   return (
     <>

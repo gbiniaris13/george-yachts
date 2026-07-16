@@ -123,7 +123,9 @@ export async function GET(request) {
       results.push({ name: "No links to locked US WhatsApp", ok: deadLinks === 0, status: 200, ms: 0, message: deadLinks === 0 ? "OK" : deadLinks + " link(s) still point to the locked number" });
     }
     if (!WHATSAPP_DOWN) {
-      const hasWa = bodies.some((b) => b.includes("wa.me/"));
+      // 2026-07-16: WhatsApp links point at api.whatsapp.com/send directly
+      // (wa.me always 302s - Ahrefs flagged 461 pages). Accept both forms.
+      const hasWa = bodies.some((b) => b.includes("wa.me/") || b.includes("api.whatsapp.com/send"));
       results.push({ name: "WhatsApp CTAs live", ok: hasWa, status: 200, ms: 0, message: hasWa ? "OK" : "CTAs should be live but no wa.me link found" });
     }
   } catch {}

@@ -94,7 +94,7 @@ export default async function ChatPage() {
     dates ? ` (${dates})` : ""
   }. `;
 
-  const waLink = `https://wa.me/${GEORGE_WHATSAPP_NUMBER}?text=${encodeURIComponent(prefill)}`;
+  const waLink = `https://api.whatsapp.com/send/?phone=${GEORGE_WHATSAPP_NUMBER}&text=${encodeURIComponent(prefill)}`;
 
   return (
     <article>

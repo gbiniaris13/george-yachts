@@ -116,7 +116,7 @@ export default function SoundFx() {
 
     // Hover handler — gated to whitelisted selectors so we don't
     // chime on every <div> the cursor crosses.
-    const HOVER_SEL = '[data-sound-hover], a[href^="https://calendly.com"], a[href^="https://wa.me"], button.gy-premium-cta';
+    const HOVER_SEL = '[data-sound-hover], a[href^="https://calendly.com"], a[href^="https://wa.me"], a[href^="https://api.whatsapp.com"], button.gy-premium-cta';
     function onMouseOver(e) {
       if (!armedRef.current) return;
       const target = e.target?.closest?.(HOVER_SEL);

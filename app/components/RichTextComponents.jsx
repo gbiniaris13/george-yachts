@@ -12,6 +12,7 @@ const INTERNAL_HOSTS = ["georgeyachts.com", "www.georgeyachts.com"];
 const OWN_PROPERTIES = [
   "calendly.com/george-georgeyachts",
   "wa.me/17867988798",
+  "api.whatsapp.com/send",
   "wa.me/306970380999",
   "linkedin.com/in/georgebiniaris",
   "instagram.com/georgeyachts",
