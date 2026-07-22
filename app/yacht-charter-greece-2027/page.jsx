@@ -321,29 +321,49 @@ export default function Charter2027Page() {
           <p style={eyebrowStyle}>The 2027 calendar, honestly</p>
           <h2 style={h2Style}>Which 2027 weeks go first, and who they suit</h2>
           <p style={bodyStyle}>
-            <strong>Late July and August</strong> go first, every year: European school holidays meet the
-            warmest sea, and the demand is structural. If your dates are tied to a school calendar, these
-            are exactly the weeks to reserve early, because everyone else&apos;s school calendar points at
-            them too. The{" "}
+            <strong>
+              Late{" "}
+              <Link href="/yacht-charter-greece-july-2027" style={goldLink}>
+                July
+              </Link>{" "}
+              and{" "}
+              <Link href="/yacht-charter-greece-august-2027" style={goldLink}>
+                August
+              </Link>
+            </strong>{" "}
+            go first, every year: European school holidays meet the warmest sea, and the demand is
+            structural. If your dates are tied to a school calendar, these are exactly the weeks to
+            reserve early, because everyone else&apos;s school calendar points at them too. The{" "}
             <Link href="/best-time-charter-yacht-greece-month-by-month-2026" style={goldLink}>
               month-by-month guide
             </Link>{" "}
             walks the whole year.
           </p>
           <p style={bodyStyle}>
-            <strong>Early September</strong> follows closely, and I will argue it is the finest water of
-            the season: the sea at its warmest, the Meltemi fading, the crowds gone. It is the month
-            couples and adult groups fight over quietly; I have made{" "}
+            <strong>
+              Early{" "}
+              <Link href="/yacht-charter-greece-september-2027" style={goldLink}>
+                September
+              </Link>
+            </strong>{" "}
+            follows closely, and I will argue it is the finest water of the season: the sea at its
+            warmest, the Meltemi fading, the crowds gone. It is the month couples and adult groups fight
+            over quietly; I have made{" "}
             <Link href="/blog/yacht-charter-greece-september-2026" style={goldLink}>
               the full case for September
             </Link>{" "}
             elsewhere, and the first September 2027 contract on my desk suggests the argument is landing.
           </p>
           <p style={bodyStyle}>
-            <strong>June</strong> is the connoisseur&apos;s value: long daylight, warm air, rates a step
-            below peak. <strong>May and early October</strong> reward flexibility most of all. And for
-            American families planning around US school breaks, Memorial Day week and the last two weeks
-            of June are the practical sweet spot: summer conditions before the European rush peaks.
+            <strong>
+              <Link href="/yacht-charter-greece-june-2027" style={goldLink}>
+                June
+              </Link>
+            </strong>{" "}
+            is the connoisseur&apos;s value: long daylight, warm air, rates a step below peak.{" "}
+            <strong>May and early October</strong> reward flexibility most of all. And for American
+            families planning around US school breaks, Memorial Day week and the last two weeks of June
+            are the practical sweet spot: summer conditions before the European rush peaks.
           </p>
         </div>
       </section>
