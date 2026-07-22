@@ -35,6 +35,7 @@ const staticRoutes = [
   // 2026-07-02 (ASK A Move 3a) - the exact-match head page for
   // "crewed yacht charter greece"; guide + live Private Fleet.
   { path: "/crewed-yacht-charter-greece", priority: 0.95, changeFrequency: "weekly" },
+  { path: "/yacht-charter-greece-2027", priority: 0.9, changeFrequency: "weekly" },
   { path: "/private-fleet", priority: 0.9, changeFrequency: "weekly" },
   { path: "/explorer-fleet", priority: 0.9, changeFrequency: "weekly" },
   { path: "/how-it-works", priority: 0.85, changeFrequency: "monthly" },
