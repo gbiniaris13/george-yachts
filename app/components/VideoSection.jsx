@@ -60,7 +60,6 @@
 // preload="auto" so the browser starts buffering immediately.
 
 import React, { useEffect, useRef, useState } from "react";
-import RevealHeading from "./RevealHeading";
 
 const HERO_VIDEO_BASE = "/videos/hero-loop";
 
@@ -191,22 +190,45 @@ export default function VideoSection() {
           className="flex w-full max-w-[1100px] flex-col items-center text-center"
           style={{ transform: revealed ? "translateY(0)" : "translateY(8px)", transition: "transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1)" }}
         >
-          {/* Headline - Boss-spec exactly: "Greek Waters. One Broker.
-              Total Discretion." Six words. Three propositions. Reads
-              with the deliberate punctuation pause - exclusivity →
-              personal service → UHNW priority. Font lands on the
-              Phase 28 display tier (Fraunces Thin 100) via the
-              .gy-hero-headline mapping in globals.css. */}
-          {/* 2026-07-03 (ASK B 2.2, DEMO pending George's yes) — the
-              headline rises line-by-line from a baseline mask via
-              RevealHeading (GSAP SplitText). Server HTML keeps the
-              text fully visible, so crawlers/no-JS/LCP see plain
-              type; `play={revealed}` syncs the rise with the block
-              fade. Revert = swap RevealHeading back to h1. */}
-          <RevealHeading
-            as="h1"
-            play={revealed}
-            delay={0.15}
+          {/* Eyebrow - the sacred-guest whisper above the headline
+              (Boss pick 2026-07-21, "option B": the Philoxenia idea
+              rides as a four-word crown so the headline stays fast).
+              Small caps, gold, wide tracking - the site's standard
+              eyebrow voice. */}
+          <p
+            style={{
+              fontFamily: "var(--gy-font-ui)",
+              fontSize: "clamp(9px, 0.9vw, 11px)",
+              letterSpacing: "0.42em",
+              textTransform: "uppercase",
+              color: "#C9A84C",
+              fontWeight: 600,
+              margin: "0 0 22px",
+            }}
+          >
+            The Guest Is Sacred · Greek Waters Exclusively
+          </p>
+
+          {/* Headline - Boss-spec 2026-07-21 (chosen from a 30-option
+              copy exploration): "A house, not a platform. We host you
+              at sea." Positioning first (what we are / are not), then
+              the promise, spoken to the reader. Replaces "Greek
+              Waters. One Broker. Total Discretion." - George's call:
+              "one broker" could read as small; "house" carries
+              boutique + capability without the size signal. Font
+              lands on the Phase 28 display tier (Fraunces Thin 100)
+              via the .gy-hero-headline mapping in globals.css. */}
+          {/* 2026-07-21 — RevealHeading (GSAP SplitText line rise)
+              REVERTED to a plain h1, per the component's own revert
+              note. Root cause, found while shipping the new copy:
+              the reveal tween was being killed mid-flight (the
+              `play` effect re-ran), leaving every line translated
+              inside its overflow-clip mask - i.e. the LIVE hero
+              headline rendered invisible. The demo never had
+              George's sign-off; a headline that always shows beats
+              a rise that sometimes hides it. The pearl-white finish
+              is pure CSS and stays. */}
+          <h1
             className="gy-hero-headline gy-pearl-white"
             style={{
               fontSize: "clamp(32px, 6.4vw, 84px)",
@@ -215,11 +237,11 @@ export default function VideoSection() {
               color: "#F8F5F0",
               margin: 0,
               textShadow: "0 12px 50px rgba(13, 27, 42, 0.55)",
-              maxWidth: "16ch",
+              maxWidth: "24ch",
             }}
           >
-            Greek Waters. One Broker. Total Discretion.
-          </RevealHeading>
+            A house, not a platform. We host you at sea.
+          </h1>
 
           {/* Subline - Boss-spec: 1 line, Switzer Light 300, 16 px,
               tracking 0.04em, ivory white at 70 % opacity. Lands on
@@ -238,7 +260,7 @@ export default function VideoSection() {
               maxWidth: "62ch",
             }}
           >
-            Exclusively crewed yacht charter in Greece - since the beginning.
+            No call centres, no handovers, no ticket numbers. A table set for you before you even land.
           </p>
 
           {/* CTA pair - primary (gold-bordered transparent) + secondary

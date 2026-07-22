@@ -72,7 +72,7 @@ export default function ThreeGreekWorlds() {
       <div className="gy-three-worlds__header">
         <p className="gy-three-worlds__eyebrow">The Fleet · Where We Sail</p>
         <h2 className="gy-three-worlds__title">
-          Three Greek Worlds. One Broker. Infinite Summer.
+          Three Greek Worlds. One House. Infinite Summer.
         </h2>
       </div>
 
