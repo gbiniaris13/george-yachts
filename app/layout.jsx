@@ -144,7 +144,7 @@ const fraunces = Fraunces({
 export const metadata = {
   metadataBase: new URL("https://georgeyachts.com"),
   title: {
-    default: "George Yachts | Featured in Forbes · Luxury Yacht Charter Greece",
+    default: "Luxury Yacht Charter Greece · A House, Not a Platform | George Yachts",
     template: "%s | George Yachts",
   },
   description:

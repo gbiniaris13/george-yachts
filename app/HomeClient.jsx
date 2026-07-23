@@ -116,6 +116,46 @@ const HomeClient = ({
           IYBA/MYBA. Every claim links to its evidence page. */}
       <TrustStrip />
 
+      {/* 2026-07-22 (20-charters wave) — the 2027 priority-window band.
+          The Early-Bird funnel page existed with zero visible doorways;
+          GSC showed the July searcher is last-minute while George's real
+          buyer (weekly 2027) decides in autumn. One quiet line, one link.
+          The first September 2027 charter signing 14 months out is true
+          and time-stamped (July 2026). */}
+      <section
+        aria-label="2027 charter season priority list"
+        style={{
+          background: "rgba(201,168,76,0.06)",
+          borderTop: "1px solid rgba(201,168,76,0.18)",
+          borderBottom: "1px solid rgba(201,168,76,0.18)",
+          padding: "18px 24px",
+          textAlign: "center",
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "var(--gy-font-ui)",
+            fontSize: "clamp(12px, 1.1vw, 14px)",
+            letterSpacing: "0.06em",
+            color: "rgba(248,245,240,0.85)",
+            margin: 0,
+          }}
+        >
+          The 2027 calendars open this autumn. The first September 2027 charter is already at signatures.{" "}
+          <a
+            href="/yacht-charter-greece-2027"
+            style={{
+              color: "#C9A84C",
+              textDecoration: "none",
+              borderBottom: "1px solid rgba(201,168,76,0.5)",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Join the 2027 priority list
+          </a>
+        </p>
+      </section>
+
       {/* TrendingYachts ("This Week's Selection") removed 2026-05-07
           per Boss directive — the homepage was reading like a travel-
           agency carousel of bestsellers. Yacht discovery surface lives
