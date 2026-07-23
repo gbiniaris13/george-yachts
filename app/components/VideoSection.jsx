@@ -231,16 +231,25 @@ export default function VideoSection() {
           <h1
             className="gy-hero-headline gy-pearl-white"
             style={{
-              fontSize: "clamp(32px, 6.4vw, 84px)",
-              lineHeight: 1.05,
+              fontSize: "clamp(30px, 5.6vw, 76px)",
+              lineHeight: 1.08,
               letterSpacing: "-0.02em",
               color: "#F8F5F0",
               margin: 0,
               textShadow: "0 12px 50px rgba(13, 27, 42, 0.55)",
-              maxWidth: "24ch",
             }}
           >
-            A house, not a platform. We host you at sea.
+            {/* George 2026-07-22: each sentence on its OWN line, never
+                broken mid-phrase ("A house, not a / platform. We / host
+                you at sea" read as noise). Two block spans + balanced
+                wrap; font clamp trimmed so each line fits one row on
+                desktop. */}
+            <span style={{ display: "block", textWrap: "balance" }}>
+              A house, not a platform.
+            </span>
+            <span style={{ display: "block", textWrap: "balance" }}>
+              We host you at sea.
+            </span>
           </h1>
 
           {/* Subline - Boss-spec: 1 line, Switzer Light 300, 16 px,
@@ -258,6 +267,7 @@ export default function VideoSection() {
               letterSpacing: "0.04em",
               color: "rgba(248,245,240,0.78)",
               maxWidth: "62ch",
+              textWrap: "balance",
             }}
           >
             No call centres, no handovers, no ticket numbers. A table set for you before you even land.

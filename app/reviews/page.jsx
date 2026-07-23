@@ -273,7 +273,7 @@ export default function ReviewsPage() {
                     color: "rgba(248,245,240,0.6)",
                   }}
                 >
-                  {aggregate.reviewCount} verified charters
+                  Five-star on Google
                 </span>
               </div>
             )}

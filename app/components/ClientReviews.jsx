@@ -49,8 +49,11 @@ export default function ClientReviews() {
               {agg.ratingValue}
             </span>
           </div>
+          {/* George 2026-07-22: never show the review COUNT — it goes
+              stale the moment a new review lands (said "4" while Google
+              showed 5). Score + the reviews themselves carry the proof. */}
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, letterSpacing: "0.08em", color: "rgba(13,27,42,0.6)", margin: "14px 0 0", textAlign: "center" }}>
-            {agg.reviewCount} five-star reviews on Google
+            Five-star reviews on Google
           </p>
         </div>
 
