@@ -35,7 +35,9 @@ greece", "greece sailing catamaran", "greek islands boat", "flotilla greece".
 > It splits into four buckets, and the headline weekly rate is only the first.
 > For a ~26m crewed motor yacht in peak season you're looking at roughly
 > €45-50k/week base. On top: APA (Advance Provisioning Allowance) ~30% for
-> fuel, food, berths; Greek VAT (13% on crewed charters over 48h); and crew
+> fuel, food, berths; Greek VAT (invoiced at the yacht's certified rate, in
+> practice 5.2-12%, under the statutory 13% ceiling for weekly crewed
+> charters; short or bareboat charters are 24%); and crew
 > gratuity (the MYBA guideline is ~10-15% of the base). So a €47k base lands
 > nearer €75-80k all-in. The big lever nobody mentions: **season**. The same
 > boat in late September/October can be 35-45% cheaper, with warmer water and
@@ -103,3 +105,43 @@ greece", "greece sailing catamaran", "greek islands boat", "flotilla greece".
 > yacht, fixing problems mid-charter. If you know exactly what you want and love
 > running a boat, go direct. If you want it handled, use a broker. I am one (in
 > Greece), so weigh that — but that's the honest split.
+
+<!-- Added 2026-07-27 from the weekly GSC routine: the day-charter cluster
+     (126 impressions for "day yacht charter greece" plus the "day yacht" and
+     "daily yacht charter" variants) and "difference between yacht charter
+     broker and yacht sales broker" (32 impressions) are both live demand with
+     no ready answer in this file. -->
+
+## 7 — "We're in Greece for a week. Is a day charter worth it, or should we do the whole week?"
+> Depends how many days you actually have. A day charter is 8-12 hours from
+> the same port: out at 10, a swim stop or two, lunch aboard, back by 7. Real
+> Greek day rates run about €600-2,500 for small motor boats, €3,500-8,000 for
+> a 15-24m motor yacht, €10,000-30,000 for 24-40m luxury. One thing nobody
+> tells you: a day charter is not a weekly rate divided by seven, it's closer
+> to a quarter or a third of it, because the crew day, the fuel and the lost
+> week for the operator all price in. So if you're in Greece for 5-7 days,
+> two or three day charters cost more than a proper 4-night crewed charter
+> where you sleep aboard and wake up in a different bay. Also worth knowing:
+> charters of 48 hours or less carry Greek VAT at 24%, while a weekly crewed
+> charter is invoiced at the yacht's certified rate, usually 5.2-12%. Day
+> charters make sense as an add-on to a land holiday, or for an event
+> (birthday, proposal). For an actual holiday, do the nights. I broker these
+> in Greece for a living, happy to price both side by side.
+
+## 8 — "Charter broker, central agent, yacht sales broker: who is who, and does it change what I pay?"
+> They're different jobs sharing a word. A **charter broker** arranges the
+> hire of a yacht plus crew for a period, on the MYBA-standard charter
+> agreement; nothing changes hands but time aboard. A **central agent** is
+> appointed by one yacht's owner to market that specific yacht, so she's
+> representing the boat, not you. A **yacht sales broker** handles the sale of
+> the vessel itself: memorandum of agreement, survey, sea trial, title. Some
+> houses run both a charter desk and a sales desk, which is fine, but it's
+> worth asking which desk you're sitting at, because a shortlist can quietly
+> be built around a boat someone is also trying to sell. On price: under the
+> MYBA framework the brokerage side is remunerated within the charter fee
+> between the professional parties, so the figure you approve in writing is
+> the figure you pay. If a quote grows a new line later, that's the tell.
+> Whoever you use, the three checks are the same before any money moves: a
+> serial-numbered MYBA-standard contract, the yacht's Greek charter licence,
+> and every cost line (base, APA, VAT, gratuity) in writing. Never pay an
+> individual's personal account. Disclosure: I'm a charter broker in Athens.

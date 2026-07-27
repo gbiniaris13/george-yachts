@@ -37,6 +37,9 @@ const Footer = () => {
   const companyLinks = [
     { name: "About Us", href: "/about-us" },
     { name: "Our Team", href: "/team" },
+    // 2026-07-27 (weekly index audit): the broker profile is the site's
+    // author and E-E-A-T anchor, and Google had never seen the URL.
+    { name: "George P. Biniaris", href: "/team/george-biniaris" },
     { name: "Credentials", href: "/credentials" },
     // 2026-05-14 (Ahrefs orphan-page audit) - /press, /partners,
     // /events had zero incoming internal links. All three are real,
@@ -109,6 +112,11 @@ const Footer = () => {
         { name: "Compare Yachts", href: "/compare" },
         { name: "Greece vs Other Destinations →", href: "/comparisons" },
         { name: "Crewed Charter Greek Islands", href: "/crewed-yacht-charter-greek-islands-2026" },
+        // 2026-07-27 (weekly index audit): the kosher vertical shipped
+        // 2026-07-23 with no sitewide inbound links; both pages read
+        // "URL is unknown to Google" four days later.
+        { name: "Kosher Charter", href: "/kosher-yacht-charter-greece" },
+        { name: "Israeli Clients", href: "/yacht-charter-greece-israeli-clients" },
       ],
     },
     // 2026-06-10 (GSC-driven). The cost/pricing cluster was absent
@@ -128,6 +136,12 @@ const Footer = () => {
         { name: "APA Explained", href: "/advance-provisioning-allowance-apa-greek-yacht-charter-explained" },
         { name: "Greek VAT Explained", href: "/greek-yacht-charter-vat-explained-2026" },
         { name: "Chartering with 12+ Guests", href: "/blog/12-passenger-rule-greek-yacht-charter-groups-of-14" },
+        // 2026-07-27 (weekly index audit): both pages came back "URL is
+        // unknown to Google" with zero server-rendered inbound links
+        // sitewide, though one is the pricing cluster's research asset
+        // and the other its gratuity explainer.
+        { name: "Charter Pricing Index 2026", href: "/greek-yacht-charter-pricing-index-2026" },
+        { name: "Crew Gratuity Guide 2026", href: "/greek-yacht-charter-crew-gratuity-guide-2026" },
         { name: "Market Reports →", href: "/market-reports" },
       ],
     },
@@ -141,6 +155,12 @@ const Footer = () => {
         { name: "Corfu Anchorages", href: "/yacht-charter-corfu-anchorages" },
         { name: "Paros Anchorages", href: "/yacht-charter-paros-anchorages" },
         { name: "Andros", href: "/yacht-charter-andros" },
+        // 2026-07-27 (weekly index audit): three island pages Google has
+        // either never seen or crawled without indexing. Milos is the
+        // fastest-rising island in our own 2026 Index data.
+        { name: "Milos", href: "/yacht-charter-milos" },
+        { name: "Ios", href: "/yacht-charter-ios" },
+        { name: "Kefalonia", href: "/yacht-charter-kefalonia" },
         { name: "Naxos", href: "/yacht-charter-naxos" },
         { name: "Sifnos", href: "/yacht-charter-sifnos" },
         { name: "Ithaca", href: "/yacht-charter-ithaca" },
@@ -156,6 +176,12 @@ const Footer = () => {
       heading: "Yacht Type & Itinerary",
       links: [
         { name: "All Yacht Types →", href: "/yacht-types" },
+        // 2026-07-27 (weekly index audit): two yacht-type money pages
+        // with no sitewide inbound links. "best platforms to charter a
+        // luxury power catamaran in greece" is already an impression
+        // source at position 13.6 with nowhere strong to land.
+        { name: "Power Catamaran Charter", href: "/power-catamaran-charter-greece" },
+        { name: "Superyacht Charter Greece", href: "/superyacht-charter-greece" },
         { name: "All Best-Yacht Guides →", href: "/best-yachts" },
         { name: "Best Catamarans", href: "/best-catamarans-greece-charter" },
         { name: "Best Gulets", href: "/best-gulets-greece-authentic-experience" },
