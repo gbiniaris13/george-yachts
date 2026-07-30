@@ -13,7 +13,10 @@ export const metadata = {
   description:
     "Curated 'best yacht for...' guides for Greek charter - large groups, families, couples, corporate, speed, August superyachts and more.",
   alternates: { canonical: URL },
-  openGraph: { title: "Best Yachts in Greece by Use Case", url: URL, type: "website" },
+  openGraph: { title: "Best Yachts in Greece by Use Case", url: URL, type: "website",
+    images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US", },
 };
 
 export default function BestYachtsHub() {

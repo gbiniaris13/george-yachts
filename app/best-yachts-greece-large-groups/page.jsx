@@ -16,6 +16,8 @@ export const metadata = {
     url: `https://georgeyachts.com/best-yachts-greece-large-groups`,
     type: "article",
     images: [`/api/og?title=${encodeURIComponent(PAGE.h1)}&eyebrow=${encodeURIComponent(PAGE.eyebrow)}`],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 

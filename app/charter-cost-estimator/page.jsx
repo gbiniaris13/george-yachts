@@ -24,6 +24,8 @@ export const metadata = {
     url: "https://georgeyachts.com/charter-cost-estimator",
     type: "website",
     images: [`/api/og?title=${encodeURIComponent("Greek Charter Cost Estimator")}&eyebrow=${encodeURIComponent("Charter planning tool")}`],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 

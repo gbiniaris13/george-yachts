@@ -338,14 +338,16 @@ export default async function RootLayout({ children }) {
             opens the TLS connection during HTML parse and shaves
             150-300 ms off the first Sanity image fetch. */}
         <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
-        {/* 2026-05-18 — Pexels + Unsplash are whitelisted as next/image
-            remotePatterns for destination + island stock photography
-            (per next.config.mjs). The yacht-itineraries + greece-by-yacht
-            + destinations/[region] pages fetch from them. Preconnect
-            mirrors the cdn.sanity.io treatment: open TLS during HTML
-            parse so the first image fetch starts immediately. */}
-        <link rel="preconnect" href="https://images.pexels.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+        {/* 2026-07-30 — the Pexels + Unsplash preconnects are gone. They were
+            added 2026-05-18 for destination stock photography, but every one
+            of those images has since been uploaded into Sanity and is served
+            from cdn.sanity.io: a grep across all 479 built pages finds zero
+            images.pexels.com / images.unsplash.com assets. They were costing
+            us twice over. Two unused TLS handshakes on every page load, and
+            the bare https://images.pexels.com href was being crawled as an
+            external 4XX on every page (Ahrefs, 30/07/2026). If stock photos
+            from either host ever come back, restore the preconnect with
+            them. */}
         {/* 2026-05-14 — Ahrefs flagged 459 pages "Page has broken CSS".
             Root cause: the fontshare /v2/css endpoint returns 500 for
             ANY italic variant (400i / 500i / etc) — confirmed by

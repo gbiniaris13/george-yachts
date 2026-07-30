@@ -7,7 +7,7 @@ import { pageMeta } from "@/lib/pageMeta";
 export const metadata = pageMeta({
   title: "Valleria Karvouni - Charter Logistics",
   description:
-    "Meet Valleria Karvouni, Administrative & Charter Logistics Coordinator at George Yachts. Valleria supports our administrative core with precision and discipline.",
+    "Valleria Karvouni, Administrative and Charter Logistics Coordinator at George Yachts, supporting our administrative core with precision.",
   path: "/team/valleria-karvouni",
   type: "profile",
 });

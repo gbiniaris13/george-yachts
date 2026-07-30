@@ -22,6 +22,8 @@ export const metadata = {
     url: "https://georgeyachts.com/charter-calendar-heat-map",
     type: "website",
     images: [`/api/og?title=${encodeURIComponent("Charter Calendar Heat Map")}&eyebrow=${encodeURIComponent("Charter planning tool")}`],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 

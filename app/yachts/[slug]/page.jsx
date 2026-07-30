@@ -78,6 +78,8 @@ export async function generateMetadata({ params }) {
       url: canonical,
       images: yacht.imageUrl ? [{ url: yacht.imageUrl }] : [],
       type: 'website',
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
     },
     twitter: {
       card: 'summary_large_image',

@@ -11,6 +11,8 @@ export const metadata = {
     title: 'Which Greek Island Are You? | George Yachts',
     description: 'Discover your perfect Greek island match - take the quiz!',
     url: 'https://georgeyachts.com/island-quiz',
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
   },
 };
 

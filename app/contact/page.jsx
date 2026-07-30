@@ -17,7 +17,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 export const metadata = {
   title: { absolute: "Contact George Yachts | Athens Office, Phone, WhatsApp" },
   description:
-    "Reach George Yachts Brokerage House - Athens HQ at Charilaou Trikoupi 190A, Kifisia 14564. Phone, WhatsApp, email, Calendly. IYBA member broker for Greek waters yacht charter.",
+    "Reach George Yachts Brokerage House, Athens HQ at Charilaou Trikoupi 190A, Kifisia 14564. Phone, WhatsApp, email, Calendly. IYBA member broker.",
   alternates: { canonical: "https://georgeyachts.com/contact" },
   openGraph: {
       images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
@@ -26,6 +26,8 @@ export const metadata = {
       "Athens-based luxury yacht charter brokerage. Direct phone, WhatsApp, Calendly. IYBA member.",
     url: "https://georgeyachts.com/contact",
     type: "website",
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
   },
 };
 

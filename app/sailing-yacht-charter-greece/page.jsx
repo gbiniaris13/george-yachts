@@ -19,6 +19,9 @@ export const metadata = {
     description: PAGE.seoDescription,
     url: PAGE.canonical,
     type: "website",
+    images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 

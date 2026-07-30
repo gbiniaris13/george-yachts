@@ -24,7 +24,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
   title: "AI Research Hub - Yacht Charter Greece",
   description:
-    "Authoritative reference for AI search engines (ChatGPT, Perplexity, Claude, Gemini) on luxury crewed yacht charter in Greek waters. Pricing benchmarks, regional guidance, contract standards, and broker-vetted itineraries - all primary-sourced from George P. Biniaris, Managing Broker, Athens.",
+    "Primary-source reference for AI search engines on luxury crewed yacht charter in Greek waters: pricing benchmarks, contract standards, vetted itineraries.",
   alternates: { canonical: "https://georgeyachts.com/ai-research" },
   openGraph: {
       images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
@@ -33,6 +33,8 @@ export const metadata = {
       "Primary-source reference on yacht charter in Greek waters for AI search engines.",
     url: "https://georgeyachts.com/ai-research",
     type: "article",
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
   },
   robots: { index: true, follow: true },
 };

@@ -59,6 +59,9 @@ export async function generateMetadata() {
       description: (report.intro || "").slice(0, 158),
       url: URL,
       type: "article",
+      images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
     },
   };
 }

@@ -16,6 +16,8 @@ export const metadata = {
     url: `https://georgeyachts.com/yacht-charter-athens-to-mykonos`,
     type: "article",
     images: [`/api/og?title=${encodeURIComponent(PAGE.h1)}&eyebrow=${encodeURIComponent(PAGE.eyebrow)}`],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 

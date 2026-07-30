@@ -28,13 +28,16 @@ export const revalidate = 60;
 export const metadata = {
   title: "The Journal | Luxury Yacht Charter Insights",
   description:
-    "Expert editorial, market analysis, and insider insights on luxury yacht charter in Greece. Booking guides, itinerary tips, industry trends. By George P. Biniaris, Managing Broker.",
+    "Expert editorial and market analysis on luxury yacht charter in Greece: booking guides, itinerary tips, industry trends. By George P. Biniaris.",
   alternates: { canonical: "https://georgeyachts.com/blog" },
   openGraph: {
     title: "The Journal | George Yachts Maritime Intelligence",
     description: "Expert insights on luxury yacht charter in Greece. Booking guides, market trends, insider tips from an IYBA member broker.",
     url: "https://georgeyachts.com/blog",
     type: "website",
+    images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 

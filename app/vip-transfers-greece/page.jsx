@@ -11,7 +11,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: "VIP Transfers Greece | Luxury Chauffeur",
   description:
-    "Luxury VIP transfers in Athens, Mykonos, Santorini, and across Greece. Professional chauffeurs, premium vehicles. Airport to marina, seamless coordination with yacht charters.",
+    "Luxury VIP transfers in Athens, Mykonos, Santorini and across Greece. Professional chauffeurs, premium vehicles, airport to marina coordination.",
   path: "/vip-transfers-greece",
 });
 

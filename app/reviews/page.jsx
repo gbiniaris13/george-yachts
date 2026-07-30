@@ -22,6 +22,8 @@ export const metadata = {
     title: "Charter Reviews | George Yachts",
     description: "Verified yacht charter reviews from George Yachts clients across Greek waters. IYBA member, MYBA-standard contracts.",
     url: "https://georgeyachts.com/reviews",
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
   },
 };
 

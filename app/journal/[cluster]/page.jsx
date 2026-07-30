@@ -35,6 +35,8 @@ export async function generateMetadata({ params }) {
       type: "website",
       url: `https://georgeyachts.com/journal/${cluster.slug}`,
       images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
     },
   };
 }

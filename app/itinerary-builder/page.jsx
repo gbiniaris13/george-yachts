@@ -5,7 +5,7 @@ export const metadata = {
   // 2026-06-25: was double-branded ("...| George Yachts" + the site-wide
   // "%s | George Yachts" template = 84 chars). `absolute` keeps one brand.
   title: { absolute: 'Build Your Greek Islands Itinerary | George Yachts' },
-  description: 'Design your perfect Greek island-hopping route. Click islands on our interactive map, see distances in nautical miles, and send your dream itinerary to George for a personalized proposal.',
+  description: 'Design your Greek island-hopping route. Click islands on the interactive map, see distances in nautical miles, and send the itinerary to George.',
   alternates: { canonical: 'https://georgeyachts.com/itinerary-builder' },
   openGraph: {
       type: "website",
@@ -13,6 +13,8 @@ export const metadata = {
     title: 'Build Your Greek Islands Itinerary | George Yachts',
     description: 'Interactive route planner for luxury yacht charters in Greek waters.',
     url: 'https://georgeyachts.com/itinerary-builder',
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
   },
 };
 

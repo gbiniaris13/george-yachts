@@ -18,6 +18,8 @@ export const metadata = {
     publishedTime: PAGE.publishedAt,
     authors: ["George P. Biniaris"],
     images: [`/api/og?title=${encodeURIComponent(PAGE.period)}&eyebrow=${encodeURIComponent("Market Research")}`],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 

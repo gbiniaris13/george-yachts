@@ -129,6 +129,8 @@ export async function generateMetadata({ params }) {
       url: canonical,
       images: d.heroImage ? [{ url: d.heroImage }] : [],
       type: "website",
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
     },
   };
 }

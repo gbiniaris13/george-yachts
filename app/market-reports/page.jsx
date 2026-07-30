@@ -34,6 +34,8 @@ export const metadata = {
     url: "https://georgeyachts.com/market-reports",
     type: "website",
     images: [`/api/og?title=${encodeURIComponent("Market Reports")}&eyebrow=${encodeURIComponent("Research")}`],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 

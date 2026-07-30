@@ -11,7 +11,9 @@ export const metadata = {
   title: { absolute: PAGE.seoTitle },
   description: PAGE.seoDescription,
   alternates: { canonical: PAGE.canonical },
-  openGraph: { title: PAGE.seoTitle, description: PAGE.seoDescription, url: PAGE.canonical, type: "article", images: [`/api/og?title=${encodeURIComponent(PAGE.h1)}&eyebrow=${encodeURIComponent(PAGE.eyebrow)}`] },
+  openGraph: { title: PAGE.seoTitle, description: PAGE.seoDescription, url: PAGE.canonical, type: "article", images: [`/api/og?title=${encodeURIComponent(PAGE.h1)}&eyebrow=${encodeURIComponent(PAGE.eyebrow)}`],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US", },
 };
 
 // Phase 7 R23 + R25 (2026-05-12, technical brief Priorities 1B + 1D):

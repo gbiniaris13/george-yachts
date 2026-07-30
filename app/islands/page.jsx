@@ -14,7 +14,9 @@ export const metadata = {
   description:
     "Every Greek island we charter, by region - Cyclades, Ionian, Saronic, Dodecanese, Sporades. Matched yachts, sample routes, and seasonality for each.",
   alternates: { canonical: URL },
-  openGraph: {  title: "Yacht Charter by Greek Island", url: URL, type: "website", images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }] },
+  openGraph: {  title: "Yacht Charter by Greek Island", url: URL, type: "website", images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US", },
 };
 
 export default function IslandsHub() {

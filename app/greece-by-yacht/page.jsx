@@ -29,9 +29,9 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const revalidate = 3600;
 
 export const metadata = {
-  title: "Greece by Yacht | Ten Stops Across the Aegean",
+  title: "Greece by Yacht | Ten Aegean Stops",
   description:
-    "A broker's diary across ten places we keep returning to with charter clients - Mykonos, Folegandros, Milos, Hydra, Symi and beyond. Editorial stops with the yachts that do each route best.",
+    "A broker's diary across ten places we keep returning to with charter clients: Mykonos, Folegandros, Milos, Hydra, Symi and beyond, with the yachts.",
   alternates: { canonical: "https://georgeyachts.com/greece-by-yacht" },
   openGraph: {
     title: "Greece by Yacht | George Yachts",
@@ -39,6 +39,9 @@ export const metadata = {
       "Ten cinematic stops across the Aegean - editorial routes with the yachts that do each one best.",
     url: "https://georgeyachts.com/greece-by-yacht",
     type: "article",
+    images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 

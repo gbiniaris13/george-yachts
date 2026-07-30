@@ -12,7 +12,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: "Private Jet & Helicopter Charter Greece",
   description:
-    "Book private jets and helicopters in Greece with George Yachts. 24/7 bespoke aviation for Athens, Greek islands, and the Mediterranean. Seamless yacht-to-jet coordination.",
+    "Book private jets and helicopters in Greece with George Yachts. Bespoke aviation for Athens and the Greek islands, coordinated with your charter.",
   path: "/private-jet-charter",
 });
 

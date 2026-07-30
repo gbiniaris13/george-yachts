@@ -30,9 +30,9 @@ const REGION_DATA = {
   cyclades: {
     title: "Yacht Charter Cyclades",
     h1: "Yacht Charter · Cyclades",
-    metaTitle: "Yacht Charter Cyclades 2026 | Mykonos · Santorini · Paros",
+    metaTitle: "Yacht Charter Cyclades 2026 | Mykonos, Paros",
     metaDescription:
-      "Crewed yacht charter across the Cyclades: Mykonos, Santorini, Paros, Milos, Naxos. Real broker advice from George Yachts (IYBA member). 2026 rates, weather notes, itineraries.",
+      "Crewed yacht charter across the Cyclades: Mykonos, Santorini, Paros, Milos, Naxos. Broker advice from George Yachts. 2026 rates and itineraries.",
     intro:
       "The Cyclades (Mykonos, Santorini, Paros, Milos, Naxos, Ios, Folegandros, Antiparos) is the most photographed yacht charter region in the world. It is also the most weather-dependent: the Meltemi wind shapes every itinerary July through August. We charter here every week of the season and write the itineraries that account for the weather, not the brochure.",
     queries: [
@@ -51,7 +51,7 @@ const REGION_DATA = {
   ionian: {
     title: "Yacht Charter Ionian",
     h1: "Yacht Charter · Ionian Islands",
-    metaTitle: "Yacht Charter Ionian Islands 2026 | Corfu · Lefkada · Kefalonia",
+    metaTitle: "Yacht Charter Ionian Islands 2026 | Corfu",
     metaDescription:
       "Crewed yacht charter in the Ionian: Corfu, Lefkada, Kefalonia, Zakynthos, Ithaca. Calm waters, family-friendly. George Yachts IYBA broker advice + 2026 rates.",
     intro:
@@ -72,7 +72,7 @@ const REGION_DATA = {
   saronic: {
     title: "Yacht Charter Saronic Gulf",
     h1: "Yacht Charter · Saronic Gulf",
-    metaTitle: "Yacht Charter Saronic Gulf 2026 | Hydra · Spetses · Aegina",
+    metaTitle: "Yacht Charter Saronic Gulf 2026 | Hydra",
     metaDescription:
       "Crewed yacht charter in the Saronic Gulf: Hydra, Spetses, Aegina, Poros. The 5-day Greek charter that starts 45 minutes from Athens airport.",
     intro:
@@ -113,6 +113,9 @@ export async function generateMetadata({ params }) {
       description: data.metaDescription,
       url: `https://georgeyachts.com/yacht-charter/${region}`,
       type: "website",
+      images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
     },
   };
 }

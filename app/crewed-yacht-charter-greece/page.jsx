@@ -40,7 +40,7 @@ const CANONICAL = "https://georgeyachts.com/crewed-yacht-charter-greece";
 export const metadata = {
   title: `Crewed Yacht Charter Greece: Rates & Fleet`,
   description:
-    `Crewed yacht charter in Greece with a full professional crew: 2026 weekly rates by yacht type and region, the real VAT rates, per-person math, and George's curated Private Fleet. IYBA member, MYBA contracts.`,
+    `Crewed yacht charter in Greece with full professional crew: 2026 weekly rates by yacht type and region, the real VAT rates, and the curated Private Fleet.`,
   alternates: { canonical: CANONICAL },
   openGraph: {
       type: "website",
@@ -51,6 +51,8 @@ export const metadata = {
     images: [
       `/api/og?title=${encodeURIComponent("Crewed Yacht Charter Greece")}&eyebrow=${encodeURIComponent("Full Crew · 2026")}`,
     ],
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
   },
 };
 

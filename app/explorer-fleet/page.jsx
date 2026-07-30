@@ -20,6 +20,9 @@ export async function generateMetadata() {
       title: "Explorer Fleet | George Yachts",
       description: `More islands. More adventure. From €${low.toLocaleString()} to €${high.toLocaleString()} per person per week.`,
       url: "https://georgeyachts.com/explorer-fleet",
+      images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
     },
   };
 }

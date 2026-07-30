@@ -19,7 +19,7 @@ export const revalidate = 86400;
 export const metadata = {
   title: { absolute: "Greek Yacht Charter 2027 Outlook | Data + Sources" },
   description:
-    "A sourced 2027 outlook for Greek yacht charter: Greece up 24% in 2025 and 40% of Eastern Med bookings, a 260M euro port programme, the catamaran fuel-economics shift, and where motor yachts go next. Every figure cited.",
+    "A sourced 2027 outlook for Greek yacht charter: Greece up 24% in 2025, 40% of Eastern Med bookings, a 260M euro port programme. Every figure cited.",
   alternates: { canonical: "https://georgeyachts.com/greek-yacht-charter-2027-outlook" },
   openGraph: {
     title: "Greek Yacht Charter: The 2027 Outlook",
@@ -27,6 +27,9 @@ export const metadata = {
       "Greece up 24% in 2025, 40% of Eastern Med charter, a 260M euro port programme, and the catamaran-vs-motor fuel story. A fully-sourced outlook from George Yachts.",
     url: "https://georgeyachts.com/greek-yacht-charter-2027-outlook",
     type: "article",
+    images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 

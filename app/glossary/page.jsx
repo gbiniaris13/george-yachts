@@ -23,7 +23,7 @@ const CREAM = "#F8F5F0";
 export const revalidate = 86400;
 
 export const metadata = {
-  title: "Yacht Charter Glossary: 30 UHNW Terms Explained",
+  title: "Yacht Charter Glossary: 30 UHNW Terms",
   description:
     "From APA to flybridge - every yacht charter term a luxury buyer needs to know, defined by George P. Biniaris. The definitive 2026 UHNW yacht charter glossary.",
   alternates: { canonical: "https://georgeyachts.com/glossary" },
@@ -36,6 +36,8 @@ export const metadata = {
     images: [
       `/api/og?title=${encodeURIComponent("Yacht Charter Glossary")}&eyebrow=${encodeURIComponent("Reference")}`,
     ],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 

@@ -64,7 +64,7 @@ const howToSchema = {
 export const metadata = {
   title: "How It Works | Yacht Charter Process",
   description:
-    "From first conversation to boarding day - 5 simple steps to charter a luxury yacht in Greece with George Yachts. MYBA contracts, transparent pricing, personal broker service.",
+    "From first conversation to boarding day, five steps to charter a luxury yacht in Greece. MYBA contracts, transparent pricing, personal broker service.",
   alternates: {
     canonical: "https://georgeyachts.com/how-it-works",
   },
@@ -74,6 +74,8 @@ export const metadata = {
     title: "How It Works | George Yachts Charter Process",
     description: "5 steps from vision to voyage. Personal broker service, MYBA contracts, transparent pricing.",
     url: "https://georgeyachts.com/how-it-works",
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
   },
 };
 

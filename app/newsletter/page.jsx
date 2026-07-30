@@ -25,6 +25,8 @@ export const metadata = {
     description:
       "Four short letters from the Greek waters. Pick the one that fits - or more than one. Insider, never noisy. Always reply-to-george.",
     url: "https://georgeyachts.com/newsletter",
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
   },
 };
 

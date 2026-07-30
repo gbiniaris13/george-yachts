@@ -24,6 +24,8 @@ export const metadata = {
     url: "https://georgeyachts.com/sailing-distance-calculator",
     type: "website",
     images: [`/api/og?title=${encodeURIComponent("Greek Islands Sailing Distance Calculator")}&eyebrow=${encodeURIComponent("Charter planning tool")}`],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 

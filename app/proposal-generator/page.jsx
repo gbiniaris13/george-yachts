@@ -12,6 +12,8 @@ export const metadata = {
     title: "Instant Charter Proposal | George Yachts",
     description: "Generate a personalized yacht charter proposal in seconds. Select your yacht, dates, and preferences - receive a complete breakdown instantly.",
     url: "https://georgeyachts.com/proposal-generator",
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
   },
 };
 

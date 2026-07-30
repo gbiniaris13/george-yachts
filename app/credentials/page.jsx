@@ -28,7 +28,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
   title: "Credentials: Forbes, IYBA, MYBA",
   description:
-    "George Yachts is featured in Forbes (May 2026), is an IYBA Charter Active Member, uses MYBA-standard charter contracts, and operates as a Wyoming-registered LLC with Athens-based brokerage operations.",
+    "George Yachts is featured in Forbes (May 2026), is an IYBA Charter Active Member, uses MYBA-standard contracts, and is a Wyoming-registered LLC.",
   alternates: { canonical: "https://georgeyachts.com/credentials" },
   openGraph: {
     title: "Credentials | George Yachts",
@@ -36,6 +36,9 @@ export const metadata = {
       "Independent journalism, professional broker membership, MYBA-standard contracts, US/Greek dual residency - the four trust surfaces that matter.",
     url: "https://georgeyachts.com/credentials",
     type: "article",
+    images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 

@@ -13,7 +13,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: "Signature Yacht Itineraries Greece",
   description:
-    "3 signature Greek yacht charter itineraries personally sailed by George Biniaris. Cyclades Classic, Saronic Elegance, Ionian Dream. Day-by-day routes with insider tips.",
+    "Three signature Greek yacht charter itineraries personally sailed by George Biniaris: Cyclades Classic, Saronic Elegance, Ionian Dream.",
   path: "/yacht-itineraries-greece",
 });
 

@@ -14,6 +14,8 @@ import RelatedArticles from "@/components/RelatedArticles";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import BlogPostFooter from "@/components/BlogPostFooter";
 import { autoLinkPortableText } from "@/lib/auto-link-content";
+import { blogSeoTitle } from "@/lib/blogSeoTitles";
+import { getClustersForPost } from "@/lib/journal-clusters";
 
 // Non-CDN client for real-time content fetching.
 // withRetry — see lib/sanity.js: rides out transient CDN connect-timeouts
@@ -198,7 +200,13 @@ export async function generateMetadata({ params }) {
     // appends "| George Yachts"): our AEO question-titles are long by
     // design, and the extra 14 chars pushed 31 posts past the 60-char
     // mark on the Ahrefs crawl. OG keeps the Journal branding.
-    title: post.title,
+    //
+    // 2026-07-30 — dropping "| The Journal" was not enough: 42 headlines
+    // still overshot on their own. lib/blogSeoTitles.js carries a short
+    // keyword-forward SERP title per slug. The H1, the OG card and the
+    // Journal index all keep the full editorial headline; only the
+    // <title> is swapped, and only where an override exists.
+    title: blogSeoTitle(slug, post.title),
     description,
     alternates: {
       canonical: canonicalUrl,
@@ -211,6 +219,8 @@ export async function generateMetadata({ params }) {
       description,
       url: canonicalUrl,
       images: [{ url: ogImageUrl, width: 1200, height: 630 }],
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
     },
     twitter: {
       card: "summary_large_image",
@@ -612,6 +622,39 @@ const ArticlePage = async ({ params }) => {
             : pickFallbackYachts(slug, fleetPool)
         }
       />
+
+      {/* 2026-07-30 — series link back to the Journal cluster this post
+          belongs to. Reader value first: someone who just finished a
+          Cyclades piece is the likeliest person to want the rest of the
+          Cyclades set. It also gives each cluster hub 3-5 real inbound
+          links instead of the single one from /blog. Renders nothing for
+          posts that sit outside every cluster. */}
+      {(() => {
+        const clusters = getClustersForPost(slug);
+        if (clusters.length === 0) return null;
+        return (
+          <div style={{ padding: "0 24px 8px", textAlign: "center" }}>
+            <p
+              style={{
+                fontFamily: "'Montserrat', sans-serif",
+                fontSize: "12px",
+                letterSpacing: "0.08em",
+                color: "rgba(255,255,255,0.45)",
+              }}
+            >
+              {clusters.length > 1 ? "Part of the series " : "Part of the series "}
+              {clusters.map((c, i) => (
+                <span key={c.slug}>
+                  {i > 0 && (i === clusters.length - 1 ? " and " : ", ")}
+                  <Link href={`/journal/${c.slug}`} style={{ color: "#C9A84C" }}>
+                    {c.title}
+                  </Link>
+                </span>
+              ))}
+            </p>
+          </div>
+        );
+      })()}
 
       <RelatedArticles posts={relatedPosts} />
       <ContactFormSection />

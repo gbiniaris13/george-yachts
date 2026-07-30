@@ -37,6 +37,8 @@ export async function generateMetadata({ params }) {
       images: [
         `/api/og?title=${encodeURIComponent(term.term)}&eyebrow=${encodeURIComponent("Glossary")}`,
       ],
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
     },
   };
 }

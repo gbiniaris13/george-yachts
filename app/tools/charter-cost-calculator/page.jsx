@@ -33,6 +33,8 @@ export const metadata = {
     images: [
       `/api/og?title=${encodeURIComponent("Charter Cost Calculator")}&eyebrow=${encodeURIComponent("Free tool")}`,
     ],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 

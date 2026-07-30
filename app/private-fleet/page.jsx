@@ -22,6 +22,9 @@ export async function generateMetadata() {
       title: "Private Fleet | George Yachts",
       description: `Your own world at sea. Full crew. Total discretion. From €${low.toLocaleString()} to €${high.toLocaleString()}/week.`,
       url: "https://georgeyachts.com/private-fleet",
+      images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
     },
   };
 }

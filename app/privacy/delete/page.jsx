@@ -22,6 +22,8 @@ export const metadata = {
     description:
       "Request deletion of your personal data held by George Yachts Brokerage House. We action requests within 30 days per GDPR.",
     url: "https://georgeyachts.com/privacy/delete",
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
   },
 };
 

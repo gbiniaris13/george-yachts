@@ -13,7 +13,10 @@ export const metadata = {
   description:
     "How Greek yacht charter compares to Croatia, the French Riviera, Italy, Turkey and the Caribbean - honest UHNW decision guides on price, weather and crowds.",
   alternates: { canonical: URL },
-  openGraph: { title: "Greece vs Other Charter Destinations", url: URL, type: "website" },
+  openGraph: { title: "Greece vs Other Charter Destinations", url: URL, type: "website",
+    images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US", },
 };
 
 export default function ComparisonsHub() {

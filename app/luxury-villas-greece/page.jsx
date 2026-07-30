@@ -11,7 +11,7 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
   title: "Luxury Villas Greece | Curated",
   description:
-    "Luxury villas in Mykonos, Paros, Santorini, Athens Riviera. Curated privately through our partner network. Beachfront estates, chef service, yacht+villa packages.",
+    "Luxury villas in Mykonos, Paros, Santorini and the Athens Riviera, curated through our partner network. Beachfront estates, chef service, yacht packages.",
   path: "/luxury-villas-greece",
 });
 

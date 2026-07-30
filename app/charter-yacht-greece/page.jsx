@@ -33,6 +33,8 @@ export const metadata = {
     images: [
       "https://cdn.sanity.io/images/ecqr94ey/production/5a1d2f46e69d3e21c61aa3950deb11085e725b9d-1024x768.jpg",
     ],
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
   },
 };
 

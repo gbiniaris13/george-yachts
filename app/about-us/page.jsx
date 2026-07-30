@@ -18,6 +18,9 @@ export const metadata = {
     title: "About George Yachts | Boutique Yacht Brokerage",
     description: "Premier boutique yacht brokerage in Greek waters. Personal service, curated fleet, 360° luxury.",
     url: "https://georgeyachts.com/about-us",
+      images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
+      siteName: "George Yachts Brokerage House",
+      locale: "en_US",
   },
 };
 

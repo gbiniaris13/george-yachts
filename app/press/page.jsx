@@ -51,6 +51,8 @@ export const metadata = {
         alt: "George Yachts - Featured in Forbes, May 2026",
       },
     ],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",

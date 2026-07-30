@@ -35,7 +35,7 @@ export const revalidate = 86400;
 export const metadata = {
   title: "George P. Biniaris, Yacht Broker in Greece",
   description:
-    "Full bio, credentials, and complete bibliography of George P. Biniaris, Founder and Managing Broker of George Yachts Brokerage House. IYBA member, Forbes-featured (May 2026), MYBA-standard practitioner.",
+    "Full bio, credentials and complete bibliography of George P. Biniaris, Founder and Managing Broker of George Yachts. IYBA member, Forbes-featured 2026.",
   alternates: {
     canonical: "https://georgeyachts.com/about/george-p-biniaris",
   },
@@ -48,6 +48,8 @@ export const metadata = {
     images: [
       `/api/og?title=${encodeURIComponent("George P. Biniaris")}&eyebrow=${encodeURIComponent("Founder and Managing Broker")}`,
     ],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 

@@ -37,8 +37,8 @@ const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
 export const metadata = {
-  title: `Yacht Charter Greece 2027: The Priority Window`,
-  description: `Planning a 2027 crewed yacht charter in Greece? Owners publish 2027 rate cards in autumn 2026 and the best weeks go first. How the priority window works, the 2026 reference rates, and how to reserve first look.`,
+  title: `Yacht Charter Greece 2027: Priority Window`,
+  description: `Planning a 2027 crewed charter in Greece? Owners publish 2027 rate cards in autumn 2026 and the best weeks go first. How the priority window works.`,
   alternates: { canonical: CANONICAL },
   openGraph: {
     type: "website",
@@ -49,6 +49,8 @@ export const metadata = {
     images: [
       `/api/og?title=${encodeURIComponent("Yacht Charter Greece 2027")}&eyebrow=${encodeURIComponent("The Priority Window")}`,
     ],
+    siteName: "George Yachts Brokerage House",
+    locale: "en_US",
   },
 };
 
