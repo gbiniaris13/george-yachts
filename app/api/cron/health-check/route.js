@@ -130,6 +130,37 @@ export async function GET(request) {
     }
   } catch {}
 
+  // Brand squatting: the Delphi profile (2026-07-30). Delphi cold-mailed
+  // George claiming "a luxury traveler just asked about yacht charter". The
+  // page's own payload says his address came from a Qwoted lead list, so no
+  // traveler asked anything. It publishes his name, his title and the GEORGE
+  // YACHTS logo without licence, and it carries no noindex, so it can enter
+  // Google under his name. A removal request went out the same day.
+  //
+  // This check is deliberately inverted: it FAILS while the page is still
+  // live and indexable, and passes the moment Delphi takes it down or
+  // noindexes it. That way it closes itself and cannot rot into a check
+  // nobody reads. If a similar squat appears elsewhere, add it to the list.
+  try {
+    const squats = [["Delphi profile", "https://claim.delphi.ai/george-p-biniaris"]];
+    for (const [label, url] of squats) {
+      const res = await fetch(url, { cache: "no-store", headers: { "User-Agent": "Mozilla/5.0 (georgeyachts-health)" } }).catch(() => null);
+      if (!res || res.status === 404) {
+        results.push({ name: label + " removed", ok: true, status: res?.status ?? 0, ms: 0, message: "Gone" });
+        continue;
+      }
+      const html = await res.text().catch(() => "");
+      const noindexed = /noindex/i.test(html) || /noindex/i.test(res.headers.get("x-robots-tag") || "");
+      results.push({
+        name: label + " removed",
+        ok: noindexed,
+        status: res.status,
+        ms: 0,
+        message: noindexed ? "Still up but noindexed" : "LIVE and indexable, unlicensed logo + name",
+      });
+    }
+  } catch {}
+
   // Gmail SMTP
   let gmailOk = false;
   try {
