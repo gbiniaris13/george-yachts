@@ -296,12 +296,14 @@ function PersonJsonLd() {
       "https://connectively.us/p/george-p-biniaris",
       "https://georgeyachts.com/team/george-biniaris",
     ],
-    // The bibliography — every editorial piece George is the byline
-    // author of. AI engines pivot from a Person record to its
-    // authored works when establishing credibility for a query.
-    // This is the single largest E-E-A-T signal we can ship.
-    workExample: authoredItems,
+    // The bibliography used to hang here as `workExample`, which is a
+    // CreativeWork-only property and invalid on Person (flagged in the
+    // Ahrefs crawl of 30/07/2026). The works now sit as first-class nodes
+    // in the @graph below, each already declaring `author: @id` back to
+    // this Person — a stronger E-E-A-T assertion than the nested form,
+    // because every piece independently claims George as its byline.
     },
+    ...authoredItems,
     ],
   };
   return (

@@ -195,25 +195,19 @@ function YachtSchema({ yacht, imageUrl, slug }) {
       vehicleModelDate: yearBuilt,
       modelDate: yearBuilt,
     }),
-    // Length — emit both QuantitativeValue forms so consumers that
-    // expect metres or feet both pick it up cleanly.
-    ...(lengthMeters && {
-      length: {
-        '@type': 'QuantitativeValue',
-        value: lengthMeters,
-        unitCode: 'MTR',
-      },
-    }),
-    // Occupancy / cabins / crew via the official Vehicle properties.
+    // LOA, guest count and cabin count carry NO valid Product/Vehicle
+    // property in schema.org: `length` and `numberOfGuests` do not exist at
+    // all, and `numberOfRooms` is Accommodation-only. All three were emitted
+    // here until the Ahrefs crawl of 30/07/2026 flagged 59 yacht pages. They
+    // now travel as unit-coded PropertyValue rows in additionalProperty
+    // below, which is valid and stays machine-readable for AI engines.
+    // Guest capacity keeps its first-class Vehicle property as well.
     ...(yacht.sleeps && {
       vehicleSeatingCapacity: {
         '@type': 'QuantitativeValue',
         value: yacht.sleeps,
       },
-      // Boat extension; some parsers honour this for marine listings.
-      numberOfGuests: yacht.sleeps,
     }),
-    ...(yacht.cabins && { numberOfRooms: yacht.cabins }),
     // Cruise + max speed as QuantitativeValue knots.
     ...(cruiseSpeedKnots && {
       speed: {
@@ -299,10 +293,14 @@ function YachtSchema({ yacht, imageUrl, slug }) {
     // Vehicle property (beam, draft, etc. would go here when added
     // to the Sanity schema). Each row is gated on its value.
     additionalProperty: [
-      { '@type': 'PropertyValue', name: 'Length (ft)', value: lengthFeet ? `${lengthFeet} ft` : yacht.length },
-      { '@type': 'PropertyValue', name: 'Length (m)', value: lengthMeters ? `${lengthMeters} m` : null },
-      { '@type': 'PropertyValue', name: 'Guests', value: yacht.sleeps },
-      { '@type': 'PropertyValue', name: 'Cabins', value: yacht.cabins },
+      // Unit-coded where we hold a real number, so the figures stay
+      // machine-readable now that `length` no longer has a home.
+      lengthFeet
+        ? { '@type': 'PropertyValue', name: 'Length (ft)', value: lengthFeet, unitCode: 'FOT' }
+        : { '@type': 'PropertyValue', name: 'Length (ft)', value: yacht.length },
+      { '@type': 'PropertyValue', name: 'Length (m)', value: lengthMeters || null, ...(lengthMeters ? { unitCode: 'MTR' } : {}) },
+      { '@type': 'PropertyValue', name: 'Guests', value: yacht.sleeps, ...(yacht.sleeps ? { unitText: 'guests' } : {}) },
+      { '@type': 'PropertyValue', name: 'Cabins', value: yacht.cabins, ...(yacht.cabins ? { unitText: 'cabins' } : {}) },
       { '@type': 'PropertyValue', name: 'Crew', value: yacht.crew },
       { '@type': 'PropertyValue', name: 'Builder', value: yacht.builder },
       { '@type': 'PropertyValue', name: 'Year built / refit', value: yacht.yearBuiltRefit },

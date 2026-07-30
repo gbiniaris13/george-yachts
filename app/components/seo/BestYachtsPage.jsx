@@ -12,6 +12,18 @@ const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
+// "€180,000-260,000" -> { low: "180000", high: "260000" }; single figures
+// return low only. Used to emit a valid AggregateOffer instead of the
+// invalid `priceRange` key that Offer does not define (12 pages flagged in
+// the Ahrefs crawl of 30/07/2026). Returns null when nothing parses, so a
+// weekly string we cannot read simply drops the offer rather than guessing.
+function parseWeeklyRange(weekly) {
+  if (!weekly || typeof weekly !== "string") return null;
+  const nums = weekly.replace(/[,\s]/g, "").match(/\d+/g);
+  if (!nums || nums.length === 0) return null;
+  return { low: nums[0], high: nums.length > 1 ? nums[1] : null };
+}
+
 function JsonLd({ data }) {
   const article = {
     "@context": "https://schema.org",
@@ -39,22 +51,32 @@ function JsonLd({ data }) {
     "@type": "ItemList",
     "@id": `https://georgeyachts.com${data.urlPath}#yachts`,
     name: data.h1,
-    itemListElement: (data.yachts || []).map((y, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      item: {
-        "@type": "Product",
-        name: y.spec,
-        description: y.why,
-        ...(y.href ? { url: `https://georgeyachts.com${y.href}` } : {}),
-        offers: {
-          "@type": "Offer",
-          priceCurrency: "EUR",
-          priceRange: y.weekly,
-          availability: "https://schema.org/InStock",
+    itemListElement: (data.yachts || []).map((y, i) => {
+      const range = parseWeeklyRange(y.weekly);
+      return {
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "Product",
+          name: y.spec,
+          description: y.why,
+          ...(y.href ? { url: `https://georgeyachts.com${y.href}` } : {}),
+          ...(range
+            ? {
+                offers: {
+                  // AggregateOffer, because these rows describe a band across
+                  // a class of yachts rather than one bookable price.
+                  "@type": "AggregateOffer",
+                  priceCurrency: "EUR",
+                  lowPrice: range.low,
+                  ...(range.high ? { highPrice: range.high } : {}),
+                  availability: "https://schema.org/InStock",
+                },
+              }
+            : {}),
         },
-      },
-    })),
+      };
+    }),
   };
   const faqPage = {
     "@context": "https://schema.org",

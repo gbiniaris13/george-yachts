@@ -95,9 +95,12 @@ function PlaceJsonLd({ island }) {
   // sub-attractions derived from the curated insider tips so each
   // page exposes a structured tourist-attraction list — strongest
   // citation-friendly form for "things to do in X" queries.
+  // No `position` here: it is a ListItem-only property and was an invalid
+  // key on TouristAttraction (26 pages flagged in the Ahrefs crawl of
+  // 30/07/2026). Order is already carried by the array itself. The
+  // itinerary block further down keeps position correctly, on ListItem.
   const subAttractions = (island.insiderTips || []).slice(0, 6).map((tip, i) => ({
     "@type": "TouristAttraction",
-    position: i + 1,
     name: tip.split(/[—,.]/)[0].trim().slice(0, 80) || `${island.name} attraction ${i + 1}`,
     description: tip,
     geo: { "@type": "GeoCoordinates", addressCountry: "GR" },
