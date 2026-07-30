@@ -58,8 +58,11 @@ export async function generateMetadata({ searchParams }) {
   if (slugs.length === 0) {
     return pageMeta({
       title: "Compare Yachts for Charter in Greece",
+      // 158-char cap. This route renders from searchParams, so it produces no
+      // static HTML and the 30/07/2026 build-time audit could not see it; the
+      // live sweep caught it at 167.
       description:
-        "Side-by-side comparison of luxury yachts available for charter in Greek waters. Specs, weekly rates, regions, and capacity - built by working brokers at George Yachts.",
+        "Side-by-side comparison of luxury yachts for charter in Greek waters: specs, weekly rates, cruising regions and guest capacity, from a working broker.",
       path: "/compare",
     });
   }
