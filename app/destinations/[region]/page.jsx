@@ -226,6 +226,41 @@ export default async function DestinationPage({ params }) {
           </div>
         </section>
 
+        {/* FAQ — 2026-08-01 SD-1 (GSC striking distance). Optional per
+            region: renders only when lib/destinations.js provides a faq
+            array. Reuses the insider-picks visual system so the Boss
+            design spec stays untouched; answers respect the standing
+            directives (no yacht counts, no prices per region). */}
+        {Array.isArray(d.faq) && d.faq.length > 0 && (
+          <section className="gy-dest-picks">
+            <div className="gy-dest-picks__inner">
+              <h2 className="gy-dest-picks__label">Questions we are asked about the {d.label}</h2>
+              <ul className="gy-dest-picks__list">
+                {d.faq.map((f) => (
+                  <li key={f.q} className="gy-dest-pick">
+                    <h3 className="gy-dest-pick__name">{f.q}</h3>
+                    <p className="gy-dest-pick__desc">{f.a}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: d.faq.map((f) => ({
+                    "@type": "Question",
+                    name: f.q,
+                    acceptedAnswer: { "@type": "Answer", text: f.a },
+                  })),
+                }).replace(/</g, "\\u003c"),
+              }}
+            />
+          </section>
+        )}
+
         {/* CTA */}
         <section className="gy-dest-cta">
           <h2 className="gy-dest-cta__headline">
