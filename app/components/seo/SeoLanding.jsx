@@ -44,6 +44,7 @@
 //   }
 
 import Link from "next/link";
+import ReactDOM from "react-dom";
 // 2026-07-02 (ASK B 2.1a) — fleet-match cards join the cover-open
 // view transition, pairing yacht-cover-<slug> with the detail hero.
 import ViewTransitionLink from "@/app/components/ViewTransitionLink";
@@ -150,6 +151,18 @@ function ServiceJsonLd({ pageData, yachts }) {
 
 export default async function SeoLanding({ pageData }) {
   const yachts = await loadFleetMatches(pageData.yachtFilter);
+  // SD-3.1 (2026-08-01) — the fleet cards paint as inline-style CSS
+  // backgrounds, which the browser's preload scanner cannot see; on the
+  // type pages one of these cards is the LCP element, discovered only
+  // after layout (~1.7s observed), which Lighthouse's mobile simulation
+  // punishes into a 26-29s LCP. Preloading the first two card images
+  // from the server (React hoists these into <head>) makes them
+  // discoverable from byte one. Zero visual change.
+  for (const y of (yachts || []).slice(0, 2)) {
+    if (y?.image) {
+      ReactDOM.preload(sanityCardImg(y.image, 600), { as: "image", fetchPriority: "high" });
+    }
+  }
   // Greek pages cross-link each OTHER (2026-07-16 — Ahrefs flagged all 11 as
   // orphans: relatedFor only knows the English catalog, so the /el/ cluster
   // had zero incoming internal links). Cyclic window: each page links the

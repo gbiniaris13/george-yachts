@@ -390,8 +390,9 @@ export default function NavDrawerSystem() {
           {/* Header — close × top-right, logo centered top */}
           <div className="relative flex items-center justify-center pt-6 pb-4">
             <Link href="/" onClick={closeMobile} aria-label="Home">
+              {/* SD-3.1: same 719 KB fake-SVG swap as the masthead. */}
               <img
-                src="/images/yacht-icon-only.svg"
+                src="/images/yacht-icon-nav.png"
                 alt="George Yachts"
                 style={{ height: 56, width: "auto" }}
               />
