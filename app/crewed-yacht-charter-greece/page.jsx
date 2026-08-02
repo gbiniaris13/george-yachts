@@ -134,6 +134,12 @@ const FAQS = [
     q: "Where do crewed charters start?",
     a: "Most of the crewed fleet is based around Athens, which is why the Saronic Gulf and the Ionian are the best-value starting waters: little or no repositioning cost. Embarkation from other islands is arranged with a repositioning fee that George quotes up front.",
   },
+  // 2026-08-01 SD-2 (2027 sweep): the top money page had no 2027 answer at
+  // the exact moment the 2026 season closes and 2027 buyers start shopping.
+  {
+    q: "Can we book a crewed yacht charter in Greece for 2027 now?",
+    a: "Yes, and the timing is on your side: the 2027 calendars are open, owners publish their 2027 rate cards through the autumn, and the best crewed yachts commit their July and August 2027 weeks by late winter. Reserving early buys first pick of yacht and week, and George holds your preferred week while the rate card settles. The 2027 season calendar keeps the current picture.",
+  },
 ];
 
 function faqSchema() {
