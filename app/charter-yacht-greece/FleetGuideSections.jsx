@@ -125,6 +125,12 @@ function buildFaqs(tiers) {
       q: "How do I know I am booking through a legitimate broker?",
       a: "Ask the questions that expose the pretenders: association membership (George Yachts is an IYBA member), the contract form used, how client funds are held, and whether you can speak with the same named broker from enquiry to disembarkation. George has published the full checklist on the Journal.",
     },
+    // 2026-08-01 SD-2.1: the fleet page, the most commercial page on the
+    // site, had no 2027 answer. Caught by George's honesty check.
+    {
+      q: "Is this fleet bookable for the 2027 season?",
+      a: "Yes. The 2027 calendars are open across the fleet, owners publish their 2027 rate cards through the autumn, and the most requested yachts commit their July and August 2027 weeks by late winter. If a yacht on this page fits your group, the early conversation holds the week while the rate card settles.",
+    },
   ];
 }
 
