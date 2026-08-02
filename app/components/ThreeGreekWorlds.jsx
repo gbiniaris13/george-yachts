@@ -22,17 +22,23 @@
 
 import Link from "next/link";
 import { DESTINATIONS } from "@/lib/destinations";
+import useNearViewport from "./useNearViewport";
 
-function WorldCard({ slug, label, cardTitle, cardSubline, heroImage }) {
+function WorldCard({ slug, label, cardTitle, cardSubline, heroImage, showImage = true }) {
   return (
     <Link
       href={`/destinations/${slug}`}
       className="gy-world-card group relative block overflow-hidden"
       data-cursor-magnetic="DISCOVER"
     >
+      {/* SD-3 (2026-08-01): these three region heroes total ~2.3 MB and
+          the section sits below the fold - the CSS background loaded
+          eagerly on every homepage visit and starved the hero. The URL
+          now attaches when the section is a scroll away; the navy base
+          colour covers the instant before. */}
       <div
         className="absolute inset-0 bg-cover bg-center transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
-        style={{ backgroundImage: `url(${heroImage})`, backgroundColor: "#0D1B2A" }}
+        style={{ backgroundImage: showImage ? `url(${heroImage})` : undefined, backgroundColor: "#0D1B2A" }}
         aria-hidden="true"
       />
       {/* Default overlay 0.40 → 0.60 on hover (Boss spec). */}
@@ -61,9 +67,13 @@ function WorldCard({ slug, label, cardTitle, cardSubline, heroImage }) {
 
 export default function ThreeGreekWorlds() {
   const cards = ["cyclades", "ionian", "saronic"].map((slug) => DESTINATIONS[slug]);
+  // SD-3: one observer for the whole section - all three card images
+  // attach together when the visitor is a scroll away.
+  const [nearRef, near] = useNearViewport("200px");
 
   return (
     <section
+      ref={nearRef}
       className="gy-three-worlds relative w-full"
       aria-label="Three Greek Worlds - Cyclades, Ionian, Saronic"
       style={{ background: "#0D1B2A", padding: "96px 0 80px" }}
@@ -79,7 +89,7 @@ export default function ThreeGreekWorlds() {
       {/* Cards row */}
       <div className="gy-three-worlds__row">
         {cards.map((d) => (
-          <WorldCard key={d.slug} {...d} />
+          <WorldCard key={d.slug} {...d} showImage={near} />
         ))}
       </div>
 

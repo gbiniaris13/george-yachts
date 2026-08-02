@@ -16,6 +16,7 @@
 // experience that gets upgraded.
 
 import { useEffect, useRef, useState } from "react";
+import useNearViewport from "./useNearViewport";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
@@ -30,16 +31,23 @@ import { useI18n } from "@/lib/i18n/I18nProvider";
 function PanelBackgroundVideo({ videoBase, posterSrc }) {
   const videoRef = useRef(null);
   const [failed, setFailed] = useState(false);
+  // SD-3 (2026-08-01): these fleet panels sit below the fold on the
+  // homepage yet their 3.5 MB ambients preloaded eagerly and starved the
+  // hero's bandwidth (mobile LCP 40s in the baseline). Sources now attach
+  // when the panel is a scroll away; poster covers until then.
+  const [nearRef, near] = useNearViewport("200px");
 
   useEffect(() => {
+    if (!near) return;
     const v = videoRef.current;
     if (!v) return;
     v.muted = true;
+    v.load();
     const p = v.play?.();
     if (p && typeof p.then === "function") {
       p.catch(() => setFailed(true));
     }
-  }, []);
+  }, [near]);
 
   if (failed) {
     return (
@@ -57,22 +65,23 @@ function PanelBackgroundVideo({ videoBase, posterSrc }) {
   }
 
   return (
-    <video
-      ref={videoRef}
-      poster={posterSrc}
-      preload="auto"
-      autoPlay
-      loop
-      muted
-      playsInline
-      aria-hidden="true"
-      onError={() => setFailed(true)}
-      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
-      style={{ pointerEvents: "none", backgroundColor: "#0D1B2A" }}
-    >
-      <source src={`/videos/${videoBase}.webm`} type="video/webm" />
-      <source src={`/videos/${videoBase}.mp4`} type="video/mp4" />
-    </video>
+    <div ref={nearRef} className="absolute inset-0">
+      <video
+        ref={videoRef}
+        poster={posterSrc}
+        preload="none"
+        loop
+        muted
+        playsInline
+        aria-hidden="true"
+        onError={() => setFailed(true)}
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+        style={{ pointerEvents: "none", backgroundColor: "#0D1B2A" }}
+      >
+        {near && <source src={`/videos/${videoBase}.webm`} type="video/webm" />}
+        {near && <source src={`/videos/${videoBase}.mp4`} type="video/mp4" />}
+      </video>
+    </div>
   );
 }
 

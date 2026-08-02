@@ -33,6 +33,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 import ConstellationBackdrop from "./ConstellationBackdrop";
+import useNearViewport from "./useNearViewport";
 
 // Phase 27i.14 (2026-05-08) — R3F gold-ember layer behind the
 // constellation. Lazy-loaded, ssr:false because three.js is a heavy
@@ -41,6 +42,15 @@ const GoldEmbers3D = dynamic(() => import("./GoldEmbers3D"), { ssr: false });
 
 export default function Filotimon({ filotimoImage = null }) {
   const { t } = useI18n();
+  // SD-3: lazy sources for the Navagio ambient (see comment on the <video>).
+  const [filotimoNearRef, filotimoNear] = useNearViewport("200px");
+  const filotimoVideoRef = React.useRef(null);
+  React.useEffect(() => {
+    if (filotimoNear && filotimoVideoRef.current) {
+      filotimoVideoRef.current.load();
+      filotimoVideoRef.current.play().catch(() => {});
+    }
+  }, [filotimoNear]);
 
   const pillars = [
     { title: t("filotimo.pillar1Title"), body: t("filotimo.pillar1Desc") },
@@ -91,7 +101,7 @@ export default function Filotimon({ filotimoImage = null }) {
       <div className="relative grid grid-cols-1 lg:grid-cols-[40%_60%]">
         {/* ── LEFT — editorial image, sticky on desktop so it frames
              the long-form text column without scrolling away ── */}
-        <div className="relative min-h-[60vh] lg:min-h-[100dvh] lg:sticky lg:top-0 overflow-hidden">
+        <div ref={filotimoNearRef} className="relative min-h-[60vh] lg:min-h-[100dvh] lg:sticky lg:top-0 overflow-hidden">
           {/* Chapter 01 (2026-05-08) — Navagio aerial video replaces
               the static editorial image. Boss-curated 8.4 s loop
               (15522129_3840_2160_30fps.mp4 → encoded 1920×1080
@@ -112,9 +122,14 @@ export default function Filotimon({ filotimoImage = null }) {
             // editorial filter (grayscale 0.15 / brightness 0.8 /
             // contrast 1.06) is applied via CSS so it covers BOTH
             // poster and live video — no swap visible.
+            // SD-3 (2026-08-01): below-fold homepage section whose 3 MB
+            // ambient preloaded eagerly and starved the hero (LCP 40s in
+            // the mobile baseline). Sources attach via useNearViewport;
+            // the frame-1 poster covers until then, so nothing changes
+            // visually.
             poster="/images/posters/filotimo-navagio-frame1.jpg"
-            preload="auto"
-            autoPlay
+            preload="none"
+            ref={filotimoVideoRef}
             loop
             muted
             playsInline
@@ -123,8 +138,8 @@ export default function Filotimon({ filotimoImage = null }) {
               filter: "grayscale(0.15) brightness(0.8) contrast(1.06)",
             }}
           >
-            <source src="/videos/filotimo-navagio.webm" type="video/webm" />
-            <source src="/videos/filotimo-navagio.mp4" type="video/mp4" />
+            {filotimoNear && <source src="/videos/filotimo-navagio.webm" type="video/webm" />}
+            {filotimoNear && <source src="/videos/filotimo-navagio.mp4" type="video/mp4" />}
           </video>
 
           {/* Navy→transparent vignette */}

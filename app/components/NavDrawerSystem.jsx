@@ -327,8 +327,11 @@ export default function NavDrawerSystem() {
             data-cursor="Home"
             style={{ zIndex: 25 }}
           >
+            {/* SD-3 (2026-08-01): the old src was a 719 KB base64-PNG-in-SVG
+                downloaded on every page for a masthead logo. Same artwork,
+                extracted to a 600px PNG (18 KB). Original file untouched. */}
             <img
-              src="/images/yacht-icon-only.svg"
+              src="/images/yacht-icon-nav.png"
               alt="George Yachts Brokerage House"
               className="gy-nav-logo group-hover:opacity-80"
               style={{

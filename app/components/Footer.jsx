@@ -7,6 +7,39 @@ import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 import Image from "next/image";
 import PressStrip from "./PressStrip";
+import useNearViewport from "./useNearViewport";
+
+// SD-3: lazy ambient for the footer sunset. Same element, same poster,
+// same styling - the sources simply do not exist in the DOM until the
+// footer is within 600px of the viewport, then load()+play() restores
+// the exact previous behaviour.
+function FooterAmbientVideo() {
+  const [holderRef, near] = useNearViewport("600px");
+  const vidRef = React.useRef(null);
+  React.useEffect(() => {
+    if (near && vidRef.current) {
+      vidRef.current.load();
+      vidRef.current.play().catch(() => {});
+    }
+  }, [near]);
+  return (
+    <div ref={holderRef} className="absolute inset-0">
+      <video
+        ref={vidRef}
+        className="absolute inset-0 w-full h-full object-cover"
+        poster="/images/posters/footer-sunset-frame1.jpg"
+        preload="none"
+        loop
+        muted
+        playsInline
+        style={{ opacity: 0.55, filter: "saturate(1.05) brightness(0.95)" }}
+      >
+        {near && <source src="/videos/footer-sunset.webm" type="video/webm" />}
+        {near && <source src="/videos/footer-sunset.mp4" type="video/mp4" />}
+      </video>
+    </div>
+  );
+}
 
 const WhatsappIcon = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -264,19 +297,13 @@ const Footer = () => {
             now read clearly behind the content. The overlay still
             keeps the footer copy readable but no longer drowns
             the video. */}
-        <video
-          className="absolute inset-0 w-full h-full object-cover"
-          poster="/images/posters/footer-sunset-frame1.jpg"
-          preload="auto"
-          autoPlay
-          loop
-          muted
-          playsInline
-          style={{ opacity: 0.55, filter: "saturate(1.05) brightness(0.95)" }}
-        >
-          <source src="/videos/footer-sunset.webm" type="video/webm" />
-          <source src="/videos/footer-sunset.mp4" type="video/mp4" />
-        </video>
+        {/* SD-3 (2026-08-01): the footer renders on every page and always
+            below the fold, yet this 2.7 MB webm carried preload="auto" -
+            it was in the top downloads of every Lighthouse run. The
+            sources now attach only when the footer is a scroll away
+            (useNearViewport); the poster covers until then, so the
+            visual is unchanged. */}
+        <FooterAmbientVideo />
         <div
           className="absolute inset-0"
           style={{
@@ -307,9 +334,16 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-1 flex flex-col items-center lg:items-start">
             <Link href="/" className="block mb-8">
+              {/* SD-3 (2026-08-01): the old src was a 719 KB "svg" that
+                  was really a 2528px PNG in base64, downloaded on every
+                  page for a 150px logo. Same artwork, extracted and
+                  resized to 400px PNG (12 KB). The original file stays
+                  in place untouched (contact-page JSON-LD still points
+                  at it), per the no-deletions rule. */}
               <img
-                src="/images/yacht-icon-only.svg"
+                src="/images/yacht-icon-footer.png"
                 alt="George Yachts Brokerage House LLC"
+                loading="lazy"
                 style={{ height: "clamp(90px, 20vw, 150px)", width: "auto" }}
               />
             </Link>
