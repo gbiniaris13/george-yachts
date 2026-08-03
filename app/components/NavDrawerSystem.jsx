@@ -327,11 +327,8 @@ export default function NavDrawerSystem() {
             data-cursor="Home"
             style={{ zIndex: 25 }}
           >
-            {/* SD-3 (2026-08-01): the old src was a 719 KB base64-PNG-in-SVG
-                downloaded on every page for a masthead logo. Same artwork,
-                extracted to a 600px PNG (18 KB). Original file untouched. */}
             <img
-              src="/images/yacht-icon-nav.png"
+              src="/images/yacht-icon-only.svg"
               alt="George Yachts Brokerage House"
               className="gy-nav-logo group-hover:opacity-80"
               style={{
@@ -390,9 +387,8 @@ export default function NavDrawerSystem() {
           {/* Header — close × top-right, logo centered top */}
           <div className="relative flex items-center justify-center pt-6 pb-4">
             <Link href="/" onClick={closeMobile} aria-label="Home">
-              {/* SD-3.1: same 719 KB fake-SVG swap as the masthead. */}
               <img
-                src="/images/yacht-icon-nav.png"
+                src="/images/yacht-icon-only.svg"
                 alt="George Yachts"
                 style={{ height: 56, width: "auto" }}
               />

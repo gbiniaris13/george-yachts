@@ -334,16 +334,9 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-1 flex flex-col items-center lg:items-start">
             <Link href="/" className="block mb-8">
-              {/* SD-3 (2026-08-01): the old src was a 719 KB "svg" that
-                  was really a 2528px PNG in base64, downloaded on every
-                  page for a 150px logo. Same artwork, extracted and
-                  resized to 400px PNG (12 KB). The original file stays
-                  in place untouched (contact-page JSON-LD still points
-                  at it), per the no-deletions rule. */}
               <img
-                src="/images/yacht-icon-footer.png"
+                src="/images/yacht-icon-only.svg"
                 alt="George Yachts Brokerage House LLC"
-                loading="lazy"
                 style={{ height: "clamp(90px, 20vw, 150px)", width: "auto" }}
               />
             </Link>
