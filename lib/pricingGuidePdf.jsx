@@ -431,7 +431,7 @@ export function PricingGuidePdfDocument({ firstName = "" }) {
           <Text style={styles.costBucketNum}>4</Text>
           <View style={styles.costBucketBody}>
             <Text style={styles.costBucketLabel}>
-              Crew Gratuity - 5 to 20%
+              Crew Gratuity - 10 to 15%
             </Text>
             <Text style={styles.costBucketDetail}>
               Cash tip paid to the crew at disembarkation. Greek-market 2026

@@ -99,7 +99,7 @@ function buildFaqs(tiers) {
     },
     {
       q: "Is crew gratuity included?",
-      a: "No. Gratuity is customary rather than contractual: charterers typically hand 15 to 20% of the base rate to the captain at the end of the week, and the captain distributes it among the crew. In practice it is part of the real cost of the charter, so budget for it from the start.",
+      a: "No. Gratuity is customary rather than contractual: charterers typically hand 10 to 15% of the base rate to the captain at the end of the week, and the captain distributes it among the crew. In practice it is part of the real cost of the charter, so budget for it from the start.",
     },
     {
       q: "How far ahead should I book?",

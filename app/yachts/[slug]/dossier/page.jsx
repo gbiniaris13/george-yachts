@@ -157,7 +157,7 @@ export default async function DossierPage({ params }) {
               </tr>
               <tr>
                 <td style={{ ...value, padding: "8px 0" }}>Crew gratuity (customary, at your discretion)</td>
-                <td style={{ ...value, padding: "8px 0", textAlign: "right" }}>15-20% of base</td>
+                <td style={{ ...value, padding: "8px 0", textAlign: "right" }}>10-15% of base</td>
               </tr>
             </tbody>
           </table>

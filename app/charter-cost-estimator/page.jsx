@@ -173,7 +173,7 @@ export default function CharterCostEstimatorPage() {
               </p>
               <p>
                 <strong style={{ color: "#F8F5F0" }}>Crew gratuity.</strong>{" "}
-                17.5% of the base is the customary midpoint (15-20% range).
+                12.5% of the base is the customary midpoint (10-15% range).
                 Paid in cash or wire directly to the captain at end of week;
                 he distributes among crew. Non-negotiable as a real cost -
                 budget it from the start.
