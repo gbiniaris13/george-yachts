@@ -40,30 +40,15 @@ async function tryMp3(audioRef, masterGainRef) {
       audioRef.current.loop = true;
       audioRef.current.preload = "auto";
       audioRef.current.crossOrigin = "anonymous";
-      // Kick off the fetch so the track is buffered by the time playback
-      // is allowed (on-open or first gesture) - SOS-4 behaviour kept.
-      // SD-3 (2026-08-01): but not DURING first paint. This 3 MB mp3 was
-      // in the top downloads of every page's Lighthouse run, competing
-      // with the hero for bandwidth on mobile. Buffering now starts once
-      // the page has loaded (or in 3s, whichever first); play() still
-      // fetches on demand if a gesture beats the timer, so the music
-      // requirement is unchanged - only the hero stops paying for it.
-      try {
-        const kick = () => { try { audioRef.current && audioRef.current.load(); } catch {} };
-        if (typeof window !== "undefined" && document.readyState !== "complete") {
-          // SD-3 follow-up: the first version used a 3s timer fallback,
-          // and on throttled mobile the page is still fetching its hero
-          // at 3s, so the mp3 jumped back into the pipe mid-load. Now:
-          // window load, or the user's first gesture (they are about to
-          // trigger play() anyway) - never an arbitrary clock.
-          let done = false;
-          const once = () => { if (!done) { done = true; kick(); } };
-          window.addEventListener("load", once, { once: true });
-          window.addEventListener("pointerdown", once, { once: true, passive: true });
-        } else {
-          kick();
-        }
-      } catch {}
+      // Kick off the fetch immediately so the track is already buffered
+      // by the time playback is allowed (on-open or first gesture).
+      // 2026-08-02: the SD-3 attempt to defer this until window load
+      // broke SOS-4 in practice - a visitor's first gesture often lands
+      // BEFORE the deferred buffering, so play() started a cold 3 MB
+      // fetch and the room stayed silent for seconds. George's order is
+      // explicit: instant music outranks the bandwidth cost. Reverted
+      // to eager buffering exactly as it was.
+      try { audioRef.current.load(); } catch {}
     }
     const a = audioRef.current;
     a.volume = 0;
