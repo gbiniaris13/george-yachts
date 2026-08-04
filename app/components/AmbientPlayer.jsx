@@ -42,12 +42,6 @@ async function tryMp3(audioRef, masterGainRef) {
       audioRef.current.crossOrigin = "anonymous";
       // Kick off the fetch immediately so the track is already buffered
       // by the time playback is allowed (on-open or first gesture).
-      // 2026-08-02: the SD-3 attempt to defer this until window load
-      // broke SOS-4 in practice - a visitor's first gesture often lands
-      // BEFORE the deferred buffering, so play() started a cold 3 MB
-      // fetch and the room stayed silent for seconds. George's order is
-      // explicit: instant music outranks the bandwidth cost. Reverted
-      // to eager buffering exactly as it was.
       try { audioRef.current.load(); } catch {}
     }
     const a = audioRef.current;
@@ -203,14 +197,13 @@ export default function AmbientPlayer() {
   // if the browser blocks it, the first-gesture effect below catches
   // the very first tap/click/key anywhere and the music begins then.
   // The mute pill always turns it off, and a session mute is honoured.
-  // 2026-08-02 — the discovery that explains "the music does not start":
-  // Chrome refuses to even FETCH an <audio> src before a user-activation
-  // gesture on low-engagement visits, so the first click used to start a
-  // cold 3 MB download and the room stayed silent for seconds. fetch()
-  // is NOT subject to that media gating - so we pull the track into the
-  // HTTP cache the moment the page opens, and the first real gesture
-  // plays it from disk, effectively instantly. George's order: the music
-  // outranks everything else on the wire.
+  // 2026-08-02 — the one addition to the proven player, fully isolated
+  // from the gesture flow: Chrome will not FETCH an <audio> src before a
+  // user-activation on low-engagement visits, so the first gesture used
+  // to start a cold 3 MB download (seconds of silence). Plain fetch() is
+  // not subject to that media gating - warm the HTTP cache at open, and
+  // the first gesture plays from disk instantly. Nothing else changed
+  // from the version George confirmed working.
   useEffect(() => {
     if (suppressed) return;
     try { fetch(AMBIENT_MP3, { cache: "force-cache" }).catch(() => {}); } catch {}
@@ -248,8 +241,6 @@ export default function AmbientPlayer() {
       window.removeEventListener("pointerdown", start, true);
       window.removeEventListener("keydown", start, true);
       window.removeEventListener("touchstart", start, true);
-      window.removeEventListener("mousemove", start, true);
-      window.removeEventListener("wheel", start, { capture: true });
     };
     const start = async (e) => {
       if (done) return;
@@ -258,17 +249,9 @@ export default function AmbientPlayer() {
       if (masterGainRef.current) { done = true; remove(); return; }
       if (e && e.target && e.target.closest && e.target.closest("[data-gy-ambient-toggle]")) return;
       done = true;
+      remove();
       const ok = await buildAndPlay();
       if (ok) {
-        // 2026-08-02 — BUG FIX (mine, an hour old): remove() used to run
-        // BEFORE the attempt. That was harmless when the only triggers
-        // were real activations (pointerdown/keydown/touch, which
-        // essentially always succeed), but the new mousemove trigger
-        // fails by policy on untrusted visits - and it had already torn
-        // down every listener, so the visitor's actual click later found
-        // nobody home and the site stayed silent forever. Listeners now
-        // come down only on SUCCESS.
-        remove();
         try { sessionStorage.removeItem(SESSION_MUTE_KEY); } catch {}
         setPlaying(true);
         try { window.dispatchEvent(new CustomEvent("gy:ambient-mute-changed")); } catch {}
@@ -279,14 +262,6 @@ export default function AmbientPlayer() {
     window.addEventListener("pointerdown", start, true);
     window.addEventListener("keydown", start, true);
     window.addEventListener("touchstart", start, true);
-    // 2026-08-02 George: "ή με το πρώτο κούνημα του ποντικιού". A bare
-    // mousemove/wheel is not a user-activation for audio in Chrome, but
-    // for visitors the browser already trusts (media engagement) the
-    // attempt SUCCEEDS - and for everyone else it fails silently and the
-    // real-gesture listeners above still do the job. done/remove guards
-    // make the extra attempts one-shot-safe.
-    window.addEventListener("mousemove", start, true);
-    window.addEventListener("wheel", start, { capture: true, passive: true });
     return remove;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [suppressed]);
