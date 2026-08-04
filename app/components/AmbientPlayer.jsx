@@ -258,9 +258,17 @@ export default function AmbientPlayer() {
       if (masterGainRef.current) { done = true; remove(); return; }
       if (e && e.target && e.target.closest && e.target.closest("[data-gy-ambient-toggle]")) return;
       done = true;
-      remove();
       const ok = await buildAndPlay();
       if (ok) {
+        // 2026-08-02 — BUG FIX (mine, an hour old): remove() used to run
+        // BEFORE the attempt. That was harmless when the only triggers
+        // were real activations (pointerdown/keydown/touch, which
+        // essentially always succeed), but the new mousemove trigger
+        // fails by policy on untrusted visits - and it had already torn
+        // down every listener, so the visitor's actual click later found
+        // nobody home and the site stayed silent forever. Listeners now
+        // come down only on SUCCESS.
+        remove();
         try { sessionStorage.removeItem(SESSION_MUTE_KEY); } catch {}
         setPlaying(true);
         try { window.dispatchEvent(new CustomEvent("gy:ambient-mute-changed")); } catch {}
