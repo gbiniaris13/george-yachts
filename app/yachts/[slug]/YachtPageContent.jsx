@@ -957,7 +957,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                             y={p.y + (i % 2 === 0 ? -14 : 22)}
                             textAnchor="middle"
                             fill="rgba(248,245,240,0.6)"
-                            fontFamily="'Montserrat', sans-serif"
+                            fontFamily="var(--gy-font-ui)"
                             fontSize="9"
                             letterSpacing="0.18em"
                           >
