@@ -666,7 +666,7 @@ const ArticlePage = async ({ params }) => {
           <div style={{ padding: "0 24px 8px", textAlign: "center" }}>
             <p
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--gy-font-ui)",
                 fontSize: "12px",
                 letterSpacing: "0.08em",
                 color: "rgba(255,255,255,0.45)",
