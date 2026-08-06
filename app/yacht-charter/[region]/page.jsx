@@ -30,7 +30,7 @@ const REGION_DATA = {
   cyclades: {
     title: "Yacht Charter Cyclades",
     h1: "Yacht Charter · Cyclades",
-    metaTitle: "Yacht Charter Cyclades 2026 | Mykonos, Paros",
+    metaTitle: "Yacht Charter Cyclades | Mykonos, Paros, Milos",
     metaDescription:
       "Crewed yacht charter across the Cyclades: Mykonos, Santorini, Paros, Milos, Naxos. Broker advice from George Yachts. 2026 rates and itineraries.",
     intro:
@@ -51,7 +51,7 @@ const REGION_DATA = {
   ionian: {
     title: "Yacht Charter Ionian",
     h1: "Yacht Charter · Ionian Islands",
-    metaTitle: "Yacht Charter Ionian Islands 2026 | Corfu",
+    metaTitle: "Yacht Charter Ionian | Corfu, Lefkada",
     metaDescription:
       "Crewed yacht charter in the Ionian: Corfu, Lefkada, Kefalonia, Zakynthos, Ithaca. Calm waters, family-friendly. George Yachts IYBA broker advice + 2026 rates.",
     intro:
@@ -72,7 +72,7 @@ const REGION_DATA = {
   saronic: {
     title: "Yacht Charter Saronic Gulf",
     h1: "Yacht Charter · Saronic Gulf",
-    metaTitle: "Yacht Charter Saronic Gulf 2026 | Hydra",
+    metaTitle: "Yacht Charter Saronic | Hydra, Spetses",
     metaDescription:
       "Crewed yacht charter in the Saronic Gulf: Hydra, Spetses, Aegina, Poros. The 5-day Greek charter that starts 45 minutes from Athens airport.",
     intro:

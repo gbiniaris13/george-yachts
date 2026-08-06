@@ -14,13 +14,37 @@ export default function robots() {
   //
   // The '/admin' no-trailing-slash form covers both bare '/admin'
   // (404 fallback) and '/admin/*' (KPIs dashboard etc.).
-  // '/island/' (Stage 2, Extra IB) is the INTERNAL route backing the public
-  // /yacht-charter-{island} URLs (served via a next.config rewrite). Bots
-  // should crawl the public /yacht-charter-* form, not the duplicate
-  // internal path - belt-and-braces on top of the canonical that already
-  // points /island/* -> /yacht-charter-*. Note: '/island/' (trailing slash)
-  // does NOT match the '/islands' hub page.
-  const COMMON_DISALLOW = ["/_next/", "/api/", "/admin", "/studio", "/island/"];
+  // '/island/' USED to be disallowed here as "belt and braces" on top of the
+  // canonical. 2026-08-06 — that was backwards and Search Console proved it:
+  // six of those URLs sit under "Indexed, though blocked by robots.txt". A
+  // blocked URL can still be indexed from links alone, and blocking is
+  // precisely what stops Google reading the canonical that would have
+  // consolidated it. Belt and braces cancelled each other out.
+  //
+  // /island/* already carries a correct canonical to its public
+  // /yacht-charter-{island} twin, so the fix is to let Google crawl it, see
+  // that canonical, and fold the duplicate away properly. Never block a URL
+  // you want de-indexed: blocking hides the very instruction that would
+  // de-index it.
+  // 2026-08-06 — /videos/ added, and this is the single biggest crawl-budget
+  // find of the day. Search Console's Crawl Stats (no API, read from the
+  // console itself) show 4,853 requests to this host over 90 days, 7.55 GB
+  // downloaded, and the breakdown by file type is:
+  //
+  //     HTML 42%  ·  Image 31%  ·  VIDEO 23%  ·  other 4%
+  //
+  // Roughly 1.7 GB of Googlebot's budget on this site is spent re-fetching
+  // 79 MB of background video. Every one of those files is a decorative
+  // loop (hero, fleet CTA backgrounds, footer sunset) and the site carries
+  // ZERO VideoObject markup, which is why Search Console's video report reads
+  // "no videos indexed" on 62 pages. We pay the download and get nothing.
+  //
+  // Meanwhile 62 real pages have never been fetched at all.
+  //
+  // robots.txt governs crawlers only: visitors still get every video exactly
+  // as before, and blocking a purely decorative resource does not affect how
+  // Google renders or assesses the page. Reversible by deleting one string.
+  const COMMON_DISALLOW = ["/_next/", "/api/", "/admin", "/studio", "/videos/"];
 
   // AI crawlers — explicitly allowed for the public surface (GEO
   // strategy), but with the same admin/api guardrails as everyone

@@ -15,23 +15,49 @@ import { sanityCardImg } from "@/lib/sanity-image";
 import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
+import Footer from "@/app/components/Footer";
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
   return JOURNAL_CLUSTERS.map((c) => ({ cluster: c.slug }));
 }
 
+// 2026-08-06 (job 8, local until George's push) — was cluster.intro.slice(0, 158),
+// the same raw mid-word cut found on the island and article pages, so every
+// journal hub advertised itself in Google with a severed sentence: "you're
+// aboard within 45 minutes, and the first swim is happening before yo".
+// Whole sentences, em dashes normalised, ellipsis only when one sentence is
+// genuinely longer than the limit.
+function clusterDescription(intro) {
+  const text = String(intro || "")
+    .replace(/\s*[—–]\s*/g, " - ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (text.length <= 158) return text;
+
+  let packed = "";
+  for (const sentence of text.split(/(?<=[.!?])\s+/)) {
+    if ((packed ? packed.length + 1 : 0) + sentence.length > 158) break;
+    packed = packed ? `${packed} ${sentence}` : sentence;
+  }
+  if (packed && packed.length >= 80) return packed;
+
+  const cut = text.slice(0, 158);
+  return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:]$/, "") + "...";
+}
+
 export async function generateMetadata({ params }) {
   const { cluster: clusterSlug } = await params;
   const cluster = getClusterBySlug(clusterSlug);
   if (!cluster) return { title: "Topic" };
+  const description = clusterDescription(cluster.intro);
   return {
     title: `${cluster.title} | The Journal`,
-    description: cluster.intro.slice(0, 158),
+    description,
     alternates: { canonical: `https://georgeyachts.com/journal/${cluster.slug}` },
     openGraph: {
       title: `${cluster.title} | George Yachts`,
-      description: cluster.intro.slice(0, 158),
+      description,
       type: "website",
       url: `https://georgeyachts.com/journal/${cluster.slug}`,
       images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
@@ -85,6 +111,7 @@ export default async function ClusterPage({ params }) {
   const { articles, yachts } = await loadClusterData(cluster);
 
   return (
+    <>
     <article style={{ background: "#0D1B2A", minHeight: "100vh" }}>
       {/* journal cluster */}
       <PageBreadcrumb path="/blog" />
@@ -457,5 +484,11 @@ export default async function ClusterPage({ params }) {
         </div>
       </section>
     </article>
+      {/* 2026-08-06 (job 9) — footer added; see the same note in the other
+          templates. Before this, 397 of 474 public pages rendered no <footer>
+          at all, so most of the site carried neither the sitewide link block
+          nor the privacy link. */}
+      <Footer />
+    </>
   );
 }

@@ -117,7 +117,14 @@ export async function generateMetadata({ params }) {
   const d = getDestination(region);
   if (!d) return { title: "Destination" };
   const title = `${d.label} Yacht Charter - ${d.cardTitle}`;
-  const description = `${d.cardSubline} ${d.pageTagline}`;
+  // 2026-08-06 (job 5) — was `${d.cardSubline} ${d.pageTagline}`, and those two
+  // fields say the same thing in different words, so every regional snippet in
+  // Google repeated itself: "Whitewashed cliffs. Deep blue caldera. The Aegean
+  // at its most iconic. Whitewashed cliffs over the deepest blue in the
+  // Aegean." Worse, neither half contained the phrase "yacht charter" at all,
+  // on the page built to rank for it. One poetic line is plenty; the term goes
+  // first, where a searcher scanning results can see it.
+  const description = `${d.label} yacht charter, crewed and by the week. ${d.cardSubline}`;
   const canonical = `https://georgeyachts.com/destinations/${d.slug}`;
   return {
     title,
@@ -168,10 +175,28 @@ export default async function DestinationPage({ params }) {
           />
           <div aria-hidden="true" className="gy-dest-hero__overlay" />
           <div className="gy-dest-hero__content">
-            <p className="gy-dest-hero__label">
-              The Greek Waters · {d.label}
-            </p>
-            <h1 className="gy-dest-hero__title">{d.cardTitle}</h1>
+            {/* 2026-08-06 (job 5, local until George's push).
+
+                The h1 on these pages used to be the mood line alone: "Volcanic
+                Drama", "Timeless Elegance", "Emerald Bays". Not one contained
+                the region name or the words "yacht charter", on the page built
+                to rank for exactly that, and Search Console showed the cost:
+                /destinations/cyclades at position 33.3 on 576 impressions with
+                no clicks, /destinations/saronic at 68.6 on 268.
+
+                George asked whether a visitor landing on "Volcanic Drama" would
+                even know where they were. The benchmark answers it: Fraser
+                ("Greece: the Cyclades"), IYC ("Cyclades") and Burgess ("The
+                Cyclades") all lead with the place, none with a mood phrase.
+                His decision was to follow them.
+
+                So the place and the product are the headline now, and the mood
+                line survives directly underneath in gold. Nothing is lost: the
+                character still lands, it just no longer stands where the
+                orientation should be. */}
+            <p className="gy-dest-hero__label">The Greek Waters</p>
+            <h1 className="gy-dest-hero__title">{d.label} Yacht Charter</h1>
+            <p className="gy-dest-hero__mood">{d.cardTitle}</p>
             <p className="gy-dest-hero__tagline">{d.pageTagline}</p>
           </div>
         </section>
@@ -341,6 +366,19 @@ export default async function DestinationPage({ params }) {
           color: #F8F5F0;
           margin: 0 0 24px;
           text-shadow: 0 8px 40px rgba(13, 27, 42, 0.55);
+        }
+        /* The mood line, displaced from the h1 on 2026-08-06. Editorial face
+           and gold so it still reads as the brand's voice rather than a
+           subtitle, but set well below the 56px headline so orientation comes
+           first and character second. */
+        .gy-dest-hero__mood {
+          font-family: var(--gy-font-editorial);
+          font-weight: 300;
+          font-size: 22px;
+          line-height: 1.3;
+          letter-spacing: 0.01em;
+          color: #C9A84C;
+          margin: 0 0 14px;
         }
         .gy-dest-hero__tagline {
           font-family: var(--gy-font-ui);

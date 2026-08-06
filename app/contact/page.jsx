@@ -13,6 +13,7 @@
 
 import JsonLd from "@/app/components/JsonLd";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import Footer from "@/app/components/Footer";
 
 export const metadata = {
   title: { absolute: "Contact George Yachts | Athens Office, Phone, WhatsApp" },
@@ -347,6 +348,9 @@ export default function ContactPage() {
           </div>
         </section>
       </main>
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
   );
 }

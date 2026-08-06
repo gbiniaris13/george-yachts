@@ -10,12 +10,13 @@
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import CharterCostEstimator from "./CharterCostEstimator";
+import Footer from "@/app/components/Footer";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
 
 export const metadata = {
-  title: "Greek Yacht Charter Cost Estimator 2026",
+  title: "Greek Yacht Charter Cost Estimator",
   description: "Estimate your Greek yacht charter cost 2026. Base + APA + VAT + crew gratuity. Motor yachts, sailing, catamaran, gulet, superyacht. Honest 2026 rates.",
   alternates: { canonical: "https://georgeyachts.com/charter-cost-estimator" },
   openGraph: {
@@ -248,6 +249,9 @@ export default function CharterCostEstimatorPage() {
           </div>
         </section>
       </article>
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
   );
 }

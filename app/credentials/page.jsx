@@ -26,9 +26,14 @@ import Footer from "@/app/components/Footer";
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
-  title: "Credentials: Forbes, IYBA, MYBA",
+  // 2026-08-06 (job 7) — the old title, "Credentials: Forbes, IYBA, MYBA",
+  // answered "who are you" for a page whose incoming query is "how do I check
+  // whether a broker is real". 331 impressions at positions 19.9 and 21.6 with
+  // no clicks. The title now carries the question and the description leads
+  // with the method, then the proof.
+  title: "Yacht Charter Broker Credentials: How to Verify Any Broker",
   description:
-    "George Yachts is featured in Forbes (May 2026), is an IYBA Charter Active Member, uses MYBA-standard contracts, and is a Wyoming-registered LLC.",
+    "Four checks that work on any charter broker: the association directory, the contract, the registered entity, and coverage they did not commission. Ours, in full.",
   alternates: { canonical: "https://georgeyachts.com/credentials" },
   openGraph: {
     title: "Credentials | George Yachts",
@@ -45,10 +50,66 @@ export const metadata = {
 const FORBES_URL =
   "https://www.forbes.com/sites/jacquesledbetter/2026/05/01/how-the-wealthy-are-hedging-for-instability/";
 
+// 2026-08-06 (job 7) — FAQPage for the verification section below.
+//
+// This page already carries the Organization node (memberOf IYBA, subjectOf
+// the Forbes piece) from the root layout, so the entity facts are machine
+// readable. What was not machine readable is the ANSWER to the question that
+// brings traffic here. Search Console shows this page at 7.3 for machine-shaped
+// research queries about broker membership status, and at 19.9 and 21.6 for the
+// human version, "how to verify a yacht charter broker's credentials".
+//
+// The question names below are written as the queries are actually typed, not
+// as the headings read, because that is what gets matched. Answers are trimmed
+// versions of the visible copy: schema that says something the page does not is
+// a manual action waiting to happen.
+const VERIFY_FAQ = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How do you verify a yacht charter broker's credentials?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "There is no single licence that makes a charter broker legitimate. There are four independent checks: search the broker association's own member directory rather than trusting a logo, ask which contract the charter will be written on, ask for the registered legal entity and look it up in its jurisdiction's public register, and look for coverage the broker did not commission themselves.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How do I check if a yacht charter broker is MYBA certified?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Search the association's published member directory directly. Note the distinction that is often blurred: using the MYBA standard charter agreement, which is the Mediterranean contract framework, is not the same as holding MYBA membership. George Yachts uses MYBA-standard contracts and is an IYBA Charter Active Member; we are not MYBA members and do not claim to be.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Why does the charter contract framework matter?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The MYBA Charter Agreement fixes who holds the deposit, what the Advance Provisioning Allowance covers, how cancellation is treated, and what happens if a yacht becomes unavailable. A broker who cannot name the contract, or who wants to write on their own paper, is asking you to give up the protections the standard exists to provide.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What legal entity signs a Greek yacht charter agreement?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Ask for the registered entity, its jurisdiction and its registration number, then check that jurisdiction's public register. A trading name is not a company, and you want to know who you would be suing and in which country. George Yachts Brokerage House LLC is registered in Wyoming, in the United States, and operates from Athens.",
+      },
+    },
+  ],
+};
+
 export default function CredentialsPage() {
   return (
     <>
       <PageBreadcrumb path="/credentials" />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(VERIFY_FAQ) }}
+      />
       <main
         style={{
           background: "#0D1B2A",
@@ -68,16 +129,37 @@ export default function CredentialsPage() {
           <p className="gy-eyebrow" style={{ color: "#C9A84C" }}>
             Credentials
           </p>
+          {/* 2026-08-06 (job 7) — the h1 was "What stands behind every charter
+              we write.", which says nothing about what the page is. Search
+              Console has this page at position 19.9 and 21.6 for "how to
+              verify a yacht charter broker's credentials" and its variants,
+              331 impressions and no clicks. Same defect and same fix as the
+              destination heroes: the big line names the subject, the sentence
+              with the character in it moves directly underneath and is kept
+              word for word. */}
           <h1
             className="gy-display-xl"
             style={{
-              maxWidth: "16ch",
-              margin: "10px 0 32px",
+              maxWidth: "18ch",
+              margin: "10px 0 18px",
               letterSpacing: "-0.035em",
             }}
           >
-            What stands behind every charter we write.
+            Yacht Charter Broker Credentials
           </h1>
+          <p
+            style={{
+              fontFamily: "var(--gy-font-editorial)",
+              fontSize: "clamp(19px, 2.1vw, 26px)",
+              fontWeight: 300,
+              color: "#C9A84C",
+              margin: "0 0 26px",
+              maxWidth: "34ch",
+              lineHeight: 1.3,
+            }}
+          >
+            What stands behind every charter we write.
+          </p>
           <p
             className="gy-lede"
             style={{ color: "rgba(248,245,240,0.85)", maxWidth: "62ch" }}
@@ -579,6 +661,95 @@ export default function CredentialsPage() {
           >
             Brief George →
           </Link>
+        </section>
+
+        {/* 2026-08-06 (job 7) — "how to verify a yacht charter broker's
+            credentials" and its variants bring 331 impressions to this page at
+            positions 19.9 and 21.6, and the page never answered the question.
+            It listed our own credentials and left the reader to infer the
+            method. The four checks below are written to be useful whoever the
+            reader ends up chartering with, which is the only version of this
+            section a machine will quote. Every claim about us restates what is
+            already documented above; nothing new is asserted here. */}
+        <section
+          aria-label="How to verify a yacht charter broker"
+          style={{
+            padding: "clamp(56px, 7vw, 96px) clamp(24px, 6vw, 96px)",
+            maxWidth: 1000,
+            marginInline: "auto",
+            borderTop: "1px solid rgba(201,168,76,0.18)",
+          }}
+        >
+          <p className="gy-eyebrow" style={{ color: "#C9A84C" }}>
+            The method
+          </p>
+          <h2
+            className="gy-display-m"
+            style={{ margin: "10px 0 20px", letterSpacing: "-0.02em" }}
+          >
+            How to verify a yacht charter broker&apos;s credentials
+          </h2>
+          <p
+            style={{
+              fontFamily: "var(--gy-font-ui)",
+              fontSize: 16,
+              lineHeight: 1.75,
+              fontWeight: 300,
+              color: "rgba(248,245,240,0.82)",
+              maxWidth: "64ch",
+              margin: "0 0 40px",
+            }}
+          >
+            There is no single licence that makes a charter broker legitimate,
+            which is exactly why the question is asked so often. What exists is
+            four independent checks, each of which can be done in a few minutes
+            and none of which relies on taking the broker&apos;s word for it.
+          </p>
+          {[
+            {
+              q: "1. Check the broker association membership directly, at the source",
+              a: "Do not accept a logo on a website. IYBA and MYBA both publish searchable member directories, so open the association's own site and search the company name. A membership claim that cannot be found in the association's directory is not a membership. George Yachts is listed as an IYBA Charter Active Member. We are not MYBA members, and we say so plainly: what we use is the MYBA standard charter agreement, which is the contract framework the market runs on, and using the form is not the same thing as holding the membership.",
+            },
+            {
+              q: "2. Read the contract framework before you read the itinerary",
+              a: "Ask which contract the charter will be written on. The MYBA Charter Agreement is the Mediterranean standard, and it matters because of what it fixes: who holds the deposit, what the Advance Provisioning Allowance covers, how cancellation is treated, and what happens when a yacht becomes unavailable. A broker who cannot name the contract, or who wants to write on their own paper, is asking you to give up every protection the standard exists to give you.",
+            },
+            {
+              q: "3. Find the legal entity that will actually sign",
+              a: "A trading name is not a company. Ask for the registered entity, its jurisdiction and its registration number, then look it up in that jurisdiction's public register. You want to know who you would be suing, and in which country, on the day something goes wrong. George Yachts Brokerage House LLC is registered in Wyoming, in the United States, and operates from Athens.",
+            },
+            {
+              q: "4. Look for coverage the broker did not commission",
+              a: "Testimonials on a broker's own website are marketing. Independent journalism, an association listing, a court record, a public register: these are things the broker cannot write themselves. George P. Biniaris is quoted in Jacques Ledbetter's May 2026 Forbes article on how the wealthy hedge for instability. Editorial coverage is not an endorsement and should not be read as one, but it is verifiable by someone other than us, which is the whole point of this list.",
+            },
+          ].map((item) => (
+            <div key={item.q} style={{ marginBottom: 34, maxWidth: "72ch" }}>
+              <h3
+                style={{
+                  fontFamily: "var(--gy-font-editorial)",
+                  fontSize: "clamp(18px, 2.1vw, 23px)",
+                  fontWeight: 400,
+                  color: "#F8F5F0",
+                  margin: "0 0 10px",
+                  lineHeight: 1.25,
+                }}
+              >
+                {item.q}
+              </h3>
+              <p
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 15,
+                  lineHeight: 1.75,
+                  fontWeight: 300,
+                  color: "rgba(248,245,240,0.72)",
+                  margin: 0,
+                }}
+              >
+                {item.a}
+              </p>
+            </div>
+          ))}
         </section>
 
         {/* Mandatory legal disclaimer per Roberto legal directive §1

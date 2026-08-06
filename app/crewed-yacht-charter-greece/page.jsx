@@ -22,7 +22,7 @@ import { FLEET_COUNT } from "@/lib/fleetCount";
 import { sanityClient } from "@/lib/sanity";
 import { CHARTER_INDEX_2026 } from "@/lib/charterIndex2026";
 import { REVIEWS, initials } from "@/lib/reviewsData";
-import { extractPriceRange } from "@/lib/pricing";
+import { extractPriceRange, yachtOfferSchema } from "@/lib/pricing";
 import Footer from "@/components/Footer";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import BrowseSeoCategories from "@/app/components/seo/BrowseSeoCategories";
@@ -40,16 +40,16 @@ const CANONICAL = "https://georgeyachts.com/crewed-yacht-charter-greece";
 export const metadata = {
   title: `Crewed Yacht Charter Greece: Rates & Fleet`,
   description:
-    `Crewed yacht charter in Greece with full professional crew: 2026 weekly rates by yacht type and region, the real VAT rates, and the curated Private Fleet.`,
+    `Crewed yacht charter in Greece with full professional crew: weekly rates by yacht type and region, the real VAT rates, and the curated Private Fleet.`,
   alternates: { canonical: CANONICAL },
   openGraph: {
       type: "website",
     title: "Crewed Yacht Charter Greece | George Yachts",
     description:
-      "Full-crew yacht charter in Greek waters: 2026 rates, the real VAT rates, and the curated Private Fleet. Personal broker service by George P. Biniaris.",
+      "Full-crew yacht charter in Greek waters: weekly rates, the real VAT rates, and the curated Private Fleet. Personal broker service by George P. Biniaris.",
     url: CANONICAL,
     images: [
-      `/api/og?title=${encodeURIComponent("Crewed Yacht Charter Greece")}&eyebrow=${encodeURIComponent("Full Crew · 2026")}`,
+      `/api/og?title=${encodeURIComponent("Crewed Yacht Charter Greece")}&eyebrow=${encodeURIComponent("Full Crew · Weekly")}`,
     ],
       siteName: "George Yachts Brokerage House",
       locale: "en_US",
@@ -77,8 +77,17 @@ const CREAM = "#F8F5F0";
 // The FAQ copy lives in one place so the visible HTML and the
 // FAQPage JSON-LD can never drift apart.
 const FAQS = [
+  // 2026-08-06 (job 19) — "what is a crewed yacht charter" and its
+  // "crewed luxury yacht charter" variant carry 182 impressions over the last
+  // 90 days and were being answered only by /glossary/crewed-charter at
+  // position 45.6. The definition belongs on the money page too. First
+  // position in the list because it is the entry question of the whole topic.
   {
-    q: "How much does a crewed yacht charter in Greece cost in 2026?",
+    q: "What is a crewed yacht charter?",
+    a: "A crewed yacht charter is a private yacht taken for a week or more with her professional crew already aboard, so nobody in your party navigates, cooks, or cleans. At minimum that means a captain; from roughly 20 metres up it means a captain, a chef and a hostess, and on larger yachts a full brigade of stewardesses, deckhands and an engineer. You are chartering the yacht and her people together, not renting a boat. The practical difference from a bareboat is that no licence is required of you, the itinerary is proposed each morning against the real wind, and the week is planned around what you want rather than what you can handle.",
+  },
+  {
+    q: "How much does a crewed yacht charter in Greece cost?",
     a: "Per the George Yachts Greek Charter Index 2026: a crewed sailing catamaran for up to 12 guests runs roughly EUR 15,000 to 40,000 per week net base in peak season; crewed motor yachts of 24 to 34m around EUR 30,000 to 100,000; 35 to 49m about EUR 100,000 to 350,000; and 50m-plus superyachts from EUR 250,000 to over one million. Add VAT at the yacht's certified rate, in practice 5.2% to 12% (statutory cap 13%), and an APA of 25 to 40% for fuel, food and berthing.",
   },
   {
@@ -198,18 +207,27 @@ function fleetListSchema(yachts) {
     "@type": "ItemList",
     name: "George Yachts Private Fleet - crewed yachts in Greece",
     numberOfItems: yachts.length,
-    itemListElement: yachts.slice(0, 12).map((y, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      item: {
-        "@type": "Product",
-        name: y.name || y.slug,
-        url: `https://georgeyachts.com/yachts/${y.slug}`,
-        image: y.imageUrl,
-        category: "Crewed Yacht Charter",
-        brand: { "@type": "Brand", name: "George Yachts" },
-      },
-    })),
+    // 2026-08-06 — see the note on the same list in /charter-yacht-greece:
+    // a Product without offers, a review or an aggregateRating is invisible
+    // to Google rich results. Real rate, as an AggregateOffer band.
+    itemListElement: yachts
+      .slice(0, 12)
+      .map((y) => ({ y, url: `https://georgeyachts.com/yachts/${y.slug}` }))
+      .map(({ y, url }) => ({ y, url, offers: yachtOfferSchema(y, url) }))
+      .filter(({ offers }) => offers)
+      .map(({ y, url, offers }, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "Product",
+          name: y.name || y.slug,
+          url,
+          image: y.imageUrl,
+          category: "Crewed Yacht Charter",
+          brand: { "@type": "Brand", name: "George Yachts" },
+          offers,
+        },
+      })),
   };
 }
 
@@ -292,7 +310,14 @@ export default async function CrewedCharterPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema()) }} />
 
       {/* HERO - text-first editorial (fast LCP, no video on this page) */}
-      <header style={{ padding: "140px 24px 64px", borderBottom: "1px solid rgba(201,168,76,0.15)" }}>
+      {/* padding-top comes from .gy-hero-lead, so the three sides below are
+          longhand on purpose: a `padding` shorthand here is an inline style
+          and would beat the stylesheet, which is exactly how the masthead
+          ended up sitting on the h1 in the first place. */}
+      <header
+        className="gy-hero-lead"
+        style={{ paddingLeft: 24, paddingRight: 24, paddingBottom: 64, borderBottom: "1px solid rgba(201,168,76,0.15)" }}
+      >
         <div style={{ maxWidth: 880, margin: "0 auto" }}>
           <p style={eyebrowStyle}>Full Crew · Exclusively Greek Waters</p>
           <h1
@@ -330,7 +355,7 @@ export default async function CrewedCharterPage() {
       <section style={{ padding: "32px 24px 0" }}>
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <QuickAnswerBlock
-            question="What is a crewed yacht charter in Greece, and what does it cost in 2026?"
+            question="What is a crewed yacht charter in Greece, and what does a week cost?"
             answer={`A crewed yacht charter means the yacht comes with a full professional crew: captain, chef and service. Per the George Yachts Greek Charter Index 2026, weekly net base rates run roughly EUR 15,000-40,000 for a crewed sailing catamaran (up to 12 guests), EUR 30,000-100,000 for 24-34m motor yachts, EUR 100,000-350,000 for 35-49m, and EUR 250,000 to over one million for 50m-plus superyachts. Add VAT at the yacht's certified rate (in practice 5.2-12%; statutory cap 13%) and 25-40% APA. George Yachts curates ${FLEET_COUNT} yachts in Greek waters, split between the fully crewed Private Fleet and the skippered Explorer Fleet.`}
           />
         </div>
@@ -405,7 +430,7 @@ export default async function CrewedCharterPage() {
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <p style={{ ...eyebrowStyle, textAlign: "center" }}>Rates · {CHARTER_INDEX_2026.edition}</p>
           <h2 style={{ ...h2Style, textAlign: "center" }}>
-            What a crewed week costs in 2026
+            What a crewed week costs
           </h2>
           <p style={{ ...bodyStyle, maxWidth: 720, margin: "0 auto 36px", textAlign: "center" }}>
             The figures below are George&apos;s own compiled market data, the{" "}
@@ -626,6 +651,61 @@ export default async function CrewedCharterPage() {
         </section>
       )}
 
+      {/* WHICH CREWED FORMAT — 2026-08-06 (job 19, local until George's push).
+          Search Console showed this page, /crewed-catamaran-charter-greece and
+          /motor-yacht-charter-greece all ranking for each other's head terms at
+          positions 42 to 70, with 1,047 impressions and ONE click across the
+          whole crewed cluster. This page held 277 impressions of which the
+          largest were catamaran queries it should never have been answering,
+          and it carried no link at all to either specialist page. The section
+          below is the fix: exact-match anchor text handing each intent to the
+          page that should own it. It is also genuinely useful to a reader who
+          has not chosen a format yet, which is most of them. */}
+      <section style={{ padding: "72px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={eyebrowStyle}>Which Crewed Yacht</p>
+          <h2 style={h2Style}>Three crewed formats, one week to spend</h2>
+          <p style={bodyStyle}>
+            Every yacht on this page comes with her crew. What changes between
+            them is the shape of the week, not the standard of service, and
+            the honest answer is that the format should follow the group
+            rather than the budget.
+          </p>
+          <p style={{ ...bodyStyle, marginTop: 20 }}>
+            A{" "}
+            <Link href="/crewed-catamaran-charter-greece" style={goldLink}>
+              crewed catamaran charter
+            </Link>{" "}
+            is where most families and most first-timers belong. Two hulls, no
+            heel, the widest deck space per euro, and a captain, chef and
+            hostess aboard from the Saturday. Weeks begin around €18,000 for
+            the yacht and her crew.
+          </p>
+          <p style={{ ...bodyStyle, marginTop: 20 }}>
+            A{" "}
+            <Link href="/motor-yacht-charter-greece" style={goldLink}>
+              crewed motor yacht charter
+            </Link>{" "}
+            is the answer when the route crosses island groups, when the
+            Meltemi is blowing through July and August, or when the group
+            wants stabilisers and a master suite. Across the seventeen I place
+            personally, a week runs from €17,500 to €235,000, and the step
+            that moves the price is crew count rather than length: two crew at
+            eighteen metres, nine at fifty.
+          </p>
+          <p style={{ ...bodyStyle, marginTop: 20 }}>
+            A{" "}
+            <Link href="/sailing-yacht-charter-greece" style={goldLink}>
+              crewed sailing yacht
+            </Link>{" "}
+            is for the group where the sailing itself is the reason for the
+            week, and eight knots under canvas beats twenty under power. If
+            you would rather not choose in the abstract, tell me the group and
+            the dates and I will put three real boats in front of you.
+          </p>
+        </div>
+      </section>
+
       {/* CREWED VS THE ALTERNATIVES */}
       <section
         style={{
@@ -701,7 +781,7 @@ export default async function CrewedCharterPage() {
       >
         <div style={{ maxWidth: 880, margin: "0 auto" }}>
           <p style={{ ...eyebrowStyle, textAlign: "center" }}>Questions, Answered Straight</p>
-          <h2 style={{ ...h2Style, textAlign: "center" }}>Crewed charter FAQ, 2026</h2>
+          <h2 style={{ ...h2Style, textAlign: "center" }}>Crewed charter FAQ</h2>
           <div style={{ marginTop: 36 }}>
             {FAQS.map((f) => (
               <details

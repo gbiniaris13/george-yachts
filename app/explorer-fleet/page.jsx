@@ -1,6 +1,7 @@
 import { sanityClient } from "@/lib/sanity";
 import ExplorerFleetClient from "./ExplorerFleetClient";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import Footer from "@/app/components/Footer";
 
 export const revalidate = 3600;
 
@@ -124,6 +125,9 @@ export default async function ExplorerFleetPage() {
       />
       <ExplorerFleetSchema lowestPerPerson={displayLowest} />
       <ExplorerFleetClient yachts={displayYachts} lowestPerPerson={displayLowest} highestPerPerson={displayHighest} />
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
   );
 }

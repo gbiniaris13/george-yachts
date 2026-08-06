@@ -4060,3 +4060,52 @@ html.gy-cursor-live .gy-cursor-ring { opacity: 1; }
 .gy-wa-fab * ,
 .gy-cursor-ring { border-radius: 999px !important; }
 .gy-cursor-dot { border-radius: 50% !important; }
+
+/* ─────────────────────────────────────────────────────────────
+   2026-08-06 — Quick Answer lead-in offset.
+
+   The masthead is two fixed layers: .gy-forbes-bar (36 px) sits on
+   top of .gy-nav, which reserves 196 px on desktop for the centred
+   wordmark. That is 232 px of fixed chrome before any content.
+
+   Every SeoLanding page that opens with the Quick Answer block was
+   giving it 32 px of top padding, so on desktop the block slid under
+   the masthead and the logo rendered straight through the answer
+   text. 133 pages were affected, including every yacht-type money
+   page and all the duration pages. It reads as a broken page to a
+   first-time visitor, and those are exactly the pages a first-time
+   visitor lands on.
+
+   Mobile is untouched by the bug: the same nav compacts to 56 px
+   there (see the rule above), so 92 px of chrome and the old 32 px
+   was merely tight rather than broken. Hence the two values.
+
+   Hero sections that open with a full-bleed image are deliberately
+   left alone: the masthead floating over a photograph is the design,
+   over a paragraph of text it is a defect. */
+.gy-qa-lead {
+  padding-top: 264px;
+}
+
+@media (max-width: 768px) {
+  .gy-qa-lead {
+    padding-top: 116px;
+  }
+}
+
+/* Same defect, same fix, different template. 2026-08-06 (job 19).
+   /crewed-yacht-charter-greece is hand-written JSX rather than a
+   SeoLanding page, so it never picked up the rule above. Its hero
+   opened at 140 px against 232 px of fixed masthead, which put the
+   gold logo directly on top of the gold eyebrow line and clipped the
+   top of the h1. Text-first hero, so the masthead must clear it.
+   Measured on the page: nav bottom 232, h1 top was 207. */
+.gy-hero-lead {
+  padding-top: 264px;
+}
+
+@media (max-width: 768px) {
+  .gy-hero-lead {
+    padding-top: 116px;
+  }
+}

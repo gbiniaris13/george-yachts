@@ -9,6 +9,8 @@ import { WHATSAPP_DOWN, WHATSAPP_NUMBER } from "@/lib/whatsappStatus";
 // expectation runs strictly as attributed opinion, not as fact.
 
 import Link from "next/link";
+import { relatedFor } from "@/lib/seoInternalLinks";
+import Footer from "@/app/components/Footer";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -92,6 +94,22 @@ const SECTIONS = [
       { t: "Marine VLSFO climbed past 650 US dollars per metric ton in March 2026 amid tensions following the 28 February 2026 Iran-Israel military operations.", s: "gmh" },
       { t: "The Mediterranean Emission Control Area took effect on 1 May 2025, capping marine-fuel sulphur content at 0.10% by mass.", s: "maersk" },
       { t: "After early-2026 Middle East tensions, travel intent toward the Gulf states fell while Southern Mediterranean destinations absorbed the shift.", s: "mabrian" },
+    ],
+  },
+  // 2026-08-06 (job 18) — the missing forward half. A page titled "The 2027
+  // Outlook" was mentioning 2027 six times against 2026 twenty times, because
+  // all four sections were evidence from 2025 and 2026 with nothing that told a
+  // reader what to DO about next season. Every fact below is already sourced
+  // elsewhere on this page; this section reads them forward rather than adding
+  // any new claim. No forecast figures: the house-view block underneath remains
+  // the only forward-looking opinion, and it stays labelled as opinion.
+  {
+    heading: "What the record means for 2027 dates",
+    facts: [
+      { t: "The 260 million euro port programme runs through 2027, so a 2027 charter meets upgraded harbours across 30 islands that a 2025 charter did not.", s: "gtpPorts" },
+      { t: "Average booking lead time fell to 83 days in 2026, down almost 30% year on year. That average is dominated by shoulder and last-minute weeks; the prime July and August slots move on a different clock entirely, which is what makes a falling average easy to misread.", s: "nj" },
+      { t: "Median charter length rose from seven days to eight, and eight-to-ten day charters are now the single largest category at 42.9% of activity. The full week, not the long weekend, is what the market is booking.", s: "nj" },
+      { t: "The 20 to 40 metre segment accounts for nearly 70% of all Mediterranean bookings, which is the band most Greek crewed weeks are chartered in.", s: "myba" },
     ],
   },
 ];
@@ -216,7 +234,33 @@ export default function Outlook2027Page() {
             A personal reply from George, usually within a few hours.
           </p>
         </section>
+
+        {/* 2026-08-06 — this page argues the 2027 case better than any other
+            and was the only member of the season-2027 family that received
+            sibling links without passing any on. A reader convinced here has
+            nowhere to go next; now they have the month pages. */}
+        <section style={{ padding: "72px 24px", borderTop: "1px solid rgba(248,245,240,0.06)" }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px", textAlign: "center" }}>
+              Continue exploring
+            </p>
+            <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(24px, 3.4vw, 34px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 36px", textAlign: "center", lineHeight: 1.2 }}>
+              Closely related to this page
+            </h2>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14 }}>
+              {relatedFor("/greek-yacht-charter-2027-outlook", { max: 6 }).map((r) => (
+                <Link key={r.urlPath} href={r.urlPath} style={{ display: "block", textDecoration: "none", color: "inherit", border: "1px solid rgba(248,245,240,0.1)", padding: "18px 20px", background: "rgba(248,245,240,0.02)" }}>
+                  <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.3em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 8px" }}>{r.eyebrow}</p>
+                  <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 17, fontWeight: 400, color: "#F8F5F0", margin: 0, lineHeight: 1.3 }}>{r.title}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
       </article>
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
   );
 }

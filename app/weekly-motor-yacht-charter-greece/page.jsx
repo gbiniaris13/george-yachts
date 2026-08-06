@@ -23,6 +23,7 @@ import {
   faqItems,
   HUB_LINKS,
 } from "@/lib/weeklyMotorPillar";
+import Footer from "@/app/components/Footer";
 
 const URL = `https://georgeyachts.com/${SLUG}`;
 // 2026-07-03: while the company WhatsApp is under review, route to /inquiry
@@ -33,7 +34,7 @@ const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
 export const metadata = pageMeta({
-  title: "Weekly Motor Yacht Charter Greece 2026",
+  title: "Weekly Motor Yacht Charter Greece: Rates by Size",
   description: DESCRIPTION,
   path: `/${SLUG}`,
 });
@@ -178,6 +179,9 @@ export default function WeeklyMotorPillarPage() {
           </div>
         </section>
       </article>
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
   );
 }

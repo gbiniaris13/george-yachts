@@ -16,6 +16,7 @@ import BlogPostFooter from "@/components/BlogPostFooter";
 import { autoLinkPortableText } from "@/lib/auto-link-content";
 import { blogSeoTitle } from "@/lib/blogSeoTitles";
 import { getClustersForPost } from "@/lib/journal-clusters";
+import RelatedPages from "@/app/components/seo/RelatedPages";
 
 // Non-CDN client for real-time content fetching.
 // withRetry — see lib/sanity.js: rides out transient CDN connect-timeouts
@@ -163,10 +164,36 @@ export async function generateMetadata({ params }) {
 
   let description = post.excerpt || null;
 
-  // Ahrefs flags descriptions over ~160 chars and our excerpts often run
-  // long. Trim at a word boundary; the full excerpt still shows on-page.
-  const capDescription = (text) => {
+  // Ahrefs flags descriptions over ~160 chars and our excerpts often run long.
+  //
+  // 2026-08-06 (job 8, local until George's push): this used to cut at 158 and
+  // append "..." unconditionally, so 35 of the 46 articles advertised
+  // themselves in Google with a severed sentence, including the two
+  // highest-impression pages on the whole site. Now it packs WHOLE sentences
+  // first and only falls back to a word-boundary cut when a single sentence is
+  // genuinely longer than the limit. An ellipsis is a fair signal that there is
+  // more to read; it is not a fair way to end a sentence that would have fitted.
+  const capDescription = (raw) => {
+    // Em and en dashes are a standing no on this site, and they were reaching
+    // Google in the snippets of the two highest-impression articles we have
+    // ("in Greece — with real numbers", "isn't a Greek law — it's an
+    // international one"). They live in Sanity excerpts written before the
+    // rule, so normalise here rather than chase every document by hand.
+    const text = raw ? String(raw).replace(/\s*[—–]\s*/g, " - ") : raw;
     if (!text || text.length <= 158) return text;
+
+    let packed = "";
+    for (const sentence of text.split(/(?<=[.!?])\s+/)) {
+      if ((packed ? packed.length + 1 : 0) + sentence.length > 158) break;
+      packed = packed ? `${packed} ${sentence}` : sentence;
+    }
+    // A whole sentence is better than a severed one, but not when the article
+    // opens with a four-word hook: "Forget the brochure." was the entire
+    // description of the hour-by-hour piece, twenty characters of a hundred
+    // and fifty-eight. Below 80 the ellipsis version simply tells the searcher
+    // more, so it wins.
+    if (packed && packed.length >= 80) return packed;
+
     const cut = text.slice(0, 158);
     return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:]$/, "") + "...";
   };
@@ -179,7 +206,10 @@ export async function generateMetadata({ params }) {
       const rawText = firstTextBlock.children
         .map((span) => span.text || "")
         .join("");
-      description = rawText.slice(0, 155) || null;
+      // Was rawText.slice(0, 155), a raw mid-word cut for any article without
+      // an excerpt. Hand it over whole and let capDescription above end it on
+      // a sentence.
+      description = rawText || null;
     }
   }
 
@@ -657,6 +687,14 @@ const ArticlePage = async ({ params }) => {
       })()}
 
       <RelatedArticles posts={relatedPosts} />
+      {/* 2026-08-06 (job 18) — RelatedArticles above is Sanity-driven and only
+          ever surfaces other blog posts. That is why the strongest 2027 asset
+          on this site, the 5,103-word lead-time piece, had 47 inbound internal
+          links of which 45 came from other articles and NONE from a commercial
+          page. It sits in the "season-2027" cohort in lib/seoInternalLinks.js
+          and the cohort never reached it, because COHORTS only rendered inside
+          SeoLanding. This block closes that gap for all 46 articles at once. */}
+      <RelatedPages path={`/blog/${slug}`} />
       <ContactFormSection />
       <Footer />
     </div>

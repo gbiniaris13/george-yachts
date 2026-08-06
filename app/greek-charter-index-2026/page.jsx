@@ -18,6 +18,8 @@ import { sanityClient } from "@/lib/sanity";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import LastUpdated from "@/app/components/seo/LastUpdated";
 import { CHARTER_INDEX_2026 } from "@/lib/charterIndex2026";
+import RelatedPages from "@/app/components/seo/RelatedPages";
+import Footer from "@/app/components/Footer";
 
 export const revalidate = 3600;
 
@@ -50,9 +52,15 @@ export async function generateMetadata() {
     // 2026-06-25: `absolute` — report.title already leads with the brand
     // ("George Yachts Greek Charter Index 2026"), so the descriptor tail +
     // the site-wide template suffix pushed this to 78 chars with brand twice.
-    title: { absolute: report.title },
+    // 2026-08-06 — the SERP title is no longer the report's own title.
+    // "George Yachts Greek Charter Index 2026" sat at position 6.0 on 755
+    // impressions and earned a 0.13% click-through: it opens with our name,
+    // which means nothing to someone who has not heard of us, and closes
+    // with a year that has just ended. The page keeps its own heading; only
+    // the line Google shows now leads with what the reader came for.
+    title: { absolute: "Greek Charter Index: What a Week Actually Costs, by Yacht" },
     description:
-      (report.intro || "Original George Yachts data on Greek crewed yacht charter rates and trends.").slice(0, 158),
+      "Original rate data across 59 crewed yachts I know first hand: what a week costs by type and size, from EUR 10,900 up, and when the 2027 rate cards open.",
     alternates: { canonical: URL },
     openGraph: {
       title: report.title,
@@ -334,7 +342,16 @@ export default async function GreekCharterIndexPage() {
             A personal reply from George, usually within a few hours.
           </p>
         </section>
+        {/* 2026-08-06 (job 18) — the cost cluster is the biggest commercial
+            demand on this site and every query in it was being answered by
+            three to five of our own pages at once. This page linked to exactly
+            one of its six siblings because the COHORTS mechanism only ever
+            rendered inside SeoLanding. */}
+        <RelatedPages path="/greek-charter-index-2026" />
       </article>
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
   );
 }

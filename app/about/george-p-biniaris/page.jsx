@@ -25,6 +25,7 @@ import { ARTICLES } from "@/lib/articleSeo";
 import { DESTINATION_COMPARISONS } from "@/lib/destinationComparisonSeo";
 import { GLOSSARY_TERMS } from "@/lib/glossarySeo";
 import { SITE_UPDATED } from "@/lib/contentFreshness";
+import Footer from "@/app/components/Footer";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -858,6 +859,9 @@ export default function GeorgeBiniarisAuthorPage() {
           }
         }
       `}</style>
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
   );
 }

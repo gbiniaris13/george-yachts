@@ -25,6 +25,8 @@ import {
   statCallouts,
   faqItems,
 } from "@/lib/weeklyMotorRates";
+import RelatedPages from "@/app/components/seo/RelatedPages";
+import Footer from "@/app/components/Footer";
 
 const SLUG = "weekly-yacht-charter-rates-greece";
 const URL = `https://georgeyachts.com/${SLUG}`;
@@ -33,8 +35,13 @@ const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
+// 2026-08-06 (job 8, local until George's push) — this page ranks 11.1 in the
+// US for "motor yacht charter greece prices" and took 35 impressions with zero
+// clicks over 90 days. Its own lead paragraph publishes the exact figure a
+// price searcher is hunting for, and the title carried no number at all. The
+// head term stays at the front; the range is appended verbatim from the page.
 export const metadata = pageMeta({
-  title: "Weekly Yacht Charter Rates Greece 2026",
+  title: "Weekly Yacht Charter Rates Greece: €35,000 to €228,000 All-In",
   description: DESCRIPTION,
   path: `/${SLUG}`,
 });
@@ -290,7 +297,16 @@ export default function WeeklyRatesPage() {
             A personal reply from George, usually within a few hours.
           </p>
         </section>
+        {/* 2026-08-06 (job 18) — the cost cluster is the biggest commercial
+            demand on this site and every query in it was being answered by
+            three to five of our own pages at once. This page linked to exactly
+            one of its six siblings because the COHORTS mechanism only ever
+            rendered inside SeoLanding. */}
+        <RelatedPages path="/weekly-yacht-charter-rates-greece" />
       </article>
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import IslandQuizClient from './IslandQuizClient';
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
+import Footer from "@/app/components/Footer";
 export const metadata = {
   title: { absolute: 'Which Greek Island Are You? | George Yachts' },
   description: 'Take our fun personality quiz and discover which Greek island matches your travel style. Are you Mykonos, Hydra, Santorini, or Paxos?',
@@ -21,6 +22,9 @@ export default function IslandQuizPage() {
     <>
       <PageBreadcrumb path="/island-quiz" />
       <IslandQuizClient />
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
   );
 }

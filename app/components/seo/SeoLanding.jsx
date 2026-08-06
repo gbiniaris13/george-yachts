@@ -59,6 +59,7 @@ import { SITE_UPDATED } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
 import { buildTouristTrip } from "@/lib/touristTripSchema";
 import { WHATSAPP_DOWN, WHATSAPP_NUMBER } from "@/lib/whatsappStatus";
+import Footer from "@/app/components/Footer";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -229,9 +230,12 @@ export default async function SeoLanding({ pageData }) {
           if (!question || !answer) return null;
           return (
             <section
+              className="gy-qa-lead"
               style={{
                 background: NAVY,
-                padding: "32px 24px 0",
+                paddingLeft: 24,
+                paddingRight: 24,
+                paddingBottom: 0,
               }}
             >
               <div style={{ maxWidth: 980, margin: "0 auto" }}>
@@ -294,10 +298,24 @@ export default async function SeoLanding({ pageData }) {
           </div>
         </header>
 
-        {/* WHY THIS PAGE */}
+        {/* WHY THIS PAGE
+
+            2026-08-06 (job 20, local until George's push) — whyTitle, whenTitle
+            and insiderTitle were all marked up as <p>. They are section
+            headings and were styled like section headings, but a paragraph is
+            what Google was reading. The consequence showed up in the URL
+            Inspection sweep: /motor-yacht-charter-corfu renders 714 words under
+            exactly four headings, three of which are template furniture
+            ("About motor yacht charter corfu", "Closely related to this page",
+            and the CTA), so it reads to a crawler as a thin doorway page. It
+            has never been fetched by Google. Fifty-two commercial pages share
+            this template and that fate.
+
+            The three <p> elements below become <h2> with the SAME style object,
+            so the page looks identical and finally has an outline. */}
         <section style={{ padding: "72px 24px" }}>
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
-            <p
+            <h2
               style={{
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 9,
@@ -309,7 +327,7 @@ export default async function SeoLanding({ pageData }) {
               }}
             >
               {pageData.whyTitle}
-            </p>
+            </h2>
             <div
               style={{
                 fontFamily: "var(--gy-font-ui)",
@@ -533,9 +551,9 @@ export default async function SeoLanding({ pageData }) {
         {pageData.whenBody && (
           <section style={{ padding: "72px 24px" }}>
             <div style={{ maxWidth: 720, margin: "0 auto" }}>
-              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px" }}>
+              <h2 style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px" }}>
                 {pageData.whenTitle}
-              </p>
+              </h2>
               <p
                 style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.75, color: "rgba(248,245,240,0.88)", margin: 0 }}
                 dangerouslySetInnerHTML={{ __html: pageData.whenBody.replace(/\*\*(.+?)\*\*/g, '<strong style="color:#F8F5F0">$1</strong>') }}
@@ -548,9 +566,9 @@ export default async function SeoLanding({ pageData }) {
         {Array.isArray(pageData.insiderTips) && pageData.insiderTips.length > 0 && (
           <section style={{ background: "rgba(201,168,76,0.025)", borderTop: "1px solid rgba(201,168,76,0.15)", borderBottom: "1px solid rgba(201,168,76,0.15)", padding: "72px 24px" }}>
             <div style={{ maxWidth: 720, margin: "0 auto" }}>
-              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 18px" }}>
+              <h2 style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 18px" }}>
                 {pageData.insiderTitle || "George's insider notes"}
-              </p>
+              </h2>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 14 }}>
                 {pageData.insiderTips.map((tip, i) => (
                   <li key={i} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.65, color: "rgba(248,245,240,0.88)", paddingLeft: 22, position: "relative" }}>
@@ -570,7 +588,11 @@ export default async function SeoLanding({ pageData }) {
                 Frequently asked
               </p>
               <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 36px", textAlign: "center" }}>
-                {pageData.faqHeading || `About ${pageData.h1.toLowerCase()}`}
+                {/* 2026-08-06 (job 20) — the fallback was `About ${h1.toLowerCase()}`,
+                    which rendered as "About motor yacht charter corfu": lower-cased,
+                    machine-flavoured, and on the thin combo pages it was one of only
+                    three headings on the whole page. Keeps the term, loses the tell. */}
+                {pageData.faqHeading || `Questions we get about ${pageData.h1}`}
               </h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 {pageData.faq.map((f, i) => (
@@ -657,6 +679,16 @@ export default async function SeoLanding({ pageData }) {
           </div>
         </section>
       </article>
+      {/* 2026-08-06 (job 9) — the footer was missing from this template.
+          Measured across all 474 public pages: 77 rendered the sitewide
+          footer, 397 rendered no <footer> element at all, because the six
+          programmatic templates each ended at </article>. No comment in any
+          of them explained it, so it was an omission rather than a decision.
+          The cost was concrete: /yacht-charter-sifnos carried 43 internal
+          links and no privacy link, against 172 on /crewed-yacht-charter-greece
+          which had the footer. Same component as everywhere else, so nothing
+          about the design changes. */}
+      <Footer />
     </>
   );
 }

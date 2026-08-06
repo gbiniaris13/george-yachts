@@ -13,6 +13,7 @@
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { pageMeta } from "@/lib/pageMeta";
+import Footer from "@/app/components/Footer";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -517,6 +518,9 @@ export default function MarketReportPage() {
           </div>
         </section>
       </article>
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
   );
 }

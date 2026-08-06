@@ -11,7 +11,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import BrowseSeoCategories from "@/app/components/seo/BrowseSeoCategories";
 import FleetGuideSections from "./FleetGuideSections";
 import FirstAccessBand from "@/app/components/FirstAccessBand";
-import { extractPriceRange } from "@/lib/pricing";
+import { extractPriceRange, yachtOfferSchema } from "@/lib/pricing";
 import "./fleet-page.css";
 
 // ISR - revalidate every hour
@@ -77,21 +77,35 @@ function generateFleetSchema(yachts) {
     description:
       `Curated fleet of ${FLEET_COUNT} luxury yachts for charter in Greek waters`,
     numberOfItems: yachts.length,
-    itemListElement: yachts.slice(0, 20).map((yacht, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      item: {
-        "@type": "Product",
-        name: yacht.name || yacht.slug,
+    // 2026-08-06 — every Product here now carries her real rate as an
+    // AggregateOffer. Without offers (or a review, or an aggregateRating)
+    // Google will not consider a Product for a rich result, and Ahrefs was
+    // reporting exactly that on all 20 entries. A yacht with no parseable
+    // rate is left out of the list rather than given an invented price.
+    itemListElement: yachts
+      .slice(0, 20)
+      .map((yacht) => ({
+        yacht,
         url: `https://georgeyachts.com/yachts/${yacht.slug}`,
-        image: yacht.imageUrl,
-        category: "Luxury Yacht Charter",
-        brand: {
-          "@type": "Brand",
-          name: "George Yachts",
+      }))
+      .map(({ yacht, url }) => ({ yacht, url, offers: yachtOfferSchema(yacht, url) }))
+      .filter(({ offers }) => offers)
+      .map(({ yacht, url, offers }, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "Product",
+          name: yacht.name || yacht.slug,
+          url,
+          image: yacht.imageUrl,
+          category: "Luxury Yacht Charter",
+          brand: {
+            "@type": "Brand",
+            name: "George Yachts",
+          },
+          offers,
         },
-      },
-    })),
+      })),
   };
 }
 

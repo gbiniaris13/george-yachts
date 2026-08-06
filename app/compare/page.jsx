@@ -20,6 +20,7 @@ import Image from "next/image";
 import { sanityClient } from "@/lib/sanity";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { pageMeta } from "@/lib/pageMeta";
+import Footer from "@/app/components/Footer";
 
 export const revalidate = 3600;
 
@@ -84,6 +85,13 @@ export async function generateMetadata({ searchParams }) {
     title: `${titleNames} - Charter Comparison`,
     description: `Honest specs and weekly-rate comparison of ${titleNames} for crewed charter in Greek waters. Built by IYBA-member brokers at George Yachts.`,
     path: `/compare?yachts=${slugs.join(",")}`,
+    // 2026-08-06 — the comparison tool is for the visitor in front of it, not
+    // for the index. With 59 yachts, every pairing is its own URL, so leaving
+    // these open invites thousands of near-identical thin pages into the crawl
+    // (Ahrefs had already found one indexed with a single inbound link). The
+    // bare /compare above stays indexable; only the generated combinations are
+    // held back, and follow stays on so the yacht pages keep the link equity.
+    noIndex: true,
   });
 }
 
@@ -369,6 +377,9 @@ export default async function ComparePage({ searchParams }) {
           )}
         </section>
       </main>
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
   );
 }

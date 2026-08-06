@@ -248,6 +248,21 @@ export default function Charter2027Page() {
             </Link>
             . The yacht they actually want, in the week their family can actually travel.
           </p>
+          {/* 2026-08-06 (job 18) — the lead-time article is the strongest 2027
+              asset on this site: 5,103 words, 13 sections, real lead times off
+              George's own book. It had 47 inbound internal links and 45 of them
+              came from other blog posts, none from a commercial page, and
+              Google has never fetched it ("URL is unknown"). This hub carries a
+              section literally titled "Why autumn 2026 decides summer 2027",
+              which is that article's whole thesis, and did not link to it. */}
+          <p style={bodyStyle}>
+            If you want the long version, with the real lead times week by week and why six-cabin yachts
+            run out first, I wrote it out in full:{" "}
+            <Link href="/blog/how-far-in-advance-book-greek-yacht-charter-2027" style={goldLink}>
+              how far ahead a Greek charter is actually booked
+            </Link>
+            .
+          </p>
           <p style={bodyStyle}>
             If 2027 is on your horizon at all, the useful move costs nothing: tell me the month, the group
             and the mood now, and let the calendar come to you when it opens.

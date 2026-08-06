@@ -8,12 +8,13 @@
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import CalendarHeatMap from "./CalendarHeatMap";
+import Footer from "@/app/components/Footer";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
 
 export const metadata = {
-  title: "Greek Yacht Charter Calendar 2026",
+  title: "Greek Yacht Charter Calendar: Month by Month",
   description: "Visual best-weeks-to-charter heat map across the top 12 Greek charter destinations. Cyclades, Ionian, Saronic, Dodecanese. May through October scored 1-5.",
   alternates: { canonical: "https://georgeyachts.com/charter-calendar-heat-map" },
   openGraph: {
@@ -241,6 +242,9 @@ export default function CalendarHeatMapPage() {
           </div>
         </section>
       </article>
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
   );
 }

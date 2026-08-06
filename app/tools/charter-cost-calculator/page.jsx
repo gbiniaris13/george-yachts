@@ -12,6 +12,8 @@
 import Link from "next/link";
 import CalculatorClient from "./CalculatorClient";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import RelatedPages from "@/app/components/seo/RelatedPages";
+import Footer from "@/app/components/Footer";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -20,12 +22,12 @@ const CREAM = "#F8F5F0";
 export const revalidate = 86400;
 
 export const metadata = {
-  title: "Greek Yacht Charter Cost Calculator 2026",
+  title: "Greek Yacht Charter Cost Calculator",
   description:
     "Calculate the full cost of a Greek yacht charter - base fee + VAT + APA + delivery + gratuity. Free tool by George Yachts, IYBA member, MYBA-standard contracts.",
   alternates: { canonical: "https://georgeyachts.com/tools/charter-cost-calculator" },
   openGraph: {
-    title: "Greek Yacht Charter Cost Calculator 2026",
+    title: "Greek Yacht Charter Cost Calculator",
     description:
       "Free interactive calculator. Base + VAT + APA + delivery + gratuity. By George Yachts.",
     url: "https://georgeyachts.com/tools/charter-cost-calculator",
@@ -461,7 +463,16 @@ export default function ChartCostCalculatorPage() {
             </div>
           </div>
         </section>
+        {/* 2026-08-06 (job 18) — the cost cluster is the biggest commercial
+            demand on this site and every query in it was being answered by
+            three to five of our own pages at once. This page linked to exactly
+            one of its six siblings because the COHORTS mechanism only ever
+            rendered inside SeoLanding. */}
+        <RelatedPages path="/tools/charter-cost-calculator" />
       </article>
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
   );
 }

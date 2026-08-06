@@ -214,6 +214,18 @@ const Footer = () => {
         // luxury power catamaran in greece" is already an impression
         // source at position 13.6 with nowhere strong to land.
         { name: "Power Catamaran Charter", href: "/power-catamaran-charter-greece" },
+        // 2026-08-06 (job 9) — same audit, same finding, bigger page. An
+        // inbound-link count across all 474 pages: /catamaran-charter-greece
+        // 473, /crewed-yacht-charter-greece 473, both because they sit in this
+        // footer. /weekly-motor-yacht-charter-greece 104. And
+        // /motor-yacht-charter-greece, a 2.239-word pillar with our own
+        // crew-per-length ladder on it, sitting at 42.
+        //
+        // It shows in Search Console exactly as you would expect: 27
+        // impressions in three months at position 31.1. The motor pillar was
+        // the only major yacht-type pillar missing from the footer while its
+        // own "Best Motor Yachts" guide was already in it.
+        { name: "Motor Yacht Charter Greece", href: "/motor-yacht-charter-greece" },
         { name: "Superyacht Charter Greece", href: "/superyacht-charter-greece" },
         { name: "All Best-Yacht Guides →", href: "/best-yachts" },
         { name: "Best Catamarans", href: "/best-catamarans-greece-charter" },

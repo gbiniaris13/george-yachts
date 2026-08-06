@@ -13,6 +13,7 @@ import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { MARKET_REPORTS } from "@/lib/marketReportsSeo";
 import InlineCalendlySection from "@/app/components/InlineCalendlySection";
+import Footer from "@/app/components/Footer";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -23,12 +24,12 @@ export const revalidate = 86400;
 export const metadata = {
   // 2026-06-25: `absolute` to avoid the double brand the site-wide
   // "%s | George Yachts" template otherwise appends (was 75 chars).
-  title: { absolute: "Greek Yacht Charter Market Reports | George Yachts" },
+  title: { absolute: "Greek Charter Market Data: Rates, Demand and the 2027 Outlook" },
   description:
-    "Quarterly and forecast research on the Greek yacht charter market - original data from George Yachts Brokerage House. Authored by George P. Biniaris.",
+    "Original research from a working Athens broker: how the 2026 season actually ran, where rates landed by yacht class, and what that means for booking 2027.",
   alternates: { canonical: "https://georgeyachts.com/market-reports" },
   openGraph: {
-    title: "Greek Yacht Charter Market Reports",
+    title: "Greek Charter Market Data: Rates, Demand and the 2027 Outlook",
     description:
       "Quarterly and forecast research on the Greek yacht charter market. Original data, no marketing fluff.",
     url: "https://georgeyachts.com/market-reports",
@@ -363,6 +364,9 @@ export default function MarketReportsHub() {
           </div>
         </section>
       </article>
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
   );
 }

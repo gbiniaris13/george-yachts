@@ -25,11 +25,107 @@ import { relatedFor } from "@/lib/seoInternalLinks";
 import QuizCtaCard from "@/app/components/QuizCtaCard";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import { pageMeta } from "@/lib/pageMeta";
+import Footer from "@/app/components/Footer";
 
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
   return ISLANDS.map((i) => ({ slug: i.slug }));
+}
+
+// 2026-08-06 (job 8, local until George's push) — the island meta description
+// used to be `island.whyVisit.slice(0, 158)`, a raw cut of editorial prose.
+// Twenty-five of the twenty-six island pages were therefore advertising
+// themselves in Google with a sentence chopped mid-word, and nine of them
+// were printing the literal ** of the markdown bold. Sifnos read:
+//
+//   "Sifnos is **the Cyclades' food island**. Greek charter veterans know
+//    that Sifnos has produced more Greek chefs per capita than any other
+//    Aegean island, and th"
+//
+// That is what a US searcher saw at position 14.6 for "motor yacht sifnos",
+// and it is why none of them clicked. Now: markdown stripped, a charter-intent
+// lead so the snippet says what we sell, and truncation on a sentence boundary
+// with a word boundary as the fallback. Never mid-word, never a stray asterisk.
+function islandDescription(island) {
+  const LIMIT = 158;
+  const strip = (s) =>
+    String(s || "")
+      .replace(/\*\*(.+?)\*\*/g, "$1")
+      .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  // Prefer the island's own tagline. Every one of the twenty-six has one, they
+  // run 69 to 147 characters, and they were written as single editorial lines,
+  // which is exactly the job a meta description does. Falling straight to
+  // whyVisit prose left thirteen islands, Mykonos and Santorini among them,
+  // sharing one identical generic sentence, and duplicate descriptions across
+  // half the island set are their own problem.
+  const tagline = strip(island.tagline).replace(/[.\s]+$/, "");
+  const plain = strip(island.whyVisit);
+
+  // Two leads, long first. Naming the region is worth the characters, but not
+  // at the price of severing the sentence that follows: Hydra's opening line
+  // is 131 characters and the long lead left it one short, which is how the
+  // clause fallback produced "Hydra is the Saronic's centerpiece - a no-cars."
+  // The region is also skipped when the island name already carries it, which
+  // is what gave "Crewed yacht charter Crete (Chania), Crete."
+  const region =
+    island.region && !island.name.toLowerCase().includes(island.region.toLowerCase())
+      ? `, ${island.region}`
+      : "";
+  const leads = [`Crewed yacht charter ${island.name}${region}. `, `Crewed yacht charter ${island.name}. `];
+
+  const sentences = plain.split(/(?<=[.!?])\s+/);
+  let lead = leads[0];
+  let room = LIMIT - lead.length;
+  let body = "";
+
+  for (const candidate of leads) {
+    const space = LIMIT - candidate.length;
+    // The tagline first, whole, then whole sentences of whyVisit.
+    if (tagline && tagline.length + 1 <= space) {
+      lead = candidate;
+      room = space;
+      body = `${tagline}.`;
+      break;
+    }
+    let packed = "";
+    for (const sentence of sentences) {
+      if ((packed ? packed.length + 1 : 0) + sentence.length > space) break;
+      packed = packed ? `${packed} ${sentence}` : sentence;
+    }
+    if (packed) {
+      lead = candidate;
+      room = space;
+      body = packed;
+      break;
+    }
+    lead = candidate;
+    room = space;
+  }
+  // When the island's opening sentence is simply too long to survive whole,
+  // we do NOT chop it. Two rounds of clause-level and word-level truncation
+  // were tried here and both kept producing lines a human could see were
+  // severed: "a no-cars.", "under-chartered by international UHNW visitors
+  // despite.", "quietly one of the most.". A snippet is the shop window, so
+  // the rule is now absolute: whole sentences, or our own sentence instead.
+  // The fallback below is true of every island page on the site, each one
+  // carries the crewed fleet, the anchorages and a sample week.
+  if (!body) {
+    const fallback = "Crewed weeks, the anchorages worth the detour, and the yachts that suit them.";
+    body = fallback.length <= room ? fallback : "";
+  }
+
+  // Top up: if a short opening sentence left most of the snippet empty, add
+  // the next whole sentence when it fits. Sifnos opens in 35 characters.
+  if (body && sentences.includes(body)) {
+    const next = sentences[sentences.indexOf(body) + 1];
+    if (next && body.length + 1 + next.length <= room) body = `${body} ${next}`;
+  }
+
+  return (lead + body).trim();
 }
 
 export async function generateMetadata({ params }) {
@@ -51,7 +147,7 @@ export async function generateMetadata({ params }) {
   )}&eyebrow=${encodeURIComponent(island.region || "Luxury Yacht Charter Greece")}`;
   return pageMeta({
     title,
-    description: island.whyVisit.slice(0, 158),
+    description: islandDescription(island),
     path: `/yacht-charter-${island.slug}`,
     image: ogImage,
   });
@@ -869,6 +965,16 @@ export default async function IslandPage({ params }) {
           </div>
         </section>
       </article>
+      {/* 2026-08-06 (job 9) — the footer was missing from this template.
+          Measured across all 474 public pages: 77 rendered the sitewide
+          footer, 397 rendered no <footer> element at all, because the six
+          programmatic templates each ended at </article>. No comment in any
+          of them explained it, so it was an omission rather than a decision.
+          The cost was concrete: /yacht-charter-sifnos carried 43 internal
+          links and no privacy link, against 172 on /crewed-yacht-charter-greece
+          which had the footer. Same component as everywhere else, so nothing
+          about the design changes. */}
+      <Footer />
     </>
   );
 }

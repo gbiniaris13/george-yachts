@@ -12,6 +12,7 @@
 import NewsletterSignupClient from "./NewsletterSignupClient";
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
+import SiteFooter from "@/app/components/Footer";
 export const metadata = {
   title: { absolute: "Subscribe - The George Yachts Journals" },
   description:
@@ -75,6 +76,7 @@ const STREAMS = [
 
 export default function NewsletterPage() {
   return (
+    <>
     <main
       style={{
         minHeight: "100vh",
@@ -184,5 +186,11 @@ export default function NewsletterPage() {
         </p>
       </footer>
     </main>
+      {/* 2026-08-06 (job 9) — the sitewide footer, missing here like on
+          396 other pages. Imported as SiteFooter because this page already
+          has its own small <footer> for the unsubscribe line, and that one
+          stays exactly where it is. */}
+      <SiteFooter />
+    </>
   );
 }

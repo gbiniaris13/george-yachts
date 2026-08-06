@@ -274,13 +274,26 @@ const nextConfig = {
       },
       // 2026-05-11 — blog post "greek-yacht-charter-vs-mediterranean-2026"
       // links to /destinations/sporades but only cyclades/ionian/saronic
-      // region pages exist. Redirect to /yacht-charter-skiathos (the
-      // main Sporades charter island, has its own full island page).
-      // Boss may build a proper /destinations/sporades hub later — at
-      // that point this redirect gets removed.
+      // region pages exist.
+      //
+      // 2026-08-06 (job 6) — retargeted. This pointed at
+      // /yacht-charter-skiathos, which Search Console shows holds 2
+      // impressions. The page Google actually ranks for every Sporades query
+      // is /yacht-charter-sporades-skiathos, with 1.007. The redirect was
+      // feeding the region's only inbound signal to the wrong URL, and the
+      // one it starved is the one sitting at position 23.8 with three clicks.
       {
         source: "/destinations/sporades",
-        destination: "/yacht-charter-skiathos",
+        destination: "/yacht-charter-sporades-skiathos",
+        permanent: true,
+      },
+      // 2026-08-06 (job 6) — /destinations/dodecanese was a hard 404 while
+      // /yacht-charter-dodecanese-rhodes carries 872 impressions for exactly
+      // that region. Anyone who guesses the URL pattern from the three region
+      // pages that do exist hits a dead end. Same treatment as Sporades.
+      {
+        source: "/destinations/dodecanese",
+        destination: "/yacht-charter-dodecanese-rhodes",
         permanent: true,
       },
       // 2026-05-04 link audit fix — broken outgoing links inside

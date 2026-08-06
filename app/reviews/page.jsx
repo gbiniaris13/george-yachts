@@ -8,6 +8,7 @@
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { REVIEWS, getOverallAggregateRating, initials } from "@/lib/reviewsData";
+import Footer from "@/app/components/Footer";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -105,7 +106,14 @@ function ReviewCard({ review }) {
           flexWrap: "wrap",
         }}
       >
-        <span itemProp="author">{initials(review.author)}</span>
+        {/* schema.org/author expects a Person or an Organization, never a bare
+            string. Until 2026-08-06 this was plain text inside itemProp, which
+            failed validation on all five reviews (caught in the Ahrefs crawl).
+            Nesting a Person itemscope keeps the page looking identical and
+            makes the markup valid. */}
+        <span itemProp="author" itemScope itemType="https://schema.org/Person">
+          <span itemProp="name">{initials(review.author)}</span>
+        </span>
         {review.country && <span style={{ color: "rgba(248, 245, 240, 0.45)" }}>{review.country}</span>}
         <span style={{ color: "rgba(248, 245, 240, 0.45)" }}>·</span>
         <time itemProp="datePublished" dateTime={review.date} style={{ color: "rgba(248,245,240,0.6)" }}>
@@ -366,7 +374,10 @@ export default function ReviewsPage() {
                 lineHeight: 1.2,
               }}
             >
-              Charter with us for 2026.
+              {/* 2026-08-06 — season pivot, in step with the 106 other calls
+                  to action moved off 2026 today. A guest reading the reviews
+                  in August is choosing a week for next summer. */}
+              Charter with us for 2027.
             </h2>
             <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
               <Link
@@ -409,6 +420,16 @@ export default function ReviewsPage() {
           </div>
         </section>
       </article>
+      {/* 2026-08-06 (job 9) — the footer was missing from this template.
+          Measured across all 474 public pages: 77 rendered the sitewide
+          footer, 397 rendered no <footer> element at all, because the six
+          programmatic templates each ended at </article>. No comment in any
+          of them explained it, so it was an omission rather than a decision.
+          The cost was concrete: /yacht-charter-sifnos carried 43 internal
+          links and no privacy link, against 172 on /crewed-yacht-charter-greece
+          which had the footer. Same component as everywhere else, so nothing
+          about the design changes. */}
+      <Footer />
     </>
   );
 }

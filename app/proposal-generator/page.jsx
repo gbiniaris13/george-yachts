@@ -2,6 +2,7 @@ import { sanityClient as client } from "@/lib/sanity";
 import ProposalClient from "./ProposalClient";
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
+import Footer from "@/app/components/Footer";
 export const metadata = {
   title: "Instant Charter Proposal",
   description: "Generate a personalized yacht charter proposal in seconds. Select your yacht, dates, and preferences - receive a complete breakdown instantly.",
@@ -52,6 +53,9 @@ export default async function ProposalPage() {
 
       <ProposalClient yachts={yachts} />
 
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
 
   );

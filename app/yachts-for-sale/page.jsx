@@ -7,7 +7,13 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import "@/styles/service-page.css";
 
 export const metadata = {
-  title: "Buy a Yacht in Greece | Off-Market Listings",
+  // 2026-08-06 (job 5) — "Off-Market Listings" in the title of a SALES page was
+  // pulling it onto off-market CHARTER queries: 67 impressions at position 37.1
+  // for "inquire about off-market superyacht charters greece", while
+  // /exclusive-yacht-charter-greece, the page that says off-market fifteen times
+  // and is indexed, took zero. The title now says plainly that this page is
+  // about buying, and the charter page below takes the charter phrasing.
+  title: "Buy a Yacht in Greece: Brokerage and Private Sales",
   description:
     "Buying a yacht in Greece or the Mediterranean? George Yachts sources off-market and partner listings to your exact specifications. Discreet advisory.",
   alternates: { canonical: "https://georgeyachts.com/yachts-for-sale" },
@@ -54,7 +60,7 @@ export default function BuyYachtPage() {
         <div className="svc-hero__gradient" />
         <div className="svc-hero__content">
           <p className="svc-hero__eyebrow">Acquisition &amp; Advisory</p>
-          <h1 className="svc-hero__title">Buy a Yacht</h1>
+          <h1 className="svc-hero__title">Buy a Yacht in Greece</h1>
           <div className="svc-hero__line" />
           <p className="svc-hero__subtitle">Off-market opportunities &amp; partner listings - tell us your specs and we&apos;ll source options.</p>
         </div>

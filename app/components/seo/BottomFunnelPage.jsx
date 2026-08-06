@@ -8,6 +8,7 @@ import InlineCalendlySection from "@/app/components/InlineCalendlySection";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
+import Footer from "@/app/components/Footer";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -112,7 +113,23 @@ export default function BottomFunnelPage({ pageData }) {
     { name: "Charter Yachts Greece", url: "https://georgeyachts.com/charter-yacht-greece" },
     { name: d.h1, url: `https://georgeyachts.com${d.urlPath}` },
   ];
-  const related = relatedFor(d.urlPath, { max: 4 });
+  // 2026-08-06 (job 6) — 4 → 6. The two regional pages in this template
+  // (Dodecanese, Sporades) just gained geographic cohorts of seven and four
+  // members. At max 4 a reader on the Dodecanese page would still never see
+  // Patmos. Six matches the RelatedPages default used everywhere else.
+  //
+  // pinnedRelated exists because the scoring engine is right about relevance
+  // and wrong about intent in one specific case. The August page tells the
+  // reader, correctly, that the August they can still shape is next year's,
+  // and then offered six superyacht siblings and no way to act on that
+  // sentence. A page may now pin one destination ahead of the scored set.
+  // Pinned entries are deduped against the scored ones and the total still
+  // caps at six, so nothing is pushed off the page without being replaced.
+  const pinned = (d.pinnedRelated || []).filter((p) => p.urlPath !== d.urlPath);
+  const scored = relatedFor(d.urlPath, { max: 6 }).filter(
+    (r) => !pinned.some((p) => p.urlPath === r.urlPath)
+  );
+  const related = [...pinned, ...scored].slice(0, 6);
 
   return (
     <>
@@ -606,6 +623,16 @@ export default function BottomFunnelPage({ pageData }) {
           </section>
         )}
       </article>
+      {/* 2026-08-06 (job 9) — the footer was missing from this template.
+          Measured across all 474 public pages: 77 rendered the sitewide
+          footer, 397 rendered no <footer> element at all, because the six
+          programmatic templates each ended at </article>. No comment in any
+          of them explained it, so it was an omission rather than a decision.
+          The cost was concrete: /yacht-charter-sifnos carried 43 internal
+          links and no privacy link, against 172 on /crewed-yacht-charter-greece
+          which had the footer. Same component as everywhere else, so nothing
+          about the design changes. */}
+      <Footer />
     </>
   );
 }

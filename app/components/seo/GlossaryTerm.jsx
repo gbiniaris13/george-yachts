@@ -19,6 +19,8 @@ import { getGlossaryTermBySlug } from "@/lib/glossarySeo";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
+import RelatedPages from "@/app/components/seo/RelatedPages";
+import Footer from "@/app/components/Footer";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -572,7 +574,21 @@ export default function GlossaryTerm({ termData }) {
             </div>
           </div>
         </section>
+      {/* 2026-08-06 (job 18) — glossary entries never reached the COHORTS
+          mechanism either, and /glossary/day-charter was answering weekly cost
+          queries at position 18 to 27 with a single link to its own family. */}
+      <RelatedPages path={`/glossary/${termData.slug}`} />
       </article>
+      {/* 2026-08-06 (job 9) — the footer was missing from this template.
+          Measured across all 474 public pages: 77 rendered the sitewide
+          footer, 397 rendered no <footer> element at all, because the six
+          programmatic templates each ended at </article>. No comment in any
+          of them explained it, so it was an omission rather than a decision.
+          The cost was concrete: /yacht-charter-sifnos carried 43 internal
+          links and no privacy link, against 172 on /crewed-yacht-charter-greece
+          which had the footer. Same component as everywhere else, so nothing
+          about the design changes. */}
+      <Footer />
     </>
   );
 }

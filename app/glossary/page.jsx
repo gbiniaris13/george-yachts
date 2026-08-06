@@ -15,6 +15,7 @@ import Link from "next/link";
 import { GLOSSARY_TERMS, GLOSSARY_CATEGORIES } from "@/lib/glossarySeo";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
+import Footer from "@/app/components/Footer";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
@@ -374,6 +375,9 @@ export default function GlossaryIndexPage() {
           </div>
         </section>
       </article>
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
     </>
   );
 }

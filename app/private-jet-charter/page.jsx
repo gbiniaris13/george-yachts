@@ -42,10 +42,15 @@ export default function FlyPrivatePage() {
         <Image src="/images/george-aviation.jpg" alt="Private jet charter Greece - luxury aviation George Yachts" fill priority className="svc-hero__bg" sizes="100vw" />
         <div className="svc-hero__gradient" />
         <div className="svc-hero__content">
+          {/* 2026-08-06 (job 5) — the h1 was "Fly Private": no "jet", no
+              "charter", no "Greece", on the page that carries 185 impressions
+              at position 44.3. Same defect as the destination heroes and the
+              itineraries page, and George's rule from today applies: the big
+              line says what the page is, the character line sits under it. */}
           <p className="svc-hero__eyebrow">Helicopters &amp; Jets</p>
-          <h1 className="svc-hero__title">Fly Private</h1>
+          <h1 className="svc-hero__title">Private Jet Charter Greece</h1>
           <div className="svc-hero__line" />
-          <p className="svc-hero__subtitle">Fully customized private aviation anywhere in Greece and the Mediterranean.</p>
+          <p className="svc-hero__subtitle">Fly private. Fully customized aviation anywhere in Greece and the Mediterranean, arranged alongside your charter.</p>
         </div>
       </section>
 

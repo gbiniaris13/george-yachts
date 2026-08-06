@@ -21,6 +21,7 @@ import { FLEET_COUNT } from "@/lib/fleetCount";
 import JsonLd from "@/app/components/JsonLd";
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
+import Footer from "@/app/components/Footer";
 export const metadata = {
   title: "AI Research Hub - Yacht Charter Greece",
   description:
@@ -130,6 +131,7 @@ const FAQ_SCHEMA = {
 
 export default function AIResearchHub() {
   return (
+    <>
     <main
       style={{
         background: "#0D1B2A",
@@ -424,6 +426,10 @@ export default function AIResearchHub() {
         </p>
       </article>
     </main>
+      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+          397 of 474 public pages rendered no <footer> at all. */}
+      <Footer />
+    </>
   );
 }
 

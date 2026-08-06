@@ -229,7 +229,10 @@ export default async function sitemap() {
       // Sanity always populates _updatedAt; the fallback is defensive
       // only. If Sanity ever returns nothing, prefer the JOURNAL date
       // over "now" so we don't lie about a fresh edit.
-      lastModified: post._updatedAt || LAST_REFRESH.JOURNAL,
+      // 2026-08-06 — same correction as the fleet below: Sanity's _updatedAt
+    // only moves when someone edits the post, so today's footer rollout was
+    // invisible on all 44 articles. Take whichever date is later.
+    lastModified: [post._updatedAt, LAST_REFRESH.JOURNAL].filter(Boolean).sort().pop(),
       changeFrequency: "weekly",
       priority: 0.8,
     }));
@@ -298,7 +301,7 @@ export default async function sitemap() {
   // 2026-07-14 — Greek-language landing pages (Brand Radar Greek queries).
   const greekEntries = GREEK_PAGES.map((p) => ({
     url: `${BASE_URL}${p.urlPath}`,
-    lastModified: "2026-07-14",
+    lastModified: LAST_REFRESH.STATIC,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
@@ -460,8 +463,19 @@ export default async function sitemap() {
         : [];
       return {
         url: `${BASE_URL}/yachts/${yacht.slug}`,
-        // Sanity always populates _updatedAt; the fallback is defensive.
-        lastModified: yacht._updatedAt || LAST_REFRESH.STATIC,
+        // 2026-08-06 (pre-push audit) — this used to be Sanity's _updatedAt
+        // alone, which meant the fleet's lastmod only ever moved when someone
+        // edited a yacht IN SANITY. Template and code changes were invisible:
+        // today the 59 yacht pages gained the sitewide footer, roughly
+        // tripling their internal links, and every one of them still claimed
+        // it was last modified on 4 May. Taking the LATER of the two dates is
+        // the accurate answer, because the page genuinely changed on whichever
+        // came last. Still honest: if neither the content nor the code moved,
+        // neither does this date.
+        lastModified: [yacht._updatedAt, LAST_REFRESH.FLEET]
+          .filter(Boolean)
+          .sort()
+          .pop(),
         changeFrequency: "weekly",
         priority: 0.75,
         ...(imgs.length ? { images: imgs } : {}),

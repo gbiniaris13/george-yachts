@@ -8,6 +8,7 @@ import { extractPriceRange } from '@/lib/pricing';
 import QuickAnswerBlock from '@/app/components/QuickAnswerBlock';
 import DossierRequest from './DossierRequest';
 import './yacht-page.css';
+import Footer from "@/app/components/Footer";
 
 // ISR - revalidate every hour
 export const revalidate = 3600;
@@ -61,7 +62,12 @@ export async function generateMetadata({ params }) {
   // alone, which reads cleaner than a chopped model string.
   const base = shortSubtitle ? `${yacht.name} | ${shortSubtitle}` : yacht.name;
   const title = base.length <= 44 ? base : yacht.name;
-  let description = `Charter ${yacht.name}: ${yacht.length} ${shortSubtitle}, sleeps ${yacht.sleeps}. Crewed yacht charter in Greek waters. ${yacht.weeklyRatePrice}`;
+  // 2026-08-06 (job 8) — em/en dashes are a standing no, and one was reaching
+  // Google through a Sanity subtitle ("Lagoon 51 — Sailing Catamaran" on
+  // Errant Vagabond). Normalising at the generator covers every yacht added
+  // from here on rather than leaving it to whoever types the next subtitle.
+  let description = `Charter ${yacht.name}: ${yacht.length} ${shortSubtitle}, sleeps ${yacht.sleeps}. Crewed yacht charter in Greek waters. ${yacht.weeklyRatePrice}`
+    .replace(/\s*[—–]\s*/g, " - ");
   if (description.length > 158) {
     const cut = description.slice(0, 158);
     description = cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:]$/, '') + '...';
@@ -521,6 +527,11 @@ export default async function YachtPage({ params }) {
           Carries the 24h-personal-reply promise + discretion note. */}
       <DossierRequest slug={slug} yachtName={yacht.name} />
       <SimilarYachts items={similar} />
+      {/* 2026-08-06 (job 9) — footer added; see the same note in the other
+          templates. Before this, 397 of 474 public pages rendered no <footer>
+          at all, so most of the site carried neither the sitewide link block
+          nor the privacy link. */}
+      <Footer />
     </>
   );
 }
