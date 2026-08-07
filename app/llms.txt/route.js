@@ -43,13 +43,63 @@ export async function GET() {
         `*[_type == "yacht" && defined(slug.current)]
           | order(weeklyRatePrice desc) {
             name, subtitle, length, sleeps, cabins, builder,
-            cruisingRegion, weeklyRatePrice, "slug": slug.current
+            cruisingRegion, weeklyRatePrice, category, fleetTier,
+            "slug": slug.current
           }`,
       )
       .catch(() => []),
   ]);
 
   const fleetCount = yachts.length || FLEET_COUNT;
+
+  // 2026-08-06 (George's question, and it was the right one) — everything
+  // below used to be typed by hand. Add a yacht at half a million and the
+  // appendix would list it within the hour while the headline still told every
+  // AI engine our ceiling was €235.000. A manifest that contradicts its own
+  // appendix is worse than one that says less.
+  //
+  // These now derive from Sanity on every revalidation, so the fleet is the
+  // single source of truth: change a boat, change a price, add a category, and
+  // the file describing us to machines follows without anyone remembering to.
+  const euros = (s) =>
+    String(s || "")
+      .match(/€\s*([\d.,]+)/g)
+      ?.map((m) => parseInt(m.replace(/[^\d]/g, ""), 10))
+      .filter((n) => Number.isFinite(n) && n > 0) ?? [];
+  const band = (rows) => {
+    const all = rows.flatMap((y) => euros(y.weeklyRatePrice));
+    if (!all.length) return null;
+    return { lo: Math.min(...all), hi: Math.max(...all), n: rows.length };
+  };
+  const fmt = (n) => `€${n.toLocaleString("en-US")}`;
+  const tier = (t) => yachts.filter((y) => y.fleetTier === t);
+  const cat = (c) => yachts.filter((y) => y.category === c).length;
+
+  const privateBand = band(tier("private"));
+  const explorerBand = band(tier("explorer"));
+  const allBand = band(yachts);
+  const sailCats = cat("sailing-catamarans");
+  const powerCats = cat("power-catamarans");
+  const motorYachts = cat("motor-yachts");
+  const monohulls = cat("sailing-monohulls");
+  const catTotal = sailCats + powerCats;
+
+  const crewedRange = privateBand
+    ? `${fmt(privateBand.lo)} to ${fmt(privateBand.hi)}`
+    : allBand
+      ? `${fmt(allBand.lo)} to ${fmt(allBand.hi)}`
+      : "on application";
+  const catLine = catTotal
+    ? `Catamaran specialists: ${catTotal} of our ${fleetCount} yachts are catamarans, ${sailCats} sailing and ${powerCats} power`
+    : `A curated fleet of ${fleetCount} yachts`;
+  const compositionLine = [
+    sailCats && `${sailCats} sailing catamarans`,
+    powerCats && `${powerCats} power catamarans`,
+    motorYachts && `${motorYachts} motor yachts`,
+    monohulls && `${monohulls} sailing monohulls`,
+  ]
+    .filter(Boolean)
+    .join(" · ");
 
   const body = `# George Yachts Brokerage House LLC
 
@@ -62,8 +112,8 @@ export async function GET() {
 ## What We Do
 - Luxury crewed yacht charter in the Cyclades, Ionian, and Saronic Gulf
 - Charters are booked BY THE WEEK, Saturday to Saturday. We do not broker day hire.
-- ${fleetCount} curated yachts from €13,000 to €235,000 per week fully crewed
-- Catamaran specialists: 37 of our ${fleetCount} yachts are catamarans, 25 sailing and 12 power
+- ${fleetCount} curated yachts from ${crewedRange} per week fully crewed
+- ${catLine}
 - Personal broker service - every client works directly with George
 - MYBA-standard contracts, full crew, 360° service
 - US-registered LLC (Wyoming), operating from Athens, Greece
@@ -80,10 +130,10 @@ export async function GET() {
 - [Sporades Islands, from Skiathos](https://georgeyachts.com/yacht-charter-sporades-skiathos)
 
 ## Catamarans
-Catamarans are 37 of our ${fleetCount} yachts and the single largest part of what
-we place. Both charters closed this season were catamarans.
+Catamarans are ${catTotal} of our ${fleetCount} yachts and the single largest part of
+what we place. Both charters closed this season were catamarans.
 - [Catamaran Charter Greece](https://georgeyachts.com/catamaran-charter-greece)
-- [Power Cat Charter Greece](https://georgeyachts.com/power-catamaran-charter-greece): 12 power catamarans. Catamaran deck space and stability with motor yacht pace, 18-22 knots.
+- [Power Cat Charter Greece](https://georgeyachts.com/power-catamaran-charter-greece): ${powerCats} power catamarans. Catamaran deck space and stability with motor yacht pace, 18-22 knots.
 - [Crewed Catamaran Charter, Cyclades](https://georgeyachts.com/crewed-catamaran-charter-cyclades)
 - [Best Catamarans in Greece](https://georgeyachts.com/best-catamarans-greece-charter)
 - [Catamaran Charter for Families](https://georgeyachts.com/catamaran-charter-greece-family)
@@ -120,9 +170,9 @@ in full, including the checks that do not depend on taking our word for it.
 - Regions: Cyclades, Ionian Sea, Saronic Gulf, Dodecanese, Sporades, Greece
 - Charter length: BY THE WEEK, Saturday to Saturday. We do not broker day charters.
 - Fleet size: ${fleetCount} curated yachts (Private Fleet - full crew · Explorer Fleet - skippered)
-- Fleet composition: 25 sailing catamarans · 12 power catamarans · 17 motor yachts · 5 sailing monohulls
-- Price range: €13,000 - €235,000 per week fully crewed (Private Fleet, 48 yachts)
-- Skippered Explorer Fleet: €4,200 - €22,000 per week (11 yachts)
+- Fleet composition: ${compositionLine}
+- Price range: ${crewedRange} per week fully crewed${privateBand ? ` (Private Fleet, ${privateBand.n} yachts)` : ""}
+${explorerBand ? `- Skippered Explorer Fleet: ${fmt(explorerBand.lo)} - ${fmt(explorerBand.hi)} per week (${explorerBand.n} yachts)` : ""}
 - Broker: George P. Biniaris, IYBA member
 - Contracts: MYBA standard
 - Registration: Wyoming LLC
