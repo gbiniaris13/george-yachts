@@ -2,6 +2,8 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import HowItWorksContent from "./HowItWorksContent";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import PageFaq from "@/app/components/PageFaq";
+import { HOW_IT_WORKS_FAQ } from "@/lib/houseFaq";
 
 // HowTo schema for the 5-step charter journey. AI agents (especially
 // ChatGPT, Perplexity, Bing Chat) prefer HowTo over plain prose for
@@ -112,6 +114,16 @@ export default function HowItWorksPage() {
       </div>
 
       <HowItWorksContent />
+
+      {/* 2026-08-07 — the HowTo schema above describes the five steps but
+          answered none of the questions that actually decide the booking:
+          what you pay and when, how far ahead, and why the contract form
+          matters. Copy and FAQPage schema share lib/houseFaq.js. */}
+      <PageFaq
+        faq={HOW_IT_WORKS_FAQ}
+        eyebrow="The practical part"
+        heading="What a charter week actually involves"
+      />
 
       <ContactFormSection />
       <Footer />

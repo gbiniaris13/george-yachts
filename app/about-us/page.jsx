@@ -4,6 +4,8 @@ import ContactFormSection from "@/components/ContactFormSection";
 import AboutContent from "./AboutContent";
 import Image from "next/image";
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
+import PageFaq from "@/app/components/PageFaq";
+import { ABOUT_FAQ } from "@/lib/houseFaq";
 import "./about-us.css";
 
 export const metadata = {
@@ -40,7 +42,41 @@ const personSchema = {
     "https://www.linkedin.com/in/george-p-biniaris/",
     "https://www.instagram.com/georgeyachts/"
   ],
-  "knowsAbout": ["Luxury Yacht Charter", "Greek Waters Navigation", "MYBA Charter Contracts"]
+  // 2026-08-07 — this Person carried three generic topics and no evidence of
+  // competence at all. The two credentials below are the ones an engine can do
+  // something with, and both are stated exactly as the bio states them:
+  // a skipper's licence, not a captain's ticket.
+  "knowsAbout": [
+    "Weekly crewed yacht charter in Greek waters",
+    "Motor yacht charter",
+    "Power catamaran charter",
+    "Sailing catamaran charter",
+    "MYBA Charter Contracts",
+    "Greek charter VAT and APA practice",
+    "Cyclades, Ionian, Saronic, Dodecanese and Sporades navigation",
+    "Yacht crew selection and guest hospitality"
+  ],
+  "hasCredential": [
+    {
+      "@type": "EducationalOccupationalCredential",
+      "credentialCategory": "license",
+      "name": "Skipper's licence",
+      "recognizedBy": { "@type": "Organization", "name": "Olympiacos SFP Sailing Academy" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "credentialCategory": "license",
+      "name": "Powerboat licence"
+    }
+  ],
+  "memberOf": {
+    "@type": "Organization",
+    "name": "International Yacht Brokers Association",
+    "alternateName": "IYBA",
+    "url": "https://iyba.org"
+  },
+  "knowsLanguage": ["en", "el"],
+  "nationality": { "@type": "Country", "name": "Greece" }
 };
 
 export default function AboutUsPage() {
@@ -73,6 +109,16 @@ export default function AboutUsPage() {
 
       {/* ── CLIENT COMPONENT WITH ANIMATIONS ── */}
       <AboutContent />
+
+      {/* 2026-08-07 — this page ran ~4,000 words with no structured question on
+          it at all, so an engine asked "which broker should I use in Greece"
+          had nothing here to lift. Copy and FAQPage schema both come from
+          lib/houseFaq.js. */}
+      <PageFaq
+        faq={ABOUT_FAQ}
+        eyebrow="Before you decide"
+        heading="What people ask before they call"
+      />
 
       {/* ── CONTACT ── */}
       <ContactFormSection />
