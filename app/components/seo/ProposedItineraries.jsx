@@ -79,7 +79,7 @@ export default function ProposedItineraries() {
             maxWidth: 660,
           }}
         >
-          Every one of them is a Saturday to Saturday week out of Athens, and every one was changed
+          Every one of them is a full week out of Athens, and every one was changed
           again after the first conversation. That is the point of them: a starting shape, not a
           fixed product.
         </p>

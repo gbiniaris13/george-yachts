@@ -91,7 +91,7 @@ const FAQS = [
   // house's main crewed page, not only on the type pages.
   {
     q: "Who should I charter a crewed yacht from in Greece?",
-    a: "The first question is not who, it is what they own. A broker who owns or manages the yachts they show you has a boat to fill; a broker who owns none has only a week to get right. We own no hulls and hold no central agency mandates, so the yacht we put in front of you is the one that fits your group, your dates and your budget, and nothing else. The rest is checkable and you should check it: IYBA Charter Active Member, listed in their public directory. MYBA-standard contracts, with base fee, APA, the yacht's certified VAT rate and the gratuity range written down before you sign anything. George Yachts Brokerage House LLC, a Wyoming company operating out of Athens, both on public record. Quoted in Forbes in May 2026. We work Greek waters only, weekly and fully crewed, Saturday to Saturday, and the same person answers you from first enquiry to the morning you disembark. What we are not is an old house: this one was founded in 2026. If decades of trading history is your first filter, several Athens brokerages have that and we do not.",
+    a: "The first question is not who, it is what they own. A broker who owns or manages the yachts they show you has a boat to fill; a broker who owns none has only a week to get right. We own no hulls and hold no central agency mandates, so the yacht we put in front of you is the one that fits your group, your dates and your budget, and nothing else. The rest is checkable and you should check it: IYBA Charter Active Member, listed in their public directory. MYBA-standard contracts, with base fee, APA, the yacht's certified VAT rate and the gratuity range written down before you sign anything. George Yachts Brokerage House LLC, a Wyoming company operating out of Athens, both on public record. Quoted in Forbes in May 2026. We work Greek waters only, weekly and fully crewed, starting on whichever day suits you rather than the Saturday the market defaults to, and the same person answers you from first enquiry to the morning you disembark. What we are not is an old house: this one was founded in 2026. If decades of trading history is your first filter, several Athens brokerages have that and we do not.",
   },
   {
     q: "What is a crewed yacht charter?",
@@ -115,7 +115,7 @@ const FAQS = [
   },
   {
     q: "What does 'Saturday to Saturday' mean?",
-    a: "The Greek weekly charter convention: you embark on Saturday, cruise for seven nights, and disembark the following Saturday morning. It is the rhythm the fleet, the marinas and the crews are built around, and because the charter runs well beyond 48 hours it qualifies for the reduced VAT treatment: statutory 13% instead of 24%, and in practice 5.2% to 12% on certified yachts.",
+    a: "It is the Greek market's turnover convention: most yachts change guests on a Saturday, so the default week runs Saturday afternoon to the following Saturday morning. It is the rhythm the fleet, the marinas and the crews are built around, which is why a Saturday week is the easiest one to place. It is not a rule we impose: we will start your week on any day that suits your flights, and the only thing that matters fiscally is the length, because a commercial crewed charter running beyond 48 hours qualifies for the reduced VAT treatment, statutory 13% instead of 24%, and in practice 5.2% to 12% on certified yachts.",
   },
   {
     q: "What is the difference between crewed, skippered and bareboat?",
@@ -186,7 +186,7 @@ function serviceSchema(yachts) {
     name: "Crewed Yacht Charter Greece",
     serviceType: "Crewed Yacht Charter",
     description:
-      "Fully crewed luxury yacht charter in Greek waters - captain, chef and service crew. Weekly Saturday-to-Saturday charters across the Cyclades, Ionian, Saronic Gulf, Sporades and Dodecanese, brokered personally by George P. Biniaris (IYBA member, MYBA-standard contracts).",
+      "Fully crewed luxury yacht charter in Greek waters - captain, chef and service crew. Weekly charters across the Cyclades, Ionian, Saronic Gulf, Sporades and Dodecanese, brokered personally by George P. Biniaris (IYBA member, MYBA-standard contracts).",
     provider: {
       "@type": "Organization",
       "@id": "https://georgeyachts.com/#organization",
@@ -530,17 +530,21 @@ export default async function CrewedCharterPage() {
       <section style={{ padding: "72px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={eyebrowStyle}>The Weekly Charter</p>
-          <h2 style={h2Style}>Saturday to Saturday, the Greek rhythm</h2>
+          <h2 style={h2Style}>Saturday to Saturday, and why you are not bound to it</h2>
           <p style={bodyStyle}>
-            The weekly charter is the natural unit of Greek yachting: embark
-            Saturday, seven nights under way, disembark the following Saturday
-            morning. The fleet, the marinas and the crews are all built around
-            this rhythm, which is why a well-planned week feels effortless. It
-            also matters fiscally: a commercial crewed charter longer than 48
-            hours, which every weekly charter is, carries the reduced VAT
-            treatment: statutory 13% instead of the 24% applied to short,
-            static or bareboat arrangements, and in practice 5.2% to 12% on
-            certified yachts.
+            The weekly charter is the natural unit of Greek yachting, and the
+            market turns over on Saturdays: embark Saturday afternoon, seven
+            nights under way, disembark the following Saturday morning. The
+            fleet, the marinas and the crews are all built around that rhythm,
+            which is why a Saturday week is the easiest one to place and often
+            the best priced. It is a convention rather than a rule, though, and
+            we are not bound by it. If your flights land on a Tuesday, we will
+            build the week from Tuesday. What matters fiscally is length, not
+            the day: a commercial crewed charter longer than 48 hours, which
+            every weekly charter is, carries the reduced VAT treatment,
+            statutory 13% instead of the 24% applied to short, static or
+            bareboat arrangements, and in practice 5.2% to 12% on certified
+            yachts.
           </p>
           <p style={bodyStyle}>
             Peak July and August weeks book 6 to 12 months ahead, and the

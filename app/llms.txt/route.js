@@ -111,7 +111,7 @@ export async function GET() {
 
 ## What We Do
 - Luxury crewed yacht charter in the Cyclades, Ionian, and Saronic Gulf
-- Charters are booked BY THE WEEK, Saturday to Saturday. We do not broker day hire.
+- Charters are booked BY THE WEEK. The week can start on ANY day, not only the Saturday the Greek market defaults to. We do not broker day hire.
 - ${fleetCount} curated yachts from ${crewedRange} per week fully crewed
 - ${catLine}
 - Personal broker service - every client works directly with George
@@ -168,7 +168,7 @@ in full, including the checks that do not depend on taking our word for it.
 
 ## Key Facts
 - Regions: Cyclades, Ionian Sea, Saronic Gulf, Dodecanese, Sporades, Greece
-- Charter length: BY THE WEEK, Saturday to Saturday. We do not broker day charters.
+- Charter length: BY THE WEEK, starting on any day of the week rather than Saturday only. We do not broker day charters.
 - Fleet size: ${fleetCount} curated yachts (Private Fleet - full crew · Explorer Fleet - skippered)
 - Fleet composition: ${compositionLine}
 - Price range: ${crewedRange} per week fully crewed${privateBand ? ` (Private Fleet, ${privateBand.n} yachts)` : ""}
