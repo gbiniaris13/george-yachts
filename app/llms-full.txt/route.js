@@ -1,3 +1,11 @@
+import { sanityClient } from "@/lib/sanity";
+//
+// 2026-08-06 (AI offensive) — retired posts were being handed to every AI
+// engine. sitemap.js and app/blog/page.jsx have filtered RETIRED_SLUGS since
+// July, but these two files never did, so llms.txt listed at least one post
+// that 307s to /blog. A dead link inside the file we publish specifically for
+// machines is worse than in ordinary copy: it is the one document an engine
+// treats as our own description of ourselves.
 // llms-full.txt — the llmstxt.org "full-content dump" variant.
 //
 // While /llms.txt gives AI crawlers a structured site map + excerpts,
@@ -18,7 +26,7 @@
 // /llms.txt so crawlers know it exists. The llmstxt.org spec is a
 // proposal; this file follows the draft convention.
 
-import { sanityClient } from "@/lib/sanity";
+import { RETIRED_SLUGS } from "@/lib/retiredSlugs";
 import { JOURNAL_CLUSTERS } from "@/lib/journal-clusters";
 import { ISLANDS } from "@/lib/islands";
 import { NextResponse } from "next/server";
@@ -58,10 +66,11 @@ export async function GET() {
   try {
     [posts, yachts] = await Promise.all([
       sanityClient.fetch(
-        `*[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
+        `*[_type == "post" && defined(slug.current) && !(slug.current in $retired)] | order(publishedAt desc) {
           title, "slug": slug.current, excerpt, publishedAt, _updatedAt, body,
           "author": author->name
         }`,
+        { retired: RETIRED_SLUGS },
       ),
       sanityClient.fetch(
         `*[_type == "yacht" && defined(slug.current)] | order(weeklyRatePrice desc) {

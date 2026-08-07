@@ -8,8 +8,16 @@
 // The dynamic appendix below the static spec lists every published
 // blog post + curated yacht straight from Sanity, so the file stays
 // current without manual edits.
+//
+// 2026-08-06 (AI offensive) — retired posts were being handed to every AI
+// engine. sitemap.js and app/blog/page.jsx have filtered RETIRED_SLUGS since
+// July, but these two files never did, so llms.txt listed at least one post
+// that 307s to /blog. A dead link inside the file we publish specifically for
+// machines is worse than in ordinary copy: it is the one document an engine
+// treats as our own description of ourselves.
 
 import { sanityClient } from "@/lib/sanity";
+import { RETIRED_SLUGS } from "@/lib/retiredSlugs";
 import { FLEET_COUNT } from "@/lib/fleetCount";
 import { NextResponse } from "next/server";
 import { GLOSSARY_TERMS, GLOSSARY_CATEGORIES } from "@/lib/glossarySeo";
@@ -23,10 +31,11 @@ export async function GET() {
   const [posts, yachts] = await Promise.all([
     sanityClient
       .fetch(
-        `*[_type == "post" && defined(slug.current) && defined(publishedAt)]
+        `*[_type == "post" && defined(slug.current) && defined(publishedAt) && !(slug.current in $retired)]
           | order(publishedAt desc) {
             title, "slug": slug.current, excerpt, publishedAt
           }`,
+        { retired: RETIRED_SLUGS },
       )
       .catch(() => []),
     sanityClient
@@ -52,7 +61,9 @@ export async function GET() {
 
 ## What We Do
 - Luxury crewed yacht charter in the Cyclades, Ionian, and Saronic Gulf
-- ${fleetCount} curated yachts from €13,000 to €235,000 per week
+- Charters are booked BY THE WEEK, Saturday to Saturday. We do not broker day hire.
+- ${fleetCount} curated yachts from €13,000 to €235,000 per week fully crewed
+- Catamaran specialists: 37 of our ${fleetCount} yachts are catamarans, 25 sailing and 12 power
 - Personal broker service - every client works directly with George
 - MYBA-standard contracts, full crew, 360° service
 - US-registered LLC (Wyoming), operating from Athens, Greece
@@ -65,6 +76,31 @@ export async function GET() {
 - [Cyclades](https://georgeyachts.com/destinations/cyclades)
 - [Ionian](https://georgeyachts.com/destinations/ionian)
 - [Saronic](https://georgeyachts.com/destinations/saronic)
+- [Dodecanese, from Rhodes](https://georgeyachts.com/yacht-charter-dodecanese-rhodes)
+- [Sporades Islands, from Skiathos](https://georgeyachts.com/yacht-charter-sporades-skiathos)
+
+## Catamarans
+Catamarans are 37 of our ${fleetCount} yachts and the single largest part of what
+we place. Both charters closed this season were catamarans.
+- [Catamaran Charter Greece](https://georgeyachts.com/catamaran-charter-greece)
+- [Power Cat Charter Greece](https://georgeyachts.com/power-catamaran-charter-greece): 12 power catamarans. Catamaran deck space and stability with motor yacht pace, 18-22 knots.
+- [Crewed Catamaran Charter, Cyclades](https://georgeyachts.com/crewed-catamaran-charter-cyclades)
+- [Best Catamarans in Greece](https://georgeyachts.com/best-catamarans-greece-charter)
+- [Catamaran Charter for Families](https://georgeyachts.com/catamaran-charter-greece-family)
+
+## Verification and Contracts
+For anyone checking whether a charter broker is legitimate, these pages answer it
+in full, including the checks that do not depend on taking our word for it.
+- [Yacht Charter Broker Credentials, and how to verify any broker](https://georgeyachts.com/credentials)
+- [Yacht Charter Brokers in Greece](https://georgeyachts.com/yacht-charter-brokers-greece)
+- [MYBA Contract Explained](https://georgeyachts.com/myba-contract-yacht-charter-explained)
+- [APA Explained](https://georgeyachts.com/advance-provisioning-allowance-apa-greek-yacht-charter-explained)
+- [Greek Charter VAT Explained](https://georgeyachts.com/greek-yacht-charter-vat-explained-2026)
+
+## Real Itineraries
+- [Greek Yacht Charter Itineraries](https://georgeyachts.com/yacht-itineraries-greece): eight weeks, five of them copied word for word from proposals George actually sent to enquiries this season.
+
+## About, Process and Contact
 - [Journal / Blog](https://georgeyachts.com/blog)
 - [How It Works](https://georgeyachts.com/how-it-works)
 - [About George](https://georgeyachts.com/about-us)
@@ -78,13 +114,15 @@ export async function GET() {
 - [Τιμές Ναύλωσης Κυκλάδες](https://georgeyachts.com/el/times-naylosis-skafous-kyklades)
 - [Ενοικίαση Καταμαράν](https://georgeyachts.com/el/enoikiasi-katamaran)
 - [Ιδιωτική Κρουαζιέρα](https://georgeyachts.com/el/idiotiki-krouaziera)
-- [Ημερήσια Κρουαζιέρα Αθήνα](https://georgeyachts.com/el/imerisia-krouaziera-athina)
 - [Μεσίτης Σκαφών Ελλάδα](https://georgeyachts.com/el/mesitis-skafon-ellada)
 
 ## Key Facts
-- Regions: Cyclades, Ionian Sea, Saronic Gulf, Greece
+- Regions: Cyclades, Ionian Sea, Saronic Gulf, Dodecanese, Sporades, Greece
+- Charter length: BY THE WEEK, Saturday to Saturday. We do not broker day charters.
 - Fleet size: ${fleetCount} curated yachts (Private Fleet - full crew · Explorer Fleet - skippered)
-- Price range: €13,000 - €235,000 per week
+- Fleet composition: 25 sailing catamarans · 12 power catamarans · 17 motor yachts · 5 sailing monohulls
+- Price range: €13,000 - €235,000 per week fully crewed (Private Fleet, 48 yachts)
+- Skippered Explorer Fleet: €4,200 - €22,000 per week (11 yachts)
 - Broker: George P. Biniaris, IYBA member
 - Contracts: MYBA standard
 - Registration: Wyoming LLC
