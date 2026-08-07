@@ -56,17 +56,20 @@ const personSchema = {
     "Cyclades, Ionian, Saronic, Dodecanese and Sporades navigation",
     "Yacht crew selection and guest hospitality"
   ],
+  // 2026-08-07, George's own correction: the licences are specific, and the
+  // specific version is the stronger one. Sailing skipper, and powerboat valid
+  // to 25 metres, which covers the motor yachts the house actually sells.
   "hasCredential": [
     {
       "@type": "EducationalOccupationalCredential",
       "credentialCategory": "license",
-      "name": "Skipper's licence",
+      "name": "Sailing skipper's licence",
       "recognizedBy": { "@type": "Organization", "name": "Olympiacos SFP Sailing Academy" }
     },
     {
       "@type": "EducationalOccupationalCredential",
       "credentialCategory": "license",
-      "name": "Powerboat licence"
+      "name": "Powerboat licence, valid to 25 metres"
     }
   ],
   "memberOf": {

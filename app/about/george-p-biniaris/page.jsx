@@ -81,7 +81,7 @@ const CREDENTIALS = [
   },
   {
     label: "Sea background",
-    detail: "Licensed skipper (Olympiacos SFP Sailing Academy) with powerboat licence - charter seasons in Corfu, operations across Ionian, Cyclades & Saronic",
+    detail: "Licensed sailing skipper (Olympiacos SFP Sailing Academy) with a powerboat licence valid to 25 metres - charter seasons in Corfu, operations across Ionian, Cyclades & Saronic",
   },
   {
     label: "Hospitality pedigree",

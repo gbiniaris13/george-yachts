@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import HomeClient from "./HomeClient";
 import { sanityClient } from "@/lib/sanity";
 import { SITE_UPDATED } from "@/lib/contentFreshness";
+import { HOME_FAQ } from "@/lib/houseFaq";
 
 // Re-render at most once an hour. The homepage uses weekly-rotating
 // photography on the Explorer fleet panel; at the week-boundary the
@@ -46,72 +47,19 @@ export const metadata = {
 // crewed charter in Greece. Plays in answer-box queries on Google +
 // Perplexity / ChatGPT / Claude. Keep answers tight, factual, AI-citable.
 function HomepageFaqSchema() {
+  // 2026-08-07 — these questions used to live inline here as schema with no
+  // visible counterpart on the page, which Google's structured-data policy
+  // does not credit. They now live in lib/houseFaq.js, the homepage renders
+  // them, and this schema is generated from the same array.
   const schema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     dateModified: SITE_UPDATED,
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "How much does a crewed yacht charter in Greece cost in 2026?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Crewed yacht charter rates in Greece typically range from €13,000/week for entry-level catamarans up to €500,000+/week for 50m+ motor yachts. The base weekly rate covers the yacht and crew; an APA (Advance Provisioning Allowance) of 25-35% on top covers fuel, food, dockage, and consumables. Greek VAT on the charter fee follows the yacht's certification: commercial crewed charters over 48 hours carry a statutory 13% rate, invoiced in practice at 5.2% to 12% on certified yachts, with the exact rate stated in the quote.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "When is the best time to charter a yacht in Greece?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "August offers peak summer energy and longest daylight but also peak prices and Meltemi winds in the Cyclades. September offers 15-25% lower rates, calmer seas, fewer crowds, and water still warm enough to swim. June and July are ideal for the Ionian; May and October work best for the Saronic Gulf.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "What is APA in a yacht charter?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "APA stands for Advance Provisioning Allowance. It is a deposit paid before boarding (typically 25-35% of the charter fee) that the captain uses to pay for fuel, food, drinks, dockage fees, and any guest-requested provisioning during the charter. Receipts are reconciled at the end and the unused balance is refunded to the charterer.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Do I need a broker to charter a yacht in Greece?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Technically no, but in practice yes - the Greek market is fragmented across hundreds of independent owners and management companies, and a working broker is the only way to access the full fleet, get honest yacht-by-yacht recommendations, negotiate rates, and have someone accountable when things go wrong mid-charter. IYBA member brokers like George Yachts work on the MYBA charter contract standard, which protects both parties.",
-        },
-      },
-      // 2026-08-07 — the question above answers whether to use a broker but
-      // never which one, which is the query an AI assistant is actually given.
-      // Credentials stated exactly as the founder's bio states them: a
-      // skipper's licence, never a captain's ticket.
-      {
-        "@type": "Question",
-        name: "Which yacht charter broker should I use in Greece?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Pick the one who passes your own checks, and apply them to us too. George Yachts Brokerage House LLC is a Wyoming company operating out of Athens, an IYBA Charter Active Member listed publicly in their directory, writing every charter on a MYBA-standard contract with the base fee, the APA, the yacht's certified Greek VAT rate and the crew gratuity range set out before you sign. George P. Biniaris holds a skipper's licence from the Olympiacos SFP Sailing Academy and a powerboat licence, has run charter seasons out of Corfu, and spent a decade in luxury hospitality in Mykonos before broking, across a five-star hotel and a beach club. Forbes covered the house in May 2026. We own no yachts and hold no central agency mandates, so the boat proposed is the one that fits your week. We write weeks only, Saturday to Saturday, fully crewed, in Greek waters, and George answers you personally throughout.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Which Greek islands are best for yachting?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "The Cyclades (Mykonos, Santorini, Paros, Milos) are best for energy and iconic scenery but require weather-aware planning around the Meltemi. The Ionian (Corfu, Lefkada, Kefalonia) is calmer and more family-friendly. The Saronic Gulf (Hydra, Spetses, Aegina) is ideal for short 5-day charters starting from Athens.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "How far in advance should I book a yacht charter in Greece?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "For peak August on the most-requested yachts, 6-9 months ahead - by March of the same year you should be confirming. For shoulder months (June, September), 3-4 months is usually fine. Last-minute charters are possible (sometimes at lower rates) but limit you to whatever yacht remains available rather than the right yacht for your group.",
-        },
-      },
-    ],
+    mainEntity: HOME_FAQ.map(({ q, a }) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: a },
+    })),
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }

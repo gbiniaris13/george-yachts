@@ -12,7 +12,15 @@ import React from "react";
  * Renders the visible copy and the JSON-LD from the same array, so the two
  * cannot drift apart.
  */
-export default function PageFaq({ faq, heading = "Questions people ask", eyebrow = "Straight answers" }) {
+export default function PageFaq({
+  faq,
+  heading = "Questions people ask",
+  eyebrow = "Straight answers",
+  // The homepage already emits its own FAQPage from the same array. Two
+  // FAQPage blocks describing one page is worse than one, so it renders the
+  // visible half only. Caught on the first local run.
+  emitSchema = true,
+}) {
   if (!Array.isArray(faq) || faq.length === 0) return null;
 
   const schema = {
@@ -34,10 +42,12 @@ export default function PageFaq({ faq, heading = "Questions people ask", eyebrow
         borderTop: "1px solid rgba(201,168,76,0.12)",
       }}
     >
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
+      {emitSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      )}
       {/* list-style:none alone leaves Safari's own disclosure triangle in
           place, and with no affordance at all the questions read as plain
           text nobody thinks to click. A thin gold rule that turns is enough. */}

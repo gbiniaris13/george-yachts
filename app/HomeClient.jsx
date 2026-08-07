@@ -3,6 +3,8 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import VideoSection from "./components/VideoSection";
+import PageFaq from "./components/PageFaq";
+import { HOME_FAQ } from "@/lib/houseFaq";
 // Chapter 08 (2026-05-08) — SignatureYacht "Featured This Week"
 // retired in favour of the new <GeorgesSelection /> 2-card pair
 // (La Pellegrina 1 + Errant Vagabond). The SignatureYacht component
@@ -303,6 +305,21 @@ const HomeClient = ({
           flywheel. Hidden when no posts are available. */}
       <div data-gy-reveal="up">
         <HomeJournalTeaser posts={latestPosts} />
+      </div>
+
+      {/* 2026-08-07 — the homepage FAQ existed as schema only, with none of the
+          answers readable on the page. Google does not credit invisible
+          structured data, so the site's richest FAQ was almost certainly being
+          discarded for search while AI engines read it happily. Rendering it
+          here, closed by default so the page reads the same until someone asks.
+          Same array feeds HomepageFaqSchema in app/page.jsx. */}
+      <div data-gy-reveal="up">
+        <PageFaq
+          faq={HOME_FAQ}
+          eyebrow="Straight answers"
+          heading="What people ask before they charter"
+          emitSchema={false}
+        />
       </div>
 
       {/* ContactBar absorbed into ContactFormSection (Proposal D) */}
