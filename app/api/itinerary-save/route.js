@@ -54,7 +54,7 @@ export async function POST(req) {
   const routeStr = route.map((s) => (typeof s === "string" ? s : s?.name || "?")).join(" → ");
 
   // Telegram to Boss
-  const tg = `🗺️ *Itinerary Builder — saved route*\n\n👤 ${name}\n📧 ${email}\n\n*Route:* ${routeStr}\n*Total:* ${totalNM || "?"} NM · ~${hours || "?"} sailing hours\n${message ? `\n*Notes:*\n${message}\n` : ""}\n_Source: /itinerary-builder_`;
+  const tg = `🗺️ *Itinerary Builder, saved route*\n\n👤 ${name}\n📧 ${email}\n\n*Route:* ${routeStr}\n*Total:* ${totalNM || "?"} NM · ~${hours || "?"} sailing hours\n${message ? `\n*Notes:*\n${message}\n` : ""}\n_Source: /itinerary-builder_`;
   try {
     await sendTelegram(tg);
   } catch {}
@@ -64,7 +64,7 @@ export async function POST(req) {
     const html = `
 <div style="font-family:'Lato','Montserrat',sans-serif;font-size:14px;line-height:1.7;color:#0D1B2A">
 <p>Dear ${name.split(" ")[0] || "friend"},</p>
-<p>Thank you — I've saved the Greek-island route you designed on the website. Here it is for your records:</p>
+<p>Thank you, I've saved the Greek-island route you designed on the website. Here it is for your records:</p>
 <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;color:#0D1B2A;margin:18px 0">
 <strong>${routeStr}</strong><br/>
 <span style="color:#9CA3AF">${totalNM || ""} NM · ~${hours || ""} sailing hours</span>
@@ -72,12 +72,12 @@ export async function POST(req) {
 ${message ? `<p style="background:#F8F5F0;padding:12px 16px;border-left:3px solid #C9A84C;font-style:italic">${message.replace(/</g, "&lt;")}</p>` : ""}
 <p>I'll come back to you within 24 hours with two yachts that fit this route at the time of year you're looking at, plus one alternative I think you haven't considered.</p>
 <p>If anything's urgent, the fastest channel is WhatsApp: <a href="https://api.whatsapp.com/send/?phone=17867988798">+1 786 798 8798</a>.</p>
-<p style="margin-top:24px">— George<br/>
+<p style="margin-top:24px">, George<br/>
 <span style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#9CA3AF">George P. Biniaris · Managing Broker</span></p>
 </div>`.trim();
     await sendNewsletterEmail({
       to: email,
-      subject: `Your Greek itinerary is saved — ${routeStr.length > 60 ? routeStr.slice(0, 57) + "…" : routeStr}`,
+      subject: `Your Greek itinerary is saved, ${routeStr.length > 60 ? routeStr.slice(0, 57) + "…" : routeStr}`,
       html,
       list: "transactional", // not a newsletter — reuses Resend infra for one-off
       tags: [{ name: "kind", value: "itinerary_save" }],

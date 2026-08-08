@@ -116,7 +116,7 @@ export async function GET(req) {
     if (brokenLinks.length > 0 || orphans.length > 0) {
       const header = brokenLinks.length > 0 ? "🔴" : "🔗";
       const message =
-        `${header} *Link Audit — George Yachts*\n\n` +
+        `${header} *Link Audit, George Yachts*\n\n` +
         `Broken links: ${brokenLinks.length}\n` +
         (blockedExternal.length > 0 ? `External sites blocking our checker (verify by hand): ${blockedExternal.length}\n` : "") +
         `Posts that other posts never link to (internal-link opportunities): ${orphans.length}\n\n` +

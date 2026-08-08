@@ -307,7 +307,7 @@ export default async function BriefReviewPage() {
         <p className="cabin-brief-review__lede">
           {isSubmitted
             ? "Your brief has been sent. The captain, chef and George have all started preparing your week."
-            : "Every line below was written by your group — your guests, you. George reads every one of them personally. Once you send, only George can re-open the brief for changes — so take a quiet moment to read through and tap into any section that doesn't yet feel like your week."}
+            : "Every line below was written by your group, your guests, you. George reads every one of them personally. Once you send, only George can re-open the brief for changes, so take a quiet moment to read through and tap into any section that doesn't yet feel like your week."}
         </p>
       </header>
 
@@ -320,7 +320,7 @@ export default async function BriefReviewPage() {
             Submitted{submittedByName ? ` by ${submittedByName}` : ""}
             {submittedAtPretty ? ` · ${submittedAtPretty}` : ""}. George will
             read it personally and reply within a day. If you need to make a
-            change, write to George — he can reopen the brief for everyone.
+            change, write to George, he can reopen the brief for everyone.
           </p>
         </section>
       ) : null}
@@ -336,7 +336,7 @@ export default async function BriefReviewPage() {
               {delegatedAdmins
                 .map((m) => m.display_name || m.email)
                 .join(", ")}{" "}
-              — can also send the brief to George on your behalf.
+ , can also send the brief to George on your behalf.
             </p>
           )}
           {optedOut.length > 0 && (
@@ -345,7 +345,7 @@ export default async function BriefReviewPage() {
               {optedOut
                 .map((m) => m.display_name || m.email)
                 .join(", ")}{" "}
-              — their allergies, dietary, swimming and passport details
+ , their allergies, dietary, swimming and passport details
               remain with them. They&apos;ve left the group choices to
               the rest of you.
             </p>
@@ -353,11 +353,11 @@ export default async function BriefReviewPage() {
         </section>
       )}
 
-      {/* 2026-05-24 — Christos pass: principal sees the full
+      {/* 2026-05-24, Christos pass: principal sees the full
           aggregate group allergies HERE (review page is principal-
           only), since the brief section pages no longer show
           aggregate to guests for GDPR reasons. The chef briefing
-          still surfaces every member's health info — just at the
+          still surfaces every member's health info, just at the
           one place where only the principal reads it. */}
       <AllergyAlert source="aggregate" />
 
@@ -406,16 +406,16 @@ export default async function BriefReviewPage() {
                   )}
                 </div>
 
-                {/* 2026-05-25 — Phase 3: per-member Life Aboard
+                {/* 2026-05-25, Phase 3: per-member Life Aboard
                     roll-up. Life Aboard is per-person (Angeliki
                     pass batch 3), so the canonical row in
                     cabin_brief_sections is empty for this section
-                    — the answers live on each member. Show them
+ , the answers live on each member. Show them
                     here so the principal (and chef/captain after
                     the email) can read every voice. Empty
                     members are surfaced quietly so it's clear
                     who still owes an answer. */}
-                {/* 2026-05-27 — Brief 06 (#6): only render this
+                {/* 2026-05-27, Brief 06 (#6): only render this
                     per-member "voices" roll-up when at least one
                     member actually has per-member content (legacy
                     cabins from the Phase-3 multi-writer era). Under
@@ -442,11 +442,11 @@ export default async function BriefReviewPage() {
                           {v.role === "principal_charterer" ? " (you)" : ""}
                           {v.hasContent ? (
                             <span className="cabin-brief-review__voice-glance">
-                              {" — "}{v.highlights.length} note{v.highlights.length === 1 ? "" : "s"}
+                              {"-"}{v.highlights.length} note{v.highlights.length === 1 ? "" : "s"}
                             </span>
                           ) : (
                             <span className="cabin-brief-review__voice-empty">
-                              {" — not yet filled"}
+                              {", not yet filled"}
                             </span>
                           )}
                         </summary>
@@ -462,7 +462,7 @@ export default async function BriefReviewPage() {
                   </div>
                 )}
 
-                {/* 2026-05-23 — MUB-C: shared wishlist items
+                {/* 2026-05-23, MUB-C: shared wishlist items
                     (specific bottles/dishes the group named). */}
                 {wishlist.length > 0 && (
                   <div className="cabin-brief-review__wishlist">
@@ -481,12 +481,12 @@ export default async function BriefReviewPage() {
                           )}
                           {w.notes && (
                             <span className="cabin-brief-review__wishlist-notes">
-                              {" — "}
+                              {"-"}
                               <em>{w.notes}</em>
                             </span>
                           )}
                           <span className="cabin-brief-review__wishlist-by">
-                            {" "}— added by {w.addedByName}
+                            {" "}, added by {w.addedByName}
                           </span>
                         </li>
                       ))}
@@ -508,13 +508,13 @@ export default async function BriefReviewPage() {
         })}
       </ol>
 
-      {/* 2026-05-23 — Multi-user Brief (Phase 3, MUB-B): APA
+      {/* 2026-05-23, Multi-user Brief (Phase 3, MUB-B): APA
           disclaimer block. George's spec for friend test 4:
             "Μια υποσημείωση εκεί, λόγω του Advanced Provisioning
              Allowance, APA, να τον προστατεύουμε ουσιαστικά και
              να του λέμε ότι κοίταξε να δεις όσο πιο ακριβά είναι
              τόσο πιο πολλά θα πληρώστε."
-          Boutique navy/gold band — same visual weight as the
+          Boutique navy/gold band, same visual weight as the
           submitted banner, just calmer. Sits ABOVE the ReviewSubmit
           modal so the principal reads it before any "Send" click.
           The Send modal itself acts as the explicit acknowledgement
@@ -522,7 +522,7 @@ export default async function BriefReviewPage() {
       {!isSubmitted && (
         <section className="cabin-brief-review__apa">
           <div className="cabin-brief-review__apa-eyebrow">
-            Before you send — about your APA
+            Before you send, about your APA
           </div>
           <p className="cabin-brief-review__apa-copy">
             Charter yachts work on an <strong>Advanced Provisioning
@@ -536,7 +536,7 @@ export default async function BriefReviewPage() {
             premium tiers you&apos;ve chosen (Champagne, wines, spirits),
             the more specific labels you&apos;ve named, and the longer
             any &quot;specific items&quot; list you&apos;ve added, the
-            more the hostess will spend at provisioning — and the
+            more the hostess will spend at provisioning, and the
             higher your APA will draw down. None of this is added
             silently to your tab: anything materially above your
             stated tiers, or any rare/specialty bottle outside a

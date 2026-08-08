@@ -300,7 +300,7 @@ export default async function SeoLanding({ pageData }) {
 
         {/* WHY THIS PAGE
 
-            2026-08-06 (job 20, local until George's push) — whyTitle, whenTitle
+            2026-08-06 (job 20, local until George's push), whyTitle, whenTitle
             and insiderTitle were all marked up as <p>. They are section
             headings and were styled like section headings, but a paragraph is
             what Google was reading. The consequence showed up in the URL
@@ -340,7 +340,7 @@ export default async function SeoLanding({ pageData }) {
           </div>
         </section>
 
-        {/* PROS / CONS — optional */}
+        {/* PROS / CONS, optional */}
         {pageData.prosAndCons && (
           <section style={{ padding: "24px 24px 64px" }}>
             <div style={{ maxWidth: 880, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
@@ -372,7 +372,7 @@ export default async function SeoLanding({ pageData }) {
           </section>
         )}
 
-        {/* BEST FOR — optional bulleted list */}
+        {/* BEST FOR, optional bulleted list */}
         {Array.isArray(pageData.bestFor) && pageData.bestFor.length > 0 && (
           <section style={{ padding: "0 24px 64px" }}>
             <div style={{ maxWidth: 720, margin: "0 auto" }}>
@@ -445,7 +445,7 @@ export default async function SeoLanding({ pageData }) {
           </section>
         )}
 
-        {/* RATE TABLE — optional visible pricing table (2026-07-02, GEO:
+        {/* RATE TABLE, optional visible pricing table (2026-07-02, GEO:
             engines extract facts from rendered HTML tables; JSON-LD alone
             showed no citation uplift in Ahrefs' 1,885-page experiment). */}
         {pageData.rateTable && Array.isArray(pageData.rateTable.rows) && pageData.rateTable.rows.length > 0 && (
@@ -495,7 +495,7 @@ export default async function SeoLanding({ pageData }) {
           </section>
         )}
 
-        {/* TESTIMONIAL — optional verified client quote (2026-07-08).
+        {/* TESTIMONIAL, optional verified client quote (2026-07-08).
             Real review words on the money page: E-E-A-T for Google,
             quotable first-hand proof for AI engines. Renders nothing
             when the field is absent, so the other ~40 pages are
@@ -519,7 +519,7 @@ export default async function SeoLanding({ pageData }) {
           </section>
         )}
 
-        {/* DEEP DIVE — optional long-form editorial sections (2026-07-02).
+        {/* DEEP DIVE, optional long-form editorial sections (2026-07-02).
             Lets head pages carry guide-depth content without touching the
             template contract of the other ~40 pages (renders nothing when
             the field is absent). body supports **bold** + [text](/path). */}
@@ -588,7 +588,7 @@ export default async function SeoLanding({ pageData }) {
                 Frequently asked
               </p>
               <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 36px", textAlign: "center" }}>
-                {/* 2026-08-06 (job 20) — the fallback was `About ${h1.toLowerCase()}`,
+                {/* 2026-08-06 (job 20), the fallback was `About ${h1.toLowerCase()}`,
                     which rendered as "About motor yacht charter corfu": lower-cased,
                     machine-flavoured, and on the thin combo pages it was one of only
                     three headings on the whole page. Keeps the term, loses the tell. */}
@@ -606,7 +606,7 @@ export default async function SeoLanding({ pageData }) {
           </section>
         )}
 
-        {/* CONTINUE EXPLORING — Phase 7 Round 6 internal linking */}
+        {/* CONTINUE EXPLORING, Phase 7 Round 6 internal linking */}
         {related.length > 0 && (
           <section style={{ padding: "72px 24px", borderTop: "1px solid rgba(248, 245, 240,0.06)" }}>
             <div style={{ maxWidth: 1100, margin: "0 auto" }}>
@@ -663,7 +663,7 @@ export default async function SeoLanding({ pageData }) {
               >
                 Or write to George
               </Link>
-              {/* 2026-07-03 TEMPORARY — WhatsApp under review; route
+              {/* 2026-07-03 TEMPORARY, WhatsApp under review; route
                   to /inquiry while WHATSAPP_DOWN (lib/whatsappStatus). */}
               <a
                 href={WHATSAPP_DOWN ? "/inquiry" : `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(`Hi George, I am interested in ${pageData.h1 || "a Greek yacht charter"}. Could you share availability and rates?`)}`}
@@ -679,7 +679,7 @@ export default async function SeoLanding({ pageData }) {
           </div>
         </section>
       </article>
-      {/* 2026-08-06 (job 9) — the footer was missing from this template.
+      {/* 2026-08-06 (job 9), the footer was missing from this template.
           Measured across all 474 public pages: 77 rendered the sitewide
           footer, 397 rendered no <footer> element at all, because the six
           programmatic templates each ended at </article>. No comment in any

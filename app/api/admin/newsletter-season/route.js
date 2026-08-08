@@ -126,37 +126,37 @@ export async function GET(request) {
       case "deep_winter":
         return {
           bridge: "References, comparisons, quiet stories. Booking decisions are 4-5 months away.",
-          wake: "Education — what your clients should be asking about Greek waters",
+          wake: "Education, what your clients should be asking about Greek waters",
           compass: "Peer market signals year-round",
         };
       case "spring_lift":
         return {
           bridge: "Surface availability windows + season setup. Inquiries respond fast right now.",
-          wake: "Booking signals — what's tightening, urgency without specifics",
+          wake: "Booking signals, what's tightening, urgency without specifics",
           compass: "Peer market signals year-round",
         };
       case "season_open":
         return {
-          bridge: "Last call for prime weeks. Select-availability framing — direct, never panicky.",
+          bridge: "Last call for prime weeks. Select-availability framing, direct, never panicky.",
           wake: "Booking signals + last-window framing",
           compass: "Peer market signals year-round",
         };
       case "high_season":
         return {
           bridge: "Operational mode. Light-touch storytelling, no fresh pitches.",
-          wake: "Last-minute opportunities — white-label-ready short offers",
+          wake: "Last-minute opportunities, white-label-ready short offers",
           compass: "Peer market signals year-round",
         };
       case "shoulder":
         return {
           bridge: "Second-wave bookings. Highlight October weather window + Cyclades quiet.",
-          wake: "2027 preview — what's coming online",
+          wake: "2027 preview, what's coming online",
           compass: "Peer market signals year-round",
         };
       case "year_end":
         return {
           bridge: "Plant testimonials, surface 2027 early-bird, write introspective stories.",
-          wake: "2027 preview — what's coming online",
+          wake: "2027 preview, what's coming online",
           compass: "Peer market signals year-round",
         };
       default:

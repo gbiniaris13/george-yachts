@@ -134,7 +134,7 @@ async function handleEvent(evt) {
       await kvSrem(set, email).catch(() => {});
     }
     await notifyTelegram(
-      `📧 <b>Hard bounce — suppressed</b>\n${escapeHtml(email)}\nReason: ${escapeHtml(evt?.data?.bounce?.message ?? "n/a")}`,
+      `📧 <b>Hard bounce, suppressed</b>\n${escapeHtml(email)}\nReason: ${escapeHtml(evt?.data?.bounce?.message ?? "n/a")}`,
     );
     return { type, action: "suppressed-hard-bounce", email };
   }
@@ -153,7 +153,7 @@ async function handleEvent(evt) {
       await kvSrem(set, email).catch(() => {});
     }
     await notifyTelegram(
-      `🚨 <b>Spam complaint — suppressed</b>\n${escapeHtml(email)}\nThis address marked us as spam. Removed from every list.`,
+      `🚨 <b>Spam complaint, suppressed</b>\n${escapeHtml(email)}\nThis address marked us as spam. Removed from every list.`,
     );
     return { type, action: "suppressed-complaint", email };
   }
@@ -198,7 +198,7 @@ export async function POST(request) {
   if (!verify.ok) {
     // Brief §16.1: never silent fail. Telegram-alert + 401.
     await notifyTelegram(
-      `🚨 <b>Resend webhook signature failed</b>\nReason: ${escapeHtml(verify.reason ?? "unknown")}\nIgnoring this event — possible attack.`,
+      `🚨 <b>Resend webhook signature failed</b>\nReason: ${escapeHtml(verify.reason ?? "unknown")}\nIgnoring this event, possible attack.`,
     );
     return NextResponse.json(
       { error: "invalid signature", reason: verify.reason },

@@ -79,14 +79,14 @@ export default function ReviewSubmit({
       // the first thing they see.
       setTimeout(() => router.push("/cabin/brief"), 300);
     } catch (e) {
-      setError(e?.message || "Could not send the brief — try again.");
+      setError(e?.message || "Could not send the brief, try again.");
       setSubmitting(false);
     }
   }
 
   return (
     <div className="cbr-submit">
-      {/* 2026-05-24 — Sections-incomplete is now HARD-BLOCKING
+      {/* 2026-05-24, Sections-incomplete is now HARD-BLOCKING
           (was soft-warning before). Surface it loudly so the
           principal knows what to chase. */}
       {!allDone && (
@@ -98,7 +98,7 @@ export default function ReviewSubmit({
             className="cbr-submit__pending-eyebrow"
             style={{ color: "#9a3a2c", fontWeight: 700 }}
           >
-            Brief sections still pending — required before sending
+            Brief sections still pending, required before sending
           </div>
           <p
             className="cbr-submit__pending-copy"
@@ -106,8 +106,8 @@ export default function ReviewSubmit({
           >
             Your brief is{" "}
             <strong>{completionPercent || 0}%</strong> complete.
-            The chef and hostess need every section filled — food
-            picks, drinks, the lot — before George can plan
+            The chef and hostess need every section filled, food
+            picks, drinks, the lot, before George can plan
             provisioning. Hop back into any section marked&nbsp;
             <em>Not yet filled</em> above and add what&apos;s
             missing. The button below unlocks the moment every
@@ -116,7 +116,7 @@ export default function ReviewSubmit({
         </div>
       )}
 
-      {/* 2026-05-22 — HARD readiness gate. Per George's directive
+      {/* 2026-05-22, HARD readiness gate. Per George's directive
           "πρέπει για να κλειδώσει ή αλλιώς δεν κλειδώνει", the brief
           cannot be sent until every non-opted-out member has finished
           their Crew List essentials (port-authority paperwork). The
@@ -136,7 +136,7 @@ export default function ReviewSubmit({
             className="cbr-submit__pending-eyebrow"
             style={{ color: "#9a3a2c", fontWeight: 700 }}
           >
-            Crew list still pending — required before sending
+            Crew list still pending, required before sending
           </div>
           <p
             className="cbr-submit__pending-copy"
@@ -186,15 +186,15 @@ export default function ReviewSubmit({
               <a href="/cabin/guests" style={{ color: "#8a7327", borderBottom: "1px solid rgba(201, 168, 76, 0.55)" }}>
                 Your Group
               </a>
-              , or — if you decide someone won&apos;t be filling theirs
-              — they can mark themselves as having stepped aside (opt
+              , or, if you decide someone won&apos;t be filling theirs
+ , they can mark themselves as having stepped aside (opt
               out) from their own page.
             </em>
           </p>
         </div>
       )}
 
-      {/* 2026-05-27 — Brief 06 (#1+#2): the brief-confirmation gate
+      {/* 2026-05-27, Brief 06 (#1+#2): the brief-confirmation gate
           panel is removed. Guests don't confirm anything under the
           single-writer model, so there was nothing here that the
           principal could ever clear. */}
@@ -265,7 +265,7 @@ export default function ReviewSubmit({
             </h3>
             <p className="cbr-modal__copy">
               Once you send, the brief for{" "}
-              <strong>{vesselName || "your cabin"}</strong> is locked —
+              <strong>{vesselName || "your cabin"}</strong> is locked
               guests can no longer edit, and any change has to come
               through George.{" "}
               {pendingCount > 0 ? (
@@ -302,7 +302,7 @@ export default function ReviewSubmit({
                 onClick={confirm}
                 disabled={submitting}
               >
-                {submitting ? "Sending…" : "Send it — I'm sure"}
+                {submitting ? "Sending…" : "Send it, I'm sure"}
               </button>
             </div>
           </div>

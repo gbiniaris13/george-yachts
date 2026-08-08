@@ -124,7 +124,7 @@ export default function GreekWatersMap() {
       style={{ background: "#0D1B2A" }}
       aria-label="Greek waters - four cruising regions"
     >
-      {/* Soft radial wash — reads as moonlight on water */}
+      {/* Soft radial wash, reads as moonlight on water */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -186,7 +186,7 @@ export default function GreekWatersMap() {
             role="img"
             aria-label="Map of Greek cruising regions"
           >
-            {/* Mainland backdrop — faint */}
+            {/* Mainland backdrop, faint */}
             <path
               d={BACKDROP_PATHS.mainland}
               fill="rgba(248, 245, 240,0.025)"
@@ -200,7 +200,7 @@ export default function GreekWatersMap() {
               strokeWidth="1"
             />
 
-            {/* Athens marker — a small ring + label, editorial anchor */}
+            {/* Athens marker, a small ring + label, editorial anchor */}
             <g>
               <circle cx="430" cy="390" r="3" fill="rgba(201,168,76,0.6)" />
               <circle
@@ -224,7 +224,7 @@ export default function GreekWatersMap() {
               </text>
             </g>
 
-            {/* Labels for each region — small caps, ivory, positioned
+            {/* Labels for each region, small caps, ivory, positioned
                 above the cluster. Tint gold when active. */}
             {REGIONS.map((r) => {
               const isActive = activeId === r.id;
@@ -287,7 +287,7 @@ export default function GreekWatersMap() {
               );
             })}
 
-            {/* Hover zones — one invisible rect per region that
+            {/* Hover zones, one invisible rect per region that
                 swallows the mouse over its island cluster. Each
                 wraps a <a> so click navigates. */}
             {REGIONS.map((r) => {
@@ -327,7 +327,7 @@ export default function GreekWatersMap() {
             })}
           </svg>
 
-          {/* Floating info card on desktop — only visible when a
+          {/* Floating info card on desktop, only visible when a
               region is hovered. Shown outside the SVG so normal HTML
               interactions work. Mobile: hidden; mobile shows a static
               list below instead. */}
@@ -403,7 +403,7 @@ export default function GreekWatersMap() {
           )}
         </div>
 
-        {/* Mobile / fallback — compact list of regions below the map.
+        {/* Mobile / fallback, compact list of regions below the map.
             Always rendered but visually hidden on desktop via the
             md:hidden class below the map SVG; on mobile serves as
             the primary nav since hover isn't available. */}

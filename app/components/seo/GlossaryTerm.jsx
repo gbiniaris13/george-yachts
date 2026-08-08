@@ -96,7 +96,7 @@ export default function GlossaryTerm({ termData }) {
       <BreadcrumbSchema items={breadcrumbs} />
 
       <article style={{ background: NAVY, minHeight: "100vh", color: CREAM }}>
-        {/* HERO — featured-snippet target */}
+        {/* HERO, featured-snippet target */}
         <header style={{ padding: "120px 24px 56px", borderBottom: "1px solid rgba(201,168,76,0.15)" }}>
           <div style={{ maxWidth: 880, margin: "0 auto" }}>
             <nav style={{ marginBottom: 24 }}>
@@ -574,12 +574,12 @@ export default function GlossaryTerm({ termData }) {
             </div>
           </div>
         </section>
-      {/* 2026-08-06 (job 18) — glossary entries never reached the COHORTS
+      {/* 2026-08-06 (job 18), glossary entries never reached the COHORTS
           mechanism either, and /glossary/day-charter was answering weekly cost
           queries at position 18 to 27 with a single link to its own family. */}
       <RelatedPages path={`/glossary/${termData.slug}`} />
       </article>
-      {/* 2026-08-06 (job 9) — the footer was missing from this template.
+      {/* 2026-08-06 (job 9), the footer was missing from this template.
           Measured across all 474 public pages: 77 rendered the sitewide
           footer, 397 rendered no <footer> element at all, because the six
           programmatic templates each ended at </article>. No comment in any

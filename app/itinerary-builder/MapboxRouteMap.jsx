@@ -281,7 +281,7 @@ export default function MapboxRouteMap({
         role="application"
         aria-label="Interactive Greek-islands route map"
       />
-      {/* L.2 — 2D ⇄ 3D toggle. Sits top-left so it doesn't clash with
+      {/* L.2, 2D ⇄ 3D toggle. Sits top-left so it doesn't clash with
           the NavigationControl (top-right). Hidden until the map is
           ready so users don't see a non-functional button. */}
       {ready && (

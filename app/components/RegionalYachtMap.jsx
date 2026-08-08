@@ -235,7 +235,7 @@ export default function RegionalYachtMap({ yachts = [] }) {
         </div>
       </div>
 
-      {/* Phase 27i.19 (2026-05-08) — home-base footnote. Boss
+      {/* Phase 27i.19 (2026-05-08), home-base footnote. Boss
           directive: the per-region yacht counts are home bases, not
           static "this is where the yacht lives all summer". Yachts
           relocate on client request and most charters cross regions
@@ -249,7 +249,7 @@ export default function RegionalYachtMap({ yachts = [] }) {
         and end it in the Cyclades.
       </p>
 
-      {/* Region detail modal — photo carousel cover + yacht list.
+      {/* Region detail modal, photo carousel cover + yacht list.
           key={region.slug} so the modal remounts on fly-through →
           photoIdx resets to 0 → cover photos start their fade fresh
           for the new region. */}
@@ -317,7 +317,7 @@ function RegionModal({ region, yachts, flying = false, onClose, onPrev, onNext }
           ×
         </button>
 
-        {/* Phase 27i.15 (2026-05-08) — region-to-region fly-through.
+        {/* Phase 27i.15 (2026-05-08), region-to-region fly-through.
             Prev/next arrows glide the camera (the underlying SVG
             map zoom origin transitions over 480 ms) AND swap the
             modal contents to the neighbouring region. Keyboard:
@@ -345,7 +345,7 @@ function RegionModal({ region, yachts, flying = false, onClose, onPrev, onNext }
           </button>
         )}
 
-        {/* Carousel cover — all 4 photos stacked, the active one at
+        {/* Carousel cover, all 4 photos stacked, the active one at
             full opacity, others at 0. CSS handles the crossfade. */}
         <div className="gy-region-modal-cover" aria-hidden="true">
           {photos.map((src, i) => (
@@ -367,7 +367,7 @@ function RegionModal({ region, yachts, flying = false, onClose, onPrev, onNext }
             <p className="gy-region-modal-subtitle">{region.subtitle}</p>
           </div>
 
-          {/* Dot indicators — clickable, manual nav for users who
+          {/* Dot indicators, clickable, manual nav for users who
               don't want to wait for the auto-rotation. */}
           {photos.length > 1 && (
             <div className="gy-region-modal-dots">

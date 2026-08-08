@@ -59,7 +59,7 @@ export async function POST(req) {
   </a>
 </p>
 <p style="font-size:12px;color:#9CA3AF">If you didn't request this, ignore this email.</p>
-<p style="margin-top:20px">— George Yachts Brokerage House</p>
+<p style="margin-top:20px">, George Yachts Brokerage House</p>
 </div>`.trim();
 
         await fetch(`${RESEND_API}/emails`, {

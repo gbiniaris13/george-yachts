@@ -215,32 +215,32 @@ export default async function CharterFleetPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
       />
-      {/* 2026-05-18 — Service schema (companion to the ItemList above).
+      {/* 2026-05-18, Service schema (companion to the ItemList above).
           ItemList lists the yachts; Service describes the bookable
-          service this page sells. Two scripts, no conflict — Google
+          service this page sells. Two scripts, no conflict, Google
           merges multiple JSON-LD blocks on the same page. */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
 
-      {/* HERO — Chapter 01 (2026-05-08): Boss-curated catamaran video
+      {/* HERO, Chapter 01 (2026-05-08): Boss-curated catamaran video
           replaces the static Sanity image. Two clips concatenated:
           14413577 (top-down catamaran on emerald shallows, 17 s) →
           19714235 (catamaran with lone swimmer near reef, 59 s).
           Total 76 s loop. Encoded WebM 1300 kbps / MP4 1900 kbps
           2-pass → 12 MB WebM (Chrome/Firefox/Edge primary) +
           17 MB MP4 (Safari fallback). Different feel from the
-          homepage hero (motor yacht) — fleet header now leads with
+          homepage hero (motor yacht), fleet header now leads with
           sailing-cat texture so the visitor immediately reads
           "we cover both sides of the brokerage". */}
       <section className="fleet-hero">
-        {/* 2026-05-08 (Chapter 01 follow-up) — poster + preload fix.
+        {/* 2026-05-08 (Chapter 01 follow-up), poster + preload fix.
             Boss reported the Pellegrina Sanity image flashing at
             page load before the catamaran video kicked in. Two
             changes:
               (a) poster now points to a frame extracted directly
-                  from fleet-catamarans.mp4 at t=0 — so even if the
+                  from fleet-catamarans.mp4 at t=0, so even if the
                   poster shows for 100 ms while the video buffers,
                   it's the SAME image as frame 1 of the video.
                   Swap is invisible.
@@ -248,7 +248,7 @@ export default async function CharterFleetPage() {
                   downloading the video bytes as soon as the page
                   loads, instead of waiting for the play() call.
                   Trade-off: 12 MB starts downloading immediately
-                  on this route — acceptable here because the fleet
+                  on this route, acceptable here because the fleet
                   page is intent-driven (visitor typed it / clicked
                   through) and bandwidth is rarely the constraint
                   for the UHNW visitor. */}
@@ -292,13 +292,13 @@ export default async function CharterFleetPage() {
       </section>
 
       {/* FLEET GRID (Client Component) */}
-      {/* Phase 2 / B1 (luxury rebuild) — Brief George banner sitting
+      {/* Phase 2 / B1 (luxury rebuild), Brief George banner sitting
           alongside filters. Boutique alternative path for guests who
           don't want to filter through 60+ yachts. */}
       <BriefGeorgeBanner />
       <FleetGrid yachts={yachts} />
 
-      {/* 2026-07-02 (ASK A Move 3c) — the guide layer: live per-tier
+      {/* 2026-07-02 (ASK A Move 3c), the guide layer: live per-tier
           cost table, Index stat callouts, sample week, seasons,
           reviews, 10-question FAQ with FAQPage schema. Closes the
           editorial-depth gap against the ranking competitor category
@@ -306,7 +306,7 @@ export default async function CharterFleetPage() {
           ran a grid and a trust strip). */}
       <FleetGuideSections yachts={yachts} />
 
-      {/* Phase 7 (2026-05-11) — SEO internal-link block. Pushes
+      {/* Phase 7 (2026-05-11), SEO internal-link block. Pushes
           authority from the fleet page (high traffic, ranking well)
           to the 22 new yacht-type / use-case / long-tail landing
           pages built per the SEO strategy doc. */}
@@ -340,12 +340,12 @@ export default async function CharterFleetPage() {
         </p>
       </section>
 
-      {/* 2026-07-02 (ASK B 5.1) — quiet inline email capture; the
+      {/* 2026-07-02 (ASK B 5.1), quiet inline email capture; the
           exit-intent modal is silenced on money pages, this band and
           the footer form carry the capture instead. */}
       <FirstAccessBand />
 
-      {/* FROM THE JOURNAL — Cross-linking */}
+      {/* FROM THE JOURNAL, Cross-linking */}
       <section style={{ padding: "80px 24px", background: "#0D1B2A", borderTop: "1px solid rgba(201,168,76,0.06)" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "40px" }}>

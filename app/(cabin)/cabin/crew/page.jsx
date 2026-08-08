@@ -188,7 +188,7 @@ export default async function CrewPage() {
       <IntroParagraph>
         A small, hand-picked team will look after you and your guests at sea.
         Their first names, the role each holds, a few quiet words about each
-        — not a CV, more the kind of thing you&apos;d hear at a welcome
+ , not a CV, more the kind of thing you&apos;d hear at a welcome
         dinner. The captain reads your preferences in your own voice; what
         follows is their voice, in return.
       </IntroParagraph>
@@ -196,7 +196,7 @@ export default async function CrewPage() {
       {crew.length === 0 ? (
         <p className="crew-empty">
           <em>
-            We will introduce your crew here shortly — within a week of your
+            We will introduce your crew here shortly, within a week of your
             embarkation, sometimes sooner. If you would like a name today,
             <a href="mailto:george@georgeyachts.com"> reply to me</a> and I
             will tell you.

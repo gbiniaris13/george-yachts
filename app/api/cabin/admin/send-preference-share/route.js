@@ -106,7 +106,7 @@ export async function POST(req) {
   const shareUrl = `${publicOrigin(req)}/cabin/share/${token}`;
   const charterDates =
     cabin.charter_period_from && cabin.charter_period_to
-      ? `${fmtDate(cabin.charter_period_from)} – ${fmtDate(cabin.charter_period_to)}`
+      ? `${fmtDate(cabin.charter_period_from)}, ${fmtDate(cabin.charter_period_to)}`
       : "";
 
   // Fan out to each recipient. We don't fail the request if a single

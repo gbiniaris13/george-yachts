@@ -157,13 +157,13 @@ export default function AboutContent() {
         </RevealSection>
       </section>
 
-      {/* ═══════ TIER 2.1 — FORBES MENTION ═══════
+      {/* ═══════ TIER 2.1, FORBES MENTION ═══════
           Roberto Forbes integration brief, May 2026. Small
           typographic addition that sits beneath the existing intro
           philosophy and above the stats section. Brand-equality
           rule respected: "Forbes" rendered as a text wordmark in
           regular weight, never larger than the page-level G/Y mark.
-          NOT a rewrite — purely additive.
+          NOT a rewrite, purely additive.
       */}
       <section
         aria-label="Featured in Forbes - May 2026"
@@ -279,7 +279,7 @@ export default function AboutContent() {
                 />
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%", background: "linear-gradient(to top, rgba(13, 27, 42,0.6), transparent)" }} />
               </div>
-              {/* IYBA Badge under photo — official logo, link to iyba.org
+              {/* IYBA Badge under photo, official logo, link to iyba.org
                   per legal directive §3 backlink-required clause. */}
               <a
                 href="https://iyba.org"
@@ -354,7 +354,7 @@ export default function AboutContent() {
       </section>
 
       {/* ═══════ OUR CORE TEAM ═══════
-          Boss directive 2026-05-08 — restore from the prior site,
+          Boss directive 2026-05-08, restore from the prior site,
           same six people / photos / titles. Palette + fonts run
           through the canonical brand tokens (no inline hex, no
           hardcoded font-family beyond what the Phase 28 catcher
@@ -567,7 +567,7 @@ export default function AboutContent() {
         </RevealSection>
       </section>
 
-      {/* ═══════ SERVICES — 360° ═══════ */}
+      {/* ═══════ SERVICES, 360° ═══════ */}
       <section className="about-services">
         <RevealSection className="text-center">
           <p className="about-services__eyebrow">Beyond the Yacht</p>

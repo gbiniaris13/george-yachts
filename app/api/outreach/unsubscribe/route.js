@@ -44,7 +44,7 @@ function htmlPage(title, body) {
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${title} — George Yachts</title>
+<title>${title}, George Yachts</title>
 <style>
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
        background:#0b1020;color:#e7ecf2;display:flex;align-items:center;
@@ -74,7 +74,7 @@ export async function GET(request) {
         'Link expired',
         `<h1>That link has expired.</h1>
          <p>No action was taken. If you want to unsubscribe from our
-         outreach emails, just reply to any message with "unsubscribe" —
+         outreach emails, just reply to any message with "unsubscribe"
          a real person will handle it within 24 hours.</p>`
       ),
       { status: 400, headers: { 'content-type': 'text/html' } }
@@ -112,7 +112,7 @@ export async function GET(request) {
        from our outreach list. You won\u2019t receive any further emails
        from George Yachts brokerage outreach.</p>
        <p>If a colleague of yours still hears from us, just forward them
-       this link and have them open it — the confirmation is
+       this link and have them open it, the confirmation is
        address-specific.</p>
        <p>If this was a mistake, reply to any prior message with
        "resubscribe" and we\u2019ll add you back.</p>`

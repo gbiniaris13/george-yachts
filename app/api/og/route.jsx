@@ -79,7 +79,7 @@ export async function GET(request) {
             </span>
           </div>
 
-          {/* Centre block — eyebrow + headline */}
+          {/* Centre block, eyebrow + headline */}
           <div
             style={{
               display: "flex",
@@ -115,7 +115,7 @@ export async function GET(request) {
             </div>
           </div>
 
-          {/* Bottom — domain + gold accent line */}
+          {/* Bottom, domain + gold accent line */}
           <div
             style={{
               display: "flex",

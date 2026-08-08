@@ -143,11 +143,11 @@ export default function BriefFormShell({
         // shell stays role-agnostic.
         initialData: initialData ?? {},
       })}
-      {/* 2026-05-24 — Angeliki pass: Next button = navy/gold,
+      {/* 2026-05-24, Angeliki pass: Next button = navy/gold,
           autosave reassurance line in the middle. Phase 6 (today)
           adds the "Ready for the next step?" microcopy above the
           nav so the user reads a clear instruction BEFORE the
-          button — boutique handoff between content and action. */}
+          button, boutique handoff between content and action. */}
       {nextSection && (
         <div className="brief-shell__handoff" role="note">
           <div className="brief-shell__handoff-eyebrow">Next step</div>

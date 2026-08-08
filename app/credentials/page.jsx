@@ -129,7 +129,7 @@ export default function CredentialsPage() {
           <p className="gy-eyebrow" style={{ color: "#C9A84C" }}>
             Credentials
           </p>
-          {/* 2026-08-06 (job 7) — the h1 was "What stands behind every charter
+          {/* 2026-08-06 (job 7), the h1 was "What stands behind every charter
               we write.", which says nothing about what the page is. Search
               Console has this page at position 19.9 and 21.6 for "how to
               verify a yacht charter broker's credentials" and its variants,
@@ -415,7 +415,7 @@ export default function CredentialsPage() {
           <span />
         </span>
 
-        {/* MYBA — text only per legal directive */}
+        {/* MYBA, text only per legal directive */}
         <section
           aria-label="MYBA-standard charter contracts"
           data-gy-reveal="up"
@@ -663,7 +663,7 @@ export default function CredentialsPage() {
           </Link>
         </section>
 
-        {/* 2026-08-06 (job 7) — "how to verify a yacht charter broker's
+        {/* 2026-08-06 (job 7), "how to verify a yacht charter broker's
             credentials" and its variants bring 331 impressions to this page at
             positions 19.9 and 21.6, and the page never answered the question.
             It listed our own credentials and left the reader to infer the

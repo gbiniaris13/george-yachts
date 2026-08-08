@@ -97,7 +97,7 @@ export default function VisitorGreeting() {
           }, VISIBLE_MS);
         }, SHOW_DELAY_MS);
       })
-      .catch(() => { /* silent failure — no greeting, no log spam */ });
+      .catch(() => { /* silent failure, no greeting, no log spam */ });
 
     return () => {
       cancelled = true;

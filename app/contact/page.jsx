@@ -122,7 +122,7 @@ export default function ContactPage() {
       />
 
       <main className="bg-black text-white min-h-screen">
-        {/* 2026-07-14 — top padding raised from py-24 (96px): the fixed
+        {/* 2026-07-14, top padding raised from py-24 (96px): the fixed
             nav's centered wordmark (clamp 120-180px tall + Forbes bar)
             overlaid the centered masthead, logo colliding with the H1.
             Clamp keeps clearance across breakpoints without a mobile gap. */}
@@ -130,7 +130,7 @@ export default function ContactPage() {
           className="max-w-6xl mx-auto px-6 pb-24"
           style={{ paddingTop: "clamp(180px, 18vw, 240px)" }}
         >
-          {/* Phase 27g (Forbes-launch day) — masthead upgraded to brand
+          {/* Phase 27g (Forbes-launch day), masthead upgraded to brand
               standard. Cinzel + .gy-luxe-enter via inline style + gold
               rules + italic Cormorant lede, matching homepage hero +
               region pages. */}
@@ -348,7 +348,7 @@ export default function ContactPage() {
           </div>
         </section>
       </main>
-      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+      {/* 2026-08-06 (job 9), sitewide footer. Measured before this change:
           397 of 474 public pages rendered no <footer> at all. */}
       <Footer />
     </>

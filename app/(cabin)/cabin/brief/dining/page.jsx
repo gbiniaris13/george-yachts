@@ -184,15 +184,15 @@ export default function DiningSectionPage() {
         italic="table."
       />
       <IntroParagraph>
-        Your chef builds every menu from scratch — there is no fixed list of
+        Your chef builds every menu from scratch, there is no fixed list of
         dishes. The more you share, the more thoughtfully your meals can be
         designed. Don&apos;t worry about being too specific. We would rather know
         too much than too little.
       </IntroParagraph>
 
-      {/* 2026-05-20 — Da$k friend-test asked for an allergy banner
+      {/* 2026-05-20, Da$k friend-test asked for an allergy banner
           on every food-related page, prominently.
-          2026-05-23 — George friend test 4 (Bill nuts, Olga
+          2026-05-23, George friend test 4 (Bill nuts, Olga
           pineapple): the principal-only Health-section data was
           missing every guest's /me allergy. Switched to "aggregate"
           mode so the alert merges:
@@ -200,7 +200,7 @@ export default function DiningSectionPage() {
             • every guest's personal_details allergies + dietary
           and surfaces them attributed by name. Chef sees the
           full group picture without opening guests one-by-one. */}
-      {/* 2026-05-24 — Christos pass (GDPR): switched aggregate
+      {/* 2026-05-24, Christos pass (GDPR): switched aggregate
           → self. Brief/dining is editable by EVERYONE in the
           shared brief model, so an aggregate allergy view would
           leak each member's medical info to every other member.
@@ -209,21 +209,21 @@ export default function DiningSectionPage() {
           only page) so the chef briefing is complete. */}
       <AllergyAlert source="self" />
 
-      {/* 2026-05-20 — Friend-test pass 3 (George): the sample menu
+      {/* 2026-05-20, Friend-test pass 3 (George): the sample menu
           uploaded in GY Command shows BEFORE the preference ticks so
           the charterer isn't filling in a vacuum. */}
       <SampleMenuPreview />
 
-      {/* 2026-05-23 — SHARED BRIEF MODEL: the form below IS the
+      {/* 2026-05-23, SHARED BRIEF MODEL: the form below IS the
           shared document. A small "Last edited by X · Y ago" line
           tells whoever opened the page what's been added before
-          them. Replaces the previous GroupVoicesPanel — now the
+          them. Replaces the previous GroupVoicesPanel, now the
           form itself is the live group voice. */}
       <SharedBriefIndicator sectionKey="dining" />
 
-      {/* 2026-05-26 — Brief 02 (Task A8.1): GuestAdditiveBanner
+      {/* 2026-05-26, Brief 02 (Task A8.1): GuestAdditiveBanner
           mount removed. Under the new single-responsibility model
-          guests no longer write to dining at all — they 403 at the
+          guests no longer write to dining at all, they 403 at the
           server (CP1) and see a read-only render upstream (CP2's
           A2 branch above). The "your edits ADD to the group's
           picks" message is no longer accurate for anyone, so the
@@ -245,7 +245,7 @@ export default function DiningSectionPage() {
         )}
       </BriefFormShell>
 
-      {/* 2026-05-23 — MUB-C: shared specific-items wishlist. */}
+      {/* 2026-05-23, MUB-C: shared specific-items wishlist. */}
       <WishlistPanel sectionKey="dining" />
 
       <style jsx>{`

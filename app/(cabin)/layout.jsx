@@ -31,7 +31,7 @@ export const metadata = {
     template: "%s · Your Cabin",
   },
   description:
-    "Your private space at George Yachts — Filotimo · Φιλότιμο.",
+    "Your private space at George Yachts, Filotimo · Φιλότιμο.",
   robots: { index: false, follow: false },     // never indexed
   manifest: "/cabin/manifest.webmanifest",
   appleWebApp: {

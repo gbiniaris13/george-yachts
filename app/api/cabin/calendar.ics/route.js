@@ -71,7 +71,7 @@ export async function GET() {
   const description = [
     "Your private charter with George Yachts.",
     "",
-    "George P. Biniaris — Managing Broker",
+    "George P. Biniaris, Managing Broker",
     "WhatsApp: +1 786 798 8798",
     "Email: george@georgeyachts.com",
     "",

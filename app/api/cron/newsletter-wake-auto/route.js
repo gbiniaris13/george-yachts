@@ -63,7 +63,7 @@ export async function GET(request) {
   if (!entry) {
     await sendTelegramText(
       [
-        `📭 <b>Wake auto-cron — queue is empty</b>`,
+        `📭 <b>Wake auto-cron, queue is empty</b>`,
         ``,
         `Today is the 15th and Wake should send. There are no pending`,
         `intel signals in the queue.`,

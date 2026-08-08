@@ -181,7 +181,7 @@ export default function ExitIntentModal() {
       aria-labelledby="gy-exit-title"
       className="fixed inset-0 z-[9997] flex items-center justify-center p-5"
     >
-      {/* Backdrop — Boss spec rgba(13,27,42,0.95). */}
+      {/* Backdrop, Boss spec rgba(13,27,42,0.95). */}
       <div
         onClick={close}
         className="absolute inset-0"
@@ -233,7 +233,7 @@ export default function ExitIntentModal() {
         </button>
 
         <div className="px-8 md:px-12 py-12 md:py-14">
-          {/* Headline — Boss-spec exact copy */}
+          {/* Headline, Boss-spec exact copy */}
           <h2
             id="gy-exit-title"
             style={{

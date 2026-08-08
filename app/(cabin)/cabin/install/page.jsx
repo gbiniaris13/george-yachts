@@ -88,7 +88,7 @@ export default function CabinInstallPage() {
           italic="installed."
         />
         <IntroParagraph>
-          You’re browsing The Cabin in installed mode — the icon is already
+          You’re browsing The Cabin in installed mode, the icon is already
           on your home screen. Open from there next time and you skip the
           sign-in email entirely.
         </IntroParagraph>
@@ -115,17 +115,17 @@ export default function CabinInstallPage() {
         italic="your home screen."
       />
       <IntroParagraph>
-        One tap to come back next time — no more sign-in emails on this
+        One tap to come back next time, no more sign-in emails on this
         device. Pick the section below that matches your phone.
       </IntroParagraph>
 
       {/* Reorder so iPhone (~60% of UHNW guests) is first.
-          All three blocks always shown — no UA sniffing. */}
-      {/* iPhone — Safari (manual, but the most common case) */}
+          All three blocks always shown, no UA sniffing. */}
+      {/* iPhone, Safari (manual, but the most common case) */}
       <section className="install-card">
         <div className="install-eyebrow">iPhone · Safari</div>
         <p>
-          Safari on iPhone doesn’t offer a one-tap install button —
+          Safari on iPhone doesn’t offer a one-tap install button
           Apple’s rules. The good news: it takes three taps.
         </p>
         <ol className="install-steps">
@@ -152,13 +152,13 @@ export default function CabinInstallPage() {
         <p className="install-note">
           <em>
             Tip: if you opened this in a different browser (Chrome,
-            Firefox, Brave), iOS won’t let those install apps — only
+            Firefox, Brave), iOS won’t let those install apps, only
             Safari can. Open the magic-link email in Safari first.
           </em>
         </p>
       </section>
 
-      {/* Android — Chrome / Edge (one-tap when beforeinstallprompt
+      {/* Android, Chrome / Edge (one-tap when beforeinstallprompt
           has fired, manual three-step otherwise). */}
       <section className="install-card">
         <div className="install-eyebrow">Android · Chrome or Edge</div>
@@ -166,7 +166,7 @@ export default function CabinInstallPage() {
             <>
               <p>
                 Tap the button below. Your browser will ask once whether
-                to add The Cabin to your home screen — confirm, and you’re
+                to add The Cabin to your home screen, confirm, and you’re
                 done.
               </p>
               <button
@@ -183,14 +183,14 @@ export default function CabinInstallPage() {
               )}
               {outcome === "dismissed" && (
                 <p className="install-note">
-                  No problem — you can come back and tap the button any time.
+                  No problem, you can come back and tap the button any time.
                 </p>
               )}
             </>
           ) : (
             <>
               <p>
-                Your browser hasn’t offered the one-tap install yet — it
+                Your browser hasn’t offered the one-tap install yet, it
                 usually does after a moment’s use. In the meantime you can
                 still install manually:
               </p>
@@ -205,7 +205,7 @@ export default function CabinInstallPage() {
           )}
       </section>
 
-      {/* Desktop — Chrome / Edge / Arc. Shown for everyone since
+      {/* Desktop, Chrome / Edge / Arc. Shown for everyone since
           UA sniffing isn't reliable; the user just ignores blocks
           that aren't theirs. */}
       <section className="install-card">
@@ -214,7 +214,7 @@ export default function CabinInstallPage() {
             <>
               <p>
                 Chrome or Edge can install The Cabin like an app on your
-                desktop too — it opens in its own window with no browser
+                desktop too, it opens in its own window with no browser
                 tabs around it. Useful when you’re reviewing a charter.
               </p>
               <button
@@ -229,7 +229,7 @@ export default function CabinInstallPage() {
             <>
               <p>
                 Most desktop install of The Cabin happens via the small
-                icon in your address bar — look for a tile-shaped icon
+                icon in your address bar, look for a tile-shaped icon
                 next to the URL.
               </p>
               <p className="install-note">

@@ -247,8 +247,8 @@ const ContactFormSection = () => {
       <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2A] via-[#0D1B2A] to-[#0D1B2A] z-0" />
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay z-10" />
 
-      {/* Phase 27i.18 (2026-05-08) — constellation backdrop. Reads
-          as "navigate to us by the stars" — a quiet poetic note for
+      {/* Phase 27i.18 (2026-05-08), constellation backdrop. Reads
+          as "navigate to us by the stars", a quiet poetic note for
           the final destination on the homepage scroll. Low intensity
           so it doesn't fight with the gold gradient overlay above. */}
       <div className="absolute inset-0 z-[5] pointer-events-none">
@@ -284,7 +284,7 @@ const ContactFormSection = () => {
             {t('contact.subtitle')}
           </p>
 
-          {/* Direct-contact row — merged from ContactBar (Proposal D).
+          {/* Direct-contact row, merged from ContactBar (Proposal D).
               Phone + WhatsApp sit under the section headline so
               visitors who want a human right now don't have to fill
               the form. */}
@@ -342,7 +342,7 @@ const ContactFormSection = () => {
             a field hidden in another step (the 2026-07-03 SOS bug). */}
         <form ref={formRef} onSubmit={handleVercelSubmit} noValidate>
 
-          {/* Honeypot — hidden from real users, bots autofill it */}
+          {/* Honeypot, hidden from real users, bots autofill it */}
           <input
             type="text"
             name="website"
@@ -500,7 +500,7 @@ const ContactFormSection = () => {
               </p>
             </div>
 
-            {/* 2026-07-02 (ASK B 5.5) — the discretion signal. Old
+            {/* 2026-07-02 (ASK B 5.5), the discretion signal. Old
                 money buys silence; say it plainly at the point of
                 trust. */}
             <div className="text-[11px] text-white/60 tracking-widest text-center mb-3 leading-relaxed">

@@ -110,7 +110,7 @@ export default function NavSearch() {
 
   return (
     <>
-      {/* Trigger button — magnifier icon */}
+      {/* Trigger button, magnifier icon */}
       <button
         type="button"
         onClick={() => setOpen(true)}

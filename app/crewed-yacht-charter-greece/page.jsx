@@ -646,7 +646,7 @@ export default async function CrewedCharterPage() {
                       {y.name}
                     </p>
                     <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11.5, letterSpacing: "0.06em", color: "rgba(248,245,240,0.66)", margin: 0 }}>
-                      {/* crew: Sanity stores "5 — Captain, Chef..." - render
+                      {/* crew: Sanity stores "5, Captain, Chef..." - render
                           the count only (no-dash rule + cleaner card). */}
                       {[y.length, y.sleeps && `${y.sleeps} guests`, parseInt(y.crew) ? `${parseInt(y.crew)} crew` : null].filter(Boolean).join(" · ")}
                     </p>
@@ -666,7 +666,7 @@ export default async function CrewedCharterPage() {
         </section>
       )}
 
-      {/* WHICH CREWED FORMAT — 2026-08-06 (job 19, local until George's push).
+      {/* WHICH CREWED FORMAT, 2026-08-06 (job 19, local until George's push).
           Search Console showed this page, /crewed-catamaran-charter-greece and
           /motor-yacht-charter-greece all ranking for each other's head terms at
           positions 42 to 70, with 1,047 impressions and ONE click across the

@@ -117,7 +117,7 @@ async function build1hPing(draft, stats) {
   const bounceRate = stats?.bounce_rate ?? 0;
   const guardianTriggered = bounceRate > BOUNCE_RATE_ALERT_PCT;
   const lines = [
-    `${guardianTriggered ? "🚨" : "📡"} <b>1h post-send report — ${streamLabel(draft.stream)} Issue #${draft.issue_number ?? "?"}</b>`,
+    `${guardianTriggered ? "🚨" : "📡"} <b>1h post-send report, ${streamLabel(draft.stream)} Issue #${draft.issue_number ?? "?"}</b>`,
     ``,
     `Subject: ${draft.subject ?? ""}`,
     `Sent: ${totalSent}`,
@@ -126,7 +126,7 @@ async function build1hPing(draft, stats) {
     `Opens (so far): ${opens} · ${fmtPct(stats?.open_rate ?? 0)}`,
     ``,
     guardianTriggered
-      ? `⚠️ <b>Bounce rate above ${BOUNCE_RATE_ALERT_PCT}% threshold.</b> Investigate now — could indicate a list-quality issue or a deliverability event. Cleanup affected addresses before the next send.`
+      ? `⚠️ <b>Bounce rate above ${BOUNCE_RATE_ALERT_PCT}% threshold.</b> Investigate now, could indicate a list-quality issue or a deliverability event. Cleanup affected addresses before the next send.`
       : `On track. 24h report follows tomorrow.`,
   ];
   return { text: lines.join("\n"), guardianTriggered };
@@ -139,7 +139,7 @@ async function build24hPing(draft, stats) {
   const clicks = stats?.unique_clicks ?? 0;
   const complaints = stats?.counters?.complained ?? 0;
   const lines = [
-    `📊 <b>24h post-send report — ${streamLabel(draft.stream)} Issue #${draft.issue_number ?? "?"}</b>`,
+    `📊 <b>24h post-send report, ${streamLabel(draft.stream)} Issue #${draft.issue_number ?? "?"}</b>`,
     ``,
     `Subject: ${draft.subject ?? ""}`,
     `Recipients: ${totalSent}`,
@@ -152,7 +152,7 @@ async function build24hPing(draft, stats) {
     `Complaints: ${complaints}  (${fmtPct(stats?.complaint_rate ?? 0)})`,
     ``,
     opens === 0 && delivered > 0
-      ? `<i>No opens recorded — Resend webhook may not be wired yet (see CLAUDE.md → Resend webhook setup runbook).</i>`
+      ? `<i>No opens recorded, Resend webhook may not be wired yet (see CLAUDE.md → Resend webhook setup runbook).</i>`
       : `<i>Final-ish numbers. Webhook events still trickle in for ~7 days.</i>`,
   ];
   return { text: lines.join("\n") };

@@ -305,7 +305,7 @@ export async function POST() {
       const wishlistHighlights = wishlistForSection.map((w) => {
         const qty = w.quantity ? ` (${w.quantity})` : "";
         const who = w.added_by_member_id
-          ? ` — added by ${contributorNameById[w.added_by_member_id] || "(member)"}`
+          ? `, added by ${contributorNameById[w.added_by_member_id] || "(member)"}`
           : "";
         const note = w.notes ? ` · note: ${w.notes}` : "";
         return `${w.label}${qty}${who}${note}`;
@@ -438,7 +438,7 @@ export async function POST() {
       for (const v of section.voices) {
         const tail = (v.highlights || []).slice(0, 2).join(" · ");
         telegramVoiceLines.push(
-          `· ${section.sectionTitle}${tail ? " — " + tail : ""}`,
+          `· ${section.sectionTitle}${tail ? "-" + tail : ""}`,
         );
       }
     }
@@ -452,7 +452,7 @@ export async function POST() {
       // the most chef/crew-actionable piece per member.
       const lead = (v.highlights || [])[0] || "";
       telegramVoiceLines.push(
-        `· ${v.name}${lead ? " — " + lead : ""}`,
+        `· ${v.name}${lead ? "-" + lead : ""}`,
       );
     }
   }
@@ -468,7 +468,7 @@ export async function POST() {
       if (m.allergies) parts.push(m.allergies);
       if (m.dietary && m.dietary.length > 0) parts.push(m.dietary.join(", "));
       const tail = parts.join(" · ");
-      telegramVoiceLines.push(`· ${m.name}${tail ? " — " + tail : ""}`);
+      telegramVoiceLines.push(`· ${m.name}${tail ? "-" + tail : ""}`);
     }
   } else if (allergyRollup.totals.total > 0) {
     telegramVoiceLines.push("");
@@ -502,7 +502,7 @@ export async function POST() {
       title: "Charter Brief submitted",
       lines: [
         `From: ${existing.principal_charterer_name ?? session.email}`,
-        `Re: ${existing.vessel_name ?? "—"}`,
+        `Re: ${existing.vessel_name ?? "-"}`,
         existing.charter_period_from && existing.charter_period_to
           ? `Dates: ${existing.charter_period_from} → ${existing.charter_period_to}`
           : null,

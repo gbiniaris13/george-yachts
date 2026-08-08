@@ -263,8 +263,8 @@ export default function NewsletterSignupClient({ streams }) {
           })}
         </div>
 
-        {/* Honeypot — invisible to humans, bots fill it.
-            2026-05-12 — added aria-hidden + aria-label so screen
+        {/* Honeypot, invisible to humans, bots fill it.
+            2026-05-12, added aria-hidden + aria-label so screen
             readers don't read the unlabeled field aloud and so
             sighted-keyboard users don't tab onto it. */}
         <input

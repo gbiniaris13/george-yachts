@@ -125,7 +125,7 @@ export default async function ExplorerFleetPage() {
       />
       <ExplorerFleetSchema lowestPerPerson={displayLowest} />
       <ExplorerFleetClient yachts={displayYachts} lowestPerPerson={displayLowest} highestPerPerson={displayHighest} />
-      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+      {/* 2026-08-06 (job 9), sitewide footer. Measured before this change:
           397 of 474 public pages rendered no <footer> at all. */}
       <Footer />
     </>

@@ -193,13 +193,13 @@ async function buildWatchdogLines() {
     `<b>⚠️ WATCHDOG</b>`,
     ...breaches.map(
       (b) =>
-        `· ${b.stream} — last sent ${b.last === "never" ? "<i>never</i>" : b.last.slice(0, 10)}; ${b.days_overdue} (threshold ${b.threshold}d)`,
+        `· ${b.stream}, last sent ${b.last === "never" ? "<i>never</i>" : b.last.slice(0, 10)}; ${b.days_overdue} (threshold ${b.threshold}d)`,
     ),
   ];
 }
 
 function delta(current, previous) {
-  if (previous === undefined || previous === null) return "—";
+  if (previous === undefined || previous === null) return "-";
   const d = current - previous;
   if (d === 0) return "no change";
   return d > 0 ? `+${d} today` : `${d} today`;
@@ -261,7 +261,7 @@ export async function GET(request) {
   }
 
   const lines = [
-    `📊 <b>Daily digest — ${today}</b>`,
+    `📊 <b>Daily digest, ${today}</b>`,
     "",
     `<b>Subscribers</b>`,
     `· Bridge: ${currentCounts.bridge} (${delta(currentCounts.bridge, prev?.counts?.bridge)})`,
@@ -273,7 +273,7 @@ export async function GET(request) {
     `· Drafts pending: ${draftsPending}`,
     `· Resend usage this month: ${quotaTrafficLight} ${resendUsage} / ${MONTHLY_HARD_CAP} (${monthlyPct}%) · today: ${dailyUsage}`,
     `· Last error (24h): ${
-      lastError ? `🚨 ${(lastError.component ?? "—")}: ${lastError.message ?? ""}` : "none"
+      lastError ? `🚨 ${(lastError.component ?? "-")}: ${lastError.message ?? ""}` : "none"
     }`,
     ...watchdogLines,
     "",

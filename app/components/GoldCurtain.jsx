@@ -115,7 +115,7 @@ export default function GoldCurtain() {
         }}
       />
 
-      {/* Center hairline — grows from 0 to full height, then fades */}
+      {/* Center hairline, grows from 0 to full height, then fades */}
       <div
         className="absolute top-0 bottom-0 left-1/2"
         style={{

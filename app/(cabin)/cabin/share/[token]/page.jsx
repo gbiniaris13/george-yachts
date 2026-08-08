@@ -50,11 +50,11 @@ function titleCase(s) {
 }
 
 function fmtMaybe(v) {
-  if (v == null || v === "") return "—";
+  if (v == null || v === "") return "-";
   if (typeof v === "string") return v;
   if (typeof v === "number" || typeof v === "boolean") return String(v);
   if (Array.isArray(v)) {
-    if (v.length === 0) return "—";
+    if (v.length === 0) return "-";
     return v.map((x) => titleCase(String(x))).join(" · ");
   }
   return String(v);
@@ -202,7 +202,7 @@ export default async function PreferenceSharePage({ params }) {
               marginTop: 12,
             }}
           >
-            {fmtDate(cabin.charter_period_from) ?? "—"} to {fmtDate(cabin.charter_period_to) ?? "—"}
+            {fmtDate(cabin.charter_period_from) ?? "-"} to {fmtDate(cabin.charter_period_to) ?? "-"}
           </div>
           <div
             style={{
@@ -214,7 +214,7 @@ export default async function PreferenceSharePage({ params }) {
               textTransform: "uppercase",
             }}
           >
-            {cabin.port_embarkation || "—"} → {cabin.port_disembarkation || "—"}
+            {cabin.port_embarkation || "-"} → {cabin.port_disembarkation || "-"}
             {cabin.cruising_area ? `  ·  ${cabin.cruising_area}` : ""}
           </div>
 
@@ -229,7 +229,7 @@ export default async function PreferenceSharePage({ params }) {
               maxWidth: 540,
             }}
           >
-            Prepared with care by George Yachts — to help everyone caring for
+            Prepared with care by George Yachts, to help everyone caring for
             our charterer aboard {cabin.vessel_name} give them the most
             thoughtful week possible. Shared with the operating team, the
             captain and crew, the chef and hostess, and the yacht&apos;s owner
@@ -238,7 +238,7 @@ export default async function PreferenceSharePage({ params }) {
           </p>
         </header>
 
-        {/* ============ 01 — LOGISTICS ============ */}
+        {/* ============ 01, LOGISTICS ============ */}
         <Section number="01" title="Logistics" italic="arrival & departure">
           <SubBlock label="Yacht">
             <Row k="Vessel" v={`${cabin.vessel_name}${cabin.vessel_make_model ? " · " + cabin.vessel_make_model : ""}`} />
@@ -279,22 +279,22 @@ export default async function PreferenceSharePage({ params }) {
             <Row k="Requested" v={fmtMaybe(arrival.transfers_requested)} />
             {get(arrival, "transfer_to_yacht.pickup_location") ? (
               <>
-                <Row k="To yacht — pickup" v={fmtMaybe(get(arrival, "transfer_to_yacht.pickup_location"))} />
-                <Row k="To yacht — when" v={fmtMaybe(get(arrival, "transfer_to_yacht.pickup_datetime"))} />
-                <Row k="To yacht — guests" v={fmtMaybe(get(arrival, "transfer_to_yacht.number_of_guests"))} />
+                <Row k="To yacht, pickup" v={fmtMaybe(get(arrival, "transfer_to_yacht.pickup_location"))} />
+                <Row k="To yacht, when" v={fmtMaybe(get(arrival, "transfer_to_yacht.pickup_datetime"))} />
+                <Row k="To yacht, guests" v={fmtMaybe(get(arrival, "transfer_to_yacht.number_of_guests"))} />
               </>
             ) : null}
             {get(arrival, "transfer_from_yacht.dropoff_location") ? (
               <>
-                <Row k="From yacht — drop-off" v={fmtMaybe(get(arrival, "transfer_from_yacht.dropoff_location"))} />
-                <Row k="From yacht — when" v={fmtMaybe(get(arrival, "transfer_from_yacht.dropoff_datetime"))} />
-                <Row k="From yacht — guests" v={fmtMaybe(get(arrival, "transfer_from_yacht.number_of_guests"))} />
+                <Row k="From yacht, drop-off" v={fmtMaybe(get(arrival, "transfer_from_yacht.dropoff_location"))} />
+                <Row k="From yacht, when" v={fmtMaybe(get(arrival, "transfer_from_yacht.dropoff_datetime"))} />
+                <Row k="From yacht, guests" v={fmtMaybe(get(arrival, "transfer_from_yacht.number_of_guests"))} />
               </>
             ) : null}
           </SubBlock>
         </Section>
 
-        {/* ============ 02 — THE GROUP ============ */}
+        {/* ============ 02, THE GROUP ============ */}
         <Section number="02" title="The group" italic="who is aboard, and why" pageBreakBefore>
           {get(guestsSection, "charter_purpose_narrative") ? (
             <div
@@ -389,7 +389,7 @@ export default async function PreferenceSharePage({ params }) {
           )}
         </Section>
 
-        {/* ============ 03 — HEALTH & ITINERARY ============ */}
+        {/* ============ 03, HEALTH & ITINERARY ============ */}
         <Section number="03" title="Health, safety & itinerary" italic="what shapes the week" pageBreakBefore>
           <SubBlock label="Health & safety">
             <Row k="Allergies & dietary requirements" v={fmtMaybe(health.allergies_dietary)} />
@@ -422,17 +422,17 @@ export default async function PreferenceSharePage({ params }) {
             <Row k="Crew presence preference" v={fmtMaybe(lifeAboard.crew_interaction)} />
             <Row k="Activities of interest" v={fmtMaybe(lifeAboard.activities)} />
             <Row k="Other activities" v={fmtMaybe(lifeAboard.activities_other)} />
-            <Row k="Music — morning" v={fmtMaybe(get(lifeAboard, "music.morning"))} />
-            <Row k="Music — lunch & afternoon" v={fmtMaybe(get(lifeAboard, "music.lunch_afternoon"))} />
-            <Row k="Music — sunset & dinner" v={fmtMaybe(get(lifeAboard, "music.sunset_dinner"))} />
-            <Row k="Music — late night" v={fmtMaybe(get(lifeAboard, "music.late_night"))} />
+            <Row k="Music, morning" v={fmtMaybe(get(lifeAboard, "music.morning"))} />
+            <Row k="Music, lunch & afternoon" v={fmtMaybe(get(lifeAboard, "music.lunch_afternoon"))} />
+            <Row k="Music, sunset & dinner" v={fmtMaybe(get(lifeAboard, "music.sunset_dinner"))} />
+            <Row k="Music, late night" v={fmtMaybe(get(lifeAboard, "music.late_night"))} />
             <Row k="Specific artists / playlists" v={fmtMaybe(get(lifeAboard, "music.specific_artists"))} />
             <Row k="Small touches to ask about" v={fmtMaybe(lifeAboard.extras_freeform)} />
             <Row k="Wellness on board" v={fmtMaybe(lifeAboard.wellness_onboard)} />
           </SubBlock>
         </Section>
 
-        {/* ============ 04 — FOOD & DRINK ============ */}
+        {/* ============ 04, FOOD & DRINK ============ */}
         <Section number="04" title="Food & drink preferences" italic="what the chef should know" pageBreakBefore>
           <SubBlock label="Meal times">
             <Row k="Breakfast" v={fmtMaybe(dining.breakfast_time)} />
@@ -519,7 +519,7 @@ export default async function PreferenceSharePage({ params }) {
           )}
         </Section>
 
-        {/* ============ 05 — BAR & CELLAR ============ */}
+        {/* ============ 05, BAR & CELLAR ============ */}
         <Section number="05" title="Bar & cellar" italic="what to provision" pageBreakBefore>
           <SubBlock label="Bottled water">
             <Row k="Type" v={fmtMaybe(beverages.water_type || beverages.water)} />
@@ -534,13 +534,13 @@ export default async function PreferenceSharePage({ params }) {
             <Row k="Specific preferences" v={fmtMaybe(beverages.specific_preferences)} />
           </SubBlock>
 
-          <SubBlock label="Wine — approach">
+          <SubBlock label="Wine, approach">
             <Row k="Greek vineyards" v={fmtMaybe(beverages.wine_greek_vineyards)} />
             <Row k="Preferred price range" v={fmtMaybe(beverages.wine_price_range)} />
             <Row k="Overall style" v={fmtMaybe(beverages.wine_style)} />
           </SubBlock>
 
-          <LabelQtyTable label="Wine — specific labels" rows={beverages.wines} withPriceRange />
+          <LabelQtyTable label="Wine, specific labels" rows={beverages.wines} withPriceRange />
 
           <LabelQtyTable label="Whiskey" rows={beverages.whiskey} />
           <LabelQtyTable label="Vodka" rows={beverages.vodka} />
@@ -549,8 +549,8 @@ export default async function PreferenceSharePage({ params }) {
           <LabelQtyTable label="Tequila" rows={beverages.tequila} />
           <LabelQtyTable label="Liqueur" rows={beverages.liqueur} />
 
-          <LabelQtyTable label="Beers — international" rows={beverages.beers} />
-          <LabelQtyTable label="Beers — local Greek" rows={beverages.beers_local} />
+          <LabelQtyTable label="Beers, international" rows={beverages.beers} />
+          <LabelQtyTable label="Beers, local Greek" rows={beverages.beers_local} />
 
           <SubBlock label="Cocktails & mocktails">
             <Row k="Cocktails the hostess should know" v={fmtMaybe(beverages.cocktails)} />
@@ -558,7 +558,7 @@ export default async function PreferenceSharePage({ params }) {
           </SubBlock>
         </Section>
 
-        {/* ============ 06 — CLOSING NOTES ============ */}
+        {/* ============ 06, CLOSING NOTES ============ */}
         <Section number="06" title="Closing notes" italic="the small things" pageBreakBefore>
           <SubBlock label="Surprises & celebrations">
             <Row k="Surprises to plan" v={fmtMaybe(little.surprises_celebrations)} />
@@ -566,7 +566,7 @@ export default async function PreferenceSharePage({ params }) {
           </SubBlock>
 
           <SubBlock label="Night service in cabins">
-            <Row k="Place in each cabin (6–9pm)" v={fmtMaybe(little.night_service)} />
+            <Row k="Place in each cabin (6-9pm)" v={fmtMaybe(little.night_service)} />
           </SubBlock>
 
           <SubBlock label="Photography on the water">
@@ -682,7 +682,7 @@ function SubBlock({ label, children }) {
 }
 
 function Row({ k, v }) {
-  const empty = v == null || v === "" || v === "—";
+  const empty = v == null || v === "" || v === "-";
   return (
     <div
       style={{
@@ -715,7 +715,7 @@ function Row({ k, v }) {
           fontStyle: empty ? "italic" : "normal",
         }}
       >
-        {empty ? "—" : v}
+        {empty ? "-" : v}
       </dd>
     </div>
   );
@@ -754,7 +754,7 @@ function GuestCard({ order, g }) {
             color: NAVY,
           }}
         >
-          {g.full_name || "—"}
+          {g.full_name || "-"}
           {g.is_minor ? (
             <em style={{ color: GOLD, marginLeft: 8, fontSize: 13 }}>· minor</em>
           ) : null}
@@ -770,19 +770,19 @@ function GuestCard({ order, g }) {
           fontSize: 13,
         }}
       >
-        <GuestCell label="DOB" v={fmtDate(g.date_of_birth) ?? "—"} />
-        <GuestCell label="Nationality" v={g.nationality || "—"} />
-        <GuestCell label="Passport №" v={g.passport_number || "—"} />
-        <GuestCell label="Passport expiry" v={fmtDate(g.passport_expiry) ?? "—"} />
-        <GuestCell label="Cabin pairing" v={g.cabin_pairing || "—"} />
-        <GuestCell label="Shoe size" v={g.shoe_size || "—"} />
+        <GuestCell label="DOB" v={fmtDate(g.date_of_birth) ?? "-"} />
+        <GuestCell label="Nationality" v={g.nationality || "-"} />
+        <GuestCell label="Passport №" v={g.passport_number || "-"} />
+        <GuestCell label="Passport expiry" v={fmtDate(g.passport_expiry) ?? "-"} />
+        <GuestCell label="Cabin pairing" v={g.cabin_pairing || "-"} />
+        <GuestCell label="Shoe size" v={g.shoe_size || "-"} />
         {order === 1 ? (
           <>
-            <GuestCell label="Mobile" v={g.mobile || "—"} />
-            <GuestCell label="Email" v={g.email || "—"} />
+            <GuestCell label="Mobile" v={g.mobile || "-"} />
+            <GuestCell label="Email" v={g.email || "-"} />
           </>
         ) : null}
-        <GuestCell label="Allergies / dietary" v={g.allergies_dietary || "—"} fullWidth />
+        <GuestCell label="Allergies / dietary" v={g.allergies_dietary || "-"} fullWidth />
       </dl>
       {g.allergies_severity === "life_threatening" && (
         <div
@@ -838,7 +838,7 @@ function GuestCard({ order, g }) {
 }
 
 function GuestCell({ label, v, fullWidth }) {
-  const empty = !v || v === "—";
+  const empty = !v || v === "-";
   return (
     <div
       style={{
@@ -867,7 +867,7 @@ function GuestCell({ label, v, fullWidth }) {
           fontStyle: empty ? "italic" : "normal",
         }}
       >
-        {empty ? "—" : v}
+        {empty ? "-" : v}
       </dd>
     </div>
   );
@@ -906,7 +906,7 @@ function FoodMatrixTable({ matrix }) {
           fontWeight: 500,
         }}
       >
-        Lunch & dinner — preferences matrix
+        Lunch & dinner, preferences matrix
       </h3>
       <table
         style={{
@@ -1009,10 +1009,10 @@ function LabelQtyTable({ label, rows, withPriceRange }) {
         <tbody>
           {filled.map((r, i) => (
             <tr key={i} style={{ borderBottom: `1px solid ${RULE}` }}>
-              <td style={matrixCellLabel}>{r.label || "—"}</td>
-              <td style={matrixCellLabel}>{r.quantity || "—"}</td>
+              <td style={matrixCellLabel}>{r.label || "-"}</td>
+              <td style={matrixCellLabel}>{r.quantity || "-"}</td>
               {withPriceRange && (
-                <td style={matrixCellLabel}>{r.price_range_per_bottle || "—"}</td>
+                <td style={matrixCellLabel}>{r.price_range_per_bottle || "-"}</td>
               )}
             </tr>
           ))}

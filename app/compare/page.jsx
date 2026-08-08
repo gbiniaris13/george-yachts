@@ -202,7 +202,7 @@ export default async function ComparePage({ searchParams }) {
 
       <main className="bg-black text-white min-h-screen">
         <section className="max-w-6xl mx-auto px-6 py-24">
-          {/* Phase 27g (Forbes-launch day, 2026-05-06) — masthead
+          {/* Phase 27g (Forbes-launch day, 2026-05-06), masthead
               upgraded to brand standard: Cinzel uppercase via inline-
               style catch-all + .gy-luxe-enter ivory→champagne reveal +
               gold rules above + below. Italic Cormorant lede. Same
@@ -330,7 +330,7 @@ export default async function ComparePage({ searchParams }) {
                 </table>
               </div>
 
-              {/* CTA strip — brand-standard pair (gold-fill primary +
+              {/* CTA strip, brand-standard pair (gold-fill primary +
                   ghost secondary) matching homepage hero. Phase 27g. */}
               <div className="mt-12" style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center" }}>
                 <Link
@@ -377,7 +377,7 @@ export default async function ComparePage({ searchParams }) {
           )}
         </section>
       </main>
-      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+      {/* 2026-08-06 (job 9), sitewide footer. Measured before this change:
           397 of 474 public pages rendered no <footer> at all. */}
       <Footer />
     </>

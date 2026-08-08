@@ -99,7 +99,7 @@ export default function TrendingYachts({ yachts }) {
           </p>
           {/* B.3 (Roberto brief): "Trending Now" reads consumer-app to
               UHNW. Replaced with the editorial "This Week's Selection"
-              — same content, the right register for the audience. */}
+ , same content, the right register for the audience. */}
           <h2
             style={{
               fontFamily: "var(--gy-font-editorial)",
@@ -178,7 +178,7 @@ export default function TrendingYachts({ yachts }) {
                 e.currentTarget.style.borderColor = "rgba(248, 245, 240,0.08)";
               }}
             >
-              {/* Image — A.11: served through the Sanity image helper
+              {/* Image, A.11: served through the Sanity image helper
                   so we get WebP at the actual rendered width (640w
                   retina-safe for a 320px card), not the raw 2000+px
                   source. */}

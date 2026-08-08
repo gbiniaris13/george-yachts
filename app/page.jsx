@@ -254,7 +254,7 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* <head> inside a page.jsx is ignored by the App Router — preload
+      {/* <head> inside a page.jsx is ignored by the App Router, preload
           hints need to live in root layout or be emitted via the
           Metadata API. The previous attempted preload was dead code.
           If hero-poster.jpg ever becomes LCP again, add via

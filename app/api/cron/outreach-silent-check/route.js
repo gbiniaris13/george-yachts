@@ -98,7 +98,7 @@ export async function GET(request) {
   if (silent.length > 0) {
     const lines = silent.map(
       (s) =>
-        '• `' + s.bot + '` — silent for ' + fmtHours(s.silentFor)
+        '• `' + s.bot + '`, silent for ' + fmtHours(s.silentFor)
     );
     await sendTelegram(
       '🚨 *Outreach silent-bot alert*\n\n' +

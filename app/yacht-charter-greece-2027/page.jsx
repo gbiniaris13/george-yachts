@@ -248,7 +248,7 @@ export default function Charter2027Page() {
             </Link>
             . The yacht they actually want, in the week their family can actually travel.
           </p>
-          {/* 2026-08-06 (job 18) — the lead-time article is the strongest 2027
+          {/* 2026-08-06 (job 18), the lead-time article is the strongest 2027
               asset on this site: 5,103 words, 13 sections, real lead times off
               George's own book. It had 47 inbound internal links and 45 of them
               came from other blog posts, none from a commercial page, and

@@ -221,7 +221,7 @@ export async function POST(req) {
       const wishlistHighlights = wishlistForSection.map((w) => {
         const qty = w.quantity ? ` (${w.quantity})` : "";
         const who = w.added_by_member_id
-          ? ` — added by ${contributorNameById[w.added_by_member_id] || "(member)"}`
+          ? `, added by ${contributorNameById[w.added_by_member_id] || "(member)"}`
           : "";
         const note = w.notes ? ` · note: ${w.notes}` : "";
         return `${w.label}${qty}${who}${note}`;
@@ -294,7 +294,7 @@ export async function POST(req) {
     for (const section of wishlistSections) {
       for (const v of section.voices) {
         const tail = (v.highlights || []).slice(0, 2).join(" · ");
-        telegramVoiceLines.push(`· ${section.sectionTitle}${tail ? " — " + tail : ""}`);
+        telegramVoiceLines.push(`· ${section.sectionTitle}${tail ? "-" + tail : ""}`);
       }
     }
   }
@@ -303,7 +303,7 @@ export async function POST(req) {
     telegramVoiceLines.push("Life Aboard voices:");
     for (const v of lifeAboardSection.voices) {
       const lead = (v.highlights || [])[0] || "";
-      telegramVoiceLines.push(`· ${v.name}${lead ? " — " + lead : ""}`);
+      telegramVoiceLines.push(`· ${v.name}${lead ? "-" + lead : ""}`);
     }
   }
   if (allergyRollup.members.length > 0) {
@@ -313,7 +313,7 @@ export async function POST(req) {
       const parts = [];
       if (m.allergies) parts.push(m.allergies);
       if (m.dietary && m.dietary.length > 0) parts.push(m.dietary.join(", "));
-      telegramVoiceLines.push(`· ${m.name}: ${parts.join(" · ") || "—"}`);
+      telegramVoiceLines.push(`· ${m.name}: ${parts.join(" · ") || "-"}`);
     }
   }
 
@@ -328,7 +328,7 @@ export async function POST(req) {
       title: "Charter Brief submitted",
       lines: [
         `From: ${existing.principal_charterer_name ?? actorEmail}`,
-        `Re: ${existing.vessel_name ?? "—"}`,
+        `Re: ${existing.vessel_name ?? "-"}`,
         existing.charter_period_from && existing.charter_period_to
           ? `Dates: ${existing.charter_period_from} → ${existing.charter_period_to}`
           : null,

@@ -204,7 +204,7 @@ export default function Lightbox({ images, yachtName }) {
             {captionText}
           </div>
 
-          {/* Arrows — only when more than 1 photo */}
+          {/* Arrows, only when more than 1 photo */}
           {count > 1 && (
             <>
               <button

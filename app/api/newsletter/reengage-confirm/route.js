@@ -21,7 +21,7 @@ export const runtime = "nodejs";
 function htmlPage({ title, body, status = 200 }) {
   return new NextResponse(
     `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>${title} — George Yachts</title>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>${title}, George Yachts</title>
 <style>
   body { font-family: Georgia, "Times New Roman", serif; background:#F8F5F0; color:#0D1B2A; margin:0; padding:48px 24px; }
   .card { max-width: 520px; margin: 0 auto; background:#F8F5F0; padding: 36px; border:1px solid #F8F5F0; }
@@ -60,7 +60,7 @@ export async function GET(request) {
   if (!existing) {
     return htmlPage({
       title: "Already on the list",
-      body: `<p>We don't have a re-engagement record for this address — you're already on the list, no action needed. Welcome aboard.</p>`,
+      body: `<p>We don't have a re-engagement record for this address, you're already on the list, no action needed. Welcome aboard.</p>`,
     });
   }
   if (existing.completed) {
@@ -76,6 +76,6 @@ export async function GET(request) {
     title: "You're staying on",
     body: `<p>Thanks for the click. The Bridge will keep landing in your inbox every other Thursday from the Greek waters.</p>
 <p>If you ever want to step off, the unsubscribe link at the bottom of every email is one click. No friction either direction.</p>
-<p style="margin-top:32px;">— George</p>`,
+<p style="margin-top:32px;">, George</p>`,
   });
 }

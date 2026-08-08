@@ -39,9 +39,9 @@ async function notifyTelegram(email, welcomeResult) {
     ? welcomeResult.ok
       ? `✅ Welcome email sent automatically (Resend id: ${welcomeResult.message_id ?? "n/a"})`
       : welcomeResult.suppressed
-        ? `⚠️ Welcome NOT sent — address is on the suppression list`
-        : `🚨 Welcome failed — ${String(welcomeResult.error ?? "unknown").slice(0, 200)}`
-    : `(welcome flow skipped — non-bridge stream)`;
+        ? `⚠️ Welcome NOT sent, address is on the suppression list`
+        : `🚨 Welcome failed, ${String(welcomeResult.error ?? "unknown").slice(0, 200)}`
+    : `(welcome flow skipped, non-bridge stream)`;
 
   const text = [
     `📬 *New Newsletter Subscriber!*`,
@@ -258,7 +258,7 @@ export async function POST(request) {
     await transporter.sendMail({
       from: GMAIL_USER,
       to: "george@georgeyachts.com",
-      subject: `📬 New Newsletter Subscriber — ${email}`,
+      subject: `📬 New Newsletter Subscriber, ${email}`,
       html: `
         <h3>New Newsletter Subscriber</h3>
         <p><strong>Email:</strong> ${email}</p>

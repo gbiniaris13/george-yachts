@@ -406,7 +406,7 @@ const ArticlePage = async ({ params }) => {
           </div>
         </div>
 
-        {/* Typographic block — left on mobile, centered on desktop */}
+        {/* Typographic block, left on mobile, centered on desktop */}
         <div className="flex flex-col items-start md:items-center md:text-center flex-1 justify-center mt-12 md:mt-0">
           <div className="flex items-center space-x-4 mb-8">
             <span className="block w-8 h-px bg-[#C9A84C]" />
@@ -431,10 +431,10 @@ const ArticlePage = async ({ params }) => {
             {post.title}
           </h1>
 
-          {/* Phase 1 (2026-05-08, E-E-A-T) — author byline now links
+          {/* Phase 1 (2026-05-08, E-E-A-T), author byline now links
               to the author's full profile page when George is the
               listed author. Adds an "IYBA Member" credential pip
-              right of the name (visible authority signal — Google
+              right of the name (visible authority signal, Google
               + AI engines + readers all see expertise badge). */}
           <div className="flex items-center space-x-5 mt-10">
             <span className="block w-12 h-px bg-white/10" />
@@ -467,7 +467,7 @@ const ArticlePage = async ({ params }) => {
         <div className="w-full h-px bg-gradient-to-r from-transparent via-white/5 to-transparent mt-14" />
       </section>
 
-      {/* FULL-WIDTH EDITORIAL IMAGE — contain, no crop */}
+      {/* FULL-WIDTH EDITORIAL IMAGE, contain, no crop */}
       {post.imageUrl && (
         <section className="w-full px-8 md:px-20">
           <div className="relative w-full bg-[#0D1B2A]">
@@ -494,7 +494,7 @@ const ArticlePage = async ({ params }) => {
             <span className="block flex-1 h-px bg-white/5" />
           </div>
 
-          {/* Boss directive 2026-05-08 — AI-search Quick Answer.
+          {/* Boss directive 2026-05-08, AI-search Quick Answer.
               When a Sanity post carries a `quickAnswer` field, render
               it as a 50-word direct answer block at the top of the
               article. This is the format Perplexity / ChatGPT /
@@ -502,7 +502,7 @@ const ArticlePage = async ({ params }) => {
               workflow: Boss adds the field in Sanity Studio for the
               3-4 top-converting posts; future posts include it as a
               standard field. When missing, the block just doesn't
-              render — no visual disruption. */}
+              render, no visual disruption. */}
           {post.quickAnswer && (
             <aside
               className="gy-quick-answer"
@@ -571,7 +571,7 @@ const ArticlePage = async ({ params }) => {
         </div>
       </section>
 
-      {/* Frequently asked questions — visible section, only renders when
+      {/* Frequently asked questions, visible section, only renders when
           the post has a structured `faqItems` field (legacy posts that
           put FAQs inline as H3-in-body skip this to avoid duplication;
           their FAQ JSON-LD is still emitted via extractFAQs above). */}
@@ -642,7 +642,7 @@ const ArticlePage = async ({ params }) => {
         </section>
       )}
 
-      {/* F.1 + F.2 — Yachts to consider + author bio. Sits BEFORE
+      {/* F.1 + F.2, Yachts to consider + author bio. Sits BEFORE
           related articles so the highest-conversion path (yacht
           inquiry) is offered first. */}
       <BlogPostFooter
@@ -653,7 +653,7 @@ const ArticlePage = async ({ params }) => {
         }
       />
 
-      {/* 2026-07-30 — series link back to the Journal cluster this post
+      {/* 2026-07-30, series link back to the Journal cluster this post
           belongs to. Reader value first: someone who just finished a
           Cyclades piece is the likeliest person to want the rest of the
           Cyclades set. It also gives each cluster hub 3-5 real inbound
@@ -687,7 +687,7 @@ const ArticlePage = async ({ params }) => {
       })()}
 
       <RelatedArticles posts={relatedPosts} />
-      {/* 2026-08-06 (job 18) — RelatedArticles above is Sanity-driven and only
+      {/* 2026-08-06 (job 18), RelatedArticles above is Sanity-driven and only
           ever surfaces other blog posts. That is why the strongest 2027 asset
           on this site, the 5,103-word lead-time piece, had 47 inbound internal
           links of which 45 came from other articles and NONE from a commercial

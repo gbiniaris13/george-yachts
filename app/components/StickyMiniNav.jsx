@@ -106,7 +106,7 @@ export default function StickyMiniNav() {
         borderBottom: "1px solid rgba(201,168,76,0.28)",
       }}
     >
-      {/* Phase 27 (Forbes-launch eve, 2026-05-05) — Boss flagged the
+      {/* Phase 27 (Forbes-launch eve, 2026-05-05), Boss flagged the
           mini-nav was rendering with broken hyphenation on iPhone:
           "SIG-NA-TURE", "FILO-TIMO", "WA-TERS". Root cause: flex
           children default to flex-shrink:1, so on a 390px iPhone the

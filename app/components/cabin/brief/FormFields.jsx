@@ -648,14 +648,14 @@ export function LikeDislikeMatrix({ name, label, hint, items, register, lockedKe
               "brief-matrix-row" + (rowLocked ? " brief-matrix-row--locked" : "")
             }
           >
-            {/* 2026-05-23 — NUCLEAR fix for the food matrix labels
+            {/* 2026-05-23, NUCLEAR fix for the food matrix labels
                 that George has reported as invisible/washed-out
                 THREE TIMES across three days.
 
                 Inline style sets pure black + weight 800 + system
                 fonts so we don't depend on FontShare at all for
                 these safety-critical labels. The CSS rule in
-                cabin-tones.css does the same — between the two
+                cabin-tones.css does the same, between the two
                 there is no path by which these labels render
                 anything other than bold black on near-white.
 

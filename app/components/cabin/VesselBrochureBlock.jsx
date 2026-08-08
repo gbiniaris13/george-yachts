@@ -131,7 +131,7 @@ export default function VesselBrochureBlock({ cabin, photos, asPage = false }) {
         <div className="cabin-vessel-block__year">Built {year}</div>
       )}
 
-      {/* 2026-05-23 — George after Olga friend-test: "θα ήταν
+      {/* 2026-05-23, George after Olga friend-test: "θα ήταν
           ωραίο να μπορούν να τις αλλάζουν και να τις βλέπουν
           μεγάλες." Hero + thumbnails are now click-to-lightbox
           (arrows, keyboard ← →, swipe on touch, X to close). The
@@ -248,12 +248,12 @@ export default function VesselBrochureBlock({ cabin, photos, asPage = false }) {
         accommodation.crew_summary) && (
         <div className="cabin-vessel-block__chapter">
           <h3 className="cabin-vessel-block__chapter-label">Accommodation</h3>
-          {/* 2026-05-22 — George's read on the EFFIE STAR preview:
+          {/* 2026-05-22, George's read on the EFFIE STAR preview:
               "Πώς γίνεται σε τέσσερις καμπίνες να κοιμούνται δέκα
                άνθρωποι?" The previous render put the brochure's
               verbatim sentence ("10 guests in 4 double cabins, all
               with en-suite facilities & 1 French double that
-              shares bathroom") into a Row labelled "Cabins" — the
+              shares bathroom") into a Row labelled "Cabins", the
               label collided with the sentence's own subject and
               the customer read "4 cabins · 10 guests" without
               parsing the " & 1 French double" tail.

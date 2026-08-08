@@ -181,7 +181,7 @@ export default function ItineraryPreview() {
           real prices - comes from George within twenty-four hours of your brief.
         </p>
 
-        {/* The form — compact horizontal row on desktop, stacked on mobile */}
+        {/* The form, compact horizontal row on desktop, stacked on mobile */}
         <div
           style={{
             display: "grid",

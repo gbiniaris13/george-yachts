@@ -67,7 +67,7 @@ export default function PriceBlock({
       >
         {price}
       </span>
-      {/* M.1 — converted secondary line, only renders client-side
+      {/* M.1, converted secondary line, only renders client-side
           when the visitor has switched away from EUR. */}
       <PriceBlockFx eurDisplay={price} size={size} />
       {showApa && (

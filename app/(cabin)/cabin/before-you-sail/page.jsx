@@ -36,12 +36,12 @@ const PACKING = {
   Essentials: [
     "Passport (we already have the details, but bring the document)",
     "Travel insurance documentation",
-    "Prescription medication in original packaging — accessible, not in checked luggage",
+    "Prescription medication in original packaging, accessible, not in checked luggage",
     "Reef-safe sunscreen (SPF 30+, the sun is strong)",
     "Sunglasses with strap; a wide-brimmed hat for noon hours",
   ],
   "Clothing": [
-    "Two or three swimsuits — they barely dry between dips",
+    "Two or three swimsuits, they barely dry between dips",
     "A light cotton or linen wardrobe for sun-warmed days",
     "Wind jacket for evening crossings",
     "One smart-casual outfit if you'd like a refined dinner ashore",
@@ -57,13 +57,13 @@ const PACKING = {
   //   stream it through the yacht's system.
   "Pleasures": [
     "Book or e-reader for the long afternoons at anchor",
-    "A favourite playlist — we'll stream it through the yacht's sound system",
-    "Camera or phone — there is no shortage of moments",
+    "A favourite playlist, we'll stream it through the yacht's sound system",
+    "Camera or phone, there is no shortage of moments",
     "Reusable water bottle (we keep them cold)",
   ],
   "Please leave at home": [
-    "Tanning oils and gels — they stain the boat's fabrics",
-    "Hard-shell luggage if you can — soft duffels stow better",
+    "Tanning oils and gels, they stain the boat's fabrics",
+    "Hard-shell luggage if you can, soft duffels stow better",
     "Anything you would not like sea spray on",
   ],
 };
@@ -131,7 +131,7 @@ export default async function BeforeYouSailPage() {
       <IntroParagraph>
         The week or so before embarkation, three small things help the most:
         a glance at the weather, a few phrases that delight the locals, and a
-        quiet packing list. Nothing here is required — just a little less for
+        quiet packing list. Nothing here is required, just a little less for
         you to think about.
       </IntroParagraph>
 
@@ -148,7 +148,7 @@ export default async function BeforeYouSailPage() {
           {completed ? (
             <p className="bys-out-of-range">
               <em>
-                Your voyage has completed — we hope it was as bright as
+                Your voyage has completed, we hope it was as bright as
                 the forecast had promised. The Voyage Album holds the
                 rest.
               </em>
@@ -251,7 +251,7 @@ export default async function BeforeYouSailPage() {
         <ul className="bys-reminders">
           <li>
             <strong>Passport &amp; cards.</strong> Passport, ATM cards, a
-            credit card, and a little cash for shore mornings — small kiosks
+            credit card, and a little cash for shore mornings, small kiosks
             on the islands are often cash-only.
           </li>
           <li>
@@ -266,7 +266,7 @@ export default async function BeforeYouSailPage() {
           </li>
           <li>
             <strong>Sunscreen.</strong> SPF 30 or higher for the first days.
-            Please avoid tanning oils and gels — they stain teak.
+            Please avoid tanning oils and gels, they stain teak.
           </li>
           <li>
             <strong>On board.</strong> Barefoot is best, or soft-soled boat
@@ -274,15 +274,15 @@ export default async function BeforeYouSailPage() {
           </li>
           <li>
             <strong>Watersports licences.</strong> Greek law requires a
-            licence to operate jet skis and certain motorised toys — and a
+            licence to operate jet skis and certain motorised toys, and a
             PADI certificate for scuba. If anyone in your group has a
             certificate, bring it; we&apos;ll handle the rest.
           </li>
           <li>
             <strong>A small word on tipping.</strong> Entirely at your
-            discretion. Most guests find 10–15% of the charter fee, shared
+            discretion. Most guests find 10-15% of the charter fee, shared
             among the crew at the end, feels right when the week has been a
-            joy — but truly, only if it has.
+            joy, but truly, only if it has.
           </li>
         </ul>
       </section>

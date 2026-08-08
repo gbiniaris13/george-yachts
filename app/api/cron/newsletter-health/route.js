@@ -147,7 +147,7 @@ export async function GET(request) {
 
   if (reds.length > 0) {
     await notifyTelegram(
-      `🚨 <b>Newsletter health check — RED</b>\n\n${reds.map((r) => `• ${r}`).join("\n")}\n\nUTC: ${new Date().toISOString()}`,
+      `🚨 <b>Newsletter health check, RED</b>\n\n${reds.map((r) => `• ${r}`).join("\n")}\n\nUTC: ${new Date().toISOString()}`,
     );
   }
 

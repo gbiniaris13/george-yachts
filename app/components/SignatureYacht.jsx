@@ -113,7 +113,7 @@ export default function SignatureYacht({ yacht }) {
       className="relative w-full bg-black overflow-hidden"
       aria-label={`Signature yacht: ${yacht.name}`}
     >
-      {/* Hero image layer — zooms gently with scroll (Ken Burns) and
+      {/* Hero image layer, zooms gently with scroll (Ken Burns) and
           translates slower than the page (parallax). Oversized so the
           translate never reveals an edge.
 
@@ -141,12 +141,12 @@ export default function SignatureYacht({ yacht }) {
           }}
         />
 
-        {/* Gradient overlays — ensure text readability top & bottom,
+        {/* Gradient overlays, ensure text readability top & bottom,
             keep the image alive in the middle. */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0D1B2A]/65 via-[#0D1B2A]/10 to-[#0D1B2A]/85" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0D1B2A]/35 via-transparent to-[#0D1B2A]/35" />
 
-        {/* Top label — FEATURED THIS WEEK. Pushed below the fixed
+        {/* Top label, FEATURED THIS WEEK. Pushed below the fixed
             nav zone (72px scrolled-state) plus a bit more breathing. */}
         <div
           className="absolute top-6 md:top-8 left-0 right-0 text-center z-10"
@@ -167,7 +167,7 @@ export default function SignatureYacht({ yacht }) {
           </span>
         </div>
 
-        {/* Bottom-anchored content block — pb tightened so the text
+        {/* Bottom-anchored content block, pb tightened so the text
             lifts closer to the image bottom, closing the dark gap. */}
         <div className="absolute inset-x-0 bottom-0 z-10 px-6 md:px-12 pb-10 md:pb-14 text-center">
           <div className="max-w-[880px] mx-auto">
@@ -185,7 +185,7 @@ export default function SignatureYacht({ yacht }) {
               {yacht.name}
             </h2>
 
-            {/* Subtitle — builder model line */}
+            {/* Subtitle, builder model line */}
             {yacht.subtitle && (
               <p
                 className="text-white/50 italic mb-8"
@@ -214,7 +214,7 @@ export default function SignatureYacht({ yacht }) {
               </p>
             )}
 
-            {/* Inside info — the differentiator */}
+            {/* Inside info, the differentiator */}
             {insiderTrim && (
               <div className="max-w-[720px] mx-auto mb-12">
                 <p
@@ -275,7 +275,7 @@ export default function SignatureYacht({ yacht }) {
           </div>
         </div>
 
-        {/* Gold corner-brackets — subtle frame cue, editorial feel */}
+        {/* Gold corner-brackets, subtle frame cue, editorial feel */}
         <span
           aria-hidden="true"
           className="absolute top-6 left-6 md:top-10 md:left-10 w-8 h-8 md:w-12 md:h-12 border-t border-l border-[#C9A84C]/40 pointer-events-none"

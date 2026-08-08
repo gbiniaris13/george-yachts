@@ -60,7 +60,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
           background: "#0D1B2A",
         }}
       >
-        {/* Hero backdrop — uses an existing yacht hero image until
+        {/* Hero backdrop, uses an existing yacht hero image until
             Boss drops drone footage. */}
         {heroBackdrop && (
           <div
@@ -210,7 +210,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
             alignItems: "center",
           }}
         >
-          {/* Backdrop — try video, fall back to first yacht's hero photo */}
+          {/* Backdrop, try video, fall back to first yacht's hero photo */}
           <StopBackdrop stop={stop} />
 
           {/* Editorial content */}

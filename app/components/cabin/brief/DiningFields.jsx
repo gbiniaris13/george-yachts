@@ -99,22 +99,22 @@ export default function DiningFields({
   };
   return (
     <>
-      {/* 2026-05-24 — Angeliki pass: meal TIMES are now principal-
-          only. One eat-schedule per table — set by the principal,
+      {/* 2026-05-24, Angeliki pass: meal TIMES are now principal-
+          only. One eat-schedule per table, set by the principal,
           shown to guests via GuestBriefReadOnly upstream. The rest
           of dining (food matrix, breakfast styles, snacks, etc.)
           stays shared, so the group's preferences still feed the
           chef collectively.
 
-          2026-05-26 — Brief 02 (bug-pass): the guest "read-only"
+          2026-05-26, Brief 02 (bug-pass): the guest "read-only"
           fieldset branch was dead code post-CP1 (guests never
-          reach DiningFields — the dining page returns early with
+          reach DiningFields, the dining page returns early with
           GuestBriefReadOnly when isPrincipal === false). The
-          orphaned aria-label "Meal times — read-only (principal
+          orphaned aria-label "Meal times, read-only (principal
           only)" was also being mis-read as visible page copy by
           assistive tools + browser hover. Branch removed; the
           "Principal only" chip is removed too because the viewer
-          IS the principal (or delegated brief-admin) — calling
+          IS the principal (or delegated brief-admin), calling
           out the obvious added noise. */}
       <h2 className="brief-subhead">When do you like to eat?</h2>
       <p className="brief-note">
@@ -146,7 +146,7 @@ export default function DiningFields({
           { value: "light_healthy",  label: "Light & healthy - fruit, granola, smoothies" },
         ]}
       />
-      {/* 2026-05-24 — Christos pass: free-text "other" after each
+      {/* 2026-05-24, Christos pass: free-text "other" after each
           multiple-choice food subsection. We may not have included
           your style on the list. */}
       <OpenTextarea
@@ -238,7 +238,7 @@ export default function DiningFields({
         placeholder="e.g. matcha latte, chai, specific tea brand, oat-milk flat white"
       />
 
-      {/* 2026-05-24 — Christos pass (item 3): service-style block
+      {/* 2026-05-24, Christos pass (item 3): service-style block
           re-introduced as PRINCIPAL-ONLY. George wanted it gone
           from the shared form ("αν πούνε πέντε διαφορετικά τι θα
           κάνει το crew") but kept in the principal's view so ONE

@@ -507,7 +507,7 @@ export default function CabinMePage() {
         <div className="me-load-error" role="alert">
           <div className="me-load-error__eyebrow">Couldn&apos;t load</div>
           <p className="me-load-error__copy">
-            We couldn&apos;t load your saved details just now —
+            We couldn&apos;t load your saved details just now
             <strong> your information is still safe</strong>, this
             is only a connection hiccup between your browser and
             the Cabin. Tap reload below and your fields will come
@@ -581,11 +581,11 @@ export default function CabinMePage() {
         title="Just enough"
         italic="for the captain and the chef."
       />
-      {/* 2026-05-26 — Brief 02 (A3.4): explicit 2-step indicator.
+      {/* 2026-05-26, Brief 02 (A3.4): explicit 2-step indicator.
           Domingo's friend-test feedback was "I didn't realise there
           was a second page". The force-save Continue link (added in
           A3.2) only became visible once you scrolled past the
-          Aboard block — too easy to miss. A boutique step pill at
+          Aboard block, too easy to miss. A boutique step pill at
           the top of the form makes the journey legible from the
           first paint: Step 1 (this page) → Step 2 (Private notes). */}
       <div className="me-stepper" role="navigation" aria-label="Two-step form">
@@ -600,7 +600,7 @@ export default function CabinMePage() {
         </span>
       </div>
       <IntroParagraph>
-        Hello, {firstName}. Everything here is optional — but the few
+        Hello, {firstName}. Everything here is optional, but the few
         fields you fill in mean the chef knows what not to cook, the
         captain has the right paperwork at marinas, and we can quietly
         mark any small celebration that falls during your week. Saves
@@ -608,10 +608,10 @@ export default function CabinMePage() {
       </IntroParagraph>
 
       <form className="me-form" onSubmit={onSave}>
-        {/* 2026-05-22 — Crew List essentials block. Port authorities
+        {/* 2026-05-22, Crew List essentials block. Port authorities
             require name + gender + DOB + ID/passport + mobile for
             every person aboard. These five fields are MANDATORY for
-            the brief to lock — the principal sees who's still
+            the brief to lock, the principal sees who's still
             missing on the review screen before they send to George. */}
         <div className="me-crewlist">
           <div className="me-crewlist__head">
@@ -627,7 +627,7 @@ export default function CabinMePage() {
 
           <label className="me-field">
             <span>Date of birth</span>
-            {/* 2026-05-23 — Olga friend-test: the native HTML
+            {/* 2026-05-23, Olga friend-test: the native HTML
                 date picker forced her to click month-arrows back
                 year-by-year to reach 1991. Replaced with a
                 3-field Day / Month / Year control that lets her
@@ -703,9 +703,9 @@ export default function CabinMePage() {
             </label>
           </div>
 
-          {/* 2026-05-24 — Christos pass: country-code picker.
+          {/* 2026-05-24, Christos pass: country-code picker.
               Christos typed +30 in the mobile field, the number
-              never picked it up — phone numbers without an
+              never picked it up, phone numbers without an
               explicit country code aren't dialable from a Greek
               SIM if the captain is calling from abroad. Split
               into a Greek/US/UK/etc. picker + local-number field.
@@ -760,14 +760,14 @@ export default function CabinMePage() {
           </div>
 
           <p className="me-hint" style={{ marginTop: 4 }}>
-            Stored encrypted in your Cabin — visible to you, decrypted
+            Stored encrypted in your Cabin, visible to you, decrypted
             for the captain at the moment of embarkation paperwork.
           </p>
         </div>
 
-        {/* 2026-05-26 — Brief 02 (A5, bug-pass v3, Domingo): guest
+        {/* 2026-05-26, Brief 02 (A5, bug-pass v3, Domingo): guest
             reassurance line. Under the single-responsibility model
-            the Crew List is a guest's ONLY task — once they're
+            the Crew List is a guest's ONLY task, once they're
             through it, they're done. The Main Charterer owns the
             itinerary, dining and cellar decisions for the whole
             group. Shown only to non-principals / non-DAs (who DO
@@ -787,12 +787,12 @@ export default function CabinMePage() {
             </aside>
           )}
 
-        {/* 2026-05-24 — Christos pass (item 2): the health /
+        {/* 2026-05-24, Christos pass (item 2): the health /
             allergies / dietary / mobility / consent block was
             moved off this page onto a dedicated /cabin/me/private
             route. Christos wanted the privacy boundary to be a
             wholly separate page rather than a banner-on-the-same-
-            page — that way it's visually obvious the answers
+            page, that way it's visually obvious the answers
             below it are for the crew's eyes only, not for the
             other guests.
 
@@ -806,18 +806,18 @@ export default function CabinMePage() {
             <p className="me-private-link__copy">
               <em>
                 Health, allergies, dietary preferences and swimming
-                ability live on a separate page — only George and
+                ability live on a separate page, only George and
                 the crew see those answers, never the rest of your
                 group.
               </em>
             </p>
           </div>
-          {/* 2026-05-26 — Brief 02 (A3.2): force-save Next.
+          {/* 2026-05-26, Brief 02 (A3.2): force-save Next.
               Vanilla Link replaced by an <a> + onClick handler
               (onContinueToPrivate) that drives a save FIRST when
               the form is dirty, then navigates. Eleanna's data-
               loss path: typed → clicked Private link → typing
-              gone — is closed. href stays so right-click
+              gone, is closed. href stays so right-click
               "Open in new tab" + screen-readers still see a real
               target. aria-disabled while saving so assistive tech
               announces the wait. */}
@@ -828,7 +828,7 @@ export default function CabinMePage() {
             aria-disabled={busy}
           >
             {busy && pendingNav === "/cabin/me/private"
-              ? "Saving — opening when done…"
+              ? "Saving, opening when done…"
               : "Next: Private notes  →"}
           </a>
         </div>
@@ -848,7 +848,7 @@ export default function CabinMePage() {
           />
         </label>
 
-        {/* 2026-05-26 — Brief 02 (A3.3): shoe size for the hostess's
+        {/* 2026-05-26, Brief 02 (A3.3): shoe size for the hostess's
             flip-flop / spa-slipper set. Free string so charterers can
             write "EU 42", "US 9", "UK 7" etc. without us guessing
             their unit. */}
@@ -870,7 +870,7 @@ export default function CabinMePage() {
           <textarea
             rows={2}
             value={form.special_dates_during_charter}
-            placeholder="e.g. my 60th on July 14 — keep it a surprise"
+            placeholder="e.g. my 60th on July 14, keep it a surprise"
             onChange={(e) =>
               setForm({ ...form, special_dates_during_charter: e.target.value })
             }
@@ -889,15 +889,15 @@ export default function CabinMePage() {
           />
         </label>
 
-        {/* 2026-05-24 — GDPR consent checkbox moved to /cabin/me/
+        {/* 2026-05-24, GDPR consent checkbox moved to /cabin/me/
             private alongside the health fields it gates. Keeps the
             consent literally adjacent to what it covers. */}
 
-        {/* 2026-05-26 — Brief 02 (Task A8.5): the entire guest-only
+        {/* 2026-05-26, Brief 02 (Task A8.5): the entire guest-only
             "Help fill the group brief" block is unmounted under the
             new single-responsibility model. Guests no longer write
             to ANY brief section (dining/beverages/life-aboard/
-            itinerary/etc.) — so there is nothing to "help fill"
+            itinerary/etc.), so there is nothing to "help fill"
             anymore. The opt-out toggle is also removed (guests have
             nothing to opt out OF; their Crew List is mandatory for
             port authorities). NextStep on /cabin home shows them a
@@ -909,14 +909,14 @@ export default function CabinMePage() {
             preference-sheet) and PART B Task B2 can still surface
             historical opt-outs. The submit-gate logic that reads
             it is also preserved. We just stop CREATING new opt-outs
-            from this UI — onSetOptOut() + optOutBusy/optOutNote
+            from this UI, onSetOptOut() + optOutBusy/optOutNote
             state are now unused but kept on disk for now (so any
             other call site continues to compile). Schedule a
             follow-up cleanup if those become truly orphaned. */}
 
         {err && <p className="me-err" role="alert">{err}</p>}
 
-        {/* 2026-05-24 — Christos pass: after a successful save,
+        {/* 2026-05-24, Christos pass: after a successful save,
             render a green confirmation panel with a clear "Go
             back to the Cabin" CTA so the guest knows what to do
             next. Replaces the silent inline "Saved" message. */}
@@ -924,7 +924,7 @@ export default function CabinMePage() {
           <div className="me-saved-panel" aria-live="polite">
             <div className="me-saved-panel__eyebrow">Saved</div>
             <p className="me-saved-panel__copy">
-              Your information is saved — thank you. The principal
+              Your information is saved, thank you. The principal
               charterer reviews every member&apos;s details before
               the brief goes to George.
             </p>
@@ -935,7 +935,7 @@ export default function CabinMePage() {
         )}
 
         <div className="me-actions">
-          {/* 2026-05-25 — Race guard: intercept the click so we
+          {/* 2026-05-25, Race guard: intercept the click so we
               can defer navigation until any in-flight save lands.
               href="/cabin" stays so right-click "open in new tab"
               still works and so screen readers/search engines see
@@ -947,7 +947,7 @@ export default function CabinMePage() {
             aria-disabled={busy}
           >
             {busy && pendingNav
-              ? "Saving — leaving when done…"
+              ? "Saving, leaving when done…"
               : "← Back to your Cabin"}
           </Link>
           {!dirty && !busy ? (
@@ -1195,7 +1195,7 @@ export default function CabinMePage() {
         }
         /* 2026-05-25 — Race guard visual state: while a save is in
            flight AND the user has clicked Back, surface a calm
-           "Saving — leaving when done" label so they know the
+           "Saving, leaving when done" label so they know the
            navigation is queued, not ignored. */
         .me-back--waiting {
           color: var(--gy-gold);

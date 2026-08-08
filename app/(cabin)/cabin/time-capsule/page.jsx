@@ -57,7 +57,7 @@ export default function TimeCapsulePage() {
         italic="time capsule."
       />
       <IntroParagraph>
-        Write one short paragraph to yourself — anything from a single
+        Write one short paragraph to yourself, anything from a single
         sentence to a few lines. Why are you sailing this week? What are you
         hoping to find, to leave behind, to remember? We seal it in your
         Cabin, and return it to you, quietly, six months from today.
@@ -85,7 +85,7 @@ export default function TimeCapsulePage() {
             rows={7}
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
-            placeholder="A few lines, in your own voice. Nobody else will read this — not even me."
+            placeholder="A few lines, in your own voice. Nobody else will read this, not even me."
             className="tc-textarea"
             maxLength={4000}
           />
@@ -111,7 +111,7 @@ export default function TimeCapsulePage() {
           </p>
           <p className="tc-sealed__return">
             We will return this to you on{" "}
-            <strong>{fmtDate(capsule.reveal_at)}</strong> — a quiet email from
+            <strong>{fmtDate(capsule.reveal_at)}</strong>, a quiet email from
             George, with the paragraph below in your own words.
           </p>
           <details className="tc-sealed__peek">
@@ -168,7 +168,7 @@ export default function TimeCapsulePage() {
           margin: 12px 0 0 0;
         }
         /* 2026-05-26 — Brief 04 / T6 (Domingo guest audit): "SEAL IN
-           MY CABIN" looked dead — pale grey text on a medium grey
+           MY CABIN" looked dead, pale grey text on a medium grey
            button. Root cause: when the textarea is empty (the
            default state on page load), the button is disabled
            and previous styling was just opacity 0.55 on the
@@ -177,7 +177,7 @@ export default function TimeCapsulePage() {
              • Disabled (no content): cream ghost outline, muted
                navy text, "wait for content" cursor.
              • Enabled (≥4 chars typed): full navy CTA with gold
-               border + ivory text — the brand's primary action
+               border + ivory text, the brand's primary action
                style, matching "NEXT: PRIVATE NOTES" / "ADD PHOTOS".
            Behaviour untouched. */
         .tc-form__row button {

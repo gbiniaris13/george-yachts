@@ -31,7 +31,7 @@ export const runtime = "edge";
 
 const RATE_LIMIT_PER_HOUR = 10;
 
-const SYSTEM_PROMPT_BASE = `You are "Ask George" — an AI concierge for George Yachts Brokerage House (georgeyachts.com).
+const SYSTEM_PROMPT_BASE = `You are "Ask George", an AI concierge for George Yachts Brokerage House (georgeyachts.com).
 
 You help visitors explore yacht charter options in Greek waters.
 
@@ -41,14 +41,14 @@ WHO IS GEORGE:
 - He works hands-on with charter clients and central agents across Greek waters.
 
 YOUR KNOWLEDGE:
-- ${FLEET_COUNT} curated yachts in our fleet (Private Fleet — per yacht/week pricing; Explorer Fleet — per person/week pricing).
+- ${FLEET_COUNT} curated yachts in our fleet (Private Fleet, per yacht/week pricing; Explorer Fleet, per person/week pricing).
 - Greek regions: Cyclades, Ionian, Saronic Gulf.
 - Sample itineraries on 10+ yachts.
 - MYBA-standard charter contracts, APA, VAT logic.
 
 YOUR BEHAVIOR:
 - Recommend yachts when the user describes their needs (group size, region, vibe, budget).
-- Be specific — name yachts from the catalog below.
+- Be specific, name yachts from the catalog below.
 - Explain pricing model clearly: Private Fleet = per yacht/week, Explorer Fleet = per person/week.
 - Suggest itineraries.
 - Answer questions about Greek waters honestly.
@@ -56,11 +56,11 @@ YOUR BEHAVIOR:
 
 WHAT YOU NEVER DO:
 - Never call George the "founder", "owner", or "CEO". He is "Managing Broker".
-- Never claim "MYBA Member" — we use MYBA-standard contracts but are IYBA members.
+- Never claim "MYBA Member", we use MYBA-standard contracts but are IYBA members.
 - Never mention specific years of experience or charter counts.
 - Never confirm a booking. You can collect interest only.
-- Never quote exact prices for specific dates — say "George provides exact pricing in your personalized proposal".
-- Never reveal the names of central agents or yacht management companies — those are confidential.
+- Never quote exact prices for specific dates, say "George provides exact pricing in your personalized proposal".
+- Never reveal the names of central agents or yacht management companies, those are confidential.
 - Never make up yachts or itineraries that aren't in the catalog.
 
 AFTER 3-4 EXCHANGES:
@@ -90,7 +90,7 @@ function formatFleetForPrompt(yachts) {
     .slice(0, 80)
     .map((y) => {
       const tier = y.fleetTier === "explorer" ? "Explorer (per person/week)" : "Private (per yacht/week)";
-      return `• ${y.name} — ${y.builder || y.category || "yacht"}, ${y.length || ""}, sleeps ${y.sleeps || "?"}, ${y.cruisingRegion || "Greece"}. ${tier}. ${y.weeklyRatePrice || ""}. /yachts/${y.slug}`;
+      return `• ${y.name}, ${y.builder || y.category || "yacht"}, ${y.length || ""}, sleeps ${y.sleeps || "?"}, ${y.cruisingRegion || "Greece"}. ${tier}. ${y.weeklyRatePrice || ""}. /yachts/${y.slug}`;
     })
     .join("\n");
 }
@@ -109,7 +109,7 @@ async function checkRateLimit(ip) {
 
 function fallbackReply() {
   const text =
-    "Ask George is warming up — give us a moment. In the meantime, the fastest way to reach George is to write to him at /inquiry or via WhatsApp. He replies personally, usually within the day.";
+    "Ask George is warming up, give us a moment. In the meantime, the fastest way to reach George is to write to him at /inquiry or via WhatsApp. He replies personally, usually within the day.";
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     start(controller) {
@@ -164,7 +164,7 @@ export async function POST(req) {
       .map((m) => `*${m.role === "user" ? "Visitor" : "Ask George"}:* ${m.content}`)
       .join("\n\n")
       .slice(0, 3500);
-    const tg = `🤖 *Ask George — follow-up requested*\n\n👤 ${name}\n📧 ${email}\n\n${summary}\n\n_Source: ${body.path || "unknown"}_`;
+    const tg = `🤖 *Ask George, follow-up requested*\n\n👤 ${name}\n📧 ${email}\n\n${summary}\n\n_Source: ${body.path || "unknown"}_`;
     try {
       await sendTelegram(tg);
     } catch {}

@@ -218,7 +218,7 @@ export default function VideoSection() {
               boutique + capability without the size signal. Font
               lands on the Phase 28 display tier (Fraunces Thin 100)
               via the .gy-hero-headline mapping in globals.css. */}
-          {/* 2026-07-21 — RevealHeading (GSAP SplitText line rise)
+          {/* 2026-07-21, RevealHeading (GSAP SplitText line rise)
               REVERTED to a plain h1, per the component's own revert
               note. Root cause, found while shipping the new copy:
               the reveal tween was being killed mid-flight (the

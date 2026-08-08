@@ -74,7 +74,7 @@ export default function PressStrip() {
             flexWrap: "wrap",
           }}
         >
-          {/* Slot 1 — Forbes (text wordmark, As Featured caption) */}
+          {/* Slot 1, Forbes (text wordmark, As Featured caption) */}
           <a
             href={FORBES_URL}
             target="_blank"
@@ -118,7 +118,7 @@ export default function PressStrip() {
             </span>
           </a>
 
-          {/* Slot 2 — IYBA Charter Active Member (official logo, link
+          {/* Slot 2, IYBA Charter Active Member (official logo, link
               to iyba.org per backlink-required clause) */}
           <a
             href="https://iyba.org"
@@ -158,7 +158,7 @@ export default function PressStrip() {
             />
           </a>
 
-          {/* Slot 3 — MYBA standards (PLAIN TEXT ONLY per legal directive
+          {/* Slot 3, MYBA standards (PLAIN TEXT ONLY per legal directive
               §2: no logo, no badge, no link). Exact phrasing required. */}
           <div
             aria-label="Charter contracts based on the MYBA standard"

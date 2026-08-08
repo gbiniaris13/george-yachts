@@ -21,7 +21,7 @@ export default async function CabinLoginPage({ searchParams }) {
   let errorMessage = null;
   if (errorCode === "expired") {
     errorMessage =
-      "That sign-in link has expired. We can send you a fresh one — it takes a moment.";
+      "That sign-in link has expired. We can send you a fresh one, it takes a moment.";
   } else if (errorCode === "unknown") {
     errorMessage =
       "We could not match this email to a Cabin. If you received an invitation from George, please reply to that email so we can sort it.";
@@ -49,7 +49,7 @@ export default async function CabinLoginPage({ searchParams }) {
 
       <footer className="cabin-login__footer">
         <p>
-          Filotimo · Φιλότιμο — <span>doing the right thing because of who we are.</span>
+          Filotimo · Φιλότιμο, <span>doing the right thing because of who we are.</span>
         </p>
       </footer>
 

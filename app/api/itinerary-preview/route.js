@@ -22,17 +22,17 @@ export const runtime = "edge";
 
 const RATE_LIMIT_PER_HOUR = 12; // generous — visitors may try a few combos
 
-const SYSTEM_PROMPT = `You are a yacht-charter broker drafting a SAMPLE preview of a Greek-waters week for a prospective guest. This is NOT a proposal — it's a textural taster the visitor can read in 20 seconds.
+const SYSTEM_PROMPT = `You are a yacht-charter broker drafting a SAMPLE preview of a Greek-waters week for a prospective guest. This is NOT a proposal, it's a textural taster the visitor can read in 20 seconds.
 
 OUTPUT RULES (strict):
 - ALWAYS open with a 1-sentence vibe statement (no "Hello", no "Welcome").
 - Then exactly 3 sample days, formatted as:
-    Day 1 — [island name]: [50-70 word narrative paragraph]
-    Day 2 — [island name]: [50-70 word narrative paragraph]
-    Day 3 — [island name]: [50-70 word narrative paragraph]
+    Day 1, [island name]: [50-70 word narrative paragraph]
+    Day 2, [island name]: [50-70 word narrative paragraph]
+    Day 3, [island name]: [50-70 word narrative paragraph]
 - Pick islands appropriate to the visitor's region preference.
-- Each day's narrative should describe morning anchorage, afternoon swim/excursion, and evening — sensory, specific, in present tense.
-- Close with ONE italicised line beginning "*A real broker writes the rest" — no other content after.
+- Each day's narrative should describe morning anchorage, afternoon swim/excursion, and evening, sensory, specific, in present tense.
+- Close with ONE italicised line beginning "*A real broker writes the rest", no other content after.
 
 NEVER:
 - Recommend specific yachts.
@@ -41,7 +41,7 @@ NEVER:
 - Claim "we'll do X" or commit to anything.
 - Promise availability.
 - Make it longer than 250 words total.
-- Use markdown headings (##, etc) — only the "Day N — Name:" pattern shown above.
+- Use markdown headings (##, etc), only the "Day N, Name:" pattern shown above.
 
 The visitor's brief follows. Write the 250-word preview only, nothing else.`;
 
@@ -60,7 +60,7 @@ async function checkRateLimit(ip) {
 function fallbackPreview() {
   // Free fallback when AI keys aren't configured — we still want the
   // page to do something useful. Static editorial copy.
-  const text = `An unhurried week through the Cyclades, anchor up at sunrise, dinner ashore by sunset.\n\nDay 1 — Mykonos: Wake at anchor outside Ornos. Tender to Spilia for a long lunch overlooking the channel. Afternoon swim at Houlakia where the rocks meet the sea. Evening drinks aboard at golden hour, then a private table at Scorpios for the only dinner that ends with a view of your yacht.\n\nDay 2 — Folegandros: Sixty nautical miles south, into water clearer than most pools. Spilia bay drops 200m straight off the bow. Swim ashore for a walk through Chora's whitewashed lanes; lunch at Pounta; afternoon back aboard. Sunset over the cliffs from the foredeck.\n\nDay 3 — Milos: Sarakiniko at 07:00 before the day-trip boats arrive. Tender into Kleftiko for caves only accessible from the water. Lunch on board, anchor in Provatas for the afternoon swim, evening into Adamantas for dinner at one of the small village tavernas the locals walk to.\n\n*A real broker writes the rest.*`;
+  const text = `An unhurried week through the Cyclades, anchor up at sunrise, dinner ashore by sunset.\n\nDay 1, Mykonos: Wake at anchor outside Ornos. Tender to Spilia for a long lunch overlooking the channel. Afternoon swim at Houlakia where the rocks meet the sea. Evening drinks aboard at golden hour, then a private table at Scorpios for the only dinner that ends with a view of your yacht.\n\nDay 2, Folegandros: Sixty nautical miles south, into water clearer than most pools. Spilia bay drops 200m straight off the bow. Swim ashore for a walk through Chora's whitewashed lanes; lunch at Pounta; afternoon back aboard. Sunset over the cliffs from the foredeck.\n\nDay 3, Milos: Sarakiniko at 07:00 before the day-trip boats arrive. Tender into Kleftiko for caves only accessible from the water. Lunch on board, anchor in Provatas for the afternoon swim, evening into Adamantas for dinner at one of the small village tavernas the locals walk to.\n\n*A real broker writes the rest.*`;
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     async start(controller) {

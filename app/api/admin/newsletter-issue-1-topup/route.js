@@ -166,7 +166,7 @@ export async function POST(request) {
 
   await notifyTelegram(
     [
-      `📨 <b>Issue #1 — top-up</b>`,
+      `📨 <b>Issue #1, top-up</b>`,
       `Bridge audience: ${audience.length}`,
       `Bootstrapped (already-received): ${bootstrapped}`,
       `Sent in this run: ${sent}`,

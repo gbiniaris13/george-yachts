@@ -146,7 +146,7 @@ export default async function BlogPage() {
       {/* BLOG GRID (Client Component for animations) */}
       <BlogGrid posts={posts} />
 
-      {/* 2026-07-02 — reading paths. The 7 /journal/[cluster] topic
+      {/* 2026-07-02, reading paths. The 7 /journal/[cluster] topic
           hubs had zero server-rendered inbound links anywhere on the
           site (Ahrefs: orphan pages). This strip gives each cluster a
           crawlable route from its natural parent, the Journal index. */}
@@ -217,7 +217,7 @@ export default async function BlogPage() {
         </div>
       </section>
 
-      {/* Roberto 2026-05-04 — fleet teaser strip. Every yacht now has
+      {/* Roberto 2026-05-04, fleet teaser strip. Every yacht now has
           a second incoming internal link (from this hub page) on top
           of /charter-yacht-greece, fixing the link-audit "orphan"
           flag. Server-rendered <a href> so any crawler picks it up. */}

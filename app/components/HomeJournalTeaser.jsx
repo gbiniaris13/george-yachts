@@ -33,7 +33,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
         overflow: "hidden",
       }}
     >
-      {/* Phase 27i.18 (2026-05-08) — constellation backdrop. Editorial
+      {/* Phase 27i.18 (2026-05-08), constellation backdrop. Editorial
           section deserves the same night-sky register; intensity kept
           low (0.28) so it sits behind the post tiles without
           competing with them. */}

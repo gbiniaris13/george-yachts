@@ -113,7 +113,7 @@ export default function AboutUsPage() {
       {/* ── CLIENT COMPONENT WITH ANIMATIONS ── */}
       <AboutContent />
 
-      {/* 2026-08-07 — this page ran ~4,000 words with no structured question on
+      {/* 2026-08-07, this page ran ~4,000 words with no structured question on
           it at all, so an engine asked "which broker should I use in Greece"
           had nothing here to lift. Copy and FAQPage schema both come from
           lib/houseFaq.js. */}

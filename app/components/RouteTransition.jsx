@@ -105,7 +105,7 @@ export default function RouteTransition() {
           boxShadow: "inset 16px 0 32px rgba(13, 27, 42, 0.85)",
         }}
       />
-      {/* Gold seam — appears at the meeting line */}
+      {/* Gold seam, appears at the meeting line */}
       <span
         className="gy-velvet-seam"
         style={{

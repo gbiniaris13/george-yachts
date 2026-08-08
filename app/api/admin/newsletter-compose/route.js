@@ -207,7 +207,7 @@ async function buildOneDraft({
 
     tg = await sendTelegramText(
       [
-        `🛑 <b>DRAFT BLOCKED — ${stream} · ${content_type}</b>`,
+        `🛑 <b>DRAFT BLOCKED, ${stream} · ${content_type}</b>`,
         ``,
         `<b>Subject:</b> ${escapeTg(built.subject)}`,
         `<b>Audience:</b> ${audienceSize} subscribers (${stream})`,

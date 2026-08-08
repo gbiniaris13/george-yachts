@@ -160,13 +160,13 @@ export async function POST(req) {
       const html = `
 <div style="font-family:'Lato','Montserrat',sans-serif;font-size:14px;line-height:1.7;color:#0D1B2A">
 <p>Dear ${name.split(" ")[0] || "friend"},</p>
-<p>Attached is your personalized George Yachts proposal — ${yachts.length} yacht${yachts.length === 1 ? "" : "s"} drawn from the live fleet, with George's insider note on each.</p>
+<p>Attached is your personalized George Yachts proposal, ${yachts.length} yacht${yachts.length === 1 ? "" : "s"} drawn from the live fleet, with George's insider note on each.</p>
 <p style="background:#F8F5F0;padding:14px 16px;border-left:3px solid #C9A84C;font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;margin:18px 0">
 ${yachts.map((y) => y.name).join(" · ")}
 </p>
-<p>The numbers in the proposal are honest ranges. The exact figure for your dates lands in a written quote with availability — usually within the day.</p>
+<p>The numbers in the proposal are honest ranges. The exact figure for your dates lands in a written quote with availability, usually within the day.</p>
 <p>If anything's urgent, the fastest channel is WhatsApp: <a href="https://api.whatsapp.com/send/?phone=17867988798">+1 786 798 8798</a>. To book a 30-minute call: <a href="https://calendly.com/george-georgeyachts/30min">calendly.com/george-georgeyachts/30min</a>.</p>
-<p style="margin-top:24px">— George<br/>
+<p style="margin-top:24px">, George<br/>
 <span style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#9CA3AF">George P. Biniaris · Managing Broker</span></p>
 </div>`.trim();
 
@@ -181,7 +181,7 @@ ${yachts.map((y) => y.name).join(" · ")}
           to: [email],
           bcc: ["george@georgeyachts.com"],
           reply_to: RESEND_REPLY_TO,
-          subject: `Your George Yachts proposal — ${yachts.map((y) => y.name).join(", ").slice(0, 80)}`,
+          subject: `Your George Yachts proposal, ${yachts.map((y) => y.name).join(", ").slice(0, 80)}`,
           html,
           attachments: [
             {

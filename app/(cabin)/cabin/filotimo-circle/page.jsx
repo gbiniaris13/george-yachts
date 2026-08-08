@@ -47,7 +47,7 @@ const TIER_DESCRIPTIONS = {
       "Everything a Companion receives",
       "First call on premium vessels for high-season weeks",
       "Personalized planning call with George at any time",
-      "A more substantial annual gesture — chosen with you in mind",
+      "A more substantial annual gesture, chosen with you in mind",
     ],
   },
 };
@@ -85,13 +85,13 @@ export default async function FilotimoCirclePage() {
         <div className="filotimo__rule" aria-hidden />
         <IntroParagraph>
           You did not apply. There is no card. The moment you sail
-          with George Yachts — even as a guest of someone else — you
+          with George Yachts, even as a guest of someone else, you
           are part of the Circle. This is what it means, and what it
           gives you, quietly, over the years.
         </IntroParagraph>
       </header>
 
-      {/* 2026-05-20 — Pass 4 round 5 (David, Helen, Tyler):
+      {/* 2026-05-20, Pass 4 round 5 (David, Helen, Tyler):
           "Friend of the Circle, since 2026" before the first voyage
           reads as fake-bestowed loyalty. Hide the tier-status card
           entirely until at least one voyage is completed. */}
@@ -161,7 +161,7 @@ export default async function FilotimoCirclePage() {
 
       <footer className="filotimo__footer">
         <p>
-          <em>Filotimo · Φιλότιμο</em> — doing the right thing because of
+          <em>Filotimo · Φιλότιμο</em>, doing the right thing because of
           who we are, not because anyone is watching.
         </p>
       </footer>

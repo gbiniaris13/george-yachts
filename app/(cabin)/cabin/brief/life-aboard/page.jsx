@@ -147,7 +147,7 @@ export default function LifeAboardSectionPage() {
       />
       <IntroParagraph>
         How would you like the crew to be around the group, and a
-        quiet list of generic things many groups enjoy at sea —
+        quiet list of generic things many groups enjoy at sea
         tick what appeals to your party, skip what doesn&apos;t.
       </IntroParagraph>
 
@@ -161,7 +161,7 @@ export default function LifeAboardSectionPage() {
             <RadioGroup
               name="crew_interaction"
               label="How would you like the crew to be around you and to address you?"
-              hint="Sets the tone for the whole week — invisible service, warm professional, or chatty-friendly."
+              hint="Sets the tone for the whole week, invisible service, warm professional, or chatty-friendly."
               register={register}
               options={[
                 { value: "always_around", label: "Warm and chatty", description: "Crew on first-name terms, attentive throughout the day, like family at the table." },
@@ -173,7 +173,7 @@ export default function LifeAboardSectionPage() {
             <CheckboxGroup
               name="activities"
               label="What does your group love?"
-              hint="Generic moments only — the water toys your vessel actually carries are shown on your cabin home. The crew will fold in whatever matches what you've ticked here."
+              hint="Generic moments only, the water toys your vessel actually carries are shown on your cabin home. The crew will fold in whatever matches what you've ticked here."
               register={register}
               twoColumn
               options={[
@@ -188,8 +188,8 @@ export default function LifeAboardSectionPage() {
               ]}
             />
             <OpenTextarea
-              label="Anything else your group loves — write freely"
-              hint="Specific water toys, scuba experiences, fishing — anything we haven't listed. The crew will tell you what your vessel can and can't carry."
+              label="Anything else your group loves, write freely"
+              hint="Specific water toys, scuba experiences, fishing, anything we haven't listed. The crew will tell you what your vessel can and can't carry."
               name="activities_other"
               register={register}
               rows={2}
@@ -197,7 +197,7 @@ export default function LifeAboardSectionPage() {
 
             <OpenTextarea
               label="A few small touches we should ask the crew about"
-              hint="Anything that would make a small difference — write freely. The captain will come back with a quick yes/no on each."
+              hint="Anything that would make a small difference, write freely. The captain will come back with a quick yes/no on each."
               name="extras_freeform"
               register={register}
               rows={4}

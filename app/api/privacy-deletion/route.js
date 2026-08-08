@@ -53,9 +53,9 @@ export async function POST(req) {
 <p>Dear ${name.split(" ")[0] || "friend"},</p>
 <p>We&rsquo;ve received your request to delete the personal data we hold about you (email: <strong>${email}</strong>).</p>
 <p>George will personally review the request and respond within 30 days, in line with GDPR Article 17. If your request is straightforward, expect a reply within 48 hours.</p>
-<p>Some records carry a legal-hold obligation — signed charter agreements and financial transactions, primarily — which we&rsquo;ll explain in our reply if applicable.</p>
+<p>Some records carry a legal-hold obligation, signed charter agreements and financial transactions, primarily, which we&rsquo;ll explain in our reply if applicable.</p>
 <p>If you didn&rsquo;t make this request, reply to this email and we&rsquo;ll cancel it immediately.</p>
-<p style="margin-top:20px">— George<br/>
+<p style="margin-top:20px">, George<br/>
 <span style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#9CA3AF">George P. Biniaris · Managing Broker</span></p>
 </div>`.trim();
 
@@ -70,7 +70,7 @@ export async function POST(req) {
           to: [email],
           bcc: ["george@georgeyachts.com"],
           reply_to: process.env.RESEND_REPLY_TO || "george@georgeyachts.com",
-          subject: "We received your data deletion request — George Yachts",
+          subject: "We received your data deletion request, George Yachts",
           html,
           tags: [{ name: "kind", value: "gdpr_deletion_request" }],
         }),

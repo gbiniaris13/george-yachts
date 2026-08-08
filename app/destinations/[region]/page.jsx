@@ -201,7 +201,7 @@ export default async function DestinationPage({ params }) {
           </div>
         </section>
 
-        {/* QUICK FACTS — Boss Ch.1D, AI-search citation block. Plain
+        {/* QUICK FACTS, Boss Ch.1D, AI-search citation block. Plain
             structured data that ChatGPT / Perplexity / Google AI
             Overviews preferentially pull when answering charter
             questions about this region. Visually restrained: small
@@ -233,7 +233,7 @@ export default async function DestinationPage({ params }) {
         {/* INSIDER PICKS */}
         <section className="gy-dest-picks">
           <div className="gy-dest-picks__inner">
-            {/* 2026-05-11 — was <p>, promoted to <h2> so the H1 → H3
+            {/* 2026-05-11, was <p>, promoted to <h2> so the H1 → H3
                 jump (page title → individual pick names) gets a
                 proper H2 bridge. Visual class unchanged. */}
             <h2 className="gy-dest-picks__label">George&apos;s Insider Picks</h2>
@@ -251,7 +251,7 @@ export default async function DestinationPage({ params }) {
           </div>
         </section>
 
-        {/* FAQ — 2026-08-01 SD-1 (GSC striking distance). Optional per
+        {/* FAQ, 2026-08-01 SD-1 (GSC striking distance). Optional per
             region: renders only when lib/destinations.js provides a faq
             array. Reuses the insider-picks visual system so the Boss
             design spec stays untouched; answers respect the standing

@@ -284,7 +284,7 @@ function buildVisitorCard({
   lines.push(`${flag} ${flag} ${flag}`);
   lines.push('');
   if (hotScore !== null && hotScore !== undefined) {
-    lines.push(`\u{1F525} *HOT VISITOR* — Score ${hotScore}`);
+    lines.push(`\u{1F525} *HOT VISITOR*, Score ${hotScore}`);
     lines.push('');
   } else {
     lines.push(`\u{1F464} *New Visitor on georgeyachts.com*`);
@@ -314,7 +314,7 @@ function buildVisitorCard({
   if (locale) devBits.push(locale);
   let deviceLine = `${device.icon || '\u{1F4BB}'} ${devBits.filter(Boolean).join(' · ')}`;
   if (deviceTier && deviceTier !== 'unknown') {
-    deviceLine += `  — *${deviceTier} device*`;
+    deviceLine += `, *${deviceTier} device*`;
   }
   lines.push(deviceLine);
 
@@ -720,13 +720,13 @@ export async function POST(request) {
 
       const source = classifySource(row?.referrer_url || referrer || '');
       const card = testLabel + [
-        `\u{1F525}\u{1F525}\u{1F525} *HOT LEAD DETECTED!* — Score ${score}`,
+        `\u{1F525}\u{1F525}\u{1F525} *HOT LEAD DETECTED!*, Score ${score}`,
         '',
         ipEnrich?.company || ipEnrich?.asn_name
           ? `\u{1F3E2} *Network:* ${ipEnrich.company || ipEnrich.asn_name}${ipEnrich.asn ? ` (${ipEnrich.asn})` : ''}`
           : null,
         `${flag} *${country}*${decodedCity ? ` (${decodedCity})` : ''}${decodedRegion ? ` · ${decodedRegion}` : ''}${latLng ? `  (${latLng})` : ''}`,
-        `${device.icon} ${device.type} · ${uaParsed.browser || ''}${uaParsed.browser_version ? ' ' + uaParsed.browser_version : ''}${browserLanguage ? ' · ' + browserLanguage : ''}${(row?.device_tier || deviceTier) !== 'unknown' ? `  — *${row?.device_tier || deviceTier} device*` : ''}`,
+        `${device.icon} ${device.type} · ${uaParsed.browser || ''}${uaParsed.browser_version ? ' ' + uaParsed.browser_version : ''}${browserLanguage ? ' · ' + browserLanguage : ''}${(row?.device_tier || deviceTier) !== 'unknown' ? `, *${row?.device_tier || deviceTier} device*` : ''}`,
         '',
         `\u{1F517} *Source:* ${source}`,
         `⏱ *Time on site:* ${formatDuration(sanitisedTimeOnSite)}${typeof activeSeconds === 'number' ? `  (active ${formatDuration(activeSeconds)})` : ''}`,
@@ -748,7 +748,7 @@ export async function POST(request) {
         `\u{1F3AF} _A concierge card just offered them WhatsApp or a one-field email. If a form or WhatsApp arrives in the next minutes, it is THIS person - answer first, win the week._`,
       ].filter(Boolean).join('\n');
 
-      const hotLeadDesc = `${country}${decodedCity ? ` (${decodedCity})` : ''} — ${formatDuration(sanitisedTimeOnSite)} — ${(yachtsViewed || []).length} yachts (${premiumViews} premium) — score ${score}${ipEnrich?.company ? ` — ${ipEnrich.company}` : ''}`;
+      const hotLeadDesc = `${country}${decodedCity ? ` (${decodedCity})` : ''}, ${formatDuration(sanitisedTimeOnSite)}, ${(yachtsViewed || []).length} yachts (${premiumViews} premium), score ${score}${ipEnrich?.company ? `, ${ipEnrich.company}` : ''}`;
       const sendTg = await shouldFireTelegram('hot_lead', ip);
       await Promise.allSettled([
         sendTg ? sendTelegram(card) : Promise.resolve(),
@@ -763,7 +763,7 @@ export async function POST(request) {
         }),
         writeToCRM('notifications', {
           type: 'hot_lead',
-          title: `${flag} Hot lead from ${country} — score ${score}`,
+          title: `${flag} Hot lead from ${country}, score ${score}`,
           description: hotLeadDesc,
           link: '/dashboard/visitors',
         }),
@@ -836,7 +836,7 @@ export async function POST(request) {
         writeToCRM('activities', {
           contact_id: existingContact.id,
           type: 'lead_captured',
-          description: `Website lead merged — viewed ${(yachtsViewed || []).join(', ')}${enriched?.company ? ` — ${enriched.company}` : ''}`,
+          description: `Website lead merged, viewed ${(yachtsViewed || []).join(', ')}${enriched?.company ? `, ${enriched.company}` : ''}`,
           metadata: { yachts_viewed: yachtsViewed, time_on_site: sanitisedTimeOnSite, source: 'website_popup', enrichment: enriched },
         }).catch(() => {});
       } else {
@@ -866,7 +866,7 @@ export async function POST(request) {
           writeToCRM('activities', {
             contact_id: newContact[0].id,
             type: 'lead_captured',
-            description: `Captured from website popup — ${country}, viewed ${(yachtsViewed || []).join(', ')}${enriched?.company ? ` — ${enriched.company}` : ''}`,
+            description: `Captured from website popup, ${country}, viewed ${(yachtsViewed || []).join(', ')}${enriched?.company ? `, ${enriched.company}` : ''}`,
             metadata: { yachts_viewed: yachtsViewed, time_on_site: sanitisedTimeOnSite, device: device.type, referrer, enrichment: enriched },
           }).catch(() => {});
         }
@@ -882,8 +882,8 @@ export async function POST(request) {
 
       await writeToCRM('notifications', {
         type: 'lead',
-        title: `\u{1F389} New lead captured: ${leadData.name || leadData.email || 'Unknown'}${enriched?.company ? ` — ${enriched.company}` : ''}`,
-        description: `${country}${decodedCity ? ` (${decodedCity})` : ''} — ${leadData.email ?? ''}${(yachtsViewed || []).length ? ` — viewed ${(yachtsViewed || []).join(', ')}` : ''}`,
+        title: `\u{1F389} New lead captured: ${leadData.name || leadData.email || 'Unknown'}${enriched?.company ? `, ${enriched.company}` : ''}`,
+        description: `${country}${decodedCity ? ` (${decodedCity})` : ''}, ${leadData.email ?? ''}${(yachtsViewed || []).length ? `, viewed ${(yachtsViewed || []).join(', ')}` : ''}`,
         link: '/dashboard/contacts',
       });
 
@@ -920,7 +920,7 @@ export async function POST(request) {
         : '  (none)';
 
       const msg = testLabel + [
-        `\u{1F44B} *Visitor Left* — final score ${finalScore}`,
+        `\u{1F44B} *Visitor Left*, final score ${finalScore}`,
         '',
         `${flag} *${country}*${decodedCity ? ` (${decodedCity})` : ''}`,
         `${device.icon} ${device.type}`,

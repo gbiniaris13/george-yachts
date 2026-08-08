@@ -44,7 +44,20 @@ export default function robots() {
   // robots.txt governs crawlers only: visitors still get every video exactly
   // as before, and blocking a purely decorative resource does not affect how
   // Google renders or assesses the page. Reversible by deleting one string.
-  const COMMON_DISALLOW = ["/_next/", "/api/", "/admin", "/studio", "/videos/"];
+  // 2026-08-07 — "/_next/" removed. Search Console's indexing report showed
+  // 102 URLs "blocked by robots.txt" and 2 more "indexed though blocked", and
+  // every single one was a stylesheet under /_next/static/css. Not one real
+  // page among them.
+  //
+  // That is worse than noise. Google renders a page before judging it, and it
+  // cannot render what it cannot fetch: with the stylesheets blocked, our
+  // pages were being assessed unstyled. Google's own guidance is explicit that
+  // CSS and JS must stay crawlable. These files are public assets the browser
+  // already downloads on every visit, so nothing is exposed by allowing them.
+  //
+  // /videos/ stays blocked for the reason above: purely decorative loops with
+  // no VideoObject markup, costing crawl budget for nothing.
+  const COMMON_DISALLOW = ["/api/", "/admin", "/studio", "/videos/"];
 
   // AI crawlers — explicitly allowed for the public surface (GEO
   // strategy), but with the same admin/api guardrails as everyone

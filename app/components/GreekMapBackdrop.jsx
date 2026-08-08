@@ -56,7 +56,7 @@ export default function GreekMapBackdrop() {
       aria-hidden="true"
     >
       <defs>
-        {/* Sea — slow horizontal stripes that simulate a wave grain. */}
+        {/* Sea, slow horizontal stripes that simulate a wave grain. */}
         <pattern id="seaWave" x="0" y="0" width="60" height="14" patternUnits="userSpaceOnUse">
           <path
             d="M 0 7 Q 15 0 30 7 T 60 7"
@@ -65,12 +65,12 @@ export default function GreekMapBackdrop() {
             fill="none"
           />
         </pattern>
-        {/* Greece land — subtle ivory/gold gradient */}
+        {/* Greece land, subtle ivory/gold gradient */}
         <linearGradient id="greekLand" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%"   stopColor="rgba(248, 245, 240, 0.10)" />
           <stop offset="100%" stopColor="rgba(201, 168, 76, 0.06)" />
         </linearGradient>
-        {/* Drop-shadow filter — subtle depth around Greece coastline */}
+        {/* Drop-shadow filter, subtle depth around Greece coastline */}
         <filter id="greekGlow" x="-10%" y="-10%" width="120%" height="120%">
           <feGaussianBlur stdDeviation="1.6" result="b" />
           <feColorMatrix
@@ -88,10 +88,10 @@ export default function GreekMapBackdrop() {
         </filter>
       </defs>
 
-      {/* Sea wave texture — full canvas */}
+      {/* Sea wave texture, full canvas */}
       <rect width={WIDTH} height={HEIGHT} fill="url(#seaWave)" />
 
-      {/* Neighbour countries — faint outline only, no fill, so the
+      {/* Neighbour countries, faint outline only, no fill, so the
           eye reads "Greece is here in the Mediterranean" without
           competing with the focus. */}
       {neighboursPath && (
@@ -103,7 +103,7 @@ export default function GreekMapBackdrop() {
         />
       )}
 
-      {/* Greece — full cartographic detail with the gradient fill +
+      {/* Greece, full cartographic detail with the gradient fill +
           gold coastline + soft glow. */}
       {greecePath && (
         <path

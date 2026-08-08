@@ -189,10 +189,10 @@ export async function GET(request) {
 
   const lines = allOk
     ? [
-        "✅ *Daily Health Check — All OK*",
+        "✅ *Daily Health Check, All OK*",
         "🕐 " + ts + " Athens",
         "",
-        ...results.map((r) => "✓ " + r.name + " — " + r.ms + "ms"),
+        ...results.map((r) => "✓ " + r.name + "-" + r.ms + "ms"),
         "",
         ...(WHATSAPP_US_LOCKED
           ? ["⚠️ _Known state: US WhatsApp (+1 786) under review — all WhatsApp CTAs use the Greek WhatsApp Business number. Restore per lib/whatsappStatus.js when unlocked._", ""]
@@ -200,10 +200,10 @@ export async function GET(request) {
         "_georgeyachts.com fully operational._",
       ]
     : [
-        "🚨 *ALERT — Issues Detected!*",
+        "🚨 *ALERT, Issues Detected!*",
         "🕐 " + ts + " Athens",
         "",
-        ...results.map((r) => (r.ok ? "✅ " : "❌ ") + r.name + (r.ok ? "" : " — " + (r.message || "FAIL"))),
+        ...results.map((r) => (r.ok ? "✅ " : "❌ ") + r.name + (r.ok ? "" : "-" + (r.message || "FAIL"))),
         "",
         "⚠️ *" + failed.length + " issue(s) need attention!*",
       ];

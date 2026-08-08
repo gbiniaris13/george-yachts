@@ -69,7 +69,7 @@ function authorized(req) {
 // or converted to verbatim-string equivalents. Unit-bearing
 // measurements are captured as single verbatim strings ("51 ft",
 // "27 m") instead of two-field splits that risk conversion.
-const VERBATIM_MANDATE = `VERBATIM MANDATE — read this before anything else:
+const VERBATIM_MANDATE = `VERBATIM MANDATE, read this before anything else:
 1. Reproduce text EXACTLY as the source PDF shows it. No rewording,
    no paraphrasing, no normalisation of casing or punctuation, no
    smart-quoting, no spacing "improvements".
@@ -80,7 +80,7 @@ const VERBATIM_MANDATE = `VERBATIM MANDATE — read this before anything else:
    list is long, take ALL of it verbatim. Never cherry-pick.
 4. Do NOT strip. Honorifics (Mr / Ms / Mrs / Dr), middle names,
    accreditations after a name, parenthetical asides, dates,
-   degrees, brand names — all preserved as written.
+   degrees, brand names, all preserved as written.
 5. Units: when a measurement carries a unit ("51 ft", "27 m",
    "8.1 m beam"), keep the unit AS WRITTEN in the same string. Do
    NOT convert. Do NOT split. Do NOT drop.
@@ -105,17 +105,17 @@ Output strict JSON with this exact shape:
       "languages": ["<each language explicitly named in this person's bio>"],
       "years_experience_phrase": "<verbatim phrase if the bio says something like 'over 6 years of experience' or '15 years at sea'; null otherwise. Do NOT convert to a number.>",
       "credentials_verbatim": "<the exact prose sentence that lists this person's certifications, diplomas, licences. Preserve as a single string. null if the bio does not contain such a sentence.>",
-      "bio": "<full multi-paragraph bio in original prose, verbatim, with \\n\\n between paragraphs. Do NOT modify a single word, including the surname, year of birth, degrees, or any phrase you might find unflattering or off-tone — those decisions are downstream.>"
+      "bio": "<full multi-paragraph bio in original prose, verbatim, with \\n\\n between paragraphs. Do NOT modify a single word, including the surname, year of birth, degrees, or any phrase you might find unflattering or off-tone, those decisions are downstream.>"
     }
   ]
 }
 
 Rules:
-• "first_name" / "last_name" — take from the title line of each crew member's section (e.g. "Captain Thanos Karagiozis" → first:"Thanos", last:"Karagiozis"). If the booklet only gives a first name, last:null.
-• "languages" — extract languages ONLY when explicitly stated in the bio (e.g. "Fluent in Greek and English"). Output the verbatim language names. If no languages are explicitly stated, output null (NOT a default of English).
-• "years_experience_phrase" — capture the exact wording the bio uses about experience. Do not invent or interpret.
-• "credentials_verbatim" — find the sentence (if any) that lists certifications/diplomas. Copy it whole. If multiple sentences mention credentials, concatenate them with a space. If none, null.
-• "bio" — the WHOLE bio of this crew member, verbatim, including the title line if it's part of the page's prose flow.
+• "first_name" / "last_name", take from the title line of each crew member's section (e.g. "Captain Thanos Karagiozis" → first:"Thanos", last:"Karagiozis"). If the booklet only gives a first name, last:null.
+• "languages", extract languages ONLY when explicitly stated in the bio (e.g. "Fluent in Greek and English"). Output the verbatim language names. If no languages are explicitly stated, output null (NOT a default of English).
+• "years_experience_phrase", capture the exact wording the bio uses about experience. Do not invent or interpret.
+• "credentials_verbatim", find the sentence (if any) that lists certifications/diplomas. Copy it whole. If multiple sentences mention credentials, concatenate them with a space. If none, null.
+• "bio", the WHOLE bio of this crew member, verbatim, including the title line if it's part of the page's prose flow.
 • Skip the photo. Photos are handled separately.`,
 
   menu: `${VERBATIM_MANDATE}
@@ -127,27 +127,27 @@ Output strict JSON with this exact shape:
   "tagline": "<a single-line standfirst directly under the title, if present; null otherwise>",
   "sections": [
     {
-      "name": "<section heading verbatim, including its actual case ('BREAKFAST', 'Appetizers/Snacks', 'main courses' — whatever the source uses)>",
+      "name": "<section heading verbatim, including its actual case ('BREAKFAST', 'Appetizers/Snacks', 'main courses', whatever the source uses)>",
       "dishes": ["<each dish in this section, one per array entry, VERBATIM — same casing, same spelling, same punctuation, same brand names. If the source writes 'Nutella' use 'Nutella'. If it writes 'Tuna Mango Ceviche' use 'Tuna Mango Ceviche'. Never convert to Title Case or sentence case or any other case.>"]
     }
   ]
 }
 
 Rules:
-• Preserve section order from the booklet — first section first, last section last.
+• Preserve section order from the booklet, first section first, last section last.
 • Preserve dish order within each section.
 • Preserve casing for ALL strings (title, tagline, section names, dish names). The booklet's design decision is the truth.
 • If the booklet groups dishes by day instead of by meal, render each day as a section.
-• "tagline" — only set if the booklet has a one-line standfirst under the title; else null. Never invent one.
-• Brand names ("Nutella", "Heinz", "Coca-Cola") — keep them. Do not generic-ize.`,
+• "tagline", only set if the booklet has a one-line standfirst under the title; else null. Never invent one.
+• Brand names ("Nutella", "Heinz", "Coca-Cola"), keep them. Do not generic-ize.`,
 
   vessel: `You are extracting a VESSEL BROCHURE for a charter yacht.
 
-CRITICAL — READ THIS FIRST:
+CRITICAL, READ THIS FIRST:
 
 Yacht brochures are DESIGNED documents (typically built in InDesign
-or similar). Most text — vessel name, KEY FEATURES list, the
-SPECIFICATIONS box on the spec page, paragraph descriptions — is
+or similar). Most text, vessel name, KEY FEATURES list, the
+SPECIFICATIONS box on the spec page, paragraph descriptions, is
 rendered as part of the page layout, often as bitmap text overlaid
 on photographs or set inside coloured panels. You MUST use your
 vision capability to read this image-rendered text. The PDF's text
@@ -158,39 +158,39 @@ WHAT TO EXTRACT:
 • type descriptor like "Sailing Catamaran" or "Motor Yacht" (often
   the kicker line above the name)
 • builder + model phrase (often a logo at the bottom of the cover
-  or in the spec table — "Lagoon 51", "Sunseeker 76", etc.)
+  or in the spec table, "Lagoon 51", "Sunseeker 76", etc.)
 • year built (typically on the spec page as "Built: 2025" or in
   the KEY FEATURES "BRAND NEW, BUILT IN 2025")
-• summary paragraph — the editorial intro, usually on page 2 in
+• summary paragraph, the editorial intro, usually on page 2 in
   a coloured panel headed "THE YACHT" or similar. Read every word.
-• key features — the bullet/slash-separated list near the intro
+• key features, the bullet/slash-separated list near the intro
   paragraph, typically headed "KEY FEATURES". Split on slashes or
   bullets into individual entries.
-• specifications — the structured box on the spec page (L.O.A,
+• specifications, the structured box on the spec page (L.O.A,
   Beam, Draft, Main Engines, Generator, Cruising speed, Fuel
   Consumption). Keep units intact.
-• accommodation — usually a short paragraph next to the spec box
+• accommodation, usually a short paragraph next to the spec box
   ("Accommodation: 10 guests in 4 double cabins…"). Also the
   "Crew consisting of N" line nearby.
-• amenities — the "General Amenities" list.
-• tender — the boat the yacht carries (make/model + engine).
-• water toys — everything in the "Tender & Toys" list MINUS the
+• amenities, the "General Amenities" list.
+• tender, the boat the yacht carries (make/model + engine).
+• water toys, everything in the "Tender & Toys" list MINUS the
   tender itself, comma- or slash-separated.
-• areas — the section labels the brochure walks through (Aft
+• areas, the section labels the brochure walks through (Aft
   Deck, Saloon & Dining Area, Cabins, Flybridge, Bow Area, etc.)
 
 Extract verbatim what you can see. If a value is clearly visible
-in any image on any page, capture it — don't return null just
+in any image on any page, capture it, don't return null just
 because the text is part of a layout rather than a parseable text
 layer. ONLY return null for a field that genuinely isn't anywhere
 in the document.
 
-Output strict JSON with this exact shape (every example value is illustrative — extract the actual content of THIS PDF):
+Output strict JSON with this exact shape (every example value is illustrative, extract the actual content of THIS PDF):
 {
   "vessel_name": "<yacht name from the cover or intro page, verbatim>",
   "type_line": "<verbatim type descriptor, e.g. 'Sailing Catamaran', 'Motor Yacht'>",
   "builder_model": "<verbatim builder + model phrase, e.g. 'Lagoon 51'>",
-  "year_built": "<verbatim string the brochure uses — '2024', 'Built 2024', 'Year built: 2024' — keep what's there; null if absent>",
+  "year_built": "<verbatim string the brochure uses, '2024', 'Built 2024', 'Year built: 2024', keep what's there; null if absent>",
   "summary": "<paste the intro / 'THE YACHT' paragraph verbatim, every word preserved>",
   "key_features": ["<each bullet of the brochure's KEY FEATURES section, verbatim, one per array entry. If the section is absent, null (not an empty array).>"],
   "specifications": {
@@ -220,8 +220,8 @@ Output strict JSON with this exact shape (every example value is illustrative �
 }
 
 Rules:
-• "summary" — preserve every word, every paragraph break, every quirk of punctuation.
-• Lists — never invent items. Capture what you can read. Use null only when you've checked every page and the list genuinely isn't present.
+• "summary", preserve every word, every paragraph break, every quirk of punctuation.
+• Lists, never invent items. Capture what you can read. Use null only when you've checked every page and the list genuinely isn't present.
 • When a unit ("ft", "m", "knots", "lt/hr") is present in the brochure, KEEP IT inside the value string.
 • Output ONLY the JSON object. No markdown fences, no commentary, no preamble.`,
 
@@ -240,21 +240,21 @@ Rules:
 You are extracting structured data from a signed MYBA Charter
 Agreement (the standard contract used across the worldwide yacht-
 charter industry, published by MYBA). Page One contains the
-"Charter Particulars" block — that's where most fields live.
+"Charter Particulars" block, that's where most fields live.
 Subsequent pages are the standard clauses; skip them unless an
 addendum modifies the headline particulars.
 
-Output strict JSON with this exact shape — and obey the safe /
+Output strict JSON with this exact shape, and obey the safe /
 internal split (safe = data the charterer may see; internal =
 operator-only fields the client must never see). Every example
-value is illustrative — extract whatever the actual contract says.
+value is illustrative, extract whatever the actual contract says.
 
 {
   "safe": {
     "vessel_name": "<verbatim, e.g. 'EFFIE STAR'>",
     "vessel_make_model": "<verbatim Type field, e.g. 'Lagoon 51'>",
     "vessel_type": "<verbatim if separately stated (Sailing Catamaran, Motor Yacht); null otherwise>",
-    "vessel_length": "<verbatim Length string WITH unit: '51 ft', '15.6 m', or whatever the contract writes — do NOT split into ft and m fields, do NOT convert>",
+    "vessel_length": "<verbatim Length string WITH unit: '51 ft', '15.6 m', or whatever the contract writes, do NOT split into ft and m fields, do NOT convert>",
     "homeport": "<verbatim Port of Registry, e.g. 'Piraeus'>",
     "flag": "<verbatim Flag field, e.g. 'Greek'>",
     "max_guests_sleeping": "<integer if explicit (parsed from 'Maximum number of guests sleeping (10)')>",
@@ -265,7 +265,7 @@ value is illustrative — extract whatever the actual contract says.
     "port_embarkation": "<verbatim Place of Delivery>",
     "port_disembarkation": "<verbatim Place of Re-Delivery>",
     "cruising_area": "<verbatim Cruising area string, even if it reads as legalese ('Greek & International Waters')>",
-    "principal_charterer_name": "<verbatim Charterer row, INCLUDING any honorific (Ms / Mrs / Mr / Dr) the contract carries — e.g. 'Ms. Tricia Stevens', NOT 'Tricia Stevens'>",
+    "principal_charterer_name": "<verbatim Charterer row, INCLUDING any honorific (Ms / Mrs / Mr / Dr) the contract carries, e.g. 'Ms. Tricia Stevens', NOT 'Tricia Stevens'>",
     "principal_charterer_address": "<verbatim address from the CHARTERER ADDRESS row, one string>"
   },
   "internal": {
@@ -301,12 +301,12 @@ value is illustrative — extract whatever the actual contract says.
 
 Rules:
 • Dates: output ISO 8601 (YYYY-MM-DD). MYBA dates appear as "27
-  June 2026" — convert to date string only. The hour ("12:00") is
+  June 2026", convert to date string only. The hour ("12:00") is
   discarded because the cabin tracks day granularity.
 • Currency amounts: parse numeric value (drop "€" symbol, drop
   thousand separators). If the field says "n/a" or blank → null.
   Do NOT round. "€20,856" → 20856. "€2,502.72" → 2502.72.
-• Honorifics on charterer name — KEEP them. The contract is the
+• Honorifics on charterer name, KEEP them. The contract is the
   legal document; "Ms. Tricia Stevens" is how the agreement
   identifies her, and that's what we preserve. Stripping is a
   display concern, not an extraction concern.
@@ -315,14 +315,14 @@ Rules:
 • "vessel_length" is a single verbatim string with whatever unit
   the contract writes. Examples: "51 ft", "27 m", "51 ft / 15.6
   m". The cabin schema can store it as text; no conversion needed.
-• "payment_schedule" — parse the FIRST INSTALMENT and SECOND
+• "payment_schedule", parse the FIRST INSTALMENT and SECOND
   INSTALMENT (and any additional) into ordered entries. Each entry
-  has amount, due_date (ISO), and a "label" — the label is the
+  has amount, due_date (ISO), and a "label", the label is the
   verbatim short phrase the contract uses (e.g. "50% of charter
   fee", "Rest 50% + VAT 12% + APA").
-• "bank_account" — extract the entire block (SWIFT, IBAN,
+• "bank_account", extract the entire block (SWIFT, IBAN,
   beneficiary, branch address) verbatim.
-• "special_conditions_summary" — only set when Page Two's Special
+• "special_conditions_summary", only set when Page Two's Special
   Conditions section materially alters the standard MYBA clauses
   (APA percentage variance, payment schedule deviation,
   cancellation override). Quote the affected clauses verbatim
@@ -439,7 +439,7 @@ export async function POST(req) {
           role: "user",
           parts: [
             { inline_data: { mime_type: "application/pdf", data: base64 } },
-            { text: `Extract the ${kind} data from this PDF as strict JSON per the schema. Output JSON only — no markdown fences, no commentary.` },
+            { text: `Extract the ${kind} data from this PDF as strict JSON per the schema. Output JSON only, no markdown fences, no commentary.` },
           ],
         },
       ],

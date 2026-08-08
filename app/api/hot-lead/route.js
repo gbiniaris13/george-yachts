@@ -66,7 +66,7 @@ export async function POST(request) {
     const countryName = getCountryName(country);
     const device = detectDevice(ua);
     const time = athensTime();
-    const cityStr = city ? ` — ${decodeURIComponent(city)}` : '';
+    const cityStr = city ? `, ${decodeURIComponent(city)}` : '';
 
     // Format yacht names nicely (remove slug format)
     const yachtNames = yachts.map(s =>
@@ -74,7 +74,7 @@ export async function POST(request) {
     ).join(', ');
 
     const text = [
-      `🔥 *HOT LEAD — George Yachts*`,
+      `🔥 *HOT LEAD, George Yachts*`,
       ``,
       `${flag} *${countryName}*${cityStr}`,
       `${device}`,

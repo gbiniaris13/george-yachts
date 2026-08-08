@@ -142,7 +142,7 @@ export async function POST(req) {
       lines.push(``);
       lines.push(`📋 *Shortlist (${shortlist.length}):*`);
       shortlist.slice(0, 10).forEach((y) => {
-        lines.push(`  • ${escMd(y.name || y.slug)}${y.weeklyRatePrice ? ` — ${escMd(y.weeklyRatePrice)}` : ""}`);
+        lines.push(`  • ${escMd(y.name || y.slug)}${y.weeklyRatePrice ? `, ${escMd(y.weeklyRatePrice)}` : ""}`);
       });
     }
     if (message) {
@@ -162,7 +162,7 @@ export async function POST(req) {
       Array.isArray(shortlist) && shortlist.length > 0
         ? `<h4>Shortlist (${shortlist.length}):</h4><ul>${shortlist
             .slice(0, 10)
-            .map((y) => `<li>${escHtml(y.name || y.slug)}${y.weeklyRatePrice ? ` — ${escHtml(y.weeklyRatePrice)}` : ""}</li>`)
+            .map((y) => `<li>${escHtml(y.name || y.slug)}${y.weeklyRatePrice ? `, ${escHtml(y.weeklyRatePrice)}` : ""}</li>`)
             .join("")}</ul>`
         : "";
     const emailHtml = `
@@ -192,7 +192,7 @@ export async function POST(req) {
 
     await notifyGeorge({
       telegramText: lines.join("\n"),
-      emailSubject: `[Lead] ${sourceLabel}${yachtName ? ` — ${yachtName}` : ""} — ${name}`,
+      emailSubject: `[Lead] ${sourceLabel}${yachtName ? `, ${yachtName}` : ""}, ${name}`,
       emailHtml,
       replyTo: email,
       whatsappText: waText,

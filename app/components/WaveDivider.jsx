@@ -36,7 +36,7 @@ export default function WaveDivider({ height = 80, intensity = 1 }) {
           </linearGradient>
         </defs>
 
-        {/* Wave 1 — gold, drifts left */}
+        {/* Wave 1, gold, drifts left */}
         <path
           className="gy-wave-divider-line gy-wave-divider-line--1"
           d="M 0 50 Q 150 30, 300 50 T 600 50 T 900 50 T 1200 50"
@@ -44,7 +44,7 @@ export default function WaveDivider({ height = 80, intensity = 1 }) {
           strokeWidth="0.8"
           fill="none"
         />
-        {/* Wave 2 — ivory, drifts right, slightly different period */}
+        {/* Wave 2, ivory, drifts right, slightly different period */}
         <path
           className="gy-wave-divider-line gy-wave-divider-line--2"
           d="M 0 46 Q 200 64, 400 46 T 800 46 T 1200 46"

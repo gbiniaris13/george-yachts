@@ -57,7 +57,7 @@ export default function ArrivalSectionPage() {
       />
       <IntroParagraph>
         A few simple questions about your flight into Greece. Skip
-        anything you don&apos;t know yet — every field saves as you
+        anything you don&apos;t know yet, every field saves as you
         type, and you can come back any time.
       </IntroParagraph>
 
@@ -88,8 +88,8 @@ export default function ArrivalSectionPage() {
                 name="flight_group_1.airline_and_flight"
                 register={register}
               />
-              {/* 2026-05-20 — Pass 4 (David):
-                  "Departure airport (city you fly from)" — the parenthetical
+              {/* 2026-05-20, Pass 4 (David):
+                  "Departure airport (city you fly from)", the parenthetical
                   is ambiguous: enter "JFK" or "New York"? Renamed to "Where
                   you fly from" so a city is clearly what we want. */}
               <TextField
@@ -128,17 +128,17 @@ export default function ArrivalSectionPage() {
               label="Staying somewhere before the yacht?"
               hint="Most groups go straight from the airport to the yacht. If you're spending a night or two ashore first, share the hotel name + address here so the captain knows where to pick you up. Leave blank if you go directly to the yacht."
               name="before_embarkation.hotel_or_address"
-              placeholder="e.g. Grande Bretagne, Syntagma Square, Athens — checking out Saturday morning."
+              placeholder="e.g. Grande Bretagne, Syntagma Square, Athens, checking out Saturday morning."
               register={register}
               rows={3}
             />
 
-            {/* 2026-05-22 — Local Contact in Greece. George's
+            {/* 2026-05-22, Local Contact in Greece. George's
                 directive: "Captain contacts the principal by
                 default. If you have someone in Greece, share
                 their name and mobile."
                 Pattern matches the BF / industry preference
-                sheets — a single line at the top of section 01
+                sheets, a single line at the top of section 01
                 that lets the captain reach a local point of
                 contact (relative, hotel concierge, etc.) for
                 last-minute coordination without waking the
@@ -146,8 +146,8 @@ export default function ArrivalSectionPage() {
             <h2 className="brief-subhead">Local contact in Greece</h2>
             <p className="brief-note brief-note--lead">
               <em>
-                By default, the captain reaches you — the principal
-                charterer — directly for anything that needs your call.
+                By default, the captain reaches you, the principal
+                charterer, directly for anything that needs your call.
                 If someone else is already on the ground in Greece (a
                 family member, a personal concierge, a Greek-speaking
                 friend), share their details and the captain will
@@ -161,22 +161,22 @@ export default function ArrivalSectionPage() {
               options={[
                 {
                   value: "principal",
-                  label: "Me, the principal charterer — direct.",
+                  label: "Me, the principal charterer, direct.",
                 },
                 {
                   value: "broker",
-                  label: "My broker — George P. Biniaris.",
+                  label: "My broker, George P. Biniaris.",
                   description:
                     "George is already in Greece and is happy to liaise with the captain on your behalf for anything that comes up.",
                 },
                 {
                   value: "other",
-                  label: "Someone else is on the ground — let me share who.",
+                  label: "Someone else is on the ground, let me share who.",
                 },
               ]}
             />
             <details className="brief-details">
-              <summary>If someone else — their details</summary>
+              <summary>If someone else, their details</summary>
               <div className="brief-stack">
                 <TextField
                   label="Their full name"
@@ -219,7 +219,7 @@ export default function ArrivalSectionPage() {
             />
 
             <details className="brief-details">
-              <summary>If yes — transfer details</summary>
+              <summary>If yes, transfer details</summary>
               <div className="brief-stack">
                 <TextField label="Pickup location to yacht" name="transfer_to_yacht.pickup_location" register={register} />
                 <TextField label="Pickup date & time" name="transfer_to_yacht.pickup_datetime" register={register} />
@@ -252,7 +252,7 @@ export default function ArrivalSectionPage() {
           font-weight: 500;
         }
         /* 2026-05-20 — Was .brief-grid (2-column grid on desktop).
-           George flagged that as "ανακατεμένα" — fields didn't read
+           George flagged that as "ανακατεμένα", fields didn't read
            in a clean top-to-bottom order. Single-column stack reads
            like a conversation. */
         .brief-stack {

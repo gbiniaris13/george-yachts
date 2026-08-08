@@ -183,24 +183,24 @@ export default function BeveragesSectionPage() {
         italic="cellar."
       />
       <IntroParagraph>
-        The bar comes already stocked — gin, vodka, whisky, the usual mixers.
+        The bar comes already stocked, gin, vodka, whisky, the usual mixers.
         We only need a sense of what your group actually drinks, and any
         labels that matter to you. The hostess buys the rest. No quantities
         to count, ever.
       </IntroParagraph>
 
-      {/* 2026-05-23 — SHARED BRIEF MODEL: form below IS the
+      {/* 2026-05-23, SHARED BRIEF MODEL: form below IS the
           shared document; this indicator shows who edited last. */}
       <SharedBriefIndicator sectionKey="beverages" />
 
-      {/* 2026-05-26 — Brief 02 (Task A8.1): GuestAdditiveBanner
-          mount removed. Same rationale as dining/page.jsx — guests
+      {/* 2026-05-26, Brief 02 (Task A8.1): GuestAdditiveBanner
+          mount removed. Same rationale as dining/page.jsx, guests
           can't write here anymore, so the additive-merge banner is
           no longer accurate. The component file is kept on disk
           for back-compat / archeology. */}
 
-      {/* 2026-05-24 — Christos pass: dropped `isLastSection` so
-          the "I'm done — send to George" button no longer renders
+      {/* 2026-05-24, Christos pass: dropped `isLastSection` so
+          the "I'm done, send to George" button no longer renders
           here for ANY caller. Guests saw it and were misled into
           thinking they could submit on the principal's behalf;
           the API rejected, the UI looked broken. Send-to-George
@@ -220,11 +220,11 @@ export default function BeveragesSectionPage() {
         )}
       </BriefFormShell>
 
-      {/* 2026-05-23 — MUB-C: shared specific-items wishlist. */}
+      {/* 2026-05-23, MUB-C: shared specific-items wishlist. */}
       <WishlistPanel sectionKey="beverages" />
 
-      {/* 2026-05-24 — Angeliki pass: finishing CTA. Reads "you're
-          done with this section — here's what comes next" so the
+      {/* 2026-05-24, Angeliki pass: finishing CTA. Reads "you're
+          done with this section, here's what comes next" so the
           user never gets stuck wondering whether their work saved
           or where to click next. Autosave still works in the
           background; this is the explicit go-forward path. */}
@@ -234,7 +234,7 @@ export default function BeveragesSectionPage() {
         <p className="bev-finish__copy">
           {isPrincipal ? (
             <>
-              Open the review page next — you&apos;ll see every section in one
+              Open the review page next, you&apos;ll see every section in one
               place, the group&apos;s contributions merged in, and a final
               &ldquo;Send to George&rdquo; button. Nothing reaches George
               until you press it.
@@ -254,7 +254,7 @@ export default function BeveragesSectionPage() {
             </Link>
           ) : (
             <Link href="/cabin" className="bev-finish__cta">
-              All done — back to the Cabin →
+              All done, back to the Cabin →
             </Link>
           )}
           <Link href="/cabin/brief" className="bev-finish__secondary">

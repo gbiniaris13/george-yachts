@@ -24,12 +24,12 @@ export default function ChildrenSectionPage() {
       />
       <IntroParagraph>
         Children are honoured guests aboard. The crew prepares differently
-        when little ones are sailing — softer towels, swim aids,
+        when little ones are sailing, softer towels, swim aids,
         age-appropriate snacks, quieter evenings if needed. Tell us about
         each child.
       </IntroParagraph>
 
-      {/* 2026-05-24 — Christos pass (GDPR): self only. The
+      {/* 2026-05-24, Christos pass (GDPR): self only. The
           principal sees the full aggregate on /cabin/brief/review.
           Guests shouldn't see other guests' children's allergies. */}
       <AllergyAlert source="self" />
@@ -41,7 +41,7 @@ export default function ChildrenSectionPage() {
               <ChildBlock key={i} register={register} index={i} watch={watch} />
             ))}
             <h2 className="brief-subhead">Equipment the crew should prepare</h2>
-            {/* 2026-05-22 — George: "άσε ό,τι έχουν και αυτοί. Μη
+            {/* 2026-05-22, George: "άσε ό,τι έχουν και αυτοί. Μη
                 βάλεις 7 γιατί μπορεί να είναι έξτρα και να την
                 πατήσουμε." Trimmed to the three items industry
                 preference forms commit to: baby cot, high chair,

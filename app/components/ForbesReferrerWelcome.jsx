@@ -89,7 +89,7 @@ export default function ForbesReferrerWelcome() {
         transition: `opacity ${FADE_MS}ms ease, transform ${FADE_MS}ms cubic-bezier(0.2, 0.8, 0.2, 1)`,
       }}
     >
-      {/* Eyebrow line — Forbes wordmark */}
+      {/* Eyebrow line, Forbes wordmark */}
       <div
         style={{
           display: "flex",
@@ -125,7 +125,7 @@ export default function ForbesReferrerWelcome() {
         </span>
       </div>
 
-      {/* Headline — Boss-spec copy (2026-05-08): warmer, less salesy. */}
+      {/* Headline, Boss-spec copy (2026-05-08): warmer, less salesy. */}
       <p
         style={{
           fontFamily: "var(--gy-font-editorial)",
@@ -218,7 +218,7 @@ export default function ForbesReferrerWelcome() {
           <line x1="10" y1="2" x2="2" y2="10" />
         </svg>
       </button>
-      {/* Phase 27 (mobile audit) — at right:92 + maxWidth(380, 100vw-48)
+      {/* Phase 27 (mobile audit), at right:92 + maxWidth(380, 100vw-48)
           the card was clipping ~44px off the LEFT edge of a 390px
           iPhone (it overflowed the viewport because right:92 left
           insufficient room for a 380px-wide card). Drop it to a full-

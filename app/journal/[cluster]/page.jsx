@@ -484,7 +484,7 @@ export default async function ClusterPage({ params }) {
         </div>
       </section>
     </article>
-      {/* 2026-08-06 (job 9) — footer added; see the same note in the other
+      {/* 2026-08-06 (job 9), footer added; see the same note in the other
           templates. Before this, 397 of 474 public pages rendered no <footer>
           at all, so most of the site carried neither the sitewide link block
           nor the privacy link. */}

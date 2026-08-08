@@ -37,7 +37,7 @@ export default function ClientReviews() {
   return (
     <section className="relative py-24 md:py-28" style={{ backgroundColor: CREAM }} aria-label="Client reviews">
       <div className="max-w-5xl mx-auto px-6 md:px-12">
-        {/* Aggregate header — centered via inline styles (not reliant on
+        {/* Aggregate header, centered via inline styles (not reliant on
             utility classes) so the stars + rating + count always sit centred. */}
         <div style={{ textAlign: "center", marginBottom: "48px", display: "flex", flexDirection: "column", alignItems: "center" }}>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, fontWeight: 400, letterSpacing: "clamp(0.2em, 0.8vw, 0.4em)", textTransform: "uppercase", color: NAVY, opacity: 0.5, margin: "0 0 18px" }}>
@@ -49,7 +49,7 @@ export default function ClientReviews() {
               {agg.ratingValue}
             </span>
           </div>
-          {/* George 2026-07-22: never show the review COUNT — it goes
+          {/* George 2026-07-22: never show the review COUNT, it goes
               stale the moment a new review lands (said "4" while Google
               showed 5). Score + the reviews themselves carry the proof. */}
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, letterSpacing: "0.08em", color: "rgba(13,27,42,0.6)", margin: "14px 0 0", textAlign: "center" }}>

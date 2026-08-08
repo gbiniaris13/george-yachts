@@ -512,7 +512,7 @@ export default async function YachtPage({ params }) {
         heroImage={heroImage}
         description={yacht.description}
       />
-      {/* 2026-07-02 (ASK A Move 3b) — the Quick Answer above existed
+      {/* 2026-07-02 (ASK A Move 3b), the Quick Answer above existed
           only as JSON-LD; engines extract from VISIBLE HTML (schema-only
           showed no citation uplift in Ahrefs' 1,885-page experiment).
           Rendering the same Q/A as an on-page essentials recap makes the
@@ -522,12 +522,12 @@ export default async function YachtPage({ params }) {
           <QuickAnswerBlock question={quickAnswerQ} answer={quickAnswerA} />
         </div>
       </section>
-      {/* 2026-07-02 (ASK B 5.2) — the premium email capture: guest
+      {/* 2026-07-02 (ASK B 5.2), the premium email capture: guest
           leaves an email, receives the forwardable dossier instantly.
           Carries the 24h-personal-reply promise + discretion note. */}
       <DossierRequest slug={slug} yachtName={yacht.name} />
       <SimilarYachts items={similar} />
-      {/* 2026-08-06 (job 9) — footer added; see the same note in the other
+      {/* 2026-08-06 (job 9), footer added; see the same note in the other
           templates. Before this, 397 of 474 public pages rendered no <footer>
           at all, so most of the site carried neither the sitewide link block
           nor the privacy link. */}

@@ -87,7 +87,7 @@ export default async function ChatPage() {
   );
   const vessel = cabin?.vessel_name || "the charter";
   const dates = cabin?.charter_period_from && cabin?.charter_period_to
-    ? `${prettyDate(cabin.charter_period_from)} – ${prettyDate(cabin.charter_period_to)}`
+    ? `${prettyDate(cabin.charter_period_from)}, ${prettyDate(cabin.charter_period_to)}`
     : "";
 
   const prefill = `Hello George, it's ${firstName} from ${vessel}${
@@ -104,20 +104,20 @@ export default async function ChatPage() {
         italic="to George."
       />
       <IntroParagraph>
-        I’m one tap away on WhatsApp — for the small questions before
+        I’m one tap away on WhatsApp, for the small questions before
         you sail, the celebrations during the week, and the things
         that don’t fit anywhere else. I read every message personally.
       </IntroParagraph>
 
       <section className="chat-card">
         <div className="chat-card__head">
-          {/* 2026-05-23 — George: "Εδώ στο A Direct Line with George
+          {/* 2026-05-23, George: "Εδώ στο A Direct Line with George
               έχει ένα κυκλάκι και λέει GB τα αρχικά μου. Θα μπορούσαμε
               να το κάνουμε λίγο πιο όμορφο όπως είναι η υπογραφή του
               mail μου." Replaced the GB monogram with his real
               headshot + an IYBA verification badge bottom-right.
               Same dual-circle treatment as the broker industry
-              norm — face says "this is a human", IYBA badge says
+              norm, face says "this is a human", IYBA badge says
               "credentialled" without taking up extra real estate. */}
           <span className="chat-card__avatar" aria-hidden>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -137,8 +137,8 @@ export default async function ChatPage() {
             <div className="chat-card__name">George P. Biniaris</div>
             <div className="chat-card__role">Managing Broker · George Yachts</div>
           </div>
-          {/* 2026-05-20 — Pass 6 (Domingo / Tyler):
-              the green "Online" dot was a fake-presence claim — it
+          {/* 2026-05-20, Pass 6 (Domingo / Tyler):
+              the green "Online" dot was a fake-presence claim, it
               animated whether or not George was actually awake.
               Replaced with an honest cadence label sourced from the
               same notes block below. No animation, no false trust
@@ -151,7 +151,7 @@ export default async function ChatPage() {
         <p className="chat-card__lede">
           Tap below to open WhatsApp with our chat ready. I’ll see your
           first message arrive with your vessel and dates already
-          attached — so I’ll know it’s you, even mid-week at sea.
+          attached, so I’ll know it’s you, even mid-week at sea.
         </p>
 
         <a
@@ -168,11 +168,11 @@ export default async function ChatPage() {
           </span>
           <span className="chat-card__cta-label">
             <strong>Open WhatsApp</strong>
-            <em>Instant — on George’s phone</em>
+            <em>Instant, on George’s phone</em>
           </span>
-          {/* 2026-05-20 — Pass 6: ASCII "→" rendered as a thin
+          {/* 2026-05-20, Pass 6: ASCII "→" rendered as a thin
               broken arrow in WhatsApp green on iOS Safari.
-              2026-05-21 — Pass 7 (Tyler, David): the SVG chevron
+              2026-05-21, Pass 7 (Tyler, David): the SVG chevron
               I substituted in Pass 6 read as a different idiom from
               the rest of the Cabin, which uses the U+203A single
               angle quotation mark ("›") on every CTA ("Invite your
@@ -188,22 +188,22 @@ export default async function ChatPage() {
           <li>
             <span className="chat-card__note-glyph" aria-hidden>✦</span>
             <span>
-              <strong>Before sailing</strong> — replies usually within a
+              <strong>Before sailing</strong>, replies usually within a
               few hours, sometimes faster.
             </span>
           </li>
           <li>
             <span className="chat-card__note-glyph" aria-hidden>⚓</span>
             <span>
-              <strong>During your voyage</strong> — within the hour,
+              <strong>During your voyage</strong>, within the hour,
               quicker if it’s urgent. The captain has my number too.
             </span>
           </li>
           <li>
             <span className="chat-card__note-glyph" aria-hidden>✉</span>
             <span>
-              <strong>After your voyage</strong> — I’m here. Re-charters,
-              referrals, the time capsule arriving in six months — all
+              <strong>After your voyage</strong>, I’m here. Re-charters,
+              referrals, the time capsule arriving in six months, all
               of it goes through this same channel.
             </span>
           </li>
@@ -217,7 +217,7 @@ export default async function ChatPage() {
           <Link href="mailto:george@georgeyachts.com">
             george@georgeyachts.com
           </Link>
-          {" "}— I read both with the same care.
+          {" "}, I read both with the same care.
         </em>
       </p>
 

@@ -58,7 +58,7 @@ export default async function MenuPage() {
         italic="of the week."
       />
       <IntroParagraph>
-        A sample of what the chef will bring to the table — not a contract,
+        A sample of what the chef will bring to the table, not a contract,
         a quiet promise. Your preferences from the Brief shape the actual
         menu; if anything below doesn’t sit right, simply tell George.
       </IntroParagraph>
@@ -81,10 +81,10 @@ export default async function MenuPage() {
               <div key={i} className="mn-section">
                 <h3 className="mn-section__name">{s.name}</h3>
                 {s.dishes.length === 0 ? (
-                  <p className="mn-section__empty"><em>—</em></p>
+                  <p className="mn-section__empty"><em></em></p>
                 ) : (
                   <ul className="mn-section__dishes">
-                    {/* 2026-05-21 — Pass 7 (Helen): dishes now
+                    {/* 2026-05-21, Pass 7 (Helen): dishes now
                         accept either a plain string or an object
                         { label, gloss?, photo_url? }. When a photo
                         is present we render it above the label so
@@ -109,7 +109,7 @@ export default async function MenuPage() {
                           <div className="mn-section__dish-body">
                             <span className="mn-section__dish-label">{label}</span>
                             {gloss && (
-                              <em className="mn-section__gloss"> — {gloss}</em>
+                              <em className="mn-section__gloss">, {gloss}</em>
                             )}
                           </div>
                         </li>
@@ -143,7 +143,7 @@ export default async function MenuPage() {
            menu panel used pure #ffffff while every other Cabin
            page uses the cream body surface. The white card broke
            the cream palette and read as borrowed from a different
-           UI. Brought into line with the rest of the Cabin —
+           UI. Brought into line with the rest of the Cabin
            soft cream tint over the ivory body, same hairline gold
            that the crew card / cabin-at-a-glance use. */
         .mn-wrap {
@@ -237,7 +237,7 @@ export default async function MenuPage() {
           overflow-wrap: break-word;
         }
         /* 2026-05-21 — Pass 7 (Helen): dishes with photos take a
-           slightly different layout — the figure stacks above the
+           slightly different layout, the figure stacks above the
            label and gloss, with a thin gold rule between courses
            to keep the editorial rhythm. Dishes without photos are
            unchanged (the body element is just inline content). */

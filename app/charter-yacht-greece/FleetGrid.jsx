@@ -22,59 +22,59 @@ import { useI18n } from '@/lib/i18n/I18nProvider';
 
 // Fallback data for yachts missing data in Sanity
 const YACHT_OVERRIDES = {
-  'la-pellegrina-1': { name: 'M/Y LA PELLEGRINA 1', price: '\u20ac180,000 \u2013 \u20ac235,000', guests: 12, cabins: 5, crew: 9, builder: 'Couach 164', flagship: true },
-  'brooklyn': { name: 'M/Y BROOKLYN', price: '\u20ac85,000 \u2013 \u20ac105,000', guests: 10, cabins: 5, crew: 6, builder: 'Custom Built' },
-  'ottawa': { name: 'M/Y OTTAWA', price: '\u20ac90,000 \u2013 \u20ac120,000', guests: 10, cabins: 5, crew: 7, builder: 'I-SEA Yachts' },
-  'ariela': { name: 'M/Y ARIELA', price: '\u20ac95,000 \u2013 \u20ac125,000', guests: 10, cabins: 6, crew: 8, builder: 'CRN (Ferretti)' },
+  'la-pellegrina-1': { name: 'M/Y LA PELLEGRINA 1', price: '\u20ac180,000 - \u20ac235,000', guests: 12, cabins: 5, crew: 9, builder: 'Couach 164', flagship: true },
+  'brooklyn': { name: 'M/Y BROOKLYN', price: '\u20ac85,000 - \u20ac105,000', guests: 10, cabins: 5, crew: 6, builder: 'Custom Built' },
+  'ottawa': { name: 'M/Y OTTAWA', price: '\u20ac90,000 - \u20ac120,000', guests: 10, cabins: 5, crew: 7, builder: 'I-SEA Yachts' },
+  'ariela': { name: 'M/Y ARIELA', price: '\u20ac95,000 - \u20ac125,000', guests: 10, cabins: 6, crew: 8, builder: 'CRN (Ferretti)' },
   'elysium': { name: 'Cruise Ship ELYSIUM', price: 'On Request', guests: 49, cabins: 6, crew: 14, builder: 'Custom' },
-  'pareaki-ii': { name: 'M/Y PAREAKI II', price: '\u20ac80,000 \u2013 \u20ac100,000', guests: 10, cabins: 5, crew: 7 },
-  'summer-fun': { name: 'M/Y SUMMER FUN', price: '\u20ac45,000 \u2013 \u20ac55,000', guests: 10, cabins: 4, crew: 5 },
-  'one': { name: 'M/Y ONE', price: '\u20ac35,000 \u2013 \u20ac42,000', guests: 8, cabins: 4, crew: 4 },
-  'cant-remember': { name: "M/Y CAN'T REMEMBER", price: '\u20ac55,000 \u2013 \u20ac70,000', guests: 10, cabins: 5, crew: 6 },
-  'vista': { name: 'M/Y VISTA', price: '\u20ac30,000 \u2013 \u20ac38,000', guests: 8, cabins: 4, crew: 4 },
-  'm-five': { name: 'M/Y M FIVE', price: '\u20ac22,000 \u2013 \u20ac28,000', guests: 8, cabins: 3, crew: 3 },
-  'sea-u': { name: 'M/Y SEA U', price: '\u20ac20,000 \u2013 \u20ac25,000', guests: 8, cabins: 3, crew: 3 },
-  'shero': { name: 'M/Y SHERO', price: '\u20ac28,000 \u2013 \u20ac35,000', guests: 8, cabins: 4, crew: 4 },
-  'lady-l': { name: 'M/Y LADY L', price: '\u20ac17,500 \u2013 \u20ac20,000', guests: 8, cabins: 3, crew: 2, builder: 'Altamar 64' },
-  'mary': { name: 'M/Y MARY', price: '\u20ac17,500 \u2013 \u20ac19,900', guests: 8, cabins: 3, crew: 2, builder: 'Ferretti 68' },
-  'n-ice': { name: 'M/Y N.ICE', price: '\u20ac18,900 \u2013 \u20ac22,900', guests: 6, cabins: 3, crew: 2, builder: 'Omikron OT-60' },
-  'star-link': { name: 'M/Y STAR LINK', price: '\u20ac35,000 \u2013 \u20ac45,000', guests: 8, cabins: 4, crew: 4 },
-  'crazy-horse': { name: 'P/CAT CRAZY HORSE', price: '\u20ac55,000 \u2013 \u20ac70,000', guests: 10, cabins: 5, crew: 6 },
-  'alina': { name: 'P/CAT ALINA', price: '\u20ac35,000 \u2013 \u20ac42,000', guests: 8, cabins: 4, crew: 4 },
-  'samara': { name: 'P/CAT SAMARA', price: '\u20ac30,000 \u2013 \u20ac38,000', guests: 8, cabins: 4, crew: 4 },
-  'just-marie-2': { name: 'P/CAT JUST MARIE 2', price: '\u20ac40,000 \u2013 \u20ac50,000', guests: 10, cabins: 5, crew: 5 },
-  'christal-mio': { name: 'P/CAT CHRISTAL MIO', price: '\u20ac55,000 \u2013 \u20ac65,000', guests: 12, cabins: 6, crew: 7 },
-  'christal-mio-80': { name: 'P/CAT CHRISTAL MIO 80', price: '\u20ac45,000 \u2013 \u20ac55,000', guests: 10, cabins: 4, crew: 5 },
-  'alena': { name: 'P/CAT ALENA', price: '\u20ac60,000 \u2013 \u20ac75,000', guests: 10, cabins: 5, crew: 6 },
-  'majesty-of-greece': { name: 'P/CAT MAJESTY OF GREECE', price: '\u20ac70,000 \u2013 \u20ac90,000', guests: 12, cabins: 6, crew: 8 },
-  'endless-beauty': { name: 'P/CAT ENDLESS BEAUTY', price: '\u20ac14,000 \u2013 \u20ac17,500', guests: 6, cabins: 3, crew: 2, builder: 'Fountaine Pajot 44' },
-  'genny': { name: 'S/CAT GENNY', price: '\u20ac30,000 \u2013 \u20ac38,000', guests: 10, cabins: 5, crew: 4 },
-  'summer-star': { name: 'S/CAT SUMMER STAR', price: '\u20ac17,000 \u2013 \u20ac22,000', guests: 10, cabins: 4, crew: 2, builder: 'Lagoon 52' },
-  'odyssey': { name: 'S/CAT ODYSSEY', price: '\u20ac10,900 \u2013 \u20ac14,900', guests: 8, cabins: 3, crew: 2, builder: 'Nautitech 46 Fly' },
-  'my-star': { name: 'S/CAT MY STAR', price: '\u20ac12,000 \u2013 \u20ac15,000', guests: 8, cabins: 3, crew: 2, builder: 'Lagoon 46' },
+  'pareaki-ii': { name: 'M/Y PAREAKI II', price: '\u20ac80,000 - \u20ac100,000', guests: 10, cabins: 5, crew: 7 },
+  'summer-fun': { name: 'M/Y SUMMER FUN', price: '\u20ac45,000 - \u20ac55,000', guests: 10, cabins: 4, crew: 5 },
+  'one': { name: 'M/Y ONE', price: '\u20ac35,000 - \u20ac42,000', guests: 8, cabins: 4, crew: 4 },
+  'cant-remember': { name: "M/Y CAN'T REMEMBER", price: '\u20ac55,000 - \u20ac70,000', guests: 10, cabins: 5, crew: 6 },
+  'vista': { name: 'M/Y VISTA', price: '\u20ac30,000 - \u20ac38,000', guests: 8, cabins: 4, crew: 4 },
+  'm-five': { name: 'M/Y M FIVE', price: '\u20ac22,000 - \u20ac28,000', guests: 8, cabins: 3, crew: 3 },
+  'sea-u': { name: 'M/Y SEA U', price: '\u20ac20,000 - \u20ac25,000', guests: 8, cabins: 3, crew: 3 },
+  'shero': { name: 'M/Y SHERO', price: '\u20ac28,000 - \u20ac35,000', guests: 8, cabins: 4, crew: 4 },
+  'lady-l': { name: 'M/Y LADY L', price: '\u20ac17,500 - \u20ac20,000', guests: 8, cabins: 3, crew: 2, builder: 'Altamar 64' },
+  'mary': { name: 'M/Y MARY', price: '\u20ac17,500 - \u20ac19,900', guests: 8, cabins: 3, crew: 2, builder: 'Ferretti 68' },
+  'n-ice': { name: 'M/Y N.ICE', price: '\u20ac18,900 - \u20ac22,900', guests: 6, cabins: 3, crew: 2, builder: 'Omikron OT-60' },
+  'star-link': { name: 'M/Y STAR LINK', price: '\u20ac35,000 - \u20ac45,000', guests: 8, cabins: 4, crew: 4 },
+  'crazy-horse': { name: 'P/CAT CRAZY HORSE', price: '\u20ac55,000 - \u20ac70,000', guests: 10, cabins: 5, crew: 6 },
+  'alina': { name: 'P/CAT ALINA', price: '\u20ac35,000 - \u20ac42,000', guests: 8, cabins: 4, crew: 4 },
+  'samara': { name: 'P/CAT SAMARA', price: '\u20ac30,000 - \u20ac38,000', guests: 8, cabins: 4, crew: 4 },
+  'just-marie-2': { name: 'P/CAT JUST MARIE 2', price: '\u20ac40,000 - \u20ac50,000', guests: 10, cabins: 5, crew: 5 },
+  'christal-mio': { name: 'P/CAT CHRISTAL MIO', price: '\u20ac55,000 - \u20ac65,000', guests: 12, cabins: 6, crew: 7 },
+  'christal-mio-80': { name: 'P/CAT CHRISTAL MIO 80', price: '\u20ac45,000 - \u20ac55,000', guests: 10, cabins: 4, crew: 5 },
+  'alena': { name: 'P/CAT ALENA', price: '\u20ac60,000 - \u20ac75,000', guests: 10, cabins: 5, crew: 6 },
+  'majesty-of-greece': { name: 'P/CAT MAJESTY OF GREECE', price: '\u20ac70,000 - \u20ac90,000', guests: 12, cabins: 6, crew: 8 },
+  'endless-beauty': { name: 'P/CAT ENDLESS BEAUTY', price: '\u20ac14,000 - \u20ac17,500', guests: 6, cabins: 3, crew: 2, builder: 'Fountaine Pajot 44' },
+  'genny': { name: 'S/CAT GENNY', price: '\u20ac30,000 - \u20ac38,000', guests: 10, cabins: 5, crew: 4 },
+  'summer-star': { name: 'S/CAT SUMMER STAR', price: '\u20ac17,000 - \u20ac22,000', guests: 10, cabins: 4, crew: 2, builder: 'Lagoon 52' },
+  'odyssey': { name: 'S/CAT ODYSSEY', price: '\u20ac10,900 - \u20ac14,900', guests: 8, cabins: 3, crew: 2, builder: 'Nautitech 46 Fly' },
+  'my-star': { name: 'S/CAT MY STAR', price: '\u20ac12,000 - \u20ac15,000', guests: 8, cabins: 3, crew: 2, builder: 'Lagoon 46' },
   'helidoni': { name: 'S/CAT HELIDONI', price: 'From \u20ac5,900', guests: 8, cabins: 3, crew: 2, builder: 'Fountaine Pajot Tanna 47' },
   'alegria': { name: 'S/CAT ALEGRIA', price: 'From \u20ac10,900', guests: 8, cabins: 3, crew: 2, builder: 'Fountaine Pajot Saona 47' },
-  'libra': { name: 'S/CAT LIBRA', price: '\u20ac15,000 \u2013 \u20ac19,000', guests: 8, cabins: 4, crew: 2 },
-  'worlds-end': { name: "S/CAT WORLD'S END", price: '\u20ac18,000 \u2013 \u20ac24,000', guests: 8, cabins: 4, crew: 3 },
-  'ad-astra': { name: 'S/CAT AD ASTRA', price: '\u20ac32,000 \u2013 \u20ac40,000', guests: 10, cabins: 5, crew: 4, builder: 'Custom 80' },
-  'azul': { name: 'S/CAT AZUL', price: '\u20ac14,000 \u2013 \u20ac18,000', guests: 8, cabins: 4, crew: 2 },
-  'serenissima': { name: 'S/CAT SERENISSIMA', price: '\u20ac22,000 \u2013 \u20ac28,000', guests: 8, cabins: 4, crew: 3 },
-  'serenissima-iii': { name: 'S/CAT SERENISSIMA III', price: '\u20ac18,000 \u2013 \u20ac24,000', guests: 8, cabins: 4, crew: 3 },
-  'above-beyond': { name: 'S/CAT ABOVE & BEYOND', price: '\u20ac14,000 \u2013 \u20ac18,000', guests: 8, cabins: 4, crew: 2 },
-  'kimata': { name: 'S/CAT KIMATA', price: '\u20ac15,000 \u2013 \u20ac20,000', guests: 8, cabins: 4, crew: 2 },
-  'pixie': { name: 'S/CAT PIXIE', price: '\u20ac12,000 \u2013 \u20ac16,000', guests: 8, cabins: 3, crew: 2 },
-  'nadamas': { name: 'S/Y NADAMAS', price: '\u20ac22,000 \u2013 \u20ac30,000', guests: 8, cabins: 4, crew: 3 },
-  'huayra': { name: 'S/Y HUAYRA', price: '\u20ac35,000 \u2013 \u20ac45,000', guests: 8, cabins: 4, crew: 4 },
-  'alexandra-ii': { name: 'S/CAT ALEXANDRA II', price: '\u20ac20,000 \u2013 \u20ac26,000', guests: 8, cabins: 4, crew: 3 },
-  'imladris': { name: 'S/CAT IMLADRIS', price: '\u20ac18,000 \u2013 \u20ac24,000', guests: 8, cabins: 4, crew: 3 },
-  'sahana': { name: 'S/CAT SAHANA', price: '\u20ac16,000 \u2013 \u20ac20,000', guests: 8, cabins: 4, crew: 2 },
-  'aloia': { name: 'S/CAT ALOIA', price: '\u20ac14,000 \u2013 \u20ac18,000', guests: 6, cabins: 3, crew: 2 },
-  'sol-madinina': { name: 'S/CAT SOL MADININA', price: '\u20ac12,000 \u2013 \u20ac16,000', guests: 6, cabins: 3, crew: 2 },
-  'explorion': { name: 'P/CAT EXPLORION', price: '\u20ac16,000 \u2013 \u20ac20,000', guests: 8, cabins: 4, crew: 2 },
-  'alteya': { name: 'P/CAT ALTEYA', price: '\u20ac25,000 \u2013 \u20ac32,000', guests: 10, cabins: 5, crew: 3 },
+  'libra': { name: 'S/CAT LIBRA', price: '\u20ac15,000 - \u20ac19,000', guests: 8, cabins: 4, crew: 2 },
+  'worlds-end': { name: "S/CAT WORLD'S END", price: '\u20ac18,000 - \u20ac24,000', guests: 8, cabins: 4, crew: 3 },
+  'ad-astra': { name: 'S/CAT AD ASTRA', price: '\u20ac32,000 - \u20ac40,000', guests: 10, cabins: 5, crew: 4, builder: 'Custom 80' },
+  'azul': { name: 'S/CAT AZUL', price: '\u20ac14,000 - \u20ac18,000', guests: 8, cabins: 4, crew: 2 },
+  'serenissima': { name: 'S/CAT SERENISSIMA', price: '\u20ac22,000 - \u20ac28,000', guests: 8, cabins: 4, crew: 3 },
+  'serenissima-iii': { name: 'S/CAT SERENISSIMA III', price: '\u20ac18,000 - \u20ac24,000', guests: 8, cabins: 4, crew: 3 },
+  'above-beyond': { name: 'S/CAT ABOVE & BEYOND', price: '\u20ac14,000 - \u20ac18,000', guests: 8, cabins: 4, crew: 2 },
+  'kimata': { name: 'S/CAT KIMATA', price: '\u20ac15,000 - \u20ac20,000', guests: 8, cabins: 4, crew: 2 },
+  'pixie': { name: 'S/CAT PIXIE', price: '\u20ac12,000 - \u20ac16,000', guests: 8, cabins: 3, crew: 2 },
+  'nadamas': { name: 'S/Y NADAMAS', price: '\u20ac22,000 - \u20ac30,000', guests: 8, cabins: 4, crew: 3 },
+  'huayra': { name: 'S/Y HUAYRA', price: '\u20ac35,000 - \u20ac45,000', guests: 8, cabins: 4, crew: 4 },
+  'alexandra-ii': { name: 'S/CAT ALEXANDRA II', price: '\u20ac20,000 - \u20ac26,000', guests: 8, cabins: 4, crew: 3 },
+  'imladris': { name: 'S/CAT IMLADRIS', price: '\u20ac18,000 - \u20ac24,000', guests: 8, cabins: 4, crew: 3 },
+  'sahana': { name: 'S/CAT SAHANA', price: '\u20ac16,000 - \u20ac20,000', guests: 8, cabins: 4, crew: 2 },
+  'aloia': { name: 'S/CAT ALOIA', price: '\u20ac14,000 - \u20ac18,000', guests: 6, cabins: 3, crew: 2 },
+  'sol-madinina': { name: 'S/CAT SOL MADININA', price: '\u20ac12,000 - \u20ac16,000', guests: 6, cabins: 3, crew: 2 },
+  'explorion': { name: 'P/CAT EXPLORION', price: '\u20ac16,000 - \u20ac20,000', guests: 8, cabins: 4, crew: 2 },
+  'alteya': { name: 'P/CAT ALTEYA', price: '\u20ac25,000 - \u20ac32,000', guests: 10, cabins: 5, crew: 3 },
   'shooting-star': { name: 'S/Y SHOOTING STAR', price: 'From \u20ac13,000', guests: 6, cabins: 3, crew: 2, builder: 'Gianetti 65' },
-  'aizu': { name: 'S/Y AIZU', price: '\u20ac30,000 \u2013 \u20ac40,000', guests: 8, cabins: 4, crew: 4 },
-  'gigreca': { name: 'S/Y GIGRECA', price: '\u20ac20,000 \u2013 \u20ac28,000', guests: 6, cabins: 3, crew: 3 },
+  'aizu': { name: 'S/Y AIZU', price: '\u20ac30,000 - \u20ac40,000', guests: 8, cabins: 4, crew: 4 },
+  'gigreca': { name: 'S/Y GIGRECA', price: '\u20ac20,000 - \u20ac28,000', guests: 6, cabins: 3, crew: 3 },
 };
 
 const CATEGORY_LABELS = {
@@ -87,7 +87,7 @@ const CATEGORY_LABELS = {
 const LENGTH_RANGES = [
   { id: 'all', label: 'Any Length' },
   { id: 'small', label: 'Under 20m' },
-  { id: 'medium', label: '20m \u2013 40m' },
+  { id: 'medium', label: '20m - 40m' },
   { id: 'large', label: '40m+' },
 ];
 
@@ -110,8 +110,8 @@ const CABIN_OPTIONS = [
 const PRICE_RANGES = [
   { id: 'all', label: 'Any Price' },
   { id: 'under20', label: 'Under \u20ac20K' },
-  { id: '20to50', label: '\u20ac20K \u2013 \u20ac50K' },
-  { id: '50to100', label: '\u20ac50K \u2013 \u20ac100K' },
+  { id: '20to50', label: '\u20ac20K - \u20ac50K' },
+  { id: '50to100', label: '\u20ac50K - \u20ac100K' },
   { id: 'over100', label: '\u20ac100K+' },
 ];
 
@@ -264,12 +264,12 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
   const override = YACHT_OVERRIDES[slug] || {};
   const name = yacht.name || override.name || slug?.replace(/-/g, ' ').toUpperCase() || 'Yacht';
   const price = yacht.weeklyRatePrice || override.price || 'On Request';
-  const guests = yacht.sleeps || override.guests || '\u2013';
-  const cabins = yacht.cabins || override.cabins || '\u2013';
+  const guests = yacht.sleeps || override.guests || '-';
+  const cabins = yacht.cabins || override.cabins || '-';
   const builder = yacht.subtitle || override.builder || yacht.builder || '';
   const isFlagship = slug === 'la-pellegrina-1';
   const imageUrl = yacht.imageUrl;
-  const lengthShort = yacht.length ? yacht.length.split('/')[0].trim() : '\u2013';
+  const lengthShort = yacht.length ? yacht.length.split('/')[0].trim() : '-';
 
   // Per-person per-week estimate at the CEILING: APA 30% + statutory-max VAT 13%.
   // Most yachts invoice VAT below this (5.2-12% by certification), so the real
@@ -307,7 +307,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
       // user scrolls quickly through the grid.
       style={{ '--stagger': `${Math.min(index * 0.05, 0.3)}s` }}
     >
-      {/* Image — ViewTransitionLink so click on the cover triggers a
+      {/* Image, ViewTransitionLink so click on the cover triggers a
           native View Transitions API morph from card thumbnail to the
           detail-page hero. Pairing happens via `view-transition-name`
           set on the <Image> element below + the same name on the
@@ -344,10 +344,10 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
                 onLoad={() => setImgLoaded(true)}
                 style={{ viewTransitionName: `yacht-cover-${slug}` }}
               />
-              {/* C.4 (Roberto master rebuild) — hover preview cycle.
+              {/* C.4 (Roberto master rebuild), hover preview cycle.
                   Up to 3 additional photos overlay the hero on hover,
                   fading 0→1→0 at 1.2s offsets via the gy-card-cycle
-                  CSS animation. Pure CSS — no JS state, no extra
+                  CSS animation. Pure CSS, no JS state, no extra
                   network on cards that aren't hovered. Mobile: tap
                   highlight triggers same animation via :focus-within. */}
               {Array.isArray(yacht.hoverImages) &&
@@ -401,7 +401,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
             </svg>
           </button>
-          {/* Wishlist heart — end */}
+          {/* Wishlist heart, end */}
           {/* Overlay gradient */}
           <div className="fleet-card__overlay" />
           {/* Name on image */}
@@ -455,7 +455,7 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
             {/* C.8 (Roberto master rebuild brief): "Inquire" now opens
                 the express inquiry modal (3 fields + channel picker)
                 instead of jumping straight to WhatsApp. WhatsApp stays
-                available — it's the channel selector inside the modal,
+                available, it's the channel selector inside the modal,
                 or the secondary link below. */}
             <button
               type="button"
@@ -876,10 +876,10 @@ export default function FleetGrid({ yachts }) {
 
   return (
     <>
-      {/* C.5 — sentinel for sticky-collapse trigger */}
+      {/* C.5, sentinel for sticky-collapse trigger */}
       <div ref={sentinelRef} aria-hidden="true" style={{ height: 1 }} />
 
-      {/* C.7 — Saved view preset chips. One-click filters for the
+      {/* C.7, Saved view preset chips. One-click filters for the
           shopping intents UHNW visitors actually have. */}
       <div
         style={{
@@ -935,7 +935,7 @@ export default function FleetGrid({ yachts }) {
         ))}
       </div>
 
-      {/* FILTER BAR — Glass-morphism */}
+      {/* FILTER BAR, Glass-morphism */}
       <div ref={filterBarRef} className="fleet-filters">
         {/* Category tabs */}
         <div className="fleet-filters__tabs">
@@ -995,7 +995,7 @@ export default function FleetGrid({ yachts }) {
           </div>
         </div>
 
-        {/* C.6 — UHNW advanced filters: refit year, master deck, cruising speed (toys below as chips) */}
+        {/* C.6, UHNW advanced filters: refit year, master deck, cruising speed (toys below as chips) */}
         <div className="fleet-filters__row fleet-filters__row--advanced">
           <div className="fleet-filters__select-group">
             <label htmlFor="filter-refit" className="fleet-filters__label">Refit year</label>
@@ -1023,7 +1023,7 @@ export default function FleetGrid({ yachts }) {
           </div>
         </div>
 
-        {/* C.6 — Water toys multi-select chip row */}
+        {/* C.6, Water toys multi-select chip row */}
         <div className="fleet-filters__toys" role="group" aria-label="Water toys">
           <span className="fleet-filters__label fleet-filters__label--inline">Toys:</span>
           {TOY_OPTIONS.map((opt) => {
@@ -1057,7 +1057,7 @@ export default function FleetGrid({ yachts }) {
         <div className="fleet-results__note">Prices per week &middot; Plus VAT &amp; APA</div>
       </div>
 
-      {/* Live count — George 2026-04-20 C1: visible feedback so the
+      {/* Live count, George 2026-04-20 C1: visible feedback so the
           filters feel responsive, not guesswork. */}
       <div className="fleet-count" aria-live="polite">
         <span className="fleet-count__n">{filtered.length}</span>
@@ -1075,7 +1075,7 @@ export default function FleetGrid({ yachts }) {
         )}
       </div>
 
-      {/* YACHT GRID — keyed on filter signature so cards re-stagger
+      {/* YACHT GRID, keyed on filter signature so cards re-stagger
           gracefully whenever filters/sort change. */}
       <div
         id="fleet-grid"
@@ -1104,7 +1104,7 @@ export default function FleetGrid({ yachts }) {
         onClear={() => setCompareList([])}
       />
 
-      {/* C.8 — Express inquiry modal (one instance, pre-filled with the
+      {/* C.8, Express inquiry modal (one instance, pre-filled with the
           yacht context the user clicked on). */}
       <ExpressInquiryModal
         open={!!inquiryYacht}
@@ -1114,7 +1114,7 @@ export default function FleetGrid({ yachts }) {
         source="fleet_card_express"
       />
 
-      {/* EMPTY STATE — Elegant */}
+      {/* EMPTY STATE, Elegant */}
       {filtered.length === 0 && (
         <div className="fleet-empty">
           <div className="fleet-empty__icon">

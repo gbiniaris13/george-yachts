@@ -182,7 +182,7 @@ export default function FleetGuideSections({ yachts }) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJson) }} />
 
-      {/* COST 2026 — live table */}
+      {/* COST 2026, live table */}
       <section
         style={{
           background: "rgba(201,168,76,0.025)",

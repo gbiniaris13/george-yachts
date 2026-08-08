@@ -105,7 +105,7 @@ export default async function GreeceByYachtPage() {
     <>
       <PageBreadcrumb path="/greece-by-yacht" />
       <GreeceByYachtClient stops={stops} heroBackdrop={heroBackdrop} />
-      {/* Phase 5 / H1 — AI itinerary preview (texture only, never a
+      {/* Phase 5 / H1, AI itinerary preview (texture only, never a
           proposal). Streams a 3-day sample week from Gemini based on
           the visitor's brief. The real proposal always comes from a
           human broker via /inquiry. */}

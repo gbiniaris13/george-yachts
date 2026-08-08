@@ -182,7 +182,7 @@ export default function YachtCinematicTour({ images = [], yachtName = "" }) {
           </p>
         </div>
 
-        {/* Slim gold progress bar bottom — reads as a film reel
+        {/* Slim gold progress bar bottom, reads as a film reel
             advancing as the tour plays. */}
         <div className="gy-yacht-tour-progress" aria-hidden="true">
           <div

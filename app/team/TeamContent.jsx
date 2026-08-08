@@ -139,7 +139,7 @@ function TeamCard({ member, index }) {
               </span>
             )}
 
-            {/* I.3 — public business email + LinkedIn (per brief). Icons
+            {/* I.3, public business email + LinkedIn (per brief). Icons
                 stop the link bubbling up to the team-card profileUrl. */}
             {(hasEmail || hasLinkedin) && (
               <span className="team-card__contacts" style={{ display: 'inline-flex', gap: 10, marginTop: 6 }}>

@@ -623,7 +623,7 @@ export default function BottomFunnelPage({ pageData }) {
           </section>
         )}
       </article>
-      {/* 2026-08-06 (job 9) — the footer was missing from this template.
+      {/* 2026-08-06 (job 9), the footer was missing from this template.
           Measured across all 474 public pages: 77 rendered the sitewide
           footer, 397 rendered no <footer> element at all, because the six
           programmatic templates each ended at </article>. No comment in any

@@ -186,7 +186,7 @@ export default function NewsletterPage() {
         </p>
       </footer>
     </main>
-      {/* 2026-08-06 (job 9) — the sitewide footer, missing here like on
+      {/* 2026-08-06 (job 9), the sitewide footer, missing here like on
           396 other pages. Imported as SiteFooter because this page already
           has its own small <footer> for the unsubscribe line, and that one
           stays exactly where it is. */}

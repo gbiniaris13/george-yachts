@@ -151,7 +151,7 @@ export async function GET(request) {
   const yachts = await fetchYachts();
   if (!yachts.length) {
     await notifyTelegram(
-      "⚠️ *Weekly Newsletter* skipped — no yachts returned from Sanity."
+      "⚠️ *Weekly Newsletter* skipped, no yachts returned from Sanity."
     );
     return NextResponse.json({ ok: false, reason: "no_yachts" });
   }
@@ -189,7 +189,7 @@ export async function GET(request) {
   // 4. Send (or dry-run)
   if (!GMAIL_USER || !GMAIL_PASS) {
     await notifyTelegram(
-      `⚠️ *Weekly Newsletter* aborted — Gmail transport not configured.\n\nSubscribers: ${total}\nFeatured: ${featured?.name || "-"}`
+      `⚠️ *Weekly Newsletter* aborted, Gmail transport not configured.\n\nSubscribers: ${total}\nFeatured: ${featured?.name || "-"}`
     );
     return NextResponse.json({ ok: false, reason: "no_gmail" });
   }
@@ -204,14 +204,14 @@ export async function GET(request) {
       await transporter.sendMail({
         from: `"George Yachts Journal (DRY RUN)" <${GMAIL_USER}>`,
         to: "george@georgeyachts.com",
-        subject: `[DRY RUN] Issue ${nextIssue} — ${featured?.name || "The George Yachts Journal"}`,
+        subject: `[DRY RUN] Issue ${nextIssue}, ${featured?.name || "The George Yachts Journal"}`,
         html: buildForEmail("george@georgeyachts.com"),
       });
     } catch (e) {
       console.error("[weekly-newsletter] dry run send failed:", e);
     }
     await notifyTelegram(
-      `🧪 *Weekly Newsletter* dry run — preview delivered to george@\n\nIssue *${nextIssue}* / Week label: ${weekLabel()}\nSubscribers in KV: *${total}*\nFeatured: *${featured?.name || "-"}*\nAvailable: ${available.map((y) => y.name).join(", ") || "-"}\n\nFlip NEWSLETTER_WEEKLY_ENABLED=true to ship.`
+      `🧪 *Weekly Newsletter* dry run, preview delivered to george@\n\nIssue *${nextIssue}* / Week label: ${weekLabel()}\nSubscribers in KV: *${total}*\nFeatured: *${featured?.name || "-"}*\nAvailable: ${available.map((y) => y.name).join(", ") || "-"}\n\nFlip NEWSLETTER_WEEKLY_ENABLED=true to ship.`
     );
     return NextResponse.json({
       ok: true,
@@ -241,7 +241,7 @@ export async function GET(request) {
   let sent = 0;
   let failed = 0;
   const failures = [];
-  const subject = `${featured?.name || "This week on the Aegean"} — Issue ${nextIssue}`;
+  const subject = `${featured?.name || "This week on the Aegean"}, Issue ${nextIssue}`;
 
   for (let i = 0; i < subscribers.length; i += BATCH_SIZE) {
     const batch = subscribers.slice(i, i + BATCH_SIZE);

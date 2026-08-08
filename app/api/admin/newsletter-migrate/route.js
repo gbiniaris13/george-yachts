@@ -112,7 +112,7 @@ export async function GET(request) {
     return NextResponse.json(
       {
         error:
-          "unauthorized — pass ?key=<CRON_SECRET, NEWSLETTER_UNSUB_SECRET, or NEWSLETTER_PROXY_SECRET>",
+          "unauthorized, pass ?key=<CRON_SECRET, NEWSLETTER_UNSUB_SECRET, or NEWSLETTER_PROXY_SECRET>",
       },
       { status: 401 },
     );

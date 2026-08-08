@@ -120,8 +120,8 @@ function PreVoyageShell({ title, lede, steps }) {
         />
       ))}
 
-      {/* 2026-05-22 — Boutique deadline footnote. Seven days from
-          the invite arriving (NOT seven days before the voyage —
+      {/* 2026-05-22, Boutique deadline footnote. Seven days from
+          the invite arriving (NOT seven days before the voyage
           George's correction). Mirrored in the magic-link email
           so the message lands twice: first when the email arrives,
           again as a quiet reminder once the recipient steps inside. */}

@@ -37,7 +37,7 @@ function esc(s) {
     .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 function fmtDate(iso) {
-  if (!iso) return "—";
+  if (!iso) return "-";
   return new Date(iso + "T00:00:00Z").toLocaleDateString("en-GB", {
     day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
   });
@@ -83,7 +83,7 @@ async function buildBundleHtml(cabin, photos, capsule) {
     return out.join("");
   })();
 
-  const dateRange = `${fmtDate(cabin.charter_period_from)} – ${fmtDate(cabin.charter_period_to)}`;
+  const dateRange = `${fmtDate(cabin.charter_period_from)}, ${fmtDate(cabin.charter_period_to)}`;
   const totalCount = photos.length;
 
   return `<!doctype html>
@@ -97,7 +97,7 @@ async function buildBundleHtml(cabin, photos, capsule) {
         </td></tr>
         <tr><td style="padding:32px;font-size:15px;line-height:1.75;">
           <p style="margin:0 0 16px;">Dear ${esc(cabin.principal_charterer_name).split(" ")[0]},</p>
-          <p style="margin:0 0 16px;">Your week aboard <em>${esc(cabin.vessel_name)}</em> (${dateRange}) is now part of our quiet archive. Here is a small bundle to remember it by — every photograph and video your group uploaded lives in your Cabin, and will stay there for as long as you’d like to come back.</p>
+          <p style="margin:0 0 16px;">Your week aboard <em>${esc(cabin.vessel_name)}</em> (${dateRange}) is now part of our quiet archive. Here is a small bundle to remember it by, every photograph and video your group uploaded lives in your Cabin, and will stay there for as long as you’d like to come back.</p>
 
           ${
             previewItems.length
@@ -107,7 +107,7 @@ async function buildBundleHtml(cabin, photos, capsule) {
                 <p style="margin:0 0 16px;font-style:italic;color:rgba(13,27,42,0.6);font-size:13px">
                   ${totalCount > 6 ? `+ ${totalCount - 6} more in your Cabin.` : `That’s all ${totalCount} of them.`}
                 </p>`
-              : `<p style="font-style:italic;color:rgba(13,27,42,0.6)">Your group didn’t upload photographs this time — no worries. The Cabin stays open for you to add any later.</p>`
+              : `<p style="font-style:italic;color:rgba(13,27,42,0.6)">Your group didn’t upload photographs this time, no worries. The Cabin stays open for you to add any later.</p>`
           }
 
           <p style="margin:0 0 16px;">
@@ -122,7 +122,7 @@ async function buildBundleHtml(cabin, photos, capsule) {
               : ""
           }
 
-          <p style="margin:24px 0 4px;font-style:italic">— George</p>
+          <p style="margin:24px 0 4px;font-style:italic">, George</p>
           <p style="font-size:11px;letter-spacing:2px;color:rgba(13,27,42,0.45);text-transform:uppercase;margin-top:24px;border-top:1px solid rgba(13,27,42,0.08);padding-top:14px;">George Yachts · Filotimo · Φιλότιμο</p>
         </td></tr>
       </table>

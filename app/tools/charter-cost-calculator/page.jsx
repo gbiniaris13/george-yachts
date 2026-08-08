@@ -463,14 +463,14 @@ export default function ChartCostCalculatorPage() {
             </div>
           </div>
         </section>
-        {/* 2026-08-06 (job 18) — the cost cluster is the biggest commercial
+        {/* 2026-08-06 (job 18), the cost cluster is the biggest commercial
             demand on this site and every query in it was being answered by
             three to five of our own pages at once. This page linked to exactly
             one of its six siblings because the COHORTS mechanism only ever
             rendered inside SeoLanding. */}
         <RelatedPages path="/tools/charter-cost-calculator" />
       </article>
-      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+      {/* 2026-08-06 (job 9), sitewide footer. Measured before this change:
           397 of 474 public pages rendered no <footer> at all. */}
       <Footer />
     </>

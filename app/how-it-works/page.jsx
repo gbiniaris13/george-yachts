@@ -115,7 +115,7 @@ export default function HowItWorksPage() {
 
       <HowItWorksContent />
 
-      {/* 2026-08-07 — the HowTo schema above describes the five steps but
+      {/* 2026-08-07, the HowTo schema above describes the five steps but
           answered none of the questions that actually decide the booking:
           what you pay and when, how far ahead, and why the contract form
           matters. Copy and FAQPage schema share lib/houseFaq.js. */}

@@ -145,7 +145,7 @@ export async function GET(request) {
   });
   if (!validation.ok) {
     await sendTelegramText(
-      `🚨 <b>Approval blocked — validator failed</b>\n${draft.stream} #${draft.issue_number ?? "?"}: ${draft.subject}\n${validation.violations.map((v) => `• ${v.rule}`).join("\n")}`,
+      `🚨 <b>Approval blocked, validator failed</b>\n${draft.stream} #${draft.issue_number ?? "?"}: ${draft.subject}\n${validation.violations.map((v) => `• ${v.rule}`).join("\n")}`,
     ).catch(() => {});
     return new NextResponse(
       page(
@@ -288,12 +288,12 @@ export async function GET(request) {
     // Update the original Telegram card → final state.
     if (draft.telegram_message_id) {
       const cardText = fullyDone
-        ? `✅ <b>Sent — ${draft.stream} Issue #${draft.issue_number ?? "?"}</b>\nSubject: ${escapeHtml(draft.subject)}\nRecipients: ${recipients.length}\nDelivered: ${draft.sent_count}\nSuppressed: ${draft.suppressed_count}\nFailed: ${draft.failed_count}\nAt: ${draft.sent_at}`
-        : `⏸ <b>Sending paused — daily Resend cap reached</b>\n${draft.stream} Issue #${draft.issue_number ?? "?"}\nDelivered today: ${sent}\nQueued for tomorrow's 00:30 UTC flush: ${queued}\nThe queue resumes automatically — no action needed.`;
+        ? `✅ <b>Sent, ${draft.stream} Issue #${draft.issue_number ?? "?"}</b>\nSubject: ${escapeHtml(draft.subject)}\nRecipients: ${recipients.length}\nDelivered: ${draft.sent_count}\nSuppressed: ${draft.suppressed_count}\nFailed: ${draft.failed_count}\nAt: ${draft.sent_at}`
+        : `⏸ <b>Sending paused, daily Resend cap reached</b>\n${draft.stream} Issue #${draft.issue_number ?? "?"}\nDelivered today: ${sent}\nQueued for tomorrow's 00:30 UTC flush: ${queued}\nThe queue resumes automatically, no action needed.`;
       await editTelegramText(draft.telegram_message_id, cardText).catch(() => {});
     }
     const summaryLines = [
-      `📨 <b>Issue #${draft.issue_number ?? "?"} — ${remainingForQueue.length === 0 ? "sent" : "paused"}</b>`,
+      `📨 <b>Issue #${draft.issue_number ?? "?"}, ${remainingForQueue.length === 0 ? "sent" : "paused"}</b>`,
       `Stream: ${draft.stream}`,
       `Delivered now: ${sent} / ${recipients.length}`,
       `Suppressed: ${suppressed}`,
@@ -345,7 +345,7 @@ export async function GET(request) {
   const fullyDoneOut = remainingForQueue.length === 0;
   return new NextResponse(
     page(
-      fullyDoneOut ? "Sent" : "Sending paused — daily cap reached",
+      fullyDoneOut ? "Sent" : "Sending paused, daily cap reached",
       fullyDoneOut
         ? `<p>Issue #${draft.issue_number ?? "?"} of <strong>${escapeHtml(draft.stream)}</strong> went out.</p>
            <p>Recipients: ${recipients.length} · Delivered: ${sent} · Suppressed: ${suppressed} · Failed: ${failed}</p>

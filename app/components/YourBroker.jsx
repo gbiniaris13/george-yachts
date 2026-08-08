@@ -173,7 +173,7 @@ export default function YourBroker() {
         </div>
       </div>
 
-      {/* Process — merged from the standalone HowItWorks section
+      {/* Process, merged from the standalone HowItWorks section
           (2026-04-21, Proposal B). Three editorial steps sit under
           the bio so the "Meet George + how he works" story reads on
           ONE scroll instead of two stacked sections. Copy kept

@@ -40,7 +40,7 @@ export async function GET(request) {
 
   if (draft.status === "sent" || draft.status === "sending") {
     return new NextResponse(
-      page("Cannot cancel — already sent",
+      page("Cannot cancel, already sent",
         `This issue is already <strong>${draft.status}</strong> and cannot be aborted.`),
       { status: 409, headers: { "Content-Type": "text/html; charset=utf-8" } },
     );
@@ -55,7 +55,7 @@ export async function GET(request) {
   if (draft.telegram_message_id) {
     await editTelegramText(
       draft.telegram_message_id,
-      `❌ <b>Aborted</b> — ${draft.stream} Issue #${draft.issue_number ?? "?"}\n${draft.subject}`,
+      `❌ <b>Aborted</b>, ${draft.stream} Issue #${draft.issue_number ?? "?"}\n${draft.subject}`,
     ).catch(() => {});
   }
   await sendTelegramText(

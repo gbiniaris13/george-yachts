@@ -44,7 +44,7 @@ export default function ExplorerFleetClient({ yachts, lowestPerPerson = 420, hig
         </div>
       </section>
 
-      {/* 2026-07-08 (George's UI wave #3) — three answers instead of
+      {/* 2026-07-08 (George's UI wave #3), three answers instead of
           scrolling every card. Deep-links to the filtered fleet grid. */}
       <div style={{ background: "#0D1B2A", padding: "56px 0 8px" }}>
         <FleetQuickFinder heading="Find your Explorer yacht in three answers" />

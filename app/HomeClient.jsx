@@ -113,12 +113,12 @@ const HomeClient = ({
         explorerRange={explorerRange}
       />
 
-      {/* 2026-07-08 (George's UI wave #2) — one quiet line of proof in
+      {/* 2026-07-08 (George's UI wave #2), one quiet line of proof in
           the first three seconds: real 5.0 Google rating, Forbes 2026,
           IYBA/MYBA. Every claim links to its evidence page. */}
       <TrustStrip />
 
-      {/* 2026-07-22 (20-charters wave) — the 2027 priority-window band.
+      {/* 2026-07-22 (20-charters wave), the 2027 priority-window band.
           The Early-Bird funnel page existed with zero visible doorways;
           GSC showed the July searcher is last-minute while George's real
           buyer (weekly 2027) decides in autumn. One quiet line, one link.
@@ -159,15 +159,15 @@ const HomeClient = ({
       </section>
 
       {/* TrendingYachts ("This Week's Selection") removed 2026-05-07
-          per Boss directive — the homepage was reading like a travel-
+          per Boss directive, the homepage was reading like a travel-
           agency carousel of bestsellers. Yacht discovery surface lives
           in FleetCTAs + SignatureYacht below; weekly rotation is now
           visible on @georgeyachts (yacht-first IG feed, see gy-command
           PLAYBOOKS §9). */}
 
-      {/* Phase 27i.17 (2026-05-08) — custom WebGL water shader.
+      {/* Phase 27i.17 (2026-05-08), custom WebGL water shader.
           Sits as a thin horizon band between the hero and the
-          fleet split-screen — reads as the camera looking down at
+          fleet split-screen, reads as the camera looking down at
           the sea before tilting up to the fleet. Multi-octave fBm
           noise + caustic light + champagne gold near the horizon.
           Mobile / reduced-motion gets a CSS gradient fallback. */}
@@ -189,23 +189,23 @@ const HomeClient = ({
         />
       </section>
 
-      {/* 2026-06-28 — real five-star Google reviews made visible (stars +
+      {/* 2026-06-28, real five-star Google reviews made visible (stars +
           aggregate), high on the page as social proof right after the fleet. */}
       <section id="reviews-proof" data-gy-reveal="up">
         <ClientReviews />
       </section>
 
-      {/* Chapter 08 (2026-05-08) — George's Selection. Replaces the
+      {/* Chapter 08 (2026-05-08), George's Selection. Replaces the
           prior Signature Yacht "Featured This Week" rotation slot
           with two Boss-curated cards: La Pellegrina 1 (Private
           Fleet flagship) + Errant Vagabond (Explorer Fleet
-          flagship). No auto-rotation, no Sanity weekly pull —
+          flagship). No auto-rotation, no Sanity weekly pull
           this is the broker's hand-picked pair. */}
       <section id="selection" data-gy-reveal="up">
         <GeorgesSelection />
       </section>
 
-      {/* 2026-07-03 (Wave 2) — one quiet editorial line from the
+      {/* 2026-07-03 (Wave 2), one quiet editorial line from the
           strongest page on the site to the two head-term guides.
           Boss homepage rules respected: no counts, no prices, no
           cards - just type. */}
@@ -234,48 +234,48 @@ const HomeClient = ({
       </section>
 
       {/* Skipper's Pick spotlight removed 2026-05-07 per Boss
-          directive (along with TrendingYachts + Editor's Pick) —
+          directive (along with TrendingYachts + Editor's Pick)
           eliminates the "shopping carousel" feel from the homepage. */}
 
-      {/* 2026-05-08 (Phase 27i.19) — MapboxFlyover removed from the
+      {/* 2026-05-08 (Phase 27i.19), MapboxFlyover removed from the
           homepage tree. Boss directive: it duplicated the work of the
           Regional Yacht Map below (both surfaces show islands with
           photos), so the two are merged into one. The Mapbox section
           also dragged Mapbox GL JS (~250 KB gz) into the homepage
-          bundle for no incremental value — removing it is also a
+          bundle for no incremental value, removing it is also a
           performance win. The component file stays on disk in case
           a future page wants it, but the homepage no longer mounts
           it. */}
 
-      {/* Chapter 07 (2026-05-08) — Three Greek Worlds.
+      {/* Chapter 07 (2026-05-08), Three Greek Worlds.
           Replaces the prior <RegionalYachtMap /> per Boss directive:
           drop the interactive port map / yacht counts / disclaimer
           copy and surface a 3-card editorial section pointing at
           the new /destinations/{cyclades,ionian,saronic} pages.
           Boss spec: no yacht counts or prices anywhere on the
-          homepage — the brand message is "we know these waters,
+          homepage, the brand message is "we know these waters,
           we'll put you on the right yacht". */}
       <section id="destinations" data-gy-reveal="up">
         <ThreeGreekWorlds />
       </section>
 
-      {/* Aegean wave divider — gold + ivory sine waves drifting in
+      {/* Aegean wave divider, gold + ivory sine waves drifting in
           opposite directions, bridges the regional map (deep navy)
           into the Forbes section (also deep navy) so the transition
           reads as horizon, not as a hard edit. */}
       <WaveDivider height={64} intensity={0.85} />
 
-      {/* Tier 1.3 (Forbes integration brief, May 2026) — Forbes
+      {/* Tier 1.3 (Forbes integration brief, May 2026), Forbes
           pull-quote section. Server-rendered: quote + attribution
           appear in initial HTML for SEO/AI crawlers. */}
       <div data-gy-reveal="up">
         <HomeForbesQuote />
       </div>
 
-      {/* Phase 26 (luxury rebuild, 2026-05-05) — AI itinerary preview
+      {/* Phase 26 (luxury rebuild, 2026-05-05), AI itinerary preview
           on homepage too. Visitors landing from Forbes see the live
           texture-only AI tool without having to navigate to
-          /greece-by-yacht. Texture only — never a proposal, the broker
+          /greece-by-yacht. Texture only, never a proposal, the broker
           writes the real one (Boss directive). */}
       <div data-gy-reveal="up">
         <ItineraryPreview />
@@ -286,11 +286,11 @@ const HomeClient = ({
       </section>
 
       {/* Editor's Pick spotlight removed 2026-05-07 per Boss
-          directive — same rationale as the Skipper's Pick removal
+          directive, same rationale as the Skipper's Pick removal
           above (yacht-discovery surface lives in FleetCTAs + the IG
           feed, not in inline shopping spots on the homepage). */}
 
-      {/* Second Aegean horizon — bridges Filotimon's manifesto into
+      {/* Second Aegean horizon, bridges Filotimon's manifesto into
           the social-proof block so the cadence reads as continuous
           surf rather than stacked sections. Lower intensity than the
           map→Forbes one to keep the testimonials primary. */}
@@ -300,14 +300,14 @@ const HomeClient = ({
         <BrokerTestimonials />
       </div>
 
-      {/* B.6 (Roberto brief, May 2026) — Journal teaser surfaces the
+      {/* B.6 (Roberto brief, May 2026), Journal teaser surfaces the
           3 most-recent blog posts so visitors see the editorial
           flywheel. Hidden when no posts are available. */}
       <div data-gy-reveal="up">
         <HomeJournalTeaser posts={latestPosts} />
       </div>
 
-      {/* 2026-08-07 — the homepage FAQ existed as schema only, with none of the
+      {/* 2026-08-07, the homepage FAQ existed as schema only, with none of the
           answers readable on the page. Google does not credit invisible
           structured data, so the site's richest FAQ was almost certainly being
           discarded for search while AI engines read it happily. Rendering it

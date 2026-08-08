@@ -42,7 +42,7 @@ export default function FlyPrivatePage() {
         <Image src="/images/george-aviation.jpg" alt="Private jet charter Greece - luxury aviation George Yachts" fill priority className="svc-hero__bg" sizes="100vw" />
         <div className="svc-hero__gradient" />
         <div className="svc-hero__content">
-          {/* 2026-08-06 (job 5) — the h1 was "Fly Private": no "jet", no
+          {/* 2026-08-06 (job 5), the h1 was "Fly Private": no "jet", no
               "charter", no "Greece", on the page that carries 185 impressions
               at position 44.3. Same defect as the destination heroes and the
               itineraries page, and George's rule from today applies: the big

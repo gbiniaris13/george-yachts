@@ -21,7 +21,7 @@ export default function GuestsSectionPage() {
         italic="with you?"
       />
       <IntroParagraph>
-        Tell us in your own words what would make this charter perfect — then a
+        Tell us in your own words what would make this charter perfect, then a
         few quick taps about your group. The detailed manifest (passports,
         cabin pairings, allergies per person) opens shortly before embarkation.
       </IntroParagraph>
@@ -45,7 +45,7 @@ export default function GuestsSectionPage() {
                 rows={4}
               />
 
-              {/* 2026-05-24 — Christos pass: "What kind of week" +
+              {/* 2026-05-24, Christos pass: "What kind of week" +
                   "A few quick taps about your group" were two very
                   similar prompts back-to-back. Merged under one
                   heading; the group-type checkboxes + group-scenarios
@@ -123,31 +123,31 @@ export default function GuestsSectionPage() {
               {hasPet === "true" && (
                 <OpenTextarea
                   label="Tell us about your pet"
-                  hint="Type, age, name, anything we should know — food brand, sleeping habits, swimming, comfort needs."
+                  hint="Type, age, name, anything we should know, food brand, sleeping habits, swimming, comfort needs."
                   name="pet_details"
                   register={register}
                   rows={3}
                 />
               )}
 
-              {/* 2026-05-20 — Eleanna friend-test: "Δεν κατάλαβα τι ήθελες
-                  να γράψω εδώ". The original prompt was abstract — by the
+              {/* 2026-05-20, Eleanna friend-test: "Δεν κατάλαβα τι ήθελες
+                  να γράψω εδώ". The original prompt was abstract, by the
                   time you reach this field you've already filled the
                   charter_purpose_narrative at the top, so "anything else"
                   reads as "what do you want me to add now?" Concrete examples
                   the captain actually USES make it obvious what's worth
                   writing here. */}
-              {/* 2026-05-22 — Photo preference. George's read on
+              {/* 2026-05-22, Photo preference. George's read on
                   the BF preference-list audit: "Το να μην φωτο-
                   γραφίζουν τους guest το κρατάμε."
-                  Discreet single yes/no — default unset = crew
+                  Discreet single yes/no, default unset = crew
                   uses normal practice. Explicit "yes please refrain"
                   tells them to put the cameras away entirely. */}
               <h2 className="brief-subhead">A small note on photography</h2>
               <RadioGroup
                 name="no_photos_of_guests"
                 label="Would you prefer the crew not photograph the guests during the week?"
-                hint="Some clients — especially the publicly known — prefer the cabin stays off-camera. The crew is always discreet either way; this just tells them to put the phones down entirely."
+                hint="Some clients, especially the publicly known, prefer the cabin stays off-camera. The crew is always discreet either way; this just tells them to put the phones down entirely."
                 register={register}
                 options={[
                   { value: "false", label: "No, photos are welcome" },
@@ -155,18 +155,18 @@ export default function GuestsSectionPage() {
                 ]}
               />
 
-              {/* 2026-05-24 — Christos pass: was duplicating
+              {/* 2026-05-24, Christos pass: was duplicating
                   "Pair-ups (who's sharing a cabin)" which Crew List
                   asks earlier per-member. Replaced the hint with a
                   generic "anything else from what you've picked
-                  above, or anything we haven't covered" — no more
+                  above, or anything we haven't covered", no more
                   duplicate questions. */}
               <h2 className="brief-subhead">Anything else for the crew?</h2>
               <OpenTextarea
                 label="A few sentences the captain reads to the rest of the crew"
-                hint="If anything from what you've picked above needs more colour — or if there's something we simply haven't asked about — write it freely here. Skip if it's all in the boxes."
+                hint="If anything from what you've picked above needs more colour, or if there's something we simply haven't asked about, write it freely here. Skip if it's all in the boxes."
                 name="group_notes"
-                placeholder="e.g. We'd like the last night to feel quiet — slow anchor, candles, no music. A surprise birthday on Thursday for my brother, please keep it discreet until then."
+                placeholder="e.g. We'd like the last night to feel quiet, slow anchor, candles, no music. A surprise birthday on Thursday for my brother, please keep it discreet until then."
                 rows={5}
                 register={register}
               />

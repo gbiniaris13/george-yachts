@@ -273,7 +273,7 @@ export default function ItineraryBuilderClient() {
             <rect x="100" y="180" width="750" height="420" fill="url(#seaGlow)" />
             <rect x="100" y="180" width="750" height="420" fill="url(#waterSheen)" />
 
-            {/* Greece mainland — realistic silhouette */}
+            {/* Greece mainland, realistic silhouette */}
             <g filter="url(#landShadow)">
               {/* Mainland / Peloponnese */}
               <path d="M280,180 L310,200 L340,195 L370,200 L390,210 L420,220 L440,215 L460,225 L480,240 L490,260 L485,290 L470,310 L460,330 L450,350 L440,365 L430,370 L415,380 L400,395 L380,410 L370,420 L365,440 L375,460 L390,470 L400,460 L410,440 L420,430 L430,420 L440,430 L435,445 L425,460 L410,470 L395,480 L380,485 L365,480 L350,470 L340,455 L335,440 L330,420 L320,410 L310,400 L300,410 L290,420 L280,415 L270,405 L265,390 L260,375 L250,360 L240,350 L230,340 L225,325 L230,310 L240,295 L250,280 L260,265 L265,245 L270,225 L275,205 Z"
@@ -292,13 +292,13 @@ export default function ItineraryBuilderClient() {
                 fill="url(#landGrad)" stroke="rgba(201,168,76,0.05)" strokeWidth="0.5" opacity="0.5" />
             </g>
 
-            {/* Nautical grid — latitude/longitude lines */}
+            {/* Nautical grid, latitude/longitude lines */}
             <g opacity="0.04" stroke="rgba(201,168,76,0.5)" strokeWidth="0.3" strokeDasharray="4 8">
               {[200, 300, 400, 500, 600, 700, 800].map(x => <line key={`gx-${x}`} x1={x} y1="180" x2={x} y2="600" />)}
               {[220, 300, 380, 460, 540].map(y => <line key={`gy-${y}`} x1="100" y1={y} x2="850" y2={y} />)}
             </g>
 
-            {/* Compass rose — top right */}
+            {/* Compass rose, top right */}
             <g transform="translate(800, 210)" opacity="0.12">
               <circle r="25" fill="none" stroke="#C9A84C" strokeWidth="0.5" />
               <line x1="0" y1="-28" x2="0" y2="28" stroke="#C9A84C" strokeWidth="0.5" />
@@ -309,7 +309,7 @@ export default function ItineraryBuilderClient() {
               <text x="-32" y="3" textAnchor="middle" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 5, fill: '#C9A84C' }}>W</text>
             </g>
 
-            {/* Scale bar — bottom left */}
+            {/* Scale bar, bottom left */}
             <g transform="translate(140, 575)" opacity="0.15">
               <line x1="0" y1="0" x2="60" y2="0" stroke="#C9A84C" strokeWidth="1" />
               <line x1="0" y1="-3" x2="0" y2="3" stroke="#C9A84C" strokeWidth="0.5" />
@@ -317,7 +317,7 @@ export default function ItineraryBuilderClient() {
               <text x="30" y="10" textAnchor="middle" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 5, fill: '#C9A84C', letterSpacing: '0.1em' }}>50 NM</text>
             </g>
 
-            {/* Region labels — subtle watermark style */}
+            {/* Region labels, subtle watermark style */}
             <text x="590" y="395" textAnchor="middle" style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 14, fill: 'rgba(201,168,76,0.06)', letterSpacing: '0.3em', fontStyle: 'italic' }}>CYCLADES</text>
             <text x="190" y="320" textAnchor="middle" style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 12, fill: 'rgba(74,144,217,0.06)', letterSpacing: '0.3em', fontStyle: 'italic' }}>IONIAN</text>
             <text x="420" y="430" textAnchor="middle" style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 11, fill: 'rgba(201, 168, 76,0.06)', letterSpacing: '0.3em', fontStyle: 'italic' }}>SARONIC</text>
@@ -610,7 +610,7 @@ export default function ItineraryBuilderClient() {
         }
       `}</style>
 
-      {/* L.1 — Save-route modal */}
+      {/* L.1, Save-route modal */}
       {saveOpen && (
         <div
           role="dialog"

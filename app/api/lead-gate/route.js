@@ -179,10 +179,10 @@ export async function POST(request) {
 
   const when = new Date().toISOString();
   const headline = {
-    "proposal-generator": "📄 Proposal Generator — lead captured",
-    partners: "🤝 Partners — unlock request",
-    inquiry: "✉️ Inquiry — new message",
-  }[source] || `📬 Lead — ${source}`;
+    "proposal-generator": "📄 Proposal Generator, lead captured",
+    partners: "🤝 Partners, unlock request",
+    inquiry: "✉️ Inquiry, new message",
+  }[source] || `📬 Lead, ${source}`;
 
   const lines = [
     `*${headline}*`,

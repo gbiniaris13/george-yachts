@@ -28,7 +28,7 @@ export async function POST(request) {
     const countryName = getCountryName(country);
     const device = detectDevice(ua);
     const time = athensTime();
-    const cityStr = city ? ` — ${decodeURIComponent(city)}` : '';
+    const cityStr = city ? `, ${decodeURIComponent(city)}` : '';
     const date = todayKey();
 
     // Telegram dedup: one alert per IP per 4 hours. The dedup key

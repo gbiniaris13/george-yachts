@@ -228,7 +228,7 @@ export async function GET(request) {
   const totalSent = results.reduce((s, r) => s + (r.sent ?? 0), 0);
   const totalRemaining = results.reduce((s, r) => s + Math.max(0, r.remaining ?? 0), 0);
   const lines = [
-    `🔁 <b>Daily queue flush — ${todayUtc()}</b>`,
+    `🔁 <b>Daily queue flush, ${todayUtc()}</b>`,
     `Σήμερα έφυγαν: ${totalSent} email${totalSent === 1 ? "" : "s"}`,
   ];
   // Per-draft breakdown — read each draft for stream + issue label.
@@ -254,7 +254,7 @@ export async function GET(request) {
     lines.push(`Auto-resume αύριο 00:30 UTC.`);
   } else {
     lines.push("");
-    lines.push(`🎉 All queues drained — every issue fully delivered.`);
+    lines.push(`🎉 All queues drained, every issue fully delivered.`);
   }
   await notifyTelegram(lines.join("\n"));
 

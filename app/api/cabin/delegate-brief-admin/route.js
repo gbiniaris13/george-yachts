@@ -86,7 +86,7 @@ export async function POST(req) {
         ok: false,
         error: "cannot-delegate-to-principal",
         message:
-          "The principal charterer already has admin rights — no delegation needed.",
+          "The principal charterer already has admin rights, no delegation needed.",
       },
       { status: 400 },
     );

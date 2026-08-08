@@ -222,7 +222,7 @@ export default function AllergyAlert({ source = "health" }) {
           </p>
         )}
 
-        {/* 2026-05-25 — Phase 4: was `<style jsx>{styles}</style>`.
+        {/* 2026-05-25, Phase 4: was `<style jsx>{styles}</style>`.
             styled-jsx can't extract CSS when the children expression
             is a variable reference to a module-level const (verified
             in browser: zero matching rules in any stylesheet → all

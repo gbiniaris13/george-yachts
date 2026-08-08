@@ -54,7 +54,7 @@ export async function GET(request) {
 
     // Build message
     const lines = [
-      `📊 *Daily Report — George Yachts*`,
+      `📊 *Daily Report, George Yachts*`,
       `📅 ${date}`,
       ``,
       `👥 *${totalVisitors}* visitors today`,
@@ -73,7 +73,7 @@ export async function GET(request) {
     if (topPages.length > 0) {
       lines.push(`📄 *Top Pages:*`);
       topPages.forEach(([page, count]) => {
-        lines.push(`  \`${page}\` — ${count} views`);
+        lines.push(`  \`${page}\`, ${count} views`);
       });
       lines.push(``);
     }
@@ -90,7 +90,7 @@ export async function GET(request) {
       lines.push(`_No visitors recorded today. KV storage may not be connected._`);
     }
 
-    lines.push(`— _George Yachts Analytics Bot_ 🤖`);
+    lines.push(`, _George Yachts Analytics Bot_ 🤖`);
 
     await sendTelegram(lines.join('\n'));
 

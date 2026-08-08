@@ -81,7 +81,7 @@ function SelectionCard({ slug, label, name, specs, price, note, image, overlay }
       {/* Top-left collection label */}
       <p className="gy-selection-card__label">{label.toUpperCase()}</p>
 
-      {/* Content stack — anchored bottom-left for the editorial
+      {/* Content stack, anchored bottom-left for the editorial
           rhythm Boss flagged in the brief (yacht name first, specs
           + price beneath, italic note, CTA). */}
       <div className="gy-selection-card__body">

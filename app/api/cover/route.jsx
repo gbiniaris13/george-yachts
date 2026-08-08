@@ -73,7 +73,7 @@ export async function GET(request) {
           color: "#F8F5F0",
         }}
       >
-        {/* Top hairline — gold rule */}
+        {/* Top hairline, gold rule */}
         <div
           style={{
             display: "flex",

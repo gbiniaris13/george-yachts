@@ -81,7 +81,7 @@ const DiagonalWipePanel = ({ item, index, total }) => {
       className="sticky top-0 w-full h-screen overflow-hidden"
       style={{ zIndex: index + 1 }}
     >
-      {/* Background image — zooms slightly on scroll */}
+      {/* Background image, zooms slightly on scroll */}
       <div
         className="absolute inset-0 z-0"
         style={{
@@ -101,7 +101,7 @@ const DiagonalWipePanel = ({ item, index, total }) => {
         <div className="absolute inset-0 bg-[#0D1B2A]/30" />
       </div>
 
-      {/* Diagonal gold wipe overlay — reveals content behind it */}
+      {/* Diagonal gold wipe overlay, reveals content behind it */}
       <div
         className="absolute inset-0 z-10 pointer-events-none"
         style={{
@@ -131,7 +131,7 @@ const DiagonalWipePanel = ({ item, index, total }) => {
         }}
       />
 
-      {/* Content — Glass HUD with reveal animation */}
+      {/* Content, Glass HUD with reveal animation */}
       <div
         className={`absolute inset-0 z-20 flex items-center ${
           isRight ? 'justify-end' : 'justify-start'
@@ -148,7 +148,7 @@ const DiagonalWipePanel = ({ item, index, total }) => {
               isRight ? 'ml-auto' : ''
             }`}
           >
-            {/* Top gold line — animates width on reveal */}
+            {/* Top gold line, animates width on reveal */}
             <div
               className="h-px mb-10 opacity-50"
               style={{
@@ -170,7 +170,7 @@ const DiagonalWipePanel = ({ item, index, total }) => {
               0{index + 1} / 0{total}
             </span>
 
-            {/* Typography — staggered entrance */}
+            {/* Typography, staggered entrance */}
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-marcellus text-white leading-[0.9] tracking-tight mb-8">
               <span
                 className="block opacity-90"

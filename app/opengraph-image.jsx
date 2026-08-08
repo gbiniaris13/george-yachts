@@ -76,7 +76,7 @@ export default async function Image() {
         {/* Spacer */}
         <div style={{ flex: 1, display: "flex" }} />
 
-        {/* Brand wordmark — Cinzel feel via heavy serif caps */}
+        {/* Brand wordmark, Cinzel feel via heavy serif caps */}
         <div
           style={{
             fontSize: 110,

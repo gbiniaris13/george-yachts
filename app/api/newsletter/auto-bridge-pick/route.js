@@ -33,7 +33,7 @@ export const runtime = "nodejs";
 
 function htmlPage(title, body) {
   return `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>${title} — George Yachts</title>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>${title}, George Yachts</title>
 <style>
   body { font-family: Georgia, "Times New Roman", serif; background:#F8F5F0; color:#0D1B2A; margin:0; padding:48px 24px; }
   .card { max-width: 520px; margin: 0 auto; background: #F8F5F0; padding: 36px; border: 1px solid #F8F5F0; }
@@ -58,7 +58,7 @@ export async function GET(request) {
     return new NextResponse(
       htmlPage(
         "Token invalid or expired",
-        `<p>This Bridge menu button could not be verified. The cron generates a fresh menu every Thursday — wait for the next one, or trigger manually from the admin endpoint.</p>`,
+        `<p>This Bridge menu button could not be verified. The cron generates a fresh menu every Thursday, wait for the next one, or trigger manually from the admin endpoint.</p>`,
       ),
       { status: 401, headers: { "Content-Type": "text/html; charset=utf-8" } },
     );
@@ -200,7 +200,7 @@ export async function GET(request) {
   return new NextResponse(
     htmlPage(
       tone,
-      `<p>Draft created for stream <code>bridge</code>. Open Telegram — the standard approval card with 👀 Preview / ✅ Approve / ❌ Abort buttons should be waiting. Nothing was sent yet.</p>` +
+      `<p>Draft created for stream <code>bridge</code>. Open Telegram, the standard approval card with 👀 Preview / ✅ Approve / ❌ Abort buttons should be waiting. Nothing was sent yet.</p>` +
         `<p><small>Fire ID: <code>${fireId}</code></small></p>`,
     ),
     { status: 200, headers: { "Content-Type": "text/html; charset=utf-8" } },

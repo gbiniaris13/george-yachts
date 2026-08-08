@@ -238,7 +238,7 @@ export default async function BestYachtsPage({ pageData }) {
                       <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.32em", textTransform: "uppercase", color: GOLD, fontWeight: 700, margin: "0 0 8px" }}>
                         Option {i + 1}
                       </p>
-                      {/* 2026-07-02 — rows may carry href when the "spec"
+                      {/* 2026-07-02, rows may carry href when the "spec"
                           is a named fleet yacht; renders a link to the
                           yacht page so the list passes authority inward. */}
                       {y.href ? (
@@ -320,7 +320,7 @@ export default async function BestYachtsPage({ pageData }) {
           </section>
         )}
       </article>
-      {/* 2026-08-06 (job 9) — the footer was missing from this template.
+      {/* 2026-08-06 (job 9), the footer was missing from this template.
           Measured across all 474 public pages: 77 rendered the sitewide
           footer, 397 rendered no <footer> element at all, because the six
           programmatic templates each ended at </article>. No comment in any

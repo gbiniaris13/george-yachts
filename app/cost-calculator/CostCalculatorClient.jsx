@@ -135,7 +135,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
       </div>
 
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '0 24px 120px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40 }} className="calc-layout">
-        {/* LEFT — Inputs */}
+        {/* LEFT, Inputs */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
           {/* Yacht Selection */}
           <div>
@@ -249,7 +249,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
           </div>
         </div>
 
-        {/* RIGHT — Breakdown */}
+        {/* RIGHT, Breakdown */}
         <div>
           {breakdown ? (
             <div style={{
@@ -267,7 +267,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                 {breakdown.guests} {t('calculator.guestsLabel', 'guests')} · {weeks} {weeks === 1 ? t('calculator.week', 'Week').toLowerCase() : t('calculator.weeks', 'Weeks').toLowerCase()} · {t(`calculator.season${season.charAt(0).toUpperCase() + season.slice(1)}`, SEASONS.find(s => s.id === season)?.label)}
               </p>
 
-              {/* Line items — Charter costs */}
+              {/* Line items, Charter costs */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 16 }}>
                 {[
                   { label: `${t('calculator.charterRate', 'Charter Rate')} (${breakdown.weeks}w)`, value: breakdown.charterRate, note: t('calculator.charterRateNote', 'Base weekly rate × duration') },
@@ -286,7 +286,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                 ))}
               </div>
 
-              {/* Charter Total — ALL IN */}
+              {/* Charter Total, ALL IN */}
               <div style={{
                 background: `${GOLD}10`,
                 border: `1px solid ${GOLD}30`,
@@ -315,7 +315,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                 </div>
               </div>
 
-              {/* Transfer — SEPARATE section */}
+              {/* Transfer, SEPARATE section */}
               {breakdown.totalTransfer > 0 && (
                 <div style={{ padding: 16, background: 'rgba(248, 245, 240,0.02)', border: '1px solid rgba(248, 245, 240,0.05)', borderRadius: 8, marginBottom: 24 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
@@ -343,7 +343,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
 
               {/* CTAs */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {/* N.1 / brief E.3 — primary CTA links to Smart Match Quiz */}
+                {/* N.1 / brief E.3, primary CTA links to Smart Match Quiz */}
                 <Link
                   href={`/yacht-finder?from=cost-calculator&yacht=${encodeURIComponent(breakdown.yacht.slug)}`}
                   onClick={() => {

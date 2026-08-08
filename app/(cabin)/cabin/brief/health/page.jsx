@@ -18,17 +18,17 @@ export default function HealthSectionPage() {
         title="One person,"
         italic="ashore."
       />
-      {/* 2026-05-24 — Christos pass: section drastically slimmed.
+      {/* 2026-05-24, Christos pass: section drastically slimmed.
           The old group-level health fields (allergies / medical
           conditions / medications / swimming overview) belong to
-          each MEMBER privately on their own /cabin/me page — GDPR
+          each MEMBER privately on their own /cabin/me page, GDPR
           and clarity both demand it. The principal's brief now
           carries ONLY the emergency-contact ashore. */}
       <IntroParagraph>
         One person, not aboard, the captain can reach in an
         emergency. Allergies, medications, swimming comfort and
         every other personal health detail live on each
-        member&apos;s own private page — kept private from the
+        member&apos;s own private page, kept private from the
         rest of the group, shared only with George and the
         captain for safety planning.
       </IntroParagraph>

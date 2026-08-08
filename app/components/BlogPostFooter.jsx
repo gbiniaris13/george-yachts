@@ -185,7 +185,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
         </section>
       )}
 
-      {/* F.2 — Author bio (fixed copy, identity-rule compliant) */}
+      {/* F.2, Author bio (fixed copy, identity-rule compliant) */}
       <section
         aria-label="About the author"
         style={{

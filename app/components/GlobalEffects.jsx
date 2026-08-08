@@ -200,7 +200,7 @@ export default function GlobalEffects() {
 
   return (
     <>
-      {/* 2026-05-08 — duplicate scroll progress bar removed. The
+      {/* 2026-05-08, duplicate scroll progress bar removed. The
           newer <ScrollProgress /> handles this with rAF throttling
           and the proper brand gold gradient. */}
 

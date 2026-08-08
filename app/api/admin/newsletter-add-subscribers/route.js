@@ -225,7 +225,7 @@ async function handle({ stream, emails, source, sendWelcome }) {
 
   await notifyTelegram(
     [
-      `📬 <b>Subscribers added — ${stream}</b>`,
+      `📬 <b>Subscribers added, ${stream}</b>`,
       `Added: <b>${added}</b>`,
       alreadyOn ? `Already on list: ${alreadyOn}` : "",
       suppressed.length ? `Suppressed (skipped): ${suppressed.length}` : "",

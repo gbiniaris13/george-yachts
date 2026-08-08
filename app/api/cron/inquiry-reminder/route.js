@@ -44,13 +44,13 @@ export async function GET(request) {
     // Send reminder for each overdue inquiry
     for (const inq of overdue) {
       const text = [
-        `⏱ *REMINDER — Unanswered Inquiry*`,
+        `⏱ *REMINDER, Unanswered Inquiry*`,
         ``,
         `👤 *${inq.name}* (${inq.email})`,
         `⛵ Interested in: ${inq.yacht_type || 'N/A'}`,
         `⏰ Submitted *${inq.hoursAgo}h ago*`,
         ``,
-        `⚠️ _Please respond ASAP — response time affects conversion!_`,
+        `⚠️ _Please respond ASAP, response time affects conversion!_`,
       ].join('\n');
 
       await sendTelegram(text);

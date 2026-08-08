@@ -110,7 +110,7 @@ export default function CharterAtAGlance({ summary }) {
           </a>{" "}
           - we will fix it before you do anything else.
         </p>
-        {/* 2026-05-20 — Pass 4 (Tyler): "A real .ics download
+        {/* 2026-05-20, Pass 4 (Tyler): "A real .ics download
             anywhere." Single quiet link beneath the glance card. */}
         <p className="cabin-at-a-glance__ics">
           <a href="/api/cabin/calendar.ics" download>

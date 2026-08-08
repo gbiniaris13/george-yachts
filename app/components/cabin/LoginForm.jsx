@@ -28,7 +28,7 @@ export default function LoginForm({ initialError }) {
     try {
       const saved = localStorage.getItem(REMEMBERED_EMAIL_KEY);
       if (saved && saved.includes("@")) setEmail(saved);
-    } catch { /* localStorage blocked — silently skip */ }
+    } catch { /* localStorage blocked, silently skip */ }
   }, []);
 
   async function onSubmit(e) {

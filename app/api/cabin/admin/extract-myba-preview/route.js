@@ -44,7 +44,7 @@ function authorized(req) {
 // If/when both endpoints need the same prompt long-term, lift
 // to lib/cabin/extraction-prompts.js in a later, single-purpose
 // commit.
-const VERBATIM_MANDATE = `VERBATIM MANDATE — read this before anything else:
+const VERBATIM_MANDATE = `VERBATIM MANDATE, read this before anything else:
 1. Reproduce text EXACTLY as the source PDF shows it. No rewording,
    no paraphrasing, no normalisation of casing or punctuation, no
    smart-quoting, no spacing "improvements".
@@ -55,7 +55,7 @@ const VERBATIM_MANDATE = `VERBATIM MANDATE — read this before anything else:
    list is long, take ALL of it verbatim. Never cherry-pick.
 4. Do NOT strip. Honorifics (Mr / Ms / Mrs / Dr), middle names,
    accreditations after a name, parenthetical asides, dates,
-   degrees, brand names — all preserved as written.
+   degrees, brand names, all preserved as written.
 5. Units: when a measurement carries a unit ("51 ft", "27 m",
    "8.1 m beam"), keep the unit AS WRITTEN in the same string. Do
    NOT convert. Do NOT split. Do NOT drop.
@@ -70,21 +70,21 @@ const CONTRACT_PROMPT = `${VERBATIM_MANDATE}
 You are extracting structured data from a signed MYBA Charter
 Agreement (the standard contract used across the worldwide yacht-
 charter industry, published by MYBA). Page One contains the
-"Charter Particulars" block — that's where most fields live.
+"Charter Particulars" block, that's where most fields live.
 Subsequent pages are the standard clauses; skip them unless an
 addendum modifies the headline particulars.
 
-Output strict JSON with this exact shape — and obey the safe /
+Output strict JSON with this exact shape, and obey the safe /
 internal split (safe = data the charterer may see; internal =
 operator-only fields the client must never see). Every example
-value is illustrative — extract whatever the actual contract says.
+value is illustrative, extract whatever the actual contract says.
 
 {
   "safe": {
     "vessel_name": "<verbatim, e.g. 'EFFIE STAR'>",
     "vessel_make_model": "<verbatim Type field, e.g. 'Lagoon 51'>",
     "vessel_type": "<verbatim if separately stated (Sailing Catamaran, Motor Yacht); null otherwise>",
-    "vessel_length": "<verbatim Length string WITH unit: '51 ft', '15.6 m', or whatever the contract writes — do NOT split into ft and m fields, do NOT convert>",
+    "vessel_length": "<verbatim Length string WITH unit: '51 ft', '15.6 m', or whatever the contract writes, do NOT split into ft and m fields, do NOT convert>",
     "homeport": "<verbatim Port of Registry, e.g. 'Piraeus'>",
     "flag": "<verbatim Flag field, e.g. 'Greek'>",
     "max_guests_sleeping": "<integer if explicit (parsed from 'Maximum number of guests sleeping (10)')>",
@@ -95,7 +95,7 @@ value is illustrative — extract whatever the actual contract says.
     "port_embarkation": "<verbatim Place of Delivery>",
     "port_disembarkation": "<verbatim Place of Re-Delivery>",
     "cruising_area": "<verbatim Cruising area string, even if it reads as legalese ('Greek & International Waters')>",
-    "principal_charterer_name": "<verbatim Charterer row, INCLUDING any honorific (Ms / Mrs / Mr / Dr) the contract carries — e.g. 'Ms. Tricia Stevens', NOT 'Tricia Stevens'>",
+    "principal_charterer_name": "<verbatim Charterer row, INCLUDING any honorific (Ms / Mrs / Mr / Dr) the contract carries, e.g. 'Ms. Tricia Stevens', NOT 'Tricia Stevens'>",
     "principal_charterer_address": "<verbatim address from the CHARTERER ADDRESS row, one string>"
   },
   "internal": {
@@ -134,7 +134,7 @@ value is illustrative — extract whatever the actual contract says.
 }
 
 Rules:
-• Dates → ISO 8601 (YYYY-MM-DD). MYBA dates appear as "27 June 2026" — convert format only. Hours ("12:00") are discarded.
+• Dates → ISO 8601 (YYYY-MM-DD). MYBA dates appear as "27 June 2026", convert format only. Hours ("12:00") are discarded.
 • Currency amounts → numeric value (drop "€", drop thousand separators). "€20,856" → 20856. "€2,502.72" → 2502.72. "n/a" or blank → null.
 • Honorifics on charterer name → KEEP. The contract is the legal document; "Ms. Tricia Stevens" is how the agreement identifies her, and that's what we preserve.
 • Names, addresses, banking details → verbatim, no normalisation.
@@ -183,7 +183,7 @@ export async function POST(req) {
           role: "user",
           parts: [
             { inline_data: { mime_type: "application/pdf", data: base64 } },
-            { text: "Extract the MYBA contract data as strict JSON per the schema. Output JSON only — no markdown fences, no commentary." },
+            { text: "Extract the MYBA contract data as strict JSON per the schema. Output JSON only, no markdown fences, no commentary." },
           ],
         },
       ],

@@ -98,7 +98,7 @@ function fmt(n) {
 }
 
 function fmtDate(iso) {
-  if (!iso) return "—";
+  if (!iso) return "-";
   return new Date(iso).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
@@ -222,16 +222,16 @@ export async function GET(request) {
 
   // ── Build Telegram message ───────────────────────────────────────
   const lines = [];
-  lines.push("📊 *SEO Weekly Digest* — George Yachts");
-  lines.push(`Week of ${fromLabel}–${toLabel}, ${new Date().getFullYear()}`);
+  lines.push("📊 *SEO Weekly Digest*, George Yachts");
+  lines.push(`Week of ${fromLabel}-${toLabel}, ${new Date().getFullYear()}`);
   lines.push("");
 
   lines.push("📝 *Content*");
   lines.push(
-    `• ${newPostsThisWeek ?? 0} new posts this week / ${totalPosts ?? "—"} total`,
+    `• ${newPostsThisWeek ?? 0} new posts this week / ${totalPosts ?? "-"} total`,
   );
   lines.push(
-    `• ${newYachtsThisWeek ?? 0} new yachts this week / ${totalYachts ?? "—"} total`,
+    `• ${newYachtsThisWeek ?? 0} new yachts this week / ${totalYachts ?? "-"} total`,
   );
   if (sitemapCount != null) {
     lines.push(`• Sitemap URLs live: ${fmt(sitemapCount)}`);
@@ -248,7 +248,7 @@ export async function GET(request) {
     );
     if (postsMissingQA > 0) {
       lines.push(
-        `• ⚠️ ${postsMissingQA} post(s) need a Quick Answer — write in Sanity Studio`,
+        `• ⚠️ ${postsMissingQA} post(s) need a Quick Answer, write in Sanity Studio`,
       );
     } else {
       lines.push("• ✅ Every post has a Quick Answer");
@@ -264,14 +264,14 @@ export async function GET(request) {
       const titleEsc = String(p.title || "Untitled")
         .replace(/[*_`[\]()]/g, "")
         .slice(0, 70);
-      lines.push(`${qa} _${fmtDate(p.publishedAt)}_ — ${titleEsc}`);
+      lines.push(`${qa} _${fmtDate(p.publishedAt)}_, ${titleEsc}`);
     }
     lines.push("");
   }
 
   // ── Google Search Console (V2) ──────────────────────────────────
   if (gscData) {
-    lines.push("🔍 *Google Search* — last 7 days");
+    lines.push("🔍 *Google Search*, last 7 days");
     lines.push(
       `• ${fmt(gscData.clicks)} clicks · ${fmt(gscData.impressions)} impressions`,
     );
@@ -282,7 +282,7 @@ export async function GET(request) {
       lines.push("• Top queries:");
       for (const q of gscData.topQueries.slice(0, 3)) {
         const qEsc = String(q.query).replace(/[*_`[\]]/g, "").slice(0, 50);
-        lines.push(`   — "${qEsc}" · ${q.clicks} clicks · pos ${q.position.toFixed(1)}`);
+        lines.push(`-"${qEsc}" · ${q.clicks} clicks · pos ${q.position.toFixed(1)}`);
       }
     }
     if (gscData.topPages.length > 0) {
@@ -294,7 +294,7 @@ export async function GET(request) {
 
   // ── Bing AI / Search (V2) ───────────────────────────────────────
   if (bingData) {
-    lines.push("🤖 *Bing* — last 7 days (feeds ChatGPT)");
+    lines.push("🤖 *Bing*, last 7 days (feeds ChatGPT)");
     lines.push(
       `• ${fmt(bingData.clicks)} clicks · ${fmt(bingData.impressions)} impressions`,
     );
@@ -314,7 +314,7 @@ export async function GET(request) {
         .filter(Boolean)
         .join(", ");
 
-    lines.push("🌐 *Where visitors came from* — last 7 days");
+    lines.push("🌐 *Where visitors came from*, last 7 days");
     lines.push(
       `• ${fmt(t.totalVisits)} visits · ${t.totalHot} hot lead${t.totalHot === 1 ? "" : "s"}${t.totalLeads ? ` · ${t.totalLeads} captured` : ""}`,
     );
@@ -325,10 +325,10 @@ export async function GET(request) {
     if (ai.length) {
       for (const [l, v] of ai) {
         const e = engStr(v);
-        lines.push(`   — ${l}: ${v.visits}${e ? ` (${e})` : ""}`);
+        lines.push(`, ${l}: ${v.visits}${e ? ` (${e})` : ""}`);
       }
     } else {
-      lines.push("   — none tracked this week (a share hides in Direct, see note)");
+      lines.push(", none tracked this week (a share hides in Direct, see note)");
     }
 
     // Search
@@ -337,7 +337,7 @@ export async function GET(request) {
       lines.push(`🔍 Search: ${fmt(t.groups.search || 0)} visits`);
       for (const [l, v] of search.slice(0, 3)) {
         const e = engStr(v);
-        lines.push(`   — ${l}: ${v.visits}${e ? ` (${e})` : ""}`);
+        lines.push(`, ${l}: ${v.visits}${e ? ` (${e})` : ""}`);
       }
     }
 
@@ -357,7 +357,7 @@ export async function GET(request) {
     }
 
     lines.push(
-      "_Note: ChatGPT and some in-app browsers strip the referrer, so the AI number is a floor — a share of Direct is really AI-driven._",
+      "_Note: ChatGPT and some in-app browsers strip the referrer, so the AI number is a floor, a share of Direct is really AI-driven._",
     );
     lines.push("");
   }
@@ -387,7 +387,7 @@ export async function GET(request) {
   } else if (aiVisibility && aiVisibility.reason === "no_api_key") {
     // Don't shout when the key isn't set; just note quietly.
     lines.push(
-      "_🤖 AI visibility tracker idle — set GOOGLE_GEMINI_API_KEY to enable._",
+      "_🤖 AI visibility tracker idle, set GOOGLE_GEMINI_API_KEY to enable._",
     );
     lines.push("");
   }
@@ -405,7 +405,7 @@ export async function GET(request) {
     // (e.g. site not yet propagated, account mismatch, rate-limit).
     // Phrasing kept neutral so the digest doesn't lie about config.
     lines.push(
-      `_⚙️ ${missing.join(" + ")} data unavailable this run — usually clears within 24–48h of initial verification._`,
+      `_⚙️ ${missing.join(" + ")} data unavailable this run, usually clears within 24-48h of initial verification._`,
     );
   }
 

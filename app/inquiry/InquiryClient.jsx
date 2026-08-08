@@ -318,7 +318,7 @@ export default function InquiryClient() {
             }}
           >
             {/* Using a plain <img> so the response loads instantly without
-                Next/Image's loader pipeline — this is a one-shot render. */}
+                Next/Image's loader pipeline, this is a one-shot render. */}
             <img
               src={coverUrl}
               alt={`Editorial cover for ${answers.name || "your"} ${friendlyRegion} brief`}
@@ -412,10 +412,10 @@ export default function InquiryClient() {
 
           {step.type === "yacht-choice" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {/* Native select — single tap on mobile, opens system
+              {/* Native select, single tap on mobile, opens system
                   picker. We append a "flexible" sentinel so the step
                   never feels like a hard gate.
-                  2026-05-12 — aria-label added so screen readers
+                  2026-05-12, aria-label added so screen readers
                   announce the question for each field; without it the
                   unlabeled <select> reads as just 'combo box'. */}
               <select

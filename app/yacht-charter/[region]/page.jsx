@@ -191,7 +191,7 @@ export default async function RegionPage({ params }) {
       <ServiceSchema region={region} data={data} yachtCount={yachts.length || 60} />
 
       {/*
-        Phase 27g (Forbes-launch day, 2026-05-06) — Boss flagged
+        Phase 27g (Forbes-launch day, 2026-05-06), Boss flagged
         "άσχημο, φτιάξ' το". Old layout used plain Cormorant + raw
         Tailwind cards with rounded corners. Rewritten to match the
         rest of the site's editorial language:
@@ -203,7 +203,7 @@ export default async function RegionPage({ params }) {
           • Premium CTA pair (ghost + gold-fill) matching home hero
       */}
       <main className="bg-black text-white min-h-screen">
-        {/* Hero band — full editorial masthead with gold rules */}
+        {/* Hero band, full editorial masthead with gold rules */}
         <section
           style={{
             paddingTop: "clamp(120px, 14vw, 200px)",
@@ -292,7 +292,7 @@ export default async function RegionPage({ params }) {
           </div>
         </section>
 
-        {/* Best fit / Weather — editorial pair */}
+        {/* Best fit / Weather, editorial pair */}
         <section
           style={{
             padding: "clamp(40px, 6vw, 72px) clamp(20px, 4vw, 56px)",
@@ -323,7 +323,7 @@ export default async function RegionPage({ params }) {
                   position: "relative",
                 }}
               >
-                {/* Gold inset accent — top-left corner mark */}
+                {/* Gold inset accent, top-left corner mark */}
                 <span
                   aria-hidden="true"
                   style={{
@@ -514,7 +514,7 @@ export default async function RegionPage({ params }) {
           </section>
         )}
 
-        {/* Common questions — editorial chips */}
+        {/* Common questions, editorial chips */}
         <section
           style={{
             padding: "clamp(40px, 6vw, 72px) clamp(20px, 4vw, 56px)",
@@ -574,7 +574,7 @@ export default async function RegionPage({ params }) {
           </div>
         </section>
 
-        {/* CTA pair — ghost + gold-fill, same as homepage hero */}
+        {/* CTA pair, ghost + gold-fill, same as homepage hero */}
         <section
           style={{
             padding: "clamp(56px, 8vw, 96px) clamp(20px, 4vw, 56px)",

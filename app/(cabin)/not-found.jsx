@@ -68,7 +68,7 @@ export default function CabinNotFound() {
         }}
       >
         It might have moved, or the link may have been mis-typed.
-        Everything in your Cabin is still where you left it — start
+        Everything in your Cabin is still where you left it, start
         from the home below, or write to George and he&apos;ll send
         you the right link directly.
       </p>

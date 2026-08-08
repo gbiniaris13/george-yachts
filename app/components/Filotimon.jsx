@@ -71,7 +71,7 @@ export default function Filotimon({ filotimoImage = null }) {
       style={{ background: "#0D1B2A" }}
       aria-label="Filotimo - the Greek philosophy that shapes George Yachts"
     >
-      {/* Ambient gold wash — drifts slowly on scroll (A4 ambient parallax) */}
+      {/* Ambient gold wash, drifts slowly on scroll (A4 ambient parallax) */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -83,13 +83,13 @@ export default function Filotimon({ filotimoImage = null }) {
         }}
       />
 
-      {/* Phase 27i.6 (2026-05-07) — constellation backdrop. Faint
+      {/* Phase 27i.6 (2026-05-07), constellation backdrop. Faint
           gold star pattern + connecting lines, drifts very slowly,
           stars twinkle on independent timing. Adds the night-sky
           register the philosophy section was missing. */}
       <ConstellationBackdrop intensity={0.55} />
 
-      {/* Phase 27i.14 (2026-05-08) — R3F gold embers drift upward
+      {/* Phase 27i.14 (2026-05-08), R3F gold embers drift upward
           through the constellation. Original cinematic brief asked
           for a 3D R3F particle field behind Filotimo + Forbes; the
           Forbes side has StarField3D (drifting stars), this side
@@ -99,10 +99,10 @@ export default function Filotimon({ filotimoImage = null }) {
       <GoldEmbers3D />
 
       <div className="relative grid grid-cols-1 lg:grid-cols-[40%_60%]">
-        {/* ── LEFT — editorial image, sticky on desktop so it frames
+        {/* ── LEFT, editorial image, sticky on desktop so it frames
              the long-form text column without scrolling away ── */}
         <div ref={filotimoNearRef} className="relative min-h-[60vh] lg:min-h-[100dvh] lg:sticky lg:top-0 overflow-hidden">
-          {/* Chapter 01 (2026-05-08) — Navagio aerial video replaces
+          {/* Chapter 01 (2026-05-08), Navagio aerial video replaces
               the static editorial image. Boss-curated 8.4 s loop
               (15522129_3840_2160_30fps.mp4 → encoded 1920×1080
               VP9 3000 kbps WebM 3.0 MB / H.264 4500 kbps MP4 4.3 MB
@@ -110,7 +110,7 @@ export default function Filotimon({ filotimoImage = null }) {
               contrast 1.06 filter runs over the video so it reads
               "philosophy / contemplation" rather than "destination
               tourism". The static filotimoImage prop is kept as
-              the <video> poster — Sanity-supplied fallback for any
+              the <video> poster, Sanity-supplied fallback for any
               browser that fails the autoplay heuristic (and as the
               first paint while the video decodes). */}
           <video
@@ -151,7 +151,7 @@ export default function Filotimon({ filotimoImage = null }) {
             }}
           />
 
-          {/* Faint ΦΙΛΟΤΙΜΟ watermark — gentle ambient drift */}
+          {/* Faint ΦΙΛΟΤΙΜΟ watermark, gentle ambient drift */}
           <div
             className="absolute inset-0 flex items-end justify-start pb-12 pl-8 md:pl-14 pointer-events-none select-none"
             style={{
@@ -194,10 +194,10 @@ export default function Filotimon({ filotimoImage = null }) {
           />
         </div>
 
-        {/* ── RIGHT — editorial long-form text ── */}
+        {/* ── RIGHT, editorial long-form text ── */}
         <div className="relative flex items-start justify-center px-8 md:px-16 lg:px-24 py-20 lg:py-32">
           <article className="max-w-[680px] w-full">
-            {/* Eyebrow — Phase 24 Cinzel temple-caps */}
+            {/* Eyebrow, Phase 24 Cinzel temple-caps */}
             <p
               className="text-[#C9A84C] mb-10"
               style={{
@@ -211,7 +211,7 @@ export default function Filotimon({ filotimoImage = null }) {
               {t("filotimo.label")}
             </p>
 
-            {/* Signature line — Phase 24 polish: bumped scale + tighter
+            {/* Signature line, Phase 24 polish: bumped scale + tighter
                 tracking for editorial presence. The brand-philosophy
                 section deserves the same masthead gravitas as the rest
                 of the site. */}
@@ -258,7 +258,7 @@ export default function Filotimon({ filotimoImage = null }) {
               τιμή <span className="text-[#C9A84C]/50">(timi)</span> - honour, worth
             </p>
 
-            {/* Intro paragraph — full i18n string, long-form */}
+            {/* Intro paragraph, full i18n string, long-form */}
             <p
               className="text-white/70 mb-16"
               style={{
@@ -364,7 +364,7 @@ export default function Filotimon({ filotimoImage = null }) {
               {t("filotimo.applicationBold")}
             </p>
 
-            {/* Four examples — italic one-liners with gold left rule */}
+            {/* Four examples, italic one-liners with gold left rule */}
             <ul className="space-y-4 mb-16 list-none p-0">
               {examples.map((ex, i) => (
                 <li

@@ -32,7 +32,7 @@ const SECTION_META = [
   {
     key: "guests",
     title: "Your Group",
-    intro: "Who is sailing — and the spirit of the week.",
+    intro: "Who is sailing, and the spirit of the week.",
     minutes: 3,
     // 2026-05-24 — Angeliki pass: now principal-only, see
     // app/api/cabin/brief/[section]/route.js PRINCIPAL_ONLY_SECTIONS.
@@ -75,7 +75,7 @@ const SECTION_META = [
   {
     key: "beverages",
     title: "In the Cellar",
-    intro: "Champagne, wines, spirits, beers, soft drinks — by feel.",
+    intro: "Champagne, wines, spirits, beers, soft drinks, by feel.",
     minutes: 4,
     principalOnly: true,
   },
@@ -255,55 +255,55 @@ export default async function CabinBriefOverviewPage() {
     <div className="cabin-brief">
       <header className="cabin-brief__head">
         <div className="cabin-brief__eyebrow">The Charter Brief</div>
-        {/* 2026-05-20 — Pass 4 round 5 (Margaret, Sarah, David, Tyler):
+        {/* 2026-05-20, Pass 4 round 5 (Margaret, Sarah, David, Tyler):
             "Says 'around twenty minutes' here and 'Around 24 minutes'
              four lines below. Pick one."
-            H1 dropped the specific number — the body line does the
+            H1 dropped the specific number, the body line does the
             job with the live total. The two no longer disagree. */}
         <h1 className="cabin-brief__title">
           A quiet conversation, <em>at your pace.</em>
         </h1>
         <div className="cabin-brief__rule" aria-hidden />
         <IntroParagraph>
-          {/* 2026-05-26 — Brief 02 (bug-pass v3, Domingo): old
+          {/* 2026-05-26, Brief 02 (bug-pass v3, Domingo): old
               additive-model intro removed. Under the new single-
               responsibility model the Main Charterer owns every
               brief section; guests fill ONLY their own Crew List
-              on /cabin/me. Two copies — one for the principal,
+              on /cabin/me. Two copies, one for the principal,
               one for the guest reader. */}
           {isPrincipal ? (
             <>
               Eight quiet sections. You write the picks for the
-              whole week — arrival, your group, the itinerary,
+              whole week, arrival, your group, the itinerary,
               what life aboard should feel like, what your table
               should look like, what your cellar should hold. Your
               group sees each section as read-only so they know
               what you&apos;ve planned. When the brief feels
-              complete, you review it once and send it to George —
+              complete, you review it once and send it to George
               the brief locks and your {crewNouns} {crewQuantifier}{" "}
               read from here.
             </>
           ) : (
             <>
-              The Main Charterer is shaping the brief — your
+              The Main Charterer is shaping the brief, your
               arrival paperwork, your itinerary, life aboard, the
               table and the cellar. You can read what they&apos;ve
               decided in any section below, but the only thing
               you&apos;re asked to fill yourself is your own Crew
               List, on the page about you. Once you&apos;re done
-              there, you&apos;re set — enjoy your Cabin.
+              there, you&apos;re set, enjoy your Cabin.
             </>
           )}
         </IntroParagraph>
         <p className="cabin-brief__time">
           Around <strong>{remainingMinutes || totalMinutes} minutes</strong>{" "}
           {remainingMinutes !== totalMinutes
-            ? "remaining — pick up from where you left off."
+            ? "remaining, pick up from where you left off."
             : "in total, in your own time."}
         </p>
       </header>
 
-      {/* 2026-05-22 — Submission state banners.
+      {/* 2026-05-22, Submission state banners.
           • Submitted → calm navy banner, no Submit CTA.
           • All sections complete (principal only) → gold ribbon
             with REVIEW & SEND.
@@ -317,7 +317,7 @@ export default async function CabinBriefOverviewPage() {
             Submitted {submittedBy ? `by ${submittedBy}` : ""}
             {submittedAtPretty ? ` · ${submittedAtPretty}` : ""}.
             George will read it personally and reply within a day. If you
-            need to make a change, write to George — he can reopen the
+            need to make a change, write to George, he can reopen the
             brief for everyone.
           </p>
         </section>
@@ -327,7 +327,7 @@ export default async function CabinBriefOverviewPage() {
             Your brief is ready for your approval
           </div>
           <p className="cabin-brief__ready-copy">
-            Every section is filled. Take a quiet read — adjust anything
+            Every section is filled. Take a quiet read, adjust anything
             that doesn&apos;t match your group, then send it to George.
           </p>
           <Link href="/cabin/brief/review" className="cabin-brief__ready-cta">
@@ -357,12 +357,12 @@ export default async function CabinBriefOverviewPage() {
                 <span className="cabin-brief__body">
                   <strong>{s.title}</strong>
                   <em>{s.intro}</em>
-                  {/* 2026-05-24 — Quiet "Principal only" tag for
+                  {/* 2026-05-24, Quiet "Principal only" tag for
                       arrival + itinerary when the caller is a
                       guest. Read-only experience explained. */}
                   {s.principalOnly && !isPrincipal && (
                     <span className="cabin-brief__principal-only">
-                      Principal only — you&apos;ll see it as read-only
+                      Principal only, you&apos;ll see it as read-only
                     </span>
                   )}
                   {edited?.name && (
@@ -380,8 +380,8 @@ export default async function CabinBriefOverviewPage() {
         })}
       </ul>
 
-      {/* 2026-06-01 — Brief 06 cabin-closeout (C1): the per-member
-          "I'm done — confirm the brief" CTA was removed. It set a
+      {/* 2026-06-01, Brief 06 cabin-closeout (C1): the per-member
+          "I'm done, confirm the brief" CTA was removed. It set a
           brief_confirmed_at flag that nothing reads anymore (the Send
           gate is crew-list + sections complete; readiness mirrors
           that), so it was a vestigial confirm dead-end. The principal's
@@ -586,7 +586,7 @@ export default async function CabinBriefOverviewPage() {
            ::after gold "·" was meant to flag row 03 (Emergency
            Contact) as high-priority, but rendered as a detached
            floating glyph to the right of the row number with no
-           anchor — read as an unfinished required-field marker.
+           anchor, read as an unfinished required-field marker.
            Removed; the "Emergency Contact" title is self-evidently
            important and doesn't need an additional glyph. The
            importance:"high" data field on SECTION_META stays

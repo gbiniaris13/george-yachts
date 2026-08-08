@@ -149,13 +149,13 @@ export default function VoyageAlbumPage() {
         const m = err?.message;
         const friendly =
           m === "compress-failed"
-            ? "could not read on this browser — try saving as JPG"
+            ? "could not read on this browser, try saving as JPG"
             : m === "too-large-video"
-            ? "video is over 100 MB — try a shorter clip or lower resolution"
+            ? "video is over 100 MB, try a shorter clip or lower resolution"
             : m === "too-large-photo" || m === "too-large-photo-multipart"
-            ? "image is too large even after compression — try saving as a smaller JPG first"
+            ? "image is too large even after compression, try saving as a smaller JPG first"
             : m === "unsupported-type"
-            ? "file type isn't supported here — please use JPG, PNG, MP4, MOV or WebM"
+            ? "file type isn't supported here, please use JPG, PNG, MP4, MOV or WebM"
             : m || "upload failed";
         setError(`Item ${i + 1}: ${friendly}`);
       }
@@ -182,11 +182,11 @@ export default function VoyageAlbumPage() {
         title="Voyage"
         italic="album."
       />
-      {/* 2026-05-20 — Friend-test pass 4:
+      {/* 2026-05-20, Friend-test pass 4:
           Sarah: "100 MB video limit is under 20 seconds of HD. Either
            raise the limit or be honest."
           Helen: "'Yours forever' is a marketing promise. My 1996 honeymoon
-           Pinterest is stuck in a defunct cloud. Be specific — ZIP download,
+           Pinterest is stuck in a defunct cloud. Be specific, ZIP download,
            mailed USB, anything concrete."
           Copy now: be honest about the size limit (~4 MB), explain the
           full-resolution download path explicitly, and offer email for
@@ -195,9 +195,9 @@ export default function VoyageAlbumPage() {
         After your week at sea, this is where the photographs live. Any
         member of your group can upload. Tap any photo to view it large;
         full-resolution originals can be downloaded individually from this
-        Cabin, or zipped on request — write to George and a single
+        Cabin, or zipped on request, write to George and a single
         download link arrives within a day. Short video clips welcome too
-        — up to about four megabytes each (a few seconds at HD), which
+ , up to about four megabytes each (a few seconds at HD), which
         covers most quick moments. For longer films, email them directly
         to{" "}
         <a href="mailto:george@georgeyachts.com" style={{ color: "var(--gy-gold)" }}>
@@ -267,7 +267,7 @@ export default function VoyageAlbumPage() {
         })}
       </div>
 
-      {/* 2026-05-23 — Portal the lightbox into document.body so
+      {/* 2026-05-23, Portal the lightbox into document.body so
           ancestor transforms (cabin-shell mount cascade, scroll
           reveals) cannot trap its `position: fixed`. Same fix as
           PhotoGallery in commit 3d7fcd3. */}

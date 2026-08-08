@@ -524,7 +524,7 @@ export default function PartnersClient() {
         </div>
       </section>
 
-      {/* ═══════ J.1 — PARTNERS FAQ ═══════ */}
+      {/* ═══════ J.1, PARTNERS FAQ ═══════ */}
       <section className="py-20 md:py-28 px-6" style={{ backgroundColor: "#0D1B2A" }}>
         <div className="max-w-3xl mx-auto">
           <p className="text-center mb-16" style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", fontWeight: 300, letterSpacing: "0.45em", textTransform: "uppercase", color: "rgba(248, 245, 240,0.4)" }}>
@@ -591,7 +591,7 @@ export default function PartnersClient() {
         </div>
       </section>
 
-      {/* ═══════ CTA — REQUEST PROGRAMME ═══════ */}
+      {/* ═══════ CTA, REQUEST PROGRAMME ═══════ */}
       <section className="py-20 md:py-28 px-6" style={{ backgroundColor: "#F8F5F0" }}>
         <div className="max-w-xl mx-auto text-center">
           <h2
@@ -621,7 +621,7 @@ export default function PartnersClient() {
 
           {!submitted ? (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-8">
-              {/* Honeypot — hidden from real users, bots autofill it */}
+              {/* Honeypot, hidden from real users, bots autofill it */}
               <input
                 type="text"
                 name="website"

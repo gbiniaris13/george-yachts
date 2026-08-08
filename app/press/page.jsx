@@ -225,7 +225,7 @@ export default function PressPage() {
         </p>
       </section>
 
-      {/* Featured entry — Forbes */}
+      {/* Featured entry, Forbes */}
       <section
         aria-label="Forbes feature"
         style={{
@@ -241,7 +241,7 @@ export default function PressPage() {
             margin: "0 auto",
           }}
         >
-          {/* Forbes wordmark — text-based, intentionally smaller than
+          {/* Forbes wordmark, text-based, intentionally smaller than
               the George Yachts header logo so the brand-equality rule
               from the brief holds. */}
           <p
@@ -299,7 +299,7 @@ export default function PressPage() {
             By {FORBES.authorName}, {FORBES.authorRole}
           </p>
 
-          {/* Pull quote — Cormorant italic 24px, gold left rule 3px */}
+          {/* Pull quote, Cormorant italic 24px, gold left rule 3px */}
           <blockquote
             cite={FORBES.url}
             style={{
@@ -376,7 +376,7 @@ export default function PressPage() {
         </article>
       </section>
 
-      {/* Addendum v2 — About this Feature (Q&A block).
+      {/* Addendum v2, About this Feature (Q&A block).
           AI-search engines extract answers in Q&A format. The visible
           copy + the matching FAQPage JSON-LD make this page the
           primary citation source for AI-generated answers about
@@ -466,7 +466,7 @@ export default function PressPage() {
         ))}
       </section>
 
-      {/* Future entries — placeholder so layout is ready */}
+      {/* Future entries, placeholder so layout is ready */}
       <section
         style={{
           padding: "20px 24px 60px",
@@ -544,7 +544,7 @@ export default function PressPage() {
       </section>
 
       {/* Mandatory legal disclaimer per Roberto legal directive §1 (4 May 2026).
-          Exact text required — do not paraphrase. Lato Light 9px, color #9CA3AF,
+          Exact text required, do not paraphrase. Lato Light 9px, color #9CA3AF,
           single-line, centered. Frames Forbes / MYBA / IYBA references on this
           page as nominative fair use, not endorsement. */}
       <section

@@ -62,7 +62,7 @@ export default function HomeForbesQuote() {
           {t("forbesQuote.eyebrow", "As Featured In")}
         </span>
 
-        {/* FORBES wordmark — Cinzel 700, brand-consistent with the
+        {/* FORBES wordmark, Cinzel 700, brand-consistent with the
             @georgeyachts IG post + the homepage hero. */}
         <h2 className="gy-forbes-wordmark" aria-label="Forbes">
           Forbes
@@ -73,7 +73,7 @@ export default function HomeForbesQuote() {
           {t("forbesQuote.date", "1 May · 2026")}
         </span>
 
-        {/* Animated gold rule — draws open on scroll-into-view */}
+        {/* Animated gold rule, draws open on scroll-into-view */}
         <span className="gy-forbes-rule" aria-hidden="true" />
 
         {/* The pull quote (server-rendered for SEO/AI) */}
@@ -92,10 +92,10 @@ export default function HomeForbesQuote() {
           {t("forbesQuote.context", "in conversation with Forbes · 1 May 2026")}
         </span>
 
-        {/* Animated gold rule — symmetric with the top one */}
+        {/* Animated gold rule, symmetric with the top one */}
         <span className="gy-forbes-rule" aria-hidden="true" />
 
-        {/* CTA — gold border on hover, subtle right-arrow shift */}
+        {/* CTA, gold border on hover, subtle right-arrow shift */}
         <span className="gy-forbes-cta">
           {t("forbesQuote.cta", "Read the full article")}
           <span aria-hidden="true" className="gy-forbes-cta-arrow">&rarr;</span>

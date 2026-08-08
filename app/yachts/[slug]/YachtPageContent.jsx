@@ -608,7 +608,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
         <section className="yacht-hero">
           {heroImage && (
             <div className="yacht-hero__image-container gy-ken-burns">
-              {/* Phase 2 / C1 (luxury rebuild) — Ken Burns parallax. CSS-only
+              {/* Phase 2 / C1 (luxury rebuild), Ken Burns parallax. CSS-only
                   cinematic zoom/pan reveal applied to the yacht hero image so
                   every detail page opens like a film, not a catalog page. */}
               <Image
@@ -631,14 +631,14 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </div>
         </section>
 
-        {/* Phase 27i.10 (2026-05-07) — Diamond Journey scroll-driven
+        {/* Phase 27i.10 (2026-05-07), Diamond Journey scroll-driven
             cinematic tour. Disabled 2026-05-11 per Boss directive:
             the 300vh pinned section read as an unbroken navy gap on
             many yachts (scroll progress hard to trigger on trackpads
             + the cross-fade swap registered as "broken" UX). Gallery
             below provides the same photo access without consuming
             3 viewport heights of scroll. Component file retained in
-            case we revive a shorter version later — DO NOT delete. */}
+            case we revive a shorter version later, DO NOT delete. */}
         {/* {Array.isArray(yacht.images) && yacht.images.length >= 2 && (
           <YachtCinematicTour
             images={yacht.images}
@@ -646,10 +646,10 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           />
         )} */}
 
-        {/* A.6 — Breadcrumb (sits below hero) */}
+        {/* A.6, Breadcrumb (sits below hero) */}
         <Breadcrumbs items={breadcrumbItems.map(b => ({ name: b.name, url: b.url ? new URL(b.url).pathname : undefined }))} />
 
-        {/* D.1 — SPECS STRIP — pulled up here so the buyer sees the
+        {/* D.1, SPECS STRIP, pulled up here so the buyer sees the
             decision-grade information before the editorial. */}
         <section className="yacht-specs reveal">
           <div className="container">
@@ -667,10 +667,10 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </div>
         </section>
 
-        {/* D.1 — PRICE BLOCK — uses the unit-aware PriceBlock helper.
+        {/* D.1, PRICE BLOCK, uses the unit-aware PriceBlock helper.
             Sits immediately after specs so the buyer's price question
             is answered up-front (per Camper / Burgess / Fraser
-            convention). 0.7 — every price has a unit badge. */}
+            convention). 0.7, every price has a unit badge. */}
         {yacht.weeklyRatePrice && (
           <section className="yacht-pricing reveal" style={{ background: '#0D1B2A', padding: '48px 24px' }}>
             <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
@@ -723,9 +723,9 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </section>
         )}
 
-        {/* D.3 — PHOTO GALLERY (rebuilt 2026-05-11 as editorial
+        {/* D.3, PHOTO GALLERY (rebuilt 2026-05-11 as editorial
             carousel + fullscreen lightbox). Now receives ALL images
-            (was .slice(1) — that skipped the hero). The hero photo
+            (was .slice(1), that skipped the hero). The hero photo
             is the strongest shot we have; including it as the first
             carousel slide reinforces the impression rather than
             wasting it. The carousel renders ONE photo at a time
@@ -744,7 +744,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </section>
         )}
 
-        {/* D.5 — INTERACTIVE DECK PLANS (rich) when populated, else
+        {/* D.5, INTERACTIVE DECK PLANS (rich) when populated, else
             simpler layout-image fallback drawn from existing gallery
             images whose alt text flags them as a deck layout (per
             Boss directive 2026-05-05). */}
@@ -756,7 +756,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           )
         )}
 
-        {/* D.6 — MATTERPORT 3D TOUR (lazy / click-to-load) */}
+        {/* D.6, MATTERPORT 3D TOUR (lazy / click-to-load) */}
         {yacht.matterportEmbedUrl && (
           <MatterportSection url={yacht.matterportEmbedUrl} yachtName={yacht.name} />
         )}
@@ -807,7 +807,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </section>
         )}
 
-        {/* GEORGE'S INSIDE INFO — anchored above editorial copy so
+        {/* GEORGE'S INSIDE INFO, anchored above editorial copy so
             the highest-value differentiator (insider tip) hits
             visitors before the long-form. */}
         {yacht.georgeInsiderTip && (
@@ -829,7 +829,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </section>
         )}
 
-        {/* EDITORIAL STORY — moved to closing chapter so the page is
+        {/* EDITORIAL STORY, moved to closing chapter so the page is
             usable for buyers who want decisions, but still complete
             for SEO + AI citations. */}
         {description && (
@@ -853,16 +853,16 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </section>
         )}
 
-        {/* D.8 (Roberto brief, May 2026) — Crew profiles section
+        {/* D.8 (Roberto brief, May 2026), Crew profiles section
             REMOVED per Boss directive 2026-05-05. Yacht owners can
             change crew without notifying us; if we surface specific
             people on the public yacht page we expose ourselves to
             client disappointment when an introduced captain or chef
             isn't actually onboard. The legacy free-text crew field
-            in the specs row stays — that's count-of-roles, no individuals,
+            in the specs row stays, that's count-of-roles, no individuals,
             which is safe to publish. */}
 
-        {/* D.7 — SAMPLE 7-DAY ROUTE */}
+        {/* D.7, SAMPLE 7-DAY ROUTE */}
         {sampleItinerary && Array.isArray(sampleItinerary.days) && sampleItinerary.days.length > 0 && (
           <section className="yacht-itinerary reveal" style={{ background: '#0D1B2A', padding: '64px 24px' }}>
             <div className="container" style={{ maxWidth: 880, margin: '0 auto' }}>
@@ -909,7 +909,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                 </p>
               )}
 
-              {/* D.7 — Stylized route SVG. Generic per-yacht: N dots
+              {/* D.7, Stylized route SVG. Generic per-yacht: N dots
                   (one per day) connected by a flowing gold line. Works
                   for any itinerary length, no per-yacht coordinates
                   needed. Aria-hidden because the timeline below is the
@@ -1066,7 +1066,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                 Indicative only - every charter is shaped around your group, the wind, and the season.
               </p>
 
-              {/* D.7 brief — CTA below the timeline */}
+              {/* D.7 brief, CTA below the timeline */}
               <div style={{ textAlign: 'center', marginTop: 12 }}>
                 <Link
                   href="/itinerary-builder"
@@ -1143,7 +1143,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
         </section>
       </article>
 
-      {/* Chapter 06 (mobile, 2026-05-08) — full-width "Inquire" bottom
+      {/* Chapter 06 (mobile, 2026-05-08), full-width "Inquire" bottom
           bar, mobile-only via the .gy-yacht-mobile-cta media query in
           globals.css. The bar hides whenever an input/textarea is
           focused so it doesn't fight with form fields the visitor is
@@ -1151,9 +1151,9 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           scroll-άρει πάνω σε ενεργό form section"). */}
       <MobileInquireBar onClick={openModal} />
 
-      {/* D.2 — Top sticky mini-bar (desktop), continues below */}
+      {/* D.2, Top sticky mini-bar (desktop), continues below */}
 
-      {/* D.2 — Sticky Inquire bar (appears after scrolling past the
+      {/* D.2, Sticky Inquire bar (appears after scrolling past the
           hero). Always reachable; click opens the express modal.
           Uses the global --gy-top-offset CSS variable so when the
           Forbes feature bar is present, this bar stacks below it
@@ -1234,9 +1234,9 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           >
             Request proposal →
           </button>
-          {/* Phase 27 (Forbes-launch eve, 2026-05-05) — at 375px the sticky
+          {/* Phase 27 (Forbes-launch eve, 2026-05-05), at 375px the sticky
               bar's 18px Cormorant yacht name + 9px gold price line truncated
-              to 1–2 chars on the left while the gold "Request proposal" CTA
+              to 1-2 chars on the left while the gold "Request proposal" CTA
               took the right half. Defeats the whole purpose of the bar.
               At <=480px: shrink the CTA to icon-only "→ INQUIRE" and tighten
               the title block so the yacht name actually reads. */}
@@ -1259,7 +1259,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
         </div>
       )}
 
-      {/* D.4 — Express inquiry modal */}
+      {/* D.4, Express inquiry modal */}
       <ExpressInquiryModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}

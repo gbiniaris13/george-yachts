@@ -247,7 +247,7 @@ export default function IslandAnchorages({ guideData }) {
           </div>
         </section>
 
-        {/* ANCHORAGES — the directory */}
+        {/* ANCHORAGES, the directory */}
         <section
           style={{
             background: "rgba(201,168,76,0.025)",
@@ -545,7 +545,7 @@ export default function IslandAnchorages({ guideData }) {
           </section>
         )}
 
-        {/* ANCHORAGE LIBRARY — 2026-07-02. Guides for islands without
+        {/* ANCHORAGE LIBRARY, 2026-07-02. Guides for islands without
             a /yacht-charter-{island} root page had zero server-rendered
             inbound links (Ahrefs: orphan pages). Every guide now links
             every other guide, so each one carries 40+ crawlable inbound
@@ -640,7 +640,7 @@ export default function IslandAnchorages({ guideData }) {
               >
                 The full anchorage database →
               </Link>
-              {/* 2026-07-02 (ASK A Section 2, Phase 2) — shallow-draft bays
+              {/* 2026-07-02 (ASK A Section 2, Phase 2), shallow-draft bays
                   are catamaran water; the guides feed the catamaran page. */}
               <Link
                 href="/catamaran-charter-greece"
@@ -734,7 +734,7 @@ export default function IslandAnchorages({ guideData }) {
           </div>
         </section>
       </article>
-      {/* 2026-08-06 (job 9) — footer added; see the same note in the other
+      {/* 2026-08-06 (job 9), footer added; see the same note in the other
           templates. Before this, 397 of 474 public pages rendered no <footer>
           at all, so most of the site carried neither the sitewide link block
           nor the privacy link. */}

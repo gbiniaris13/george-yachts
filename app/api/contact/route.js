@@ -241,7 +241,7 @@ export async function POST(request) {
     ]);
 
     return NextResponse.json(
-      { message: "Thank you — we'll get back within 24h." },
+      { message: "Thank you, we'll get back within 24h." },
       { status: 200, headers: defaultHeaders }
     );
   } catch (error) {

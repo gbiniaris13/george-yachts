@@ -185,13 +185,13 @@ export default function WelcomePage() {
         italic="details, then you’re in."
       />
       <IntroParagraph>
-        Just four small things — first name, surname, your mobile,
+        Just four small things, first name, surname, your mobile,
         and a date of birth. These let the chef, the captain and the
         marina paperwork find you. Everything else can wait.
       </IntroParagraph>
 
       <form className="wlc-form" onSubmit={onSave}>
-        {/* 2026-05-20 — Pass 4 (Margaret 70F):
+        {/* 2026-05-20, Pass 4 (Margaret 70F):
             "Four small red 'required' badges shout at me on a single
              form. The intro already told me there are only four
              small things. Don't repeat it loudly." Replaced the red
@@ -227,7 +227,7 @@ export default function WelcomePage() {
         <div className="wlc-row">
           <label className="wlc-field">
             <span>Date of birth</span>
-            {/* 2026-05-23 — Olga friend-test: typeable Year. */}
+            {/* 2026-05-23, Olga friend-test: typeable Year. */}
             <DateOfBirthPicker
               value={dob}
               onChange={(iso) => setDob(iso)}
@@ -235,8 +235,8 @@ export default function WelcomePage() {
             />
           </label>
           <label className="wlc-field">
-            <span>Mobile <em className="wlc-field-hint">— with country code</em></span>
-            {/* 2026-05-23 — Eleanna (friend-test, GR): typed her
+            <span>Mobile <em className="wlc-field-hint">, with country code</em></span>
+            {/* 2026-05-23, Eleanna (friend-test, GR): typed her
                 Greek mobile without the +30 country code, the input
                 went yellow (invalid:not(:placeholder-shown) styling)
                 with NO explanation. Now: the label says "with
@@ -287,7 +287,7 @@ export default function WelcomePage() {
             </label>
             <label className="wlc-field">
               <span>Anniversary date <em>optional</em></span>
-              {/* Same Olga fix — anniversary years also need
+              {/* Same Olga fix, anniversary years also need
                   typeable year entry. */}
               <DateOfBirthPicker
                 value={anniversary}
@@ -297,9 +297,9 @@ export default function WelcomePage() {
           </div>
         )}
 
-        {/* 2026-05-20 — Friend-test pass 4 (George):
+        {/* 2026-05-20, Friend-test pass 4 (George):
             "Μην αναφέρεις yacht owner / management company / άλλους
-             ανθρώπους — αυτά εκθέτουν την αλυσίδα στον πελάτη. Είμαστε
+             ανθρώπους, αυτά εκθέτουν την αλυσίδα στον πελάτη. Είμαστε
              brokers, ο πελάτης δεν χρειάζεται να ξέρει τίποτα γι' αυτό."
             Trimmed to a quiet privacy line that does not name any
             third party. */}

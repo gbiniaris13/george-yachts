@@ -74,7 +74,7 @@ export default function ForbesTopBar() {
         }}
         data-cursor="Read"
       >
-        {/* Forbes wordmark — text-based, Times Bold, intentionally
+        {/* Forbes wordmark, text-based, Times Bold, intentionally
             sized smaller than the George Yachts header logo so the
             brand-equality rule from the brief holds. */}
         <span
@@ -167,10 +167,10 @@ export default function ForbesTopBar() {
         </span>
       </Link>
 
-      {/* 2026-05-08 — × dismiss button removed (see Chapter 01 note
+      {/* 2026-05-08, × dismiss button removed (see Chapter 01 note
           at the top). The Forbes credential always shows. */}
 
-      {/* Inline responsive rules — flips desktop/mobile copy and
+      {/* Inline responsive rules, flips desktop/mobile copy and
           tightens spacing under 600px so the bar never wraps. */}
       <style>{`
         .gy-forbes-bar__mobile { display: none; }

@@ -61,7 +61,7 @@ export default function VoyageCarousel() {
         {items.map((it) => (
           <li key={it.id} className="voyage-carousel__tile">
             <a href={it.url} target="_blank" rel="noopener noreferrer">
-              {/* No next/image — these are signed temporary URLs, not
+              {/* No next/image, these are signed temporary URLs, not
                   a known origin from next.config remotePatterns. Plain
                   <img> avoids the rewrite pipeline. */}
               <img

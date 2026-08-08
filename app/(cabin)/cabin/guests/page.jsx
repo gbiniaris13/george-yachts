@@ -117,7 +117,7 @@ function MinorAdder({ onAdded }) {
           </div>
           <label className="minor-adder__field">
             <span>Date of birth (for life-jacket sizing)</span>
-            {/* 2026-05-23 — Same DOB-picker upgrade as /cabin/me +
+            {/* 2026-05-23, Same DOB-picker upgrade as /cabin/me +
                 /cabin/welcome. Even for children, the native HTML
                 date picker is fiddly; typeable Year is friendlier. */}
             <DateOfBirthPicker
@@ -306,7 +306,7 @@ function MemberDetailsPanel({ details }) {
             (value ? "" : " member-details__value--empty")
           }
         >
-          {value || "—"}
+          {value || "-"}
         </span>
       </div>
     ));
@@ -370,7 +370,7 @@ function headlineName(member) {
 
 const STATUS_BADGE = {
   ready:   { label: "Details ready", tone: "ok" },
-  joined:  { label: "Joined — waiting on details", tone: "warm" },
+  joined:  { label: "Joined, waiting on details", tone: "warm" },
   invited: { label: "Invite sent", tone: "cool" },
   unsent:  { label: "Not invited yet", tone: "muted" },
 };
@@ -459,7 +459,7 @@ export default function GuestsPage() {
     if (!confirm(
       currentlyAdmin
         ? `Revoke ${who}'s brief admin rights? They will no longer be able to send the brief to George on your behalf.`
-        : `Make ${who} a brief admin? They will be able to send the brief to George on your behalf — recorded in the cabin's audit log as your explicit delegation.`,
+        : `Make ${who} a brief admin? They will be able to send the brief to George on your behalf, recorded in the cabin's audit log as your explicit delegation.`,
     )) return;
     setDelegatingId(memberId);
     setError(null);
@@ -582,12 +582,12 @@ export default function GuestsPage() {
       />
       <IntroParagraph>
         Add an email for each adult guest. Each one receives their own
-        private sign-in to your Cabin — they share their own details
+        private sign-in to your Cabin, they share their own details
         (allergies, swimming, anything we should know) so you’re not
         asked to remember it all for them.
       </IntroParagraph>
 
-      {/* 2026-05-20 — Friend-test pass 4 round 5 (Sarah):
+      {/* 2026-05-20, Friend-test pass 4 round 5 (Sarah):
           "My kids are 8 and 11. They do not have email addresses…
            Either I can't add my kids, or the system contradicts its
            own promise."
@@ -641,7 +641,7 @@ export default function GuestsPage() {
         {bulkOpen && (
           <div className="guests-add__bulk">
             <p className="guests-add__bulk-hint">
-              <em>Paste one email per line — or separated by commas. We’ll
+              <em>Paste one email per line, or separated by commas. We’ll
               send each guest their own private sign-in link.</em>
             </p>
             <textarea
@@ -685,14 +685,14 @@ export default function GuestsPage() {
             return (
               <li key={m.id}>
                 <div className="guests-list__head">
-                  {/* 2026-05-26 — Brief 04 / T2: headlineName() falls
+                  {/* 2026-05-26, Brief 04 / T2: headlineName() falls
                       back gracefully when display_name is null;
                       raw email is no longer used as the headline. */}
                   <strong>{headlineName(m)}</strong>
                   <em>{ROLE_LABEL[m.role] ?? m.role}</em>
                 </div>
                 <div className="guests-list__meta">
-                  {/* 2026-05-26 — Brief 04 / T2: " · " separator now
+                  {/* 2026-05-26, Brief 04 / T2: " · " separator now
                       carries explicit spaces on BOTH sides so it
                       renders as "@gmail.com · signed in 24 May"
                       instead of "@gmail.com· signed in 24 May". */}
@@ -711,7 +711,7 @@ export default function GuestsPage() {
                 {m.is_brief_admin && (
                   <div
                     className="guests-list__badge guests-list__badge--admin"
-                    title="The principal delegated brief-admin rights to this guest — they can send the brief to George."
+                    title="The principal delegated brief-admin rights to this guest, they can send the brief to George."
                   >
                     Brief admin
                   </div>
@@ -764,7 +764,7 @@ export default function GuestsPage() {
                       Remove
                     </button>
                   )}
-                  {/* 2026-05-23 — Principal only: show details
+                  {/* 2026-05-23, Principal only: show details
                       toggle. Only visible when the guest has
                       actually filled in something, so we don't
                       offer an empty drawer. */}

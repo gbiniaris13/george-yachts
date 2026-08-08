@@ -88,7 +88,7 @@ export async function POST(req) {
       title: "Time Capsule sealed",
       lines: [
         `From: ${cabin?.principal_charterer_name ?? session.email}`,
-        `Re: ${cabin?.vessel_name ?? "—"}`,
+        `Re: ${cabin?.vessel_name ?? "-"}`,
         `Reveal date: ${reveal.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`,
       ],
       link: `/dashboard/cabins/${cabinId}`,

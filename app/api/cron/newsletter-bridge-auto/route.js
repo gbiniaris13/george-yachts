@@ -125,14 +125,14 @@ export async function GET(request) {
   if (stillFlushing) {
     await sendTelegramText(
       [
-        `⏳ <b>Bridge auto-cron deferred — previous issue still drained</b>`,
+        `⏳ <b>Bridge auto-cron deferred, previous issue still drained</b>`,
         ``,
         `Issue #${stillFlushing.issue_number} is in <code>${stillFlushing.status}</code> state`,
         `(draft <code>${stillFlushing.draftId}</code>) and the flush cron is still`,
         `delivering it to late recipients (free-tier 95/day cap).`,
         ``,
         `No menu sent this Thursday. Next auto-cron will check again`,
-        `next Thursday — by then the flush cron will have caught up.`,
+        `next Thursday, by then the flush cron will have caught up.`,
         ``,
         `Daily flush runs 00:30 UTC.`,
       ].join("\n"),
@@ -177,14 +177,14 @@ export async function GET(request) {
 
   if (blog) {
     buttons.push({
-      text: `📰 /blog recap — ${blog.title.slice(0, 50)}${blog.title.length > 50 ? "…" : ""}`,
+      text: `📰 /blog recap, ${blog.title.slice(0, 50)}${blog.title.length > 50 ? "…" : ""}`,
       url: autoBridgePickUrl({ action: "blog", fire_id: fireId, slug: blog.slug }),
     });
   }
 
   if (yacht) {
     buttons.push({
-      text: `⛵ Highlight — ${yacht.name.slice(0, 50)}`,
+      text: `⛵ Highlight, ${yacht.name.slice(0, 50)}`,
       url: autoBridgePickUrl({ action: "yacht", fire_id: fireId, slug: yacht.slug }),
     });
   }
@@ -213,13 +213,13 @@ export async function GET(request) {
     `Pick the content path for this week:`,
     ``,
     blog
-      ? `· <b>📰 /blog recap</b> — fresh post: <i>${escapeHtml(blog.title)}</i>`
+      ? `· <b>📰 /blog recap</b>, fresh post: <i>${escapeHtml(blog.title)}</i>`
       : `· <i>📰 No fresh blog post in last 7 days</i>`,
     yacht
-      ? `· <b>⛵ Yacht highlight</b> — first unfeatured boat with voice fields: <i>${escapeHtml(yacht.name)}</i>`
+      ? `· <b>⛵ Yacht highlight</b>, first unfeatured boat with voice fields: <i>${escapeHtml(yacht.name)}</i>`
       : `· <i>⛵ No eligible yacht (add captain_name / positioning_one_liner / idealFor in Sanity to surface candidates)</i>`,
-    `· <b>✍️ Write /story</b> — opens Composer in CRM`,
-    `· <b>⏸ Skip this week</b> — try again next Thursday`,
+    `· <b>✍️ Write /story</b>, opens Composer in CRM`,
+    `· <b>⏸ Skip this week</b>, try again next Thursday`,
     ``,
     `<i>Tap any button to act. The cron will not re-prompt this week.</i>`,
   ].filter(Boolean).join("\n");

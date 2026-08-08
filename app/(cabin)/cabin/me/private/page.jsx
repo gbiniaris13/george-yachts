@@ -28,7 +28,7 @@ import IntroParagraph from "../../../../components/cabin/IntroParagraph";
 
 const SWIMS_OPTIONS = [
   { value: "confident",      label: "Confident swimmer" },
-  { value: "some",           label: "Some — comfortable with help" },
+  { value: "some",           label: "Some, comfortable with help" },
   { value: "non_swimmer",    label: "Non-swimmer" },
   { value: "prefer_not_say", label: "Prefer not to say" },
 ];
@@ -163,7 +163,7 @@ export default function CabinMePrivatePage() {
       />
       <IntroParagraph>
         Hello again, {firstName}. The fields below stay between you,
-        George, and the captain, chef and hostess on board — your
+        George, and the captain, chef and hostess on board, your
         fellow guests never see these answers. We need them only for
         safety and provisioning. Edit any time.
       </IntroParagraph>
@@ -192,7 +192,7 @@ export default function CabinMePrivatePage() {
             }
           />
           <em className="mp-hint">
-            The chef adapts every menu around this — please be specific.
+            The chef adapts every menu around this, please be specific.
           </em>
         </label>
 
@@ -241,7 +241,7 @@ export default function CabinMePrivatePage() {
           <textarea
             rows={2}
             value={form.mobility_notes}
-            placeholder="e.g. recent knee surgery — slow with the swim ladder"
+            placeholder="e.g. recent knee surgery, slow with the swim ladder"
             onChange={(e) =>
               setForm({ ...form, mobility_notes: e.target.value })
             }
@@ -276,7 +276,7 @@ export default function CabinMePrivatePage() {
           <div className="mp-saved-panel" aria-live="polite">
             <div className="mp-saved-panel__eyebrow">Saved</div>
             <p className="mp-saved-panel__copy">
-              Your private notes are saved — thank you. Only George
+              Your private notes are saved, thank you. Only George
               and the crew see this information.
             </p>
             <div className="mp-saved-panel__ctas">

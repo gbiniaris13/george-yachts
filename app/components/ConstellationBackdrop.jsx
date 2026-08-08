@@ -89,7 +89,7 @@ export default function ConstellationBackdrop({
         </radialGradient>
       </defs>
 
-      {/* Constellation lines — very faint gold */}
+      {/* Constellation lines, very faint gold */}
       <g
         stroke="rgba(201, 168, 76, 0.16)"
         strokeWidth="0.2"

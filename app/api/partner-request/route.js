@@ -98,7 +98,7 @@ export async function POST(request) {
     await transporter.sendMail({
       from: `"George Yachts" <${GMAIL_USER}>`,
       to: email,
-      subject: "George Yachts — Partnership Programme 2026",
+      subject: "George Yachts, Partnership Programme 2026",
       html: `
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #0D1B2A;">
           <div style="text-align: center; padding: 40px 20px; background: #0D1B2A;">
@@ -120,7 +120,7 @@ export async function POST(request) {
               with travel professionals.
             </p>
             <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
-              We remain invisible to your clients — you stay the hero.
+              We remain invisible to your clients, you stay the hero.
             </p>
 
             <div style="margin: 24px 0; padding: 18px 20px; border-left: 3px solid #C9A84C; background: rgba(201,168,76,0.05);">
@@ -165,7 +165,7 @@ export async function POST(request) {
     await transporter.sendMail({
       from: GMAIL_USER,
       to: GMAIL_USER,
-      subject: `🤝 New Partner Request — ${email}`,
+      subject: `🤝 New Partner Request, ${email}`,
       html: `
         <h3>New Partnership Programme Request</h3>
         <p><strong>Email:</strong> ${email}</p>

@@ -28,7 +28,7 @@ function unauthorizedPage() {
   return `<!doctype html><html><head><meta charset="utf-8"><title>Unauthorized</title>
 <style>body{font-family:system-ui;background:#0b1020;color:#e7ecf2;
 display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}</style>
-</head><body><div><h1>401 — bad or missing key.</h1></div></body></html>`;
+</head><body><div><h1>401, bad or missing key.</h1></div></body></html>`;
 }
 
 export async function GET(request) {
@@ -116,7 +116,7 @@ ${records.slice(0, 50).map((r) => `
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Outreach dashboard — George Yachts</title>
+<title>Outreach dashboard, George Yachts</title>
 <style>
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
      background:#0b1020;color:#e7ecf2;padding:32px 24px;}
@@ -125,7 +125,7 @@ h1{margin:0 0 8px;color:#d8b65d;font-size:22px;letter-spacing:.01em;}
 .row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;}
 </style>
 </head><body>
-<h1>George Yachts \u2014 Outreach dashboard</h1>
+<h1>George Yachts, Outreach dashboard</h1>
 <div class="sub">Refreshed ${h(now.toLocaleString('en-GB', { timeZone: 'Europe/Athens' }))} Athens time. Today = ${h(athensYmd)}.</div>
 
 <div class="row">

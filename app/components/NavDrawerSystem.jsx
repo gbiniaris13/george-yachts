@@ -283,7 +283,7 @@ export default function NavDrawerSystem() {
         }}
       >
         <div className="flex items-center justify-between h-full relative">
-          {/* MOBILE HAMBURGER — right, only ≤ md. Boss mobile spec
+          {/* MOBILE HAMBURGER, right, only ≤ md. Boss mobile spec
               relocates the hamburger to top-right; logo stays centered.
               Gold #C9A84C, 22 px stroke. The 44 × 44 hit area exceeds
               the WCAG touch-target minimum even though the icon itself
@@ -305,7 +305,7 @@ export default function NavDrawerSystem() {
             <Menu style={{ width: 22, height: 22 }} />
           </button>
 
-          {/* DESKTOP — left cluster: CHARTER + EXPLORE GREECE */}
+          {/* DESKTOP, left cluster: CHARTER + EXPLORE GREECE */}
           <div className="hidden md:flex items-center gap-10">
             <NavItem section={NAV_SECTIONS[0]} anchor="left" isOpen={openDesktop === NAV_SECTIONS[0].label} onEnter={() => setOpenDesktop(NAV_SECTIONS[0].label)} onLeave={() => setOpenDesktop(null)} />
             <NavItem section={NAV_SECTIONS[1]} anchor="left" isOpen={openDesktop === NAV_SECTIONS[1].label} onEnter={() => setOpenDesktop(NAV_SECTIONS[1].label)} onLeave={() => setOpenDesktop(null)} />
@@ -320,7 +320,7 @@ export default function NavDrawerSystem() {
             </Link>
           </div>
 
-          {/* CENTER — logo */}
+          {/* CENTER, logo */}
           <Link
             href="/"
             className="absolute left-1/2 -translate-x-1/2 shrink-0 group gy-logo-reveal"
@@ -341,7 +341,7 @@ export default function NavDrawerSystem() {
             />
           </Link>
 
-          {/* DESKTOP — right cluster: ABOUT + BRIEF GEORGE CTA */}
+          {/* DESKTOP, right cluster: ABOUT + BRIEF GEORGE CTA */}
           <div className="hidden md:flex items-center gap-10">
             <NavItem section={NAV_SECTIONS[2]} anchor="right" isOpen={openDesktop === NAV_SECTIONS[2].label} onEnter={() => setOpenDesktop(NAV_SECTIONS[2].label)} onLeave={() => setOpenDesktop(null)} />
             <Link
@@ -361,7 +361,7 @@ export default function NavDrawerSystem() {
             </Link>
           </div>
 
-          {/* Currency switcher removed 2026-05-08 — Boss directive
+          {/* Currency switcher removed 2026-05-08, Boss directive
               (rates always quoted + signed in EUR; conversion liability
               risk if the spread moves between view and contract). */}
         </div>
@@ -384,7 +384,7 @@ export default function NavDrawerSystem() {
         aria-label="Navigation"
       >
         <div className="h-full w-full flex flex-col">
-          {/* Header — close × top-right, logo centered top */}
+          {/* Header, close × top-right, logo centered top */}
           <div className="relative flex items-center justify-center pt-6 pb-4">
             <Link href="/" onClick={closeMobile} aria-label="Home">
               <img
@@ -405,7 +405,7 @@ export default function NavDrawerSystem() {
             </button>
           </div>
 
-          {/* Centered nav items — Cormorant Light 32 px theatrical */}
+          {/* Centered nav items, Cormorant Light 32 px theatrical */}
           <div className="flex-1 flex flex-col items-center justify-center gap-2 px-6">
             {NAV_SECTIONS.map((section) => {
               const expanded = openSection === section.label;
@@ -457,7 +457,7 @@ export default function NavDrawerSystem() {
                 </div>
               );
             })}
-            {/* Journal / blog — top-level link, no dropdown */}
+            {/* Journal / blog, top-level link, no dropdown */}
             <div className="w-full max-w-md text-center">
               <Link
                 href="/blog"
@@ -478,7 +478,7 @@ export default function NavDrawerSystem() {
             </div>
           </div>
 
-          {/* BRIEF GEORGE — gold, 36 px Cormorant per Boss spec */}
+          {/* BRIEF GEORGE, gold, 36 px Cormorant per Boss spec */}
           <div className="px-6 pb-6 pt-4">
             <Link
               href={BRIEF_GEORGE.href}
@@ -500,7 +500,7 @@ export default function NavDrawerSystem() {
             </Link>
           </div>
 
-          {/* Currency row removed 2026-05-08 — see masthead note above.
+          {/* Currency row removed 2026-05-08, see masthead note above.
               The mobile overlay closes with a slim ivory rule + bottom
               padding so the BRIEF GEORGE CTA remains the visual close. */}
           <div className="px-6 pb-10 pt-2" aria-hidden="true" />

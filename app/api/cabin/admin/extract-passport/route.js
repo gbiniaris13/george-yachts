@@ -43,7 +43,7 @@ function authorized(req) {
 }
 
 // Same VERBATIM_MANDATE block as the other extraction endpoints.
-const VERBATIM_MANDATE = `VERBATIM MANDATE — read this before anything else:
+const VERBATIM_MANDATE = `VERBATIM MANDATE, read this before anything else:
 1. Reproduce text EXACTLY as the source PDF shows it. No rewording,
    no paraphrasing, no normalisation of casing or punctuation, no
    smart-quoting, no spacing "improvements".
@@ -60,7 +60,7 @@ const PASSPORT_PROMPT = `${VERBATIM_MANDATE}
 
 You are extracting bio-page data from a passport. Most fields can
 be read from the visual bio panel (the right side of the page).
-Cross-reference against the Machine Readable Zone (MRZ — the two
+Cross-reference against the Machine Readable Zone (MRZ, the two
 lines of "<<<" characters at the bottom of the page) when a visual
 field is unclear; MRZ wins for canonical names.
 
@@ -71,12 +71,12 @@ Output strict JSON with this exact shape:
   "passport_type": "<verbatim type code, usually 'P'>",
   "passport_number": "<verbatim Passport No.>",
   "surname": "<verbatim Surname / Family Name field. From MRZ if visual is unclear.>",
-  "given_names": "<verbatim Given Names field — may contain a middle name>",
+  "given_names": "<verbatim Given Names field, may contain a middle name>",
   "full_name": "<surname + ', ' + given_names in the case the passport prints them in. E.g. 'STEVENS, PATRICIA RHODES'. Verbatim from the MRZ when unclear.>",
   "signature_display_name": "<the SIGNATURE form, i.e. how the holder signs on the 'Signature of bearer' line, e.g. 'Patricia R. Stevens'. If illegible, fall back to '<First-given-name> <surname>' in Title Case (e.g. 'Patricia Stevens'). Never all caps.>",
   "nationality": "<verbatim Nationality field>",
   "date_of_birth": "<ISO YYYY-MM-DD parsed from the Date of Birth field>",
-  "sex": "<verbatim — 'M' / 'F' / 'X' as printed>",
+  "sex": "<verbatim, 'M' / 'F' / 'X' as printed>",
   "place_of_birth": "<verbatim Place of Birth field>",
   "date_of_issue": "<ISO YYYY-MM-DD>",
   "date_of_expiration": "<ISO YYYY-MM-DD>",
@@ -86,7 +86,7 @@ Output strict JSON with this exact shape:
 }
 
 Rules:
-• Dates are formatted in many ways on passports ('02 Oct 1968', '02OCT1968', '02/10/1968', etc.). Output ISO 8601 (YYYY-MM-DD) regardless of source format. If a date is partially unreadable, output null for that field — never guess.
+• Dates are formatted in many ways on passports ('02 Oct 1968', '02OCT1968', '02/10/1968', etc.). Output ISO 8601 (YYYY-MM-DD) regardless of source format. If a date is partially unreadable, output null for that field, never guess.
 • MRZ is the source of truth when visual and MRZ disagree.
 • "signature_display_name" is the ONE field that needs minimal grooming: render in Title Case based on the holder's actual signature; this is the only string the customer-facing /cabin will display.
 • Honorifics are NOT shown on passports. Do not invent one.
@@ -149,7 +149,7 @@ export async function POST(req) {
           role: "user",
           parts: [
             { inline_data: { mime_type: file.type, data: base64 } },
-            { text: "Extract the passport bio-page data as strict JSON per the schema. Output JSON only — no markdown fences, no commentary." },
+            { text: "Extract the passport bio-page data as strict JSON per the schema. Output JSON only, no markdown fences, no commentary." },
           ],
         },
       ],

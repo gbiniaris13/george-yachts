@@ -215,7 +215,7 @@ export default function PhotoGallery({
       {typeof children === "function" ? children({ open }) : children}
 
       {/* PORTAL the modal into document.body so ancestor transforms
-          can't trap it. After hydration only — first render is null
+          can't trap it. After hydration only, first render is null
           on the client to match server output. */}
       {modal && portalTarget ? createPortal(modal, portalTarget) : null}
 

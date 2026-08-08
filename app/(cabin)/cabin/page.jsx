@@ -364,7 +364,7 @@ export default async function CabinHomePage() {
   // is editorial and wants the punchier "27 Jun — 4 Jul 2026".
   const heroDates =
     cabin.charter_period_from && cabin.charter_period_to
-      ? `${prettyDate(cabin.charter_period_from)} — ${prettyDate(cabin.charter_period_to)}`
+      ? `${prettyDate(cabin.charter_period_from)}, ${prettyDate(cabin.charter_period_to)}`
       : null;
 
   // 2026-05-22 — Resolve vessel photos for rendering. Each entry
@@ -378,7 +378,7 @@ export default async function CabinHomePage() {
 
   return (
     <div className="cabin-home">
-      {/* 2026-05-22 — VesselHero removed.
+      {/* 2026-05-22, VesselHero removed.
           George's read on the EFFIE STAR preview after the photos
           landed: the band cropped a horizontal sailing-yacht shot
           to "only the mast visible" because the band's fixed
@@ -386,18 +386,18 @@ export default async function CabinHomePage() {
           different photo aspect-ratios, so no single object-position
           fits them all without per-cabin art direction.
           The same hero photo lives properly framed inside the
-          VesselBrochureBlock just below — keeping it once, in the
+          VesselBrochureBlock just below, keeping it once, in the
           place where it has editorial context (kicker + name +
           builder + year + summary) reads better than the same
           shot appearing twice, once cropped wrong.
           Identity still arrives on entry via the navy header
-          chip on the right ("EFFIE STAR · 27 Jun – 4 Jul ·
+          chip on the right ("EFFIE STAR · 27 Jun, 4 Jul ·
           PATRICIA R. STEVENS"). */}
 
       <header className="cabin-home__welcome">
-        {/* 2026-05-20 — Pass 6 (Domingo, Margaret):
+        {/* 2026-05-20, Pass 6 (Domingo, Margaret):
             "'Welcome aboard, in spirit' over 'Welcome, George' reads
-            like two competing greetings — and the 'in spirit' hedge
+            like two competing greetings, and the 'in spirit' hedge
             sits awkwardly with people who paid €50k for a real
             voyage. The eyebrow is now a calm contextualizer, not a
             second welcome. */}
@@ -408,10 +408,10 @@ export default async function CabinHomePage() {
         <div className="cabin-home__rule" aria-hidden />
         {isPrincipal ? (
           <IntroParagraph>
-            This is your private Cabin — your quiet corner of George
+            This is your private Cabin, your quiet corner of George
             Yachts. The first thing we’d like to ask of you is small:
             invite the people sailing with you. Each one gets their own
-            quiet sign-in to share a few details about themselves —
+            quiet sign-in to share a few details about themselves
             allergies, swimming, what they’d like the chef to know.
             You don’t need to fill that in for them.
           </IntroParagraph>
@@ -428,7 +428,7 @@ export default async function CabinHomePage() {
         )}
       </header>
 
-      {/* 2026-05-24 — NextStep wizard banner (everyone sees one).
+      {/* 2026-05-24, NextStep wizard banner (everyone sees one).
           Auto-detects this member's first incomplete action and
           surfaces it as a single big "Do this next" card with a
           navy CTA. Walks principal + guests through invite → crew
@@ -449,7 +449,7 @@ export default async function CabinHomePage() {
       />
 
       {/* ============================================================
-          PRE-VOYAGE STEPS — 2026-05-22 (George):
+          PRE-VOYAGE STEPS, 2026-05-22 (George):
           The cabin's two onboarding inputs (invite group · brief)
           are now unified into a single magazine-style block at
           the top of the page, then the vessel reveals beneath.
@@ -457,7 +457,7 @@ export default async function CabinHomePage() {
           sees only Step 01 (their own /me details). Pressureless
           luxury framing, status indicators on each card.
 
-          2026-05-26 — Brief 02 (Task A5.2): suppressed for guests.
+          2026-05-26, Brief 02 (Task A5.2): suppressed for guests.
           NextStep already prompts the guest's Crew List (the only
           thing they do under the new single-responsibility model),
           and PreVoyageSteps Card 01 was a duplicate of that prompt
@@ -477,7 +477,7 @@ export default async function CabinHomePage() {
         />
       )}
 
-      {/* 2026-05-24 — Group readiness card (principal-only).
+      {/* 2026-05-24, Group readiness card (principal-only).
           George friend test 4: moved here from above PreVoyageSteps
           so the principal first reads the step-by-step instructions
           (invite → crew list → brief), THEN sees the picture of
@@ -498,12 +498,12 @@ export default async function CabinHomePage() {
         missingBriefSections={missingBriefSections}
       />
 
-      {/* 2026-05-22 — George rejected the small teaser:
+      {/* 2026-05-22, George rejected the small teaser:
           "λέμε αυτό το κείμενο στον πελάτη και δεν του δείχνουμε
           τίποτα. 'See the full vessel' τι σημαίνει? Η μπροσούρα
           που σου έχω ανεβάσει σαν PDF πρέπει να είναι εκεί μέσα.
           Όλη."
-          Replaced VesselTeaser with VesselBrochureBlock — the
+          Replaced VesselTeaser with VesselBrochureBlock, the
           FULL brochure rendered inline: hero + intro paragraph
           + key features + photo gallery + specs + accommodation
           + amenities + tender & toys + spaces aboard. No more
@@ -511,9 +511,9 @@ export default async function CabinHomePage() {
           brochure IS the chapter. */}
       <VesselBrochureBlock cabin={cabin} photos={resolvedVesselPhotos} />
 
-      {/* 2026-05-23 — Berth Map (Phase 1). Renders only when George
+      {/* 2026-05-23, Berth Map (Phase 1). Renders only when George
           has set lat/lng from the CRM. Cabins without berth data
-          render nothing — fully back-compat for every existing cabin. */}
+          render nothing, fully back-compat for every existing cabin. */}
       <BerthMap
         lat={Number(cabin?.berth_lat)}
         lng={Number(cabin?.berth_lng)}
@@ -521,7 +521,7 @@ export default async function CabinHomePage() {
         vesselName={cabin?.vessel_name}
       />
 
-      {/* 2026-05-23 — Berth Map Phase 2 — "Around your berth"
+      {/* 2026-05-23, Berth Map Phase 2, "Around your berth"
           museum-plate block: airport, helipad, ATMs, hospital,
           pharmacy. Data pre-fetched server-side by the CRM at
           save-time; this just reads the JSONB. Renders nothing
@@ -529,21 +529,21 @@ export default async function CabinHomePage() {
           pre-Phase-2 cabins) see no change. */}
       <BerthNearby nearby={cabin?.berth_nearby} />
 
-      {/* 2026-05-22 — Step 02 (Charter Brief) folded into the
+      {/* 2026-05-22, Step 02 (Charter Brief) folded into the
           PreVoyageSteps block above. */}
 
-      {/* 2026-05-20 — Friend-test pass 3 (George): "Δεν είδα κουμπί
+      {/* 2026-05-20, Friend-test pass 3 (George): "Δεν είδα κουμπί
           να βάλω την Καμπίνα στο κινητό." Install nudge moved here
           (was at the bottom of the page) so it's above-the-fold on
-          mobile — visible without scrolling. The component
+          mobile, visible without scrolling. The component
           dismisses itself silently on desktop and on already-
           installed PWAs. */}
       <InstallNudge />
 
       <CharterAtAGlance summary={summary} cabin={cabin} />
 
-      {/* 2026-05-20 — Friend-test pass 4 (Sarah):
-          "Surface a single Greek word of the day on the Cabin home —
+      {/* 2026-05-20, Friend-test pass 4 (Sarah):
+          "Surface a single Greek word of the day on the Cabin home
            don't bury it two clicks deep in Before You Sail."
           Picks one of 10 phrases deterministically by day of year
           so guests see something fresh per visit but no random
@@ -551,7 +551,7 @@ export default async function CabinHomePage() {
       <GreekWordOfTheDay />
 
       {/* ============================================================
-          THE CABIN MAP — icon grid (2026-05-20 friend-test pass 3).
+          THE CABIN MAP, icon grid (2026-05-20 friend-test pass 3).
           Replaces the small discoveries list AND the hamburger menu.
           George: "Κανένας πελάτης δεν θα κάτσει να ανοίξει hamburger.
           Βγάλε τα όλα στην κεντρική σελίδα σαν εικονίδια με απλά
@@ -560,7 +560,7 @@ export default async function CabinHomePage() {
           Tiles are role-aware:
             - principal/assistant → "Your Group" (links to /cabin/guests)
             - guest                → "My Details" (links to /cabin/me)
-          2026-05-23 — SHARED BRIEF MODEL (George friend test 4
+          2026-05-23, SHARED BRIEF MODEL (George friend test 4
           clarification): the brief is now a single common document
           every cabin member can edit together. Tile visible to all.
           ============================================================ */}
@@ -572,8 +572,8 @@ export default async function CabinHomePage() {
             <strong>The Brief</strong>
             <em>
               {isPrincipal
-                ? "Tell us about your week — pace, food, what to celebrate. Everyone in the group helps fill it."
-                : "Help fill your group's brief — add your food, drink and life-aboard picks alongside everyone else's."}
+                ? "Tell us about your week, pace, food, what to celebrate. Everyone in the group helps fill it."
+                : "Help fill your group's brief, add your food, drink and life-aboard picks alongside everyone else's."}
             </em>
           </Link>
           <Link href="/cabin/chat" className="cabin-home__tile">
@@ -588,7 +588,7 @@ export default async function CabinHomePage() {
                 <strong>Your Group</strong>
                 <em>Invite the people sailing with you. See who has joined.</em>
               </Link>
-              {/* 2026-05-22 — Principal needs their own /cabin/me
+              {/* 2026-05-22, Principal needs their own /cabin/me
                   surface too. The brief lock now requires every
                   member (incl. principal) to have a complete Crew
                   List, but the principal previously had no direct
@@ -596,17 +596,17 @@ export default async function CabinHomePage() {
               <Link href="/cabin/me" className="cabin-home__tile">
                 <CabinIcon name="data" className="cabin-home__tile-glyph" />
                 <strong>My Crew List Line</strong>
-                <em>Your own DOB, gender, nationality, ID/passport, mobile — the harbour-authority essentials.</em>
+                <em>Your own DOB, gender, nationality, ID/passport, mobile, the harbour-authority essentials.</em>
               </Link>
             </>
           ) : (
             <Link href="/cabin/me" className="cabin-home__tile">
               <CabinIcon name="group" className="cabin-home__tile-glyph" />
               <strong>My Crew List Line</strong>
-              <em>Your DOB, gender, nationality, ID/passport, mobile — five quiet fields for the marinas.</em>
+              <em>Your DOB, gender, nationality, ID/passport, mobile, five quiet fields for the marinas.</em>
             </Link>
           )}
-          {/* 2026-05-21 — Pass 7 prep (Domingo): the original tile
+          {/* 2026-05-21, Pass 7 prep (Domingo): the original tile
               copy hard-coded "captain, chef and hostess" but smaller
               vessels often sail with captain + chef only, or
               captain + chef + deckhand. Promising a hostess we
@@ -623,14 +623,14 @@ export default async function CabinHomePage() {
             <strong>Sample Menu</strong>
             <em>A taste of what your chef proposes for the week.</em>
           </Link>
-          {/* 2026-05-22 — Removed the "Your Vessel" tile from
+          {/* 2026-05-22, Removed the "Your Vessel" tile from
               the home grid. The full vessel brochure is now
               rendered INLINE above (VesselBrochureBlock). Keeping
               a tile that goes to a near-duplicate page just
               creates two competing entries for the same content.
               The standalone /cabin/vessel route still exists for
               direct deep-linking + print views. */}
-          {/* 2026-05-24 — Christos pass: Mood Board / Pin the Vibe
+          {/* 2026-05-24, Christos pass: Mood Board / Pin the Vibe
               tile removed from the cabin home grid. George: "το λες
               Μουτ Μπορντ, βγάλ' το, μπερδεύονται οι άνθρωποι." Page
               and route stay live for any saved links, just no longer
@@ -643,7 +643,7 @@ export default async function CabinHomePage() {
           <Link href="/cabin/voyage-album" className="cabin-home__tile">
             <CabinIcon name="album" className="cabin-home__tile-glyph" />
             <strong>Voyage Album</strong>
-            <em>Your photos from the week — download any time, zip on request.</em>
+            <em>Your photos from the week, download any time, zip on request.</em>
           </Link>
           <Link href="/cabin/time-capsule" className="cabin-home__tile">
             <CabinIcon name="capsule" className="cabin-home__tile-glyph" />
@@ -658,19 +658,19 @@ export default async function CabinHomePage() {
           <Link href="/cabin/install" className="cabin-home__tile">
             <CabinIcon name="install" className="cabin-home__tile-glyph" />
             <strong>Add to phone</strong>
-            <em>One tap to come back next time — no more sign-in emails.</em>
+            <em>One tap to come back next time, no more sign-in emails.</em>
           </Link>
         </div>
       </section>
 
-      {/* 2026-05-20 — Friend-test pass 4 (George): "Κάτω από το
+      {/* 2026-05-20, Friend-test pass 4 (George): "Κάτω από το
           grid θέλω σε καρουζέλ τις τελευταίες φωτογραφίες των
           ταξιδιών." Quietly renders nothing if no photos yet. */}
       <VoyageCarousel />
 
-      {/* 2026-05-20 — Pass 4 rounds 4+5 (David, Tyler, Helen):
+      {/* 2026-05-20, Pass 4 rounds 4+5 (David, Tyler, Helen):
           "'You are a Friend of the Circle, since 2026' BEFORE the
-           charter has even started — reads as pre-bestowed loyalty.
+           charter has even started, reads as pre-bestowed loyalty.
            The whole point of filotimo is that it's earned."
           Hide the tier badge entirely until the user has at least
           one completed voyage. Pre-voyage, we show a calm "on the
@@ -682,7 +682,7 @@ export default async function CabinHomePage() {
           {(circle.voyages_count ?? 0) === 0 ? (
             <p>
               You&apos;re at the start of our quiet circle. The Circle
-              isn&apos;t earned in advance — it&apos;s built across
+              isn&apos;t earned in advance, it&apos;s built across
               voyages, one at a time. We&apos;ll write to you about it
               once you&apos;re home.
             </p>
@@ -701,9 +701,9 @@ export default async function CabinHomePage() {
         </aside>
       )}
 
-      {/* 2026-05-20 — Friend-test pass 3: hamburger menu removed
+      {/* 2026-05-20, Friend-test pass 3: hamburger menu removed
           entirely (see CabinShell.jsx). Sign-out moved here as a
-          small, calm footer link — visible but not noisy. */}
+          small, calm footer link, visible but not noisy. */}
       <footer className="cabin-home__footer">
         <form action="/api/cabin/auth/logout" method="post">
           <button type="submit" className="cabin-home__signout">
@@ -712,10 +712,10 @@ export default async function CabinHomePage() {
         </form>
       </footer>
 
-      {/* 2026-05-21 — Pass 7 (George): the same GHOST_ build credit
+      {/* 2026-05-21, Pass 7 (George): the same GHOST_ build credit
           the marketing site footer carries. Quiet, low on the page,
           luxury-tech monospace gold. Same agency owns both surfaces
-          — the credit on the cabin signs the platform without
+ , the credit on the cabin signs the platform without
           shouting over the customer's own page. */}
       <GhostCredit />
 
@@ -950,7 +950,7 @@ export default async function CabinHomePage() {
           height: 28px;
           display: block;
           /* Now an inline SVG (CabinIcon) rather than a Unicode
-             glyph — one consistent hand across the entire grid. */
+             glyph, one consistent hand across the entire grid. */
         }
         .cabin-home__tile strong {
           font-family: var(--gy-font-editorial);
@@ -977,7 +977,7 @@ export default async function CabinHomePage() {
         }
         /* 2026-05-26 — Brief 04 / T1 (Domingo guest audit): the
            Sign-out button at the bottom of /cabin home was 0.45
-           navy on cream — too pale to read as "this is the logout
+           navy on cream, too pale to read as "this is the logout
            button". Bumped to 0.7 for proper contrast; hover still
            goes full navy. */
         .cabin-home__signout {

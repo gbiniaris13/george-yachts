@@ -154,7 +154,7 @@ export default function MoodBoardPage() {
         italic="vibe."
       />
       <IntroParagraph>
-        Photographs of sunsets, dishes, atmospheres, music covers — whatever
+        Photographs of sunsets, dishes, atmospheres, music covers, whatever
         captures the feeling of the week you want. Paste any image link
         (Pinterest, Unsplash, your camera roll uploaded somewhere) and your
         captain will see your mood, not just your checkboxes.
@@ -164,7 +164,7 @@ export default function MoodBoardPage() {
         <div className="mood-add__caption-row">
           <input
             type="text"
-            placeholder="A short caption (applies to next pin) — optional"
+            placeholder="A short caption (applies to next pin), optional"
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
             maxLength={240}
@@ -219,25 +219,25 @@ export default function MoodBoardPage() {
               The board now opens with four CSS-gradient placeholders
               evoking the Greek visual register (Cycladic blue,
               taverna marble, Aegean horizon, olive grove). They are
-              labelled as inspiration — not the user's pins — and
+              labelled as inspiration, not the user's pins, and
               quietly disappear once the user adds anything. No
               external assets used: no photos to license, no risk of
               an example image stealing focus from the customer's
               own taste. */
           <>
             <p className="mood-empty">
-              Your Mood Board is empty. Below — four moments from the
+              Your Mood Board is empty. Below, four moments from the
               Greek visual register. Pin your own as you go, and these
               quietly step aside.
             </p>
-            {/* 2026-05-23 — George: "λίγο περίεργα, λίγο φτηνά. Να
+            {/* 2026-05-23, George: "λίγο περίεργα, λίγο φτηνά. Να
                 φαίνεται πολύ πιο ακριβό. Multimillion, πολυεθνική
                 εταιρεία yachting, boutique εταιρεία yachting."
                 Rebuilt as museum-plate cards: portrait 4:5 aspect,
                 gold-rule inner border, plate numbering, bilingual
                 Greek/English captions, layered painterly gradients
                 with SVG film grain for that editorial-print finish.
-                Still no asset round-trip — pure CSS + inline SVG
+                Still no asset round-trip, pure CSS + inline SVG
                 so it survives any deploy. */}
             <div className="mood-grid__plates" aria-hidden>
               <figure className="mood-plate mood-plate--blue">
@@ -278,11 +278,11 @@ export default function MoodBoardPage() {
         {items?.map((it) => (
           <figure key={it.id} className="mood-card">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            {/* 2026-05-23 — referrerPolicy="no-referrer" is a defence
+            {/* 2026-05-23, referrerPolicy="no-referrer" is a defence
                 for any legacy rows where image_path is still a raw
                 external URL (pre-2026-05-23 rows where we hadn't yet
                 shipped the server-side rehost). Pinterest et al check
-                the Referer header — sending none bypasses hotlink
+                the Referer header, sending none bypasses hotlink
                 protection. New rows are stored in our bucket and
                 this attribute is a no-op for them. */}
             <img

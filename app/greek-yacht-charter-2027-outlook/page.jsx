@@ -235,7 +235,7 @@ export default function Outlook2027Page() {
           </p>
         </section>
 
-        {/* 2026-08-06 — this page argues the 2027 case better than any other
+        {/* 2026-08-06, this page argues the 2027 case better than any other
             and was the only member of the season-2027 family that received
             sibling links without passing any on. A reader convinced here has
             nowhere to go next; now they have the month pages. */}
@@ -258,7 +258,7 @@ export default function Outlook2027Page() {
           </div>
         </section>
       </article>
-      {/* 2026-08-06 (job 9) — sitewide footer. Measured before this change:
+      {/* 2026-08-06 (job 9), sitewide footer. Measured before this change:
           397 of 474 public pages rendered no <footer> at all. */}
       <Footer />
     </>

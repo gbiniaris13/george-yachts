@@ -67,7 +67,7 @@ export async function GET(request) {
   if (!entry) {
     await sendTelegramText(
       [
-        `📭 <b>Compass auto-cron — queue is empty</b>`,
+        `📭 <b>Compass auto-cron, queue is empty</b>`,
         ``,
         `Today is the 1st of an even month and Compass should send.`,
         `There are no pending intel signals in the queue.`,

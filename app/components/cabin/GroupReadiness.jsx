@@ -101,7 +101,7 @@ export default function GroupReadiness({
           </p>
 
           <div className="gr__lanes">
-            {/* Lane 1 — Crew lists */}
+            {/* Lane 1, Crew lists */}
             <div className="gr__lane">
               <div className="gr__lane-head">
                 <strong>Crew lists</strong>
@@ -133,8 +133,8 @@ export default function GroupReadiness({
               )}
             </div>
 
-            {/* Lane 2 — Brief sections complete (the real Send gate).
-                2026-06-01 — replaced the old "Brief confirmed (X of N)"
+            {/* Lane 2, Brief sections complete (the real Send gate).
+                2026-06-01, replaced the old "Brief confirmed (X of N)"
                 lane (per-member brief_confirmed_at), which was stuck at
                 0/N under the single-writer model. This mirrors exactly
                 what Send-to-George requires: every section marked done. */}

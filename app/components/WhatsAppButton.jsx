@@ -92,7 +92,7 @@ export default function WhatsAppButton() {
 
   return (
     <>
-      {/* Auto-greeting bubble — appears 10s into the visit, dismissable */}
+      {/* Auto-greeting bubble, appears 10s into the visit, dismissable */}
       {greetOpen && (
         <div
           role="dialog"

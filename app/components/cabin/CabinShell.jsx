@@ -236,17 +236,17 @@ export default function CabinShell({
       )}
       {showChrome && (
         <header className="cabin-shell__header" role="banner">
-          {/* 2026-05-22 — Header redesigned, take 3 (George's
+          {/* 2026-05-22, Header redesigned, take 3 (George's
               directive after seeing the centred-but-small logo):
-                · LEFT     — "THE CABIN · Filotimo" with a
+                · LEFT, "THE CABIN · Filotimo" with a
                              quiet brand tagline beneath.
                              The back arrow tucks here too,
                              before the brand block.
-                · CENTRE   — CabinBrandMark: the real GY logo,
+                · CENTRE, CabinBrandMark: the real GY logo,
                              large, the page's visual anchor.
-                · RIGHT    — vessel name (italic editorial) over
+                · RIGHT, vessel name (italic editorial) over
                              dates + viewer name (spaced caps).
-                             The cabin IS the vessel — the
+                             The cabin IS the vessel, the
                              customer's "I've walked into the
                              cabin of MY yacht" moment lives
                              here.
@@ -327,7 +327,7 @@ export default function CabinShell({
         </nav>
       )}
 
-      {/* 2026-05-20 — drawer + backdrop removed. The Cabin map on
+      {/* 2026-05-20, drawer + backdrop removed. The Cabin map on
           /cabin replaces this; Sign-out lives in /cabin footer. */}
 
       <style jsx global>{`

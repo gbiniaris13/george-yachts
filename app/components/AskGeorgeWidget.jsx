@@ -140,9 +140,9 @@ export default function AskGeorgeWidget() {
 
   return (
     <>
-      {/* Floating button — bottom-right, sits above the existing WhatsApp btn.
+      {/* Floating button, bottom-right, sits above the existing WhatsApp btn.
           Phase 27 (Forbes-launch eve, 2026-05-05): hidden on mobile via the
-          .gy-fab-desktop-only class — three FABs covered editorial copy on
+          .gy-fab-desktop-only class, three FABs covered editorial copy on
           every iPhone screen George tested. WhatsApp + the gold sticky CTA
           are the only mobile actions the visitor needs; the AI concierge
           stays as a desktop affordance only. */}

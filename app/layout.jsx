@@ -321,7 +321,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Phase 28 (typography overhaul, 2026-05-08) — FontShare CDN
+        {/* Phase 28 (typography overhaul, 2026-05-08), FontShare CDN
             for the three free FontShare faces in the 5-tier system:
             Sentient (editorial H2/H3), General Sans (body / reading),
             Switzer (UI / captions). Loaded as a stylesheet <link> in
@@ -332,13 +332,13 @@ export default async function RootLayout({ children }) {
             opening the TLS connection early. */}
         <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />
-        {/* 2026-05-12 — yacht thumbnails (homepage trending carousel,
+        {/* 2026-05-12, yacht thumbnails (homepage trending carousel,
             fleet grid, yacht detail galleries) all load from
             cdn.sanity.io. Homepage references it 76 times. Preconnect
             opens the TLS connection during HTML parse and shaves
             150-300 ms off the first Sanity image fetch. */}
         <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
-        {/* 2026-07-30 — the Pexels + Unsplash preconnects are gone. They were
+        {/* 2026-07-30, the Pexels + Unsplash preconnects are gone. They were
             added 2026-05-18 for destination stock photography, but every one
             of those images has since been uploaded into Sanity and is served
             from cdn.sanity.io: a grep across all 479 built pages finds zero
@@ -348,12 +348,12 @@ export default async function RootLayout({ children }) {
             external 4XX on every page (Ahrefs, 30/07/2026). If stock photos
             from either host ever come back, restore the preconnect with
             them. */}
-        {/* 2026-05-14 — Ahrefs flagged 459 pages "Page has broken CSS".
+        {/* 2026-05-14, Ahrefs flagged 459 pages "Page has broken CSS".
             Root cause: the fontshare /v2/css endpoint returns 500 for
-            ANY italic variant (400i / 500i / etc) — confirmed by
+            ANY italic variant (400i / 500i / etc), confirmed by
             bisection (sentient@400,500 → 200 OK; +500i → 500 ERROR).
             Italic styles fall back to browser-synthesised oblique
-            (font-synthesis: style; default) — visually negligible at
+            (font-synthesis: style; default), visually negligible at
             our body / accent sizes, and the alternative was the entire
             stylesheet 500'ing on every page. Revisit if fontshare ever
             ships the italic fix. */}
@@ -370,12 +370,12 @@ export default async function RootLayout({ children }) {
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-        {/* Phase 27 (Forbes-launch eve, 2026-05-05) — SEO/GEO push for
+        {/* Phase 27 (Forbes-launch eve, 2026-05-05), SEO/GEO push for
             #1 ranking on "yacht charter Greece". Geo meta tags help
             Google + Bing + AI search engines (Perplexity / ChatGPT /
             Claude / Gemini) anchor the site to Kifisia/Greece for
             local-intent queries. Coordinates must match the Google
-            Business Profile pin exactly (38.0876, 23.8084 — Charilaou
+            Business Profile pin exactly (38.0876, 23.8084, Charilaou
             Trikoupi 190A, Kifisia) so Google can reconcile NAP across
             site meta, JSON-LD, and Maps. The schema additions below
             feed Google's Knowledge Graph + AI search citations. */}
@@ -391,7 +391,7 @@ export default async function RootLayout({ children }) {
         {/* AI-search hints (non-standard but parsed by some AI crawlers) */}
         <meta name="ai-content-declaration" content="human-authored" />
         <meta name="ai-search-priority" content="yacht-charter-greece, luxury-yacht-charter-greek-islands, crewed-yacht-charter-cyclades, motor-yacht-charter-mykonos, sailing-yacht-charter-ionian, superyacht-charter-greece" />
-        {/* 2026-06-25 — Cookiebot REMOVED (paid dependency beyond its
+        {/* 2026-06-25, Cookiebot REMOVED (paid dependency beyond its
             50-page free tier; George: "no subscriptions"). Replaced by a
             free, self-hosted consent system: <CookieConsent /> banner +
             Google Consent Mode v2 defaults (set with the GA4 init below)
@@ -402,7 +402,7 @@ export default async function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${fraunces.variable} antialiased${forbesDismissed ? "" : " gy-with-forbes-bar"}`}
       >
-        {/* Skip to main content — accessibility */}
+        {/* Skip to main content, accessibility */}
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-[#C9A84C] focus:text-black focus:px-6 focus:py-3 focus:text-sm focus:font-semibold focus:rounded"
@@ -410,19 +410,19 @@ export default async function RootLayout({ children }) {
           Skip to main content
         </a>
 
-        {/* Tier 1.1 — Forbes feature bar (sitewide, server-rendered).
+        {/* Tier 1.1, Forbes feature bar (sitewide, server-rendered).
             George Yachts featured in Forbes, 1 May 2026. The bar sits
             above all other UI; cookie-dismissible for 90 days. */}
         <ForbesTopBar />
 
-        {/* E1 — Gold curtain opens once per session, first thing visitors see */}
+        {/* E1, Gold curtain opens once per session, first thing visitors see */}
         <GoldCurtain />
-        {/* Phase 22 (luxury rebuild) — Hermes/Bottega-style gold sweep
+        {/* Phase 22 (luxury rebuild), Hermes/Bottega-style gold sweep
             on every route change. 360ms ribbon wipe. Skipped on first
             mount (GoldCurtain owns the entrance) and on prefers-reduced-
             motion. */}
         <RouteTransition />
-        {/* Phase 26 — pseudo-3D mouse parallax on .gy-ken-burns
+        {/* Phase 26, pseudo-3D mouse parallax on .gy-ken-burns
             containers (yacht hero, /greece-by-yacht hero). Cheap
             CSS substitute for the AI depth-map in Boss's C1 combo
             decision. Skipped on touch + reduced-motion. */}
@@ -444,10 +444,10 @@ export default async function RootLayout({ children }) {
           />
         )}
 
-        {/* Global Effects + Custom Cursor — all pages */}
+        {/* Global Effects + Custom Cursor, all pages */}
         <GlobalEffects />
         <CustomCursor />
-        {/* Phase 27i (2026-05-07) — cinematic layer.
+        {/* Phase 27i (2026-05-07), cinematic layer.
             SmoothScroll: Lenis-driven interpolated scrolling, the
               page glides instead of snapping.
             ScrollProgress: gold thin line at the top, 1st cinematic
@@ -460,9 +460,9 @@ export default async function RootLayout({ children }) {
         <ScrollProgress />
         <SoundFx />
         <ScrollToTop />
-        {/* A4 — Ambient scroll parallax driver (publishes CSS vars) */}
+        {/* A4, Ambient scroll parallax driver (publishes CSS vars) */}
         <AmbientScroll />
-        {/* 2026-07-02 (ASK B 2.4) — Speculation Rules prerender for the
+        {/* 2026-07-02 (ASK B 2.4), Speculation Rules prerender for the
             two highest-intent destinations. Progressive enhancement;
             PostHogProvider gates analytics on document.prerendering. */}
         <SpeculationRules />
@@ -477,46 +477,46 @@ export default async function RootLayout({ children }) {
         </main>
         {/* Language: users choose from flag selector. LiveTicker: social proof */}
         <LiveTicker />
-        {/* CookieConsent (custom) — removed; Cookiebot handles it */}
+        {/* CookieConsent (custom), removed; Cookiebot handles it */}
         {/* Removed VoiceSearch */}
         {/* TranslateWidget moved into NavDrawerSystem's right icon
-            strip — cleaner placement, no floating pill clashing with
+            strip, cleaner placement, no floating pill clashing with
             social icons or the hero content. */}
         <WhatsAppButton />
-        {/* 2026-06-25 — Web Push opt-in. Discreet, contextual (high-intent
+        {/* 2026-06-25, Web Push opt-in. Discreet, contextual (high-intent
             pages only), dismissible; bottom-LEFT so it never clashes with
             the WhatsApp FAB bottom-right. Push-only service worker, so it
             cannot affect page loads. Free owned channel for last-minute
             availability. Needs VAPID_PRIVATE_KEY in Vercel to send. */}
         <PushOptIn />
-        {/* Phase 1 / B2 (luxury rebuild, 2026-05-05) — multi-channel
+        {/* Phase 1 / B2 (luxury rebuild, 2026-05-05), multi-channel
             contact drawer (WhatsApp / iMessage / Signal / direct call).
             Sits above the WhatsApp FAB; one tap surfaces every channel
             UHNW guests use. Personal reply, never an autoresponder. */}
         <ContactDrawer />
-        {/* Phase 1 / G2 (luxury rebuild, 2026-05-05) — first-visit
+        {/* Phase 1 / G2 (luxury rebuild, 2026-05-05), first-visit
             subtle greeting that reads visitor's IP city + local time
-            ("Good evening from Athens — 21:14 local"). Free Vercel
+            ("Good evening from Athens, 21:14 local"). Free Vercel
             geo headers, no third-party calls, fades after 4s. */}
         <VisitorGreeting />
-        {/* Phase 27 — AmbientPlayer is back per Boss directive
+        {/* Phase 27, AmbientPlayer is back per Boss directive
             ("μη μου διαγράφεις πράγματα που δε σου 'χω πει εγώ").
-            Click-to-play remains the model — pill stays muted on
+            Click-to-play remains the model, pill stays muted on
             load, plays only after the explicit gesture. Sound
             quality fix tracked separately. */}
         <AmbientPlayer />
-        {/* Phase 27d (2026-05-05) — BrokerStatus retired per Boss
+        {/* Phase 27d (2026-05-05), BrokerStatus retired per Boss
             instruction. The pill was breaking the hero composition.
             <BrokerStatus />  */}
-        {/* Phase 21 — Forbes referrer welcome card. Detects ?ref=forbes
+        {/* Phase 21, Forbes referrer welcome card. Detects ?ref=forbes
             or referrer containing forbes.com, slides in once per session,
             offers a direct path to Brief George. */}
         <ForbesReferrerWelcome />
-        {/* H.1 — Ask George AI Concierge (sitewide). Sits ABOVE the
+        {/* H.1, Ask George AI Concierge (sitewide). Sits ABOVE the
             WhatsApp button at bottom-right. Widget is fully client-side;
             graceful fallback when AI_API_KEY env vars aren't configured. */}
         <AskGeorgeWidget />
-        {/* Roberto 2026-05-02 — sticky bottom CTA so the fleet is one
+        {/* Roberto 2026-05-02, sticky bottom CTA so the fleet is one
             tap from anywhere on the site (auto-hides on fleet/yacht
             routes). yachtCount left undefined here at the layout
             level since we don't have it server-side without an extra
@@ -527,9 +527,9 @@ export default async function RootLayout({ children }) {
             StickyInquiryBar for programmatic pages. The component
             self-suppresses on homepage and conversion pages. */}
         <StickyInquiryBar />
-        {/* D2 — Exit-intent capture, one shot per session */}
+        {/* D2, Exit-intent capture, one shot per session */}
         <ExitIntentModal />
-        {/* FavoritesEmailPrompt removed 2026-05-08 (Boss directive) —
+        {/* FavoritesEmailPrompt removed 2026-05-08 (Boss directive)
             interrupting a visitor mid-shortlist with a modal is
             the wrong moment. The /favorites page already exposes
             a static "Send to George" form that does the same job
@@ -584,7 +584,7 @@ export default async function RootLayout({ children }) {
         </Script>
 
 
-        {/* Removed: Smartsupp live-chat loader — George 2026-04-21
+        {/* Removed: Smartsupp live-chat loader, George 2026-04-21
             "eksafanise to teleiws den mas noiazei". Primary inbound
             channel is WhatsApp (see <WhatsAppButton />), so the chat
             widget was just another floating surface competing for
@@ -592,13 +592,13 @@ export default async function RootLayout({ children }) {
             off the first paint; Smartsupp domain can now come out of
             the CSP disclosure as well. */}
 
-        {/* Removed: Leadsy AI tracker — form-interaction + visitor
+        {/* Removed: Leadsy AI tracker, form-interaction + visitor
             tracking was overlapping with Microsoft Clarity (which
             already captures full session recordings + heatmaps).
             Keeping one vendor for that surface keeps the page lighter
             and the GDPR disclosure simpler. */}
 
-        {/* Safe Pass Apr 2026 — additive enhanced analytics */}
+        {/* Safe Pass Apr 2026, additive enhanced analytics */}
         <EnhancedAnalytics />
         <MicrosoftClarity />
       </body>

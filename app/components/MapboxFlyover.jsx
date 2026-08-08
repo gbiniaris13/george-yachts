@@ -266,8 +266,8 @@ export default function MapboxFlyover() {
         </h2>
       </div>
 
-      {/* The map container — lazy mounted.
-          Phase 27f (Forbes-launch day, 2026-05-06) — when skipMap is
+      {/* The map container, lazy mounted.
+          Phase 27f (Forbes-launch day, 2026-05-06), when skipMap is
           true (no token / load failure / 5s timeout), we now render a
           rich image-based fallback instead of a black gradient: an
           aerial Aegean photo with a gold overlay grid + 5 region
@@ -290,7 +290,7 @@ export default function MapboxFlyover() {
       >
         {skipMap && (
           <>
-            {/* Background hero image — aerial Aegean coastline. We
+            {/* Background hero image, aerial Aegean coastline. We
                 reuse the existing hero-poster as a known-good asset
                 already in /public. */}
             <img
@@ -361,7 +361,7 @@ export default function MapboxFlyover() {
                   marginTop: 8,
                 }}
               >
-                {/* 2026-05-14 — Ahrefs flagged these as "page has links to
+                {/* 2026-05-14, Ahrefs flagged these as "page has links to
                     redirect": /yacht-charter/{region} 308-redirects to
                     /destinations/{region}. Point them at the canonical
                     destination URL directly so the redirect roundtrip +

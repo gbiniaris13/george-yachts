@@ -357,7 +357,7 @@ export default async function IslandPage({ params }) {
             >
               {island.region} · George Yachts
             </p>
-            {/* Phase 27g (Forbes-launch day, 2026-05-06) — added the
+            {/* Phase 27g (Forbes-launch day, 2026-05-06), added the
                 .gy-luxe-enter class so the per-island H1 gets the
                 same ivory→champagne gold reveal as the homepage hero.
                 Global CSS catch-all already converts Cormorant H1s
@@ -825,7 +825,7 @@ export default async function IslandPage({ params }) {
           <QuizCtaCard fromSlug={island.slug} fromName={island.name} />
         </div>
 
-        {/* CONTINUE EXPLORING — Phase 7 Round 11 internal linking */}
+        {/* CONTINUE EXPLORING, Phase 7 Round 11 internal linking */}
         {related.length > 0 && (
           <section style={{ padding: "72px 24px", borderTop: "1px solid rgba(248, 245, 240, 0.06)" }}>
             <div style={{ maxWidth: 1100, margin: "0 auto" }}>
@@ -965,7 +965,7 @@ export default async function IslandPage({ params }) {
           </div>
         </section>
       </article>
-      {/* 2026-08-06 (job 9) — the footer was missing from this template.
+      {/* 2026-08-06 (job 9), the footer was missing from this template.
           Measured across all 474 public pages: 77 rendered the sitewide
           footer, 397 rendered no <footer> element at all, because the six
           programmatic templates each ended at </article>. No comment in any
