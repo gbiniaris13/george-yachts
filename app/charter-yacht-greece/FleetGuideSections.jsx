@@ -82,7 +82,7 @@ const fmt = (n) => `€${Number(n).toLocaleString("en-US")}`;
 // never drift apart. Answers quote on-site sources only.
 function buildFaqs(tiers) {
   const priceAnswer = tiers.private
-    ? `Live from today's fleet: the fully crewed Private Fleet runs ${fmt(tiers.private.low)} to ${fmt(tiers.private.high)} per yacht per week base rate${tiers.explorerPP ? `, and the skippered Explorer Fleet starts around ${fmt(tiers.explorerPP)} per person per week` : ""}. On top come APA (typically 25 to 40%) and Greek VAT.`
+    ? `Live from today's fleet: the fully crewed Private Fleet runs ${fmt(tiers.private.low)} to ${fmt(tiers.private.high)} per yacht per week base rate${tiers.explorerPP ? `, and the skippered Explorer Fleet starts around ${fmt(tiers.explorerPP)} per person per week` : ""}. On top come APA (20 to 40% by yacht type) and Greek VAT.`
     : "The fully crewed Private Fleet is priced per yacht per week; the skippered Explorer Fleet is priced per person. Every yacht page lists its live rate, and George confirms the full figure in writing before you commit.";
   return [
     {
@@ -91,7 +91,7 @@ function buildFaqs(tiers) {
     },
     {
       q: "What is included in the base charter rate?",
-      a: "The yacht and her professional crew. The running costs of your week (fuel, provisioning, berthing) are funded by the APA, the Advance Provisioning Allowance, typically 25 to 40% of the base rate depending on yacht type, run as a transparent account and settled at the end of the charter.",
+      a: "The yacht and her professional crew. The running costs of your week (fuel, provisioning, berthing) are funded by the APA, the Advance Provisioning Allowance, 20 to 40% of the base rate depending on yacht type, run as a transparent account and settled at the end of the charter.",
     },
     {
       q: "What VAT applies to a Greek yacht charter in 2026?",
@@ -243,7 +243,7 @@ export default function FleetGuideSections({ yachts }) {
             <Link href="/greek-yacht-charter-vat-explained-2026" style={goldLink}>the 2026 VAT rules explained</Link>)
             and the{" "}
             <Link href="/advance-provisioning-allowance-apa-greek-yacht-charter-explained" style={goldLink}>APA</Link>{" "}
-            of 25 to 40% for fuel, provisioning and berthing.{" "}
+            of 20 to 40% by yacht type, for fuel, provisioning and berthing.{" "}
             <Link href="/whats-included-in-greek-yacht-charter-complete-2026-guide" style={goldLink}>What is included, in full</Link>, and the{" "}
             <Link href="/greek-charter-index-2026" style={goldLink}>Greek Charter Index 2026</Link>{" "}
             holds the market rates by yacht type and region.

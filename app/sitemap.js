@@ -83,7 +83,10 @@ const staticRoutes = [
   // for "yacht charter cost Greece" land directly. /yacht-finder
   // still 301-redirects to /inquiry until the Smart Match Quiz
   // ships at /yacht-finder.
-  { path: "/cost-calculator", priority: 0.9, changeFrequency: "weekly" },
+  // 2026-08-08 — dropped from the sitemap, not from the site. It now
+  // canonicalises to /tools/charter-cost-calculator, and asking Google to
+  // crawl a URL that points somewhere else just spends crawl budget saying
+  // "look over there". The page still serves anyone who has the link.
   // Phase 7 R26 (2026-05-12, technical brief Priority 2A) - VAT/APA
   // calculator. Highest-leverage linkable asset. Higher priority
   // than cost-calculator because this is the comprehensive new

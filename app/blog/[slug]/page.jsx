@@ -17,6 +17,7 @@ import { autoLinkPortableText } from "@/lib/auto-link-content";
 import { blogSeoTitle } from "@/lib/blogSeoTitles";
 import { getClustersForPost } from "@/lib/journal-clusters";
 import RelatedPages from "@/app/components/seo/RelatedPages";
+import { titleField } from "@/lib/seoTitle";
 
 // Non-CDN client for real-time content fetching.
 // withRetry — see lib/sanity.js: rides out transient CDN connect-timeouts
@@ -236,7 +237,7 @@ export async function generateMetadata({ params }) {
     // keyword-forward SERP title per slug. The H1, the OG card and the
     // Journal index all keep the full editorial headline; only the
     // <title> is swapped, and only where an override exists.
-    title: blogSeoTitle(slug, post.title),
+    title: titleField(blogSeoTitle(slug, post.title)),
     description,
     alternates: {
       canonical: canonicalUrl,

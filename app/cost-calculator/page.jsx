@@ -6,11 +6,22 @@ import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 import Footer from "@/app/components/Footer";
 export const revalidate = 3600;
 
+// 2026-08-08 — this page and /tools/charter-cost-calculator are 68% the same
+// content, and the numbers say only one of them is working. Over three months
+// in Search Console /tools/charter-cost-calculator took 172 impressions and
+// this URL does not appear at all; Bing's AI report credits that page with 92
+// citations and this one with none.
+//
+// So the authority consolidates there. This page keeps working for anyone who
+// has the link or arrives from the partner dashboard, which is why it is
+// canonicalised rather than deleted or redirected: nothing that exists gets
+// taken away, the search engines are simply told which address to rank.
 export const metadata = pageMeta({
   title: 'Charter Cost Calculator | George Yachts',
   description:
     'Calculate the total cost of your Greek yacht charter. Transparent pricing with charter rate, APA, VAT, and transfer estimates. No hidden fees.',
   path: '/cost-calculator',
+  canonicalPath: '/tools/charter-cost-calculator',
 });
 
 const QUERY = `*[_type == "yacht"] | order(weeklyRatePrice asc) {

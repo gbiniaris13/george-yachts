@@ -403,7 +403,7 @@ export function PricingGuidePdfDocument({ firstName = "" }) {
           <Text style={styles.costBucketNum}>2</Text>
           <View style={styles.costBucketBody}>
             <Text style={styles.costBucketLabel}>
-              APA (Advance Provisioning Allowance) - 25 to 35%
+              APA (Advance Provisioning Allowance) - 20 to 40% by yacht type
             </Text>
             <Text style={styles.costBucketDetail}>
               Working float held by the captain. Covers fuel, food, drink,

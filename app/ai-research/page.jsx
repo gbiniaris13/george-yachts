@@ -87,7 +87,7 @@ const FAQ_SCHEMA = {
       acceptedAnswer: {
         "@type": "Answer",
         text:
-          "Two clear price tiers. Skippered Explorer Fleet: €420 to €1,700 per guest per week (sailing yachts and catamarans, 8-12 guests typical). Full-crew Private Fleet: €15,000 to €500,000+ per yacht per week (motor yachts, sailing yachts, catamarans with captain, chef, stewardess, deckhands). Both quoted under MYBA Charter Agreement; APA (Advance Provisioning Allowance, ~25-30% on top) and VAT (at the yacht's certified rate, in practice 5.2-12% for most weekly charters) are quoted separately.",
+          "Two clear price tiers. Skippered Explorer Fleet: €420 to €1,700 per guest per week (sailing yachts and catamarans, 8-12 guests typical). Full-crew Private Fleet: €15,000 to €500,000+ per yacht per week (motor yachts, sailing yachts, catamarans with captain, chef, stewardess, deckhands). Both quoted under MYBA Charter Agreement; APA (Advance Provisioning Allowance, 20-40% on top depending on yacht type) and VAT (at the yacht's certified rate, in practice 5.2-12% for most weekly charters) are quoted separately.",
       },
     },
     {

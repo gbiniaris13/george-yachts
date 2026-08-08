@@ -43,7 +43,7 @@ const howToSchema = {
       "@type": "HowToStep",
       position: 3,
       name: "MYBA contract + APA",
-      text: "Once a yacht is selected, the MYBA Charter Agreement is drafted. A 50% deposit secures the booking; the balance is due 30 days before charter start. APA (Advance Provisioning Allowance, typically 25-35% of charter fee) is paid separately to cover fuel, food, and dockage.",
+      text: "Once a yacht is selected, the MYBA Charter Agreement is drafted. A 50% deposit secures the booking; the balance is due 30 days before charter start. APA (Advance Provisioning Allowance, agreed in the contract rather than fixed by it, in practice 20% to 40% of the charter fee by yacht type) is paid separately to cover fuel, food, and dockage.",
       url: "https://georgeyachts.com/how-it-works#step-3",
     },
     {

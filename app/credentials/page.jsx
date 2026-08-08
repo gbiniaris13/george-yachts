@@ -23,6 +23,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Footer from "@/app/components/Footer";
+import { titleField } from "@/lib/seoTitle";
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = {
@@ -31,7 +32,7 @@ export const metadata = {
   // whether a broker is real". 331 impressions at positions 19.9 and 21.6 with
   // no clicks. The title now carries the question and the description leads
   // with the method, then the proof.
-  title: "Yacht Charter Broker Credentials: How to Verify Any Broker",
+  title: titleField("Yacht Charter Broker Credentials: How to Verify Any Broker"),
   description:
     "Four checks that work on any charter broker: the association directory, the contract, the registered entity, and coverage they did not commission. Ours, in full.",
   alternates: { canonical: "https://georgeyachts.com/credentials" },

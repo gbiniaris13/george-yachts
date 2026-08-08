@@ -254,7 +254,7 @@ export default function ChartCostCalculatorPage() {
                   body: "Half the standard 24% Greek VAT, applied to the base fee for intra-Greek charters on Greek-flagged yachts. The most favourable Mediterranean rate after Croatia's 13%.",
                 },
                 {
-                  label: "APA (25-35%)",
+                  label: "APA (20-40% by yacht type)",
                   body: "Advance Provisioning Allowance. Working float held by the captain to cover fuel, food, drink, port fees, laundry. Receipted - any unspent balance is refunded at disembarkation.",
                 },
                 {

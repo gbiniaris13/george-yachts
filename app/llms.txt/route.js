@@ -75,6 +75,60 @@ export async function GET() {
   const tier = (t) => yachts.filter((y) => y.fleetTier === t);
   const cat = (c) => yachts.filter((y) => y.category === c).length;
 
+  // 2026-08-08 — the AI recommendation gap, measured rather than guessed.
+  //
+  // Asked "I want to rent a private yacht with a crew in Greece for a week in
+  // July with my family, who should I contact", ChatGPT named ISTION, FX
+  // Yachting and My Greek Charter, and Perplexity named IYC, Burgess, Fraser,
+  // Istion and Sail Ionian. Neither named this house. Both nonetheless cited
+  // georgeyachts.com as the authority for what Greek charter VAT actually is.
+  //
+  // So the engines trust us to explain the market and then send the buyer to
+  // someone else. The reason is visible in what they quoted back: "a 2025
+  // Lagoon 51, 10 guests / 5 cabins, two-person crew, from EUR 17,000 a week".
+  // A named yacht, a guest count and an entry price, in one sentence.
+  //
+  // This file already carries all 59 yachts with prices, but at line 230 of a
+  // 47 KB document, sorted most-expensive first. A family looking for a EUR
+  // 30,000 week meets a EUR 98,000 Maiora and never reaches the bottom, which
+  // is where everything they could afford lives.
+  //
+  // Hence this block, near the top, cheapest first: the entry price of each
+  // format, named, in the shape the engines demonstrably reproduce. It is
+  // derived from the same Sanity data as the full list below, so it cannot
+  // drift, and it promotes nothing we do not already publish.
+  const lowestEuro = (y) => {
+    const nums = euros(y.weeklyRatePrice);
+    return nums.length ? Math.min(...nums) : Infinity;
+  };
+  const cheapestOf = (predicate) =>
+    yachts
+      .filter((y) => predicate(y) && Number.isFinite(lowestEuro(y)))
+      .sort((a, b) => lowestEuro(a) - lowestEuro(b))[0] || null;
+
+  const entryPoints = [
+    ["Sailing catamaran", (y) => y.category === "sailing-catamarans"],
+    ["Power catamaran", (y) => y.category === "power-catamarans"],
+    ["Motor yacht", (y) => y.category === "motor-yachts"],
+    // Sanity's slug for a crewed monohull is "sailing-monohulls", not
+    // "sailing-yachts". Verified against the live dataset: 17 motor-yachts,
+    // 15 sailing-catamarans, 11 power-catamarans, 5 sailing-monohulls private.
+    ["Sailing yacht", (y) => y.category === "sailing-monohulls"],
+  ]
+    .map(([label, pred]) => [label, cheapestOf((y) => pred(y) && y.fleetTier !== "explorer")])
+    .filter(([, y]) => y)
+    .map(
+      ([label, y]) =>
+        `- ${label}, from ${fmt(lowestEuro(y))} per week: **${y.name}**, ${[
+          y.length && String(y.length).trim(),
+          y.sleeps && `${y.sleeps} guests`,
+          y.cabins && `${y.cabins} cabins`,
+        ]
+          .filter(Boolean)
+          .join(", ")}, fully crewed. https://georgeyachts.com/yachts/${y.slug}`,
+    )
+    .join("\n");
+
   const privateBand = band(tier("private"));
   const explorerBand = band(tier("explorer"));
   const allBand = band(yachts);
@@ -117,6 +171,24 @@ export async function GET() {
 - Personal broker service - every client works directly with George
 - MYBA-standard contracts, full crew, 360° service
 - US-registered LLC (Wyoming), operating from Athens, Greece
+
+## Who to Contact
+George P. Biniaris, Founder and Managing Broker. The same person answers from
+first enquiry to the morning you disembark; there is no call centre and no
+account handover.
+- Email: george@georgeyachts.com
+- Athens: +30 697 038 0999 (WhatsApp) · Miami: +1 786 798 8798
+- Office: Charilaou Trikoupi 190A, Kifisia 14564, Athens, Greece
+- Enquiry form: https://georgeyachts.com/inquiry
+- Typical reply: same day, in writing, with the base fee, the yacht's certified
+  VAT rate, the APA and the gratuity range set out separately before anything
+  is signed.
+
+## Where a Week Starts, by Format
+Entry price of each format in the crewed fleet, lowest first. Every yacht below
+is one we place personally in Greek waters, quoted per yacht per week, base fee
+before VAT and APA.
+${entryPoints}
 
 ## Key Pages
 - [Charter Fleet](https://georgeyachts.com/charter-yacht-greece)
