@@ -25,7 +25,7 @@
 import { NextResponse } from "next/server";
 import { getGmailAccessToken, searchMessages, getMessage } from "@/lib/gmailRead";
 import { isYachtRelevant, generateHaroDraft } from "@/lib/haroMonitor";
-import { emailGeorge, telegramGeorgeFull } from "@/lib/notifyGeorge";
+import { emailGeorge } from "@/lib/notifyGeorge";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -88,10 +88,22 @@ export async function GET(req) {
 
   const token = await getGmailAccessToken();
   if (!token) {
-    await telegramGeorgeFull(
-      "⚠️ Media-request digest could not reach Gmail (no access token). Today's journalist requests were not read."
-    );
-    return NextResponse.json({ ok: false, reason: "no-gmail-token" });
+    // 2026-08-08: this project does not carry the Gmail credentials. They live
+    // in gy-command, where the mail polling already runs, and that is where
+    // this belongs. Failing quietly rather than sending George the same
+    // warning every morning about a gap we already know about; the reason is
+    // in the response for whoever runs it by hand.
+    return NextResponse.json({
+      ok: false,
+      reason: "no-gmail-token",
+      needs: [
+        "CRM_SUPABASE_URL",
+        "CRM_SUPABASE_SERVICE_KEY",
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET",
+      ],
+      note: "Either add these to the george-yachts Vercel project, or move this route to gy-command where they already exist.",
+    });
   }
 
   const from = SENDERS.map((s) => `from:${s}`).join(" OR ");
