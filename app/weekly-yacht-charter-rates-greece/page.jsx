@@ -20,6 +20,7 @@ import {
   INTRO,
   buildMatrix,
   buildBreakdownTable,
+  buildRange,
   quickAnswer,
   methodology,
   statCallouts,
@@ -35,13 +36,33 @@ const GOLD = "#C9A84C";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
-// 2026-08-06 (job 8, local until George's push) — this page ranks 11.1 in the
-// US for "motor yacht charter greece prices" and took 35 impressions with zero
-// clicks over 90 days. Its own lead paragraph publishes the exact figure a
-// price searcher is hunting for, and the title carried no number at all. The
-// head term stays at the front; the range is appended verbatim from the page.
+// 2026-08-06 (job 8) — this page ranks for "motor yacht charter greece prices"
+// and took 35 impressions with zero clicks over 90 days. Its own lead paragraph
+// publishes the exact figure a price searcher is hunting for, and the title
+// carried no number at all, so the range was appended.
+//
+// 2026-08-11 — that tuning moved nothing: 222 impressions across the site for
+// that query, position 14.0 overall and 11.7 on this page, still zero clicks.
+// Reading the title next to the query explains why. The searcher types "motor
+// yacht charter greece PRICES"; the title said "Weekly Yacht Charter RATES
+// Greece" and never said "motor yacht" at all. Every word of the query was
+// either missing or a synonym. So the head term now matches what people type.
+//
+// The range is also no longer typed by hand. Changing the motor-yacht APA to
+// its own band this morning moved the all-in ceiling from 228,000 to 231,000
+// and the title kept the old number for half a day, which is exactly the kind
+// of quiet drift that makes a price page untrustworthy. It reads from
+// buildRange() now, the same function that prints the figure on the page, so
+// the two can never disagree again.
+const { lowText, highText } = buildRange();
+
 export const metadata = pageMeta({
-  title: "Weekly Yacht Charter Rates Greece: €35,000 to €228,000 All-In",
+  // "All-In" is not decoration. Without it the title lands at exactly 70
+  // characters once the brand suffix is appended, which is the limit, and
+  // Google truncates on pixel width well before that, eating the number that
+  // is the whole reason a price searcher clicks. At 61 characters the title
+  // rule drops the brand instead, and the phrase and both figures survive.
+  title: `Motor Yacht Charter Greece Prices: ${lowText} to ${highText} All-In`,
   description: DESCRIPTION,
   path: `/${SLUG}`,
 });
@@ -178,7 +199,7 @@ export default function WeeklyRatesPage() {
               Original rate data · Motor yachts · 2026
             </p>
             <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(40px, 6vw, 80px)", fontWeight: 300, margin: "0 0 18px", lineHeight: 1.02, letterSpacing: "-0.02em" }}>
-              Weekly Yacht Charter Rates in Greece
+              Motor Yacht Charter Prices in Greece
             </h1>
             <LastUpdated date={DATA_MODIFIED} />
           </div>
