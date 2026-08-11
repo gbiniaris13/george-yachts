@@ -1,3 +1,4 @@
+import { yachtSeoTitle } from "@/lib/yachtSeoTitles";
 import { sanityClient } from '@/lib/sanity';
 import { notFound } from 'next/navigation';
 import YachtPageContent from './YachtPageContent';
@@ -61,7 +62,11 @@ export async function generateMetadata({ params }) {
   // (16 chars), so the base must stay <= 44 — otherwise the name stands
   // alone, which reads cleaner than a chopped model string.
   const base = shortSubtitle ? `${yacht.name} | ${shortSubtitle}` : yacht.name;
-  const title = base.length <= 44 ? base : yacht.name;
+  // 2026-08-11 — a per-yacht override, used only where Search Console shows a
+  // real name-search cluster. See lib/yachtSeoTitles.js for why this is a map
+  // rather than a change to the line below: the whole fleet takes 85
+  // impressions in ninety days and one hull accounts for most of them.
+  const title = yachtSeoTitle(slug) || (base.length <= 44 ? base : yacht.name);
   // 2026-08-06 (job 8) — em/en dashes are a standing no, and one was reaching
   // Google through a Sanity subtitle ("Lagoon 51 — Sailing Catamaran" on
   // Errant Vagabond). Normalising at the generator covers every yacht added
