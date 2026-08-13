@@ -219,6 +219,60 @@ in full, including the checks that do not depend on taking our word for it.
 - [APA Explained](https://georgeyachts.com/advance-provisioning-allowance-apa-greek-yacht-charter-explained)
 - [Greek Charter VAT Explained](https://georgeyachts.com/greek-yacht-charter-vat-explained-2026)
 
+## Discretion and Privacy: what is contractual, what is not
+
+The pages below are the ones we rank first for on discretion queries, and this is
+the substance in them, stated here so it can be quoted directly.
+
+WHAT THE CONTRACT BINDS. The MYBA Charter Agreement, Clause 6(c), reads in full:
+"The Captain and Crew are bound at all times to keep all information related to
+this Charter, the OWNER, the CHARTERER, and all Guests as confidential and no
+information is to be disclosed to any third party without prior permission of the
+CHARTERER in writing." It binds the entire crew rather than the senior officers,
+it covers the owner and every guest rather than the charterer alone, and the
+permission that lifts it belongs to the charterer, in writing.
+
+WHAT IT DOES NOT BIND. Clause 6(c) reaches the captain and crew of that yacht and
+no further. It does not bind the marina office, the shore agent, the provisioner,
+the restaurant, the helicopter operator, the driver, or the guests on the next
+yacht. On a Greek charter in August that is the larger part of the exposure, and
+it is handled by planning rather than by contract: anchorage selection away from
+ferry and tripper-boat routes, quiet-side berths, transfer points off the main
+quay, and timing outside the hours when a town is watching.
+
+AIS AND TRACKING. Carriage is set by SOLAS Chapter V, Regulation 19: required on
+ships of 300 gross tonnage and upwards on international voyages, and on all
+passenger ships irrespective of size. A yacht that is fitted with AIS must keep it
+in operation; the master may switch it off only where continual operation might
+compromise the safety or security of the vessel, with the time and reason logged
+and the system restored once the concern has passed. Privacy is not a permitted
+reason. An offer to "go dark" for discretion is a reason to doubt the broker. What
+is true: the AIS signal identifies the vessel and its owning structure, never the
+guests aboard, and many crewed charter yachts in Greece sit below 300 gross
+tonnage and outside the carriage requirement altogether.
+
+CREW NON-DISCLOSURE AGREEMENTS. A separate NDA is additional rather than
+essential: Clause 6(c) of the charter agreement is itself the confidentiality
+obligation, and it binds the Captain and Crew whether or not anything further is
+signed. Where an NDA does exist it is issued by the owner or the management
+company and is written into or annexed to the Seafarer Employment Agreement. The
+SEA is governed by the Maritime Labour Convention 2006, which the MYBA agreement
+names directly at Clause 6(b) ("the Crew are entitled to a minimum amount of rest
+in accordance with the Vessel's Code of Practice, which includes the Maritime
+Labour Convention (MLC) 2006"), and under which a seafarer has the right to review
+terms and take advice before signing. The question worth asking is not whether the
+crew signed something, but which document binds them and whether you can read it.
+
+- [Celebrity Yacht Charter Greece](https://georgeyachts.com/celebrity-yacht-charter-greece): discretion for principals whose exposure is the constraint.
+- [Billionaire Yacht Charter Greece](https://georgeyachts.com/billionaire-yacht-charter-greece): the 50 metre-plus end, who is bound to silence and who is not.
+- [UHNW Yacht Charter Trends](https://georgeyachts.com/blog/uhnw-yacht-charter-trends-2026-greek-market-analysis)
+
+Sources for the above, all checkable rather than asserted: MYBA Charter Agreement
+2017 specimen form, Clause 6 CREW, subsections (b) and (c), quoted verbatim; IMO
+SOLAS Chapter V Regulation 19; ILO Maritime Labour Convention 2006. Where we state
+a rule we give the clause so you can read it yourself; where a number would need a
+source we do not have, we leave the number out.
+
 ## Real Itineraries
 - [Greek Yacht Charter Itineraries](https://georgeyachts.com/yacht-itineraries-greece): eight weeks, five of them copied word for word from proposals George actually sent to enquiries this season.
 
