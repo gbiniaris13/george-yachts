@@ -48,7 +48,22 @@ const nextConfig = {
               // both consent.cookiebot.com (main script) and
               // consentcdn.cookiebot.com (consent state CDN) as
               // required across script/img/connect/frame directives.
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://translate.google.com https://translate.googleapis.com https://js.hs-scripts.com https://js.hsforms.net https://js.hs-analytics.net https://js.hs-banner.com https://js.hscollectedforms.net https://consent.cookiebot.com https://consentcdn.cookiebot.com",
+              // 2026-08-11 — Microsoft Clarity added, and it is the second time
+              // this exact bug has cost us. The note above records Cookiebot
+              // being "silently blocked by CSP"; Clarity was blocked the same
+              // way from the day it went in and nobody could see it, because
+              // the failure looks like success. The inline loader runs happily
+              // under 'unsafe-inline', creates window.clarity as a queue shim
+              // so every check for "is Clarity there" returns yes, and then
+              // the browser blocks the real script it tries to insert. The
+              // dashboard stays empty, the tag "loads", and you diagnose
+              // consent for a day.
+              //
+              // Two hosts are required and they are different: www.clarity.ms
+              // serves the small per-project tag, scripts.clarity.ms serves
+              // the library the tag then loads. Allowing only the first is
+              // exactly the state we were in.
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://translate.google.com https://translate.googleapis.com https://js.hs-scripts.com https://js.hsforms.net https://js.hs-analytics.net https://js.hs-banner.com https://js.hscollectedforms.net https://consent.cookiebot.com https://consentcdn.cookiebot.com https://www.clarity.ms https://scripts.clarity.ms",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com https://api.fontshare.com https://consent.cookiebot.com https://consentcdn.cookiebot.com",
               "font-src 'self' https://fonts.gstatic.com https://cdn.fontshare.com https://consent.cookiebot.com https://consentcdn.cookiebot.com",
               // 2026-05-17 — The Cabin (mood-board + voyage-album)
@@ -58,7 +73,11 @@ const nextConfig = {
               // Also allowing https: for arbitrary mood-board pastes
               // (Pinterest, etc.) which are charterer-pasted URLs.
               "img-src 'self' data: blob: https: https://cdn.sanity.io https://images.pexels.com https://images.unsplash.com https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://translate.google.com https://www.google.com https://translate.googleapis.com https://imgsct.cookiebot.com https://consent.cookiebot.com",
-              "connect-src 'self' https://cdn.sanity.io https://*.sanity.io https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://*.hubapi.com https://api.hubspot.com https://forms.hubspot.com https://translate.googleapis.com https://translate.google.com https://wttr.in https://consent.cookiebot.com https://consentcdn.cookiebot.com",
+              // *.clarity.ms on connect-src: the library uploads to
+              // u.clarity.ms and pings c.clarity.ms. Allowing the scripts to
+              // load but not to send would be a subtler version of the same
+              // failure, so both directives move together.
+              "connect-src 'self' https://cdn.sanity.io https://*.sanity.io https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://*.hubapi.com https://api.hubspot.com https://forms.hubspot.com https://translate.googleapis.com https://translate.google.com https://wttr.in https://consent.cookiebot.com https://consentcdn.cookiebot.com https://*.clarity.ms",
               // 2026-05-12 — added my.matterport.com pre-emptively.
               // The yacht detail page (YachtPageContent.jsx Matterport
               // section) renders an <iframe src={yacht.matterportEmbedUrl}>
