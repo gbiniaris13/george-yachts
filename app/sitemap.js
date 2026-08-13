@@ -57,9 +57,17 @@ const staticRoutes = [
   // Google indexes the high-value comparison-query pages directly.
   { path: "/contact", priority: 0.85, changeFrequency: "monthly" },
   { path: "/compare", priority: 0.8, changeFrequency: "weekly" },
-  { path: "/compare?yachts=genny,altaia", priority: 0.7, changeFrequency: "weekly" },
-  { path: "/compare?yachts=la-pellegrina,filotimo", priority: 0.7, changeFrequency: "weekly" },
-  { path: "/compare?yachts=genny,filotimo", priority: 0.7, changeFrequency: "weekly" },
+  // 2026-08-13 - the three /compare?yachts=... routes were REMOVED from the
+  // sitemap after an Ahrefs crawl flagged "Noindex page in sitemap" as a
+  // critical error, and the live pages confirmed it: each one serves
+  // <meta name="robots" content="noindex, follow">. Listing them here told
+  // Google "please crawl this" while the page said "do not index me", which
+  // is a contradiction that costs crawl budget on a site where only 44 of
+  // 476 pages were re-crawled in a week. All three have ZERO impressions
+  // over 90 days, so nothing is lost.
+  //
+  // The pages themselves are untouched and still render for anyone holding
+  // the link. This removes an instruction, not a page.
 
   // Per-region SEO landing pages.
   // 2026-05-08 — Boss flagged /yacht-charter/[region] as off-brand
@@ -510,13 +518,48 @@ export default async function sitemap() {
   // the fallback for anything the manifest does not know (a route that is not
   // prerendered, or a page added since the last manifest run), so this is a
   // narrowing of the claim, never a widening of it.
+  // NEVER ADVERTISE A PAGE WE HAVE ALREADY DISOWNED.
+  //
+  // 2026-08-13. Ahrefs flagged "Non-canonical page in sitemap" and it was
+  // /mykonos-vs-santorini-yacht-charter-2026, which canonicalises to the
+  // year-free twin. That consolidation was deliberate and correct, but the
+  // page kept appearing here, so the sitemap was asking Google to index a
+  // URL our own HTML tells it to ignore. Google resolves that by trusting
+  // the sitemap slightly less, which is the last thing this site can afford.
+  //
+  // Written as a rule rather than a one-off deletion: any entry whose data
+  // declares a canonical pointing somewhere else is dropped automatically.
+  // The page still renders, still redirects nothing, and still serves old
+  // links. Only the recommendation goes away. One entry qualifies today; the
+  // next duplicate consolidation will be handled without anyone remembering.
+  const canonicalisedAway = new Set(
+    [
+      ...ARTICLES,
+      ...COMPARISONS,
+      ...LONG_TAIL_PAGES,
+      ...USE_CASES,
+      ...COMBOS,
+      ...BOTTOM_FUNNEL_PAGES,
+      ...BEST_YACHTS_PAGES,
+      ...LINKABLE_ASSETS,
+      ...YACHT_TYPES,
+    ]
+      .filter(
+        (e) =>
+          e?.canonical &&
+          e?.urlPath &&
+          e.canonical !== `${BASE_URL}${e.urlPath}`
+      )
+      .map((e) => e.urlPath)
+  );
+
   const manifest = LASTMOD_MANIFEST?.pages || {};
   const withHonestDates = (entries) =>
     entries.map((e) => {
       const path = e.url.replace(BASE_URL, "") || "/";
       const known = manifest[path]?.lastmod;
       return known ? { ...e, lastModified: known } : e;
-    });
+    }).filter((e) => !canonicalisedAway.has(e.url.replace(BASE_URL, "")));
 
   return withHonestDates([
     ...staticEntries,

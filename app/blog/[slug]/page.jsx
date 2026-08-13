@@ -181,12 +181,26 @@ export async function generateMetadata({ params }) {
     // international one"). They live in Sanity excerpts written before the
     // rule, so normalise here rather than chase every document by hand.
     const text = raw ? String(raw).replace(/\s*[—–]\s*/g, " - ") : raw;
-    if (!text || text.length <= 158) return text;
+
+    // MEASURE WHAT SHIPS, NOT WHAT WE TYPED.
+    //
+    // 2026-08-13. Ahrefs flagged the 12-passenger article at 174 characters
+    // when this function had just capped it at 158, and the two numbers were
+    // both right. React escapes an apostrophe to &#x27;, six characters where
+    // the source had one, and that article's excerpt carries three of them.
+    // Sixteen invisible characters, on the second-highest-impression page on
+    // the site. Anything that counts the raw string is measuring a draft.
+    const htmlLen = (s) =>
+      s.replace(/&/g, "&amp;").replace(/'/g, "&#x27;").replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;").replace(/>/g, "&gt;").length;
+
+    if (!text || htmlLen(text) <= 158) return text;
 
     let packed = "";
     for (const sentence of text.split(/(?<=[.!?])\s+/)) {
-      if ((packed ? packed.length + 1 : 0) + sentence.length > 158) break;
-      packed = packed ? `${packed} ${sentence}` : sentence;
+      const next = packed ? `${packed} ${sentence}` : sentence;
+      if (htmlLen(next) > 158) break;
+      packed = next;
     }
     // A whole sentence is better than a severed one, but not when the article
     // opens with a four-word hook: "Forget the brochure." was the entire
@@ -195,7 +209,11 @@ export async function generateMetadata({ params }) {
     // more, so it wins.
     if (packed && packed.length >= 80) return packed;
 
-    const cut = text.slice(0, 158);
+    // Same rule for the fallback: walk back until the ENCODED form fits,
+    // leaving room for the ellipsis. A single sentence longer than the budget
+    // is the only path that reaches here.
+    let cut = text;
+    while (cut.length && htmlLen(cut) > 155) cut = cut.slice(0, -1);
     return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:]$/, "") + "...";
   };
 
