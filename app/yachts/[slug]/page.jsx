@@ -396,6 +396,13 @@ export default async function YachtPage({ params }) {
       features,
       toys,
       idealFor,
+      // 2026-08-14 — the brochure field has existed on the yacht schema for
+      // months and no yacht page has ever rendered it. LA PELLEGRINA carries
+      // one; her page has never offered it. Dead data on 65 hulls, and the one
+      // asset a charterer comparing three boats at forty thousand euro a week
+      // actually wants to keep open in a tab.
+      "brochureUrl": brochure.asset->url,
+      "brochureSize": brochure.asset->size,
       "slug": slug.current,
       // 0.7 (Roberto brief) - fleetTier + priceModel power the
       // unit badge logic in PriceBlock + sticky CTA. Both are
@@ -548,6 +555,8 @@ export default async function YachtPage({ params }) {
           deckPlans: yacht.deckPlans,
           layoutImages: yacht.layoutImages,
           images: yacht.images,
+          brochureUrl: yacht.brochureUrl,
+          brochureSize: yacht.brochureSize,
         }}
         heroImage={heroImage}
         description={yacht.description}

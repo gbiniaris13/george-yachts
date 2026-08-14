@@ -807,6 +807,45 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           </section>
         )}
 
+        {/* THE BROCHURE.
+
+            2026-08-14 — the yacht schema has carried a brochure field for
+            months and no page has ever rendered it, so LA PELLEGRINA has had a
+            brochure sitting in Sanity that nobody could reach. It goes here,
+            immediately after "who she is ideal for", because that is the point
+            in the page where someone has decided she might be the boat and
+            wants something to send to the rest of the party.
+
+            The file size is printed on the button. A charterer on hotel wifi in
+            August deserves to know whether they are about to pull nine
+            megabytes before they tap it, and a download that surprises you is a
+            download you resent. */}
+        {yacht.brochureUrl && (
+          <section className="yacht-brochure reveal">
+            <div className="container" style={{ textAlign: "center", padding: "8px 0 40px" }}>
+              <a
+                href={yacht.brochureUrl}
+                target="_blank"
+                rel="noopener"
+                download
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 12,
+                  padding: "16px 32px", border: "1px solid rgba(201,169,110,.55)",
+                  color: "#C9A96E", textDecoration: "none", letterSpacing: ".08em",
+                  fontSize: 14, textTransform: "uppercase",
+                }}
+              >
+                {t('yacht.brochure', 'Download the full brochure')}
+                {yacht.brochureSize ? (
+                  <span style={{ opacity: .65, textTransform: "none", letterSpacing: 0 }}>
+                    PDF, {Math.round(yacht.brochureSize / 1048576)} MB
+                  </span>
+                ) : null}
+              </a>
+            </div>
+          </section>
+        )}
+
         {/* GEORGE'S INSIDE INFO, anchored above editorial copy so
             the highest-value differentiator (insider tip) hits
             visitors before the long-form. */}
