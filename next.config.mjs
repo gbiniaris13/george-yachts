@@ -72,12 +72,30 @@ const nextConfig = {
               // violation in the console and the <img> shows broken.
               // Also allowing https: for arbitrary mood-board pastes
               // (Pinterest, etc.) which are charterer-pasted URLs.
-              "img-src 'self' data: blob: https: https://cdn.sanity.io https://images.pexels.com https://images.unsplash.com https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://translate.google.com https://www.google.com https://translate.googleapis.com https://imgsct.cookiebot.com https://consent.cookiebot.com",
+              "img-src 'self' data: blob: https: https://cdn.sanity.io https://images.pexels.com https://images.unsplash.com https://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://translate.google.com https://www.google.com https://translate.googleapis.com https://imgsct.cookiebot.com https://consent.cookiebot.com",
               // *.clarity.ms on connect-src: the library uploads to
               // u.clarity.ms and pings c.clarity.ms. Allowing the scripts to
               // load but not to send would be a subtler version of the same
               // failure, so both directives move together.
-              "connect-src 'self' https://cdn.sanity.io https://*.sanity.io https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://*.hubapi.com https://api.hubspot.com https://forms.hubspot.com https://translate.googleapis.com https://translate.google.com https://wttr.in https://consent.cookiebot.com https://consentcdn.cookiebot.com https://*.clarity.ms",
+              // 2026-08-14 — GA4 was being blocked for European visitors and we
+              // have been reading its numbers as if they were complete.
+              //
+              // GA4 does not always post to www.google-analytics.com. Traffic
+              // from the EEA is routed to regional endpoints, region1 through
+              // region14, and this policy named only the www host. Every
+              // page_view and scroll event from a European browser hit
+              // "Refused to connect" in the console and never reached Google.
+              // Greece is in Europe. Our home market was the one not counted.
+              //
+              // Found by opening a live yacht page and reading the console,
+              // which is the third time in two days that a CSP has silently
+              // killed a third-party script here: Cookiebot in May, Clarity
+              // yesterday, GA4 today. The rule this site keeps relearning is
+              // that adding a tag is only half of adding a tag.
+              //
+              // *.google-analytics.com covers the regional collectors,
+              // *.analytics.google.com covers the newer collection host.
+              "connect-src 'self' https://cdn.sanity.io https://*.sanity.io https://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.hubspot.com https://*.hubapi.com https://api.hubspot.com https://forms.hubspot.com https://translate.googleapis.com https://translate.google.com https://wttr.in https://consent.cookiebot.com https://consentcdn.cookiebot.com https://*.clarity.ms",
               // 2026-05-12 — added my.matterport.com pre-emptively.
               // The yacht detail page (YachtPageContent.jsx Matterport
               // section) renders an <iframe src={yacht.matterportEmbedUrl}>
