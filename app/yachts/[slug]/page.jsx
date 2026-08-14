@@ -37,7 +37,7 @@ export async function generateMetadata({ params }) {
   try {
     yacht = await sanityClient.fetch(
       `*[_type == "yacht" && slug.current == $slug][0]{
-        name, subtitle, length, sleeps, weeklyRatePrice, cruisingRegion,
+        name, subtitle, length, sleeps, cabins, crew, weeklyRatePrice, cruisingRegion,
         "imageUrl": images[0].asset->url
       }`,
       { slug }
@@ -71,10 +71,45 @@ export async function generateMetadata({ params }) {
   // Google through a Sanity subtitle ("Lagoon 51 — Sailing Catamaran" on
   // Errant Vagabond). Normalising at the generator covers every yacht added
   // from here on rather than leaving it to whoever types the next subtitle.
-  let description = `Charter ${yacht.name}: ${yacht.length} ${shortSubtitle}, sleeps ${yacht.sleeps}. Crewed yacht charter in Greek waters. ${yacht.weeklyRatePrice}`
-    .replace(/\s*[—–]\s*/g, " - ");
+  // 2026-08-14 — the description a searcher and an answer engine actually read.
+  //
+  // What it used to say: "Charter P/CAT ELLY: 20,36 m / 67 ft FOUNTAINE PAJOT
+  // POWER 67, sleeps 8..." and then ran past 158 characters and got cut. Three
+  // things wrong with that in one line. "P/CAT" is a trade prefix nobody types
+  // into a search box and nobody says out loud. The model came through in the
+  // shouting capitals of the Sanity subtitle field. And the sentence spent its
+  // budget before reaching the price, which is the one number every charterer
+  // is actually looking for.
+  //
+  // Now: the hull name on its own, the model in normal case, the three
+  // countable facts a charterer compares boats on (guests, cabins, crew), and
+  // the entry price with the two expenses that get added to it. Under 158
+  // characters by construction rather than by truncation, so no ellipsis and
+  // no severed sentence reaches a search result.
+  const plainName = yacht.name.replace(/^(P\/CAT|S\/CAT|M\/Y|S\/Y|M\/C)\s+/i, "").trim();
+  const model = shortSubtitle
+    .replace(/\s*[—–]\s*/g, " - ")
+    .split(" ")
+    .map((w) => (w.length > 2 && w === w.toUpperCase() && /[A-Z]/.test(w)
+      ? w.charAt(0) + w.slice(1).toLowerCase()
+      : w))
+    .join(" ");
+  const entryPrice = (yacht.weeklyRatePrice || "").match(/€[\d,.]+/)?.[0];
+  const crewCount = String(yacht.crew || "").match(/^\s*(\d+)/)?.[1];
+
+  let description = [
+    `Charter ${plainName} in Greece: ${yacht.length}`,
+    model ? ` ${model},` : ",",
+    ` ${yacht.sleeps} guests`,
+    yacht.cabins ? `, ${yacht.cabins} cabins` : "",
+    crewCount ? `, ${crewCount} crew` : "",
+    entryPrice ? `. Weekly from ${entryPrice} plus VAT and APA.` : ". Crewed charter in Greek waters.",
+  ].join("").replace(/\s*[—–]\s*/g, " - ").replace(/\s+/g, " ").trim();
+
+  // Belt and braces. If a future yacht carries an unusually long model string
+  // the sentence still has to end on a whole word rather than mid-syllable.
   if (description.length > 158) {
-    const cut = description.slice(0, 158);
+    const cut = description.slice(0, 155);
     description = cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:]$/, '') + '...';
   }
   const canonical = `https://georgeyachts.com/yachts/${slug}`;

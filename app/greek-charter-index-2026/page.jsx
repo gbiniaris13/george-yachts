@@ -60,7 +60,7 @@ export async function generateMetadata() {
     // the line Google shows now leads with what the reader came for.
     title: { absolute: "Greek Charter Index: What a Week Actually Costs, by Yacht" },
     description:
-      "Original rate data across 59 crewed yachts I know first hand: what a week costs by type and size, from EUR 10,900 up, and when the 2027 rate cards open.",
+      "Original rate data across 65 crewed yachts I know first hand: what a week costs by type and size, from EUR 10,900 up, and when the 2027 rate cards open.",
     alternates: { canonical: URL },
     openGraph: {
       title: report.title,
