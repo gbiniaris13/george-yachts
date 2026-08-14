@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <!--
+    Film-grain overlay, generated in the browser rather than fetched.
+
+    2026-08-14. Every yacht page and both contact sections were pulling this
+    texture from grainy-gradients.vercel.app, somebody else's demo deployment,
+    and that URL has been returning 404. So: a request on 67 pages, a console
+    error on every one of them, a third party told each visitor's IP and page,
+    and the grain never rendered anyway.
+
+    feTurbulence produces it locally. baseFrequency 0.8 with three octaves is
+    the fine grain the design wants; stitchTiles keeps the 256px square seamless
+    when it repeats. No network, nothing to go stale, nobody else's uptime.
+  -->
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" result="n"/>
+    <feColorMatrix in="n" type="saturate" values="0"/>
+  </filter>
+  <rect width="256" height="256" filter="url(#grain)" opacity="0.55"/>
+</svg>

@@ -194,7 +194,7 @@ const ContactFormSection = () => {
     return (
       <section id="contact" className="relative w-full min-h-screen bg-black flex items-center justify-center py-24 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2A] via-[#0D1B2A] to-[#0D1B2A] z-0" />
-        <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay z-10" />
+        <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[url('/noise.svg')] mix-blend-overlay z-10" />
 
         <div className="relative z-30 text-center px-6 max-w-2xl mx-auto">
           <div className="mb-8 inline-flex items-center justify-center w-20 h-20 rounded-full border border-[#C9A84C]/30">
@@ -245,7 +245,7 @@ const ContactFormSection = () => {
     <section id="contact" className="relative w-full bg-black py-28 md:py-36 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2A] via-[#0D1B2A] to-[#0D1B2A] z-0" />
-      <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay z-10" />
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[url('/noise.svg')] mix-blend-overlay z-10" />
 
       {/* Phase 27i.18 (2026-05-08), constellation backdrop. Reads
           as "navigate to us by the stars", a quiet poetic note for
