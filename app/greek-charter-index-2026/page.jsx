@@ -60,7 +60,7 @@ export async function generateMetadata() {
     // the line Google shows now leads with what the reader came for.
     title: { absolute: "Greek Charter Index: What a Week Actually Costs, by Yacht" },
     description:
-      "Original rate data across 65 crewed yachts I know first hand: what a week costs by type and size, from EUR 10,900 up, and when the 2027 rate cards open.",
+      "Original rate data across the 65 yachts I know first hand: what a week costs by type and size, from EUR 10,900 up, and when the 2027 rate cards open.",
     alternates: { canonical: URL },
     openGraph: {
       title: report.title,
@@ -215,7 +215,15 @@ export default async function GreekCharterIndexPage() {
 
       <article style={{ background: NAVY, minHeight: "100vh", color: CREAM }}>
         {/* HERO */}
-        <header style={{ padding: "160px 24px 48px", borderBottom: "1px solid rgba(201,168,76,0.15)", textAlign: "center" }}>
+        {/* 2026-08-15. The eyebrow sat at y196 and the fixed masthead's
+            wordmark ends at y232, so "Original market data · 2026-2027" was
+            printing underneath the logo. Same bug the crewed hub had: a
+            `padding` shorthand inline beats .gy-hero-lead, so the other three
+            sides are longhand and the top comes from the stylesheet. */}
+        <header
+          className="gy-hero-lead"
+          style={{ paddingLeft: 24, paddingRight: 24, paddingBottom: 48, borderBottom: "1px solid rgba(201,168,76,0.15)", textAlign: "center" }}
+        >
           <div style={{ maxWidth: 980, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 18px" }}>
               Original market data {report.edition ? `· ${report.edition}` : ""}
@@ -294,9 +302,9 @@ export default async function GreekCharterIndexPage() {
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 16px" }}>Go deeper</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               <Link href="/weekly-yacht-charter-rates-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.25)", paddingBottom: 10 }}>Weekly charter rates, all-in: base, APA, VAT and gratuity by yacht size and season</Link>
-              <Link href="/motor-yacht-charter-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.25)", paddingBottom: 10 }}>Motor yacht charter in Greece: the full 2026 guide</Link>
+              <Link href="/motor-yacht-charter-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.25)", paddingBottom: 10 }}>Motor yacht charter in Greece: the full 2027 guide</Link>
               <Link href="/charter-cost-estimator" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.25)", paddingBottom: 10 }}>Charter cost estimator</Link>
-              <Link href="/glossary/greek-vat" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.25)", paddingBottom: 10 }}>Greek charter VAT in 2026, explained</Link>
+              <Link href="/glossary/greek-vat" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.25)", paddingBottom: 10 }}>Greek charter VAT, explained: 5.2 to 12% by certification</Link>
             </div>
           </div>
         </section>
@@ -308,7 +316,7 @@ export default async function GreekCharterIndexPage() {
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px" }}>Cite this index</p>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.82)", margin: 0 }}>
-              George Yachts Brokerage House. (2026). <em>Greek Charter Index 2026: weekly crewed charter rates by yacht type and region</em>. https://georgeyachts.com/greek-charter-index-2026
+              George Yachts Brokerage House. (2026). <em>Greek Charter Index 2026-2027: weekly crewed charter rates by yacht type and size</em> (Autumn 2026 ed.). https://georgeyachts.com/greek-charter-index-2026
             </p>
           </div>
         </section>

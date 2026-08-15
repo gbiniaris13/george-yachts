@@ -293,7 +293,7 @@ export default function WeeklyRatesPage() {
                 <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.66)" }}> - the fleet, builders and what a motor week is really like.</span>
               </li>
               <li>
-                <Link href="/greek-charter-index-2026" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>Greek Charter Index 2026</Link>
+                <Link href="/greek-charter-index-2026" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>Greek Charter Index</Link>
                 <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.66)" }}> - our market data on rates by yacht type and region.</span>
               </li>
               <li>

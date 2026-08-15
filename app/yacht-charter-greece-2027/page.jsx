@@ -63,7 +63,7 @@ const FAQS = [
   },
   {
     q: "Are 2027 charter rates published yet?",
-    a: "Mostly not. Owners publish 2027 rate cards in the autumn of 2026, which is exactly why the priority window matters: whoever has already told their broker the month, the group and the budget gets the first proposals the day the cards appear. Until then, the George Yachts Greek Charter Index 2026 is the honest reference for what each yacht class costs per week, and 2027 figures typically land in the same neighbourhood adjusted by each owner individually.",
+    a: "Mostly not. Owners publish 2027 rate cards in the autumn of 2026, which is exactly why the priority window matters: whoever has already told their broker the month, the group and the budget gets the first proposals the day the cards appear. Until then, the George Yachts Greek Charter Index is the honest reference for what each yacht class costs per week, and 2027 figures typically land in the same neighbourhood adjusted by each owner individually.",
   },
   {
     q: "How does the 2027 priority list work?",
@@ -75,7 +75,7 @@ const FAQS = [
   },
   {
     q: "How much does a crewed yacht charter in Greece cost per week?",
-    a: "Using the 2026 Index as the reference: a crewed sailing catamaran for up to 12 guests runs roughly EUR 15,000 to 40,000 per week net base in peak season; crewed motor yachts of 24 to 34 metres around EUR 30,000 to 100,000; 35 to 49 metres about EUR 100,000 to 350,000; and 50-metre-plus superyachts from EUR 250,000 upward. On top of the base fee sit VAT at the yacht's certified rate and the APA for running expenses.",
+    a: "Using the Index as the reference, from the rate cards we currently hold: a crewed sailing catamaran runs EUR 10,900 to 22,000 per week net base at 12 to 16 metres, EUR 31,500 to 43,500 at 20 to 22 and EUR 56,000 to 90,000 at 23 to 24; a power catamaran EUR 14,000 to 90,000 across the same span; motor yachts EUR 17,500 to 33,000 at 18 to 24 metres, EUR 40,000 to 65,000 at 26 to 31 and EUR 60,000 to 120,000 at 35 to 40; and the yachts above 50 metres EUR 162,500 to 235,000. On top of the base fee sit VAT at the yacht's certified rate and the APA for running expenses. The 2027 cards land through the autumn and winter, and they usually arrive in the same neighbourhood.",
   },
   {
     q: "Can I hold a 2027 week without committing?",
@@ -217,13 +217,13 @@ export default function Charter2027Page() {
             decided. The 2027 calendars open in the autumn of 2026, and the people who have already told
             me their month, their group and their mood will see them first.
           </p>
-          <LastUpdated date="2026-07-21" />
+          <LastUpdated date="2026-08-15" />
         </div>
       </header>
 
       <QuickAnswerBlock
         question="When does the 2027 Greek charter season open for booking?"
-        answer={`Effectively in autumn 2026, when owners settle their 2027 rate cards; repeat clients see the calendars even earlier, and the first 2027 contracts are already being signed as of July 2026. The most requested yachts have their late-July and August 2027 weeks spoken for months before the season. Early booking buys choice, not discounts: the right yacht, layout, crew and week. Reference pricing: crewed catamarans roughly EUR 15,000-40,000 per week net; motor yachts 24-34m EUR 30,000-100,000 (2026 Index).`}
+        answer={`Effectively in autumn 2026, when owners settle their 2027 rate cards; repeat clients see the calendars even earlier, and the first 2027 contracts are already being signed as of July 2026. The most requested yachts have their late-July and August 2027 weeks spoken for months before the season. Early booking buys choice, not discounts: the right yacht, layout, crew and week. Reference pricing from the cards we hold: crewed catamarans EUR 10,900-90,000 per week net by size; motor yachts EUR 17,500-33,000 at 18-24m and EUR 40,000-65,000 at 26-31m (Greek Charter Index).`}
       />
 
       {/* WHY AUTUMN DECIDES THE SUMMER */}
@@ -392,7 +392,7 @@ export default function Charter2027Page() {
           <p style={{ ...bodyStyle, textAlign: "center", maxWidth: 720, margin: "0 auto 12px" }}>
             Owners publish 2027 rate cards in autumn 2026. Until then, the honest reference is the{" "}
             <Link href="/greek-charter-index-2026" style={goldLink}>
-              George Yachts Greek Charter Index 2026
+              George Yachts Greek Charter Index
             </Link>
             : weekly net base fees, excluding VAT at the yacht&apos;s certified rate and{" "}
             <Link href="/glossary/apa" style={goldLink}>

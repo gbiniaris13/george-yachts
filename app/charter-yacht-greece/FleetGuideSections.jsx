@@ -245,8 +245,8 @@ export default function FleetGuideSections({ yachts }) {
             <Link href="/advance-provisioning-allowance-apa-greek-yacht-charter-explained" style={goldLink}>APA</Link>{" "}
             of 20 to 40% by yacht type, for fuel, provisioning and berthing.{" "}
             <Link href="/whats-included-in-greek-yacht-charter-complete-2026-guide" style={goldLink}>What is included, in full</Link>, and the{" "}
-            <Link href="/greek-charter-index-2026" style={goldLink}>Greek Charter Index 2026</Link>{" "}
-            holds the market rates by yacht type and region.
+            <Link href="/greek-charter-index-2026" style={goldLink}>Greek Charter Index</Link>{" "}
+            holds our weekly rates by yacht type and size.
           </p>
 
           {/* Stat callouts from the Index */}
