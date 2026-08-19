@@ -88,7 +88,7 @@ export async function GET() {
   // Lagoon 51, 10 guests / 5 cabins, two-person crew, from EUR 17,000 a week".
   // A named yacht, a guest count and an entry price, in one sentence.
   //
-  // This file already carries all 59 yachts with prices, but at line 230 of a
+  // This file already carries all 72 yachts with prices, but at line 230 of a
   // 47 KB document, sorted most-expensive first. A family looking for a EUR
   // 30,000 week meets a EUR 98,000 Maiora and never reaches the bottom, which
   // is where everything they could afford lives.
