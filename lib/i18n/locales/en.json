@@ -32,14 +32,14 @@
     "forPartners": "For Partners",
     "proposal": "Instant Proposal",
     "privateFleet": "Private Fleet",
-    "explorerFleet": "Explorer Fleet"
+    "explorerFleet": "Sailing Fleet"
   },
   "hero": {
     "tagline": "Exclusively Greek Waters",
     "subtitle": "Boutique Yacht Brokerage",
     "secondaryCta": "Or find your yacht in 60 seconds",
     "fleetPrivate": "Private Fleet",
-    "fleetExplorer": "Explorer Fleet"
+    "fleetExplorer": "Sailing Fleet"
   },
   "stats": {
     "yachts": "Curated Yachts",
@@ -294,7 +294,7 @@
   "favorites": {
     "label": "Your Selection",
     "empty": "No Favorites Yet",
-    "emptyDesc": "Browse our fleet and tap the heart icon on any yacht that catches your eye. Your favorites will appear here.",
+    "emptyDesc": "Browse the fleet and tap the heart icon on any yacht that catches your eye. Your favorites will appear here.",
     "browse": "Browse Fleet",
     "saved": "Favorites Saved",
     "reviewDesc": "Review your selection and send them to George for a personalized proposal.",

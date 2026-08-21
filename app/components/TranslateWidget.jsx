@@ -64,13 +64,13 @@ export default function TranslateWidget({ variant = 'floating' }) {
           minHeight: '40px',
           background: 'rgba(13, 27, 42, 0.75)',
           backdropFilter: 'blur(12px)',
-          border: '1px solid rgba(201,168,76,0.25)',
+          border: '1px solid rgba(218, 161, 16,0.25)',
           cursor: 'pointer',
           fontFamily: "var(--gy-font-ui)",
           fontSize: '9px',
           letterSpacing: '0.18em',
           textTransform: 'uppercase',
-          color: 'rgba(201,168,76,0.75)',
+          color: 'rgba(218, 161, 16,0.75)',
           transition: 'all 0.3s ease',
         };
 
@@ -82,7 +82,7 @@ export default function TranslateWidget({ variant = 'floating' }) {
         style={triggerStyle}
         onMouseEnter={(e) => {
           if (variant === 'inline') {
-            e.currentTarget.style.borderColor = 'rgba(201,168,76,0.4)';
+            e.currentTarget.style.borderColor = 'rgba(218, 161, 16,0.4)';
           }
         }}
         onMouseLeave={(e) => {
@@ -124,16 +124,16 @@ export default function TranslateWidget({ variant = 'floating' }) {
               : { bottom: '100%', left: 0, marginBottom: 10 }),
             background: 'rgba(13, 27, 42, 0.95)',
             backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(201,168,76,0.2)',
+            border: '1px solid rgba(218, 161, 16,0.2)',
             overflow: 'hidden',
             minWidth: 200,
             boxShadow: '0 20px 60px rgba(13, 27, 42,0.5)',
           }}
         >
           <div style={{
-            padding: '12px 16px', borderBottom: '1px solid rgba(201,168,76,0.1)',
+            padding: '12px 16px', borderBottom: '1px solid rgba(218, 161, 16,0.1)',
             fontFamily: "var(--gy-font-ui)", fontSize: 8,
-            letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(201,168,76,0.4)',
+            letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(218, 161, 16,0.4)',
           }}>
             Select Language
           </div>
@@ -144,15 +144,15 @@ export default function TranslateWidget({ variant = 'floating' }) {
               style={{
                 display: 'flex', alignItems: 'center', gap: 10, width: '100%',
                 padding: '11px 16px', fontFamily: "var(--gy-font-ui)", fontSize: 11,
-                color: locale === lang.code ? '#C9A84C' : 'rgba(248, 245, 240,0.5)',
-                background: locale === lang.code ? 'rgba(201,168,76,0.06)' : 'transparent',
+                color: locale === lang.code ? '#DAA110' : 'rgba(248, 245, 240,0.5)',
+                background: locale === lang.code ? 'rgba(218, 161, 16,0.06)' : 'transparent',
                 border: 'none', borderBottom: '1px solid rgba(248, 245, 240,0.03)',
                 cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s ease',
               }}
             >
               <span style={{ fontSize: 16, lineHeight: 1 }}>{flags[lang.code] || '🌐'}</span>
               <span>{lang.label}</span>
-              {locale === lang.code && <span style={{ marginLeft: 'auto', fontSize: 10, color: '#C9A84C' }}>✓</span>}
+              {locale === lang.code && <span style={{ marginLeft: 'auto', fontSize: 10, color: '#DAA110' }}>✓</span>}
             </button>
           ))}
         </div>

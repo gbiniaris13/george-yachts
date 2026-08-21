@@ -100,7 +100,7 @@ export default function NewsletterPage() {
             fontFamily: "var(--gy-font-ui)",
             fontSize: 10,
             letterSpacing: "0.45em",
-            color: "#C9A84C",
+            color: "#DAA110",
             textTransform: "uppercase",
             margin: 0,
           }}
@@ -126,7 +126,7 @@ export default function NewsletterPage() {
           style={{
             width: 60,
             height: 1,
-            background: "#C9A84C",
+            background: "#DAA110",
             margin: "16px auto 24px auto",
           }}
         />

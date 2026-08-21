@@ -38,7 +38,7 @@ const DONE_KEY = "gy_push_done";          // subscribed or permission decided
 const DISMISS_KEY = "gy_push_dismissed_at";
 const DISMISS_LOCK_MS = 45 * 24 * 60 * 60 * 1000; // 45 days
 const DELAY_MS = 35_000;
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);

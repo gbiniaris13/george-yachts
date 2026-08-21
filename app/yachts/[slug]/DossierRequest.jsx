@@ -11,7 +11,7 @@
 
 import { useState } from "react";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 const SUBSCRIBED_KEY = "gy_exit_intent_subscribed";
@@ -51,7 +51,7 @@ export default function DossierRequest({ slug, yachtName }) {
         style={{
           maxWidth: 980,
           margin: "0 auto",
-          border: "1px solid rgba(201,168,76,0.3)",
+          border: "1px solid rgba(218, 161, 16,0.3)",
           padding: "34px 32px",
           textAlign: "center",
         }}

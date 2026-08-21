@@ -29,10 +29,10 @@ export default function YourBroker() {
     <section
       ref={ref}
       style={{
-        padding: "120px 24px",
+        padding: "clamp(40px, 5vw, 56px) 24px",
         background: "#0D1B2A",
-        borderTop: "1px solid rgba(201,168,76,0.08)",
-        borderBottom: "1px solid rgba(201,168,76,0.08)",
+        borderTop: "1px solid rgba(218, 161, 16,0.08)",
+        borderBottom: "1px solid rgba(218, 161, 16,0.08)",
       }}
     >
       <div
@@ -102,7 +102,7 @@ export default function YourBroker() {
 
           <div style={{
             width: "40px", height: "1px", marginBottom: "32px",
-            background: "linear-gradient(90deg, #C9A84C, transparent)",
+            background: "linear-gradient(90deg, #DAA110, transparent)",
           }} />
 
           <p style={{
@@ -144,7 +144,7 @@ export default function YourBroker() {
               letterSpacing: "0.2em",
               textTransform: "uppercase",
               color: "#0D1B2A",
-              background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
+              background: "linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
               padding: "16px 40px",
               textDecoration: "none",
               transition: "all 0.4s ease",
@@ -165,7 +165,7 @@ export default function YourBroker() {
               marginLeft: "24px",
               transition: "color 0.3s ease",
             }}
-            onMouseEnter={(e) => e.target.style.color = "#C9A84C"}
+            onMouseEnter={(e) => e.target.style.color = "#DAA110"}
             onMouseLeave={(e) => e.target.style.color = "rgba(248, 245, 240,0.4)"}
           >
             {t('broker.learnMore')}
@@ -208,7 +208,7 @@ export default function YourBroker() {
               width: 40,
               height: 1,
               margin: "0 auto",
-              background: "linear-gradient(90deg, transparent, #C9A84C, transparent)",
+              background: "linear-gradient(90deg, transparent, #DAA110, transparent)",
               opacity: 0.7,
             }}
           />

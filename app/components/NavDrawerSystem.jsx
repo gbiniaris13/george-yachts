@@ -6,7 +6,7 @@
 // right cluster (search / currency / language / Instagram / LinkedIn
 // / favorites) with a Burgess/Aman-tier 4-item top nav:
 //
-//   CHARTER          (dropdown: Private Fleet · Explorer Fleet · View All)
+//   CHARTER          (dropdown: Private Fleet · Sailing Fleet · View All)
 //   EXPLORE GREECE   (dropdown: Cyclades · Ionian · Saronic · Itineraries)
 //   ABOUT            (dropdown: About George · How It Works · FAQ)
 //   BRIEF GEORGE →   (no dropdown — primary CTA, gold, direct link to /inquiry)
@@ -68,12 +68,17 @@ const NAV_SECTIONS = [
     label: "Charter",
     items: [
       { label: "Private Fleet", href: "/private-fleet" },
-      { label: "Explorer Fleet", href: "/explorer-fleet" },
+      { label: "Sailing Fleet", href: "/explorer-fleet" },
       // 2026-07-03 (Wave 2) — the two head terms George is chasing
       // get the heaviest link on the site: the main nav. Crewed is
       // the flagship guide (built 2026-07-02); Catamarans is the
       // biggest-volume query we track.
-      { label: "Crewed Charter", href: "/crewed-yacht-charter-greece" },
+      // 2026-08-21 (section 9). This read "Crewed Charter" and sat between two
+      // fleet listings, so a visitor clicking it expected boats and arrived at
+      // a guide with nine cards on it. The word stays in the anchor because
+      // this is the heaviest internal link the head term gets and the anchor
+      // text carries; what is added is the part that sets the expectation.
+      { label: "Crewed Charter, Explained", href: "/crewed-yacht-charter-greece" },
       { label: "Catamarans", href: "/catamaran-charter-greece" },
       { label: "View All", href: "/charter-yacht-greece" },
     ],
@@ -316,7 +321,7 @@ export default function NavDrawerSystem() {
         <div className="flex items-center justify-between h-full relative">
           {/* MOBILE HAMBURGER, right, only ≤ md. Boss mobile spec
               relocates the hamburger to top-right; logo stays centered.
-              Gold #C9A84C, 22 px stroke. The 44 × 44 hit area exceeds
+              Gold #DAA110, 22 px stroke. The 44 × 44 hit area exceeds
               the WCAG touch-target minimum even though the icon itself
               is 22 px. */}
           <button
@@ -326,7 +331,7 @@ export default function NavDrawerSystem() {
             style={{
               width: 44,
               height: 44,
-              color: "#C9A84C",
+              color: "#DAA110",
               zIndex: 35,
             }}
             aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
@@ -390,7 +395,7 @@ export default function NavDrawerSystem() {
               style={{
                 ...navLabelStyle,
                 fontWeight: 500,
-                color: "#C9A84C",
+                color: "#DAA110",
                 textDecoration: "none",
                 padding: "10px 4px",
                 whiteSpace: "nowrap",
@@ -440,7 +445,7 @@ export default function NavDrawerSystem() {
               type="button"
               onClick={closeMobile}
               className="absolute top-3 right-3 transition-colors flex items-center justify-center"
-              style={{ width: 44, height: 44, color: "#C9A84C" }}
+              style={{ width: 44, height: 44, color: "#DAA110" }}
               aria-label="Close navigation"
               data-cursor="Close"
             >
@@ -463,7 +468,7 @@ export default function NavDrawerSystem() {
                       fontWeight: 300,
                       fontSize: "32px",
                       letterSpacing: "-0.005em",
-                      color: expanded ? "#C9A84C" : "#FFFFFF",
+                      color: expanded ? "#DAA110" : "#FFFFFF",
                       padding: "14px 0",
                       minHeight: 56,
                     }}
@@ -532,7 +537,7 @@ export default function NavDrawerSystem() {
                 fontWeight: 300,
                 fontSize: "36px",
                 letterSpacing: "-0.005em",
-                color: "#C9A84C",
+                color: "#DAA110",
                 padding: "16px",
                 textDecoration: "none",
                 minHeight: 56,
@@ -586,7 +591,7 @@ export default function NavDrawerSystem() {
           background: rgba(13, 27, 42, 0.94);
           backdrop-filter: blur(14px);
           -webkit-backdrop-filter: blur(14px);
-          border: 1px solid rgba(201, 168, 76, 0.18);
+          border: 1px solid rgba(218, 161, 16, 0.18);
           opacity: 0;
           pointer-events: none;
           transition: opacity 220ms ease, transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -612,7 +617,7 @@ export default function NavDrawerSystem() {
           transition: color 200ms ease, padding-left 200ms ease;
         }
         .gy-nav-item__link:hover {
-          color: #C9A84C;
+          color: #DAA110;
           padding-left: 6px;
         }
 
@@ -629,7 +634,7 @@ export default function NavDrawerSystem() {
           display: block;
           padding: 12px 4px;
           text-decoration: none;
-          border-top: 1px solid rgba(201, 168, 76, 0.10);
+          border-top: 1px solid rgba(218, 161, 16, 0.10);
           transition: padding-left 220ms ease;
         }
         .gy-nav-item__rich-link:first-child {
@@ -644,7 +649,7 @@ export default function NavDrawerSystem() {
           font-weight: 500;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #C9A84C;
+          color: #DAA110;
           margin: 0 0 6px;
         }
         .gy-nav-item__rich-title {
@@ -670,14 +675,14 @@ export default function NavDrawerSystem() {
           font-weight: 500;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #C9A84C;
+          color: #DAA110;
         }
         .gy-nav-item__rich-link:hover .gy-nav-item__rich-cta {
           color: #F8F5F0;
         }
         .gy-nav-item__trigger:hover,
         .gy-nav-item:hover .gy-nav-item__trigger {
-          color: #C9A84C !important;
+          color: #DAA110 !important;
         }
         .gy-nav-cta:hover {
           color: #ffffff !important;

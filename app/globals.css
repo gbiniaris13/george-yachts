@@ -106,12 +106,59 @@ body {
 
   /* Chapter 05 (palette audit, 2026-05-08) — canonical 6-colour
      scheme Boss locked in. Use these CSS variables in any new
-     code; the existing #C9A84C-era hex strings are kept inline
+     code; the existing #DAA110-era hex strings are kept inline
      across legacy components but now resolve through the global
      overrides at the bottom of this file (or have been converged
      to --gy-gold). */
   --gy-navy:    #0D1B2A;  /* Deep Navy — primary bg */
-  --gy-gold:    #C9A84C;  /* Antique Gold — accents only */
+  /* ── Gold (section 7, 2026-08-21) ──────────────────────────────────────
+     George: "δεν μου αρέσει καθόλου το χρυσό σε όλο το site, είναι μουσταρδί".
+     He was right twice over, and the second reason was the bigger one.
+
+     First, the colour. The old #DAA110 sits at the same hue and almost the
+     same lightness as the gold on ghostwebdesign.dev, which is the reference
+     he pointed at, but with 18% less chroma: OKLCh C 0.117 against 0.139.
+     A yellow at that lightness with the chroma pulled out of it is the
+     definition of mustard. Raising the chroma is most of the fix, and it
+     costs nothing in readability: gold on navy goes from 7.61 to 8.27.
+
+     Second, and worse: the site had 112 gradients that were the same colour
+     repeated. `linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)` renders as
+     flat paint. Somewhere a global colour sweep flattened every ramp on the
+     site, so nothing anywhere read as metal. Gold looks like gold because it
+     is dark, then bright, then dark again; take that away and the most
+     expensive colour on the page becomes the cheapest.
+
+     The ramp below is lifted stop for stop from the Ghost logo gradient,
+     measured from the live page rather than eyeballed. Contrast against navy
+     is on every line so nobody has to guess later.
+
+     2026-08-21, George: "these yellows are not gold". He was right, and the
+     Ghost source says why in one line: a single flat hex always reads as
+     mustard, because the eye reads SATURATION as gold. The old ramp sat at
+     65% saturation and looked washed out on navy; every stop here is 84-100%,
+     which is the Ghost rule. The hues and the ramp are unchanged, so nothing
+     about the brand moves. Only the mud comes out. */
+  --gy-gold:        #DAA110;  /* the metal itself. Text, rules, accents.  7.53 */
+  --gy-gold-light:  #F7DE8A;  /* the specular highlight. Hover, sheen.   13.06 */
+  --gy-gold-mid:    #F0C756;  /* between the two, for surface ramps      10.77 */
+  --gy-gold-deep:   #B58A0A;  /* the shaded side of the metal             5.47 */
+  --gy-gold-dark:   #A87E00;  /* deeper shadow, decoration only           4.68 */
+  --gy-gold-bronze: #7A5C04;  /* bronze. Decoration and light grounds     2.78 */
+
+  /* The logo and decorative rules: the full Ghost ramp, dark to bright to
+     dark, which is what makes a flat shape read as leaf. Never put text on
+     it, the bronze ends are 2.78. The 118 degree angle is the Ghost angle:
+     it walks the highlight across a glyph rather than down it. */
+  --gy-gold-leaf: linear-gradient(118deg,
+    #7A5C04 0%, #B58A0A 22%, #F7DE8A 46%, #DAA110 60%, #A87E00 80%, #7A5C04 100%);
+
+  /* Buttons and filled bars, where dark text sits on top. Same metal, but the
+     range is held high on purpose: the darkest stop is 5.47 against navy, so
+     the type stays readable across the whole sweep rather than only in the
+     middle of it. */
+  --gy-gold-surface: linear-gradient(180deg,
+    #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%);
   --gy-ivory:   #F8F5F0;  /* Ivory White — text on dark */
   --gy-card:    #142233;  /* Card bg — slightly lighter than navy */
   --gy-white:   #FFFFFF;  /* Pure white — imagery borders only (see vellum) */
@@ -130,6 +177,42 @@ body {
      (b) 0.5 px section divider lines, (c) George's Inside Info
      left border, (d) hover states. Nowhere else. The restraint of
      the gold is what makes it premium — overuse cheapens it. */
+}
+
+/* ── Foil edge, borrowed from the Ghost build ─────────────────────────────
+   Gold type loses its edge as it brightens: the letterform and the ground
+   meet with nothing between them and the glyph goes soft. Foil-stamped print
+   solves it with a struck edge, and the cheap version of that is a hairline
+   of the metal's own darker tone under the type. Costs one text-shadow and
+   nothing at runtime.
+
+   Applied here to the small gold labels, which are the ones that were
+   reading as flat yellow. Display type gets the ramp instead. */
+.gy-metal,
+.gy-eyebrow,
+.gy-kicker,
+[class*="gy-gold-text"] {
+  text-shadow: 0 1px 0 rgba(122, 92, 4, 0.30), 0 0 1px rgba(122, 92, 4, 0.38);
+}
+
+/* Struck leaf for DISPLAY only. Never on small copy: clipping a gradient
+   into 9px letterforms muddies them and drops the mid-tones under any
+   usable contrast. The 7s drift is the Ghost timing. */
+.gy-leaf-text {
+  background: var(--gy-gold-leaf);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: gy-leaf-shift 7s ease-in-out infinite;
+}
+@keyframes gy-leaf-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gy-leaf-text { animation: none; }
 }
 
 /* Smooth scroll globally */
@@ -257,15 +340,146 @@ body {
   line-height: 1.7;
 }
 
+/* ── Line breaking (section 4, 2026-08-21) ───────────────────────────────
+   George flagged one centred line on the homepage. Measuring it turned up the
+   same fault on every page: centred type breaking into one long line and a
+   two or three word orphan under it. Worst measured ratios were 0.79 on the
+   homepage and 0.75 on /about-us, meaning the top line ran three quarters
+   longer than the one beneath it.
+
+   The April 2026 pass further down this file already set `balance` on h1 to
+   h3 and `pretty` on p, li and blockquote, and it was doing its job. What it
+   could not do is tell a paragraph of body prose from a centred display line,
+   and those want opposite treatment:
+
+   balance   evens every line of a short block. Right for a centred display
+             line, where the block's shape is part of the design.
+   pretty    leaves the block alone except for the last line, which it stops
+             being a single word. Right for body prose, where balancing fights
+             the reading rhythm.
+
+   Two things this rule had to get right, and got wrong on the first attempt.
+   It must not repeat what already exists, so only h4, figcaption, summary and
+   dd are added to the balance side. And it must actually win: written with
+   :where() it carried zero specificity and lost to the plain `p, li,
+   blockquote` selector at line 1267, which is why measuring it afterwards
+   showed nothing had changed. :is() keeps the grouping and carries the
+   specificity of what is inside it.
+
+   Both properties are ignored outright by browsers that do not support them,
+   so there is no fallback to write. */
+:where(h4, figcaption, summary) { text-wrap: balance; }
+:where(dd) { text-wrap: pretty; }
+
+/* Centred type is display type: balance it. There is no way to ask CSS for
+   "computed text-align is center", so this comes at the problem from two
+   directions.
+
+   First, anything centred by an inline style or by a utility class.
+
+   Second, by name. Chasing these one class at a time was the first attempt
+   and it was wrong: fixing .fleet-hero__desc simply moved the next failure to
+   .svc-hero__subtitle, then to .about-hero__eyebrow. They are all the same
+   thing wearing different block names, so the selector matches the BEM
+   element instead of the block. A new page that calls its standfirst
+   __subtitle is covered the day it is written. */
+:is([style*="text-align:center"], [style*="text-align: center"], .text-center, [align="center"])
+  :is(p, li, dd, blockquote),
+p.text-center, li.text-center, dd.text-center, blockquote.text-center,
+p[style*="text-align:center"], p[style*="text-align: center"],
+/* Matched on the bare word, with no separator in front of it.
+   
+   This took two wrong turns worth recording. Matching "__subtitle" missed
+   about-credentials__item-desc, whose element name nests. Matching "-desc"
+   then fixed that family and silently broke the other one, because
+   yacht-hero__subtitle has an underscore in front of the word and no hyphen
+   at all: the measurement afterwards showed four blocks that had been fixed
+   coming back ragged. The bare word covers both spellings and cannot be
+   caught out by the next component's naming.
+   
+   "text" is deliberately absent. It would match Tailwind's text-center,
+   text-sm and text-white, which is most of the site, and balancing body prose
+   is the opposite of what it needs. The two blocks that genuinely want it are
+   named at the end instead.
+   
+   Balance stops applying past a handful of lines by itself, so a long block
+   carrying one of these names is left alone. */
+[class*="eyebrow"], [class*="subtitle"], [class*="lede"],
+[class*="kicker"], [class*="tagline"], [class*="standfirst"],
+[class*="quote"], [class*="desc"], [class*="footnote"],
+[class*="note"], [class*="signature"], [class*="caption"],
+[class*="intro"], [class*="title"],
+/* The handful that do not follow the pattern. */
+.gy-forbes-quote, .about-philosophy__text, .about-george__bio,
+.yacht-ideal__text {
+  text-wrap: balance;
+}
+
 /* Typography refresh — readability & luxury spacing */
 p, li, dd, blockquote {
   max-width: 720px;
+  margin-inline: auto;
 }
 
-/* Increase section breathing room globally */
+/* 2026-08-21 (section 2) - the auto margins on the cap above are the fix for a
+ * bug that ran across the whole site, and this is why they are there.
+ *
+ * 720px is a READING width: body copy should not run wider than the eye can
+ * track. Correct. But a block with a max-width and NO auto margins sits at the
+ * LEFT of whatever contains it, and text-align: center then centres the words
+ * inside that 720px box rather than on the page. On a 1000px window the
+ * homepage banner measured 24..744, centre 384 against a page centre of 500:
+ * 116px off, on a line that is centred in the markup and centred in the CSS.
+ * 16 blocks on the homepage alone, 6 more on /about-us.
+ *
+ * George saw two of them and said the site reads sloppy. He was right, and it
+ * was one missing pair of auto margins.
+ *
+ * Considered and rejected: patching each component. 66 rules across the site
+ * set text-align: center without auto margins, and editing 66 places to fix
+ * one systemic default is how a codebase rots. With the margins on the cap,
+ * every capped block becomes a centred reading column, which is what the rest
+ * of this site already looks like. Checked on a yacht page: body copy now
+ * sits at 140..860 in a 1000px page instead of flush against 24. That reads
+ * better, not merely different.
+ *
+ * The rule below covers the one case the cap cannot. Several blocks carry
+ * style="...margin:0" from a styled-jsx component, written to kill the
+ * default VERTICAL margin, which takes the inline axis with it. Inline beats
+ * any rule without !important, so those stayed pinned left even after the cap
+ * was fixed: verified in the browser, selector matching, margin-left 0px. */
+:where([style*="text-align:center"], [style*="text-align: center"], .text-center, [align="center"])
+  :where(p, li, dd, blockquote),
+p.text-center,
+li.text-center,
+dd.text-center,
+blockquote.text-center,
+p[style*="text-align:center"],
+p[style*="text-align: center"] {
+  margin-inline: auto !important;
+}
+
+/* 2026-08-21 (section 2) - this was clamp(3rem, 6vw, 5rem), 48 to 80px on
+   every side of every section, and it is where the hollow bands came from.
+ *
+ * It does not stand alone. Almost every component on this site already pads
+ * itself, so a band between two sections was the first component's bottom,
+ * plus this rule's bottom, plus this rule's top, plus the next component's
+ * top. Measured on the homepage before the change: 14 gaps over 110px, the
+ * worst 335px of empty navy. That is what George called "kufio", hollow, and
+ * he was reading it correctly as unfinished.
+ *
+ * Halved rather than deleted, because a handful of sections carry no padding
+ * of their own and would collapse onto each other without it. The adjacent
+ * rule below stops the two halves stacking back up into the same problem:
+ * where one section follows another, the second does not re-pay for the space
+ * the first already left. */
 section {
-  padding-top: clamp(3rem, 6vw, 5rem);
-  padding-bottom: clamp(3rem, 6vw, 5rem);
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+section + section {
+  padding-top: 0;
 }
 
 /* Prevent horizontal scroll on mobile */
@@ -346,13 +560,13 @@ section {
 
 /* Selection color */
 ::selection {
-  background: #C9A84C;
+  background: #DAA110;
   color: #0D1B2A;
 }
 
 /* Focus-visible — accessible keyboard focus ring (brand gold) */
 *:focus-visible {
-  outline: 2px solid #C9A84C;
+  outline: 2px solid #DAA110;
   outline-offset: 2px;
 }
 
@@ -430,17 +644,17 @@ section {
                          baked in (use sparingly: H1 on-load, single
                          editorial accent per section).
    .gy-gold-24k-glow  — adds a soft outer halo without changing the
-                         fill (useful on solid #C9A84C captions). */
+                         fill (useful on solid #DAA110 captions). */
 .gy-gold-24k {
   background: linear-gradient(
     135deg,
-    #C9A84C 0%,    /* highlight */
-    #C9A84C 14%,
-    #C9A84C 30%,
-    #C9A84C 48%,   /* core 24K */
-    #C9A84C 66%,
-    #C9A84C 84%,
-    #C9A84C 100%   /* deep bronze shadow */
+    #DAA110 0%,    /* highlight */
+    #DAA110 14%,
+    #DAA110 30%,
+    #DAA110 48%,   /* core 24K */
+    #DAA110 66%,
+    #DAA110 84%,
+    #DAA110 100%   /* deep bronze shadow */
   );
   background-size: 200% 200%;
   background-position: 30% 30%;
@@ -448,28 +662,28 @@ section {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  filter: drop-shadow(0 0 0.6em rgba(201, 168, 76, 0.28))
+  filter: drop-shadow(0 0 0.6em rgba(218, 161, 16, 0.28))
           drop-shadow(0 1px 0 rgba(13, 27, 42, 0.45));
 }
 .gy-gold-24k-shine {
   background: linear-gradient(
     100deg,
-    #C9A84C 0%,
-    #C9A84C 18%,
-    #C9A84C 28%,
+    #DAA110 0%,
+    #DAA110 18%,
+    #DAA110 28%,
     #FFFFFF 33%,   /* sweeping white highlight */
-    #C9A84C 38%,
-    #C9A84C 48%,
-    #C9A84C 60%,
-    #C9A84C 80%,
-    #C9A84C 100%
+    #DAA110 38%,
+    #DAA110 48%,
+    #DAA110 60%,
+    #DAA110 80%,
+    #DAA110 100%
   );
   background-size: 300% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  filter: drop-shadow(0 0 0.8em rgba(201, 168, 76, 0.32))
+  filter: drop-shadow(0 0 0.8em rgba(218, 161, 16, 0.32))
           drop-shadow(0 1px 0 rgba(13, 27, 42, 0.5));
   animation: gy24kShine 8s ease-in-out infinite;
 }
@@ -479,10 +693,10 @@ section {
   100% { background-position: 0%   center; }
 }
 .gy-gold-24k-glow {
-  color: #C9A84C;
+  color: #DAA110;
   text-shadow:
-    0 0 12px rgba(201, 168, 76, 0.45),
-    0 0 28px rgba(201, 168, 76, 0.25),
+    0 0 12px rgba(218, 161, 16, 0.45),
+    0 0 28px rgba(218, 161, 16, 0.25),
     0 1px 0 rgba(13, 27, 42, 0.5);
 }
 @media (prefers-reduced-motion: reduce) {
@@ -516,12 +730,12 @@ section {
     /* Cool champagne highlights instead of saturated yellow */
     #F8F5F0 0%,
     #F8F5F0 14%,
-    #C9A84C 28%,
+    #DAA110 28%,
     #FFFFFF 36%,    /* white sweep highlight */
     #F8F5F0 44%,
-    #C9A84C 60%,
-    #C9A84C 76%,
-    #8B7B58 100%    /* warm bronze shadow */
+    #DAA110 60%,
+    #DAA110 76%,
+    #7A5C04 100%    /* warm bronze shadow */
   );
   background-size: 320% 100%;
   -webkit-background-clip: text;
@@ -529,7 +743,7 @@ section {
   animation:
     gy-luxe-enter-fade 1.8s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards,
     gy-luxe-shine 18s ease-in-out 3s infinite;
-  filter: drop-shadow(0 0 0.7em rgba(201, 168, 76, 0.18))
+  filter: drop-shadow(0 0 0.7em rgba(218, 161, 16, 0.18))
           drop-shadow(0 1px 0 rgba(13, 27, 42, 0.55));
 }
 @keyframes gy-luxe-enter-fade {
@@ -654,23 +868,23 @@ section {
       105deg,
       transparent 30%,
       rgba(248, 245, 240, 0.32) 45%,
-      rgba(201, 168, 76, 0.6) 50%,
+      rgba(218, 161, 16, 0.6) 50%,
       rgba(248, 245, 240, 0.32) 55%,
       transparent 70%
     ),
     /* Mid: brushed-metal directional sheen */
     repeating-linear-gradient(
       92deg,
-      rgba(201, 168, 76, 0.18) 0px,
+      rgba(218, 161, 16, 0.18) 0px,
       transparent 1.5px,
       transparent 3px
     ),
     /* Base: 24K gradient core */
     linear-gradient(
       135deg,
-      #C9A84C 0%, #C9A84C 14%, #C9A84C 28%,
-      #FFFFFF 36%, #C9A84C 42%, #C9A84C 50%,
-      #C9A84C 64%, #C9A84C 78%, #C9A84C 100%
+      #DAA110 0%, #DAA110 14%, #DAA110 28%,
+      #FFFFFF 36%, #DAA110 42%, #DAA110 50%,
+      #DAA110 64%, #DAA110 78%, #DAA110 100%
     );
   background-size: 200% 100%, 100% 100%, 200% 200%;
   background-position: 0% 50%, 0 0, 30% 30%;
@@ -679,7 +893,7 @@ section {
   -webkit-text-fill-color: transparent;
   color: transparent;
   filter:
-    drop-shadow(0 0 0.7em rgba(201, 168, 76, 0.32))
+    drop-shadow(0 0 0.7em rgba(218, 161, 16, 0.32))
     drop-shadow(0 1px 0 rgba(13, 27, 42, 0.55));
   animation: gyGoldFoilSweep 14s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
@@ -720,8 +934,8 @@ section {
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.32em;
-    color: rgba(201, 168, 76, 0.42);
-    text-shadow: 0 0 8px rgba(201, 168, 76, 0.25);
+    color: rgba(218, 161, 16, 0.42);
+    text-shadow: 0 0 8px rgba(218, 161, 16, 0.25);
     pointer-events: none;
     z-index: 5;
     text-transform: uppercase;
@@ -752,11 +966,11 @@ section {
     display: block;
     width: 22px;
     height: 22px;
-    border-right: 1.5px solid rgba(201, 168, 76, 0.85);
-    border-bottom: 1.5px solid rgba(201, 168, 76, 0.85);
+    border-right: 1.5px solid rgba(218, 161, 16, 0.85);
+    border-bottom: 1.5px solid rgba(218, 161, 16, 0.85);
     transform: rotate(45deg);
     margin: 0 auto;
-    filter: drop-shadow(0 0 6px rgba(201, 168, 76, 0.45));
+    filter: drop-shadow(0 0 6px rgba(218, 161, 16, 0.45));
     animation: gyScrollHint 1.8s cubic-bezier(0.55, 0, 0.1, 1) infinite;
   }
   .gy-mobile-scroll-hint__rule {
@@ -767,8 +981,8 @@ section {
     background: linear-gradient(
       180deg,
       transparent 0%,
-      rgba(201, 168, 76, 0.65) 60%,
-      rgba(201, 168, 76, 0.85) 100%
+      rgba(218, 161, 16, 0.65) 60%,
+      rgba(218, 161, 16, 0.85) 100%
     );
   }
   @keyframes gyScrollHint {
@@ -814,9 +1028,9 @@ section {
   transform: translate(-50%, -50%) scale(0.4);
   background: radial-gradient(
     ellipse at center,
-    rgba(201, 168, 76, 0.55) 0%,
-    rgba(201, 168, 76, 0.18) 25%,
-    rgba(201, 168, 76, 0) 60%
+    rgba(218, 161, 16, 0.55) 0%,
+    rgba(218, 161, 16, 0.18) 25%,
+    rgba(218, 161, 16, 0) 60%
   );
   opacity: 0;
   z-index: -1;
@@ -877,8 +1091,8 @@ section {
 [class*="eyebrow"][style*="DAA520"],
 [class*="eyebrow"][style*="C9A84C"] {
   text-shadow:
-    0 0 10px rgba(201, 168, 76, 0.32),
-    0 0 22px rgba(201, 168, 76, 0.14),
+    0 0 10px rgba(218, 161, 16, 0.32),
+    0 0 22px rgba(218, 161, 16, 0.14),
     0 1px 0 rgba(13, 27, 42, 0.45);
 }
 
@@ -887,14 +1101,14 @@ section {
 .text-shimmer {
   background: linear-gradient(
     90deg,
-    #C9A84C 0%, #FFFFFF 18%, #C9A84C 28%, #C9A84C 50%,
-    #C9A84C 68%, #C9A84C 82%, #C9A84C 100%
+    #DAA110 0%, #FFFFFF 18%, #DAA110 28%, #DAA110 50%,
+    #DAA110 68%, #DAA110 82%, #DAA110 100%
   );
   background-size: 300% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 0.6em rgba(201, 168, 76, 0.28));
+  filter: drop-shadow(0 0 0.6em rgba(218, 161, 16, 0.28));
   animation: textShimmerAnim 8s ease-in-out infinite;
 }
 
@@ -925,7 +1139,7 @@ section {
   left: 0;
   width: 0;
   height: 1px;
-  background: linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C);
+  background: linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%);
   transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .gold-underline:hover::after {
@@ -937,12 +1151,12 @@ section {
   background: rgba(13, 27, 42, 0.4);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(201, 168, 76, 0.08);
+  border: 1px solid rgba(218, 161, 16, 0.08);
 }
 
 /* Ambient glow */
 .glow-gold {
-  box-shadow: 0 0 40px rgba(201, 168, 76, 0.06), 0 0 80px rgba(201, 168, 76, 0.03);
+  box-shadow: 0 0 40px rgba(218, 161, 16, 0.06), 0 0 80px rgba(218, 161, 16, 0.03);
 }
 
 /* Magnetic-style scale on hover */
@@ -1022,7 +1236,7 @@ section {
   content: '';
   position: absolute;
   inset: -1px;
-  background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+  background: linear-gradient(90deg, transparent, #DAA110, transparent);
   background-size: 300% 100%;
   z-index: -1;
   animation: borderGlowAnim 3s ease-in-out infinite;
@@ -1047,8 +1261,8 @@ section {
   animation: pulseSoftAnim 3s ease-in-out infinite;
 }
 @keyframes pulseSoftAnim {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.15); }
-  50% { box-shadow: 0 0 0 12px rgba(201,168,76,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(218, 161, 16,0.15); }
+  50% { box-shadow: 0 0 0 12px rgba(218, 161, 16,0); }
 }
 
 /* Touch feedback — active state for mobile */
@@ -1061,7 +1275,7 @@ section {
 
 /* Gradient text animation — flowing gold */
 .text-flow {
-  background: linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C, #C9A84C, #C9A84C);
+  background: linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%);
   background-size: 400% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -1127,7 +1341,7 @@ section {
 
 /* Style for the ACTIVE dot (make it the gold color) */
 .yacht-swiper .swiper-pagination-bullet-active {
-  background-color: #C9A84C !important; /* Gold color for the active dot */
+  background-color: #DAA110 !important; /* Gold color for the active dot */
   opacity: 1 !important;
 }
 
@@ -1139,12 +1353,12 @@ section {
 
 /* 1. For Backgrounds (Buttons, Sections) */
 .bg-luxury {
-  background: linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%);
+  background: linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%);
 }
 
 /* 2. For Text (Headings, Spans) */
 .text-luxury {
-  background: linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%);
+  background: linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -1157,7 +1371,7 @@ section {
 .border-luxury {
   border-width: 1px;
   border-style: solid;
-  border-image: linear-gradient(90deg, #C9A84C 0%, #C9A84C 45%, #C9A84C 100%) 1;
+  border-image: linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%) 1;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1311,7 +1525,7 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
    already exist) but the background is now pure black. C9A84C on
    #0D1B2A = 7.6:1 (AAA) — even higher contrast than navy. */
 .gold-on-navy {
-  color: #C9A84C;
+  color: #DAA110;
   background: #0D1B2A;
 }
 
@@ -1334,7 +1548,7 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
   padding: 0.75rem 1.25rem;
   background: #0D1B2A;
   color: #F8F5F0;
-  border: 2px solid #C9A84C;
+  border: 2px solid #DAA110;
   border-radius: 4px;
   font-weight: 600;
   text-decoration: none;
@@ -1366,8 +1580,8 @@ button:active, [role="button"]:active, a.btn:active, .cta:active {
 
 /* F.3 — yachtCallout hover (replaces inline JS handlers that broke Server Component). */
 .yacht-callout-card:hover {
-  border-color: #C9A84C !important;
-  background: rgba(201,168,76,0.12) !important;
+  border-color: #DAA110 !important;
+  background: rgba(218, 161, 16,0.12) !important;
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -1471,7 +1685,7 @@ a.btn-secondary {
   gap: 12px;
   padding: 18px 36px;
   background: transparent;
-  border: 1px solid rgba(201, 168, 76, 0.5);
+  border: 1px solid rgba(218, 161, 16, 0.5);
   color: #F8F5F0;
   font-family: var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Montserrat', sans-serif;
   font-weight: 500;
@@ -1483,9 +1697,9 @@ a.btn-secondary {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .gy-cta-ghost:hover {
-  border-color: #C9A84C;
-  background: rgba(201, 168, 76, 0.08);
-  color: #C9A84C;
+  border-color: #DAA110;
+  background: rgba(218, 161, 16, 0.08);
+  color: #DAA110;
 }
 
 /* Phase 18 — lower 3D tilt magnitude. The previous 2.5° rotateY +
@@ -1500,7 +1714,7 @@ a.btn-secondary {
   transform: perspective(1200px) translateY(-3px) !important;
   box-shadow:
     0 18px 44px rgba(13, 27, 42, 0.4),
-    0 0 0 1px rgba(201, 168, 76, 0.18) inset !important;
+    0 0 0 1px rgba(218, 161, 16, 0.18) inset !important;
 }
 @media (hover: hover) and (min-width: 700px) {
   .fleet-card--visible:hover,
@@ -1510,7 +1724,7 @@ a.btn-secondary {
     transform: perspective(1200px) translateY(-4px) !important;
     box-shadow:
       0 20px 48px rgba(13, 27, 42, 0.42),
-      0 0 0 1px rgba(201, 168, 76, 0.20) inset !important;
+      0 0 0 1px rgba(218, 161, 16, 0.20) inset !important;
   }
 }
 
@@ -1604,7 +1818,7 @@ footer h4 {
     transform: perspective(1200px) translateY(-4px);
     box-shadow:
       0 20px 48px rgba(13, 27, 42, 0.42),
-      0 0 0 1px rgba(201, 168, 76, 0.20) inset;
+      0 0 0 1px rgba(218, 161, 16, 0.20) inset;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1703,7 +1917,7 @@ footer h4 {
   font-size: 10px;
   letter-spacing: 0.42em;
   text-transform: uppercase;
-  color: #C9A84C;
+  color: #DAA110;
   margin-bottom: 18px;
   display: inline-block;
 }
@@ -1713,7 +1927,7 @@ footer h4 {
   font-size: 9px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: #C9A84C;
+  color: #DAA110;
 }
 
 /* Asymmetric editorial grid — 12-column with intentional misalignment.
@@ -1754,7 +1968,7 @@ footer h4 {
   display: block;
   width: clamp(40px, 6vw, 80px);
   height: 1px;
-  background: rgba(201, 168, 76, 0.5);
+  background: rgba(218, 161, 16, 0.5);
   margin-block: clamp(20px, 3vw, 32px);
 }
 .gy-rule-gold-center {
@@ -1768,7 +1982,7 @@ footer h4 {
   font-size: 12px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #C9A84C;
+  color: #DAA110;
   font-weight: 600;
   text-decoration: none;
   padding-bottom: 4px;
@@ -1780,7 +1994,7 @@ footer h4 {
   bottom: 0;
   width: 100%;
   height: 1px;
-  background: #C9A84C;
+  background: #DAA110;
   transform-origin: left center;
   transform: scaleX(0.3);
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -1812,20 +2026,20 @@ footer h4 {
 
 /* D.7 — Build-a-custom-itinerary CTA hover. */
 .d7-build-cta:hover {
-  background: rgba(201,168,76,0.12) !important;
-  border-color: #C9A84C !important;
+  background: rgba(218, 161, 16,0.12) !important;
+  border-color: #DAA110 !important;
 }
 
 /* D.6 — Matterport trigger card hover (click-to-load placeholder). */
 .d6-matterport-trigger:hover {
-  border-color: #C9A84C !important;
-  background: linear-gradient(135deg, rgba(201,168,76,0.14) 0%, rgba(13,27,42,0.85) 100%) !important;
+  border-color: #DAA110 !important;
+  background: linear-gradient(135deg, rgba(218, 161, 16,0.14) 0%, rgba(13,27,42,0.85) 100%) !important;
 }
 
 /* D.5 — Deck plan hotspot subtle pulse + hover. */
 @keyframes d5HotspotPulse {
-  0%, 100% { box-shadow: 0 0 0 6px rgba(201,168,76,0.25); }
-  50%      { box-shadow: 0 0 0 10px rgba(201,168,76,0.0); }
+  0%, 100% { box-shadow: 0 0 0 6px rgba(218, 161, 16,0.25); }
+  50%      { box-shadow: 0 0 0 10px rgba(218, 161, 16,0.0); }
 }
 .d5-hotspot:hover {
   transform: translate(-50%, -50%) scale(1.18) !important;
@@ -1838,18 +2052,18 @@ footer h4 {
 
 /* F.4 — Topic-cluster card hover. */
 .f4-article-card:hover, .f4-yacht-card:hover {
-  border-color: rgba(201,168,76,0.5) !important;
+  border-color: rgba(218, 161, 16,0.5) !important;
 }
 
 /* G.1 — Island page yacht-card hover. */
 .g1-yacht-card:hover {
-  border-color: rgba(201,168,76,0.5) !important;
+  border-color: rgba(218, 161, 16,0.5) !important;
 }
 
 /* H.1 — Ask George floating button pulse dot. */
 @keyframes askGeorgePulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.6); }
-  50%      { box-shadow: 0 0 0 6px rgba(201,168,76,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(218, 161, 16,0.6); }
+  50%      { box-shadow: 0 0 0 6px rgba(218, 161, 16,0); }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -1868,8 +2082,8 @@ button.btn-primary:focus-visible,
 a.btn-primary:focus-visible {
   transform: scale(1.02);
   box-shadow:
-    0 6px 28px rgba(201, 168, 76, 0.28),
-    0 0 0 1px rgba(201, 168, 76, 0.45) inset !important;
+    0 6px 28px rgba(218, 161, 16, 0.28),
+    0 0 0 1px rgba(218, 161, 16, 0.45) inset !important;
 }
 button.btn-secondary,
 a.btn-secondary {
@@ -1882,8 +2096,8 @@ a.btn-secondary:hover,
 button.btn-secondary:focus-visible,
 a.btn-secondary:focus-visible {
   transform: scale(1.02);
-  border-color: rgba(201, 168, 76, 0.85) !important;
-  color: #C9A84C !important;
+  border-color: rgba(218, 161, 16, 0.85) !important;
+  color: #DAA110 !important;
 }
 
 /* Form fields — gold focus ring. Form inputs everywhere get the same
@@ -1893,8 +2107,8 @@ input:not([type="checkbox"]):not([type="radio"]):not([data-no-gy-focus]):focus,
 textarea:not([data-no-gy-focus]):focus,
 select:not([data-no-gy-focus]):focus {
   outline: none;
-  border-color: #C9A84C !important;
-  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.18) !important;
+  border-color: #DAA110 !important;
+  box-shadow: 0 0 0 3px rgba(218, 161, 16, 0.18) !important;
   transition: border-color 0.18s ease, box-shadow 0.18s ease !important;
 }
 
@@ -1973,7 +2187,7 @@ a.gy-fancy-link:hover {
   transform: perspective(1200px) rotateX(2.5deg) rotateY(-3deg) translateY(-4px);
   box-shadow:
     0 24px 56px rgba(13, 27, 42, 0.45),
-    0 0 0 1px rgba(201, 168, 76, 0.18) inset;
+    0 0 0 1px rgba(218, 161, 16, 0.18) inset;
 }
 
 /* Subtle "depth" shadow used as the resting state for tilt cards. */
@@ -2063,7 +2277,7 @@ a.gy-fancy-link:hover {
   background: linear-gradient(
     105deg,
     transparent 35%,
-    rgba(201, 168, 76, 0.25) 50%,
+    rgba(218, 161, 16, 0.25) 50%,
     transparent 65%
   );
   transform: translateX(-130%);
@@ -2090,7 +2304,7 @@ a.gy-fancy-link:hover {
   content: "";
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(218, 161, 16, 0.4), transparent);
   max-width: 280px;
   margin-inline: 18px;
 }
@@ -2106,13 +2320,13 @@ a.gy-fancy-link:hover {
   border-radius: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-bottom: 8px solid #C9A84C;
-  filter: drop-shadow(0 0 4px rgba(201, 168, 76, 0.42));
+  border-bottom: 8px solid #DAA110;
+  filter: drop-shadow(0 0 4px rgba(218, 161, 16, 0.42));
   animation: gyStarBreath 3.6s ease-in-out infinite;
 }
 @keyframes gyStarBreath {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(201, 168, 76, 0.42)); opacity: 1; }
-  50%      { filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.65)); opacity: 0.85; }
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(218, 161, 16, 0.42)); opacity: 1; }
+  50%      { filter: drop-shadow(0 0 10px rgba(218, 161, 16, 0.65)); opacity: 0.85; }
 }
 
 /* Reduced motion — gold standard accessibility. */
@@ -2174,7 +2388,7 @@ a.gy-fancy-link:hover {
   width: 32px;
   height: 32px;
   margin: -16px 0 0 -16px; /* centre on transform origin */
-  border: 1px solid rgba(201, 168, 76, 0.5);
+  border: 1px solid rgba(218, 161, 16, 0.5);
   border-radius: 50%;
   background: transparent;
   transition:
@@ -2197,7 +2411,7 @@ a.gy-fancy-link:hover {
   width: 48px;
   height: 48px;
   margin: -24px 0 0 -24px;
-  border-color: rgba(201, 168, 76, 0.9);
+  border-color: rgba(218, 161, 16, 0.9);
 }
 
 /* Magnetic — hero video + yacht card images. Ring grows to 64 px
@@ -2207,7 +2421,7 @@ a.gy-fancy-link:hover {
   width: 64px;
   height: 64px;
   margin: -32px 0 0 -32px;
-  border-color: rgba(201, 168, 76, 0.9);
+  border-color: rgba(218, 161, 16, 0.9);
 }
 
 /* Labelled — same 64 px geometry as magnetic, label inside. The
@@ -2216,7 +2430,7 @@ a.gy-fancy-link:hover {
   width: 64px;
   height: 64px;
   margin: -32px 0 0 -32px;
-  border-color: rgba(201, 168, 76, 0.9);
+  border-color: rgba(218, 161, 16, 0.9);
 }
 
 /* Text — collapses to a thin gold I-beam over inputs / textareas. */
@@ -2228,11 +2442,11 @@ a.gy-fancy-link:hover {
   border-radius: 1px;
   background: linear-gradient(
     180deg,
-    rgba(201, 168, 76, 0) 0%,
-    rgba(201, 168, 76, 0.85) 18%,
+    rgba(218, 161, 16, 0) 0%,
+    rgba(218, 161, 16, 0.85) 18%,
     rgba(248, 245, 240, 0.95) 50%,
-    rgba(201, 168, 76, 0.85) 82%,
-    rgba(201, 168, 76, 0) 100%
+    rgba(218, 161, 16, 0.85) 82%,
+    rgba(218, 161, 16, 0) 100%
   );
 }
 
@@ -2242,7 +2456,7 @@ a.gy-fancy-link:hover {
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #C9A84C;
+  color: #DAA110;
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
@@ -2288,13 +2502,19 @@ a.gy-fancy-link:hover {
 .gy-forbes-section {
   position: relative;
   isolation: isolate;
-  padding: clamp(80px, 12vw, 140px) 24px;
+  /* 2026-08-21 (section 2) - was clamp(80px, 12vw, 140px). This block pads
+     itself generously and sits between two others that do the same, so the
+     bands either side measured 295px and 222px of empty navy. Brought onto
+     the same rhythm as the rest of the page rather than deleted: the section
+     still breathes, it just no longer pays twice for space its neighbours
+     have already left. */
+  padding: clamp(48px, 6vw, 72px) 24px;
   overflow: hidden;
   background:
     radial-gradient(ellipse at 50% 100%, #0D1B2A 0%, #0D1B2A 55%, #0D1B2A 100%),
     #0D1B2A;
-  border-top: 1px solid rgba(201, 168, 76, 0.18);
-  border-bottom: 1px solid rgba(201, 168, 76, 0.18);
+  border-top: 1px solid rgba(218, 161, 16, 0.18);
+  border-bottom: 1px solid rgba(218, 161, 16, 0.18);
 }
 
 /* Paper-grain noise overlay — gives the navy a hand-pressed quality
@@ -2324,9 +2544,9 @@ a.gy-fancy-link:hover {
   transform: translateX(-50%);
   background: radial-gradient(
     ellipse at 50% 0%,
-    rgba(201, 168, 76, 0.16) 0%,
-    rgba(201, 168, 76, 0.07) 35%,
-    rgba(201, 168, 76, 0) 70%
+    rgba(218, 161, 16, 0.16) 0%,
+    rgba(218, 161, 16, 0.07) 35%,
+    rgba(218, 161, 16, 0) 70%
   );
   filter: blur(6px);
   pointer-events: none;
@@ -2354,7 +2574,7 @@ a.gy-fancy-link:hover {
   height: 3px;
   border-radius: 50%;
   background: rgba(248, 245, 240, 0.7);
-  box-shadow: 0 0 6px rgba(201, 168, 76, 0.55);
+  box-shadow: 0 0 6px rgba(218, 161, 16, 0.55);
   animation: gyForbesDustRise 16s linear infinite;
   opacity: 0;
 }
@@ -2393,7 +2613,7 @@ a.gy-fancy-link:hover {
   font-size: 13px;
   letter-spacing: 0.55em;
   text-transform: uppercase;
-  color: rgba(201, 168, 76, 0.8);
+  color: rgba(218, 161, 16, 0.8);
   margin-inline-end: -0.55em;
   opacity: 0;
   transform: translateY(10px);
@@ -2434,9 +2654,9 @@ a.gy-fancy-link:hover {
   transform: translateX(-50%);
   background: radial-gradient(
     ellipse at 50% 0%,
-    rgba(201, 168, 76, 0.32) 0%,
-    rgba(201, 168, 76, 0.05) 60%,
-    rgba(201, 168, 76, 0) 100%
+    rgba(218, 161, 16, 0.32) 0%,
+    rgba(218, 161, 16, 0.05) 60%,
+    rgba(218, 161, 16, 0) 100%
   );
   filter: blur(6px);
   z-index: -1;
@@ -2456,7 +2676,7 @@ a.gy-fancy-link:hover {
   font-size: 12px;
   letter-spacing: 0.50em;
   text-transform: uppercase;
-  color: rgba(201, 168, 76, 0.85);
+  color: rgba(218, 161, 16, 0.85);
   margin-inline-end: -0.50em;
   opacity: 0;
   animation: gyForbesFadeUp 1.2s ease 0.7s forwards;
@@ -2470,9 +2690,9 @@ a.gy-fancy-link:hover {
   width: 0;
   background: linear-gradient(
     90deg,
-    rgba(201, 168, 76, 0) 0%,
-    rgba(201, 168, 76, 0.85) 50%,
-    rgba(201, 168, 76, 0) 100%
+    rgba(218, 161, 16, 0) 0%,
+    rgba(218, 161, 16, 0.85) 50%,
+    rgba(218, 161, 16, 0) 100%
   );
   margin: 8px 0;
   animation:
@@ -2522,7 +2742,7 @@ a.gy-fancy-link:hover {
   font-style: italic;
   font-weight: 300;
   font-size: 16px;
-  color: rgba(201, 168, 76, 0.75);
+  color: rgba(218, 161, 16, 0.75);
   letter-spacing: 0.03em;
   opacity: 0;
   animation: gyForbesFadeUp 1s ease 1.65s forwards;
@@ -2537,8 +2757,8 @@ a.gy-fancy-link:hover {
   text-transform: uppercase;
   color: #F8F5F0;
   padding: 14px 28px 14px 30px;
-  border: 1px solid rgba(201, 168, 76, 0.5);
-  background: rgba(201, 168, 76, 0.06);
+  border: 1px solid rgba(218, 161, 16, 0.5);
+  background: rgba(218, 161, 16, 0.06);
   display: inline-flex;
   align-items: center;
   gap: 14px;
@@ -2558,15 +2778,15 @@ a.gy-fancy-link:hover {
   font-size: 18px;
   letter-spacing: 0;
   margin-inline-end: 0;
-  color: rgba(201, 168, 76, 0.95);
+  color: rgba(218, 161, 16, 0.95);
   transition: transform 320ms cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 .gy-forbes-link:hover .gy-forbes-cta {
-  background: rgba(201, 168, 76, 0.16);
-  border-color: rgba(201, 168, 76, 0.85);
+  background: rgba(218, 161, 16, 0.16);
+  border-color: rgba(218, 161, 16, 0.85);
   box-shadow:
-    0 14px 36px rgba(201, 168, 76, 0.28),
-    inset 0 0 24px rgba(201, 168, 76, 0.10);
+    0 14px 36px rgba(218, 161, 16, 0.28),
+    inset 0 0 24px rgba(218, 161, 16, 0.10);
   color: #FFFFFF;
 }
 .gy-forbes-link:hover .gy-forbes-cta-arrow {
@@ -2617,8 +2837,8 @@ a.gy-fancy-link:hover {
     #0D1B2A;
   padding: clamp(80px, 10vw, 130px) 24px clamp(60px, 8vw, 100px);
   overflow: hidden;
-  border-top: 1px solid rgba(201, 168, 76, 0.16);
-  border-bottom: 1px solid rgba(201, 168, 76, 0.16);
+  border-top: 1px solid rgba(218, 161, 16, 0.16);
+  border-bottom: 1px solid rgba(218, 161, 16, 0.16);
 }
 
 .gy-region-map-header {
@@ -2634,7 +2854,7 @@ a.gy-fancy-link:hover {
   font-size: 11px;
   letter-spacing: 0.55em;
   text-transform: uppercase;
-  color: rgba(201, 168, 76, 0.85);
+  color: rgba(218, 161, 16, 0.85);
   margin: 0 0 18px;
   margin-inline-end: -0.55em;
 }
@@ -2652,7 +2872,7 @@ a.gy-fancy-link:hover {
   font-style: italic;
   font-weight: 300;
   font-size: clamp(15px, 1.5vw, 18px);
-  color: rgba(201, 168, 76, 0.7);
+  color: rgba(218, 161, 16, 0.7);
   margin: 0;
   letter-spacing: 0.02em;
 }
@@ -2682,11 +2902,11 @@ a.gy-fancy-link:hover {
   max-width: 1200px;
   margin: 0 auto;
   aspect-ratio: 1.6 / 1;
-  border: 1px solid rgba(201, 168, 76, 0.12);
+  border: 1px solid rgba(218, 161, 16, 0.12);
   background:
     radial-gradient(ellipse at 50% 50%, rgba(13, 27, 42, 0.6) 0%, rgba(13, 27, 42, 0) 70%),
-    radial-gradient(circle at 30% 35%, rgba(201, 168, 76, 0.06) 0%, transparent 50%),
-    radial-gradient(circle at 70% 65%, rgba(201, 168, 76, 0.04) 0%, transparent 50%);
+    radial-gradient(circle at 30% 35%, rgba(218, 161, 16, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 70% 65%, rgba(218, 161, 16, 0.04) 0%, transparent 50%);
   z-index: 1;
 }
 
@@ -2726,16 +2946,16 @@ a.gy-fancy-link:hover {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #C9A84C;
+  background: #DAA110;
   box-shadow:
-    0 0 0 2px rgba(201, 168, 76, 0.18),
-    0 0 18px rgba(201, 168, 76, 0.55);
+    0 0 0 2px rgba(218, 161, 16, 0.18),
+    0 0 18px rgba(218, 161, 16, 0.55);
   margin-bottom: 4px;
   animation: gyRegionPinPulse 2.6s ease-in-out infinite;
 }
 @keyframes gyRegionPinPulse {
-  0%, 100% { box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.18), 0 0 18px rgba(201, 168, 76, 0.55); }
-  50%      { box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.30), 0 0 28px rgba(201, 168, 76, 0.75); }
+  0%, 100% { box-shadow: 0 0 0 2px rgba(218, 161, 16, 0.18), 0 0 18px rgba(218, 161, 16, 0.55); }
+  50%      { box-shadow: 0 0 0 4px rgba(218, 161, 16, 0.30), 0 0 28px rgba(218, 161, 16, 0.75); }
 }
 .gy-region-pin-name {
   font-family: var(--gy-font-display);
@@ -2752,7 +2972,7 @@ a.gy-fancy-link:hover {
   font-style: italic;
   font-weight: 300;
   font-size: 14px;
-  color: rgba(201, 168, 76, 0.85);
+  color: rgba(218, 161, 16, 0.85);
   letter-spacing: 0.03em;
 }
 .gy-region-pin:hover .gy-region-pin-dot {
@@ -2784,7 +3004,7 @@ a.gy-fancy-link:hover {
   max-height: 88vh;
   overflow-y: auto;
   background: #0D1B2A;
-  border: 1px solid rgba(201, 168, 76, 0.32);
+  border: 1px solid rgba(218, 161, 16, 0.32);
   box-shadow: 0 30px 90px rgba(13, 27, 42, 0.7);
 }
 .gy-region-modal-close {
@@ -2806,8 +3026,8 @@ a.gy-fancy-link:hover {
   transition: background 200ms ease, border-color 200ms ease;
 }
 .gy-region-modal-close:hover {
-  background: rgba(201, 168, 76, 0.2);
-  border-color: #C9A84C;
+  background: rgba(218, 161, 16, 0.2);
+  border-color: #DAA110;
 }
 
 /* Phase 27i.15 (2026-05-08) — region-to-region fly-through arrows.
@@ -2821,7 +3041,7 @@ a.gy-fancy-link:hover {
   height: 44px;
   border-radius: 0;
   background: rgba(13, 27, 42, 0.65);
-  border: 1px solid rgba(201, 168, 76, 0.45);
+  border: 1px solid rgba(218, 161, 16, 0.45);
   color: #F8F5F0;
   font-size: 30px;
   line-height: 1;
@@ -2841,8 +3061,8 @@ a.gy-fancy-link:hover {
 .gy-region-modal-nav--prev { left: 14px; }
 .gy-region-modal-nav--next { right: 14px; }
 .gy-region-modal-nav:hover {
-  background: rgba(201, 168, 76, 0.18);
-  border-color: #C9A84C;
+  background: rgba(218, 161, 16, 0.18);
+  border-color: #DAA110;
   transform: scale(1.06);
 }
 .gy-region-modal.is-flying .gy-region-modal-cover {
@@ -2899,7 +3119,7 @@ a.gy-fancy-link:hover {
   font-size: 11px;
   letter-spacing: 0.5em;
   text-transform: uppercase;
-  color: rgba(201, 168, 76, 0.85);
+  color: rgba(218, 161, 16, 0.85);
   margin: 0 0 8px;
   margin-inline-end: -0.5em;
   display: inline-block;
@@ -2917,7 +3137,7 @@ a.gy-fancy-link:hover {
   font-style: italic;
   font-weight: 300;
   font-size: clamp(14px, 1.5vw, 17px);
-  color: rgba(201, 168, 76, 0.85);
+  color: rgba(218, 161, 16, 0.85);
   margin: 0;
   letter-spacing: 0.025em;
 }
@@ -2938,7 +3158,7 @@ a.gy-fancy-link:hover {
   font-size: 11px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: rgba(201, 168, 76, 0.85);
+  color: rgba(218, 161, 16, 0.85);
   margin: 0 0 16px;
   margin-inline-end: -0.32em;
 }
@@ -2961,8 +3181,8 @@ a.gy-fancy-link:hover {
   transition: background 200ms ease, border-color 200ms ease;
 }
 .gy-region-yacht-row:hover {
-  background: rgba(201, 168, 76, 0.06);
-  border-color: rgba(201, 168, 76, 0.45);
+  background: rgba(218, 161, 16, 0.06);
+  border-color: rgba(218, 161, 16, 0.45);
 }
 .gy-region-yacht-thumb {
   width: 84px;
@@ -2985,7 +3205,7 @@ a.gy-fancy-link:hover {
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(201, 168, 76, 0.7);
+  color: rgba(218, 161, 16, 0.7);
   margin: 4px 0 0;
 }
 .gy-region-yacht-cta {
@@ -2994,7 +3214,7 @@ a.gy-fancy-link:hover {
   font-size: 10px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: #C9A84C;
+  color: #DAA110;
   margin-inline-end: -0.32em;
 }
 .gy-region-yacht-more {
@@ -3006,7 +3226,7 @@ a.gy-fancy-link:hover {
   text-align: center;
 }
 .gy-region-yacht-more a {
-  color: #C9A84C;
+  color: #DAA110;
   text-decoration: underline;
 }
 
@@ -3059,14 +3279,14 @@ a.gy-fancy-link:hover {
   transition: background 280ms ease, border-color 280ms ease, transform 280ms ease;
 }
 .gy-region-modal-dots button:hover {
-  background: rgba(201, 168, 76, 0.55);
-  border-color: rgba(201, 168, 76, 0.85);
+  background: rgba(218, 161, 16, 0.55);
+  border-color: rgba(218, 161, 16, 0.85);
 }
 .gy-region-modal-dots button.is-active {
-  background: #C9A84C;
-  border-color: #C9A84C;
+  background: #DAA110;
+  border-color: #DAA110;
   transform: scale(1.18);
-  box-shadow: 0 0 12px rgba(201, 168, 76, 0.6);
+  box-shadow: 0 0 12px rgba(218, 161, 16, 0.6);
 }
 
 /* Phase 27i.5c (2026-05-07) — SVG Greek-coast backdrop replaces
@@ -3149,7 +3369,7 @@ a.gy-fancy-link:hover {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  border: 1px solid rgba(201, 168, 76, 0);
+  border: 1px solid rgba(218, 161, 16, 0);
   transform: translate(-50%, -50%) scale(1);
   pointer-events: none;
   transition: opacity 360ms ease, transform 480ms cubic-bezier(0.16, 1, 0.3, 1), border-color 360ms ease;
@@ -3163,7 +3383,7 @@ a.gy-fancy-link:hover {
   transform: scale(1.18);
 }
 .gy-region-pin:hover .gy-region-pin-dot::after {
-  border-color: rgba(201, 168, 76, 0.65);
+  border-color: rgba(218, 161, 16, 0.65);
   transform: translate(-50%, -50%) scale(3.4);
   opacity: 1;
 }
@@ -3183,8 +3403,8 @@ a.gy-fancy-link:hover {
 .gy-region-map-canvas::before {
   background: radial-gradient(
     ellipse 30% 18% at 30% 40%,
-    rgba(201, 168, 76, 0.10) 0%,
-    rgba(201, 168, 76, 0) 60%
+    rgba(218, 161, 16, 0.10) 0%,
+    rgba(218, 161, 16, 0) 60%
   );
   animation: gyMapShimmer1 28s ease-in-out infinite alternate;
   filter: blur(8px);
@@ -3193,7 +3413,7 @@ a.gy-fancy-link:hover {
   background: radial-gradient(
     ellipse 26% 16% at 70% 60%,
     rgba(248, 245, 240, 0.08) 0%,
-    rgba(201, 168, 76, 0) 65%
+    rgba(218, 161, 16, 0) 65%
   );
   animation: gyMapShimmer2 34s ease-in-out infinite alternate;
   filter: blur(10px);
@@ -3227,11 +3447,11 @@ a.gy-fancy-link:hover {
   height: 2px;
   background: linear-gradient(
     90deg,
-    rgba(201, 168, 76, 0) 0%,
+    rgba(218, 161, 16, 0) 0%,
     rgba(248, 245, 240, 0.6) 25%,
-    rgba(201, 168, 76, 0.85) 50%,
+    rgba(218, 161, 16, 0.85) 50%,
     rgba(248, 245, 240, 0.6) 75%,
-    rgba(201, 168, 76, 0) 100%
+    rgba(218, 161, 16, 0) 100%
   );
   filter: blur(0.8px);
   z-index: 1;
@@ -3278,7 +3498,7 @@ a.gy-fancy-link:hover {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1px solid rgba(201, 168, 76, 0.55);
+  border: 1px solid rgba(218, 161, 16, 0.55);
   background: rgba(13, 27, 42, 0.55);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
@@ -3306,14 +3526,14 @@ a.gy-fancy-link:hover {
 .gy-scroll-to-top:hover {
   background: radial-gradient(
     circle at 50% 50%,
-    rgba(201, 168, 76, 0.32) 0%,
-    rgba(201, 168, 76, 0.10) 70%,
+    rgba(218, 161, 16, 0.32) 0%,
+    rgba(218, 161, 16, 0.10) 70%,
     rgba(13, 27, 42, 0.4) 100%
   );
   border-color: rgba(248, 245, 240, 0.85);
   color: #FFFFFF;
   box-shadow:
-    0 12px 28px rgba(201, 168, 76, 0.30),
+    0 12px 28px rgba(218, 161, 16, 0.30),
     inset 0 0 18px rgba(248, 245, 240, 0.15);
   transform: translateY(-2px) scale(1.04);
 }
@@ -3568,7 +3788,7 @@ figcaption,
 /* ───────────────────────────────────────────────────────────────────
    Chapter 05 Pass 2 — Gold restraint (Boss directive, 2026-05-08).
 
-   Boss rule: gold (#C9A84C) appears ONLY on:
+   Boss rule: gold (#DAA110) appears ONLY on:
      • CTA button borders
      • 0.5 px section divider lines
      • George's Inside Info left border
@@ -3646,13 +3866,13 @@ figcaption,
 [class*="cta-primary"],
 [class*="cta-gold"],
 [class*="brief-george"] {
-  color: var(--gy-gold, #C9A84C) !important;
+  color: var(--gy-gold, #DAA110) !important;
 }
 
 /* George's Inside Info — explicit override so the 4 px gold left
    border stays intact (it's one of the 4 allowed gold uses). */
 .yacht-insider__card {
-  border-left-color: var(--gy-gold, #C9A84C) !important;
+  border-left-color: var(--gy-gold, #DAA110) !important;
 }
 
 /* ───────────────────────────────────────────────────────────────────
@@ -3815,7 +4035,7 @@ footer.gy-footer-depth,
     background: rgba(13, 27, 42, 0.92);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-top: 1px solid rgba(201, 168, 76, 0.45);
+    border-top: 1px solid rgba(218, 161, 16, 0.45);
     transform: translateY(0);
     opacity: 1;
     transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -3833,8 +4053,8 @@ footer.gy-footer-depth,
     width: 100%;
     height: 52px;
     background: transparent;
-    color: #C9A84C;
-    border: 1px solid #C9A84C;
+    color: #DAA110;
+    border: 1px solid #DAA110;
     text-decoration: none;
     font-family: var(--gy-font-ui);
     font-size: 12px;
@@ -3843,7 +4063,7 @@ footer.gy-footer-depth,
     text-transform: uppercase;
   }
   .gy-yacht-mobile-cta__btn:active {
-    background: #C9A84C;
+    background: #DAA110;
     color: #0D1B2A;
   }
   /* Reserve room above the bar so the page footer never sits behind
@@ -4045,7 +4265,7 @@ h4, h5, h6, button, input, select, textarea, label {
    for any new code:
      --gy-navy   #0D1B2A   primary bg
      --gy-card   #142233   card / panel bg
-     --gy-gold   #C9A84C   accents only (rules, hover, CTA borders)
+     --gy-gold   #DAA110   accents only (rules, hover, CTA borders)
      --gy-ivory  #F8F5F0   text on dark
      --gy-white  #FFFFFF   light-section bg
      --gy-muted  #9CA3AF   secondary text on dark
@@ -4134,6 +4354,48 @@ body.cabin-mode [data-cabin-mode] {
    data-cursor word on hover. Desktop fine-pointer only; the media
    query + the component's own guard keep the native cursor on touch.
    ────────────────────────────────────────────────────────────── */
+/* ── Cursor proposals, round two (section 8, 2026-08-21) ─────────────────
+   Round one used a stand-in logo file and George called it a cartoon. These
+   three come off the real artwork: the sheer traced and rebuilt as vector,
+   the yacht and the bow exported from the mark itself at 3x so they stay
+   sharp on a retina screen. */
+.gy-cur2 {
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 2147483600;
+  opacity: 0; transition: opacity .25s ease;
+  will-change: transform;
+  display: flex; align-items: center; gap: 11px;
+}
+html.gy-cursor-live .gy-cur2 { opacity: 1; }
+.gy-cur2__mark {
+  display: block;
+  transform-origin: 50% 60%;
+  transition: scale .28s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 1px 2.5px rgba(0, 0, 0, 0.55));
+}
+.gy-cur2__mark img { display: block; }
+.gy-cur2.is-link .gy-cur2__mark { scale: 1.3; }
+.gy-cur2.is-word .gy-cur2__mark { scale: 1.15; }
+
+/* Each one is anchored so the BOW, the point of the mark, sits on the true
+   pointer position. A wide ribbon centred on its own box would put the hot
+   spot in the middle of the hull, which is nowhere. */
+.gy-cur2--sheer { margin: -5px 0 0 -27px; }
+.gy-cur2--yacht { margin: -4px 0 0 -34px; }
+.gy-cur2--bow   { margin: -5px 0 0 -22px; }
+
+.gy-cur2__label {
+  font-family: var(--gy-font-ui);
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: #DAA110; white-space: nowrap;
+  opacity: 0; transform: translateX(-6px);
+  transition: opacity .22s ease, transform .28s cubic-bezier(0.16, 1, 0.3, 1);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
+}
+.gy-cur2.is-word .gy-cur2__label { opacity: 1; transform: translateX(0); }
+
+@media (prefers-reduced-motion: reduce) { .gy-cur2 { display: none !important; } }
+
 html.gy-custom-cursor,
 html.gy-custom-cursor * { cursor: none !important; }
 html.gy-custom-cursor input,
@@ -4141,55 +4403,66 @@ html.gy-custom-cursor textarea,
 html.gy-custom-cursor select,
 html.gy-custom-cursor [contenteditable="true"] { cursor: auto !important; }
 
-/* 2026-08-19 (design pass, job 10) - the wake.
-   Five gold points trailing the ring, each smaller than the one ahead. No
-   transition on transform: the RAF loop writes it every frame and a CSS
-   transition on top would fight it and smear. Opacity DOES transition, so the
-   trail dissolves rather than blinking out when the pointer stops. */
-.gy-cursor-wake {
-  position: fixed; top: 0; left: 0; width: 5px; height: 5px;
-  margin: -2.5px 0 0 -2.5px; border-radius: 50%; background: #C9A84C;
-  pointer-events: none; z-index: 2147483599; will-change: transform, opacity;
-  opacity: 0; transition: opacity .32s ease;
+/* ── The ring cursor (section 8, third pass, 2026-08-21) ─────────────────
+   George, after the logo: put a square, put a circle, put whatever, just make
+   it something good that does not lag and does not break.
+
+   So: a fine gold ring with a point at its centre, sitting exactly on the
+   pointer. Every expensive thing is gone.
+
+   No filter. drop-shadow on a moving element forces a repaint every frame and
+   was the real cost of the logo version; the box-shadow below is composited
+   once and travels with the layer.
+
+   No image. Nothing to fetch or decode: the seal is inline SVG, six shapes,
+   rasterised once into the layer.
+
+   No animation. Nothing runs on its own, so a still mouse costs nothing at
+   all. The only transition is on the hover state, which fires rarely and
+   never during movement. */
+.gy-mark-cursor {
+  position: fixed; top: 0; left: 0;
+  margin: -17px 0 0 -17px;        /* the seal's centre is the aim point */
+  width: 34px; height: 34px;
+  pointer-events: none; z-index: 2147483600;
+  opacity: 0; transition: opacity .22s ease;
+  will-change: transform;
+  display: flex; align-items: center;
+}
+html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
+
+/* The seal is drawn at 34 and sits at 26, so the hover state scales up into
+   a raster that already exists rather than magnifying a smaller one. The
+   transform-origin is the centre of the 34px box, offset back to the aim
+   point by the negative margin above. */
+.gy-mark-cursor__seal {
+  position: absolute; top: -5px; left: -5px;
+  width: 44px; height: 44px;
+  transform: scale(0.7727);       /* 44 drawn, 34 on screen */
+  transform-origin: 50% 50%;
+  transition: transform .22s cubic-bezier(0.16, 1, 0.3, 1), opacity .22s ease;
+}
+/* Over a link the seal opens toward its full drawn size. One scale on one
+   composited element, and it never fires during movement. */
+.gy-mark-cursor.is-link .gy-mark-cursor__seal { transform: scale(0.955); }
+.gy-mark-cursor.is-word .gy-mark-cursor__seal { transform: scale(0.86); }
+/* The seventy-four data-cursor words, set beside the seal. */
+.gy-mark-cursor__label {
+  position: absolute; left: 39px; top: 50%;
+  transform: translateY(-50%) translateX(-5px);
+  font-family: var(--gy-font-ui);
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: #DAA110; white-space: nowrap;
+  opacity: 0;
+  transition: opacity .2s ease, transform .24s cubic-bezier(0.16, 1, 0.3, 1);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7), 0 0 6px rgba(13, 27, 42, 0.5);
+}
+.gy-mark-cursor.is-word .gy-mark-cursor__label {
+  opacity: 1; transform: translateY(-50%) translateX(0);
 }
 
-.gy-cursor-dot {
-  position: fixed; top: 0; left: 0; width: 6px; height: 6px;
-  margin: -3px 0 0 -3px; border-radius: 50%; background: #C9A84C;
-  pointer-events: none; z-index: 2147483600; will-change: transform;
-  opacity: 0; transition: opacity .3s ease;
-}
-html.gy-cursor-live .gy-cursor-dot,
-html.gy-cursor-live .gy-cursor-ring { opacity: 1; }
-.gy-cursor-ring {
-  position: fixed; top: 0; left: 0; width: 36px; height: 36px;
-  margin: -18px 0 0 -18px; border: 1px solid rgba(201,168,76,0.7);
-  border-radius: 999px; pointer-events: none; z-index: 2147483600;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0;
-  transition: width .25s cubic-bezier(.16,1,.3,1),
-              height .25s cubic-bezier(.16,1,.3,1),
-              margin .25s cubic-bezier(.16,1,.3,1),
-              background-color .25s ease, border-color .25s ease,
-              opacity .3s ease;
-  will-change: transform;
-}
-.gy-cursor-ring.is-link {
-  width: 50px; height: 50px; margin: -25px 0 0 -25px;
-  border-color: rgba(201,168,76,0.95);
-}
-.gy-cursor-ring.is-active {
-  width: 86px; height: 86px; margin: -43px 0 0 -43px;
-  background-color: rgba(201,168,76,0.94); border-color: transparent;
-}
-.gy-cursor-label {
-  font-family: var(--gy-font-ui); font-size: 9px; letter-spacing: 0.18em;
-  text-transform: uppercase; color: #0D1B2A; opacity: 0;
-  transition: opacity .18s ease; white-space: nowrap; font-weight: 600;
-}
-.gy-cursor-ring.is-active .gy-cursor-label { opacity: 1; }
 @media (max-width: 1024px), (pointer: coarse) {
-  .gy-cursor-dot, .gy-cursor-ring, .gy-cursor-wake { display: none !important; }
+  .gy-mark-cursor { display: none !important; }
   html.gy-custom-cursor, html.gy-custom-cursor * { cursor: auto !important; }
 }
 
@@ -4204,9 +4477,11 @@ html.gy-cursor-live .gy-cursor-ring { opacity: 1; }
 .gy-fab-desktop-only,
 .gy-fab-desktop-only span[style*="border-radius"],
 .gy-wa-fab,
-.gy-wa-fab * ,
-.gy-cursor-ring { border-radius: 999px !important; }
-.gy-cursor-dot, .gy-cursor-wake { border-radius: 50% !important; }
+.gy-wa-fab *,
+/* The cursor used to need an exception here: when it was a bordered div the
+   global reset squared it off. The Bearing is SVG, whose circles the reset
+   cannot touch, so the entry is gone rather than kept as dead weight. */
+.gy-wa-fab-legacy-noop { border-radius: 999px !important; }
 
 /* ─────────────────────────────────────────────────────────────
    2026-08-06 — Quick Answer lead-in offset.
@@ -4264,38 +4539,59 @@ html.gy-cursor-live .gy-cursor-ring { opacity: 1; }
   }
 }
 
-/* ── Awarded fleet, homepage (design pass, job 16, 2026-08-20) ────────────
-   George: the awarded yachts must take the clicks, not the cheap catamaran
-   that happens to rank for its own name. This is that section.
+/* ── Award-winning fleet, homepage (rebuilt 2026-08-21, George's section 3) ─
+   The cheapest catamaran takes the clicks the whole fleet earns because it
+   ranks for its own name. Eleven yachts whose crews have won at the two Greek
+   charter shows take almost none. This band exists to invert that.
 
-   Deliberately not a badge wall. Six gold laurels in a row is a booking
-   platform showing off supplier ratings, and a client at this level has seen
-   enough invented trust marks to discount the whole genre on sight. A list,
-   a gold rule, the year and the placing. */
+   George read the first photo version and named three faults. The heading
+   buried the point. The count badge said "1 PLACING" over a line reading
+   "3rd Place", which reads as a contradiction. And nobody outside the trade
+   knows how a yacht wins anything, so the placings meant nothing.
+
+   The answers, in order: the heading says what these are; the rank lives in
+   its own column as 1st / 2nd / 3rd where it cannot be read as a total; and
+   a three-panel explainer sits above the yachts.
+
+   Still not a badge wall. No laurels, no seals. The wow is a row of large
+   numerals over a row of photographs, and every one of those numerals is
+   arithmetic over lib/yachtAwards.js rather than a figure anybody typed.
+
+   Motion budget: one slow scale on each photograph, one gold hairline that
+   draws under the name, one four-pixel lift, one staggered entrance. All of
+   it off under prefers-reduced-motion. */
 .gy-awarded {
-  padding: clamp(72px, 9vw, 128px) 0;
+  /* The bottom figure is deliberately smaller than the top one because the
+     wrapping <section id="awarded"> contributes the global section padding
+     underneath it; measured at 1440 the two used to add to 108px of empty
+     navy before the reviews. */
+  padding: clamp(40px, 5vw, 56px) 0 clamp(24px, 2.5vw, 32px);
+  scroll-margin-top: 200px;
   background: var(--gy-navy, #0D1B2A);
-  border-top: 1px solid rgba(201, 168, 76, 0.14);
+  border-top: 1px solid rgba(218, 161, 16, 0.14);
 }
 .gy-awarded__inner {
-  max-width: 880px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 0 clamp(20px, 4vw, 32px);
+  padding: 0 clamp(20px, 4vw, 40px);
 }
+
+/* ── head ─────────────────────────────────────────────────────────────── */
+.gy-awarded__head { max-width: 780px; margin: 0 0 clamp(26px, 3vw, 38px); }
 .gy-awarded__eyebrow {
   font-family: var(--gy-font-ui);
   font-size: 11px;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--gy-gold, #C9A84C);
+  color: var(--gy-gold, #DAA110);
   margin: 0 0 20px;
 }
 .gy-awarded__title {
   font-family: var(--gy-font-display);
   font-weight: 250;
-  font-size: clamp(30px, 4.4vw, 54px);
-  letter-spacing: 0.035em;
-  line-height: 1.1;
+  font-size: clamp(32px, 4.8vw, 60px);
+  letter-spacing: 0.03em;
+  line-height: 1.06;
   margin: 0 0 18px;
   color: var(--gy-ivory, #F8F5F0);
 }
@@ -4304,73 +4600,637 @@ html.gy-cursor-live .gy-cursor-ring { opacity: 1; }
   font-size: 17px;
   line-height: 1.75;
   color: rgba(248, 245, 240, 0.66);
-  max-width: 620px;
-  margin: 0 0 44px;
+  max-width: 660px;
+  margin: 0;
 }
-.gy-awarded__list { list-style: none; margin: 0; padding: 0; }
-.gy-awarded__row { border-top: 1px solid rgba(201, 168, 76, 0.14); }
-.gy-awarded__row:last-child { border-bottom: 1px solid rgba(201, 168, 76, 0.14); }
 
-/* The whole row is the target. A small "read more" link on a row this wide
-   is a smaller tap area than the row it sits in, for no gain. */
-.gy-awarded__link {
+/* ── the numbers ──────────────────────────────────────────────────────── */
+/* Four figures, hairline-separated, no boxes. A card with a border round a
+   number is a dashboard; a number standing on its own with a small label
+   under it is a results sheet, which is what this is. */
+.gy-awarded__stats {
+  list-style: none;
+  margin: 0 0 clamp(34px, 4vw, 52px);
+  padding: clamp(22px, 2.6vw, 32px) 0;
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 6px 24px;
-  align-items: baseline;
-  padding: 22px 4px;
-  text-decoration: none;
-  transition: background-color 0.35s ease, padding-left 0.35s ease;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  border-top: 1px solid rgba(218, 161, 16, 0.2);
+  border-bottom: 1px solid rgba(218, 161, 16, 0.2);
 }
-.gy-awarded__link:hover,
-.gy-awarded__link:focus-visible {
-  background: rgba(201, 168, 76, 0.045);
-  padding-left: 14px;
+.gy-awarded__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: none;
+  margin-inline: 0;
 }
-.gy-awarded__name {
+.gy-awarded__stat + .gy-awarded__stat {
+  border-left: 1px solid rgba(218, 161, 16, 0.14);
+  padding-left: clamp(16px, 2vw, 28px);
+}
+.gy-awarded__statnum {
+  font-family: var(--gy-font-display);
+  font-weight: 250;
+  font-size: clamp(40px, 6vw, 76px);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  color: var(--gy-ivory, #F8F5F0);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.gy-awarded__statlabel {
+  font-family: var(--gy-font-ui);
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gy-gold, #DAA110);
+}
+
+/* ── the explainer ────────────────────────────────────────────────────── */
+.gy-awarded__explain { margin: 0 0 clamp(34px, 4vw, 52px); }
+.gy-awarded__explaintitle {
   font-family: var(--gy-font-display);
   font-weight: 300;
-  font-size: clamp(19px, 2.2vw, 26px);
-  letter-spacing: 0.02em;
+  font-size: clamp(20px, 2.1vw, 27px);
+  letter-spacing: 0.03em;
   color: var(--gy-ivory, #F8F5F0);
+  margin: 0 0 clamp(18px, 2vw, 26px);
 }
-.gy-awarded__count {
-  font-family: var(--gy-font-ui);
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gy-gold, #C9A84C);
-  white-space: nowrap;
+.gy-awarded__steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 2.8vw, 40px);
 }
-.gy-awarded__award {
-  grid-column: 1 / -1;
+.gy-awarded__step {
+  max-width: none;
+  margin-inline: 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(218, 161, 16, 0.18);
+}
+.gy-awarded__stepnum {
+  display: block;
+  font-family: var(--gy-font-display);
+  font-weight: 250;
+  font-size: 26px;
+  line-height: 1;
+  color: rgba(218, 161, 16, 0.55);
+  margin-bottom: 12px;
+  font-variant-numeric: lining-nums;
+}
+.gy-awarded__stephead {
+  font-family: var(--gy-font-display);
+  font-weight: 300;
+  font-size: 18px;
+  letter-spacing: 0.025em;
+  color: var(--gy-ivory, #F8F5F0);
+  margin: 0 0 9px;
+}
+.gy-awarded__step p {
   font-family: var(--gy-font-body);
-  font-size: 15px;
-  line-height: 1.55;
-  color: rgba(248, 245, 240, 0.6);
-}
-@media (max-width: 767.98px) {
-  .gy-awarded__link { grid-template-columns: 1fr; gap: 5px; padding: 18px 2px; }
-  .gy-awarded__count { grid-row: 1; justify-self: start; }
+  font-size: 14.5px;
+  line-height: 1.72;
+  color: rgba(248, 245, 240, 0.58);
+  margin: 0;
+  max-width: none;
+  margin-inline: 0;
 }
 
-/* The one link out of the awarded band. Gold rule under it rather than an
-   underline, so it reads as a continuation of the list rather than a button. */
+/* ── the shared card link ─────────────────────────────────────────────── */
+.gy-awarded__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.gy-awarded__link:hover,
+.gy-awarded__link:focus-visible { transform: translateY(-4px); }
+.gy-awarded__link:focus-visible {
+  outline: 1px solid rgba(218, 161, 16, 0.55);
+  outline-offset: 8px;
+}
+
+/* overflow:hidden is what lets the photograph move inside a fixed rectangle
+   instead of pushing the layout around. */
+.gy-awarded__shot {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: #08121C;
+  border: 1px solid rgba(218, 161, 16, 0.14);
+}
+.gy-awarded__shot--lead { aspect-ratio: 3 / 2; }
+.gy-awarded__card--major .gy-awarded__shot { aspect-ratio: 16 / 10; }
+
+.gy-awarded__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* Held a touch back so the ivory type over it never fights the photograph.
+     Comes up to full on hover, which is most of the reward for the movement. */
+  filter: saturate(0.92) brightness(0.86);
+  transform: scale(1.001);
+  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.9s ease;
+}
+.gy-awarded__link:hover .gy-awarded__img,
+.gy-awarded__link:focus-visible .gy-awarded__img {
+  transform: scale(1.055);
+  filter: saturate(1) brightness(1);
+}
+.gy-awarded__noimg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(218, 161, 16,0.10), transparent 70%),
+    #0A1622;
+}
+.gy-awarded__shot::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 52%;
+  background: linear-gradient(0deg, rgba(6,14,22,0.78) 0%, rgba(6,14,22,0) 100%);
+  pointer-events: none;
+}
+
+/* The strongest result, printed across the foot of the photograph. This
+   replaced the count badge that read "1 PLACING" over a third place. It says
+   a placing and a year, so there is nothing left to misread. */
+.gy-awarded__crown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 14px;
+  font-family: var(--gy-font-ui);
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  padding: 14px 16px;
+  border-top: 1px solid rgba(218, 161, 16, 0.32);
+  background: linear-gradient(0deg, rgba(8,18,28,0.78), rgba(8,18,28,0.06));
+}
+.gy-awarded__crownplace { color: #F7DE8A; }
+/* The price sits at the other end of the same strip, quieter than the
+   placing. George's brief was discreet: a reader scanning sixteen decorated
+   yachts has one question the photographs cannot answer, and a card that
+   refuses to answer it loses the enquiry rather than the objection. */
+.gy-awarded__crownprice {
+  color: rgba(248, 245, 240, 0.72);
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+}
+/* The second home for the price, for the compact phone row where the strip
+   across the photograph is hidden. Exactly one of the two ever shows. */
+.gy-awarded__priceinline { display: none; }
+
+/* ── card body ────────────────────────────────────────────────────────── */
+.gy-awarded__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px 2px 0;
+}
+.gy-awarded__kicker {
+  display: block;
+  font-family: var(--gy-font-ui);
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gy-gold, #DAA110);
+  margin-bottom: 12px;
+}
+.gy-awarded__name {
+  position: relative;
+  font-family: var(--gy-font-display);
+  font-weight: 300;
+  font-size: clamp(19px, 2vw, 26px);
+  letter-spacing: 0.025em;
+  line-height: 1.2;
+  color: var(--gy-ivory, #F8F5F0);
+  margin: 0 0 6px;
+  padding-bottom: 12px;
+}
+/* Sits at 34px at rest and runs the width of the name on hover, so the card
+   answers the pointer without anything jumping. */
+.gy-awarded__name::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 34px;
+  background: var(--gy-gold, #DAA110);
+  opacity: 0.55;
+  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+}
+.gy-awarded__link:hover .gy-awarded__name::after,
+.gy-awarded__link:focus-visible .gy-awarded__name::after {
+  width: 100%;
+  opacity: 1;
+}
+.gy-awarded__meta {
+  font-family: var(--gy-font-ui);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(248, 245, 240, 0.44);
+  margin: 12px 0 0;
+}
+
+/* ── the roll of honour ───────────────────────────────────────────────── */
+.gy-awarded__roll { list-style: none; margin: 14px 0 0; padding: 0; }
+.gy-awarded__rollrow {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  gap: 3px 12px;
+  align-items: baseline;
+  padding: 9px 0;
+  border-top: 1px solid rgba(218, 161, 16, 0.12);
+}
+/* The rank in its own column, and the only place on the site where a numeral
+   is allowed to be the loudest thing in a row. */
+.gy-awarded__rank {
+  /* UI face, not the display face. Boska's "1" is a bare vertical stroke and
+     at 15px "1st" read as "Ist" in the first build of this, which is exactly
+     the kind of ambiguity this column exists to remove. */
+  font-family: var(--gy-font-ui);
+  font-weight: 500;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  font-variant-numeric: lining-nums tabular-nums;
+  text-transform: uppercase;
+  color: var(--gy-gold, #DAA110);
+  white-space: nowrap;
+}
+.gy-awarded__rank--1 { color: #F7DE8A; }
+.gy-awarded__rank--2 { color: rgba(226, 226, 226, 0.82); }
+.gy-awarded__rank--3 { color: rgba(198, 156, 109, 0.9); }
+.gy-awarded__what {
+  font-family: var(--gy-font-body);
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: rgba(248, 245, 240, 0.78);
+}
+.gy-awarded__who {
+  font-family: var(--gy-font-ui);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(218, 161, 16, 0.78);
+  white-space: nowrap;
+}
+.gy-awarded__go {
+  /* auto pushes it to the floor of the card, so one placing, three placings
+     and a wrapped line all finish level across a row. */
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 16px;
+  align-self: flex-start;
+  font-family: var(--gy-font-ui);
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(248, 245, 240, 0.5);
+  transition: color 0.4s ease, letter-spacing 0.5s ease;
+}
+.gy-awarded__link:hover .gy-awarded__go,
+.gy-awarded__link:focus-visible .gy-awarded__go {
+  color: var(--gy-gold, #DAA110);
+  letter-spacing: 0.26em;
+}
+
+/* ── the lead ─────────────────────────────────────────────────────────── */
+.gy-awarded__lead { margin: 0 0 clamp(26px, 3vw, 40px); }
+.gy-awarded__lead .gy-awarded__link {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(24px, 3.5vw, 48px);
+  align-items: center;
+}
+.gy-awarded__lead .gy-awarded__body { padding-top: 0; }
+.gy-awarded__lead .gy-awarded__name { font-size: clamp(26px, 3.1vw, 40px); }
+
+/* ── the other ten ────────────────────────────────────────────────────── */
+/* Twelve columns. The lead takes its own full-width frame, three runners-up
+   sit three across, and the remaining twelve sit four across in three clean
+   rows. Sixteen yachts less the lead is fifteen, and 3 + 12 is the only split
+   of fifteen across these two widths that strands nothing on a last row. */
+.gy-awarded__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(20px, 2.4vw, 34px);
+}
+.gy-awarded__card { grid-column: span 3; max-width: none; margin-inline: 0; }
+.gy-awarded__card--major { grid-column: span 4; }
+
+/* The four-across cards are narrow, so their type steps down with them. */
+.gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__what { font-size: 13.5px; }
+.gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__rollrow {
+  grid-template-columns: 30px minmax(0, 1fr);
+  padding: 8px 0;
+}
+.gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__who {
+  grid-column: 2;
+  justify-self: start;
+}
+
+/* ── honours ──────────────────────────────────────────────────────────── */
+/* Not a placing and not counted as one. A different shape from the cards on
+   purpose: a year in the margin and a paragraph beside it, the way a house
+   would mention something rather than the way a results sheet lists it. */
+.gy-awarded__honours {
+  margin-top: clamp(32px, 4vw, 48px);
+  padding-top: clamp(26px, 3vw, 36px);
+  border-top: 1px solid rgba(218, 161, 16, 0.14);
+}
+.gy-awarded__honourstitle {
+  font-family: var(--gy-font-display);
+  font-weight: 300;
+  font-size: clamp(18px, 1.8vw, 23px);
+  letter-spacing: 0.03em;
+  color: var(--gy-ivory, #F8F5F0);
+  margin: 0 0 18px;
+}
+.gy-awarded__honourslist { list-style: none; margin: 0; padding: 0; }
+.gy-awarded__honour { max-width: none; margin-inline: 0; }
+.gy-awarded__honourlink {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr);
+  gap: 6px 22px;
+  align-items: start;
+  padding: 18px 2px;
+  text-decoration: none;
+  border-top: 1px solid rgba(218, 161, 16, 0.12);
+  transition: background-color 0.35s ease, padding-left 0.35s ease;
+}
+.gy-awarded__honourlink:hover,
+.gy-awarded__honourlink:focus-visible {
+  background: rgba(218, 161, 16, 0.045);
+  padding-left: 12px;
+}
+.gy-awarded__honouryear {
+  font-family: var(--gy-font-display);
+  font-weight: 250;
+  font-size: 30px;
+  line-height: 1;
+  color: rgba(218, 161, 16, 0.72);
+  font-variant-numeric: lining-nums;
+}
+.gy-awarded__honourbody { display: block; }
+.gy-awarded__honourname {
+  display: block;
+  font-family: var(--gy-font-display);
+  font-weight: 300;
+  font-size: clamp(18px, 1.8vw, 23px);
+  letter-spacing: 0.025em;
+  color: var(--gy-ivory, #F8F5F0);
+  margin-bottom: 4px;
+}
+.gy-awarded__honouraward {
+  font-family: var(--gy-font-body);
+  font-size: 15px;
+  color: rgba(248, 245, 240, 0.8);
+}
+.gy-awarded__honourorg {
+  font-family: var(--gy-font-ui);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(218, 161, 16, 0.78);
+  margin-left: 10px;
+}
+.gy-awarded__honournote {
+  display: block;
+  margin-top: 7px;
+  font-family: var(--gy-font-body);
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: rgba(248, 245, 240, 0.55);
+  max-width: 620px;
+}
+@media (max-width: 639.98px) {
+  .gy-awarded__honourlink { grid-template-columns: 1fr; gap: 8px; }
+  .gy-awarded__honouryear { font-size: 24px; }
+  .gy-awarded__honourorg { display: block; margin: 6px 0 0; }
+}
+
+/* ── analysis ─────────────────────────────────────────────────────────── */
+.gy-awarded__note {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(24px, 4vw, 56px);
+  margin-top: clamp(38px, 4.5vw, 60px);
+  padding-top: clamp(28px, 3vw, 40px);
+  border-top: 1px solid rgba(218, 161, 16, 0.14);
+}
+.gy-awarded__notetitle {
+  font-family: var(--gy-font-display);
+  font-weight: 300;
+  font-size: clamp(17px, 1.6vw, 21px);
+  letter-spacing: 0.03em;
+  color: var(--gy-ivory, #F8F5F0);
+  margin: 0 0 12px;
+}
+.gy-awarded__notecol p {
+  font-family: var(--gy-font-body);
+  font-size: 15px;
+  line-height: 1.78;
+  color: rgba(248, 245, 240, 0.6);
+  margin: 0;
+  /* Section 2 left a global 720px cap and an auto inline margin on every p
+     and li; these columns are already narrower and must stay hard left. */
+  max-width: none;
+  margin-inline: 0;
+}
+
+/* Said once, at the foot of the band, rather than sixteen times under
+   sixteen cards. */
+.gy-awarded__ratenote {
+  margin: clamp(26px, 3vw, 36px) 0 0;
+  max-width: 720px;
+  font-family: var(--gy-font-body);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: rgba(248, 245, 240, 0.45);
+  margin-inline: 0;
+}
+
 .gy-awarded__more {
   display: inline-block;
-  margin-top: 34px;
+  margin-top: clamp(20px, 2.2vw, 28px);
   font-family: var(--gy-font-ui);
   font-size: 11.5px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gy-gold, #C9A84C);
+  color: var(--gy-gold, #DAA110);
   text-decoration: none;
   padding-bottom: 5px;
-  border-bottom: 1px solid rgba(201, 168, 76, 0.35);
+  border-bottom: 1px solid rgba(218, 161, 16, 0.35);
   transition: border-color 0.35s ease, color 0.35s ease;
 }
 .gy-awarded__more:hover,
 .gy-awarded__more:focus-visible {
-  border-bottom-color: var(--gy-gold, #C9A84C);
-  color: #E3C77A;
+  border-bottom-color: var(--gy-gold, #DAA110);
+  color: #F7DE8A;
+}
+
+/* ── staggered entrance ───────────────────────────────────────────────── */
+/* Keyed off the ancestor section's reveal class rather than giving every card
+   its own [data-gy-reveal]. Nesting reveals means a card is hidden until its
+   own observer fires, and the 2.5s no-JS fallback would then run eleven
+   separate times. One observer moves the band; the cards stagger inside it. */
+#awarded.gy-revealed .gy-awarded__stat,
+#awarded.gy-revealed .gy-awarded__step,
+#awarded.gy-revealed .gy-awarded__lead,
+#awarded.gy-revealed .gy-awarded__card {
+  animation: gyAwardedIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+#awarded.gy-revealed .gy-awarded__stat:nth-child(2) { animation-delay: 0.07s; }
+#awarded.gy-revealed .gy-awarded__stat:nth-child(3) { animation-delay: 0.14s; }
+#awarded.gy-revealed .gy-awarded__stat:nth-child(4) { animation-delay: 0.21s; }
+#awarded.gy-revealed .gy-awarded__step:nth-child(2) { animation-delay: 0.08s; }
+#awarded.gy-revealed .gy-awarded__step:nth-child(3) { animation-delay: 0.16s; }
+#awarded.gy-revealed .gy-awarded__card:nth-child(1) { animation-delay: 0.06s; }
+#awarded.gy-revealed .gy-awarded__card:nth-child(2) { animation-delay: 0.12s; }
+#awarded.gy-revealed .gy-awarded__card:nth-child(3) { animation-delay: 0.18s; }
+#awarded.gy-revealed .gy-awarded__card:nth-child(4) { animation-delay: 0.23s; }
+#awarded.gy-revealed .gy-awarded__card:nth-child(5) { animation-delay: 0.28s; }
+#awarded.gy-revealed .gy-awarded__card:nth-child(6) { animation-delay: 0.32s; }
+#awarded.gy-revealed .gy-awarded__card:nth-child(n + 7) { animation-delay: 0.36s; }
+@keyframes gyAwardedIn {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── narrower ─────────────────────────────────────────────────────────── */
+@media (max-width: 1199.98px) {
+  /* Two across for everything: at this width four cards put the roll of
+     honour into a column too narrow to keep a placing and its year together. */
+  .gy-awarded__card { grid-column: span 4; }
+  .gy-awarded__card--major { grid-column: span 6; }
+  .gy-awarded__card .gy-awarded__shot { aspect-ratio: 4 / 3; }
+  .gy-awarded__card--major .gy-awarded__shot { aspect-ratio: 16 / 10; }
+  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__rollrow {
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+  }
+  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__who {
+    grid-column: 3;
+    justify-self: end;
+  }
+}
+@media (max-width: 999.98px) {
+  .gy-awarded__lead .gy-awarded__link { grid-template-columns: 1fr; gap: 20px; }
+  .gy-awarded__lead .gy-awarded__body { padding-top: 4px; }
+  .gy-awarded__steps { grid-template-columns: 1fr; gap: 22px; }
+  .gy-awarded__note { grid-template-columns: 1fr; }
+}
+@media (max-width: 639.98px) {
+  .gy-awarded__card,
+  .gy-awarded__card--major { grid-column: span 12; }
+  /* One column on a phone means twelve frames stacked, so the frame gets
+     shallower: 16/10 rather than 3/2. */
+  .gy-awarded__shot,
+  .gy-awarded__shot--lead,
+  .gy-awarded__card .gy-awarded__shot { aspect-ratio: 16 / 10; }
+  .gy-awarded__grid { gap: 26px; }
+  .gy-awarded__body { padding-top: 16px; }
+  .gy-awarded__roll { margin-top: 12px; }
+  .gy-awarded__rollrow,
+  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__rollrow {
+    grid-template-columns: 32px minmax(0, 1fr);
+    gap: 2px 10px;
+    padding: 8px 0;
+  }
+  .gy-awarded__who,
+  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__who {
+    grid-column: 2;
+    justify-self: start;
+  }
+  /* Four numerals across a 390px screen leaves each one 80px wide, which is
+     not a headline figure, it is a footnote. Two by two. */
+  .gy-awarded__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 16px; }
+  .gy-awarded__stat:nth-child(3) { border-left: 0; padding-left: 0; }
+  .gy-awarded__stat + .gy-awarded__stat { padding-left: 16px; }
+
+  /* ── the phone compromise ──────────────────────────────────────────────
+     Eleven full-width photo cards measured 7,868px on a 390 screen: nine
+     screens of thumb for one band, with the rest of the homepage behind it.
+     Cutting yachts was not an option, George's whole point is that these get
+     seen, and hiding them behind a "show more" hides them from the reader who
+     is already scrolling.
+
+     So the three that carry the record keep their photography at full width,
+     the lead and the two runners-up, and the remaining eight become rows: a
+     square photograph at 104px beside the name and the complete roll of
+     honour. Nothing is dropped. Every placing, every organiser and every year
+     is still on the phone, and the band comes in at less than half the
+     height. */
+  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__link {
+    display: grid;
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+  }
+  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__shot {
+    aspect-ratio: 1 / 1;
+  }
+  /* The crown is a full-width strip of letterspaced type; inside a 104px
+     square it would wrap to three lines over the boat. The placing is in the
+     roll directly beside it, so it simply goes. */
+  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__crown { display: none; }
+  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__priceinline {
+    display: block;
+    margin: 7px 0 0;
+    max-width: none;
+    margin-inline: 0;
+    font-family: var(--gy-font-ui);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(248, 245, 240, 0.62);
+  }
+  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__shot::after { height: 30%; }
+  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__body { padding: 0; }
+  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__name {
+    font-size: 19px;
+    padding-bottom: 9px;
+    margin-bottom: 4px;
+  }
+  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__meta { margin-top: 9px; }
+  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__roll { margin-top: 9px; }
+  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__rollrow { padding: 7px 0; }
+  /* The whole row is already the tap target, so the words underneath it are
+     a second instruction for the same action. */
+  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__go { display: none; }
+  .gy-awarded__grid { gap: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gy-awarded__link,
+  .gy-awarded__img,
+  .gy-awarded__name::after,
+  .gy-awarded__go { transition: none !important; }
+  .gy-awarded__link:hover,
+  .gy-awarded__link:focus-visible { transform: none; }
+  .gy-awarded__link:hover .gy-awarded__img { transform: scale(1.001); }
+  #awarded.gy-revealed .gy-awarded__stat,
+  #awarded.gy-revealed .gy-awarded__step,
+  #awarded.gy-revealed .gy-awarded__lead,
+  #awarded.gy-revealed .gy-awarded__card { animation: none; }
 }

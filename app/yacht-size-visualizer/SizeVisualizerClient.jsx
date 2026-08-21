@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useI18n } from '@/lib/i18n/I18nProvider';
 
-const GOLD = '#C9A84C';
+const GOLD = '#DAA110';
 
 const COMPARISONS = [
   { name: 'Tennis Court', key: 'tennisCourt', length: 23.77, icon: '🎾', color: '#2ECC71' },
@@ -144,7 +144,7 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
         </div>
 
         {/* Fun facts */}
-        <div style={{ marginTop: 48, padding: 24, background: 'rgba(201,168,76,0.03)', border: `1px solid ${GOLD}15`, borderRadius: 12, textAlign: 'center' }}>
+        <div style={{ marginTop: 48, padding: 24, background: 'rgba(218, 161, 16,0.03)', border: `1px solid ${GOLD}15`, borderRadius: 12, textAlign: 'center' }}>
           <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 18, color: '#F8F5F0', fontStyle: 'italic', margin: '0 0 8px' }}>
             "{selectedYacht.name} {t('sizeViz.asLongAs', 'is as long as')} {fmt(selectedYacht.length / 11.23)} {t('sizeViz.londonBusesEndToEnd', 'London buses parked end to end')}"
           </p>
@@ -165,7 +165,7 @@ export default function SizeVisualizerClient({ yachts: YACHTS = [] }) {
               fontWeight: 600,
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
-              background: `linear-gradient(90deg, #C9A84C, #C9A84C)`,
+              background: `linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)`,
               color: '#0D1B2A',
               borderRadius: 6,
               textDecoration: 'none',

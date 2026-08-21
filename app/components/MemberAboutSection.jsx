@@ -30,7 +30,7 @@ const MemberAboutSection = ({
   bgColor = "bg-white",
   headingColor = "text-black",
   textColor = "text-[#9CA3AF]",
-  accentColor = "text-[#C9A84C]",
+  accentColor = "text-[#DAA110]",
 }) => {
   return (
     <section className={`w-full ${bgColor} py-16 lg:py-20`}>
@@ -67,7 +67,7 @@ const MemberAboutSection = ({
               href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`text-black hover:text-black transition-colors duration-300 bg-[#C9A84C] p-2.5 rounded-full`}
+              className={`text-black hover:text-black transition-colors duration-300 bg-[#DAA110] p-2.5 rounded-full`}
             >
               <Instagram className="w-8 h-8" />
             </a>

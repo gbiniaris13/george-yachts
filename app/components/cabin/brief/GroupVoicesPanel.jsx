@@ -185,12 +185,12 @@ const styles = `
     margin: 0 0 24px 0;
     padding: 16px 18px 14px;
     background: #FCFAF4;
-    border: 1px solid rgba(201, 168, 76, 0.32);
+    border: 1px solid rgba(218, 161, 16, 0.32);
     border-left: 3px solid var(--gy-gold);
     border-radius: 3px;
   }
   .gvp--empty {
-    background: rgba(201, 168, 76, 0.05);
+    background: rgba(218, 161, 16, 0.05);
   }
   .gvp__head {
     display: flex;
@@ -281,7 +281,7 @@ const styles = `
   }
   .gvp__voice {
     background: #ffffff;
-    border: 1px solid rgba(201, 168, 76, 0.22);
+    border: 1px solid rgba(218, 161, 16, 0.22);
     border-radius: 3px;
   }
   .gvp__voice > summary {

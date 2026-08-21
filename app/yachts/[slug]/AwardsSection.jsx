@@ -1,8 +1,14 @@
-// What distinguishes this yacht from the other seventy-one.
+// What distinguishes this yacht from the rest of the fleet.
 //
-// Six of the fleet have won something. Sixty-six have not, and this section
-// does not draw for them: an empty "Awards" heading is worse than no heading,
-// because it says we looked and found nothing.
+// Sixteen of the fleet have been placed at the Greek charter shows and most
+// have not, and this section does not draw for those: an empty "Awards"
+// heading is worse than no heading, because it says we looked and found
+// nothing.
+//
+// 2026-08-21: it also renders HONOURS, which are distinctions that are real
+// and dated but are not show placings. Two yachts carry one. They are kept
+// visibly separate so that neither the reader nor the totals confuse a medal
+// with a cooking prize.
 //
 // The restraint is the point. A row of gold badges is what a booking platform
 // does. This is a line of text, the way a house would mention it: what was
@@ -13,11 +19,12 @@
 // scripts/checkAwardClaims.mjs fails the build if it ever is.
 
 import Link from "next/link";
-import { awardsFor } from "@/lib/yachtAwards";
+import { awardsFor, honoursFor } from "@/lib/yachtAwards";
 
 export default function AwardsSection({ slug, yachtName }) {
   const awards = awardsFor(slug);
-  if (awards.length === 0) return null;
+  const honours = honoursFor(slug);
+  if (awards.length === 0 && honours.length === 0) return null;
 
   // Crew awards are the chef's, the steward's, the deck team's. Saying so
   // is not a disclaimer, it is the more flattering fact: somebody aboard
@@ -56,8 +63,10 @@ export default function AwardsSection({ slug, yachtName }) {
                 <li key={`c${i}`} className="yacht-awards__item">
                   <span className="yacht-awards__year">{a.year}</span>
                   <span className="yacht-awards__award">{a.award}</span>
+                  {/* The chef's name stays in the registry for the sourcing
+                      trail and never reaches the page: crew names are not
+                      ours to publish. */}
                   <span className="yacht-awards__org">{a.organiser}</span>
-                  {a.chef && <span className="yacht-awards__who">Chef {a.chef}</span>}
                 </li>
               ))}
             </ol>
@@ -68,6 +77,25 @@ export default function AwardsSection({ slug, yachtName }) {
                 See every awarded yacht in the fleet
               </Link>
             </p>
+          </>
+        )}
+        {honours.length > 0 && (
+          <>
+            <p className="yacht-awards__lede">
+              {awards.length > 0
+                ? "And one distinction that is not a competition."
+                : "One distinction, and it is not a competition."}
+            </p>
+            <ol className="yacht-awards__list">
+              {honours.map((h, i) => (
+                <li key={`h${i}`} className="yacht-awards__item">
+                  <span className="yacht-awards__year">{h.year}</span>
+                  <span className="yacht-awards__award">{h.award}</span>
+                  <span className="yacht-awards__org">{h.organiser}</span>
+                  {h.note && <span className="yacht-awards__honournote">{h.note}</span>}
+                </li>
+              ))}
+            </ol>
           </>
         )}
       </div>

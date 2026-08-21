@@ -184,7 +184,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
               style={{
                 width: activeIdx === i ? 28 : 14,
                 height: 1,
-                background: activeIdx === i ? "#C9A84C" : "rgba(248,245,240,0.45)",
+                background: activeIdx === i ? "#DAA110" : "rgba(248,245,240,0.45)",
                 transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
             />
@@ -230,7 +230,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
             <div style={{ maxWidth: 720 }}>
               <p
                 className="gy-eyebrow"
-                style={{ margin: 0, color: "#C9A84C" }}
+                style={{ margin: 0, color: "#DAA110" }}
               >
                 {stop.eyebrow}
               </p>
@@ -289,7 +289,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                         top: "0.7em",
                         width: 14,
                         height: 1,
-                        background: "#C9A84C",
+                        background: "#DAA110",
                       }}
                     />
                     {line}
@@ -302,7 +302,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                   style={{
                     margin: "36px 0 0",
                     padding: "18px 0 0",
-                    borderTop: "1px solid rgba(201,168,76,0.35)",
+                    borderTop: "1px solid rgba(218, 161, 16,0.35)",
                     fontFamily: "var(--gy-font-editorial)",
                     fontStyle: "italic",
                     fontSize: "clamp(20px, 2vw, 26px)",
@@ -405,7 +405,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
                               fontFamily: "var(--gy-font-editorial)",
                               fontStyle: "italic",
                               fontSize: 14,
-                              color: "#C9A84C",
+                              color: "#DAA110",
                               margin: "10px 0 0",
                             }}
                           >
@@ -444,7 +444,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
           background: "linear-gradient(180deg, #0D1B2A 0%, #0D1B2A 100%)",
         }}
       >
-        <p className="gy-eyebrow" style={{ color: "#C9A84C" }}>
+        <p className="gy-eyebrow" style={{ color: "#DAA110" }}>
           Ten stops. One brief away.
         </p>
         <h2
@@ -480,9 +480,9 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
             fontWeight: 700,
             color: "#0D1B2A",
             textDecoration: "none",
-            background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)",
-            border: "1px solid #C9A84C",
-            boxShadow: "0 12px 32px rgba(201,168,76,0.22)",
+            background: "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
+            border: "1px solid #DAA110",
+            boxShadow: "0 12px 32px rgba(218, 161, 16,0.22)",
           }}
         >
           Brief George →

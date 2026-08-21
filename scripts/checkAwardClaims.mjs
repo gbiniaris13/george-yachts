@@ -32,18 +32,37 @@ const {
   YACHT_AWARDS,
   NEVER_CLAIM,
   WITHHELD,
+  HONOURS,
+  TIERS,
   renderable,
+  honoursFor,
+  PLACED_BY,
+  PERMITTED_HOUSES,
 } = await import(pathToFileURL(join(ROOT, "lib/yachtAwards.js")).href);
 
 const problems = [];
 const notes = [];
 
+const VAGUE = /\baward[- ]winning\b|\baward winner\b|\bwon awards\b/i;
+
 // ── 1. nothing forbidden has crept in ────────────────────────────────────
-for (const slug of Object.keys(NEVER_CLAIM)) {
-  if (YACHT_AWARDS[slug]) {
-    problems.push(
-      `${slug} has an award entry, but it is on the never-claim list: ${NEVER_CLAIM[slug]}`
-    );
+// NEVER_CLAIM is keyed by the claim now, not by the slug, because a yacht can
+// carry a builder's boast on her agent's page AND a placing her own crew won.
+// What must never happen is the boast becoming the claim, so the test is that
+// the forbidden WORDING has not turned up in the registry.
+for (const [id, entry] of Object.entries(NEVER_CLAIM)) {
+  const { slug, reason } = entry;
+  if (!slug || !reason) {
+    problems.push(`NEVER_CLAIM["${id}"] needs both a slug and a reason.`);
+    continue;
+  }
+  for (const e of YACHT_AWARDS[slug] || []) {
+    if (VAGUE.test(String(e.award || "")) || /builder|shipyard|model/i.test(String(e.competition || ""))) {
+      problems.push(
+        `${slug} has an award entry that reads like the forbidden claim ` +
+          `"${id}": ${reason}`
+      );
+    }
   }
 }
 
@@ -69,6 +88,26 @@ for (const [slug, list] of Object.entries(YACHT_AWARDS)) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(String(e.checked || ""))) {
       problems.push(`${where} has no checked date in YYYY-MM-DD form.`);
     }
+    // Structure added 2026-08-21 so the page can print a rank marker and a
+    // bracket without regexing the organiser's own wording at render time.
+    if (![1, 2, 3].includes(e.rank)) {
+      problems.push(
+        `${where} has rank ${JSON.stringify(e.rank)}. Every placing on this ` +
+          `site is a 1, a 2 or a 3, printed as itself. There is no fourth value.`
+      );
+    }
+    if (!e.competition || !String(e.competition).trim()) {
+      problems.push(
+        `${where} names no competition. "1st Place Diamond" alone does not ` +
+          `tell a reader what was won.`
+      );
+    }
+    if (e.tier && !Object.prototype.hasOwnProperty.call(TIERS, e.tier)) {
+      problems.push(
+        `${where} has tier "${e.tier}", which lib/yachtAwards.js TIERS cannot ` +
+          `explain. A bracket the page cannot define should be null.`
+      );
+    }
     if (e.kind !== "vessel" && e.kind !== "crew") {
       problems.push(
         `${where} has kind "${e.kind}". A prize the hull won is "vessel"; ` +
@@ -78,9 +117,75 @@ for (const [slug, list] of Object.entries(YACHT_AWARDS)) {
   });
 }
 
+// ── 3b. honours are held to the same standard as placings ────────────────
+// They sit outside the placing count on purpose, which makes them easier to
+// let slip. Same three facts, same source, same date.
+let honourCount = 0;
+for (const [slug, list] of Object.entries(HONOURS || {})) {
+  if (!Array.isArray(list) || list.length === 0) {
+    problems.push(`HONOURS["${slug}"] is empty; remove the key instead.`);
+    continue;
+  }
+  if (honoursFor(slug).length !== list.length) {
+    problems.push(
+      `HONOURS["${slug}"] holds an entry missing one of award / organiser / ` +
+        `year, so it will silently vanish at render time.`
+    );
+  }
+  list.forEach((e, i) => {
+    honourCount++;
+    if (!e.source || !String(e.source).trim()) {
+      problems.push(`HONOURS["${slug}"][${i}] has no source.`);
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(String(e.checked || ""))) {
+      problems.push(`HONOURS["${slug}"][${i}] has no checked date in YYYY-MM-DD form.`);
+    }
+    if (YACHT_AWARDS[slug]?.some((a) => a.year === e.year && a.award === e.award)) {
+      problems.push(
+        `HONOURS["${slug}"][${i}] duplicates a placing in YACHT_AWARDS, which ` +
+          `would count it twice in the totals.`
+      );
+    }
+  });
+}
+
+// ── 3c. every awarded yacht comes from a house we may place ──────────────
+// The permission question. A yacht outside FX, FYLY or Istion is one we have
+// no right to publish, and an award is the most quotable thing on the site,
+// so it is the worst place for that mistake to sit unnoticed.
+for (const slug of [...Object.keys(YACHT_AWARDS), ...Object.keys(HONOURS || {})]) {
+  const house = PLACED_BY[slug];
+  if (!house) {
+    problems.push(
+      `${slug} carries a distinction but no entry in PLACED_BY. Record which ` +
+        `of ${PERMITTED_HOUSES.join(", ")} shows her, and how that was checked.`
+    );
+  } else if (!PERMITTED_HOUSES.includes(house)) {
+    problems.push(
+      `${slug} is recorded as placed by "${house}", which is not one of ` +
+        `${PERMITTED_HOUSES.join(", ")}. We have no permission to publish her.`
+    );
+  }
+}
+
 // ── 4. no free-typed award language in yacht copy ────────────────────────
-const VAGUE = /\baward[- ]winning\b|\baward winner\b|\bwon awards\b/i;
 const SEARCH_DIRS = ["app/yachts", "app/components"];
+
+/**
+ * The two files allowed to write the phrase, each with the reason.
+ *
+ * The rule exists to stop a sentence that reads like an award and turns out
+ * to be about the builder. It is not there to stop a heading that sits
+ * directly on top of twenty-five placings, each naming its competition, its
+ * bracket, its organiser and its year, and each carrying a source. In those
+ * two files the phrase is the summary of the evidence underneath it.
+ *
+ * Everywhere else it stays banned, which is the whole fleet.
+ */
+const PHRASE_ALLOWED = new Map([
+  ["app/components/AwardedFleet.jsx",
+   "the homepage band; the phrase heads a list of every sourced placing"],
+]);
 const SKIP = new Set(["node_modules", ".next", ".git"]);
 
 function walk(dir, out = []) {
@@ -108,6 +213,10 @@ function walk(dir, out = []) {
 for (const dir of SEARCH_DIRS) {
   for (const file of walk(join(ROOT, dir))) {
     const rel = relative(ROOT, file);
+    if (PHRASE_ALLOWED.has(rel)) {
+      notes.push(`Award guard: phrase allowed in ${rel} (${PHRASE_ALLOWED.get(rel)}).`);
+      continue;
+    }
     readFileSync(file, "utf8")
       .split("\n")
       .forEach((line, i) => {
@@ -137,8 +246,9 @@ for (const dir of SEARCH_DIRS) {
 const withheld = Object.keys(WITHHELD).length;
 if (problems.length === 0) {
   notes.push(
-    `Award guard: clean. ${total} claims across ${Object.keys(YACHT_AWARDS).length} yachts, ` +
-      `all sourced. ${withheld} held back, ${Object.keys(NEVER_CLAIM).length} on the never-claim list.`
+    `Award guard: clean. ${total} placings across ${Object.keys(YACHT_AWARDS).length} yachts, ` +
+      `plus ${honourCount} honour(s) held apart. All sourced. ${withheld} held back, ` +
+      `${Object.keys(NEVER_CLAIM).length} on the never-claim list.`
   );
   console.log(notes.join("\n"));
   process.exit(0);

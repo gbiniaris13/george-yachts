@@ -61,7 +61,7 @@ import { buildTouristTrip } from "@/lib/touristTripSchema";
 import { WHATSAPP_DOWN, WHATSAPP_NUMBER } from "@/lib/whatsappStatus";
 import Footer from "@/app/components/Footer";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 
 async function loadFleetMatches(yachtFilter) {
@@ -250,7 +250,7 @@ export default async function SeoLanding({ pageData }) {
           style={{
             background: `linear-gradient(180deg, ${NAVY} 0%, ${NAVY} 100%)`,
             padding: "120px 24px 64px",
-            borderBottom: "1px solid rgba(201,168,76,0.15)",
+            borderBottom: "1px solid rgba(218, 161, 16,0.15)",
             textAlign: "center",
           }}
         >
@@ -344,7 +344,7 @@ export default async function SeoLanding({ pageData }) {
         {pageData.prosAndCons && (
           <section style={{ padding: "24px 24px 64px" }}>
             <div style={{ maxWidth: 880, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
-              <div style={{ border: "1px solid rgba(201,168,76,0.25)", padding: "24px 26px" }}>
+              <div style={{ border: "1px solid rgba(218, 161, 16,0.25)", padding: "24px 26px" }}>
                 <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.32em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px" }}>
                   In its favour
                 </p>
@@ -394,9 +394,9 @@ export default async function SeoLanding({ pageData }) {
         {yachts.length > 0 && (
           <section
             style={{
-              background: "rgba(201,168,76,0.025)",
-              borderTop: "1px solid rgba(201,168,76,0.15)",
-              borderBottom: "1px solid rgba(201,168,76,0.15)",
+              background: "rgba(218, 161, 16,0.025)",
+              borderTop: "1px solid rgba(218, 161, 16,0.15)",
+              borderBottom: "1px solid rgba(218, 161, 16,0.15)",
               padding: "72px 24px",
             }}
           >
@@ -472,7 +472,7 @@ export default async function SeoLanding({ pageData }) {
                   <thead>
                     <tr>
                       {(pageData.rateTable.columns || []).map((c) => (
-                        <th key={c} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: GOLD, fontWeight: 600, textAlign: "left", padding: "12px 14px", borderBottom: "1px solid rgba(201,168,76,0.35)", whiteSpace: "nowrap" }}>
+                        <th key={c} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: GOLD, fontWeight: 600, textAlign: "left", padding: "12px 14px", borderBottom: "1px solid rgba(218, 161, 16,0.35)", whiteSpace: "nowrap" }}>
                           {c}
                         </th>
                       ))}
@@ -503,7 +503,7 @@ export default async function SeoLanding({ pageData }) {
             review - never edited, never invented. */}
         {pageData.testimonial && (
           <section style={{ padding: "72px 24px 0" }} aria-label="Client review">
-            <figure className="reveal-up" style={{ maxWidth: 720, margin: "0 auto", padding: "36px 32px", border: "1px solid rgba(201,168,76,0.25)", background: "rgba(201,168,76,0.04)" }}>
+            <figure className="reveal-up" style={{ maxWidth: 720, margin: "0 auto", padding: "36px 32px", border: "1px solid rgba(218, 161, 16,0.25)", background: "rgba(218, 161, 16,0.04)" }}>
               <p aria-hidden="true" style={{ color: GOLD, fontSize: 15, letterSpacing: 3, margin: "0 0 14px" }}>★★★★★</p>
               <blockquote style={{ margin: 0, fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(17px, 2.2vw, 21px)", fontStyle: "italic", fontWeight: 300, lineHeight: 1.65, color: "rgba(248,245,240,0.92)" }}>
                 {"\u201C"}{pageData.testimonial.quote}{"\u201D"}
@@ -511,7 +511,7 @@ export default async function SeoLanding({ pageData }) {
               <figcaption style={{ marginTop: 18, fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.08em", color: "rgba(248,245,240,0.66)" }}>
                 {pageData.testimonial.attribution}
                 {" \u00B7 "}
-                <a href="/reviews" style={{ color: GOLD, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.4)" }}>
+                <a href="/reviews" style={{ color: GOLD, textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.4)" }}>
                   all reviews
                 </a>
               </figcaption>
@@ -540,7 +540,7 @@ export default async function SeoLanding({ pageData }) {
                 dangerouslySetInnerHTML={{
                   __html: sec.body
                     .replace(/\*\*(.+?)\*\*/g, '<strong style="color:#F8F5F0">$1</strong>')
-                    .replace(/\[([^\]]+)\]\((\/[^)\s]*)\)/g, '<a href="$2" style="color:#C9A84C;text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.5)">$1</a>'),
+                    .replace(/\[([^\]]+)\]\((\/[^)\s]*)\)/g, '<a href="$2" style="color:#DAA110;text-decoration:none;border-bottom:1px solid rgba(218, 161, 16,0.5)">$1</a>'),
                 }}
               />
             </div>
@@ -564,7 +564,7 @@ export default async function SeoLanding({ pageData }) {
 
         {/* INSIDER TIPS */}
         {Array.isArray(pageData.insiderTips) && pageData.insiderTips.length > 0 && (
-          <section style={{ background: "rgba(201,168,76,0.025)", borderTop: "1px solid rgba(201,168,76,0.15)", borderBottom: "1px solid rgba(201,168,76,0.15)", padding: "72px 24px" }}>
+          <section style={{ background: "rgba(218, 161, 16,0.025)", borderTop: "1px solid rgba(218, 161, 16,0.15)", borderBottom: "1px solid rgba(218, 161, 16,0.15)", padding: "72px 24px" }}>
             <div style={{ maxWidth: 720, margin: "0 auto" }}>
               <h2 style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 18px" }}>
                 {pageData.insiderTitle || "George's insider notes"}
@@ -645,7 +645,7 @@ export default async function SeoLanding({ pageData }) {
         )}
 
         {/* CTA */}
-        <section style={{ background: "rgba(201,168,76,0.025)", borderTop: "1px solid rgba(201,168,76,0.15)", padding: "84px 24px" }}>
+        <section style={{ background: "rgba(218, 161, 16,0.025)", borderTop: "1px solid rgba(218, 161, 16,0.15)", padding: "84px 24px" }}>
           <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
             <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 32px", lineHeight: 1.2 }}>
               {pageData.ctaTitle}
@@ -653,7 +653,7 @@ export default async function SeoLanding({ pageData }) {
             <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
               <Link
                 href={pageData.ctaPrimaryHref || "/yacht-finder"}
-                style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)", color: NAVY, border: "1px solid rgba(201,168,76,0.6)", textDecoration: "none" }}
+                style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)", color: NAVY, border: "1px solid rgba(218, 161, 16,0.6)", textDecoration: "none" }}
               >
                 {pageData.ctaPrimary}
               </Link>
@@ -668,7 +668,7 @@ export default async function SeoLanding({ pageData }) {
               <a
                 href={WHATSAPP_DOWN ? "/inquiry" : `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(`Hi George, I am interested in ${pageData.h1 || "a Greek yacht charter"}. Could you share availability and rates?`)}`}
                 {...(WHATSAPP_DOWN ? {} : { target: "_blank", rel: "noopener noreferrer" })}
-                style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", background: "transparent", color: "#C9A84C", border: "1px solid #C9A84C", textDecoration: "none" }}
+                style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", background: "transparent", color: "#DAA110", border: "1px solid #DAA110", textDecoration: "none" }}
               >
                 {WHATSAPP_DOWN ? "Message George Directly" : "Message on WhatsApp"}
               </a>

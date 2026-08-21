@@ -43,19 +43,19 @@ export default function GhostCredit() {
           font-family: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
           font-size: 11.5px;
           letter-spacing: 0.12em;
-          color: var(--gy-gold, #C9A84C);
+          color: var(--gy-gold, #DAA110);
           text-decoration: none;
           padding: 6px 10px;
           line-height: 1.65;
           transition: color 220ms ease, text-shadow 220ms ease;
         }
         .cabin-ghost-credit__link:hover {
-          color: #E6C77A;
-          text-shadow: 0 0 12px rgba(201, 168, 76, 0.45);
+          color: #F7DE8A;
+          text-shadow: 0 0 12px rgba(218, 161, 16, 0.45);
         }
         .cabin-ghost-credit__mark {
           font-weight: 700;
-          color: #E6C77A;
+          color: #F7DE8A;
           letter-spacing: 0.22em;
         }
         .cabin-ghost-credit__tagline {

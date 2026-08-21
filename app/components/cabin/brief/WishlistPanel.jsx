@@ -245,7 +245,7 @@ export default function WishlistPanel({ sectionKey }) {
         .wlp {
           margin: 28px 0 0 0;
           background: #FCFAF4;
-          border: 1px solid rgba(201, 168, 76, 0.32);
+          border: 1px solid rgba(218, 161, 16, 0.32);
           border-left: 3px solid var(--gy-gold);
           border-radius: 3px;
         }
@@ -300,7 +300,7 @@ export default function WishlistPanel({ sectionKey }) {
         }
         .wlp__item {
           background: #ffffff;
-          border: 1px solid rgba(201, 168, 76, 0.22);
+          border: 1px solid rgba(218, 161, 16, 0.22);
           border-radius: 3px;
           padding: 12px 14px;
           display: flex;
@@ -393,7 +393,7 @@ export default function WishlistPanel({ sectionKey }) {
         .wlp__field input:focus {
           outline: none;
           border-color: var(--gy-gold);
-          box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.18);
+          box-shadow: 0 0 0 3px rgba(218, 161, 16, 0.18);
         }
         .wlp__grid-2 {
           display: grid;

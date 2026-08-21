@@ -8,7 +8,7 @@
 import Link from "next/link";
 import { REVIEWS, getOverallAggregateRating, initials } from "@/lib/reviewsData";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -60,7 +60,7 @@ export default function ClientReviews() {
         {/* Review cards */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 28 }}>
           {shown.map((r) => (
-            <figure key={r.id} style={{ margin: 0, borderTop: `1px solid rgba(201,168,76,0.4)`, paddingTop: 22 }}>
+            <figure key={r.id} style={{ margin: 0, borderTop: `1px solid rgba(218, 161, 16,0.4)`, paddingTop: 22 }}>
               <Stars n={Math.round(r.rating) || 5} size={13} />
               <blockquote style={{ fontFamily: "var(--gy-font-editorial)", fontStyle: "italic", fontSize: 16, lineHeight: 1.65, fontWeight: 400, color: NAVY, margin: "14px 0 16px" }}>
                 &ldquo;{trim(r.body)}&rdquo;

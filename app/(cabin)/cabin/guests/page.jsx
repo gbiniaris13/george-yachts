@@ -161,7 +161,7 @@ function MinorAdder({ onAdded }) {
           cursor: pointer;
         }
         .minor-adder__form {
-          background: rgba(201,168,76,0.06);
+          background: rgba(218, 161, 16,0.06);
           border-left: 2px solid var(--gy-gold);
           padding: 16px 18px 18px;
           margin-top: 10px;
@@ -797,7 +797,7 @@ export default function GuestsPage() {
           align-items: baseline;
           margin: 18px 0 0 0;
           padding: 14px 16px;
-          background: rgba(201, 168, 76, 0.07);
+          background: rgba(218, 161, 16, 0.07);
           border-left: 2px solid var(--gy-gold);
           font-family: var(--gy-font-editorial);
           font-size: 14px;
@@ -983,7 +983,7 @@ export default function GuestsPage() {
           text-transform: uppercase;
         }
         .guests-list__badge--ok    { background: rgba(47, 125, 58, 0.12); color: #2f7d3a; }
-        .guests-list__badge--warm  { background: rgba(201, 168, 76, 0.14); color: #8a7327; }
+        .guests-list__badge--warm  { background: rgba(218, 161, 16, 0.14); color: #7A5C04; }
         .guests-list__badge--cool  { background: rgba(13, 27, 42, 0.06);   color: rgba(13,27,42,0.65); }
         .guests-list__badge--muted { background: rgba(13, 27, 42, 0.04);   color: rgba(13,27,42,0.45); }
         .guests-list__badge--admin {
@@ -1056,8 +1056,8 @@ export default function GuestsPage() {
         .member-details {
           margin-top: 14px;
           padding: 14px 16px 12px;
-          background: rgba(201, 168, 76, 0.05);
-          border: 1px solid rgba(201, 168, 76, 0.32);
+          background: rgba(218, 161, 16, 0.05);
+          border: 1px solid rgba(218, 161, 16, 0.32);
           border-left: 3px solid var(--gy-gold);
           display: flex;
           flex-direction: column;
@@ -1073,7 +1073,7 @@ export default function GuestsPage() {
           font-size: 9.5px;
           letter-spacing: 2.5px;
           text-transform: uppercase;
-          color: #8a7327;
+          color: #7A5C04;
           font-weight: 700;
           margin-bottom: 4px;
         }

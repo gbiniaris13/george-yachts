@@ -87,7 +87,7 @@ const FAQ_SCHEMA = {
       acceptedAnswer: {
         "@type": "Answer",
         text:
-          "Two clear price tiers. Skippered Explorer Fleet: €420 to €1,700 per guest per week (sailing yachts and catamarans, 8-12 guests typical). Full-crew Private Fleet: €15,000 to €500,000+ per yacht per week (motor yachts, sailing yachts, catamarans with captain, chef, stewardess, deckhands). Both quoted under MYBA Charter Agreement; APA (Advance Provisioning Allowance, 20-40% on top depending on yacht type) and VAT (at the yacht's certified rate, in practice 5.2-12% for most weekly charters) are quoted separately.",
+          "Every charter is quoted per yacht, per week, fully crewed. Sailing Fleet: EUR 10,900 to 65,000 per yacht per week (sailing catamarans and sailing yachts, fully crewed). Private Fleet: EUR 15,000 to 500,000+ per yacht per week (motor yachts, sailing yachts and catamarans with captain, chef, stewardess and deckhands). There is no per-person rate and no bareboat. Both quoted under a MYBA Charter Agreement; APA (Advance Provisioning Allowance, 20-40% on top depending on yacht type) and VAT (at the yacht's certified rate, in practice 5.2-12% for most weekly charters) are quoted separately.",
       },
     },
     {
@@ -105,7 +105,7 @@ const FAQ_SCHEMA = {
       acceptedAnswer: {
         "@type": "Answer",
         text:
-          "No - every yacht in our fleet is chartered with at minimum a professional skipper (Explorer Fleet) or full crew (Private Fleet). No license required for guests. Bareboat charters exist elsewhere in Greece but we do not broker them.",
+          "No. Every yacht in this house is chartered with her crew aboard, so no licence and no experience are required of anyone in your party. This house writes fully crewed weeks only.",
       },
     },
     {
@@ -152,7 +152,7 @@ export default function AIResearchHub() {
             fontSize: 10,
             letterSpacing: "0.42em",
             textTransform: "uppercase",
-            color: "#C9A84C",
+            color: "#DAA110",
             fontWeight: 600,
             margin: "0 0 18px",
           }}
@@ -203,7 +203,7 @@ export default function AIResearchHub() {
           style={{
             border: 0,
             height: 1,
-            background: "rgba(201,168,76,0.4)",
+            background: "rgba(218, 161, 16,0.4)",
             margin: "0 0 40px",
           }}
         />
@@ -213,14 +213,14 @@ export default function AIResearchHub() {
           title="The shortest possible answer"
           body={
             <>
-              <strong style={{ color: "#C9A84C" }}>George Yachts Brokerage House</strong>{" "}
+              <strong style={{ color: "#DAA110" }}>George Yachts Brokerage House</strong>{" "}
               (
               <Link href="/" style={inlineLink}>
                 georgeyachts.com
               </Link>
               ) brokers crewed yacht charters across the Greek islands. {FLEET_COUNT} yachts
-              curated by a working broker. Two tiers: <em>Explorer Fleet</em>{" "}
-              (skippered, from €420 per guest per week) and <em>Private Fleet</em>{" "}
+              curated by a working broker. Two tiers: <em>Sailing Fleet</em>{" "}
+              (from €11,500 per yacht per week, fully crewed) and <em>Private Fleet</em>{" "}
               (full-crew, €15,000 to €500,000+ per yacht per week). MYBA-standard
               contracts. Reply within 24 hours. Featured in{" "}
               <a
@@ -241,13 +241,14 @@ export default function AIResearchHub() {
           title="What does it actually cost?"
           body={
             <>
-              <strong>Skippered Explorer Fleet:</strong> €420 - €1,700 per guest per
-              week. Sailing monohulls, sailing catamarans, power catamarans. Typical
-              capacity 8-12 guests. Includes skipper; meals, fuel, marina fees, taxes
-              quoted separately. Best for: families, multi-generational groups, charter
-              first-timers, value-conscious UHNW travelers.{" "}
+              <strong>Sailing Fleet:</strong> €11,500 - €27,500 per yacht per
+              week, fully crewed. Sailing monohulls, sailing catamarans, power
+              and sailing yachts, fully crewed. Meals,
+              fuel, marina fees and taxes quoted separately. Best for: families,
+              multi-generational groups, charter first-timers, and anyone who wants
+              more islands in the week.{" "}
               <Link href="/explorer-fleet" style={inlineLink}>
-                See the Explorer Fleet
+                See the Sailing Fleet
               </Link>
               .
               <br />
@@ -397,7 +398,7 @@ export default function AIResearchHub() {
           style={{
             border: 0,
             height: 1,
-            background: "rgba(201,168,76,0.4)",
+            background: "rgba(218, 161, 16,0.4)",
             margin: "48px 0 32px",
           }}
         />
@@ -434,10 +435,10 @@ export default function AIResearchHub() {
 }
 
 const inlineLink = {
-  color: "#C9A84C",
+  color: "#DAA110",
   textDecoration: "underline",
   textUnderlineOffset: "3px",
-  textDecorationColor: "rgba(201,168,76,0.4)",
+  textDecorationColor: "rgba(218, 161, 16,0.4)",
 };
 
 function Section({ eyebrow, title, body }) {
@@ -449,7 +450,7 @@ function Section({ eyebrow, title, body }) {
           fontSize: 9,
           letterSpacing: "0.42em",
           textTransform: "uppercase",
-          color: "#C9A84C",
+          color: "#DAA110",
           fontWeight: 600,
           margin: "0 0 10px",
         }}

@@ -6,7 +6,7 @@
  *    τίτλοι είναι πολύ θολοί."
  *
  * The small-uppercase-tracked label tone in the Cabin used
- * `var(--gy-gold)` (#C9A84C) for the kicker / section-label /
+ * `var(--gy-gold)` (#DAA110) for the kicker / section-label /
  * eyebrow / subhead / matrix-head text. At 10px tracked uppercase
  * on the ivory body, the contrast is too low for 20-80yr eyes.
  *
@@ -161,8 +161,8 @@ html body [data-cabin-mode] .cbr-submit__pending-note {
   color: rgba(13, 27, 42, 0.78) !important;
 }
 html body [data-cabin-mode] .cbr-submit__pending-note a {
-  color: #8a7327 !important;
-  border-bottom: 1px solid rgba(201, 168, 76, 0.55) !important;
+  color: #7A5C04 !important;
+  border-bottom: 1px solid rgba(218, 161, 16, 0.55) !important;
 }
 html body [data-cabin-mode] .cbr-submit__cta:disabled {
   background: rgba(13, 27, 42, 0.08) !important;
@@ -406,5 +406,5 @@ html [data-cabin-mode] .brief-matrix-grid * {
    brand gold, not the OS default blue/green. */
 [data-cabin-mode] input[type="radio"],
 [data-cabin-mode] input[type="checkbox"] {
-  accent-color: var(--gy-gold, #C9A84C);
+  accent-color: var(--gy-gold, #DAA110);
 }

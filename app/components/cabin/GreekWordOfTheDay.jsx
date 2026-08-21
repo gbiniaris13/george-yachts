@@ -53,7 +53,7 @@ export default function GreekWordOfTheDay() {
 
       <style>{`
         .gwotd {
-          background: rgba(201, 168, 76, 0.06);
+          background: rgba(218, 161, 16, 0.06);
           border-left: 2px solid var(--gy-gold);
           padding: 16px 20px;
         }

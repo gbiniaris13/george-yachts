@@ -12,12 +12,13 @@
 // Every number on this surface is either computed from Sanity at
 // render time or quoted from lib/charterIndex2026.js / lib data.
 
+import { isPrivateFleet, isSailingFleet } from "@/lib/fleetTiers";
 import Link from "next/link";
 import { CHARTER_INDEX_2026 } from "@/lib/charterIndex2026";
 import { REVIEWS, initials } from "@/lib/reviewsData";
 import { extractPriceRange, extractLowPrice, isPerPerson } from "@/lib/pricing";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -51,7 +52,7 @@ const bodyStyle = {
 const goldLink = {
   color: GOLD,
   textDecoration: "none",
-  borderBottom: "1px solid rgba(201,168,76,0.5)",
+  borderBottom: "1px solid rgba(218, 161, 16,0.5)",
 };
 
 const thStyle = {
@@ -63,7 +64,7 @@ const thStyle = {
   fontWeight: 600,
   textAlign: "left",
   padding: "12px 14px",
-  borderBottom: "1px solid rgba(201,168,76,0.35)",
+  borderBottom: "1px solid rgba(218, 161, 16,0.35)",
   whiteSpace: "nowrap",
 };
 
@@ -82,8 +83,8 @@ const fmt = (n) => `€${Number(n).toLocaleString("en-US")}`;
 // never drift apart. Answers quote on-site sources only.
 function buildFaqs(tiers) {
   const priceAnswer = tiers.private
-    ? `Live from today's fleet: the fully crewed Private Fleet runs ${fmt(tiers.private.low)} to ${fmt(tiers.private.high)} per yacht per week base rate${tiers.explorerPP ? `, and the skippered Explorer Fleet starts around ${fmt(tiers.explorerPP)} per person per week` : ""}. On top come APA (20 to 40% by yacht type) and Greek VAT.`
-    : "The fully crewed Private Fleet is priced per yacht per week; the skippered Explorer Fleet is priced per person. Every yacht page lists its live rate, and George confirms the full figure in writing before you commit.";
+    ? `Live from today's fleet: the fully crewed Private Fleet runs ${fmt(tiers.private.low)} to ${fmt(tiers.private.high)} per yacht per week base rate${tiers.explorerYacht ? `, and the Sailing Fleet starts around ${fmt(tiers.explorerYacht)} per yacht per week` : ""}. On top come APA (20 to 40% by yacht type) and Greek VAT.`
+    : "Both fleets are priced the same way, per yacht per week, fully crewed. Every yacht page lists its live rate, and George confirms the full figure in writing before you commit.";
   return [
     {
       q: "How much does a yacht charter in Greece cost in 2026?",
@@ -106,8 +107,8 @@ function buildFaqs(tiers) {
       a: "Typical lead time for peak July and August weeks is 6 to 12 months, and premium 40m-plus yachts often commit a year or more ahead. June and September usually hold availability closer in, at softer rates for the same yacht.",
     },
     {
-      q: "What is the difference between the Private Fleet and the Explorer Fleet?",
-      a: "The Private Fleet is fully crewed: captain, chef and service crew, priced per yacht per week. The Explorer Fleet is skippered sailing and catamaran chartering, priced per person, lighter in style and closer to the water. Same broker, same Greek waters, two different rhythms.",
+      q: "What is the difference between the Private Fleet and the Sailing Fleet?",
+      a: "The Private Fleet is fully crewed: captain, chef and service crew, priced per yacht per week. The Sailing Fleet is the same week on a smaller sailing yacht or catamaran with a crew of two or three, priced the same way, per yacht per week, lighter in style and closer to the water. Same broker, same Greek waters, two different rhythms.",
     },
     {
       q: "Where do charters embark?",
@@ -145,15 +146,11 @@ function buildFaqs(tiers) {
 export default function FleetGuideSections({ yachts }) {
   // Live per-tier pricing computed from the SAME data the grid renders.
   const priv = (yachts || []).filter(
-    (y) => (y.fleetTier === "private" || y.fleetTier === "both") && !isPerPerson(y)
+    (y) => isPrivateFleet(y)
   );
   const privRanges = priv.map((y) => extractPriceRange(y.weeklyRatePrice)).filter((r) => r.low);
-  const explorerPP = (yachts || [])
-    .filter((y) => y.fleetTier === "explorer" && isPerPerson(y))
-    .map((y) => extractLowPrice(y.weeklyRatePrice))
-    .filter(Boolean);
   const explorerYacht = (yachts || [])
-    .filter((y) => y.fleetTier === "explorer" && !isPerPerson(y))
+    .filter((y) => isSailingFleet(y))
     .map((y) => extractLowPrice(y.weeklyRatePrice))
     .filter(Boolean);
 
@@ -161,7 +158,6 @@ export default function FleetGuideSections({ yachts }) {
     private: privRanges.length
       ? { low: Math.min(...privRanges.map((r) => r.low)), high: Math.max(...privRanges.map((r) => r.high)) }
       : null,
-    explorerPP: explorerPP.length ? Math.min(...explorerPP) : null,
     explorerYacht: explorerYacht.length ? Math.min(...explorerYacht) : null,
   };
 
@@ -185,9 +181,9 @@ export default function FleetGuideSections({ yachts }) {
       {/* COST 2026, live table */}
       <section
         style={{
-          background: "rgba(201,168,76,0.025)",
-          borderTop: "1px solid rgba(201,168,76,0.15)",
-          borderBottom: "1px solid rgba(201,168,76,0.15)",
+          background: "rgba(218, 161, 16,0.025)",
+          borderTop: "1px solid rgba(218, 161, 16,0.15)",
+          borderBottom: "1px solid rgba(218, 161, 16,0.15)",
           padding: "72px 24px",
         }}
       >
@@ -219,16 +215,12 @@ export default function FleetGuideSections({ yachts }) {
                     <td className="gy-tnum" style={tdStyle}>{fmt(tiers.private.low)} to {fmt(tiers.private.high)}</td>
                   </tr>
                 )}
-                {tiers.explorerPP && (
-                  <tr>
-                    <td style={tdStyle}>Explorer Fleet, skippered</td>
-                    <td style={tdStyle}>per person</td>
-                    <td className="gy-tnum" style={tdStyle}>from {fmt(tiers.explorerPP)}</td>
-                  </tr>
-                )}
+                {/* The Sailing Fleet used to have its own row here, priced
+                    per person. It is priced the way everything else is, and
+                    the "whole yacht" row below is now simply its row. */}
                 {tiers.explorerYacht && (
                   <tr>
-                    <td style={tdStyle}>Explorer Fleet, whole yacht</td>
+                    <td style={tdStyle}>Sailing Fleet</td>
                     <td style={tdStyle}>per yacht</td>
                     <td className="gy-tnum" style={tdStyle}>from {fmt(tiers.explorerYacht)}</td>
                   </tr>
@@ -250,7 +242,7 @@ export default function FleetGuideSections({ yachts }) {
           </p>
 
           {/* Stat callouts from the Index */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 1, background: "rgba(201,168,76,0.15)", marginTop: 40 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 1, background: "rgba(218, 161, 16,0.15)", marginTop: 40 }}>
             {CHARTER_INDEX_2026.statCallouts.map((s) => (
               <div key={s.label} style={{ background: NAVY, padding: "26px 24px" }}>
                 <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 21, color: GOLD, fontWeight: 400, margin: "0 0 8px", lineHeight: 1.2 }}>{s.value}</p>
@@ -323,9 +315,9 @@ export default function FleetGuideSections({ yachts }) {
       {/* SEASONS + EMBARKATION */}
       <section
         style={{
-          background: "rgba(201,168,76,0.025)",
-          borderTop: "1px solid rgba(201,168,76,0.15)",
-          borderBottom: "1px solid rgba(201,168,76,0.15)",
+          background: "rgba(218, 161, 16,0.025)",
+          borderTop: "1px solid rgba(218, 161, 16,0.15)",
+          borderBottom: "1px solid rgba(218, 161, 16,0.15)",
           padding: "72px 24px",
         }}
       >
@@ -346,7 +338,7 @@ export default function FleetGuideSections({ yachts }) {
           <p style={bodyStyle}>
             Most of the fleet bases around Athens, which is why the Saronic
             and the western Cyclades open a week so efficiently. Several
-            Explorer Fleet catamarans base in Lefkada, Corfu and Santorini
+            Sailing Fleet catamarans base in Lefkada, Corfu and Santorini
             for Ionian and southern-Cyclades starts. Any other embarkation is
             possible with repositioning, quoted up front. If your dates are
             fixed to school-holiday August, decide 6 to 12 months out; the
@@ -363,7 +355,7 @@ export default function FleetGuideSections({ yachts }) {
             <h2 style={{ ...h2Style, textAlign: "center" }}>Weeks that were kept</h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20, marginTop: 36 }}>
               {guideReviews.map((r) => (
-                <figure key={r.id} style={{ margin: 0, border: "1px solid rgba(201,168,76,0.2)", padding: "28px 30px", background: "rgba(248,245,240,0.02)" }}>
+                <figure key={r.id} style={{ margin: 0, border: "1px solid rgba(218, 161, 16,0.2)", padding: "28px 30px", background: "rgba(248,245,240,0.02)" }}>
                   <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.28em", color: GOLD, margin: "0 0 14px" }} aria-label={`${r.rating} out of 5 stars`}>
                     {"★".repeat(r.rating)}
                   </p>
@@ -389,9 +381,9 @@ export default function FleetGuideSections({ yachts }) {
       {/* FAQ */}
       <section
         style={{
-          background: "rgba(201,168,76,0.025)",
-          borderTop: "1px solid rgba(201,168,76,0.15)",
-          borderBottom: "1px solid rgba(201,168,76,0.15)",
+          background: "rgba(218, 161, 16,0.025)",
+          borderTop: "1px solid rgba(218, 161, 16,0.15)",
+          borderBottom: "1px solid rgba(218, 161, 16,0.15)",
           padding: "72px 24px",
         }}
       >

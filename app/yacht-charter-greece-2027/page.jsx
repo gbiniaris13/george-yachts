@@ -32,7 +32,7 @@ export const revalidate = 3600;
 
 const CANONICAL = "https://georgeyachts.com/yacht-charter-greece-2027";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -153,7 +153,7 @@ const thStyle = {
   fontWeight: 600,
   textAlign: "left",
   padding: "12px 14px",
-  borderBottom: `1px solid rgba(201,168,76,0.35)`,
+  borderBottom: `1px solid rgba(218, 161, 16,0.35)`,
   whiteSpace: "nowrap",
 };
 
@@ -169,7 +169,7 @@ const tdStyle = {
 const goldLink = {
   color: GOLD,
   textDecoration: "none",
-  borderBottom: `1px solid rgba(201,168,76,0.5)`,
+  borderBottom: `1px solid rgba(218, 161, 16,0.5)`,
 };
 
 const stepNumStyle = {
@@ -196,7 +196,7 @@ export default function Charter2027Page() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema()) }} />
 
       {/* HERO - text-first editorial */}
-      <header style={{ padding: "140px 24px 64px", borderBottom: "1px solid rgba(201,168,76,0.15)" }}>
+      <header style={{ padding: "140px 24px 64px", borderBottom: "1px solid rgba(218, 161, 16,0.15)" }}>
         <div style={{ maxWidth: 880, margin: "0 auto" }}>
           <p style={eyebrowStyle}>The 2027 Season · Priority Window</p>
           <h1
@@ -271,7 +271,7 @@ export default function Charter2027Page() {
       </section>
 
       {/* THE PRIORITY LIST - 3 steps */}
-      <section style={{ padding: "72px 24px", background: "rgba(201,168,76,0.04)", borderTop: "1px solid rgba(201,168,76,0.1)", borderBottom: "1px solid rgba(201,168,76,0.1)" }}>
+      <section style={{ padding: "72px 24px", background: "rgba(218, 161, 16,0.04)", borderTop: "1px solid rgba(218, 161, 16,0.1)", borderBottom: "1px solid rgba(218, 161, 16,0.1)" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto" }}>
           <h2 style={{ ...h2Style, textAlign: "center" }}>The 2027 priority list, in three steps</h2>
           <p style={{ ...bodyStyle, textAlign: "center", maxWidth: 640, margin: "0 auto 48px" }}>
@@ -386,7 +386,7 @@ export default function Charter2027Page() {
       </section>
 
       {/* REFERENCE RATES - real Index data, honestly labelled */}
-      <section style={{ padding: "72px 24px", background: "rgba(201,168,76,0.04)", borderTop: "1px solid rgba(201,168,76,0.1)", borderBottom: "1px solid rgba(201,168,76,0.1)" }}>
+      <section style={{ padding: "72px 24px", background: "rgba(218, 161, 16,0.04)", borderTop: "1px solid rgba(218, 161, 16,0.1)", borderBottom: "1px solid rgba(218, 161, 16,0.1)" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto" }}>
           <h2 style={{ ...h2Style, textAlign: "center" }}>What a 2027 week is likely to cost</h2>
           <p style={{ ...bodyStyle, textAlign: "center", maxWidth: 720, margin: "0 auto 12px" }}>
@@ -486,7 +486,7 @@ export default function Charter2027Page() {
       </section>
 
       {/* FAQ - visible HTML matching the FAQPage schema */}
-      <section style={{ padding: "72px 24px", background: "rgba(201,168,76,0.04)", borderTop: "1px solid rgba(201,168,76,0.1)", borderBottom: "1px solid rgba(201,168,76,0.1)" }}>
+      <section style={{ padding: "72px 24px", background: "rgba(218, 161, 16,0.04)", borderTop: "1px solid rgba(218, 161, 16,0.1)", borderBottom: "1px solid rgba(218, 161, 16,0.1)" }}>
         <div style={{ maxWidth: 880, margin: "0 auto" }}>
           <h2 style={{ ...h2Style, textAlign: "center" }}>2027 charter FAQ</h2>
           <div style={{ marginTop: 40 }}>
@@ -516,7 +516,7 @@ export default function Charter2027Page() {
       <BrowseSeoCategories />
 
       {/* TRUST STRIP */}
-      <section style={{ padding: "56px 24px 84px", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.06)" }}>
+      <section style={{ padding: "56px 24px 84px", textAlign: "center", borderTop: "1px solid rgba(218, 161, 16,0.06)" }}>
         <p style={{ ...eyebrowStyle, marginBottom: 18 }}>Trusted Brokerage</p>
         <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.14em", color: "rgba(248,245,240,0.78)", margin: "0 0 30px" }}>
           IYBA Member · MYBA-Standard Contracts · Featured in Forbes, May 2026 · Greek Waters Exclusively

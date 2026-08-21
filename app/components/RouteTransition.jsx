@@ -116,9 +116,9 @@ export default function RouteTransition() {
           width: "1px",
           transform: "translateX(-50%) scaleY(0)",
           background:
-            "linear-gradient(180deg, transparent 0%, rgba(201,168,76,0.85) 25%, #C9A84C 50%, rgba(201,168,76,0.85) 75%, transparent 100%)",
+            "linear-gradient(180deg, transparent 0%, rgba(218, 161, 16,0.85) 25%, #DAA110 50%, rgba(218, 161, 16,0.85) 75%, transparent 100%)",
           boxShadow:
-            "0 0 16px rgba(201,168,76,0.6), 0 0 32px rgba(201,168,76,0.3)",
+            "0 0 16px rgba(218, 161, 16,0.6), 0 0 32px rgba(218, 161, 16,0.3)",
         }}
       />
       <style jsx global>{`

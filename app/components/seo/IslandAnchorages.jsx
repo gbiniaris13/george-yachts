@@ -23,7 +23,7 @@ import { getIslandBySlug } from "@/lib/islands";
 import { ISLAND_ANCHORAGES } from "@/lib/islandAnchoragesSeo";
 import Footer from "@/app/components/Footer";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -147,7 +147,7 @@ export default function IslandAnchorages({ guideData }) {
 
       <article style={{ background: NAVY, minHeight: "100vh", color: CREAM }}>
         {/* HERO */}
-        <header style={{ padding: "120px 24px 56px", borderBottom: "1px solid rgba(201,168,76,0.15)" }}>
+        <header style={{ padding: "120px 24px 56px", borderBottom: "1px solid rgba(218, 161, 16,0.15)" }}>
           <div style={{ maxWidth: 880, margin: "0 auto" }}>
             <Link
               href={parentHref}
@@ -250,9 +250,9 @@ export default function IslandAnchorages({ guideData }) {
         {/* ANCHORAGES, the directory */}
         <section
           style={{
-            background: "rgba(201,168,76,0.025)",
-            borderTop: "1px solid rgba(201,168,76,0.15)",
-            borderBottom: "1px solid rgba(201,168,76,0.15)",
+            background: "rgba(218, 161, 16,0.025)",
+            borderTop: "1px solid rgba(218, 161, 16,0.15)",
+            borderBottom: "1px solid rgba(218, 161, 16,0.15)",
             padding: "72px 24px",
           }}
         >
@@ -306,7 +306,7 @@ export default function IslandAnchorages({ guideData }) {
                   // into place as it enters the viewport.
                   className="reveal-up"
                   style={{
-                    border: "1px solid rgba(201,168,76,0.2)",
+                    border: "1px solid rgba(218, 161, 16,0.2)",
                     padding: "28px 32px",
                     background: "rgba(248, 245, 240, 0.02)",
                   }}
@@ -458,9 +458,9 @@ export default function IslandAnchorages({ guideData }) {
         {g.captainAdvice && (
           <section
             style={{
-              background: "rgba(201,168,76,0.04)",
-              borderTop: "1px solid rgba(201,168,76,0.15)",
-              borderBottom: "1px solid rgba(201,168,76,0.15)",
+              background: "rgba(218, 161, 16,0.04)",
+              borderTop: "1px solid rgba(218, 161, 16,0.15)",
+              borderBottom: "1px solid rgba(218, 161, 16,0.15)",
               padding: "56px 24px",
             }}
           >
@@ -533,7 +533,7 @@ export default function IslandAnchorages({ guideData }) {
                       color: CREAM,
                       fontWeight: 600,
                       textDecoration: "none",
-                      border: "1px solid rgba(201,168,76,0.4)",
+                      border: "1px solid rgba(218, 161, 16,0.4)",
                       padding: "12px 22px",
                     }}
                   >
@@ -552,7 +552,7 @@ export default function IslandAnchorages({ guideData }) {
             routes and the series reads as one library. */}
         <section
           style={{
-            borderTop: "1px solid rgba(201,168,76,0.15)",
+            borderTop: "1px solid rgba(218, 161, 16,0.15)",
             padding: "72px 24px",
           }}
         >
@@ -596,7 +596,7 @@ export default function IslandAnchorages({ guideData }) {
                       fontSize: 9,
                       letterSpacing: "0.32em",
                       textTransform: "uppercase",
-                      color: "rgba(201,168,76,0.7)",
+                      color: "rgba(218, 161, 16,0.7)",
                       fontWeight: 600,
                       margin: "0 0 10px",
                     }}
@@ -665,8 +665,8 @@ export default function IslandAnchorages({ guideData }) {
         {/* CTA */}
         <section
           style={{
-            background: "rgba(201,168,76,0.025)",
-            borderTop: "1px solid rgba(201,168,76,0.15)",
+            background: "rgba(218, 161, 16,0.025)",
+            borderTop: "1px solid rgba(218, 161, 16,0.15)",
             padding: "84px 24px",
           }}
         >

@@ -465,7 +465,7 @@ export default function CabinMePage() {
           .me-skel__head {
             height: 12px;
             width: 140px;
-            background: rgba(201,168,76,0.18);
+            background: rgba(218, 161, 16,0.18);
             animation: me-skel-pulse 1.6s ease-in-out infinite;
           }
           .me-skel__row {
@@ -985,8 +985,8 @@ export default function CabinMePage() {
           background: rgba(13, 27, 42, 0.02);
         }
         .me-stepper__step--active {
-          border-color: rgba(201, 168, 76, 0.55);
-          background: rgba(201, 168, 76, 0.08);
+          border-color: rgba(218, 161, 16, 0.55);
+          background: rgba(218, 161, 16, 0.08);
           color: var(--gy-navy);
         }
         .me-stepper__num {
@@ -1037,8 +1037,8 @@ export default function CabinMePage() {
             as a distinct, mandatory unit; subtle ivory background
             so it doesn't shout. */
         .me-crewlist {
-          background: rgba(201, 168, 76, 0.05);
-          border: 1px solid rgba(201, 168, 76, 0.35);
+          background: rgba(218, 161, 16, 0.05);
+          border: 1px solid rgba(218, 161, 16, 0.35);
           border-left: 3px solid var(--gy-gold);
           padding: 18px 18px 14px 18px;
           display: flex;
@@ -1052,7 +1052,7 @@ export default function CabinMePage() {
           font-size: 10.5px;
           letter-spacing: 3.2px;
           text-transform: uppercase;
-          color: #8a7327;
+          color: #7A5C04;
           font-weight: 700;
         }
         .me-crewlist__copy {
@@ -1319,8 +1319,8 @@ export default function CabinMePage() {
         .me-guest-reassure {
           margin: 22px 0 6px 0;
           padding: 16px 20px;
-          background: rgba(201, 168, 76, 0.05);
-          border: 1px solid rgba(201, 168, 76, 0.32);
+          background: rgba(218, 161, 16, 0.05);
+          border: 1px solid rgba(218, 161, 16, 0.32);
           border-left: 3px solid var(--gy-gold);
           border-radius: 3px;
           display: flex;
@@ -1332,7 +1332,7 @@ export default function CabinMePage() {
           font-size: 10.5px;
           letter-spacing: 3.2px;
           text-transform: uppercase;
-          color: #8a7327;
+          color: #7A5C04;
           font-weight: 700;
         }
         .me-guest-reassure__copy {
@@ -1351,7 +1351,7 @@ export default function CabinMePage() {
           margin: 22px 0 6px 0;
           padding: 18px 20px;
           background: #FCFAF4;
-          border: 1px solid rgba(201, 168, 76, 0.32);
+          border: 1px solid rgba(218, 161, 16, 0.32);
           border-left: 3px solid var(--gy-gold);
           border-radius: 3px;
           display: flex;
@@ -1403,7 +1403,7 @@ export default function CabinMePage() {
           margin: 24px 0 18px 0;
           padding: 14px 18px;
           background: #FCFAF4;
-          border: 1px solid rgba(201, 168, 76, 0.32);
+          border: 1px solid rgba(218, 161, 16, 0.32);
           border-left: 3px solid var(--gy-gold);
           border-radius: 3px;
           display: flex;

@@ -29,7 +29,7 @@ const WhatsAppEnquiry = ({ yachtName, mobileBar = true }) => {
         rel="noopener noreferrer"
         className="hidden md:inline-flex items-center gap-2.5 px-8 py-3.5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
         style={{
-          backgroundColor: "#C9A84C",
+          backgroundColor: "#DAA110",
           color: "#0D1B2A",
           fontFamily: "var(--gy-font-ui)",
           fontSize: "12px",
@@ -57,7 +57,7 @@ const WhatsAppEnquiry = ({ yachtName, mobileBar = true }) => {
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2.5 w-full py-3.5 transition-all duration-300 active:scale-[0.98]"
           style={{
-            backgroundColor: "#C9A84C",
+            backgroundColor: "#DAA110",
             color: "#0D1B2A",
             fontFamily: "var(--gy-font-ui)",
             fontSize: "12px",

@@ -1,3 +1,4 @@
+import { RETIRED_YACHT_SLUGS, RETIRED_YACHT_DESTINATION } from "./lib/retiredYachts.js";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
@@ -308,6 +309,26 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // 2026-08-21 (section 6) — seven yachts withdrawn on George's
+      // instruction, every one of them carrying "Skipper available" or its
+      // equivalent in her crew field. Their detail URLs 301 to the fleet
+      // rather than 404: whatever links and search equity those pages had
+      // are worth more redirected than thrown away, and a visitor arriving
+      // from an old bookmark should land on boats they can actually charter.
+      //
+      // Generated from lib/retiredYachts.js, which is the same list the
+      // Sanity client reads, so this file cannot drift out of step with what
+      // the site actually serves.
+      ...RETIRED_YACHT_SLUGS.map((slug) => ({
+        source: `/yachts/${slug}`,
+        destination: RETIRED_YACHT_DESTINATION,
+        permanent: true,
+      })),
+      ...RETIRED_YACHT_SLUGS.map((slug) => ({
+        source: `/yachts/${slug}/dossier`,
+        destination: RETIRED_YACHT_DESTINATION,
+        permanent: true,
+      })),
       // 2026-06-29 — the four "Kos" Explorer-Fleet yachts were retired
       // (unpublished from Sanity). 301 their detail URLs to the Explorer
       // Fleet listing so external links / search equity never 404.

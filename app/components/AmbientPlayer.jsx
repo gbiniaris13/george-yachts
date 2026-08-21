@@ -360,16 +360,16 @@ export default function AmbientPlayer() {
         background: "transparent",
         border: `1px solid ${
           playing
-            ? "rgba(201,168,76,0.55)"
+            ? "rgba(218, 161, 16,0.55)"
             : hovered
-            ? "rgba(201,168,76,0.4)"
+            ? "rgba(218, 161, 16,0.4)"
             : "rgba(248, 245, 240,0.06)"
         }`,
         color: playing
-          ? "#C9A84C"
+          ? "#DAA110"
           : hovered
-          ? "rgba(201,168,76,0.85)"
-          : "rgba(201,168,76,0.45)",
+          ? "rgba(218, 161, 16,0.85)"
+          : "rgba(218, 161, 16,0.45)",
         cursor: "pointer",
         display: "inline-flex",
         alignItems: "center",

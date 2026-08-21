@@ -39,7 +39,7 @@ import { WHATSAPP_DOWN } from "@/lib/whatsappStatus";
 // recognisable, or the button stops saying which app it opens.
 const WA_NUMBER = "17867988798"; // company WhatsApp Business (US)
 const WA_INK = "#0D1B2A";  // house navy, the disc
-const WA_GOLD = "#C9A84C"; // house gold, the rim and the glyph
+const WA_GOLD = "#DAA110"; // house gold, the rim and the glyph
 const WA_DEFAULT_MSG =
   "Hello George, I'm interested in chartering a yacht in Greece.";
 const WA_QUICK_MSG =
@@ -147,9 +147,9 @@ export default function WhatsAppButton() {
             className="relative p-5 pr-10"
             style={{
               background: "linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)",
-              border: "1px solid rgba(201,168,76,0.35)",
+              border: "1px solid rgba(218, 161, 16,0.35)",
               boxShadow:
-                "0 12px 48px rgba(13, 27, 42,0.5), 0 0 24px rgba(201,168,76,0.08)",
+                "0 12px 48px rgba(13, 27, 42,0.5), 0 0 24px rgba(218, 161, 16,0.08)",
               backdropFilter: "blur(12px)",
             }}
           >
@@ -159,7 +159,7 @@ export default function WhatsAppButton() {
                 fontSize: "9px",
                 letterSpacing: "0.45em",
                 textTransform: "uppercase",
-                color: "#C9A84C",
+                color: "#DAA110",
                 fontWeight: 600,
                 marginBottom: "10px",
               }}
@@ -204,8 +204,8 @@ export default function WhatsAppButton() {
                 letterSpacing: "0.3em",
                 textTransform: "uppercase",
                 fontWeight: 600,
-                color: "#C9A84C",
-                borderBottom: "1px solid rgba(201,168,76,0.55)",
+                color: "#DAA110",
+                borderBottom: "1px solid rgba(218, 161, 16,0.55)",
                 paddingBottom: "2px",
               }}
             >
@@ -238,7 +238,7 @@ export default function WhatsAppButton() {
                 }
               }}
               aria-label="Dismiss greeting"
-              className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center text-white/40 hover:text-[#C9A84C] transition-colors duration-300"
+              className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center text-white/40 hover:text-[#DAA110] transition-colors duration-300"
               style={{ background: "transparent", border: 0, cursor: "pointer" }}
             >
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.3">
@@ -258,7 +258,7 @@ export default function WhatsAppButton() {
                 height: 0,
                 borderLeft: "8px solid transparent",
                 borderRight: "8px solid transparent",
-                borderTop: "8px solid rgba(201,168,76,0.35)",
+                borderTop: "8px solid rgba(218, 161, 16,0.35)",
               }}
             />
           </div>
@@ -284,7 +284,7 @@ export default function WhatsAppButton() {
           className="absolute inset-0 rounded-full transition-all duration-700"
           style={{
             background: hovered
-              ? "radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%)"
+              ? "radial-gradient(circle, rgba(218, 161, 16,0.15) 0%, transparent 70%)"
               : "transparent",
             transform: hovered ? "scale(1.8)" : "scale(1)",
           }}
@@ -299,10 +299,10 @@ export default function WhatsAppButton() {
             height: 56,
             borderRadius: "50%",
             background: WA_INK,
-            border: `1px solid ${hovered ? "rgba(201,168,76,0.85)" : "rgba(201,168,76,0.55)"}`,
+            border: `1px solid ${hovered ? "rgba(218, 161, 16,0.85)" : "rgba(218, 161, 16,0.55)"}`,
             boxShadow: hovered
-              ? "0 8px 32px rgba(13,27,42,0.55), 0 0 22px rgba(201,168,76,0.30), inset 0 1px 0 rgba(201,168,76,0.20)"
-              : "0 4px 16px rgba(13,27,42,0.45), inset 0 1px 0 rgba(201,168,76,0.12)",
+              ? "0 8px 32px rgba(13,27,42,0.55), 0 0 22px rgba(218, 161, 16,0.30), inset 0 1px 0 rgba(218, 161, 16,0.20)"
+              : "0 4px 16px rgba(13,27,42,0.45), inset 0 1px 0 rgba(218, 161, 16,0.12)",
             transform: hovered ? "scale(1.08) translateY(-2px)" : "scale(1)",
           }}
         >
@@ -312,7 +312,7 @@ export default function WhatsAppButton() {
               aria-hidden="true"
               className="absolute inset-0 rounded-full"
               style={{
-                boxShadow: "0 0 0 0 rgba(201,168,76,0.45)",
+                boxShadow: "0 0 0 0 rgba(218, 161, 16,0.45)",
                 animation: "gy-wa-pulse 2.4s ease-out infinite",
               }}
             />
@@ -322,7 +322,7 @@ export default function WhatsAppButton() {
           <div
             className="absolute inset-0 transition-opacity duration-500"
             style={{
-              background: "linear-gradient(105deg, transparent 40%, rgba(201,168,76,0.08) 50%, transparent 60%)",
+              background: "linear-gradient(105deg, transparent 40%, rgba(218, 161, 16,0.08) 50%, transparent 60%)",
               opacity: hovered ? 1 : 0,
               animation: hovered ? "whatsappShimmer 2s ease infinite" : "none",
             }}
@@ -353,8 +353,8 @@ export default function WhatsAppButton() {
             className="px-4 py-2 text-[10px] tracking-[0.15em] uppercase"
             style={{
               background: "rgba(13, 27, 42,0.95)",
-              border: "1px solid rgba(201,168,76,0.15)",
-              color: "rgba(201,168,76,0.7)",
+              border: "1px solid rgba(218, 161, 16,0.15)",
+              color: "rgba(218, 161, 16,0.7)",
               fontFamily: "var(--gy-font-ui)",
               backdropFilter: "blur(8px)",
             }}
@@ -386,9 +386,9 @@ export default function WhatsAppButton() {
              switched that off, so nothing renders this today. Kept in step
              with the button so the two cannot drift apart if it returns. */
           @keyframes gy-wa-pulse {
-            0%   { box-shadow: 0 0 0 0 rgba(201,168,76,0.45); }
-            70%  { box-shadow: 0 0 0 18px rgba(201,168,76,0); }
-            100% { box-shadow: 0 0 0 0 rgba(201,168,76,0); }
+            0%   { box-shadow: 0 0 0 0 rgba(218, 161, 16,0.45); }
+            70%  { box-shadow: 0 0 0 18px rgba(218, 161, 16,0); }
+            100% { box-shadow: 0 0 0 0 rgba(218, 161, 16,0); }
           }
           @keyframes gy-greet-in {
             0%   { opacity: 0; transform: translateY(12px) scale(0.96); }

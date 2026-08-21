@@ -28,7 +28,7 @@ import { priceUnitBadge, isPerPerson, sortAllFleet } from "@/lib/pricing";
 import { sanityCardImg } from "@/lib/sanity-image";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 function formatPrice(weeklyRatePrice) {
   if (!weeklyRatePrice) return null;
@@ -66,8 +66,8 @@ export default function TrendingYachts({ yachts }) {
         position: "relative",
         background: "#0D1B2A",
         padding: "60px 0 70px",
-        borderTop: "1px solid rgba(201,168,76,0.12)",
-        borderBottom: "1px solid rgba(201,168,76,0.12)",
+        borderTop: "1px solid rgba(218, 161, 16,0.12)",
+        borderBottom: "1px solid rgba(218, 161, 16,0.12)",
       }}
     >
       {/* Heading */}
@@ -171,7 +171,7 @@ export default function TrendingYachts({ yachts }) {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-4px)";
-                e.currentTarget.style.borderColor = "rgba(201,168,76,0.4)";
+                e.currentTarget.style.borderColor = "rgba(218, 161, 16,0.4)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
@@ -289,7 +289,7 @@ export default function TrendingYachts({ yachts }) {
             transform: perspective(1200px) rotateX(2deg) rotateY(-3deg) translateY(-6px);
             box-shadow:
               0 28px 60px rgba(13, 27, 42, 0.55),
-              0 0 0 1px rgba(201, 168, 76, 0.32) inset;
+              0 0 0 1px rgba(218, 161, 16, 0.32) inset;
           }
         }
         @media (prefers-reduced-motion: reduce) {

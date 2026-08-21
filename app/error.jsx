@@ -12,7 +12,7 @@ export default function Error({ error, reset }) {
             fontSize: "9px",
             letterSpacing: "0.5em",
             textTransform: "uppercase",
-            color: "#C9A84C",
+            color: "#DAA110",
             fontWeight: 600,
             marginBottom: "24px",
           }}
@@ -34,7 +34,7 @@ export default function Error({ error, reset }) {
           style={{
             width: "60px",
             height: "1px",
-            background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
+            background: "linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
             margin: "0 auto 32px",
           }}
         />
@@ -55,7 +55,7 @@ export default function Error({ error, reset }) {
             onClick={() => reset()}
             style={{
               padding: "14px 36px",
-              background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
+              background: "linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
               color: "#0D1B2A",
               fontSize: "10px",
               letterSpacing: "0.2em",
@@ -72,8 +72,8 @@ export default function Error({ error, reset }) {
             style={{
               display: "inline-block",
               padding: "14px 36px",
-              border: "1px solid rgba(201,168,76,0.3)",
-              color: "#C9A84C",
+              border: "1px solid rgba(218, 161, 16,0.3)",
+              color: "#DAA110",
               fontSize: "10px",
               letterSpacing: "0.2em",
               textTransform: "uppercase",

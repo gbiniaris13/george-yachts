@@ -29,7 +29,7 @@ const URL = `https://georgeyachts.com/${SLUG}`;
 // 2026-07-03: while the company WhatsApp is under review, route to /inquiry
 const WHATSAPP = WHATSAPP_DOWN ? "/inquiry" : `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}`;
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -88,7 +88,7 @@ export default function WeeklyMotorPillarPage() {
 
       <article style={{ background: NAVY, minHeight: "100vh", color: CREAM }}>
         {/* HERO */}
-        <header style={{ padding: "160px 24px 40px", borderBottom: "1px solid rgba(201,168,76,0.15)", textAlign: "center" }}>
+        <header style={{ padding: "160px 24px 40px", borderBottom: "1px solid rgba(218, 161, 16,0.15)", textAlign: "center" }}>
           <div style={{ maxWidth: 980, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 18px" }}>
               The 7-night motor yacht week · Greece
@@ -138,7 +138,7 @@ export default function WeeklyMotorPillarPage() {
                 )}
 
                 {s.link && (
-                  <Link href={s.link.href} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, letterSpacing: "0.04em", color: GOLD, textDecoration: "none", borderBottom: `1px solid rgba(201,168,76,0.5)` }}>
+                  <Link href={s.link.href} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, letterSpacing: "0.04em", color: GOLD, textDecoration: "none", borderBottom: `1px solid rgba(218, 161, 16,0.5)` }}>
                     {s.link.label} &rarr;
                   </Link>
                 )}
@@ -148,14 +148,14 @@ export default function WeeklyMotorPillarPage() {
         </section>
 
         {/* HUB LINKS - the motor cluster */}
-        <section style={{ padding: "8px 24px 8px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+        <section style={{ padding: "8px 24px 8px", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
           <div style={{ maxWidth: 980, margin: "0 auto", paddingTop: 36 }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 20px" }}>
               Plan your motor week
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 18 }}>
               {HUB_LINKS.map((l, i) => (
-                <Link key={i} href={l.href} style={{ textDecoration: "none", display: "block", border: "1px solid rgba(201,168,76,0.2)", padding: "18px 20px" }}>
+                <Link key={i} href={l.href} style={{ textDecoration: "none", display: "block", border: "1px solid rgba(218, 161, 16,0.2)", padding: "18px 20px" }}>
                   <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, margin: "0 0 6px", fontWeight: 500 }}>{l.label}</p>
                   <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, lineHeight: 1.45, color: "rgba(248,245,240,0.66)", margin: 0 }}>{l.blurb}</p>
                 </Link>
@@ -165,7 +165,7 @@ export default function WeeklyMotorPillarPage() {
         </section>
 
         {/* CTA - inquiry + discreet WhatsApp */}
-        <section style={{ padding: "64px 24px 88px", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.15)", marginTop: 40 }}>
+        <section style={{ padding: "64px 24px 88px", textAlign: "center", borderTop: "1px solid rgba(218, 161, 16,0.15)", marginTop: 40 }}>
           <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(20px, 3vw, 28px)", fontWeight: 300, color: CREAM, margin: "0 0 24px", maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
             Tell us your dates and your islands. George will shortlist the right motor yacht personally.
           </p>

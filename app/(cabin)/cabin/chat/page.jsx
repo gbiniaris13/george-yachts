@@ -336,12 +336,12 @@ export default async function ChatPage() {
           background: #0D1B2A;
           color: #F8F5F0;
           text-decoration: none;
-          border: 1px solid rgba(201, 168, 76, 0.55);
+          border: 1px solid rgba(218, 161, 16, 0.55);
           transition: background 160ms ease, border-color 160ms ease, transform 120ms ease;
         }
         .chat-card__cta:hover {
           background: #142233;
-          border-color: rgba(201, 168, 76, 0.85);
+          border-color: rgba(218, 161, 16, 0.85);
         }
         .chat-card__cta:active { transform: scale(0.99); }
         .chat-card__cta-icon {
@@ -351,9 +351,9 @@ export default async function ChatPage() {
           width: 40px;
           height: 40px;
           /* 2026-08-19 (job 9) - gold on navy, matching the rim above. */
-          background: rgba(201, 168, 76, 0.14);
+          background: rgba(218, 161, 16, 0.14);
           border-radius: 50%;
-          color: #C9A84C;
+          color: #DAA110;
         }
         .chat-card__cta-label strong {
           display: block;

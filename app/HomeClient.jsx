@@ -135,9 +135,9 @@ const HomeClient = ({
       <section
         aria-label="2027 charter season priority list"
         style={{
-          background: "rgba(201,168,76,0.06)",
-          borderTop: "1px solid rgba(201,168,76,0.18)",
-          borderBottom: "1px solid rgba(201,168,76,0.18)",
+          background: "rgba(218, 161, 16,0.06)",
+          borderTop: "1px solid rgba(218, 161, 16,0.18)",
+          borderBottom: "1px solid rgba(218, 161, 16,0.18)",
           padding: "18px 24px",
           textAlign: "center",
         }}
@@ -151,13 +151,17 @@ const HomeClient = ({
             margin: 0,
           }}
         >
-          The 2027 calendars open this autumn. The first September 2027 charter is already at signatures.{" "}
+          {/* 2026-08-21 (section 2) — plural, on George's instruction. It was
+              "the first September 2027 charter", singular, which reads as one
+              booking and one client. The plural says the season has started
+              moving, which is both what he meant and what is true. */}
+          The 2027 calendars open this autumn. The first September 2027 charters are already at signatures.{" "}
           <a
             href="/yacht-charter-greece-2027"
             style={{
-              color: "#C9A84C",
+              color: "#DAA110",
               textDecoration: "none",
-              borderBottom: "1px solid rgba(201,168,76,0.5)",
+              borderBottom: "1px solid rgba(218, 161, 16,0.5)",
               whiteSpace: "nowrap",
             }}
           >
@@ -186,17 +190,19 @@ const HomeClient = ({
           first thing visitors see on scroll. Per GA4 (last 30d) only
           4 / 267 = 1.5% of homepage visitors reached a fleet page;
           moving fleet up + SignatureYacht down should multiply that. */}
-      <section id="fleet" data-gy-reveal="up" data-sound-reveal>
-        <FleetCTAs
-          privateRange={privateRange}
-          explorerRange={explorerRange}
-          privateHeroImage={privateHeroImage}
-          explorerHeroImage={explorerHeroImage}
-          privateCount={privateCount}
-          explorerCount={explorerCount}
-        />
-      </section>
+      {/* 2026-08-21 (section 9) — the awarded band moved above the fleet
+          split, on George's instruction and for a reason worth writing down.
 
+          At twenty to five hundred thousand a week the visitor's first
+          question is not "what have you got", it is "why you". Yachts they
+          can find anywhere. Sixteen yachts with thirty-two placings at the
+          two Greek shows answer the second question in one screen, and every
+          card in the band is a link to a yacht, so the proof and the
+          navigation are the same object.
+
+          It does not replace the fleet split, it precedes it. The split is
+          still the spine: forty-nine of the sixty-five yachts, and every one
+          above EUR 65,000, live outside the awarded band. */}
       {/* 2026-08-20 (design pass, job 16) — the awarded fleet, on George's
           instruction and high on the page for his reason: the cheapest
           catamaran in the fleet takes most of the clicks the whole fleet
@@ -214,6 +220,17 @@ const HomeClient = ({
         <AwardedFleet fleet={fleet} />
       </section>
 
+      <section id="fleet" data-gy-reveal="up" data-sound-reveal>
+        <FleetCTAs
+          privateRange={privateRange}
+          explorerRange={explorerRange}
+          privateHeroImage={privateHeroImage}
+          explorerHeroImage={explorerHeroImage}
+          privateCount={privateCount}
+          explorerCount={explorerCount}
+        />
+      </section>
+
       {/* 2026-06-28, real five-star Google reviews made visible (stars +
           aggregate), high on the page as social proof right after the fleet. */}
       <section id="reviews-proof" data-gy-reveal="up">
@@ -223,7 +240,7 @@ const HomeClient = ({
       {/* Chapter 08 (2026-05-08), George's Selection. Replaces the
           prior Signature Yacht "Featured This Week" rotation slot
           with two Boss-curated cards: La Pellegrina 1 (Private
-          Fleet flagship) + Errant Vagabond (Explorer Fleet
+          Fleet flagship) + Errant Vagabond (Sailing Fleet
           flagship). No auto-rotation, no Sanity weekly pull
           this is the broker's hand-picked pair. */}
       <section id="selection" data-gy-reveal="up">
@@ -233,15 +250,25 @@ const HomeClient = ({
       {/* 2026-07-03 (Wave 2), one quiet editorial line from the
           strongest page on the site to the two head-term guides.
           Boss homepage rules respected: no counts, no prices, no
-          cards - just type. */}
+          cards - just type.
+
+          2026-08-21 (section 4). George flagged this line for centring. It was
+          116px off centre at 1000px wide, and the global fix in section 2 put
+          it right: measured 0px off at 1440, 1000, 768 and 390.
+
+          What that left was the break. At the 720px reading cap the second
+          line began "where others cannot", cutting the sentence mid-clause
+          and leaving a short orphan under a long line. text-wrap: balance
+          asks the browser to even the two lines instead, so the break falls
+          near the comma where a reader would pause anyway. */}
       <section aria-label="Charter guides" style={{ background: "#0D1B2A", padding: "0 24px 64px", textAlign: "center" }}>
-        <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(15px, 1.8vw, 18px)", fontStyle: "italic", fontWeight: 300, color: "rgba(248,245,240,0.78)", margin: 0, lineHeight: 1.7 }}>
+        <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(15px, 1.8vw, 18px)", fontStyle: "italic", fontWeight: 300, color: "rgba(248,245,240,0.78)", margin: 0, lineHeight: 1.7, textWrap: "balance" }}>
           Two ways to take these waters:{" "}
-          <a href="/crewed-yacht-charter-greece" style={{ color: "#C9A84C", textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.5)" }}>
+          <a href="/crewed-yacht-charter-greece" style={{ color: "#DAA110", textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.5)" }}>
             the fully crewed charter
           </a>
           , or{" "}
-          <a href="/catamaran-charter-greece" style={{ color: "#C9A84C", textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.5)" }}>
+          <a href="/catamaran-charter-greece" style={{ color: "#DAA110", textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.5)" }}>
             the catamaran
           </a>
           {" "}that anchors where others cannot.

@@ -11,7 +11,7 @@ import { LAST_REFRESH } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
 import Footer from "@/app/components/Footer";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -207,9 +207,9 @@ export default async function BestYachtsPage({ pageData }) {
         {/* YACHT RECS LIST */}
         <section
           style={{
-            background: "rgba(201,168,76,0.025)",
-            borderTop: "1px solid rgba(201,168,76,0.15)",
-            borderBottom: "1px solid rgba(201,168,76,0.15)",
+            background: "rgba(218, 161, 16,0.025)",
+            borderTop: "1px solid rgba(218, 161, 16,0.15)",
+            borderBottom: "1px solid rgba(218, 161, 16,0.15)",
             padding: "72px 24px",
           }}
         >
@@ -228,7 +228,7 @@ export default async function BestYachtsPage({ pageData }) {
                     counterIncrement: "yachts",
                     padding: "24px 26px",
                     border: `1px solid ${GOLD}`,
-                    background: "rgba(201,168,76,0.04)",
+                    background: "rgba(218, 161, 16,0.04)",
                     marginBottom: 14,
                     position: "relative",
                   }}
@@ -242,7 +242,7 @@ export default async function BestYachtsPage({ pageData }) {
                           is a named fleet yacht; renders a link to the
                           yacht page so the list passes authority inward. */}
                       {y.href ? (
-                        <Link href={y.href} style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 20, color: CREAM, fontWeight: 400, margin: 0, lineHeight: 1.3, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.45)", display: "inline" }}>
+                        <Link href={y.href} style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 20, color: CREAM, fontWeight: 400, margin: 0, lineHeight: 1.3, textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.45)", display: "inline" }}>
                           {y.spec}
                         </Link>
                       ) : (

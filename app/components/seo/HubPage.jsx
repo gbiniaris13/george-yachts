@@ -13,7 +13,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import LastUpdated from "@/app/components/seo/LastUpdated";
 import Footer from "@/app/components/Footer";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -59,7 +59,7 @@ export default function HubPage({
 
       <article style={{ background: NAVY, minHeight: "100vh", color: CREAM }}>
         {/* HERO */}
-        <header style={{ padding: "120px 24px 48px", borderBottom: "1px solid rgba(201,168,76,0.15)", textAlign: "center" }}>
+        <header style={{ padding: "120px 24px 48px", borderBottom: "1px solid rgba(218, 161, 16,0.15)", textAlign: "center" }}>
           <div style={{ maxWidth: 880, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 18px" }}>
               {eyebrow}
@@ -85,7 +85,7 @@ export default function HubPage({
                 href={it.url}
                 style={{
                   display: "block",
-                  border: "1px solid rgba(201,168,76,0.25)",
+                  border: "1px solid rgba(218, 161, 16,0.25)",
                   padding: "22px 24px",
                   background: "rgba(248,245,240,0.02)",
                   textDecoration: "none",
@@ -111,7 +111,7 @@ export default function HubPage({
         </section>
 
         {/* CTA */}
-        <section style={{ padding: "32px 24px 72px", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+        <section style={{ padding: "32px 24px 72px", textAlign: "center", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
           <Link href={ctaHref} style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: GOLD, color: NAVY, textDecoration: "none" }}>
             {ctaLabel}
           </Link>

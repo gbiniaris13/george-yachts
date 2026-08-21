@@ -183,7 +183,7 @@ export default function ReviewSubmit({
           >
             <em>
               Nudge them quietly from{" "}
-              <a href="/cabin/guests" style={{ color: "#8a7327", borderBottom: "1px solid rgba(201, 168, 76, 0.55)" }}>
+              <a href="/cabin/guests" style={{ color: "#7A5C04", borderBottom: "1px solid rgba(218, 161, 16, 0.55)" }}>
                 Your Group
               </a>
               , or, if you decide someone won&apos;t be filling theirs
@@ -318,8 +318,8 @@ export default function ReviewSubmit({
           gap: 12px;
           margin-top: 8px;
           padding: 24px 24px 24px 24px;
-          background: rgba(201, 168, 76, 0.08);
-          border: 1px solid rgba(201, 168, 76, 0.5);
+          background: rgba(218, 161, 16, 0.08);
+          border: 1px solid rgba(218, 161, 16, 0.5);
           border-left: 3px solid var(--gy-gold);
         }
         .cbr-submit__hint {
@@ -407,7 +407,7 @@ export default function ReviewSubmit({
         .cbr-submit__pending-note a {
           color: var(--gy-gold);
           text-decoration: none;
-          border-bottom: 1px solid rgba(201, 168, 76, 0.4);
+          border-bottom: 1px solid rgba(218, 161, 16, 0.4);
         }
 
         .cbr-submit__ready {

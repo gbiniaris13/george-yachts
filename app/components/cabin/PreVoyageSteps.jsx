@@ -141,7 +141,7 @@ function PreVoyageShell({ title, lede, steps }) {
         .cabin-pre-voyage__deadline {
           margin: 6px 0 0 0;
           padding: 8px 0 8px 16px;
-          border-left: 2px solid rgba(201, 168, 76, 0.55);
+          border-left: 2px solid rgba(218, 161, 16, 0.55);
           font-family: var(--gy-font-editorial);
           font-style: italic;
           font-size: 14px;

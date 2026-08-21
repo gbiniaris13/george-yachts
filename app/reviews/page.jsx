@@ -10,7 +10,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { REVIEWS, getOverallAggregateRating, initials } from "@/lib/reviewsData";
 import Footer from "@/app/components/Footer";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 
 export const metadata = {
@@ -145,7 +145,7 @@ function EmptyState() {
   return (
     <div
       style={{
-        border: "1px solid rgba(201, 168, 76, 0.25)",
+        border: "1px solid rgba(218, 161, 16, 0.25)",
         padding: "48px 36px",
         textAlign: "center",
         maxWidth: 640,
@@ -212,7 +212,7 @@ export default function ReviewsPage() {
         <header
           style={{
             padding: "120px 24px 64px",
-            borderBottom: "1px solid rgba(201, 168, 76, 0.15)",
+            borderBottom: "1px solid rgba(218, 161, 16, 0.15)",
             textAlign: "center",
           }}
         >
@@ -308,8 +308,8 @@ export default function ReviewsPage() {
         {/* HOW WE COLLECT REVIEWS */}
         <section
           style={{
-            background: "rgba(201, 168, 76, 0.025)",
-            borderTop: "1px solid rgba(201, 168, 76, 0.15)",
+            background: "rgba(218, 161, 16, 0.025)",
+            borderTop: "1px solid rgba(218, 161, 16, 0.15)",
             padding: "72px 24px",
           }}
         >
@@ -390,9 +390,9 @@ export default function ReviewsPage() {
                   textTransform: "uppercase",
                   fontWeight: 700,
                   padding: "14px 26px",
-                  background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
+                  background: "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
                   color: NAVY,
-                  border: "1px solid rgba(201, 168, 76, 0.6)",
+                  border: "1px solid rgba(218, 161, 16, 0.6)",
                   textDecoration: "none",
                 }}
               >

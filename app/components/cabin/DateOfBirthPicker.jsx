@@ -186,7 +186,7 @@ export default function DateOfBirthPicker({
         }
         .dob-picker > input:focus,
         .dob-picker > select:focus {
-          border-color: var(--gy-gold, #C9A84C);
+          border-color: var(--gy-gold, #DAA110);
         }
         .dob-picker__day,
         .dob-picker__year {

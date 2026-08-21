@@ -1,7 +1,7 @@
 /* ============================================
    GEORGE YACHTS — Fleet Page Round 4
    BLACK + GOLD — Matching Homepage Palette
-   #0D1B2A background, #C9A84C gold, gradient #C9A84C→#C9A84C→#C9A84C
+   #0D1B2A background, #DAA110 gold, gradient #DAA110→#DAA110→#DAA110
    ============================================ */
 
 /* ---- ANIMATIONS ---- */
@@ -46,8 +46,8 @@
 }
 
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 8px rgba(201, 168, 76, 0.3); }
-  50% { box-shadow: 0 0 20px rgba(201, 168, 76, 0.5); }
+  0%, 100% { box-shadow: 0 0 8px rgba(218, 161, 16, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(218, 161, 16, 0.5); }
 }
 
 @keyframes ctaShimmer {
@@ -110,7 +110,7 @@
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: #C9A84C;
+  color: #DAA110;
   margin-bottom: 16px;
   font-weight: 500;
   opacity: 0;
@@ -136,7 +136,7 @@
 .fleet-hero__line {
   width: 0;
   height: 1px;
-  background: linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C);
+  background: linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%);
   margin: 0 auto 24px;
   animation: goldLineExpand 1.2s ease-out 1s forwards;
 }
@@ -183,7 +183,7 @@
   background: rgba(13, 27, 42, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(201, 168, 76, 0.18);
+  border-bottom: 1px solid rgba(218, 161, 16, 0.18);
   padding: 0 24px;
   transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
 }
@@ -231,7 +231,7 @@
   transform: translateX(-50%);
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C);
+  background: linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%);
   transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -240,7 +240,7 @@
 }
 
 .fleet-filters__tab--active {
-  color: #C9A84C;
+  color: #DAA110;
 }
 
 .fleet-filters__tab--active::after {
@@ -283,7 +283,7 @@
 
 .fleet-filters__select {
   background: rgba(248, 245, 240, 0.04);
-  border: 1px solid rgba(201, 168, 76, 0.15);
+  border: 1px solid rgba(218, 161, 16, 0.15);
   color: rgba(248, 245, 240, 0.85);
   padding: 7px 30px 7px 12px;
   font-family: var(--gy-font-ui);
@@ -299,13 +299,13 @@
 }
 
 .fleet-filters__select:hover {
-  border-color: rgba(201, 168, 76, 0.4);
+  border-color: rgba(218, 161, 16, 0.4);
   background: rgba(248, 245, 240, 0.06);
 }
 
 .fleet-filters__select:focus {
   outline: none;
-  border-color: #C9A84C;
+  border-color: #DAA110;
 }
 
 .fleet-filters__select option {
@@ -333,7 +333,7 @@
 }
 
 .fleet-results__highlight {
-  color: #C9A84C;
+  color: #DAA110;
   font-weight: 600;
 }
 
@@ -394,8 +394,8 @@
     transform: perspective(1200px) rotateX(2deg) rotateY(-2.5deg) translateY(-6px) !important;
     box-shadow:
       0 28px 60px rgba(13, 27, 42, 0.55),
-      0 0 0 1px rgba(201, 168, 76, 0.25) inset;
-    border-color: rgba(201, 168, 76, 0.32);
+      0 0 0 1px rgba(218, 161, 16, 0.25) inset;
+    border-color: rgba(218, 161, 16, 0.32);
   }
 }
 
@@ -520,13 +520,13 @@
   left: 16px;
   background: rgba(13, 27, 42, 0.8);
   backdrop-filter: blur(8px);
-  color: #C9A84C;
+  color: #DAA110;
 }
 
 .fleet-card__badge--featured {
   right: 16px;
   left: auto;
-  background: linear-gradient(135deg, #C9A84C, #C9A84C, #C9A84C);
+  background: linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%);
   color: #0D1B2A;
   font-weight: 700;
   font-size: 8px;
@@ -569,7 +569,7 @@
 .fleet-card__builder {
   font-family: var(--gy-font-ui);
   font-size: 10px;
-  color: #C9A84C;
+  color: #DAA110;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin: 6px 0 0;
@@ -580,7 +580,7 @@
 .fleet-card__info {
   background: #0D1B2A;
   padding: 24px 24px 20px;
-  border-top: 1px solid rgba(201, 168, 76, 0.1);
+  border-top: 1px solid rgba(218, 161, 16, 0.1);
 }
 
 .fleet-card__specs {
@@ -614,7 +614,7 @@
 
 .fleet-card__divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.12), transparent);
+  background: linear-gradient(90deg, transparent, rgba(218, 161, 16, 0.12), transparent);
   margin-bottom: 20px;
 }
 
@@ -638,16 +638,32 @@
 .fleet-card__price {
   font-family: var(--gy-font-editorial);
   font-size: 22px;
-  color: #C9A84C;
+  color: #DAA110;
   font-weight: 600;
   letter-spacing: 0.02em;
+}
+
+/* 2026-08-21 (section 5). The card used to carry a per-person total under
+   the weekly rate. What replaces it is one line saying what the weekly figure
+   is and is not, which is the sentence the old block was pretending to
+   answer. The three per-person rules below are left in place rather than
+   deleted: nothing renders them now, and a stylesheet is not the right place
+   to lose history. */
+.fleet-card__price-note {
+  font-family: var(--gy-font-ui);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(248, 245, 240,0.28);
+  margin-top: 8px;
+  line-height: 1.7;
 }
 
 .fleet-card__per-person {
   font-family: var(--gy-font-ui);
   font-size: 11px;
   letter-spacing: 0.04em;
-  color: rgba(201,168,76,0.45);
+  color: rgba(218, 161, 16,0.45);
   margin-top: 8px;
   font-weight: 400;
   line-height: 1.7;
@@ -705,8 +721,8 @@
 /* Details button — gold border glow + shimmer sweep */
 .fleet-card__btn--details {
   background: transparent;
-  border: 1px solid rgba(201, 168, 76, 0.3);
-  color: #C9A84C;
+  border: 1px solid rgba(218, 161, 16, 0.3);
+  color: #DAA110;
 }
 
 .fleet-card__btn--details::after {
@@ -716,14 +732,14 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent 0%, rgba(201, 168, 76, 0.15) 40%, rgba(201, 168, 76, 0.25) 50%, rgba(201, 168, 76, 0.15) 60%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(218, 161, 16, 0.15) 40%, rgba(218, 161, 16, 0.25) 50%, rgba(218, 161, 16, 0.15) 60%, transparent 100%);
   transition: none;
 }
 
 .fleet-card__btn--details:hover {
-  border-color: #C9A84C;
-  box-shadow: 0 0 16px rgba(201, 168, 76, 0.25), inset 0 0 8px rgba(201, 168, 76, 0.05);
-  background: rgba(201, 168, 76, 0.06);
+  border-color: #DAA110;
+  box-shadow: 0 0 16px rgba(218, 161, 16, 0.25), inset 0 0 8px rgba(218, 161, 16, 0.05);
+  background: rgba(218, 161, 16, 0.06);
 }
 
 .fleet-card__btn--details:hover::after {
@@ -732,7 +748,7 @@
 
 /* Inquire button — solid gold + pulse glow + shimmer */
 .fleet-card__btn--inquire {
-  background: linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C);
+  background: linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%);
   border: 1px solid transparent;
   color: #0D1B2A;
   font-weight: 700;
@@ -750,10 +766,10 @@
 }
 
 .fleet-card__btn--inquire:hover {
-  background: linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C);
+  background: linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%);
   animation: pulseGlow 1.5s ease-in-out infinite;
   transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.4);
+  box-shadow: 0 4px 20px rgba(218, 161, 16, 0.4);
 }
 
 .fleet-card__btn--inquire:hover::after {
@@ -788,8 +804,8 @@
 
 .fleet-empty__reset {
   background: transparent;
-  border: 1px solid rgba(201, 168, 76, 0.4);
-  color: #C9A84C;
+  border: 1px solid rgba(218, 161, 16, 0.4);
+  color: #DAA110;
   padding: 12px 32px;
   cursor: pointer;
   font-family: var(--gy-font-ui);
@@ -800,13 +816,13 @@
 }
 
 .fleet-empty__reset:hover {
-  background: rgba(201, 168, 76, 0.1);
-  border-color: #C9A84C;
+  background: rgba(218, 161, 16, 0.1);
+  border-color: #DAA110;
 }
 
 /* ---- TRUST / CTA SECTION ---- */
 .fleet-trust {
-  border-top: 1px solid rgba(201, 168, 76, 0.1);
+  border-top: 1px solid rgba(218, 161, 16, 0.1);
   padding: 80px 24px;
   text-align: center;
 }
@@ -816,7 +832,7 @@
   font-size: 10px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #C9A84C;
+  color: #DAA110;
   margin-bottom: 24px;
 }
 
@@ -833,14 +849,14 @@
 }
 
 .fleet-trust__dot {
-  color: rgba(201, 168, 76, 0.3);
+  color: rgba(218, 161, 16, 0.3);
 }
 
 /* CTA Button — Gold gradient + continuous shimmer */
 .fleet-trust__cta {
   display: inline-block;
   margin-top: 48px;
-  background: linear-gradient(90deg, #C9A84C 0%, #C9A84C 25%, #C9A84C 50%, #C9A84C 75%, #C9A84C 100%);
+  background: linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%);
   background-size: 200% 100%;
   color: #0D1B2A;
   padding: 16px 48px;
@@ -856,7 +872,7 @@
 
 .fleet-trust__cta:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 30px rgba(201, 168, 76, 0.35);
+  box-shadow: 0 8px 30px rgba(218, 161, 16, 0.35);
 }
 
 .fleet-trust__note {
@@ -1005,7 +1021,7 @@
   font-family: var(--gy-font-editorial);
   font-size: 28px;
   font-weight: 300;
-  color: #C9A84C;
+  color: #DAA110;
   letter-spacing: 0.02em;
   line-height: 1;
   transition: color 0.3s ease;
@@ -1019,8 +1035,8 @@
 .fleet-count__reset {
   margin-left: auto;
   background: transparent;
-  border: 1px solid rgba(201, 168, 76, 0.35);
-  color: rgba(201, 168, 76, 0.9);
+  border: 1px solid rgba(218, 161, 16, 0.35);
+  color: rgba(218, 161, 16, 0.9);
   font-family: var(--gy-font-ui);
   font-size: 10px;
   letter-spacing: 0.22em;
@@ -1030,9 +1046,9 @@
   transition: all 0.25s ease;
 }
 .fleet-count__reset:hover {
-  background: rgba(201, 168, 76, 0.1);
-  color: #C9A84C;
-  border-color: #C9A84C;
+  background: rgba(218, 161, 16, 0.1);
+  color: #DAA110;
+  border-color: #DAA110;
 }
 
 /* C1 — when the grid re-mounts (filter/sort change), fade the whole
@@ -1051,7 +1067,7 @@
 /* C.6 — Advanced filter row (refit, master deck, speed) */
 .fleet-filters__row--advanced {
   margin-top: 8px;
-  border-top: 1px solid rgba(201, 168, 76, 0.12);
+  border-top: 1px solid rgba(218, 161, 16, 0.12);
   padding-top: 12px;
 }
 
@@ -1085,11 +1101,11 @@
   transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 }
 .fleet-filters__toy-chip:hover {
-  border-color: rgba(201, 168, 76, 0.45);
+  border-color: rgba(218, 161, 16, 0.45);
   color: rgba(248, 245, 240, 0.85);
 }
 .fleet-filters__toy-chip--active {
-  background: rgba(201, 168, 76, 0.18);
-  color: #C9A84C;
-  border-color: #C9A84C;
+  background: rgba(218, 161, 16, 0.18);
+  color: #DAA110;
+  border-color: #DAA110;
 }

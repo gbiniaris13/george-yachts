@@ -25,7 +25,7 @@ import Image from "next/image";
 import { sanityCardImg } from "@/lib/sanity-image";
 import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 export default function NavSearch() {
   const [open, setOpen] = useState(false);
@@ -170,7 +170,7 @@ export default function NavSearch() {
               maxWidth: 720,
               width: "100%",
               background: "#0D1B2A",
-              border: "1px solid rgba(201,168,76,0.4)",
+              border: "1px solid rgba(218, 161, 16,0.4)",
               padding: 24,
               fontFamily: "var(--gy-font-ui)",
             }}
@@ -184,7 +184,7 @@ export default function NavSearch() {
                 paddingBottom: 14,
               }}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(201,168,76,0.85)" strokeWidth="1.6">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(218, 161, 16,0.85)" strokeWidth="1.6">
                 <circle cx="11" cy="11" r="7" />
                 <path d="M21 21l-4.3-4.3" />
               </svg>
@@ -281,16 +281,16 @@ export default function NavSearch() {
                           padding: 12,
                           alignItems: "center",
                           background: "rgba(248, 245, 240,0.03)",
-                          border: "1px solid rgba(201,168,76,0.25)",
+                          border: "1px solid rgba(218, 161, 16,0.25)",
                           textDecoration: "none",
                           transition: "all 0.3s ease",
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.borderColor = GOLD;
-                          e.currentTarget.style.background = "rgba(201,168,76,0.08)";
+                          e.currentTarget.style.background = "rgba(218, 161, 16,0.08)";
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.borderColor = "rgba(201,168,76,0.25)";
+                          e.currentTarget.style.borderColor = "rgba(218, 161, 16,0.25)";
                           e.currentTarget.style.background = "rgba(248, 245, 240,0.03)";
                         }}
                       >

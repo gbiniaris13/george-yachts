@@ -14,7 +14,7 @@ const Section = ({ number, title, children }) => (
   <div className="mb-20 group" style={{ opacity: 1 }}>
     <div className="flex items-start gap-6">
       {number && (
-        <span style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "48px", fontWeight: 300, lineHeight: 1, color: "rgba(201,168,76,0.15)" }}>
+        <span style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "48px", fontWeight: 300, lineHeight: 1, color: "rgba(218, 161, 16,0.15)" }}>
           {String(number).padStart(2, "0")}
         </span>
       )}
@@ -22,7 +22,7 @@ const Section = ({ number, title, children }) => (
         <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.5rem", fontWeight: 400, color: "#F8F5F0", letterSpacing: "0.05em", marginBottom: "24px" }}>
           {title}
         </h2>
-        <div className="w-12 h-px mb-8" style={{ background: "linear-gradient(90deg, #C9A84C, transparent)" }} />
+        <div className="w-12 h-px mb-8" style={{ background: "linear-gradient(90deg, #DAA110, transparent)" }} />
         <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", lineHeight: 2.2, color: "rgba(248,245,240,0.6)", letterSpacing: "0.02em" }} className="space-y-4">
           {children}
         </div>
@@ -36,10 +36,10 @@ const PrivacyPolicy = () => {
     <div className="min-h-screen bg-black text-white">
       <PageBreadcrumb path="/privacy-policy" />
       {/* --- HERO SECTION --- */}
-      <div className="relative pt-44 pb-24 px-6 md:px-12" style={{ borderBottom: "1px solid rgba(201,168,76,0.1)" }}>
+      <div className="relative pt-44 pb-24 px-6 md:px-12" style={{ borderBottom: "1px solid rgba(218, 161, 16,0.1)" }}>
         <div className="container mx-auto max-w-4xl text-center">
-          <div className="w-16 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
-          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#C9A84C", marginBottom: "24px", textTransform: "uppercase" }}>
+          <div className="w-16 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #DAA110, transparent)" }} />
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#DAA110", marginBottom: "24px", textTransform: "uppercase" }}>
             Data Protection
           </p>
           <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#F8F5F0", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "16px" }}>
@@ -48,9 +48,9 @@ const PrivacyPolicy = () => {
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", letterSpacing: "0.2em", color: "rgba(248, 245, 240,0.35)", textTransform: "uppercase", marginBottom: "32px" }}>
             George Yachts Brokerage House LLC
           </p>
-          <div className="w-16 h-px mx-auto" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
+          <div className="w-16 h-px mx-auto" style={{ background: "linear-gradient(90deg, transparent, #DAA110, transparent)" }} />
         </div>
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(201,168,76,0.04) 0%, transparent 70%)" }} />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(218, 161, 16,0.04) 0%, transparent 70%)" }} />
       </div>
 
       {/* --- CONTENT SECTION --- */}
@@ -99,7 +99,7 @@ const PrivacyPolicy = () => {
               <strong className="text-white">Automatically:</strong> IP address,
               device/browser information, and usage data - for non-essential
               analytics, only with your consent (see our{" "}
-              <a href="/cookie-policy" className="text-[#C9A84C] hover:underline">Cookie Policy</a>).
+              <a href="/cookie-policy" className="text-[#DAA110] hover:underline">Cookie Policy</a>).
             </li>
           </ul>
           <p className="mt-4">
@@ -166,9 +166,9 @@ const PrivacyPolicy = () => {
             <li><strong className="text-white">Cloudflare</strong> - network and security</li>
             <li><strong className="text-white">Telegram / WhatsApp</strong> - internal notification and client communication you initiate</li>
           </ul>
-          <div className="mt-4 p-4 border border-[#C9A84C]/20 bg-[#C9A84C]/5">
+          <div className="mt-4 p-4 border border-[#DAA110]/20 bg-[#DAA110]/5">
             <p>
-              <strong className="text-[#C9A84C]">We do not sell your data.</strong>{" "}
+              <strong className="text-[#DAA110]">We do not sell your data.</strong>{" "}
               We do not, and will never, sell, rent, or trade your personal data,
               and we do not share it for cross-context behavioral advertising.
             </p>
@@ -195,9 +195,9 @@ const PrivacyPolicy = () => {
           </p>
           <p className="mt-4">
             To request erasure you may use our dedicated page at{" "}
-            <a href="/privacy/delete" className="text-[#C9A84C] hover:underline">georgeyachts.com/privacy/delete</a>{" "}
+            <a href="/privacy/delete" className="text-[#DAA110] hover:underline">georgeyachts.com/privacy/delete</a>{" "}
             or email{" "}
-            <ObfuscatedEmail className="text-[#C9A84C] hover:underline" />. We
+            <ObfuscatedEmail className="text-[#DAA110] hover:underline" />. We
             respond within one month.
           </p>
           <p className="mt-4">
@@ -213,7 +213,7 @@ const PrivacyPolicy = () => {
         <Section number={7} title="Cookies">
           <p>
             We use cookies and similar technologies as described in our{" "}
-            <a href="/cookie-policy" className="text-[#C9A84C] hover:underline">Cookie Policy</a>.
+            <a href="/cookie-policy" className="text-[#DAA110] hover:underline">Cookie Policy</a>.
             Non-essential cookies (analytics, session analysis) are set only
             after you give consent via our cookie banner, which you can change
             at any time.
@@ -241,7 +241,7 @@ const PrivacyPolicy = () => {
         <Section number={10} title="Complaints and contact">
           <p>
             For any privacy question or to exercise a right, contact us at{" "}
-            <ObfuscatedEmail className="text-[#C9A84C] hover:underline" /> or
+            <ObfuscatedEmail className="text-[#DAA110] hover:underline" /> or
             +30 697 038 0999.
           </p>
           <p className="mt-4">
@@ -252,13 +252,13 @@ const PrivacyPolicy = () => {
             contact@dpa.gr; www.dpa.gr/en). UK residents may alternatively
             complain to the UK Information Commissioner's Office (ico.org.uk).
           </p>
-          <div className="mt-6 text-white space-y-2" style={{ background: "rgba(201,168,76,0.03)", border: "1px solid rgba(201,168,76,0.15)", padding: "32px" }}>
+          <div className="mt-6 text-white space-y-2" style={{ background: "rgba(218, 161, 16,0.03)", border: "1px solid rgba(218, 161, 16,0.15)", padding: "32px" }}>
             <div><strong>Data controller:</strong> George Yachts Brokerage House LLC</div>
             <div><strong>Registered:</strong> Wyoming, USA</div>
             <div><strong>Operating office:</strong> Charilaou Trikoupi 190A, Kifisia 145 64, Athens, Greece</div>
             <div>
               <strong>Contact:</strong>{" "}
-              <ObfuscatedEmail className="hover:text-[#C9A84C] transition-colors" />
+              <ObfuscatedEmail className="hover:text-[#DAA110] transition-colors" />
             </div>
           </div>
         </Section>
@@ -270,8 +270,8 @@ const PrivacyPolicy = () => {
           </p>
         </Section>
 
-        <div className="mt-32 pt-16 text-center" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
-          <div className="w-8 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
+        <div className="mt-32 pt-16 text-center" style={{ borderTop: "1px solid rgba(218, 161, 16,0.1)" }}>
+          <div className="w-8 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #DAA110, transparent)" }} />
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", letterSpacing: "0.3em", color: "rgba(248, 245, 240,0.2)", textTransform: "uppercase" }}>
             Last Updated: June 2026
           </p>

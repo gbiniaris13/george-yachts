@@ -124,7 +124,7 @@ export default function BerthNearby({ nearby }) {
         }
         .berth-nearby__inner {
           background: #FAF7F0;
-          border: 1px solid rgba(201, 168, 76, 0.32);
+          border: 1px solid rgba(218, 161, 16, 0.32);
           border-radius: 6px;
           box-shadow:
             0 12px 36px rgba(13, 27, 42, 0.08),
@@ -136,7 +136,7 @@ export default function BerthNearby({ nearby }) {
           display: flex;
           flex-direction: column;
           gap: 6px;
-          border-bottom: 1px solid rgba(201, 168, 76, 0.22);
+          border-bottom: 1px solid rgba(218, 161, 16, 0.22);
         }
         .berth-nearby__eyebrow {
           font-family: var(--gy-font-ui);
@@ -159,7 +159,7 @@ export default function BerthNearby({ nearby }) {
         }
         .berth-nearby__section {
           padding: 26px 0;
-          border-bottom: 1px solid rgba(201, 168, 76, 0.16);
+          border-bottom: 1px solid rgba(218, 161, 16, 0.16);
         }
         .berth-nearby__section:last-child {
           border-bottom: none;
@@ -194,7 +194,7 @@ export default function BerthNearby({ nearby }) {
           display: inline-block;
           margin-left: 10px;
           padding: 2px 8px;
-          border: 1px solid rgba(201, 168, 76, 0.5);
+          border: 1px solid rgba(218, 161, 16, 0.5);
           border-radius: 2px;
           font-family: var(--gy-font-ui);
           font-size: 11px;
@@ -242,8 +242,8 @@ export default function BerthNearby({ nearby }) {
         }
         .berth-nearby__badge {
           padding: 2px 8px;
-          background: rgba(201, 168, 76, 0.16);
-          border: 1px solid rgba(201, 168, 76, 0.45);
+          background: rgba(218, 161, 16, 0.16);
+          border: 1px solid rgba(218, 161, 16, 0.45);
           border-radius: 2px;
           font-family: var(--gy-font-ui);
           font-size: 10px;

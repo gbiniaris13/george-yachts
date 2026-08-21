@@ -197,7 +197,7 @@ export default function ExitIntentModal() {
         className="relative w-full max-w-[540px]"
         style={{
           background: "#0D1B2A",
-          borderTop: "1px solid rgba(201,168,76,0.35)",
+          borderTop: "1px solid rgba(218, 161, 16,0.35)",
           boxShadow: "0 30px 80px rgba(13, 27, 42, 0.6)",
           animation: "gy-ei-modal 0.55s cubic-bezier(0.2,0.8,0.2,1) both",
         }}
@@ -205,18 +205,18 @@ export default function ExitIntentModal() {
         {/* Gold corner accents */}
         <span
           aria-hidden="true"
-          className="absolute top-3 left-3 w-6 h-6 border-t border-l border-[#C9A84C]/45 pointer-events-none"
+          className="absolute top-3 left-3 w-6 h-6 border-t border-l border-[#DAA110]/45 pointer-events-none"
         />
         <span
           aria-hidden="true"
-          className="absolute bottom-3 right-3 w-6 h-6 border-b border-r border-[#C9A84C]/45 pointer-events-none"
+          className="absolute bottom-3 right-3 w-6 h-6 border-b border-r border-[#DAA110]/45 pointer-events-none"
         />
 
         {/* Close */}
         <button
           onClick={close}
           aria-label="Close"
-          className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center text-white/40 hover:text-[#C9A84C] transition-colors duration-300"
+          className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center text-white/40 hover:text-[#DAA110] transition-colors duration-300"
           style={{ background: "transparent", border: 0, cursor: "pointer" }}
         >
           <svg
@@ -251,7 +251,7 @@ export default function ExitIntentModal() {
             <span
               style={{
                 fontStyle: "italic",
-                color: "#C9A84C",
+                color: "#DAA110",
               }}
             >
               Offers and openings, before they go public.
@@ -277,8 +277,8 @@ export default function ExitIntentModal() {
             <div
               style={{
                 padding: "18px 20px",
-                border: "1px solid rgba(201,168,76,0.35)",
-                background: "rgba(201,168,76,0.05)",
+                border: "1px solid rgba(218, 161, 16,0.35)",
+                background: "rgba(218, 161, 16,0.05)",
               }}
             >
               <p
@@ -286,7 +286,7 @@ export default function ExitIntentModal() {
                   fontFamily: "var(--gy-font-editorial)",
                   fontSize: "18px",
                   fontWeight: 300,
-                  color: "#C9A84C",
+                  color: "#DAA110",
                   marginBottom: "4px",
                 }}
               >
@@ -315,10 +315,10 @@ export default function ExitIntentModal() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
                   disabled={status === "submitting"}
-                  className="flex-1 px-4 py-3 outline-none focus:border-[#C9A84C]/70 transition-colors duration-300"
+                  className="flex-1 px-4 py-3 outline-none focus:border-[#DAA110]/70 transition-colors duration-300"
                   style={{
                     background: "rgba(13, 27, 42, 0.5)",
-                    border: "1px solid rgba(201,168,76,0.25)",
+                    border: "1px solid rgba(218, 161, 16,0.25)",
                     color: "#F8F5F0",
                     fontFamily: "var(--gy-font-editorial)",
                     fontSize: "16px",
@@ -332,13 +332,13 @@ export default function ExitIntentModal() {
                   className="px-6 py-3 transition-all duration-400 hover:brightness-110 disabled:opacity-60 disabled:cursor-not-allowed"
                   style={{
                     background: "transparent",
-                    color: "#C9A84C",
+                    color: "#DAA110",
                     fontFamily: "var(--gy-font-ui)",
                     fontSize: "11px",
                     fontWeight: 500,
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
-                    border: "1px solid #C9A84C",
+                    border: "1px solid #DAA110",
                     cursor: "pointer",
                     whiteSpace: "nowrap",
                   }}

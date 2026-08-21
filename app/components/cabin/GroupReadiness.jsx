@@ -180,7 +180,7 @@ export default function GroupReadiness({
           margin: 0 0 28px 0;
           padding: 22px 24px 20px;
           background: #FCFAF4;
-          border: 1px solid rgba(201, 168, 76, 0.32);
+          border: 1px solid rgba(218, 161, 16, 0.32);
           border-left: 3px solid var(--gy-gold);
           border-radius: 4px;
         }
@@ -226,7 +226,7 @@ export default function GroupReadiness({
           background: linear-gradient(
             90deg,
             var(--gy-gold) 0%,
-            #d8b756 100%
+            #DAA110 100%
           );
           transition: width 320ms cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -252,7 +252,7 @@ export default function GroupReadiness({
         .gr__lane {
           padding: 12px 14px;
           background: #ffffff;
-          border: 1px solid rgba(201, 168, 76, 0.22);
+          border: 1px solid rgba(218, 161, 16, 0.22);
           border-radius: 3px;
         }
         .gr__lane-head {
@@ -295,7 +295,7 @@ export default function GroupReadiness({
           content: "·";
           position: absolute;
           left: 0;
-          color: var(--gy-gold, #C9A84C);
+          color: var(--gy-gold, #DAA110);
           font-weight: 700;
         }
         .gr__lane-list em {
@@ -330,11 +330,11 @@ export default function GroupReadiness({
         .gr__nudge a {
           color: #0D1B2A;
           text-decoration: none;
-          border-bottom: 1px solid var(--gy-gold, #C9A84C);
+          border-bottom: 1px solid var(--gy-gold, #DAA110);
           padding-bottom: 1px;
         }
         .gr__nudge a:hover {
-          color: var(--gy-gold, #C9A84C);
+          color: var(--gy-gold, #DAA110);
         }
         .gr__cta {
           display: inline-flex;

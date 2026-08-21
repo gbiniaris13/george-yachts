@@ -135,7 +135,7 @@ export default function VisitorGreeting() {
         background: "linear-gradient(135deg, rgba(13, 27, 42,0.9) 0%, rgba(13, 27, 42,0.9) 100%)",
         backdropFilter: "blur(10px)",
         WebkitBackdropFilter: "blur(10px)",
-        border: "1px solid rgba(201,168,76,0.28)",
+        border: "1px solid rgba(218, 161, 16,0.28)",
         boxShadow: "0 16px 40px rgba(13, 27, 42,0.45)",
         opacity: phase === "fading" ? 0 : 1,
         transform: phase === "fading"
@@ -168,7 +168,7 @@ export default function VisitorGreeting() {
           fontSize: 9,
           letterSpacing: "0.32em",
           textTransform: "uppercase",
-          color: "#C9A84C",
+          color: "#DAA110",
           fontWeight: 600,
         }}
       >

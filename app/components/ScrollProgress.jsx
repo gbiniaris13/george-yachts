@@ -59,7 +59,7 @@ export default function ScrollProgress() {
         height: "2px",
         zIndex: 90,
         pointerEvents: "none",
-        background: "rgba(201, 168, 76, 0.08)",
+        background: "rgba(218, 161, 16, 0.08)",
       }}
     >
       <div
@@ -68,11 +68,11 @@ export default function ScrollProgress() {
           height: "100%",
           width: "100%",
           background:
-            "linear-gradient(90deg, rgba(201,168,76,0.6) 0%, rgba(248, 245, 240,0.95) 50%, rgba(201,168,76,0.6) 100%)",
+            "linear-gradient(90deg, rgba(218, 161, 16,0.6) 0%, rgba(248, 245, 240,0.95) 50%, rgba(218, 161, 16,0.6) 100%)",
           transformOrigin: "left center",
           transform: "scaleX(0)",
           willChange: "transform",
-          boxShadow: "0 0 8px rgba(201, 168, 76, 0.45)",
+          boxShadow: "0 0 8px rgba(218, 161, 16, 0.45)",
         }}
       />
     </div>

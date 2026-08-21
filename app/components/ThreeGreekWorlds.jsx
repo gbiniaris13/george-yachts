@@ -18,7 +18,7 @@
 //   • CTA "Discover the X →" sits at the bottom of the card,
 //     translates up 6 px on hover (subtle motion only).
 //   • Footnote underneath: max-width 600 px, "Speak to George
-//     directly" as the only link (gold #C9A84C, underline-on-hover).
+//     directly" as the only link (gold #DAA110, underline-on-hover).
 
 import Link from "next/link";
 import { DESTINATIONS } from "@/lib/destinations";
@@ -76,7 +76,7 @@ export default function ThreeGreekWorlds() {
       ref={nearRef}
       className="gy-three-worlds relative w-full"
       aria-label="Three Greek Worlds - Cyclades, Ionian, Saronic"
-      style={{ background: "#0D1B2A", padding: "96px 0 80px" }}
+      style={{ background: "#0D1B2A", padding: "clamp(40px, 5vw, 56px) 0 clamp(40px, 5vw, 56px)" }}
     >
       {/* Section header */}
       <div className="gy-three-worlds__header">
@@ -117,8 +117,13 @@ export default function ThreeGreekWorlds() {
           font-weight: 500;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #C9A84C;
-          margin: 0 0 18px;
+          color: #DAA110;
+          /* 2026-08-21 (section 2) - "0 auto" not "0 0". This eyebrow centres its
+             own text, and the global 720px reading cap in globals.css then
+             pinned the 720px box to the left of the section. The shorthand is
+             where the fix belongs: a separate margin-inline: auto above this
+             line was silently reset by it. */
+          margin: 0 auto 18px;
         }
         .gy-three-worlds__title {
           font-family: var(--gy-font-editorial);
@@ -164,7 +169,7 @@ export default function ThreeGreekWorlds() {
           font-weight: 500;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #C9A84C;
+          color: #DAA110;
           margin: 0 0 14px;
         }
         .gy-world-card__title {
@@ -192,15 +197,15 @@ export default function ThreeGreekWorlds() {
           font-weight: 500;
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: #C9A84C;
+          color: #DAA110;
           padding-bottom: 4px;
-          border-bottom: 1px solid rgba(201, 168, 76, 0.6);
+          border-bottom: 1px solid rgba(218, 161, 16, 0.6);
           transform: translateY(0);
           transition: transform 320ms ease, border-color 320ms ease;
         }
         .gy-world-card:hover .gy-world-card__cta {
           transform: translateY(-6px);
-          border-bottom-color: #C9A84C;
+          border-bottom-color: #DAA110;
         }
 
         /* Footnote */
@@ -216,7 +221,7 @@ export default function ThreeGreekWorlds() {
           text-align: center;
         }
         .gy-three-worlds__footnote-link {
-          color: #C9A84C;
+          color: #DAA110;
           text-decoration: none;
           transition: text-decoration 200ms ease;
         }

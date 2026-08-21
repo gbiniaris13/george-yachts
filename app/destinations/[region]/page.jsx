@@ -354,7 +354,7 @@ export default async function DestinationPage({ params }) {
           font-size: 10px;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #C9A84C;
+          color: #DAA110;
           margin: 0 0 24px;
         }
         .gy-dest-hero__title {
@@ -377,7 +377,7 @@ export default async function DestinationPage({ params }) {
           font-size: 22px;
           line-height: 1.3;
           letter-spacing: 0.01em;
-          color: #C9A84C;
+          color: #DAA110;
           margin: 0 0 14px;
         }
         .gy-dest-hero__tagline {
@@ -402,14 +402,14 @@ export default async function DestinationPage({ params }) {
         .gy-dest-facts__list {
           margin: 0;
           padding: 0;
-          border-top: 1px solid rgba(201, 168, 76, 0.18);
+          border-top: 1px solid rgba(218, 161, 16, 0.18);
         }
         .gy-dest-facts__row {
           display: grid;
           grid-template-columns: 220px 1fr;
           gap: 24px;
           padding: 14px 0;
-          border-bottom: 1px solid rgba(201, 168, 76, 0.10);
+          border-bottom: 1px solid rgba(218, 161, 16, 0.10);
         }
         .gy-dest-facts__row dt {
           font-family: var(--gy-font-ui);
@@ -472,7 +472,7 @@ export default async function DestinationPage({ params }) {
           font-size: 10px;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #C9A84C;
+          color: #DAA110;
           text-align: center;
           margin: 0 0 18px;
         }
@@ -492,7 +492,7 @@ export default async function DestinationPage({ params }) {
           margin: 0;
         }
         .gy-dest-pick {
-          border-left: 2px solid #C9A84C;
+          border-left: 2px solid #DAA110;
           padding-left: 1.5rem;
           margin-bottom: 2rem;
         }
@@ -522,7 +522,7 @@ export default async function DestinationPage({ params }) {
         /* CTA */
         .gy-dest-cta {
           background: #0D1B2A;
-          border-top: 1px solid rgba(201, 168, 76, 0.25);
+          border-top: 1px solid rgba(218, 161, 16, 0.25);
           padding: 100px 24px;
           text-align: center;
         }
@@ -556,15 +556,15 @@ export default async function DestinationPage({ params }) {
           font-size: 12px;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #C9A84C;
-          border: 1px solid #C9A84C;
+          color: #DAA110;
+          border: 1px solid #DAA110;
           background: transparent;
           text-decoration: none;
           white-space: nowrap;
           transition: background 280ms ease, color 280ms ease;
         }
         .gy-dest-cta__primary:hover {
-          background: #C9A84C;
+          background: #DAA110;
           color: #0D1B2A;
         }
         .gy-dest-cta__secondary {

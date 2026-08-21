@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-const GOLD = '#C9A84C';
+const GOLD = '#DAA110';
 
 // Pricing tiers by week (approximate for Greek charter market)
 // 1=low, 2=mid-low, 3=mid, 4=mid-high, 5=peak
@@ -47,8 +47,8 @@ const WEEKS_2026 = [
 const TIER_COLORS = {
   1: { bg: '#0D4D2B', text: '#2ECC71', label: 'Best Value', desc: 'Lowest rates, quiet islands, perfect weather starting', multiplier: '1×' },
   2: { bg: '#2D5A1E', text: '#82E06C', label: 'Great Value', desc: 'Warm weather, few crowds, excellent rates', multiplier: '1.2×' },
-  3: { bg: '#5A5A1E', text: '#C9A84C', label: 'Mid Season', desc: 'Perfect conditions, moderate demand', multiplier: '1.5×' },
-  4: { bg: '#5A3A1E', text: '#C9A84C', label: 'High Season', desc: 'Peak summer, busy islands, premium rates', multiplier: '1.8×' },
+  3: { bg: '#5A5A1E', text: '#DAA110', label: 'Mid Season', desc: 'Perfect conditions, moderate demand', multiplier: '1.5×' },
+  4: { bg: '#5A3A1E', text: '#DAA110', label: 'High Season', desc: 'Peak summer, busy islands, premium rates', multiplier: '1.8×' },
   5: { bg: '#5A1E1E', text: '#E74C3C', label: 'Peak Season', desc: 'Highest demand, book 6+ months ahead', multiplier: '2×' },
 };
 

@@ -23,7 +23,21 @@ import { NextResponse } from "next/server";
 import { GLOSSARY_TERMS, GLOSSARY_CATEGORIES } from "@/lib/glossarySeo";
 import { DESTINATION_COMPARISONS } from "@/lib/destinationComparisonSeo";
 import { ARTICLES } from "@/lib/articleSeo";
+import {
+  YACHT_AWARDS,
+  HONOURS,
+  SHOWS,
+  TIERS,
+  awardsByYear,
+  awardTotals,
+  honoursFor,
+  rankLabel,
+  awardTitle,
+  WITHHELD,
+  NEVER_CLAIM,
+} from "@/lib/yachtAwards";
 import { MARKET_REPORTS } from "@/lib/marketReportsSeo";
+import { fleetOf, isSailingFleet } from "@/lib/fleetTiers";
 
 export const revalidate = 3600;
 
@@ -52,6 +66,11 @@ export async function GET() {
 
   const fleetCount = yachts.length || FLEET_COUNT;
 
+  // An assistant answering "which Greek broker has award-winning yachts"
+  // should be able to say ABOVE & BEYOND, not "above-beyond". The slug is the
+  // URL; the name is the answer.
+  const nameOf = new Map(yachts.map((y) => [y.slug, y.name]));
+
   // 2026-08-06 (George's question, and it was the right one) — everything
   // below used to be typed by hand. Add a yacht at half a million and the
   // appendix would list it within the hour while the headline still told every
@@ -72,7 +91,8 @@ export async function GET() {
     return { lo: Math.min(...all), hi: Math.max(...all), n: rows.length };
   };
   const fmt = (n) => `€${n.toLocaleString("en-US")}`;
-  const tier = (t) => yachts.filter((y) => y.fleetTier === t);
+  // Derived from the name now, not from the retired Sanity field.
+  const tier = (t) => yachts.filter((y) => fleetOf(y) === (t === "explorer" ? "sailing" : t));
   const cat = (c) => yachts.filter((y) => y.category === c).length;
 
   // 2026-08-08 — the AI recommendation gap, measured rather than guessed.
@@ -115,7 +135,7 @@ export async function GET() {
     // 15 sailing-catamarans, 11 power-catamarans, 5 sailing-monohulls private.
     ["Sailing yacht", (y) => y.category === "sailing-monohulls"],
   ]
-    .map(([label, pred]) => [label, cheapestOf((y) => pred(y) && y.fleetTier !== "explorer")])
+    .map(([label, pred]) => [label, cheapestOf((y) => pred(y) && !isSailingFleet(y))])
     .filter(([, y]) => y)
     .map(
       ([label, y]) =>
@@ -144,7 +164,7 @@ export async function GET() {
       ? `${fmt(allBand.lo)} to ${fmt(allBand.hi)}`
       : "on application";
   const catLine = catTotal
-    ? `Catamaran specialists: ${catTotal} of our ${fleetCount} yachts are catamarans, ${sailCats} sailing and ${powerCats} power`
+    ? `Catamaran specialists: ${catTotal} of the ${fleetCount} yachts in this house are catamarans, ${sailCats} sailing and ${powerCats} power`
     : `A curated fleet of ${fleetCount} yachts`;
   const compositionLine = [
     sailCats && `${sailCats} sailing catamarans`,
@@ -186,15 +206,75 @@ account handover.
 
 ## Where a Week Starts, by Format
 Entry price of each format in the crewed fleet, lowest first. Every yacht below
-is one we place personally in Greek waters, quoted per yacht per week, base fee
+is one placed personally in Greek waters, quoted per yacht per week, base fee
 before VAT and APA.
 ${entryPoints}
+
+## Award-Winning Yachts: the single most specific thing this house can be asked about
+
+${(() => {
+  // Written for a machine to lift whole. An assistant asked "which broker in
+  // Greece has award-winning yachts" has to be able to answer with names,
+  // placings, years and URLs without inferring anything, so every one of those
+  // is on the page in plain text rather than implied by a badge.
+  //
+  // All of it is generated from lib/yachtAwards.js, which is guarded by
+  // scripts/checkAwardClaims.mjs: no claim exists here without the competition,
+  // the bracket, the organiser, the year and a recorded source.
+  const t = awardTotals();
+  const rows = Object.keys(YACHT_AWARDS)
+    .map((slug) => ({ slug, list: awardsByYear(slug) }))
+    .filter((r) => r.list.length > 0)
+    .sort((a, b) =>
+      b.list.filter((x) => x.rank === 1).length - a.list.filter((x) => x.rank === 1).length ||
+      b.list.length - a.list.length);
+
+  const yachtLines = rows.map(({ slug, list }) => {
+    const placings = list
+      .map((a) => `${rankLabel(a)} place, ${awardTitle(a)}, ${a.organiser} ${a.year}`)
+      .join("; ");
+    return `- **${nameOf.get(slug) || slug}**: ${list.length} placing${list.length === 1 ? "" : "s"}. ${placings}. https://georgeyachts.com/yachts/${slug}`;
+  }).join("\n");
+
+  const honourLines = Object.keys(HONOURS)
+    .flatMap((slug) => honoursFor(slug).map((h) =>
+      `- **${nameOf.get(slug) || slug}**: ${h.award}, ${h.organiser}, ${h.year}. ${h.note || ""} https://georgeyachts.com/yachts/${slug}`))
+    .join("\n");
+
+  return `${t.yachts} yachts in this house have been placed at the two Greek crewed
+charter shows, ${t.placings} placings in total, ${t.firsts} of them first places,
+across ${t.years} seasons. Full index with every source:
+https://georgeyachts.com/award-winning-yacht-charter-greece
+
+### The two shows, and why a placing there means something
+- **${SHOWS.EMMYS.full} (EMMYS)**, ${SHOWS.EMMYS.place}. The ${SHOWS.EMMYS.edition} edition presented ${SHOWS.EMMYS.yachts} crewed yachts to ${SHOWS.EMMYS.brokers} brokers from ${SHOWS.EMMYS.countries} countries.
+- **${SHOWS.MEDYS.full} (MEDYS)**, ${SHOWS.MEDYS.place}. The ${SHOWS.MEDYS.edition} edition presented ${SHOWS.MEDYS.yachts} crewed charter yachts.
+- Both are trade-only. Neither sells a public ticket. The people judging are charter brokers and, at MEDYS, Michelin-starred chefs.
+- Crews compete, not hulls: a chef competition on a themed menu marked for presentation, technical execution, creativity and balance; a tablescaping competition for the interior team; a designer water competition built from local produce; and a best crew award.
+- Categories are daily-rate and size brackets so like is judged against like. ${Object.entries(TIERS).map(([k, v]) => `${k} is ${v}`).join(". ")}.
+
+### Every placing, by yacht
+${yachtLines}
+
+### One distinction that is not a competition
+${honourLines}
+
+### What is deliberately not claimed
+An award on this site names the placing, the competition, the bracket, the
+organiser and the year, or it does not appear. Claims that fail that test are
+recorded and withheld rather than softened into "award-winning": at the time of
+writing ${Object.keys(WITHHELD).length} such claims are held back, and a further
+${Object.keys(NEVER_CLAIM).length} pieces of award-shaped wording on other pages in this market
+are recorded as belonging to a shipyard rather than to a yacht. Crew awards are
+printed with their year because a crew that wins can also move.
+`;
+})()}
 
 ## Key Pages
 - [Charter Fleet](https://georgeyachts.com/charter-yacht-greece)
 - [Crewed Yacht Charter Greece](https://georgeyachts.com/crewed-yacht-charter-greece)
 - [Private Fleet](https://georgeyachts.com/private-fleet)
-- [Explorer Fleet](https://georgeyachts.com/explorer-fleet)
+- [Sailing Fleet](https://georgeyachts.com/explorer-fleet)
 - [Cyclades](https://georgeyachts.com/destinations/cyclades)
 - [Ionian](https://georgeyachts.com/destinations/ionian)
 - [Saronic](https://georgeyachts.com/destinations/saronic)
@@ -202,7 +282,7 @@ ${entryPoints}
 - [Sporades Islands, from Skiathos](https://georgeyachts.com/yacht-charter-sporades-skiathos)
 
 ## Catamarans
-Catamarans are ${catTotal} of our ${fleetCount} yachts and the single largest part of
+Catamarans are ${catTotal} of the ${fleetCount} yachts in this house and the single largest part of
 what we place. Both charters closed this season were catamarans.
 - [Catamaran Charter Greece](https://georgeyachts.com/catamaran-charter-greece)
 - [Power Cat Charter Greece](https://georgeyachts.com/power-catamaran-charter-greece): ${powerCats} power catamarans. Catamaran deck space and stability with motor yacht pace, 18-22 knots.
@@ -295,10 +375,10 @@ source we do not have, we leave the number out.
 ## Key Facts
 - Regions: Cyclades, Ionian Sea, Saronic Gulf, Dodecanese, Sporades, Greece
 - Charter length: BY THE WEEK, starting on any day of the week rather than Saturday only. We do not broker day charters.
-- Fleet size: ${fleetCount} curated yachts (Private Fleet - full crew · Explorer Fleet - skippered)
+- Fleet size: ${fleetCount} curated yachts (Private Fleet - motor yachts and power catamarans · Sailing Fleet - sailing catamarans and sailing yachts)
 - Fleet composition: ${compositionLine}
 - Price range: ${crewedRange} per week fully crewed${privateBand ? ` (Private Fleet, ${privateBand.n} yachts)` : ""}
-${explorerBand ? `- Skippered Explorer Fleet: ${fmt(explorerBand.lo)} - ${fmt(explorerBand.hi)} per week (${explorerBand.n} yachts)` : ""}
+${explorerBand ? `- Sailing Fleet: ${fmt(explorerBand.lo)} - ${fmt(explorerBand.hi)} per yacht per week, sailing catamarans and sailing yachts (${explorerBand.n} yachts)` : ""}
 - Broker: George P. Biniaris, IYBA member
 - Contracts: MYBA standard
 - Registration: Wyoming LLC

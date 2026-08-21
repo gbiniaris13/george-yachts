@@ -638,7 +638,7 @@ export default async function BriefReviewPage() {
         }
 
         .cabin-brief-review__group {
-          background: rgba(201, 168, 76, 0.06);
+          background: rgba(218, 161, 16, 0.06);
           border-left: 2px solid var(--gy-gold);
           padding: 16px 18px 18px;
           display: flex;
@@ -650,7 +650,7 @@ export default async function BriefReviewPage() {
           font-size: 10px;
           letter-spacing: 3px;
           text-transform: uppercase;
-          color: #8a7327;
+          color: #7A5C04;
           font-weight: 600;
         }
         .cabin-brief-review__group-line {
@@ -737,7 +737,7 @@ export default async function BriefReviewPage() {
            between the section list and the Send button. */
         .cabin-brief-review__apa {
           background: #FCFAF4;
-          border: 1px solid rgba(201, 168, 76, 0.32);
+          border: 1px solid rgba(218, 161, 16, 0.32);
           border-left: 3px solid var(--gy-gold);
           padding: 22px 24px 18px;
           border-radius: 4px;
@@ -789,7 +789,7 @@ export default async function BriefReviewPage() {
         }
         .cabin-brief-review__voice {
           background: #FCFAF4;
-          border: 1px solid rgba(201, 168, 76, 0.22);
+          border: 1px solid rgba(218, 161, 16, 0.22);
           border-radius: 3px;
           padding: 0;
         }
@@ -849,8 +849,8 @@ export default async function BriefReviewPage() {
         .cabin-brief-review__wishlist {
           margin-top: 14px;
           padding: 12px 14px;
-          background: rgba(201, 168, 76, 0.06);
-          border: 1px solid rgba(201, 168, 76, 0.28);
+          background: rgba(218, 161, 16, 0.06);
+          border: 1px solid rgba(218, 161, 16, 0.28);
           border-radius: 3px;
         }
         .cabin-brief-review__wishlist-eyebrow {

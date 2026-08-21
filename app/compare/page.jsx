@@ -146,7 +146,7 @@ function FeaturedComparisons() {
         Pick a yacht detail page and use the &ldquo;Compare&rdquo; option, or
         start with one of the broker-curated comparisons below. To compare any
         2-4 yachts directly, append slugs to the URL:
-        <code className="ml-2 text-[#C9A84C] text-sm">
+        <code className="ml-2 text-[#DAA110] text-sm">
           /compare?yachts=genny,altaia
         </code>
       </p>
@@ -154,13 +154,13 @@ function FeaturedComparisons() {
         <Link
           key={c.title}
           href={`/compare?yachts=${c.slugs.join(",")}`}
-          className="block border border-white/10 rounded-lg p-6 hover:border-[#C9A84C] transition"
+          className="block border border-white/10 rounded-lg p-6 hover:border-[#DAA110] transition"
         >
-          <h2 className="font-cormorant text-2xl text-[#C9A84C] mb-2">
+          <h2 className="font-cormorant text-2xl text-[#DAA110] mb-2">
             {c.title}
           </h2>
           <p className="text-white/70 text-sm">{c.description}</p>
-          <span className="mt-3 inline-block text-xs text-[#C9A84C] tracking-widest uppercase">
+          <span className="mt-3 inline-block text-xs text-[#DAA110] tracking-widest uppercase">
             View comparison →
           </span>
         </Link>
@@ -216,7 +216,7 @@ export default async function ComparePage({ searchParams }) {
                 height: 1,
                 margin: "0 auto 24px",
                 background:
-                  "linear-gradient(90deg, transparent, rgba(201,168,76,0.7), transparent)",
+                  "linear-gradient(90deg, transparent, rgba(218, 161, 16,0.7), transparent)",
               }}
             />
             <p
@@ -226,7 +226,7 @@ export default async function ComparePage({ searchParams }) {
                 fontSize: 11,
                 letterSpacing: "0.42em",
                 textTransform: "uppercase",
-                color: "#C9A84C",
+                color: "#DAA110",
                 fontWeight: 600,
                 margin: "0 0 22px",
               }}
@@ -255,7 +255,7 @@ export default async function ComparePage({ searchParams }) {
                 width: 60,
                 height: 1,
                 margin: "0 auto 28px",
-                background: "rgba(201,168,76,0.55)",
+                background: "rgba(218, 161, 16,0.55)",
               }}
             />
             <p
@@ -285,7 +285,7 @@ export default async function ComparePage({ searchParams }) {
                 <div />
                 {yachtsByOrder.map((y) => (
                   <Link key={y._id} href={`/yachts/${y.slug}`} className="group">
-                    <div className="aspect-[4/3] relative overflow-hidden bg-white/5 mb-3" style={{ border: "1px solid rgba(201,168,76,0.2)" }}>
+                    <div className="aspect-[4/3] relative overflow-hidden bg-white/5 mb-3" style={{ border: "1px solid rgba(218, 161, 16,0.2)" }}>
                       {y.imageUrl ? (
                         <Image
                           src={y.imageUrl}
@@ -296,7 +296,7 @@ export default async function ComparePage({ searchParams }) {
                         />
                       ) : null}
                     </div>
-                    <h2 className="font-cormorant text-2xl text-white group-hover:text-[#C9A84C] transition">
+                    <h2 className="font-cormorant text-2xl text-white group-hover:text-[#DAA110] transition">
                       {y.name}
                     </h2>
                     <p className="text-xs text-white/50 mt-1">{y.subtitle}</p>
@@ -305,7 +305,7 @@ export default async function ComparePage({ searchParams }) {
               </div>
 
               {/* Spec rows */}
-              <div className="overflow-hidden" style={{ border: "1px solid rgba(201,168,76,0.22)" }}>
+              <div className="overflow-hidden" style={{ border: "1px solid rgba(218, 161, 16,0.22)" }}>
                 <table className="w-full">
                   <tbody>
                     {SPEC_ROWS.map((row, idx) => (
@@ -343,7 +343,7 @@ export default async function ComparePage({ searchParams }) {
                     gap: 10,
                     padding: "18px 36px",
                     minHeight: 52,
-                    background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
+                    background: "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
                     color: "#0D1B2A",
                     fontFamily: "var(--gy-font-display)",
                     fontSize: 12,
@@ -351,8 +351,8 @@ export default async function ComparePage({ searchParams }) {
                     textTransform: "uppercase",
                     fontWeight: 500,
                     textDecoration: "none",
-                    border: "1px solid rgba(201,168,76,0.7)",
-                    boxShadow: "0 14px 35px -10px rgba(201,168,76,0.5), inset 0 1px 0 rgba(248, 245, 240,0.3)",
+                    border: "1px solid rgba(218, 161, 16,0.7)",
+                    boxShadow: "0 14px 35px -10px rgba(218, 161, 16,0.5), inset 0 1px 0 rgba(248, 245, 240,0.3)",
                   }}
                 >
                   Brief George - reply within 24h →

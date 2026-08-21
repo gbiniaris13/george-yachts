@@ -263,7 +263,7 @@ export default function PhotoGallery({
           box-shadow:
             0 4px 12px rgba(0,0,0,0.4),
             0 24px 60px rgba(0,0,0,0.55),
-            0 0 0 1px rgba(201, 168, 76, 0.18);
+            0 0 0 1px rgba(218, 161, 16, 0.18);
           animation: cabin-lightbox-img-in 380ms cubic-bezier(0.16, 1, 0.3, 1);
         }
         @keyframes cabin-lightbox-img-in {
@@ -280,7 +280,7 @@ export default function PhotoGallery({
           max-width: 64ch;
           letter-spacing: 0.2px;
         }
-        .cabin-lightbox__caption em { color: rgba(201, 168, 76, 0.92); font-style: normal; }
+        .cabin-lightbox__caption em { color: rgba(218, 161, 16, 0.92); font-style: normal; }
 
         /* CLOSE - fixed to viewport top-right, always visible. */
         .cabin-lightbox__close {
@@ -294,7 +294,7 @@ export default function PhotoGallery({
           justify-content: center;
           background: rgba(248, 245, 240, 0.08);
           color: #F8F5F0;
-          border: 1px solid rgba(201, 168, 76, 0.5);
+          border: 1px solid rgba(218, 161, 16, 0.5);
           border-radius: 50%;
           cursor: pointer;
           transition: all 220ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -303,8 +303,8 @@ export default function PhotoGallery({
           z-index: 10001;
         }
         .cabin-lightbox__close:hover {
-          background: rgba(201, 168, 76, 0.22);
-          border-color: rgba(201, 168, 76, 0.9);
+          background: rgba(218, 161, 16, 0.22);
+          border-color: rgba(218, 161, 16, 0.9);
           transform: scale(1.06);
         }
 
@@ -320,7 +320,7 @@ export default function PhotoGallery({
           justify-content: center;
           background: rgba(248, 245, 240, 0.08);
           color: #F8F5F0;
-          border: 1px solid rgba(201, 168, 76, 0.5);
+          border: 1px solid rgba(218, 161, 16, 0.5);
           border-radius: 50%;
           cursor: pointer;
           transition: all 220ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -329,8 +329,8 @@ export default function PhotoGallery({
           z-index: 10001;
         }
         .cabin-lightbox__nav:hover {
-          background: rgba(201, 168, 76, 0.22);
-          border-color: rgba(201, 168, 76, 0.9);
+          background: rgba(218, 161, 16, 0.22);
+          border-color: rgba(218, 161, 16, 0.9);
           transform: translateY(-50%) scale(1.06);
         }
         .cabin-lightbox__nav--prev { left: 24px; }
@@ -347,7 +347,7 @@ export default function PhotoGallery({
           letter-spacing: 4px;
           color: rgba(248, 245, 240, 0.85);
           padding: 8px 16px;
-          border: 1px solid rgba(201, 168, 76, 0.45);
+          border: 1px solid rgba(218, 161, 16, 0.45);
           border-radius: 999px;
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
@@ -356,7 +356,7 @@ export default function PhotoGallery({
           z-index: 10001;
         }
         .cabin-lightbox__counter-num {
-          color: rgba(201, 168, 76, 0.95);
+          color: rgba(218, 161, 16, 0.95);
           font-weight: 600;
         }
         .cabin-lightbox__counter-sep {

@@ -93,15 +93,15 @@ export async function GET(request) {
               style={{
                 width: 6,
                 height: 6,
-                background: "#C9A84C",
+                background: "#DAA110",
                 borderRadius: 999,
-                boxShadow: "0 0 0 6px rgba(201,168,76,0.18)",
+                boxShadow: "0 0 0 6px rgba(218, 161, 16,0.18)",
                 display: "block",
               }}
             />
             <div
               style={{
-                color: "#C9A84C",
+                color: "#DAA110",
                 fontSize: 18,
                 letterSpacing: "0.42em",
                 textTransform: "uppercase",
@@ -177,7 +177,7 @@ export async function GET(request) {
             justifyContent: "space-between",
             width: "100%",
             paddingTop: 28,
-            borderTop: "1px solid rgba(201,168,76,0.32)",
+            borderTop: "1px solid rgba(218, 161, 16,0.32)",
           }}
         >
           <div
@@ -205,7 +205,7 @@ export async function GET(request) {
             >
               Forbes
             </span>
-            <span style={{ color: "rgba(201,168,76,0.55)", display: "block" }}>·</span>
+            <span style={{ color: "rgba(218, 161, 16,0.55)", display: "block" }}>·</span>
             <span style={{ display: "block" }}>IYBA Charter Active Member</span>
           </div>
           <div

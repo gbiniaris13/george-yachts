@@ -11,7 +11,7 @@ export default function PrintButton({ label = "Print / save as PDF" }) {
       type="button"
       onClick={() => globalThis.print()}
       style={{
-        background: "#C9A84C",
+        background: "#DAA110",
         color: "#0D1B2A",
         padding: "8px 16px",
         border: 0,

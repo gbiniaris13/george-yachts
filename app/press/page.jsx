@@ -188,7 +188,7 @@ export default function PressPage() {
             fontSize: 10,
             letterSpacing: "0.42em",
             textTransform: "uppercase",
-            color: "#C9A84C",
+            color: "#DAA110",
             fontWeight: 600,
             margin: "0 0 14px",
           }}
@@ -230,8 +230,8 @@ export default function PressPage() {
         aria-label="Forbes feature"
         style={{
           background: "#0D1B2A",
-          borderTop: "1px solid rgba(201,168,76,0.25)",
-          borderBottom: "1px solid rgba(201,168,76,0.25)",
+          borderTop: "1px solid rgba(218, 161, 16,0.25)",
+          borderBottom: "1px solid rgba(218, 161, 16,0.25)",
           padding: "70px 24px 80px",
         }}
       >
@@ -264,7 +264,7 @@ export default function PressPage() {
               fontSize: 11,
               letterSpacing: "0.32em",
               textTransform: "uppercase",
-              color: "#C9A84C",
+              color: "#DAA110",
               fontWeight: 600,
               margin: "0 0 22px",
             }}
@@ -303,7 +303,7 @@ export default function PressPage() {
           <blockquote
             cite={FORBES.url}
             style={{
-              borderLeft: "3px solid #C9A84C",
+              borderLeft: "3px solid #DAA110",
               paddingLeft: 22,
               margin: "0 0 36px",
             }}
@@ -328,7 +328,7 @@ export default function PressPage() {
                 fontSize: 11,
                 letterSpacing: "0.22em",
                 textTransform: "uppercase",
-                color: "rgba(201,168,76,0.85)",
+                color: "rgba(218, 161, 16,0.85)",
                 fontWeight: 600,
               }}
             >
@@ -359,7 +359,7 @@ export default function PressPage() {
                 display: "inline-block",
                 padding: "14px 30px",
                 background:
-                  "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
+                  "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
                 color: "#0D1B2A",
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 11,
@@ -367,7 +367,7 @@ export default function PressPage() {
                 textTransform: "uppercase",
                 fontWeight: 700,
                 textDecoration: "none",
-                border: "1px solid rgba(201,168,76,0.6)",
+                border: "1px solid rgba(218, 161, 16,0.6)",
               }}
             >
               Read the full article on Forbes →
@@ -394,7 +394,7 @@ export default function PressPage() {
           style={{
             width: 80,
             height: 1,
-            background: "rgba(201,168,76,0.4)",
+            background: "rgba(218, 161, 16,0.4)",
             margin: "0 auto 36px",
           }}
         />
@@ -404,7 +404,7 @@ export default function PressPage() {
             fontSize: 10,
             letterSpacing: "0.42em",
             textTransform: "uppercase",
-            color: "#C9A84C",
+            color: "#DAA110",
             fontWeight: 600,
             margin: "0 0 32px",
             textAlign: "center",
@@ -505,7 +505,7 @@ export default function PressPage() {
             fontSize: 10,
             letterSpacing: "0.42em",
             textTransform: "uppercase",
-            color: "#C9A84C",
+            color: "#DAA110",
             fontWeight: 600,
             margin: "0 0 14px",
           }}
@@ -531,10 +531,10 @@ export default function PressPage() {
               fontSize: 12,
               letterSpacing: "0.24em",
               textTransform: "uppercase",
-              color: "#C9A84C",
+              color: "#DAA110",
               fontWeight: 600,
               textDecoration: "none",
-              borderBottom: "1px solid #C9A84C",
+              borderBottom: "1px solid #DAA110",
               paddingBottom: 2,
             }}
           >

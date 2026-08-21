@@ -156,13 +156,13 @@ export default function CharterAtAGlance({ summary }) {
           background: linear-gradient(
             to right,
             transparent,
-            rgba(201, 168, 76, 0.6) 50%,
+            rgba(218, 161, 16, 0.6) 50%,
             transparent
           );
         }
         .cabin-at-a-glance__card {
           background: #FCFAF4;
-          border: 1px solid rgba(201, 168, 76, 0.32);
+          border: 1px solid rgba(218, 161, 16, 0.32);
           border-radius: 6px;
           padding: 40px 44px 32px 44px;
           display: flex;
@@ -186,13 +186,13 @@ export default function CharterAtAGlance({ summary }) {
           background: linear-gradient(
             to right,
             transparent,
-            rgba(201, 168, 76, 0.75) 50%,
+            rgba(218, 161, 16, 0.75) 50%,
             transparent
           );
         }
         .cabin-at-a-glance__group {
           padding: 18px 0;
-          border-top: 1px solid rgba(201, 168, 76, 0.18);
+          border-top: 1px solid rgba(218, 161, 16, 0.18);
         }
         .cabin-at-a-glance__group:first-of-type {
           border-top: none;
@@ -260,7 +260,7 @@ export default function CharterAtAGlance({ summary }) {
           font-style: italic;
           font-size: 12.5px;
           color: rgba(13, 27, 42, 0.6);
-          border-top: 1px solid rgba(201, 168, 76, 0.18);
+          border-top: 1px solid rgba(218, 161, 16, 0.18);
           padding-top: 16px;
           margin: 18px 0 0 0;
           text-align: center;

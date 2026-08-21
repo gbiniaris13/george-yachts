@@ -316,11 +316,11 @@ const styles = `
   .cabin-allergy-alert {
     margin: 0 0 28px 0;
     border-left: 3px solid var(--gy-gold);
-    background: rgba(201, 168, 76, 0.05);
+    background: rgba(218, 161, 16, 0.05);
     padding: 16px 18px 14px 18px;
   }
   .cabin-allergy-alert.has-content {
-    background: rgba(201, 168, 76, 0.1);
+    background: rgba(218, 161, 16, 0.1);
   }
   .cabin-allergy-alert header {
     display: flex;
@@ -359,7 +359,7 @@ const styles = `
   .cabin-allergy-alert__section + .cabin-allergy-alert__section {
     margin-top: 14px;
     padding-top: 10px;
-    border-top: 1px dashed rgba(201, 168, 76, 0.32);
+    border-top: 1px dashed rgba(218, 161, 16, 0.32);
   }
   .cabin-allergy-alert__section-eyebrow {
     display: block;

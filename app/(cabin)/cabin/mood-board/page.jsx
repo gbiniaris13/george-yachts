@@ -446,7 +446,7 @@ export default function MoodBoardPage() {
              than a real border because it sits ABOVE the art and
              never pushes the edges around. */
           box-shadow:
-            inset 0 0 0 1px rgba(201, 168, 76, 0.55),
+            inset 0 0 0 1px rgba(218, 161, 16, 0.55),
             0 6px 18px rgba(13, 27, 42, 0.18);
           transition: transform 320ms ease, box-shadow 320ms ease;
           cursor: default;
@@ -454,7 +454,7 @@ export default function MoodBoardPage() {
         .mood-plate:hover {
           transform: translateY(-2px);
           box-shadow:
-            inset 0 0 0 1px rgba(201, 168, 76, 0.85),
+            inset 0 0 0 1px rgba(218, 161, 16, 0.85),
             0 12px 28px rgba(13, 27, 42, 0.28);
         }
         /* Painterly art layer — fills the card, gets the film-grain
@@ -521,7 +521,7 @@ export default function MoodBoardPage() {
           font-size: 9.5px;
           letter-spacing: 3px;
           text-transform: uppercase;
-          color: rgba(201, 168, 76, 0.95);
+          color: rgba(218, 161, 16, 0.95);
           font-weight: 600;
         }
         .mood-plate__name {

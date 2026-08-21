@@ -97,16 +97,16 @@ html:has([data-cabin-mode]) body {
   --gy-foil-line: linear-gradient(
     to right,
     transparent,
-    rgba(201, 168, 76, 0.35) 18%,
-    rgba(201, 168, 76, 0.7) 50%,
-    rgba(201, 168, 76, 0.35) 82%,
+    rgba(218, 161, 16, 0.35) 18%,
+    rgba(218, 161, 16, 0.7) 50%,
+    rgba(218, 161, 16, 0.35) 82%,
     transparent
   );
   --gy-foil-soft: linear-gradient(
     135deg,
-    rgba(201, 168, 76, 0.18),
-    rgba(201, 168, 76, 0.05) 50%,
-    rgba(201, 168, 76, 0.18)
+    rgba(218, 161, 16, 0.18),
+    rgba(218, 161, 16, 0.05) 50%,
+    rgba(218, 161, 16, 0.18)
   );
 }
 
@@ -388,7 +388,7 @@ html:has([data-cabin-mode]) body {
   padding: 36px 0 44px;
   background:
     radial-gradient(ellipse at 50% 0%,
-      rgba(201, 168, 76, 0.05) 0%,
+      rgba(218, 161, 16, 0.05) 0%,
       transparent 60%);
 }
 
@@ -444,7 +444,7 @@ html:has([data-cabin-mode]) body {
   background: linear-gradient(
     115deg,
     transparent 30%,
-    rgba(201, 168, 76, 0.18) 50%,
+    rgba(218, 161, 16, 0.18) 50%,
     transparent 70%
   );
   transform: skewX(-18deg);
@@ -454,7 +454,7 @@ html:has([data-cabin-mode]) body {
 [data-cabin-mode] .cabin-home__tile:hover {
   transform: translateY(-3px);
   box-shadow: var(--gy-shadow-lift);
-  border-color: rgba(201, 168, 76, 0.55) !important;
+  border-color: rgba(218, 161, 16, 0.55) !important;
   background-color: #FCFAF4 !important;
 }
 [data-cabin-mode] .cabin-home__tile:hover::before {
@@ -469,9 +469,9 @@ html:has([data-cabin-mode]) body {
     filter var(--gy-d-base) var(--gy-ease);
 }
 [data-cabin-mode] .cabin-home__tile:hover .cabin-home__tile-glyph {
-  color: var(--gy-gold, #C9A84C);
+  color: var(--gy-gold, #DAA110);
   transform: translateY(-2px) scale(1.06);
-  filter: drop-shadow(0 2px 4px rgba(201, 168, 76, 0.35));
+  filter: drop-shadow(0 2px 4px rgba(218, 161, 16, 0.35));
 }
 
 
@@ -594,7 +594,7 @@ html:has([data-cabin-mode]) body {
 [data-cabin-mode] em a:not([class]) {
   color: var(--gy-navy);
   text-decoration: none;
-  background-image: linear-gradient(to right, var(--gy-gold, #C9A84C), var(--gy-gold, #C9A84C));
+  background-image: linear-gradient(to right, var(--gy-gold, #DAA110), var(--gy-gold, #DAA110));
   background-size: 100% 1px;
   background-position: 0 100%;
   background-repeat: no-repeat;
@@ -605,7 +605,7 @@ html:has([data-cabin-mode]) body {
 }
 [data-cabin-mode] p a:not([class]):hover,
 [data-cabin-mode] li a:not([class]):hover {
-  color: var(--gy-gold, #C9A84C);
+  color: var(--gy-gold, #DAA110);
   background-size: 100% 2px;
 }
 
@@ -695,7 +695,7 @@ html:has([data-cabin-mode]) body {
 [data-cabin-mode] summary:focus-visible,
 [data-cabin-mode] [role="button"]:focus-visible,
 [data-cabin-mode] [tabindex]:not([tabindex="-1"]):focus-visible {
-  outline: 2px solid rgba(201, 168, 76, 0.72) !important;
+  outline: 2px solid rgba(218, 161, 16, 0.72) !important;
   outline-offset: 3px !important;
   border-radius: 2px;
   transition: outline-color var(--gy-d-fast) ease;
@@ -708,8 +708,8 @@ html:has([data-cabin-mode]) body {
 [data-cabin-mode] textarea:focus-visible,
 [data-cabin-mode] select:focus-visible {
   outline: none !important;
-  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.22) !important;
-  border-color: rgba(201, 168, 76, 0.75) !important;
+  box-shadow: 0 0 0 3px rgba(218, 161, 16, 0.22) !important;
+  border-color: rgba(218, 161, 16, 0.75) !important;
   transition: box-shadow var(--gy-d-fast) ease, border-color var(--gy-d-fast) ease;
 }
 
@@ -767,17 +767,17 @@ html:has([data-cabin-mode]) body {
   transition: background var(--gy-d-base) var(--gy-ease);
 }
 [data-cabin-mode] ::-webkit-scrollbar-thumb:hover {
-  background: rgba(201, 168, 76, 0.55);
+  background: rgba(218, 161, 16, 0.55);
   background-clip: padding-box;
   border: 2px solid transparent;
 }
 
 [data-cabin-mode] ::selection {
-  background-color: rgba(201, 168, 76, 0.32);
+  background-color: rgba(218, 161, 16, 0.32);
   color: var(--gy-navy, #0D1B2A);
 }
 [data-cabin-mode] ::-moz-selection {
-  background-color: rgba(201, 168, 76, 0.32);
+  background-color: rgba(218, 161, 16, 0.32);
   color: var(--gy-navy, #0D1B2A);
 }
 
@@ -847,7 +847,7 @@ html:has([data-cabin-mode]) body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: var(--gy-gold, #C9A84C);
+  color: var(--gy-gold, #DAA110);
   background: var(--gy-ivory, #F8F5F0);
   padding: 0 12px;
   font-size: 8px;
@@ -866,7 +866,7 @@ html:has([data-cabin-mode]) body {
   background: linear-gradient(180deg,
     #FCFAF4 0%,
     #F8F5F0 100%);
-  border: 1px solid rgba(201, 168, 76, 0.22);
+  border: 1px solid rgba(218, 161, 16, 0.22);
   border-radius: 6px;
   padding: 32px 36px;
   position: relative;
@@ -918,7 +918,7 @@ html:has([data-cabin-mode]) body {
   width: 60%;
   height: 100%;
   background: linear-gradient(90deg,
-    transparent, rgba(201, 168, 76, 0.35), transparent);
+    transparent, rgba(218, 161, 16, 0.35), transparent);
   transition: left var(--gy-d-cinema) var(--gy-ease);
 }
 [data-cabin-mode] .btn-primary:hover::before,

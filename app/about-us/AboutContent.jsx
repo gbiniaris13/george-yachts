@@ -149,7 +149,7 @@ export default function AboutContent() {
             As a boutique brokerage, we do one thing and we do it properly: crewed yacht charters in Greek waters. The Cyclades, the Ionian, the Saronic Gulf - every region, every season, every type of vessel. One broker, one relationship, one standard.
           </p>
           <p className="about-philosophy__text">
-            Every yacht in our fleet is personally vetted. Every captain is known by name. Itineraries are crafted from real routes sailed in these waters - not copied from brochures. We work exclusively with MYBA-standard contracts, transparent APA and VAT breakdowns, and fast, detailed proposals.
+            Every yacht in this house is personally vetted. Every captain is known by name. Itineraries are crafted from real routes sailed in these waters - not copied from brochures. We work exclusively with MYBA-standard contracts, transparent APA and VAT breakdowns, and fast, detailed proposals.
           </p>
           <p className="about-philosophy__text">
             George Yachts is registered in the United States (Wyoming LLC) and operates from Athens, Greece. We serve an international clientele who expect discretion, precision, and a level of personal attention that larger platforms simply cannot provide.
@@ -179,7 +179,7 @@ export default function AboutContent() {
             style={{
               fontFamily: "var(--gy-font-editorial)",
               fontSize: 18,
-              color: "rgba(201,168,76,0.55)",
+              color: "rgba(218, 161, 16,0.55)",
               letterSpacing: "0.18em",
               marginBottom: 22,
             }}
@@ -233,10 +233,10 @@ export default function AboutContent() {
               fontSize: 11,
               letterSpacing: "0.32em",
               textTransform: "uppercase",
-              color: "#C9A84C",
+              color: "#DAA110",
               fontWeight: 600,
               textDecoration: "none",
-              borderBottom: "1px solid rgba(201,168,76,0.5)",
+              borderBottom: "1px solid rgba(218, 161, 16,0.5)",
               paddingBottom: 2,
             }}
           >
@@ -286,12 +286,12 @@ export default function AboutContent() {
                 target="_blank"
                 rel="noopener noreferrer"
                 title="International Yacht Brokers Association"
-                style={{ textDecoration: "none", marginTop: "20px", display: "flex", alignItems: "center", gap: "12px", padding: "16px", border: "1px solid rgba(201,168,76,0.15)", background: "rgba(201,168,76,0.03)" }}
+                style={{ textDecoration: "none", marginTop: "20px", display: "flex", alignItems: "center", gap: "12px", padding: "16px", border: "1px solid rgba(218, 161, 16,0.15)", background: "rgba(218, 161, 16,0.03)" }}
               >
                 <img src="/images/iyba-official-white.png" alt="IYBA - International Yacht Brokers Association" style={{ height: "32px", width: "auto", opacity: 0.85 }} />
                 <div>
                   <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.2em", color: "rgba(248, 245, 240,0.4)", textTransform: "uppercase", margin: 0 }}>Charter Active Member</p>
-                  <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", letterSpacing: "0.1em", color: "#C9A84C", margin: 0 }}>International Yacht Brokers Association</p>
+                  <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", letterSpacing: "0.1em", color: "#DAA110", margin: 0 }}>International Yacht Brokers Association</p>
                 </div>
               </a>
             </RevealSection>
@@ -324,13 +324,13 @@ export default function AboutContent() {
       </section>
 
       {/* ═══════ A NOTE FROM GEORGE ═══════ */}
-      <section style={{ padding: "100px 24px", background: "#0D1B2A" }}>
+      <section style={{ padding: "clamp(40px, 5vw, 56px) 24px", background: "#0D1B2A" }}>
         <RevealSection style={{ maxWidth: "740px", margin: "0 auto" }}>
-          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", fontWeight: 300, letterSpacing: "0.4em", color: "#C9A84C", textTransform: "uppercase", marginBottom: "32px", textAlign: "center" }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", fontWeight: 300, letterSpacing: "0.4em", color: "#DAA110", textTransform: "uppercase", marginBottom: "32px", textAlign: "center" }}>
             A &nbsp; N O T E &nbsp; F R O M &nbsp; G E O R G E
           </p>
 
-          <div style={{ borderLeft: "4px solid #C9A84C", paddingLeft: "28px" }}>
+          <div style={{ borderLeft: "4px solid #DAA110", paddingLeft: "28px" }}>
             <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(18px, 2vw, 22px)", fontWeight: 400, fontStyle: "italic", lineHeight: 1.85, color: "rgba(248,245,240,0.82)", marginBottom: "20px" }}>
               I grew up on my uncle&apos;s Ferretti, crossing from Athens to Syros, to Mykonos, to wherever the Cyclades took us. My mother is from Syros - the sea was never a hobby. It was home.
             </p>
@@ -346,7 +346,7 @@ export default function AboutContent() {
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "16px", fontWeight: 300, lineHeight: 1.85, color: "rgba(248,245,240,0.6)", marginBottom: "28px" }}>
               Greece is not one destination. It is hundreds. And if you have the right person guiding you, every voyage reveals something new. I am that person.
             </p>
-            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", fontWeight: 600, letterSpacing: "0.15em", color: "#C9A84C" }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", fontWeight: 600, letterSpacing: "0.15em", color: "#DAA110" }}>
               - George P. Biniaris, Managing Broker
             </p>
           </div>
@@ -362,9 +362,9 @@ export default function AboutContent() {
       <section
         className="about-team"
         style={{
-          padding: "100px 24px",
+          padding: "clamp(40px, 5vw, 56px) 24px",
           background: "var(--gy-navy)",
-          borderTop: "1px solid rgba(201,168,76,0.10)",
+          borderTop: "1px solid rgba(218, 161, 16,0.10)",
         }}
       >
         <RevealSection style={{ maxWidth: "1200px", margin: "0 auto" }}>
@@ -402,7 +402,7 @@ export default function AboutContent() {
                 width: 60,
                 height: 1,
                 margin: "0 auto 24px",
-                background: "rgba(201, 168, 76, 0.55)",
+                background: "rgba(218, 161, 16, 0.55)",
               }}
             />
             <p
@@ -441,7 +441,7 @@ export default function AboutContent() {
                     position: "relative",
                     overflow: "hidden",
                     background: "var(--gy-card)",
-                    border: "1px solid rgba(201, 168, 76, 0.10)",
+                    border: "1px solid rgba(218, 161, 16, 0.10)",
                     textDecoration: "none",
                     height: "100%",
                   }}
@@ -536,7 +536,7 @@ export default function AboutContent() {
               style={{
                 color: "rgba(248,245,240,0.78)",
                 textDecoration: "none",
-                borderBottom: "1px solid rgba(201, 168, 76, 0.4)",
+                borderBottom: "1px solid rgba(218, 161, 16, 0.4)",
                 paddingBottom: "2px",
               }}
             >
@@ -547,9 +547,9 @@ export default function AboutContent() {
       </section>
 
       {/* ═══════ WHY BOUTIQUE ═══════ */}
-      <section style={{ padding: "100px 24px", background: "rgba(201,168,76,0.02)", borderTop: "1px solid rgba(201,168,76,0.08)", borderBottom: "1px solid rgba(201,168,76,0.08)" }}>
+      <section style={{ padding: "clamp(40px, 5vw, 56px) 24px", background: "rgba(218, 161, 16,0.02)", borderTop: "1px solid rgba(218, 161, 16,0.08)", borderBottom: "1px solid rgba(218, 161, 16,0.08)" }}>
         <RevealSection className="text-center" style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", letterSpacing: "0.4em", color: "#C9A84C", textTransform: "uppercase", marginBottom: "24px" }}>The Difference</p>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", letterSpacing: "0.4em", color: "#DAA110", textTransform: "uppercase", marginBottom: "24px" }}>The Difference</p>
           <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 300, color: "#F8F5F0", marginBottom: "40px", lineHeight: 1.3 }}>
             Why Choose a Boutique Broker?
           </h2>
@@ -558,8 +558,8 @@ export default function AboutContent() {
               { label: "Large Aggregator", value: "Thousands of yachts, generic filters, algorithm-matched", vs: "vs" },
               { label: "George Yachts", value: `${FLEET_COUNT} personally vetted yachts, hand-selected for you by someone who has been aboard each one`, highlight: true },
             ].map((item, i) => (
-              <div key={i} style={{ padding: "32px", border: item.highlight ? "1px solid rgba(201,168,76,0.3)" : "1px solid rgba(248, 245, 240,0.08)", background: item.highlight ? "rgba(201,168,76,0.05)" : "transparent" }}>
-                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.3em", color: item.highlight ? "#C9A84C" : "rgba(248, 245, 240,0.3)", textTransform: "uppercase", marginBottom: "16px" }}>{item.label}</p>
+              <div key={i} style={{ padding: "32px", border: item.highlight ? "1px solid rgba(218, 161, 16,0.3)" : "1px solid rgba(248, 245, 240,0.08)", background: item.highlight ? "rgba(218, 161, 16,0.05)" : "transparent" }}>
+                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.3em", color: item.highlight ? "#DAA110" : "rgba(248, 245, 240,0.3)", textTransform: "uppercase", marginBottom: "16px" }}>{item.label}</p>
                 <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", lineHeight: 1.9, color: item.highlight ? "rgba(248,245,240,0.78)" : "rgba(248, 245, 240,0.4)" }}>{item.value}</p>
               </div>
             ))}
@@ -585,7 +585,7 @@ export default function AboutContent() {
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="22"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg>
               ),
               title: "Yacht Charter",
-              desc: `${FLEET_COUNT} curated yachts - Private Fleet (full crew) + Explorer Fleet (skippered) - across all Greek waters.`,
+              desc: `${FLEET_COUNT} curated yachts - Private Fleet (full crew) + Sailing Fleet (smaller yachts, crew of two or three) - across all Greek waters.`,
             },
             {
               icon: (

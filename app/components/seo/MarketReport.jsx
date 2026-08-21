@@ -12,7 +12,7 @@ import InlineCalendlySection from "@/app/components/InlineCalendlySection";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import Footer from "@/app/components/Footer";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -104,7 +104,7 @@ function DataTable({ table }) {
       style={{
         marginTop: 24,
         marginBottom: 12,
-        border: "1px solid rgba(201,168,76,0.2)",
+        border: "1px solid rgba(218, 161, 16,0.2)",
         background: "rgba(248, 245, 240, 0.02)",
         overflow: "auto",
       }}
@@ -115,8 +115,8 @@ function DataTable({ table }) {
           gridTemplateColumns: `repeat(${table.headers.length}, minmax(120px, 1fr))`,
           gap: 12,
           padding: "12px 16px",
-          background: "rgba(201,168,76,0.08)",
-          borderBottom: "1px solid rgba(201,168,76,0.2)",
+          background: "rgba(218, 161, 16,0.08)",
+          borderBottom: "1px solid rgba(218, 161, 16,0.2)",
           fontFamily: "var(--gy-font-ui)",
           fontSize: 9,
           letterSpacing: "0.28em",
@@ -182,7 +182,7 @@ export default function MarketReport({ reportData }) {
 
       <article style={{ background: NAVY, minHeight: "100vh", color: CREAM }}>
         {/* HERO */}
-        <header style={{ padding: "120px 24px 56px", borderBottom: "1px solid rgba(201,168,76,0.15)" }}>
+        <header style={{ padding: "120px 24px 56px", borderBottom: "1px solid rgba(218, 161, 16,0.15)" }}>
           <div style={{ maxWidth: 880, margin: "0 auto" }}>
             <Link
               href="/market-reports"
@@ -284,9 +284,9 @@ export default function MarketReport({ reportData }) {
         {Array.isArray(r.keyFindings) && r.keyFindings.length > 0 && (
           <section
             style={{
-              background: "rgba(201,168,76,0.025)",
-              borderTop: "1px solid rgba(201,168,76,0.15)",
-              borderBottom: "1px solid rgba(201,168,76,0.15)",
+              background: "rgba(218, 161, 16,0.025)",
+              borderTop: "1px solid rgba(218, 161, 16,0.15)",
+              borderBottom: "1px solid rgba(218, 161, 16,0.15)",
               padding: "72px 24px",
             }}
           >
@@ -421,9 +421,9 @@ export default function MarketReport({ reportData }) {
         {r.methodology && (
           <section
             style={{
-              background: "rgba(201,168,76,0.025)",
-              borderTop: "1px solid rgba(201,168,76,0.15)",
-              borderBottom: "1px solid rgba(201,168,76,0.15)",
+              background: "rgba(218, 161, 16,0.025)",
+              borderTop: "1px solid rgba(218, 161, 16,0.15)",
+              borderBottom: "1px solid rgba(218, 161, 16,0.15)",
               padding: "56px 24px",
             }}
           >
@@ -540,8 +540,8 @@ export default function MarketReport({ reportData }) {
         {/* CTA */}
         <section
           style={{
-            background: "rgba(201,168,76,0.025)",
-            borderTop: "1px solid rgba(201,168,76,0.15)",
+            background: "rgba(218, 161, 16,0.025)",
+            borderTop: "1px solid rgba(218, 161, 16,0.15)",
             padding: "84px 24px",
           }}
         >

@@ -18,7 +18,7 @@ import { sanityCardImg } from "@/lib/sanity-image";
 import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
 
 const MAX_YACHTS = 5;
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 function gtagEvent(name, payload) {
   try {
@@ -180,8 +180,8 @@ export default function ProposalClient({ yachts = [] }) {
           label="Fleet"
           options={[
             { value: "all", label: "Both fleets" },
-            { value: "private", label: "Private (per yacht/wk)" },
-            { value: "explorer", label: "Explorer (per person/wk)" },
+            { value: "private", label: "Private Fleet" },
+            { value: "explorer", label: "Sailing Fleet" },
           ]}
           value={tier} onChange={setTier}
         />
@@ -308,8 +308,8 @@ export default function ProposalClient({ yachts = [] }) {
             letterSpacing: "0.28em", textTransform: "uppercase",
             fontWeight: 700, padding: "12px 22px",
             background: picked.length === 0
-              ? "rgba(201,168,76,0.25)"
-              : `linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)`,
+              ? "rgba(218, 161, 16,0.25)"
+              : `linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)`,
             color: picked.length === 0 ? "rgba(13, 27, 42,0.45)" : "#0D1B2A",
             border: "none",
             cursor: picked.length === 0 ? "default" : "pointer",
@@ -400,7 +400,7 @@ export default function ProposalClient({ yachts = [] }) {
                         color: "#0D1B2A",
                         background: submitting
                           ? `${GOLD}66`
-                          : `linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)`,
+                          : `linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)`,
                         border: "none", cursor: submitting ? "default" : "pointer",
                       }}
                     >
@@ -446,7 +446,7 @@ export default function ProposalClient({ yachts = [] }) {
                     fontFamily: "var(--gy-font-ui)", fontSize: 10,
                     fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase",
                     color: "#0D1B2A",
-                    background: `linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)`,
+                    background: `linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)`,
                     textDecoration: "none",
                   }}
                 >
@@ -508,7 +508,7 @@ function FilterGroup({ label, options, value, onChange }) {
                 fontFamily: "var(--gy-font-ui)", fontSize: 10,
                 letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600,
                 padding: "8px 12px",
-                background: active ? "rgba(201,168,76,0.16)" : "transparent",
+                background: active ? "rgba(218, 161, 16,0.16)" : "transparent",
                 color: active ? GOLD : "rgba(248,245,240,0.6)",
                 border: `1px solid ${active ? GOLD : "rgba(248, 245, 240,0.15)"}`,
                 cursor: "pointer",

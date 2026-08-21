@@ -234,7 +234,7 @@ export default function TimeCapsulePage() {
         .tc-sealed__peek {
           margin-top: 24px;
           padding-top: 18px;
-          border-top: 1px solid rgba(201,168,76,0.25);
+          border-top: 1px solid rgba(218, 161, 16,0.25);
         }
         .tc-sealed__peek summary {
           cursor: pointer;

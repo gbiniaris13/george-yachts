@@ -310,7 +310,7 @@ export default function BriefFormShell({
         .brief-shell__handoff {
           margin: 32px 0 0 0;
           padding: 14px 18px;
-          background: rgba(201, 168, 76, 0.06);
+          background: rgba(218, 161, 16, 0.06);
           border-left: 2px solid var(--gy-gold);
           border-radius: 3px;
         }

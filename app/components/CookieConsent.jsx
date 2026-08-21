@@ -17,7 +17,7 @@
 import { useEffect, useState } from "react";
 import { getConsent, setConsent } from "@/lib/consent";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 
 export default function CookieConsent() {

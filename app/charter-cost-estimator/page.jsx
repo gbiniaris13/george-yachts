@@ -12,7 +12,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import CharterCostEstimator from "./CharterCostEstimator";
 import Footer from "@/app/components/Footer";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 
 export const metadata = {
@@ -70,7 +70,7 @@ export default function CharterCostEstimatorPage() {
         <header
           style={{
             padding: "120px 24px 56px",
-            borderBottom: "1px solid rgba(201, 168, 76, 0.15)",
+            borderBottom: "1px solid rgba(218, 161, 16, 0.15)",
             textAlign: "center",
           }}
         >
@@ -124,8 +124,8 @@ export default function CharterCostEstimatorPage() {
 
         <section
           style={{
-            background: "rgba(201, 168, 76, 0.025)",
-            borderTop: "1px solid rgba(201, 168, 76, 0.15)",
+            background: "rgba(218, 161, 16, 0.025)",
+            borderTop: "1px solid rgba(218, 161, 16, 0.15)",
             padding: "72px 24px",
           }}
         >
@@ -221,7 +221,7 @@ export default function CharterCostEstimatorPage() {
                   padding: "14px 26px",
                   background: GOLD,
                   color: NAVY,
-                  border: "1px solid rgba(201, 168, 76, 0.6)",
+                  border: "1px solid rgba(218, 161, 16, 0.6)",
                   textDecoration: "none",
                 }}
               >

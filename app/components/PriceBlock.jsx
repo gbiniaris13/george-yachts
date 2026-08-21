@@ -49,7 +49,7 @@ export default function PriceBlock({
           fontSize: s.badge,
           letterSpacing: "0.3em",
           textTransform: "uppercase",
-          color: "#C9A84C",
+          color: "#DAA110",
           fontWeight: 600,
         }}
       >
@@ -81,9 +81,10 @@ export default function PriceBlock({
             maxWidth: "32ch",
           }}
         >
-          {isPerPerson(yacht)
-            ? "All-in per person · APA + VAT included"
-            : "Plus VAT at the yacht's certified rate + APA, 20-40% by yacht type"}
+          {/* There used to be a per-person branch here promising "All-in per
+              person · APA + VAT included". Nothing on this site is all-in and
+              nothing is per person. */}
+          Plus VAT at the yacht&rsquo;s certified rate + APA, 20-40% by yacht type
         </span>
       )}
     </div>

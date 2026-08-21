@@ -369,7 +369,7 @@ export default async function BeforeYouSailPage() {
           font-style: italic;
           font-size: 14px;
           color: rgba(13, 27, 42, 0.6);
-          background: rgba(201, 168, 76, 0.06);
+          background: rgba(218, 161, 16, 0.06);
           border-left: 2px solid var(--gy-gold);
           padding: 14px 18px;
           margin: 0;

@@ -34,8 +34,8 @@ import { sanityCardImg } from "@/lib/sanity-image";
 const MAP_W = 1000;
 const MAP_H = 600;
 
-const GOLD = "#C9A84C";
-const GOLD_SOFT = "rgba(201, 168, 76, 0.35)";
+const GOLD = "#DAA110";
+const GOLD_SOFT = "rgba(218, 161, 16, 0.35)";
 
 /**
  * Yacht-list row shown inside the region modal.

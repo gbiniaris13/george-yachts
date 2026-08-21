@@ -9,7 +9,7 @@
 
 import Link from "next/link";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 const TYPE_LINKS = [
   // 2026-07-02 (ASK A Move 3a) - the crewed head page, first in the
@@ -116,8 +116,8 @@ export default function BrowseSeoCategories() {
       aria-label="Browse charter options"
       style={{
         background: "#0D1B2A",
-        borderTop: "1px solid rgba(201,168,76,0.18)",
-        borderBottom: "1px solid rgba(201,168,76,0.18)",
+        borderTop: "1px solid rgba(218, 161, 16,0.18)",
+        borderBottom: "1px solid rgba(218, 161, 16,0.18)",
         padding: "72px 24px",
       }}
     >

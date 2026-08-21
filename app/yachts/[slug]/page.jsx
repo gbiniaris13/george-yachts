@@ -273,7 +273,7 @@ function YachtSchema({ yacht, imageUrl, slug }) {
     ...(yacht.subtitle && { vehicleConfiguration: yacht.subtitle.split('|')[0].trim() }),
     ...(yacht.cruisingRegion && { vehicleSpecialUsage: `Crewed charter, ${yacht.cruisingRegion}` }),
     bodyType: 'Yacht',
-    fuelType: 'Diesel',  // virtually all charter yachts in our fleet
+    fuelType: 'Diesel',  // virtually every charter yacht here
     ...(yearBuilt && {
       productionDate: yearBuilt,
       vehicleModelDate: yearBuilt,
@@ -306,7 +306,11 @@ function YachtSchema({ yacht, imageUrl, slug }) {
     // and @id still ref the canonical Organization.
     offers: (() => {
       const { low, high } = extractPriceRange(yacht.weeklyRatePrice);
-      const perPerson = yacht.priceModel === 'per_person_week';
+      // 2026-08-21 (section 5). Every price on this site is the week for
+      // the yacht. Ten Sanity records still carry per_person_week and this
+      // used to read it straight into the structured data Google indexes,
+      // which is the last place a retired price model should survive.
+      const perPerson = false;
       // validThrough rolls with the Greek charter-season booking horizon
       // (the season ends ~Oct 31). This page is ISR (revalidate 3600) so the
       // value recomputes hourly and can never fall into the past - which is
@@ -348,7 +352,7 @@ function YachtSchema({ yacht, imageUrl, slug }) {
           price: String(low),
           priceCurrency: 'EUR',
           // priceModel-aware: whole-yacht vs per-guest weekly rate.
-          unitText: perPerson ? 'per guest per week' : 'per week',
+          unitText: 'per yacht per week',
           referenceQuantity: {
             '@type': 'QuantitativeValue',
             value: 7,

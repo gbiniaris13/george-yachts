@@ -38,12 +38,12 @@ function renderEmail({ capsule, cabin }) {
     <tr><td align="center" style="padding:32px 16px;">
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" style="max-width:560px;background:#FFFFFF;border:1px solid rgba(13,27,42,0.08);">
         <tr><td style="background:#0D1B2A;padding:24px 32px;">
-          <div style="color:#C9A84C;letter-spacing:3.5px;font-size:11px;text-transform:uppercase;font-family:'Helvetica Neue',Arial,sans-serif">Your time capsule</div>
-          <div style="color:#F8F5F0;font-size:26px;font-weight:300;margin-top:8px">Six months ago, <em style="color:#C9A84C;font-style:italic">you wrote this.</em></div>
+          <div style="color:#DAA110;letter-spacing:3.5px;font-size:11px;text-transform:uppercase;font-family:'Helvetica Neue',Arial,sans-serif">Your time capsule</div>
+          <div style="color:#F8F5F0;font-size:26px;font-weight:300;margin-top:8px">Six months ago, <em style="color:#DAA110;font-style:italic">you wrote this.</em></div>
         </td></tr>
         <tr><td style="padding:32px;font-size:15px;line-height:1.75;color:#0D1B2A;">
           <p style="margin:0 0 18px;">A small ritual you set in motion before sailing on <em>${escapeHtml(cabin.vessel_name)}</em>. We kept your words quietly in your Cabin, and bring them back to you now, without comment, without judgement, just the paragraph you wrote.</p>
-          <blockquote style="font-family:Georgia,serif;font-style:italic;font-size:17px;line-height:1.8;color:#0D1B2A;border-left:1px solid #C9A84C;padding:6px 0 6px 18px;margin:24px 0;">
+          <blockquote style="font-family:Georgia,serif;font-style:italic;font-size:17px;line-height:1.8;color:#0D1B2A;border-left:1px solid #DAA110;padding:6px 0 6px 18px;margin:24px 0;">
             ${escapeHtml(capsule.message).replace(/\n/g, "<br/>")}
           </blockquote>
           <p style="margin:0 0 16px;font-style:italic;color:rgba(13,27,42,0.65)">However much or little of this still feels true, we hope the rest of the week aboard, and the time since, has been kind.</p>

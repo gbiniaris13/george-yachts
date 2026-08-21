@@ -12,7 +12,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -98,7 +98,7 @@ export default function CalculatorClient() {
       <section
         style={{
           background: "rgba(248, 245, 240, 0.03)",
-          border: `1px solid rgba(201, 168, 76, 0.25)`,
+          border: `1px solid rgba(218, 161, 16, 0.25)`,
           padding: "32px 28px",
         }}
       >
@@ -406,7 +406,7 @@ export default function CalculatorClient() {
       {/* RESULTS */}
       <section
         style={{
-          background: "rgba(201, 168, 76, 0.04)",
+          background: "rgba(218, 161, 16, 0.04)",
           border: `1px solid ${GOLD}`,
           padding: "32px 28px",
         }}
@@ -495,10 +495,9 @@ export default function CalculatorClient() {
               lineHeight: 1.5,
             }}
           >
-            Per person ({guestCount} guests):{" "}
-            <span style={{ color: GOLD, fontWeight: 600 }}>
-              {rangeFormat(perPersonLow, perPersonHigh)}
-            </span>
+            {/* The per-person line came out on 2026-08-21: the figure a
+                charterer needs is the week, and this tool now ends on it. */}
+            Base fee, before the yacht&rsquo;s certified VAT rate and APA.
           </p>
         </div>
 

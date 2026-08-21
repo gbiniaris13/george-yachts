@@ -152,14 +152,14 @@ export default function ItineraryPreview() {
       style={{
         background: "linear-gradient(180deg, #0D1B2A 0%, #0D1B2A 100%)",
         padding: "clamp(72px, 10vw, 140px) clamp(24px, 5vw, 64px)",
-        borderTop: "1px solid rgba(201,168,76,0.12)",
-        borderBottom: "1px solid rgba(201,168,76,0.12)",
+        borderTop: "1px solid rgba(218, 161, 16,0.12)",
+        borderBottom: "1px solid rgba(218, 161, 16,0.12)",
         position: "relative",
         overflow: "hidden",
       }}
     >
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <p className="gy-eyebrow" style={{ color: "#C9A84C", marginBottom: 14 }}>
+        <p className="gy-eyebrow" style={{ color: "#DAA110", marginBottom: 14 }}>
           Live preview · Texture only
         </p>
         <h2
@@ -221,11 +221,11 @@ export default function ItineraryPreview() {
               color: streaming ? "#F8F5F0" : "#0D1B2A",
               background: streaming
                 ? "rgba(13, 27, 42,0.7)"
-                : "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)",
-              border: streaming ? "1px solid #C9A84C" : "1px solid #C9A84C",
+                : "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
+              border: streaming ? "1px solid #DAA110" : "1px solid #DAA110",
               boxShadow: streaming
                 ? "none"
-                : "0 12px 32px rgba(201,168,76,0.22)",
+                : "0 12px 32px rgba(218, 161, 16,0.22)",
               cursor: "pointer",
               transition: "all 0.32s ease",
             }}
@@ -254,7 +254,7 @@ export default function ItineraryPreview() {
               marginTop: 36,
               padding: "clamp(28px, 4vw, 48px)",
               background: "rgba(13, 27, 42, 0.55)",
-              border: "1px solid rgba(201,168,76,0.32)",
+              border: "1px solid rgba(218, 161, 16,0.32)",
               boxShadow: "0 24px 56px rgba(13, 27, 42,0.45)",
               minHeight: 280,
               position: "relative",
@@ -263,7 +263,7 @@ export default function ItineraryPreview() {
           >
             <p
               className="gy-eyebrow-sm"
-              style={{ color: "rgba(201,168,76,0.65)", marginBottom: 16 }}
+              style={{ color: "rgba(218, 161, 16,0.65)", marginBottom: 16 }}
             >
               {streaming ? "George is dictating…" : "Sample preview"}
             </p>
@@ -286,7 +286,7 @@ export default function ItineraryPreview() {
                     display: "inline-block",
                     width: 2,
                     height: "1em",
-                    background: "#C9A84C",
+                    background: "#DAA110",
                     marginLeft: 4,
                     verticalAlign: "text-bottom",
                     animation: "gy-cursor-blink 0.9s ease-in-out infinite",
@@ -300,10 +300,10 @@ export default function ItineraryPreview() {
                   fontFamily: "var(--gy-font-editorial)",
                   fontStyle: "italic",
                   fontSize: "clamp(18px, 1.7vw, 22px)",
-                  color: "#C9A84C",
+                  color: "#DAA110",
                   margin: "32px 0 0",
                   paddingTop: 24,
-                  borderTop: "1px solid rgba(201,168,76,0.35)",
+                  borderTop: "1px solid rgba(218, 161, 16,0.35)",
                   fontWeight: 300,
                   letterSpacing: "0.005em",
                 }}
@@ -378,7 +378,7 @@ function SelectField({ label, value, onChange, options }) {
         style={{
           padding: "12px 14px",
           background: "rgba(13, 27, 42, 0.55)",
-          border: "1px solid rgba(201,168,76,0.25)",
+          border: "1px solid rgba(218, 161, 16,0.25)",
           color: "#F8F5F0",
           fontFamily: "var(--gy-font-ui)",
           fontSize: 13,
@@ -421,7 +421,7 @@ function TextField({ label, value, onChange, placeholder }) {
         style={{
           padding: "12px 14px",
           background: "rgba(13, 27, 42, 0.55)",
-          border: "1px solid rgba(201,168,76,0.25)",
+          border: "1px solid rgba(218, 161, 16,0.25)",
           color: "#F8F5F0",
           fontFamily: "var(--gy-font-ui)",
           fontSize: 16,

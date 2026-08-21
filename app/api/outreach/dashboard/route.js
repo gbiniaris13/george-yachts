@@ -82,7 +82,7 @@ export async function GET(request) {
 border-radius:10px;padding:18px 20px;">
 <div style="font-size:12px;color:#6e778a;text-transform:uppercase;
 letter-spacing:.08em;">${h(title)}</div>
-<div style="font-size:32px;color:#d8b65d;font-weight:700;margin-top:6px;">${h(value)}</div>
+<div style="font-size:32px;color:#DAA110;font-weight:700;margin-top:6px;">${h(value)}</div>
 ${hint ? `<div style="font-size:12px;color:#8a93a8;margin-top:4px;">${h(hint)}</div>` : ''}
 </div>`;
 
@@ -120,7 +120,7 @@ ${records.slice(0, 50).map((r) => `
 <style>
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
      background:#0b1020;color:#e7ecf2;padding:32px 24px;}
-h1{margin:0 0 8px;color:#d8b65d;font-size:22px;letter-spacing:.01em;}
+h1{margin:0 0 8px;color:#DAA110;font-size:22px;letter-spacing:.01em;}
 .sub{color:#8a93a8;margin-bottom:24px;font-size:14px;}
 .row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;}
 </style>

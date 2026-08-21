@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useI18n } from '@/lib/i18n/I18nProvider';
 
-const GOLD = '#C9A84C';
+const GOLD = '#DAA110';
 
 export default function BudgetSlider({ yachts = [] }) {
   const { t } = useI18n();
@@ -32,7 +32,7 @@ export default function BudgetSlider({ yachts = [] }) {
   const range = sliderMax - sliderMin || 1;
 
   return (
-    <section style={{ padding: '80px 24px', background: '#0D1B2A', borderTop: '1px solid rgba(201,168,76,0.06)' }}>
+    <section style={{ padding: '80px 24px', background: '#0D1B2A', borderTop: '1px solid rgba(218, 161, 16,0.06)' }}>
       <div style={{ maxWidth: 800, margin: '0 auto' }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
@@ -101,7 +101,7 @@ export default function BudgetSlider({ yachts = [] }) {
                   display: 'block',
                   padding: '20px',
                   background: 'rgba(248, 245, 240,0.02)',
-                  border: '1px solid rgba(201,168,76,0.1)',
+                  border: '1px solid rgba(218, 161, 16,0.1)',
                   borderRadius: 12,
                   textDecoration: 'none',
                   textAlign: 'center',
@@ -154,7 +154,7 @@ export default function BudgetSlider({ yachts = [] }) {
           border-radius: 50%;
           background: ${GOLD};
           cursor: pointer;
-          box-shadow: 0 2px 8px rgba(13, 27, 42,0.3), 0 0 12px rgba(201,168,76,0.2);
+          box-shadow: 0 2px 8px rgba(13, 27, 42,0.3), 0 0 12px rgba(218, 161, 16,0.2);
         }
         input[type="range"]::-moz-range-thumb {
           width: 24px;

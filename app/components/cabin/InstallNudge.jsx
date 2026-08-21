@@ -143,7 +143,7 @@ export default function InstallNudge() {
           position: relative;
           background: var(--gy-navy, #0D1B2A);
           color: var(--gy-ivory, #F8F5F0);
-          border: 1px solid var(--gy-gold, #C9A84C);
+          border: 1px solid var(--gy-gold, #DAA110);
           padding: 22px 22px 20px;
           margin-top: 8px;
         }
@@ -172,7 +172,7 @@ export default function InstallNudge() {
           font-size: 9.5px;
           letter-spacing: 3px;
           text-transform: uppercase;
-          color: var(--gy-gold, #C9A84C);
+          color: var(--gy-gold, #DAA110);
           font-weight: 500;
         }
         .gy-install__title {
@@ -219,7 +219,7 @@ export default function InstallNudge() {
           cursor: pointer;
         }
         .gy-install__cta {
-          background: var(--gy-gold, #C9A84C);
+          background: var(--gy-gold, #DAA110);
           color: var(--gy-navy, #0D1B2A);
           border: 0;
           padding: 12px 22px;

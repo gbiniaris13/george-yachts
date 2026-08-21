@@ -169,11 +169,11 @@ export default function StickyFleetCTA({ yachtCount: yachtCountProp } = {}) {
             color: "#0D1B2A",
             textDecoration: "none",
             background:
-              "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
-            border: "1px solid rgba(201,168,76,0.65)",
+              "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
+            border: "1px solid rgba(218, 161, 16,0.65)",
             borderRadius: "999px",
             boxShadow:
-              "0 14px 35px -10px rgba(201,168,76,0.5), inset 0 1px 0 rgba(248, 245, 240,0.3)",
+              "0 14px 35px -10px rgba(218, 161, 16,0.5), inset 0 1px 0 rgba(248, 245, 240,0.3)",
             transition: "transform 0.4s ease, box-shadow 0.4s ease",
           }}
           onMouseEnter={(e) => {

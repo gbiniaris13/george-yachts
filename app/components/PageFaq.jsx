@@ -38,8 +38,8 @@ export default function PageFaq({
       className="gy-faq"
       style={{
         background: "#0D1B2A",
-        padding: "clamp(64px, 9vw, 120px) 24px",
-        borderTop: "1px solid rgba(201,168,76,0.12)",
+        padding: "clamp(40px, 5vw, 56px) 24px",
+        borderTop: "1px solid rgba(218, 161, 16,0.12)",
       }}
     >
       {emitSchema && (
@@ -59,12 +59,12 @@ export default function PageFaq({
         .gy-faq summary::after,
         .gy-faq summary::before {
           content: ""; position: absolute; right: 6px; top: 50%;
-          width: 15px; height: 1px; background: #C9A84C;
+          width: 15px; height: 1px; background: #DAA110;
           transition: transform .35s cubic-bezier(.4,0,.2,1), opacity .35s;
         }
         .gy-faq summary::before { transform: rotate(90deg); }
         .gy-faq details[open] summary::before { transform: rotate(0deg); opacity: 0; }
-        .gy-faq summary:hover { color: #C9A84C; }
+        .gy-faq summary:hover { color: #DAA110; }
         .gy-faq summary { transition: color .3s ease; }
       `,
         }}
@@ -77,7 +77,7 @@ export default function PageFaq({
             fontWeight: 600,
             letterSpacing: "0.4em",
             textTransform: "uppercase",
-            color: "#C9A84C",
+            color: "#DAA110",
             marginBottom: "18px",
           }}
         >

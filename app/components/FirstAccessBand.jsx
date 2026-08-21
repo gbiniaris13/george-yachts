@@ -12,7 +12,7 @@
 
 import { useState } from "react";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 const SUBSCRIBED_KEY = "gy_exit_intent_subscribed";
@@ -49,8 +49,8 @@ export default function FirstAccessBand() {
     <section
       aria-label="First access to the fleet"
       style={{
-        background: "rgba(201,168,76,0.03)",
-        borderTop: "1px solid rgba(201,168,76,0.15)",
+        background: "rgba(218, 161, 16,0.03)",
+        borderTop: "1px solid rgba(218, 161, 16,0.15)",
         padding: "64px 24px",
       }}
     >

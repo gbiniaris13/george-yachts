@@ -37,7 +37,7 @@ export default function ForbesBarDismiss({ cookieName }) {
         zIndex: 2,
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.color = "#C9A84C";
+        e.currentTarget.style.color = "#DAA110";
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.color = "rgba(248,245,240,0.6)";

@@ -16,7 +16,7 @@ import { FLEET_COUNT } from "@/lib/fleetCount";
 
 export const revalidate = 3600;
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const INK = "#23282E";
 const VELLUM = "#F4EFE6";
@@ -69,8 +69,9 @@ export default async function DossierPage({ params }) {
 
   const { low, high } = extractPriceRange(yacht.weeklyRatePrice);
   const guests = parseInt(yacht.sleeps) || null;
-  const perGuestLow = low && guests ? Math.round(low / guests) : null;
-  const perGuestHigh = high && guests ? Math.round(high / guests) : null;
+  // 2026-08-21 (section 5): the dossier used to carry a "per guest" row. A
+  // dossier is the document a client forwards to the rest of the party, which
+  // makes it the last place to put a number nobody can actually charter.
   const fmt = (n) => `€${Number(n).toLocaleString("en-US")}`;
 
   const specs = [
@@ -139,14 +140,6 @@ export default async function DossierPage({ params }) {
                 <td style={{ ...value, padding: "8px 0", borderBottom: "1px solid rgba(13,27,42,0.1)" }}>Weekly base rate (yacht + crew)</td>
                 <td style={{ ...value, padding: "8px 0", borderBottom: "1px solid rgba(13,27,42,0.1)", textAlign: "right", fontWeight: 600 }}>{yacht.weeklyRatePrice || "on request"}</td>
               </tr>
-              {perGuestLow && (
-                <tr>
-                  <td style={{ ...value, padding: "8px 0", borderBottom: "1px solid rgba(13,27,42,0.1)" }}>Per guest, at {guests} guests</td>
-                  <td style={{ ...value, padding: "8px 0", borderBottom: "1px solid rgba(13,27,42,0.1)", textAlign: "right" }}>
-                    {fmt(perGuestLow)}{perGuestHigh && perGuestHigh !== perGuestLow ? ` to ${fmt(perGuestHigh)}` : ""} / week
-                  </td>
-                </tr>
-              )}
               <tr>
                 <td style={{ ...value, padding: "8px 0", borderBottom: "1px solid rgba(13,27,42,0.1)" }}>APA (fuel, provisioning, berthing - transparent account)</td>
                 <td style={{ ...value, padding: "8px 0", borderBottom: "1px solid rgba(13,27,42,0.1)", textAlign: "right" }}>typically 25-40% of base</td>

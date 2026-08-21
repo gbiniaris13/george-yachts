@@ -3,7 +3,7 @@
 import { useI18n } from '@/lib/i18n/I18nProvider';
 import { useState } from 'react';
 
-const GOLD = '#C9A84C';
+const GOLD = '#DAA110';
 
 const ISLANDS = {
   mykonos: { name: 'Mykonos', emoji: '🎉', tagline: 'The Cosmopolitan Soul', desc: 'You thrive on energy, style, and being where the world gathers. Mykonos matches your love for vibrant nightlife, world-class dining, and beautiful people. You want your yacht anchored at Psarou Bay, cocktails flowing, and Little Venice glowing at sunset.', region: 'Cyclades', bestFor: 'Beach clubs, nightlife, celebrity spotting, cosmopolitan dining', yacht: "S/Y Genny or M/Y La Pellegrina 1" },
@@ -131,7 +131,7 @@ export default function IslandQuizClient() {
                   fontSize: 13,
                   color: 'rgba(248,245,240,0.78)',
                   background: 'rgba(248, 245, 240,0.03)',
-                  border: '1px solid rgba(201,168,76,0.1)',
+                  border: '1px solid rgba(218, 161, 16,0.1)',
                   borderRadius: 12,
                   cursor: 'pointer',
                   textAlign: 'left',
@@ -144,7 +144,7 @@ export default function IslandQuizClient() {
                   e.target.style.color = '#F8F5F0';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.borderColor = 'rgba(201,168,76,0.1)';
+                  e.target.style.borderColor = 'rgba(218, 161, 16,0.1)';
                   e.target.style.background = 'rgba(248, 245, 240,0.03)';
                   e.target.style.color = 'rgba(248,245,240,0.78)';
                 }}
@@ -171,7 +171,7 @@ export default function IslandQuizClient() {
             {result.desc}
           </p>
 
-          <div style={{ background: 'rgba(248, 245, 240,0.03)', border: '1px solid rgba(201,168,76,0.15)', borderRadius: 12, padding: 24, marginBottom: 32, textAlign: 'left' }}>
+          <div style={{ background: 'rgba(248, 245, 240,0.03)', border: '1px solid rgba(218, 161, 16,0.15)', borderRadius: 12, padding: 24, marginBottom: 32, textAlign: 'left' }}>
             <div style={{ marginBottom: 16 }}>
               <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.3)' }}>{t('quiz.region', 'Region')}</span>
               <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: '#F8F5F0', margin: '4px 0 0' }}>{result.region}</p>
@@ -199,7 +199,7 @@ export default function IslandQuizClient() {
                 letterSpacing: '0.15em',
                 textTransform: 'uppercase',
                 fontWeight: 600,
-                background: `linear-gradient(90deg, #C9A84C, #C9A84C)`,
+                background: `linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)`,
                 color: '#0D1B2A',
                 borderRadius: 8,
                 textDecoration: 'none',

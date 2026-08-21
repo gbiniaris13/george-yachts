@@ -314,7 +314,7 @@ export default function CabinMePrivatePage() {
           margin: 24px 0 18px 0;
           padding: 14px 18px;
           background: #FCFAF4;
-          border: 1px solid rgba(201, 168, 76, 0.32);
+          border: 1px solid rgba(218, 161, 16, 0.32);
           border-left: 3px solid var(--gy-gold);
           border-radius: 3px;
           display: flex;

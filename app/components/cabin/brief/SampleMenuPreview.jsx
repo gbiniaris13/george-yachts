@@ -111,7 +111,7 @@ export default function SampleMenuPreview() {
         .smp {
           margin: 8px 0 28px 0;
           padding: 0;
-          background: rgba(201, 168, 76, 0.06);
+          background: rgba(218, 161, 16, 0.06);
           border-left: 2px solid var(--gy-gold);
         }
         .smp__toggle {

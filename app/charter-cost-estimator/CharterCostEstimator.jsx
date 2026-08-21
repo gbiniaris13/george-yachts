@@ -8,7 +8,7 @@ import {
   estimateCharterCost,
 } from "@/lib/charterCostData";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 
 function selectStyle() {
@@ -133,8 +133,8 @@ export default function CharterCostEstimator() {
       {result && (
         <div
           style={{
-            border: "1px solid rgba(201, 168, 76, 0.3)",
-            background: "rgba(201, 168, 76, 0.04)",
+            border: "1px solid rgba(218, 161, 16, 0.3)",
+            background: "rgba(218, 161, 16, 0.04)",
             padding: "32px 36px",
           }}
         >

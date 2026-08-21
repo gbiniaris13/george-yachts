@@ -2,14 +2,14 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 
-const GOLD = '#C9A84C';
+const GOLD = '#DAA110';
 
 // Yacht names for random selection
 const YACHTS = [
   'M/Y La Pellegrina 1', 'S/CAT Genny', 'S/CAT Above & Beyond', "S/CAT World's End",
   'S/CAT Ad Astra', 'S/CAT Aloia', 'S/CAT Imladris', 'S/CAT Kimata',
   'P/CAT Crazy Horse', 'P/CAT Just Marie 2', 'P/CAT Alteya', 'P/CAT Alina', 'P/CAT SAMARA',
-  'S/CAT Helidoni', 'S/CAT Odyssey', 'S/CAT Azul', 'S/CAT Sahana',
+  'S/CAT Azul', 'S/CAT Sahana',
   'S/CAT Libra', 'S/Y Gigreca', 'S/Y Huayra', 'S/Y Nadamas',
   'M/Y Brooklyn', 'P/CAT Explorion', 'S/CAT Summer Star',
 ];

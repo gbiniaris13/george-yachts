@@ -83,8 +83,8 @@ export default function ForbesReferrerWelcome() {
         zIndex: 65,
         maxWidth: "min(380px, calc(100vw - 48px))",
         background: "linear-gradient(135deg, rgba(13,27,42,0.96) 0%, rgba(13, 27, 42,0.96) 100%)",
-        border: "1px solid rgba(201,168,76,0.42)",
-        boxShadow: "0 24px 60px rgba(13, 27, 42,0.55), 0 0 0 1px rgba(201,168,76,0.10) inset",
+        border: "1px solid rgba(218, 161, 16,0.42)",
+        boxShadow: "0 24px 60px rgba(13, 27, 42,0.55), 0 0 0 1px rgba(218, 161, 16,0.10) inset",
         backdropFilter: "blur(10px)",
         WebkitBackdropFilter: "blur(10px)",
         padding: "20px 22px 22px",
@@ -114,14 +114,14 @@ export default function ForbesReferrerWelcome() {
         >
           Forbes
         </span>
-        <span style={{ color: "rgba(201,168,76,0.7)" }}>·</span>
+        <span style={{ color: "rgba(218, 161, 16,0.7)" }}>·</span>
         <span
           style={{
             fontFamily: "var(--gy-font-display)",
             fontSize: 9,
             letterSpacing: "0.32em",
             textTransform: "uppercase",
-            color: "#C9A84C",
+            color: "#DAA110",
             fontWeight: 500,
           }}
         >
@@ -165,7 +165,7 @@ export default function ForbesReferrerWelcome() {
           display: "block",
           width: 56,
           height: 1,
-          background: "rgba(201,168,76,0.45)",
+          background: "rgba(218, 161, 16,0.45)",
           marginBottom: 16,
         }}
       />
@@ -181,8 +181,8 @@ export default function ForbesReferrerWelcome() {
           alignItems: "center",
           gap: 10,
           padding: "14px 24px",
-          background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)",
-          border: "1px solid #C9A84C",
+          background: "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
+          border: "1px solid #DAA110",
           color: "#0D1B2A",
           fontFamily: "var(--gy-font-display)",
           fontSize: 11,
@@ -190,7 +190,7 @@ export default function ForbesReferrerWelcome() {
           letterSpacing: "0.24em",
           textTransform: "uppercase",
           textDecoration: "none",
-          boxShadow: "0 8px 20px rgba(201,168,76,0.18)",
+          boxShadow: "0 8px 20px rgba(218, 161, 16,0.18)",
         }}
       >
         Brief George

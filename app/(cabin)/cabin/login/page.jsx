@@ -75,7 +75,7 @@ export default async function CabinLoginPage({ searchParams }) {
           font-family: var(--gy-font-ui);
           font-size: 10px;
           letter-spacing: 4px;
-          color: var(--gy-gold, #C9A84C);
+          color: var(--gy-gold, #DAA110);
           text-transform: uppercase;
           font-weight: 500;
         }

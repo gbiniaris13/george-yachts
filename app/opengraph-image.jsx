@@ -57,7 +57,7 @@ export default async function Image() {
           >
             Forbes
           </span>
-          <span style={{ color: "#C9A84C", display: "block" }}>·</span>
+          <span style={{ color: "#DAA110", display: "block" }}>·</span>
           <span style={{ display: "block", color: "rgba(248,245,240,0.85)" }}>As Featured · May 2026</span>
         </div>
 
@@ -69,7 +69,7 @@ export default async function Image() {
             left: "30%",
             right: "30%",
             height: "1px",
-            background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.5), transparent)",
+            background: "linear-gradient(90deg, transparent, rgba(218, 161, 16,0.5), transparent)",
           }}
         />
 
@@ -97,7 +97,7 @@ export default async function Image() {
           style={{
             width: 120,
             height: 1,
-            background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
+            background: "linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
             margin: "26px 0",
           }}
         />
@@ -107,7 +107,7 @@ export default async function Image() {
             fontSize: 17,
             letterSpacing: "0.4em",
             textTransform: "uppercase",
-            color: "#C9A84C",
+            color: "#DAA110",
             fontFamily: "sans-serif",
             fontWeight: 600,
             display: "block",
@@ -149,9 +149,9 @@ export default async function Image() {
           }}
         >
           <span style={{ display: "block" }}>IYBA Charter Active Member</span>
-          <span style={{ color: "rgba(201,168,76,0.5)", display: "block" }}>·</span>
+          <span style={{ color: "rgba(218, 161, 16,0.5)", display: "block" }}>·</span>
           <span style={{ display: "block" }}>MYBA-standard contracts</span>
-          <span style={{ color: "rgba(201,168,76,0.5)", display: "block" }}>·</span>
+          <span style={{ color: "rgba(218, 161, 16,0.5)", display: "block" }}>·</span>
           <span style={{ display: "block" }}>georgeyachts.com</span>
         </div>
 
@@ -163,15 +163,15 @@ export default async function Image() {
             left: "30%",
             right: "30%",
             height: "1px",
-            background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent)",
+            background: "linear-gradient(90deg, transparent, rgba(218, 161, 16,0.4), transparent)",
           }}
         />
 
         {/* Corner accents */}
-        <div style={{ position: "absolute", top: 24, left: 24, width: 50, height: 50, borderTop: "1px solid rgba(201,168,76,0.4)", borderLeft: "1px solid rgba(201,168,76,0.4)" }} />
-        <div style={{ position: "absolute", top: 24, right: 24, width: 50, height: 50, borderTop: "1px solid rgba(201,168,76,0.4)", borderRight: "1px solid rgba(201,168,76,0.4)" }} />
-        <div style={{ position: "absolute", bottom: 24, left: 24, width: 50, height: 50, borderBottom: "1px solid rgba(201,168,76,0.4)", borderLeft: "1px solid rgba(201,168,76,0.4)" }} />
-        <div style={{ position: "absolute", bottom: 24, right: 24, width: 50, height: 50, borderBottom: "1px solid rgba(201,168,76,0.4)", borderRight: "1px solid rgba(201,168,76,0.4)" }} />
+        <div style={{ position: "absolute", top: 24, left: 24, width: 50, height: 50, borderTop: "1px solid rgba(218, 161, 16,0.4)", borderLeft: "1px solid rgba(218, 161, 16,0.4)" }} />
+        <div style={{ position: "absolute", top: 24, right: 24, width: 50, height: 50, borderTop: "1px solid rgba(218, 161, 16,0.4)", borderRight: "1px solid rgba(218, 161, 16,0.4)" }} />
+        <div style={{ position: "absolute", bottom: 24, left: 24, width: 50, height: 50, borderBottom: "1px solid rgba(218, 161, 16,0.4)", borderLeft: "1px solid rgba(218, 161, 16,0.4)" }} />
+        <div style={{ position: "absolute", bottom: 24, right: 24, width: 50, height: 50, borderBottom: "1px solid rgba(218, 161, 16,0.4)", borderRight: "1px solid rgba(218, 161, 16,0.4)" }} />
       </div>
     ),
     { ...size }

@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import Image from 'next/image';
 
-const GOLD = '#C9A84C';
+const GOLD = '#DAA110';
 const DARK_BG = '#0D1B2A';
 const CARD_BG = '#0D1B2A';
 const BORDER = '#333333';
@@ -19,8 +19,9 @@ const SPEC_KEYS = [
   { key: 'cruiseSpeed', label: 'Cruise Speed' },
   { key: 'maxSpeed', label: 'Max Speed' },
   { key: 'weeklyRate', label: 'Weekly Rate' },
-  { key: 'perPersonWeekLow', label: 'Low Season / Person / Week' },
-  { key: 'perPersonWeekHigh', label: 'High Season / Person / Week' },
+  // 2026-08-21 (section 5). Two rows here divided the week by the berths and
+  // invited the reader to compare yachts on a number nobody can buy. The
+  // weekly rate above is the row that decides a charter.
 ];
 
 function parseNumeric(val) {
@@ -119,16 +120,16 @@ export default function CompareYachts({ compareList = [], onRemove, onClear }) {
             fontSize: isMobile ? 14 : 15,
             letterSpacing: '0.05em',
             textTransform: 'uppercase',
-            boxShadow: '0 4px 24px rgba(201, 168, 76, 0.4), 0 2px 8px rgba(13, 27, 42,0.5)',
+            boxShadow: '0 4px 24px rgba(218, 161, 16, 0.4), 0 2px 8px rgba(13, 27, 42,0.5)',
             transition: 'transform 0.2s ease, box-shadow 0.2s ease',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.05)';
-            e.currentTarget.style.boxShadow = '0 6px 32px rgba(201, 168, 76, 0.6), 0 4px 12px rgba(13, 27, 42,0.6)';
+            e.currentTarget.style.boxShadow = '0 6px 32px rgba(218, 161, 16, 0.6), 0 4px 12px rgba(13, 27, 42,0.6)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 24px rgba(201, 168, 76, 0.4), 0 2px 8px rgba(13, 27, 42,0.5)';
+            e.currentTarget.style.boxShadow = '0 4px 24px rgba(218, 161, 16, 0.4), 0 2px 8px rgba(13, 27, 42,0.5)';
           }}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -391,11 +392,11 @@ function CompareInsights({ compareList, isMobile }) {
     // --- Per-person value ---
     const withPP = compareList.filter(y => num(y.perPersonWeekLow) > 0);
     if (withPP.length >= 2) {
-      const sorted = [...withPP].sort((a, b) => num(a.perPersonWeekLow) - num(b.perPersonWeekLow));
-      if (num(sorted[0].perPersonWeekLow) !== num(sorted[sorted.length - 1].perPersonWeekLow)) {
+      const sorted = [...withPP].sort((a, b) => num(a.weeklyRate) - num(b.weeklyRate));
+      if (num(sorted[0].weeklyRate) !== num(sorted[sorted.length - 1].weeklyRate)) {
         result.push({
-          icon: '✨',
-          text: `Best value per person: ${sorted[0].title} at ${sorted[0].perPersonWeekLow}/person`,
+          icon: '·',
+          text: `Lowest week: ${sorted[0].title} at ${sorted[0].weeklyRate}`,
         });
       }
     }
@@ -416,8 +417,8 @@ function CompareInsights({ compareList, isMobile }) {
     >
       <div
         style={{
-          background: 'rgba(201, 168, 76, 0.06)',
-          border: `1px solid rgba(201, 168, 76, 0.15)`,
+          background: 'rgba(218, 161, 16, 0.06)',
+          border: `1px solid rgba(218, 161, 16, 0.15)`,
           borderRadius: 10,
           padding: isMobile ? '16px 18px' : '20px 28px',
         }}
@@ -620,7 +621,7 @@ function SpecRow({ label, value, highlighted, isMobile }) {
         transition: 'background-color 0.2s ease',
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = 'rgba(201, 168, 76, 0.05)';
+        e.currentTarget.style.backgroundColor = 'rgba(218, 161, 16, 0.05)';
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.backgroundColor = 'transparent';

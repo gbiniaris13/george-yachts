@@ -149,7 +149,7 @@ export default async function MenuPage() {
         .mn-wrap {
           margin-top: 30px;
           background: rgba(255, 252, 244, 0.85);
-          border: 1px solid rgba(201, 168, 76, 0.22);
+          border: 1px solid rgba(218, 161, 16, 0.22);
           padding: 32px 28px 28px;
         }
         /* 2026-05-24 — Christos pass: on phones the inner padding
@@ -209,7 +209,7 @@ export default async function MenuPage() {
           color: var(--gy-gold);
           margin: 0 0 14px 0;
           padding-bottom: 8px;
-          border-bottom: 1px solid rgba(201,168,76,0.4);
+          border-bottom: 1px solid rgba(218, 161, 16,0.4);
           font-weight: 500;
         }
         .mn-section__dishes {

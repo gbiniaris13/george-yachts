@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useWishlist } from '../components/WishlistProvider';
 import { useI18n } from '@/lib/i18n/I18nProvider';
 
-const GOLD = '#C9A84C';
+const GOLD = '#DAA110';
 
 const inputStyle = {
   padding: '12px 16px',
@@ -116,7 +116,7 @@ export default function FavoritesContent() {
           {t('favorites.empty', 'No Favorites Yet')}
         </h1>
         <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248, 245, 240,0.35)', maxWidth: 400, marginBottom: 32 }}>
-          {t('favorites.emptyDesc', 'Browse our fleet and tap the heart icon on any yacht that catches your eye. Your favorites will appear here.')}
+          {t('favorites.emptyDesc', 'Browse the fleet and tap the heart icon on any yacht that catches your eye. Your favorites will appear here.')}
         </p>
         <Link
           href="/charter-yacht-greece"
@@ -129,7 +129,7 @@ export default function FavoritesContent() {
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
             color: '#0D1B2A',
-            background: `linear-gradient(90deg, ${GOLD}, #C9A84C)`,
+            background: `linear-gradient(90deg, ${GOLD}, #DAA110)`,
             textDecoration: 'none',
             borderRadius: 4,
           }}
@@ -282,7 +282,7 @@ export default function FavoritesContent() {
                   letterSpacing: '0.15em',
                   textTransform: 'uppercase',
                   color: (!name || !email) ? '#9CA3AF' : '#0D1B2A',
-                  background: (!name || !email) ? '#9CA3AF' : `linear-gradient(90deg, ${GOLD}, #C9A84C)`,
+                  background: (!name || !email) ? '#9CA3AF' : `linear-gradient(90deg, ${GOLD}, #DAA110)`,
                   border: 'none',
                   borderRadius: 4,
                   cursor: (!name || !email) ? 'default' : 'pointer',

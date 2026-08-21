@@ -11,8 +11,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const GOLD = "#C9A84C";
-const GOLD_BRIGHT = "#C9A84C";
+const GOLD = "#DAA110";
+const GOLD_BRIGHT = "#DAA110";
 
 export default function MapboxRouteMap({
   islands = [],
@@ -293,7 +293,7 @@ export default function MapboxRouteMap({
             zIndex: 5,
             display: "flex",
             background: "rgba(13, 27, 42,0.85)",
-            border: "1px solid rgba(201,168,76,0.35)",
+            border: "1px solid rgba(218, 161, 16,0.35)",
             borderRadius: 4,
             backdropFilter: "blur(8px)",
             overflow: "hidden",
@@ -319,7 +319,7 @@ export default function MapboxRouteMap({
                   textTransform: "uppercase",
                   fontWeight: 700,
                   padding: "8px 14px",
-                  background: active ? "rgba(201,168,76,0.22)" : "transparent",
+                  background: active ? "rgba(218, 161, 16,0.22)" : "transparent",
                   color: active ? GOLD_BRIGHT : "rgba(248,245,240,0.72)",
                   border: "none",
                   cursor: "pointer",

@@ -7,7 +7,7 @@ import { SITE_UPDATED } from "@/lib/contentFreshness";
 import { HOME_FAQ } from "@/lib/houseFaq";
 
 // Re-render at most once an hour. The homepage uses weekly-rotating
-// photography on the Explorer fleet panel; at the week-boundary the
+// photography on the Sailing fleet panel; at the week-boundary the
 // next hourly revalidation picks up the new yacht automatically.
 // No manual work required from George.
 export const revalidate = 3600;
@@ -22,7 +22,7 @@ export const metadata = {
   },
   openGraph: {
     title: "George Yachts | Featured in Forbes · Luxury Yacht Charter Greece",
-    description: `Featured in Forbes (May 2026). ${FLEET_COUNT} curated yachts in Greek waters. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Personal broker service from Athens.`,
+    description: `Featured in Forbes (May 2026). ${FLEET_COUNT} curated yachts in Greek waters. Private Fleet (motor yachts and power catamarans) + Sailing Fleet (sailing catamarans and sailing yachts). IYBA Charter Active Member. Personal broker service from Athens.`,
     url: "https://georgeyachts.com",
     type: "website",
     siteName: "George Yachts Brokerage House",
@@ -81,7 +81,7 @@ export default async function HomePage() {
 
   let yachtCount = FLEET_COUNT;
   let privateRange = { low: 13000, high: 180000 };
-  let explorerRange = { low: 420, high: 1800 };
+  let explorerRange = { low: 11500, high: 27500 };
   let budgetYachts = [];
   let privateHeroImage = null;
   let explorerHeroImage = null;
@@ -232,14 +232,17 @@ export default async function HomePage() {
       privateRange = { low: Math.min(...privatePrices), high: Math.max(...privatePrices) };
     }
 
-    const explorerPP = explorerYachts.map(y => {
-      const base = extractPrice(y.weeklyRatePrice);
-      if (base === 0) return 0;
-      const guests = parseInt(y.sleeps) || 8;
-      return Math.round(base / guests);
-    }).filter(Boolean);
-    if (explorerPP.length) {
-      explorerRange = { low: Math.min(...explorerPP), high: Math.max(...explorerPP) };
+    // 2026-08-21 (section 5). This used to divide the week by the number of
+    // berths and publish the result as a per-person figure. George: "όλες οι
+    // τιμές στο site είναι per week, όχι per person". It is also the more
+    // honest number. A weekly rate divided by a bunk is not a price anybody
+    // can pay: the yacht goes as one yacht, and a group of six on an eight
+    // berth boat pays the eight berth week.
+    const explorerPrices = explorerYachts
+      .map(y => extractPrice(y.weeklyRatePrice))
+      .filter(p => p > 0);
+    if (explorerPrices.length) {
+      explorerRange = { low: Math.min(...explorerPrices), high: Math.max(...explorerPrices) };
     }
 
     budgetYachts = allYachts

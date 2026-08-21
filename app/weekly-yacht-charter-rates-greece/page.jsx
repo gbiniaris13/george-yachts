@@ -32,7 +32,7 @@ import Footer from "@/app/components/Footer";
 const SLUG = "weekly-yacht-charter-rates-greece";
 const URL = `https://georgeyachts.com/${SLUG}`;
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -162,7 +162,7 @@ export default function WeeklyRatesPage() {
       url: "https://georgeyachts.com",
     },
     publisher: { "@type": "Organization", "@id": "https://georgeyachts.com/#organization" },
-    variableMeasured: ["All-in weekly charter cost", "Base charter fee", "APA", "VAT", "Crew gratuity", "Per-guest cost"],
+    variableMeasured: ["All-in weekly charter cost", "Base charter fee", "APA", "VAT", "Crew gratuity"],
     measurementTechnique: "George Yachts 2026 closing book and IYBA pricing surveys",
     spatialCoverage: { "@type": "Place", name: "Greece (Cyclades, Ionian, Saronic, Dodecanese)" },
   };
@@ -193,7 +193,7 @@ export default function WeeklyRatesPage() {
 
       <article style={{ background: NAVY, minHeight: "100vh", color: CREAM }}>
         {/* HERO */}
-        <header style={{ padding: "160px 24px 40px", borderBottom: "1px solid rgba(201,168,76,0.15)", textAlign: "center" }}>
+        <header style={{ padding: "160px 24px 40px", borderBottom: "1px solid rgba(218, 161, 16,0.15)", textAlign: "center" }}>
           <div style={{ maxWidth: 980, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 18px" }}>
               Original rate data · Motor yachts · 2026
@@ -246,7 +246,7 @@ export default function WeeklyRatesPage() {
         </section>
 
         {/* BREAKDOWN - what's inside the all-in */}
-        <section style={{ padding: "16px 24px 48px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+        <section style={{ padding: "16px 24px 48px", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
           <div style={{ maxWidth: 820, margin: "0 auto" }}>
             <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(22px, 3vw, 30px)", fontWeight: 300, color: CREAM, margin: "0 0 14px" }}>
               What is included in the all-in weekly rate?
@@ -259,7 +259,7 @@ export default function WeeklyRatesPage() {
         </section>
 
         {/* METHODOLOGY */}
-        <section style={{ padding: "32px 24px", background: "rgba(201,168,76,0.03)", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+        <section style={{ padding: "32px 24px", background: "rgba(218, 161, 16,0.03)", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px" }}>Methodology and VAT basis</p>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.82)", margin: 0 }}>{methodology()}</p>
@@ -267,7 +267,7 @@ export default function WeeklyRatesPage() {
         </section>
 
         {/* FAQ */}
-        <section style={{ padding: "56px 24px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+        <section style={{ padding: "56px 24px", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
             <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(24px, 4vw, 36px)", fontWeight: 300, color: CREAM, margin: "0 0 28px" }}>Frequently asked questions</h2>
             {faqs.map((f, i) => (
@@ -280,7 +280,7 @@ export default function WeeklyRatesPage() {
         </section>
 
         {/* RELATED / INTERNAL LINKS */}
-        <section style={{ padding: "32px 24px 8px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+        <section style={{ padding: "32px 24px 8px", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 16px" }}>Go deeper</p>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 12 }}>

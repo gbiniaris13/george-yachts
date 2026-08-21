@@ -38,7 +38,7 @@ function htmlPage(title, body) {
   body { font-family: Georgia, "Times New Roman", serif; background:#F8F5F0; color:#0D1B2A; margin:0; padding:48px 24px; }
   .card { max-width: 520px; margin: 0 auto; background: #F8F5F0; padding: 36px; border: 1px solid #F8F5F0; }
   h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300; letter-spacing: 0.04em; font-size: 28px; margin: 0 0 8px 0; }
-  .gold { color: #C9A84C; font-size: 11px; text-transform: uppercase; letter-spacing: 0.32em; margin-bottom: 24px; }
+  .gold { color: #DAA110; font-size: 11px; text-transform: uppercase; letter-spacing: 0.32em; margin-bottom: 24px; }
   p { line-height: 1.65; }
   code { background:#F8F5F0; padding:2px 6px; }
 </style></head>

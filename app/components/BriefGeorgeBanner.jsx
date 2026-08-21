@@ -22,9 +22,9 @@ export default function BriefGeorgeBanner() {
       style={{
         position: "relative",
         padding: "clamp(28px, 4vw, 44px) clamp(24px, 5vw, 56px)",
-        background: "linear-gradient(135deg, rgba(201,168,76,0.06) 0%, rgba(13,27,42,0.6) 100%)",
-        borderTop: "1px solid rgba(201,168,76,0.18)",
-        borderBottom: "1px solid rgba(201,168,76,0.18)",
+        background: "linear-gradient(135deg, rgba(218, 161, 16,0.06) 0%, rgba(13,27,42,0.6) 100%)",
+        borderTop: "1px solid rgba(218, 161, 16,0.18)",
+        borderBottom: "1px solid rgba(218, 161, 16,0.18)",
         overflow: "hidden",
       }}
     >
@@ -43,7 +43,7 @@ export default function BriefGeorgeBanner() {
         <div style={{ flex: "1 1 360px", minWidth: 280 }}>
           <p
             className="gy-eyebrow-sm"
-            style={{ margin: 0, color: "#C9A84C" }}
+            style={{ margin: 0, color: "#DAA110" }}
           >
             Or skip the filters
           </p>
@@ -58,7 +58,7 @@ export default function BriefGeorgeBanner() {
               letterSpacing: "-0.01em",
             }}
           >
-            Tell us about your week - <em style={{ color: "#C9A84C", fontStyle: "italic" }}>George replies personally</em>.
+            Tell us about your week - <em style={{ color: "#DAA110", fontStyle: "italic" }}>George replies personally</em>.
           </h2>
           <p
             style={{
@@ -105,9 +105,9 @@ export default function BriefGeorgeBanner() {
               fontWeight: 700,
               color: "#0D1B2A",
               textDecoration: "none",
-              background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)",
-              border: "1px solid #C9A84C",
-              boxShadow: "0 12px 32px rgba(201,168,76,0.22)",
+              background: "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
+              border: "1px solid #DAA110",
+              boxShadow: "0 12px 32px rgba(218, 161, 16,0.22)",
               transition: "transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.32s ease",
             }}
           >

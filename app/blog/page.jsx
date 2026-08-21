@@ -123,7 +123,7 @@ export default async function BlogPage() {
   const jsonLdSchema = BlogListSchema(posts);
 
   return (
-    <div className="min-h-screen bg-black selection:bg-[#C9A84C] selection:text-black" style={{ fontFamily: "var(--gy-font-ui)" }}>
+    <div className="min-h-screen bg-black selection:bg-[#DAA110] selection:text-black" style={{ fontFamily: "var(--gy-font-ui)" }}>
       <PageBreadcrumb path="/blog" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }} />
 
@@ -155,7 +155,7 @@ export default async function BlogPage() {
         style={{
           background: "#0D1B2A",
           padding: "64px 24px",
-          borderTop: "1px solid rgba(201,168,76,0.12)",
+          borderTop: "1px solid rgba(218, 161, 16,0.12)",
         }}
       >
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
@@ -165,7 +165,7 @@ export default async function BlogPage() {
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 10,
                 letterSpacing: "0.4em",
-                color: "#C9A84C",
+                color: "#DAA110",
                 textTransform: "uppercase",
                 fontWeight: 600,
                 marginBottom: 14,
@@ -206,7 +206,7 @@ export default async function BlogPage() {
                   color: "#F8F5F0",
                   fontWeight: 600,
                   textDecoration: "none",
-                  border: "1px solid rgba(201,168,76,0.4)",
+                  border: "1px solid rgba(218, 161, 16,0.4)",
                   padding: "12px 22px",
                 }}
               >
@@ -227,7 +227,7 @@ export default async function BlogPage() {
           style={{
             background: "#0D1B2A",
             padding: "72px 24px",
-            borderTop: "1px solid rgba(201,168,76,0.12)",
+            borderTop: "1px solid rgba(218, 161, 16,0.12)",
           }}
         >
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
@@ -237,7 +237,7 @@ export default async function BlogPage() {
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 10,
                   letterSpacing: "0.4em",
-                  color: "#C9A84C",
+                  color: "#DAA110",
                   textTransform: "uppercase",
                   fontWeight: 600,
                   marginBottom: 14,
@@ -327,10 +327,10 @@ export default async function BlogPage() {
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
                   fontWeight: 600,
-                  color: "#C9A84C",
+                  color: "#DAA110",
                   textDecoration: "none",
                   paddingBottom: 4,
-                  borderBottom: "1px solid #C9A84C",
+                  borderBottom: "1px solid #DAA110",
                 }}
               >
                 Browse the Full Fleet →

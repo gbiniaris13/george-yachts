@@ -16,7 +16,7 @@
 
 import Link from "next/link";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -25,7 +25,7 @@ export default function QuickAnswerBlock({ question, answer, attribution = true 
   return (
     <aside
       style={{
-        background: "rgba(201, 168, 76, 0.06)",
+        background: "rgba(218, 161, 16, 0.06)",
         borderLeft: `3px solid ${GOLD}`,
         padding: "28px 32px",
         margin: "0 auto 36px",

@@ -40,7 +40,7 @@ import { useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 
 const NAVY = "#0D1B2A";
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 // Inline SVG marker — gold pin with navy dot. No external image.
 const PIN_SVG = `
@@ -462,7 +462,7 @@ export default function BerthMap({
         }
         .berth-map__inner {
           background: #FAF7F0;
-          border: 1px solid rgba(201, 168, 76, 0.28);
+          border: 1px solid rgba(218, 161, 16, 0.28);
           border-radius: 6px;
           box-shadow:
             0 10px 32px rgba(13, 27, 42, 0.07),
@@ -542,7 +542,7 @@ export default function BerthMap({
         .berth-map__open:focus-visible {
           background: var(--gy-gold);
           color: #ffffff;
-          box-shadow: 0 4px 12px rgba(201, 168, 76, 0.32);
+          box-shadow: 0 4px 12px rgba(218, 161, 16, 0.32);
           transform: translateY(-1px);
         }
         .berth-map__open-arrow {
@@ -572,7 +572,7 @@ export default function BerthMap({
         /* Leaflet popup look - tighter, branded. */
         :global(.leaflet-popup-content-wrapper) {
           background: #ffffff !important;
-          border: 1px solid rgba(201, 168, 76, 0.6) !important;
+          border: 1px solid rgba(218, 161, 16, 0.6) !important;
           border-radius: 2px !important;
           box-shadow: 0 6px 18px rgba(13, 27, 42, 0.18) !important;
         }

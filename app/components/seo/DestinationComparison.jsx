@@ -15,7 +15,7 @@ import { LAST_REFRESH } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
 import Footer from "@/app/components/Footer";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 const GREEN_TICK = "#7DB48B";
@@ -214,9 +214,9 @@ export default function DestinationComparison({ pageData }) {
         {Array.isArray(data.comparisonTable) && data.comparisonTable.length > 0 && (
           <section
             style={{
-              background: "rgba(201,168,76,0.025)",
-              borderTop: "1px solid rgba(201,168,76,0.15)",
-              borderBottom: "1px solid rgba(201,168,76,0.15)",
+              background: "rgba(218, 161, 16,0.025)",
+              borderTop: "1px solid rgba(218, 161, 16,0.15)",
+              borderBottom: "1px solid rgba(218, 161, 16,0.15)",
               padding: "72px 24px",
             }}
           >
@@ -250,7 +250,7 @@ export default function DestinationComparison({ pageData }) {
               </h2>
               <div
                 style={{
-                  border: "1px solid rgba(201,168,76,0.2)",
+                  border: "1px solid rgba(218, 161, 16,0.2)",
                   background: "rgba(248, 245, 240, 0.02)",
                   overflow: "hidden",
                 }}
@@ -263,8 +263,8 @@ export default function DestinationComparison({ pageData }) {
                     gridTemplateColumns: "minmax(180px, 1.6fr) 1.2fr 1.2fr 140px",
                     gap: 16,
                     padding: "14px 20px",
-                    background: "rgba(201,168,76,0.08)",
-                    borderBottom: "1px solid rgba(201,168,76,0.2)",
+                    background: "rgba(218, 161, 16,0.08)",
+                    borderBottom: "1px solid rgba(218, 161, 16,0.2)",
                     fontFamily: "var(--gy-font-ui)",
                     fontSize: 9,
                     letterSpacing: "0.32em",
@@ -397,9 +397,9 @@ export default function DestinationComparison({ pageData }) {
         {/* WHO CHOOSES WHICH */}
         <section
           style={{
-            background: "rgba(201,168,76,0.025)",
-            borderTop: "1px solid rgba(201,168,76,0.15)",
-            borderBottom: "1px solid rgba(201,168,76,0.15)",
+            background: "rgba(218, 161, 16,0.025)",
+            borderTop: "1px solid rgba(218, 161, 16,0.15)",
+            borderBottom: "1px solid rgba(218, 161, 16,0.15)",
             padding: "84px 24px",
           }}
         >
@@ -442,7 +442,7 @@ export default function DestinationComparison({ pageData }) {
                 style={{
                   border: `1px solid ${GOLD}`,
                   padding: "32px 28px",
-                  background: "rgba(201,168,76,0.04)",
+                  background: "rgba(218, 161, 16,0.04)",
                 }}
               >
                 <p
@@ -617,8 +617,8 @@ export default function DestinationComparison({ pageData }) {
         {Array.isArray(data.faq) && data.faq.length > 0 && (
           <section
             style={{
-              background: "rgba(201,168,76,0.025)",
-              borderTop: "1px solid rgba(201,168,76,0.15)",
+              background: "rgba(218, 161, 16,0.025)",
+              borderTop: "1px solid rgba(218, 161, 16,0.15)",
               padding: "84px 24px",
             }}
           >
@@ -785,8 +785,8 @@ export default function DestinationComparison({ pageData }) {
         {/* CTA */}
         <section
           style={{
-            background: "rgba(201,168,76,0.025)",
-            borderTop: "1px solid rgba(201,168,76,0.15)",
+            background: "rgba(218, 161, 16,0.025)",
+            borderTop: "1px solid rgba(218, 161, 16,0.15)",
             padding: "84px 24px",
           }}
         >

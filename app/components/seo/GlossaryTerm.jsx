@@ -22,7 +22,7 @@ import LastUpdated from "@/app/components/seo/LastUpdated";
 import RelatedPages from "@/app/components/seo/RelatedPages";
 import Footer from "@/app/components/Footer";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -97,7 +97,7 @@ export default function GlossaryTerm({ termData }) {
 
       <article style={{ background: NAVY, minHeight: "100vh", color: CREAM }}>
         {/* HERO, featured-snippet target */}
-        <header style={{ padding: "120px 24px 56px", borderBottom: "1px solid rgba(201,168,76,0.15)" }}>
+        <header style={{ padding: "120px 24px 56px", borderBottom: "1px solid rgba(218, 161, 16,0.15)" }}>
           <div style={{ maxWidth: 880, margin: "0 auto" }}>
             <nav style={{ marginBottom: 24 }}>
               <Link
@@ -212,9 +212,9 @@ export default function GlossaryTerm({ termData }) {
         {term.whyItMatters && (
           <section
             style={{
-              background: "rgba(201,168,76,0.025)",
-              borderTop: "1px solid rgba(201,168,76,0.15)",
-              borderBottom: "1px solid rgba(201,168,76,0.15)",
+              background: "rgba(218, 161, 16,0.025)",
+              borderTop: "1px solid rgba(218, 161, 16,0.15)",
+              borderBottom: "1px solid rgba(218, 161, 16,0.15)",
               padding: "64px 24px",
             }}
           >
@@ -272,7 +272,7 @@ export default function GlossaryTerm({ termData }) {
                   <div
                     key={i}
                     style={{
-                      border: "1px solid rgba(201,168,76,0.25)",
+                      border: "1px solid rgba(218, 161, 16,0.25)",
                       padding: "24px 26px",
                       background: "rgba(248, 245, 240, 0.02)",
                     }}
@@ -311,8 +311,8 @@ export default function GlossaryTerm({ termData }) {
         {Array.isArray(term.faq) && term.faq.length > 0 && (
           <section
             style={{
-              background: "rgba(201,168,76,0.025)",
-              borderTop: "1px solid rgba(201,168,76,0.15)",
+              background: "rgba(218, 161, 16,0.025)",
+              borderTop: "1px solid rgba(218, 161, 16,0.15)",
               padding: "72px 24px",
             }}
           >
@@ -491,7 +491,7 @@ export default function GlossaryTerm({ termData }) {
                       color: CREAM,
                       fontWeight: 600,
                       textDecoration: "none",
-                      border: "1px solid rgba(201,168,76,0.4)",
+                      border: "1px solid rgba(218, 161, 16,0.4)",
                       padding: "12px 22px",
                     }}
                   >
@@ -506,8 +506,8 @@ export default function GlossaryTerm({ termData }) {
         {/* CTA */}
         <section
           style={{
-            background: "rgba(201,168,76,0.025)",
-            borderTop: "1px solid rgba(201,168,76,0.15)",
+            background: "rgba(218, 161, 16,0.025)",
+            borderTop: "1px solid rgba(218, 161, 16,0.15)",
             padding: "72px 24px",
           }}
         >

@@ -14,7 +14,7 @@
 //   2. Leave one field (email) and George reaches out personally
 import { useEffect, useRef, useState } from "react";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const SEEN_KEY = "gy-concierge-shown";
 
@@ -97,7 +97,7 @@ export default function HotLeadConcierge({ signal }) {
         zIndex: 70,
         width: "min(340px, calc(100vw - 40px))",
         background: NAVY,
-        border: `1px solid rgba(201,168,76,0.45)`,
+        border: `1px solid rgba(218, 161, 16,0.45)`,
         boxShadow: "0 18px 50px rgba(0,0,0,0.45)",
         padding: "22px 22px 20px",
         animation: "gy-concierge-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both",
@@ -204,7 +204,7 @@ export default function HotLeadConcierge({ signal }) {
                   fontSize: 12,
                   color: "#F8F5F0",
                   background: "rgba(248,245,240,0.06)",
-                  border: "1px solid rgba(201,168,76,0.3)",
+                  border: "1px solid rgba(218, 161, 16,0.3)",
                   padding: "10px 12px",
                 }}
               />

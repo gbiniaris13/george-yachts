@@ -27,7 +27,7 @@ import { GLOSSARY_TERMS } from "@/lib/glossarySeo";
 import { SITE_UPDATED } from "@/lib/contentFreshness";
 import Footer from "@/app/components/Footer";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -337,7 +337,7 @@ export default function GeorgeBiniarisAuthorPage() {
         <header
           style={{
             padding: "120px 24px 72px",
-            borderBottom: "1px solid rgba(201,168,76,0.15)",
+            borderBottom: "1px solid rgba(218, 161, 16,0.15)",
           }}
         >
           <div
@@ -395,7 +395,7 @@ export default function GeorgeBiniarisAuthorPage() {
               style={{
                 aspectRatio: "3 / 4",
                 background: `${NAVY} url(/images/george-syros-quay.jpg) center/cover no-repeat`,
-                border: "1px solid rgba(201,168,76,0.3)",
+                border: "1px solid rgba(218, 161, 16,0.3)",
               }}
               aria-label="George P. Biniaris on the quay in Syros, Cyclades, at sunset"
             />
@@ -405,8 +405,8 @@ export default function GeorgeBiniarisAuthorPage() {
         {/* QUICK STATS */}
         <section
           style={{
-            background: "rgba(201,168,76,0.04)",
-            borderBottom: "1px solid rgba(201,168,76,0.15)",
+            background: "rgba(218, 161, 16,0.04)",
+            borderBottom: "1px solid rgba(218, 161, 16,0.15)",
             padding: "32px 24px",
           }}
         >
@@ -559,9 +559,9 @@ export default function GeorgeBiniarisAuthorPage() {
         {/* CREDENTIALS */}
         <section
           style={{
-            background: "rgba(201,168,76,0.025)",
-            borderTop: "1px solid rgba(201,168,76,0.15)",
-            borderBottom: "1px solid rgba(201,168,76,0.15)",
+            background: "rgba(218, 161, 16,0.025)",
+            borderTop: "1px solid rgba(218, 161, 16,0.15)",
+            borderBottom: "1px solid rgba(218, 161, 16,0.15)",
             padding: "72px 24px",
           }}
         >
@@ -604,7 +604,7 @@ export default function GeorgeBiniarisAuthorPage() {
                 <div
                   key={i}
                   style={{
-                    border: "1px solid rgba(201,168,76,0.25)",
+                    border: "1px solid rgba(218, 161, 16,0.25)",
                     padding: "22px 24px",
                     background: "rgba(248, 245, 240, 0.02)",
                   }}
@@ -693,7 +693,7 @@ export default function GeorgeBiniarisAuthorPage() {
                     fontWeight: 400,
                     color: CREAM,
                     margin: "0 0 18px",
-                    borderBottom: "1px solid rgba(201,168,76,0.2)",
+                    borderBottom: "1px solid rgba(218, 161, 16,0.2)",
                     paddingBottom: 10,
                   }}
                 >
@@ -769,8 +769,8 @@ export default function GeorgeBiniarisAuthorPage() {
         {/* CTA */}
         <section
           style={{
-            background: "rgba(201,168,76,0.025)",
-            borderTop: "1px solid rgba(201,168,76,0.15)",
+            background: "rgba(218, 161, 16,0.025)",
+            borderTop: "1px solid rgba(218, 161, 16,0.15)",
             padding: "84px 24px",
           }}
         >

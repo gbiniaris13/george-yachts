@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
-const GOLD = '#C9A84C';
+const GOLD = '#DAA110';
 
 const toolIcons = [
   (
@@ -57,7 +57,7 @@ export default function InteractiveTools() {
   ];
 
   return (
-    <section style={{ padding: '80px 24px', background: '#0D1B2A', borderTop: '1px solid rgba(201,168,76,0.06)' }}>
+    <section style={{ padding: '80px 24px', background: '#0D1B2A', borderTop: '1px solid rgba(218, 161, 16,0.06)' }}>
       <div style={{ maxWidth: 1000, margin: '0 auto' }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 48 }}>

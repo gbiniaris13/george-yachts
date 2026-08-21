@@ -105,7 +105,7 @@ export async function POST(request) {
             <h1 style="font-family: Georgia, serif; font-size: 28px; font-weight: 300; color: #F8F5F0; letter-spacing: 0.1em; margin: 0;">
               GEORGE YACHTS
             </h1>
-            <p style="font-size: 11px; letter-spacing: 0.3em; color: #C9A84C; margin-top: 8px;">
+            <p style="font-size: 11px; letter-spacing: 0.3em; color: #DAA110; margin-top: 8px;">
               PARTNERSHIP PROGRAMME
             </p>
           </div>
@@ -116,24 +116,24 @@ export async function POST(request) {
             </p>
             <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
               Please find attached our <strong>Partnership Programme for 2026</strong>,
-              which includes our fleet overview, commission structure, and how we work
+              which includes the fleet overview, commission structure, and how we work
               with travel professionals.
             </p>
             <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
               We remain invisible to your clients, you stay the hero.
             </p>
 
-            <div style="margin: 24px 0; padding: 18px 20px; border-left: 3px solid #C9A84C; background: rgba(201,168,76,0.05);">
+            <div style="margin: 24px 0; padding: 18px 20px; border-left: 3px solid #DAA110; background: rgba(218, 161, 16,0.05);">
               <p style="font-size: 14px; color: #0D1B2A; margin: 0 0 6px;">
                 The PDF is attached to this email. You can also
-                <a href="https://georgeyachts.com/partnership-deck.pdf" style="color: #C9A84C; font-weight: 600;">open it directly in your browser</a>.
+                <a href="https://georgeyachts.com/partnership-deck.pdf" style="color: #DAA110; font-weight: 600;">open it directly in your browser</a>.
               </p>
             </div>
 
-            <div style="margin: 32px 0; padding: 20px; border-left: 3px solid #C9A84C; background: rgba(201,168,76,0.05);">
+            <div style="margin: 32px 0; padding: 20px; border-left: 3px solid #DAA110; background: rgba(218, 161, 16,0.05);">
               <p style="font-size: 14px; color: #0D1B2A; margin: 0;">
                 <strong>Next step:</strong> Reply to this email or
-                <a href="https://calendly.com/george-georgeyachts/30min" style="color: #C9A84C;">book a 30-minute call</a>
+                <a href="https://calendly.com/george-georgeyachts/30min" style="color: #DAA110;">book a 30-minute call</a>
                 to discuss how we can work together.
               </p>
             </div>

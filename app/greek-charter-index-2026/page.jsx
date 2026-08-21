@@ -1,3 +1,4 @@
+import { FLEET_COUNT } from "@/lib/fleetCount";
 import { WHATSAPP_DOWN, WHATSAPP_NUMBER } from "@/lib/whatsappStatus";
 // Greek Charter Index 2026 - Stage 2 (Task 6 / Research A1).
 //
@@ -26,7 +27,7 @@ export const revalidate = 3600;
 const SLUG = "greek-charter-index-2026";
 const URL = `https://georgeyachts.com/${SLUG}`;
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -60,7 +61,7 @@ export async function generateMetadata() {
     // the line Google shows now leads with what the reader came for.
     title: { absolute: "Greek Charter Index: What a Week Actually Costs, by Yacht" },
     description:
-      "Original rate data across the 72 yachts I know first hand: what a week costs by type and size, from EUR 10,900 up, and when the 2027 rate cards open.",
+      `Original rate data across the ${FLEET_COUNT} yachts I know first hand: what a week costs by type and size, from EUR 10,900 up, and when the 2027 rate cards open.`,
     alternates: { canonical: URL },
     openGraph: {
       title: report.title,
@@ -222,7 +223,7 @@ export default async function GreekCharterIndexPage() {
             sides are longhand and the top comes from the stylesheet. */}
         <header
           className="gy-hero-lead"
-          style={{ paddingLeft: 24, paddingRight: 24, paddingBottom: 48, borderBottom: "1px solid rgba(201,168,76,0.15)", textAlign: "center" }}
+          style={{ paddingLeft: 24, paddingRight: 24, paddingBottom: 48, borderBottom: "1px solid rgba(218, 161, 16,0.15)", textAlign: "center" }}
         >
           <div style={{ maxWidth: 980, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 18px" }}>
@@ -236,7 +237,7 @@ export default async function GreekCharterIndexPage() {
         </header>
 
         {isDraft && (
-          <div style={{ background: "rgba(201,168,76,0.1)", borderBottom: `1px solid ${GOLD}`, padding: "14px 24px", textAlign: "center" }}>
+          <div style={{ background: "rgba(218, 161, 16,0.1)", borderBottom: `1px solid ${GOLD}`, padding: "14px 24px", textAlign: "center" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.04em", color: CREAM, margin: 0 }}>
               Draft preview. Figures populate from the Data Report (Charter Index) document in Sanity. This page is noindex until published.
             </p>
@@ -271,7 +272,7 @@ export default async function GreekCharterIndexPage() {
 
         {/* DATA SECTIONS */}
         {Array.isArray(report.sections) && report.sections.length > 0 && (
-          <section style={{ padding: "16px 24px 48px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+          <section style={{ padding: "16px 24px 48px", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
             <div style={{ maxWidth: 980, margin: "0 auto" }}>
               {report.sections.map((sec, i) => (
                 <div key={i} style={{ marginBottom: 40 }}>
@@ -286,7 +287,7 @@ export default async function GreekCharterIndexPage() {
 
         {/* METHODOLOGY */}
         {report.methodology && (
-          <section style={{ padding: "32px 24px", background: "rgba(201,168,76,0.03)", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+          <section style={{ padding: "32px 24px", background: "rgba(218, 161, 16,0.03)", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
             <div style={{ maxWidth: 760, margin: "0 auto" }}>
               <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px" }}>Methodology</p>
               <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.82)", margin: 0 }}>{report.methodology}</p>
@@ -297,14 +298,14 @@ export default async function GreekCharterIndexPage() {
         {/* RELATED - 2026-06-29. Close the internal-link loop: the index was a
             dead end (0 outbound links to the money pages). These feed crawl
             depth + topical clustering across the motor-charter cluster. */}
-        <section style={{ padding: "40px 24px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+        <section style={{ padding: "40px 24px", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 16px" }}>Go deeper</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <Link href="/weekly-yacht-charter-rates-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.25)", paddingBottom: 10 }}>Weekly charter rates, all-in: base, APA, VAT and gratuity by yacht size and season</Link>
-              <Link href="/motor-yacht-charter-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.25)", paddingBottom: 10 }}>Motor yacht charter in Greece: the full 2027 guide</Link>
-              <Link href="/charter-cost-estimator" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.25)", paddingBottom: 10 }}>Charter cost estimator</Link>
-              <Link href="/glossary/greek-vat" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.25)", paddingBottom: 10 }}>Greek charter VAT, explained: 5.2 to 12% by certification</Link>
+              <Link href="/weekly-yacht-charter-rates-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.25)", paddingBottom: 10 }}>Weekly charter rates, all-in: base, APA, VAT and gratuity by yacht size and season</Link>
+              <Link href="/motor-yacht-charter-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.25)", paddingBottom: 10 }}>Motor yacht charter in Greece: the full 2027 guide</Link>
+              <Link href="/charter-cost-estimator" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.25)", paddingBottom: 10 }}>Charter cost estimator</Link>
+              <Link href="/glossary/greek-vat" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.25)", paddingBottom: 10 }}>Greek charter VAT, explained: 5.2 to 12% by certification</Link>
             </div>
           </div>
         </section>
@@ -312,7 +313,7 @@ export default async function GreekCharterIndexPage() {
         {/* CITE THIS - 2026-06-28. Original data is what third parties + AI
             engines cite, but only if attribution is trivial. A ready-made
             citation line turns the index into a citation magnet. */}
-        <section style={{ padding: "32px 24px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+        <section style={{ padding: "32px 24px", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px" }}>Cite this index</p>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.82)", margin: 0 }}>
@@ -323,7 +324,7 @@ export default async function GreekCharterIndexPage() {
 
         {/* FAQ */}
         {Array.isArray(report.faqItems) && report.faqItems.length > 0 && (
-          <section style={{ padding: "56px 24px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+          <section style={{ padding: "56px 24px", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
             <div style={{ maxWidth: 760, margin: "0 auto" }}>
               <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(24px, 4vw, 36px)", fontWeight: 300, color: CREAM, margin: "0 0 28px" }}>Frequently asked questions</h2>
               {report.faqItems.map((f, i) => (
@@ -337,7 +338,7 @@ export default async function GreekCharterIndexPage() {
         )}
 
         {/* CTA */}
-        <section style={{ padding: "64px 24px", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+        <section style={{ padding: "64px 24px", textAlign: "center", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/inquiry" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: GOLD, color: NAVY, textDecoration: "none" }}>
               Brief George directly

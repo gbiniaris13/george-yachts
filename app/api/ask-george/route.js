@@ -22,6 +22,7 @@
 // 8478263770) with the conversation transcript and returns ok. No
 // AI call.
 
+import { isSailingFleet } from "@/lib/fleetTiers";
 import { sendTelegram } from "@/lib/telegram";
 import { FLEET_COUNT } from "@/lib/fleetCount";
 import { sanityClient } from "@/lib/sanity";
@@ -41,7 +42,7 @@ WHO IS GEORGE:
 - He works hands-on with charter clients and central agents across Greek waters.
 
 YOUR KNOWLEDGE:
-- ${FLEET_COUNT} curated yachts in our fleet (Private Fleet, per yacht/week pricing; Explorer Fleet, per person/week pricing).
+- ${FLEET_COUNT} curated yachts in this house. Every rate is per yacht, per week, fully crewed. There is no per-person rate and no bareboat.
 - Greek regions: Cyclades, Ionian, Saronic Gulf.
 - Sample itineraries on 10+ yachts.
 - MYBA-standard charter contracts, APA, VAT logic.
@@ -49,7 +50,7 @@ YOUR KNOWLEDGE:
 YOUR BEHAVIOR:
 - Recommend yachts when the user describes their needs (group size, region, vibe, budget).
 - Be specific, name yachts from the catalog below.
-- Explain pricing model clearly: Private Fleet = per yacht/week, Explorer Fleet = per person/week.
+- Explain pricing clearly and identically for both fleets: per yacht, per week, fully crewed, with VAT, APA and gratuity quoted separately. Never quote a per-person figure, never divide a week by the number of guests, and never mention bareboat or a skipper-only arrangement as something we offer.
 - Suggest itineraries.
 - Answer questions about Greek waters honestly.
 - Keep responses concise (2-4 short paragraphs, not essays).
@@ -89,7 +90,7 @@ function formatFleetForPrompt(yachts) {
   return yachts
     .slice(0, 80)
     .map((y) => {
-      const tier = y.fleetTier === "explorer" ? "Explorer (per person/week)" : "Private (per yacht/week)";
+      const tier = isSailingFleet(y) ? "Sailing Fleet" : "Private Fleet";
       return `• ${y.name}, ${y.builder || y.category || "yacht"}, ${y.length || ""}, sleeps ${y.sleeps || "?"}, ${y.cruisingRegion || "Greece"}. ${tier}. ${y.weeklyRatePrice || ""}. /yachts/${y.slug}`;
     })
     .join("\n");

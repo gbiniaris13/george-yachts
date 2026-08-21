@@ -5,7 +5,7 @@
 // Replaces the old 2-card boxy CTA strip with a full-viewport
 // editorial diptych:
 //   • Left panel:  Private Fleet (cinematic yacht hero image)
-//   • Right panel: Explorer Fleet (cinematic yacht hero image)
+//   • Right panel: Sailing Fleet (cinematic yacht hero image)
 //   • Hover a panel → the OTHER panel darkens to 40%, the active
 //     panel zooms 1.05× and its overlay lifts from 55% to 25%.
 //   • Subtle gold diagonal seam between the two panels on desktop.
@@ -111,6 +111,7 @@ function FleetPanel({
   href,
   collectionLabel,
   name,
+  subtitle,
   priceLine,
   descriptor,
   footer,
@@ -168,7 +169,7 @@ function FleetPanel({
         className="absolute inset-x-0 bottom-0 h-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to top, rgba(201,168,76,0.10), transparent 70%)",
+            "linear-gradient(to top, rgba(218, 161, 16,0.10), transparent 70%)",
         }}
       />
 
@@ -176,7 +177,7 @@ function FleetPanel({
       <div className="relative z-10 h-full min-h-[50dvh] md:min-h-[100dvh] flex flex-col items-center justify-center px-8 py-16 text-center">
         {/* Collection label */}
         <p
-          className="text-[#C9A84C]/80 text-[9px] mb-8"
+          className="text-[#DAA110]/80 text-[9px] mb-8"
           style={{
             fontFamily: "var(--gy-font-ui)",
             letterSpacing: "0.45em",
@@ -189,10 +190,10 @@ function FleetPanel({
 
         {/* Name - Cormorant Garamond editorial */}
         <h2
-          className="text-white mb-6"
+          className="text-white mb-2"
           style={{
             fontFamily: "var(--gy-font-editorial)",
-            // Mobile: min 32 (was 40) so "Explorer Fleet" fits on
+            // Mobile: min 32 (was 40) so "Sailing Fleet" fits on
             // 320px devices. maxWidth guards against edge-case long
             // builder names.
             fontSize: "clamp(32px, 6vw, 76px)",
@@ -206,9 +207,29 @@ function FleetPanel({
           {name}
         </h2>
 
+        {/* 2026-08-21 (section 9) — the literal term under the brand name.
+            George's idea and the right one: the name on top has to create
+            desire, the line under it has to tell a visitor in three words
+            what is actually in there, and it feeds the search engines and
+            the assistants the vocabulary the brand name deliberately avoids. */}
+        {subtitle && (
+          <p
+            className="text-white/45 mb-6"
+            style={{
+              fontFamily: "var(--gy-font-ui)",
+              fontSize: "clamp(9.5px, 1.05vw, 11px)",
+              letterSpacing: "0.28em",
+              textTransform: "uppercase",
+              fontWeight: 400,
+            }}
+          >
+            {subtitle}
+          </p>
+        )}
+
         {/* Price line */}
         <p
-          className="text-[#C9A84C] mb-5"
+          className="text-[#DAA110] mb-5"
           style={{
             fontFamily: "var(--gy-font-ui)",
             fontSize: "clamp(11px, 1.3vw, 13px)",
@@ -235,7 +256,7 @@ function FleetPanel({
 
         {/* CTA - inline gold-on-hover with sliding arrow */}
         <span
-          className="group inline-flex items-center gap-3 text-white/70 group-hover:text-[#C9A84C] transition-colors duration-500 pb-1 border-b border-white/20 group-hover:border-[#C9A84C]"
+          className="group inline-flex items-center gap-3 text-white/70 group-hover:text-[#DAA110] transition-colors duration-500 pb-1 border-b border-white/20 group-hover:border-[#DAA110]"
           style={{
             fontFamily: "var(--gy-font-ui)",
             fontSize: "11px",
@@ -271,7 +292,7 @@ function FleetPanel({
 
 export default function FleetCTAs({
   privateRange = { low: 13000, high: 180000 },
-  explorerRange = { low: 420, high: 1800 },
+  explorerRange = { low: 11500, high: 27500 },
   privateHeroImage = null,
   explorerHeroImage = null,
   privateCount = 0,
@@ -288,9 +309,10 @@ export default function FleetCTAs({
           href="/private-fleet"
           collectionLabel="Collection I"
           name="Private Fleet"
-          priceLine={`From ${fmtK(privateRange.low)} to ${fmtK(privateRange.high)} / week`}
+          subtitle="Motor Yachts & Power Catamarans"
+          priceLine={`From €${privateRange.low.toLocaleString('en-US')} to €${privateRange.high.toLocaleString('en-US')} / week`}
           descriptor="Full crew, total discretion. A private world at sea."
-          footer={privateCount > 0 ? `${privateCount} Yachts · Motor, Sailing, Catamaran` : null}
+          footer={privateCount > 0 ? `${privateCount} Yachts · Motor Yachts & Power Cats` : null}
           image={privateHeroImage}
           gradientFallback="linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)"
           ctaLabel="View the Fleet"
@@ -308,14 +330,15 @@ export default function FleetCTAs({
         <FleetPanel
           href="/explorer-fleet"
           collectionLabel="Collection II"
-          name="Explorer Fleet"
-          priceLine={`From €${explorerRange.low.toLocaleString('en-US')} to €${explorerRange.high.toLocaleString('en-US')} / person`}
-          descriptor="Skippered or lightly crewed. More islands, more adventure."
-          footer={explorerCount > 0 ? `${explorerCount} Yachts · Sailing & Power Cats` : null}
+          name="Sailing Fleet"
+          subtitle="Sailing Catamarans & Sailing Yachts"
+          priceLine={`From €${explorerRange.low.toLocaleString('en-US')} to €${explorerRange.high.toLocaleString('en-US')} / week`}
+          descriptor="Under sail, and into the bays the engines cannot reach."
+          footer={explorerCount > 0 ? `${explorerCount} Yachts · Sailing Cats & Monohulls` : null}
           image={explorerHeroImage}
           gradientFallback="linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)"
           ctaLabel="View the Fleet"
-          // Chapter 06.5 - Boss-curated Explorer Fleet background
+          // Chapter 06.5 - Boss-curated Sailing Fleet background
           // video (underwater swimmer in red, 26 s loop -
           // captures the "snorkel / explore / lightly crewed"
           // adventure mood). WebM 3.4 MB / MP4 5.3 MB / poster
@@ -330,7 +353,7 @@ export default function FleetCTAs({
       </div>
 
       {/* All Fleet bridge - George 2026-04-20:
-          "Private Fleet και Explorer Fleet στο hero είναι πολύ μεγάλα -
+          "Private Fleet και Sailing Fleet στο hero είναι πολύ μεγάλα -
           θέλω να μπει All Fleet ώστε να μπορούν να δουν όλο τον στόλο."
           A thin gold band under the two panels with a single link to
           the unified charter catalogue so nobody gets locked into one
@@ -340,8 +363,8 @@ export default function FleetCTAs({
         style={{
           background:
             "linear-gradient(to bottom, #0D1B2A 0%, #0D1B2A 100%)",
-          borderTop: "1px solid rgba(201,168,76,0.35)",
-          borderBottom: "1px solid rgba(201,168,76,0.15)",
+          borderTop: "1px solid rgba(218, 161, 16,0.35)",
+          borderBottom: "1px solid rgba(218, 161, 16,0.15)",
         }}
       >
         <Link
@@ -362,14 +385,14 @@ export default function FleetCTAs({
             Or
           </span>
           <span
-            className="relative transition-colors duration-500 group-hover:text-[#C9A84C]"
+            className="relative transition-colors duration-500 group-hover:text-[#DAA110]"
             style={{
               fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(18px, 2vw, 24px)",
               fontWeight: 300,
               color: "#F8F5F0",
               letterSpacing: "0.04em",
-              borderBottom: "1px solid rgba(201,168,76,0.5)",
+              borderBottom: "1px solid rgba(218, 161, 16,0.5)",
               paddingBottom: "3px",
             }}
           >
@@ -380,7 +403,7 @@ export default function FleetCTAs({
             height="10"
             viewBox="0 0 22 10"
             fill="none"
-            stroke="#C9A84C"
+            stroke="#DAA110"
             strokeWidth="1.2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -414,8 +437,8 @@ export default function FleetCTAs({
           background: linear-gradient(
             to right,
             transparent,
-            rgba(201, 168, 76, 0.35) 20%,
-            rgba(201, 168, 76, 0.35) 80%,
+            rgba(218, 161, 16, 0.35) 20%,
+            rgba(218, 161, 16, 0.35) 80%,
             transparent
           );
           width: 100%;
@@ -428,8 +451,8 @@ export default function FleetCTAs({
             background: linear-gradient(
               to bottom,
               transparent,
-              rgba(201, 168, 76, 0.35) 15%,
-              rgba(201, 168, 76, 0.35) 85%,
+              rgba(218, 161, 16, 0.35) 15%,
+              rgba(218, 161, 16, 0.35) 85%,
               transparent
             );
           }

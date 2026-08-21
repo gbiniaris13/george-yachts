@@ -358,7 +358,7 @@ const ArticlePage = async ({ params }) => {
   });
 
   return (
-    <div className="min-h-screen bg-[#0D1B2A] font-sans selection:bg-[#C9A84C] selection:text-black">
+    <div className="min-h-screen bg-[#0D1B2A] font-sans selection:bg-[#DAA110] selection:text-black">
       <JsonLd data={articleSchema} />
       {faqSchema && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
@@ -392,13 +392,13 @@ const ArticlePage = async ({ params }) => {
         />
 
         {/* Gold top rule */}
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C9A84C]/30 to-transparent mb-16" />
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#DAA110]/30 to-transparent mb-16" />
 
         {/* Top bar */}
         <div className="flex items-center justify-between w-full">
           <Link
             href="/blog"
-            className="inline-flex items-center text-white/50 hover:text-[#C9A84C] transition-colors duration-500 text-[9px] tracking-[0.55em] uppercase font-bold group"
+            className="inline-flex items-center text-white/50 hover:text-[#DAA110] transition-colors duration-500 text-[9px] tracking-[0.55em] uppercase font-bold group"
           >
             <ChevronLeft className="w-3 h-3 mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
             The Journal
@@ -414,7 +414,7 @@ const ArticlePage = async ({ params }) => {
             </span>
             {post._updatedAt && post.publishedAt &&
               Math.abs(new Date(post._updatedAt) - new Date(post.publishedAt)) > 24 * 60 * 60 * 1000 && (
-              <span className="text-[#C9A84C]/40 text-[8px] tracking-[0.4em] uppercase">
+              <span className="text-[#DAA110]/40 text-[8px] tracking-[0.4em] uppercase">
                 Updated: {new Date(post._updatedAt).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
@@ -428,11 +428,11 @@ const ArticlePage = async ({ params }) => {
         {/* Typographic block, left on mobile, centered on desktop */}
         <div className="flex flex-col items-start md:items-center md:text-center flex-1 justify-center mt-12 md:mt-0">
           <div className="flex items-center space-x-4 mb-8">
-            <span className="block w-8 h-px bg-[#C9A84C]" />
-            <span className="text-[#C9A84C] text-[9px] tracking-[0.6em] uppercase font-bold">
+            <span className="block w-8 h-px bg-[#DAA110]" />
+            <span className="text-[#DAA110] text-[9px] tracking-[0.6em] uppercase font-bold">
               Editorial
             </span>
-            <span className="hidden md:block w-8 h-px bg-[#C9A84C]" />
+            <span className="hidden md:block w-8 h-px bg-[#DAA110]" />
           </div>
 
           <h1
@@ -461,7 +461,7 @@ const ArticlePage = async ({ params }) => {
               By {post.author === "George P. Biniaris" ? (
                 <Link
                   href="/team/george-biniaris"
-                  className="hover:text-[#C9A84C] transition-colors"
+                  className="hover:text-[#DAA110] transition-colors"
                   style={{ color: "rgba(248,245,240,0.78)" }}
                 >
                   {post.author}
@@ -472,7 +472,7 @@ const ArticlePage = async ({ params }) => {
               {post.author === "George P. Biniaris" && (
                 <>
                   {" · "}
-                  <span style={{ color: "rgba(201, 168, 76, 0.65)" }}>
+                  <span style={{ color: "rgba(218, 161, 16, 0.65)" }}>
                     IYBA Member
                   </span>
                 </>
@@ -506,8 +506,8 @@ const ArticlePage = async ({ params }) => {
       <section className="relative z-10 bg-[#0D1B2A] px-6 py-20 md:py-32">
         <div className="max-w-[720px] mx-auto">
           <div className="flex items-center space-x-6 mb-16">
-            <span className="block w-6 h-px bg-[#C9A84C]/50" />
-            <span className="text-[#C9A84C]/50 text-[8px] tracking-[0.7em] uppercase">
+            <span className="block w-6 h-px bg-[#DAA110]/50" />
+            <span className="text-[#DAA110]/50 text-[8px] tracking-[0.7em] uppercase">
               George Yachts &middot; Maritime Intelligence
             </span>
             <span className="block flex-1 h-px bg-white/5" />
@@ -528,10 +528,10 @@ const ArticlePage = async ({ params }) => {
               aria-label="Quick answer"
               data-speakable="true"
               style={{
-                borderLeft: "2px solid #C9A84C",
+                borderLeft: "2px solid #DAA110",
                 padding: "20px 24px",
                 margin: "0 0 56px",
-                background: "rgba(201, 168, 76, 0.04)",
+                background: "rgba(218, 161, 16, 0.04)",
               }}
             >
               <p
@@ -541,7 +541,7 @@ const ArticlePage = async ({ params }) => {
                   fontWeight: 500,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
-                  color: "#C9A84C",
+                  color: "#DAA110",
                   margin: "0 0 12px",
                 }}
               >
@@ -569,7 +569,7 @@ const ArticlePage = async ({ params }) => {
 
           {/* End-of-article marker */}
           <div className="mt-20 pt-16 border-t border-white/[0.04] flex flex-col items-center space-y-5">
-            <span className="text-[#C9A84C]/25 text-4xl font-marcellus select-none">
+            <span className="text-[#DAA110]/25 text-4xl font-marcellus select-none">
               &#10022;
             </span>
             <p className="text-white/50 text-[8px] tracking-[0.7em] uppercase">
@@ -581,7 +581,7 @@ const ArticlePage = async ({ params }) => {
           <div className="mt-16 flex justify-center">
             <Link
               href="/blog"
-              className="inline-flex items-center text-white/50 hover:text-[#C9A84C] transition-colors duration-500 text-[9px] tracking-[0.55em] uppercase font-bold group"
+              className="inline-flex items-center text-white/50 hover:text-[#DAA110] transition-colors duration-500 text-[9px] tracking-[0.55em] uppercase font-bold group"
             >
               <ChevronLeft className="w-3 h-3 mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
               Return to The Journal
@@ -598,8 +598,8 @@ const ArticlePage = async ({ params }) => {
         <section className="relative z-10 bg-[#0D1B2A] px-6 pb-20 md:pb-28">
           <div className="max-w-[720px] mx-auto">
             <div className="flex items-center space-x-6 mb-12">
-              <span className="block w-6 h-px bg-[#C9A84C]/50" />
-              <span className="text-[#C9A84C]/50 text-[8px] tracking-[0.7em] uppercase">
+              <span className="block w-6 h-px bg-[#DAA110]/50" />
+              <span className="text-[#DAA110]/50 text-[8px] tracking-[0.7em] uppercase">
                 Frequently Asked
               </span>
               <span className="block flex-1 h-px bg-white/5" />
@@ -626,7 +626,7 @@ const ArticlePage = async ({ params }) => {
                   className="group border-b border-white/[0.07] py-6"
                 >
                   <summary
-                    className="cursor-pointer list-none flex items-start justify-between gap-6 text-white/85 hover:text-[#C9A84C] transition-colors duration-300"
+                    className="cursor-pointer list-none flex items-start justify-between gap-6 text-white/85 hover:text-[#DAA110] transition-colors duration-300"
                     style={{
                       fontFamily: "var(--gy-font-editorial)",
                       fontSize: "20px",
@@ -638,7 +638,7 @@ const ArticlePage = async ({ params }) => {
                     <span>{item.question}</span>
                     <span
                       aria-hidden="true"
-                      className="shrink-0 text-[#C9A84C]/70 transition-transform duration-300 group-open:rotate-45"
+                      className="shrink-0 text-[#DAA110]/70 transition-transform duration-300 group-open:rotate-45"
                       style={{ fontSize: "20px", lineHeight: 1 }}
                     >
                       +
@@ -695,7 +695,7 @@ const ArticlePage = async ({ params }) => {
               {clusters.map((c, i) => (
                 <span key={c.slug}>
                   {i > 0 && (i === clusters.length - 1 ? " and " : ", ")}
-                  <Link href={`/journal/${c.slug}`} style={{ color: "#C9A84C" }}>
+                  <Link href={`/journal/${c.slug}`} style={{ color: "#DAA110" }}>
                     {c.title}
                   </Link>
                 </span>

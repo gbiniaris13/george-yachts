@@ -14,7 +14,7 @@ const Section = ({ number, title, children }) => (
   <div className="mb-20 group" style={{ opacity: 1 }}>
     <div className="flex items-start gap-6">
       {number && (
-        <span style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "48px", fontWeight: 300, lineHeight: 1, color: "rgba(201,168,76,0.15)" }}>
+        <span style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "48px", fontWeight: 300, lineHeight: 1, color: "rgba(218, 161, 16,0.15)" }}>
           {String(number).padStart(2, "0")}
         </span>
       )}
@@ -22,7 +22,7 @@ const Section = ({ number, title, children }) => (
         <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.5rem", fontWeight: 400, color: "#F8F5F0", letterSpacing: "0.05em", marginBottom: "24px" }}>
           {title}
         </h2>
-        <div className="w-12 h-px mb-8" style={{ background: "linear-gradient(90deg, #C9A84C, transparent)" }} />
+        <div className="w-12 h-px mb-8" style={{ background: "linear-gradient(90deg, #DAA110, transparent)" }} />
         <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", lineHeight: 2.2, color: "rgba(248,245,240,0.6)", letterSpacing: "0.02em" }} className="space-y-4">
           {children}
         </div>
@@ -36,10 +36,10 @@ const CookiePolicy = () => {
     <div className="min-h-screen bg-black text-white">
       <PageBreadcrumb path="/cookie-policy" />
       {/* --- HERO SECTION --- */}
-      <div className="relative pt-44 pb-24 px-6 md:px-12" style={{ borderBottom: "1px solid rgba(201,168,76,0.1)" }}>
+      <div className="relative pt-44 pb-24 px-6 md:px-12" style={{ borderBottom: "1px solid rgba(218, 161, 16,0.1)" }}>
         <div className="container mx-auto max-w-4xl text-center">
-          <div className="w-16 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
-          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#C9A84C", marginBottom: "24px", textTransform: "uppercase" }}>
+          <div className="w-16 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #DAA110, transparent)" }} />
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#DAA110", marginBottom: "24px", textTransform: "uppercase" }}>
             Digital Transparency
           </p>
           <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#F8F5F0", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "16px" }}>
@@ -48,9 +48,9 @@ const CookiePolicy = () => {
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", letterSpacing: "0.2em", color: "rgba(248, 245, 240,0.35)", textTransform: "uppercase", marginBottom: "32px" }}>
             George Yachts Brokerage House LLC
           </p>
-          <div className="w-16 h-px mx-auto" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
+          <div className="w-16 h-px mx-auto" style={{ background: "linear-gradient(90deg, transparent, #DAA110, transparent)" }} />
         </div>
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(201,168,76,0.04) 0%, transparent 70%)" }} />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(218, 161, 16,0.04) 0%, transparent 70%)" }} />
       </div>
 
       {/* --- CONTENT SECTION --- */}
@@ -120,15 +120,15 @@ const CookiePolicy = () => {
         <Section number={7} title="Contact">
           <p>
             Questions about this policy:{" "}
-            <ObfuscatedEmail className="text-[#C9A84C] hover:underline" />. You may
+            <ObfuscatedEmail className="text-[#DAA110] hover:underline" />. You may
             also contact the Hellenic Data Protection Authority (1-3 Kifissias
             Avenue, 115 23 Athens; +30 210 6475600; contact@dpa.gr). See also our{" "}
-            <a href="/privacy-policy" className="text-[#C9A84C] hover:underline">Privacy Policy</a>.
+            <a href="/privacy-policy" className="text-[#DAA110] hover:underline">Privacy Policy</a>.
           </p>
         </Section>
 
-        <div className="mt-32 pt-16 text-center" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
-          <div className="w-8 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
+        <div className="mt-32 pt-16 text-center" style={{ borderTop: "1px solid rgba(218, 161, 16,0.1)" }}>
+          <div className="w-8 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #DAA110, transparent)" }} />
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", letterSpacing: "0.3em", color: "rgba(248, 245, 240,0.2)", textTransform: "uppercase" }}>
             Last Updated: June 2026
           </p>

@@ -51,9 +51,9 @@ function htmlPage(title, body) {
        justify-content:center;min-height:100vh;padding:24px;}
   .card{max-width:520px;background:#141a2e;border:1px solid #26304f;
         border-radius:12px;padding:40px 36px;box-shadow:0 16px 48px rgba(0,0,0,.5);}
-  h1{margin:0 0 12px;font-size:22px;color:#d8b65d;letter-spacing:.01em;}
+  h1{margin:0 0 12px;font-size:22px;color:#DAA110;letter-spacing:.01em;}
   p{margin:0 0 12px;line-height:1.55;color:#b7c0d0;}
-  a{color:#d8b65d;text-decoration:none;border-bottom:1px solid #d8b65d33;}
+  a{color:#DAA110;text-decoration:none;border-bottom:1px solid #DAA11033;}
   .fineprint{margin-top:20px;font-size:12px;color:#6e778a;}
 </style>
 </head><body>

@@ -18,7 +18,7 @@ import Image from "next/image";
 import { sanityCardImg } from "@/lib/sanity-image";
 import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 export default function BlogPostFooter({ relatedYachts = [] }) {
   const yachts = Array.isArray(relatedYachts)
@@ -31,9 +31,9 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
         <section
           aria-label="Yachts to consider for this read"
           style={{
-            background: "rgba(201,168,76,0.025)",
-            borderTop: "1px solid rgba(201,168,76,0.18)",
-            borderBottom: "1px solid rgba(201,168,76,0.18)",
+            background: "rgba(218, 161, 16,0.025)",
+            borderTop: "1px solid rgba(218, 161, 16,0.18)",
+            borderBottom: "1px solid rgba(218, 161, 16,0.18)",
             padding: "60px 24px",
           }}
         >
@@ -303,9 +303,9 @@ const btnGold = {
   textTransform: "uppercase",
   fontWeight: 700,
   padding: "10px 18px",
-  background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
+  background: "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
   color: "#0D1B2A",
-  border: "1px solid rgba(201,168,76,0.6)",
+  border: "1px solid rgba(218, 161, 16,0.6)",
   textDecoration: "none",
 };
 

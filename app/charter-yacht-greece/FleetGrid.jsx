@@ -274,30 +274,18 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
   // Per-person per-week estimate at the CEILING: APA 30% + statutory-max VAT 13%.
   // Most yachts invoice VAT below this (5.2-12% by certification), so the real
   // figure is usually lower; the label says "from" the estimate is honest.
-  const perPersonWeekly = useMemo(() => {
-    const priceStr = yacht.weeklyRatePrice || override.price || '';
-    const guestCount = parseInt(guests) || 0;
-    if (!priceStr || guestCount === 0 || priceStr === 'On Request') return null;
-    // Extract all numbers from price string
-    const numbers = [];
-    const regex = /€?([\d,.]+)/g;
-    const cleanStr = priceStr.replace(/[^\d.,€\-–]/g, ' ');
-    let m;
-    while ((m = regex.exec(cleanStr)) !== null) {
-      const num = parseFloat(m[1].replace(/,/g, '').replace(/\./g, ''));
-      if (!isNaN(num) && num > 100) numbers.push(num);
-    }
-    if (numbers.length === 0) return null;
-    const lowBase = numbers[0];
-    const highBase = numbers.length > 1 ? numbers[numbers.length - 1] : lowBase;
-    // Ceiling estimate: APA 30% + statutory-max VAT 13% = 1.43. Real invoices
-    // usually land lower (VAT 5.2-12% by the yacht's certification).
-    const multiplier = 1.43;
-    const lowTotal = Math.round((lowBase * multiplier) / guestCount);
-    const highTotal = Math.round((highBase * multiplier) / guestCount);
-    if (lowTotal <= 0) return null;
-    return { low: `€${lowTotal.toLocaleString('en-US')}`, high: `€${highTotal.toLocaleString('en-US')}` };
-  }, [yacht.weeklyRatePrice, override.price, guests]);
+  // 2026-08-21 (section 5). What stood here took the weekly rate, multiplied
+  // it by 1.43 as a "ceiling estimate" of APA at 30% and VAT at the 13%
+  // statutory maximum, divided the result by the guest count, and printed it
+  // on every card as "Total per person/week · incl. APA & VAT".
+  //
+  // Two separate problems and both mattered. The multiplier was a guess
+  // presented as an inclusive total, on a site whose argument is that APA and
+  // the yacht's certified VAT rate are itemised in writing rather than
+  // estimated; most of these yachts invoice VAT at 5.2 to 7.8%, so the number
+  // was materially wrong as well as invented. And the division produced a
+  // per-person price, which George has taken off the site: the yacht goes as
+  // one yacht.
 
   return (
     <div
@@ -394,8 +382,8 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
             }}
           >
             <svg width="18" height="18" viewBox="0 0 24 24"
-              fill={hasWishlist(slug) ? '#C9A84C' : 'none'}
-              stroke={hasWishlist(slug) ? '#C9A84C' : 'rgba(248,245,240,0.66)'}
+              fill={hasWishlist(slug) ? '#DAA110' : 'none'}
+              stroke={hasWishlist(slug) ? '#DAA110' : 'rgba(248,245,240,0.66)'}
               strokeWidth="2"
             >
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
@@ -437,16 +425,9 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
           <div style={{ width: '100%' }}>
             <div className="fleet-card__price-label">{t('fleet.weeklyCharter', 'Weekly Charter')}</div>
             <div className="fleet-card__price">{price}</div>
-            {perPersonWeekly && (
-              <div className="fleet-card__per-person">
-                <span className="fleet-card__per-person-label">{t('fleet.totalPerPerson', 'Total per person/week')}</span>
-                {perPersonWeekly.low === perPersonWeekly.high
-                  ? perPersonWeekly.low
-                  : `${perPersonWeekly.low} - ${perPersonWeekly.high}`
-                }
-                <span className="fleet-card__per-person-note">{t('fleet.inclApaVat', 'incl. APA & VAT')}</span>
-              </div>
-            )}
+            <div className="fleet-card__price-note">
+              {t('fleet.plusVatApa', 'Base fee. VAT, APA and gratuity quoted separately.')}
+            </div>
           </div>
           <div className="fleet-card__buttons">
             <Link href={`/yachts/${slug}`} className="fleet-card__btn fleet-card__btn--details">
@@ -497,9 +478,9 @@ function YachtCard({ yacht, index, isComparing, onToggleCompare, compareCount, t
               width: "100%",
               marginTop: "8px",
               padding: "6px",
-              background: isComparing ? "rgba(201,168,76,0.15)" : "transparent",
-              border: isComparing ? "1px solid rgba(201,168,76,0.4)" : "1px solid rgba(248, 245, 240,0.08)",
-              color: isComparing ? "#C9A84C" : "rgba(248, 245, 240,0.3)",
+              background: isComparing ? "rgba(218, 161, 16,0.15)" : "transparent",
+              border: isComparing ? "1px solid rgba(218, 161, 16,0.4)" : "1px solid rgba(248, 245, 240,0.08)",
+              color: isComparing ? "#DAA110" : "rgba(248, 245, 240,0.3)",
               fontSize: "9px",
               letterSpacing: "0.15em",
               textTransform: "uppercase",
@@ -908,7 +889,7 @@ export default function FleetGrid({ yachts }) {
               padding: '8px 16px',
               background: 'transparent',
               color: 'rgba(248,245,240,0.85)',
-              border: '1px solid rgba(201,168,76,0.45)',
+              border: '1px solid rgba(218, 161, 16,0.45)',
               borderRadius: '999px',
               fontFamily: "var(--gy-font-ui)",
               fontSize: 10,
@@ -920,14 +901,14 @@ export default function FleetGrid({ yachts }) {
               whiteSpace: 'nowrap',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(201,168,76,0.15)';
-              e.currentTarget.style.color = '#C9A84C';
-              e.currentTarget.style.borderColor = '#C9A84C';
+              e.currentTarget.style.background = 'rgba(218, 161, 16,0.15)';
+              e.currentTarget.style.color = '#DAA110';
+              e.currentTarget.style.borderColor = '#DAA110';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = 'transparent';
               e.currentTarget.style.color = 'rgba(248,245,240,0.85)';
-              e.currentTarget.style.borderColor = 'rgba(201,168,76,0.45)';
+              e.currentTarget.style.borderColor = 'rgba(218, 161, 16,0.45)';
             }}
           >
             {preset.label}
@@ -1119,10 +1100,10 @@ export default function FleetGrid({ yachts }) {
         <div className="fleet-empty">
           <div className="fleet-empty__icon">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="24" cy="24" r="23" stroke="rgba(201,168,76,0.3)" strokeWidth="1"/>
-              <path d="M16 28C16 28 19 24 24 24C29 24 32 28 32 28" stroke="rgba(201,168,76,0.5)" strokeWidth="1.5" strokeLinecap="round" transform="rotate(180 24 26)"/>
-              <circle cx="18" cy="20" r="1.5" fill="rgba(201,168,76,0.4)"/>
-              <circle cx="30" cy="20" r="1.5" fill="rgba(201,168,76,0.4)"/>
+              <circle cx="24" cy="24" r="23" stroke="rgba(218, 161, 16,0.3)" strokeWidth="1"/>
+              <path d="M16 28C16 28 19 24 24 24C29 24 32 28 32 28" stroke="rgba(218, 161, 16,0.5)" strokeWidth="1.5" strokeLinecap="round" transform="rotate(180 24 26)"/>
+              <circle cx="18" cy="20" r="1.5" fill="rgba(218, 161, 16,0.4)"/>
+              <circle cx="30" cy="20" r="1.5" fill="rgba(218, 161, 16,0.4)"/>
             </svg>
           </div>
           <p className="fleet-empty__text">No yachts match your filters</p>

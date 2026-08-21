@@ -15,7 +15,7 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 

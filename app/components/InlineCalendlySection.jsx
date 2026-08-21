@@ -14,7 +14,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -93,9 +93,9 @@ export default function InlineCalendlySection({
     <section
       ref={containerRef}
       style={{
-        background: "rgba(201,168,76,0.04)",
-        borderTop: "1px solid rgba(201,168,76,0.15)",
-        borderBottom: "1px solid rgba(201,168,76,0.15)",
+        background: "rgba(218, 161, 16,0.04)",
+        borderTop: "1px solid rgba(218, 161, 16,0.15)",
+        borderBottom: "1px solid rgba(218, 161, 16,0.15)",
         padding: "84px 24px",
       }}
     >
@@ -150,7 +150,7 @@ export default function InlineCalendlySection({
             minWidth: 320,
             height: 720,
             background: CREAM,
-            border: "1px solid rgba(201,168,76,0.25)",
+            border: "1px solid rgba(218, 161, 16,0.25)",
           }}
         />
 

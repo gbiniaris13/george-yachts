@@ -16,7 +16,7 @@ function gtagEventDebounced(name, payload, delay = 800) {
   }, delay);
 }
 
-const GOLD = '#C9A84C';
+const GOLD = '#DAA110';
 
 const SEASONS = [
   { id: 'low', label: 'Low Season', months: 'Apr-May, Oct', desc: 'Quieter waters, cooler weather, best rates' },
@@ -75,7 +75,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
     const apa = weeklyCharter * 0.30;
     // Charter total = charter + VAT + APA
     const charterTotal = weeklyCharter + vat + apa;
-    const perPersonWeek = Math.round(charterTotal / actualGuests / weeks);
+    const weekTotalPerWeek = Math.round(charterTotal / actualGuests / weeks);
     // Transfer is SEPARATE — per person, not included in charter total
     const transferCostPP = TRANSFER_OPTIONS.find(t => t.id === transfer)?.cost || 0;
     const totalTransfer = transferCostPP * actualGuests;
@@ -89,7 +89,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
       transferCostPP,
       totalTransfer,
       grandTotal: charterTotal + totalTransfer,
-      perPersonWeek,
+      weekTotalPerWeek,
       guests: actualGuests,
       weeks,
     };
@@ -101,7 +101,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
     fontFamily: "var(--gy-font-ui)",
     fontSize: 13,
     background: 'rgba(248, 245, 240,0.03)',
-    border: '1px solid rgba(201,168,76,0.15)',
+    border: '1px solid rgba(218, 161, 16,0.15)',
     borderRadius: 8,
     color: '#F8F5F0',
     outline: 'none',
@@ -242,7 +242,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
             >
               {TRANSFER_OPTIONS.map(t => (
                 <option key={t.id} value={t.id} style={{ background: '#0D1B2A' }}>
-                  {t.label} {t.cost > 0 ? `(${fmt(t.cost)}/person)` : ''}
+                  {t.label} {t.cost > 0 ? `(${fmt(t.cost)} per seat)` : ''}
                 </option>
               ))}
             </select>
@@ -254,7 +254,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
           {breakdown ? (
             <div style={{
               background: 'rgba(248, 245, 240,0.02)',
-              border: '1px solid rgba(201,168,76,0.15)',
+              border: '1px solid rgba(218, 161, 16,0.15)',
               borderRadius: 16,
               padding: 32,
               position: 'sticky',
@@ -306,14 +306,12 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                 </div>
               </div>
 
-              {/* Per person per week */}
-              <div style={{ textAlign: 'center', padding: 20, background: 'rgba(248, 245, 240,0.02)', borderRadius: 8, marginBottom: 24 }}>
-                <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(248, 245, 240,0.3)', marginBottom: 6 }}>{t('calculator.perPersonWeek', 'Per Person / Week (All-In)')}</div>
-                <div style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 28, color: '#F8F5F0' }}>{fmt(breakdown.perPersonWeek)}</div>
-                <div style={{ fontFamily: "var(--gy-font-ui)", fontSize: 8, color: 'rgba(248, 245, 240,0.2)', marginTop: 4 }}>
-                  {breakdown.guests} {t('calculator.guestsLabel', 'guests')} · {breakdown.weeks} {breakdown.weeks === 1 ? t('calculator.week', 'Week').toLowerCase() : t('calculator.weeks', 'Weeks').toLowerCase()} · {t('calculator.inclApaVat', 'incl. APA & VAT')}
-                </div>
-              </div>
+              {/* 2026-08-21 (section 5). A "per person per week" panel sat
+                  here, under the total. Removed: the calculator's job is to
+                  show what the week costs, and dividing that by the number of
+                  people at the table is not a price, it is a bill-splitting
+                  exercise the guests can do themselves once they know the
+                  real figure. */}
 
               {/* Transfer, SEPARATE section */}
               {breakdown.totalTransfer > 0 && (
@@ -365,7 +363,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                     fontWeight: 700,
                     letterSpacing: '0.18em',
                     textTransform: 'uppercase',
-                    background: `linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)`,
+                    background: `linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)`,
                     color: '#0D1B2A',
                     borderRadius: 6,
                     textDecoration: 'none',
@@ -375,7 +373,7 @@ export default function CostCalculatorClient({ yachts: YACHT_DATA = [] }) {
                   Get exact pricing →
                 </Link>
                 <a
-                  href={`https://api.whatsapp.com/send/?phone=17867988798&text=${encodeURIComponent(`Hi George, I used the cost calculator for ${breakdown.yacht.name}:\n\n${breakdown.guests} guests, ${breakdown.weeks} week(s), ${SEASONS.find(s => s.id === season)?.label}\nCharter all-in: ${fmt(breakdown.charterTotal)} (${fmt(breakdown.perPersonWeek)}/person/week)\nIncludes charter + VAT (est. max 13%) + APA 30%\n\nCan we discuss availability?`)}`}
+                  href={`https://api.whatsapp.com/send/?phone=17867988798&text=${encodeURIComponent(`Hi George, I used the cost calculator for ${breakdown.yacht.name}:\n\n${breakdown.guests} guests, ${breakdown.weeks} week(s), ${SEASONS.find(s => s.id === season)?.label}\nCharter all-in: ${fmt(breakdown.charterTotal)} (${fmt(breakdown.charterTotal)} for the week/week)\nIncludes charter + VAT (est. max 13%) + APA 30%\n\nCan we discuss availability?`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => {

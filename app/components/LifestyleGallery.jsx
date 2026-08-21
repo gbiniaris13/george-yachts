@@ -62,7 +62,7 @@ export default function LifestyleGallery({ heading = "Moments aboard", showCta =
       }}
     >
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <p className="gy-eyebrow" style={{ color: "#C9A84C" }}>
+        <p className="gy-eyebrow" style={{ color: "#DAA110" }}>
           Moments aboard
         </p>
         <h2
@@ -119,10 +119,10 @@ export default function LifestyleGallery({ heading = "Moments aboard", showCta =
         ) : (
           <div
             style={{
-              border: "1px solid rgba(201,168,76,0.18)",
+              border: "1px solid rgba(218, 161, 16,0.18)",
               padding: "clamp(48px, 7vw, 96px)",
               background:
-                "linear-gradient(135deg, rgba(201,168,76,0.04) 0%, rgba(13,27,42,0.5) 100%)",
+                "linear-gradient(135deg, rgba(218, 161, 16,0.04) 0%, rgba(13,27,42,0.5) 100%)",
               textAlign: "center",
               maxWidth: 720,
               marginInline: "auto",
@@ -198,7 +198,7 @@ export default function LifestyleGallery({ heading = "Moments aboard", showCta =
         .gy-lifestyle-tile:hover {
           transform: translateY(-6px) scale(1.02);
           box-shadow: 0 20px 48px rgba(13, 27, 42,0.5),
-                      0 0 0 1px rgba(201,168,76,0.3) inset;
+                      0 0 0 1px rgba(218, 161, 16,0.3) inset;
           z-index: 3;
         }
         .gy-lifestyle-tile__veil {

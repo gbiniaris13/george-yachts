@@ -335,7 +335,7 @@ const Footer = () => {
       <PressStrip />
 
       {/* Gold line top */}
-      <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C9A84C]/20 to-transparent" />
+      <div className="w-full h-px bg-gradient-to-r from-transparent via-[#DAA110]/20 to-transparent" />
 
       {/* Main footer content */}
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 pt-20 pb-16">
@@ -373,31 +373,31 @@ const Footer = () => {
                 href="https://www.instagram.com/georgeyachts"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#C9A84C]/40 transition-all duration-500"
+                className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#DAA110]/40 transition-all duration-500"
                 aria-label="Instagram"
                 data-cursor="Instagram"
               >
-                <Instagram className="w-4 h-4 text-white/50 group-hover:text-[#C9A84C] transition-colors duration-300" />
+                <Instagram className="w-4 h-4 text-white/50 group-hover:text-[#DAA110] transition-colors duration-300" />
               </a>
               <a
                 href="https://www.linkedin.com/in/george-p-biniaris/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#C9A84C]/40 transition-all duration-500"
+                className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#DAA110]/40 transition-all duration-500"
                 aria-label="LinkedIn"
                 data-cursor="LinkedIn"
               >
-                <Linkedin className="w-4 h-4 text-white/50 group-hover:text-[#C9A84C] transition-colors duration-300" />
+                <Linkedin className="w-4 h-4 text-white/50 group-hover:text-[#DAA110] transition-colors duration-300" />
               </a>
               <a
                 href="https://api.whatsapp.com/send/?phone=17867988798"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#C9A84C]/40 transition-all duration-500"
+                className="group relative w-11 h-11 flex items-center justify-center border border-white/10 hover:border-[#DAA110]/40 transition-all duration-500"
                 aria-label="WhatsApp"
                 data-cursor="WhatsApp"
               >
-                <WhatsappIcon className="w-4 h-4 text-white/50 group-hover:text-[#C9A84C] transition-colors duration-300" />
+                <WhatsappIcon className="w-4 h-4 text-white/50 group-hover:text-[#DAA110] transition-colors duration-300" />
               </a>
             </div>
 
@@ -446,11 +446,11 @@ const Footer = () => {
                 color: "#0D1B2A",
                 textDecoration: "none",
                 background:
-                  "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
-                border: "1px solid rgba(201,168,76,0.6)",
+                  "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
+                border: "1px solid rgba(218, 161, 16,0.6)",
                 borderRadius: "999px",
                 boxShadow:
-                  "0 8px 24px -8px rgba(201,168,76,0.4), inset 0 1px 0 rgba(248, 245, 240,0.25)",
+                  "0 8px 24px -8px rgba(218, 161, 16,0.4), inset 0 1px 0 rgba(248, 245, 240,0.25)",
               }}
             >
               Browse the Fleet →
@@ -510,7 +510,7 @@ const Footer = () => {
                     try { window.gtag("event", "calendly_click", { click_location: "footer" }); } catch {}
                   }
                 }}
-                className="inline-block px-6 py-3 text-center border border-[#C9A84C]/30 hover:border-[#C9A84C] text-[#C9A84C] hover:bg-[#C9A84C]/5 transition-all duration-500"
+                className="inline-block px-6 py-3 text-center border border-[#DAA110]/30 hover:border-[#DAA110] text-[#DAA110] hover:bg-[#DAA110]/5 transition-all duration-500"
                 style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, textDecoration: "none" }}
                 data-cursor="Book"
               >
@@ -566,10 +566,10 @@ const Footer = () => {
         <div
           className="my-12"
           style={{
-            borderTop: "1px solid rgba(201,168,76,0.18)",
-            borderBottom: "1px solid rgba(201,168,76,0.18)",
+            borderTop: "1px solid rgba(218, 161, 16,0.18)",
+            borderBottom: "1px solid rgba(218, 161, 16,0.18)",
             padding: "clamp(48px, 6vw, 72px) 24px",
-            background: "linear-gradient(135deg, rgba(201,168,76,0.03) 0%, rgba(13,27,42,0.4) 100%)",
+            background: "linear-gradient(135deg, rgba(218, 161, 16,0.03) 0%, rgba(13,27,42,0.4) 100%)",
           }}
         >
           <div className="max-w-2xl mx-auto text-center">
@@ -644,7 +644,7 @@ const Footer = () => {
                 <button
                   type="submit"
                   style={{
-                    background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
+                    background: "linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
                     color: "#0D1B2A",
                     padding: "14px 24px",
                     fontFamily: "var(--gy-font-ui)",
@@ -703,7 +703,7 @@ const Footer = () => {
                     fontSize: "9px",
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
-                    color: "rgba(201, 168, 76,0.85)",
+                    color: "rgba(218, 161, 16,0.85)",
                     marginBottom: "10px",
                   }}
                 >
@@ -754,7 +754,7 @@ const Footer = () => {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-white/30 hover:text-[#C9A84C] transition-colors duration-300"
+                className="text-white/30 hover:text-[#DAA110] transition-colors duration-300"
                 style={{ fontFamily: "var(--gy-font-ui)", fontSize: "8px", letterSpacing: "0.12em", textTransform: "uppercase" }}
               >
                 {link.name}
@@ -765,7 +765,7 @@ const Footer = () => {
             <button
               type="button"
               onClick={() => { if (typeof window !== "undefined" && window.gyOpenCookieSettings) window.gyOpenCookieSettings(); }}
-              className="text-white/30 hover:text-[#C9A84C] transition-colors duration-300"
+              className="text-white/30 hover:text-[#DAA110] transition-colors duration-300"
               style={{ fontFamily: "var(--gy-font-ui)", fontSize: "8px", letterSpacing: "0.12em", textTransform: "uppercase", background: "none", border: "none", cursor: "pointer", padding: 0 }}
             >
               Cookie Settings
@@ -784,7 +784,7 @@ const Footer = () => {
             edge so the gold reads across the full footer width (not
             tucked into the right column). Same Boss owns both
             entities; lead-gen channel for the agency. */}
-        <div className="w-full mt-10 pt-8 border-t border-[rgba(201,168,76,0.18)]">
+        <div className="w-full mt-10 pt-8 border-t border-[rgba(218, 161, 16,0.18)]">
           <a
             href="https://ghostwebdesign.dev"
             target="_blank"
@@ -792,7 +792,7 @@ const Footer = () => {
             className="block text-center"
             style={{
               fontSize: "13px",
-              color: "#C9A84C",
+              color: "#DAA110",
               textDecoration: "none",
               fontFamily: '"JetBrains Mono", "SF Mono", Menlo, Consolas, monospace',
               letterSpacing: "0.12em",
@@ -802,16 +802,16 @@ const Footer = () => {
               transition: "color 0.3s ease, text-shadow 0.3s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.color = "#F4E4B8";
-              e.currentTarget.style.textShadow = "0 0 16px rgba(201, 168, 76, 0.55)";
+              e.currentTarget.style.color = "#F7DE8A";
+              e.currentTarget.style.textShadow = "0 0 16px rgba(218, 161, 16, 0.55)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.color = "#C9A84C";
+              e.currentTarget.style.color = "#DAA110";
               e.currentTarget.style.textShadow = "none";
             }}
           >
             This website was designed and built by{" "}
-            <span style={{ fontWeight: 700, color: "#F4E4B8", letterSpacing: "0.22em" }}>GHOST_</span>
+            <span style={{ fontWeight: 700, color: "#F7DE8A", letterSpacing: "0.22em" }}>GHOST_</span>
             {" "}-{" "}
             <span style={{ fontStyle: "italic", opacity: 0.92 }}>premium digital agency for the discerning few</span>
             {" "}↗
@@ -833,9 +833,9 @@ const Footer = () => {
             lineHeight: 1.8,
             maxWidth: "820px",
             margin: "48px auto 0",
-            border: "1px solid rgba(201,168,76,0.18)",
+            border: "1px solid rgba(218, 161, 16,0.18)",
             padding: "16px 22px",
-            background: "rgba(201,168,76,0.025)",
+            background: "rgba(218, 161, 16,0.025)",
           }}
         >
           <strong style={{ color: "#F8F5F0", letterSpacing: "0.12em", textTransform: "uppercase", fontSize: "8px", display: "block", marginBottom: "8px" }}>
@@ -860,15 +860,15 @@ const Footer = () => {
             lineHeight: 1.8,
             maxWidth: "820px",
             margin: "24px auto 0",
-            border: "1px solid rgba(201,168,76,0.18)",
+            border: "1px solid rgba(218, 161, 16,0.18)",
             padding: "16px 22px",
-            background: "rgba(201,168,76,0.025)",
+            background: "rgba(218, 161, 16,0.025)",
           }}
         >
           <strong style={{ color: "#F8F5F0", letterSpacing: "0.12em", textTransform: "uppercase", fontSize: "8px", display: "block", marginBottom: "8px" }}>
             A note on currency
           </strong>
-          All charter rates are quoted in <strong style={{ color: "#C9A84C" }}>EUR (€)</strong> and the MYBA-standard charter agreement is signed in EUR. Conversion to USD, GBP or any other currency is provided by your own bank at the time of payment; <span className="notranslate">George Yachts</span> assumes no responsibility for exchange-rate movement between view, quote and contract execution.
+          All charter rates are quoted in <strong style={{ color: "#DAA110" }}>EUR (€)</strong> and the MYBA-standard charter agreement is signed in EUR. Conversion to USD, GBP or any other currency is provided by your own bank at the time of payment; <span className="notranslate">George Yachts</span> assumes no responsibility for exchange-rate movement between view, quote and contract execution.
         </p>
 
         {/* O.2 - GDPR data residency + deletion line. Reinforces the

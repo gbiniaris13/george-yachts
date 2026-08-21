@@ -92,8 +92,8 @@ async function buildBundleHtml(cabin, photos, capsule) {
     <tr><td align="center" style="padding:32px 16px;">
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;background:#FFFFFF;border:1px solid rgba(13,27,42,0.08);">
         <tr><td style="background:#0D1B2A;padding:28px 32px;">
-          <div style="color:#C9A84C;letter-spacing:3.5px;font-size:11px;text-transform:uppercase;font-family:'Helvetica Neue',Arial,sans-serif">Your voyage, kept</div>
-          <div style="color:#F8F5F0;font-size:28px;font-weight:300;margin-top:8px">A small <em style="color:#C9A84C;font-style:italic">album</em> from your week.</div>
+          <div style="color:#DAA110;letter-spacing:3.5px;font-size:11px;text-transform:uppercase;font-family:'Helvetica Neue',Arial,sans-serif">Your voyage, kept</div>
+          <div style="color:#F8F5F0;font-size:28px;font-weight:300;margin-top:8px">A small <em style="color:#DAA110;font-style:italic">album</em> from your week.</div>
         </td></tr>
         <tr><td style="padding:32px;font-size:15px;line-height:1.75;">
           <p style="margin:0 0 16px;">Dear ${esc(cabin.principal_charterer_name).split(" ")[0]},</p>
@@ -111,12 +111,12 @@ async function buildBundleHtml(cabin, photos, capsule) {
           }
 
           <p style="margin:0 0 16px;">
-            <a href="${PUBLIC}/cabin/voyage-album" style="display:inline-block;background:#0D1B2A;color:#F8F5F0;text-decoration:none;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:2.5px;font-size:11px;font-weight:500;padding:13px 26px;border:1px solid #C9A84C;text-transform:uppercase;">Open the voyage album</a>
+            <a href="${PUBLIC}/cabin/voyage-album" style="display:inline-block;background:#0D1B2A;color:#F8F5F0;text-decoration:none;font-family:'Helvetica Neue',Arial,sans-serif;letter-spacing:2.5px;font-size:11px;font-weight:500;padding:13px 26px;border:1px solid #DAA110;text-transform:uppercase;">Open the voyage album</a>
           </p>
 
           ${
             capsule
-              ? `<p style="margin:24px 0 8px;font-style:italic;font-family:Georgia,serif;border-left:1px solid #C9A84C;padding-left:14px;color:rgba(13,27,42,0.7);font-size:13.5px">
+              ? `<p style="margin:24px 0 8px;font-style:italic;font-family:Georgia,serif;border-left:1px solid #DAA110;padding-left:14px;color:rgba(13,27,42,0.7);font-size:13.5px">
                   A reminder: you sealed a time capsule on ${fmtDate(capsule.sealed_at?.slice(0,10))}. We’ll quietly bring it back to you on <strong>${fmtDate(capsule.reveal_at?.slice(0,10))}</strong>, in your own words.
                 </p>`
               : ""

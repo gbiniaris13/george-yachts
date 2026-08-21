@@ -3,7 +3,7 @@
 import { useI18n } from '@/lib/i18n/I18nProvider';
 import { useState } from 'react';
 
-const GOLD = '#C9A84C';
+const GOLD = '#DAA110';
 
 const MONTHS = [
   { month: 'April', temp: 19, sea: 17, wind: 'Light', meltemi: false, crowds: 'Low', pricing: 'Low Season', rating: 3, desc: 'Spring awakening. Wildflowers cover the islands. Cool evenings, warm days. Perfect for hiking and exploring without crowds. Some restaurants still opening.' },
@@ -65,7 +65,7 @@ export default function WeatherClient() {
         </div>
 
         {/* Selected month detail */}
-        <div style={{ background: 'rgba(248, 245, 240,0.02)', border: '1px solid rgba(201,168,76,0.12)', borderRadius: 16, padding: 32, marginBottom: 48 }}>
+        <div style={{ background: 'rgba(248, 245, 240,0.02)', border: '1px solid rgba(218, 161, 16,0.12)', borderRadius: 16, padding: 32, marginBottom: 48 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 16 }}>
             <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 28, color: '#F8F5F0', fontWeight: 300, margin: 0 }}>
               {selectedMonth.month}
@@ -128,7 +128,7 @@ export default function WeatherClient() {
         </div>
 
         {/* George's tip */}
-        <div style={{ background: 'rgba(201,168,76,0.05)', borderLeft: `3px solid ${GOLD}`, borderRadius: '0 12px 12px 0', padding: 24 }}>
+        <div style={{ background: 'rgba(218, 161, 16,0.05)', borderLeft: `3px solid ${GOLD}`, borderRadius: '0 12px 12px 0', padding: 24 }}>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: GOLD, marginBottom: 8 }}>George's Tip</p>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: 'rgba(248,245,240,0.66)', lineHeight: 1.8, margin: '0 0 8px', fontStyle: 'italic' }}>
             "If I had to choose one month to charter in Greece, it would be June or September. June gives you long days and warm seas before the Meltemi arrives. September gives you the warmest water of the year after the crowds have gone. Both offer mid-season pricing - significantly less than July and August."

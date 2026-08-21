@@ -227,7 +227,7 @@ export default async function FilotimoCirclePage() {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 16px;
-          border-top: 1px solid rgba(201, 168, 76, 0.25);
+          border-top: 1px solid rgba(218, 161, 16, 0.25);
           padding-top: 18px;
         }
         .filotimo__stats span {

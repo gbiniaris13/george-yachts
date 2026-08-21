@@ -18,7 +18,7 @@ import { ImageResponse } from "next/og";
 export const runtime = "edge";
 
 export async function GET() {
-  const GOLD = "#C9A84C";
+  const GOLD = "#DAA110";
   const NAVY = "#0D1B2A";
   const CREAM = "#FAF8F3";
 

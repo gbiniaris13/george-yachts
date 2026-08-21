@@ -128,7 +128,7 @@ export default function VesselHero({ photos, vesselName, makeModel, dates }) {
           font-size: 10px;
           letter-spacing: 3px;
           text-transform: uppercase;
-          color: var(--gy-gold, #C9A84C);
+          color: var(--gy-gold, #DAA110);
           font-weight: 500;
           margin-bottom: 8px;
         }

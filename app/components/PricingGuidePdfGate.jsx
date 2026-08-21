@@ -13,7 +13,7 @@
 
 import { useState } from "react";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -158,7 +158,7 @@ export default function PricingGuidePdfGate() {
         {status === "success" ? (
           <div
             style={{
-              background: "rgba(201,168,76,0.08)",
+              background: "rgba(218, 161, 16,0.08)",
               border: `1px solid ${GOLD}`,
               padding: "20px 24px",
               textAlign: "center",
@@ -202,7 +202,7 @@ export default function PricingGuidePdfGate() {
         ) : status === "success-no-pdf" ? (
           <div
             style={{
-              background: "rgba(201,168,76,0.08)",
+              background: "rgba(218, 161, 16,0.08)",
               border: `1px solid ${GOLD}`,
               padding: "20px 24px",
               textAlign: "center",
@@ -377,7 +377,7 @@ export default function PricingGuidePdfGate() {
                 textTransform: "uppercase",
                 fontWeight: 700,
                 padding: "15px 22px",
-                background: status === "submitting" ? "rgba(201,168,76,0.5)" : GOLD,
+                background: status === "submitting" ? "rgba(218, 161, 16,0.5)" : GOLD,
                 color: NAVY,
                 border: "none",
                 cursor: status === "submitting" ? "default" : "pointer",

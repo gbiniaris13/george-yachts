@@ -134,7 +134,7 @@ const styles = `
     font-size: 10px;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--gy-gold, #C9A84C);
+    color: var(--gy-gold, #DAA110);
     font-weight: 500;
     margin-bottom: 6px;
   }
@@ -171,7 +171,7 @@ const styles = `
   }
   .cabin-login-form__submit:disabled { opacity: 0.55; cursor: wait; }
   .cabin-login-form__error {
-    color: #E0BA77;
+    color: #DAA110;
     font-family: var(--gy-font-editorial);
     font-style: italic;
     font-size: 13px;

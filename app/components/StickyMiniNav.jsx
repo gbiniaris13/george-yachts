@@ -102,8 +102,8 @@ export default function StickyMiniNav() {
         background: "rgba(13, 27, 42, 0.78)",
         backdropFilter: "blur(14px)",
         WebkitBackdropFilter: "blur(14px)",
-        borderTop: "1px solid rgba(201,168,76,0.12)",
-        borderBottom: "1px solid rgba(201,168,76,0.28)",
+        borderTop: "1px solid rgba(218, 161, 16,0.12)",
+        borderBottom: "1px solid rgba(218, 161, 16,0.28)",
       }}
     >
       {/* Phase 27 (Forbes-launch eve, 2026-05-05), Boss flagged the
@@ -135,10 +135,10 @@ export default function StickyMiniNav() {
                     textTransform: "uppercase",
                     fontWeight: 500,
                     color: isActive
-                      ? "#C9A84C"
+                      ? "#DAA110"
                       : "rgba(248,245,240,0.6)",
                     borderBottom: `1px solid ${
-                      isActive ? "#C9A84C" : "transparent"
+                      isActive ? "#DAA110" : "transparent"
                     }`,
                     cursor: "pointer",
                     whiteSpace: "nowrap",

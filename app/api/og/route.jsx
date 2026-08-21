@@ -75,7 +75,7 @@ export async function GET(request) {
               >
                 Forbes
               </span>
-              <span style={{ color: "#C9A84C" }}>· Featured</span>
+              <span style={{ color: "#DAA110" }}>· Featured</span>
             </span>
           </div>
 
@@ -92,7 +92,7 @@ export async function GET(request) {
                 fontSize: 18,
                 letterSpacing: "0.42em",
                 textTransform: "uppercase",
-                color: "#C9A84C",
+                color: "#DAA110",
                 fontWeight: 700,
                 marginBottom: 18,
                 display: "flex",
@@ -121,7 +121,7 @@ export async function GET(request) {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              borderTop: "1px solid rgba(201,168,76,0.4)",
+              borderTop: "1px solid rgba(218, 161, 16,0.4)",
               paddingTop: 22,
             }}
           >
@@ -139,7 +139,7 @@ export async function GET(request) {
                 fontSize: 14,
                 letterSpacing: "0.32em",
                 textTransform: "uppercase",
-                color: "#C9A84C",
+                color: "#DAA110",
                 fontWeight: 700,
               }}
             >

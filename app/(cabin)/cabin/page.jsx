@@ -850,7 +850,7 @@ export default async function CabinHomePage() {
           margin-top: 18px;
         }
         .cabin-home__cta--ghost:hover {
-          background: rgba(201, 168, 76, 0.08);
+          background: rgba(218, 161, 16, 0.08);
         }
 
         /* ── Icon grid (Cabin map) ─────────────────────────────── */
@@ -939,7 +939,7 @@ export default async function CabinHomePage() {
           transition: background 160ms ease, transform 160ms ease;
         }
         .cabin-home__tile:hover {
-          background: rgba(201, 168, 76, 0.06);
+          background: rgba(218, 161, 16, 0.06);
         }
         .cabin-home__tile:active {
           transform: scale(0.985);

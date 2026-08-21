@@ -34,7 +34,7 @@ import { YACHT_AWARDS, awardsFor, awardLine, headlineAward } from "@/lib/yachtAw
 const CANONICAL = "https://georgeyachts.com/award-winning-yacht-charter-greece";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 const SLUGS = Object.keys(YACHT_AWARDS).filter((s) => awardsFor(s).length > 0);
 const TOTAL = SLUGS.reduce((n, s) => n + awardsFor(s).length, 0);
@@ -175,7 +175,7 @@ export default async function AwardWinningPage() {
           h1 on this site. */}
       <header
         className="gy-hero-lead"
-        style={{ paddingLeft: 24, paddingRight: 24, paddingBottom: 56, borderBottom: "1px solid rgba(201,168,76,0.15)" }}
+        style={{ paddingLeft: 24, paddingRight: 24, paddingBottom: 56, borderBottom: "1px solid rgba(218, 161, 16,0.15)" }}
       >
         <div style={{ maxWidth: 880, margin: "0 auto" }}>
           <p style={eyebrow}>Judged at the Greek charter shows</p>
@@ -216,7 +216,7 @@ export default async function AwardWinningPage() {
             {winners.map((w) => (
               <li
                 key={w.slug}
-                style={{ borderTop: "1px solid rgba(201,168,76,0.14)", padding: "26px 0" }}
+                style={{ borderTop: "1px solid rgba(218, 161, 16,0.14)", padding: "26px 0" }}
               >
                 <Link
                   href={`/yachts/${w.slug}`}
@@ -295,7 +295,7 @@ export default async function AwardWinningPage() {
         </div>
       </section>
 
-      <section style={{ padding: "clamp(48px, 6vw, 80px) 24px", borderTop: "1px solid rgba(201,168,76,0.14)" }}>
+      <section style={{ padding: "clamp(48px, 6vw, 80px) 24px", borderTop: "1px solid rgba(218, 161, 16,0.14)" }}>
         <div style={{ maxWidth: 880, margin: "0 auto" }}>
           <h2 style={h2}>What these two shows are</h2>
           <p style={body}>
@@ -316,7 +316,7 @@ export default async function AwardWinningPage() {
         </div>
       </section>
 
-      <section style={{ padding: "clamp(48px, 6vw, 80px) 24px", borderTop: "1px solid rgba(201,168,76,0.14)" }}>
+      <section style={{ padding: "clamp(48px, 6vw, 80px) 24px", borderTop: "1px solid rgba(218, 161, 16,0.14)" }}>
         <div style={{ maxWidth: 880, margin: "0 auto" }}>
           <h2 style={h2}>What we do not call an award</h2>
           <p style={body}>

@@ -11,7 +11,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 const selectStyle = {
   fontFamily: "var(--gy-font-ui)",
@@ -19,7 +19,7 @@ const selectStyle = {
   letterSpacing: "0.06em",
   color: "#F8F5F0",
   background: "#0D1B2A",
-  border: "1px solid rgba(201,168,76,0.35)",
+  border: "1px solid rgba(218, 161, 16,0.35)",
   padding: "12px 14px",
   minWidth: 170,
   cursor: "pointer",
@@ -47,8 +47,8 @@ export default function FleetQuickFinder({ heading }) {
           maxWidth: 880,
           margin: "0 auto",
           padding: "26px 24px",
-          border: "1px solid rgba(201,168,76,0.25)",
-          background: "rgba(201,168,76,0.04)",
+          border: "1px solid rgba(218, 161, 16,0.25)",
+          background: "rgba(218, 161, 16,0.04)",
           textAlign: "center",
         }}
       >

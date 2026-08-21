@@ -165,7 +165,7 @@ export default function AskGeorgeWidget() {
           width: 56,
           height: 56,
           borderRadius: "50%",
-          background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
+          background: "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
           color: "#0D1B2A",
           border: "none",
           cursor: "pointer",
@@ -201,7 +201,7 @@ export default function AskGeorgeWidget() {
               height: 10,
               borderRadius: "50%",
               background: "#F8F5F0",
-              border: "2px solid #C9A84C",
+              border: "2px solid #DAA110",
               animation: "askGeorgePulse 2s ease-in-out infinite",
             }}
           />
@@ -222,7 +222,7 @@ export default function AskGeorgeWidget() {
             width: "min(380px, calc(100vw - 48px))",
             maxHeight: "min(640px, calc(100vh - 200px))",
             background: "#0D1B2A",
-            border: "1px solid rgba(201,168,76,0.4)",
+            border: "1px solid rgba(218, 161, 16,0.4)",
             display: "flex",
             flexDirection: "column",
             zIndex: 9999,
@@ -232,7 +232,7 @@ export default function AskGeorgeWidget() {
           <header
             style={{
               padding: "14px 18px",
-              borderBottom: "1px solid rgba(201,168,76,0.25)",
+              borderBottom: "1px solid rgba(218, 161, 16,0.25)",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
@@ -257,7 +257,7 @@ export default function AskGeorgeWidget() {
                   fontSize: 9,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
-                  color: "#C9A84C",
+                  color: "#DAA110",
                   margin: "2px 0 0",
                   fontWeight: 600,
                 }}
@@ -327,9 +327,9 @@ export default function AskGeorgeWidget() {
                       style={{
                         textAlign: "left",
                         padding: "9px 12px",
-                        background: "rgba(201,168,76,0.08)",
+                        background: "rgba(218, 161, 16,0.08)",
                         color: "rgba(248, 245, 240,0.85)",
-                        border: "1px solid rgba(201,168,76,0.3)",
+                        border: "1px solid rgba(218, 161, 16,0.3)",
                         cursor: "pointer",
                         fontFamily: "var(--gy-font-ui)",
                         fontSize: 13,
@@ -350,10 +350,10 @@ export default function AskGeorgeWidget() {
                   maxWidth: "88%",
                   padding: "10px 13px",
                   background:
-                    m.role === "user" ? "rgba(201,168,76,0.16)" : "rgba(248, 245, 240,0.05)",
+                    m.role === "user" ? "rgba(218, 161, 16,0.16)" : "rgba(248, 245, 240,0.05)",
                   border:
                     m.role === "user"
-                      ? "1px solid rgba(201,168,76,0.4)"
+                      ? "1px solid rgba(218, 161, 16,0.4)"
                       : "1px solid rgba(248, 245, 240,0.1)",
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 13.5,
@@ -372,8 +372,8 @@ export default function AskGeorgeWidget() {
             <div
               style={{
                 padding: "10px 18px",
-                borderTop: "1px solid rgba(201,168,76,0.25)",
-                background: "rgba(201,168,76,0.06)",
+                borderTop: "1px solid rgba(218, 161, 16,0.25)",
+                background: "rgba(218, 161, 16,0.06)",
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 12.5,
                 color: "rgba(248, 245, 240,0.85)",
@@ -394,7 +394,7 @@ export default function AskGeorgeWidget() {
                   textTransform: "uppercase",
                   fontWeight: 700,
                   padding: "6px 10px",
-                  background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
+                  background: "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
                   color: "#0D1B2A",
                   border: "none",
                   cursor: "pointer",
@@ -409,7 +409,7 @@ export default function AskGeorgeWidget() {
               onSubmit={submitFollowUp}
               style={{
                 padding: "12px 18px",
-                borderTop: "1px solid rgba(201,168,76,0.25)",
+                borderTop: "1px solid rgba(218, 161, 16,0.25)",
                 display: "flex",
                 flexDirection: "column",
                 gap: 8,
@@ -440,7 +440,7 @@ export default function AskGeorgeWidget() {
                   textTransform: "uppercase",
                   fontWeight: 700,
                   padding: "9px 12px",
-                  background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
+                  background: "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
                   color: "#0D1B2A",
                   border: "none",
                   cursor: "pointer",
@@ -459,8 +459,8 @@ export default function AskGeorgeWidget() {
                 fontSize: 12.5,
                 color: "rgba(248, 245, 240,0.85)",
                 textAlign: "center",
-                background: "rgba(201,168,76,0.08)",
-                borderTop: "1px solid rgba(201,168,76,0.25)",
+                background: "rgba(218, 161, 16,0.08)",
+                borderTop: "1px solid rgba(218, 161, 16,0.25)",
               }}
             >
               Saved. George will reach out within 24 hours.
@@ -475,7 +475,7 @@ export default function AskGeorgeWidget() {
             }}
             style={{
               padding: 12,
-              borderTop: "1px solid rgba(201,168,76,0.25)",
+              borderTop: "1px solid rgba(218, 161, 16,0.25)",
               display: "flex",
               gap: 8,
             }}
@@ -510,8 +510,8 @@ export default function AskGeorgeWidget() {
                 padding: "0 16px",
                 background:
                   sending || !input.trim()
-                    ? "rgba(201,168,76,0.3)"
-                    : "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
+                    ? "rgba(218, 161, 16,0.3)"
+                    : "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
                 color: "#0D1B2A",
                 border: "none",
                 cursor: sending || !input.trim() ? "default" : "pointer",

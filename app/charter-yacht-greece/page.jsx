@@ -20,7 +20,7 @@ export const revalidate = 3600;
 export const metadata = {
   title: `Charter Yacht Greece - ${FLEET_COUNT} Curated Yachts`,
   description:
-    `Curated fleet of ${FLEET_COUNT} yachts in Greek waters - Private Fleet (full crew) + Explorer Fleet (skippered). Motor, sailing, catamaran. Cyclades, Ionian, Saronic.`,
+    `Curated fleet of ${FLEET_COUNT} yachts in Greek waters - Private Fleet (full crew) + Sailing Fleet (smaller yachts, crew of two or three). Motor, sailing, catamaran. Cyclades, Ionian, Saronic.`,
   alternates: {
     canonical: "https://georgeyachts.com/charter-yacht-greece",
   },
@@ -175,7 +175,7 @@ function generateServiceSchema(yachts) {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Explorer Fleet - skippered or lightly crewed",
+            name: "Sailing Fleet - smaller crewed yachts",
           },
         },
       ],
@@ -286,7 +286,7 @@ export default async function CharterFleetPage() {
         {/* Scroll indicator */}
         <div className="fleet-hero__scroll">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 8L10 14L16 8" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M4 8L10 14L16 8" stroke="#DAA110" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </div>
       </section>
@@ -346,13 +346,13 @@ export default async function CharterFleetPage() {
       <FirstAccessBand />
 
       {/* FROM THE JOURNAL, Cross-linking */}
-      <section style={{ padding: "80px 24px", background: "#0D1B2A", borderTop: "1px solid rgba(201,168,76,0.06)" }}>
+      <section style={{ padding: "clamp(40px, 5vw, 56px) 24px", background: "#0D1B2A", borderTop: "1px solid rgba(218, 161, 16,0.06)" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "40px" }}>
-            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C9A84C", fontWeight: 600, marginBottom: "12px" }}>Expert Insights</p>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.35em", textTransform: "uppercase", color: "#DAA110", fontWeight: 600, marginBottom: "12px" }}>Expert Insights</p>
             <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 300, color: "#F8F5F0" }}>From The Journal</h2>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1px", background: "rgba(201,168,76,0.04)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1px", background: "rgba(218, 161, 16,0.04)" }}>
             {[
               { title: "The First-Timer\u2019s Complete Guide to Crewed Yacht Charter in Greece", slug: "the-first-timer-s-complete-guide-to-crewed-yacht-charter-in-greece" },
               { title: "The \u20ac50,000 Mistake: What Goes Wrong Without a Broker", slug: "the-eur50-000-mistake-what-goes-wrong-when-you-book-a-yacht-charter-without-a-broker" },
@@ -364,7 +364,7 @@ export default async function CharterFleetPage() {
                 style={{ background: "#0D1B2A", padding: "28px 24px", textDecoration: "none", display: "block", transition: "background 0.3s ease" }}
               >
                 <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "17px", fontWeight: 400, color: "#F8F5F0", lineHeight: 1.4, margin: "0 0 12px" }}>{post.title}</p>
-                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#C9A84C" }}>Read Article &rarr;</span>
+                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "9px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#DAA110" }}>Read Article &rarr;</span>
               </a>
             ))}
           </div>

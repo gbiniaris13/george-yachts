@@ -26,7 +26,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 /* ─── Question set ─────────────────────────────────────────────── */
 // Phase 24 (luxury rebuild, 2026-05-05) — Boss spec: SIX brief fields
@@ -86,7 +86,7 @@ const STEPS = [
       { value: "30-60k",     label: "€30,000 - €60,000" },
       { value: "60-120k",    label: "€60,000 - €120,000" },
       { value: "120k-plus",  label: "€120,000+" },
-      { value: "per-person", label: "I think per person (Explorer Fleet)" },
+      { value: "smaller-yacht", label: "A smaller yacht, and I want the weekly figure" },
       { value: "discuss",    label: "I'd rather discuss with George" },
     ],
   },
@@ -311,7 +311,7 @@ export default function InquiryClient() {
             style={{
               margin: "40px auto 0",
               maxWidth: 720,
-              border: "1px solid rgba(201,168,76,0.32)",
+              border: "1px solid rgba(218, 161, 16,0.32)",
               boxShadow: "0 24px 56px rgba(13, 27, 42,0.45)",
               background: "#0D1B2A",
               animation: "gy-cover-reveal 0.9s cubic-bezier(0.2, 0.8, 0.2, 1)",
@@ -332,7 +332,7 @@ export default function InquiryClient() {
                 fontSize: 11,
                 letterSpacing: "0.32em",
                 textTransform: "uppercase",
-                color: "#C9A84C",
+                color: "#DAA110",
                 fontWeight: 600,
                 padding: "14px 0",
               }}
@@ -349,7 +349,7 @@ export default function InquiryClient() {
               href="https://api.whatsapp.com/send/?phone=17867988798&text=Hi%20George%2C%20I%20just%20submitted%20an%20inquiry%20on%20the%20site."
               target="_blank"
               rel="noopener noreferrer"
-              style={{ ...ctaPrimary, background: "transparent", border: "1px solid rgba(201,168,76,0.55)", color: "#C9A84C" }}
+              style={{ ...ctaPrimary, background: "transparent", border: "1px solid rgba(218, 161, 16,0.55)", color: "#DAA110" }}
             >
               Message on WhatsApp now
             </a>
@@ -399,7 +399,7 @@ export default function InquiryClient() {
                     borderColor:
                       answers[step.key] === opt.value
                         ? GOLD
-                        : "rgba(201,168,76,0.22)",
+                        : "rgba(218, 161, 16,0.22)",
                     color:
                       answers[step.key] === opt.value ? GOLD : "#F8F5F0",
                   }}
@@ -562,12 +562,12 @@ const progressTrack = {
   left: 0,
   right: 0,
   height: 2,
-  background: "rgba(201,168,76,0.08)",
+  background: "rgba(218, 161, 16,0.08)",
   zIndex: 39,
 };
 const progressFill = {
   height: "100%",
-  background: `linear-gradient(90deg, ${GOLD}, #C9A84C)`,
+  background: `linear-gradient(90deg, ${GOLD}, #DAA110)`,
   transition: "width 0.35s cubic-bezier(0.2,0.8,0.2,1)",
 };
 const card = {
@@ -575,7 +575,7 @@ const card = {
   maxWidth: 640,
   padding: "36px 28px 30px",
   background: "#0D1B2A",
-  border: "1px solid rgba(201,168,76,0.16)",
+  border: "1px solid rgba(218, 161, 16,0.16)",
   animation: "fade-in 0.25s ease both",
 };
 const eyebrow = {
@@ -614,7 +614,7 @@ const textInput = {
   width: "100%",
   padding: "14px 16px",
   background: "#0D1B2A",
-  border: "1px solid rgba(201,168,76,0.25)",
+  border: "1px solid rgba(218, 161, 16,0.25)",
   color: "#F8F5F0",
   fontFamily: "var(--gy-font-ui)",
   fontSize: 16,
@@ -625,7 +625,7 @@ const textInput = {
 const choiceBtn = {
   padding: "14px 18px",
   background: "rgba(13, 27, 42, 0.5)",
-  border: "1px solid rgba(201,168,76,0.22)",
+  border: "1px solid rgba(218, 161, 16,0.22)",
   color: "#F8F5F0",
   fontFamily: "var(--gy-font-ui)",
   fontSize: 13,
@@ -647,7 +647,7 @@ const navBtn = {
 const ctaPrimary = {
   display: "inline-block",
   padding: "14px 34px",
-  background: `linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)`,
+  background: `linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)`,
   color: "#0D1B2A",
   fontFamily: "var(--gy-font-ui)",
   fontSize: 11,

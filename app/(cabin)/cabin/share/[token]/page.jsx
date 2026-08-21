@@ -27,7 +27,7 @@ export const metadata = { title: "Charter preferences · George Yachts" };
 
 // =================== BRAND TOKENS ============================
 const NAVY = "#0D1B2A";
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const IVORY = "#F8F5F0";
 const RULE = "rgba(13, 27, 42, 0.12)";
 const MUTED = "rgba(13, 27, 42, 0.55)";
@@ -300,7 +300,7 @@ export default async function PreferenceSharePage({ params }) {
             <div
               className="avoid-break"
               style={{
-                background: "rgba(201,168,76,0.06)",
+                background: "rgba(218, 161, 16,0.06)",
                 borderLeft: `2px solid ${GOLD}`,
                 padding: "16px 20px",
                 marginBottom: 24,

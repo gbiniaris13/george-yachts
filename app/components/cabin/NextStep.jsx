@@ -167,8 +167,8 @@ export default function NextStep({
           margin: 0 0 28px 0;
           padding: 24px 26px 22px;
           background: #FCFAF4;
-          border: 1px solid rgba(201, 168, 76, 0.32);
-          border-left: 3px solid var(--gy-gold, #C9A84C);
+          border: 1px solid rgba(218, 161, 16, 0.32);
+          border-left: 3px solid var(--gy-gold, #DAA110);
           border-radius: 4px;
         }
         .ns--ready {
@@ -191,7 +191,7 @@ export default function NextStep({
           font-size: 11px;
           letter-spacing: 2.6px;
           text-transform: uppercase;
-          color: var(--gy-gold, #C9A84C);
+          color: var(--gy-gold, #DAA110);
           font-weight: 700;
           margin-bottom: 10px;
         }
@@ -225,7 +225,7 @@ export default function NextStep({
           padding: 15px 28px;
           background: var(--gy-navy, #0D1B2A);
           color: var(--gy-ivory, #F8F5F0);
-          border: 1px solid var(--gy-gold, #C9A84C);
+          border: 1px solid var(--gy-gold, #DAA110);
           border-radius: 3px;
           font-family: var(--gy-font-ui, sans-serif);
           font-size: 11px;

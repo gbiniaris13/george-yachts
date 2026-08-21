@@ -167,7 +167,7 @@ function prefillFromUrl() {
   }
 }
 
-const GOLD = '#C9A84C';
+const GOLD = '#DAA110';
 
 const QUESTIONS = [
   {
@@ -237,7 +237,7 @@ const QUESTIONS = [
       {
         value: 'under-15',
         label: 'Under €15K',
-        sub: 'Explorer Fleet - skippered cats',
+        sub: 'Sailing Fleet - smaller crewed cats',
       },
       { value: '15-40', label: '€15K - €40K', sub: 'Mid-tier crewed' },
       { value: '40-100', label: '€40K - €100K', sub: 'Premium crewed' },
@@ -629,7 +629,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
                 transition: 'all 0.3s ease',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(201,168,76,0.08)';
+                e.currentTarget.style.background = 'rgba(218, 161, 16,0.08)';
                 e.currentTarget.style.borderColor = GOLD;
               }}
               onMouseLeave={(e) => {
@@ -781,7 +781,7 @@ function ContactStep({ contact, setContact, onBack, onSubmit, submitting, error,
                 textTransform: 'uppercase',
                 fontWeight: 600,
                 border: `1px solid ${contact.channel === c ? GOLD : 'rgba(248, 245, 240,0.2)'}`,
-                background: contact.channel === c ? 'rgba(201,168,76,0.12)' : 'transparent',
+                background: contact.channel === c ? 'rgba(218, 161, 16,0.12)' : 'transparent',
                 color: contact.channel === c ? GOLD : 'rgba(248,245,240,0.82)',
                 cursor: 'pointer',
                 fontFamily: "var(--gy-font-ui)",
@@ -862,7 +862,7 @@ function ResultScreen({ matches, answers }) {
           lineHeight: 1.6,
         }}
       >
-        These are the closest matches in our fleet. I&rsquo;ll personally review your
+        These are the closest matches in this house. I&rsquo;ll personally review your
         answers and send a complete proposal within 24 hours.
       </p>
 
@@ -957,8 +957,8 @@ function ResultScreen({ matches, answers }) {
         style={{
           marginTop: 36,
           padding: 24,
-          background: 'rgba(201,168,76,0.06)',
-          border: '1px solid rgba(201,168,76,0.3)',
+          background: 'rgba(218, 161, 16,0.06)',
+          border: '1px solid rgba(218, 161, 16,0.3)',
         }}
       >
         <p
@@ -1023,9 +1023,9 @@ function Field({ label, type = 'text', value, onChange, required }) {
 
 const primaryBtnStyle = {
   padding: '14px 30px',
-  background: 'linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)',
+  background: 'linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)',
   color: '#0D1B2A',
-  border: '1px solid rgba(201,168,76,0.6)',
+  border: '1px solid rgba(218, 161, 16,0.6)',
   fontFamily: "var(--gy-font-ui)",
   fontSize: 11,
   letterSpacing: '0.32em',

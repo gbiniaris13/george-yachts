@@ -527,8 +527,8 @@ export default function VesselBrochureBlock({ cabin, photos, asPage = false }) {
           font-size: 10.5px;
           letter-spacing: 1.5px;
           text-transform: uppercase;
-          background: rgba(201, 168, 76, 0.08);
-          border: 1px solid rgba(201, 168, 76, 0.35);
+          background: rgba(218, 161, 16, 0.08);
+          border: 1px solid rgba(218, 161, 16, 0.35);
           color: var(--gy-navy);
           padding: 6px 11px 7px;
         }

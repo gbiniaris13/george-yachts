@@ -20,7 +20,7 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -208,7 +208,7 @@ export default function StickyInquiryBar() {
           bottom: 0,
           zIndex: 49,
           background: `linear-gradient(180deg, rgba(13, 27, 42, 0.94) 0%, rgba(13, 27, 42, 0.98) 100%)`,
-          borderTop: `1px solid rgba(201, 168, 76, 0.35)`,
+          borderTop: `1px solid rgba(218, 161, 16, 0.35)`,
           backdropFilter: "blur(14px)",
           WebkitBackdropFilter: "blur(14px)",
           boxShadow: "0 -8px 32px rgba(13, 27, 42, 0.4)",

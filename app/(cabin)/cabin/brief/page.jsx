@@ -122,7 +122,7 @@ export default async function CabinBriefOverviewPage() {
   });
   // 2026-05-21 — Pass 7 (Helen, David): the intro paragraph used
   // to say "the crew, the chef, the hostess or the captain" but
-  // many vessels in our fleet don't carry a hostess. Pull the
+  // many yachts here don't carry a hostess. Pull the
   // actual crew_display and let lib/cabin/format build the noun
   // list that matches reality.
   const cabinRecord = await dbQuery(
@@ -431,8 +431,8 @@ export default async function CabinBriefOverviewPage() {
            principal once every section is complete). Navy banner for
            "Brief is with George" once submitted. */
         .cabin-brief__ready {
-          background: rgba(201, 168, 76, 0.10);
-          border: 1px solid rgba(201, 168, 76, 0.55);
+          background: rgba(218, 161, 16, 0.10);
+          border: 1px solid rgba(218, 161, 16, 0.55);
           border-left: 3px solid var(--gy-gold);
           padding: 22px 24px;
           display: flex;
@@ -518,7 +518,7 @@ export default async function CabinBriefOverviewPage() {
           color: var(--gy-gold);
           font-style: normal;
           font-weight: 600;
-          border: 1px solid rgba(201, 168, 76, 0.4);
+          border: 1px solid rgba(218, 161, 16, 0.4);
           border-radius: 2px;
         }
         .cabin-brief__item.is-locked a {
@@ -549,7 +549,7 @@ export default async function CabinBriefOverviewPage() {
           transition: background 160ms ease;
         }
         .cabin-brief__item a:hover {
-          background: rgba(201, 168, 76, 0.05);
+          background: rgba(218, 161, 16, 0.05);
         }
         .cabin-brief__num {
           font-family: var(--gy-font-editorial);

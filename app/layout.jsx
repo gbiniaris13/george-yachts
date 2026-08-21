@@ -279,7 +279,7 @@ export const metadata = {
     template: "%s | George Yachts",
   },
   description:
-    `Featured in Forbes (May 2026). George Yachts Brokerage House - boutique luxury yacht charter in Greek waters. ${FLEET_COUNT} curated yachts. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Cyclades, Ionian, Saronic. Personal broker service from Athens.`,
+    `Featured in Forbes (May 2026). George Yachts Brokerage House - boutique luxury yacht charter in Greek waters. ${FLEET_COUNT} curated yachts. Private Fleet (motor yachts and power catamarans) + Sailing Fleet (sailing catamarans and sailing yachts). IYBA Charter Active Member. Cyclades, Ionian, Saronic. Personal broker service from Athens.`,
   applicationName: "George Yachts",
   authors: [{ name: "George P. Biniaris", url: "https://georgeyachts.com" }],
   generator: "Next.js",
@@ -330,7 +330,7 @@ export const metadata = {
     url: "https://georgeyachts.com",
     title: "George Yachts | Featured in Forbes · Luxury Yacht Charter Greece",
     description:
-      `Featured in Forbes (May 2026). ${FLEET_COUNT} curated yachts in Greek waters. Private Fleet (full crew) + Explorer Fleet (skippered). IYBA Charter Active Member. Personal broker service from Athens.`,
+      `Featured in Forbes (May 2026). ${FLEET_COUNT} curated yachts in Greek waters. Private Fleet (motor yachts and power catamarans) + Sailing Fleet (sailing catamarans and sailing yachts). IYBA Charter Active Member. Personal broker service from Athens.`,
     images: [
       {
         url: "/opengraph-image",
@@ -560,7 +560,7 @@ export default async function RootLayout({ children }) {
         {/* Skip to main content, accessibility */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-[#C9A84C] focus:text-black focus:px-6 focus:py-3 focus:text-sm focus:font-semibold focus:rounded"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-[#DAA110] focus:text-black focus:px-6 focus:py-3 focus:text-sm focus:font-semibold focus:rounded"
         >
           Skip to main content
         </a>

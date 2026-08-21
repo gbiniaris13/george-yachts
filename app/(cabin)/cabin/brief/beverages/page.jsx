@@ -313,7 +313,7 @@ export default function BeveragesSectionPage() {
           font-size: 13px;
           line-height: 1.7;
           color: rgba(13, 27, 42, 0.65);
-          background: rgba(201, 168, 76, 0.06);
+          background: rgba(218, 161, 16, 0.06);
           border-left: 1px solid var(--gy-gold);
           padding: 14px 18px;
           margin: 32px 0 0 0;

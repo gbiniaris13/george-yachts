@@ -9,7 +9,7 @@
 
 import { useState } from "react";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 const LABELS = {
   inquiry: "Inquiries",
@@ -87,7 +87,7 @@ export default function KpisPage() {
               fontFamily: "var(--gy-font-ui)", fontSize: 11, fontWeight: 700,
               letterSpacing: "0.18em", textTransform: "uppercase",
               color: "#0D1B2A",
-              background: loading ? `${GOLD}66` : `linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)`,
+              background: loading ? `${GOLD}66` : `linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)`,
               border: "none", cursor: loading || !key.trim() ? "default" : "pointer",
             }}
           >
@@ -110,8 +110,8 @@ export default function KpisPage() {
                 <div
                   key={event}
                   style={{
-                    border: "1px solid rgba(201,168,76,0.2)",
-                    background: "rgba(201,168,76,0.025)",
+                    border: "1px solid rgba(218, 161, 16,0.2)",
+                    background: "rgba(218, 161, 16,0.025)",
                     padding: "20px 22px",
                   }}
                 >

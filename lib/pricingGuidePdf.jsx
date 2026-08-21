@@ -6,7 +6,7 @@
 // /api/pricing-guide-pdf route after the visitor submits the email
 // capture form.
 //
-// Brand: Deep Navy #0D1B2A, Antique Gold #C9A84C, Ivory White
+// Brand: Deep Navy #0D1B2A, Antique Gold #DAA110, Ivory White
 // #F8F5F0. Free-to-use Inter font (loaded from @fontsource if
 // available; falls back to Helvetica).
 
@@ -22,7 +22,7 @@ import {
 } from "@react-pdf/renderer";
 
 const NAVY = "#0D1B2A";
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const CREAM = "#F8F5F0";
 
 const styles = StyleSheet.create({
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: 10,
     padding: 10,
-    backgroundColor: "rgba(201,168,76,0.08)",
+    backgroundColor: "rgba(218, 161, 16,0.08)",
     borderLeft: `2px solid ${GOLD}`,
   },
   costBucketNum: {

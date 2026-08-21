@@ -153,12 +153,12 @@ export default function ContactDrawer() {
           height: 56,
           borderRadius: "50%",
           background: hovered
-            ? "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)"
+            ? "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)"
             : "rgba(13,27,42,0.55)",
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
-          border: `1px solid ${hovered ? "#C9A84C" : "rgba(201,168,76,0.45)"}`,
-          color: hovered ? "#0D1B2A" : "#C9A84C",
+          border: `1px solid ${hovered ? "#DAA110" : "rgba(218, 161, 16,0.45)"}`,
+          color: hovered ? "#0D1B2A" : "#DAA110",
           fontFamily: "var(--gy-font-ui)",
           fontSize: 9,
           fontWeight: 700,
@@ -171,7 +171,7 @@ export default function ContactDrawer() {
           justifyContent: "center",
           gap: 2,
           boxShadow: hovered
-            ? "0 12px 36px rgba(13, 27, 42,0.5), 0 0 24px rgba(201,168,76,0.18)"
+            ? "0 12px 36px rgba(13, 27, 42,0.5), 0 0 24px rgba(218, 161, 16,0.18)"
             : "0 6px 20px rgba(13, 27, 42,0.35), inset 0 1px 0 rgba(255,255,255,0.18)",
           transform: hovered ? "translateY(-2px)" : "translateY(0)",
           transition: "all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
@@ -214,8 +214,8 @@ export default function ContactDrawer() {
               zIndex: 101,
               width: "min(360px, calc(100vw - 48px))",
               background: "linear-gradient(155deg, rgba(13, 27, 42,0.98) 0%, rgba(13, 27, 42,0.98) 100%)",
-              border: "1px solid rgba(201,168,76,0.32)",
-              boxShadow: "0 28px 72px rgba(13, 27, 42,0.6), 0 0 0 1px rgba(201,168,76,0.08) inset",
+              border: "1px solid rgba(218, 161, 16,0.32)",
+              boxShadow: "0 28px 72px rgba(13, 27, 42,0.6), 0 0 0 1px rgba(218, 161, 16,0.08) inset",
               padding: "26px 22px 22px",
               animation: "gy-drawer-in 0.42s cubic-bezier(0.2, 0.8, 0.2, 1)",
             }}
@@ -228,7 +228,7 @@ export default function ContactDrawer() {
                   fontSize: 9,
                   letterSpacing: "0.42em",
                   textTransform: "uppercase",
-                  color: "#C9A84C",
+                  color: "#DAA110",
                   fontWeight: 600,
                   margin: 0,
                 }}
@@ -266,8 +266,8 @@ export default function ContactDrawer() {
                     alignItems: "center",
                     gap: 14,
                     padding: "14px 16px",
-                    background: "rgba(201,168,76,0.04)",
-                    border: "1px solid rgba(201,168,76,0.15)",
+                    background: "rgba(218, 161, 16,0.04)",
+                    border: "1px solid rgba(218, 161, 16,0.15)",
                     textDecoration: "none",
                     color: "rgba(248,245,240,0.92)",
                     transition: "all 0.32s cubic-bezier(0.2, 0.8, 0.2, 1)",
@@ -280,7 +280,7 @@ export default function ContactDrawer() {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      color: "#C9A84C",
+                      color: "#DAA110",
                       flexShrink: 0,
                     }}
                   >
@@ -316,7 +316,7 @@ export default function ContactDrawer() {
                   <span
                     aria-hidden="true"
                     style={{
-                      color: "rgba(201,168,76,0.6)",
+                      color: "rgba(218, 161, 16,0.6)",
                       fontSize: 14,
                     }}
                   >
@@ -381,8 +381,8 @@ export default function ContactDrawer() {
           to   { opacity: 1; transform: translateY(0)    scale(1);    }
         }
         .gy-contact-row:hover {
-          background: rgba(201,168,76,0.10) !important;
-          border-color: rgba(201,168,76,0.5) !important;
+          background: rgba(218, 161, 16,0.10) !important;
+          border-color: rgba(218, 161, 16,0.5) !important;
           transform: translateX(-2px);
         }
         @media (prefers-reduced-motion: reduce) {

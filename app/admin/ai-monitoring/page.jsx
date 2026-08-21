@@ -21,7 +21,7 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -154,7 +154,7 @@ export default async function AdminAiMonitoringPage({ searchParams }) {
             marginBottom: 36,
           }}
         >
-          <div style={{ padding: "20px 24px", border: `1px solid ${GOLD}`, background: "rgba(201,168,76,0.06)" }}>
+          <div style={{ padding: "20px 24px", border: `1px solid ${GOLD}`, background: "rgba(218, 161, 16,0.06)" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.32em", textTransform: "uppercase", color: GOLD, margin: 0 }}>Queries</p>
             <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 32, margin: "6px 0 0" }}>{totalQueries}</p>
           </div>
@@ -206,7 +206,7 @@ export default async function AdminAiMonitoringPage({ searchParams }) {
           <thead>
             <tr
               style={{
-                background: "rgba(201,168,76,0.1)",
+                background: "rgba(218, 161, 16,0.1)",
                 textAlign: "left",
               }}
             >

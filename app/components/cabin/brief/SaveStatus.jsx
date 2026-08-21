@@ -79,7 +79,7 @@ export default function SaveStatus({ state }) {
           letter-spacing: 2px;
           text-transform: uppercase;
           padding: 9px 14px 9px 12px;
-          border: 1px solid rgba(201, 168, 76, 0.45);
+          border: 1px solid rgba(218, 161, 16, 0.45);
           opacity: 0;
           transform: translateY(8px);
           transition: opacity 180ms ease, transform 180ms ease;
@@ -101,7 +101,7 @@ export default function SaveStatus({ state }) {
         .cabin-save-status--saving .cabin-save-status__dot {
           animation: cabin-save-pulse 1.1s ease-in-out infinite;
         }
-        .cabin-save-status--error .cabin-save-status__dot { background: #E0BA77; }
+        .cabin-save-status--error .cabin-save-status__dot { background: #DAA110; }
         /* 2026-05-22 - Preview state: same teal as the in-cabin
            preview banner (#0E7C7B). Calm presence, not alarming. */
         .cabin-save-status--preview {

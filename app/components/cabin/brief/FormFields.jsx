@@ -112,7 +112,7 @@ export function TextField({
         .brief-input:disabled {
           cursor: not-allowed;
           color: rgba(13, 27, 42, 0.72);
-          border-bottom-color: rgba(201, 168, 76, 0.4);
+          border-bottom-color: rgba(218, 161, 16, 0.4);
         }
         .brief-field__locked-tag {
           font-family: var(--gy-font-ui);
@@ -181,8 +181,8 @@ export function OpenTextarea({
         .brief-textarea:disabled {
           cursor: not-allowed;
           color: rgba(13, 27, 42, 0.72);
-          border-color: rgba(201, 168, 76, 0.4);
-          background: rgba(201, 168, 76, 0.05);
+          border-color: rgba(218, 161, 16, 0.4);
+          background: rgba(218, 161, 16, 0.05);
         }
       `}</style>
     </div>
@@ -283,7 +283,7 @@ export function RadioGroup({
           transition: background 140ms ease;
         }
         .brief-radio-item:hover {
-          background: rgba(201, 168, 76, 0.04);
+          background: rgba(218, 161, 16, 0.04);
         }
         .brief-radio-item input { display: none; }
         .brief-radio-circle {
@@ -474,7 +474,7 @@ export function CheckboxGroup({
           opacity: 0.82;
         }
         .brief-check-item--locked .brief-check-box {
-          border-color: rgba(201, 168, 76, 0.55);
+          border-color: rgba(218, 161, 16, 0.55);
         }
         .brief-check-locked-tag {
           margin-left: auto;
@@ -531,7 +531,7 @@ export function CardChoice({ name, options, register }) {
         }
         .brief-card input:checked + .brief-card__inner {
           border-color: var(--gy-gold);
-          background: rgba(201, 168, 76, 0.06);
+          background: rgba(218, 161, 16, 0.06);
         }
         .brief-card__inner strong {
           display: block;
@@ -754,7 +754,7 @@ export function LikeDislikeMatrix({ name, label, hint, items, register, lockedKe
         .brief-matrix-row--locked {
           cursor: not-allowed;
           opacity: 0.82;
-          background: rgba(201, 168, 76, 0.05);
+          background: rgba(218, 161, 16, 0.05);
         }
         .brief-matrix-row--locked .brief-matrix-cell {
           cursor: not-allowed;

@@ -12,7 +12,7 @@
 import Link from "next/link";
 import { PROPOSED_ITINERARIES } from "@/lib/proposedItineraries";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const CREAM = "#F8F5F0";
 
 export default function ProposedItineraries() {
@@ -23,8 +23,8 @@ export default function ProposedItineraries() {
       id="proposed-weeks"
       style={{
         padding: "96px 24px",
-        borderTop: "1px solid rgba(201,168,76,0.15)",
-        background: "rgba(201,168,76,0.02)",
+        borderTop: "1px solid rgba(218, 161, 16,0.15)",
+        background: "rgba(218, 161, 16,0.02)",
       }}
     >
       <div style={{ maxWidth: 900, margin: "0 auto" }}>
@@ -213,7 +213,7 @@ export default function ProposedItineraries() {
                 style={{
                   color: GOLD,
                   textDecoration: "none",
-                  borderBottom: `1px solid rgba(201,168,76,0.45)`,
+                  borderBottom: `1px solid rgba(218, 161, 16,0.45)`,
                 }}
               >
                 {it.region} yacht charter
@@ -238,7 +238,7 @@ export default function ProposedItineraries() {
           yachts that fit it. If none of them does, that is more useful still:{" "}
           <Link
             href="/inquiry"
-            style={{ color: GOLD, textDecoration: "none", borderBottom: `1px solid rgba(201,168,76,0.45)` }}
+            style={{ color: GOLD, textDecoration: "none", borderBottom: `1px solid rgba(218, 161, 16,0.45)` }}
           >
             write to George
           </Link>{" "}

@@ -44,7 +44,7 @@ const reasons = [
 
 /* ─── FLEET TIERS ─── */
 const fleets = [
-  { name: "Explorer Fleet", price: "from €375/person/week", count: "14 vessels" },
+  { name: "Sailing Fleet", price: "from €11,500/yacht/week", count: "14 vessels" },
   { name: "Private Fleet", price: "€13K-€90K/week", count: "30+ vessels" },
   { name: "Superyacht Collection", price: "€90K-€235K+/week", count: "Motor yachts 100-210 ft" },
 ];
@@ -184,7 +184,7 @@ export default function PartnersClient() {
                 fontWeight: 600,
                 letterSpacing: "0.5em",
                 textTransform: "uppercase",
-                color: "#C9A84C",
+                color: "#DAA110",
                 marginBottom: "24px",
               }}
             >
@@ -224,8 +224,8 @@ export default function PartnersClient() {
               style={{
                 maxWidth: 520,
                 padding: "28px 24px 26px",
-                background: "rgba(201,168,76,0.03)",
-                border: "1px solid rgba(201,168,76,0.3)",
+                background: "rgba(218, 161, 16,0.03)",
+                border: "1px solid rgba(218, 161, 16,0.3)",
               }}
             >
               {/* Honeypot */}
@@ -308,7 +308,7 @@ export default function PartnersClient() {
                   width: "100%",
                   marginTop: 22,
                   padding: "14px 0",
-                  background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
+                  background: "linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
                   color: "#0D1B2A",
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 11,
@@ -363,7 +363,7 @@ export default function PartnersClient() {
               fontWeight: 300,
               letterSpacing: "0.5em",
               textTransform: "uppercase",
-              color: "#C9A84C",
+              color: "#DAA110",
               marginBottom: "28px",
             }}
           >
@@ -414,7 +414,7 @@ export default function PartnersClient() {
                     fontWeight: 600,
                     letterSpacing: "0.25em",
                     textTransform: "uppercase",
-                    color: "#C9A84C",
+                    color: "#DAA110",
                     marginBottom: "24px",
                   }}
                 >
@@ -450,7 +450,7 @@ export default function PartnersClient() {
           </p>
           <div className="grid md:grid-cols-2 gap-12">
             {reasons.map((r, i) => (
-              <div key={i} className="border-l-2 pl-6" style={{ borderColor: "#C9A84C" }}>
+              <div key={i} className="border-l-2 pl-6" style={{ borderColor: "#DAA110" }}>
                 <h3
                   style={{
                     fontFamily: "var(--gy-font-editorial)",
@@ -484,12 +484,12 @@ export default function PartnersClient() {
                   &ldquo;{t.quote}&rdquo;
                 </p>
               </blockquote>
-              <p className="text-center" style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#C9A84C" }}>
+              <p className="text-center" style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#DAA110" }}>
                 - {t.role}
               </p>
               {i < testimonials.length - 1 && (
                 <div className="flex justify-center my-14">
-                  <div style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
+                  <div style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, transparent, #DAA110, transparent)" }} />
                 </div>
               )}
             </div>
@@ -505,11 +505,11 @@ export default function PartnersClient() {
           </p>
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {fleets.map((f, i) => (
-              <div key={i} className="text-center p-8" style={{ border: "1px solid rgba(201, 168, 76, 0.2)", borderRadius: "2px" }}>
+              <div key={i} className="text-center p-8" style={{ border: "1px solid rgba(218, 161, 16, 0.2)", borderRadius: "2px" }}>
                 <h3 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "26px", fontWeight: 500, color: "#F8F5F0", marginBottom: "8px" }}>
                   {f.name}
                 </h3>
-                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", fontWeight: 600, color: "#C9A84C", marginBottom: "4px" }}>
+                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", fontWeight: 600, color: "#DAA110", marginBottom: "4px" }}>
                   {f.price}
                 </p>
                 <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", fontWeight: 300, color: "rgba(248, 245, 240,0.45)" }}>
@@ -556,9 +556,9 @@ export default function PartnersClient() {
               <details
                 key={i}
                 style={{
-                  border: "1px solid rgba(201, 168, 76, 0.18)",
+                  border: "1px solid rgba(218, 161, 16, 0.18)",
                   padding: "16px 22px",
-                  background: "rgba(201, 168, 76, 0.02)",
+                  background: "rgba(218, 161, 16, 0.02)",
                 }}
               >
                 <summary
@@ -638,7 +638,7 @@ export default function PartnersClient() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your business email"
-                className="flex-1 px-5 py-3.5 text-sm border focus:outline-none focus:border-[#C9A84C] transition-colors"
+                className="flex-1 px-5 py-3.5 text-sm border focus:outline-none focus:border-[#DAA110] transition-colors"
                 style={{
                   fontFamily: "var(--gy-font-ui)",
                   borderColor: "rgba(13, 27, 42, 0.15)",
@@ -653,7 +653,7 @@ export default function PartnersClient() {
                 className="px-7 py-3.5 text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-300 hover:scale-[1.02]"
                 style={{
                   fontFamily: "var(--gy-font-ui)",
-                  backgroundColor: "#C9A84C",
+                  backgroundColor: "#DAA110",
                   color: "#0D1B2A",
                   borderRadius: "2px",
                   border: "none",
@@ -665,7 +665,7 @@ export default function PartnersClient() {
               </button>
             </form>
           ) : (
-            <div className="mb-8 p-6" style={{ backgroundColor: "rgba(201, 168, 76, 0.08)", borderRadius: "2px" }}>
+            <div className="mb-8 p-6" style={{ backgroundColor: "rgba(218, 161, 16, 0.08)", borderRadius: "2px" }}>
               <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "22px", color: "#0D1B2A", marginBottom: "12px" }}>
                 Thank you! Check your inbox shortly.
               </p>
@@ -690,7 +690,7 @@ export default function PartnersClient() {
                   textTransform: "uppercase",
                   fontWeight: 600,
                   color: "#0D1B2A",
-                  background: "#C9A84C",
+                  background: "#DAA110",
                   textDecoration: "none",
                   borderRadius: "2px",
                 }}
@@ -706,7 +706,7 @@ export default function PartnersClient() {
               href="https://calendly.com/george-georgeyachts/30min"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline hover:text-[#C9A84C] transition-colors"
+              className="underline hover:text-[#DAA110] transition-colors"
               onClick={() => { try { window.gtag?.("event", "partner_calendly_clicked", {}); } catch {} }}
             >
               book a call
@@ -751,13 +751,13 @@ function FieldInput({ label, value, onChange, placeholder, type = "text", requir
           fontSize: 9,
           letterSpacing: "0.3em",
           textTransform: "uppercase",
-          color: "rgba(201,168,76,0.75)",
+          color: "rgba(218, 161, 16,0.75)",
           marginBottom: 6,
           fontWeight: 600,
         }}
       >
         {label}
-        {required ? <span style={{ color: "#C9A84C", marginLeft: 4 }}>*</span> : null}
+        {required ? <span style={{ color: "#DAA110", marginLeft: 4 }}>*</span> : null}
       </span>
       <input
         type={type}
@@ -769,7 +769,7 @@ function FieldInput({ label, value, onChange, placeholder, type = "text", requir
           width: "100%",
           padding: "11px 14px",
           background: "rgba(13, 27, 42, 0.6)",
-          border: "1px solid rgba(201,168,76,0.28)",
+          border: "1px solid rgba(218, 161, 16,0.28)",
           color: "#F8F5F0",
           fontFamily: "var(--gy-font-ui)",
           fontSize: 13,

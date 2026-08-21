@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 
-const GOLD = '#C9A84C';
+const GOLD = '#DAA110';
 const DARK = '#0D1B2A';
 
 // Greek islands with coordinates (SVG viewport 0-1000 x 0-800)
@@ -64,8 +64,8 @@ function calcNM(lat1, lng1, lat2, lng2) {
 }
 
 const REGION_COLORS = {
-  Cyclades: '#C9A84C',
-  Saronic: '#C9A84C',
+  Cyclades: '#DAA110',
+  Saronic: '#DAA110',
   Ionian: '#4A90D9',
   Sporades: '#2ECC71',
   Dodecanese: '#E67E22',
@@ -363,7 +363,7 @@ export default function ItineraryBuilderClient() {
                   }}>
                     <div style={{
                       width: 24, height: 24, borderRadius: '50%',
-                      background: `linear-gradient(135deg, ${GOLD}, #C9A84C)`,
+                      background: `linear-gradient(135deg, ${GOLD}, #DAA110)`,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       fontFamily: "var(--gy-font-ui)", fontSize: 10, fontWeight: 700, color: '#0D1B2A',
                       flexShrink: 0,
@@ -443,7 +443,7 @@ export default function ItineraryBuilderClient() {
                   width: '100%', padding: '14px 0',
                   fontFamily: "var(--gy-font-ui)", fontSize: 11, fontWeight: 600,
                   letterSpacing: '0.15em', textTransform: 'uppercase',
-                  color: '#0D1B2A', background: `linear-gradient(90deg, ${GOLD}, #C9A84C)`,
+                  color: '#0D1B2A', background: `linear-gradient(90deg, ${GOLD}, #DAA110)`,
                   border: 'none', borderRadius: 4, cursor: 'pointer',
                   transition: 'all 0.3s ease',
                 }}

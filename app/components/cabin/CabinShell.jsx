@@ -399,8 +399,8 @@ export default function CabinShell({
         }
 
         .cabin-shell__concierge-banner {
-          background: rgba(201, 168, 76, 0.12);
-          border-bottom: 1px solid rgba(201, 168, 76, 0.4);
+          background: rgba(218, 161, 16, 0.12);
+          border-bottom: 1px solid rgba(218, 161, 16, 0.4);
           color: var(--gy-navy);
           padding: 12px 18px;
           font-family: var(--gy-font-editorial);
@@ -480,7 +480,7 @@ export default function CabinShell({
           padding-top: calc(22px + env(safe-area-inset-top, 0));
           background: var(--gy-navy);
           color: var(--gy-ivory);
-          border-bottom: 1px solid rgba(201, 168, 76, 0.32);
+          border-bottom: 1px solid rgba(218, 161, 16, 0.32);
         }
         /* ─────────────────────────────────────────────────────────
            MOBILE MASTHEAD - Eleanna round 4 (2026-05-23, after a
@@ -574,7 +574,7 @@ export default function CabinShell({
             background: linear-gradient(
               to right,
               transparent,
-              rgba(201, 168, 76, 0.75) 50%,
+              rgba(218, 161, 16, 0.75) 50%,
               transparent
             );
           }
@@ -817,7 +817,7 @@ export default function CabinShell({
           background: rgba(20, 34, 51, 0.96);
           backdrop-filter: saturate(180%) blur(20px);
           -webkit-backdrop-filter: saturate(180%) blur(20px);
-          border-top: 1px solid rgba(201, 168, 76, 0.25);
+          border-top: 1px solid rgba(218, 161, 16, 0.25);
           padding-bottom: env(safe-area-inset-bottom, 0);
         }
         @media (min-width: 768px) {
@@ -872,7 +872,7 @@ export default function CabinShell({
         }
         .cabin-shell__drawer-head {
           padding-bottom: 16px;
-          border-bottom: 1px solid rgba(201, 168, 76, 0.25);
+          border-bottom: 1px solid rgba(218, 161, 16, 0.25);
         }
         .cabin-shell__drawer-list {
           list-style: none;
@@ -884,7 +884,7 @@ export default function CabinShell({
         }
         .cabin-shell__drawer-sep {
           height: 1px;
-          background: rgba(201, 168, 76, 0.2);
+          background: rgba(218, 161, 16, 0.2);
           margin: 12px 0;
         }
         .cabin-shell__drawer-link {

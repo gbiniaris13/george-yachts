@@ -9,7 +9,7 @@
 //   • Server-rendered (NOT client-only) — Googlebot + ChatGPT +
 //     Perplexity + Claude must see the Forbes mention without JS.
 //   • Sticky top, 36px desktop / 32px mobile.
-//   • Background #0D1B2A, bottom border 1px solid #C9A84C @ 30%.
+//   • Background #0D1B2A, bottom border 1px solid #DAA110 @ 30%.
 //   • Forbes wordmark = text-based, Times Bold 14px, ivory.
 //   • Click anywhere → opens article in new tab (target="_blank",
 //     rel="noopener noreferrer").
@@ -46,7 +46,7 @@ export default function ForbesTopBar() {
         zIndex: 80,
         height: 36,
         background: "#0D1B2A",
-        borderBottom: "1px solid rgba(201,168,76,0.3)",
+        borderBottom: "1px solid rgba(218, 161, 16,0.3)",
         color: "#F8F5F0",
         display: "flex",
         alignItems: "center",
@@ -90,7 +90,7 @@ export default function ForbesTopBar() {
           Forbes
         </span>
 
-        <span aria-hidden="true" style={{ color: "#C9A84C" }}>•</span>
+        <span aria-hidden="true" style={{ color: "#DAA110" }}>•</span>
 
         {/* Desktop content */}
         <span
@@ -107,7 +107,7 @@ export default function ForbesTopBar() {
           As Featured · 1 May 2026
         </span>
 
-        <span aria-hidden="true" className="gy-forbes-bar__desktop" style={{ color: "#C9A84C" }}>•</span>
+        <span aria-hidden="true" className="gy-forbes-bar__desktop" style={{ color: "#DAA110" }}>•</span>
 
         <span
           className="gy-forbes-bar__desktop"
@@ -144,7 +144,7 @@ export default function ForbesTopBar() {
             fontSize: 11,
             letterSpacing: "0.18em",
             textTransform: "uppercase",
-            color: "#C9A84C",
+            color: "#DAA110",
             fontWeight: 600,
             marginLeft: 6,
             whiteSpace: "nowrap",
@@ -158,7 +158,7 @@ export default function ForbesTopBar() {
           style={{
             fontFamily: "var(--gy-font-ui)",
             fontSize: 12,
-            color: "#C9A84C",
+            color: "#DAA110",
             fontWeight: 600,
             marginLeft: 4,
           }}

@@ -123,7 +123,7 @@ export default function HomeStats({ yachtCount = FLEET_COUNT }) {
       className="relative w-full bg-black border-y border-white/[0.04] py-16 md:py-20 overflow-hidden"
     >
       {/* Subtle gold gradient line at top */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/20 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#DAA110]/20 to-transparent" />
 
       {/* Phase 27i.18 (2026-05-08) - constellation backdrop. Same
           night-sky register as Filotimon, kept very low intensity
@@ -150,7 +150,7 @@ export default function HomeStats({ yachtCount = FLEET_COUNT }) {
               className="text-5xl md:text-6xl lg:text-7xl font-light mb-3"
               style={{
                 fontFamily: "var(--gy-font-editorial)",
-                background: "linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C)",
+                background: "linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
@@ -198,7 +198,7 @@ export default function HomeStats({ yachtCount = FLEET_COUNT }) {
             },
             {
               icon: (
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#C9A84C]/75 group-hover:text-[#C9A84C] transition-colors duration-500">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#DAA110]/75 group-hover:text-[#DAA110] transition-colors duration-500">
                   <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
                   <polyline points="14,2 14,8 20,8" />
                   <line x1="16" y1="13" x2="8" y2="13" />
@@ -209,7 +209,7 @@ export default function HomeStats({ yachtCount = FLEET_COUNT }) {
             },
             {
               icon: (
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#C9A84C]/75 group-hover:text-[#C9A84C] transition-colors duration-500">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#DAA110]/75 group-hover:text-[#DAA110] transition-colors duration-500">
                   <rect x="2" y="3" width="20" height="14" rx="2" />
                   <path d="M2 7h20" />
                   <path d="M12 21v-4" />
@@ -220,7 +220,7 @@ export default function HomeStats({ yachtCount = FLEET_COUNT }) {
             },
             {
               icon: (
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#C9A84C]/75 group-hover:text-[#C9A84C] transition-colors duration-500">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-[#DAA110]/75 group-hover:text-[#DAA110] transition-colors duration-500">
                   <circle cx="12" cy="12" r="10" />
                   <path d="M2 12h20" />
                   <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />

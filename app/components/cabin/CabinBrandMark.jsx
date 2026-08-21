@@ -122,7 +122,7 @@ export default function CabinBrandMark({ href = "/cabin" }) {
         }
         .cabin-brandmark:hover .cabin-brandmark__logo,
         .cabin-brandmark:focus-visible .cabin-brandmark__logo {
-          filter: drop-shadow(0 0 22px rgba(201, 168, 76, 0.4));
+          filter: drop-shadow(0 0 22px rgba(218, 161, 16, 0.4));
         }
         @media (max-width: 1023.98px) {
           .cabin-brandmark__logo { height: 120px; }

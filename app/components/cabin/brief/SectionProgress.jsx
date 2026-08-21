@@ -155,7 +155,7 @@ export default function SectionProgress({
         .section-progress__dot--current {
           background: var(--gy-gold);
           border: 1px solid var(--gy-navy);
-          box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.25);
+          box-shadow: 0 0 0 2px rgba(218, 161, 16, 0.25);
           width: 10px;
           height: 10px;
         }

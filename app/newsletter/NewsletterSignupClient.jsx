@@ -64,7 +64,7 @@ export default function NewsletterSignupClient({ streams }) {
             fontFamily: "var(--gy-font-ui)",
             fontSize: 10,
             letterSpacing: "0.45em",
-            color: "#C9A84C",
+            color: "#DAA110",
             textTransform: "uppercase",
             margin: 0,
           }}
@@ -87,7 +87,7 @@ export default function NewsletterSignupClient({ streams }) {
           style={{
             width: 40,
             height: 1,
-            background: "#C9A84C",
+            background: "#DAA110",
             margin: "12px auto 24px auto",
           }}
         />
@@ -155,9 +155,9 @@ export default function NewsletterSignupClient({ streams }) {
                   textAlign: "left",
                   cursor: "pointer",
                   padding: "20px 22px",
-                  background: isOn ? "rgba(201,168,76,0.07)" : "rgba(248,245,240,0.6)",
+                  background: isOn ? "rgba(218, 161, 16,0.07)" : "rgba(248,245,240,0.6)",
                   border: isOn
-                    ? "1px solid #C9A84C"
+                    ? "1px solid #DAA110"
                     : "1px solid rgba(13,27,42,0.12)",
                   borderRadius: 4,
                   position: "relative",
@@ -173,7 +173,7 @@ export default function NewsletterSignupClient({ streams }) {
                       top: -10,
                       left: 18,
                       background: "#0D1B2A",
-                      color: "#C9A84C",
+                      color: "#DAA110",
                       padding: "3px 10px",
                       fontFamily: "var(--gy-font-ui)",
                       fontSize: 9,
@@ -209,8 +209,8 @@ export default function NewsletterSignupClient({ streams }) {
                       width: 18,
                       height: 18,
                       borderRadius: 2,
-                      border: "1px solid #C9A84C",
-                      background: isOn ? "#C9A84C" : "transparent",
+                      border: "1px solid #DAA110",
+                      background: isOn ? "#DAA110" : "transparent",
                       display: "inline-flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -229,7 +229,7 @@ export default function NewsletterSignupClient({ streams }) {
                     fontSize: 10,
                     letterSpacing: "0.28em",
                     textTransform: "uppercase",
-                    color: "#C9A84C",
+                    color: "#DAA110",
                   }}
                 >
                   {s.audience}
@@ -344,9 +344,9 @@ export default function NewsletterSignupClient({ streams }) {
             style={{
               padding: "14px 22px",
               background:
-                "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
+                "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
               color: "#0D1B2A",
-              border: "1px solid rgba(201,168,76,0.6)",
+              border: "1px solid rgba(218, 161, 16,0.6)",
               fontFamily: "var(--gy-font-ui)",
               fontSize: 11,
               letterSpacing: "0.35em",
@@ -355,7 +355,7 @@ export default function NewsletterSignupClient({ streams }) {
               cursor: submitting ? "default" : "pointer",
               opacity: submitting ? 0.7 : 1,
               boxShadow:
-                "0 10px 30px -10px rgba(201,168,76,0.45), inset 0 1px 0 rgba(248, 245, 240,0.25)",
+                "0 10px 30px -10px rgba(218, 161, 16,0.45), inset 0 1px 0 rgba(248, 245, 240,0.25)",
             }}
           >
             {submitting ? "Subscribing…" : "Subscribe"}

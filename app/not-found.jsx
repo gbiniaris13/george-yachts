@@ -41,7 +41,7 @@ export default function NotFound() {
       <div style={{ maxWidth: 880, position: "relative", zIndex: 2 }}>
         <p
           className="gy-eyebrow"
-          style={{ color: "#C9A84C", textAlign: "center", display: "block" }}
+          style={{ color: "#DAA110", textAlign: "center", display: "block" }}
         >
           The page you sought has weighed&nbsp;anchor
         </p>
@@ -54,7 +54,7 @@ export default function NotFound() {
             textAlign: "center",
             letterSpacing: "-0.06em",
             lineHeight: 0.85,
-            background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
+            background: "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
             WebkitBackgroundClip: "text",
             backgroundClip: "text",
             WebkitTextFillColor: "transparent",
@@ -142,7 +142,7 @@ export default function NotFound() {
           Or simply{" "}
           <Link
             href="/"
-            style={{ color: "#C9A84C", textDecoration: "underline", textUnderlineOffset: 4 }}
+            style={{ color: "#DAA110", textDecoration: "underline", textUnderlineOffset: 4 }}
           >
             return to the home port
           </Link>
@@ -166,15 +166,15 @@ function ExitCard({ href, eyebrow, title, primary }) {
         padding: "22px 24px",
         textDecoration: "none",
         background: primary
-          ? "linear-gradient(135deg, rgba(201,168,76,0.12) 0%, rgba(13,27,42,0.6) 100%)"
+          ? "linear-gradient(135deg, rgba(218, 161, 16,0.12) 0%, rgba(13,27,42,0.6) 100%)"
           : "rgba(13, 27, 42,0.55)",
-        border: `1px solid ${primary ? "rgba(201,168,76,0.55)" : "rgba(248,245,240,0.12)"}`,
+        border: `1px solid ${primary ? "rgba(218, 161, 16,0.55)" : "rgba(248,245,240,0.12)"}`,
         color: "#F8F5F0",
       }}
     >
       <span
         className="gy-eyebrow-sm"
-        style={{ color: primary ? "#C9A84C" : "rgba(248,245,240,0.6)", margin: 0 }}
+        style={{ color: primary ? "#DAA110" : "rgba(248,245,240,0.6)", margin: 0 }}
       >
         {eyebrow}
       </span>

@@ -240,7 +240,7 @@ export default function VideoSection() {
               fontSize: "clamp(9px, 0.9vw, 11px)",
               letterSpacing: "0.42em",
               textTransform: "uppercase",
-              color: "#C9A84C",
+              color: "#DAA110",
               fontWeight: 600,
               margin: "0 0 22px",
             }}
@@ -361,9 +361,9 @@ export default function VideoSection() {
                 fontSize: "12px",
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: "#C9A84C",
+                color: "#DAA110",
                 background: "transparent",
-                border: "1px solid #C9A84C",
+                border: "1px solid #DAA110",
                 textDecoration: "none",
                 whiteSpace: "nowrap",
                 transition: "background 320ms ease, color 320ms ease, border-color 320ms ease",
@@ -468,9 +468,9 @@ export default function VideoSection() {
           }
         }
         .gy-hero-cta-primary:hover {
-          background: #C9A84C;
+          background: #DAA110;
           color: #0D1B2A;
-          border-color: #C9A84C;
+          border-color: #DAA110;
         }
         .gy-hero-cta-secondary {
           position: relative;

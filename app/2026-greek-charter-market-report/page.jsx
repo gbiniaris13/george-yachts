@@ -15,7 +15,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { pageMeta } from "@/lib/pageMeta";
 import Footer from "@/app/components/Footer";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 
 export const revalidate = 86400;
@@ -74,7 +74,7 @@ function ArticleJsonLd() {
 
 function Section({ eyebrow, h2, children }) {
   return (
-    <section style={{ padding: "56px 24px", borderBottom: "1px solid rgba(201, 168, 76, 0.12)" }}>
+    <section style={{ padding: "56px 24px", borderBottom: "1px solid rgba(218, 161, 16, 0.12)" }}>
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
         <p
           style={{
@@ -120,7 +120,7 @@ function StatCard({ stat, label, note }) {
   return (
     <div
       style={{
-        border: "1px solid rgba(201, 168, 76, 0.25)",
+        border: "1px solid rgba(218, 161, 16, 0.25)",
         padding: "24px 26px",
         background: "rgba(248, 245, 240, 0.02)",
       }}
@@ -182,7 +182,7 @@ export default function MarketReportPage() {
         <header
           style={{
             padding: "120px 24px 64px",
-            borderBottom: "1px solid rgba(201, 168, 76, 0.15)",
+            borderBottom: "1px solid rgba(218, 161, 16, 0.15)",
             textAlign: "center",
           }}
         >
@@ -231,7 +231,7 @@ export default function MarketReportPage() {
         </header>
 
         {/* QUICK ANSWER (front-loaded for AI citation) */}
-        <section style={{ padding: "48px 24px", background: "rgba(201, 168, 76, 0.025)" }}>
+        <section style={{ padding: "48px 24px", background: "rgba(218, 161, 16, 0.025)" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
             <p
               style={{
@@ -268,7 +268,7 @@ export default function MarketReportPage() {
         </section>
 
         {/* HEADLINE STATS */}
-        <section style={{ padding: "56px 24px", borderBottom: "1px solid rgba(201, 168, 76, 0.12)" }}>
+        <section style={{ padding: "56px 24px", borderBottom: "1px solid rgba(218, 161, 16, 0.12)" }}>
           <div style={{ maxWidth: 1080, margin: "0 auto" }}>
             <p
               style={{
@@ -308,7 +308,7 @@ export default function MarketReportPage() {
               <StatCard
                 stat="+7%"
                 label="Average rate change"
-                note="Weighted-average weekly base rate change vs 2025 across our fleet sample."
+                note="Weighted-average weekly base rate change vs 2025 across the fleet sampled here."
               />
               <StatCard
                 stat="11"
@@ -463,7 +463,7 @@ export default function MarketReportPage() {
         </Section>
 
         {/* CTA */}
-        <section style={{ padding: "84px 24px", background: "rgba(201, 168, 76, 0.025)" }}>
+        <section style={{ padding: "84px 24px", background: "rgba(218, 161, 16, 0.025)" }}>
           <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
             <h2
               style={{
@@ -488,9 +488,9 @@ export default function MarketReportPage() {
                   textTransform: "uppercase",
                   fontWeight: 700,
                   padding: "14px 26px",
-                  background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
+                  background: "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
                   color: NAVY,
-                  border: "1px solid rgba(201, 168, 76, 0.6)",
+                  border: "1px solid rgba(218, 161, 16, 0.6)",
                   textDecoration: "none",
                 }}
               >

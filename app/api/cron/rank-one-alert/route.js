@@ -204,7 +204,7 @@ export async function GET(req) {
 
   const html = `
     <div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:640px;color:#0D1B2A">
-      <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#C9A84C;margin:0 0 8px">Google, position 1</p>
+      <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#DAA110;margin:0 0 8px">Google, position 1</p>
       <h1 style="font-size:24px;font-weight:400;margin:0 0 16px">
         ${fresh.length} new ${plural} at the top of Google
       </h1>
@@ -215,7 +215,7 @@ export async function GET(req) {
       </p>
       <table style="width:100%;border-collapse:collapse;font-size:14px">
         <thead>
-          <tr style="text-align:left;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#C9A84C">
+          <tr style="text-align:left;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#DAA110">
             <th style="padding:8px 14px">Query</th>
             <th style="padding:8px 14px;text-align:right">Best position</th>
             <th style="padding:8px 14px;text-align:right">Impressions</th>

@@ -15,7 +15,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import RelatedPages from "@/app/components/seo/RelatedPages";
 import Footer from "@/app/components/Footer";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -190,9 +190,9 @@ export default function ChartCostCalculatorPage() {
         {/* COST MODEL EXPLAINED */}
         <section
           style={{
-            background: "rgba(201, 168, 76, 0.025)",
-            borderTop: `1px solid rgba(201, 168, 76, 0.15)`,
-            borderBottom: `1px solid rgba(201, 168, 76, 0.15)`,
+            background: "rgba(218, 161, 16, 0.025)",
+            borderTop: `1px solid rgba(218, 161, 16, 0.15)`,
+            borderBottom: `1px solid rgba(218, 161, 16, 0.15)`,
             padding: "72px 24px",
           }}
         >
@@ -395,8 +395,8 @@ export default function ChartCostCalculatorPage() {
         {/* CTA */}
         <section
           style={{
-            background: "rgba(201, 168, 76, 0.025)",
-            borderTop: `1px solid rgba(201, 168, 76, 0.15)`,
+            background: "rgba(218, 161, 16, 0.025)",
+            borderTop: `1px solid rgba(218, 161, 16, 0.15)`,
             padding: "84px 24px",
           }}
         >

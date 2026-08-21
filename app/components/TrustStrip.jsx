@@ -8,7 +8,7 @@
 // decorative, nothing invented.
 import Link from "next/link";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 const itemStyle = {
   display: "inline-flex",
@@ -24,7 +24,7 @@ const itemStyle = {
 };
 
 const dotStyle = {
-  color: "rgba(201,168,76,0.45)",
+  color: "rgba(218, 161, 16,0.45)",
   fontSize: 10,
 };
 
@@ -34,8 +34,8 @@ export default function TrustStrip() {
       aria-label="Credentials"
       style={{
         background: "#0D1B2A",
-        borderTop: "1px solid rgba(201,168,76,0.14)",
-        borderBottom: "1px solid rgba(201,168,76,0.14)",
+        borderTop: "1px solid rgba(218, 161, 16,0.14)",
+        borderBottom: "1px solid rgba(218, 161, 16,0.14)",
         padding: "14px 24px",
       }}
     >

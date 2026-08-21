@@ -14,7 +14,7 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 export default async function DashboardPage() {
   const c = await cookies();
@@ -32,7 +32,7 @@ export default async function DashboardPage() {
         <header
           style={{
             padding: "100px 24px 36px",
-            borderBottom: "1px solid rgba(201,168,76,0.15)",
+            borderBottom: "1px solid rgba(218, 161, 16,0.15)",
           }}
         >
           <div style={{ maxWidth: 1080, margin: "0 auto", display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
@@ -147,8 +147,8 @@ export default async function DashboardPage() {
 }
 
 const cardStyle = {
-  background: "rgba(201,168,76,0.025)",
-  border: "1px solid rgba(201,168,76,0.2)",
+  background: "rgba(218, 161, 16,0.025)",
+  border: "1px solid rgba(218, 161, 16,0.2)",
   padding: "22px 24px 24px",
 };
 

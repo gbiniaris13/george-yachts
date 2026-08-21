@@ -4,7 +4,7 @@
 //
 // Replaces the prior "Featured This Week" SignatureYacht slot with
 // a 2-card editorial selection: one Private Fleet flagship
-// (La Pellegrina 1) + one Explorer Fleet flagship (Errant Vagabond).
+// (La Pellegrina 1) + one Sailing Fleet flagship (Errant Vagabond).
 // Same brand voice as Three Greek Worlds — "two yachts, two
 // experiences, one Greek summer". No featured-yacht-of-the-week
 // rotation, no Sanity-driven autoplay; this is the broker's
@@ -44,7 +44,7 @@ const SELECTION = [
   },
   {
     slug: "errant-vagabond",
-    label: "Collection II · Explorer Fleet",
+    label: "Collection II · Sailing Fleet",
     name: "S/CAT Errant Vagabond",
     specs: "15.35 m · 10 Guests · 5 Cabins",
     price: "From €11,500 / week",
@@ -99,8 +99,8 @@ export default function GeorgesSelection() {
   return (
     <section
       className="gy-selection-section"
-      aria-label="George's Selection - Private Fleet flagship + Explorer Fleet flagship"
-      style={{ background: "#0D1B2A", padding: "96px 0 80px" }}
+      aria-label="George's Selection - Private Fleet flagship + Sailing Fleet flagship"
+      style={{ background: "#0D1B2A", padding: "clamp(40px, 5vw, 56px) 0" }}
     >
       <div className="gy-selection-header">
         <p className="gy-selection-eyebrow">George&apos;s Selection</p>
@@ -135,8 +135,13 @@ export default function GeorgesSelection() {
           font-weight: 500;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #C9A84C;
-          margin: 0 0 18px;
+          color: #DAA110;
+          /* 2026-08-21 (section 2) - "0 auto" not "0 0". This eyebrow centres its
+             own text, and the global 720px reading cap in globals.css then
+             pinned the 720px box to the left of the section. The shorthand is
+             where the fix belongs: a separate margin-inline: auto above this
+             line was silently reset by it. */
+          margin: 0 auto 18px;
         }
         .gy-selection-title {
           font-family: var(--gy-font-editorial);
@@ -191,7 +196,7 @@ export default function GeorgesSelection() {
           font-weight: 500;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #C9A84C;
+          color: #DAA110;
           margin: 0;
         }
 
@@ -253,16 +258,16 @@ export default function GeorgesSelection() {
           font-weight: 500;
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: #C9A84C;
+          color: #DAA110;
           padding-bottom: 4px;
-          border-bottom: 1px solid rgba(201, 168, 76, 0.6);
+          border-bottom: 1px solid rgba(218, 161, 16, 0.6);
           align-self: flex-start;
           transform: translateY(0);
           transition: transform 320ms ease, border-color 320ms ease;
         }
         .gy-selection-card:hover .gy-selection-card__cta {
           transform: translateY(-6px);
-          border-bottom-color: #C9A84C;
+          border-bottom-color: #DAA110;
         }
 
         /* Footnote link below the cards */
@@ -280,7 +285,7 @@ export default function GeorgesSelection() {
           transition: color 260ms ease, text-decoration 260ms ease;
         }
         .gy-selection-footnote-link:hover {
-          color: #C9A84C;
+          color: #DAA110;
           text-decoration: underline;
           text-underline-offset: 3px;
         }

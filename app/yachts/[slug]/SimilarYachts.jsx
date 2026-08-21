@@ -14,8 +14,8 @@ export default function SimilarYachts({ items = [] }) {
     <section
       style={{
         background: "#0D1B2A",
-        padding: "100px 24px",
-        borderTop: "1px solid rgba(201,168,76,0.1)",
+        padding: "clamp(40px, 5vw, 56px) 24px",
+        borderTop: "1px solid rgba(218, 161, 16,0.1)",
       }}
     >
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
@@ -25,7 +25,7 @@ export default function SimilarYachts({ items = [] }) {
               fontFamily: "var(--gy-font-ui)",
               fontSize: 10,
               letterSpacing: "0.4em",
-              color: "rgba(201,168,76,0.85)",
+              color: "rgba(218, 161, 16,0.85)",
               textTransform: "uppercase",
               fontWeight: 600,
               marginBottom: 14,
@@ -43,7 +43,7 @@ export default function SimilarYachts({ items = [] }) {
               letterSpacing: "0.01em",
             }}
           >
-            Similar yachts in our fleet
+            Similar yachts in this house
           </h2>
         </div>
 
@@ -62,7 +62,7 @@ export default function SimilarYachts({ items = [] }) {
                 display: "block",
                 textDecoration: "none",
                 background: "#0D1B2A",
-                border: "1px solid rgba(201,168,76,0.15)",
+                border: "1px solid rgba(218, 161, 16,0.15)",
                 overflow: "hidden",
                 transition: "transform 0.5s ease, border-color 0.5s ease",
               }}
@@ -108,7 +108,7 @@ export default function SimilarYachts({ items = [] }) {
                     fontSize: 9,
                     letterSpacing: "0.28em",
                     textTransform: "uppercase",
-                    color: "rgba(201,168,76,0.8)",
+                    color: "rgba(218, 161, 16,0.8)",
                     fontWeight: 600,
                     margin: "0 0 6px",
                   }}
@@ -147,7 +147,7 @@ export default function SimilarYachts({ items = [] }) {
                       fontFamily: "var(--gy-font-ui)",
                       fontSize: 11,
                       letterSpacing: "0.14em",
-                      color: "rgba(201,168,76,0.9)",
+                      color: "rgba(218, 161, 16,0.9)",
                       fontWeight: 600,
                     }}
                   >
@@ -161,7 +161,7 @@ export default function SimilarYachts({ items = [] }) {
 
         <style>{`
           .similar-yacht-card:hover {
-            border-color: rgba(201,168,76,0.45) !important;
+            border-color: rgba(218, 161, 16,0.45) !important;
             transform: translateY(-4px);
           }
         `}</style>

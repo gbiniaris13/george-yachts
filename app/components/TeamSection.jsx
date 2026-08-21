@@ -6,7 +6,7 @@ import Link from "next/link"; // Added for internal navigation
 const CARD_DIMENSIONS = { width: "372px", height: "400px" };
 const IMAGE_PLACEHOLDER_URL =
   "https://placehold.co/372x400/02132d/2fd5c3?text=TEAM";
-const GOLD_HEX = "#C9A84C";
+const GOLD_HEX = "#DAA110";
 
 // --- Team Data ---
 const teamMembers = [
@@ -88,7 +88,7 @@ const TeamCard = ({ member }) => {
           {/* Title uses the gold color */}
           <p
             className="text-sm font-bold"
-            style={{ color: "#C9A84C", marginBottom: "1rem" }}
+            style={{ color: "#DAA110", marginBottom: "1rem" }}
           >
             {member.title}
           </p>

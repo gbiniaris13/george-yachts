@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 export default function DeletionForm() {
   const [name, setName] = useState("");
@@ -42,7 +42,7 @@ export default function DeletionForm() {
 
   if (done) {
     return (
-      <div style={{ textAlign: "center", padding: "32px 24px", border: "1px solid rgba(201,168,76,0.35)" }}>
+      <div style={{ textAlign: "center", padding: "32px 24px", border: "1px solid rgba(218, 161, 16,0.35)" }}>
         <p
           style={{
             fontFamily: "var(--gy-font-editorial)",
@@ -69,7 +69,7 @@ export default function DeletionForm() {
       onSubmit={onSubmit}
       style={{
         display: "flex", flexDirection: "column", gap: 12,
-        border: "1px solid rgba(201,168,76,0.25)",
+        border: "1px solid rgba(218, 161, 16,0.25)",
         padding: "28px 28px 24px",
       }}
     >
@@ -103,7 +103,7 @@ export default function DeletionForm() {
           color: "#0D1B2A",
           background: submitting
             ? `${GOLD}66`
-            : `linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)`,
+            : `linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)`,
           border: "none",
           cursor: submitting ? "default" : "pointer",
         }}

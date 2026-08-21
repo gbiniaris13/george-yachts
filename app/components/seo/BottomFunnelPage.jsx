@@ -10,7 +10,7 @@ import { LAST_REFRESH } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
 import Footer from "@/app/components/Footer";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -193,9 +193,9 @@ export default function BottomFunnelPage({ pageData }) {
         {Array.isArray(d.yachtRecs) && d.yachtRecs.length > 0 && (
           <section
             style={{
-              background: "rgba(201,168,76,0.025)",
-              borderTop: "1px solid rgba(201,168,76,0.15)",
-              borderBottom: "1px solid rgba(201,168,76,0.15)",
+              background: "rgba(218, 161, 16,0.025)",
+              borderTop: "1px solid rgba(218, 161, 16,0.15)",
+              borderBottom: "1px solid rgba(218, 161, 16,0.15)",
               padding: "72px 24px",
             }}
           >
@@ -238,7 +238,7 @@ export default function BottomFunnelPage({ pageData }) {
                     key={i}
                     style={{
                       border: `1px solid ${GOLD}`,
-                      background: "rgba(201,168,76,0.04)",
+                      background: "rgba(218, 161, 16,0.04)",
                       padding: "22px 24px",
                     }}
                   >
@@ -394,9 +394,9 @@ export default function BottomFunnelPage({ pageData }) {
         {Array.isArray(d.whyGeorgeYachts) && d.whyGeorgeYachts.length > 0 && (
           <section
             style={{
-              background: "rgba(201,168,76,0.025)",
-              borderTop: "1px solid rgba(201,168,76,0.15)",
-              borderBottom: "1px solid rgba(201,168,76,0.15)",
+              background: "rgba(218, 161, 16,0.025)",
+              borderTop: "1px solid rgba(218, 161, 16,0.15)",
+              borderBottom: "1px solid rgba(218, 161, 16,0.15)",
               padding: "72px 24px",
             }}
           >

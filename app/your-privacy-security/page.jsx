@@ -12,8 +12,8 @@ export const metadata = pageMeta({
 });
 
 const Card = ({ icon, title, description }) => (
-  <div className="p-8 md:p-10" style={{ background: "rgba(201,168,76,0.03)", border: "1px solid rgba(201,168,76,0.1)" }}>
-    <div className="text-[#C9A84C] mb-6">{icon}</div>
+  <div className="p-8 md:p-10" style={{ background: "rgba(218, 161, 16,0.03)", border: "1px solid rgba(218, 161, 16,0.1)" }}>
+    <div className="text-[#DAA110] mb-6">{icon}</div>
     <h3 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.4rem", fontWeight: 400, color: "#F8F5F0", marginBottom: "16px" }}>
       {title}
     </h3>
@@ -28,15 +28,15 @@ export default function YourPrivacySecurity() {
     <div className="min-h-screen bg-black text-white">
       <PageBreadcrumb path="/your-privacy-security" />
       {/* Hero */}
-      <div className="relative pt-44 pb-24 px-6 md:px-12" style={{ borderBottom: "1px solid rgba(201,168,76,0.1)" }}>
+      <div className="relative pt-44 pb-24 px-6 md:px-12" style={{ borderBottom: "1px solid rgba(218, 161, 16,0.1)" }}>
         <div className="container mx-auto max-w-4xl text-center">
-          <div className="w-16 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full border border-[#C9A84C]/20 mb-10">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <div className="w-16 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #DAA110, transparent)" }} />
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full border border-[#DAA110]/20 mb-10">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#DAA110" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             </svg>
           </div>
-          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#C9A84C", marginBottom: "24px", textTransform: "uppercase" }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#DAA110", marginBottom: "24px", textTransform: "uppercase" }}>
             Your Trust Matters
           </p>
           <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#F8F5F0", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "24px" }}>
@@ -45,9 +45,9 @@ export default function YourPrivacySecurity() {
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "15px", lineHeight: 1.9, color: "rgba(248, 245, 240,0.45)", maxWidth: "600px", margin: "0 auto" }}>
             When you trust us with your charter plans, passport details, or personal preferences, we take that responsibility seriously. Here&apos;s exactly how we keep your information safe.
           </p>
-          <div className="w-16 h-px mx-auto mt-10" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
+          <div className="w-16 h-px mx-auto mt-10" style={{ background: "linear-gradient(90deg, transparent, #DAA110, transparent)" }} />
         </div>
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(201,168,76,0.04) 0%, transparent 70%)" }} />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(218, 161, 16,0.04) 0%, transparent 70%)" }} />
       </div>
 
       {/* Main Content */}
@@ -95,11 +95,11 @@ export default function YourPrivacySecurity() {
         </div>
 
         {/* Personal Promise */}
-        <div className="py-16 px-8 md:px-16 text-center mb-24" style={{ background: "rgba(201,168,76,0.03)", borderLeft: "3px solid rgba(201,168,76,0.3)" }}>
+        <div className="py-16 px-8 md:px-16 text-center mb-24" style={{ background: "rgba(218, 161, 16,0.03)", borderLeft: "3px solid rgba(218, 161, 16,0.3)" }}>
           <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.5rem", fontWeight: 300, color: "rgba(248,245,240,0.78)", fontStyle: "italic", lineHeight: 1.8, marginBottom: "24px" }}>
             &ldquo;In yacht brokerage, discretion isn&apos;t a feature - it&apos;s the foundation. Our clients trust us with their most personal moments, and we honour that trust with absolute confidentiality.&rdquo;
           </p>
-          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", letterSpacing: "0.2em", color: "#C9A84C", textTransform: "uppercase" }}>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", letterSpacing: "0.2em", color: "#DAA110", textTransform: "uppercase" }}>
             - George P. Biniaris, Managing Broker
           </p>
         </div>
@@ -118,7 +118,7 @@ export default function YourPrivacySecurity() {
               { right: "Take your data", desc: "Request a copy of your data in a standard format to take with you. It's yours." },
             ].map((item, i) => (
               <div key={i} className="flex gap-6 items-start py-4" style={{ borderBottom: "1px solid rgba(248, 245, 240,0.05)" }}>
-                <span style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "28px", fontWeight: 300, color: "rgba(201,168,76,0.2)", lineHeight: 1, minWidth: "30px" }}>
+                <span style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "28px", fontWeight: 300, color: "rgba(218, 161, 16,0.2)", lineHeight: 1, minWidth: "30px" }}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
@@ -142,8 +142,8 @@ export default function YourPrivacySecurity() {
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", color: "rgba(248, 245, 240,0.4)", marginBottom: "32px" }}>
             Reach out anytime. We&apos;re happy to explain anything in more detail.
           </p>
-          <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", letterSpacing: "0.15em", color: "#C9A84C", textDecoration: "none", borderBottom: "1px solid rgba(201,168,76,0.3)", paddingBottom: "4px" }}>
-            <ObfuscatedEmail className="text-[#C9A84C] no-underline" />
+          <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", letterSpacing: "0.15em", color: "#DAA110", textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.3)", paddingBottom: "4px" }}>
+            <ObfuscatedEmail className="text-[#DAA110] no-underline" />
           </span>
           <div className="mt-12">
             <Link
@@ -155,8 +155,8 @@ export default function YourPrivacySecurity() {
           </div>
         </div>
 
-        <div className="mt-32 pt-16 text-center" style={{ borderTop: "1px solid rgba(201,168,76,0.1)" }}>
-          <div className="w-8 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
+        <div className="mt-32 pt-16 text-center" style={{ borderTop: "1px solid rgba(218, 161, 16,0.1)" }}>
+          <div className="w-8 h-px mx-auto mb-8" style={{ background: "linear-gradient(90deg, transparent, #DAA110, transparent)" }} />
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", letterSpacing: "0.3em", color: "rgba(248, 245, 240,0.2)", textTransform: "uppercase" }}>
             Last Updated: March 2026
           </p>

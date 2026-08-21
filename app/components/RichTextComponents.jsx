@@ -49,7 +49,7 @@ function classifyLink(href) {
 }
 
 const linkStyle =
-  "text-[#C9A84C] hover:text-white border-b border-[#C9A84C]/30 hover:border-white transition-colors duration-300";
+  "text-[#DAA110] hover:text-white border-b border-[#DAA110]/30 hover:border-white transition-colors duration-300";
 
 export const RichTextComponents = {
   types: {
@@ -83,7 +83,7 @@ export const RichTextComponents = {
         fontWeight: isHeader ? 600 : 300,
         fontSize: "0.95rem",
         lineHeight: 1.6,
-        borderBottom: isHeader ? "2px solid #C9A84C" : "1px solid #F8F5F0",
+        borderBottom: isHeader ? "2px solid #DAA110" : "1px solid #F8F5F0",
       });
 
       return (
@@ -98,7 +98,7 @@ export const RichTextComponents = {
               style={{
                 width: "100%",
                 borderCollapse: "collapse",
-                borderLeft: "3px solid #C9A84C",
+                borderLeft: "3px solid #DAA110",
                 minWidth: "480px",
               }}
             >
@@ -176,8 +176,8 @@ export const RichTextComponents = {
               gap: 18,
               alignItems: "stretch",
               padding: 18,
-              background: "rgba(201,168,76,0.06)",
-              border: "1px solid rgba(201,168,76,0.35)",
+              background: "rgba(218, 161, 16,0.06)",
+              border: "1px solid rgba(218, 161, 16,0.35)",
               borderRadius: 0,
               textDecoration: "none",
               color: "inherit",
@@ -203,7 +203,7 @@ export const RichTextComponents = {
                     fontSize: 9,
                     letterSpacing: "0.32em",
                     textTransform: "uppercase",
-                    color: "#C9A84C",
+                    color: "#DAA110",
                     fontWeight: 600,
                   }}
                 >
@@ -246,7 +246,7 @@ export const RichTextComponents = {
                       fontSize: 8,
                       letterSpacing: "0.3em",
                       textTransform: "uppercase",
-                      color: isPerPerson(y) ? "rgba(248,245,240,0.78)" : "#C9A84C",
+                      color: isPerPerson(y) ? "rgba(248,245,240,0.78)" : "#DAA110",
                       fontWeight: 600,
                     }}
                   >
@@ -256,7 +256,7 @@ export const RichTextComponents = {
                     style={{
                       fontFamily: "var(--gy-font-ui)",
                       fontSize: 12,
-                      color: "#C9A84C",
+                      color: "#DAA110",
                       fontWeight: 600,
                     }}
                   >
@@ -271,7 +271,7 @@ export const RichTextComponents = {
                   fontSize: 10,
                   letterSpacing: "0.32em",
                   textTransform: "uppercase",
-                  color: "#C9A84C",
+                  color: "#DAA110",
                   fontWeight: 600,
                 }}
               >
@@ -296,8 +296,8 @@ export const RichTextComponents = {
           style={{
             padding: "28px 32px",
             background: "rgba(13,27,42,0.6)",
-            borderTop: "1px solid rgba(201,168,76,0.45)",
-            borderBottom: "1px solid rgba(201,168,76,0.45)",
+            borderTop: "1px solid rgba(218, 161, 16,0.45)",
+            borderBottom: "1px solid rgba(218, 161, 16,0.45)",
           }}
         >
           <p
@@ -321,7 +321,7 @@ export const RichTextComponents = {
                 fontSize: 11,
                 letterSpacing: "0.18em",
                 textTransform: "uppercase",
-                color: "#C9A84C",
+                color: "#DAA110",
                 fontWeight: 600,
                 margin: "0 0 12px",
               }}
@@ -339,7 +339,7 @@ export const RichTextComponents = {
               color: "#F8F5F0",
               margin: "0 0 16px",
               padding: "0 0 0 18px",
-              borderLeft: "3px solid #C9A84C",
+              borderLeft: "3px solid #DAA110",
               fontWeight: 300,
             }}
           >
@@ -360,7 +360,7 @@ export const RichTextComponents = {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                color: "#C9A84C",
+                color: "#DAA110",
                 textDecoration: "underline",
                 fontFamily: "'Times New Roman', Times, serif",
                 fontWeight: 700,
@@ -374,7 +374,7 @@ export const RichTextComponents = {
               href={FORBES_ARTICLE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "#C9A84C", textDecoration: "underline" }}
+              style={{ color: "#DAA110", textDecoration: "underline" }}
             >
               Read the full piece →
             </a>
@@ -406,12 +406,12 @@ export const RichTextComponents = {
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-2xl md:text-3xl text-[#C9A84C] font-marcellus mt-12 mb-4">
+      <h3 className="text-2xl md:text-3xl text-[#DAA110] font-marcellus mt-12 mb-4">
         {children}
       </h3>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="border-l-2 border-[#C9A84C] pl-6 md:pl-8 my-12 py-2">
+      <blockquote className="border-l-2 border-[#DAA110] pl-6 md:pl-8 my-12 py-2">
         <p className="text-2xl md:text-3xl text-white italic font-marcellus leading-relaxed opacity-90">
           {children}
         </p>

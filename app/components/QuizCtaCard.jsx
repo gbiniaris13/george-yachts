@@ -8,7 +8,7 @@
 
 import Link from "next/link";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -30,7 +30,7 @@ export default function QuizCtaCard({ fromSlug, fromName }) {
         maxWidth: 720,
         padding: "32px 36px",
         border: `1px solid ${GOLD}`,
-        background: "rgba(201, 168, 76, 0.04)",
+        background: "rgba(218, 161, 16, 0.04)",
         position: "relative",
       }}
     >

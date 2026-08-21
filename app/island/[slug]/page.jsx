@@ -174,6 +174,13 @@ async function loadIslandData(island) {
   try {
     [yachts, itineraries] = await Promise.all([
       sanityClient.fetch(yachtQuery),
+      // 2026-08-21 (section 6). These slugs are hand-written in
+      // lib/islands.js and they rot: on the day this was added, four of the
+      // nineteen named yachts had just been withdrawn and a fifth, "fos",
+      // had never existed in Sanity at all and was referenced nine times.
+      // The query returns only what is really there, so a stale name simply
+      // shows one card fewer instead of a broken link, and the retired set
+      // is dropped by the client wrapper before it ever gets here.
       sanityClient.fetch(itineraryQuery, { slugs: island.itineraryYachts || [] }),
     ]);
   } catch (err) {
@@ -182,7 +189,7 @@ async function loadIslandData(island) {
   return { yachts: yachts || [], itineraries: itineraries || [] };
 }
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 function PlaceJsonLd({ island }) {
   // Phase 5 (2026-05-08, Boss SEO/AI directive) — upgraded to
@@ -339,7 +346,7 @@ export default async function IslandPage({ params }) {
           style={{
             background: "linear-gradient(180deg, #0D1B2A 0%, #0D1B2A 100%)",
             padding: "120px 24px 64px",
-            borderBottom: "1px solid rgba(201,168,76,0.15)",
+            borderBottom: "1px solid rgba(218, 161, 16,0.15)",
             textAlign: "center",
           }}
         >
@@ -444,9 +451,9 @@ export default async function IslandPage({ params }) {
         {yachts.length > 0 && (
           <section
             style={{
-              background: "rgba(201,168,76,0.025)",
-              borderTop: "1px solid rgba(201,168,76,0.15)",
-              borderBottom: "1px solid rgba(201,168,76,0.15)",
+              background: "rgba(218, 161, 16,0.025)",
+              borderTop: "1px solid rgba(218, 161, 16,0.15)",
+              borderBottom: "1px solid rgba(218, 161, 16,0.15)",
               padding: "72px 24px",
             }}
           >
@@ -607,7 +614,7 @@ export default async function IslandPage({ params }) {
                   <div
                     key={y.slug}
                     style={{
-                      border: "1px solid rgba(201,168,76,0.18)",
+                      border: "1px solid rgba(218, 161, 16,0.18)",
                       padding: "28px 28px 24px",
                     }}
                   >
@@ -670,9 +677,9 @@ export default async function IslandPage({ params }) {
         {/* WHEN TO VISIT */}
         <section
           style={{
-            background: "rgba(201,168,76,0.025)",
-            borderTop: "1px solid rgba(201,168,76,0.15)",
-            borderBottom: "1px solid rgba(201,168,76,0.15)",
+            background: "rgba(218, 161, 16,0.025)",
+            borderTop: "1px solid rgba(218, 161, 16,0.15)",
+            borderBottom: "1px solid rgba(218, 161, 16,0.15)",
             padding: "72px 24px",
           }}
         >
@@ -748,8 +755,8 @@ export default async function IslandPage({ params }) {
         {/* FAQ */}
         <section
           style={{
-            background: "rgba(201,168,76,0.025)",
-            borderTop: "1px solid rgba(201,168,76,0.15)",
+            background: "rgba(218, 161, 16,0.025)",
+            borderTop: "1px solid rgba(218, 161, 16,0.15)",
             padding: "72px 24px",
           }}
         >
@@ -835,7 +842,7 @@ export default async function IslandPage({ params }) {
                   fontSize: 9,
                   letterSpacing: "0.42em",
                   textTransform: "uppercase",
-                  color: "#C9A84C",
+                  color: "#DAA110",
                   fontWeight: 600,
                   margin: "0 0 14px",
                   textAlign: "center",
@@ -883,7 +890,7 @@ export default async function IslandPage({ params }) {
                         fontSize: 9,
                         letterSpacing: "0.3em",
                         textTransform: "uppercase",
-                        color: "#C9A84C",
+                        color: "#DAA110",
                         fontWeight: 600,
                         margin: "0 0 8px",
                       }}
@@ -935,9 +942,9 @@ export default async function IslandPage({ params }) {
                   textTransform: "uppercase",
                   fontWeight: 700,
                   padding: "14px 26px",
-                  background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 50%, #C9A84C 100%)",
+                  background: "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
                   color: "#0D1B2A",
-                  border: "1px solid rgba(201,168,76,0.6)",
+                  border: "1px solid rgba(218, 161, 16,0.6)",
                   textDecoration: "none",
                 }}
               >

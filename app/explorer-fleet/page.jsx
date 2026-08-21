@@ -6,20 +6,24 @@ import Footer from "@/app/components/Footer";
 export const revalidate = 3600;
 
 export async function generateMetadata() {
-  let low = 420, high = 1800;
+  let low = 11500, high = 27500;
   try {
-    const yachts = await sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"]]{ weeklyRatePrice, sleeps }`);
-    const pp = yachts.map(y => { const m = String(y.weeklyRatePrice || '').match(/[\d,]+/); const base = m ? parseInt(m[0].replace(/,/g, '')) : 0; if (!base) return 0; return Math.round(base / (parseInt(y.sleeps) || 8)); }).filter(Boolean);
-    if (pp.length) { low = Math.min(...pp); high = Math.max(...pp); }
+    // The week, not the week divided by the berths. See the long note further
+    // down this file for why the per-person figure came off the site.
+    const yachts = await sanityClient.fetch(`*[_type == "yacht" && fleetTier in ["explorer", "both"]]{ weeklyRatePrice }`);
+    const wk = yachts.map(y => { const m = String(y.weeklyRatePrice || '').match(/[\d,]+/); return m ? parseInt(m[0].replace(/,/g, '')) : 0; }).filter(Boolean);
+    if (wk.length) { low = Math.min(...wk); high = Math.max(...wk); }
   } catch {}
   return {
-    title: `Explorer Fleet - Skippered Yacht Charter`,
-    description: `Skippered yacht charters in Greek waters from €${low.toLocaleString()}/person/week. More islands, more adventure - Cyclades, Ionian, Saronic. Brief George.`,
+    // The title said "Skippered Yacht Charter", which is the arrangement this
+    // house does not write. It is a weekly crewed charter or it is nothing.
+    title: `Sailing Fleet - Crewed Yacht Charter Greece`,
+    description: `Fully crewed weekly yacht charters in Greek waters from €${low.toLocaleString()} per yacht per week. More islands in a week, Cyclades, Ionian, Saronic. Brief George.`,
     alternates: { canonical: "https://georgeyachts.com/explorer-fleet" },
     openGraph: {
       type: "website",
-      title: "Explorer Fleet | George Yachts",
-      description: `More islands. More adventure. From €${low.toLocaleString()} to €${high.toLocaleString()} per person per week.`,
+      title: "Sailing Fleet | George Yachts",
+      description: `More islands in a week. From €${low.toLocaleString()} to €${high.toLocaleString()} per yacht per week, fully crewed.`,
       url: "https://georgeyachts.com/explorer-fleet",
       images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
       siteName: "George Yachts Brokerage House",
@@ -40,19 +44,19 @@ const FALLBACK_QUERY = `*[_type == "yacht"] | order(weeklyRatePrice asc) {
   "imageUrl": images[0].asset->url
 }`;
 
-function ExplorerFleetSchema({ lowestPerPerson }) {
+function ExplorerFleetSchema({ lowestWeekly }) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Explorer Fleet Yacht Charter",
+    name: "Sailing Fleet Yacht Charter",
     provider: { "@type": "Organization", name: "George Yachts Brokerage House", url: "https://georgeyachts.com" },
     areaServed: { "@type": "Place", name: "Greek Waters" },
-    description: `Group yacht charters in Greece from €${lowestPerPerson} per person. The smart way to see the islands.`,
+    description: `Fully crewed group yacht charters in Greek waters from €${lowestWeekly} per yacht per week.`,
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "EUR",
-      lowPrice: String(lowestPerPerson),
-      priceSpecification: { "@type": "UnitPriceSpecification", price: String(lowestPerPerson), priceCurrency: "EUR", unitText: "per person" },
+      lowPrice: String(lowestWeekly),
+      priceSpecification: { "@type": "UnitPriceSpecification", price: String(lowestWeekly), priceCurrency: "EUR", unitText: "per yacht per week" },
     },
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
@@ -64,7 +68,7 @@ export default async function ExplorerFleetPage() {
     yachts = await sanityClient.fetch(QUERY);
     if (!yachts.length) yachts = await sanityClient.fetch(FALLBACK_QUERY);
   } catch (e) {
-    console.error("Failed to fetch explorer fleet:", e);
+    console.error("Failed to fetch sailing fleet:", e);
     try { yachts = await sanityClient.fetch(FALLBACK_QUERY); } catch {}
   }
 
@@ -74,57 +78,43 @@ export default async function ExplorerFleetPage() {
     return match ? parseInt(match[0].replace(/,/g, '')) : 0;
   };
 
-  // Calculate all-in per-person price (VAT + APA + skipper where applicable)
-  // Mirrors the logic in ExplorerFleetClient.jsx
-  const calcPerPerson = (yacht) => {
-    const basePrice = extractPrice(yacht);
-    if (basePrice === 0) return 0; // "Contact for rates" → keep
-    const rawLower = String(yacht.weeklyRatePrice || '').toLowerCase();
-    const crewLower = String(yacht.crew || '').toLowerCase();
-    const guests = parseInt(yacht.sleeps) || 8;
-    let total;
-    if (rawLower.includes('plus skipper') || rawLower.includes('skipper')) {
-      total = Math.round(basePrice * 1.32) + 1400;
-    } else if (crewLower.includes('optional')) {
-      total = Math.round(basePrice * 1.27);
-    } else {
-      total = Math.round(basePrice * 1.42);
-    }
-    return Math.round(total / guests);
-  };
+  // 2026-08-21 (section 5). What stood here divided the week by the number of
+  // berths, after grossing it up by 27, 32 or 42 percent depending on whether
+  // the crew line mentioned a skipper, and published the result as a
+  // per-person price. Two things were wrong with it.
+  //
+  // The number was not a price. Nobody buys a berth: the yacht goes as one
+  // yacht, and six people on an eight berth boat pay the eight berth week.
+  // And the multipliers were an estimate of VAT and APA dressed as a fact,
+  // on a site whose whole argument is that those are itemised in writing
+  // rather than guessed at.
+  //
+  // It also read the crew field for the word "skipper", which is the
+  // arrangement George has taken off the site entirely.
+  //
+  // The week is now simply the week.
+  // 2026-08-21 (section 9). A EUR 29,000 ceiling used to sit here, from when
+  // this was the Explorer tier and the tier meant "the cheaper half". It is
+  // the Sailing Fleet now, cut by sail against power, and it runs to EUR
+  // 65,000: the ceiling was quietly hiding nineteen of its thirty-three
+  // yachts, ABOVE & BEYOND among them, which is the most decorated boat in
+  // the house.
+  const displayYachts = yachts.slice().sort((a, b) => extractPrice(a) - extractPrice(b));
 
-  const displayYachts = yachts
-    .filter(y => {
-      const charterPrice = extractPrice(y);
-      if (charterPrice > 29000) return false; // hard cap: no yacht >€29k/week in Explorer
-      const pp = calcPerPerson(y);
-      return pp === 0 || pp <= 2500; // 0 = "Contact for rates" → keep; else cap at €2,500/person
-    })
-    .sort((a, b) => extractPrice(a) - extractPrice(b));
-
-  // Per-person price range (same formula as card display: base ÷ guests)
-  const perPersonPrices = displayYachts
-    .map(y => {
-      const base = extractPrice(y);
-      if (base === 0) return null;
-      const guests = parseInt(y.sleeps) || 8;
-      return Math.round(base / guests);
-    })
-    .filter(Boolean);
-
-  const displayLowest  = perPersonPrices.length ? Math.min(...perPersonPrices) : 420;
-  const displayHighest = perPersonPrices.length ? Math.max(...perPersonPrices) : 1800;
+  const weeklyPrices = displayYachts.map(extractPrice).filter(p => p > 0);
+  const displayLowest  = weeklyPrices.length ? Math.min(...weeklyPrices) : 11500;
+  const displayHighest = weeklyPrices.length ? Math.max(...weeklyPrices) : 27500;
 
   return (
     <>
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "https://georgeyachts.com" },
-          { name: "Explorer Fleet", url: "https://georgeyachts.com/explorer-fleet" },
+          { name: "Sailing Fleet", url: "https://georgeyachts.com/explorer-fleet" },
         ]}
       />
-      <ExplorerFleetSchema lowestPerPerson={displayLowest} />
-      <ExplorerFleetClient yachts={displayYachts} lowestPerPerson={displayLowest} highestPerPerson={displayHighest} />
+      <ExplorerFleetSchema lowestWeekly={displayLowest} />
+      <ExplorerFleetClient yachts={displayYachts} lowestWeekly={displayLowest} highestWeekly={displayHighest} />
       {/* 2026-08-06 (job 9), sitewide footer. Measured before this change:
           397 of 474 public pages rendered no <footer> at all. */}
       <Footer />

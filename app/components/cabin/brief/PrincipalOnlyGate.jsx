@@ -77,8 +77,8 @@ export default async function PrincipalOnlyGate({ sectionTitle, children }) {
           margin: 0 0 22px 0;
           padding: 14px 18px;
           background: #FCFAF4;
-          border: 1px solid rgba(201, 168, 76, 0.32);
-          border-left: 3px solid var(--gy-gold, #C9A84C);
+          border: 1px solid rgba(218, 161, 16, 0.32);
+          border-left: 3px solid var(--gy-gold, #DAA110);
           border-radius: 3px;
           display: flex;
           align-items: baseline;
@@ -90,7 +90,7 @@ export default async function PrincipalOnlyGate({ sectionTitle, children }) {
           font-size: 10.5px;
           letter-spacing: 2.4px;
           text-transform: uppercase;
-          color: var(--gy-gold, #C9A84C);
+          color: var(--gy-gold, #DAA110);
           font-weight: 600;
           flex-shrink: 0;
         }

@@ -18,7 +18,7 @@
 import Link from "next/link";
 import { relatedFor } from "@/lib/seoInternalLinks";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 export default function RelatedPages({ path, limit = 6, greek = false }) {
   // relatedFor(path, opts) takes an OBJECT, not a number. Passing the bare

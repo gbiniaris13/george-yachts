@@ -85,7 +85,7 @@ function fmtMetaValue(key, raw) {
   if (raw == null) return "";
   const v = String(raw);
   if (key === "source_page" && v.startsWith("/")) {
-    return `<a href="https://georgeyachts.com${v}" style="color:#C9A84C;text-decoration:none;border-bottom:1px solid #C9A84C;">${v}</a>`;
+    return `<a href="https://georgeyachts.com${v}" style="color:#DAA110;text-decoration:none;border-bottom:1px solid #DAA110;">${v}</a>`;
   }
   if (key === "timing") {
     // Map dropdown values to friendly labels
@@ -217,16 +217,16 @@ export async function POST(request) {
             html: `
               <div style="font-family:'Helvetica Neue',Arial,sans-serif;max-width:580px;margin:0 auto;color:#0D1B2A;background:#FFFFFF;border:1px solid rgba(13,27,42,0.08);">
                 <div style="background:#0D1B2A;padding:22px 28px;">
-                  <p style="margin:0;color:#C9A84C;font-size:9px;letter-spacing:0.42em;text-transform:uppercase;font-weight:700;">George Yachts</p>
+                  <p style="margin:0;color:#DAA110;font-size:9px;letter-spacing:0.42em;text-transform:uppercase;font-weight:700;">George Yachts</p>
                   <p style="margin:8px 0 0;color:#F8F5F0;font-size:20px;font-weight:300;line-height:1.25;">${headline.replace(/[*]/g, "").replace(/[📬📄🤝✉️]/g, "").trim()}</p>
                 </div>
                 <div style="padding:26px 28px;">
                   <p style="margin:0 0 4px;color:#0D1B2A;opacity:0.65;font-size:10px;letter-spacing:0.32em;text-transform:uppercase;font-weight:600;">From</p>
                   <p style="margin:0 0 6px;color:#0D1B2A;font-size:22px;font-weight:400;line-height:1.25;">${name || "(no name provided)"}</p>
                   <p style="margin:0 0 6px;font-size:14px;">
-                    <a href="mailto:${email}" style="color:#C9A84C;text-decoration:none;border-bottom:1px solid #C9A84C;padding-bottom:1px;">${email}</a>
+                    <a href="mailto:${email}" style="color:#DAA110;text-decoration:none;border-bottom:1px solid #DAA110;padding-bottom:1px;">${email}</a>
                   </p>
-                  ${phone ? `<p style="margin:0 0 4px;color:#0D1B2A;font-size:14px;"><span style="opacity:0.6;">Phone:</span> <a href="tel:${phone}" style="color:#C9A84C;text-decoration:none;">${phone}</a></p>` : ""}
+                  ${phone ? `<p style="margin:0 0 4px;color:#0D1B2A;font-size:14px;"><span style="opacity:0.6;">Phone:</span> <a href="tel:${phone}" style="color:#DAA110;text-decoration:none;">${phone}</a></p>` : ""}
                   ${company ? `<p style="margin:0 0 4px;color:#0D1B2A;font-size:14px;"><span style="opacity:0.6;">Company:</span> ${company}</p>` : ""}
                   ${renderMetaTable(meta)}
                   <hr style="border:none;border-top:1px solid rgba(13,27,42,0.1);margin:24px 0 14px;" />
@@ -235,7 +235,7 @@ export async function POST(request) {
                     <strong style="font-weight:600;">When:</strong> ${new Date(when).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" })}
                   </p>
                 </div>
-                <div style="background:rgba(201,168,76,0.06);padding:16px 28px;border-top:1px solid rgba(201,168,76,0.2);">
+                <div style="background:rgba(218, 161, 16,0.06);padding:16px 28px;border-top:1px solid rgba(218, 161, 16,0.2);">
                   <p style="margin:0;color:#0D1B2A;font-size:12px;line-height:1.55;">
                     Reply to this email to reach <strong>${name || "the lead"}</strong> directly. Their address is set as Reply-To.
                   </p>

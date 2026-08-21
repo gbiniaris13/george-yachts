@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { PORTS, getDistance, YACHT_SPEEDS } from "@/lib/sailingDistances";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 
 function selectStyle() {
@@ -102,7 +102,7 @@ export default function SailingDistanceCalculator() {
     <div
       style={{
         background: "rgba(248, 245, 240, 0.02)",
-        border: "1px solid rgba(201, 168, 76, 0.25)",
+        border: "1px solid rgba(218, 161, 16, 0.25)",
         padding: "40px 36px",
         maxWidth: 760,
         margin: "0 auto",
@@ -199,7 +199,7 @@ export default function SailingDistanceCalculator() {
       <div
         style={{
           background: "rgba(13, 27, 42, 0.4)",
-          border: "1px solid rgba(201, 168, 76, 0.25)",
+          border: "1px solid rgba(218, 161, 16, 0.25)",
           padding: "32px 28px",
         }}
       >

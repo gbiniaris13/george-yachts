@@ -12,6 +12,7 @@
 // Times-Roman/Helvetica if the fetch fails — better degraded than
 // no PDF at all.
 
+import { fleetLabel } from "../fleetTiers";
 import {
   Document,
   Page,
@@ -25,8 +26,8 @@ import {
 
 // ─── Brand palette ───
 const NAVY = "#0D1B2A";
-const GOLD = "#C9A84C";
-const GOLD_LIGHT = "#C9A84C";
+const GOLD = "#DAA110";
+const GOLD_LIGHT = "#DAA110";
 const INK = "#0D1B2A";
 const MUTED = "#6b6b6b";
 const PAPER = "#F8F5F0";
@@ -310,8 +311,8 @@ function formatDate(d) {
 }
 
 function priceUnitFor(yacht) {
-  const model = yacht?.priceModel || (yacht?.fleetTier === "explorer" ? "per_person_week" : "per_yacht_week");
-  return model === "per_person_week" ? "Per person · per week" : "Per yacht · per week";
+  const model = "per_yacht_week"; // one model, see lib/pricing.js
+  return "Per yacht · per week"; // one model, see lib/pricing.js
 }
 
 // Forces remote images to https + adds a Sanity transform when applicable
@@ -377,7 +378,7 @@ export default function ProposalDocument({ name, dates, notes, yachts }) {
             )}
             <View style={styles.yachtBody}>
               <Text style={styles.yachtEyebrow}>
-                Yacht {i + 1} of {list.length} · {y.fleetTier === "explorer" ? "Explorer Fleet" : "Private Fleet"}
+                Yacht {i + 1} of {list.length} · {fleetLabel(y)}
               </Text>
               <Text style={styles.yachtName}>{y.name || "-"}</Text>
               {y.subtitle && <Text style={styles.yachtSubtitle}>{y.subtitle}</Text>}

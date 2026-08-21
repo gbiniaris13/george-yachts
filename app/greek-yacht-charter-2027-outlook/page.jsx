@@ -12,7 +12,7 @@ import Link from "next/link";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import Footer from "@/app/components/Footer";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -166,7 +166,7 @@ export default function Outlook2027Page() {
 
         {/* FACT SECTIONS */}
         {SECTIONS.map((sec, si) => (
-          <section key={si} style={{ padding: "40px 24px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+          <section key={si} style={{ padding: "40px 24px", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
             <div style={{ maxWidth: 880, margin: "0 auto" }}>
               <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(24px, 4vw, 36px)", fontWeight: 300, color: CREAM, margin: "0 0 28px" }}>{sec.heading}</h2>
               <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 18 }}>
@@ -184,7 +184,7 @@ export default function Outlook2027Page() {
         ))}
 
         {/* HOUSE VIEW - explicitly opinion */}
-        <section style={{ padding: "48px 24px", borderTop: "1px solid rgba(201,168,76,0.15)", background: "rgba(201,168,76,0.04)" }}>
+        <section style={{ padding: "48px 24px", borderTop: "1px solid rgba(218, 161, 16,0.15)", background: "rgba(218, 161, 16,0.04)" }}>
           <div style={{ maxWidth: 880, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 18px" }}>George Yachts house view (opinion, not fact)</p>
             <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(20px, 3vw, 27px)", fontWeight: 300, lineHeight: 1.4, color: CREAM, margin: "0 0 18px" }}>
@@ -197,7 +197,7 @@ export default function Outlook2027Page() {
         </section>
 
         {/* SOURCES */}
-        <section style={{ padding: "40px 24px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+        <section style={{ padding: "40px 24px", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
           <div style={{ maxWidth: 880, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 16px" }}>Sources</p>
             <ol style={{ margin: 0, paddingLeft: 20, display: "flex", flexDirection: "column", gap: 8 }}>
@@ -211,7 +211,7 @@ export default function Outlook2027Page() {
         </section>
 
         {/* CITE THIS */}
-        <section style={{ padding: "32px 24px", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+        <section style={{ padding: "32px 24px", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
           <div style={{ maxWidth: 880, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px" }}>Cite this outlook</p>
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.82)", margin: 0 }}>
@@ -221,7 +221,7 @@ export default function Outlook2027Page() {
         </section>
 
         {/* CTA */}
-        <section style={{ padding: "64px 24px 88px", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.15)" }}>
+        <section style={{ padding: "64px 24px 88px", textAlign: "center", borderTop: "1px solid rgba(218, 161, 16,0.15)" }}>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/inquiry" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: GOLD, color: NAVY, textDecoration: "none" }}>
               Brief George directly

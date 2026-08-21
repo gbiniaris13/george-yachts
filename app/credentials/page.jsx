@@ -127,7 +127,7 @@ export default function CredentialsPage() {
             marginInline: "auto",
           }}
         >
-          <p className="gy-eyebrow" style={{ color: "#C9A84C" }}>
+          <p className="gy-eyebrow" style={{ color: "#DAA110" }}>
             Credentials
           </p>
           {/* 2026-08-06 (job 7), the h1 was "What stands behind every charter
@@ -153,7 +153,7 @@ export default function CredentialsPage() {
               fontFamily: "var(--gy-font-editorial)",
               fontSize: "clamp(19px, 2.1vw, 26px)",
               fontWeight: 300,
-              color: "#C9A84C",
+              color: "#DAA110",
               margin: "0 0 26px",
               maxWidth: "34ch",
               lineHeight: 1.3,
@@ -188,7 +188,7 @@ export default function CredentialsPage() {
         >
           <div className="gy-grid-editorial" style={{ padding: 0 }}>
             <div className="gy-col-text-wide" style={{ gridColumn: undefined }}>
-              <p className="gy-eyebrow-sm" style={{ color: "#C9A84C" }}>
+              <p className="gy-eyebrow-sm" style={{ color: "#DAA110" }}>
                 01 · Independent journalism
               </p>
               <h2
@@ -234,7 +234,7 @@ export default function CredentialsPage() {
                 style={{
                   margin: "32px 0 0",
                   padding: "24px 0 0",
-                  borderTop: "1px solid rgba(201,168,76,0.4)",
+                  borderTop: "1px solid rgba(218, 161, 16,0.4)",
                   fontFamily: "var(--gy-font-editorial)",
                   fontStyle: "italic",
                   fontSize: "clamp(22px, 2.6vw, 32px)",
@@ -313,7 +313,7 @@ export default function CredentialsPage() {
         >
           <div className="gy-grid-editorial" style={{ padding: 0 }}>
             <div className="gy-col-text" style={{ gridColumn: undefined }}>
-              <p className="gy-eyebrow-sm" style={{ color: "#C9A84C" }}>
+              <p className="gy-eyebrow-sm" style={{ color: "#DAA110" }}>
                 02 · Broker accreditation
               </p>
               <h2
@@ -374,8 +374,8 @@ export default function CredentialsPage() {
                 justifyContent: "center",
                 padding: "clamp(32px, 5vw, 56px)",
                 background:
-                  "linear-gradient(135deg, rgba(201,168,76,0.05) 0%, rgba(13,27,42,0.6) 100%)",
-                border: "1px solid rgba(201,168,76,0.18)",
+                  "linear-gradient(135deg, rgba(218, 161, 16,0.05) 0%, rgba(13,27,42,0.6) 100%)",
+                border: "1px solid rgba(218, 161, 16,0.18)",
               }}
             >
               <a
@@ -428,7 +428,7 @@ export default function CredentialsPage() {
         >
           <div className="gy-grid-editorial" style={{ padding: 0 }}>
             <div className="gy-col-text-wide" style={{ gridColumn: undefined }}>
-              <p className="gy-eyebrow-sm" style={{ color: "#C9A84C" }}>
+              <p className="gy-eyebrow-sm" style={{ color: "#DAA110" }}>
                 03 · Contract framework
               </p>
               <h2
@@ -490,7 +490,7 @@ export default function CredentialsPage() {
         >
           <div className="gy-grid-editorial" style={{ padding: 0 }}>
             <div className="gy-col-full" style={{ gridColumn: undefined }}>
-              <p className="gy-eyebrow-sm" style={{ color: "#C9A84C" }}>
+              <p className="gy-eyebrow-sm" style={{ color: "#DAA110" }}>
                 04 · Dual residency
               </p>
               <h2
@@ -555,7 +555,7 @@ export default function CredentialsPage() {
                       letterSpacing: "0.02em",
                       marginTop: 18,
                       paddingTop: 16,
-                      borderTop: "1px solid rgba(201,168,76,0.25)",
+                      borderTop: "1px solid rgba(218, 161, 16,0.25)",
                       maxWidth: "32ch",
                     }}
                   >
@@ -620,7 +620,7 @@ export default function CredentialsPage() {
             borderTop: "1px solid rgba(248,245,240,0.06)",
           }}
         >
-          <p className="gy-eyebrow" style={{ color: "#C9A84C" }}>
+          <p className="gy-eyebrow" style={{ color: "#DAA110" }}>
             Verified. Now brief us.
           </p>
           <h2
@@ -655,9 +655,9 @@ export default function CredentialsPage() {
               fontWeight: 700,
               color: "#0D1B2A",
               textDecoration: "none",
-              background: "linear-gradient(135deg, #C9A84C 0%, #C9A84C 100%)",
-              border: "1px solid #C9A84C",
-              boxShadow: "0 12px 32px rgba(201,168,76,0.22)",
+              background: "linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)",
+              border: "1px solid #DAA110",
+              boxShadow: "0 12px 32px rgba(218, 161, 16,0.22)",
             }}
           >
             Brief George →
@@ -678,10 +678,10 @@ export default function CredentialsPage() {
             padding: "clamp(56px, 7vw, 96px) clamp(24px, 6vw, 96px)",
             maxWidth: 1000,
             marginInline: "auto",
-            borderTop: "1px solid rgba(201,168,76,0.18)",
+            borderTop: "1px solid rgba(218, 161, 16,0.18)",
           }}
         >
-          <p className="gy-eyebrow" style={{ color: "#C9A84C" }}>
+          <p className="gy-eyebrow" style={{ color: "#DAA110" }}>
             The method
           </p>
           <h2

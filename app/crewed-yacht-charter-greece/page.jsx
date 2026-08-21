@@ -70,7 +70,7 @@ const CREWED_FLEET_QUERY = `*[_type == "yacht" && fleetTier in ["private", "both
   "imageUrl": images[0].asset->url
 }`;
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -91,7 +91,7 @@ const FAQS = [
   // house's main crewed page, not only on the type pages.
   {
     q: "Who should I charter a crewed yacht from in Greece?",
-    a: "The first question is not who, it is what they own. A broker who owns or manages the yachts they show you has a boat to fill; a broker who owns none has only a week to get right. We own no hulls and hold no central agency mandates, so the yacht we put in front of you is the one that fits your group, your dates and your budget, and nothing else. The rest is checkable and you should check it: IYBA Charter Active Member, listed in their public directory. MYBA-standard contracts, with base fee, APA, the yacht's certified VAT rate and the gratuity range written down before you sign anything. George Yachts Brokerage House LLC, a Wyoming company operating out of Athens, both on public record. Quoted in Forbes in May 2026. We work Greek waters only, weekly and fully crewed, starting on whichever day suits you rather than the Saturday the market defaults to, and the same person answers you from first enquiry to the morning you disembark. What we are not is an old house: this one was founded in 2026. If decades of trading history is your first filter, several Athens brokerages have that and we do not.",
+    a: "The first question is not who they are, it is what they are carrying. A broker with a boat to fill will fill it; a broker with a week to get right has only your week to get right. There is no hull here we are under pressure to place, so the yacht we put in front of you is the one that fits your group, your dates and your budget, and nothing else. The rest is checkable and you should check it: IYBA Charter Active Member, listed in their public directory. MYBA-standard contracts, with base fee, APA, the yacht's certified VAT rate and the gratuity range written down before you sign anything. George Yachts Brokerage House LLC, a Wyoming company operating out of Athens, both on public record. Quoted in Forbes in May 2026. We work Greek waters only, weekly and fully crewed, starting on whichever day suits you rather than the Saturday the market defaults to, and the same person answers you from first enquiry to the morning you disembark. What we are not is an old house: this one was founded in 2026. If decades of trading history is your first filter, several Athens brokerages have that and we do not.",
   },
   {
     q: "What is a crewed yacht charter?",
@@ -119,7 +119,12 @@ const FAQS = [
   },
   {
     q: "What is the difference between crewed, skippered and bareboat?",
-    a: "A crewed yacht comes with a full professional crew: captain, chef and service, the floating-villa experience. A skippered yacht comes with a captain only, you live aboard more simply. Bareboat means you sail her yourself with your own license. George's Private Fleet is fully crewed; the Explorer Fleet is skippered.",
+    // 2026-08-21 (section 5). The question stays: it is a real search and
+    // people deserve the answer. What went is the part that read as a menu.
+    // The old answer ended "the Sailing Fleet is skippered", which offered
+    // the arrangement George has taken off the site. It now answers the
+    // question and says plainly which of the three this house writes.
+    a: "Three different holidays. Crewed means the yacht arrives with her professional crew already aboard, captain, chef and service, and nobody in your party navigates or cooks. Skippered means a captain and nothing else. Bareboat means you hold the licence and sail her yourself. This house writes crewed weeks only, in both fleets: the Private Fleet with a full crew, the Sailing Fleet on a smaller yacht with a crew of two or three. If you want the other two, a Greek bareboat operator is the right call and we will say so rather than sell you a week that does not fit.",
   },
   {
     q: "Can we charter with more than 12 guests?",
@@ -130,7 +135,7 @@ const FAQS = [
   // answer anywhere on the site. Honest, per-yacht answers only.
   {
     q: "Are Greek yacht charters pet friendly?",
-    a: "Some yachts in our fleet welcome pets and some owners decline them; it is always the owner's policy, never a blanket rule. Tell me at the first conversation that a dog is coming and I shortlist only pet-friendly hulls, so the question never becomes a problem. Expect practical conditions such as a cleaning provision in the contract, and note that beaches and archaeological sites ashore have their own rules.",
+    a: "Some yachts in this house welcome pets and some owners decline them; it is always the owner's policy, never a blanket rule. Tell me at the first conversation that a dog is coming and I shortlist only pet-friendly hulls, so the question never becomes a problem. Expect practical conditions such as a cleaning provision in the contract, and note that beaches and archaeological sites ashore have their own rules.",
   },
   {
     q: "Do you actually know the captains and crews personally?",
@@ -144,7 +149,7 @@ const FAQS = [
   // chef onboard premium" / "fishing charter yacht Greece Aegean".
   {
     q: "Do crewed charters in Greece include a private chef?",
-    a: "On fully crewed yachts, yes: a dedicated chef cooks every meal aboard to your preference sheet, provisioning fresh in each port along the route. Dietary briefs are normal work, not special requests. On skippered yachts the crew is smaller; a cook can often be added, and I will tell you plainly which yachts carry a true chef and which do not, because the difference shows three times a day.",
+    a: "On fully crewed yachts, yes: a dedicated chef cooks every meal aboard to your preference sheet, provisioning fresh in each port along the route. Dietary briefs are normal work, not special requests. On the smaller yachts the crew is two or three and the cooking is done by a cook rather than a dedicated chef. I will tell you plainly which yachts carry a true chef and which do not, because the difference shows three times a day.",
   },
   {
     q: "Can we fish during a crewed yacht charter in the Aegean?",
@@ -278,7 +283,7 @@ const thStyle = {
   fontWeight: 600,
   textAlign: "left",
   padding: "12px 14px",
-  borderBottom: `1px solid rgba(201,168,76,0.35)`,
+  borderBottom: `1px solid rgba(218, 161, 16,0.35)`,
   whiteSpace: "nowrap",
 };
 
@@ -294,7 +299,7 @@ const tdStyle = {
 const goldLink = {
   color: GOLD,
   textDecoration: "none",
-  borderBottom: `1px solid rgba(201,168,76,0.5)`,
+  borderBottom: `1px solid rgba(218, 161, 16,0.5)`,
 };
 
 export default async function CrewedCharterPage() {
@@ -327,7 +332,7 @@ export default async function CrewedCharterPage() {
           ended up sitting on the h1 in the first place. */}
       <header
         className="gy-hero-lead"
-        style={{ paddingLeft: 24, paddingRight: 24, paddingBottom: 64, borderBottom: "1px solid rgba(201,168,76,0.15)" }}
+        style={{ paddingLeft: 24, paddingRight: 24, paddingBottom: 64, borderBottom: "1px solid rgba(218, 161, 16,0.15)" }}
       >
         <div style={{ maxWidth: 880, margin: "0 auto" }}>
           <p style={eyebrowStyle}>Full Crew · Exclusively Greek Waters</p>
@@ -367,7 +372,7 @@ export default async function CrewedCharterPage() {
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <QuickAnswerBlock
             question="What is a crewed yacht charter in Greece, and what does a week cost?"
-            answer={`A crewed yacht charter means the yacht comes with a full professional crew: captain, chef and service. Per the George Yachts Greek Charter Index, weekly net base rates run EUR 10,900-22,000 for a crewed sailing catamaran of 12-16m and EUR 56,000-90,000 at 23-24m, EUR 14,000-90,000 for a power catamaran, EUR 17,500-33,000 for an 18-24m motor yacht, EUR 40,000-65,000 at 26-31m, EUR 60,000-120,000 at 35-40m, and EUR 162,500-235,000 above 50m. Add VAT at the yacht's certified rate (in practice 5.2-12%; statutory ceiling 13%) and APA of 20-40% by yacht type. George Yachts curates ${FLEET_COUNT} yachts in Greek waters, split between the fully crewed Private Fleet and the skippered Explorer Fleet.`}
+            answer={`A crewed yacht charter means the yacht comes with a full professional crew: captain, chef and service. Per the George Yachts Greek Charter Index, weekly net base rates run EUR 10,900-22,000 for a crewed sailing catamaran of 12-16m and EUR 56,000-90,000 at 23-24m, EUR 14,000-90,000 for a power catamaran, EUR 17,500-33,000 for an 18-24m motor yacht, EUR 40,000-65,000 at 26-31m, EUR 60,000-120,000 at 35-40m, and EUR 162,500-235,000 above 50m. Add VAT at the yacht's certified rate (in practice 5.2-12%; statutory ceiling 13%) and APA of 20-40% by yacht type. George Yachts curates ${FLEET_COUNT} yachts in Greek waters, split between the fully crewed Private Fleet and the skippered Sailing Fleet.`}
           />
         </div>
       </section>
@@ -384,8 +389,8 @@ export default async function CrewedCharterPage() {
             are a guest, never an operator. Within George&apos;s{" "}
             <Link href="/private-fleet" style={goldLink}>Private Fleet</Link>{" "}
             every yacht is fully crewed; the{" "}
-            <Link href="/explorer-fleet" style={goldLink}>Explorer Fleet</Link>{" "}
-            offers the lighter, skippered alternative.
+            <Link href="/explorer-fleet" style={goldLink}>Sailing Fleet</Link>{" "}
+            is the same week under sail, on a catamaran or a monohull.
           </p>
           <p style={bodyStyle}>
             George Yachts Brokerage House is a boutique brokerage working
@@ -432,9 +437,9 @@ export default async function CrewedCharterPage() {
       {/* COST 2026 - dated section, visible table from the Index */}
       <section
         style={{
-          background: "rgba(201,168,76,0.025)",
-          borderTop: "1px solid rgba(201,168,76,0.15)",
-          borderBottom: "1px solid rgba(201,168,76,0.15)",
+          background: "rgba(218, 161, 16,0.025)",
+          borderTop: "1px solid rgba(218, 161, 16,0.15)",
+          borderBottom: "1px solid rgba(218, 161, 16,0.15)",
           padding: "72px 24px",
         }}
       >
@@ -497,14 +502,14 @@ export default async function CrewedCharterPage() {
             .
           </p>
           <p style={{ ...bodyStyle, maxWidth: 720, margin: "16px auto 0" }}>
-            The per-person arithmetic is friendlier than the headline numbers
-            suggest. A crewed sailing catamaran for up to 12 guests at EUR
-            20,000 to 40,000 in Cyclades peak season works out to roughly EUR
-            1,700 to 3,300 per person for the week, before VAT and APA. In the
-            Ionian, at EUR 15,000 to 30,000 for the same 12 guests, roughly
-            EUR 1,250 to 2,500. For motor yachts and superyachts the math
-            depends on the vessel; George quotes it per person, in writing,
-            before you commit.
+            The headline number is the whole week, and it is the number worth
+            comparing. A crewed sailing catamaran for up to 12 guests runs EUR
+            20,000 to 40,000 in Cyclades peak season and EUR 15,000 to 30,000
+            in the Ionian, before VAT and APA. What moves it is the yacht, the
+            season and how many crew she carries, not how the group later
+            chooses to split it. George quotes the base fee, the yacht's
+            certified VAT rate, the APA and the gratuity range separately and
+            in writing, before you commit.
           </p>
         </div>
       </section>
@@ -514,7 +519,7 @@ export default async function CrewedCharterPage() {
           catamaran, family of six). Real first-hand words on the money
           page: E-E-A-T for Google, quotable proof for AI engines. */}
       <section style={{ padding: "72px 24px 0" }} aria-label="Client review">
-        <figure style={{ maxWidth: 720, margin: "0 auto", padding: "36px 32px", border: "1px solid rgba(201,168,76,0.25)", background: "rgba(201,168,76,0.04)" }}>
+        <figure style={{ maxWidth: 720, margin: "0 auto", padding: "36px 32px", border: "1px solid rgba(218, 161, 16,0.25)", background: "rgba(218, 161, 16,0.04)" }}>
           <p aria-hidden="true" style={{ color: GOLD, fontSize: 15, letterSpacing: 3, margin: "0 0 14px" }}>{"\u2605\u2605\u2605\u2605\u2605"}</p>
           <blockquote style={{ margin: 0, fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(17px, 2.2vw, 21px)", fontStyle: "italic", fontWeight: 300, lineHeight: 1.65, color: "rgba(248,245,240,0.92)" }}>
             {"\u201C"}George was highly professional and extremely communicative. He found the perfect boat and crew, advised us on the best itinerary for our time of year, and was hands-on throughout the booking process to the completion of our trip. I would not hesitate to use his services again personally or for my clients coming to Greece.{"\u201D"}
@@ -560,16 +565,16 @@ export default async function CrewedCharterPage() {
       {/* REGIONS */}
       <section
         style={{
-          background: "rgba(201,168,76,0.025)",
-          borderTop: "1px solid rgba(201,168,76,0.15)",
-          borderBottom: "1px solid rgba(201,168,76,0.15)",
+          background: "rgba(218, 161, 16,0.025)",
+          borderTop: "1px solid rgba(218, 161, 16,0.15)",
+          borderBottom: "1px solid rgba(218, 161, 16,0.15)",
           padding: "72px 24px",
         }}
       >
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <p style={{ ...eyebrowStyle, textAlign: "center" }}>Where</p>
           <h2 style={{ ...h2Style, textAlign: "center" }}>Three Greek worlds, one fleet</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 1, background: "rgba(201,168,76,0.15)", marginTop: 36 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 1, background: "rgba(218, 161, 16,0.15)", marginTop: 36 }}>
             {[
               {
                 name: "Cyclades",
@@ -724,9 +729,9 @@ export default async function CrewedCharterPage() {
       {/* CREWED VS THE ALTERNATIVES */}
       <section
         style={{
-          background: "rgba(201,168,76,0.025)",
-          borderTop: "1px solid rgba(201,168,76,0.15)",
-          borderBottom: "1px solid rgba(201,168,76,0.15)",
+          background: "rgba(218, 161, 16,0.025)",
+          borderTop: "1px solid rgba(218, 161, 16,0.15)",
+          borderBottom: "1px solid rgba(218, 161, 16,0.15)",
           padding: "72px 24px",
         }}
       >
@@ -735,15 +740,19 @@ export default async function CrewedCharterPage() {
           <h2 style={h2Style}>Crewed, skippered, or bareboat</h2>
           <p style={bodyStyle}>
             Crewed means captain, chef and service crew, the yacht as a
-            floating villa. Skippered means a captain only, the{" "}
-            <Link href="/explorer-fleet" style={goldLink}>Explorer Fleet</Link>{" "}
-            way, lighter and closer to the water. Bareboat means you hold the
-            license and sail her yourself, which George does not broker. If
-            you are weighing the first two honestly, read{" "}
+            floating villa. Skippered means a captain and nothing else.
+            Bareboat means you hold the licence and sail her yourself. This
+            house writes crewed weeks, and only crewed weeks: the{" "}
+            <Link href="/private-fleet" style={goldLink}>Private Fleet</Link>{" "}
+            with a full crew, the{" "}
+            <Link href="/explorer-fleet" style={goldLink}>Sailing Fleet</Link>{" "}
+            under sail, on a catamaran or a monohull. If the other two
+            are what you are really after, the honest answer is that a Greek
+            bareboat operator will serve you better, and{" "}
             <Link href="/crewed-vs-bareboat-yacht-charter-greece" style={goldLink}>
-              the crewed vs bareboat guide
-            </Link>{" "}
-            or take five minutes with the{" "}
+              the comparison is set out here
+            </Link>
+            . Otherwise take five minutes with the{" "}
             <Link href="/yacht-finder" style={goldLink}>Smart Match Quiz</Link>.
             Groups larger than twelve have{" "}
             <Link href="/blog/12-passenger-rule-greek-yacht-charter-groups-of-14" style={goldLink}>
@@ -762,7 +771,7 @@ export default async function CrewedCharterPage() {
             <h2 style={{ ...h2Style, textAlign: "center" }}>Weeks that were kept</h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20, marginTop: 36 }}>
               {crewedReviews.map((r) => (
-                <figure key={r.id} style={{ margin: 0, border: "1px solid rgba(201,168,76,0.2)", padding: "28px 30px", background: "rgba(248,245,240,0.02)" }}>
+                <figure key={r.id} style={{ margin: 0, border: "1px solid rgba(218, 161, 16,0.2)", padding: "28px 30px", background: "rgba(248,245,240,0.02)" }}>
                   <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.28em", color: GOLD, margin: "0 0 14px" }} aria-label={`${r.rating} out of 5 stars`}>
                     {"★".repeat(r.rating)}
                   </p>
@@ -788,9 +797,9 @@ export default async function CrewedCharterPage() {
       {/* FAQ - visible HTML matching the FAQPage schema */}
       <section
         style={{
-          background: "rgba(201,168,76,0.025)",
-          borderTop: "1px solid rgba(201,168,76,0.15)",
-          borderBottom: "1px solid rgba(201,168,76,0.15)",
+          background: "rgba(218, 161, 16,0.025)",
+          borderTop: "1px solid rgba(218, 161, 16,0.15)",
+          borderBottom: "1px solid rgba(218, 161, 16,0.15)",
           padding: "72px 24px",
         }}
       >
@@ -830,7 +839,7 @@ export default async function CrewedCharterPage() {
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ ...eyebrowStyle, textAlign: "center" }}>Go Deeper</p>
           <h2 style={{ ...h2Style, textAlign: "center", fontSize: "clamp(24px, 3vw, 34px)" }}>From The Journal</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 1, background: "rgba(201,168,76,0.06)", marginTop: 32 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 1, background: "rgba(218, 161, 16,0.06)", marginTop: 32 }}>
             {[
               { title: "The First-Timer's Complete Guide to Crewed Yacht Charter in Greece", href: "/blog/the-first-timer-s-complete-guide-to-crewed-yacht-charter-in-greece" },
               { title: "Greek Yacht Charter 2026: The Complete Pricing Guide", href: "/greek-yacht-charter-2026-complete-pricing-guide" },
@@ -850,7 +859,7 @@ export default async function CrewedCharterPage() {
       <BrowseSeoCategories />
 
       {/* TRUST STRIP */}
-      <section style={{ padding: "56px 24px 84px", textAlign: "center", borderTop: "1px solid rgba(201,168,76,0.06)" }}>
+      <section style={{ padding: "56px 24px 84px", textAlign: "center", borderTop: "1px solid rgba(218, 161, 16,0.06)" }}>
         <p style={{ ...eyebrowStyle, marginBottom: 18 }}>Trusted Brokerage</p>
         <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.14em", color: "rgba(248,245,240,0.78)", margin: "0 0 30px" }}>
           IYBA Member · MYBA-Standard Contracts · Featured in Forbes, May 2026 · Greek Waters Exclusively

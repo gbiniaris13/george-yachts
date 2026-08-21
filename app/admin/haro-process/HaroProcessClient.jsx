@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
@@ -116,7 +116,7 @@ export default function HaroProcessClient() {
               textTransform: "uppercase",
               fontWeight: 700,
               padding: "12px 22px",
-              background: status === "processing" ? "rgba(201,168,76,0.5)" : GOLD,
+              background: status === "processing" ? "rgba(218, 161, 16,0.5)" : GOLD,
               color: NAVY,
               border: "none",
               cursor: status === "processing" ? "default" : "pointer",
@@ -162,7 +162,7 @@ export default function HaroProcessClient() {
                     key={i}
                     style={{
                       border: `1px solid ${GOLD}`,
-                      background: "rgba(201,168,76,0.04)",
+                      background: "rgba(218, 161, 16,0.04)",
                       padding: "24px 26px",
                     }}
                   >

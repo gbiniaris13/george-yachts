@@ -5,9 +5,9 @@
   <g transform="translate(180 20)">
     <!-- Gold wave (upper) -->
     <path d="M 8 56 C 70 8, 140 -2, 220 22 C 165 28, 110 38, 60 56 Z"
-          fill="#C9A84C" opacity="0.95"/>
+          fill="#D4AF37" opacity="0.95"/>
     <path d="M 30 64 C 90 28, 160 22, 232 38 C 175 50, 115 60, 50 70 Z"
-          fill="#C9A84C" opacity="0.55"/>
+          fill="#D4AF37" opacity="0.55"/>
     <!-- Silver / ivory hull -->
     <path d="M 0 78 C 80 64, 175 64, 240 80 L 220 96 C 165 86, 95 86, 18 92 Z"
           fill="#F8F5F0" opacity="0.95"/>
@@ -28,7 +28,7 @@
 
   <!-- Gold divider rule -->
   <line x1="220" y1="190" x2="380" y2="190"
-        stroke="#C9A84C" stroke-width="1" opacity="0.85"/>
+        stroke="#D4AF37" stroke-width="1" opacity="0.85"/>
 
   <!-- "BROKERAGE HOUSE" — UI tier, spaced caps -->
   <text x="300" y="218"

@@ -13,7 +13,7 @@ import { sanityCardImg } from "@/lib/sanity-image";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 import ConstellationBackdrop from "./ConstellationBackdrop";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 
 export default function HomeJournalTeaser({ posts = [] }) {
   const { t } = useI18n();
@@ -27,7 +27,7 @@ export default function HomeJournalTeaser({ posts = [] }) {
       aria-label="Latest from The Journal"
       style={{
         background: "#0D1B2A",
-        padding: "80px 24px",
+        padding: "clamp(40px, 5vw, 56px) 24px",
         borderTop: "1px solid rgba(248, 245, 240,0.04)",
         position: "relative",
         overflow: "hidden",

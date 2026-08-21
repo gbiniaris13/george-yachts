@@ -98,7 +98,7 @@ const BrokerTestimonials = () => {
                     width: "60px",
                     height: "1px",
                     background:
-                      "linear-gradient(90deg, transparent, #C9A84C, transparent)",
+                      "linear-gradient(90deg, transparent, #DAA110, transparent)",
                   }}
                 />
               </div>

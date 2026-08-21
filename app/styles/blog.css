@@ -27,7 +27,7 @@
   padding: 160px 24px 80px;
   text-align: center;
   background: #0D1B2A;
-  border-bottom: 1px solid rgba(201,168,76,0.06);
+  border-bottom: 1px solid rgba(218, 161, 16,0.06);
   overflow: hidden;
 }
 
@@ -52,7 +52,7 @@
   font-size: 10px;
   letter-spacing: 0.5em;
   text-transform: uppercase;
-  color: #C9A84C;
+  color: #DAA110;
   margin-bottom: 24px;
   font-weight: 600;
   opacity: 0;
@@ -74,7 +74,7 @@
 .blog-hero__line {
   width: 0;
   height: 1px;
-  background: linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C);
+  background: linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%);
   margin: 0 auto 24px;
   animation: blogHeroLine 1s ease-out 0.9s forwards;
 }
@@ -127,13 +127,13 @@
   text-decoration: none;
   color: inherit;
   background: #0D1B2A;
-  border: 1px solid rgba(201,168,76,0.06);
+  border: 1px solid rgba(218, 161, 16,0.06);
   overflow: hidden;
   transition: border-color 0.5s ease;
 }
 
 .blog-featured:hover {
-  border-color: rgba(201,168,76,0.15);
+  border-color: rgba(218, 161, 16,0.15);
 }
 
 .blog-featured__image-wrap {
@@ -168,7 +168,7 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #0D1B2A;
-  background: linear-gradient(90deg, #C9A84C, #C9A84C, #C9A84C);
+  background: linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%);
   padding: 5px 14px;
   font-weight: 700;
   z-index: 5;
@@ -193,7 +193,7 @@
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #C9A84C;
+  color: #DAA110;
   font-weight: 600;
 }
 
@@ -219,7 +219,7 @@
 }
 
 .blog-featured:hover .blog-featured__title {
-  color: #C9A84C;
+  color: #DAA110;
 }
 
 .blog-featured__excerpt {
@@ -243,15 +243,15 @@
   font-size: 10px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: #C9A84C;
+  color: #DAA110;
   font-weight: 600;
-  border-bottom: 1px solid rgba(201,168,76,0.2);
+  border-bottom: 1px solid rgba(218, 161, 16,0.2);
   padding-bottom: 4px;
   transition: all 0.3s ease;
 }
 
 .blog-featured:hover .blog-featured__cta {
-  border-color: #C9A84C;
+  border-color: #DAA110;
   gap: 12px;
 }
 
@@ -283,7 +283,7 @@
   flex: 1;
   max-width: 120px;
   height: 1px;
-  background: rgba(201,168,76,0.1);
+  background: rgba(218, 161, 16,0.1);
 }
 
 .blog-grid-section__title {
@@ -299,7 +299,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2px;
-  background: rgba(201,168,76,0.04);
+  background: rgba(218, 161, 16,0.04);
 }
 
 /* ── BLOG CARD ── */
@@ -377,7 +377,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  border-top: 1px solid rgba(201,168,76,0.06);
+  border-top: 1px solid rgba(218, 161, 16,0.06);
 }
 
 .blog-card__meta {
@@ -393,7 +393,7 @@
   font-size: 9px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #C9A84C;
+  color: #DAA110;
   font-weight: 600;
 }
 
@@ -421,7 +421,7 @@
 }
 
 .blog-card:hover .blog-card__title {
-  color: #C9A84C;
+  color: #DAA110;
 }
 
 .blog-card__excerpt {
@@ -449,7 +449,7 @@
   text-transform: uppercase;
   color: rgba(248, 245, 240,0.4);
   font-weight: 600;
-  border-bottom: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(218, 161, 16,0.15);
   padding-bottom: 4px;
   transition: all 0.3s ease;
   margin-top: auto;
@@ -457,8 +457,8 @@
 }
 
 .blog-card:hover .blog-card__link {
-  color: #C9A84C;
-  border-color: #C9A84C;
+  color: #DAA110;
+  border-color: #DAA110;
   gap: 10px;
 }
 
@@ -553,7 +553,7 @@
   float: left;
   margin: 6px 14px -8px 0;
   padding: 0;
-  background: linear-gradient(135deg, #C9A84C 0%, #C9A84C 60%, #C9A84C 100%);
+  background: linear-gradient(135deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -564,8 +564,8 @@
 /* Article pull-quote treatment. */
 .editorial-content blockquote {
   border-left: 0;
-  border-top: 1px solid rgba(201, 168, 76, 0.4);
-  border-bottom: 1px solid rgba(201, 168, 76, 0.4);
+  border-top: 1px solid rgba(218, 161, 16, 0.4);
+  border-bottom: 1px solid rgba(218, 161, 16, 0.4);
   padding: 28px 0;
   margin: 48px 0;
   font-family: var(--gy-font-editorial);
@@ -580,7 +580,7 @@
 
 /* Inline links inside the body — gold underline that draws from left. */
 .editorial-content a {
-  color: #C9A84C;
+  color: #DAA110;
   text-decoration: none;
   background-image: linear-gradient(currentColor, currentColor);
   background-size: 0% 1px;

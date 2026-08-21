@@ -99,7 +99,7 @@ export default function NotFoundSuggestions() {
           fontSize: 9,
           letterSpacing: "0.42em",
           textTransform: "uppercase",
-          color: "#C9A84C",
+          color: "#DAA110",
           fontWeight: 600,
           margin: "0 0 14px",
           textAlign: "center",
@@ -148,7 +148,7 @@ export default function NotFoundSuggestions() {
                 fontSize: 9,
                 letterSpacing: "0.3em",
                 textTransform: "uppercase",
-                color: "#C9A84C",
+                color: "#DAA110",
                 fontWeight: 600,
                 margin: "0 0 6px",
               }}

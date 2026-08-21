@@ -9,7 +9,7 @@ import {
   scoreColor,
 } from "@/lib/charterCalendarData";
 
-const GOLD = "#C9A84C";
+const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 
 export default function CalendarHeatMap() {
@@ -173,8 +173,8 @@ export default function CalendarHeatMap() {
       {activeData ? (
         <div
           style={{
-            border: "1px solid rgba(201, 168, 76, 0.3)",
-            background: "rgba(201, 168, 76, 0.04)",
+            border: "1px solid rgba(218, 161, 16, 0.3)",
+            background: "rgba(218, 161, 16, 0.04)",
             padding: "26px 30px",
           }}
         >
