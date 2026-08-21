@@ -33,6 +33,26 @@ const SUPPRESSED_PREFIXES = ["/admin", "/partner-portal", "/privacy/delete", "/a
 // /public/audio/README.md.
 const AMBIENT_MP3 = "/audio/ambient-lounge.mp3";
 
+// 2026-08-21 — "is this a device we should not spend 3 MB on before being
+// asked". True for handhelds, where unmuted autoplay is refused outright by
+// iOS and Android, and for anyone who has switched on Save-Data or is on 2g.
+// On those visits the on-open attempt cannot succeed, but .load() inside it
+// starts the download anyway, so the bytes are spent on a certainty of
+// silence. The first-gesture path is untouched and still fetches the moment
+// the visitor actually taps the pill.
+function isFrugalClient() {
+  if (typeof window === "undefined") return false;
+  const nav = navigator || {};
+  const conn = nav.connection || nav.mozConnection || nav.webkitConnection;
+  if (conn && (conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || ""))) {
+    return true;
+  }
+  return (
+    window.matchMedia("(pointer: coarse)").matches ||
+    window.matchMedia("(max-width: 1024px)").matches
+  );
+}
+
 async function tryMp3(audioRef, masterGainRef) {
   try {
     if (!audioRef.current) {
@@ -243,8 +263,28 @@ export default function AmbientPlayer() {
   // NOT changed: the warm itself, the gesture set, and the player. That
   // combination is the version George confirmed working and it does not get
   // rewritten for tidiness.
+  // 2026-08-21 — one more condition, for the same reason as the last one.
+  //
+  // The warm exists to make the FIRST gesture play instantly instead of
+  // starting a cold 3 MB download. That argument holds on a desktop, where
+  // media engagement means the track can begin at page open. It does not
+  // hold on a phone: iOS and Android refuse unmuted autoplay outright, so
+  // the audio cannot start until the visitor taps the pill, and if they
+  // never tap it the 3 MB was spent on silence, over a metered connection.
+  //
+  // Lighthouse on mobile measured this: 9.07 MB of transfer on the homepage,
+  // 3.04 MB of it this file, on a page whose LCP was 26.6s.
+  //
+  // If they DO tap, tryMp3() calls load() at that moment and the file
+  // arrives then. Slightly later than warm, and only for someone who asked
+  // for it. Save-Data and 2g are treated the same way on any device: a
+  // visitor who has told the browser to economise has told us too.
+  //
+  // NOT changed, again: the warm itself, the gesture set, and the player.
   useEffect(() => {
     if (suppressed) return;
+    if (isFrugalClient()) return;
+
     const t = setTimeout(() => {
       const a = audioRef.current;
       // networkState 2 is NETWORK_LOADING: the element is on the wire right
@@ -270,6 +310,10 @@ export default function AmbientPlayer() {
     let muted = false;
     try { muted = sessionStorage.getItem(SESSION_MUTE_KEY) === "1"; } catch {}
     if (muted) return;
+    // The on-open attempt is the one that calls .load() and therefore the one
+    // that spends the 3 MB. On a handheld it is guaranteed to be refused, so
+    // it does not run at all and the first tap does the work instead.
+    if (isFrugalClient()) return;
     let cancelled = false;
     (async () => {
       const ok = await buildAndPlay().catch(() => false);

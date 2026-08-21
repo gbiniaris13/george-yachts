@@ -57,7 +57,7 @@
 // at the same apparent real-time pace. Encoded:
 //   • WebM VP9  1000 kbps 2-pass → 4.5 MB (Chrome / Firefox / Edge)
 //   • MP4  H.264 1500 kbps 2-pass → 6.9 MB (Safari fallback)
-// preload="auto" so the browser starts buffering immediately.
+// preload is decided per device in the effect below, not asserted here.
 
 import React, { useEffect, useRef, useState } from "react";
 
@@ -73,9 +73,43 @@ function HeroBackgroundVideo() {
   // masthead.
   const [failed, setFailed] = useState(false);
 
+  // 2026-08-21 - the phone stops paying for a film it was never going to
+  // watch.
+  //
+  // Lighthouse on mobile: LCP 26.6s, 9.07 MB of transfer, of which this
+  // video is 3.79 MB. It was fetched with preload="auto" on every device,
+  // and on a phone that is money spent twice over: mobile Safari and
+  // Chrome refuse muted-autoplay often enough that the visitor usually
+  // ends up looking at the poster anyway, and when they do get the video
+  // it arrives over a metered connection they did not agree to spend.
+  //
+  // So the fetch is now a decision rather than a default. The element
+  // renders identically on the server, which keeps hydration quiet, and
+  // the effect below decides: coarse pointer, narrow screen, or an
+  // explicit Save-Data / 2g hint means the poster is the final answer and
+  // preload stays at "none". Desktop is untouched, byte for byte.
   useEffect(() => {
     const video = ref.current;
     if (!video) return;
+
+    const nav = typeof navigator !== "undefined" ? navigator : {};
+    const conn = nav.connection || nav.mozConnection || nav.webkitConnection;
+    const frugal =
+      (conn && (conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || ""))) ||
+      false;
+    const handheld =
+      window.matchMedia("(pointer: coarse)").matches ||
+      window.matchMedia("(max-width: 1024px)").matches;
+
+    if (handheld || frugal) {
+      // Never even open the connection. The poster is already painted by
+      // the video element's own poster attribute, so there is nothing to
+      // swap in and nothing flashes.
+      // Nothing to undo: neither preload nor autoplay was ever set.
+      return;
+    }
+
+    video.preload = "auto";
     video.muted = true;
     const playPromise = video.play?.();
     if (playPromise && typeof playPromise.then === "function") {
@@ -112,8 +146,15 @@ function HeroBackgroundVideo() {
       // visitor doesn't see the poster freeze for 1-2 s on slower
       // connections. See the matching change in the fleet page.
       poster="/images/posters/hero-loop-frame1.jpg"
-      preload="auto"
-      autoPlay
+      // preload starts at "none" and the effect above promotes it to "auto"
+      // on desktop. Rendering "auto" here and demoting it later would be too
+      // late: the browser begins the fetch from the parsed attribute, before
+      // any effect runs.
+      preload="none"
+      // No autoPlay attribute. The browser starts fetching a video the moment
+      // it parses autoplay, whatever preload says, so removing it in an effect
+      // is too late to save the bytes. Desktop gets play() from the effect
+      // above instead, which is the same result one tick later.
       loop
       muted
       playsInline
