@@ -174,7 +174,29 @@
      the protagonist of the page, not a label. Negative letter-spacing
      plus bigger type makes it read like a Robb Report cover. */
   font-family: var(--gy-font-editorial);
-  font-size: clamp(56px, 10vw, 140px);
+  /* 2026-08-20 (design pass, job 14) — floor lowered from 56px to 44px.
+     Only the floor moves, so it only bites below ~440px wide; 10vw and the
+     140px ceiling are untouched and desktop is identical.
+
+     Bodoni Moda sets wider than the Fraunces it replaced. At 56px the word
+     PELLEGRINA measured 368px against a 375px line, seven pixels of room,
+     and the trailing letter-space ate them: the mobile hero rendered
+     "PELLEGRIN / A 1", broken mid-word. The h1 carries overflow-wrap:
+     anywhere, so it breaks inside the word rather than overflowing.
+
+     44px is sized off the fleet, not off this one yacht. The longest single
+     word across all 72 names is SERENISSIMA, which needs 383px at 56px and
+     301px at 44px, leaving a fifth of the line spare. PELLEGRINA and
+     VAGABOND clear it comfortably. */
+  /* 2026-08-20 (job 14, second pass) — ceiling 140 to 124 as well.
+     Boska at Extralight with 0.055em tracking sets wider than the faces
+     before it: at 140 on a 1440 desktop, "M/Y LA PELLEGRINA 1" measured 1368
+     against a 1368 line. It did not overflow, it filled the line exactly, and
+     a masthead touching both edges is the opposite of the air this pass is
+     for. At 124 the same name sits at 1228, SERENISSIMA III at 1276, and the
+     genuinely long ones like MAJESTY OF GREECE wrap at the space, which is
+     what a two-line yacht name is supposed to do. */
+  font-size: clamp(44px, 10vw, 124px);
   font-weight: 300;
   letter-spacing: -0.035em;
   text-transform: none;
@@ -1320,4 +1342,104 @@
     transition: opacity 0.15s linear;
     transform: scale(1) !important;
   }
+}
+
+/* ── Awards (design pass, job 16, 2026-08-20) ─────────────────────────────
+   Six yachts out of seventy-two draw this. It is deliberately the quietest
+   section on the page: gold rules and a year column, no badges, no ribbons.
+   A row of trophy icons is what a booking platform does, and the whole
+   positioning is that we are not one. */
+.yacht-awards {
+  padding: clamp(56px, 7vw, 96px) 0;
+  border-top: 1px solid rgba(201, 168, 76, 0.16);
+}
+.yacht-awards__inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 32px);
+}
+.yacht-awards__title {
+  font-family: var(--gy-font-display);
+  font-weight: 250;
+  font-size: clamp(26px, 3.4vw, 40px);
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+  margin: 0 0 24px;
+  color: var(--gy-ivory, #F8F5F0);
+}
+.yacht-awards__lede,
+.yacht-awards__note {
+  font-family: var(--gy-font-body);
+  font-size: 16px;
+  line-height: 1.75;
+  color: rgba(248, 245, 240, 0.68);
+  margin: 0 0 20px;
+}
+.yacht-awards__note {
+  margin: 22px 0 0;
+  font-size: 14px;
+  color: rgba(248, 245, 240, 0.5);
+}
+.yacht-awards__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* The year sits in its own column so the eye reads down the dates first,
+   which is how a record of wins should scan. */
+.yacht-awards__item {
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  gap: 4px 18px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.12);
+}
+.yacht-awards__year {
+  font-family: var(--gy-font-display);
+  font-size: 19px;
+  font-weight: 300;
+  color: var(--gy-gold, #C9A84C);
+  letter-spacing: 0.04em;
+}
+.yacht-awards__award {
+  font-family: var(--gy-font-body);
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--gy-ivory, #F8F5F0);
+}
+.yacht-awards__org,
+.yacht-awards__who {
+  grid-column: 2;
+  font-family: var(--gy-font-ui);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(248, 245, 240, 0.5);
+}
+.yacht-awards__who {
+  color: rgba(201, 168, 76, 0.72);
+}
+@media (max-width: 767.98px) {
+  .yacht-awards__item {
+    grid-template-columns: 54px 1fr;
+    gap: 3px 14px;
+  }
+  .yacht-awards__award { font-size: 16px; }
+}
+
+/* Link from a yacht's awards block to the page that lists them all. Inline
+   inside the note paragraph, because it is a footnote to it, not a call to
+   action competing with the dossier form further down. */
+.yacht-awards__more {
+  color: var(--gy-gold, #C9A84C);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.3);
+  padding-bottom: 1px;
+  transition: border-color 0.3s ease;
+  white-space: nowrap;
+}
+.yacht-awards__more:hover,
+.yacht-awards__more:focus-visible {
+  border-bottom-color: var(--gy-gold, #C9A84C);
 }

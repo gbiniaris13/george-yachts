@@ -5,11 +5,13 @@
 // `var(--font-cormorant)` etc. now resolves to the Phase 28 tier
 // stack via globals.css :root re-mapping. Stops paid-look font
 // downloads and trims the first-paint payload.
-import { Geist, Fraunces } from "next/font/google";
+import localFont from "next/font/local";
+import { GFS_Didot } from "next/font/google";
 import { FLEET_COUNT } from "@/lib/fleetCount";
 import "./globals.css";
 import Script from "next/script";
 import NavDrawerSystem from "./components/NavDrawerSystem";
+import RecaptchaOnDemand from "./components/RecaptchaOnDemand";
 import GlobalEffects from "./components/GlobalEffects";
 import CustomCursor from "./components/CustomCursor"; // reinstated 2026-06-29 (George)
 // CustomCursor removed 2026-05-08 (Boss directive) — the custom
@@ -25,14 +27,18 @@ import ScrollProgress from "./components/ScrollProgress";
 import SoundFx from "./components/SoundFx";
 import ScrollToTop from "./components/ScrollToTop";
 import WhatsAppButton from "./components/WhatsAppButton";
-import PushOptIn from "./components/PushOptIn";
+// 2026-08-19 (job 8) — not rendered; see the note at its old position.
+// import PushOptIn from "./components/PushOptIn";
 import CookieConsent from "./components/CookieConsent";
 // 2026-05-18 — PostHog provider (free 1M events/mo). Inert until
 // NEXT_PUBLIC_POSTHOG_KEY env var is set in Vercel.
 import PostHogProvider from "./components/PostHogProvider";
 import SpeculationRules from "./components/SpeculationRules";
-import ContactDrawer from "./components/ContactDrawer";
-import VisitorGreeting from "./components/VisitorGreeting";
+// 2026-08-19 (job 7) — ContactDrawer is no longer rendered; see the note at
+// its old position below. Commented rather than deleted so it is one line back.
+// import ContactDrawer from "./components/ContactDrawer";
+// 2026-08-19 (job 8) — not rendered; see the note at its old position.
+// import VisitorGreeting from "./components/VisitorGreeting";
 import AmbientPlayer from "./components/AmbientPlayer";
 // Phase 27d (Forbes-launch eve, 2026-05-05) — BrokerStatus pill
 // (the green "Dockside — replies within the hour" indicator) removed
@@ -41,7 +47,8 @@ import AmbientPlayer from "./components/AmbientPlayer";
 // file is preserved on disk in case the presence concept comes back
 // in a different form, but it no longer mounts.
 // import BrokerStatus from "./components/BrokerStatus";
-import ForbesReferrerWelcome from "./components/ForbesReferrerWelcome";
+// 2026-08-19 (job 8) — not rendered; see the note at its old position.
+// import ForbesReferrerWelcome from "./components/ForbesReferrerWelcome";
 import StickyFleetCTA from "./components/StickyFleetCTA";
 // Phase 7 Round 22 (2026-05-12, technical brief Priority 1A) -
 // StickyInquiryBar surfaces on all programmatic pages (islands,
@@ -53,7 +60,8 @@ import AskGeorgeWidget from "./components/AskGeorgeWidget";
 import GoldCurtain from "./components/GoldCurtain";
 import RouteTransition from "./components/RouteTransition";
 import MouseParallax from "./components/MouseParallax";
-import ExitIntentModal from "./components/ExitIntentModal";
+// 2026-08-19 (job 8) — not rendered; see the note at its old position.
+// import ExitIntentModal from "./components/ExitIntentModal";
 import AmbientScroll from "./components/AmbientScroll";
 // Cleanup log (for anyone wondering where these went):
 //   • TranslateWidget — relocated inside NavDrawerSystem's icon strip
@@ -63,7 +71,7 @@ import AmbientScroll from "./components/AmbientScroll";
 //     loaded via the <Script id="Cookiebot"> tag below; two banners
 //     was the primary "siege" feel on first visit
 //   • Leadsy AI tracker — overlapped with Microsoft Clarity
-import LiveTicker from "./components/LiveTicker";
+// import LiveTicker from "./components/LiveTicker"; // unmounted 2026-08-20, see the note at the render site below
 import VisitorBeacon from "./components/VisitorBeacon";
 // Removed: VoiceSearch (nobody uses voice on yacht sites)
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
@@ -79,7 +87,13 @@ import ForbesTopBar from "./components/ForbesTopBar";
 import { cookies } from "next/headers";
 // Swiper CSS moved to individual Swiper components to avoid loading on non-Swiper pages
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+// 2026-08-20 (design pass, job 14) — Geist is gone. It was the Next.js
+// starter template's default sans and it never painted a single element on
+// this site: it declared --font-geist-sans, and that variable is referenced
+// nowhere in the codebase. It still cost 28.6 KB on every page, because
+// next/font emits a <link rel="preload"> for it, so the browser fetched it
+// before it could discover that nobody wanted it.
+// const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 // Phase 28 sweep — Marcellus / Cormorant Garamond / Montserrat /
 // Cinzel / Bodoni Moda / Italiana imports removed. The legacy
 // CSS variables (--font-cormorant / --font-cinzel / --font-montserrat
@@ -115,27 +129,144 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 // either get refactored to the new tier vars or fall back to the
 // legacy var (which keeps rendering with its current font). No
 // component breaks during the rollout.
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  // 2026-05-08 follow-up — Boss said the hero "GEORGE YACHTS" still
-  // read "πρόχειρο/παιδικό" at Light 300. Fraunces 100 is the
-  // editorial-thin axis used by Vogue / NYT Cooking on display
-  // headlines — much closer to Canela Thin's air-and-grace feel.
-  //
-  // 2026-07-02 (ASK B section 4.1) — switched from six static weights
-  // (12 files with italics) to the TRUE VARIABLE font with the opsz
-  // (optical size) axis. Every font-weight 100-600 used across the
-  // site keeps working (the variable wght axis serves any value), and
-  // opsz + `font-optical-sizing: auto` (globals.css) gives body-size
-  // Fraunces real text cuts and the thin hero cut ink-like contrast,
-  // the way metal-type optical sizes worked. SOFT/WONK axes are NOT
-  // requested: WONK would stay at 0 everywhere, and loading an axis
-  // that never moves is dead weight.
-  axes: ["opsz"],
-  style: ["normal", "italic"],
-  variable: "--gy-font-display",
+// 2026-08-20 (design pass, job 14) — two families, and the second pass at it.
+//
+// The first pass picked Bodoni Moda + EB Garamond, reasoning from what the US
+// HNWI already reads. That reasoning still holds, and the table is why:
+//
+//   Vogue US               FB Didot (display)      + Adobe Garamond (text)
+//   Architectural Digest   Adobe Garamond          + Crimson Text
+//   Robb Report            Boogy Brut (display)    + Saans
+//   Feadship               PP Eiko (display)       + Gotham
+//   Aman                   Lyon Display            + Lyon Text
+//   Northrop & Johnson     Schnyder (display only) + Barlow (free, Google)
+//   Fraser / Burgess / Y.CO / NetJets              geometric sans, no serif
+//
+// George's correction was the useful half: the site has to LOOK DIFFERENT from
+// the others, not merely be correct. Bodoni Moda is the right register and the
+// wrong choice, because it is the most common free didone in the world and it
+// sits underneath thousands of templates. Every face in that table is expensive
+// and rare. Matching the register with a common face buys the reference without
+// the distinction.
+//
+// So: same structure, rarer faces, still free.
+//
+//   Display   Boska       Barbara Bigosinska, ITF Free Font License
+//   Text      Switzer     Jeremie Hornus, ITF Free Font License
+//   Greek     GFS Didot   Greek Font Society, OFL
+//
+// Stardom is the closest free face to the Schnyder / Ogg register the American
+// houses pay for: sharp cut serifs, hard vertical stress, and authority in
+// capitals, which is what matters here because our h1s are yacht names in caps.
+// It ships one weight. That is not a compromise for this job: Northrop &
+// Johnson run Schnyder in a single weight, for display only, and so do we.
+//
+// Switzer stays, and it is not a new dependency. It was already the site's
+// workhorse, 668 elements on a yacht page. What changes is that it is now
+// served from our own origin instead of the Fontshare CDN, and it is the true
+// variable cut, so one 43 KB file answers every weight from 100 to 900 that any
+// component asks for. The pairing is Robb Report's and Feadship's: a dramatic
+// display serif over a quiet grotesque. The quiet half is what lets the loud
+// half read as expensive rather than busy.
+//
+// Both are served from /fonts, which next.config.mjs already sends with a
+// one-year immutable cache (job 1). Provenance and licence are recorded in
+// public/fonts/README-FONTS.md.
+const boska = localFont({
+  src: [{ path: "../public/fonts/Boska-Variable.woff2", weight: "200 900", style: "normal" }],
+  variable: "--gy-face-display",
   display: "swap",
+  // The synthetic fallback is measured against Times rather than the default
+  // Arial: both it and Stardom are high-contrast serifs, so the swap when the
+  // real face lands moves the line far less.
+  // adjustFontFallback is OFF, and that is load-bearing too.
+  //
+  // Left on, next/font inserts a synthetic "boska Fallback" family directly
+  // after the real one, built from Times with adjusted metrics. Times has
+  // Greek. So a Greek heading matched that synthetic face and never reached
+  // GFS Didot: measured 936px for the same string that GFS Didot sets at 853.
+  // Correct-looking stack, wrong glyphs, and it would have shipped silently.
+  //
+  // The cost of turning it off is a little layout shift while the face loads.
+  // It is a small cost here: Boska is 47 KB, preloaded, and display: swap
+  // means the window is a few frames. Switzer keeps its adjusted fallback,
+  // because Greek body text landing on a system sans is fine, and Greek
+  // headings were the part that mattered.
+  adjustFontFallback: false,
+  // NO fallback array here either, and that is load-bearing.
+  //
+  // next/font appends whatever is passed to the family list it publishes in
+  // the variable, so fallback: ["Georgia", "serif"] made --gy-face-display
+  // expand to `boska, boska Fallback, Georgia, serif`. The tier stacks in
+  // globals.css then append the Greek face after it, and serif is a GENERIC
+  // family that always matches, so nothing past it is ever consulted. Greek
+  // headings would have gone back to Georgia, silently, which is the exact
+  // defect this pass set out to fix. Measured on the built page before the
+  // fix: font-family: boska, "boska Fallback", Georgia, serif, "GFS Didot".
+  //
+  // The full chain belongs in one place. globals.css owns it.
 });
+
+const switzer = localFont({
+  src: [{ path: "../public/fonts/Switzer-Variable.woff2", weight: "100 900", style: "normal" }],
+  variable: "--gy-face-text",
+  display: "swap",
+  // Same reason as the display face above: no fallback array, because
+  // sans-serif at the end of it would swallow the Greek face that the tier
+  // stacks append after this variable.
+});
+
+// The italic is a separate loader for one reason: preload.
+//
+// Listed as a second src entry on the loader above, next/font preloads it too,
+// and that is 33.4 KB fetched during first paint for type that is almost never
+// in the first screen. The italic on this site is blockquotes, <em> inside body
+// copy, and the Forbes strapline: all of it below the fold, none of it LCP.
+//
+// Split out with preload off, it is fetched the moment something italic is
+// actually rendered and not a moment earlier. First paint drops from 96.8 KB
+// of type to 63.4 KB. Same reasoning as the Greek face below, same reasoning
+// that removed Geist.
+const switzerItalic = localFont({
+  src: [{ path: "../public/fonts/Switzer-VariableItalic.woff2", weight: "100 900", style: "italic" }],
+  variable: "--gy-face-text-italic",
+  display: "swap",
+  preload: false,
+});
+
+// Greek, in its own loader and deliberately NOT preloaded. This is the trap
+// Geist fell into, caught before it shipped.
+//
+// The obvious way to write this is subsets: ["latin", "greek"] on the text
+// loader. I did exactly that with the previous pair, built it, and measured
+// what came out: next/font emitted a <link rel="preload"> for the Greek cut of
+// both roman and italic, 19.4 KB and 19.1 KB, on every page of the site. A
+// preload is fetched whether or not a single glyph ever needs it, so 465
+// English pages would have paid 38.5 KB to serve 11 Greek ones.
+//
+// Split out, the browser does the right thing by itself: the face carries a
+// unicode-range over U+0370-03FF, it is named after the Latin faces in the
+// stacks in globals.css, and with no preload tag it is fetched only when a
+// Greek character actually has to be drawn.
+//
+// GFS Didot rather than a Greek cut of the text face, because George's
+// instruction was that Greek may be a completely different typeface so long as
+// it matches the house. It does, better than the alternatives: a Greek didone
+// by the Greek Font Society, sharing Stardom's high contrast and vertical
+// stress. Held against it, EB Garamond's Greek reads rounder and warmer and
+// does not sit with Stardom at all.
+//
+// Greek is not only the 11 /el/ pages: the newsletter page, the
+// "Related pages" strip in SeoLanding and the cabin portal all set Greek.
+const gfsDidot = GFS_Didot({
+  subsets: ["greek"],
+  weight: "400",
+  style: "normal",
+  variable: "--gy-face-greek",
+  display: "swap",
+  preload: false,
+});
+
 
 // Site-wide defaults every page inherits. Individual pages override via
 // their own `export const metadata` or `generateMetadata`. Audited
@@ -330,8 +461,17 @@ export default async function RootLayout({ children }) {
             dropping the @import from the production bundle. The
             preconnect hint shaves ~150 ms off the first paint by
             opening the TLS connection early. */}
+        {/* 2026-08-20 (design pass, job 14) — the two Fontshare preconnects are
+            gone with the stylesheet they were opening a connection for. Both
+            faces are self-hosted from /fonts now, so these were two TLS
+            handshakes on every page load to a host nothing requests.
+
+            A preconnect is not a CSP entry: dropping it cannot break a load,
+            it can only stop a connection nobody uses. The CSP entries for the
+            same hosts stay where they are, for the reason in the note further
+            down.
         <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" /> */}
         {/* 2026-05-12, yacht thumbnails (homepage trending carousel,
             fleet grid, yacht detail galleries) all load from
             cdn.sanity.io. Homepage references it 76 times. Preconnect
@@ -357,10 +497,25 @@ export default async function RootLayout({ children }) {
             our body / accent sizes, and the alternative was the entire
             stylesheet 500'ing on every page. Revisit if fontshare ever
             ships the italic fix. */}
+        {/* 2026-08-20 (design pass, job 14) — the FontShare stylesheet is
+            gone with the three faces it served. Sentient, General Sans and
+            Switzer are no longer referenced: the two-family system routes
+            every tier variable to Bodoni Moda or EB Garamond, both
+            self-hosted by next/font.
+
+            What this removes from every page load: one render-blocking
+            stylesheet on a third-party host, two TLS handshakes for the
+            preconnects above, and up to fourteen declared font files.
+
+            The api/cdn.fontshare.com preconnects and the CSP entries for
+            those hosts are left in place on purpose. They cost nothing now
+            that nothing requests them, and pulling hosts out of a CSP is how
+            this site has broken itself four times already (Cookiebot,
+            Clarity, GA4, reCAPTCHA).
         <link
           rel="stylesheet"
           href="https://api.fontshare.com/v2/css?f[]=sentient@400,500&f[]=general-sans@200,300,400,500,600,700&f[]=switzer@200,300,400,500,600,700&display=swap"
-        />
+        /> */}
 
         {/* theme-color + apple-mobile-web-app-* now emitted by Next's
             Metadata API (see `export const viewport` + `metadata.icons`
@@ -400,7 +555,7 @@ export default async function RootLayout({ children }) {
       </head>
 
       <body
-        className={`${geistSans.variable} ${fraunces.variable} antialiased${forbesDismissed ? "" : " gy-with-forbes-bar"}`}
+        className={`${boska.variable} ${switzer.variable} ${switzerItalic.variable} ${gfsDidot.variable} antialiased${forbesDismissed ? "" : " gy-with-forbes-bar"}`}
       >
         {/* Skip to main content, accessibility */}
         <a
@@ -436,13 +591,13 @@ export default async function RootLayout({ children }) {
             variant (AggregateRating attaches when 3+ real reviews exist). */}
         <JsonLd data={entityGraph} />
         {/* 1. Critical External Scripts */}
-        {recaptchaKey && (
-          <Script
-            id="recaptcha-script"
-            src={`https://www.google.com/recaptcha/enterprise.js?render=${recaptchaKey}`}
-            strategy="lazyOnload"
-          />
-        )}
+        {/* 2026-08-19 (design pass, job 5) — reCAPTCHA was a <Script
+            strategy="lazyOnload"> here, so all 476 pages fetched Google's
+            313 KB enterprise.js whether or not the visitor ever met a form.
+            It now loads on the first focus into a field, or when a modal
+            announces itself. See RecaptchaOnDemand for why the homepage
+            could not simply be excluded. */}
+        {recaptchaKey && <RecaptchaOnDemand siteKey={recaptchaKey} />}
 
         {/* Global Effects + Custom Cursor, all pages */}
         <GlobalEffects />
@@ -475,8 +630,33 @@ export default async function RootLayout({ children }) {
         <main id="main-content">
         {children}
         </main>
-        {/* Language: users choose from flag selector. LiveTicker: social proof */}
-        <LiveTicker />
+        {/* 2026-08-20 (design pass) — LiveTicker unmounted, George's call after
+            it surfaced during job 13 testing. The component file stays on disk
+            untouched, so this is one line to reverse.
+
+            It was not social proof, it was generated: a random city from a list
+            of 24 crossed with a random name from a list of 24 yachts, fired at
+            90-150s and then every 2-4 minutes for as long as the tab stayed
+            open, on every page of the site. 15% of the messages claimed a
+            commercial event that had not happened ("just requested a quote
+            for", "inquired about", "just sent an inquiry"), naming real yachts
+            that belong to real owners and central agents.
+
+            Three reasons beyond it simply not being true:
+              1. The claim is checkable. A client reads "Someone from Milan just
+                 requested a quote for S/CAT Genny", asks George about that week,
+                 and there is no good answer left to give.
+              2. Wrong signal for this buyer. The rolling-toast pattern belongs
+                 to booking platforms. Fraser, IYC, Burgess and Northrop &
+                 Johnson do not run it, and the visitor who charters a 50 m
+                 Couach knows where he has seen it before.
+              3. It contradicted the page it sat on. The hero reads "A house,
+                 not a platform. No call centres, no handovers, no ticket
+                 numbers." A manufactured urgency toast is a platform behaviour.
+
+            Nothing depends on it: lib/popup-coordinator.js only names it in a
+            comment, and the [data-live-ticker] rule in globals.css now matches
+            nothing. */}
         {/* CookieConsent (custom), removed; Cookiebot handles it */}
         {/* Removed VoiceSearch */}
         {/* TranslateWidget moved into NavDrawerSystem's right icon
@@ -488,17 +668,43 @@ export default async function RootLayout({ children }) {
             the WhatsApp FAB bottom-right. Push-only service worker, so it
             cannot affect page loads. Free owned channel for last-minute
             availability. Needs VAPID_PRIVATE_KEY in Vercel to send. */}
-        <PushOptIn />
+        {/* 2026-08-19 (job 8) — no longer rendered. It waited for a scroll
+            and a timer on high-intent pages, which is the definition of an
+            automatic popup.
+
+            This one has a cost worth naming: it is the only place a visitor
+            could subscribe to push, so the site now gains no new subscribers.
+            Existing ones are untouched, /api/push/send still works, and the
+            VAPID keypair is unchanged, so the channel can be reopened by
+            uncommenting this line. */}
+        {/* <PushOptIn /> */}
         {/* Phase 1 / B2 (luxury rebuild, 2026-05-05), multi-channel
             contact drawer (WhatsApp / iMessage / Signal / direct call).
-            Sits above the WhatsApp FAB; one tap surfaces every channel
-            UHNW guests use. Personal reply, never an autoresponder. */}
-        <ContactDrawer />
+            Sat above the WhatsApp FAB; one tap surfaced every channel.
+
+            2026-08-19 (design pass, job 7) — no longer rendered, on George's
+            own verdict, and the reasoning holds: the right edge of every page
+            carried four floating buttons, and a drawer whose first offer was
+            WhatsApp sat directly on top of the WhatsApp button. A second door
+            into the same room.
+
+            WhatsApp survives in ten other places and the phone number in four
+            including the footer, so neither is lost. iMessage and Signal WERE
+            only here and go with it. That is a real consequence and the
+            decision was taken knowing it.
+
+            The component file stays on disk, unimported and so not shipped.
+            Restoring it is uncommenting two lines. */}
+        {/* <ContactDrawer /> */}
         {/* Phase 1 / G2 (luxury rebuild, 2026-05-05), first-visit
             subtle greeting that reads visitor's IP city + local time
             ("Good evening from Athens, 21:14 local"). Free Vercel
             geo headers, no third-party calls, fades after 4s. */}
-        <VisitorGreeting />
+        {/* 2026-08-19 (job 8) — no longer rendered. Three chained timers
+            faded a greeting in and out over the page. Nothing was captured
+            and nothing is lost; a visitor who wants to know we are in Athens
+            can read it in the footer. */}
+        {/* <VisitorGreeting /> */}
         {/* Phase 27, AmbientPlayer is back per Boss directive
             ("μη μου διαγράφεις πράγματα που δε σου 'χω πει εγώ").
             Click-to-play remains the model, pill stays muted on
@@ -511,7 +717,10 @@ export default async function RootLayout({ children }) {
         {/* Phase 21, Forbes referrer welcome card. Detects ?ref=forbes
             or referrer containing forbes.com, slides in once per session,
             offers a direct path to Brief George. */}
-        <ForbesReferrerWelcome />
+        {/* 2026-08-19 (job 8) — no longer rendered. It slid in on a timer,
+            which makes it an automatic popup whatever the copy said. Forbes
+            visitors still land on the same page with the same CTAs. */}
+        {/* <ForbesReferrerWelcome /> */}
         {/* H.1, Ask George AI Concierge (sitewide). Sits ABOVE the
             WhatsApp button at bottom-right. Widget is fully client-side;
             graceful fallback when AI_API_KEY env vars aren't configured. */}
@@ -527,8 +736,20 @@ export default async function RootLayout({ children }) {
             StickyInquiryBar for programmatic pages. The component
             self-suppresses on homepage and conversion pages. */}
         <StickyInquiryBar />
-        {/* D2, Exit-intent capture, one shot per session */}
-        <ExitIntentModal />
+        {/* D2, Exit-intent capture, one shot per session.
+
+            2026-08-19 (design pass, job 8) — no longer rendered. George asked
+            for every automatic popup to go, and this was the most aggressive
+            of them: it watched for the cursor leaving the top of the window
+            and threw a newsletter form in front of someone who was already
+            leaving.
+
+            It captured real addresses, so this was checked before it went.
+            /api/newsletter is reached from four other places: the footer of
+            every page, the dedicated /newsletter page, FirstAccessBand, and
+            the yacht-page dossier request. The channel is intact; only the
+            ambush is gone. */}
+        {/* <ExitIntentModal /> */}
         {/* FavoritesEmailPrompt removed 2026-05-08 (Boss directive)
             interrupting a visitor mid-shortlist with a modal is
             the wrong moment. The /favorites page already exposes

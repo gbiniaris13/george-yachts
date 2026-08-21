@@ -36,6 +36,29 @@ const nextConfig = {
           // grant was opening attack surface without a corresponding
           // feature. Camera + geolocation already disabled.
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+              // 2026-08-19 (design pass, job 6) — fifteen host entries removed
+              // because nothing on the site talks to them any more.
+              //
+              // Cookiebot was dropped on 2026-06-25 for a free self-hosted
+              // banner. HubSpot left when the CRM moved in-house. Google
+              // Translate and wttr.in have no reference left in app/ or lib/
+              // at all. Their permissions outlived them, which is the quiet
+              // kind of risk: a policy that still trusts a script host you no
+              // longer watch is a policy that would not stop that host being
+              // used against you.
+              //
+              // Checked three ways before cutting, not one: no live reference
+              // in the source, no <Script> that loads them, and a real page
+              // load on production whose only outbound hosts were
+              // georgeyachts.com, the two fontshare hosts, www.google.com for
+              // reCAPTCHA, googletagmanager with region1.google-analytics.com
+              // for GA4, and www.gstatic.com.
+              //
+              // DELIBERATELY KEPT: calendly, my.matterport.com and youtube.
+              // They also show zero requests on the fleet page, and that means
+              // nothing: they are used on other pages, 27 references for
+              // Calendly alone. Zero traffic on one page is not evidence of
+              // death.
           {
             key: "Content-Security-Policy",
             value: [
@@ -63,16 +86,16 @@ const nextConfig = {
               // serves the small per-project tag, scripts.clarity.ms serves
               // the library the tag then loads. Allowing only the first is
               // exactly the state we were in.
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://translate.google.com https://translate.googleapis.com https://js.hs-scripts.com https://js.hsforms.net https://js.hs-analytics.net https://js.hs-banner.com https://js.hscollectedforms.net https://consent.cookiebot.com https://consentcdn.cookiebot.com https://www.clarity.ms https://scripts.clarity.ms",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com https://api.fontshare.com https://consent.cookiebot.com https://consentcdn.cookiebot.com",
-              "font-src 'self' https://fonts.gstatic.com https://cdn.fontshare.com https://consent.cookiebot.com https://consentcdn.cookiebot.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://scripts.clarity.ms",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com",
+              "font-src 'self' https://fonts.gstatic.com https://cdn.fontshare.com",
               // 2026-05-17 — The Cabin (mood-board + voyage-album)
               // serves signed images from Supabase Storage. Without
               // *.supabase.co here, every photo loads with a CSP
               // violation in the console and the <img> shows broken.
               // Also allowing https: for arbitrary mood-board pastes
               // (Pinterest, etc.) which are charterer-pasted URLs.
-              "img-src 'self' data: blob: https: https://cdn.sanity.io https://images.pexels.com https://images.unsplash.com https://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com https://*.hubspot.com https://translate.google.com https://www.google.com https://translate.googleapis.com https://imgsct.cookiebot.com https://consent.cookiebot.com",
+              "img-src 'self' data: blob: https: https://cdn.sanity.io https://images.pexels.com https://images.unsplash.com https://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com https://www.google.com",
               // *.clarity.ms on connect-src: the library uploads to
               // u.clarity.ms and pings c.clarity.ms. Allowing the scripts to
               // load but not to send would be a subtler version of the same
@@ -95,7 +118,21 @@ const nextConfig = {
               //
               // *.google-analytics.com covers the regional collectors,
               // *.analytics.google.com covers the newer collection host.
-              "connect-src 'self' https://cdn.sanity.io https://*.sanity.io https://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.hubspot.com https://*.hubapi.com https://api.hubspot.com https://forms.hubspot.com https://translate.googleapis.com https://translate.google.com https://wttr.in https://consent.cookiebot.com https://consentcdn.cookiebot.com https://*.clarity.ms",
+              // 2026-08-19 (design pass, job 5) — the FOURTH time this exact bug has
+              // been found in this policy, and the notes above record the other
+              // three: Cookiebot in May, Clarity on 11/8, GA4 on 14/8. Same shape
+              // every time. A third party is allowed to LOAD but not to TALK, so
+              // it appears to work and quietly does half its job.
+              //
+              // reCAPTCHA Enterprise posts its risk signals to
+              // www.google.com/recaptcha/enterprise/clr. That host has been in
+              // script-src since the beginning and has never been in connect-src,
+              // so every one of those posts has been refused. Tokens still came
+              // back, which is why nobody noticed: the forms worked, and the
+              // score behind them was starved of the very telemetry it grades.
+              // Found on 19/8 by opening the console while a form was actually
+              // being used, which is the only way any of these four surfaced.
+              "connect-src 'self' https://www.google.com https://cdn.sanity.io https://*.sanity.io https://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.clarity.ms",
               // 2026-05-12 — added my.matterport.com pre-emptively.
               // The yacht detail page (YachtPageContent.jsx Matterport
               // section) renders an <iframe src={yacht.matterportEmbedUrl}>
@@ -103,7 +140,7 @@ const nextConfig = {
               // yacht has populated it yet. When George adds the first
               // 3D tour, the iframe would otherwise be silently
               // CSP-blocked.
-              "frame-src 'self' https://www.google.com https://calendly.com https://www.youtube.com https://translate.google.com https://my.matterport.com https://consent.cookiebot.com https://consentcdn.cookiebot.com",
+              "frame-src 'self' https://www.google.com https://calendly.com https://www.youtube.com https://my.matterport.com",
               "media-src 'self' https://cdn.sanity.io blob:",
             ].join("; "),
           },
@@ -112,6 +149,78 @@ const nextConfig = {
             value: "max-age=63072000; includeSubDomains; preload",
           },
         ],
+      },
+      // 2026-08-19 (design pass, job 1) — the single biggest cause of this
+      // site's weight, and it was never a file-size problem.
+      //
+      // Vercel serves everything under /public with
+      //   cache-control: public, max-age=0, must-revalidate
+      // while /_next/static gets max-age=31536000, immutable. That split is
+      // Vercel's default and it stays invisible until you measure a repeat
+      // visit: the JavaScript and CSS come from cache, and the 3,1 MB of
+      // ambient-lounge.mp3, the 704 KB yacht-icon-only.svg that sits in the
+      // footer and the nav drawer of every single page, and every hero video
+      // are fetched again from scratch. Measured 18/8: on a returning mobile
+      // visit the only thing that re-downloaded was the audio.
+      //
+      // Compressing the mp3 was the obvious fix and the wrong one. George
+      // wants the track exactly as it is, and the file was never the
+      // problem; asking for it twice was.
+      //
+      // TWO TIERS, and the split is deliberate.
+      //
+      // /audio and /videos get a year with `immutable`. These are the heavy
+      // files, 125 MB between them, and nothing in either directory is ever
+      // swapped for a different cut under the same filename. `immutable`
+      // means a browser that holds the file will not even send a conditional
+      // request, which is exactly right for a track and six hero loops.
+      //
+      // /images does NOT get `immutable`, and gets thirty days instead of a
+      // year, because of five specific files: george.jpg, elleanna.jpg,
+      // manos.jpg, chris.jpg and valeria.jpg. Those are the team's own
+      // portraits and they DO get replaced in place. Under a year of
+      // `immutable` a visitor who had seen the old portrait would keep
+      // seeing it until 2027 with no way for us to reach them. Thirty days
+      // removes the repeat-visit download just as completely, and any
+      // replacement heals itself for everyone inside a month.
+      //
+      // The rule that still applies to /audio and /videos: REPLACING A FILE
+      // THERE MEANS GIVING IT A NEW NAME.
+      //
+      // Everything else under /public keeps Vercel's default, and that is
+      // also deliberate. robots.txt, BingSiteAuth.xml, the Yandex and
+      // Pinterest verification pages, the three TikTok tokens and push-sw.js
+      // all sit at the root. A service worker and a set of ownership proofs
+      // are the last things on this site that should be pinned in a cache.
+      //
+      // /fonts does not exist today; the five families are served from
+      // fonts.gstatic.com and cdn.fontshare.com. The rule is here for job 14,
+      // where self-hosting them is on the table. Until then it matches
+      // nothing, and that is the honest description of it.
+      ...["/audio", "/videos", "/fonts"].map((dir) => ({
+        source: `${dir}/:path*`,
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      })),
+      {
+        source: "/images/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=2592000" }],
+      },
+      // The tab icons. These are not in /public: Next.js serves them from
+      // app/favicon.ico, app/icon.svg and app/apple-icon.png through its
+      // metadata-route convention, and that convention ships them with
+      // max-age=0, must-revalidate. Every single navigation therefore spends
+      // a conditional round trip on three files that had not changed since
+      // May, and favicon.ico is 16 KB of that.
+      //
+      // A day rather than a year on purpose. A favicon is the one asset here
+      // that is genuinely rebranded from time to time, and a wrong tab icon
+      // pinned for a year in a charterer's browser is a worse outcome than
+      // three cheap requests tomorrow morning.
+      {
+        source: "/:file(favicon.ico|icon.svg|apple-icon.png|manifest.webmanifest)",
+        headers: [{ key: "Cache-Control", value: "public, max-age=86400" }],
       },
       // 2026-05-18 — Admin routes get X-Robots-Tag pinned at the
       // CDN layer too (middleware sets it on its own responses, but

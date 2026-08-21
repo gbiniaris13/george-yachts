@@ -324,13 +324,25 @@ export default async function ChatPage() {
           align-items: center;
           gap: 16px;
           padding: 18px 22px;
-          background: #25D366; /* WhatsApp green */
-          color: #ffffff;
+          /* 2026-08-19 (design pass, job 9) - was WhatsApp green #25D366 with
+             a white glyph. Same change as the floating button on the public
+             site, and for the same two reasons.
+             First, it is WhatsApp's colour and not ours, and this page already
+             speaks in navy: the paragraph above it is rgba(13,27,42,0.75).
+             Second, the pairing failed on contrast. White on #25D366 measures
+             1.98:1 where WCAG asks 3:1 of a graphic; ivory on navy is far
+             above it. The glyph shape is untouched, it still has to say
+             WhatsApp. */
+          background: #0D1B2A;
+          color: #F8F5F0;
           text-decoration: none;
-          border: 1px solid #1FB053;
-          transition: background 160ms ease, transform 120ms ease;
+          border: 1px solid rgba(201, 168, 76, 0.55);
+          transition: background 160ms ease, border-color 160ms ease, transform 120ms ease;
         }
-        .chat-card__cta:hover { background: #20c25c; }
+        .chat-card__cta:hover {
+          background: #142233;
+          border-color: rgba(201, 168, 76, 0.85);
+        }
         .chat-card__cta:active { transform: scale(0.99); }
         .chat-card__cta-icon {
           display: inline-flex;
@@ -338,9 +350,10 @@ export default async function ChatPage() {
           justify-content: center;
           width: 40px;
           height: 40px;
-          background: rgba(255, 255, 255, 0.18);
+          /* 2026-08-19 (job 9) - gold on navy, matching the rim above. */
+          background: rgba(201, 168, 76, 0.14);
           border-radius: 50%;
-          color: #ffffff;
+          color: #C9A84C;
         }
         .chat-card__cta-label strong {
           display: block;

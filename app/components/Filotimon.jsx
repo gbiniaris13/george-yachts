@@ -39,11 +39,13 @@ import useNearViewport from "./useNearViewport";
 // constellation. Lazy-loaded, ssr:false because three.js is a heavy
 // client-only payload. Desktop-only inside the component itself.
 const GoldEmbers3D = dynamic(() => import("./GoldEmbers3D"), { ssr: false });
+import useHeavyVisualGate from "./useHeavyVisualGate";
 
 export default function Filotimon({ filotimoImage = null }) {
   const { t } = useI18n();
   // SD-3: lazy sources for the Navagio ambient (see comment on the <video>).
   const [filotimoNearRef, filotimoNear] = useNearViewport("200px");
+  const [embersRef, embersOn] = useHeavyVisualGate();
   const filotimoVideoRef = React.useRef(null);
   React.useEffect(() => {
     if (filotimoNear && filotimoVideoRef.current) {
@@ -96,7 +98,12 @@ export default function Filotimon({ filotimoImage = null }) {
           gets embers (rising motes) so the two sections feel
           related but not identical. Desktop-only via the component's
           own viewport gate. */}
-      <GoldEmbers3D />
+      {/* 2026-08-19 (job 6) — the gate moved out of the module and in front
+          of it. GoldEmbers3D still decides for itself whether to draw, but
+          dynamic() fetched three.js the moment this rendered, which meant a
+          phone downloaded 184 KB to reach an early return. Now the download
+          waits for a device that will use it and a section one screen away. */}
+      <div ref={embersRef} aria-hidden="true">{embersOn && <GoldEmbers3D />}</div>
 
       <div className="relative grid grid-cols-1 lg:grid-cols-[40%_60%]">
         {/* ── LEFT, editorial image, sticky on desktop so it frames

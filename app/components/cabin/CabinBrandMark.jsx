@@ -73,16 +73,31 @@ export default function CabinBrandMark({ href = "/cabin" }) {
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       {/* 2026-05-23, Audit pass: explicit width/height stops the
-          layout shift (CLS) on slow networks. SVG intrinsic ratio
-          is 4:3 so width:160 / height:120 matches the desktop
-          tier. CSS height rules below override at narrower tiers
-          (aspect-ratio preserved by width: auto). */}
+          layout shift (CLS) on slow networks. CSS height rules below
+          override at narrower tiers (aspect-ratio preserved by
+          width: auto). */}
+      {/* 2026-08-19 (design pass, job 3) - two corrections in one line.
+          
+          The file. gy-logo-real.svg was 719 KB for a mark that is never
+          drawn above 200 px. Like its twin in the public nav it was never
+          a vector: an export carrying TWO 2528x1696 PNGs, the artwork and
+          a luminance mask, joined by feColorMatrix filters, where one PNG
+          with an alpha channel does the same work. Its viewBox is
+          "0 0 1896 1272" with the inner group at 0.75, so the image lands
+          on the viewport one to one and a plain downscale reproduces it
+          exactly. 82 KB, and the .svg stays on disk.
+          
+          The numbers. The note above said the ratio was 4:3, and it is
+          not: 2528/1696 is 1.49. So the box reserved before the image
+          arrived was the wrong shape, which is the opposite of what
+          explicit width and height are for. They now carry the file's
+          real dimensions. */}
       <img
-        src="/images/gy-logo-real.svg"
+        src="/images/gy-logo-real-600.png"
         alt="George Yachts · Brokerage House"
         className="cabin-brandmark__logo"
-        width="160"
-        height="120"
+        width="894"
+        height="600"
       />
 
       <style>{`

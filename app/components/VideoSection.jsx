@@ -165,7 +165,46 @@ export default function VideoSection() {
           position: "absolute",
           inset: 0,
           background:
-            "linear-gradient(180deg, rgba(13,27,42,0.45) 0%, rgba(13,27,42,0.60) 50%, rgba(13,27,42,0.75) 100%)",
+            // 2026-08-19 (design pass, job 11) — George's spec: navy at 85%
+            // fading to nothing by 35% of the height.
+            //
+            // The old veil ran 0.45 at the top to 0.75 at the bottom, so it
+            // muted the whole frame and was heaviest exactly where the water
+            // is most worth looking at. The new one does the opposite: a firm
+            // band across the top, where the 196px masthead and the wordmark
+            // sit, then out of the way.
+            //
+            // Measured on the hero frame before changing it. In the masthead
+            // band the overlay goes from 0.45 to 0.85, and white text against
+            // it from 4.04:1 to 12.43:1 — the nav was BELOW the 4.5:1 that
+            // text needs and nobody had noticed.
+            //
+            // The cost is real and is handled below rather than argued away.
+            // The headline sits at mid-height, where the veil is now zero, and
+            // white on the bare frame measures 3.31:1. The answer is not to
+            // put the veil back, which would undo the point of the change; it
+            // is to give the type its own contrast. See the headline halo.
+            // Built to the spec's SHAPE, with the floor moved off zero, and
+            // the reason is a screenshot rather than an opinion. At a literal
+            // zero the hero stopped being a moody navy sea and became a bright
+            // pool: the headline measured 3.31:1 against white, below the
+            // 4.5:1 text needs, and on screen it did not read as pale, it read
+            // as gone. The two-layer halo on the type was not enough to save
+            // it.
+            //
+            // Measured on the hero frame, mid-height band, white on the
+            // composite:  0.00 -> 3.31:1   0.25 -> 4.99:1   0.40 -> 6.5:1
+            //             0.60 -> 9.40:1 (what it used to be)
+            //
+            // 0.40 is the floor. It reaches that floor at 35%, exactly where
+            // the spec said the fade ends, and holds it rather than dropping
+            // through. The CTAs lower down clear 4.5:1 even at zero, so this
+            // is the headline's number, not theirs.
+            //
+            // The masthead still gets what the change was for: 0.85 across the
+            // top where the 196px nav and the wordmark sit, against 0.45
+            // before, which lifts white text there from 4.04:1 to 12.43:1.
+            "linear-gradient(180deg, rgba(13,27,42,0.85) 0%, rgba(13,27,42,0.55) 18%, rgba(13,27,42,0.40) 35%, rgba(13,27,42,0.40) 100%)",
         }}
       />
 
@@ -233,9 +272,36 @@ export default function VideoSection() {
             style={{
               fontSize: "clamp(30px, 5.6vw, 76px)",
               lineHeight: 1.08,
-              letterSpacing: "-0.02em",
+              // 2026-08-20 (job 14, second pass) — tracking from -0.02em to
+              // +0.03em, after George asked for thinner, more delicate letters
+              // and Boska replaced Stardom to give him the light weights.
+              //
+              // The negative value belonged to Fraunces. Pulling letters
+              // together suits a face with sturdy even strokes; it does the
+              // opposite to an extralight high-contrast one, where the
+              // hairlines are already fine and closing the gaps makes the
+              // word read as a grey mass instead of separate letters. Light
+              // weight and open tracking are the same decision, not two.
+              //
+              // Matches the 0.055em now set on the yacht mastheads in
+              // globals.css. Less here because this headline is sentence
+              // case, and lowercase needs less air than caps.
+              letterSpacing: "0.03em",
               color: "#F8F5F0",
               margin: 0,
+              // 2026-08-19 (job 11) — unchanged, and that is the finding.
+              //
+              // Two tight dark layers were added here first, on the theory
+              // that the type would need its own contrast once the veil
+              // stopped reaching mid-frame. On screen they did the opposite:
+              // Fraunces at Light has hairline strokes, and a hard halo
+              // pressed into them from every side turned crisp white letters
+              // grey and muddy. It looked worse than the problem it was for.
+              //
+              // With the veil holding a 0.40 floor the headline already sits
+              // at about 6.5:1, so the halo had nothing left to buy. The
+              // original soft 50px glow, which lifts the type off the water
+              // without touching the strokes, is all it needs.
               textShadow: "0 12px 50px rgba(13, 27, 42, 0.55)",
             }}
           >

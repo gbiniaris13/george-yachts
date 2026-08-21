@@ -82,6 +82,7 @@ function iconForFeature(text = '') {
 }
 import ExpressInquiryModal from '@/app/components/ExpressInquiryModal';
 import { isPerPerson } from '@/lib/pricing';
+import { yachtQuestions } from '@/lib/yachtQuestions';
 
 // D.5 fallback (Boss directive 2026-05-05) — many yachts already
 // have a layout/floor-plan illustration in the regular gallery
@@ -553,6 +554,16 @@ function MobileInquireBar({ onClick }) {
 
 export default function YachtPageContent({ yacht, heroImage, description }) {
   const { t } = useI18n();
+
+  // 2026-08-20 (design pass, job 15) — the six question headings below used to
+  // be one sentence with the yacht name dropped in, on all 72 pages. Read as a
+  // query, each could only match somebody who already knew the name. The
+  // reasoning and the rules are on lib/yachtQuestions.js.
+  //
+  // Every field is optional here on purpose: where the data cannot support a
+  // question, q.<key> comes back null and the original wording renders
+  // unchanged. Nothing is invented to fill a gap.
+  const q = yachtQuestions(yacht);
   const [modalOpen, setModalOpen] = useState(false);
   const [stickyVisible, setStickyVisible] = useState(false);
   // Chapter 03 (2026-05-08) — resolve a sample itinerary for this
@@ -653,7 +664,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
             decision-grade information before the editorial. */}
         <section className="yacht-specs reveal">
           <div className="container">
-            <h2 className="yacht-specs__title">{t('yacht.specsTitle', 'What Are the Specifications of')} {yacht.name}?</h2>
+            <h2 className="yacht-specs__title">{q.specs || `${t('yacht.specsTitle', 'What Are the Specifications of')} ${yacht.name}?`}</h2>
             <div className="yacht-specs__grid">
               {yacht.length && <Spec label={t('common.length', 'Length')} value={yacht.length} />}
               {yacht.builder && <Spec label={t('common.builder', 'Builder')} value={yacht.builder} />}
@@ -675,7 +686,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           <section className="yacht-pricing reveal" style={{ background: '#0D1B2A', padding: '48px 24px' }}>
             <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
               <h2 className="yacht-pricing__title" style={{ marginBottom: 0 }}>
-                {t('yacht.pricingTitle', 'What Is the Weekly Charter Rate for')} {yacht.name}?
+                {q.pricing || `${t('yacht.pricingTitle', 'What Is the Weekly Charter Rate for')} ${yacht.name}?`}
               </h2>
               <PriceBlock yacht={yacht} size="lg" showApaNote className="yacht-price-block" />
               <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', justifyContent: 'center', marginTop: '12px' }}>
@@ -735,7 +746,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
         {yacht.images && yacht.images.length > 0 && (
           <section className="yacht-gallery">
             <div className="container">
-              <h2 className="yacht-gallery__title">{t('yacht.galleryTitle', 'What Does')} {yacht.name} {t('yacht.lookLike', 'Look Like Inside and Out')}?</h2>
+              <h2 className="yacht-gallery__title">{q.gallery || `${t('yacht.galleryTitle', 'What Does')} ${yacht.name} ${t('yacht.lookLike', 'Look Like Inside and Out')}?`}</h2>
               <Lightbox
                 images={yacht.images}
                 yachtName={yacht.name}
@@ -765,7 +776,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
         {yacht.features && yacht.features.length > 0 && (
           <section className="yacht-features reveal">
             <div className="container">
-              <h2 className="yacht-features__title">{t('yacht.featuresTitle', 'What Features Make')} {yacht.name} {t('yacht.standOut', 'Stand Out')}?</h2>
+              <h2 className="yacht-features__title">{q.features || `${t('yacht.featuresTitle', 'What Features Make')} ${yacht.name} ${t('yacht.standOut', 'Stand Out')}?`}</h2>
               <ul className="yacht-features__list">
                 {yacht.features.map((feature, index) => {
                   const Icon = iconForFeature(feature);
@@ -787,7 +798,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
         {yacht.toys && yacht.toys.length > 0 && (
           <section className="yacht-toys reveal">
             <div className="container">
-              <h2 className="yacht-toys__title">{t('yacht.toysTitle', 'What Water Toys Are Available on')} {yacht.name}?</h2>
+              <h2 className="yacht-toys__title">{q.toys || `${t('yacht.toysTitle', 'What Water Toys Are Available on')} ${yacht.name}?`}</h2>
               <ul className="yacht-toys__list">
                 {yacht.toys.map((toy, index) => (
                   <li key={index} className="yacht-toys__item">{toy}</li>
@@ -801,7 +812,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
         {yacht.idealFor && (
           <section className="yacht-ideal reveal">
             <div className="container">
-              <h2 className="yacht-ideal__title">{t('yacht.idealTitle', 'Who Is')} {yacht.name} {t('yacht.idealFor', 'Ideal For')}?</h2>
+              <h2 className="yacht-ideal__title">{q.ideal || `${t('yacht.idealTitle', 'Who Is')} ${yacht.name} ${t('yacht.idealFor', 'Ideal For')}?`}</h2>
               <p className="yacht-ideal__text">{yacht.idealFor}</p>
             </div>
           </section>

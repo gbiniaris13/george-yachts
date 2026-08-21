@@ -27,11 +27,13 @@ import { useI18n } from "@/lib/i18n/I18nProvider";
 // Lazy-load the 3D layer — desktop-only, decorative, must not block
 // hydration of the editorial copy underneath.
 const StarField3D = dynamic(() => import("./StarField3D"), { ssr: false });
+import useHeavyVisualGate from "./useHeavyVisualGate";
 
 const ARTICLE_URL =
   "https://www.forbes.com/sites/jacquesledbetter/2026/05/01/how-the-wealthy-are-hedging-for-instability/";
 
 export default function HomeForbesQuote() {
+  const [starsRef, starsOn] = useHeavyVisualGate();
   const { t } = useI18n();
   return (
     <section
@@ -42,7 +44,9 @@ export default function HomeForbesQuote() {
       {/* Background layers (deepest → nearest). 3D starfield first,
           then the CSS-only paper-grain noise, top-centre champagne
           spotlight, and 6 drifting gold dust motes. */}
-      <StarField3D />
+      {/* 2026-08-19 (job 6) — see Filotimon. Same three.js chunk, same
+          early return on phones, same fix in front of the import. */}
+      <div ref={starsRef} aria-hidden="true">{starsOn && <StarField3D />}</div>
       <div className="gy-forbes-grain" aria-hidden="true" />
       <div className="gy-forbes-spotlight" aria-hidden="true" />
       <div className="gy-forbes-dust" aria-hidden="true">

@@ -36,6 +36,13 @@ const staticRoutes = [
   // 2026-07-02 (ASK A Move 3a) - the exact-match head page for
   // "crewed yacht charter greece"; guide + live Private Fleet.
   { path: "/crewed-yacht-charter-greece", priority: 0.95, changeFrequency: "weekly" },
+  // 2026-08-20 (design pass, job 16) - the six yachts whose crews have placed
+  // at the Greek charter shows. Deliberately not 0.95: this is a smaller
+  // query than "crewed yacht charter greece" and it must not read as a rival
+  // to it. Its job is to rank for the award phrasings and to give the six
+  // detail pages a relevant page linking to them by name, which is the one
+  // thing they did not have. Monthly, because awards move once a season.
+  { path: "/award-winning-yacht-charter-greece", priority: 0.85, changeFrequency: "monthly" },
   { path: "/yacht-charter-greece-2027", priority: 0.9, changeFrequency: "weekly" },
   { path: "/private-fleet", priority: 0.9, changeFrequency: "weekly" },
   { path: "/explorer-fleet", priority: 0.9, changeFrequency: "weekly" },

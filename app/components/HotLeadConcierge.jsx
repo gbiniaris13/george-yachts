@@ -136,13 +136,16 @@ export default function HotLeadConcierge({ signal }) {
         A note from George
       </p>
 
+      {/* 2026-08-19 (design pass) - the italic came off both branches below.
+          In a 340px card, italic body in the editorial face reads as a
+          footnote, and this is meant to read as George writing to you. */}
       {sent ? (
-        <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 16, fontStyle: "italic", color: "rgba(248,245,240,0.92)", margin: 0, lineHeight: 1.6 }}>
+        <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 15, color: "rgba(248,245,240,0.94)", margin: 0, lineHeight: 1.65 }}>
           Received. I will be in touch personally, usually within hours. Thank you for the trust.
         </p>
       ) : (
         <>
-          <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 16, fontStyle: "italic", color: "rgba(248,245,240,0.92)", margin: "0 0 16px", lineHeight: 1.6 }}>
+          <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 15, color: "rgba(248,245,240,0.94)", margin: "0 0 18px", lineHeight: 1.65 }}>
             {yacht
               ? `Questions about ${yacht}? I answer personally, usually within hours.`
               : "Planning a week on the water? I answer personally, usually within hours."}
@@ -161,6 +164,17 @@ export default function HotLeadConcierge({ signal }) {
               letterSpacing: "0.24em",
               textTransform: "uppercase",
               fontWeight: 700,
+              /* 2026-08-19 (design pass) - tried as a gold outline and put
+                 back to the solid slab, on the reasoning George asked for:
+                 what closes customers.
+                 The outline was the right instinct for a banner everybody
+                 sees. This is not that. This card only ever opens for a
+                 visitor the tracker has already scored as hot, once in a
+                 session, on the yacht they are reading. That person is not
+                 being interrupted, they are being answered, and the primary
+                 action for them should be impossible to miss.
+                 Gold is also OUR colour here, which is what made the WhatsApp
+                 green wrong in job 9 and makes this right. */
               color: NAVY,
               background: GOLD,
               padding: "12px 16px",
@@ -179,7 +193,10 @@ export default function HotLeadConcierge({ signal }) {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Or your email, and George writes first"
+                /* 2026-08-19 (design pass) - was "Or your email, and George
+                   writes first", which did not fit its own field and was cut
+                   mid-word at "firs". Shorter, still says who moves next. */
+                placeholder="Or leave your email"
                 style={{
                   flex: 1,
                   minWidth: 0,

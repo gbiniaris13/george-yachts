@@ -439,7 +439,11 @@ export default function CabinShell({
            client reaches George - hiding it inside the Cabin defeats
            the whole purpose. The four widgets stay visible now.
            We keep nav/wishlist/sticky-CTA/exit-intent hidden because
-           those ARE distractions; the four below are contact tools. */
+           those ARE distractions; the four below are contact tools.
+
+           2026-08-19 (job 7) - three, not four. ContactDrawer is no longer
+           rendered anywhere on the site. The reasoning above is unchanged
+           and still applies to the three that remain. */
         body:has([data-cabin-mode]) #wishlist-fab,
         body:has([data-cabin-mode]) [data-global-nav],
         body:has([data-cabin-mode]) .smart-welcome,

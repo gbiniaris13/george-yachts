@@ -204,9 +204,65 @@ export default function AmbientPlayer() {
   // not subject to that media gating - warm the HTTP cache at open, and
   // the first gesture plays from disk instantly. Nothing else changed
   // from the version George confirmed working.
+  // 2026-08-19 (design pass, job 2) — the warm stays. It stops firing when
+  // the <audio> element is already doing the job itself.
+  //
+  // Measured 19/8 on the live homepage: the 3,1 MB track was fetched TWICE.
+  // The network log shows why, and it is not a duplicated call. The warm
+  // asks for the whole file and gets 200 OK. The <audio> element asks with
+  // a Range header and gets 206 Partial Content. Those are two different
+  // requests for the same bytes, three milliseconds apart, and whether
+  // Chrome lets the second one read the first one's cache entry depends on
+  // whether the first is still in flight. When it is not, the element
+  // downloads all 3 MB again.
+  //
+  // Three arms, same page, fresh URLs so nothing could borrow a cache entry:
+  //   no warm at all          1 request,  3043 KB, playable in 15 ms
+  //   warm, then the element  2 requests, 3043 KB, playable in 12 ms
+  //   warm with Range         2 requests, 3043 KB, playable in 12 ms
+  // The warm buys three milliseconds and costs a second request.
+  //
+  // But it is not dead weight, and this is the part that has to survive:
+  // Chrome refuses to FETCH an <audio> src before a user-activation on an
+  // origin the visitor has no history with. On those visits .load() does
+  // nothing, the element never downloads, and the warm is the only reason
+  // the first tap plays from disk instead of starting a cold 3 MB fetch.
+  // That is exactly the case the warm was added for on 2026-08-02.
+  //
+  // So the two situations are mutually exclusive: when the element loads by
+  // itself the warm is a duplicate, and when the warm matters the element is
+  // not loading at all. Ask the element which world we are in before firing.
+  // readyState >= 1 or anything in .buffered means it is already pulling the
+  // file, so there is nothing to warm.
+  //
+  // The 1500 ms also does the second half of this job. The old call sat
+  // inline at mount, so a 3 MB request competed with the paint on every
+  // single visit. Now it starts after it, which is the point of taking it
+  // off the critical path.
+  //
+  // NOT changed: the warm itself, the gesture set, and the player. That
+  // combination is the version George confirmed working and it does not get
+  // rewritten for tidiness.
   useEffect(() => {
     if (suppressed) return;
-    try { fetch(AMBIENT_MP3, { cache: "force-cache" }).catch(() => {}); } catch {}
+    const t = setTimeout(() => {
+      const a = audioRef.current;
+      // networkState 2 is NETWORK_LOADING: the element is on the wire right
+      // now. It is checked first and on purpose. readyState and .buffered
+      // only go up once metadata has actually arrived, so on a slow
+      // connection an element that is downloading perfectly well would still
+      // look idle at this instant and earn itself a second 3 MB request,
+      // which is the exact bug being removed. A blocked element never
+      // reaches NETWORK_LOADING, so the warm still fires where it must.
+      const busy =
+        a &&
+        (a.networkState === 2 ||
+          a.readyState >= 1 ||
+          (a.buffered && a.buffered.length > 0));
+      if (busy) return;
+      try { fetch(AMBIENT_MP3, { cache: "force-cache" }).catch(() => {}); } catch {}
+    }, 1500);
+    return () => clearTimeout(t);
   }, [suppressed]);
 
   useEffect(() => {

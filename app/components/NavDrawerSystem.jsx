@@ -250,12 +250,43 @@ export default function NavDrawerSystem() {
   const navBackground = scrolled ? "#0D1B2A" : "transparent";
   // Reverted 2026-05-08 — Boss kept the original yacht-icon-only.svg
   // lockup. Restored the prior masthead heights it was tuned for.
-  const navHeight = scrolled ? 104 : 196;
+  //
+  // 2026-08-20 (design pass, job 13) — unscrolled was 196. Measured on a
+  // 1440x900 desktop that put the masthead bottom at 232 px with the Forbes
+  // bar, a quarter of the viewport (25.8%) before a visitor saw anything.
+  //
+  // 100 of those 196 px were air: the tallest thing in the row is the logo
+  // at 96, and the menu labels are 39. The old number was sized around the
+  // pre-job-12 lockup, which was half blank canvas and needed a taller box
+  // to read at all. That reason is gone.
+  //
+  // 156 is not a round number picked by eye. It leaves 24 px under the logo,
+  // which is exactly the clearance the SCROLLED state already has (104 tall,
+  // 56 logo, centred). So the logo keeps the same relationship to the bottom
+  // edge in both states and appears to shrink in place instead of jumping.
+  // The extra 12 px on top (from paddingTop below) holds the masthead off
+  // the Forbes bar. 140 was tried and read cramped against that bar.
+  //
+  // The scrolled height is deliberately untouched: it was never the
+  // complaint, and it is what the anchor scroll-margins are tuned to
+  // (104 + 36 Forbes = 140, and scroll-margin-top is 176, a 36 px gap).
+  const navHeight = scrolled ? 104 : 156;
   // Stage 2 (George): unscrolled logo was up to 220px - TALLER than the
   // 196px nav, so it overflowed downward and the wordmark collided with the
   // hero H1 on desktop. Trimmed so it sits within the masthead. Paired with
   // a small hero content paddingTop (VideoSection) so the H1 clears it.
-  const logoHeight = scrolled ? 72 : "clamp(120px, 13vw, 180px)";
+  // 2026-08-19 (design pass, job 12) — was 72 / clamp(120px, 13vw, 180px).
+  //
+  // Those numbers were sized around an image that was half empty. The old
+  // asset carried 50% blank canvas above the mark, so a 180px box drew an
+  // 80px mark and a 36px box on a phone drew a 16px one.
+  //
+  // The replacement is cropped to the mark, so at 96px it draws 84px: taller
+  // than the old 180px box managed, in a box that takes up half the room.
+  // That is what makes "left" and "larger" possible at the same time, which
+  // they otherwise are not: a logo standing in the nav row beside 11px menu
+  // type cannot also be 158px tall.
+  const logoHeight = scrolled ? 56 : "clamp(64px, 7vw, 96px)";
 
   const toggleMobile = useCallback(() => setMobileOpen((p) => !p), []);
   const closeMobile = useCallback(() => setMobileOpen(false), []);
@@ -320,15 +351,24 @@ export default function NavDrawerSystem() {
             </Link>
           </div>
 
-          {/* CENTER, logo */}
+          {/* LEFT, logo — 2026-08-19 (job 12). It was centred and absolutely
+              positioned, floating over a row whose two clusters sat either side
+              of it. It is now the first item IN the row, where George asked for
+              it to be. */}
           <Link
             href="/"
-            className="absolute left-1/2 -translate-x-1/2 shrink-0 group gy-logo-reveal"
+            className="order-first shrink-0 group gy-logo-reveal"
             data-cursor="Home"
             style={{ zIndex: 25 }}
           >
+            {/* 2026-08-19 (job 3) - yacht-icon-only.svg was 702 KB of two stacked
+                2026-08-19 (job 12) - and now cropped to the mark. Half of that
+                file was blank canvas above the logo, which is why it always
+                looked smaller than the space it took up. 98 KB, and the
+                mark is twice the size per pixel of height.
+                PNGs pretending to be a vector. Same pixels, 96 KB. See Footer.jsx. */}
             <img
-              src="/images/yacht-icon-only.svg"
+              src="/images/yacht-logo-tight-300.png"
               alt="George Yachts Brokerage House"
               className="gy-nav-logo group-hover:opacity-80"
               style={{
@@ -387,8 +427,11 @@ export default function NavDrawerSystem() {
           {/* Header, close × top-right, logo centered top */}
           <div className="relative flex items-center justify-center pt-6 pb-4">
             <Link href="/" onClick={closeMobile} aria-label="Home">
+              {/* 2026-08-19 (job 12) - same cropped asset as the nav and the footer.
+                  At 56px the old file drew a 25px mark; this one draws 49px in the
+                  same box, which is the whole point of cutting the blank half out. */}
               <img
-                src="/images/yacht-icon-only.svg"
+                src="/images/yacht-logo-tight-300.png"
                 alt="George Yachts"
                 style={{ height: 56, width: "auto" }}
               />

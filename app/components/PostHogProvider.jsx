@@ -24,7 +24,27 @@
 "use client";
 
 import { useEffect } from "react";
-import posthog from "posthog-js";
+
+// 2026-08-19 (design pass, job 6) — this used to be a static
+// `import posthog from "posthog-js"`, which put the whole SDK into a shared
+// chunk that every page of the site downloaded: 184 KB on disk, 62 KB over
+// the wire, measured on the live homepage on 19/8.
+//
+// It has never once run. NEXT_PUBLIC_POSTHOG_KEY is not set in Vercel, and
+// the guard below returns before init, so the SDK sat inert in the bundle.
+// Verified against production the same day, not inferred: zero network
+// requests to posthog, window.posthog undefined, __loaded false.
+//
+// Nothing is removed. The import simply moved inside the branch that already
+// decided whether PostHog runs. Set the key in Vercel and the SDK is fetched
+// and initialised exactly as before, one request later. Leave the key unset
+// and no visitor pays for a product we are not using.
+//
+// Worth saying plainly if the key is ever set: posthog is NOT in the
+// Content Security Policy. eu.i.posthog.com would have to be added to
+// connect-src first, or it would load and then be refused, which is the
+// failure this codebase has now hit four times (Cookiebot, Clarity, GA4,
+// reCAPTCHA).
 
 export default function PostHogProvider({ children }) {
   useEffect(() => {
@@ -48,7 +68,8 @@ export default function PostHogProvider({ children }) {
   return children;
 }
 
-function initPosthog(key) {
+async function initPosthog(key) {
+    const { default: posthog } = await import("posthog-js");
     posthog.init(key, {
       // EU host — visitor IPs and event data stay in the EU.
       // Free tier covers either host equally; we prefer EU for

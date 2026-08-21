@@ -51,7 +51,10 @@ const contactSchema = {
     "@type": "LocalBusiness",
     "@id": "https://georgeyachts.com/#organization",
     name: "George Yachts Brokerage House",
-    image: "https://georgeyachts.com/images/yacht-icon-only.svg",
+    // 2026-08-19 (job 3) - was the .svg. Google's structured data documentation
+    // accepts JPG, PNG and GIF for image; SVG is not on that list, so this
+    // field was handing crawlers a format they will not use.
+    image: "https://georgeyachts.com/images/yacht-icon-only-540.png",
     telephone: "+30 6970380999",
     email: "george@georgeyachts.com",
     url: "https://georgeyachts.com",

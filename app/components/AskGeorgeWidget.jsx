@@ -158,7 +158,10 @@ export default function AskGeorgeWidget() {
         style={{
           position: "fixed",
           right: 24,
-          bottom: 216,
+          // 2026-08-19 (job 7) — 216 to 152. The ContactDrawer FAB used to
+          // occupy 152 and is gone, so without this the right rail would read
+          // 88, then a 72 px hole, then 216. This keeps the same 8 px gap.
+          bottom: 152,
           width: 56,
           height: 56,
           borderRadius: "50%",
@@ -214,7 +217,8 @@ export default function AskGeorgeWidget() {
           style={{
             position: "fixed",
             right: 24,
-            bottom: 280,
+            // 2026-08-19 (job 7) — follows its own button down by the same 64.
+            bottom: 216,
             width: "min(380px, calc(100vw - 48px))",
             maxHeight: "min(640px, calc(100vh - 200px))",
             background: "#0D1B2A",

@@ -1,4 +1,6 @@
 import { yachtSeoTitle } from "@/lib/yachtSeoTitles";
+import { yachtSubject } from "@/lib/yachtQuestions";
+import { headlineAwardShort, awardsFor, awardLine } from "@/lib/yachtAwards";
 import { sanityClient } from '@/lib/sanity';
 import { notFound } from 'next/navigation';
 import YachtPageContent from './YachtPageContent';
@@ -8,6 +10,7 @@ import { similarYachts } from '@/lib/yacht-similarity';
 import { extractPriceRange } from '@/lib/pricing';
 import QuickAnswerBlock from '@/app/components/QuickAnswerBlock';
 import DossierRequest from './DossierRequest';
+import AwardsSection from './AwardsSection';
 import './yacht-page.css';
 import Footer from "@/app/components/Footer";
 
@@ -97,12 +100,31 @@ export async function generateMetadata({ params }) {
   const entryPrice = (yacht.weeklyRatePrice || "").match(/€[\d,.]+/)?.[0];
   const crewCount = String(yacht.crew || "").match(/^\s*(\d+)/)?.[1];
 
+  // 2026-08-20 (design pass, job 16) — the six yachts that have won something
+  // say so here, first.
+  //
+  // This is the line that earns the click. The awards section further down
+  // the page cannot: by the time anybody reads it they have already clicked.
+  // What Google prints is the title and these 158 characters, and until now
+  // all six read exactly like the sixty-six that have won nothing, a spec
+  // dump with a price at the end.
+  //
+  // Something has to give way to make room, and it is the crew count. Of the
+  // three numbers a charterer compares, crew is the one they check after
+  // shortlisting rather than while scanning, and it is the one every crewed
+  // yacht in the fleet has. "1st Place, EMMYS 2024" is the one thing on the
+  // line that sixty-six other results cannot say.
+  //
+  // Untouched for the other sixty-six: same sentence, crew count included.
+  const shortAward = headlineAwardShort(slug);
+
   let description = [
+    shortAward ? `${shortAward}. ` : "",
     `Charter ${plainName} in Greece: ${yacht.length}`,
     model ? ` ${model},` : ",",
     ` ${yacht.sleeps} guests`,
     yacht.cabins ? `, ${yacht.cabins} cabins` : "",
-    crewCount ? `, ${crewCount} crew` : "",
+    !shortAward && crewCount ? `, ${crewCount} crew` : "",
     entryPrice ? `. Weekly from ${entryPrice} plus VAT and APA.` : ". Crewed charter in Greek waters.",
   ].join("").replace(/\s*[—–]\s*/g, " - ").replace(/\s+/g, " ").trim();
 
@@ -222,6 +244,20 @@ function YachtSchema({ yacht, imageUrl, slug }) {
     image: imageUrl,
     url: `https://georgeyachts.com/yachts/${slug}`,
     category: 'Luxury Crewed Yacht Charter',
+
+    // 2026-08-20 (design pass, job 16) — awards as structured data.
+    //
+    // schema.org/award is a plain string array on Thing, so it is available
+    // on this Product and it is what an answer engine reads when it is asked
+    // which Greek charter yachts have won anything. The site already uses it
+    // this way for the Forbes feature on the organisation and team schemas.
+    //
+    // Spread only when there is something to say. An empty award array is a
+    // claim of its own kind, and sixty-six of these yachts have nothing to
+    // put in it.
+    ...(awardsFor(slug).length > 0 && {
+      award: awardsFor(slug).map(awardLine),
+    }),
 
     // Vehicle / Boat marine properties
     ...(yacht.builder && {
@@ -499,10 +535,23 @@ export default async function YachtPage({ params }) {
     { name: yacht.name, url: `https://georgeyachts.com/yachts/${slug}` },
   ];
 
+  // 2026-08-20 (design pass, job 15) — the same model string the visible
+  // headings use, by the same rules as lib/yachtQuestions.js: a trailing
+  // yard suffix stripped ("Couach Yachts" is a company, "Couach 164" is a
+  // boat), and "Custom Built" treated as absent because it is a category
+  // rather than anything a person searches for.
+  const qSubject = yachtSubject(yacht);
+
   // Brief 2B (2026-05-12): Quick Answer FAQPage schema for each
   // yacht detail page. AI engines (Perplexity, ChatGPT, Claude)
   // extract Q/A pairs for citation. Derived from yacht specs.
-  const quickAnswerQ = `What is the ${yacht.name} yacht and what does a charter cost?`;
+  // The one question in this page's FAQ schema was name-only, the same shape
+  // as the six visible headings, so the block AI engines quote from could
+  // only be reached by somebody who already knew the yacht's name. The model
+  // now rides along. Falls back to the original wording when it is missing.
+  const quickAnswerQ = qSubject
+    ? `What is ${yacht.name}, ${qSubject}, and what does a charter cost?`
+    : `What is the ${yacht.name} yacht and what does a charter cost?`;
   const quickAnswerA = `The ${yacht.name} is a ${yacht.length || ""} ${yacht.subtitle ? yacht.subtitle.split("|")[0].trim() : "luxury"} yacht available for crewed charter in ${yacht.cruisingRegion || "Greek waters"}, sleeping ${yacht.sleeps || "up to 12"} guests across ${yacht.cabins || "multiple"} cabins. ${yacht.weeklyRatePrice ? `Weekly base charter rate: ${yacht.weeklyRatePrice}. ` : ""}Add 30% APA, Greek VAT at the yacht's certified rate, and 10-15% crew gratuity for the fully loaded cost. MYBA-standard contract.`;
   const quickAnswerJsonLd = {
     "@context": "https://schema.org",
@@ -566,6 +615,17 @@ export default async function YachtPage({ params }) {
           showed no citation uplift in Ahrefs' 1,885-page experiment).
           Rendering the same Q/A as an on-page essentials recap makes the
           FAQPage speakable selector (.gy-qa-text) resolve to real text. */}
+      {/* 2026-08-20 (design pass, job 16, moved up on George's instruction).
+          It sat before the dossier form, at the bottom. Wrong place for it.
+          Somebody who has scrolled that far is already convinced; the six
+          words that do the convincing were arriving after the decision.
+
+          Here it is the first thing under the hero, ahead of the charter
+          essentials and everything else, because on the six yachts that draw
+          it, it is the only thing on the page the other sixty-six cannot say.
+          Sixty-six pages are unchanged: the component returns null and this
+          position costs them nothing. */}
+      <AwardsSection slug={slug} yachtName={yacht.name} />
       <section aria-label="Charter essentials" style={{ background: "#0D1B2A", padding: "56px 24px 8px" }}>
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <QuickAnswerBlock question={quickAnswerQ} answer={quickAnswerA} />

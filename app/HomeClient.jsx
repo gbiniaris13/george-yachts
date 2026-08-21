@@ -19,6 +19,7 @@ import StickyMiniNav from "./components/StickyMiniNav";
 import TrendingYachts from "./components/TrendingYachts";
 import InlineYachtStrip from "./components/InlineYachtStrip";
 import HomeForbesQuote from "./components/HomeForbesQuote";
+import AwardedFleet from "./components/AwardedFleet";
 
 // Dynamic imports for below-fold components — reduces initial JS bundle.
 // 2026-04-21 declutter: the following were removed from the home tree
@@ -70,8 +71,15 @@ const ItineraryPreview = dynamic(() => import("./components/ItineraryPreview"), 
 // last "statement piece" item from the original cinematic brief.
 // Sits as a horizon band between the hero and the fleet split-screen.
 // ssr:false because three.js shader compilation is a pure client task.
+// 2026-08-19 (job 6) — was import("./components/WaterShaderHorizon").
+// dynamic() fetches on render, not on decision, and the "not on mobile"
+// check lives inside that module, so a phone downloaded 184 KB of three.js
+// purely to read the line telling it not to use three.js. WaterHorizonBand
+// paints the same navy gradient at the same height on every device, so
+// nothing moves and CLS stays 0, and mounts the real shader only once the
+// gate agrees. WaterShaderHorizon itself is unchanged.
 const WaterShaderHorizon = dynamic(
-  () => import("./components/WaterShaderHorizon"),
+  () => import("./components/WaterHorizonBand"),
   { ssr: false }
 );
 
@@ -187,6 +195,23 @@ const HomeClient = ({
           privateCount={privateCount}
           explorerCount={explorerCount}
         />
+      </section>
+
+      {/* 2026-08-20 (design pass, job 16) — the awarded fleet, on George's
+          instruction and high on the page for his reason: the cheapest
+          catamaran in the fleet takes most of the clicks the whole fleet
+          earns, because it happens to rank for its own name, while the six
+          yachts whose crews have actually won something take almost none.
+
+          It sits after the fleet and BEFORE the reviews on purpose. Both are
+          proof, and these are the harder kind: a review is a client's
+          opinion, a placing at the EMMYS is a judge putting this crew above
+          the others in the room. Ordering the softer proof first would waste
+          the stronger.
+
+          Renders nothing if the registry is ever emptied. */}
+      <section id="awarded" data-gy-reveal="up">
+        <AwardedFleet fleet={fleet} />
       </section>
 
       {/* 2026-06-28, real five-star Google reviews made visible (stars +

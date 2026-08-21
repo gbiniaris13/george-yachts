@@ -346,10 +346,24 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-1 flex flex-col items-center lg:items-start">
             <Link href="/" className="block mb-8">
+              {/* 2026-08-19 (design pass, job 3) - was yacht-icon-only.svg: 702 KB on
+                  disk, 514 KB over the wire, on every page of the site. That file was
+                  never a vector. It is an export holding TWO 2528x1696 PNGs, one the
+                  artwork and one a luminance mask, welded together with feColorMatrix
+                  filters, when a single PNG with an alpha channel does the same job.
+                  The replacement reproduces the browser's own rasterisation, including
+                  the empty upper half that the viewBox transform produces, so every
+                  height: below still lays out to the pixel. The .svg stays on disk. */}
               <img
-                src="/images/yacht-icon-only.svg"
+                src="/images/yacht-logo-tight-300.png"
                 alt="George Yachts Brokerage House LLC"
-                style={{ height: "clamp(90px, 20vw, 150px)", width: "auto" }}
+                /* 2026-08-19 (job 12) - same asset as the nav now, and the
+                   height comes down with it. The old file was half blank
+                   canvas, so 150px here drew a 66px mark; the cropped file
+                   draws 97px from 110. Leaving the two files side by side on
+                   one page looked backwards: the footer logo occupied more
+                   room than the nav one and read smaller. */
+                style={{ height: "clamp(64px, 14vw, 110px)", width: "auto" }}
               />
             </Link>
 

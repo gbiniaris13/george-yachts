@@ -17,10 +17,36 @@
    for the few hundred ms it takes Fraunces/Sentient/etc. to load,
    then swap once ready. */
 :root {
-  --gy-font-display:   "Fraunces", Georgia, serif;
-  --gy-font-editorial: "Sentient", Georgia, serif;
-  --gy-font-body:      "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --gy-font-ui:        "Switzer", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* 2026-08-20 (design pass, job 14) — four families became two.
+     Fraunces / Sentient / General Sans / Switzer are all gone; the reasoning
+     for Bodoni Moda + EB Garamond sits on the loaders in layout.jsx.
+
+     Nothing downstream had to be touched. There are 2,386 references to
+     these four tier variables across the codebase (1,500 to --gy-font-ui
+     alone), plus the six legacy aliases below, and every one of them keeps
+     resolving. That is the whole point of the Phase 28 architecture, and it
+     is why this swap is four lines rather than four hundred files.
+
+     --gy-face-display (Stardom) / --gy-face-text (Switzer) / --gy-face-greek
+     (GFS Didot) are set by next/font on <body>, see the block below.
+
+     Display AND editorial both take Stardom: the h1 and the h2 questions are
+     the two places the house voice should be heard, and Stardom holds at h2
+     size where a thinner didone would not. Body and UI take Switzer.
+
+     --gy-face-greek is named second everywhere. Neither Stardom nor Switzer
+     carries Greek, so without it a Greek heading falls to Georgia, which is
+     what the 11 live /el/ pages were doing before this pass.
+
+     Note what --gy-font-display falls through to. Bodoni Moda has no Greek,
+     so a Greek headline would otherwise drop past it to a system serif; the
+     text face is named second so those headings land on Garamond instead.
+     That is a deliberate fix for the 11 live /el/ pages, which until today
+     were setting their h1 in Georgia. */
+  --gy-font-display:   var(--gy-face-display), var(--gy-face-greek), Georgia, serif;
+  --gy-font-editorial: var(--gy-face-display), var(--gy-face-greek), Georgia, serif;
+  --gy-font-body:      var(--gy-face-text), var(--gy-face-text-italic), var(--gy-face-greek), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --gy-font-ui:        var(--gy-face-text), var(--gy-face-text-italic), var(--gy-face-greek), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* Phase 28 Pass 4 (2026-05-08) — Boss full-site sweep. The legacy
      paid-style font CSS variables alias to the Phase 28 free-tier
@@ -36,6 +62,47 @@
   --font-bodoni:    var(--gy-font-editorial);
   --font-italiana:  var(--gy-font-editorial);
   --font-marcellus: var(--gy-font-display);
+}
+
+/* 2026-08-20 (design pass, job 14) — the same ten variables, declared a
+   second time on <body>, and this is not belt and braces. It is required.
+ *
+ * next/font puts --gy-face-display / --gy-face-text / --gy-face-greek
+ * on the element carrying its className, and on this site that className is
+ * on <body> (layout.jsx), not on <html>. The block above is :root, which is
+ * <html>. Up there the three face variables do not exist yet, so every
+ * var() referencing them is invalid at computed-value time, which takes the
+ * whole declaration down with it. Measured before this block existed: 515
+ * elements on a yacht page rendering in ui-sans-serif, zero font files used,
+ * the entire site in the browser's default sans.
+ *
+ * It never showed before because Fraunces wrote straight into
+ * --gy-font-display itself, from <body>, so body's own declaration quietly
+ * won for everything inside it. Splitting the face from the tier is the
+ * better structure, and this is the price of it.
+ *
+ * The legacy aliases have to come along for the same reason: declared only
+ * at :root they resolve against invalid tier variables and inherit down as
+ * invalid. There are 21 references to --font-cinzel / --font-cormorant /
+ * --font-montserrat still live in the codebase.
+ *
+ * If the className ever moves to <html>, this block becomes redundant
+ * rather than wrong, and can go. */
+body {
+  --gy-font-display:   var(--gy-face-display), var(--gy-face-greek), Georgia, serif;
+  --gy-font-editorial: var(--gy-face-display), var(--gy-face-greek), Georgia, serif;
+  --gy-font-body:      var(--gy-face-text), var(--gy-face-text-italic), var(--gy-face-greek), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --gy-font-ui:        var(--gy-face-text), var(--gy-face-text-italic), var(--gy-face-greek), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --font-cormorant: var(--gy-font-editorial);
+  --font-cinzel:    var(--gy-font-display);
+  --font-montserrat: var(--gy-font-ui);
+  --font-bodoni:    var(--gy-font-editorial);
+  --font-italiana:  var(--gy-font-editorial);
+  --font-marcellus: var(--gy-font-display);
+}
+
+:root {
 
   /* Chapter 05 (palette audit, 2026-05-08) — canonical 6-colour
      scheme Boss locked in. Use these CSS variables in any new
@@ -135,7 +202,7 @@ blockquote {
 section[id], main[id], div[id^="section-"] {
   scroll-margin-top: 140px;
 }
-@media (max-width: 768px) {
+@media (max-width: 767.98px) {
   section[id], main[id], div[id^="section-"] {
     scroll-margin-top: 88px;
   }
@@ -202,7 +269,7 @@ section {
 }
 
 /* Prevent horizontal scroll on mobile */
-@media (max-width: 768px) {
+@media (max-width: 767.98px) {
   html, body {
     overflow-x: hidden !important;
     width: 100% !important;
@@ -669,7 +736,7 @@ section {
    vertical chevron pulses gold to invite scroll, then fades after the
    visitor scrolls past 80vh. Pure CSS, no JS — `body.gy-scrolled` is
    set by the existing scroll listener so the indicator can dim. */
-@media (max-width: 768px) {
+@media (max-width: 767.98px) {
   .gy-mobile-scroll-hint {
     position: fixed;
     bottom: 96px;       /* sits above the StickyFleetCTA gold bar */
@@ -762,10 +829,28 @@ section {
   30%  { opacity: 0.4; }
   100% { opacity: 1; }
 }
+/* 2026-08-19 (design pass, job 12) - the drop shadows are now carried through
+   every keyframe, and the reason is a bug that had been live for months.
+
+   NavDrawerSystem sets the logo's filter inline, two drop shadows whose whole
+   purpose is to keep a pale gold mark readable on top of a video. This
+   animation runs with fill-mode: both, so its last keyframe does not end, it
+   sticks. filter: brightness(1) therefore replaced that inline value
+   permanently, one second after every page load, and the shadows never
+   rendered once. The computed filter on the logo read exactly "brightness(1)".
+
+   filter is a single property: setting brightness alone wipes anything else
+   on it. So the shadows have to travel with it, in each keyframe. */
 @keyframes gyLogoLift {
-  0%   { transform: translateY(8px) scale(0.96); filter: brightness(0.7); }
-  60%  { transform: translateY(0)   scale(1.02); filter: brightness(1.15); }
-  100% { transform: translateY(0)   scale(1);    filter: brightness(1); }
+  0%   { transform: translateY(8px) scale(0.96);
+         filter: brightness(0.7) drop-shadow(0 1px 2px rgba(13,27,42,0.85))
+                 drop-shadow(0 8px 22px rgba(13,27,42,0.55)); }
+  60%  { transform: translateY(0)   scale(1.02);
+         filter: brightness(1.15) drop-shadow(0 1px 2px rgba(13,27,42,0.85))
+                 drop-shadow(0 8px 22px rgba(13,27,42,0.55)); }
+  100% { transform: translateY(0)   scale(1);
+         filter: brightness(1) drop-shadow(0 1px 2px rgba(13,27,42,0.85))
+                 drop-shadow(0 8px 22px rgba(13,27,42,0.55)); }
 }
 @keyframes gyLogoHalo {
   0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
@@ -1318,10 +1403,31 @@ h1[style*="Cormorant Garamond"],
 h1[style*="cormorant"],
 h1[style*="font-cormorant"] {
   font-family: var(--font-cinzel), 'Cinzel', 'Trajan Pro', 'Cormorant Garamond', Georgia, serif !important;
-  font-weight: 500 !important;
+  /* 2026-08-20 (design pass, job 14) — 500 became 250, and the letter-spacing
+     opened from 0.04em to 0.055em. George on seeing the new face live: "μου
+     αρέσουν πιο λεπτά, πιο λεπτεπίλεπτα γράμματα, να είναι πιο classy".
+     Which is the whole reason Boska replaced Stardom: Stardom ships one 400
+     weight and had nowhere lighter to go.
+
+     500 was not arbitrary, so it is worth saying why it can move now. It was
+     set in May because George found the hero "πρόχειρο/παιδικό" at Light 300,
+     and that was true OF FRAUNCES: a low-contrast face goes weak and childish
+     as it thins. Boska is the opposite kind of design. Its contrast between
+     thick and thin is extreme, so at 250 the thick strokes still carry the
+     word and only the hairlines get finer. Thin here reads as cut glass
+     rather than as faint.
+
+     The extra tracking is part of the same effect and not decoration: light
+     weights need more air between letters or they close up and look crowded,
+     which is exactly what reads as cheap.
+
+     Note this rule sets font-weight for every hero h1 on the site with
+     !important, overriding the 300 that .yacht-hero__title asks for itself.
+     One number, every masthead. */
+  font-weight: 250 !important;
   font-style: normal !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.04em !important;
+  letter-spacing: 0.055em !important;
   line-height: 1.05 !important;
 }
 
@@ -3165,7 +3271,9 @@ a.gy-fancy-link:hover {
      so the arrow clears the G and never gets hidden behind it. Also
      bump z-index above 9998 (the G's z-index) so any future stacking
      change can't re-overlap. */
-  bottom: 290px;
+  /* 2026-08-19 (job 7) — 290 to 226. The ContactDrawer FAB at 152 is gone and
+     AskGeorge moved down into its place, so this follows by the same 64. */
+  bottom: 226px;
   z-index: 9999;
   width: 44px;
   height: 44px;
@@ -3336,10 +3444,26 @@ a.gy-fancy-link:hover {
    currently sets font-weight 500 and letter-spacing 0.04em — easier
    to win them at the CSS layer than to chase down the inline edit
    on every component that does the same trick (FleetCTAs hero etc.). */
+/* 2026-08-20 (job 14, second pass) — tracking -0.02em to +0.03em. The weight
+   stays at 100: Boska's variable range starts at 200, so the browser clamps to
+   200 and that is the Extralight cut George asked for. Left as 100 rather than
+   rewritten to 200 so this rule keeps meaning "as light as the face goes",
+   whatever face is mounted.
+
+   The tracking had to move. -0.02em was written for Fraunces at Thin, and
+   pulling letters together suits a face with even, sturdy strokes. Boska
+   Extralight is the other kind: the contrast between thick and hairline is
+   extreme, so closing the gaps makes the line read as one grey mass instead of
+   separate letters, which is exactly what looks cheap. Light weight and open
+   tracking are one decision, not two.
+
+   Worth knowing if you touch this: SEVEN rules set letter-spacing on that h1,
+   and this pair is the one that wins, on specificity plus !important. The
+   inline style in VideoSection.jsx does not get a vote. */
 .gy-pearl-white,
 .gy-hero-headline.gy-pearl-white {
   font-weight: 100 !important;
-  letter-spacing: -0.02em !important;
+  letter-spacing: 0.03em !important;
   font-stretch: 100% !important;
 }
 
@@ -3627,7 +3751,15 @@ footer.gy-footer-depth,
       mobile the same height eats half the hero on a 667-tall
       iPhone SE. Compact to 56 px regardless of scroll state, so the
       nav is always a thin always-visible band with logo + hamburger. */
-@media (max-width: 768px) {
+/* 2026-08-19 (design pass, job 12) — the eight mobile blocks in this file
+   were written as (max-width: 768px). Tailwind's md: prefix is
+   (min-width: 768px), so at EXACTLY 768 both sides applied at once: the
+   full desktop menu rendered inside a 56 px band with a 36 px logo, and
+   .gy-qa-lead / .gy-hero-lead padded their headings for a 56 px masthead
+   while the real one measured 196. 768 is not an exotic width, it is an
+   iPad held upright. Moved to 767.98 so the two sets meet instead of
+   overlapping. Nothing changes at any other width. */
+@media (max-width: 767.98px) {
   .gy-nav {
     height: 56px !important;
     padding-top: 0 !important;
@@ -3642,7 +3774,7 @@ footer.gy-footer-depth,
       44 px minimum tap area while keeping their tiny visual size.
       Same treatment for the nav hamburger and any other small
       iconography that's < 44 px on the rendered mobile masthead. */
-@media (max-width: 768px) {
+@media (max-width: 767.98px) {
   /* Currency switcher: each currency pip is 4×8 padding inside a
      button. Bump min-width / min-height to 44 px so iOS treats the
      full square as a tap region without showing a giant pill. */
@@ -3671,7 +3803,7 @@ footer.gy-footer-depth,
 .gy-yacht-mobile-cta {
   display: none; /* desktop hides it — sticky top mini-bar takes over */
 }
-@media (max-width: 768px) {
+@media (max-width: 767.98px) {
   .gy-yacht-mobile-cta {
     position: fixed;
     left: 0;
@@ -3956,9 +4088,12 @@ body:has([data-cabin-mode]) footer:not([data-cabin-mode] footer) {
    FABs to 9997 inside cabin mode (just below AskGeorge's tier
    so it stays on top) without changing their default behaviour
    on the public site. */
+/* 2026-08-19 (job 7) — a fourth selector, [aria-label^="Speak to George"],
+   used to sit in this list. ContactDrawer is no longer rendered, so it had
+   nothing left to raise. Three FABs remain, and the comment above still
+   describes them correctly. */
 body:has([data-cabin-mode]) a[aria-label="Contact us on WhatsApp"],
 body:has([data-cabin-mode]) [aria-label="A quick message from George"],
-body:has([data-cabin-mode]) [aria-label^="Speak to George"],
 body:has([data-cabin-mode]) .gy-ambient-pill {
   z-index: 9997 !important;
 }
@@ -4006,6 +4141,18 @@ html.gy-custom-cursor textarea,
 html.gy-custom-cursor select,
 html.gy-custom-cursor [contenteditable="true"] { cursor: auto !important; }
 
+/* 2026-08-19 (design pass, job 10) - the wake.
+   Five gold points trailing the ring, each smaller than the one ahead. No
+   transition on transform: the RAF loop writes it every frame and a CSS
+   transition on top would fight it and smear. Opacity DOES transition, so the
+   trail dissolves rather than blinking out when the pointer stops. */
+.gy-cursor-wake {
+  position: fixed; top: 0; left: 0; width: 5px; height: 5px;
+  margin: -2.5px 0 0 -2.5px; border-radius: 50%; background: #C9A84C;
+  pointer-events: none; z-index: 2147483599; will-change: transform, opacity;
+  opacity: 0; transition: opacity .32s ease;
+}
+
 .gy-cursor-dot {
   position: fixed; top: 0; left: 0; width: 6px; height: 6px;
   margin: -3px 0 0 -3px; border-radius: 50%; background: #C9A84C;
@@ -4042,7 +4189,7 @@ html.gy-cursor-live .gy-cursor-ring { opacity: 1; }
 }
 .gy-cursor-ring.is-active .gy-cursor-label { opacity: 1; }
 @media (max-width: 1024px), (pointer: coarse) {
-  .gy-cursor-dot, .gy-cursor-ring { display: none !important; }
+  .gy-cursor-dot, .gy-cursor-ring, .gy-cursor-wake { display: none !important; }
   html.gy-custom-cursor, html.gy-custom-cursor * { cursor: auto !important; }
 }
 
@@ -4059,7 +4206,7 @@ html.gy-cursor-live .gy-cursor-ring { opacity: 1; }
 .gy-wa-fab,
 .gy-wa-fab * ,
 .gy-cursor-ring { border-radius: 999px !important; }
-.gy-cursor-dot { border-radius: 50% !important; }
+.gy-cursor-dot, .gy-cursor-wake { border-radius: 50% !important; }
 
 /* ─────────────────────────────────────────────────────────────
    2026-08-06 — Quick Answer lead-in offset.
@@ -4083,11 +4230,17 @@ html.gy-cursor-live .gy-cursor-ring { opacity: 1; }
    Hero sections that open with a full-bleed image are deliberately
    left alone: the masthead floating over a photograph is the design,
    over a paragraph of text it is a defect. */
+/* 2026-08-20 (design pass, job 13) — 264 was tuned against a 232 px
+   masthead (36 Forbes + 196 nav) and left a 68 px gap above the first
+   line. The nav is now 156, so the masthead bottom is 192. Reduced by
+   the same 40 px so the gap stays exactly 68 and the heading simply
+   travels up with the nav instead of drifting away from it. Mobile is
+   untouched below: that nav is still 56. */
 .gy-qa-lead {
-  padding-top: 264px;
+  padding-top: 224px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767.98px) {
   .gy-qa-lead {
     padding-top: 116px;
   }
@@ -4100,12 +4253,124 @@ html.gy-cursor-live .gy-cursor-ring { opacity: 1; }
    gold logo directly on top of the gold eyebrow line and clipped the
    top of the h1. Text-first hero, so the masthead must clear it.
    Measured on the page: nav bottom 232, h1 top was 207. */
+/* 2026-08-20 (job 13) — 264 to 224, same reason as .gy-qa-lead above. */
 .gy-hero-lead {
-  padding-top: 264px;
+  padding-top: 224px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767.98px) {
   .gy-hero-lead {
     padding-top: 116px;
   }
+}
+
+/* ── Awarded fleet, homepage (design pass, job 16, 2026-08-20) ────────────
+   George: the awarded yachts must take the clicks, not the cheap catamaran
+   that happens to rank for its own name. This is that section.
+
+   Deliberately not a badge wall. Six gold laurels in a row is a booking
+   platform showing off supplier ratings, and a client at this level has seen
+   enough invented trust marks to discount the whole genre on sight. A list,
+   a gold rule, the year and the placing. */
+.gy-awarded {
+  padding: clamp(72px, 9vw, 128px) 0;
+  background: var(--gy-navy, #0D1B2A);
+  border-top: 1px solid rgba(201, 168, 76, 0.14);
+}
+.gy-awarded__inner {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 32px);
+}
+.gy-awarded__eyebrow {
+  font-family: var(--gy-font-ui);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gy-gold, #C9A84C);
+  margin: 0 0 20px;
+}
+.gy-awarded__title {
+  font-family: var(--gy-font-display);
+  font-weight: 250;
+  font-size: clamp(30px, 4.4vw, 54px);
+  letter-spacing: 0.035em;
+  line-height: 1.1;
+  margin: 0 0 18px;
+  color: var(--gy-ivory, #F8F5F0);
+}
+.gy-awarded__lede {
+  font-family: var(--gy-font-body);
+  font-size: 17px;
+  line-height: 1.75;
+  color: rgba(248, 245, 240, 0.66);
+  max-width: 620px;
+  margin: 0 0 44px;
+}
+.gy-awarded__list { list-style: none; margin: 0; padding: 0; }
+.gy-awarded__row { border-top: 1px solid rgba(201, 168, 76, 0.14); }
+.gy-awarded__row:last-child { border-bottom: 1px solid rgba(201, 168, 76, 0.14); }
+
+/* The whole row is the target. A small "read more" link on a row this wide
+   is a smaller tap area than the row it sits in, for no gain. */
+.gy-awarded__link {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 24px;
+  align-items: baseline;
+  padding: 22px 4px;
+  text-decoration: none;
+  transition: background-color 0.35s ease, padding-left 0.35s ease;
+}
+.gy-awarded__link:hover,
+.gy-awarded__link:focus-visible {
+  background: rgba(201, 168, 76, 0.045);
+  padding-left: 14px;
+}
+.gy-awarded__name {
+  font-family: var(--gy-font-display);
+  font-weight: 300;
+  font-size: clamp(19px, 2.2vw, 26px);
+  letter-spacing: 0.02em;
+  color: var(--gy-ivory, #F8F5F0);
+}
+.gy-awarded__count {
+  font-family: var(--gy-font-ui);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gy-gold, #C9A84C);
+  white-space: nowrap;
+}
+.gy-awarded__award {
+  grid-column: 1 / -1;
+  font-family: var(--gy-font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(248, 245, 240, 0.6);
+}
+@media (max-width: 767.98px) {
+  .gy-awarded__link { grid-template-columns: 1fr; gap: 5px; padding: 18px 2px; }
+  .gy-awarded__count { grid-row: 1; justify-self: start; }
+}
+
+/* The one link out of the awarded band. Gold rule under it rather than an
+   underline, so it reads as a continuation of the list rather than a button. */
+.gy-awarded__more {
+  display: inline-block;
+  margin-top: 34px;
+  font-family: var(--gy-font-ui);
+  font-size: 11.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gy-gold, #C9A84C);
+  text-decoration: none;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.35);
+  transition: border-color 0.35s ease, color 0.35s ease;
+}
+.gy-awarded__more:hover,
+.gy-awarded__more:focus-visible {
+  border-bottom-color: var(--gy-gold, #C9A84C);
+  color: #E3C77A;
 }

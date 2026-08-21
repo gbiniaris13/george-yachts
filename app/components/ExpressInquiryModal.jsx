@@ -61,6 +61,14 @@ export default function ExpressInquiryModal({
       // N.1 — yacht_inquiry_started fires once per modal open
       window.gtag?.("event", "yacht_inquiry_started", {});
     } catch {}
+    // 2026-08-19 (job 5) — reCAPTCHA no longer loads on every page, so tell it
+    // to start now. Opening the modal is the earliest honest signal that a
+    // token will be wanted, and it buys the script the whole time the visitor
+    // spends typing a name, an email and a message. If it still is not ready
+    // the submit path sends without a token rather than refusing.
+    try {
+      window.dispatchEvent(new Event("gy:recaptcha-needed"));
+    } catch {}
     return () => {
       document.body.style.overflow = prev;
       window.removeEventListener("keydown", onKey);
@@ -79,35 +87,42 @@ export default function ExpressInquiryModal({
     setSubmitting(true);
     setError("");
 
-    // O.1 (Roberto brief, May 2026) — wait for reCAPTCHA token
-    // before submitting. The layout loads `recaptcha/enterprise.js`
-    // lazily, so on a fast click we may not yet have
-    // `window.grecaptcha`. Poll up to 4s; if still missing, block
-    // submit with a friendly error rather than letting through an
-    // un-verified payload.
+    // O.1 (Roberto brief, May 2026) — wait for a reCAPTCHA token before
+    // submitting, because the script loads lazily and a fast click can beat
+    // it. The wait is right. Refusing to send was not.
+    //
+    // 2026-08-19 (design pass, job 5) — this form was the last one still
+    // throwing leads away, and it is the most expensive one to lose: it is
+    // the "ask about THIS yacht" modal on all 72 yacht pages and on the fleet
+    // grid, which means the sender is looking at a specific hull.
+    //
+    // /api/inquiry stopped rejecting unverified submissions on 2026-07-03,
+    // after George reported exactly this ("οι πελάτες μάς μιλάνε και εμείς
+    // δεν τους βλέπουμε"). It now delivers the lead and marks it "captcha
+    // unverified" so he judges the sender himself, with the honeypot and the
+    // 10-per-hour-per-IP limit still guarding the door. The other two forms,
+    // ContactFormSection and YachtFinderQuiz, were already updated to match.
+    // This one was missed, so for six weeks it kept answering "Please wait a
+    // moment, security check loading" to people the server would have let
+    // through. Content blockers and strict mobile privacy modes stop
+    // grecaptcha loading at all, and those visitors could never send.
+    //
+    // So: still wait, still send the token when there is one, and when there
+    // is not, send without it and let the server flag it. Never refuse.
     let recaptchaToken = "";
     const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
     if (siteKey && typeof window !== "undefined") {
-      // Poll grecaptcha availability
       const start = Date.now();
       while (!window.grecaptcha?.enterprise?.execute && Date.now() - start < 4000) {
         // eslint-disable-next-line no-await-in-loop
         await new Promise((r) => setTimeout(r, 100));
       }
-      if (!window.grecaptcha?.enterprise?.execute) {
-        setError("Please wait a moment - security check loading.");
-        setSubmitting(false);
-        return;
-      }
-      try {
-        recaptchaToken = await window.grecaptcha.enterprise.execute(siteKey, {
-          action: "express_inquiry",
-        });
-      } catch {}
-      if (!recaptchaToken) {
-        setError("Please wait a moment - security check loading.");
-        setSubmitting(false);
-        return;
+      if (window.grecaptcha?.enterprise?.execute) {
+        try {
+          recaptchaToken = await window.grecaptcha.enterprise.execute(siteKey, {
+            action: "express_inquiry",
+          });
+        } catch {}
       }
     }
 

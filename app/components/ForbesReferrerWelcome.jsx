@@ -75,7 +75,11 @@ export default function ForbesReferrerWelcome() {
       style={{
         position: "fixed",
         bottom: 24,
-        right: 92, // sits left of the WhatsApp/ContactDrawer FAB stack
+        // 2026-08-19 (job 7) — was "left of the WhatsApp/ContactDrawer FAB
+        // stack". ContactDrawer is gone; this sits at bottom: 24, beside the
+        // rail rather than in it, so the 92 is still measured off the same
+        // right edge and nothing needed to move.
+        right: 92,
         zIndex: 65,
         maxWidth: "min(380px, calc(100vw - 48px))",
         background: "linear-gradient(135deg, rgba(13,27,42,0.96) 0%, rgba(13, 27, 42,0.96) 100%)",

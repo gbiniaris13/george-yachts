@@ -20,8 +20,26 @@ import { WHATSAPP_DOWN } from "@/lib/whatsappStatus";
 // #25D366 brand colour per brief spec. Previous values were US
 // Miami number + navy/gold styling. Updated under explicit Boss
 // approval to align with brief.
+//
+// 2026-08-19 (design pass, job 9) — back to navy and gold, on George's
+// instruction, which reverses the colour half of Brief 1C above. The number
+// is not part of that reversal: it stayed the US company line and still is.
+//
+// Why the green had to go. It is WhatsApp's colour, not ours. Sitting on
+// #0D1B2A it was the loudest thing on the page, brighter than the hero, and
+// it advertised a third-party product on a site whose whole case is that you
+// are dealing with one broker rather than a platform.
+//
+// Why navy with a gold rim and not solid gold: the AI concierge button eight
+// pixels above is already solid gold. Two gold discs in one rail would read
+// as one control cut in half. Navy fill, gold rim, gold glyph keeps them
+// siblings and still tells them apart at a glance.
+//
+// The glyph shape is untouched. It is WhatsApp's own mark and has to stay
+// recognisable, or the button stops saying which app it opens.
 const WA_NUMBER = "17867988798"; // company WhatsApp Business (US)
-const WA_BRAND_GREEN = "#25D366";
+const WA_INK = "#0D1B2A";  // house navy, the disc
+const WA_GOLD = "#C9A84C"; // house gold, the rim and the glyph
 const WA_DEFAULT_MSG =
   "Hello George, I'm interested in chartering a yacht in Greece.";
 const WA_QUICK_MSG =
@@ -44,7 +62,24 @@ export default function WhatsAppButton() {
 
   // Surface the greeting after a delay, respecting both the session-
   // once guard and a 7-day dismiss lock stored in localStorage.
+  //
+  // 2026-08-19 (design pass, job 8) — disabled. The bubble opened itself
+  // ninety seconds into a visit, which makes it an automatic popup however
+  // small it is, and George asked for all of those to go.
+  //
+  // There is a second reason it could not simply be left alone. ExitIntentModal
+  // was the ONLY component that ever set gy_popup_active, and it was removed in
+  // the same pass. The guard further down reads that flag to keep this bubble
+  // out of the way of a mounted modal, so with the flag never set again the
+  // bubble would have started appearing MORE often than before, not less.
+  // Removing one popup would have promoted another.
+  //
+  // The button is untouched and still opens WhatsApp on click, which is what
+  // job 9 goes on to restyle. The greeting markup, the session guard and the
+  // seven-day dismiss lock all stay below, so this is one flag to reverse.
+  const GREETING_ENABLED = false;
   useEffect(() => {
+    if (!GREETING_ENABLED) return;
     if (typeof window === "undefined") return;
     try {
       if (window.sessionStorage.getItem(STORAGE_KEY)) return;
@@ -141,9 +176,11 @@ export default function WhatsAppButton() {
                 marginBottom: "16px",
               }}
             >
-              Hello <span style={{ color: "#C9A84C" }}>&#128075;</span> -
-              questions about a Greek charter? Ask us straight on WhatsApp,
-              we reply within minutes.
+              {/* 2026-08-19 (job 9) - a waving-hand emoji lived here, written
+                  as &#128075;, which is why a search for emoji characters did
+                  not find it. George asked for none. */}
+              Hello, questions about a Greek charter? Ask us straight on
+              WhatsApp, we reply within minutes.
             </p>
 
             <a
@@ -253,19 +290,19 @@ export default function WhatsAppButton() {
           }}
         />
 
-        {/* Main button - Brief 1C: WhatsApp brand green #25D366
-            with 56px mobile / 48px desktop. */}
+        {/* Main button - 2026-08-19 (job 9): house navy disc, gold rim, gold
+            glyph. 56px mobile / 48px desktop, unchanged. */}
         <div
           className="relative flex items-center justify-center transition-all duration-500 overflow-hidden gy-wa-fab"
           style={{
             width: 56,
             height: 56,
             borderRadius: "50%",
-            background: WA_BRAND_GREEN,
-            border: `2px solid rgba(255,255,255,0.2)`,
+            background: WA_INK,
+            border: `1px solid ${hovered ? "rgba(201,168,76,0.85)" : "rgba(201,168,76,0.55)"}`,
             boxShadow: hovered
-              ? "0 8px 32px rgba(37, 211, 102, 0.4), 0 0 20px rgba(37, 211, 102, 0.25), inset 0 1px 0 rgba(255,255,255,0.3)"
-              : "0 4px 16px rgba(13, 27, 42, 0.3), inset 0 1px 0 rgba(255,255,255,0.3)",
+              ? "0 8px 32px rgba(13,27,42,0.55), 0 0 22px rgba(201,168,76,0.30), inset 0 1px 0 rgba(201,168,76,0.20)"
+              : "0 4px 16px rgba(13,27,42,0.45), inset 0 1px 0 rgba(201,168,76,0.12)",
             transform: hovered ? "scale(1.08) translateY(-2px)" : "scale(1)",
           }}
         >
@@ -291,13 +328,14 @@ export default function WhatsAppButton() {
             }}
           />
 
-          {/* WhatsApp icon - white on green per brand */}
+          {/* WhatsApp glyph - gold on navy (job 9). Shape untouched: it is
+              WhatsApp's own mark and has to stay readable as one. */}
           <svg
             width="28"
             height="28"
             viewBox="0 0 24 24"
             className="relative z-10 transition-all duration-500"
-            style={{ fill: "#FFFFFF" }}
+            style={{ fill: WA_GOLD }}
           >
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
           </svg>
@@ -343,10 +381,14 @@ export default function WhatsAppButton() {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
           }
+          /* 2026-08-19 (job 9) - the ring was WhatsApp green; it is gold now.
+             It only ever ran while the greeting bubble was open and job 8
+             switched that off, so nothing renders this today. Kept in step
+             with the button so the two cannot drift apart if it returns. */
           @keyframes gy-wa-pulse {
-            0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.45); }
-            70%  { box-shadow: 0 0 0 18px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+            0%   { box-shadow: 0 0 0 0 rgba(201,168,76,0.45); }
+            70%  { box-shadow: 0 0 0 18px rgba(201,168,76,0); }
+            100% { box-shadow: 0 0 0 0 rgba(201,168,76,0); }
           }
           @keyframes gy-greet-in {
             0%   { opacity: 0; transform: translateY(12px) scale(0.96); }
