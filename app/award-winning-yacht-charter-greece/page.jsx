@@ -30,6 +30,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import BriefGeorgeBanner from "@/app/components/BriefGeorgeBanner";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import { YACHT_AWARDS, awardsFor, awardLine, headlineAward } from "@/lib/yachtAwards";
+import { yachtOfferSchema } from "@/lib/pricing";
 
 const CANONICAL = "https://georgeyachts.com/award-winning-yacht-charter-greece";
 const NAVY = "#0D1B2A";
@@ -133,6 +134,20 @@ export default async function AwardWinningPage() {
         name: w.yacht.name,
         url: `https://georgeyachts.com/yachts/${w.slug}`,
         award: w.awards.map(awardLine),
+        // 2026-08-21 — a Product node with neither an image nor an offer is
+        // not eligible for anything Google shows, so the strongest page on
+        // the site was describing sixteen yachts and asking for nothing back.
+        // Both fields already travel in FLEET_QUERY; they were simply not
+        // being handed on.
+        ...(w.yacht.imageUrl ? { image: w.yacht.imageUrl } : {}),
+        ...(w.yacht.length ? { size: w.yacht.length } : {}),
+        // yachtOfferSchema is the shared builder, so the one price model this
+        // house has (per yacht, per week, crewed) is stated identically here
+        // and on the yacht page. Yachts on request return null and are simply
+        // listed without an offer rather than given an invented figure.
+        ...(yachtOfferSchema(w.yacht, `https://georgeyachts.com/yachts/${w.slug}`)
+          ? { offers: yachtOfferSchema(w.yacht, `https://georgeyachts.com/yachts/${w.slug}`) }
+          : {}),
       },
     })),
   };

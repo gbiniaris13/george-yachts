@@ -185,6 +185,19 @@ const SEARCH_DIRS = ["app/yachts", "app/components"];
 const PHRASE_ALLOWED = new Map([
   ["app/components/AwardedFleet.jsx",
    "the homepage band; the phrase heads a list of every sourced placing"],
+  // 2026-08-21. A navigation label, not a claim about a hull. It is the
+  // anchor text of the footer link to /award-winning-yacht-charter-greece,
+  // whose entire content is the sourced register: sixteen yachts, thirty-two
+  // placings, each with its competition, organiser, year and source.
+  //
+  // The rule this guard enforces is that award language must not float free
+  // of its evidence. Here the words ARE the route to the evidence, one click
+  // away on every page of the site, which is the opposite of the failure it
+  // was written to catch. Anything in this file that describes a specific
+  // yacht is still caught, because the exemption is per file and this file
+  // names no yachts.
+  ["app/components/Footer.jsx",
+   "anchor text of the sitewide link to the sourced awards register"],
 ]);
 const SKIP = new Set(["node_modules", ".next", ".git"]);
 

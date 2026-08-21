@@ -60,6 +60,13 @@ const Footer = () => {
   // equity. Targets now hit the canonical no-slash URLs directly.
   const serviceLinks = [
     { name: "Charter a Yacht", href: "/charter-yacht-greece" },
+    // 2026-08-21 — the awards page was the strongest page on the site and
+    // very nearly an orphan: two real internal links to it, against
+    // forty-four for the fleet hub. It is the one page here that no
+    // competitor can copy, because it is built from show results rather
+    // than adjectives, and internal links are how a site says which of its
+    // own pages matter. The footer renders on all 474 of them.
+    { name: "Award-Winning Yachts", href: "/award-winning-yacht-charter-greece" },
     { name: "Buy a Yacht", href: "/yachts-for-sale" },
     { name: "Fly Private", href: "/private-jet-charter" },
     { name: "VIP Transfers", href: "/vip-transfers-greece" },
