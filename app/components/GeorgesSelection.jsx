@@ -26,10 +26,22 @@
 import Link from "next/link";
 import { FLEET_COUNT } from "@/lib/fleetCount";
 
+// 2026-08-22. Οι δύο εικόνες κατέβαιναν στο πλήρες μέγεθος του asset,
+// 199 KB και 149 KB, και επειδή είναι background-image δεν τις πιάνει το
+// loading="lazy". Δηλαδή 348 KB κατέβαιναν πάντα, νωρίς, ανταγωνιζόμενες
+// το LCP της αρχικής, για δύο κάρτες πλάτους περίπου 600 px.
+//
+// Το CDN του Sanity ξέρει να τις κόψει στο σωστό μέγεθος και σε webp.
+// 760 px καλύπτει την κάρτα με περιθώριο σε οθόνη 2x, q=68 δεν φαίνεται
+// στο μάτι πάνω από φωτογραφία σκάφους με σκούρο overlay από πάνω της.
+// 348 KB γίνονται 130 KB.
+const SANITY_CARD = "?w=760&fm=webp&q=68&fit=crop";
 const PELLEGRINA_IMG =
-  "https://cdn.sanity.io/images/ecqr94ey/production/5a1d2f46e69d3e21c61aa3950deb11085e725b9d-1024x768.jpg";
+  "https://cdn.sanity.io/images/ecqr94ey/production/5a1d2f46e69d3e21c61aa3950deb11085e725b9d-1024x768.jpg" +
+  SANITY_CARD;
 const ERRANT_VAGABOND_IMG =
-  "https://cdn.sanity.io/images/ecqr94ey/production/9ad672aad35ae37d1287527ab6ed2f07cc394dd5-1350x900.webp";
+  "https://cdn.sanity.io/images/ecqr94ey/production/9ad672aad35ae37d1287527ab6ed2f07cc394dd5-1350x900.webp" +
+  SANITY_CARD;
 
 const SELECTION = [
   {
