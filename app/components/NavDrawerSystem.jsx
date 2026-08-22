@@ -403,7 +403,7 @@ export default function NavDrawerSystem() {
             <NavItem section={NAV_SECTIONS[2]} anchor="right" isOpen={openDesktop === NAV_SECTIONS[2].label} onEnter={() => setOpenDesktop(NAV_SECTIONS[2].label)} onLeave={() => setOpenDesktop(null)} />
             <Link
               href={BRIEF_GEORGE.href}
-              className="gy-nav-cta"
+              className="gy-nav-cta gy-goldtext"
               style={{
                 ...navLabelStyle,
                 fontWeight: 500,
@@ -499,6 +499,7 @@ export default function NavDrawerSystem() {
             {NAV_SECTIONS.map((section) => (
               <div key={section.label} style={{ marginBottom: 15 }}>
                 <p
+                  className="gy-goldtext"
                   style={{
                     fontFamily: "var(--gy-font-ui)",
                     fontSize: "10px",
@@ -550,6 +551,7 @@ export default function NavDrawerSystem() {
             {/* Journal, its own quiet section: one label, one page. */}
             <div style={{ marginBottom: 10 }}>
               <p
+                className="gy-goldtext"
                 style={{
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: "10px",
@@ -613,7 +615,7 @@ export default function NavDrawerSystem() {
               }}
               data-cursor="Brief"
             >
-              {BRIEF_GEORGE.label} &rarr;
+              <span className="gy-goldtext">{BRIEF_GEORGE.label} &rarr;</span>
             </Link>
           </div>
 

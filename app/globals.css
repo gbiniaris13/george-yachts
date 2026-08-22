@@ -4558,6 +4558,38 @@ html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
                   type, the foil-stamp edge.
 
    Everything gold is one of these three. Nothing else. */
+/* ── Metallic TEXT (2026-08-22 evening, George's verdict on the flat gold) ─
+   "Έχουμε πάρα πολλά κείμενα που είναι κίτρινα... δεν θέλω να βλέπω αυτό το
+   μουσταρδί, θέλω να είναι χρυσό." He is describing the one thing a flat
+   hex can never do: read as metal. His two reference images are horizontal
+   gold-foil gradients, pale at the highlight, amber at the edges, and that
+   is exactly what this class clips into the letterforms.
+
+   Every stop is #C9990E or brighter, 6.5:1 or better on navy, so the
+   darkest slice of any glyph is still AA. No animation: the gradient is
+   painted once and it IS the shine. text-shadow is forced off because a
+   shadow behind clipped-transparent text bleeds through the glyphs as a
+   halo. Fallback colour for any engine without background-clip:text. */
+.gy-goldtext {
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  /* The sheen recurs every 180px. A single sweep across a wide line parks
+     whole words in the pale highlight and they read as white; a repeating
+     band reads as brushed metal along the whole run. */
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #DAA110;
+  text-shadow: none !important;
+}
+/* NEVER on the same element as .gy-goldframe: both own background-image and
+   background-clip, one wins, and the loser is either an invisible label or
+   a lost border (this exact bug shipped for eleven minutes on 22/8: the
+   hero CTA rendered as an empty plate). Frame on the box, goldtext on an
+   inner span. */
+.gy-goldframe.gy-goldtext { -webkit-text-fill-color: currentColor; background-clip: padding-box, border-box; }
+
 .gy-goldframe {
   border: 1px solid transparent;
   background-image:
@@ -4624,6 +4656,12 @@ html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
   text-transform: uppercase;
   color: #DAA110;
   margin: 0 0 10px;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .gy-awd__title {
   font-family: var(--gy-font-display);
@@ -4753,6 +4791,12 @@ html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
   text-transform: uppercase;
   color: #F7DE8A;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .gy-awd__body { display: block; padding: 12px 2px 0; }
 .gy-awd__name {
@@ -4783,6 +4827,12 @@ html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
   font-size: 12.5px;
   letter-spacing: 0.08em;
   color: #DAA110;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* The last card: the archive. Ending the rail on the link means running out
@@ -4875,6 +4925,12 @@ html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
   border-bottom: 1px solid rgba(218, 161, 16, 0.45);
   padding-bottom: 3px;
   transition: color 0.3s ease, border-color 0.3s ease;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .gy-awarded__more:hover { color: #F7DE8A; border-color: #F7DE8A; }
 

@@ -158,6 +158,7 @@ const HomeClient = ({
           The 2027 calendars open this autumn. The first September 2027 charters are already at signatures.{" "}
           <a
             href="/yacht-charter-greece-2027"
+            className="gy-goldtext"
             style={{
               color: "#DAA110",
               textDecoration: "none",

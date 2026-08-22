@@ -90,7 +90,7 @@ export default function ForbesTopBar() {
           Forbes
         </span>
 
-        <span aria-hidden="true" style={{ color: "#DAA110" }}>•</span>
+        <span aria-hidden="true" style={{ color: "#F7DE8A" }}>•</span>
 
         {/* Desktop content */}
         <span
@@ -107,7 +107,7 @@ export default function ForbesTopBar() {
           As Featured · 1 May 2026
         </span>
 
-        <span aria-hidden="true" className="gy-forbes-bar__desktop" style={{ color: "#DAA110" }}>•</span>
+        <span aria-hidden="true" className="gy-forbes-bar__desktop" style={{ color: "#F7DE8A" }}>•</span>
 
         <span
           className="gy-forbes-bar__desktop"
@@ -138,7 +138,7 @@ export default function ForbesTopBar() {
 
         <span
           aria-label="Read the feature on Forbes"
-          className="gy-forbes-bar__desktop"
+          className="gy-forbes-bar__desktop gy-goldtext"
           style={{
             fontFamily: "var(--gy-font-ui)",
             fontSize: 11,

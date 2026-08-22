@@ -647,7 +647,13 @@
   color: #DAA110;
   font-weight: 500;
   letter-spacing: 0.04em;
-  text-shadow: 0 1px 0 rgba(122, 92, 4, 0.30);
+  /* 2026-08-22 evening — the foil shadow was not enough; George: flat gold
+     text reads as mustard. The ramp goes through the glyphs instead. */
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* 2026-08-21 (section 5). The card used to carry a per-person total under

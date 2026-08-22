@@ -322,7 +322,10 @@ export default function VideoSection() {
               rides as a four-word crown so the headline stays fast).
               Small caps, gold, wide tracking - the site's standard
               eyebrow voice. */}
+          {/* gy-goldtext: the ramp through the glyphs; flat gold read as
+              mustard over the video, George's call twice in one day. */}
           <p
+            className="gy-goldtext"
             style={{
               fontFamily: "var(--gy-font-ui)",
               fontSize: "clamp(9px, 0.9vw, 11px)",
@@ -331,9 +334,6 @@ export default function VideoSection() {
               color: "#DAA110",
               fontWeight: 600,
               margin: "0 0 22px",
-              /* 2026-08-22 (gold pass) — the foil hairline every small gold
-                 label now carries; over video it doubles as legibility. */
-              textShadow: "0 1px 0 rgba(122,92,4,0.35), 0 1px 3px rgba(0,0,0,0.45)",
             }}
           >
             The Guest Is Sacred · Greek Waters Exclusively
@@ -461,7 +461,7 @@ export default function VideoSection() {
                 whiteSpace: "nowrap",
               }}
             >
-              Browse the Fleet
+              <span className="gy-goldtext">Browse the Fleet</span>
             </a>
 
             <a

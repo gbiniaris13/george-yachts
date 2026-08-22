@@ -251,7 +251,7 @@ function FleetPanel({
 
         {/* Price line */}
         <p
-          className="text-[#DAA110] mb-5"
+          className="text-[#DAA110] mb-5 gy-goldtext"
           style={{
             fontFamily: "var(--gy-font-ui)",
             fontSize: "clamp(11px, 1.3vw, 13px)",
