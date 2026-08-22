@@ -107,19 +107,37 @@ export default function SmoothScroll() {
 
       lenis.scrollTo(y, { duration: immediate ? 0 : 1.1, immediate });
 
-      // Belt and braces. The animated path runs on requestAnimationFrame,
-      // which the browser suspends whenever the tab is not being painted:
-      // backgrounded, screen locked, or an app switch on a phone mid-tap.
-      // If a moment later nothing has moved, put the visitor where they
-      // asked to be rather than leaving them at the top of the page with a
-      // #contact in the address bar and no form in sight.
+      // Belt and braces, and it earns its place twice over.
+      //
+      // First: the animated path rides requestAnimationFrame, which the
+      // browser suspends whenever the tab stops painting. Backgrounded,
+      // screen locked, an app switch mid-tap on a phone. Observed on the
+      // live site with the tab hidden: the scroll left the top, travelled
+      // 3.580 px of the 18.762 it needed, and stopped there. Checking only
+      // whether the page moved AT ALL would have called that a success and
+      // left the visitor stranded in the middle of the page.
+      //
+      // Second: this page lazy-loads images the whole way down, so the
+      // target's absolute position is still growing while the scroll is in
+      // flight. Even a clean animation can land short.
+      //
+      // So the check is not "did it move", it is "is the section where the
+      // eye needs it". Measured against the live geometry after the
+      // animation should have finished, re-reading the target's position
+      // rather than trusting the number computed a second ago.
       if (!immediate) {
-        const startedAt = window.scrollY;
         window.setTimeout(() => {
-          if (Math.abs(window.scrollY - startedAt) < 8 && Math.abs(y - startedAt) > 8) {
-            lenis.scrollTo(y, { immediate: true });
+          const box = target.getBoundingClientRect();
+          const settled =
+            box.top >= ANCHOR_OFFSET - 40 && box.top <= window.innerHeight * 0.5;
+          if (!settled) {
+            const corrected = Math.max(
+              0,
+              box.top + window.scrollY + ANCHOR_OFFSET
+            );
+            lenis.scrollTo(corrected, { immediate: true });
           }
-        }, 700);
+        }, 1400);
       }
       return true;
     };
