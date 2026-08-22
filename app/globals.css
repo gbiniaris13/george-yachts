@@ -1705,7 +1705,9 @@ a.btn-secondary {
 .gy-cta-ghost:hover {
   border-color: #DAA110;
   background: rgba(218, 161, 16, 0.08);
-  color: #DAA110;
+  /* wash στο φόντο = όχι clip:text· το φωτεινό σκαλί της ράμπας
+     διαβάζεται ως γυαλάδα, όχι μουσταρδί */
+  color: #F7DE8A;
 }
 
 /* Phase 18 — lower 3D tilt magnitude. The previous 2.5° rotateY +
@@ -4101,7 +4103,8 @@ footer.gy-footer-depth,
     width: 100%;
     height: 52px;
     background: transparent;
-    color: #DAA110;
+    /* το :active από κάτω βάφει συμπαγές χρυσό φόντο, άρα όχι clip εδώ */
+    color: #F0C756;
     border: 1px solid #DAA110;
     text-decoration: none;
     font-family: var(--gy-font-ui);
@@ -4995,7 +4998,7 @@ html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
   align-items: center;
   justify-content: center;
   background: transparent;
-  color: #DAA110;
+  color: #F0C756;
   border: 1px solid rgba(218, 161, 16, 0.4);
   font-size: 16px;
   cursor: pointer;
@@ -5119,4 +5122,39 @@ body.gy-fleetbar-open {
   line-height: 1;
   white-space: nowrap;
   filter: drop-shadow(0 1px 2px rgba(5, 10, 18, 0.9));
+}
+
+/* ── Γύρος 4 (22/8 απόγευμα): τα δύο κενά του καθολικού κανόνα ──────────
+   1. SVG icons: clip:text δεν αγγίζει stroke. Το .gy-goldstroke δίνει
+      στο εικονίδιο την ίδια ράμπα μέσω url(#gyLeafSVG) (defs στο layout).
+      Το CSS stroke νικάει το presentation attribute stroke="currentColor"
+      του lucide, και τα paths μέσα το κληρονομούν.
+   2. Η rgba γραφή του ίδιου χρώματος: color:rgba(218, 161, 16,α) είναι
+      το #DAA110 με άλλα ρούχα και ξέφευγε από τα hex attribute selectors.
+      Ίδιοι κανόνες: πρόθεμα ; ή αρχή string, ποτέ σκέτο *= (πιάνει
+      border/background), και :not([style*="background"]) γιατί το
+      clip:text κόβει ΟΛΑ τα background layers στο σχήμα των γραμμάτων. */
+svg.gy-goldstroke,
+.gy-goldstroke svg {
+  stroke: url(#gyLeafSVG) !important;
+}
+
+[style^="color:rgba(218, 161, 16"]:not([style*="background"]),
+[style*=";color:rgba(218, 161, 16"]:not([style*="background"]),
+[style^="color:rgba(218,161,16"]:not([style*="background"]),
+[style*=";color:rgba(218,161,16"]:not([style*="background"]) {
+  background-image: linear-gradient(
+    100deg,
+    #c9990e 0%,
+    #e8b622 22%,
+    #f7de8a 45%,
+    #e2ac15 62%,
+    #c9990e 85%,
+    #b58a0a 100%
+  ) !important;
+  background-size: 180px 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  text-shadow: none !important;
 }

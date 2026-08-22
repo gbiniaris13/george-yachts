@@ -622,7 +622,9 @@
 
 /* Inline links inside the body — gold underline that draws from left. */
 .editorial-content a {
-  color: #DAA110;
+  /* inline link: το underline μηχανεύεται με background-image, άρα όχι
+     clip:text· φωτεινό σκαλί της ράμπας αντί για το μέταλλο */
+  color: #F0C756;
   text-decoration: none;
   background-image: linear-gradient(currentColor, currentColor);
   background-size: 0% 1px;

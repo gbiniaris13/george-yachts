@@ -346,7 +346,7 @@ export default function NavDrawerSystem() {
             aria-expanded={mobileOpen}
             data-cursor="Menu"
           >
-            <Menu style={{ width: 22, height: 22 }} />
+            <Menu className="gy-goldstroke" style={{ width: 22, height: 22 }} />
           </button>
 
           {/* DESKTOP, left cluster: CHARTER + EXPLORE GREECE */}
@@ -482,7 +482,7 @@ export default function NavDrawerSystem() {
               aria-label="Close navigation"
               data-cursor="Close"
             >
-              <X style={{ width: 22, height: 22 }} />
+              <X className="gy-goldstroke" style={{ width: 22, height: 22 }} />
             </button>
           </div>
 

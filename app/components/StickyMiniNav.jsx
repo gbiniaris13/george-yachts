@@ -133,7 +133,7 @@ export default function StickyMiniNav() {
                 <a
                   href={`#${s.id}`}
                   onClick={jumpTo(s.id)}
-                  className="inline-block px-3 md:px-4 py-1.5 transition-colors duration-300"
+                  className={`inline-block px-3 md:px-4 py-1.5 transition-colors duration-300${isActive ? " gy-goldtext" : ""}`}
                   style={{
                     fontFamily: "var(--gy-font-ui)",
                     fontSize: "10px",
@@ -143,9 +143,11 @@ export default function StickyMiniNav() {
                     color: isActive
                       ? "#DAA110"
                       : "rgba(248,245,240,0.6)",
-                    borderBottom: `1px solid ${
-                      isActive ? "#DAA110" : "transparent"
-                    }`,
+                    borderBottom: "1px solid transparent",
+                    borderImageSource: isActive
+                      ? "linear-gradient(90deg, #B58A0A 0%, #F7DE8A 50%, #B58A0A 100%)"
+                      : "none",
+                    borderImageSlice: 1,
                     cursor: "pointer",
                     whiteSpace: "nowrap",
                     hyphens: "none",

@@ -557,6 +557,27 @@ export default async function RootLayout({ children }) {
       <body
         className={`${boska.variable} ${switzer.variable} ${switzerItalic.variable} ${gfsDidot.variable} antialiased${forbesDismissed ? "" : " gy-with-forbes-bar"}`}
       >
+        {/* The gold-leaf ramp as an SVG gradient. clip:text cannot touch an
+            SVG stroke, so every icon that must read as metal (hamburger, the
+            drawer X) references url(#gyLeafSVG) via .gy-goldstroke. Hidden,
+            zero footprint, one definition for the whole document. */}
+        <svg aria-hidden="true" focusable="false" style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}>
+          <defs>
+            {/* userSpaceOnUse, όχι objectBoundingBox: οι μπάρες του hamburger
+                είναι οριζόντιες γραμμές με μηδενικό ύψος bbox και το
+                objectBoundingBox gradient πάνω τους δεν αποδίδεται καθόλου.
+                Το 0-24 καλύπτει το viewBox κάθε lucide εικονιδίου. */}
+            <linearGradient id="gyLeafSVG" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="9">
+              <stop offset="0" stopColor="#C9990E" />
+              <stop offset="0.22" stopColor="#E8B622" />
+              <stop offset="0.45" stopColor="#F7DE8A" />
+              <stop offset="0.62" stopColor="#E2AC15" />
+              <stop offset="0.85" stopColor="#C9990E" />
+              <stop offset="1" stopColor="#B58A0A" />
+            </linearGradient>
+          </defs>
+        </svg>
+
         {/* Skip to main content, accessibility */}
         <a
           href="#main-content"

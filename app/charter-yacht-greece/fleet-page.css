@@ -538,7 +538,7 @@
   left: 16px;
   background: rgba(13, 27, 42, 0.8);
   backdrop-filter: blur(8px);
-  color: #DAA110;
+  color: #F0C756;
 }
 
 .fleet-card__badge--featured {
@@ -759,7 +759,7 @@
 .fleet-card__btn--details {
   background: transparent;
   border: 1px solid rgba(218, 161, 16, 0.3);
-  color: #DAA110;
+  color: #F0C756;
 }
 
 .fleet-card__btn--details::after {
@@ -842,7 +842,7 @@
 .fleet-empty__reset {
   background: transparent;
   border: 1px solid rgba(218, 161, 16, 0.4);
-  color: #DAA110;
+  color: #F0C756;
   padding: 12px 32px;
   cursor: pointer;
   font-family: var(--gy-font-ui);
@@ -1096,7 +1096,7 @@
 }
 .fleet-count__reset:hover {
   background: rgba(218, 161, 16, 0.1);
-  color: #DAA110;
+  color: #F7DE8A;
   border-color: #DAA110;
 }
 
@@ -1155,6 +1155,6 @@
 }
 .fleet-filters__toy-chip--active {
   background: rgba(218, 161, 16, 0.18);
-  color: #DAA110;
+  color: #F0C756;
   border-color: #DAA110;
 }

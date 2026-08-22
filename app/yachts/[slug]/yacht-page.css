@@ -1137,7 +1137,7 @@
   background: rgba(13, 27, 42, 0.55);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  color: #DAA110;
+  color: #F0C756;
   font-family: var(--gy-font-editorial);
   font-size: clamp(24px, 2.6vw, 32px);
   font-weight: 300;
@@ -1305,7 +1305,7 @@
   border-radius: 50%;
   background: rgba(13, 27, 42, 0.6);
   border: 1px solid rgba(218, 161, 16, 0.5);
-  color: #DAA110;
+  color: #F0C756;
   font-family: var(--gy-font-editorial);
   font-size: clamp(28px, 3vw, 36px);
   font-weight: 300;
