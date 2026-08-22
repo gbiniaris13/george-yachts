@@ -372,18 +372,27 @@ export default function NavDrawerSystem() {
                 looked smaller than the space it took up. 98 KB, and the
                 mark is twice the size per pixel of height.
                 PNGs pretending to be a vector. Same pixels, 96 KB. See Footer.jsx. */}
-            <img
-              src="/images/yacht-logo-tight-300.png"
-              alt="George Yachts Brokerage House"
-              className="gy-nav-logo group-hover:opacity-80"
-              style={{
-                height: logoHeight,
-                width: "auto",
-                transition: "height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
-                filter:
-                  "drop-shadow(0 1px 2px rgba(13,27,42,0.85)) drop-shadow(0 8px 22px rgba(13,27,42,0.55))",
-              }}
-            />
+            {/* 2026-08-21 - WebP with a PNG fallback. Measured on a throttled
+              phone this file took 3,759 ms and was competing with the LCP
+              image for the same pipe: 99 KB of PNG for a mark that is 39 KB
+              as WebP, identical pixels. Every browser that matters has
+              supported WebP since 2020; the <source> is skipped by anything
+              older and the PNG below still serves it. */}
+            <picture>
+              <source srcSet="/images/yacht-logo-tight-300.webp" type="image/webp" />
+              <img
+                src="/images/yacht-logo-tight-300.png"
+                alt="George Yachts Brokerage House"
+                className="gy-nav-logo group-hover:opacity-80"
+                style={{
+                  height: logoHeight,
+                  width: "auto",
+                  transition: "height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
+                  filter:
+                    "drop-shadow(0 1px 2px rgba(13,27,42,0.85)) drop-shadow(0 8px 22px rgba(13,27,42,0.55))",
+                }}
+              />
+            </picture>
           </Link>
 
           {/* DESKTOP, right cluster: ABOUT + BRIEF GEORGE CTA */}
@@ -435,11 +444,20 @@ export default function NavDrawerSystem() {
               {/* 2026-08-19 (job 12) - same cropped asset as the nav and the footer.
                   At 56px the old file drew a 25px mark; this one draws 49px in the
                   same box, which is the whole point of cutting the blank half out. */}
-              <img
-                src="/images/yacht-logo-tight-300.png"
-                alt="George Yachts"
-                style={{ height: 56, width: "auto" }}
-              />
+              {/* 2026-08-21 - WebP with a PNG fallback. Measured on a throttled
+                phone this file took 3,759 ms and was competing with the LCP
+                image for the same pipe: 99 KB of PNG for a mark that is 39 KB
+                as WebP, identical pixels. Every browser that matters has
+                supported WebP since 2020; the <source> is skipped by anything
+                older and the PNG below still serves it. */}
+              <picture>
+                <source srcSet="/images/yacht-logo-tight-300.webp" type="image/webp" />
+                <img
+                  src="/images/yacht-logo-tight-300.png"
+                  alt="George Yachts"
+                  style={{ height: 56, width: "auto" }}
+                />
+              </picture>
             </Link>
             <button
               type="button"

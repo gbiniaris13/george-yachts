@@ -120,21 +120,37 @@ export default function Filotimon({ filotimoImage = null }) {
               the <video> poster, Sanity-supplied fallback for any
               browser that fails the autoplay heuristic (and as the
               first paint while the video decodes). */}
+          {/* 2026-08-21 — the frame is a lazy <img> rather than the video's
+              poster attribute. At 281 KB it was the single heaviest file on
+              the homepage and it opened its connection at 289 ms, competing
+              with the hero image that decides LCP, for a section that sits
+              a full screen below the fold. A poster attribute cannot be
+              deferred; an <img loading="lazy"> can, and it arrives at the
+              same moment the video sources attach.
+
+              The editorial filter stays on the wrapper below so it covers
+              both this frame and the live video, exactly as before, and the
+              swap remains invisible. */}
+          <img
+            src="/images/posters/filotimo-navagio-frame1.jpg"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ filter: "grayscale(0.15) brightness(0.8) contrast(1.06)" }}
+          />
           <video
             className="absolute inset-0 w-full h-full object-cover"
-            // 2026-05-08 (Chapter 01 follow-up) — poster now uses a
-            // frame extracted from the Navagio video itself, not the
-            // Sanity filotimoImage which read as a different scene
-            // and flashed visibly before the video started. The
-            // editorial filter (grayscale 0.15 / brightness 0.8 /
-            // contrast 1.06) is applied via CSS so it covers BOTH
-            // poster and live video — no swap visible.
+            // 2026-05-08 (Chapter 01 follow-up) — the frame comes from the
+            // Navagio video itself, not the Sanity filotimoImage which read
+            // as a different scene and flashed visibly before the video
+            // started. The editorial filter (grayscale 0.15 / brightness
+            // 0.8 / contrast 1.06) is applied via CSS so it covers BOTH the
+            // frame and the live video — no swap visible.
             // SD-3 (2026-08-01): below-fold homepage section whose 3 MB
             // ambient preloaded eagerly and starved the hero (LCP 40s in
-            // the mobile baseline). Sources attach via useNearViewport;
-            // the frame-1 poster covers until then, so nothing changes
-            // visually.
-            poster="/images/posters/filotimo-navagio-frame1.jpg"
+            // the mobile baseline). Sources attach via useNearViewport.
             preload="none"
             ref={filotimoVideoRef}
             loop

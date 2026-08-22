@@ -24,10 +24,23 @@ function FooterAmbientVideo() {
   }, [near]);
   return (
     <div ref={holderRef} className="absolute inset-0">
-      <video
+      {/* 2026-08-21 — poster off the critical path. A poster ATTRIBUTE is
+          fetched the moment the element is parsed, whatever preload says, so
+          this below-fold frame was competing with the hero image for a
+          phone's first seconds. As a lazy <img> it waits for the viewport,
+          which is when the video attaches anyway. */}
+        <img
+          src="/images/posters/footer-sunset-frame1.jpg"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ pointerEvents: "none" }}
+        />
+        <video
         ref={vidRef}
         className="absolute inset-0 w-full h-full object-cover"
-        poster="/images/posters/footer-sunset-frame1.jpg"
         preload="none"
         loop
         muted
@@ -361,17 +374,26 @@ const Footer = () => {
                   The replacement reproduces the browser's own rasterisation, including
                   the empty upper half that the viewBox transform produces, so every
                   height: below still lays out to the pixel. The .svg stays on disk. */}
-              <img
-                src="/images/yacht-logo-tight-300.png"
-                alt="George Yachts Brokerage House LLC"
-                /* 2026-08-19 (job 12) - same asset as the nav now, and the
-                   height comes down with it. The old file was half blank
-                   canvas, so 150px here drew a 66px mark; the cropped file
-                   draws 97px from 110. Leaving the two files side by side on
-                   one page looked backwards: the footer logo occupied more
-                   room than the nav one and read smaller. */
-                style={{ height: "clamp(64px, 14vw, 110px)", width: "auto" }}
-              />
+              {/* 2026-08-21 - WebP with a PNG fallback. Measured on a throttled
+                phone this file took 3,759 ms and was competing with the LCP
+                image for the same pipe: 99 KB of PNG for a mark that is 39 KB
+                as WebP, identical pixels. Every browser that matters has
+                supported WebP since 2020; the <source> is skipped by anything
+                older and the PNG below still serves it. */}
+              <picture>
+                <source srcSet="/images/yacht-logo-tight-300.webp" type="image/webp" />
+                <img
+                  src="/images/yacht-logo-tight-300.png"
+                  alt="George Yachts Brokerage House LLC"
+                  /* 2026-08-19 (job 12) - same asset as the nav now, and the
+                     height comes down with it. The old file was half blank
+                     canvas, so 150px here drew a 66px mark; the cropped file
+                     draws 97px from 110. Leaving the two files side by side on
+                     one page looked backwards: the footer logo occupied more
+                     room than the nav one and read smaller. */
+                  style={{ height: "clamp(64px, 14vw, 110px)", width: "auto" }}
+                />
+              </picture>
             </Link>
 
             {/* Social Icons */}

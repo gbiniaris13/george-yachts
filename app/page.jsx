@@ -74,9 +74,22 @@ export default async function HomePage() {
   // waiting for the browser to discover the <video poster=...>
   // attribute. React 19 / Next 15 hoists ReactDOM.preload() calls
   // from anywhere in the tree to the document <head>.
+  // 2026-08-21 — the preload has to describe the same set of candidates the
+  // <picture> in VideoSection does, or it races it: the browser would start
+  // fetching the 1920 px frame here at high priority while the markup then
+  // asks for the 768 px one, and the phone pays for both. imageSrcSet and
+  // imageSizes are what make a preload responsive; without them a preload
+  // for an image that is served responsively is worse than none at all.
   ReactDOM.preload("/images/posters/hero-loop-frame1.jpg", {
     as: "image",
     fetchPriority: "high",
+    imageSrcSet: [
+      "/images/posters/hero-loop-frame1-768.jpg 768w",
+      "/images/posters/hero-loop-frame1-1080.jpg 1080w",
+      "/images/posters/hero-loop-frame1-1440.jpg 1440w",
+      "/images/posters/hero-loop-frame1.jpg 1920w",
+    ].join(", "),
+    imageSizes: "100vw",
   });
 
   let yachtCount = FLEET_COUNT;

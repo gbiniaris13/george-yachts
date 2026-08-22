@@ -66,9 +66,31 @@ function PanelBackgroundVideo({ videoBase, posterSrc }) {
 
   return (
     <div ref={nearRef} className="absolute inset-0">
+      {/* 2026-08-21 — the poster leaves the critical path too.
+​
+          SD-3 stopped these panels from preloading 3.5 MB of video, which
+          was the big win. It could not stop the poster: a poster ATTRIBUTE
+          is fetched as soon as the element is parsed, whatever preload says
+          and whatever the video sources do. So four below-fold frames were
+          still opening connections at 254-379 ms and taking 685 KB of a
+          phone's first three seconds, in direct competition with the hero
+          image that decides LCP.
+​
+          As a real <img loading="lazy"> the browser holds it until the
+          panel is near the viewport, which is exactly when useNearViewport
+          attaches the video anyway. Identical picture, same moment, off the
+          critical path. */}
+      <img
+        src={posterSrc}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+        style={{ pointerEvents: "none" }}
+      />
       <video
         ref={videoRef}
-        poster={posterSrc}
         preload="none"
         loop
         muted

@@ -51,13 +51,26 @@ export default function YourBroker() {
       >
         {/* Photo */}
         <div style={{ position: "relative", aspectRatio: "3/4", overflow: "hidden", minHeight: "300px" }}>
+          {/* 2026-08-21 — priority removed, deliberately.
+
+              `priority` on a next/image emits a high-priority preload in the
+              document head, which is exactly right for something in the
+              first screenful and exactly wrong here: this section renders
+              around line 285 of HomeClient, several screens down. On a
+              throttled phone the portrait was opening its connection at
+              177 ms and taking 55 KB of the same narrow pipe the hero image
+              needed, so a photograph nobody had scrolled to yet was helping
+              to decide LCP.
+
+              It keeps next/image's default lazy behaviour instead, which
+              fetches it as the section approaches. Nothing about how it
+              looks changes. */}
           <Image
             src="/images/george-syros-quay.jpg"
             alt="George P. Biniaris on the quay in Syros at sunset - Managing Broker, George Yachts"
             fill
             className="object-cover"
             sizes="(max-width: 768px) 250px, 280px"
-            priority
           />
           <div style={{
             position: "absolute", bottom: 0, left: 0, right: 0, height: "50%",

@@ -138,29 +138,75 @@ function HeroBackgroundVideo() {
   }
 
   return (
-    <video
-      ref={ref}
-      // 2026-05-08 (Chapter 01 follow-up) - poster matches frame 1
-      // of the trio video so the swap is invisible. preload="auto"
-      // so the browser starts downloading bytes immediately and the
-      // visitor doesn't see the poster freeze for 1-2 s on slower
-      // connections. See the matching change in the fleet page.
-      poster="/images/posters/hero-loop-frame1.jpg"
-      // preload starts at "none" and the effect above promotes it to "auto"
-      // on desktop. Rendering "auto" here and demoting it later would be too
-      // late: the browser begins the fetch from the parsed attribute, before
-      // any effect runs.
-      preload="none"
+    <>
+      {/* 2026-08-21 — the poster is now a real <img>, and it is the reason
+          the hero is fast.
+
+          Measured on a throttled Pixel-class phone: the LCP element was this
+          poster, painting at 6,324 ms. It was not late to START (the preload
+          in app/page.jsx opened the connection at 174 ms) and it was not a
+          slow server. It took 6,093 ms to arrive because it is a 1920x1080
+          JPEG, 176 KB, being sent to a 412 px screen and competing with
+          every other request for the same narrow pipe. Roughly four fifths
+          of those pixels could never be seen.
+
+          A poster ATTRIBUTE cannot be responsive: there is no srcset for it.
+          So the frame becomes an <img> underneath the video, which can be,
+          and the video simply plays over the top of it on desktop. Same
+          picture, 44 KB instead of 176 KB on a phone.
+
+          srcSet with width descriptors rather than <picture> with media
+          queries, deliberately: it is the same selection algorithm the
+          preload in app/page.jsx uses, so the two agree on which file to
+          fetch. Mixed, they would disagree and the phone would download
+          two frames instead of one.
+
+          It also fixes a regression I introduced earlier today: with
+          preload="none" Chrome defers the poster along with the video, so
+          the very change that saved 3.8 MB had pushed the first paint of
+          the hero later. This decouples them. */}
+      <img
+        src="/images/posters/hero-loop-frame1.jpg"
+        srcSet={[
+          "/images/posters/hero-loop-frame1-768.jpg 768w",
+          "/images/posters/hero-loop-frame1-1080.jpg 1080w",
+          "/images/posters/hero-loop-frame1-1440.jpg 1440w",
+          "/images/posters/hero-loop-frame1.jpg 1920w",
+        ].join(", ")}
+        sizes="100vw"
+        alt=""
+        aria-hidden="true"
+        fetchPriority="high"
+        decoding="async"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: "center",
+        }}
+      />
+
+      <video
+        ref={ref}
+        // No poster attribute any more: the <img> above is the poster,
+        // and it is already painted before the video element is considered.
+        // preload starts at "none" and the effect above promotes it to "auto"
+        // on desktop. Rendering "auto" here and demoting it later would be too
+        // late: the browser begins the fetch from the parsed attribute, before
+        // any effect runs.
+        preload="none"
       // No autoPlay attribute. The browser starts fetching a video the moment
       // it parses autoplay, whatever preload says, so removing it in an effect
       // is too late to save the bytes. Desktop gets play() from the effect
       // above instead, which is the same result one tick later.
-      loop
-      muted
-      playsInline
-      aria-hidden="true"
-      onError={() => setFailed(true)}
-      data-cursor-magnetic="VIEW"
+        loop
+        muted
+        playsInline
+        aria-hidden="true"
+        onError={() => setFailed(true)}
+        data-cursor-magnetic="VIEW"
       style={{
         position: "absolute",
         inset: 0,
@@ -172,9 +218,10 @@ function HeroBackgroundVideo() {
     >
       {/* WebM (smaller) → MP4 fallback. Browsers without WebM (older
           Safari) skip the first <source> and fall through to MP4. */}
-      <source src={`${HERO_VIDEO_BASE}.webm`} type="video/webm" />
-      <source src={`${HERO_VIDEO_BASE}.mp4`} type="video/mp4" />
-    </video>
+        <source src={`${HERO_VIDEO_BASE}.webm`} type="video/webm" />
+        <source src={`${HERO_VIDEO_BASE}.mp4`} type="video/mp4" />
+      </video>
+    </>
   );
 }
 
