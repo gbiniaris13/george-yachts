@@ -378,9 +378,14 @@ const HomeClient = ({
       </div>
 
       {/* ContactBar absorbed into ContactFormSection (Proposal D) */}
-      <section id="contact" data-gy-reveal="up">
+      {/* 2026-08-22: το id="contact" έφυγε από εδώ. Το ContactFormSection
+          φέρει το ΔΙΚΟ του id="contact", οπότε η σελίδα σέρβιρε δύο
+          στοιχεία με το ίδιο id, φωλιασμένα το ένα μέσα στο άλλο. Άκυρο
+          HTML, και ο browser διαλέγει μόνος του σε ποιο θα πάει.
+          Ένα id, στο στοιχείο που είναι πράγματι η φόρμα. */}
+      <div data-gy-reveal="up">
         <ContactFormSection />
-      </section>
+      </div>
 
       <Footer />
     </div>
