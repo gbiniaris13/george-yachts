@@ -307,6 +307,12 @@
   color: #DAA110;
   margin: 0;
   position: relative;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .yacht-insider__title::after {
   content: "";
@@ -341,6 +347,12 @@
   margin: 0;
   text-align: center;
   letter-spacing: 0.1em;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* ---- Specifications ---- */
@@ -1083,6 +1095,12 @@
   text-transform: uppercase;
   color: #DAA110;
   user-select: none;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .yacht-carousel__counter-sep,
 .yacht-carousel__counter-total {

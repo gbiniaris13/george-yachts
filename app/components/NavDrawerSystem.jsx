@@ -636,6 +636,10 @@ export default function NavDrawerSystem() {
       </div>
 
       <style jsx global>{`
+        /* 2026-08-22 — the hover states CHARTER / EXPLORE GREECE /
+           JOURNAL / ABOUT turned flat mustard; George named them one
+           by one. Same metal as everything else. */
+
         /* Mobile overlay - slide-in from right per Boss spec. */
         .gy-nav-overlay {
           transform: translateX(100%);
@@ -699,6 +703,17 @@ export default function NavDrawerSystem() {
         .gy-nav-item__link:hover {
           color: #DAA110;
           padding-left: 6px;
+          /* !important, and for a measured reason: the trigger carries an
+             inline background:transparent, and a shorthand background on the
+             element nukes a class background-image, leaving transparent
+             glyphs over nothing — the invisible EXPLORE GREECE bug of 22/8.
+             Inline styles lose only to !important, so these five carry it. */
+          background-image: linear-gradient(100deg,
+            #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%) !important;
+          background-size: 180px 100% !important;
+          -webkit-background-clip: text !important;
+          background-clip: text !important;
+          -webkit-text-fill-color: transparent !important;
         }
 
         /* Explore Greece dropdown - rich editorial cards using
@@ -731,6 +746,17 @@ export default function NavDrawerSystem() {
           text-transform: uppercase;
           color: #DAA110;
           margin: 0 0 6px;
+          /* !important, and for a measured reason: the trigger carries an
+             inline background:transparent, and a shorthand background on the
+             element nukes a class background-image, leaving transparent
+             glyphs over nothing — the invisible EXPLORE GREECE bug of 22/8.
+             Inline styles lose only to !important, so these five carry it. */
+          background-image: linear-gradient(100deg,
+            #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%) !important;
+          background-size: 180px 100% !important;
+          -webkit-background-clip: text !important;
+          background-clip: text !important;
+          -webkit-text-fill-color: transparent !important;
         }
         .gy-nav-item__rich-title {
           font-family: var(--gy-font-editorial);
@@ -756,6 +782,17 @@ export default function NavDrawerSystem() {
           letter-spacing: 0.15em;
           text-transform: uppercase;
           color: #DAA110;
+          /* !important, and for a measured reason: the trigger carries an
+             inline background:transparent, and a shorthand background on the
+             element nukes a class background-image, leaving transparent
+             glyphs over nothing — the invisible EXPLORE GREECE bug of 22/8.
+             Inline styles lose only to !important, so these five carry it. */
+          background-image: linear-gradient(100deg,
+            #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%) !important;
+          background-size: 180px 100% !important;
+          -webkit-background-clip: text !important;
+          background-clip: text !important;
+          -webkit-text-fill-color: transparent !important;
         }
         .gy-nav-item__rich-link:hover .gy-nav-item__rich-cta {
           color: #F8F5F0;
@@ -763,6 +800,17 @@ export default function NavDrawerSystem() {
         .gy-nav-item__trigger:hover,
         .gy-nav-item:hover .gy-nav-item__trigger {
           color: #DAA110 !important;
+          /* !important, and for a measured reason: the trigger carries an
+             inline background:transparent, and a shorthand background on the
+             element nukes a class background-image, leaving transparent
+             glyphs over nothing — the invisible EXPLORE GREECE bug of 22/8.
+             Inline styles lose only to !important, so these five carry it. */
+          background-image: linear-gradient(100deg,
+            #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%) !important;
+          background-size: 180px 100% !important;
+          -webkit-background-clip: text !important;
+          background-clip: text !important;
+          -webkit-text-fill-color: transparent !important;
         }
         .gy-nav-cta:hover {
           color: #ffffff !important;

@@ -71,6 +71,12 @@
   font-weight: 500;
   opacity: 0;
   animation: heroEyebrow 0.8s ease-out 0.3s forwards;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .team-hero__title {
@@ -125,6 +131,12 @@
   text-transform: uppercase;
   color: #DAA110;
   margin-bottom: 32px;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .team-intro__title {
@@ -268,6 +280,12 @@
   margin: 0 0 12px;
   font-weight: 500;
   line-height: 1.5;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .team-card__instagram {
@@ -304,6 +322,12 @@
   transform: translateY(0);
   color: #DAA110;
   border-color: #DAA110;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Lead card (George) gets extra treatment */
@@ -325,6 +349,12 @@
   text-transform: uppercase;
   color: #DAA110;
   margin-bottom: 48px;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .team-values__grid {

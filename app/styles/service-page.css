@@ -71,6 +71,12 @@
   font-weight: 500;
   opacity: 0;
   animation: svcHeroEyebrow 0.8s ease-out 0.3s forwards;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .svc-hero__title {
@@ -127,6 +133,12 @@
   text-transform: uppercase;
   color: #DAA110;
   margin-bottom: 24px;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .svc-intro__title {
@@ -204,6 +216,12 @@
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .svc-features__card-title {
@@ -261,6 +279,12 @@
   color: #DAA110;
   flex-shrink: 0;
   margin-top: 2px;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .svc-checklist__text {
@@ -286,6 +310,12 @@
   text-transform: uppercase;
   color: #DAA110;
   margin-bottom: 16px;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .svc-cta__title {
@@ -389,11 +419,23 @@
 
 .faq-item__button:hover .faq-item__question {
   color: #DAA110;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .faq-item--open .faq-item__question {
   color: #DAA110;
   font-weight: 500;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .faq-item__icon {
@@ -405,6 +447,12 @@
 .faq-item--open .faq-item__icon {
   color: #DAA110;
   transform: rotate(180deg);
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .faq-item__answer {

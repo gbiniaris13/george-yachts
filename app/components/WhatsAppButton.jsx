@@ -146,8 +146,11 @@ export default function WhatsAppButton() {
           <div
             className="relative p-5 pr-10"
             style={{
-              background: "linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)",
-              border: "1px solid rgba(218, 161, 16,0.35)",
+              /* Same metal rim as the disc below; the flat rgba frame was
+                 on George's mustard list. */
+              background:
+                "linear-gradient(#0D1B2A, #0D1B2A) padding-box, linear-gradient(118deg, #7A5C04, #E8B622 30%, #F7DE8A 50%, #C9990E 72%, #7A5C04) border-box",
+              border: "1px solid transparent",
               boxShadow:
                 "0 12px 48px rgba(13, 27, 42,0.5), 0 0 24px rgba(218, 161, 16,0.08)",
               backdropFilter: "blur(12px)",
@@ -298,8 +301,15 @@ export default function WhatsAppButton() {
             width: 56,
             height: 56,
             borderRadius: "50%",
-            background: WA_INK,
-            border: `1px solid ${hovered ? "rgba(218, 161, 16,0.85)" : "rgba(218, 161, 16,0.55)"}`,
+            /* 2026-08-22 (mustard sweep, round two) — the ring was a flat
+               rgba gold and George called it by name. Same two-layer trick
+               as gy-goldframe, and it survives the border-radius: the leaf
+               ramp fills the border box, the ink disc covers the padding
+               box, and the 1px rim between them is real metal. */
+            background: hovered
+              ? `linear-gradient(${WA_INK}, ${WA_INK}) padding-box, linear-gradient(118deg, #B58A0A, #F7DE8A 46%, #DAA110 62%, #B58A0A) border-box`
+              : `linear-gradient(${WA_INK}, ${WA_INK}) padding-box, linear-gradient(118deg, #7A5C04, #E8B622 30%, #F7DE8A 50%, #C9990E 72%, #7A5C04) border-box`,
+            border: "1px solid transparent",
             boxShadow: hovered
               ? "0 8px 32px rgba(13,27,42,0.55), 0 0 22px rgba(218, 161, 16,0.30), inset 0 1px 0 rgba(218, 161, 16,0.20)"
               : "0 4px 16px rgba(13,27,42,0.45), inset 0 1px 0 rgba(218, 161, 16,0.12)",

@@ -698,6 +698,12 @@ section + section {
     0 0 12px rgba(218, 161, 16, 0.45),
     0 0 28px rgba(218, 161, 16, 0.25),
     0 1px 0 rgba(13, 27, 42, 0.5);
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 @media (prefers-reduced-motion: reduce) {
   .gy-gold-24k-shine { animation: none; }
@@ -1920,6 +1926,12 @@ footer h4 {
   color: #DAA110;
   margin-bottom: 18px;
   display: inline-block;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .gy-eyebrow-sm {
   font-family: var(--gy-font-ui);
@@ -1928,6 +1940,12 @@ footer h4 {
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: #DAA110;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Asymmetric editorial grid — 12-column with intentional misalignment.
@@ -1986,6 +2004,12 @@ footer h4 {
   font-weight: 600;
   text-decoration: none;
   padding-bottom: 4px;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .gy-link-editorial::after {
   content: "";
@@ -2098,6 +2122,12 @@ a.btn-secondary:focus-visible {
   transform: scale(1.02);
   border-color: rgba(218, 161, 16, 0.85) !important;
   color: #DAA110 !important;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Form fields — gold focus ring. Form inputs everywhere get the same
@@ -2461,6 +2491,12 @@ a.gy-fancy-link:hover {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease 60ms;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .gy-luxe-cursor-ring[data-state="labelled"] .gy-luxe-cursor-label,
@@ -3216,6 +3252,12 @@ a.gy-fancy-link:hover {
   text-transform: uppercase;
   color: #DAA110;
   margin-inline-end: -0.32em;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .gy-region-yacht-more {
   margin: 12px 0 0;
@@ -3228,6 +3270,12 @@ a.gy-fancy-link:hover {
 .gy-region-yacht-more a {
   color: #DAA110;
   text-decoration: underline;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 @media (max-width: 700px) {
@@ -4391,6 +4439,12 @@ html.gy-cursor-live .gy-cur2 { opacity: 1; }
   opacity: 0; transform: translateX(-6px);
   transition: opacity .22s ease, transform .28s cubic-bezier(0.16, 1, 0.3, 1);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .gy-cur2.is-word .gy-cur2__label { opacity: 1; transform: translateX(0); }
 
@@ -4456,6 +4510,12 @@ html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
   opacity: 0;
   transition: opacity .2s ease, transform .24s cubic-bezier(0.16, 1, 0.3, 1);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7), 0 0 6px rgba(13, 27, 42, 0.5);
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .gy-mark-cursor.is-word .gy-mark-cursor__label {
   opacity: 1; transform: translateY(-50%) translateX(0);
@@ -4583,6 +4643,43 @@ html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
   color: #DAA110;
   text-shadow: none !important;
 }
+/* ── THE SITE-WIDE MUSTARD SWEEP (2026-08-22, round two of the verdict) ──
+   George, with screenshots: "Το έχεις κάνει μόνο πάνω πάνω. Είναι σε όλο το
+   site, πραγματικά σε όλο το site." He is right: the flat #DAA110 is
+   declared as a text colour in 358 places across three syntaxes, and
+   chasing them one class at a time is how it survived the first pass.
+
+   So the sweep is structural. React serialises style objects verbatim, so
+   every inline declaration is matchable as an attribute substring, and
+   Tailwind's arbitrary value sits in the class attribute. Three guards:
+
+   · [style*=";color..."] / [style^="color..."] and never a bare
+     [style*="color:#DAA110"], because that substring also lives inside
+     "border-color:#DAA110" and "background-color:#DAA110".
+   · :not([style*="background"]) — background-clip:text clips EVERY
+     background layer of the element to its glyphs, so an element painting
+     its own plate (the WhatsApp disc, the AI button) must keep flat gold
+     text rather than lose its body. Those are handled by hand.
+   · text-shadow off, because a shadow behind clipped-transparent glyphs
+     bleeds through them as a halo.
+
+   Descendant text is covered: background-clip:text clips to the element's
+   own text AND its in-flow descendants', so container-level declarations
+   render their children in metal too. */
+[style^="color:#DAA110"]:not([style*="background"]):not([class*="bg-"]):not([class*="gy-goldframe"]),
+[style*=";color:#DAA110"]:not([style*="background"]):not([class*="bg-"]):not([class*="gy-goldframe"]),
+[style^="color: #DAA110"]:not([style*="background"]):not([class*="bg-"]):not([class*="gy-goldframe"]),
+[style*="; color: #DAA110"]:not([style*="background"]):not([class*="bg-"]):not([class*="gy-goldframe"]),
+[class*="text-[#DAA110]"]:not([class*="bg-"]) {
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none !important;
+}
+
 /* NEVER on the same element as .gy-goldframe: both own background-image and
    background-clip, one wins, and the loser is either an invisible label or
    a lost border (this exact bug shipped for eleven minutes on 22/8: the
@@ -4870,7 +4967,14 @@ html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
   line-height: 1.55;
   color: rgba(248, 245, 240, 0.78);
 }
-.gy-awd__allgo { font-size: 20px; color: #DAA110; }
+.gy-awd__allgo { font-size: 20px; color: #DAA110;
+  background-image: linear-gradient(100deg,
+    #C9990E 0%, #E8B622 22%, #F7DE8A 45%, #E2AC15 62%, #C9990E 85%, #B58A0A 100%);
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 /* Arrows: desktop affordance only, sitting in the header's right margin.
    Phones scroll the rail with a thumb and need nothing from us. */

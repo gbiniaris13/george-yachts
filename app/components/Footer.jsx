@@ -45,7 +45,12 @@ function FooterAmbientVideo() {
         loop
         muted
         playsInline
-        style={{ opacity: 0.55, filter: "saturate(1.05) brightness(0.95)" }}
+        /* 2026-08-22, George: "το έχουμε θολώσει πάρα πολύ... το βίντεο
+           κάτω είναι πανέμορφο". Opacity 0.55 → 0.82 and the brightness cut
+           removed, so the waves read as water instead of fog. Legibility
+           moves INTO the type instead of onto the film: the footer's text
+           sits on its own shadow now, not on a dimmer. */
+        style={{ opacity: 0.82, filter: "saturate(1.08)" }}
       >
         {near && <source src="/videos/footer-sunset.webm" type="video/webm" />}
         {near && <source src="/videos/footer-sunset.mp4" type="video/mp4" />}
@@ -340,7 +345,11 @@ const Footer = () => {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, rgba(13, 27, 42,0.55) 0%, rgba(13, 27, 42,0.45) 35%, rgba(13, 27, 42,0.55) 100%)",
+              /* 2026-08-22 — thinned with the video's un-dimming, same
+                 instruction. The wash now only steadies the edges; the
+                 middle lets the waves through. Text legibility rides on a
+                 text-shadow added at the container below. */
+              "linear-gradient(180deg, rgba(13, 27, 42,0.42) 0%, rgba(13, 27, 42,0.22) 40%, rgba(13, 27, 42,0.5) 100%)",
           }}
         />
       </div>
@@ -348,7 +357,15 @@ const Footer = () => {
       {/* All footer content sits above the ambient video via a
           single relative wrapper. Avoids touching every child's
           z-index individually. */}
-      <div className="relative" style={{ zIndex: 1 }}>
+      <div
+        className="relative"
+        style={{
+          zIndex: 1,
+          /* The type carries its own legibility now that the film behind it
+             is brighter: one soft ink shadow on everything in the footer. */
+          textShadow: "0 1px 3px rgba(13,27,42,0.8), 0 4px 18px rgba(13,27,42,0.55)",
+        }}
+      >
       {/* A.5 - Press strip with trust signals (IYBA + MYBA-standard
           + U.S. Registered). Forbes intentionally omitted until the
           article is actually published. */}
