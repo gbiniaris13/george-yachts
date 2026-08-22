@@ -83,6 +83,10 @@ const NAV_SECTIONS = [
       // gets the same standing as the two fleets: a seat in the main menu.
       { label: "Award-Winning Yachts", href: "/award-winning-yacht-charter-greece" },
       { label: "Crewed Charter, Explained", href: "/crewed-yacht-charter-greece" },
+      // 2026-08-22, George: "Αφού έχεις βάλει καταμαράνς σκέτα δεν πρέπει
+      // να βάλεις και μότορ γιότς σκέτα;" He is right about the symmetry:
+      // the two biggest type queries get the same seat.
+      { label: "Motor Yachts", href: "/motor-yacht-charter-greece" },
       { label: "Catamarans", href: "/catamaran-charter-greece" },
       { label: "View All", href: "/charter-yacht-greece" },
     ],
@@ -363,9 +367,14 @@ export default function NavDrawerSystem() {
               positioned, floating over a row whose two clusters sat either side
               of it. It is now the first item IN the row, where George asked for
               it to be. */}
+          {/* 2026-08-22 (George, mobile): the mark sat half on the Forbes
+              bar and half on the hero, with the hamburger below it —
+              "δείχνει προχειρότητα". On the phone the mark now lives INSIDE
+              the hero, centred above the eyebrow (see VideoSection); the
+              masthead keeps only the hamburger. Desktop is untouched. */}
           <Link
             href="/"
-            className="order-first shrink-0 group gy-logo-reveal"
+            className="order-first shrink-0 group gy-logo-reveal hidden md:block"
             data-cursor="Home"
             style={{ zIndex: 25 }}
           >

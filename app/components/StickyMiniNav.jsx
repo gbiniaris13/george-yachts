@@ -16,10 +16,16 @@
 import { useEffect, useRef, useState } from "react";
 
 const SECTIONS = [
+  // 2026-08-22 (George, on his phone): "Το Signature και το Waters δεν
+  // πατιούνται". He was right, and it was worse than a styling bug: both
+  // sections left the homepage in earlier redesigns (SignatureYacht in
+  // May, the map in July) and the mini-nav kept selling doors to rooms
+  // that no longer exist. Every id below is one that HomeClient actually
+  // renders today, and Awards takes their place: it is the section we
+  // rebuilt the homepage around.
   { id: "fleet", label: "Fleet" },
-  { id: "signature", label: "Signature" },
+  { id: "awarded", label: "Awards" },
   { id: "how", label: "How it works" },
-  { id: "map", label: "Waters" },
   { id: "filotimo", label: "Filotimo" },
   { id: "contact", label: "Contact" },
 ];

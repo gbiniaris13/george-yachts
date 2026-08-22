@@ -4641,11 +4641,15 @@ html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
 }
 
 .gy-awd__head {
+  /* 2026-08-22, George: the whole site centres its heroes; this header sat
+     left and read as a different house. Centred column, stats centred
+     under it; the rail below stays edge-to-edge, which is the one part
+     that SHOULD run off centre. */
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 18px 40px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
   margin-bottom: clamp(18px, 2.4vw, 28px);
 }
 .gy-awd__eyebrow {
@@ -4679,13 +4683,14 @@ html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
   line-height: 1.65;
   color: rgba(248, 245, 240, 0.62);
   max-width: 560px;
-  margin: 0;
+  margin: 0 auto;
 }
 /* The record in one quiet row. The old build spent four giant numerals on
    this; the numbers have not shrunk, only the type has. */
 .gy-awd__stats {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px 26px;
   margin: 0;
   font-family: var(--gy-font-ui);
@@ -4878,9 +4883,6 @@ html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
 }
 @media (min-width: 1024px) {
   .gy-awd__nav { display: flex; }
-  /* The stats row ends where the arrows live; without this the pair of
-     buttons sits on top of "6 seasons". Measured at 1440. */
-  .gy-awd__stats { padding-right: 104px; }
 }
 .gy-awd__arrow {
   width: 40px;

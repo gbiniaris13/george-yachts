@@ -43,45 +43,12 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
         </div>
       </section>
 
-      {/* 2026-07-08 (George's UI wave #3), three answers instead of
-          scrolling every card. Deep-links to the filtered fleet grid. */}
-      <div style={{ background: "#0D1B2A", padding: "56px 0 8px" }}>
-        <FleetQuickFinder heading="Find your crewed yacht in three answers" />
-      </div>
 
-      {/* Price Range */}
-      <section style={{ padding: "clamp(40px, 5vw, 56px) 24px", background: "#0D1B2A", textAlign: "center" }}>
-        <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 40px", border: "1px solid rgba(218, 161, 16,0.15)", borderRadius: 4 }}>
-          <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(1.6rem, 4vw, 2.4rem)", color: "#DAA110", margin: "0 0 16px 0" }}>
-            From €{lowestPrice.toLocaleString('en-US')} to €{highestPrice.toLocaleString('en-US')} / week
-          </p>
-          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, color: "rgba(248, 245, 240,0.4)", lineHeight: 1.8, margin: 0, letterSpacing: "0.05em" }}>
-            Full crew included · APA & expenses extra · curated for Greek waters
-          </p>
-        </div>
-      </section>
-
-      {/* Value Props */}
-      <section style={{ padding: "clamp(40px, 5vw, 56px) 24px", background: "#0D1B2A" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 40 }}>
-          {/* 2026-08-21 (section 5). A pilot emoji, a map emoji and a padlock
-              emoji at 32px, on the page that sells the most expensive weeks
-              on the site. Replaced with the same thin gold numeral the awards
-              band uses. */}
-          {[
-            { n: "01", title: "Full Crew", desc: "Captain, chef, stewardess. Your comfort is their profession." },
-            { n: "02", title: "Your Itinerary", desc: "Every day shaped around your wishes. No fixed routes." },
-            { n: "03", title: "Absolute Privacy", desc: "Your yacht. Your pace. Complete discretion." },
-          ].map((item, i) => (
-            <div key={i} style={{ textAlign: "center", padding: 40, border: "1px solid rgba(218, 161, 16,0.1)", borderRadius: 4 }}>
-              <div style={{ fontFamily: "var(--gy-font-display)", fontWeight: 250, fontSize: 26, lineHeight: 1, color: "rgba(218, 161, 16,0.55)", marginBottom: 18, fontVariantNumeric: "lining-nums" }}>{item.n}</div>
-              <h3 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.3rem", color: "#F8F5F0", marginBottom: 12 }}>{item.title}</h3>
-              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248, 245, 240,0.4)", lineHeight: 1.8 }}>{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
+      {/* 2026-08-22, George: "Θέλω με τη μία ο πελάτης να βλέπει τα σκάφη
+          κατευθείαν, και κάτω κάτω να πάει όλη αυτή η πληροφορία και οι
+          ερωτήσεις." The grid now answers the visit on arrival; the finder,
+          the price band and the value props follow it as depth for whoever
+          wants it. Same order on both fleet pages, by the same instruction. */}
       {/* Yacht Grid */}
       <section style={{ padding: "clamp(40px, 5vw, 56px) 24px", background: "#0D1B2A" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
@@ -148,6 +115,45 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
               View All Charter Yachts →
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* 2026-07-08 (George's UI wave #3), three answers instead of
+          scrolling every card. Deep-links to the filtered fleet grid. */}
+      <div style={{ background: "#0D1B2A", padding: "56px 0 8px" }}>
+        <FleetQuickFinder heading="Find your crewed yacht in three answers" />
+      </div>
+
+      {/* Price Range */}
+      <section style={{ padding: "clamp(40px, 5vw, 56px) 24px", background: "#0D1B2A", textAlign: "center" }}>
+        <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 40px", border: "1px solid rgba(218, 161, 16,0.15)", borderRadius: 4 }}>
+          <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(1.6rem, 4vw, 2.4rem)", color: "#DAA110", margin: "0 0 16px 0" }}>
+            From €{lowestPrice.toLocaleString('en-US')} to €{highestPrice.toLocaleString('en-US')} / week
+          </p>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, color: "rgba(248, 245, 240,0.4)", lineHeight: 1.8, margin: 0, letterSpacing: "0.05em" }}>
+            Full crew included · APA & expenses extra · curated for Greek waters
+          </p>
+        </div>
+      </section>
+
+      {/* Value Props */}
+      <section style={{ padding: "clamp(40px, 5vw, 56px) 24px", background: "#0D1B2A" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 40 }}>
+          {/* 2026-08-21 (section 5). A pilot emoji, a map emoji and a padlock
+              emoji at 32px, on the page that sells the most expensive weeks
+              on the site. Replaced with the same thin gold numeral the awards
+              band uses. */}
+          {[
+            { n: "01", title: "Full Crew", desc: "Captain, chef, stewardess. Your comfort is their profession." },
+            { n: "02", title: "Your Itinerary", desc: "Every day shaped around your wishes. No fixed routes." },
+            { n: "03", title: "Absolute Privacy", desc: "Your yacht. Your pace. Complete discretion." },
+          ].map((item, i) => (
+            <div key={i} style={{ textAlign: "center", padding: 40, border: "1px solid rgba(218, 161, 16,0.1)", borderRadius: 4 }}>
+              <div style={{ fontFamily: "var(--gy-font-display)", fontWeight: 250, fontSize: 26, lineHeight: 1, color: "rgba(218, 161, 16,0.55)", marginBottom: 18, fontVariantNumeric: "lining-nums" }}>{item.n}</div>
+              <h3 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.3rem", color: "#F8F5F0", marginBottom: 12 }}>{item.title}</h3>
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248, 245, 240,0.4)", lineHeight: 1.8 }}>{item.desc}</p>
+            </div>
+          ))}
         </div>
       </section>
 

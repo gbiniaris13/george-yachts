@@ -322,6 +322,27 @@ export default function VideoSection() {
               rides as a four-word crown so the headline stays fast).
               Small caps, gold, wide tracking - the site's standard
               eyebrow voice. */}
+          {/* 2026-08-22 (George, mobile): the mark, centred and large,
+              above the eyebrow — on the phone only. The masthead there now
+              carries just the hamburger, so the hero introduces the house
+              the way a cover introduces a book. Desktop keeps its masthead
+              logo and never renders this. */}
+          <div className="md:hidden" style={{ display: "flex", justifyContent: "center", marginBottom: 26 }}>
+            <picture>
+              <source srcSet="/images/yacht-logo-tight-300.webp" type="image/webp" />
+              <img
+                src="/images/yacht-logo-tight-300.png"
+                alt="George Yachts Brokerage House"
+                style={{
+                  width: "min(220px, 58vw)",
+                  height: "auto",
+                  filter:
+                    "drop-shadow(0 2px 6px rgba(13,27,42,0.9)) drop-shadow(0 10px 28px rgba(13,27,42,0.6))",
+                }}
+              />
+            </picture>
+          </div>
+
           {/* gy-goldtext: the ramp through the glyphs; flat gold read as
               mustard over the video, George's call twice in one day. */}
           <p
@@ -464,9 +485,15 @@ export default function VideoSection() {
               <span className="gy-goldtext">Browse the Fleet</span>
             </a>
 
+            {/* 2026-08-22, George on his phone: "Brief George δεν μου αρέσει
+                καθόλου. Θέλω ένα CTA που να τους οδηγεί κατευθείαν στη φόρμα."
+                The full charter form lives at the foot of this same page
+                (#contact), so the second act of the hero is now a straight
+                line to it: no route change, no new page, the visitor lands
+                on the fields themselves. */}
             <a
-              href="/inquiry"
-              data-cursor="Brief"
+              href="#contact"
+              data-cursor="Plan"
               className="gy-hero-cta-secondary"
               style={{
                 display: "inline-flex",
@@ -486,7 +513,7 @@ export default function VideoSection() {
                 transition: "color 320ms ease",
               }}
             >
-              Brief George
+              Plan Your Week
             </a>
           </div>
         </div>

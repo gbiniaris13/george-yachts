@@ -142,17 +142,39 @@ export default function AboutContent() {
             No call centres. No middlemen.
           </h2>
           <div className="about-philosophy__line" />
+          {/* 2026-08-22 — replaced with the house presentation from the Helm
+              edition, on George's instruction ("να συμπεριλάβουμε στο site
+              και να αντικατασταθούν κάποια κείμενα με αυτά"). Every claim in
+              it is one the site already carries: Wyoming HQ, Kifisia office,
+              personal vetting, the Managing Broker answering himself, MYBA
+              cycle, filotimo. */}
           <p className="about-philosophy__text">
-            George Yachts is led by George P. Biniaris, Managing Broker and IYBA member, operating from Athens with a hands-on approach built from years on the water. From crewed sailing charters in the Ionian to complex MYBA-contract superyacht operations in the Cyclades, every recommendation comes from first-hand experience - not a database.
+            George Yachts Brokerage House is a boutique American brokerage,
+            headquartered in Wyoming, USA, and operated from Athens, with an
+            office in Kifisia and boots on the ground in Greek waters all
+            season long. Small on purpose: few clients, whole attention,
+            excellence as the only acceptable standard.
           </p>
           <p className="about-philosophy__text">
-            As a boutique brokerage, we do one thing and we do it properly: crewed yacht charters in Greek waters. The Cyclades, the Ionian, the Saronic Gulf - every region, every season, every type of vessel. One broker, one relationship, one standard.
+            White glove, to us, is not a slogan; it is a calendar. We are
+            there long before you step aboard, shaping the week around the
+            people you love. We are on the quay at your check-in. We are a
+            message away every day you are on the water. And we are still
+            here after your check-out, because by then you are no longer a
+            booking, you are a relationship.
           </p>
           <p className="about-philosophy__text">
-            Every yacht in this house is personally vetted. Every captain is known by name. Itineraries are crafted from real routes sailed in these waters - not copied from brochures. We work exclusively with MYBA-standard contracts, transparent APA and VAT breakdowns, and fast, detailed proposals.
+            Our clients describe it simply: <em>our guy in Greece</em>. A team
+            that came from the water and from five-star floors, a fleet where
+            every yacht has been personally vetted, and every request answered
+            by the Managing Broker himself, through the full MYBA charter
+            cycle, from the first proposal to the captain&apos;s briefing.
           </p>
           <p className="about-philosophy__text">
-            George Yachts is registered in the United States (Wyoming LLC) and operates from Athens, Greece. We serve an international clientele who expect discretion, precision, and a level of personal attention that larger platforms simply cannot provide.
+            Above all we are guided by one Greek word that does not translate,
+            <em> filotimo</em>: the quiet duty to treat every guest with
+            honour, to give more than was asked, and to do right by them,
+            always.
           </p>
         </RevealSection>
       </section>
@@ -303,16 +325,33 @@ export default function AboutContent() {
                 Managing Broker &middot; <a href="https://iyba.org" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}>IYBA Member</a>
               </p>
               <div className="about-george__line" />
+              {/* 2026-08-22 — the Helm edition's portrait of George, on his
+                  instruction. One correction against the source text: the
+                  edition opened the second paragraph with a seafarer's title
+                  George does not hold. He holds a sailing skipper's licence
+                  and a powerboat licence, and the credentials guard rightly
+                  refuses the other word anywhere near his name, including in
+                  this comment. The sentence keeps its meaning and loses the
+                  wrong title. */}
               <p className="about-george__bio">
-                Every client works directly with George. No call centres, no junior agents,
-                no automated responses. When you reach out, George answers. When you board
-                your yacht, George has personally vetted the crew, the itinerary, and every
-                detail of your experience.
+                His connection to these waters is not professional first, it
+                is ancestral. His mother is from Syros, the administrative
+                heart of the Cyclades, and he grew up crossing the Aegean on
+                his uncle&apos;s Ferretti, Athens to Syros to Mykonos, to
+                wherever the islands called.
               </p>
               <p className="about-george__bio">
-                George knows these waters first-hand - every anchorage, every crew,
-                every restaurant worth the taxi ride. His recommendations come from personal
-                experience aboard the yachts, not from a brochure or a database.
+                Years on the water as a licensed skipper: seasons out of
+                Corfu, and charter operations across the Ionian, the Cyclades
+                and the Saronic. When he recommends an anchorage, it is
+                because he has held a wheel there.
+              </p>
+              <p className="about-george__bio">
+                Before yachting, a decade at the top of Mykonos hospitality,
+                directing operations for a five-star hotel, a fine-dining
+                restaurant and one of the island&apos;s great beach clubs,
+                leading teams of over two hundred for an international,
+                high-profile clientele.
               </p>
               <blockquote className="about-george__quote">
                 &ldquo;My clients don&apos;t just charter a yacht. They gain a trusted advisor

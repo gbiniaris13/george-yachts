@@ -44,70 +44,12 @@ export default function ExplorerFleetClient({ yachts, lowestWeekly = 11500, high
         </div>
       </section>
 
-      {/* 2026-07-08 (George's UI wave #3), three answers instead of
-          scrolling every card. Deep-links to the filtered fleet grid. */}
-      <div style={{ background: "#0D1B2A", padding: "56px 0 8px" }}>
-        <FleetQuickFinder heading="Find your Explorer yacht in three answers" />
-      </div>
 
-      {/* Price Anchor */}
-      <section style={{ padding: "clamp(40px, 5vw, 56px) 24px", background: "#0D1B2A", textAlign: "center" }}>
-        <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 40px", border: "1px solid rgba(218, 161, 16,0.15)", borderRadius: 4 }}>
-          {/* 2026-08-21 (section 5). This read "From €420 to €1,800 per
-              person / Per week · skipper included or available · expenses
-              extra". Both halves had to go. The figure was the week divided
-              by the berths, which is not a price anybody can pay, and
-              "skipper included or available" is the exact arrangement George
-              has taken off the site: this house writes crewed weeks. */}
-          <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(1.6rem, 4vw, 2.4rem)", color: "#DAA110", margin: "0 0 16px 0" }}>
-            From €{lowestWeekly.toLocaleString('en-US')} to €{highestWeekly.toLocaleString('en-US')} / week
-          </p>
-          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, color: "rgba(248, 245, 240,0.4)", lineHeight: 1.8, margin: 0, letterSpacing: "0.05em" }}>
-            Per yacht, per week · crew aboard · APA &amp; expenses extra
-          </p>
-        </div>
-      </section>
-
-      {/* Value Props */}
-      <section style={{ padding: "clamp(40px, 5vw, 56px) 24px", background: "#0D1B2A" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 40 }}>
-          {/* The middle card used to be titled "Skippered or Crewed" and
-              offered "Captain only, or add a hostess". That is the offer
-              George has removed. What replaces it is the reason a smaller
-              yacht is the right call, which is the argument the card was
-              standing in the way of.
-
-              The emoji went with it. A palm tree, a sailing boat and two
-              grey figures at 32px is what a template does, and it is the
-              first thing that tells a reader nobody looked at this page. A
-              thin gold numeral is what the awards band uses and it costs
-              nothing to read. */}
-          {[
-            { n: "01", title: "More Islands, Less Hassle", desc: "No ferries. No packing and unpacking. The yacht moves while you sleep." },
-            { n: "02", title: "Small Enough to Get In", desc: "Bays the large yachts cannot enter, and a table ashore in villages they sail past." },
-            { n: "03", title: "Built for a Group", desc: "Six to twelve, travelling together, with the crew aboard to run the week." },
-          ].map((item, i) => (
-            <div key={i} style={{ textAlign: "center", padding: 40, border: "1px solid rgba(248, 245, 240,0.06)", borderRadius: 4 }}>
-              <div style={{ fontFamily: "var(--gy-font-display)", fontWeight: 250, fontSize: 26, lineHeight: 1, color: "rgba(218, 161, 16,0.55)", marginBottom: 18, fontVariantNumeric: "lining-nums" }}>{item.n}</div>
-              <h3 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.3rem", color: "#F8F5F0", marginBottom: 12 }}>{item.title}</h3>
-              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248, 245, 240,0.4)", lineHeight: 1.8 }}>{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Perfect For */}
-      <section style={{ padding: "clamp(40px, 5vw, 56px) 24px", background: "#0D1B2A", textAlign: "center", borderTop: "1px solid rgba(218, 161, 16,0.06)" }}>
-        <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "2rem", color: "#F8F5F0", marginBottom: 40 }}>Perfect For</h2>
-        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16, maxWidth: 800, margin: "0 auto" }}>
-          {["Friend reunions", "Milestone birthdays", "Bachelor & bachelorette trips", "Multi-generational family holidays", "Small corporate retreats"].map((item, i) => (
-            <span key={i} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: "rgba(248, 245, 240,0.5)", padding: "12px 24px", border: "1px solid rgba(218, 161, 16,0.15)", borderRadius: 24, letterSpacing: "0.1em" }}>
-              {item}
-            </span>
-          ))}
-        </div>
-      </section>
-
+      {/* 2026-08-22, George: "Θέλω με τη μία ο πελάτης να βλέπει τα σκάφη
+          κατευθείαν, και κάτω κάτω να πάει όλη αυτή η πληροφορία και οι
+          ερωτήσεις." The grid now answers the visit on arrival; the finder,
+          the price band and the value props follow it as depth for whoever
+          wants it. Same order on both fleet pages, by the same instruction. */}
       {/* Yacht Grid */}
       <section style={{ padding: "clamp(40px, 5vw, 56px) 24px", background: "#0D1B2A" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
@@ -175,6 +117,70 @@ export default function ExplorerFleetClient({ yachts, lowestWeekly = 11500, high
               View All Charter Yachts →
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* 2026-07-08 (George's UI wave #3), three answers instead of
+          scrolling every card. Deep-links to the filtered fleet grid. */}
+      <div style={{ background: "#0D1B2A", padding: "56px 0 8px" }}>
+        <FleetQuickFinder heading="Find your sailing yacht in three answers" />
+      </div>
+
+      {/* Price Anchor */}
+      <section style={{ padding: "clamp(40px, 5vw, 56px) 24px", background: "#0D1B2A", textAlign: "center" }}>
+        <div style={{ maxWidth: 600, margin: "0 auto", padding: "48px 40px", border: "1px solid rgba(218, 161, 16,0.15)", borderRadius: 4 }}>
+          {/* 2026-08-21 (section 5). This read "From €420 to €1,800 per
+              person / Per week · skipper included or available · expenses
+              extra". Both halves had to go. The figure was the week divided
+              by the berths, which is not a price anybody can pay, and
+              "skipper included or available" is the exact arrangement George
+              has taken off the site: this house writes crewed weeks. */}
+          <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(1.6rem, 4vw, 2.4rem)", color: "#DAA110", margin: "0 0 16px 0" }}>
+            From €{lowestWeekly.toLocaleString('en-US')} to €{highestWeekly.toLocaleString('en-US')} / week
+          </p>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, color: "rgba(248, 245, 240,0.4)", lineHeight: 1.8, margin: 0, letterSpacing: "0.05em" }}>
+            Per yacht, per week · crew aboard · APA &amp; expenses extra
+          </p>
+        </div>
+      </section>
+
+      {/* Value Props */}
+      <section style={{ padding: "clamp(40px, 5vw, 56px) 24px", background: "#0D1B2A" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 40 }}>
+          {/* The middle card used to be titled "Skippered or Crewed" and
+              offered "Captain only, or add a hostess". That is the offer
+              George has removed. What replaces it is the reason a smaller
+              yacht is the right call, which is the argument the card was
+              standing in the way of.
+
+              The emoji went with it. A palm tree, a sailing boat and two
+              grey figures at 32px is what a template does, and it is the
+              first thing that tells a reader nobody looked at this page. A
+              thin gold numeral is what the awards band uses and it costs
+              nothing to read. */}
+          {[
+            { n: "01", title: "More Islands, Less Hassle", desc: "No ferries. No packing and unpacking. The yacht moves while you sleep." },
+            { n: "02", title: "Small Enough to Get In", desc: "Bays the large yachts cannot enter, and a table ashore in villages they sail past." },
+            { n: "03", title: "Built for a Group", desc: "Six to twelve, travelling together, with the crew aboard to run the week." },
+          ].map((item, i) => (
+            <div key={i} style={{ textAlign: "center", padding: 40, border: "1px solid rgba(248, 245, 240,0.06)", borderRadius: 4 }}>
+              <div style={{ fontFamily: "var(--gy-font-display)", fontWeight: 250, fontSize: 26, lineHeight: 1, color: "rgba(218, 161, 16,0.55)", marginBottom: 18, fontVariantNumeric: "lining-nums" }}>{item.n}</div>
+              <h3 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.3rem", color: "#F8F5F0", marginBottom: 12 }}>{item.title}</h3>
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248, 245, 240,0.4)", lineHeight: 1.8 }}>{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Perfect For */}
+      <section style={{ padding: "clamp(40px, 5vw, 56px) 24px", background: "#0D1B2A", textAlign: "center", borderTop: "1px solid rgba(218, 161, 16,0.06)" }}>
+        <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "2rem", color: "#F8F5F0", marginBottom: 40 }}>Perfect For</h2>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16, maxWidth: 800, margin: "0 auto" }}>
+          {["Friend reunions", "Milestone birthdays", "Bachelor & bachelorette trips", "Multi-generational family holidays", "Small corporate retreats"].map((item, i) => (
+            <span key={i} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: "rgba(248, 245, 240,0.5)", padding: "12px 24px", border: "1px solid rgba(218, 161, 16,0.15)", borderRadius: 24, letterSpacing: "0.1em" }}>
+              {item}
+            </span>
+          ))}
         </div>
       </section>
 

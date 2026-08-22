@@ -195,8 +195,28 @@ function FleetPanel({
         }}
       />
 
-      {/* Content */}
-      <div className="relative z-10 h-full min-h-[50dvh] md:min-h-[100dvh] flex flex-col items-center justify-center px-8 py-16 text-center">
+      {/* Content.
+          2026-08-22, George: when the Private Fleet loop reaches its white
+          clouds the type disappeared. The fix is a scrim that travels WITH
+          the text rather than a darker overlay over the whole film: a soft
+          radial pool of navy behind the content block, plus a text shadow
+          on everything inside. One component, so both covers are identical
+          by construction, which was the second half of the instruction. */}
+      <div
+        className="relative z-10 h-full min-h-[50dvh] md:min-h-[100dvh] flex flex-col items-center justify-center px-8 py-16 text-center"
+        style={{
+          textShadow: "0 1px 3px rgba(13,27,42,0.85), 0 6px 26px rgba(13,27,42,0.65)",
+        }}
+      >
+        <span
+          aria-hidden="true"
+          className="absolute pointer-events-none"
+          style={{
+            inset: "18% 0",
+            background:
+              "radial-gradient(ellipse 68% 52% at 50% 50%, rgba(13,27,42,0.52), rgba(13,27,42,0) 72%)",
+          }}
+        />
         {/* Collection label */}
         <p
           className="text-[#DAA110]/80 text-[9px] mb-8"
