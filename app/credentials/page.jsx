@@ -32,9 +32,29 @@ export const metadata = {
   // whether a broker is real". 331 impressions at positions 19.9 and 21.6 with
   // no clicks. The title now carries the question and the description leads
   // with the method, then the proof.
-  title: titleField("Yacht Charter Broker Credentials: How to Verify Any Broker"),
+  //
+  // 2026-08-22, and the August move has to be walked back, because the data
+  // says it cost more than it earned. Chasing the "how to verify" question
+  // put this 850-word page in a fight with
+  // /blog/how-to-verify-yacht-charter-broker-credentials-2026, which is 3.046
+  // words on exactly that subject and sits at position 1. GSC, 30 days:
+  //
+  //   "how to verify a yacht charter broker's credentials"
+  //       the article   position  1,0   15 impressions
+  //       this page     position 35,6   65 impressions
+  //   "how to verify superyacht charter broker credentials"
+  //       the article   position  1,9   17 impressions
+  //       this page     position 25,9   84 impressions
+  //
+  // Google serves the weaker page four times as often. The winner is being
+  // held down by its own sibling. So the question goes back to the article,
+  // and this page returns to the job only it can do: proving THIS house.
+  // That is also the better GEO position. When an engine is asked whether
+  // George Yachts can be trusted, this is the page that answers, and it now
+  // says so in its title.
+  title: titleField("George Yachts Credentials: Forbes, IYBA, MYBA Contracts"),
   description:
-    "Four checks that work on any charter broker: the association directory, the contract, the registered entity, and coverage they did not commission. Ours, in full.",
+    "The documentary trail behind this house: the Forbes feature nobody paid for, IYBA Charter Active membership, MYBA-standard contracts, and the Wyoming entity that signs your agreement.",
   alternates: { canonical: "https://georgeyachts.com/credentials" },
   openGraph: {
     title: "Credentials | George Yachts",
@@ -684,11 +704,19 @@ export default function CredentialsPage() {
           <p className="gy-eyebrow" style={{ color: "#DAA110" }}>
             The method
           </p>
+          {/* 2026-08-22: το h2 έλεγε «How to verify a yacht charter broker's
+              credentials», λέξη προς λέξη το ερώτημα που κατέχει το άρθρο
+              /blog/how-to-verify-yacht-charter-broker-credentials-2026 στη
+              θέση 1. Δύο σελίδες του ίδιου site έλεγαν στη Google «εγώ είμαι
+              η απάντηση» και κέρδιζε η μικρότερη σε συχνότητα εμφάνισης, στη
+              θέση 26 με 35. Το h2 εδώ κρατά τη μέθοδο σε περίληψη, ο πλήρης
+              οδηγός έχει το δικό του σπίτι, και ο σύνδεσμος από κάτω το λέει
+              και στον αναγνώστη και στον crawler. */}
           <h2
             className="gy-display-m"
             style={{ margin: "10px 0 20px", letterSpacing: "-0.02em" }}
           >
-            How to verify a yacht charter broker&apos;s credentials
+            The four checks, in short
           </h2>
           <p
             style={{
@@ -705,6 +733,16 @@ export default function CredentialsPage() {
             which is exactly why the question is asked so often. What exists is
             four independent checks, each of which can be done in a few minutes
             and none of which relies on taking the broker&apos;s word for it.
+            The long version, with the directories, the contract clauses and
+            what each one does and does not prove, is set out in{" "}
+            <Link
+              href="/blog/how-to-verify-yacht-charter-broker-credentials-2026"
+              className="gy-goldtext"
+              style={{ textDecoration: "underline", textUnderlineOffset: "3px" }}
+            >
+              how to verify a yacht charter broker
+            </Link>
+            .
           </p>
           {[
             {
