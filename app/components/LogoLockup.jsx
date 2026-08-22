@@ -21,6 +21,7 @@ export default function LogoLockup({
   gap = 7,
   subtitleSize = 8,
   imgClassName = "",
+  imgSizes = "(max-width: 767px) 232px, 280px",
   imgStyle = {},
   style = {},
 }) {
@@ -35,10 +36,22 @@ export default function LogoLockup({
         ...style,
       }}
     >
+      {/* 2026-08-22, ταχύτητα: το ενιαίο 972px webp ήταν 118 KB και κάθεται
+          στην κορυφή του κινητού, όπου μετράει το LCP. Το ίδιο σήμα σε τρία
+          πλάτη: 464 για το κινητό (232 CSS px στα 2x), 700 για το masthead,
+          972 για οθόνες υψηλής πυκνότητας. Το κινητό κατεβάζει 36 KB αντί
+          για 118. sizes ανά χρήση, γιατί το ίδιο component σερβίρει hero,
+          nav, drawer και footer σε τελείως διαφορετικά μεγέθη. */}
       <picture>
-        <source srcSet="/images/gy-logo-mark-2x.webp" type="image/webp" />
+        <source
+          type="image/webp"
+          sizes={imgSizes}
+          srcSet="/images/gy-logo-mark-464.webp 464w, /images/gy-logo-mark-700.webp 700w, /images/gy-logo-mark-2x.webp 972w"
+        />
         <img
-          src="/images/gy-logo-mark-2x.png"
+          src="/images/gy-logo-mark-464.png"
+          sizes={imgSizes}
+          srcSet="/images/gy-logo-mark-464.png 464w, /images/gy-logo-mark-700.png 700w, /images/gy-logo-mark-2x.png 972w"
           alt="George Yachts, The Brokerage House"
           className={imgClassName}
           style={{

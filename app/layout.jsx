@@ -13,7 +13,6 @@ import Script from "next/script";
 import NavDrawerSystem from "./components/NavDrawerSystem";
 import RecaptchaOnDemand from "./components/RecaptchaOnDemand";
 import GlobalEffects from "./components/GlobalEffects";
-import CustomCursor from "./components/CustomCursor"; // reinstated 2026-06-29 (George)
 // CustomCursor removed 2026-05-08 (Boss directive) — the custom
 // dual-cursor implementation never quite landed and Boss preferred
 // the system default. Component file + CSS state machine kept on
@@ -23,9 +22,6 @@ import CustomCursor from "./components/CustomCursor"; // reinstated 2026-06-29 (
 // utility components mounted globally; each one early-returns on
 // reduced-motion / coarse pointer / mute as appropriate.
 import SmoothScroll from "./components/SmoothScroll";
-import ScrollProgress from "./components/ScrollProgress";
-import SoundFx from "./components/SoundFx";
-import ScrollToTop from "./components/ScrollToTop";
 import WhatsAppButton from "./components/WhatsAppButton";
 // 2026-08-19 (job 8) — not rendered; see the note at its old position.
 // import PushOptIn from "./components/PushOptIn";
@@ -39,7 +35,6 @@ import SpeculationRules from "./components/SpeculationRules";
 // import ContactDrawer from "./components/ContactDrawer";
 // 2026-08-19 (job 8) — not rendered; see the note at its old position.
 // import VisitorGreeting from "./components/VisitorGreeting";
-import AmbientPlayer from "./components/AmbientPlayer";
 // Phase 27d (Forbes-launch eve, 2026-05-05) — BrokerStatus pill
 // (the green "Dockside — replies within the hour" indicator) removed
 // from the layout per Boss explicit instruction: "το πράσινο που
@@ -55,14 +50,8 @@ import StickyFleetCTA from "./components/StickyFleetCTA";
 // comparisons, glossary, reports, articles, anchorages) after 40%
 // scroll. Two CTAs: WhatsApp + Calendly. Dismissible 24h. Coexists
 // with WhatsAppButton via body class coordination.
-import StickyInquiryBar from "./components/StickyInquiryBar";
-import AskGeorgeWidget from "./components/AskGeorgeWidget";
-import GoldCurtain from "./components/GoldCurtain";
-import RouteTransition from "./components/RouteTransition";
-import MouseParallax from "./components/MouseParallax";
 // 2026-08-19 (job 8) — not rendered; see the note at its old position.
 // import ExitIntentModal from "./components/ExitIntentModal";
-import AmbientScroll from "./components/AmbientScroll";
 // Cleanup log (for anyone wondering where these went):
 //   • TranslateWidget — relocated inside NavDrawerSystem's icon strip
 //   • WelcomeLanguagePopup, SmartWelcome, WeatherAware, VoiceSearch —
@@ -72,7 +61,6 @@ import AmbientScroll from "./components/AmbientScroll";
 //     was the primary "siege" feel on first visit
 //   • Leadsy AI tracker — overlapped with Microsoft Clarity
 // import LiveTicker from "./components/LiveTicker"; // unmounted 2026-08-20, see the note at the render site below
-import VisitorBeacon from "./components/VisitorBeacon";
 // Removed: VoiceSearch (nobody uses voice on yacht sites)
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { WishlistProvider } from "./components/WishlistProvider";
@@ -80,11 +68,9 @@ import CurrencyProvider from "./components/CurrencyProvider";
 import JsonLd from "./components/JsonLd";
 import { organizationSchema } from "@/lib/organizationSchema";
 import { serviceSchema, websiteSchema, getServiceSchemaWithReviews } from "@/lib/serviceSchema";
-import VisitorIntelligence from "./components/VisitorIntelligence";
-import EnhancedAnalytics from "./components/EnhancedAnalytics";
-import MicrosoftClarity from "./components/MicrosoftClarity";
 import ForbesTopBar from "./components/ForbesTopBar";
 import { cookies } from "next/headers";
+import DeferredWidgets from "./components/DeferredWidgets";
 // Swiper CSS moved to individual Swiper components to avoid loading on non-Swiper pages
 
 // 2026-08-20 (design pass, job 14) — Geist is gone. It was the Next.js
@@ -592,18 +578,14 @@ export default async function RootLayout({ children }) {
         <ForbesTopBar />
 
         {/* E1, Gold curtain opens once per session, first thing visitors see */}
-        <GoldCurtain />
         {/* Phase 22 (luxury rebuild), Hermes/Bottega-style gold sweep
             on every route change. 360ms ribbon wipe. Skipped on first
             mount (GoldCurtain owns the entrance) and on prefers-reduced-
             motion. */}
-        <RouteTransition />
         {/* Phase 26, pseudo-3D mouse parallax on .gy-ken-burns
             containers (yacht hero, /greece-by-yacht hero). Cheap
             CSS substitute for the AI depth-map in Boss's C1 combo
             decision. Skipped on touch + reduced-motion. */}
-        <MouseParallax />
-
         {/* Stage 2 (Extra IG) - Organization + Service + WebSite consolidated
             into ONE @graph so AI engines and Google read a single connected
             entity graph (the @ids cross-reference each other). Per-page schemas
@@ -622,7 +604,6 @@ export default async function RootLayout({ children }) {
 
         {/* Global Effects + Custom Cursor, all pages */}
         <GlobalEffects />
-        <CustomCursor />
         {/* Phase 27i (2026-05-07), cinematic layer.
             SmoothScroll: Lenis-driven interpolated scrolling, the
               page glides instead of snapping.
@@ -633,11 +614,7 @@ export default async function RootLayout({ children }) {
               AmbientPlayer's session-key, so one toggle covers all
               sound on the site. */}
         <SmoothScroll />
-        <ScrollProgress />
-        <SoundFx />
-        <ScrollToTop />
         {/* A4, Ambient scroll parallax driver (publishes CSS vars) */}
-        <AmbientScroll />
         {/* 2026-07-02 (ASK B 2.4), Speculation Rules prerender for the
             two highest-intent destinations. Progressive enhancement;
             PostHogProvider gates analytics on document.prerendering. */}
@@ -731,7 +708,6 @@ export default async function RootLayout({ children }) {
             Click-to-play remains the model, pill stays muted on
             load, plays only after the explicit gesture. Sound
             quality fix tracked separately. */}
-        <AmbientPlayer />
         {/* Phase 27d (2026-05-05), BrokerStatus retired per Boss
             instruction. The pill was breaking the hero composition.
             <BrokerStatus />  */}
@@ -745,7 +721,6 @@ export default async function RootLayout({ children }) {
         {/* H.1, Ask George AI Concierge (sitewide). Sits ABOVE the
             WhatsApp button at bottom-right. Widget is fully client-side;
             graceful fallback when AI_API_KEY env vars aren't configured. */}
-        <AskGeorgeWidget />
         {/* Roberto 2026-05-02, sticky bottom CTA so the fleet is one
             tap from anywhere on the site (auto-hides on fleet/yacht
             routes). yachtCount left undefined here at the layout
@@ -756,7 +731,6 @@ export default async function RootLayout({ children }) {
         {/* Phase 7 R22 (2026-05-12, technical brief Priority 1A) -
             StickyInquiryBar for programmatic pages. The component
             self-suppresses on homepage and conversion pages. */}
-        <StickyInquiryBar />
         {/* D2, Exit-intent capture, one shot per session.
 
             2026-08-19 (design pass, job 8) — no longer rendered. George asked
@@ -776,15 +750,12 @@ export default async function RootLayout({ children }) {
             the wrong moment. The /favorites page already exposes
             a static "Send to George" form that does the same job
             on the visitor's own schedule. */}
-        <VisitorBeacon />
         </CurrencyProvider>
         </WishlistProvider>
         </I18nProvider>
         </PostHogProvider>
 
         {/* Visitor Intelligence: real-time tracking + hot lead popup */}
-        <VisitorIntelligence />
-
         {/* Free, self-hosted cookie-consent banner (replaces Cookiebot). */}
         <CookieConsent />
 
@@ -841,8 +812,9 @@ export default async function RootLayout({ children }) {
             and the GDPR disclosure simpler. */}
 
         {/* Safe Pass Apr 2026, additive enhanced analytics */}
-        <EnhancedAnalytics />
-        <MicrosoftClarity />
+        {/* Ό,τι δεν χρειάζεται στο πρώτο καρέ, φορτώνει μετά. Δες
+            DeferredWidgets.jsx για το κριτήριο και για το τι ΔΕΝ μπήκε. */}
+        <DeferredWidgets />
       </body>
     </html>
   );

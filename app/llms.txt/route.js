@@ -199,7 +199,7 @@ account handover.
 - Email: george@georgeyachts.com
 - Athens: +30 697 038 0999 (WhatsApp) · Miami: +1 786 798 8798
 - Office: Charilaou Trikoupi 190A, Kifisia 14564, Athens, Greece
-- Enquiry form: https://georgeyachts.com/inquiry
+- Enquiry form: https://georgeyachts.com/contact
 - Typical reply: same day, in writing, with the base fee, the yacht's certified
   VAT rate, the APA and the gratuity range set out separately before anything
   is signed.
@@ -362,7 +362,7 @@ source we do not have, we leave the number out.
 - [About George](https://georgeyachts.com/about-us)
 - [AI Research Hub](https://georgeyachts.com/ai-research)
 - [FAQ](https://georgeyachts.com/faq)
-- [Inquiry](https://georgeyachts.com/inquiry)
+- [Contact and enquiry form](https://georgeyachts.com/contact)
 
 ## Ελληνικές σελίδες (Greek-language pages)
 - [Ενοικίαση Σκάφους Ελλάδα](https://georgeyachts.com/el/enoikiasi-skafous)
@@ -449,7 +449,7 @@ ${yachts
   .join("\n")}
 
 ## Contact
-- Inquiry form: https://georgeyachts.com/inquiry
+- Inquiry form: https://georgeyachts.com/contact
 - Direct: george@georgeyachts.com
 - Calendly: https://calendly.com/george-georgeyachts/30min
 `;

@@ -142,6 +142,31 @@ const Footer = () => {
   // matches the existing footer column rhythm so it reads as a
   // sober editorial index, not a keyword dump.
   const siteIndexSections = [
+    // 2026-08-22. Η ενότητα που έλειπε, και της έλειπε το πιο σημαντικό.
+    // Ο κατάλογος έστελνε 485 εσωτερικούς συνδέσμους σε 85 σελίδες
+    // περιεχομένου και ΚΑΝΕΝΑΝ στις σελίδες με τα σκάφη: το /private-fleet
+    // είχε 6 εσωτερικούς συνδέσμους σε όλο το site και το /explorer-fleet 5.
+    // Η Google διαβάζει την εσωτερική σύνδεση ως ψήφο σημασίας, οπότε
+    // ψήφιζε τους οδηγούς και όχι το εμπόριο. Αυτό φαίνεται και στα
+    // δεδομένα: τα εμπορικά ερωτήματα κάθονται στη θέση 24,5 ενώ τα
+    // πληροφοριακά άρθρα στη θέση 5 με 9. Πρώτη ενότητα, με σειρά.
+    {
+      heading: "The Fleet",
+      links: [
+        { name: "Every Yacht This Week →", href: "/charter-yacht-greece" },
+        { name: "Private Fleet, Motor", href: "/private-fleet" },
+        { name: "Sailing Fleet", href: "/explorer-fleet" },
+        { name: "Catamaran Charter", href: "/catamaran-charter-greece" },
+        { name: "Award-Winning Yachts", href: "/award-winning-yacht-charter-greece" },
+        { name: "Proposed Itineraries", href: "/yacht-itineraries-greece" },
+        { name: "The Cyclades", href: "/destinations/cyclades" },
+        { name: "The Ionian", href: "/destinations/ionian" },
+        { name: "The Saronic", href: "/destinations/saronic" },
+        { name: "Greece by Yacht", href: "/greece-by-yacht" },
+        { name: "Guest Reviews", href: "/reviews" },
+        { name: "Brief George", href: "/contact" },
+      ],
+    },
     {
       heading: "Charter by Occasion",
       links: [
