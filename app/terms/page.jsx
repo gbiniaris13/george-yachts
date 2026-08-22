@@ -15,12 +15,12 @@ const Section = ({ number, title, children }) => (
   <div className="mb-20 group" style={{ opacity: 1 }}>
     <div className="flex items-start gap-6">
       {number && (
-        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "48px", fontWeight: 300, lineHeight: 1, color: "rgba(218, 161, 16,0.15)" }}>
+        <span style={{ fontFamily: "var(--gy-font-display)", fontSize: "48px", fontWeight: 300, lineHeight: 1, color: "rgba(218, 161, 16,0.15)" }}>
           {String(number).padStart(2, "0")}
         </span>
       )}
       <div className="flex-1">
-        <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.5rem", fontWeight: 400, color: "#fff", letterSpacing: "0.05em", marginBottom: "24px" }}>
+        <h2 style={{ fontFamily: "var(--gy-font-display)", fontSize: "1.5rem", fontWeight: 400, color: "#fff", letterSpacing: "0.05em", marginBottom: "24px" }}>
           {title}
         </h2>
         <div className="w-12 h-px mb-8" style={{ background: "linear-gradient(90deg, #DAA110, transparent)" }} />
@@ -42,7 +42,7 @@ const TermsOfService = () => {
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.4em", color: "#DAA110", marginBottom: "24px", textTransform: "uppercase" }}>
             Legal Agreement
           </p>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#fff", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "16px" }}>
+          <h1 style={{ fontFamily: "var(--gy-font-display)", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#fff", letterSpacing: "0.04em", lineHeight: 1.2, marginBottom: "16px" }}>
             Terms of Service
           </h1>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "11px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", marginBottom: "32px" }}>

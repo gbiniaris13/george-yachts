@@ -4539,698 +4539,356 @@ html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
   }
 }
 
-/* ── Award-winning fleet, homepage (rebuilt 2026-08-21, George's section 3) ─
-   The cheapest catamaran takes the clicks the whole fleet earns because it
-   ranks for its own name. Eleven yachts whose crews have won at the two Greek
-   charter shows take almost none. This band exists to invert that.
+/* ── The house metal, one application (2026-08-22, George's gold pass) ────
+   His verdict on the mixed golds: "Το χρυσό μας πρέπει να είναι ένα, να
+   φαίνεται μεταλλικό... λεπτεπίλεπτο σαν κόσμημα." The palette was already
+   one ramp; what was NOT one was the application: flat borders here,
+   gradient plates there, four different pale yellows for emphasis.
 
-   George read the first photo version and named three faults. The heading
-   buried the point. The count badge said "1 PLACING" over a line reading
-   "3rd Place", which reads as a contradiction. And nobody outside the trade
-   knows how a yacht wins anything, so the placings meant nothing.
+   These three classes are the whole vocabulary from now on:
 
-   The answers, in order: the heading says what these are; the rank lives in
-   its own column as 1st / 2nd / 3rd where it cannot be read as a total; and
-   a three-panel explainer sits above the yachts.
+   .gy-goldframe  a hairline of the real ramp around a quiet dark plate.
+                  The Ghost technique: the gradient fills the BORDER box and
+                  a flat sheet covers the PADDING box, so the 1px rim is
+                  true metal. A flat border-colour cannot look like metal at
+                  any width; a 1px gradient does, which is the jewellery.
+   .gy-goldplate  the filled version, for the one primary act on a page.
+                  Navy text on the surface ramp; every stop ≥5.47 on navy.
+   .gy-metal      (defined above) the darker-tone hairline under small gold
+                  type, the foil-stamp edge.
 
-   Still not a badge wall. No laurels, no seals. The wow is a row of large
-   numerals over a row of photographs, and every one of those numerals is
-   arithmetic over lib/yachtAwards.js rather than a figure anybody typed.
+   Everything gold is one of these three. Nothing else. */
+.gy-goldframe {
+  border: 1px solid transparent;
+  background-image:
+    linear-gradient(var(--gy-navy, #0D1B2A), var(--gy-navy, #0D1B2A)),
+    var(--gy-gold-leaf);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  transition: background-image 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+.gy-goldframe:hover,
+.gy-goldframe:focus-visible {
+  background-image:
+    linear-gradient(rgba(218, 161, 16, 0.13), rgba(218, 161, 16, 0.13)),
+    var(--gy-gold-leaf);
+  color: #F7DE8A;
+  box-shadow: 0 0 22px rgba(218, 161, 16, 0.18);
+}
+.gy-goldplate {
+  background: var(--gy-gold-surface);
+  color: #0D1B2A;
+  border: 1px solid rgba(218, 161, 16, 0.6);
+  transition: box-shadow 0.3s ease, filter 0.3s ease;
+}
+.gy-goldplate:hover,
+.gy-goldplate:focus-visible {
+  box-shadow: 0 0 24px rgba(218, 161, 16, 0.28);
+  filter: brightness(1.04);
+}
 
-   Motion budget: one slow scale on each photograph, one gold hairline that
-   draws under the name, one four-pixel lift, one staggered entrance. All of
-   it off under prefers-reduced-motion. */
+/* ── Award-winning fleet, homepage (third build 2026-08-22: a rail) ──────
+   The second build was honest and enormous; George's line: the client must
+   see AT ONCE that these are the award-winning yachts, and the band must
+   stop spending the homepage. One horizontal rail, scroll-snap, one card
+   per yacht, the archive on its own page.
+
+   Motion budget: native smooth scrolling on the rail (the browser's, not
+   ours), one slow photo scale on hover, one 3px lift. Nothing animates on
+   its own; a still page costs nothing. All off under reduced motion. */
 .gy-awarded {
-  /* The bottom figure is deliberately smaller than the top one because the
-     wrapping <section id="awarded"> contributes the global section padding
-     underneath it; measured at 1440 the two used to add to 108px of empty
-     navy before the reviews. */
-  padding: clamp(40px, 5vw, 56px) 0 clamp(24px, 2.5vw, 32px);
-  scroll-margin-top: 200px;
+  padding: clamp(34px, 4.5vw, 52px) 0 clamp(26px, 3vw, 40px);
   background: var(--gy-navy, #0D1B2A);
   border-top: 1px solid rgba(218, 161, 16, 0.14);
+  scroll-margin-top: 200px;
 }
 .gy-awarded__inner {
-  max-width: 1240px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 clamp(20px, 4vw, 40px);
+  padding: 0 clamp(20px, 4vw, 48px);
 }
 
-/* ── head ─────────────────────────────────────────────────────────────── */
-.gy-awarded__head { max-width: 780px; margin: 0 0 clamp(26px, 3vw, 38px); }
-.gy-awarded__eyebrow {
-  font-family: var(--gy-font-ui);
-  font-size: 11px;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: var(--gy-gold, #DAA110);
-  margin: 0 0 20px;
+.gy-awd__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px 40px;
+  margin-bottom: clamp(18px, 2.4vw, 28px);
 }
-.gy-awarded__title {
+.gy-awd__eyebrow {
+  font-family: var(--gy-font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: #DAA110;
+  margin: 0 0 10px;
+}
+.gy-awd__title {
   font-family: var(--gy-font-display);
   font-weight: 250;
-  font-size: clamp(32px, 4.8vw, 60px);
-  letter-spacing: 0.03em;
-  line-height: 1.06;
-  margin: 0 0 18px;
-  color: var(--gy-ivory, #F8F5F0);
+  font-size: clamp(26px, 3.4vw, 40px);
+  line-height: 1.12;
+  letter-spacing: 0.02em;
+  color: #F8F5F0;
+  margin: 0 0 10px;
 }
-.gy-awarded__lede {
-  font-family: var(--gy-font-body);
-  font-size: 17px;
-  line-height: 1.75;
-  color: rgba(248, 245, 240, 0.66);
-  max-width: 660px;
+.gy-awd__lede {
+  font-family: var(--gy-font-ui);
+  font-weight: 300;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: rgba(248, 245, 240, 0.62);
+  max-width: 560px;
   margin: 0;
 }
-
-/* ── the numbers ──────────────────────────────────────────────────────── */
-/* Four figures, hairline-separated, no boxes. A card with a border round a
-   number is a dashboard; a number standing on its own with a small label
-   under it is a results sheet, which is what this is. */
-.gy-awarded__stats {
-  list-style: none;
-  margin: 0 0 clamp(34px, 4vw, 52px);
-  padding: clamp(22px, 2.6vw, 32px) 0;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(16px, 2vw, 28px);
-  border-top: 1px solid rgba(218, 161, 16, 0.2);
-  border-bottom: 1px solid rgba(218, 161, 16, 0.2);
-}
-.gy-awarded__stat {
+/* The record in one quiet row. The old build spent four giant numerals on
+   this; the numbers have not shrunk, only the type has. */
+.gy-awd__stats {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-width: none;
-  margin-inline: 0;
-}
-.gy-awarded__stat + .gy-awarded__stat {
-  border-left: 1px solid rgba(218, 161, 16, 0.14);
-  padding-left: clamp(16px, 2vw, 28px);
-}
-.gy-awarded__statnum {
-  font-family: var(--gy-font-display);
-  font-weight: 250;
-  font-size: clamp(40px, 6vw, 76px);
-  line-height: 0.92;
-  letter-spacing: 0.01em;
-  color: var(--gy-ivory, #F8F5F0);
-  font-variant-numeric: lining-nums tabular-nums;
-}
-.gy-awarded__statlabel {
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  margin: 0;
   font-family: var(--gy-font-ui);
   font-size: 10.5px;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--gy-gold, #DAA110);
+  color: rgba(248, 245, 240, 0.55);
+  border-top: 1px solid rgba(218, 161, 16, 0.22);
+  padding-top: 14px;
 }
-
-/* ── the explainer ────────────────────────────────────────────────────── */
-.gy-awarded__explain { margin: 0 0 clamp(34px, 4vw, 52px); }
-.gy-awarded__explaintitle {
+.gy-awd__stats strong {
   font-family: var(--gy-font-display);
   font-weight: 300;
-  font-size: clamp(20px, 2.1vw, 27px);
-  letter-spacing: 0.03em;
-  color: var(--gy-ivory, #F8F5F0);
-  margin: 0 0 clamp(18px, 2vw, 26px);
-}
-.gy-awarded__steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(20px, 2.8vw, 40px);
-}
-.gy-awarded__step {
-  max-width: none;
-  margin-inline: 0;
-  padding-top: 18px;
-  border-top: 1px solid rgba(218, 161, 16, 0.18);
-}
-.gy-awarded__stepnum {
-  display: block;
-  font-family: var(--gy-font-display);
-  font-weight: 250;
-  font-size: 26px;
-  line-height: 1;
-  color: rgba(218, 161, 16, 0.55);
-  margin-bottom: 12px;
-  font-variant-numeric: lining-nums;
-}
-.gy-awarded__stephead {
-  font-family: var(--gy-font-display);
-  font-weight: 300;
-  font-size: 18px;
-  letter-spacing: 0.025em;
-  color: var(--gy-ivory, #F8F5F0);
-  margin: 0 0 9px;
-}
-.gy-awarded__step p {
-  font-family: var(--gy-font-body);
-  font-size: 14.5px;
-  line-height: 1.72;
-  color: rgba(248, 245, 240, 0.58);
-  margin: 0;
-  max-width: none;
-  margin-inline: 0;
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  color: #F7DE8A;
+  margin-right: 7px;
 }
 
-/* ── the shared card link ─────────────────────────────────────────────── */
-.gy-awarded__link {
+/* ── The rail ── */
+.gy-awd__railwrap { position: relative; }
+.gy-awd__rail {
   display: flex;
-  flex-direction: column;
-  height: 100%;
+  gap: 20px;
+  margin: 0;
+  padding: 4px 0 16px;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.gy-awd__rail::-webkit-scrollbar { display: none; }
+/* The cut-off card at the right edge IS the affordance; this fade makes the
+   cut read as "more" rather than "broken". */
+.gy-awd__railwrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: calc(-1 * clamp(20px, 4vw, 48px));
+  bottom: 0;
+  width: clamp(36px, 5vw, 80px);
+  background: linear-gradient(90deg, rgba(13, 27, 42, 0), var(--gy-navy, #0D1B2A));
+  pointer-events: none;
+}
+.gy-awd__card {
+  flex: 0 0 auto;
+  width: clamp(240px, 74vw, 300px);
+  scroll-snap-align: start;
+}
+@media (min-width: 1024px) {
+  .gy-awd__card { width: 300px; }
+}
+.gy-awd__link {
+  display: block;
   text-decoration: none;
-  color: inherit;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.gy-awarded__link:hover,
-.gy-awarded__link:focus-visible { transform: translateY(-4px); }
-.gy-awarded__link:focus-visible {
-  outline: 1px solid rgba(218, 161, 16, 0.55);
-  outline-offset: 8px;
+.gy-awd__link:hover,
+.gy-awd__link:focus-visible { transform: translateY(-3px); }
+.gy-awd__link:focus-visible {
+  outline: 1px solid rgba(218, 161, 16, 0.7);
+  outline-offset: 4px;
 }
-
-/* overflow:hidden is what lets the photograph move inside a fixed rectangle
-   instead of pushing the layout around. */
-.gy-awarded__shot {
+.gy-awd__shot {
   position: relative;
   display: block;
-  overflow: hidden;
   aspect-ratio: 4 / 3;
-  background: #08121C;
-  border: 1px solid rgba(218, 161, 16, 0.14);
+  overflow: hidden;
+  background: #101F31;
+  border: 1px solid rgba(218, 161, 16, 0.16);
 }
-.gy-awarded__shot--lead { aspect-ratio: 3 / 2; }
-.gy-awarded__card--major .gy-awarded__shot { aspect-ratio: 16 / 10; }
-
-.gy-awarded__img {
+.gy-awd__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  /* Held a touch back so the ivory type over it never fights the photograph.
-     Comes up to full on hover, which is most of the reward for the movement. */
-  filter: saturate(0.92) brightness(0.86);
-  transform: scale(1.001);
-  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.9s ease;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.gy-awarded__link:hover .gy-awarded__img,
-.gy-awarded__link:focus-visible .gy-awarded__img {
-  transform: scale(1.055);
-  filter: saturate(1) brightness(1);
+.gy-awd__link:hover .gy-awd__img,
+.gy-awd__link:focus-visible .gy-awd__img { transform: scale(1.04); }
+.gy-awd__noimg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #12233A, #0D1B2A);
 }
-.gy-awarded__noimg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background:
-    radial-gradient(120% 90% at 50% 0%, rgba(218, 161, 16,0.10), transparent 70%),
-    #0A1622;
-}
-.gy-awarded__shot::after {
+.gy-awd__shot::after {
   content: "";
   position: absolute;
-  inset: auto 0 0 0;
-  height: 52%;
-  background: linear-gradient(0deg, rgba(6,14,22,0.78) 0%, rgba(6,14,22,0) 100%);
-  pointer-events: none;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13, 27, 42, 0.74), rgba(13, 27, 42, 0) 46%);
 }
-
-/* The strongest result, printed across the foot of the photograph. This
-   replaced the count badge that read "1 PLACING" over a third place. It says
-   a placing and a year, so there is nothing left to misread. */
-.gy-awarded__crown {
+.gy-awd__crown {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: 12px;
+  right: 12px;
+  bottom: 10px;
   z-index: 1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 4px 14px;
   font-family: var(--gy-font-ui);
   font-size: 10.5px;
-  letter-spacing: 0.24em;
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  padding: 14px 16px;
-  border-top: 1px solid rgba(218, 161, 16, 0.32);
-  background: linear-gradient(0deg, rgba(8,18,28,0.78), rgba(8,18,28,0.06));
+  color: #F7DE8A;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
-.gy-awarded__crownplace { color: #F7DE8A; }
-/* The price sits at the other end of the same strip, quieter than the
-   placing. George's brief was discreet: a reader scanning sixteen decorated
-   yachts has one question the photographs cannot answer, and a card that
-   refuses to answer it loses the enquiry rather than the objection. */
-.gy-awarded__crownprice {
-  color: rgba(248, 245, 240, 0.72);
-  letter-spacing: 0.14em;
-  white-space: nowrap;
-}
-/* The second home for the price, for the compact phone row where the strip
-   across the photograph is hidden. Exactly one of the two ever shows. */
-.gy-awarded__priceinline { display: none; }
-
-/* ── card body ────────────────────────────────────────────────────────── */
-.gy-awarded__body {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: 20px 2px 0;
-}
-.gy-awarded__kicker {
+.gy-awd__body { display: block; padding: 12px 2px 0; }
+.gy-awd__name {
   display: block;
-  font-family: var(--gy-font-ui);
-  font-size: 10.5px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--gy-gold, #DAA110);
-  margin-bottom: 12px;
-}
-.gy-awarded__name {
-  position: relative;
   font-family: var(--gy-font-display);
   font-weight: 300;
-  font-size: clamp(19px, 2vw, 26px);
-  letter-spacing: 0.025em;
-  line-height: 1.2;
-  color: var(--gy-ivory, #F8F5F0);
-  margin: 0 0 6px;
-  padding-bottom: 12px;
+  font-size: 19px;
+  letter-spacing: 0.02em;
+  color: #F8F5F0;
 }
-/* Sits at 34px at rest and runs the width of the name on hover, so the card
-   answers the pointer without anything jumping. */
-.gy-awarded__name::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 1px;
-  width: 34px;
-  background: var(--gy-gold, #DAA110);
-  opacity: 0.55;
-  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
-}
-.gy-awarded__link:hover .gy-awarded__name::after,
-.gy-awarded__link:focus-visible .gy-awarded__name::after {
-  width: 100%;
-  opacity: 1;
-}
-.gy-awarded__meta {
+.gy-awd__meta {
+  display: block;
+  margin-top: 4px;
   font-family: var(--gy-font-ui);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(248, 245, 240, 0.44);
-  margin: 12px 0 0;
-}
-
-/* ── the roll of honour ───────────────────────────────────────────────── */
-.gy-awarded__roll { list-style: none; margin: 14px 0 0; padding: 0; }
-.gy-awarded__rollrow {
-  display: grid;
-  grid-template-columns: 34px minmax(0, 1fr) auto;
-  gap: 3px 12px;
-  align-items: baseline;
-  padding: 9px 0;
-  border-top: 1px solid rgba(218, 161, 16, 0.12);
-}
-/* The rank in its own column, and the only place on the site where a numeral
-   is allowed to be the loudest thing in a row. */
-.gy-awarded__rank {
-  /* UI face, not the display face. Boska's "1" is a bare vertical stroke and
-     at 15px "1st" read as "Ist" in the first build of this, which is exactly
-     the kind of ambiguity this column exists to remove. */
-  font-family: var(--gy-font-ui);
-  font-weight: 500;
-  font-size: 11.5px;
-  letter-spacing: 0.08em;
-  font-variant-numeric: lining-nums tabular-nums;
-  text-transform: uppercase;
-  color: var(--gy-gold, #DAA110);
-  white-space: nowrap;
-}
-.gy-awarded__rank--1 { color: #F7DE8A; }
-.gy-awarded__rank--2 { color: rgba(226, 226, 226, 0.82); }
-.gy-awarded__rank--3 { color: rgba(198, 156, 109, 0.9); }
-.gy-awarded__what {
-  font-family: var(--gy-font-body);
-  font-size: 14.5px;
-  line-height: 1.5;
-  color: rgba(248, 245, 240, 0.78);
-}
-.gy-awarded__who {
-  font-family: var(--gy-font-ui);
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(218, 161, 16, 0.78);
-  white-space: nowrap;
-}
-.gy-awarded__go {
-  /* auto pushes it to the floor of the card, so one placing, three placings
-     and a wrapped line all finish level across a row. */
-  display: inline-block;
-  margin-top: auto;
-  padding-top: 16px;
-  align-self: flex-start;
-  font-family: var(--gy-font-ui);
-  font-size: 10.5px;
-  letter-spacing: 0.22em;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(248, 245, 240, 0.5);
-  transition: color 0.4s ease, letter-spacing 0.5s ease;
 }
-.gy-awarded__link:hover .gy-awarded__go,
-.gy-awarded__link:focus-visible .gy-awarded__go {
-  color: var(--gy-gold, #DAA110);
-  letter-spacing: 0.26em;
-}
-
-/* ── the lead ─────────────────────────────────────────────────────────── */
-.gy-awarded__lead { margin: 0 0 clamp(26px, 3vw, 40px); }
-.gy-awarded__lead .gy-awarded__link {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: clamp(24px, 3.5vw, 48px);
-  align-items: center;
-}
-.gy-awarded__lead .gy-awarded__body { padding-top: 0; }
-.gy-awarded__lead .gy-awarded__name { font-size: clamp(26px, 3.1vw, 40px); }
-
-/* ── the other ten ────────────────────────────────────────────────────── */
-/* Twelve columns. The lead takes its own full-width frame, three runners-up
-   sit three across, and the remaining twelve sit four across in three clean
-   rows. Sixteen yachts less the lead is fifteen, and 3 + 12 is the only split
-   of fifteen across these two widths that strands nothing on a last row. */
-.gy-awarded__grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(20px, 2.4vw, 34px);
-}
-.gy-awarded__card { grid-column: span 3; max-width: none; margin-inline: 0; }
-.gy-awarded__card--major { grid-column: span 4; }
-
-/* The four-across cards are narrow, so their type steps down with them. */
-.gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__what { font-size: 13.5px; }
-.gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__rollrow {
-  grid-template-columns: 30px minmax(0, 1fr);
-  padding: 8px 0;
-}
-.gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__who {
-  grid-column: 2;
-  justify-self: start;
+/* Prices are numbers a client will act on, so they are set in the UI face:
+   the display serif's figures read as calligraphy at this size, which is
+   the exact complaint George raised on the fleet pages. */
+.gy-awd__price {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--gy-font-ui);
+  font-weight: 500;
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  color: #DAA110;
 }
 
-/* ── honours ──────────────────────────────────────────────────────────── */
-/* Not a placing and not counted as one. A different shape from the cards on
-   purpose: a year in the margin and a paragraph beside it, the way a house
-   would mention something rather than the way a results sheet lists it. */
-.gy-awarded__honours {
-  margin-top: clamp(32px, 4vw, 48px);
-  padding-top: clamp(26px, 3vw, 36px);
-  border-top: 1px solid rgba(218, 161, 16, 0.14);
-}
-.gy-awarded__honourstitle {
-  font-family: var(--gy-font-display);
-  font-weight: 300;
-  font-size: clamp(18px, 1.8vw, 23px);
-  letter-spacing: 0.03em;
-  color: var(--gy-ivory, #F8F5F0);
-  margin: 0 0 18px;
-}
-.gy-awarded__honourslist { list-style: none; margin: 0; padding: 0; }
-.gy-awarded__honour { max-width: none; margin-inline: 0; }
-.gy-awarded__honourlink {
-  display: grid;
-  grid-template-columns: 86px minmax(0, 1fr);
-  gap: 6px 22px;
-  align-items: start;
-  padding: 18px 2px;
+/* The last card: the archive. Ending the rail on the link means running out
+   of yachts and finding the full record are the same gesture. */
+.gy-awd__card--all { display: flex; }
+.gy-awd__alllink {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  padding: 26px;
+  border: 1px solid rgba(218, 161, 16, 0.35);
+  background: linear-gradient(160deg, rgba(218, 161, 16, 0.10), rgba(218, 161, 16, 0.02));
   text-decoration: none;
-  border-top: 1px solid rgba(218, 161, 16, 0.12);
-  transition: background-color 0.35s ease, padding-left 0.35s ease;
+  transition: background 0.4s ease;
 }
-.gy-awarded__honourlink:hover,
-.gy-awarded__honourlink:focus-visible {
-  background: rgba(218, 161, 16, 0.045);
-  padding-left: 12px;
-}
-.gy-awarded__honouryear {
+.gy-awd__alllink:hover { background: linear-gradient(160deg, rgba(218, 161, 16, 0.16), rgba(218, 161, 16, 0.04)); }
+.gy-awd__allnum {
   font-family: var(--gy-font-display);
   font-weight: 250;
-  font-size: 30px;
+  font-size: 54px;
   line-height: 1;
-  color: rgba(218, 161, 16, 0.72);
-  font-variant-numeric: lining-nums;
-}
-.gy-awarded__honourbody { display: block; }
-.gy-awarded__honourname {
-  display: block;
-  font-family: var(--gy-font-display);
-  font-weight: 300;
-  font-size: clamp(18px, 1.8vw, 23px);
-  letter-spacing: 0.025em;
-  color: var(--gy-ivory, #F8F5F0);
-  margin-bottom: 4px;
-}
-.gy-awarded__honouraward {
-  font-family: var(--gy-font-body);
-  font-size: 15px;
-  color: rgba(248, 245, 240, 0.8);
-}
-.gy-awarded__honourorg {
-  font-family: var(--gy-font-ui);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(218, 161, 16, 0.78);
-  margin-left: 10px;
-}
-.gy-awarded__honournote {
-  display: block;
-  margin-top: 7px;
-  font-family: var(--gy-font-body);
-  font-size: 14.5px;
-  line-height: 1.7;
-  color: rgba(248, 245, 240, 0.55);
-  max-width: 620px;
-}
-@media (max-width: 639.98px) {
-  .gy-awarded__honourlink { grid-template-columns: 1fr; gap: 8px; }
-  .gy-awarded__honouryear { font-size: 24px; }
-  .gy-awarded__honourorg { display: block; margin: 6px 0 0; }
-}
-
-/* ── analysis ─────────────────────────────────────────────────────────── */
-.gy-awarded__note {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(24px, 4vw, 56px);
-  margin-top: clamp(38px, 4.5vw, 60px);
-  padding-top: clamp(28px, 3vw, 40px);
-  border-top: 1px solid rgba(218, 161, 16, 0.14);
-}
-.gy-awarded__notetitle {
-  font-family: var(--gy-font-display);
-  font-weight: 300;
-  font-size: clamp(17px, 1.6vw, 21px);
-  letter-spacing: 0.03em;
-  color: var(--gy-ivory, #F8F5F0);
-  margin: 0 0 12px;
-}
-.gy-awarded__notecol p {
-  font-family: var(--gy-font-body);
-  font-size: 15px;
-  line-height: 1.78;
-  color: rgba(248, 245, 240, 0.6);
-  margin: 0;
-  /* Section 2 left a global 720px cap and an auto inline margin on every p
-     and li; these columns are already narrower and must stay hard left. */
-  max-width: none;
-  margin-inline: 0;
-}
-
-/* Said once, at the foot of the band, rather than sixteen times under
-   sixteen cards. */
-.gy-awarded__ratenote {
-  margin: clamp(26px, 3vw, 36px) 0 0;
-  max-width: 720px;
-  font-family: var(--gy-font-body);
-  font-size: 13.5px;
-  line-height: 1.7;
-  color: rgba(248, 245, 240, 0.45);
-  margin-inline: 0;
-}
-
-.gy-awarded__more {
-  display: inline-block;
-  margin-top: clamp(20px, 2.2vw, 28px);
-  font-family: var(--gy-font-ui);
-  font-size: 11.5px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gy-gold, #DAA110);
-  text-decoration: none;
-  padding-bottom: 5px;
-  border-bottom: 1px solid rgba(218, 161, 16, 0.35);
-  transition: border-color 0.35s ease, color 0.35s ease;
-}
-.gy-awarded__more:hover,
-.gy-awarded__more:focus-visible {
-  border-bottom-color: var(--gy-gold, #DAA110);
   color: #F7DE8A;
 }
+.gy-awd__alltext {
+  font-family: var(--gy-font-ui);
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(248, 245, 240, 0.78);
+}
+.gy-awd__allgo { font-size: 20px; color: #DAA110; }
 
-/* ── staggered entrance ───────────────────────────────────────────────── */
-/* Keyed off the ancestor section's reveal class rather than giving every card
-   its own [data-gy-reveal]. Nesting reveals means a card is hidden until its
-   own observer fires, and the 2.5s no-JS fallback would then run eleven
-   separate times. One observer moves the band; the cards stagger inside it. */
-#awarded.gy-revealed .gy-awarded__stat,
-#awarded.gy-revealed .gy-awarded__step,
-#awarded.gy-revealed .gy-awarded__lead,
-#awarded.gy-revealed .gy-awarded__card {
-  animation: gyAwardedIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+/* Arrows: desktop affordance only, sitting in the header's right margin.
+   Phones scroll the rail with a thumb and need nothing from us. */
+.gy-awd__nav {
+  display: none;
+  position: absolute;
+  top: -54px;
+  right: 0;
+  gap: 8px;
 }
-#awarded.gy-revealed .gy-awarded__stat:nth-child(2) { animation-delay: 0.07s; }
-#awarded.gy-revealed .gy-awarded__stat:nth-child(3) { animation-delay: 0.14s; }
-#awarded.gy-revealed .gy-awarded__stat:nth-child(4) { animation-delay: 0.21s; }
-#awarded.gy-revealed .gy-awarded__step:nth-child(2) { animation-delay: 0.08s; }
-#awarded.gy-revealed .gy-awarded__step:nth-child(3) { animation-delay: 0.16s; }
-#awarded.gy-revealed .gy-awarded__card:nth-child(1) { animation-delay: 0.06s; }
-#awarded.gy-revealed .gy-awarded__card:nth-child(2) { animation-delay: 0.12s; }
-#awarded.gy-revealed .gy-awarded__card:nth-child(3) { animation-delay: 0.18s; }
-#awarded.gy-revealed .gy-awarded__card:nth-child(4) { animation-delay: 0.23s; }
-#awarded.gy-revealed .gy-awarded__card:nth-child(5) { animation-delay: 0.28s; }
-#awarded.gy-revealed .gy-awarded__card:nth-child(6) { animation-delay: 0.32s; }
-#awarded.gy-revealed .gy-awarded__card:nth-child(n + 7) { animation-delay: 0.36s; }
-@keyframes gyAwardedIn {
-  from { opacity: 0; transform: translateY(22px); }
-  to   { opacity: 1; transform: translateY(0); }
+@media (min-width: 1024px) {
+  .gy-awd__nav { display: flex; }
+  /* The stats row ends where the arrows live; without this the pair of
+     buttons sits on top of "6 seasons". Measured at 1440. */
+  .gy-awd__stats { padding-right: 104px; }
 }
+.gy-awd__arrow {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #DAA110;
+  border: 1px solid rgba(218, 161, 16, 0.4);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.gy-awd__arrow:hover { background: rgba(218, 161, 16, 0.12); color: #F7DE8A; }
 
-/* ── narrower ─────────────────────────────────────────────────────────── */
-@media (max-width: 1199.98px) {
-  /* Two across for everything: at this width four cards put the roll of
-     honour into a column too narrow to keep a placing and its year together. */
-  .gy-awarded__card { grid-column: span 4; }
-  .gy-awarded__card--major { grid-column: span 6; }
-  .gy-awarded__card .gy-awarded__shot { aspect-ratio: 4 / 3; }
-  .gy-awarded__card--major .gy-awarded__shot { aspect-ratio: 16 / 10; }
-  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__rollrow {
-    grid-template-columns: 34px minmax(0, 1fr) auto;
-  }
-  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__who {
-    grid-column: 3;
-    justify-self: end;
-  }
+.gy-awd__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 30px;
+  margin-top: 4px;
 }
-@media (max-width: 999.98px) {
-  .gy-awarded__lead .gy-awarded__link { grid-template-columns: 1fr; gap: 20px; }
-  .gy-awarded__lead .gy-awarded__body { padding-top: 4px; }
-  .gy-awarded__steps { grid-template-columns: 1fr; gap: 22px; }
-  .gy-awarded__note { grid-template-columns: 1fr; }
+.gy-awd__ratenote {
+  font-family: var(--gy-font-ui);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  color: rgba(248, 245, 240, 0.42);
+  margin: 0;
+  max-width: 560px;
 }
+.gy-awarded__more {
+  font-family: var(--gy-font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #DAA110;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(218, 161, 16, 0.45);
+  padding-bottom: 3px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+.gy-awarded__more:hover { color: #F7DE8A; border-color: #F7DE8A; }
+
 @media (max-width: 639.98px) {
-  .gy-awarded__card,
-  .gy-awarded__card--major { grid-column: span 12; }
-  /* One column on a phone means twelve frames stacked, so the frame gets
-     shallower: 16/10 rather than 3/2. */
-  .gy-awarded__shot,
-  .gy-awarded__shot--lead,
-  .gy-awarded__card .gy-awarded__shot { aspect-ratio: 16 / 10; }
-  .gy-awarded__grid { gap: 26px; }
-  .gy-awarded__body { padding-top: 16px; }
-  .gy-awarded__roll { margin-top: 12px; }
-  .gy-awarded__rollrow,
-  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__rollrow {
-    grid-template-columns: 32px minmax(0, 1fr);
-    gap: 2px 10px;
-    padding: 8px 0;
-  }
-  .gy-awarded__who,
-  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__who {
-    grid-column: 2;
-    justify-self: start;
-  }
-  /* Four numerals across a 390px screen leaves each one 80px wide, which is
-     not a headline figure, it is a footnote. Two by two. */
-  .gy-awarded__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 16px; }
-  .gy-awarded__stat:nth-child(3) { border-left: 0; padding-left: 0; }
-  .gy-awarded__stat + .gy-awarded__stat { padding-left: 16px; }
-
-  /* ── the phone compromise ──────────────────────────────────────────────
-     Eleven full-width photo cards measured 7,868px on a 390 screen: nine
-     screens of thumb for one band, with the rest of the homepage behind it.
-     Cutting yachts was not an option, George's whole point is that these get
-     seen, and hiding them behind a "show more" hides them from the reader who
-     is already scrolling.
-
-     So the three that carry the record keep their photography at full width,
-     the lead and the two runners-up, and the remaining eight become rows: a
-     square photograph at 104px beside the name and the complete roll of
-     honour. Nothing is dropped. Every placing, every organiser and every year
-     is still on the phone, and the band comes in at less than half the
-     height. */
-  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__link {
-    display: grid;
-    grid-template-columns: 104px minmax(0, 1fr);
-    gap: 14px;
-    align-items: start;
-  }
-  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__shot {
-    aspect-ratio: 1 / 1;
-  }
-  /* The crown is a full-width strip of letterspaced type; inside a 104px
-     square it would wrap to three lines over the boat. The placing is in the
-     roll directly beside it, so it simply goes. */
-  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__crown { display: none; }
-  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__priceinline {
-    display: block;
-    margin: 7px 0 0;
-    max-width: none;
-    margin-inline: 0;
-    font-family: var(--gy-font-ui);
-    font-size: 10.5px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(248, 245, 240, 0.62);
-  }
-  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__shot::after { height: 30%; }
-  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__body { padding: 0; }
-  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__name {
-    font-size: 19px;
-    padding-bottom: 9px;
-    margin-bottom: 4px;
-  }
-  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__meta { margin-top: 9px; }
-  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__roll { margin-top: 9px; }
-  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__rollrow { padding: 7px 0; }
-  /* The whole row is already the tap target, so the words underneath it are
-     a second instruction for the same action. */
-  .gy-awarded__card:not(.gy-awarded__card--major) .gy-awarded__go { display: none; }
-  .gy-awarded__grid { gap: 22px; }
+  .gy-awd__head { align-items: flex-start; }
+  .gy-awd__stats { width: 100%; }
+  .gy-awd__stats strong { font-size: 18px; }
 }
-
 @media (prefers-reduced-motion: reduce) {
-  .gy-awarded__link,
-  .gy-awarded__img,
-  .gy-awarded__name::after,
-  .gy-awarded__go { transition: none !important; }
-  .gy-awarded__link:hover,
-  .gy-awarded__link:focus-visible { transform: none; }
-  .gy-awarded__link:hover .gy-awarded__img { transform: scale(1.001); }
-  #awarded.gy-revealed .gy-awarded__stat,
-  #awarded.gy-revealed .gy-awarded__step,
-  #awarded.gy-revealed .gy-awarded__lead,
-  #awarded.gy-revealed .gy-awarded__card { animation: none; }
+  .gy-awd__rail { scroll-behavior: auto; }
+  .gy-awd__link,
+  .gy-awd__img,
+  .gy-awd__alllink { transition: none; }
+  .gy-awd__link:hover,
+  .gy-awd__link:focus-visible { transform: none; }
+  .gy-awd__link:hover .gy-awd__img { transform: none; }
 }

@@ -78,6 +78,10 @@ const NAV_SECTIONS = [
       // a guide with nine cards on it. The word stays in the anchor because
       // this is the heaviest internal link the head term gets and the anchor
       // text carries; what is added is the part that sets the expectation.
+      // 2026-08-22 (George's mobile pass) — the awarded rail on the homepage
+      // became a teaser and the archive moved to its own page, so the page
+      // gets the same standing as the two fleets: a seat in the main menu.
+      { label: "Award-Winning Yachts", href: "/award-winning-yacht-charter-greece" },
       { label: "Crewed Charter, Explained", href: "/crewed-yacht-charter-greece" },
       { label: "Catamarans", href: "/catamaran-charter-greece" },
       { label: "View All", href: "/charter-yacht-greece" },
@@ -207,7 +211,8 @@ function NavItem({ section, color = "rgba(248, 245, 240,0.85)", anchor = "left",
 export default function NavDrawerSystem() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [openSection, setOpenSection] = useState(null);
+  // The drawer accordion left with the 2026-08-22 redesign; its state went
+  // with it.
   const [openDesktop, setOpenDesktop] = useState(null);
   const pathname = usePathname();
 
@@ -215,7 +220,6 @@ export default function NavDrawerSystem() {
   // would navigate but leave the overlay visible until next paint).
   useEffect(() => {
     setMobileOpen(false);
-    setOpenSection(null);
   }, [pathname]);
 
   // Lock body scroll while the mobile overlay is open.
@@ -295,7 +299,6 @@ export default function NavDrawerSystem() {
 
   const toggleMobile = useCallback(() => setMobileOpen((p) => !p), []);
   const closeMobile = useCallback(() => setMobileOpen(false), []);
-  const closeOpenSection = useCallback(() => setOpenSection(null), []);
 
   return (
     <>
@@ -432,6 +435,14 @@ export default function NavDrawerSystem() {
         }`}
         style={{
           background: "#0D1B2A",
+          /* 2026-08-22 — deliberately JUST the background plus inset-0. A
+             16px sliver showed down the right edge in the headless test rig
+             and an hour went into it: the rig's emulated phone still
+             reserves a classic desktop scrollbar, so the initial containing
+             block there is 374px, not 390. Real phones use overlay
+             scrollbars and the drawer spans edge to edge. Forcing 100vw
+             here "fixed" nothing (vw resolves against the same reduced
+             block) and would only paper over the rig. */
         }}
         role="dialog"
         aria-modal="true"
@@ -471,98 +482,138 @@ export default function NavDrawerSystem() {
             </button>
           </div>
 
-          {/* Centered nav items, Cormorant Light 32 px theatrical */}
-          <div className="flex-1 flex flex-col items-center justify-center gap-2 px-6">
-            {NAV_SECTIONS.map((section) => {
-              const expanded = openSection === section.label;
-              return (
-                <div key={section.label} className="w-full max-w-md text-center">
-                  <button
-                    type="button"
-                    onClick={() => setOpenSection(expanded ? null : section.label)}
-                    className="block w-full transition-colors"
-                    style={{
-                      fontFamily: "var(--gy-font-editorial)",
-                      fontWeight: 300,
-                      fontSize: "32px",
-                      letterSpacing: "-0.005em",
-                      color: expanded ? "#DAA110" : "#FFFFFF",
-                      padding: "14px 0",
-                      minHeight: 56,
-                    }}
-                    aria-expanded={expanded}
-                  >
-                    {section.label}
-                  </button>
-                  {expanded && (
-                    <div className="flex flex-col items-center gap-4 pt-1 pb-3">
-                      {section.items.map((item) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={closeMobile}
-                          className="transition-colors"
-                          style={{
-                            fontFamily: "var(--gy-font-ui)",
-                            fontSize: "12px",
-                            letterSpacing: "0.18em",
-                            textTransform: "uppercase",
-                            fontWeight: 300,
-                            color: "rgba(248,245,240,0.78)",
-                            padding: "8px 0",
-                            minHeight: 44,
-                            display: "inline-flex",
-                            alignItems: "center",
-                          }}
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
+          {/* 2026-08-22 (George's mobile pass) — the drawer, third design.
+              His verdict on the second: different typefaces fighting each
+              other, poor titles, poor design. The accordion also hid every
+              destination behind a tap, which is the opposite of "δώσε
+              κατευθείαν την πληροφορία".
+
+              So: no accordion. Everything visible, left-aligned like the
+              rest of the site's editorial pages. Exactly two voices, the
+              same two the whole site speaks: the UI face in small gold caps
+              as a section label (the same eyebrow every page uses), the
+              display face for the destinations themselves. A hairline rule
+              under each label, and the pages a visitor can actually go to
+              are the largest thing in the drawer. */}
+          <div className="flex-1 overflow-y-auto px-7 pt-1 pb-3">
+            {NAV_SECTIONS.map((section) => (
+              <div key={section.label} style={{ marginBottom: 15 }}>
+                <p
+                  style={{
+                    fontFamily: "var(--gy-font-ui)",
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    letterSpacing: "0.34em",
+                    textTransform: "uppercase",
+                    color: "#DAA110",
+                    margin: "0 0 4px",
+                  }}
+                >
+                  {section.label}
+                </p>
+                <div
+                  aria-hidden="true"
+                  style={{
+                    height: 1,
+                    background:
+                      "linear-gradient(90deg, rgba(218,161,16,0.45), rgba(218,161,16,0))",
+                    marginBottom: 6,
+                  }}
+                />
+                <div className="flex flex-col">
+                  {section.items.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={closeMobile}
+                      className="transition-colors"
+                      style={{
+                        fontFamily: "var(--gy-font-display)",
+                        fontWeight: 300,
+                        fontSize: "19px",
+                        letterSpacing: "0.015em",
+                        color: "#F8F5F0",
+                        padding: "4px 0",
+                        minHeight: 34,
+                        display: "flex",
+                        alignItems: "center",
+                        textDecoration: "none",
+                      }}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
                 </div>
-              );
-            })}
-            {/* Journal / blog, top-level link, no dropdown */}
-            <div className="w-full max-w-md text-center">
+              </div>
+            ))}
+
+            {/* Journal, its own quiet section: one label, one page. */}
+            <div style={{ marginBottom: 10 }}>
+              <p
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: "10px",
+                  fontWeight: 600,
+                  letterSpacing: "0.34em",
+                  textTransform: "uppercase",
+                  color: "#DAA110",
+                  margin: "0 0 4px",
+                }}
+              >
+                Reading
+              </p>
+              <div
+                aria-hidden="true"
+                style={{
+                  height: 1,
+                  background:
+                    "linear-gradient(90deg, rgba(218,161,16,0.45), rgba(218,161,16,0))",
+                  marginBottom: 6,
+                }}
+              />
               <Link
                 href="/blog"
                 onClick={closeMobile}
-                className="block w-full transition-colors"
+                className="transition-colors"
                 style={{
-                  fontFamily: "var(--gy-font-editorial)",
+                  fontFamily: "var(--gy-font-display)",
                   fontWeight: 300,
-                  fontSize: "32px",
-                  letterSpacing: "-0.005em",
-                  color: "#FFFFFF",
-                  padding: "14px 0",
-                  minHeight: 56,
+                  fontSize: "19px",
+                  letterSpacing: "0.015em",
+                  color: "#F8F5F0",
+                  padding: "4px 0",
+                  minHeight: 34,
+                  display: "flex",
+                  alignItems: "center",
+                  textDecoration: "none",
                 }}
               >
-                Journal
+                The Journal
               </Link>
             </div>
           </div>
 
-          {/* BRIEF GEORGE, gold, 36 px Cormorant per Boss spec */}
-          <div className="px-6 pb-6 pt-4">
+          {/* BRIEF GEORGE: the drawer's one act, dressed in the house metal.
+              A gradient hairline of the gold-leaf ramp around a quiet navy
+              plate; the UI face, spaced like every other CTA on the site. */}
+          <div className="px-7 pb-8 pt-3">
             <Link
               href={BRIEF_GEORGE.href}
               onClick={closeMobile}
-              className="block w-full text-center transition-colors"
+              className="block w-full text-center transition-colors gy-goldframe"
               style={{
-                fontFamily: "var(--gy-font-editorial)",
-                fontWeight: 300,
-                fontSize: "36px",
-                letterSpacing: "-0.005em",
+                fontFamily: "var(--gy-font-ui)",
+                fontSize: "12px",
+                fontWeight: 600,
+                letterSpacing: "0.28em",
+                textTransform: "uppercase",
                 color: "#DAA110",
-                padding: "16px",
+                padding: "17px 16px",
                 textDecoration: "none",
-                minHeight: 56,
               }}
               data-cursor="Brief"
             >
-              {BRIEF_GEORGE.label} →
+              {BRIEF_GEORGE.label} &rarr;
             </Link>
           </div>
 

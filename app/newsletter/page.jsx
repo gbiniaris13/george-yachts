@@ -132,7 +132,7 @@ export default function NewsletterPage() {
         />
         <p
           style={{
-            fontFamily: "Georgia, 'Times New Roman', serif",
+            fontFamily: "var(--gy-font-body)",
             fontSize: 17,
             lineHeight: 1.7,
             maxWidth: 620,

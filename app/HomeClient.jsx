@@ -177,13 +177,15 @@ const HomeClient = ({
           visible on @georgeyachts (yacht-first IG feed, see gy-command
           PLAYBOOKS §9). */}
 
-      {/* Phase 27i.17 (2026-05-08), custom WebGL water shader.
-          Sits as a thin horizon band between the hero and the
-          fleet split-screen, reads as the camera looking down at
-          the sea before tilting up to the fleet. Multi-octave fBm
-          noise + caustic light + champagne gold near the horizon.
-          Mobile / reduced-motion gets a CSS gradient fallback. */}
-      <WaterShaderHorizon height={220} />
+      {/* Phase 27i.17's WebGL water horizon used to sit here, 220px of it.
+          Removed 2026-08-22 on George's instruction: on a phone the shader
+          falls back to a plain gradient, so between the 2027 band and the
+          awarded fleet he was looking at 220px of empty navy. "Μεγάλο κενό
+          να φύγει τελείως, δεν θέλω κενά." The component itself survives
+          (WaterHorizonBand still wraps it for any page that wants it); only
+          this placement is gone, and the awarded fleet now follows the 2027
+          line directly, which reads as one continuous thought: proof, then
+          the calendar for it. */}
 
       {/* 2026-05-02 reorder: Fleet split-screen now sits IMMEDIATELY
           below the hero so the Private / Explorer choice is the

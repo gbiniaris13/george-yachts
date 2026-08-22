@@ -331,6 +331,9 @@ export default function VideoSection() {
               color: "#DAA110",
               fontWeight: 600,
               margin: "0 0 22px",
+              /* 2026-08-22 (gold pass) — the foil hairline every small gold
+                 label now carries; over video it doubles as legibility. */
+              textShadow: "0 1px 0 rgba(122,92,4,0.35), 0 1px 3px rgba(0,0,0,0.45)",
             }}
           >
             The Guest Is Sacred · Greek Waters Exclusively
@@ -438,7 +441,11 @@ export default function VideoSection() {
             <a
               href="/charter-yacht-greece"
               data-cursor="Browse"
-              className="gy-hero-cta-primary"
+              /* 2026-08-22 (gold pass) — the flat 1px #DAA110 border becomes
+                 the gy-goldframe hairline: the same leaf ramp every gold
+                 surface now wears, a rim of actual metal instead of a line
+                 of yellow. The class also owns hover. */
+              className="gy-hero-cta-primary gy-goldframe"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -450,11 +457,8 @@ export default function VideoSection() {
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
                 color: "#DAA110",
-                background: "transparent",
-                border: "1px solid #DAA110",
                 textDecoration: "none",
                 whiteSpace: "nowrap",
-                transition: "background 320ms ease, color 320ms ease, border-color 320ms ease",
               }}
             >
               Browse the Fleet
@@ -555,11 +559,8 @@ export default function VideoSection() {
             font-size: 32px !important;
           }
         }
-        .gy-hero-cta-primary:hover {
-          background: #DAA110;
-          color: #0D1B2A;
-          border-color: #DAA110;
-        }
+        /* Hover belongs to .gy-goldframe now (leaf wash + bloom); the old
+           flat-fill rule would stamp a solid yellow over the metal rim. */
         .gy-hero-cta-secondary {
           position: relative;
         }

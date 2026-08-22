@@ -117,7 +117,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
 
                   {yacht.weeklyRatePrice ? (
                     <>
-                      <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.35rem", fontWeight: 300, color: "#DAA110", margin: "0 0 8px 0", letterSpacing: "0.03em" }}>
+                      <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "1.1rem", fontWeight: 500, color: "#DAA110", margin: "0 0 8px 0", letterSpacing: "0.05em", textShadow: "0 1px 0 rgba(122,92,4,0.3)" }}>
                         {yacht.weeklyRatePrice.split('|')[0].trim()}
                       </p>
                       {yacht.weeklyRatePrice.includes('|') && (

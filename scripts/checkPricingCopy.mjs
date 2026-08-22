@@ -29,6 +29,27 @@ const SKIP = new Set(["node_modules", ".next", ".git", ".vercel", ".claude", "ca
 
 const RULES = [
   {
+    // 2026-08-22 — the hole George's scraper found. The AI-research page
+    // carried "Explorer (skippered, from €420 per guest per week)" for three
+    // weeks after all three of those things left the site, and this guard
+    // never flagged it, because the SAME line also said "per yacht per week"
+    // and the per-person rule's exemption list matches on the whole line.
+    // A line that names a euro figure and hangs per-guest wording directly
+    // off it is a price, whatever else the sentence goes on to say, so this
+    // rule runs first and carries no exemptions at all.
+    id: "euro figure priced per guest",
+    re: /(€|EUR)\s?[\d][\d.,]*\s*(?:\+|to\s+(?:€|EUR)?\s?[\d][\d.,]*)?\s*(?:\/|per)\s?[- ]?(guest|person|head|pax)\b/i,
+    // The ONLY euro-per-head things that may exist on this site are the
+    // extras that really are billed per head (shore catering, pairing
+    // menus, dives) and the glossary's description of the cabin-charter
+    // market, which is somebody else's product being defined, not ours
+    // being sold. Deliberately absent from this list: "per yacht per
+    // week" — a line saying both things at once is exactly the bug this
+    // rule exists to catch.
+    exempt: /catering|pairing menu|per dive|per night beyond|cabin[- ]charter|gulet cabins|food per guest per day/i,
+    fix: "A euro figure may only ever be per yacht per week. Rewrite the sentence around the yacht's weekly rate.",
+  },
+  {
     id: "per-person price",
     re: /(per[- ]person|per[- ]guest|\/\s?person|\bp\/p\b)/i,
     // "personal", "personally", "per person" inside a crew brief about

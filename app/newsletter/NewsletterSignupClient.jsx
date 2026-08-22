@@ -93,7 +93,7 @@ export default function NewsletterSignupClient({ streams }) {
         />
         <p
           style={{
-            fontFamily: "Georgia, serif",
+            fontFamily: "var(--gy-font-body)",
             fontSize: 16,
             lineHeight: 1.75,
             color: "rgba(13,27,42,0.78)",
@@ -162,7 +162,7 @@ export default function NewsletterSignupClient({ streams }) {
                   borderRadius: 4,
                   position: "relative",
                   transition: "all 200ms ease",
-                  fontFamily: "Georgia, serif",
+                  fontFamily: "var(--gy-font-body)",
                   color: "#0D1B2A",
                 }}
               >
@@ -318,7 +318,7 @@ export default function NewsletterSignupClient({ streams }) {
             style={{
               padding: "14px 16px",
               fontSize: 16,
-              fontFamily: "Georgia, serif",
+              fontFamily: "var(--gy-font-body)",
               background: "#F8F5F0",
               color: "#0D1B2A",
               border: "1px solid rgba(13,27,42,0.2)",
@@ -332,7 +332,7 @@ export default function NewsletterSignupClient({ streams }) {
                 margin: 0,
                 fontSize: 13,
                 color: "#0D1B2A",
-                fontFamily: "Georgia, serif",
+                fontFamily: "var(--gy-font-body)",
               }}
             >
               {error}

@@ -55,14 +55,18 @@ export default function PriceBlock({
       >
         {badge}
       </span>
+      {/* 2026-08-22 — the figure itself moves to the UI face, sitewide
+          rule from George's fleet-page complaint: didone figures read as
+          calligraphy and "€45,000 - €49,000 | plus expenses" becomes
+          decoration. Numbers a client acts on are set in the text face. */}
       <span
         style={{
-          fontFamily: "var(--gy-font-editorial)",
+          fontFamily: "var(--gy-font-ui)",
           fontSize: s.price,
           fontWeight: 400,
           color: "#F8F5F0",
-          letterSpacing: "0.01em",
-          lineHeight: 1.2,
+          letterSpacing: "0.02em",
+          lineHeight: 1.25,
         }}
       >
         {price}

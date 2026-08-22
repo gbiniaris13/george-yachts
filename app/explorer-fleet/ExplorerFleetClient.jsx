@@ -152,7 +152,8 @@ export default function ExplorerFleetClient({ yachts, lowestWeekly = 11500, high
                   <div style={{ padding: "16px 20px", background: "rgba(13, 27, 42,0.95)" }}>
                     {basePrice > 0 ? (
                       <>
-                        <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.3rem", color: "#DAA110", margin: "0 0 2px 0" }}>
+                        {/* 2026-08-22 — UI face for figures, sitewide rule. */}
+                        <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "1.05rem", fontWeight: 500, color: "#DAA110", margin: "0 0 2px 0", letterSpacing: "0.05em", textShadow: "0 1px 0 rgba(122,92,4,0.3)" }}>
                           From €{basePrice.toLocaleString('en-US')} / week
                         </p>
                         <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, color: "rgba(248, 245, 240,0.25)", margin: 0, letterSpacing: "0.08em" }}>
@@ -160,7 +161,7 @@ export default function ExplorerFleetClient({ yachts, lowestWeekly = 11500, high
                         </p>
                       </>
                     ) : (
-                      <p style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "1.2rem", color: "#DAA110", margin: 0 }}>
+                      <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "1rem", fontWeight: 500, color: "#DAA110", margin: 0, letterSpacing: "0.05em", textShadow: "0 1px 0 rgba(122,92,4,0.3)" }}>
                         Price on request
                       </p>
                     )}

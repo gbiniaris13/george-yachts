@@ -16,9 +16,11 @@
 // mistake the crewed cluster already made once.
 //
 // Everything factual here is sourced. The two shows were read off the
-// organisers' own sites on 2026-08-20: mediterraneanyachtshow.gr calls MEDYS
-// "the world's largest crewed yacht charter show" and holds it at Nafplio;
-// eastmedyachtshow.gr gives Piraeus as the venue. The awards themselves come
+// organisers' own sites: mediterraneanyachtshow.gr calls MEDYS "the world's
+// largest crewed yacht charter show" and holds it at Nafplio; EMMYS, the East
+// Med Multihull & Yacht Charter Show, is held at POROS (the original note
+// here said Piraeus, which belongs to a different, older show with a similar
+// name; the registry's place-names, with sources, are the truth). They come
 // from lib/yachtAwards.js, where each one carries the agent page it was read
 // on, and scripts/checkAwardClaims.mjs fails the build if one ever does not.
 
@@ -29,7 +31,7 @@ import Footer from "@/components/Footer";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import BriefGeorgeBanner from "@/app/components/BriefGeorgeBanner";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
-import { YACHT_AWARDS, awardsFor, awardLine, headlineAward } from "@/lib/yachtAwards";
+import { YACHT_AWARDS, SHOWS, TIERS, HONOURS, honoursFor, awardsFor, awardLine, headlineAward } from "@/lib/yachtAwards";
 import { yachtOfferSchema } from "@/lib/pricing";
 
 const CANONICAL = "https://georgeyachts.com/award-winning-yacht-charter-greece";
@@ -95,7 +97,11 @@ const QUESTION = "Which yachts in Greece have won awards, and what did they win?
 export default async function AwardWinningPage() {
   let rows = [];
   try {
-    rows = await sanityClient.fetch(FLEET_QUERY, { slugs: SLUGS });
+    rows = await sanityClient.fetch(FLEET_QUERY, {
+      // The honours-only yachts (Just Marie 2) are not in YACHT_AWARDS, but
+      // their names still have to come from Sanity rather than be typed here.
+      slugs: [...new Set([...SLUGS, ...Object.keys(HONOURS)])],
+    });
   } catch (error) {
     console.error("award page fleet fetch failed:", error);
   }
@@ -112,8 +118,8 @@ export default async function AwardWinningPage() {
 
   const answer =
     `${winners.length} yachts in George's Greek fleet have placed at the two Greek crewed charter shows, ` +
-    `${TOTAL} awards between them. The Mediterranean Yacht Show at Nafplio, which its organisers call the ` +
-    `world's largest crewed yacht charter show, and the East Med Yacht Show at Piraeus. Most are won by ` +
+    `${TOTAL} awards between them. The ${SHOWS.MEDYS.full} at ${SHOWS.MEDYS.place}, which its organisers call the ` +
+    `world's largest crewed yacht charter show, and the ${SHOWS.EMMYS.full} at ${SHOWS.EMMYS.place}. Most are won by ` +
     `crews rather than hulls: chef competitions, tablescaping, designer water. ` +
     winners
       .slice(0, 3)
@@ -313,23 +319,70 @@ export default async function AwardWinningPage() {
       <section style={{ padding: "clamp(48px, 6vw, 80px) 24px", borderTop: "1px solid rgba(218, 161, 16,0.14)" }}>
         <div style={{ maxWidth: 880, margin: "0 auto" }}>
           <h2 style={h2}>What these two shows are</h2>
+          {/* 2026-08-22 — rewritten from the SHOWS registry. The old copy
+              placed EMMYS at Piraeus; the registry, the homepage and the
+              llms.txt all say Poros, from the show's own reporting, and a
+              page about being precise cannot itself be wrong about a
+              place-name. Everything numeric below is a constant with a
+              source and a checked date in lib/yachtAwards.js, so this page
+              can never drift from the homepage again. This section also
+              absorbed the homepage's three-panel explainer when the band
+              there was cut down to a rail: the depth lives here now. */}
           <p style={body}>
-            The <strong style={{ color: CREAM, fontWeight: 400 }}>Mediterranean Yacht Show</strong> is
-            held at Nafplio, and its organisers describe it as the world&rsquo;s
-            largest crewed yacht charter show. The{" "}
-            <strong style={{ color: CREAM, fontWeight: 400 }}>East Med Yacht Show</strong> is held at
-            Piraeus. Both are trade shows: brokers walk the quay, board the
-            yachts, and eat what the galleys send out.
+            The <strong style={{ color: CREAM, fontWeight: 400 }}>{SHOWS.EMMYS.full}</strong>{" "}
+            is held at {SHOWS.EMMYS.place}: its {SHOWS.EMMYS.edition} edition
+            tied up {SHOWS.EMMYS.yachts} crewed yachts in front of{" "}
+            {SHOWS.EMMYS.brokers} brokers from {SHOWS.EMMYS.countries}{" "}
+            countries. The{" "}
+            <strong style={{ color: CREAM, fontWeight: 400 }}>{SHOWS.MEDYS.full}</strong>{" "}
+            is held at {SHOWS.MEDYS.place}, {SHOWS.MEDYS.yachts} crewed yachts
+            at its {SHOWS.MEDYS.edition} edition, and its organisers describe
+            it as the world&rsquo;s largest crewed yacht charter show. Neither
+            sells a public ticket. The people scoring are the people who place
+            the charters.
           </p>
           <p style={body}>
-            The competitions run alongside. Chefs cook against each other out of
-            galleys the size of a domestic kitchen, crews are judged on service,
-            and there are categories for tablescaping and for designer water.
-            That is what a placing here means. It is not a trophy a yard collected
-            at a boat show, and it is not a rating anybody paid for.
+            The competitions run alongside, and crews compete, not hulls. The
+            chef cooks a themed menu and is marked on presentation, technical
+            execution, creativity and balance; the interior team dresses a
+            table to the year&rsquo;s theme; a third contest is built from
+            local produce; and one award goes to the crew that does the whole
+            week well, which is the one every charter guest actually feels.
+            None of it is a trophy a yard collected at a boat show, and none
+            of it is a rating anybody paid for.
+          </p>
+          <p style={body}>
+            Every yacht is judged against her own kind. Emerald is{" "}
+            {TIERS.Emerald}; Diamond is {TIERS.Diamond}. A 16 metre catamaran
+            is never marked against a 24 metre one, so a first place is a
+            first place inside a real field, and a third against forty other
+            galleys is not a consolation.
           </p>
         </div>
       </section>
+
+      {/* The one distinction that is not a competition. It moved here from
+          the homepage band with the rest of the archive; George asked for it
+          by name when it first went up: "βεβαίως να το βάλουμε, είναι πολύ
+          τιμητικό για αυτόν". */}
+      {honoursFor("just-marie-2").length > 0 && (
+        <section style={{ padding: "clamp(48px, 6vw, 80px) 24px", borderTop: "1px solid rgba(218, 161, 16,0.14)" }}>
+          <div style={{ maxWidth: 880, margin: "0 auto" }}>
+            <h2 style={h2}>And one distinction that is not a competition</h2>
+            {honoursFor("just-marie-2").map((h, i) => (
+              <p style={body} key={i}>
+                <strong style={{ color: CREAM, fontWeight: 400 }}>
+                  {bySlug.get("just-marie-2")?.name || "Just Marie 2"}
+                </strong>{" "}
+                carries a {h.award} from the {h.organiser}, {h.year}.{" "}
+                {h.note} It is counted apart from the placings above because
+                it was not won in a galley, and it is the only line on this
+                page that has nothing to do with cooking.
+              </p>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section style={{ padding: "clamp(48px, 6vw, 80px) 24px", borderTop: "1px solid rgba(218, 161, 16,0.14)" }}>
         <div style={{ maxWidth: 880, margin: "0 auto" }}>

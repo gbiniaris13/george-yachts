@@ -636,11 +636,18 @@
 }
 
 .fleet-card__price {
-  font-family: var(--gy-font-editorial);
-  font-size: 22px;
+  /* 2026-08-22, George: "η γραμματοσειρά στις τιμές... δυσανάγνωστες σαν
+     καλλιγραφικά, δεν διακρίνονται τα ποσά". He is right about the face:
+     a fashion didone's figures are drawn for mastheads, not rate cards.
+     Prices are numbers a client acts on, so every price on this site is
+     set in the UI face. Slightly smaller, medium weight, and the foil
+     hairline keeps it reading as metal instead of yellow. */
+  font-family: var(--gy-font-ui);
+  font-size: 19px;
   color: #DAA110;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 0 rgba(122, 92, 4, 0.30);
 }
 
 /* 2026-08-21 (section 5). The card used to carry a per-person total under

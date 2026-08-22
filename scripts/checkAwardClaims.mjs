@@ -198,6 +198,10 @@ const PHRASE_ALLOWED = new Map([
   // names no yachts.
   ["app/components/Footer.jsx",
    "anchor text of the sitewide link to the sourced awards register"],
+  // 2026-08-22, same reasoning as the footer: the main menu's link to the
+  // register. Anchor text pointing AT the evidence, naming no yacht.
+  ["app/components/NavDrawerSystem.jsx",
+   "main-menu anchor text of the link to the sourced awards register"],
 ]);
 const SKIP = new Set(["node_modules", ".next", ".git"]);
 
