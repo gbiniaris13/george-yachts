@@ -334,7 +334,7 @@ export default async function ComparePage({ searchParams }) {
                   ghost secondary) matching homepage hero. Phase 27g. */}
               <div className="mt-12" style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center" }}>
                 <Link
-                  href="/inquiry"
+                  href="/#contact"
                   className="gy-shimmer-cta"
                   style={{
                     display: "inline-flex",

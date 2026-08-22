@@ -237,7 +237,7 @@ export default function ProposedItineraries() {
           If one of these reads like your week, tell me the month and the group and I will send the
           yachts that fit it. If none of them does, that is more useful still:{" "}
           <Link
-            href="/inquiry"
+            href="/#contact"
             style={{ color: GOLD, textDecoration: "none", borderBottom: `1px solid rgba(218, 161, 16,0.45)` }}
           >
             write to George

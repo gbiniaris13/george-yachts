@@ -30,7 +30,7 @@ const REGIONS = [
     stats: "16 islands  ·  West coast  ·  Calm waters",
     // Destinations pages were removed 2026-04-21; regions on the
     // map now funnel straight into the inquiry flow.
-    href: "/inquiry",
+    href: "/#contact",
     // Cluster of islands down the west coast of Greece.
     // (each region sends visitors to /inquiry since the dedicated
     // destination pages were retired 2026-04-21)
@@ -48,7 +48,7 @@ const REGIONS = [
     name: "Saronic",
     tagline: "One hour from Athens. Hydra at sunrise, Spetses at sunset.",
     stats: "8 islands  ·  Near Athens  ·  Weekend gateway",
-    href: "/inquiry",
+    href: "/#contact",
     islands: [
       { cx: 475, cy: 455, r: 9, name: "Aegina" },
       { cx: 510, cy: 480, r: 7, name: "Poros" },
@@ -61,7 +61,7 @@ const REGIONS = [
     name: "Cyclades",
     tagline: "Whitewashed villages, sun-blasted stone, the Greece you imagined.",
     stats: "24 islands  ·  Central Aegean  ·  Flagship destination",
-    href: "/inquiry",
+    href: "/#contact",
     islands: [
       { cx: 620, cy: 425, r: 6, name: "Kea" },
       { cx: 660, cy: 460, r: 6, name: "Kythnos" },
@@ -82,7 +82,7 @@ const REGIONS = [
     name: "Sporades",
     tagline: "Pine forests to the waterline. Mamma Mia's coast in real life.",
     stats: "4 islands  ·  Northeast Aegean  ·  Untamed coast",
-    href: "/inquiry",
+    href: "/#contact",
     islands: [
       { cx: 565, cy: 245, r: 8, name: "Skiathos" },
       { cx: 600, cy: 230, r: 10, name: "Skopelos" },

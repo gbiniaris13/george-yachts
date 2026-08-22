@@ -312,7 +312,7 @@ export default function Charter2027Page() {
           </div>
           <div style={{ textAlign: "center", marginTop: 48 }}>
             <Link
-              href="/inquiry"
+              href="/#contact"
               style={{
                 display: "inline-block",
                 fontFamily: "var(--gy-font-ui)",
@@ -522,7 +522,7 @@ export default function Charter2027Page() {
           IYBA Member · MYBA-Standard Contracts · Featured in Forbes, May 2026 · Greek Waters Exclusively
         </p>
         <Link
-          href="/inquiry"
+          href="/#contact"
           style={{
             display: "inline-block",
             fontFamily: "var(--gy-font-ui)",

@@ -463,7 +463,7 @@ export default async function ClusterPage({ params }) {
               Brief George - reply within 24h →
             </Link>
             <Link
-              href="/inquiry"
+              href="/#contact"
               style={{
                 display: "inline-block",
                 fontFamily: "var(--gy-font-ui)",

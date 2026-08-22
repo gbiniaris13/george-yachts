@@ -37,7 +37,7 @@ const CALENDLY_URL = "https://calendly.com/george-georgeyachts/30min";
 // Homepage has its own StickyFleetCTA. Conversion pages (inquiry,
 // contact) already have full forms. Admin / API / auth flows.
 const EXCLUDED_PATH_PREFIXES = [
-  "/inquiry",
+  "/#contact",
   "/contact",
   "/admin",
   "/api",

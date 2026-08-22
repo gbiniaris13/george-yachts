@@ -36,7 +36,7 @@ const BREADCRUMB_HIERARCHIES = {
   "/ai-research": { title: "AI Research Hub", trail: [{ name: "About", url: `${BASE}/about-us` }] },
   "/charter-timeline": { title: "Charter Timeline", trail: [{ name: "How It Works", url: `${BASE}/how-it-works` }] },
   "/faq": { title: "Frequently Asked Questions", trail: [] },
-  "/inquiry": { title: "Inquiry", trail: [] },
+  "/#contact": { title: "Inquiry", trail: [] },
   "/newsletter": { title: "Newsletter", trail: [] },
   "/events": { title: "Events", trail: [{ name: "About", url: `${BASE}/about-us` }] },
 

@@ -98,7 +98,7 @@ export default function ThreeGreekWorlds() {
         Specialising exclusively in the Cyclades, Ionian, and Saronic Gulf -
         with bespoke arrangements available throughout the broader
         Mediterranean, including Italy, Turkey, and beyond.{" "}
-        <Link href="/inquiry" className="gy-three-worlds__footnote-link">
+        <Link href="/#contact" className="gy-three-worlds__footnote-link">
           Speak to George directly
         </Link>{" "}
         for custom itineraries outside our core waters.

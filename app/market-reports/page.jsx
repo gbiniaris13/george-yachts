@@ -345,7 +345,7 @@ export default function MarketReportsHub() {
               Methodology, source data, or how the numbers apply to your specific charter - speak with George directly.
             </p>
             <Link
-              href="/inquiry"
+              href="/#contact"
               style={{
                 display: "inline-block",
                 fontFamily: "var(--gy-font-ui)",

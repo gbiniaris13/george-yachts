@@ -554,7 +554,7 @@ export default function GlossaryTerm({ termData }) {
                 See the fleet
               </Link>
               <Link
-                href="/inquiry"
+                href="/#contact"
                 style={{
                   display: "inline-block",
                   fontFamily: "var(--gy-font-ui)",

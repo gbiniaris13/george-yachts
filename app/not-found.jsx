@@ -122,7 +122,7 @@ export default function NotFound() {
             title="Read the ten stops"
           />
           <ExitCard
-            href="/inquiry"
+            href="/#contact"
             eyebrow="The brief"
             title="Brief George directly"
             primary

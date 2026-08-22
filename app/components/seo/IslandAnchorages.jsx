@@ -696,7 +696,7 @@ export default function IslandAnchorages({ guideData }) {
             </p>
             <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
               <Link
-                href="/inquiry"
+                href="/#contact"
                 style={{
                   display: "inline-block",
                   fontFamily: "var(--gy-font-ui)",

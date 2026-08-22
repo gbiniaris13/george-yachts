@@ -399,7 +399,7 @@ export default function ReviewsPage() {
                 Find a yacht
               </Link>
               <Link
-                href="/inquiry"
+                href="/#contact"
                 style={{
                   display: "inline-block",
                   fontFamily: "var(--gy-font-ui)",

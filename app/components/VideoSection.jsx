@@ -60,6 +60,7 @@
 // preload is decided per device in the effect below, not asserted here.
 
 import React, { useEffect, useRef, useState } from "react";
+import LogoLockup from "./LogoLockup";
 
 const HERO_VIDEO_BASE = "/videos/hero-loop";
 
@@ -327,20 +328,19 @@ export default function VideoSection() {
               carries just the hamburger, so the hero introduces the house
               the way a cover introduces a book. Desktop keeps its masthead
               logo and never renders this. */}
-          <div className="md:hidden" style={{ display: "flex", justifyContent: "center", marginBottom: 26 }}>
-            <picture>
-              <source srcSet="/images/yacht-logo-tight-300.webp" type="image/webp" />
-              <img
-                src="/images/yacht-logo-tight-300.png"
-                alt="George Yachts Brokerage House"
-                style={{
-                  width: "min(220px, 58vw)",
-                  height: "auto",
-                  filter:
-                    "drop-shadow(0 2px 6px rgba(13,27,42,0.9)) drop-shadow(0 10px 28px rgba(13,27,42,0.6))",
-                }}
-              />
-            </picture>
+          {/* 2026-08-22: display lives in the classes only. The old inline
+              display:flex outranked md:hidden (inline style beats any class),
+              which is how a second logo turned up on desktop. */}
+          <div className="flex justify-center md:hidden" style={{ marginBottom: 26 }}>
+            <LogoLockup
+              imgWidth="min(232px, 60vw)"
+              gap={9}
+              subtitleSize={10}
+              imgStyle={{
+                filter:
+                  "drop-shadow(0 2px 6px rgba(13,27,42,0.9)) drop-shadow(0 10px 28px rgba(13,27,42,0.6))",
+              }}
+            />
           </div>
 
           {/* gy-goldtext: the ramp through the glyphs; flat gold read as

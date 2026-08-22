@@ -121,7 +121,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
             slowly. Pick the week you want. Brief George with the rest.
           </p>
           <div style={{ marginTop: 36, display: "flex", gap: 22, flexWrap: "wrap" }}>
-            <Link href="/inquiry" className="gy-link-editorial">
+            <Link href="/#contact" className="gy-link-editorial">
               Brief George →
             </Link>
             <Link href="#stop-mykonos" className="gy-link-editorial" style={{ color: "rgba(248,245,240,0.66)" }}>
@@ -466,7 +466,7 @@ export default function GreeceByYachtClient({ stops, heroBackdrop }) {
           shortlist for this week.
         </p>
         <Link
-          href="/inquiry"
+          href="/#contact"
           className="gy-shimmer-cta"
           style={{
             display: "inline-flex",

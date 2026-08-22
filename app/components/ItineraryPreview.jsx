@@ -325,7 +325,7 @@ export default function ItineraryPreview() {
                 }}
               >
                 <Link
-                  href="/inquiry"
+                  href="/#contact"
                   className="gy-link-editorial"
                   data-cursor="Brief"
                 >

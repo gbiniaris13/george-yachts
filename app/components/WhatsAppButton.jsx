@@ -122,7 +122,7 @@ export default function WhatsAppButton() {
   // lib/whatsappStatus.js when the account is restored.
   const buildHref = (msg) =>
     WHATSAPP_DOWN
-      ? "/inquiry"
+      ? "/#contact"
       : `https://api.whatsapp.com/send/?phone=${WA_NUMBER}&text=${encodeURIComponent(msg)}`;
 
   return (
@@ -134,8 +134,10 @@ export default function WhatsAppButton() {
           aria-label="A quick message from George"
           className="fixed z-[51] animate-gy-greet-in"
           style={{
-            bottom: "168px",
+            // 80px above the FAB, wherever the dock line currently is.
+            bottom: "calc(var(--gy-dock, 24px) + 80px)",
             right: "24px",
+            transition: "bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
             // Mobile audit 2026-04-20: was max-w-[300px] which kept
             // the bubble anchored to the right edge and risked
             // overlapping CookieConsent on 360 px phones. Now shrinks
@@ -278,8 +280,12 @@ export default function WhatsAppButton() {
         onClick={markGreeted}
         className="fixed z-50 group"
         style={{
-          bottom: "88px",
+          // 2026-08-22: the dock line. Same baseline as the AmbientPlayer
+          // pill by shared variable; rides above StickyFleetCTA when the
+          // bar is out, so it overlaps neither the bar nor the hero CTAs.
+          bottom: "var(--gy-dock, 24px)",
           right: "24px",
+          transition: "bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
         {/* Outer glow ring */}

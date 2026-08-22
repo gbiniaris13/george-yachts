@@ -46,6 +46,7 @@
 // letter-spacing 0.15 em, weight 400 per Boss spec.
 
 import React, { useState, useEffect, useCallback } from "react";
+import LogoLockup from "./LogoLockup";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -115,7 +116,7 @@ const NAV_SECTIONS = [
   },
 ];
 
-const BRIEF_GEORGE = { label: "Brief George", href: "/inquiry" };
+const BRIEF_GEORGE = { label: "Brief George", href: "/#contact" };
 
 // Shared text style for every nav label — Switzer 11 px ALL CAPS
 // 0.15em tracking per Boss spec.
@@ -334,7 +335,7 @@ export default function NavDrawerSystem() {
           <button
             type="button"
             onClick={toggleMobile}
-            className="md:hidden absolute top-3 right-3 transition-colors flex items-center justify-center"
+            className="md:hidden absolute top-3 right-0 transition-colors flex items-center justify-center"
             style={{
               width: 44,
               height: 44,
@@ -390,21 +391,22 @@ export default function NavDrawerSystem() {
               as WebP, identical pixels. Every browser that matters has
               supported WebP since 2020; the <source> is skipped by anything
               older and the PNG below still serves it. */}
-            <picture>
-              <source srcSet="/images/yacht-logo-tight-300.webp" type="image/webp" />
-              <img
-                src="/images/yacht-logo-tight-300.png"
-                alt="George Yachts Brokerage House"
-                className="gy-nav-logo group-hover:opacity-80"
-                style={{
-                  height: logoHeight,
-                  width: "auto",
-                  transition: "height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
-                  filter:
-                    "drop-shadow(0 1px 2px rgba(13,27,42,0.85)) drop-shadow(0 8px 22px rgba(13,27,42,0.55))",
-                }}
-              />
-            </picture>
+            {/* 2026-08-22, detail-shop pass: the lockup component. The image
+                is mark + wordmark only (gy-logo-mark-2x, cut and resharpened
+                from the colour master); the hairline and THE BROKERAGE HOUSE
+                are DOM, because raster subtitle at this physical size is fog
+                on every screen. calc() keeps the whole lockup at logoHeight. */}
+            <LogoLockup
+              imgHeight={`calc(${typeof logoHeight === "number" ? `${logoHeight}px` : logoHeight} - 17px)`}
+              gap={5}
+              subtitleSize={7}
+              imgClassName="gy-nav-logo group-hover:opacity-80"
+              imgStyle={{
+                transition: "height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
+                filter:
+                  "drop-shadow(0 1px 2px rgba(13,27,42,0.85)) drop-shadow(0 8px 22px rgba(13,27,42,0.55))",
+              }}
+            />
           </Link>
 
           {/* DESKTOP, right cluster: ABOUT + BRIEF GEORGE CTA */}
@@ -470,19 +472,12 @@ export default function NavDrawerSystem() {
                 as WebP, identical pixels. Every browser that matters has
                 supported WebP since 2020; the <source> is skipped by anything
                 older and the PNG below still serves it. */}
-              <picture>
-                <source srcSet="/images/yacht-logo-tight-300.webp" type="image/webp" />
-                <img
-                  src="/images/yacht-logo-tight-300.png"
-                  alt="George Yachts"
-                  style={{ height: 56, width: "auto" }}
-                />
-              </picture>
+              <LogoLockup imgHeight={40} gap={4} subtitleSize={6.5} />
             </Link>
             <button
               type="button"
               onClick={closeMobile}
-              className="absolute top-3 right-3 transition-colors flex items-center justify-center"
+              className="absolute top-3 right-0 transition-colors flex items-center justify-center"
               style={{ width: 44, height: 44, color: "#DAA110" }}
               aria-label="Close navigation"
               data-cursor="Close"

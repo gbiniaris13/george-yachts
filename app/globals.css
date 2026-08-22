@@ -5054,3 +5054,69 @@ html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
   .gy-awd__link:focus-visible { transform: none; }
   .gy-awd__link:hover .gy-awd__img { transform: none; }
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   THE LOGO LOCKUP + THE DOCK LINE (2026-08-22, detail-shop pass)
+
+   .gy-silvertext is the sibling of .gy-goldtext: the chrome of the
+   wordmark, clipped into the glyphs. Same rules apply: background-size
+   180px so the sheen repeats and no word parks in the pale highlight;
+   text-shadow none because a shadow behind a transparent fill renders
+   as fog through the glyphs; never combined with gy-goldframe.
+
+   --gy-dock is the shared baseline every floating element sits on:
+   AmbientPlayer pill (left) and the WhatsApp FAB (right) at the same
+   height, by definition, instead of by two numbers that drift apart.
+   StickyFleetCTA raises the line when its bar is on screen, so nothing
+   ever parks behind the bar.
+   ══════════════════════════════════════════════════════════════════════ */
+:root {
+  --gy-dock: 24px;
+}
+body.gy-fleetbar-open {
+  --gy-dock: 104px;
+}
+
+.gy-silvertext {
+  background-image: linear-gradient(
+    100deg,
+    #97a0ab 0%,
+    #e9edf2 24%,
+    #b9c1cb 46%,
+    #f4f7fa 64%,
+    #a6aeb9 82%,
+    #8e97a2 100%
+  );
+  background-size: 180px 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #c9d1da; /* fallback for anything that cannot clip */
+  text-shadow: none !important;
+}
+
+.gy-logo-rule {
+  display: block;
+  width: 86%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(200, 207, 216, 0) 0%,
+    rgba(200, 207, 216, 0.75) 18%,
+    #f2f5f8 50%,
+    rgba(200, 207, 216, 0.75) 82%,
+    rgba(200, 207, 216, 0) 100%
+  );
+  filter: drop-shadow(0 1px 2px rgba(5, 10, 18, 0.85));
+}
+
+.gy-logo-sub {
+  font-family: var(--gy-font-ui);
+  font-weight: 500;
+  letter-spacing: 0.44em;
+  margin-right: -0.44em; /* recentre: tracking adds a phantom space after the last glyph */
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  filter: drop-shadow(0 1px 2px rgba(5, 10, 18, 0.9));
+}

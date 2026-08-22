@@ -27,7 +27,7 @@ import Footer from "@/app/components/Footer";
 
 const URL = `https://georgeyachts.com/${SLUG}`;
 // 2026-07-03: while the company WhatsApp is under review, route to /inquiry
-const WHATSAPP = WHATSAPP_DOWN ? "/inquiry" : `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}`;
+const WHATSAPP = WHATSAPP_DOWN ? "/#contact" : `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}`;
 
 const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
@@ -170,7 +170,7 @@ export default function WeeklyMotorPillarPage() {
             Tell us your dates and your islands. George will shortlist the right motor yacht personally.
           </p>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/inquiry" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: GOLD, color: NAVY, textDecoration: "none" }}>
+            <Link href="/#contact" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: GOLD, color: NAVY, textDecoration: "none" }}>
               Brief George directly
             </Link>
             <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", border: `1px solid ${GOLD}`, color: GOLD, textDecoration: "none" }}>

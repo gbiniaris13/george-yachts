@@ -517,7 +517,7 @@ export default function CalculatorClient() {
         </p>
 
         <Link
-          href="/inquiry"
+          href="/#contact"
           style={{
             display: "block",
             fontFamily: "var(--gy-font-ui)",

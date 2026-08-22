@@ -428,7 +428,7 @@ export default function AIResearchHub() {
           Last reviewed by George P. Biniaris on 2026-05-05.
           <br />
           Direct enquiry:{" "}
-          <Link href="/inquiry" style={inlineLink}>
+          <Link href="/#contact" style={inlineLink}>
             georgeyachts.com/inquiry
           </Link>{" "}
           ·{" "}

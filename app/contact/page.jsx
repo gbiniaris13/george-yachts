@@ -289,7 +289,7 @@ export default function ContactPage() {
                   </li>
                   <li>
                     <a
-                      href="/inquiry"
+                      href="/#contact"
                       className="hover:text-[#DAA110] transition"
                     >
                       Start a charter inquiry →

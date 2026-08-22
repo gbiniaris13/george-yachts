@@ -393,9 +393,10 @@ export default function AmbientPlayer() {
       className="gy-ambient-pill"
       style={{
         position: "fixed",
-        // Bottom-left, well clear of the right-side floating column
-        // (G / SPEAK / WhatsApp) and the top-right nav icon strip.
-        bottom: 24,
+        // Bottom-left on the shared dock line (--gy-dock), the same
+        // baseline the WhatsApp FAB sits on at bottom-right. Rides above
+        // StickyFleetCTA when that bar is out.
+        bottom: "var(--gy-dock, 24px)",
         left: 24,
         zIndex: 60,
         width: 32,
@@ -418,7 +419,7 @@ export default function AmbientPlayer() {
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
-        transition: "all 0.32s cubic-bezier(0.2, 0.8, 0.2, 1)",
+        transition: "all 0.32s cubic-bezier(0.2, 0.8, 0.2, 1), bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
     >
       <span aria-hidden="true" style={{ display: "inline-flex", gap: 2, alignItems: "flex-end" }}>

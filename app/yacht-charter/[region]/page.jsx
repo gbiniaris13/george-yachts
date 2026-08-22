@@ -549,7 +549,7 @@ export default async function RegionPage({ params }) {
               {data.queries.map((q) => (
                 <Link
                   key={q}
-                  href="/inquiry"
+                  href="/#contact"
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -603,7 +603,7 @@ export default async function RegionPage({ params }) {
             }}
           >
             <Link
-              href="/inquiry"
+              href="/#contact"
               className="gy-shimmer-cta"
               style={{
                 display: "inline-flex",

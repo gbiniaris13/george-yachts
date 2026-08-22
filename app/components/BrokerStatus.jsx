@@ -111,8 +111,11 @@ export default function BrokerStatus() {
         // the hamburger menu trigger inside NavDrawerSystem (which sits
         // at top: 0, left: ~16, height 72-140px). Move to BOTTOM-LEFT,
         // stacked above the AmbientPlayer pill (which lives at bottom:24).
-        bottom: 76,
+        // 2026-08-22: 52px above the dock line so it tracks the
+        // AmbientPlayer pill wherever the line currently sits.
+        bottom: "calc(var(--gy-dock, 24px) + 52px)",
         left: 24,
+        transition: "bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         zIndex: 70,
         display: "inline-flex",
         alignItems: "center",

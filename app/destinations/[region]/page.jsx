@@ -300,7 +300,7 @@ export default async function DestinationPage({ params }) {
               Browse the Fleet →
             </Link>
             <Link
-              href="/inquiry"
+              href="/#contact"
               className="gy-dest-cta__secondary"
               data-cursor="Brief"
             >

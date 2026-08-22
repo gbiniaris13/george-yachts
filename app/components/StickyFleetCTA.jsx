@@ -84,6 +84,16 @@ export default function StickyFleetCTA({ yachtCount: yachtCountProp } = {}) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // 2026-08-22: the dock line. While the bar is on screen, every floating
+  // element that sits on --gy-dock (AmbientPlayer pill, WhatsApp FAB) rides
+  // up above it via the body class; when it leaves they settle back to the
+  // 24 px baseline. One variable instead of four hand-tuned bottoms.
+  useEffect(() => {
+    const on = visible && !keyboardOpen;
+    document.body.classList.toggle("gy-fleetbar-open", on);
+    return () => document.body.classList.remove("gy-fleetbar-open");
+  }, [visible, keyboardOpen]);
+
   // Hide while a form field is focused — covers most "the bar is
   // in front of my keyboard" mobile complaints without needing
   // visual-viewport API gymnastics.

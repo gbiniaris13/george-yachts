@@ -497,7 +497,7 @@ export default function MarketReportPage() {
                 Find a yacht
               </Link>
               <Link
-                href="/inquiry"
+                href="/#contact"
                 style={{
                   display: "inline-block",
                   fontFamily: "var(--gy-font-ui)",

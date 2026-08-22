@@ -8,6 +8,7 @@ import { useI18n } from "@/lib/i18n/I18nProvider";
 import Image from "next/image";
 import PressStrip from "./PressStrip";
 import useNearViewport from "./useNearViewport";
+import LogoLockup from "./LogoLockup";
 
 // SD-3: lazy ambient for the footer sunset. Same element, same poster,
 // same styling - the sources simply do not exist in the DOM until the
@@ -397,20 +398,13 @@ const Footer = () => {
                 as WebP, identical pixels. Every browser that matters has
                 supported WebP since 2020; the <source> is skipped by anything
                 older and the PNG below still serves it. */}
-              <picture>
-                <source srcSet="/images/yacht-logo-tight-300.webp" type="image/webp" />
-                <img
-                  src="/images/yacht-logo-tight-300.png"
-                  alt="George Yachts Brokerage House LLC"
-                  /* 2026-08-19 (job 12) - same asset as the nav now, and the
-                     height comes down with it. The old file was half blank
-                     canvas, so 150px here drew a 66px mark; the cropped file
-                     draws 97px from 110. Leaving the two files side by side on
-                     one page looked backwards: the footer logo occupied more
-                     room than the nav one and read smaller. */
-                  style={{ height: "clamp(64px, 14vw, 110px)", width: "auto" }}
-                />
-              </picture>
+              {/* 2026-08-22, detail-shop pass: the shared lockup. Subtitle is
+                  DOM text now (THE BROKERAGE HOUSE), same as nav and hero. */}
+              <LogoLockup
+                imgHeight="clamp(46px, 10vw, 80px)"
+                gap={6}
+                subtitleSize={8}
+              />
             </Link>
 
             {/* Social Icons */}

@@ -25,7 +25,7 @@ export default function HubPage({
   breadcrumbs = [],
   lastUpdated,
   collectionUrl,
-  ctaHref = "/inquiry",
+  ctaHref = "/#contact",
   ctaLabel = "Brief George directly",
 }) {
   const abs = (u) => (u && u.startsWith("http") ? u : `https://georgeyachts.com${u}`);

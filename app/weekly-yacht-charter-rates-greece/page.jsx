@@ -307,10 +307,10 @@ export default function WeeklyRatesPage() {
         {/* CTA */}
         <section style={{ padding: "56px 24px 80px", textAlign: "center" }}>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/inquiry" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: GOLD, color: NAVY, textDecoration: "none" }}>
+            <Link href="/#contact" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 700, padding: "14px 26px", background: GOLD, color: NAVY, textDecoration: "none" }}>
               Brief George directly
             </Link>
-            <a href={WHATSAPP_DOWN ? "/inquiry" : `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=Hi%20George%2C%20I%20would%20like%20a%20weekly%20motor%20yacht%20charter%20quote%20for%20Greece.`} target={WHATSAPP_DOWN ? undefined : "_blank"} rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", border: `1px solid ${GOLD}`, color: GOLD, textDecoration: "none" }}>
+            <a href={WHATSAPP_DOWN ? "/#contact" : `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=Hi%20George%2C%20I%20would%20like%20a%20weekly%20motor%20yacht%20charter%20quote%20for%20Greece.`} target={WHATSAPP_DOWN ? undefined : "_blank"} rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", border: `1px solid ${GOLD}`, color: GOLD, textDecoration: "none" }}>
               {WHATSAPP_DOWN ? "Message George Directly" : "Message on WhatsApp"}
             </a>
           </div>

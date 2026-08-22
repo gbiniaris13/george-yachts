@@ -30,7 +30,7 @@ const DELAY_MS = 1800;
 const VISIBLE_MS = 18000;
 const FADE_MS = 600;
 
-const SUPPRESSED = ["/admin", "/partner-portal", "/privacy/delete", "/api/", "/inquiry"];
+const SUPPRESSED = ["/admin", "/partner-portal", "/privacy/delete", "/api/", "/#contact"];
 
 function isForbesReferrer() {
   if (typeof window === "undefined") return false;
@@ -74,7 +74,8 @@ export default function ForbesReferrerWelcome() {
       className="gy-forbes-welcome"
       style={{
         position: "fixed",
-        bottom: 24,
+        // 2026-08-22: on the dock line, like the rail it sits beside.
+        bottom: "var(--gy-dock, 24px)",
         // 2026-08-19 (job 7) — was "left of the WhatsApp/ContactDrawer FAB
         // stack". ContactDrawer is gone; this sits at bottom: 24, beside the
         // rail rather than in it, so the 92 is still measured off the same
@@ -90,7 +91,7 @@ export default function ForbesReferrerWelcome() {
         padding: "20px 22px 22px",
         opacity: phase === "fading" ? 0 : 1,
         transform: phase === "visible" ? "translateY(0) scale(1)" : "translateY(12px) scale(0.97)",
-        transition: `opacity ${FADE_MS}ms ease, transform ${FADE_MS}ms cubic-bezier(0.2, 0.8, 0.2, 1)`,
+        transition: `opacity ${FADE_MS}ms ease, transform ${FADE_MS}ms cubic-bezier(0.2, 0.8, 0.2, 1), bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1)`,
       }}
     >
       {/* Eyebrow line, Forbes wordmark */}

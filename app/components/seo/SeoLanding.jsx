@@ -658,7 +658,7 @@ export default async function SeoLanding({ pageData }) {
                 {pageData.ctaPrimary}
               </Link>
               <Link
-                href="/inquiry"
+                href="/#contact"
                 style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", background: "transparent", color: "rgba(248, 245, 240,0.85)", border: "1px solid rgba(248, 245, 240,0.3)", textDecoration: "none" }}
               >
                 Or write to George
@@ -666,7 +666,7 @@ export default async function SeoLanding({ pageData }) {
               {/* 2026-07-03 TEMPORARY, WhatsApp under review; route
                   to /inquiry while WHATSAPP_DOWN (lib/whatsappStatus). */}
               <a
-                href={WHATSAPP_DOWN ? "/inquiry" : `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(`Hi George, I am interested in ${pageData.h1 || "a Greek yacht charter"}. Could you share availability and rates?`)}`}
+                href={WHATSAPP_DOWN ? "/#contact" : `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(`Hi George, I am interested in ${pageData.h1 || "a Greek yacht charter"}. Could you share availability and rates?`)}`}
                 {...(WHATSAPP_DOWN ? {} : { target: "_blank", rel: "noopener noreferrer" })}
                 style={{ display: "inline-block", fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, padding: "14px 26px", background: "transparent", color: "#DAA110", border: "1px solid #DAA110", textDecoration: "none" }}
               >

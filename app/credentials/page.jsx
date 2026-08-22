@@ -641,7 +641,7 @@ export default function CredentialsPage() {
             twenty-four hours.
           </p>
           <Link
-            href="/inquiry"
+            href="/#contact"
             className="gy-shimmer-cta"
             style={{
               display: "inline-flex",

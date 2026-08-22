@@ -149,7 +149,7 @@ export default function LifestyleGallery({ heading = "Moments aboard", showCta =
               The first set arrives within the next two weeks.
             </p>
             <Link
-              href="/inquiry"
+              href="/#contact"
               className="gy-link-editorial"
               style={{ marginTop: 28, display: "inline-block" }}
             >
@@ -160,7 +160,7 @@ export default function LifestyleGallery({ heading = "Moments aboard", showCta =
 
         {hasPhotos && showCta && (
           <div style={{ textAlign: "center", marginTop: "clamp(40px, 6vw, 72px)" }}>
-            <Link href="/inquiry" className="gy-link-editorial">
+            <Link href="/#contact" className="gy-link-editorial">
               Brief George for your own week →
             </Link>
           </div>

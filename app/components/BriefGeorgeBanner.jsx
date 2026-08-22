@@ -89,7 +89,7 @@ export default function BriefGeorgeBanner() {
           }}
         >
           <Link
-            href="/inquiry"
+            href="/#contact"
             data-cursor="Brief"
             className="gy-shimmer-cta"
             style={{
