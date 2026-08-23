@@ -89,11 +89,217 @@ function Field({ icon, delay, children }) {
 }
 
 /* ─── Main Component ─── */
+const DRAFT_KEY = "gy_brief_draft";
+
+// 2026-08-23, George's directive: budget is tappable bands, all-in
+// terms (his correction: all-in, not net), derived from the LIVE
+// SITE fleet only, 65 published yachts, retired and drafts excluded
+// (George's second correction: the Sanity raw pull had €3,300 boats
+// the site never shows). Real spread: S/CAT Alegria from €10,900 net
+// up to M/Y LA PELLEGRINA 1 at €235,000 net; all-in is roughly 1.5
+// to 1.65x base. One tap filters the search; a custom field stays
+// for those who prefer their own number.
+const BUDGET_OPTIONS = [
+  "Up to €25,000",
+  "€25,000 - €50,000",
+  "€50,000 - €80,000",
+  "€80,000 - €150,000",
+  "€150,000+",
+  "Flexible - Advise Me",
+];
+
+// Dual-mode dates (George, 23/8): exact pickers for the guests who
+// already hold flights to Greece, tappable periods for everyone
+// still dreaming in seasons.
+const TIMING_EXACT = "Exact dates";
+const TIMING_OPTIONS = [
+  "September 2026",
+  "October 2026",
+  "May 2027",
+  "Early June 2027",
+  "Late June 2027",
+  "July 2027",
+  "August 2027",
+  "Early September 2027",
+  "Late September 2027",
+  "October 2027",
+  "Flexible - Advise Me",
+];
+
+// 2026-08-23, George's #2: the brief arrives knowing what the
+// visitor already looked at. The tracker keeps yacht history and
+// session timing in the browser; the form reads them and sends
+// them along, so George replies like he already knows the guest.
+function collectVisitorContext() {
+  try {
+    const ctx = {};
+    const session = JSON.parse(sessionStorage.getItem("gy-tracker-session") || "null");
+    if (session) {
+      if (session.startTime) {
+        ctx.session_minutes = Math.max(0, Math.round((Date.now() - session.startTime) / 60000));
+      }
+      if (Array.isArray(session.yachtsViewed) && session.yachtsViewed.length) {
+        ctx.yachts_this_visit = session.yachtsViewed.slice(0, 8);
+      }
+      if (session.referrer) ctx.arrived_from = String(session.referrer).slice(0, 200);
+    }
+    const history = JSON.parse(localStorage.getItem("gy-view-history") || "[]");
+    if (Array.isArray(history) && history.length) {
+      ctx.yachts_history = history.slice(0, 5).map((h) => h && h.name).filter(Boolean);
+    }
+    return ctx;
+  } catch {
+    return {};
+  }
+}
+
 const ContactFormSection = () => {
   const { t } = useI18n();
   const [status, setStatus] = useState("");
   const [step, setStep] = useState(1);
+  const [budgetChoice, setBudgetChoice] = useState("");
+  const [customBudget, setCustomBudget] = useState("");
+  const [showCustomBudget, setShowCustomBudget] = useState(false);
+  const [timingChoice, setTimingChoice] = useState("");
+  const [suggested, setSuggested] = useState([]);
   const formRef = React.useRef(null);
+  const submittedRef = React.useRef(false);
+  const lastFieldRef = React.useRef("");
+
+  const budgetValue = showCustomBudget
+    ? (customBudget ? `Custom: ${customBudget}` : "")
+    : budgetChoice;
+
+  // 2026-08-23 completion pass, part 1: nothing typed is ever lost.
+  // Every keystroke mirrors into localStorage; a visitor who leaves
+  // and comes back finds the brief exactly as they left it.
+  const saveDraft = () => {
+    try {
+      const form = formRef.current;
+      if (!form || submittedRef.current) return;
+      const obj = Object.fromEntries(new FormData(form));
+      delete obj.website;
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(obj));
+    } catch {}
+  };
+
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null");
+      const form = formRef.current;
+      if (saved && form) {
+        for (const [key, value] of Object.entries(saved)) {
+          // budget is a React-controlled hidden input; restored via state below
+          if (key === "website" || key === "budget" || !value) continue;
+          const el = form.elements[key];
+          if (el && !el.value) el.value = value;
+        }
+        if (saved.budget) {
+          if (saved.budget.startsWith("Custom: ")) {
+            setShowCustomBudget(true);
+            setCustomBudget(saved.budget.slice("Custom: ".length));
+          } else if (BUDGET_OPTIONS.includes(saved.budget)) {
+            setBudgetChoice(saved.budget);
+          }
+        }
+        if (saved.check_in) {
+          setTimingChoice(TIMING_EXACT);
+        } else if (saved.timing && saved.timing !== TIMING_EXACT) {
+          setTimingChoice(saved.timing);
+        }
+      }
+    } catch {}
+  }, []);
+
+  // Chip clicks bypass native form events, so mirror them into the
+  // draft after each render they change.
+  useEffect(() => {
+    saveDraft();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [budgetChoice, customBudget, showCustomBudget, timingChoice]);
+
+  // 2026-08-23, George's #4: the country fills itself from the
+  // existing /api/geo passthrough (the VisitorGreeting endpoint,
+  // untouched: it returns the ISO code and the browser turns it
+  // into a name). Editable, and never overwrites something the
+  // visitor (or their restored draft) already typed.
+  useEffect(() => {
+    const timer = window.setTimeout(async () => {
+      try {
+        const el = formRef.current?.elements?.country;
+        if (!el || el.value) return;
+        const res = await fetch("/api/geo", { cache: "no-store" });
+        if (!res.ok) return;
+        const { country } = await res.json();
+        if (!country || country === "XX") return;
+        let name = "";
+        try {
+          name = new Intl.DisplayNames(["en"], { type: "region" }).of(country) || "";
+        } catch {}
+        if (name && el && !el.value) {
+          el.value = name;
+          saveDraft();
+        }
+      } catch {}
+    }, 400);
+    return () => window.clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // 2026-08-23 completion pass, part 2: the rescue net. If the tab
+  // closes or goes to the background while the form holds a reachable
+  // email or phone and was never sent, beacon what exists to
+  // /api/contact/partial. Once per session; the server dedupes for
+  // 24h per identity on top of that.
+  useEffect(() => {
+    const rescue = () => {
+      try {
+        if (submittedRef.current) return;
+        const form = formRef.current;
+        if (!form) return;
+        const data = Object.fromEntries(new FormData(form));
+        if (data.website) return;
+        // Field-level abandonment measurement (George, 23/8): which
+        // field were they on when they left. Once per session, only
+        // when something was actually typed, so in a few weeks the
+        // killer field is data, not a guess.
+        if (!sessionStorage.getItem("gy_abandon_tracked")) {
+          const filled = Object.entries(data).filter(
+            ([k, v]) => v && k !== "website" && k !== "recaptchaToken"
+          ).length;
+          if (filled > 0 && typeof window.gtag === "function") {
+            window.gtag("event", "form_abandoned", {
+              last_field: lastFieldRef.current || "none",
+              fields_filled: filled,
+              page_path: window.location.pathname,
+            });
+            sessionStorage.setItem("gy_abandon_tracked", "1");
+          }
+        }
+        if (sessionStorage.getItem("gy_partial_sent")) return;
+        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email || "");
+        const phoneOk = (data.phone || "").replace(/\D/g, "").length >= 7;
+        if (!emailOk && !phoneOk) return;
+        delete data.recaptchaToken;
+        data.visitor_context = collectVisitorContext();
+        // text/plain keeps sendBeacon happy in every browser; the
+        // endpoint parses the body as JSON regardless of the header.
+        const blob = new Blob([JSON.stringify(data)], { type: "text/plain;charset=UTF-8" });
+        if (navigator.sendBeacon && navigator.sendBeacon("/api/contact/partial", blob)) {
+          sessionStorage.setItem("gy_partial_sent", "1");
+        }
+      } catch {}
+    };
+    const onVisibility = () => {
+      if (document.visibilityState === "hidden") rescue();
+    };
+    window.addEventListener("pagehide", rescue);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      window.removeEventListener("pagehide", rescue);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, []);
 
   // 2026-07-03 SOS FIX — the silent-death bug George hit on mobile.
   // The form is 3 steps; steps hide via display:none. The Continue
@@ -158,7 +364,7 @@ const ContactFormSection = () => {
     }
 
     const formData = new FormData(formRef.current);
-    const payload = { ...Object.fromEntries(formData), recaptchaToken };
+    const payload = { ...Object.fromEntries(formData), recaptchaToken, visitor_context: collectVisitorContext() };
 
     try {
       const response = await fetch("/api/contact", {
@@ -168,6 +374,22 @@ const ContactFormSection = () => {
       });
 
       if (response.ok) {
+        submittedRef.current = true;
+        try {
+          localStorage.removeItem(DRAFT_KEY);
+          sessionStorage.setItem("gy_partial_sent", "1");
+        } catch {}
+        // George's #3: keep them aboard. Fetch two or three live
+        // yachts matching the brief for the thank-you screen.
+        try {
+          const params = new URLSearchParams();
+          if (payload.budget) params.set("budget", payload.budget);
+          if (payload.yacht_type) params.set("type", payload.yacht_type);
+          fetch(`/api/fleet/suggest?${params.toString()}`)
+            .then((r) => (r.ok ? r.json() : { yachts: [] }))
+            .then((d) => setSuggested(Array.isArray(d.yachts) ? d.yachts : []))
+            .catch(() => {});
+        } catch {}
         setStatus("success");
         formRef.current.reset();
         setStep(1);
@@ -178,6 +400,41 @@ const ContactFormSection = () => {
     } catch (error) {
       setStatus("Network error. Please check your connection.");
     }
+  };
+
+  const handleTimingChange = (e) => {
+    const value = e.target.value;
+    setTimingChoice(value);
+    // A chosen period and typed dates must never contradict each other
+    if (value !== TIMING_EXACT && formRef.current) {
+      if (formRef.current.elements.check_in) formRef.current.elements.check_in.value = "";
+      if (formRef.current.elements.check_out) formRef.current.elements.check_out.value = "";
+    }
+  };
+
+  // 2026-08-23, the WhatsApp bridge: most real requests already
+  // arrive on the company WhatsApp, so the form offers that road
+  // too, carrying whatever the visitor has typed so far.
+  const openWhatsAppBridge = () => {
+    try {
+      const data = Object.fromEntries(new FormData(formRef.current));
+      const lines = [
+        "Hello George, I would like to charter a yacht in Greece.",
+        data.name ? `Name: ${data.name}` : null,
+        data.yacht_type ? `Yacht type: ${data.yacht_type}` : null,
+        data.guests ? `Guests: ${data.guests}` : null,
+        data.budget ? `Budget (all-in): ${data.budget}` : null,
+        data.check_in
+          ? `Dates: ${data.check_in} to ${data.check_out || "open"}`
+          : (data.timing && data.timing !== TIMING_EXACT ? `When: ${data.timing}` : null),
+        data.message || null,
+      ].filter(Boolean);
+      if (typeof window.gtag === "function") {
+        window.gtag("event", "whatsapp_button_clicked", { source: "contact_form_bridge" });
+      }
+      const url = `https://api.whatsapp.com/send/?phone=17867988798&text=${encodeURIComponent(lines.join("\n"))}`;
+      window.open(url, "_blank", "noopener,noreferrer");
+    } catch {}
   };
 
   // A.13 contrast pass: placeholder bumped /30 → /60 so the form is
@@ -221,7 +478,7 @@ const ContactFormSection = () => {
             />
             <div className="text-left">
               <p className="text-white text-sm font-medium">George P. Biniaris</p>
-              <p className="text-[#DAA110]/60 text-xs tracking-wider uppercase">Managing Broker</p>
+              <p className="text-[#DAA110]/60 text-xs tracking-wider uppercase">Founder and Managing Broker</p>
             </div>
           </div>
           <p className="text-white/60 text-lg font-light leading-relaxed mb-4">
@@ -230,6 +487,37 @@ const ContactFormSection = () => {
           <p className="text-white/30 text-sm tracking-wider uppercase">
             George Yachts Brokerage House
           </p>
+
+          {/* George's #3 (23/8): the brief is in, so the screen shows
+              live yachts from the shelf they just described. Real
+              rates from the fleet, nothing invented. */}
+          {suggested.length > 0 && (
+            <div className="mt-14 text-left">
+              <p className="text-[10px] tracking-[0.3em] uppercase text-[#DAA110]/70 text-center mb-6">
+                While George prepares your proposal
+              </p>
+              <div className="space-y-4">
+                {suggested.map((y) => (
+                  <a
+                    key={y.slug}
+                    href={`/yachts/${y.slug}`}
+                    className="group flex items-baseline justify-between gap-4 border border-white/10 hover:border-[#DAA110]/40 px-5 py-4 transition-colors duration-300"
+                  >
+                    <span>
+                      <span className="block text-white text-sm tracking-wide group-hover:text-[#DAA110] transition-colors duration-300">{y.name}</span>
+                      {y.subtitle && (
+                        <span className="block text-white/35 text-[10px] tracking-[0.15em] uppercase mt-1">{y.subtitle}</span>
+                      )}
+                    </span>
+                    <span className="text-right shrink-0">
+                      <span className="block text-white/70 text-xs" style={{ fontFamily: "var(--gy-font-ui)" }}>{y.rate}</span>
+                      <span className="block text-white/30 text-[9px] tracking-[0.15em] uppercase mt-1">Per Yacht &middot; Per Week</span>
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
           <button
             onClick={() => setStatus("")}
             className="mt-12 text-[#DAA110] text-xs tracking-[0.2em] uppercase border-b border-[#DAA110]/30 pb-1 hover:border-[#DAA110] transition-all duration-300"
@@ -340,7 +628,16 @@ const ContactFormSection = () => {
         {/* noValidate: validation is handled by handleVercelSubmit /
             goToStep so the browser never silently blocks a submit on
             a field hidden in another step (the 2026-07-03 SOS bug). */}
-        <form ref={formRef} onSubmit={handleVercelSubmit} noValidate>
+        <form
+          ref={formRef}
+          onSubmit={handleVercelSubmit}
+          onInput={saveDraft}
+          onChange={saveDraft}
+          onFocus={(e) => {
+            if (e.target.name && e.target.name !== "website") lastFieldRef.current = e.target.name;
+          }}
+          noValidate
+        >
 
           {/* Honeypot, hidden from real users, bots autofill it */}
           <input
@@ -353,27 +650,35 @@ const ContactFormSection = () => {
           />
 
           {/* GROUP 1: About You (always visible - single screen) */}
+          {/* 2026-08-23 completion pass: 9 required fields became 2.
+              123 visitors started this form in 12 weeks, 21 finished.
+              Name + email are the only asks; everything below is a
+              preference George clarifies on the reply, which is his
+              craft anyway. */}
           <div data-step="1" className="block">
-            <p className="text-[10px] tracking-[0.3em] uppercase text-[#DAA110]/80 mb-8">{t('common.aboutYou')}</p>
+            <p className="text-[10px] tracking-[0.3em] uppercase text-[#DAA110]/80 mb-3">{t('common.aboutYou')}</p>
+            <p className="text-white/50 text-xs font-light tracking-wide mb-8">
+              Only a name and an email are needed. Everything else simply helps George shape the right proposal.
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
               <Field icon={Icons.user} delay={0}>
                 <label htmlFor="name" className="sr-only">{t('contact.name')}</label>
                 <input type="text" id="name" name="name" required placeholder={`${t('contact.name')} *`} className={inputBase} />
               </Field>
 
-              <Field icon={Icons.globe} delay={0.05}>
-                <label htmlFor="country" className="sr-only">Country</label>
-                <input type="text" id="country" name="country" required placeholder="Country of Residence *" className={inputBase} />
-              </Field>
-
-              <Field icon={Icons.mail} delay={0.1}>
+              <Field icon={Icons.mail} delay={0.05}>
                 <label htmlFor="email" className="sr-only">{t('contact.email')}</label>
                 <input type="email" id="email" name="email" required placeholder={`${t('contact.email')} *`} className={inputBase} />
               </Field>
 
-              <Field icon={Icons.phone} delay={0.15}>
+              <Field icon={Icons.phone} delay={0.1}>
                 <label htmlFor="phone" className="sr-only">{t('contact.phone')}</label>
-                <input type="tel" id="phone" name="phone" required placeholder={`${t('contact.phone')} *`} className={inputBase} />
+                <input type="tel" id="phone" name="phone" placeholder={t('contact.phone')} className={inputBase} />
+              </Field>
+
+              <Field icon={Icons.globe} delay={0.15}>
+                <label htmlFor="country" className="sr-only">Country</label>
+                <input type="text" id="country" name="country" placeholder="Country of Residence" className={inputBase} />
               </Field>
             </div>
 
@@ -381,12 +686,15 @@ const ContactFormSection = () => {
 
           {/* GROUP 2: Charter Details */}
           <div data-step="2" className="block mt-14">
-            <p className="text-[10px] tracking-[0.3em] uppercase text-[#DAA110]/80 mb-8">{t('common.yourCharter')}</p>
+            <p className="text-[10px] tracking-[0.3em] uppercase text-[#DAA110]/80 mb-3">{t('common.yourCharter')}</p>
+            <p className="text-white/50 text-xs font-light tracking-wide mb-8">
+              All optional. Undecided on dates or budget? Leave them open and George will advise.
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
               <Field icon={Icons.anchor} delay={0}>
                 <label htmlFor="yacht_type" className="sr-only">Type of Yacht</label>
-                <select id="yacht_type" name="yacht_type" required className={selectBase} defaultValue="">
-                  <option value="" disabled className="text-white/30">Type of Yacht *</option>
+                <select id="yacht_type" name="yacht_type" className={selectBase} defaultValue="">
+                  <option value="" disabled className="text-white/30">Type of Yacht</option>
                   <option value="Motor Yacht" className="bg-black">Motor Yacht</option>
                   <option value="Sailing Catamaran" className="bg-black">Sailing Catamaran</option>
                   <option value="Power Catamaran" className="bg-black">Power Catamaran</option>
@@ -397,8 +705,8 @@ const ContactFormSection = () => {
 
               <Field icon={Icons.users} delay={0.05}>
                 <label htmlFor="guests" className="sr-only">Guests</label>
-                <select id="guests" name="guests" required className={selectBase} defaultValue="">
-                  <option value="" disabled className="text-white/30">Number of Guests *</option>
+                <select id="guests" name="guests" className={selectBase} defaultValue="">
+                  <option value="" disabled className="text-white/30">Number of Guests</option>
                   {[2,3,4,5,6,7,8,9,10,11,12].map(n => (
                     <option key={n} value={n} className="bg-black">{n} Guests</option>
                   ))}
@@ -406,28 +714,80 @@ const ContactFormSection = () => {
                 </select>
               </Field>
 
-              <Field icon={Icons.wallet} delay={0.1}>
-                <label htmlFor="budget" className="sr-only">Budget</label>
-                <select id="budget" name="budget" required className={selectBase} defaultValue="">
-                  <option value="" disabled className="text-white/30">Weekly Budget (All-In) *</option>
-                  <option value="Under €15,000" className="bg-black">Under &euro;15,000</option>
-                  <option value="€15,000 - €30,000" className="bg-black">&euro;15,000 - &euro;30,000</option>
-                  <option value="€30,000 - €50,000" className="bg-black">&euro;30,000 - &euro;50,000</option>
-                  <option value="€50,000 - €100,000" className="bg-black">&euro;50,000 - &euro;100,000</option>
-                  <option value="€100,000+" className="bg-black">&euro;100,000+</option>
-                  <option value="Flexible" className="bg-black">Flexible - Advise Me</option>
+              <Field icon={Icons.calendar} delay={0.1}>
+                <label htmlFor="timing" className="sr-only">When would you sail</label>
+                <select id="timing" name="timing" value={timingChoice} onChange={handleTimingChange} className={selectBase}>
+                  <option value="" disabled className="text-white/30">When Would You Sail?</option>
+                  <option value={TIMING_EXACT} className="bg-black">I have exact dates</option>
+                  {TIMING_OPTIONS.map((opt) => (
+                    <option key={opt} value={opt} className="bg-black">{opt}</option>
+                  ))}
                 </select>
               </Field>
 
-              <Field icon={Icons.calendar} delay={0.15}>
-                <label htmlFor="check_in" className="sr-only">Check In</label>
-                <input type="date" id="check_in" name="check_in" required className={`${inputBase} date-input`} placeholder="Check-in Date *" />
-              </Field>
+              {/* Exact dates live behind the "I have exact dates"
+                  choice: the guests who already hold flights get
+                  precision, everyone else never faces empty pickers.
+                  Kept mounted so drafts restore into them. */}
+              <div className={timingChoice === TIMING_EXACT ? "grid grid-cols-2 gap-x-6" : "hidden"}>
+                <Field icon={Icons.calendar} delay={0}>
+                  <label htmlFor="check_in" className="block text-[9px] tracking-[0.2em] uppercase text-white/40 pt-1">Check-in</label>
+                  <input type="date" id="check_in" name="check_in" className={`${inputBase} date-input !py-2`} />
+                </Field>
+                <Field icon={Icons.calendar} delay={0}>
+                  <label htmlFor="check_out" className="block text-[9px] tracking-[0.2em] uppercase text-white/40 pt-1">Check-out</label>
+                  <input type="date" id="check_out" name="check_out" className={`${inputBase} date-input !py-2`} />
+                </Field>
+              </div>
 
-              <Field icon={Icons.calendar} delay={0.2}>
-                <label htmlFor="check_out" className="sr-only">Check Out</label>
-                <input type="date" id="check_out" name="check_out" required className={`${inputBase} date-input`} placeholder="Check-out Date *" />
-              </Field>
+              {/* Budget as tappable all-in bands, cut from the live
+                  fleet's real spread. One tap gives George the filter
+                  he searches with; a custom amount stays available. */}
+              <div className="md:col-span-2">
+                <Field icon={Icons.wallet} delay={0.15}>
+                  <p className="text-[9px] tracking-[0.2em] uppercase text-white/40 pt-1 mb-3">
+                    Weekly Budget, All-In <span className="normal-case tracking-normal text-white/30">(yacht, crew, APA, VAT &amp; gratuity)</span>
+                  </p>
+                  <input type="hidden" name="budget" value={budgetValue} readOnly />
+                  <div className="flex flex-wrap gap-2">
+                    {BUDGET_OPTIONS.map((opt) => (
+                      <button
+                        key={opt}
+                        type="button"
+                        onClick={() => { setShowCustomBudget(false); setBudgetChoice(budgetChoice === opt ? "" : opt); }}
+                        className={`px-4 py-2 text-xs tracking-wider border transition-colors duration-300 ${
+                          !showCustomBudget && budgetChoice === opt
+                            ? "border-[#DAA110] text-[#DAA110]"
+                            : "border-white/25 text-white/60 hover:border-white/50 hover:text-white/80"
+                        }`}
+                      >
+                        {opt}
+                      </button>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => { setShowCustomBudget(!showCustomBudget); setBudgetChoice(""); }}
+                      className={`px-4 py-2 text-xs tracking-wider border transition-colors duration-300 ${
+                        showCustomBudget
+                          ? "border-[#DAA110] text-[#DAA110]"
+                          : "border-white/25 text-white/60 hover:border-white/50 hover:text-white/80"
+                      }`}
+                    >
+                      My own figure
+                    </button>
+                  </div>
+                  {showCustomBudget && (
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={customBudget}
+                      onChange={(e) => setCustomBudget(e.target.value)}
+                      placeholder="Your weekly budget in EUR"
+                      className={`${inputBase} mt-3 max-w-xs`}
+                    />
+                  )}
+                </Field>
+              </div>
 
               <Field icon={Icons.mapPin} delay={0.25}>
                 <label htmlFor="embarkation" className="sr-only">Embarkation</label>
@@ -508,7 +868,7 @@ const ContactFormSection = () => {
             </div>
             {/* GDPR + reCAPTCHA notice */}
             <div className="text-[9px] text-white/50 tracking-widest text-center mb-8 leading-relaxed">
-              By submitting this form you consent to George Yachts Brokerage House LLC processing your personal data to respond to your inquiry.
+              By entering your details or submitting this form you consent to George Yachts Brokerage House LLC processing your personal data to respond to your inquiry.
               See our <a href="/privacy-policy" className="underline text-[#DAA110]/70 hover:text-[#DAA110] transition-colors" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
               <br />Protected by reCAPTCHA · Google Privacy Policy and Terms of Service apply.
             </div>
@@ -538,13 +898,23 @@ const ContactFormSection = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               </button>
 
+              {/* The WhatsApp bridge: the road most guests already
+                  choose. Carries whatever is typed so far into a
+                  prefilled message to the company number. */}
               <button
                 type="button"
-                onClick={() => setStep(2)}
-                className="text-white/30 text-xs tracking-[0.2em] uppercase hover:text-white/60 transition-colors duration-300"
+                onClick={openWhatsAppBridge}
+                data-cursor="Chat"
+                className="group flex items-center gap-2 text-white/40 text-xs tracking-[0.2em] uppercase hover:text-white/70 transition-colors duration-300"
               >
-                &larr; Back to Details
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-[#DAA110]/70 group-hover:text-[#DAA110] transition-colors duration-300">
+                  <path d="M12.031 0.725C5.741 0.725 0.547 5.926 0.547 12.215C0.547 14.39 1.155 16.42 2.22 18.15L0.63 23.36l5.352-1.55c1.674 0.99 3.593 1.516 5.619 1.516c6.29 0 11.484-5.201 11.484-11.491C23.595 5.926 18.4 0.725 12.031 0.725zM17.476 15.655c-0.198 0.505-1.127 0.99-1.523 1.054c-0.342 0.054-0.695 0.078-1.574-0.373c-1.028-0.543-2.607-1.583-3.804-2.78c-1.197-1.197-2.237-2.776-2.78-3.804c-0.45-0.879-0.426-1.232-0.373-1.574c0.064-0.396 0.549-1.325 1.054-1.523c0.426-0.165 0.879-0.276 1.197-0.276c0.231 0 0.426 0.015 0.639 0.45l0.58 1.417c0.078 0.165 0.124 0.358 0.046 0.569c-0.078 0.21-0.26 0.45-0.45 0.639c-0.183 0.183-0.33 0.358-0.441 0.569c-0.111 0.21-0.26 0.385-0.137 0.609c0.124 0.223 0.639 1.152 1.518 2.031c0.879 0.879 1.808 1.455 2.031 1.518c0.223 0.124 0.398-0.023 0.609-0.137c0.21-0.111 0.385-0.26 0.569-0.441c0.183-0.183 0.426-0.375 0.639-0.45c0.21-0.078 0.403-0.032 0.569 0.046l1.417 0.58c0.435 0.211 0.546 0.665 0.373 1.197z"/>
+                </svg>
+                Prefer WhatsApp? Send your brief there instead
               </button>
+              {/* The wizard-era "Back to Details" button was removed
+                  2026-08-23: on the single-screen form it changed
+                  invisible state and did nothing a visitor could see. */}
             </div>
           </div>
         </form>

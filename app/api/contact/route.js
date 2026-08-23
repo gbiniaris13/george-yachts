@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import axios from "axios";
 import { kvLpush, todayKey } from "@/lib/kv";
 import { checkRateLimit } from "@/lib/rateLimit";
+import { upsertFormContact } from "@/lib/crmContact";
 
 export const dynamic = "force-dynamic";
 
@@ -25,6 +26,27 @@ async function writeCRMNotification(data) {
   } catch {}
 }
 
+// 2026-08-23, George's #2 — the brief arrives knowing what the
+// visitor looked at. Client-supplied, so everything is type-checked
+// and clipped before it touches a channel.
+function contextLines(ctx) {
+  if (!ctx || typeof ctx !== "object") return [];
+  const lines = [];
+  const visit = Array.isArray(ctx.yachts_this_visit)
+    ? ctx.yachts_this_visit.filter((v) => typeof v === "string") : [];
+  const history = Array.isArray(ctx.yachts_history)
+    ? ctx.yachts_history.filter((v) => typeof v === "string") : [];
+  const seen = [...new Set([...visit, ...history])].slice(0, 8).map((s) => s.slice(0, 60));
+  if (seen.length) lines.push(`Viewed: ${seen.join(", ")}`);
+  if (Number.isFinite(ctx.session_minutes) && ctx.session_minutes > 0 && ctx.session_minutes < 600) {
+    lines.push(`${ctx.session_minutes} min on site this visit`);
+  }
+  if (typeof ctx.arrived_from === "string" && ctx.arrived_from && !ctx.arrived_from.includes("georgeyachts.com")) {
+    lines.push(`Arrived from: ${ctx.arrived_from.slice(0, 120)}`);
+  }
+  return lines;
+}
+
 // Send inquiry notification to Telegram
 async function notifyTelegram(data) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -36,22 +58,24 @@ async function notifyTelegram(data) {
     ``,
     `👤 *${data.name}*`,
     `📧 ${data.email}`,
-    `📞 ${data.phone}`,
-    `🌍 ${data.country}`,
+    data.phone ? `📞 ${data.phone}` : null,
+    data.country ? `🌍 ${data.country}` : null,
     ``,
-    `⛵ Type: ${data.yacht_type}`,
-    `👥 Guests: ${data.guests}`,
-    `💰 Budget: ${data.budget}`,
-    `📅 ${data.check_in} → ${data.check_out}`,
+    data.yacht_type ? `⛵ Type: ${data.yacht_type}` : null,
+    data.guests ? `👥 Guests: ${data.guests}` : null,
+    data.budget ? `💰 Budget: ${data.budget}` : null,
+    data.check_in ? `📅 ${data.check_in} → ${data.check_out || "?"}` : (data.timing ? `📅 ${data.timing}` : null),
     `🗺 ${data.embarkation} → ${data.disembarkation}`,
     ``,
     // 2026-07-03 — FULL message, never truncated (was .substring(0,200)
     // which hid what the customer actually asked; George's SOS rule:
     // the complete text reaches every channel, always).
-    `💬 _${data.message}_`,
+    data.message ? `💬 _${data.message}_` : null,
+    Array.isArray(data.context) && data.context.length ? `` : null,
+    Array.isArray(data.context) && data.context.length ? `👁 ${data.context.join(" · ")}` : null,
     ``,
     `⏱ _Reply within 2 hours!_`,
-  ].join('\n');
+  ].filter((line) => line !== null).join('\n');
 
   try {
     const { telegramGeorgeFull } = await import("@/lib/notifyGeorge");
@@ -100,9 +124,17 @@ export async function POST(request) {
     );
   }
 
+  let payload;
   try {
-    const payload = await request.json();
+    payload = await request.json();
+  } catch {
+    return NextResponse.json(
+      { message: "Invalid request body." },
+      { status: 400, headers: defaultHeaders }
+    );
+  }
 
+  try {
     // Honeypot: if the hidden "website" field is filled, it's a bot
     if (payload.website && payload.website.trim() !== "") {
       // Respond 200 so bot thinks it worked but silently drop
@@ -121,36 +153,26 @@ export async function POST(request) {
       yacht_type,
       guests,
       budget,
+      timing,
       check_in,
       check_out,
       embarkation,
       disembarkation,
+      visitor_context,
     } = payload;
+    const context = contextLines(visitor_context);
 
-    // 2026-07-03 SOS FIX (second bug behind George's mobile report):
-    // embarkation/disembarkation are OPTIONAL in the form UI (the
-    // selects say "Preferred..." and carry no `required`), but this
-    // check rejected any submission that left them empty with a 400
-    // AFTER the customer had filled everything else. A completed
-    // form must never bounce on an optional preference - default to
-    // Flexible and let George advise, which is his job anyway.
+    // 2026-08-23 completion pass: only name + email are required.
+    // Every other field is a preference George can ask about on the
+    // reply. The old check demanded 11 fields, including `message`
+    // which the UI never marked required, so completed forms bounced
+    // with a 400 after the customer had filled everything visible.
+    // A brief must never be lost over an optional detail.
     const embark = embarkation || "Flexible - Advise Me";
     const disembark = disembarkation || "Flexible - Advise Me";
-    if (
-      !name ||
-      !email ||
-      !phone ||
-      !country ||
-      !message ||
-      !recaptchaToken ||
-      !yacht_type ||
-      !guests ||
-      !budget ||
-      !check_in ||
-      !check_out
-    ) {
+    if (!name || !email) {
       return NextResponse.json(
-        { message: "Missing required fields or ReCAPTCHA token." },
+        { message: "Please share at least a name and an email." },
         { status: 400, headers: defaultHeaders }
       );
     }
@@ -176,6 +198,7 @@ export async function POST(request) {
       }
     }
 
+    const shown = (v) => v || "Not specified";
     await sendMailPromise({
       from: GMAIL_USER,
       to: GMAIL_USER,
@@ -183,34 +206,36 @@ export async function POST(request) {
       replyTo: email,
       html: `
         <h3>New Website Inquiry:</h3>
-        
+
         <h4>Client Details:</h4>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Country:</strong> ${country}</p>
-        
+        <p><strong>Phone:</strong> ${shown(phone)}</p>
+        <p><strong>Country:</strong> ${shown(country)}</p>
+
         <hr>
-        
+
         <h4>Charter Preferences:</h4>
-        <p><strong>Yacht Type:</strong> ${yacht_type}</p>
-        <p><strong>Guests:</strong> ${guests}</p>
-        <p><strong>Budget/Week:</strong> ${budget}</p>
-        <p><strong>Dates:</strong> ${check_in} to ${check_out}</p>
+        <p><strong>Yacht Type:</strong> ${shown(yacht_type)}</p>
+        <p><strong>Guests:</strong> ${shown(guests)}</p>
+        <p><strong>Budget/Week:</strong> ${shown(budget)}</p>
+        <p><strong>Dates:</strong> ${check_in ? `${check_in} to ${shown(check_out)}` : shown(timing)}</p>
         <p><strong>Route:</strong> ${embark} &rarr; ${disembark}</p>
-        
+
         <hr>
-        
+
         <h4>Message:</h4>
-        <p style="white-space: pre-line;">${message}</p>
-        
+        <p style="white-space: pre-line;">${shown(message)}</p>
+
+        ${context.length ? `<hr><h4>Visitor context:</h4><p style="white-space: pre-line;">${context.join("\n")}</p>` : ""}
+
         <hr>
         <p style="font-size: 10px;">ReCAPTCHA Score: ${score}</p>
       `,
     });
 
     // Send Telegram notification + store for response tracking (non-blocking)
-    const inquiryData = { name, email, phone, country, message, yacht_type, guests, budget, check_in, check_out, embarkation: embark, disembarkation: disembark };
+    const inquiryData = { name, email, phone, country, message, yacht_type, guests, budget, timing, check_in, check_out, embarkation: embark, disembarkation: disembark, context };
     const inquiryId = `${Date.now()}_${name.replace(/\s/g, '_')}`;
     // 2026-07-03 (George's SOS directive) — WhatsApp channel joins
     // Telegram + email: full lead summary to the company US number
@@ -219,13 +244,23 @@ export async function POST(request) {
       `New yacht inquiry (contact form)`,
       `${name} · ${email}${phone ? ` · ${phone}` : ""}`,
       yacht_type ? `Type: ${yacht_type} · Guests: ${guests || "?"} · Budget: ${budget || "?"}` : "",
-      check_in ? `Dates: ${check_in} -> ${check_out}` : "",
+      check_in ? `Dates: ${check_in} -> ${check_out}` : (timing ? `When: ${timing}` : ""),
       message ? `\n${message}` : "",
     ].filter(Boolean).join("\n");
     // 2026-07-08 — instant acknowledgment to the client (email only).
+    // 2026-08-23 (George's #5) — the acknowledgment now carries their
+    // brief back to them, clean, plus what happens next.
+    const briefLines = [
+      yacht_type ? `Yacht type: ${yacht_type}` : null,
+      guests ? `Guests: ${guests}` : null,
+      budget ? `Weekly budget, all-in: ${budget}` : null,
+      check_in ? `Dates: ${check_in} to ${check_out || "open"}` : (timing ? `When: ${timing}` : null),
+      `Route: ${embark} -> ${disembark}`,
+      message ? `Your note: ${message}` : null,
+    ].filter(Boolean);
     (async () => {
       const { emailClient } = await import("@/lib/notifyGeorge");
-      await emailClient({ to: email, name });
+      await emailClient({ to: email, name, brief: briefLines });
     })().catch(() => {});
     await Promise.allSettled([
       notifyTelegram(inquiryData),
@@ -238,7 +273,50 @@ export async function POST(request) {
         description: `${yacht_type || 'yacht'} · ${guests || '?'} guests · ${budget || '?'} · ${country || ''} · ${email}`,
         link: '/dashboard/contacts',
       }),
+      // 2026-08-23 — the form finally writes a real CRM contact.
+      // Until now /api/contact sent notifications everywhere but
+      // created zero rows in contacts; every brief lived only in
+      // Telegram and email.
+      upsertFormContact({
+        name, email, phone, country,
+        source: 'website_form',
+        description: [
+          `Contact form brief`,
+          yacht_type ? `Type: ${yacht_type}` : null,
+          guests ? `Guests: ${guests}` : null,
+          budget ? `Budget: ${budget}` : null,
+          check_in ? `Dates: ${check_in} -> ${check_out || '?'}` : (timing ? `When: ${timing}` : null),
+          `Route: ${embark} -> ${disembark}`,
+          message ? `Message: ${message}` : null,
+          ...context,
+        ].filter(Boolean).join('\n'),
+        metadata: { yacht_type, guests, budget, timing, check_in, check_out, embarkation: embark, disembarkation: disembark },
+      }),
     ]);
+
+    // 2026-08-23 — same road /api/inquiry has walked since 15/7: every
+    // brief opens a Helm request automatically, nothing waits for
+    // manual re-typing. Hard 4s cap, best-effort, the lead is already
+    // in George's hands via the channels above.
+    try {
+      const crmSecret = process.env.NEWSLETTER_PROXY_SECRET;
+      if (crmSecret) {
+        await fetch("https://gy-command.vercel.app/api/hooks/website-inquiry", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${crmSecret}`,
+          },
+          body: JSON.stringify({
+            name, email, phone,
+            dates: check_in ? `${check_in} to ${check_out || "open"}` : (timing || ""),
+            message: [message, yacht_type ? `Type: ${yacht_type}` : "", guests ? `Guests: ${guests}` : "", budget ? `Budget all-in: ${budget}` : ""].filter(Boolean).join(" · "),
+            source: "contact_form",
+          }),
+          signal: AbortSignal.timeout(4000),
+        });
+      }
+    } catch {}
 
     return NextResponse.json(
       { message: "Thank you, we'll get back within 24h." },

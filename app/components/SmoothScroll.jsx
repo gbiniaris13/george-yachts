@@ -125,6 +125,21 @@ export default function SmoothScroll() {
       // eye needs it". Measured against the live geometry after the
       // animation should have finished, re-reading the target's position
       // rather than trusting the number computed a second ago.
+      // George, 2026-08-23: landing on the form means starting to
+      // fill it. Once the section has settled, the cursor goes into
+      // the first field so the visitor types instead of hunting.
+      // preventScroll keeps the focus from fighting the landing we
+      // just verified, and a visitor already typing is never robbed
+      // of their caret.
+      const focusFormStart = () => {
+        if (hash !== "#contact") return;
+        const first = document.querySelector('#contact form input[name="name"]');
+        if (!first) return;
+        const active = document.activeElement;
+        if (active && active.closest && active.closest("#contact form")) return;
+        try { first.focus({ preventScroll: true }); } catch {}
+      };
+
       if (!immediate) {
         window.setTimeout(() => {
           const box = target.getBoundingClientRect();
@@ -137,7 +152,10 @@ export default function SmoothScroll() {
             );
             lenis.scrollTo(corrected, { immediate: true });
           }
+          focusFormStart();
         }, 1400);
+      } else {
+        window.setTimeout(focusFormStart, 250);
       }
       return true;
     };
