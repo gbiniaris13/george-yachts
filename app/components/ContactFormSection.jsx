@@ -482,7 +482,7 @@ const ContactFormSection = () => {
             </div>
           </div>
           <p className="text-white/60 text-lg font-light leading-relaxed mb-4">
-            George will personally review your inquiry and respond within 24 hours.
+            George will personally review your inquiry. First reply usually within two hours.
           </p>
           <p className="text-white/30 text-sm tracking-wider uppercase">
             George Yachts Brokerage House
@@ -863,8 +863,11 @@ const ContactFormSection = () => {
             {/* 2026-07-02 (ASK B 5.5), the discretion signal. Old
                 money buys silence; say it plainly at the point of
                 trust. */}
+            {/* 2026-08-23, George's number, his words: "if I am not
+                asleep, I reply within 2 hours". The "usually" carries
+                the sleep honestly. */}
             <div className="text-[11px] text-white/60 tracking-widest text-center mb-3 leading-relaxed">
-              Your enquiry is read by George alone.
+              Your enquiry is read by George alone. First reply usually within two hours.
             </div>
             {/* GDPR + reCAPTCHA notice */}
             <div className="text-[9px] text-white/50 tracking-widest text-center mb-8 leading-relaxed">
