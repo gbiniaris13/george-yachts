@@ -165,6 +165,7 @@ const ContactFormSection = () => {
   const formRef = React.useRef(null);
   const submittedRef = React.useRef(false);
   const lastFieldRef = React.useRef("");
+  const geoFilledRef = React.useRef(false);
 
   const budgetValue = showCustomBudget
     ? (customBudget ? `Custom: ${customBudget}` : "")
@@ -238,6 +239,10 @@ const ContactFormSection = () => {
         } catch {}
         if (name && el && !el.value) {
           el.value = name;
+          // Mark it as ours, not theirs. The abandonment metric counts a
+          // visitor as having started only when a field they typed holds
+          // something, and this one fills itself on arrival.
+          geoFilledRef.current = true;
           saveDraft();
         }
       } catch {}
@@ -264,8 +269,17 @@ const ContactFormSection = () => {
         // when something was actually typed, so in a few weeks the
         // killer field is data, not a guess.
         if (!sessionStorage.getItem("gy_abandon_tracked")) {
+          // 2026-08-26 correction: the country field fills itself from the
+          // edge geo header the moment the page loads, so counting it made
+          // every visitor look like an abandoner. GA4 recorded 10 abandons
+          // against 1 form_start on 24/8, which measures nothing. A field
+          // the visitor did not type is not a started form.
           const filled = Object.entries(data).filter(
-            ([k, v]) => v && k !== "website" && k !== "recaptchaToken"
+            ([k, v]) =>
+              v &&
+              k !== "website" &&
+              k !== "recaptchaToken" &&
+              !(k === "country" && geoFilledRef.current)
           ).length;
           if (filled > 0 && typeof window.gtag === "function") {
             window.gtag("event", "form_abandoned", {
