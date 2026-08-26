@@ -14,7 +14,7 @@
 //     (window.gyOpenCookieSettings).
 // Restrained luxury styling to fit the brand - not a loud nag.
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getConsent, setConsent } from "@/lib/consent";
 
 const GOLD = "#DAA110";
@@ -42,6 +42,50 @@ export default function CookieConsent() {
     };
   }, []);
 
+  // 2026-08-26, the bug that cost George two days of WhatsApp enquiries.
+  //
+  // On 22/8 the floating buttons moved onto the shared dock line, from a
+  // hard-coded bottom of 88px down to var(--gy-dock), which is 24px. This
+  // banner is fixed to bottom 0, stands 117px tall on desktop and more on
+  // a phone, and carries z-60 against the FAB's z-50. From that deploy on,
+  // the WhatsApp button sat UNDERNEATH this banner and every click landed
+  // on the cookie notice instead. GA4 recorded 7 WhatsApp clicks on 20/8,
+  // 2 on 21/8, then zero for five days straight.
+  //
+  // It hit precisely the visitors who matter most: the banner only shows
+  // before a decision is stored, so it was new arrivals, the ones who
+  // message rather than fill in a form, who found a dead button.
+  //
+  // StickyFleetCTA already solved this shape of problem by raising the
+  // dock while its bar is out. The banner now does the same, so the rule
+  // stays one rule: nothing parks on the dock line underneath something
+  // fixed to the bottom of the screen.
+  // The lift is MEASURED, never guessed. This banner is 117px on a desktop
+  // and 249px on a 375px phone, and it grows again when the preferences
+  // panel opens, so any fixed number would be wrong on some screen. The
+  // observer keeps the dock exactly one banner plus a thumb's width above
+  // the bottom, on every viewport and through every reflow.
+  const barRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    document.body.classList.add("gy-cookiebar-open");
+    const apply = () => {
+      const h = barRef.current?.offsetHeight || 0;
+      if (h) document.body.style.setProperty("--gy-dock", `${h + 24}px`);
+    };
+    apply();
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(apply) : null;
+    if (ro && barRef.current) ro.observe(barRef.current);
+    window.addEventListener("resize", apply);
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener("resize", apply);
+      document.body.classList.remove("gy-cookiebar-open");
+      document.body.style.removeProperty("--gy-dock");
+    };
+  }, [open, showPrefs]);
+
   const decide = (analyticsChoice) => {
     setConsent({ analytics: analyticsChoice });
     setOpen(false);
@@ -55,6 +99,7 @@ export default function CookieConsent() {
       role="dialog"
       aria-label="Cookie consent"
       aria-live="polite"
+      ref={barRef}
       className="fixed inset-x-0 bottom-0 z-[60] animate-gy-greet-in"
       style={{
         background: "rgba(13,27,42,0.98)",

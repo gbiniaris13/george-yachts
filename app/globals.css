@@ -5079,6 +5079,17 @@ html.gy-cursor-live .gy-mark-cursor { opacity: 1; }
 body.gy-fleetbar-open {
   --gy-dock: 104px;
 }
+/* 2026-08-26: the cookie banner is fixed to bottom 0 at z-60 and stands
+   117px on desktop, taller on a phone. Between 22 and 26 August it sat on
+   top of the WhatsApp FAB and swallowed every click on it, which is the
+   whole reason this rule exists. The banner shows only before a decision
+   is stored, so the visitors it silenced were the new ones. 150px clears
+   the tallest phone rendering; when both the fleet bar and the banner are
+   out, the banner wins because it is the taller of the two. */
+body.gy-cookiebar-open,
+body.gy-cookiebar-open.gy-fleetbar-open {
+  --gy-dock: 150px;
+}
 
 .gy-silvertext {
   background-image: linear-gradient(
