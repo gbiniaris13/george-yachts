@@ -278,7 +278,7 @@ export default function WhatsAppButton() {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onClick={markGreeted}
-        className="fixed z-50 group"
+        className="fixed z-50 group gy-dock-fab"
         style={{
           // 2026-08-22: the dock line. Same baseline as the AmbientPlayer
           // pill by shared variable; rides above StickyFleetCTA when the

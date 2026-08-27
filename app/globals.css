@@ -5090,6 +5090,19 @@ body.gy-cookiebar-open,
 body.gy-cookiebar-open.gy-fleetbar-open {
   --gy-dock: 150px;
 }
+/* 2026-08-27, the David forensics. On a 375px phone the two dock FABs
+   (WhatsApp right, AmbientPlayer pill left) sat over the submit button's
+   bottom corners whenever it scrolled through the bottom band; centre
+   taps worked, corner taps landed on a FAB. The section's own stacking
+   context caps at z-30, so the button can never outrank fixed z-50 from
+   inside it. So the FABs yield instead: while the submit block is on
+   screen the dock fabs step aside, and they return the moment it leaves.
+   The form offers its own WhatsApp road right there, nothing is lost. */
+body.gy-submit-inview .gy-dock-fab {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
 
 .gy-silvertext {
   background-image: linear-gradient(

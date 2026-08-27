@@ -390,7 +390,7 @@ export default function AmbientPlayer() {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       data-cursor={playing ? "Mute" : "Listen"}
-      className="gy-ambient-pill"
+      className="gy-ambient-pill gy-dock-fab"
       style={{
         position: "fixed",
         // Bottom-left on the shared dock line (--gy-dock), the same

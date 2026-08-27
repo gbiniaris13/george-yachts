@@ -251,6 +251,23 @@ const ContactFormSection = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // 2026-08-27, David forensics: while the submit block is on screen,
+  // the dock FABs step aside (see globals.css gy-submit-inview) so no
+  // pixel of the submit button ever sits under a floating control.
+  const submitBlockRef = React.useRef(null);
+  useEffect(() => {
+    const el = submitBlockRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return undefined;
+    const obs = new IntersectionObserver(([entry]) => {
+      document.body.classList.toggle("gy-submit-inview", entry.isIntersecting);
+    }, { threshold: 0.1 });
+    obs.observe(el);
+    return () => {
+      obs.disconnect();
+      document.body.classList.remove("gy-submit-inview");
+    };
+  }, []);
+
   // 2026-08-23 completion pass, part 2: the rescue net. If the tab
   // closes or goes to the background while the form holds a reachable
   // email or phone and was never sent, beacon what exists to
@@ -898,7 +915,16 @@ const ContactFormSection = () => {
             )}
 
             {/* Submit */}
-            <div className="flex flex-col items-center gap-6">
+            {/* 2026-08-27, the David forensics: on a 375px phone, when
+                this block sits in the bottom band of the screen, the
+                WhatsApp FAB covered the submit button's bottom-right
+                corner and the AmbientPlayer pill its bottom-left
+                (both fixed at z-50/51 on the dock line). Centre taps
+                always worked; corner taps landed on the FABs. z-[55]
+                paints the submit above both, so every pixel of the
+                button is the button. The FABs lose only the sliver
+                that overlaps it, and only while it is on screen. */}
+            <div ref={submitBlockRef} className="relative z-[55] flex flex-col items-center gap-6">
               <button
                 type="submit"
                 disabled={status === "Submitting..."}
