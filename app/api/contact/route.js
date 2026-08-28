@@ -179,6 +179,7 @@ export async function POST(request) {
 
     // reCAPTCHA verification — skip if not configured
     let score = 1.0;
+    let lowScore = false;
     if (RECAPTCHA_SECRET_KEY && recaptchaToken && recaptchaToken !== "no_recaptcha") {
       try {
         const verificationUrl = `https://www.google.com/recaptcha/api/siteverify`;
@@ -186,12 +187,21 @@ export async function POST(request) {
           params: { secret: RECAPTCHA_SECRET_KEY, response: recaptchaToken },
         });
         score = verificationResponse.data.score || 0;
+        // 2026-08-28: this used to answer 403 and throw the brief away
+        // whenever Google scored below 0.7. That is a hard reject, and
+        // the house rule is that forms never lose leads. The people it
+        // punished were not bots: a UHNW client behind a corporate VPN,
+        // an iCloud Private Relay address, a hotel network, all score
+        // low and all were shown "Bot verification failed" and lost.
+        // The honeypot above already stops the actual bots, and it
+        // stops them silently and for free.
+        //
+        // So a low score no longer refuses the lead. It travels with it,
+        // and George decides. A brief that reaches him wrongly costs one
+        // deleted email; one that never arrives can cost a charter.
         if (!verificationResponse.data.success || score < 0.7) {
-          console.warn(`Bot detected. Score: ${score}`);
-          return NextResponse.json(
-            { message: "Bot verification failed. Score: " + score },
-            { status: 403, headers: defaultHeaders }
-          );
+          console.warn(`Low reCAPTCHA score, delivering anyway. Score: ${score}`);
+          lowScore = true;
         }
       } catch (recaptchaError) {
         console.warn("reCAPTCHA verification failed, proceeding anyway:", recaptchaError.message);
@@ -230,7 +240,7 @@ export async function POST(request) {
         ${context.length ? `<hr><h4>Visitor context:</h4><p style="white-space: pre-line;">${context.join("\n")}</p>` : ""}
 
         <hr>
-        <p style="font-size: 10px;">ReCAPTCHA Score: ${score}</p>
+        <p style="font-size: 10px;">ReCAPTCHA Score: ${score}${lowScore ? " (low: VPN, corporate network or private relay are the usual reasons, judge the brief on its content)" : ""}</p>
       `,
     });
 

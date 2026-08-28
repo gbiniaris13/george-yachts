@@ -166,6 +166,8 @@ const ContactFormSection = () => {
   const submittedRef = React.useRef(false);
   const lastFieldRef = React.useRef("");
   const geoFilledRef = React.useRef(false);
+  const submitAttemptsRef = React.useRef(0);
+  const lastSubmitErrorRef = React.useRef("");
 
   const budgetValue = showCustomBudget
     ? (customBudget ? `Custom: ${customBudget}` : "")
@@ -313,6 +315,11 @@ const ContactFormSection = () => {
         if (!emailOk && !phoneOk) return;
         delete data.recaptchaToken;
         data.visitor_context = collectVisitorContext();
+        // The forensic line that was missing on 27/8: did they try?
+        if (submitAttemptsRef.current > 0) {
+          data.submit_attempts = submitAttemptsRef.current;
+          data.last_submit_error = lastSubmitErrorRef.current || "unknown";
+        }
         // text/plain keeps sendBeacon happy in every browser; the
         // endpoint parses the body as JSON regardless of the header.
         const blob = new Blob([JSON.stringify(data)], { type: "text/plain;charset=UTF-8" });
@@ -363,6 +370,20 @@ const ContactFormSection = () => {
   const handleVercelSubmit = async (e) => {
     e.preventDefault();
 
+    // 2026-08-28. Two briefs in two nights reached George through the
+    // rescue net with every field filled and no submission behind them,
+    // and neither had touched the server. We could not tell whether
+    // those visitors had pressed this button and been swallowed, or
+    // never pressed it at all, because GA4 and Clarity are both consent
+    // gated and neither had accepted. So the attempt is now counted here
+    // and travels out on the rescue beacon, which is not consent gated.
+    // Next time the answer is in George's inbox, not in a guess.
+    submitAttemptsRef.current += 1;
+    lastSubmitErrorRef.current = "";
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "form_submit_attempt", { attempt: submitAttemptsRef.current });
+    }
+
     // Walk the steps; the first invalid field pulls the visitor back
     // to its step with the native validation bubble visible.
     for (const n of [1, 2, 3]) {
@@ -372,6 +393,7 @@ const ContactFormSection = () => {
       if (bad) {
         setStep(n);
         setStatus("Please complete the highlighted field.");
+        lastSubmitErrorRef.current = `invalid:${bad.name || bad.id || "unknown"}`;
         setTimeout(() => bad.reportValidity(), 60);
         return;
       }
@@ -379,19 +401,42 @@ const ContactFormSection = () => {
 
     setStatus("Submitting...");
 
+    // reCAPTCHA, on a leash.
+    //
+    // 2026-08-28: this await had no timeout, and that is the one thing
+    // between pressing the button and the request leaving the browser.
+    // Google's enterprise.js is loaded on demand, on the visitor's first
+    // keystroke, from a domain that privacy browsers, corporate networks
+    // and ad blockers all interfere with. If grecaptcha exists but is not
+    // ready, or the network stalls, execute() can return a promise that
+    // never settles. The button then sits on "Submitting..." forever, the
+    // visitor waits, decides the site is broken and leaves, and no request
+    // ever reaches us. That is exactly the shape of the two lost briefs.
+    //
+    // Four seconds, then we go without it. The token is a nice-to-have and
+    // a lead is not: the house rule is that forms never lose leads.
     let recaptchaToken = "no_recaptcha";
 
     try {
-      if (RECAPTCHA_PUBLIC_KEY) {
-        if (typeof grecaptcha !== "undefined" && grecaptcha.enterprise) {
-          recaptchaToken = await grecaptcha.enterprise.execute(RECAPTCHA_PUBLIC_KEY, { action: "contact_form_submit" });
-        } else if (typeof grecaptcha !== "undefined" && grecaptcha.execute) {
-          recaptchaToken = await grecaptcha.execute(RECAPTCHA_PUBLIC_KEY, { action: "contact_form_submit" });
+      if (RECAPTCHA_PUBLIC_KEY && typeof grecaptcha !== "undefined") {
+        const runner =
+          grecaptcha.enterprise?.execute
+            ? grecaptcha.enterprise.execute(RECAPTCHA_PUBLIC_KEY, { action: "contact_form_submit" })
+            : grecaptcha.execute
+              ? grecaptcha.execute(RECAPTCHA_PUBLIC_KEY, { action: "contact_form_submit" })
+              : null;
+        if (runner) {
+          const token = await Promise.race([
+            runner,
+            new Promise((resolve) => setTimeout(() => resolve(null), 4000)),
+          ]);
+          if (token) recaptchaToken = token;
+          else lastSubmitErrorRef.current = "recaptcha_timeout";
         }
       }
     } catch (error) {
-      console.error("reCAPTCHA execution failed:", error);
-      // Continue without reCAPTCHA — form should still work
+      lastSubmitErrorRef.current = "recaptcha_error";
+      console.error("reCAPTCHA execution failed, sending without it:", error);
     }
 
     const formData = new FormData(formRef.current);
@@ -425,11 +470,17 @@ const ContactFormSection = () => {
         formRef.current.reset();
         setStep(1);
       } else {
-        const errorData = await response.json();
-        setStatus(`Submission failed: ${errorData.message || "Server error."}`);
+        const errorData = await response.json().catch(() => ({}));
+        lastSubmitErrorRef.current = `http_${response.status}`;
+        // Never a dead end. Whatever the server said, the visitor is
+        // given a road that does not depend on this form working.
+        setStatus(
+          `We could not send that from here. Please write to george@georgeyachts.com or use the WhatsApp link below, and your brief reaches George either way.${errorData.message ? "" : ""}`
+        );
       }
     } catch (error) {
-      setStatus("Network error. Please check your connection.");
+      lastSubmitErrorRef.current = "network_error";
+      setStatus("We could not reach the server. Please write to george@georgeyachts.com or use the WhatsApp link below, and your brief reaches George either way.");
     }
   };
 

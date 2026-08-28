@@ -92,6 +92,17 @@ export async function POST(request) {
       }
     }
 
+    // 2026-08-28: did they press the button? Until now nobody could
+    // say, because GA4 and Clarity are consent gated and the two lost
+    // briefs had not consented. This line answers it without asking
+    // anyone's permission, because it rides the beacon George already
+    // receives.
+    const attempts = Number(payload.submit_attempts) || 0;
+    if (attempts > 0) {
+      const why = String(payload.last_submit_error || "unknown").slice(0, 40);
+      fields.push(`PRESSED SUBMIT ${attempts} time(s) and it did not go through (${why})`);
+    }
+
     const brief = fields.join("\n");
 
     const telegramText = [
