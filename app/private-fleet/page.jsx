@@ -34,13 +34,13 @@ export async function generateMetadata() {
   };
 }
 
-const QUERY = `*[_type == "yacht" && fleetTier in ["private", "both"]] | order(weeklyRatePrice desc) {
+const QUERY = `*[_type == "yacht" && fleetTier in ["private", "both"]] | order(weeklyRatePrice asc) {
   _id, name, subtitle, builder, length, sleeps, cabins, crew, weeklyRatePrice, cruisingRegion,
   "slug": slug.current,
   "imageUrl": images[0].asset->url
 }`;
 
-const FALLBACK_QUERY = `*[_type == "yacht"] | order(weeklyRatePrice desc) {
+const FALLBACK_QUERY = `*[_type == "yacht"] | order(weeklyRatePrice asc) {
   _id, name, subtitle, builder, length, sleeps, cabins, crew, weeklyRatePrice, cruisingRegion,
   "slug": slug.current,
   "imageUrl": images[0].asset->url
@@ -81,14 +81,17 @@ export default async function PrivateFleetPage() {
     return match ? parseInt(match[0].replace(/,/g, '')) : 0;
   };
 
-  // Flagship yachts always appear first, then the rest sorted most expensive → cheapest
+  // 2026-08-30, George's re-cut spec: cheapest first, flagship last -
+  // the ladder a browsing buyer climbs, same rule as the Catamaran
+  // Fleet. (The old flagship-first ordering belonged to the "Private
+  // Fleet" positioning that no longer exists.)
   const FLAGSHIP_NAMES = ["la pellegrina"];
 
   const isFlagship = (yacht) =>
     FLAGSHIP_NAMES.some((f) => (yacht.name || "").toLowerCase().includes(f));
 
-  const flagships = yachts.filter(isFlagship).sort((a, b) => extractPrice(b) - extractPrice(a));
-  const rest = yachts.filter((y) => !isFlagship(y)).sort((a, b) => extractPrice(b) - extractPrice(a));
+  const flagships = [];
+  const rest = yachts.slice().sort((a, b) => extractPrice(a) - extractPrice(b));
   const displayYachts = [...flagships, ...rest];
 
   // Dynamic price range — auto-updates as fleet grows
