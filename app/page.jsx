@@ -22,7 +22,7 @@ export const metadata = {
   },
   openGraph: {
     title: "George Yachts | Featured in Forbes · Luxury Yacht Charter Greece",
-    description: `Featured in Forbes (May 2026). ${FLEET_COUNT} curated yachts in Greek waters. Catamaran Fleet (42 sailing and power catamarans) + Motor Yacht Fleet (28 fully crewed motor yachts). IYBA Charter Active Member. Personal broker service from Athens.`,
+    description: `Featured in Forbes (May 2026). ${FLEET_COUNT} curated yachts in Greek waters. Catamaran Fleet (42 sailing and power catamarans) + Motor Yacht Fleet (21 fully crewed motor yachts). IYBA Charter Active Member. Personal broker service from Athens.`,
     url: "https://georgeyachts.com",
     type: "website",
     siteName: "George Yachts Brokerage House",
