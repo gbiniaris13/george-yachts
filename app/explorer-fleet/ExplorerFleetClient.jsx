@@ -19,21 +19,21 @@ export default function ExplorerFleetClient({ yachts, lowestWeekly = 11500, high
       </div>
       {/* Hero */}
       <section style={{ position: "relative", height: "80vh", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-        <Image src="/images/explorer-fleet-hero.jpg" alt="Sailing Fleet - group yacht charter Greece" fill style={{ objectFit: "cover", objectPosition: "center 30%", filter: "grayscale(100%) contrast(1.2) brightness(0.4)" }} sizes="100vw" priority />
+        <Image src="/images/explorer-fleet-hero.jpg" alt="Catamaran Fleet - crewed catamaran charter Greece" fill style={{ objectFit: "cover", objectPosition: "center 30%", filter: "grayscale(100%) contrast(1.2) brightness(0.4)" }} sizes="100vw" priority />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(13, 27, 42,0.8) 0%, transparent 40%, rgba(13, 27, 42,0.4) 100%)" }} />
         <div style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px" }}>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: "0.5em", color: "#DAA110", textTransform: "uppercase", marginBottom: 24 }}>
             George Yachts Brokerage House
           </p>
           <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(56px, 10vw, 130px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 18px 0", letterSpacing: "-0.035em", lineHeight: 0.95, textShadow: "0 6px 32px rgba(13, 27, 42,0.55)" }}>
-            Sailing Fleet
+            Catamaran Fleet
           </h1>
           <div style={{ width: 60, height: 1, background: "linear-gradient(90deg, transparent, #DAA110, transparent)", margin: "0 auto 24px" }} />
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "clamp(0.8rem, 1.5vw, 1rem)", fontWeight: 300, color: "rgba(248, 245, 240,0.5)", letterSpacing: "0.15em", marginBottom: 40 }}>
-            More islands. More adventure. The smart way to see Greece.
+            Every catamaran in the house. Sailing and power, fully crewed, cheapest to flagship.
           </p>
           <a
-            href="https://api.whatsapp.com/send/?phone=17867988798&text=Hello%20George%2C%20I%27m%20exploring%20the%20Explorer%20Fleet%20for%20a%20Greek%20charter.%20Can%20we%20plan%20an%20adventure%3F"
+            href="https://api.whatsapp.com/send/?phone=17867988798&text=Hello%20George%2C%20I%27m%20looking%20at%20your%20catamarans%20for%20a%20Greek%20charter.%20Which%20would%20you%20recommend%3F"
             target="_blank"
             rel="noopener noreferrer"
             style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--gy-font-ui)", fontSize: 11, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#0D1B2A", background: "linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)", padding: "16px 48px", textDecoration: "none" }}
@@ -58,7 +58,7 @@ export default function ExplorerFleetClient({ yachts, lowestWeekly = 11500, high
               {yachts.length} Vessels
             </p>
             <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#F8F5F0" }}>
-              The Sailing Fleet
+              The Catamaran Fleet
             </h2>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 24 }}>
@@ -123,7 +123,7 @@ export default function ExplorerFleetClient({ yachts, lowestWeekly = 11500, high
       {/* 2026-07-08 (George's UI wave #3), three answers instead of
           scrolling every card. Deep-links to the filtered fleet grid. */}
       <div style={{ background: "#0D1B2A", padding: "56px 0 8px" }}>
-        <FleetQuickFinder heading="Find your sailing yacht in three answers" />
+        <FleetQuickFinder heading="Find your catamaran in three answers" />
       </div>
 
       {/* Price Anchor */}
@@ -159,9 +159,9 @@ export default function ExplorerFleetClient({ yachts, lowestWeekly = 11500, high
               thin gold numeral is what the awards band uses and it costs
               nothing to read. */}
           {[
-            { n: "01", title: "More Islands, Less Hassle", desc: "No ferries. No packing and unpacking. The yacht moves while you sleep." },
-            { n: "02", title: "Small Enough to Get In", desc: "Bays the large yachts cannot enter, and a table ashore in villages they sail past." },
-            { n: "03", title: "Built for a Group", desc: "Six to twelve, travelling together, with the crew aboard to run the week." },
+            { n: "01", title: "Sail or Power, One Door", desc: "Every catamaran in the house on one page. Under sail for the purists, twin engines for pace - George matches the drive to your week." },
+            { n: "02", title: "Space Without the Roll", desc: "Two hulls mean the floor space of a far larger yacht, level at anchor, with cabins split for privacy. The reason families and groups start here." },
+            { n: "03", title: "Shallow Bays, Real Greece", desc: "A catamaran anchors in two metres of clear water, bow to the beach, in coves the big hulls sail past." },
           ].map((item, i) => (
             <div key={i} style={{ textAlign: "center", padding: 40, border: "1px solid rgba(248, 245, 240,0.06)", borderRadius: 4 }}>
               <div style={{ fontFamily: "var(--gy-font-display)", fontWeight: 250, fontSize: 26, lineHeight: 1, color: "rgba(218, 161, 16,0.55)", marginBottom: 18, fontVariantNumeric: "lining-nums" }}>{item.n}</div>

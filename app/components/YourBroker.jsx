@@ -76,6 +76,13 @@ export default function YourBroker() {
             position: "absolute", bottom: 0, left: 0, right: 0, height: "50%",
             background: "linear-gradient(to top, rgba(13, 27, 42,0.7), transparent)",
           }} />
+          <p style={{
+            position: "absolute", bottom: 8, right: 10, margin: 0,
+            fontFamily: "var(--gy-font-ui)", fontSize: 8, letterSpacing: "0.26em",
+            textTransform: "uppercase", color: "rgba(248,245,240,0.55)",
+          }}>
+            {t('broker.caption')}
+          </p>
         </div>
 
         {/* Text */}
@@ -133,10 +140,47 @@ export default function YourBroker() {
             fontSize: "15px",
             lineHeight: 2,
             color: "rgba(248,245,240,0.6)",
-            marginBottom: "40px",
+            marginBottom: "16px",
           }}>
             {t('broker.text2')}
           </p>
+
+          <p style={{
+            fontFamily: "var(--gy-font-ui)",
+            fontSize: "15px",
+            lineHeight: 2,
+            color: "rgba(248,245,240,0.6)",
+            marginBottom: "28px",
+          }}>
+            {t('broker.text3')}
+          </p>
+
+          {/* 2026-08-30, George: the homepage bio is now the SAME text as
+              The Edition's broker page - ancestral first, the wheel second,
+              the Mykonos decade third, then the credentials with the gold
+              diamonds. One change only, forced by
+              scripts/checkCredentialClaims.mjs: the Edition's "A former
+              captain" opener is a claim this site never makes - he holds a
+              skipper's licence - so here it reads "Years with a wheel in
+              hand". */}
+          <div style={{ borderTop: "1px solid rgba(218,161,16,0.4)", paddingTop: "18px", marginBottom: "40px" }}>
+            {[t('broker.cred1'), t('broker.cred2')].map((c, k) => (
+              <p key={k} style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12.5px", lineHeight: 1.6, color: "rgba(248,245,240,0.55)", margin: "0 0 8px" }}>
+                <span style={{ color: "#DAA110", marginRight: 10 }}>◆</span>{c}
+              </p>
+            ))}
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12.5px", lineHeight: 1.6, margin: 0 }}>
+              <span style={{ color: "#DAA110", marginRight: 10 }}>◆</span>
+              <a
+                href="https://www.forbes.com/sites/jacquesledbetter/2026/05/01/how-the-wealthy-are-hedging-for-instability/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "rgba(248,245,240,0.85)", textDecoration: "none", borderBottom: "1px solid rgba(218,161,16,0.4)" }}
+              >
+                {t('broker.cred3')}
+              </a>
+            </p>
+          </div>
 
           <a
             href="https://calendly.com/george-georgeyachts/30min"

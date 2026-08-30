@@ -3,7 +3,7 @@
 //
 // Before this page existed the site sat at position 69 on the term
 // with no URL targeting it in H1/title. Guide-plus-fleet format:
-// editorial depth + the live Private Fleet (full crew), real Charter
+// editorial depth + the live Motor Yacht Fleet (full crew), real Charter
 // Index 2026 numbers, the real VAT rates, per-person math, and the
 // "weekly charter, Saturday to Saturday" intent as a section (GSC
 // shows ~1 impression for that exact phrase, so it is a section
@@ -40,13 +40,13 @@ const CANONICAL = "https://georgeyachts.com/crewed-yacht-charter-greece";
 export const metadata = {
   title: `Crewed Yacht Charter Greece: Rates & Fleet`,
   description:
-    `Crewed yacht charter in Greece with full professional crew: weekly rates by yacht type and region, the real VAT rates, and the curated Private Fleet.`,
+    `Crewed yacht charter in Greece with full professional crew: weekly rates by yacht type and region, the real VAT rates, and the curated Motor Yacht Fleet.`,
   alternates: { canonical: CANONICAL },
   openGraph: {
       type: "website",
     title: "Crewed Yacht Charter Greece | George Yachts",
     description:
-      "Full-crew yacht charter in Greek waters: weekly rates, the real VAT rates, and the curated Private Fleet. Personal broker service by George P. Biniaris.",
+      "Full-crew yacht charter in Greek waters: weekly rates, the real VAT rates, and the curated Motor Yacht Fleet. Personal broker service by George P. Biniaris.",
     url: CANONICAL,
     images: [
       `/api/og?title=${encodeURIComponent("Crewed Yacht Charter Greece")}&eyebrow=${encodeURIComponent("Full Crew · Weekly")}`,
@@ -56,7 +56,7 @@ export const metadata = {
   },
 };
 
-// Private Fleet = the crewed side of the brokerage (full crew).
+// Motor Yacht Fleet = the crewed side of the brokerage (full crew).
 const CREWED_FLEET_QUERY = `*[_type == "yacht" && fleetTier in ["private", "both"]] | order(weeklyRatePrice desc) {
   _id,
   "slug": slug.current,
@@ -121,10 +121,10 @@ const FAQS = [
     q: "What is the difference between crewed, skippered and bareboat?",
     // 2026-08-21 (section 5). The question stays: it is a real search and
     // people deserve the answer. What went is the part that read as a menu.
-    // The old answer ended "the Sailing Fleet is skippered", which offered
+    // The old answer ended "the Catamaran Fleet is skippered", which offered
     // the arrangement George has taken off the site. It now answers the
     // question and says plainly which of the three this house writes.
-    a: "Three different holidays. Crewed means the yacht arrives with her professional crew already aboard, captain, chef and service, and nobody in your party navigates or cooks. Skippered means a captain and nothing else. Bareboat means you hold the licence and sail her yourself. This house writes crewed weeks only, in both fleets: the Private Fleet with a full crew, the Sailing Fleet on a smaller yacht with a crew of two or three. If you want the other two, a Greek bareboat operator is the right call and we will say so rather than sell you a week that does not fit.",
+    a: "Three different holidays. Crewed means the yacht arrives with her professional crew already aboard, captain, chef and service, and nobody in your party navigates or cooks. Skippered means a captain and nothing else. Bareboat means you hold the licence and sail her yourself. This house writes crewed weeks only, in both fleets: the Motor Yacht Fleet with a full crew, the Catamaran Fleet with a crew of two to four. If you want the other two, a Greek bareboat operator is the right call and we will say so rather than sell you a week that does not fit.",
   },
   {
     q: "Can we charter with more than 12 guests?",
@@ -221,7 +221,7 @@ function fleetListSchema(yachts) {
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "George Yachts Private Fleet - crewed yachts in Greece",
+    name: "George Yachts Motor Yacht Fleet - crewed yachts in Greece",
     numberOfItems: yachts.length,
     // 2026-08-06 — see the note on the same list in /charter-yacht-greece:
     // a Product without offers, a review or an aggregateRating is invisible
@@ -372,7 +372,7 @@ export default async function CrewedCharterPage() {
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <QuickAnswerBlock
             question="What is a crewed yacht charter in Greece, and what does a week cost?"
-            answer={`A crewed yacht charter means the yacht comes with a full professional crew: captain, chef and service. Per the George Yachts Greek Charter Index, weekly net base rates run EUR 10,900-22,000 for a crewed sailing catamaran of 12-16m and EUR 56,000-90,000 at 23-24m, EUR 14,000-90,000 for a power catamaran, EUR 17,500-33,000 for an 18-24m motor yacht, EUR 40,000-65,000 at 26-31m, EUR 60,000-120,000 at 35-40m, and EUR 162,500-235,000 above 50m. Add VAT at the yacht's certified rate (in practice 5.2-12%; statutory ceiling 13%) and APA of 20-40% by yacht type. George Yachts curates ${FLEET_COUNT} yachts in Greek waters, split between the fully crewed Private Fleet and the skippered Sailing Fleet.`}
+            answer={`A crewed yacht charter means the yacht comes with a full professional crew: captain, chef and service. Per the George Yachts Greek Charter Index, weekly net base rates run EUR 10,900-22,000 for a crewed sailing catamaran of 12-16m and EUR 56,000-90,000 at 23-24m, EUR 14,000-90,000 for a power catamaran, EUR 17,500-33,000 for an 18-24m motor yacht, EUR 40,000-65,000 at 26-31m, EUR 60,000-120,000 at 35-40m, and EUR 162,500-235,000 above 50m. Add VAT at the yacht's certified rate (in practice 5.2-12%; statutory ceiling 13%) and APA of 20-40% by yacht type. George Yachts curates ${FLEET_COUNT} yachts in Greek waters, split between the Catamaran Fleet with a crew of two to four and the Motor Yacht Fleet with a full crew.`}
           />
         </div>
       </section>
@@ -387,9 +387,9 @@ export default async function CrewedCharterPage() {
             who has anchored in these bays his whole life, a chef provisioning
             from island markets, and a crew whose only brief is your week. You
             are a guest, never an operator. Within George&apos;s{" "}
-            <Link href="/private-fleet" style={goldLink}>Private Fleet</Link>{" "}
+            <Link href="/private-fleet" style={goldLink}>Motor Yacht Fleet</Link>{" "}
             every yacht is fully crewed; the{" "}
-            <Link href="/explorer-fleet" style={goldLink}>Sailing Fleet</Link>{" "}
+            <Link href="/explorer-fleet" style={goldLink}>Catamaran Fleet</Link>{" "}
             is the same week under sail, on a catamaran or a monohull.
           </p>
           <p style={bodyStyle}>
@@ -610,9 +610,9 @@ export default async function CrewedCharterPage() {
 
       {/* LIVE PRIVATE FLEET STRIP - server-rendered links */}
       {featured.length >= 4 && (
-        <section style={{ padding: "72px 24px" }} aria-label="The crewed Private Fleet">
+        <section style={{ padding: "72px 24px" }} aria-label="The crewed Motor Yacht Fleet">
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-            <p style={{ ...eyebrowStyle, textAlign: "center" }}>The Private Fleet</p>
+            <p style={{ ...eyebrowStyle, textAlign: "center" }}>The Motor Yacht Fleet</p>
             <h2 style={{ ...h2Style, textAlign: "center" }}>
               {yachts.length} crewed yachts, curated one by one
             </h2>
@@ -661,7 +661,7 @@ export default async function CrewedCharterPage() {
             </div>
             <div style={{ textAlign: "center", marginTop: 36, display: "flex", gap: 28, justifyContent: "center", flexWrap: "wrap" }}>
               <Link href="/private-fleet" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, color: GOLD, textDecoration: "none", paddingBottom: 4, borderBottom: `1px solid ${GOLD}` }}>
-                The Full Private Fleet →
+                The Full Motor Yacht Fleet →
               </Link>
               <Link href="/charter-yacht-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, color: "rgba(248,245,240,0.82)", textDecoration: "none", paddingBottom: 4, borderBottom: "1px solid rgba(248,245,240,0.3)" }}>
                 Every Yacht We Charter →
@@ -743,9 +743,9 @@ export default async function CrewedCharterPage() {
             floating villa. Skippered means a captain and nothing else.
             Bareboat means you hold the licence and sail her yourself. This
             house writes crewed weeks, and only crewed weeks: the{" "}
-            <Link href="/private-fleet" style={goldLink}>Private Fleet</Link>{" "}
+            <Link href="/private-fleet" style={goldLink}>Motor Yacht Fleet</Link>{" "}
             with a full crew, the{" "}
-            <Link href="/explorer-fleet" style={goldLink}>Sailing Fleet</Link>{" "}
+            <Link href="/explorer-fleet" style={goldLink}>Catamaran Fleet</Link>{" "}
             under sail, on a catamaran or a monohull. If the other two
             are what you are really after, the honest answer is that a Greek
             bareboat operator will serve you better, and{" "}

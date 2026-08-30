@@ -23,7 +23,7 @@ export async function generateStaticParams() {
   // fails at build time, return [] so the build doesn't crash;
   // pages are rendered dynamically as visitors hit them.
   try {
-    const yachts = await sanityClient.fetch(`*[_type == "yacht" && defined(slug.current)]{
+    const yachts = await sanityClient.fetch(`*[/* +mono */ _type == "yacht" && defined(slug.current)]{
       "slug": slug.current
     }`);
     return yachts.map((yacht) => ({ slug: yacht.slug }));

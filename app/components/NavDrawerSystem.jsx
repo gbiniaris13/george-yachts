@@ -6,7 +6,7 @@
 // right cluster (search / currency / language / Instagram / LinkedIn
 // / favorites) with a Burgess/Aman-tier 4-item top nav:
 //
-//   CHARTER          (dropdown: Private Fleet · Sailing Fleet · View All)
+//   CHARTER          (dropdown: Motor Yacht Fleet · Catamaran Fleet · View All)
 //   EXPLORE GREECE   (dropdown: Cyclades · Ionian · Saronic · Itineraries)
 //   ABOUT            (dropdown: About George · How It Works · FAQ)
 //   BRIEF GEORGE →   (no dropdown — primary CTA, gold, direct link to /inquiry)
@@ -68,8 +68,8 @@ const NAV_SECTIONS = [
   {
     label: "Charter",
     items: [
-      { label: "Private Fleet", href: "/private-fleet" },
-      { label: "Sailing Fleet", href: "/explorer-fleet" },
+      { label: "Motor Yacht Fleet", href: "/private-fleet" },
+      { label: "Catamaran Fleet", href: "/explorer-fleet" },
       // 2026-07-03 (Wave 2) — the two head terms George is chasing
       // get the heaviest link on the site: the main nav. Crewed is
       // the flagship guide (built 2026-07-02); Catamarans is the

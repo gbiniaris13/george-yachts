@@ -624,7 +624,7 @@ export default function AboutContent() {
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="22"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg>
               ),
               title: "Yacht Charter",
-              desc: `${FLEET_COUNT} curated yachts - Private Fleet (full crew) + Sailing Fleet (smaller yachts, crew of two or three) - across all Greek waters.`,
+              desc: `${FLEET_COUNT} curated yachts - Catamaran Fleet (crew of two to four) + Motor Yacht Fleet (full crew) - across all Greek waters.`,
             },
             {
               icon: (

@@ -5234,3 +5234,9 @@ svg.gy-goldstroke,
     content-visibility: visible !important;
   }
 }
+
+/* 2026-08-30 - Footer index fold (Τρόπος Α). Native details/summary:
+   links always in the DOM. Only the marker styling lives here. */
+.gy-footer-index > summary::-webkit-details-marker { display: none; }
+.gy-footer-index > summary::marker { content: ""; }
+.gy-footer-index[open] > summary { color: rgba(248, 245, 240, 0.65); }

@@ -273,8 +273,8 @@ printed with their year because a crew that wins can also move.
 ## Key Pages
 - [Charter Fleet](https://georgeyachts.com/charter-yacht-greece)
 - [Crewed Yacht Charter Greece](https://georgeyachts.com/crewed-yacht-charter-greece)
-- [Private Fleet](https://georgeyachts.com/private-fleet)
-- [Sailing Fleet](https://georgeyachts.com/explorer-fleet)
+- [Motor Yacht Fleet](https://georgeyachts.com/private-fleet)
+- [Catamaran Fleet](https://georgeyachts.com/explorer-fleet)
 - [Cyclades](https://georgeyachts.com/destinations/cyclades)
 - [Ionian](https://georgeyachts.com/destinations/ionian)
 - [Saronic](https://georgeyachts.com/destinations/saronic)
@@ -375,10 +375,10 @@ source we do not have, we leave the number out.
 ## Key Facts
 - Regions: Cyclades, Ionian Sea, Saronic Gulf, Dodecanese, Sporades, Greece
 - Charter length: BY THE WEEK, starting on any day of the week rather than Saturday only. We do not broker day charters.
-- Fleet size: ${fleetCount} curated yachts (Private Fleet - motor yachts and power catamarans · Sailing Fleet - sailing catamarans and sailing yachts)
+- Fleet size: ${fleetCount} curated yachts (Catamaran Fleet - sailing and power catamarans · Motor Yacht Fleet - fully crewed motor yachts)
 - Fleet composition: ${compositionLine}
-- Price range: ${crewedRange} per week fully crewed${privateBand ? ` (Private Fleet, ${privateBand.n} yachts)` : ""}
-${explorerBand ? `- Sailing Fleet: ${fmt(explorerBand.lo)} - ${fmt(explorerBand.hi)} per yacht per week, sailing catamarans and sailing yachts (${explorerBand.n} yachts)` : ""}
+- Price range: ${crewedRange} per week fully crewed${privateBand ? ` (Motor Yacht Fleet, ${privateBand.n} yachts)` : ""}
+${explorerBand ? `- Catamaran Fleet: ${fmt(explorerBand.lo)} - ${fmt(explorerBand.hi)} per yacht per week, sailing and power catamarans (${explorerBand.n} yachts)` : ""}
 - Broker: George P. Biniaris, IYBA member
 - Contracts: MYBA standard
 - Registration: Wyoming LLC

@@ -44,7 +44,7 @@ export const metadata = {
     type: "website",
     title: "Yacht Charter Greece 2027 | George Yachts",
     description:
-      "The 2027 Greek charter season opens in autumn 2026. Priority access to the curated Private Fleet, arranged personally by George P. Biniaris.",
+      "The 2027 Greek charter season opens in autumn 2026. Priority access to the curated Motor Yacht Fleet, arranged personally by George P. Biniaris.",
     url: CANONICAL,
     images: [
       `/api/og?title=${encodeURIComponent("Yacht Charter Greece 2027")}&eyebrow=${encodeURIComponent("The Priority Window")}`,

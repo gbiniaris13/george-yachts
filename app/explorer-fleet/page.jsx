@@ -17,13 +17,18 @@ export async function generateMetadata() {
   return {
     // The title said "Skippered Yacht Charter", which is the arrangement this
     // house does not write. It is a weekly crewed charter or it is nothing.
-    title: `Sailing Fleet - Crewed Yacht Charter Greece`,
-    description: `Fully crewed weekly yacht charters in Greek waters from €${low.toLocaleString()} per yacht per week. More islands in a week, Cyclades, Ionian, Saronic. Brief George.`,
+    // 2026-08-30 re-cut. Role: the BROWSE page of the catamaran cluster,
+    // ranked cheapest to priciest. The head term "catamaran charter greece"
+    // (590/mo, KD 0-14, DataForSEO 30/8) belongs to the pillar at
+    // /catamaran-charter-greece; this title leads with the FLEET role so
+    // the two never fight - the cannibalisation law.
+    title: `Catamaran Fleet Greece: Sailing & Power Cats by Price`,
+    description: `Every crewed catamaran in the house, sailing and power together, from €${low.toLocaleString()} to €${high.toLocaleString()} per yacht per week, all-in guidance from George. Ranked cheapest to flagship.`,
     alternates: { canonical: "https://georgeyachts.com/explorer-fleet" },
     openGraph: {
       type: "website",
-      title: "Sailing Fleet | George Yachts",
-      description: `More islands in a week. From €${low.toLocaleString()} to €${high.toLocaleString()} per yacht per week, fully crewed.`,
+      title: "Catamaran Fleet | George Yachts",
+      description: `Sailing and power catamarans, fully crewed, from €${low.toLocaleString()} to €${high.toLocaleString()} per yacht per week.`,
       url: "https://georgeyachts.com/explorer-fleet",
       images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
       siteName: "George Yachts Brokerage House",
@@ -48,10 +53,10 @@ function ExplorerFleetSchema({ lowestWeekly }) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Sailing Fleet Yacht Charter",
+    name: "Catamaran Fleet Yacht Charter",
     provider: { "@type": "Organization", name: "George Yachts Brokerage House", url: "https://georgeyachts.com" },
     areaServed: { "@type": "Place", name: "Greek Waters" },
-    description: `Fully crewed group yacht charters in Greek waters from €${lowestWeekly} per yacht per week.`,
+    description: `Fully crewed sailing and power catamaran charters in Greek waters from €${lowestWeekly} per yacht per week.`,
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "EUR",
@@ -95,7 +100,7 @@ export default async function ExplorerFleetPage() {
   // The week is now simply the week.
   // 2026-08-21 (section 9). A EUR 29,000 ceiling used to sit here, from when
   // this was the Explorer tier and the tier meant "the cheaper half". It is
-  // the Sailing Fleet now, cut by sail against power, and it runs to EUR
+  // the Catamaran Fleet now, cut by sail against power, and it runs to EUR
   // 65,000: the ceiling was quietly hiding nineteen of its thirty-three
   // yachts, ABOVE & BEYOND among them, which is the most decorated boat in
   // the house.
@@ -110,7 +115,7 @@ export default async function ExplorerFleetPage() {
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "https://georgeyachts.com" },
-          { name: "Sailing Fleet", url: "https://georgeyachts.com/explorer-fleet" },
+          { name: "Catamaran Fleet", url: "https://georgeyachts.com/explorer-fleet" },
         ]}
       />
       <ExplorerFleetSchema lowestWeekly={displayLowest} />

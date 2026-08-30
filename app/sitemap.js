@@ -34,7 +34,7 @@ const staticRoutes = [
   { path: "", priority: 1.0, changeFrequency: "weekly" },
   { path: "/charter-yacht-greece", priority: 0.95, changeFrequency: "daily" },
   // 2026-07-02 (ASK A Move 3a) - the exact-match head page for
-  // "crewed yacht charter greece"; guide + live Private Fleet.
+  // "crewed yacht charter greece"; guide + live Motor Yacht Fleet.
   { path: "/crewed-yacht-charter-greece", priority: 0.95, changeFrequency: "weekly" },
   // 2026-08-20 (design pass, job 16) - the six yachts whose crews have placed
   // at the Greek charter shows. Deliberately not 0.95: this is a smaller
@@ -471,7 +471,7 @@ export default async function sitemap() {
     // yacht and attach them via Next.js's `images` field (rendered as
     // <image:image> tags). Real Sanity CDN URLs only — no placeholders.
     const yachts = await sanityClient.fetch(
-      `*[_type == "yacht" && defined(slug.current)]{
+      `*[/* +mono */ _type == "yacht" && defined(slug.current)]{
         "slug": slug.current, _updatedAt,
         "images": images[0..2].asset->url
       }`

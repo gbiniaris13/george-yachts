@@ -265,7 +265,7 @@ export const metadata = {
     template: "%s | George Yachts",
   },
   description:
-    `Featured in Forbes (May 2026). George Yachts Brokerage House - boutique luxury yacht charter in Greek waters. ${FLEET_COUNT} curated yachts. Private Fleet (motor yachts and power catamarans) + Sailing Fleet (sailing catamarans and sailing yachts). IYBA Charter Active Member. Cyclades, Ionian, Saronic. Personal broker service from Athens.`,
+    `Featured in Forbes (May 2026). George Yachts Brokerage House - boutique luxury yacht charter in Greek waters. ${FLEET_COUNT} curated yachts. Catamaran Fleet (42 sailing and power catamarans) + Motor Yacht Fleet (17 fully crewed motor yachts). IYBA Charter Active Member. Cyclades, Ionian, Saronic. Personal broker service from Athens.`,
   applicationName: "George Yachts",
   authors: [{ name: "George P. Biniaris", url: "https://georgeyachts.com" }],
   generator: "Next.js",
@@ -316,7 +316,7 @@ export const metadata = {
     url: "https://georgeyachts.com",
     title: "George Yachts | Featured in Forbes · Luxury Yacht Charter Greece",
     description:
-      `Featured in Forbes (May 2026). ${FLEET_COUNT} curated yachts in Greek waters. Private Fleet (motor yachts and power catamarans) + Sailing Fleet (sailing catamarans and sailing yachts). IYBA Charter Active Member. Personal broker service from Athens.`,
+      `Featured in Forbes (May 2026). ${FLEET_COUNT} curated yachts in Greek waters. Catamaran Fleet (42 sailing and power catamarans) + Motor Yacht Fleet (17 fully crewed motor yachts). IYBA Charter Active Member. Personal broker service from Athens.`,
     images: [
       {
         url: "/opengraph-image",

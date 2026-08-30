@@ -19,7 +19,7 @@
 // new "Request a personal proposal" primary CTA. Telegram fires
 // immediately on submit.
 
-import { isSailingFleet } from "@/lib/fleetTiers";
+import { isSailingFleet, isPrivateFleet } from "@/lib/fleetTiers";
 import { useEffect, useState } from 'react';
 import { useI18n } from '@/lib/i18n/I18nProvider';
 import { PortableText } from '@portabletext/react';
@@ -599,7 +599,8 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
   }, []);
 
   const yachtType =
-    isSailingFleet(yacht) ? 'Sailing Fleet'
+    isSailingFleet(yacht) ? 'Catamaran Fleet'
+    : isPrivateFleet(yacht) ? 'Motor Yacht Fleet'
     : (yacht?.subtitle || yacht?.builder || 'Charter Fleet');
 
   const breadcrumbItems = [

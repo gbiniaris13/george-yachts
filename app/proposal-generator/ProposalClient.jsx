@@ -180,8 +180,8 @@ export default function ProposalClient({ yachts = [] }) {
           label="Fleet"
           options={[
             { value: "all", label: "Both fleets" },
-            { value: "private", label: "Private Fleet" },
-            { value: "explorer", label: "Sailing Fleet" },
+            { value: "private", label: "Motor Yacht Fleet" },
+            { value: "explorer", label: "Catamaran Fleet" },
           ]}
           value={tier} onChange={setTier}
         />

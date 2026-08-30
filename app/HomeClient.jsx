@@ -104,6 +104,11 @@ const HomeClient = ({
   // B.6 — three most-recent blog posts for the homepage Journal teaser
   latestPosts,
 }) => {
+  // 2026-08-30: monohulls ride in this pool solely so AwardedFleet can
+  // show S/Y MELITI's MEDYS first place - the one surface where a hidden
+  // monohull may appear (George's call). The map and carousel that once
+  // consumed this array are long removed from the homepage tree, so no
+  // browsing surface sees them.
   const fleet = Array.isArray(fleetForMap) && fleetForMap.length > 0
     ? fleetForMap
     : (trendingYachts ?? []);
@@ -243,7 +248,7 @@ const HomeClient = ({
       {/* Chapter 08 (2026-05-08), George's Selection. Replaces the
           prior Signature Yacht "Featured This Week" rotation slot
           with two Boss-curated cards: La Pellegrina 1 (Private
-          Fleet flagship) + Errant Vagabond (Sailing Fleet
+          Fleet flagship) + Errant Vagabond (Catamaran Fleet
           flagship). No auto-rotation, no Sanity weekly pull
           this is the broker's hand-picked pair. */}
       <section id="selection" data-gy-reveal="up">

@@ -15,12 +15,16 @@ export async function generateMetadata() {
     if (prices.length) { low = Math.min(...prices); high = Math.max(...prices); }
   } catch {}
   return {
-    title: "Private Fleet | Luxury Yacht Charter Greece",
-    description: `Your own world at sea. Full crew. Total discretion. Premium crewed yacht charters in Greek waters - from €${low.toLocaleString()} to €${high.toLocaleString()}/week.`,
+    // 2026-08-30 re-cut. Role: the fleet/BROWSE page for motor yachts.
+    // Target: "luxury motor yacht charter greece" (320/mo, KD 5,
+    // DataForSEO 30/8) - unclaimed by any pillar; the head term "crewed
+    // motor yacht charter greece" stays with /motor-yacht-charter-greece.
+    title: "Motor Yacht Fleet: Luxury Motor Yacht Charter Greece",
+    description: `Fully crewed luxury motor yachts in Greek waters, ranked cheapest to flagship - from €${low.toLocaleString()} to €${high.toLocaleString()} per yacht per week. Full crew, total discretion.`,
     alternates: { canonical: "https://georgeyachts.com/private-fleet" },
     openGraph: {
       type: "website",
-      title: "Private Fleet | George Yachts",
+      title: "Motor Yacht Fleet | George Yachts",
       description: `Your own world at sea. Full crew. Total discretion. From €${low.toLocaleString()} to €${high.toLocaleString()}/week.`,
       url: "https://georgeyachts.com/private-fleet",
       images: [{ url: "https://georgeyachts.com/opengraph-image", width: 1200, height: 630 }],
@@ -46,7 +50,7 @@ function PrivateFleetSchema({ lowestPrice, highestPrice, count }) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Private Fleet Yacht Charter",
+    name: "Motor Yacht Fleet Yacht Charter",
     provider: { "@type": "Organization", name: "George Yachts Brokerage House", url: "https://georgeyachts.com" },
     areaServed: { "@type": "Place", name: "Greek Waters" },
     description: `Premium crewed yacht charters in Greek waters. From €${lowestPrice.toLocaleString()} to €${highestPrice.toLocaleString()} per week.`,
@@ -97,7 +101,7 @@ export default async function PrivateFleetPage() {
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "https://georgeyachts.com" },
-          { name: "Private Fleet", url: "https://georgeyachts.com/private-fleet" },
+          { name: "Motor Yacht Fleet", url: "https://georgeyachts.com/private-fleet" },
         ]}
       />
       <PrivateFleetSchema lowestPrice={lowestPrice} highestPrice={highestPrice} count={displayYachts.length} />

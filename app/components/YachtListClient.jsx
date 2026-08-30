@@ -6,7 +6,6 @@ import YachtSwiper from "./YachtSwiper";
 
 const CATEGORIES = [
   { label: "All Fleet", value: "all" },
-  { label: "Sailing Monohulls", value: "sailing-monohulls" },
   { label: "Sailing Catamarans", value: "sailing-catamarans" },
   { label: "Power Catamarans", value: "power-catamarans" },
   { label: "Motor Yachts", value: "motor-yachts" },

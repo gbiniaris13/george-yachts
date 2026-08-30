@@ -19,20 +19,20 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
       </div>
       {/* Hero */}
       <section style={{ position: "relative", height: "80vh", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-        <Image src="/images/private-fleet-hero.jpg" alt="Private Fleet - luxury yacht charter Greece" fill style={{ objectFit: "cover", objectPosition: "center 40%", filter: "grayscale(100%) contrast(1.2) brightness(0.4)" }} sizes="100vw" priority />
+        <Image src="/images/private-fleet-hero.jpg" alt="Motor Yacht Fleet - luxury motor yacht charter Greece" fill style={{ objectFit: "cover", objectPosition: "center 40%", filter: "grayscale(100%) contrast(1.2) brightness(0.4)" }} sizes="100vw" priority />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(13, 27, 42,0.8) 0%, transparent 40%, rgba(13, 27, 42,0.4) 100%)" }} />
         <div style={{ position: "relative", zIndex: 10, textAlign: "center", padding: "0 24px" }}>
           {/* Brand identity lives in the nav logo (same rule as the
               homepage hero) - repeating the wordmark here doubled it. */}
           <h1 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(56px, 10vw, 130px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 18px 0", letterSpacing: "-0.035em", lineHeight: 0.95, textShadow: "0 6px 32px rgba(13, 27, 42,0.55)" }}>
-            Private Fleet
+            Motor Yacht Fleet
           </h1>
           <div style={{ width: 60, height: 1, background: "linear-gradient(90deg, transparent, #DAA110, transparent)", margin: "0 auto 24px" }} />
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "clamp(0.8rem, 1.5vw, 1rem)", fontWeight: 300, color: "rgba(248, 245, 240,0.5)", letterSpacing: "0.15em", marginBottom: 40 }}>
             Your own world at sea. Full crew. Total discretion.
           </p>
           <a
-            href="https://api.whatsapp.com/send/?phone=17867988798&text=Hello%20George%2C%20I%27m%20interested%20in%20your%20Private%20Fleet%20for%20a%20Greek%20charter.%20Can%20we%20discuss%20options%3F"
+            href="https://api.whatsapp.com/send/?phone=17867988798&text=Hello%20George%2C%20I%27m%20interested%20in%20a%20motor%20yacht%20for%20a%20Greek%20charter.%20Can%20we%20discuss%20options%3F"
             target="_blank"
             rel="noopener noreferrer"
             style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--gy-font-ui)", fontSize: 11, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: "#0D1B2A", background: "linear-gradient(90deg, #B58A0A 0%, #F0C756 38%, #DAA110 62%, #B58A0A 100%)", padding: "16px 48px", textDecoration: "none" }}
@@ -57,7 +57,7 @@ export default function PrivateFleetClient({ yachts, lowestPrice = 30000, highes
               {yachts.length} Vessels
             </p>
             <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#F8F5F0" }}>
-              The Private Fleet
+              The Motor Yacht Fleet
             </h2>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 24 }}>

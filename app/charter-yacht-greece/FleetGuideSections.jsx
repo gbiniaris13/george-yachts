@@ -83,7 +83,7 @@ const fmt = (n) => `€${Number(n).toLocaleString("en-US")}`;
 // never drift apart. Answers quote on-site sources only.
 function buildFaqs(tiers) {
   const priceAnswer = tiers.private
-    ? `Live from today's fleet: the fully crewed Private Fleet runs ${fmt(tiers.private.low)} to ${fmt(tiers.private.high)} per yacht per week base rate${tiers.explorerYacht ? `, and the Sailing Fleet starts around ${fmt(tiers.explorerYacht)} per yacht per week` : ""}. On top come APA (20 to 40% by yacht type) and Greek VAT.`
+    ? `Live from today's fleet: the fully crewed Motor Yacht Fleet runs ${fmt(tiers.private.low)} to ${fmt(tiers.private.high)} per yacht per week base rate${tiers.explorerYacht ? `, and the Catamaran Fleet starts around ${fmt(tiers.explorerYacht)} per yacht per week` : ""}. On top come APA (20 to 40% by yacht type) and Greek VAT.`
     : "Both fleets are priced the same way, per yacht per week, fully crewed. Every yacht page lists its live rate, and George confirms the full figure in writing before you commit.";
   return [
     {
@@ -107,8 +107,8 @@ function buildFaqs(tiers) {
       a: "Typical lead time for peak July and August weeks is 6 to 12 months, and premium 40m-plus yachts often commit a year or more ahead. June and September usually hold availability closer in, at softer rates for the same yacht.",
     },
     {
-      q: "What is the difference between the Private Fleet and the Sailing Fleet?",
-      a: "The Private Fleet is fully crewed: captain, chef and service crew, priced per yacht per week. The Sailing Fleet is the same week on a smaller sailing yacht or catamaran with a crew of two or three, priced the same way, per yacht per week, lighter in style and closer to the water. Same broker, same Greek waters, two different rhythms.",
+      q: "What is the difference between the Motor Yacht Fleet and the Catamaran Fleet?",
+      a: "The Motor Yacht Fleet is fully crewed: captain, chef and service crew, priced per yacht per week. The Catamaran Fleet is the same week on a smaller sailing yacht or catamaran with a crew of two or three, priced the same way, per yacht per week, lighter in style and closer to the water. Same broker, same Greek waters, two different rhythms.",
     },
     {
       q: "Where do charters embark?",
@@ -210,17 +210,17 @@ export default function FleetGuideSections({ yachts }) {
               <tbody>
                 {tiers.private && (
                   <tr>
-                    <td style={tdStyle}>Private Fleet, full crew</td>
+                    <td style={tdStyle}>Motor Yacht Fleet, full crew</td>
                     <td style={tdStyle}>per yacht</td>
                     <td className="gy-tnum" style={tdStyle}>{fmt(tiers.private.low)} to {fmt(tiers.private.high)}</td>
                   </tr>
                 )}
-                {/* The Sailing Fleet used to have its own row here, priced
+                {/* The Catamaran Fleet used to have its own row here, priced
                     per person. It is priced the way everything else is, and
                     the "whole yacht" row below is now simply its row. */}
                 {tiers.explorerYacht && (
                   <tr>
-                    <td style={tdStyle}>Sailing Fleet</td>
+                    <td style={tdStyle}>Catamaran Fleet</td>
                     <td style={tdStyle}>per yacht</td>
                     <td className="gy-tnum" style={tdStyle}>from {fmt(tiers.explorerYacht)}</td>
                   </tr>
@@ -338,7 +338,7 @@ export default function FleetGuideSections({ yachts }) {
           <p style={bodyStyle}>
             Most of the fleet bases around Athens, which is why the Saronic
             and the western Cyclades open a week so efficiently. Several
-            Sailing Fleet catamarans base in Lefkada, Corfu and Santorini
+            Catamaran Fleet catamarans base in Lefkada, Corfu and Santorini
             for Ionian and southern-Cyclades starts. Any other embarkation is
             possible with repositioning, quoted up front. If your dates are
             fixed to school-holiday August, decide 6 to 12 months out; the

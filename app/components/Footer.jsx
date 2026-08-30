@@ -154,8 +154,8 @@ const Footer = () => {
       heading: "The Fleet",
       links: [
         { name: "Every Yacht This Week →", href: "/charter-yacht-greece" },
-        { name: "Private Fleet, Motor", href: "/private-fleet" },
-        { name: "Sailing Fleet", href: "/explorer-fleet" },
+        { name: "Motor Yacht Fleet, Motor", href: "/private-fleet" },
+        { name: "Catamaran Fleet", href: "/explorer-fleet" },
         { name: "Catamaran Charter", href: "/catamaran-charter-greece" },
         { name: "Award-Winning Yachts", href: "/award-winning-yacht-charter-greece" },
         { name: "Proposed Itineraries", href: "/yacht-itineraries-greece" },
@@ -740,8 +740,17 @@ const Footer = () => {
             publications run at the bottom of every page. The full
             categorisation rationale lives in the comment above the
             siteIndexSections constant. */}
-        <div className="w-full mb-12 pt-2">
-          <p
+        {/* 2026-08-30 - Τρόπος Α (George's standing order from 29/8):
+            the long-tail index FOLDS for the human eye and stays intact
+            for the crawler. A native <details> keeps every one of these
+            links in the initial HTML whether open or closed - Google's
+            mobile-first indexing gives accordion content full weight -
+            so the link graph is byte-identical to the unfolded footer.
+            NO JavaScript touches the DOM here; parity check before any
+            push: the footer <a> count must match the pre-fold count on
+            every page type. */}
+        <details className="w-full mb-12 pt-2 gy-footer-index">
+          <summary
             style={{
               fontFamily: "var(--gy-font-ui)",
               fontSize: "8px",
@@ -750,10 +759,14 @@ const Footer = () => {
               color: "rgba(248, 245, 240,0.4)",
               marginBottom: "20px",
               textAlign: "center",
+              cursor: "pointer",
+              listStyle: "none",
             }}
           >
-            More from George Yachts
-          </p>
+            <span style={{ color: "rgba(218,161,16,0.7)", fontSize: "7px", marginRight: 10 }}>◆</span>
+            More from George Yachts - the full index
+            <span style={{ color: "rgba(218,161,16,0.7)", fontSize: "7px", marginLeft: 10 }}>◆</span>
+          </summary>
           <div
             className="grid gap-x-8 gap-y-6"
             style={{
@@ -798,7 +811,7 @@ const Footer = () => {
               </div>
             ))}
           </div>
-        </div>
+        </details>
 
         {/* Divider */}
         <div className="w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-12" />

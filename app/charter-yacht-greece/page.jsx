@@ -20,7 +20,7 @@ export const revalidate = 3600;
 export const metadata = {
   title: `Charter Yacht Greece - ${FLEET_COUNT} Curated Yachts`,
   description:
-    `Curated fleet of ${FLEET_COUNT} yachts in Greek waters - Private Fleet (full crew) + Sailing Fleet (smaller yachts, crew of two or three). Motor, sailing, catamaran. Cyclades, Ionian, Saronic.`,
+    `Curated fleet of ${FLEET_COUNT} yachts in Greek waters - Catamaran Fleet (crew of two to four) + Motor Yacht Fleet (full crew). Motor, sailing, catamaran. Cyclades, Ionian, Saronic.`,
   alternates: {
     canonical: "https://georgeyachts.com/charter-yacht-greece",
   },
@@ -168,14 +168,14 @@ function generateServiceSchema(yachts) {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Private Fleet - full crew",
+            name: "Motor Yacht Fleet - full crew",
           },
         },
         {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Sailing Fleet - smaller crewed yachts",
+            name: "Catamaran Fleet - smaller crewed yachts",
           },
         },
       ],

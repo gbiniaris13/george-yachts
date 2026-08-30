@@ -780,7 +780,6 @@ const ContactFormSection = () => {
                   <option value="Motor Yacht" className="bg-black">Motor Yacht</option>
                   <option value="Sailing Catamaran" className="bg-black">Sailing Catamaran</option>
                   <option value="Power Catamaran" className="bg-black">Power Catamaran</option>
-                  <option value="Sailing Monohull" className="bg-black">Sailing Monohull</option>
                   <option value="Not Sure - Advise Me" className="bg-black">Not Sure - Advise Me</option>
                 </select>
               </Field>

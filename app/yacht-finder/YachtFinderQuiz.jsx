@@ -237,7 +237,7 @@ const QUESTIONS = [
       {
         value: 'under-15',
         label: 'Under €15K',
-        sub: 'Sailing Fleet - smaller crewed cats',
+        sub: 'Catamaran Fleet - crewed cats, sail and power',
       },
       { value: '15-40', label: '€15K - €40K', sub: 'Mid-tier crewed' },
       { value: '40-100', label: '€40K - €100K', sub: 'Premium crewed' },

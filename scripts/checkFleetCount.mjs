@@ -33,7 +33,10 @@ const PROJECT = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "ecqr94ey";
 const DATASET = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 
 // The same rewrite the client applies, so this asks exactly what the site asks.
-const query = excludeRetiredYachts(`count(*[_type == "yacht" && defined(slug.current)])`);
+// 2026-08-30: the S/Y monohulls left fleet browsing; the site's lists
+// exclude them at the same chokepoint. The guard asks what a LIST sees.
+const MONO = `(string::startsWith(name, "S/Y"))`;
+const query = excludeRetiredYachts(`count(*[_type == "yacht" && defined(slug.current) && !${MONO}])`);
 
 let live;
 try {

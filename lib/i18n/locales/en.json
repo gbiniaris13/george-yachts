@@ -48,13 +48,18 @@
     "satisfaction": "Client Satisfaction"
   },
   "broker": {
-    "label": "Your Broker",
+    "label": "The Broker Behind This House",
     "name": "George P. Biniaris",
     "title": "Managing Broker · IYBA Member",
-    "text1": "My mother is from Syros; I grew up crossing the Aegean on my uncle's Ferretti. I studied shipping, earned my skipper's licence in Corfu, and spent a decade running five-star hospitality in Mykonos before my first charter. These waters are home.",
-    "text2": "Every client works directly with me. No call centres, no junior agents, no automated responses. One conversation is all it takes to understand exactly what you need, and to deliver it.",
+    "text1": "His connection to these waters is not professional first, it is ancestral. His mother is from Syros, the administrative heart of the Cyclades, and he grew up crossing the Aegean on his uncle's Ferretti, Athens to Syros to Mykonos, to wherever the islands called.",
+    "text2": "Years with a wheel in hand: licensed skipper seasons out of Corfu and charter operations across the Ionian, the Cyclades and the Saronic. When he recommends an anchorage, it is because he has held a wheel there.",
     "cta": "Book a Call with George",
-    "learnMore": "Learn more about George →"
+    "learnMore": "Learn more about George →",
+    "text3": "Before yachting, a decade at the top of Mykonos hospitality, directing operations for a five-star hotel, a fine-dining restaurant and one of the island's great beach clubs, leading teams of over two hundred for an international, high-profile clientele.",
+    "caption": "On the quay in Syros, where his family is from",
+    "cred1": "BSc Shipping Management & Operations, London Metropolitan University & Business College of Athens",
+    "cred2": "IYBA Charter Active Member · MYBA-standard practitioner",
+    "cred3": "Featured in Forbes, May 2026"
   },
   "howItWorks": {
     "label": "Your Journey",

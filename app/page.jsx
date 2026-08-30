@@ -22,7 +22,7 @@ export const metadata = {
   },
   openGraph: {
     title: "George Yachts | Featured in Forbes · Luxury Yacht Charter Greece",
-    description: `Featured in Forbes (May 2026). ${FLEET_COUNT} curated yachts in Greek waters. Private Fleet (motor yachts and power catamarans) + Sailing Fleet (sailing catamarans and sailing yachts). IYBA Charter Active Member. Personal broker service from Athens.`,
+    description: `Featured in Forbes (May 2026). ${FLEET_COUNT} curated yachts in Greek waters. Catamaran Fleet (42 sailing and power catamarans) + Motor Yacht Fleet (17 fully crewed motor yachts). IYBA Charter Active Member. Personal broker service from Athens.`,
     url: "https://georgeyachts.com",
     type: "website",
     siteName: "George Yachts Brokerage House",
@@ -170,7 +170,11 @@ export default async function HomePage() {
       // unit badge per card and never mix per-yacht / per-person
       // prices without context. `priceModel` is optional in Sanity —
       // the front-end falls back to fleetTier inference when missing.
-      sanityClient.fetch(`*[_type == "yacht" && count(images) > 0]{
+      // 2026-08-30: the +mono marker keeps S/Y MELITI in this pool so the
+      // AWARDS grid can still show her (George: the award stays). The
+      // carousel and the map filter monohulls back out client-side -
+      // awards are the one surface a hidden monohull may appear on.
+      sanityClient.fetch(`*[/* +mono */ _type == "yacht" && count(images) > 0]{
         name, "slug": slug.current, weeklyRatePrice, sleeps, length,
         fleetTier, priceModel, cruisingRegion,
         "image": images[0].asset->url

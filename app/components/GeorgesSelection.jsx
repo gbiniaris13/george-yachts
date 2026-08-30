@@ -3,8 +3,8 @@
 // Chapter 08 (Boss-spec, 2026-05-08) — George's Selection.
 //
 // Replaces the prior "Featured This Week" SignatureYacht slot with
-// a 2-card editorial selection: one Private Fleet flagship
-// (La Pellegrina 1) + one Sailing Fleet flagship (Errant Vagabond).
+// a 2-card editorial selection: one Motor Yacht Fleet flagship
+// (La Pellegrina 1) + one Catamaran Fleet flagship (Errant Vagabond).
 // Same brand voice as Three Greek Worlds — "two yachts, two
 // experiences, one Greek summer". No featured-yacht-of-the-week
 // rotation, no Sanity-driven autoplay; this is the broker's
@@ -46,7 +46,7 @@ const ERRANT_VAGABOND_IMG =
 const SELECTION = [
   {
     slug: "la-pellegrina-1",
-    label: "Collection I · Private Fleet",
+    label: "Collection I · Motor Yacht Fleet",
     name: "M/Y La Pellegrina 1",
     specs: "50 m · 12 Guests · 5 Cabins",
     price: "From €180,000 / week",
@@ -56,7 +56,7 @@ const SELECTION = [
   },
   {
     slug: "errant-vagabond",
-    label: "Collection II · Sailing Fleet",
+    label: "Collection II · Catamaran Fleet",
     name: "S/CAT Errant Vagabond",
     specs: "15.35 m · 10 Guests · 5 Cabins",
     price: "From €11,500 / week",
@@ -111,7 +111,7 @@ export default function GeorgesSelection() {
   return (
     <section
       className="gy-selection-section"
-      aria-label="George's Selection - Private Fleet flagship + Sailing Fleet flagship"
+      aria-label="George's Selection - Motor Yacht Fleet flagship + Catamaran Fleet flagship"
       style={{ background: "#0D1B2A", padding: "clamp(40px, 5vw, 56px) 0" }}
     >
       <div className="gy-selection-header">

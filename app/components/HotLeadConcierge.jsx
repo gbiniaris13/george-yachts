@@ -43,6 +43,13 @@ export default function HotLeadConcierge({ signal }) {
   useEffect(() => {
     if (!signal) return;
     if (shownRef.current) return;
+    // 2026-08-30, George from his phone: the card slid in mid-scroll and
+    // sat on top of the close button of whatever he was reading. Mobile
+    // is OFF entirely - same rule as the ExitIntentModal and the same
+    // Google intrusive-interstitial logic. Desktop keeps the card.
+    try {
+      if (window.matchMedia?.("(pointer: coarse)")?.matches) return;
+    } catch {}
     try {
       if (sessionStorage.getItem(SEEN_KEY) === "1") return;
     } catch {}

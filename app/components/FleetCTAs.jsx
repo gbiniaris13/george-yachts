@@ -4,8 +4,8 @@
 //
 // Replaces the old 2-card boxy CTA strip with a full-viewport
 // editorial diptych:
-//   • Left panel:  Private Fleet (cinematic yacht hero image)
-//   • Right panel: Sailing Fleet (cinematic yacht hero image)
+//   • Left panel:  Motor Yacht Fleet (cinematic yacht hero image)
+//   • Right panel: Catamaran Fleet (cinematic yacht hero image)
 //   • Hover a panel → the OTHER panel darkens to 40%, the active
 //     panel zooms 1.05× and its overlay lifts from 55% to 25%.
 //   • Subtle gold diagonal seam between the two panels on desktop.
@@ -196,7 +196,7 @@ function FleetPanel({
       />
 
       {/* Content.
-          2026-08-22, George: when the Private Fleet loop reaches its white
+          2026-08-22, George: when the Motor Yacht Fleet loop reaches its white
           clouds the type disappeared. The fix is a scrim that travels WITH
           the text rather than a darker overlay over the whole film: a soft
           radial pool of navy behind the content block, plus a text shadow
@@ -235,7 +235,7 @@ function FleetPanel({
           className="text-white mb-2"
           style={{
             fontFamily: "var(--gy-font-editorial)",
-            // Mobile: min 32 (was 40) so "Sailing Fleet" fits on
+            // Mobile: min 32 (was 40) so "Catamaran Fleet" fits on
             // 320px devices. maxWidth guards against edge-case long
             // builder names.
             fontSize: "clamp(32px, 6vw, 76px)",
@@ -350,11 +350,11 @@ export default function FleetCTAs({
         <FleetPanel
           href="/private-fleet"
           collectionLabel="Collection I"
-          name="Private Fleet"
-          subtitle="Motor Yachts & Power Catamarans"
+          name="Motor Yacht Fleet"
+          subtitle="Fully Crewed Motor Yachts"
           priceLine={`From €${privateRange.low.toLocaleString('en-US')} to €${privateRange.high.toLocaleString('en-US')} / week`}
           descriptor="Full crew, total discretion. A private world at sea."
-          footer={privateCount > 0 ? `${privateCount} Yachts · Motor Yachts & Power Cats` : null}
+          footer={privateCount > 0 ? `${privateCount} Yachts · 20 to 50 Metres` : null}
           image={privateHeroImage}
           gradientFallback="linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)"
           ctaLabel="View the Fleet"
@@ -372,15 +372,15 @@ export default function FleetCTAs({
         <FleetPanel
           href="/explorer-fleet"
           collectionLabel="Collection II"
-          name="Sailing Fleet"
-          subtitle="Sailing Catamarans & Sailing Yachts"
+          name="Catamaran Fleet"
+          subtitle="Sailing & Power Catamarans"
           priceLine={`From €${explorerRange.low.toLocaleString('en-US')} to €${explorerRange.high.toLocaleString('en-US')} / week`}
-          descriptor="Under sail, and into the bays the engines cannot reach."
-          footer={explorerCount > 0 ? `${explorerCount} Yachts · Sailing Cats & Monohulls` : null}
+          descriptor="Two hulls, level at anchor, into the bays the big yachts cannot reach."
+          footer={explorerCount > 0 ? `${explorerCount} Yachts · Sail & Power` : null}
           image={explorerHeroImage}
           gradientFallback="linear-gradient(135deg, #0D1B2A 0%, #0D1B2A 100%)"
           ctaLabel="View the Fleet"
-          // Chapter 06.5 - Boss-curated Sailing Fleet background
+          // Chapter 06.5 - Boss-curated Catamaran Fleet background
           // video (underwater swimmer in red, 26 s loop -
           // captures the "snorkel / explore / lightly crewed"
           // adventure mood). WebM 3.4 MB / MP4 5.3 MB / poster
@@ -395,7 +395,7 @@ export default function FleetCTAs({
       </div>
 
       {/* All Fleet bridge - George 2026-04-20:
-          "Private Fleet και Sailing Fleet στο hero είναι πολύ μεγάλα -
+          "Motor Yacht Fleet και Catamaran Fleet στο hero είναι πολύ μεγάλα -
           θέλω να μπει All Fleet ώστε να μπορούν να δουν όλο τον στόλο."
           A thin gold band under the two panels with a single link to
           the unified charter catalogue so nobody gets locked into one

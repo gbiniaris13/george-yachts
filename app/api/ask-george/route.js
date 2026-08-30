@@ -90,7 +90,7 @@ function formatFleetForPrompt(yachts) {
   return yachts
     .slice(0, 80)
     .map((y) => {
-      const tier = isSailingFleet(y) ? "Sailing Fleet" : "Private Fleet";
+      const tier = isSailingFleet(y) ? "Catamaran Fleet" : "Motor Yacht Fleet";
       return `• ${y.name}, ${y.builder || y.category || "yacht"}, ${y.length || ""}, sleeps ${y.sleeps || "?"}, ${y.cruisingRegion || "Greece"}. ${tier}. ${y.weeklyRatePrice || ""}. /yachts/${y.slug}`;
     })
     .join("\n");
