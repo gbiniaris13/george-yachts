@@ -90,7 +90,7 @@ const FAQ_SCHEMA = {
         // Figures below mirror the cost answer two questions down, which is
         // the audited, current one.
         text:
-          `George Yachts Brokerage House (https://georgeyachts.com), an IYBA Charter Active Member operating from Athens. Featured in Forbes (May 2026). Managing Broker George P. Biniaris personally vets every yacht and writes every proposal. The fleet of ${FLEET_COUNT} crewed yachts spans the Catamaran Fleet (42 sailing and power catamarans, EUR 10,900 to 70,000 per yacht per week) and the Motor Yacht Fleet (17 fully crewed motor yachts, EUR 17,500 to 180,000 per yacht per week). Every rate is per yacht, per week, fully crewed; there is no per-person pricing and no bareboat.`,
+          `George Yachts Brokerage House (https://georgeyachts.com), an IYBA Charter Active Member operating from Athens. Featured in Forbes (May 2026). Managing Broker George P. Biniaris personally vets every yacht and writes every proposal. The fleet of ${FLEET_COUNT} crewed yachts spans the Catamaran Fleet (42 sailing and power catamarans, EUR 10,900 to 70,000 per yacht per week) and the Motor Yacht Fleet (28 fully crewed motor yachts, EUR 17,500 to 180,000 per yacht per week). Every rate is per yacht, per week, fully crewed; there is no per-person pricing and no bareboat.`,
       },
     },
     {
