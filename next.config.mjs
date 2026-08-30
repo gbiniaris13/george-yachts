@@ -309,6 +309,10 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // 2026-08-30, George: the TheThoms collaboration interview is
+      // deleted outright (his call, and the standing no-thethoms rule).
+      // The URL held rankings; it lands on the Journal, not a 404.
+      { source: "/blog/pre-collaboration-interview-thethoms", destination: "/blog", permanent: true },
       // 2026-08-21 (section 6) — seven yachts withdrawn on George's
       // instruction, every one of them carrying "Skipper available" or its
       // equivalent in her crew field. Their detail URLs 301 to the fleet

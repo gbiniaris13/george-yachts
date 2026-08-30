@@ -63,10 +63,6 @@ const WaveDivider = dynamic(() => import("./components/WaveDivider"));
 const BrokerTestimonials = dynamic(() => import("./components/BrokerTestimonials"));
 const ContactFormSection = dynamic(() => import("./components/ContactFormSection"));
 const HomeJournalTeaser = dynamic(() => import("./components/HomeJournalTeaser"));
-// Phase 26 — AI itinerary preview surfaced on homepage too. The texture
-// tool was previously only on /greece-by-yacht; for tomorrow's Forbes
-// traffic landing on the home page, show it within the scroll path.
-const ItineraryPreview = dynamic(() => import("./components/ItineraryPreview"), { ssr: false });
 // Phase 27i.17 (2026-05-08) — custom WebGL water shader. Closes the
 // last "statement piece" item from the original cinematic brief.
 // Sits as a horizon band between the hero and the fleet split-screen.
@@ -332,14 +328,11 @@ const HomeClient = ({
         <HomeForbesQuote />
       </div>
 
-      {/* Phase 26 (luxury rebuild, 2026-05-05), AI itinerary preview
-          on homepage too. Visitors landing from Forbes see the live
-          texture-only AI tool without having to navigate to
-          /greece-by-yacht. Texture only, never a proposal, the broker
-          writes the real one (Boss directive). */}
-      <div data-gy-reveal="up">
-        <ItineraryPreview />
-      </div>
+      {/* 2026-08-30, George: the 60-second itinerary-preview widget is
+          OFF the homepage ("πολύ νόιζ, βγάλτε" - the visitor's one job
+          here is the main Brief George form, not a toy). The tool
+          itself still lives at /greece-by-yacht for whoever seeks it;
+          nothing was deleted, only unmounted from this page. */}
 
       <section id="filotimo" data-gy-reveal="up">
         <Filotimon filotimoImage={filotimoImage} />

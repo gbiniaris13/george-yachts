@@ -54,8 +54,15 @@ function WorldCard({ slug, label, cardTitle, cardSubline, heroImage, showImage =
       />
 
       <div className="relative z-10 flex h-full w-full flex-col items-center justify-center text-center px-8">
-        <p className="gy-world-card__label">{label.toUpperCase()}</p>
-        <h3 className="gy-world-card__title">{cardTitle}</h3>
+        {/* 2026-08-30, George: "μήπως το Κυκλάδες πρέπει να είναι πιο
+            μεγάλο; και είναι μουσταρδί". The place-before-poetry rule,
+            applied to its own section: the REGION is now the big line,
+            set in the real gold-leaf ramp (never the flat hex - the
+            mustard he caught), and the poetic title drops to a quiet
+            subtitle beneath it. h3 carries the region name, which is
+            also the better heading for search. */}
+        <h3 className="gy-world-card__region gy-goldtext">{label.toUpperCase()}</h3>
+        <p className="gy-world-card__title">{cardTitle}</p>
         <p className="gy-world-card__subline">{cardSubline}</p>
         <span className="gy-world-card__cta">
           Discover the {label} →
@@ -163,24 +170,23 @@ export default function ThreeGreekWorlds() {
            wrapped in <Link> so any tap navigates. */
         @media (max-width: 600px)  { .gy-world-card { height: 260px; } }
 
-        .gy-world-card__label {
-          font-family: var(--gy-font-ui);
-          font-size: 10px;
-          font-weight: 500;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          color: #DAA110;
-          margin: 0 0 14px;
+        .gy-world-card__region {
+          font-family: var(--gy-font-editorial);
+          font-weight: 400;
+          font-size: clamp(30px, 3.6vw, 44px);
+          letter-spacing: 0.08em;
+          line-height: 1.05;
+          margin: 0 0 10px;
         }
         .gy-world-card__title {
-          font-family: var(--gy-font-editorial);
+          font-family: var(--gy-font-ui);
           font-weight: 300;
-          font-size: clamp(28px, 3.2vw, 38px);
-          color: #F8F5F0;
-          margin: 0 0 16px;
-          letter-spacing: 0.005em;
-          line-height: 1.1;
-          text-shadow: 0 4px 20px rgba(13, 27, 42, 0.55);
+          font-size: 13px;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: rgba(248, 245, 240, 0.85);
+          margin: 0 0 14px;
+          text-shadow: 0 2px 12px rgba(13, 27, 42, 0.6);
         }
         .gy-world-card__subline {
           font-family: var(--gy-font-ui);
