@@ -91,7 +91,11 @@ export default async function PrivateFleetPage() {
     FLAGSHIP_NAMES.some((f) => (yacht.name || "").toLowerCase().includes(f));
 
   const flagships = [];
-  const rest = yachts.slice().sort((a, b) => extractPrice(a) - extractPrice(b));
+  // Unpriced hulls (Rate on application) sort to the TOP of the ladder's
+  // end, not to position zero: a missing number means "ask", not "free".
+  const rest = yachts
+    .slice()
+    .sort((a, b) => (extractPrice(a) || Infinity) - (extractPrice(b) || Infinity));
   const displayYachts = [...flagships, ...rest];
 
   // Dynamic price range — auto-updates as fleet grows
