@@ -595,9 +595,16 @@ export default async function SeoLanding({ pageData }) {
                 {pageData.faqHeading || `Questions we get about ${pageData.h1}`}
               </h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {/* 2026-08-31 - Clarity dead-click fix (VAT page): gold
+                    non-links looked clickable while these FAQ rows, which DO
+                    open, looked static. The gold + is the missing
+                    affordance; rotates to x when open (.gy-faq-details). */}
                 {pageData.faq.map((f, i) => (
-                  <details key={i} style={{ border: "1px solid rgba(248, 245, 240,0.1)", padding: "16px 20px" }}>
-                    <summary style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 18, color: "#F8F5F0", cursor: "pointer", listStyle: "none", fontWeight: 400 }}>{f.q}</summary>
+                  <details key={i} className="gy-faq-details" style={{ border: "1px solid rgba(248, 245, 240,0.1)", padding: "16px 20px" }}>
+                    <summary style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 18, color: "#F8F5F0", cursor: "pointer", listStyle: "none", fontWeight: 400, display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 16 }}>
+                      <span>{f.q}</span>
+                      <span className="gy-faq-plus" aria-hidden="true" style={{ color: "#DAA110", fontSize: 20, lineHeight: 1, flexShrink: 0, transition: "transform 0.25s ease", fontFamily: "var(--gy-font-ui)" }}>+</span>
+                    </summary>
                     <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, lineHeight: 1.7, color: "rgba(248,245,240,0.85)", margin: "12px 0 0" }}>{f.a}</p>
                   </details>
                 ))}

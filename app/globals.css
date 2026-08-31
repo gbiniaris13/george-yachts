@@ -5240,3 +5240,11 @@ svg.gy-goldstroke,
 .gy-footer-index > summary::-webkit-details-marker { display: none; }
 .gy-footer-index > summary::marker { content: ""; }
 .gy-footer-index[open] > summary { color: rgba(248, 245, 240, 0.65); }
+
+/* 2026-08-31 - FAQ affordance (Clarity dead-click fix, VAT page).
+   The gold + invites the tap; open state rotates it to x. */
+.gy-faq-details > summary::-webkit-details-marker { display: none; }
+.gy-faq-details > summary::marker { content: ""; }
+.gy-faq-details[open] .gy-faq-plus { transform: rotate(45deg); }
+.gy-faq-details > summary:hover .gy-faq-plus { transform: scale(1.15); }
+.gy-faq-details[open] > summary:hover .gy-faq-plus { transform: rotate(45deg) scale(1.15); }
