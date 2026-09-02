@@ -510,6 +510,33 @@ export default function GuestBriefReadOnly({ sectionKey, kind }) {
               );
             }
 
+            // 2026-09-02 — Nested objects (flight_group_1, the
+            // before-embarkation hotel, the emergency contact) used
+            // to fall through to formatPrimitive → the guest saw a
+            // bare heading with nothing under it and assumed the
+            // principal had filled nothing. Render each populated
+            // sub-field as its own "Label - value" line instead.
+            if (value && typeof value === "object" && !Array.isArray(value)) {
+              const subEntries = Object.entries(value).filter(
+                ([, v]) => !isEmpty(v) && typeof v !== "object",
+              );
+              if (subEntries.length === 0) return null;
+              return (
+                <div key={key} className="gbr__row">
+                  <dt className="gbr__dt">{label}</dt>
+                  <dd className="gbr__dd">
+                    <ul className="gbr__sublist">
+                      {subEntries.map(([k, v]) => (
+                        <li key={k} className="gbr__subli">
+                          {titleCase(k)} <em>{formatPrimitive(v)}</em>
+                        </li>
+                      ))}
+                    </ul>
+                  </dd>
+                </div>
+              );
+            }
+
             // Plain primitive
             return (
               <div key={key} className="gbr__row">
