@@ -562,6 +562,51 @@ export default async function SeoLanding({ pageData }) {
           </section>
         )}
 
+        {/* LINK INDEX
+            A page that promises "one guide per island" has to show them. The
+            anchorage hub was pitched to the cruising press as 48 per-island
+            guides while linking only the handful the related-pages engine
+            happened to surface, and an editor wrote back that he could find
+            one page. Groups render in the order given. */}
+        {pageData.linkIndex && Array.isArray(pageData.linkIndex.groups) && pageData.linkIndex.groups.length > 0 && (
+          <section style={{ padding: "0 24px 72px" }}>
+            <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "left" }}>
+              <h2 style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px" }}>
+                {pageData.linkIndex.title}
+              </h2>
+              {pageData.linkIndex.intro && (
+                <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.75, color: "rgba(248,245,240,0.88)", margin: "0 0 34px", maxWidth: 720 }}>
+                  {pageData.linkIndex.intro}
+                </p>
+              )}
+              <div style={{ display: "flex", flexDirection: "column", gap: 30 }}>
+                {pageData.linkIndex.groups.map((group) => (
+                  <div key={group.label}>
+                    <h3 style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(248,245,240,0.55)", fontWeight: 600, margin: "0 0 14px" }}>
+                      {group.label}
+                    </h3>
+                    <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr))", gap: "10px 22px", justifyItems: "start" }}>
+                      {/* marginInline below overrides the site-wide
+                          `p, li, dd, blockquote { margin-inline: auto }`
+                          rule, which centres each name in its grid cell. */}
+                      {group.links.map((link) => (
+                        <li key={link.href} style={{ marginInline: 0 }}>
+                          <a
+                            href={link.href}
+                            style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.5, color: "rgba(248,245,240,0.88)", textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.28)", paddingBottom: 2 }}
+                          >
+                            {link.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* INSIDER TIPS */}
         {Array.isArray(pageData.insiderTips) && pageData.insiderTips.length > 0 && (
           <section style={{ background: "rgba(218, 161, 16,0.025)", borderTop: "1px solid rgba(218, 161, 16,0.15)", borderBottom: "1px solid rgba(218, 161, 16,0.15)", padding: "72px 24px" }}>
