@@ -109,7 +109,10 @@ export default async function MenuPage() {
                           <div className="mn-section__dish-body">
                             <span className="mn-section__dish-label">{label}</span>
                             {gloss && (
-                              <em className="mn-section__gloss">, {gloss}</em>
+                              // 2026-09-02 — gloss on its own centred line.
+                              // Inline ", gloss" made lines ragged and broke
+                              // the centred carte rhythm George asked for.
+                              <em className="mn-section__gloss">{gloss}</em>
                             )}
                           </div>
                         </li>
@@ -152,79 +155,89 @@ export default async function MenuPage() {
           border: 1px solid rgba(218, 161, 16, 0.22);
           padding: 32px 28px 28px;
         }
-        /* 2026-05-24 — Christos pass: on phones the inner padding
-           felt cramped against the section headers + the page
-           wrap padding (18px) outside it, making dish names look
-           stuck to the left edge. Bump inner padding and centre
-           the headers a touch so they breathe. */
+        /* 2026-09-02 — Full recut of the carte (George, before the
+           SEABARIT LX send): the two-column grid + tiny 11px UI-font
+           section headers + the site-wide li max-width/auto-margin
+           rule left dishes half-centred, half-left, "like we made
+           it by hand on a phone". Now a single centred column, the
+           way a restaurant sets a carte: everything centred, section
+           names in the editorial face at a readable size, a short
+           gold rule under each, glosses on their own line. */
         @media (max-width: 599.98px) {
           .mn-wrap {
-            padding: 24px 18px 20px;
-          }
-          .mn-section__name {
-            text-align: center;
-            letter-spacing: 3px;
-          }
-          .mn-section__dishes li,
-          .mn-section__dish-with-photo {
-            padding: 0 4px;
+            padding: 26px 16px 22px;
           }
         }
         .mn-title {
           font-family: var(--gy-font-editorial);
-          font-size: 26px;
+          font-size: clamp(26px, 4vw, 33px);
           font-weight: 300;
           margin: 0;
           color: var(--gy-navy);
-          letter-spacing: 1px;
+          letter-spacing: 2px;
+          text-align: center;
+          text-transform: uppercase;
         }
         .mn-tagline {
           font-family: var(--gy-font-editorial);
           font-style: italic;
           color: rgba(13,27,42,0.6);
-          margin: 8px 0 0 0;
-          font-size: 14px;
+          margin: 10px 0 0 0;
+          font-size: 15px;
+          text-align: center;
         }
         .mn-sections {
-          margin-top: 28px;
+          margin-top: 40px;
           display: flex;
           flex-direction: column;
-          gap: 28px;
-        }
-        @media (min-width: 720px) {
-          .mn-sections {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px 40px;
-          }
+          gap: 44px;
+          max-width: 560px;
+          margin-left: auto;
+          margin-right: auto;
         }
         .mn-section {
           break-inside: avoid;
+          text-align: center;
         }
         .mn-section__name {
-          font-family: var(--gy-font-ui);
-          font-size: 11px;
-          letter-spacing: 4px;
+          font-family: var(--gy-font-editorial);
+          font-size: 17px;
+          letter-spacing: 3.5px;
           text-transform: uppercase;
           color: var(--gy-gold);
-          margin: 0 0 14px 0;
-          padding-bottom: 8px;
-          border-bottom: 1px solid rgba(218, 161, 16,0.4);
-          font-weight: 500;
+          margin: 0 0 6px 0;
+          font-weight: 400;
+          text-align: center;
+        }
+        /* Short centred rule under the section name — the old
+           full-width border read as a spreadsheet divider. */
+        .mn-section__name::after {
+          content: "";
+          display: block;
+          width: 44px;
+          height: 1px;
+          background: rgba(218, 161, 16, 0.55);
+          margin: 12px auto 0;
         }
         .mn-section__dishes {
           list-style: none;
           padding: 0;
-          margin: 0;
+          margin: 14px 0 0 0;
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 11px;
         }
         .mn-section__dishes li {
           font-family: var(--gy-font-editorial);
-          font-size: 16px;
-          line-height: 1.55;
+          font-size: 16.5px;
+          line-height: 1.5;
           color: var(--gy-navy);
+          text-align: center;
+          /* Neutralise the site-wide p/li max-width + auto-margin
+             cap — inside this centred column it fought the layout
+             and produced the mixed alignment George flagged. */
+          max-width: none;
+          margin-inline: 0;
           /* 2026-05-20 — Pass 6 (Domingo, Helen):
              "cus-tard" hyphenation appeared mid-word in the gloss
              on iOS Safari. The default UA stylesheet for some Greek
@@ -266,9 +279,12 @@ export default async function MenuPage() {
           font-family: var(--gy-font-editorial);
         }
         .mn-section__gloss {
+          display: block;
+          margin-top: 2px;
           font-style: italic;
-          color: rgba(13,27,42,0.55);
-          font-size: 13.5px;
+          color: rgba(13,27,42,0.5);
+          font-size: 13px;
+          text-align: center;
           hyphens: manual;
           -webkit-hyphens: manual;
           word-break: keep-all;
@@ -276,13 +292,15 @@ export default async function MenuPage() {
         }
         .mn-section__empty { color: rgba(13,27,42,0.4); }
         .mn-footnote {
-          margin: 32px 0 0 0;
+          margin: 40px auto 0;
           padding-top: 18px;
           border-top: 1px solid rgba(13,27,42,0.06);
           font-family: var(--gy-font-editorial);
           font-size: 13px;
           color: rgba(13,27,42,0.55);
           line-height: 1.7;
+          max-width: 560px;
+          text-align: center;
         }
       `}</style>
     </article>

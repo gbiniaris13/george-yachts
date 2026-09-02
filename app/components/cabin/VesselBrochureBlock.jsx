@@ -61,15 +61,42 @@ export default function VesselBrochureBlock({ cabin, photos, asPage = false }) {
   const builderModel = brochure.builder_model || cabin.vessel_make_model;
   const year = brochure.year_built;
   const summary = brochure.summary;
-  const features = Array.isArray(brochure.key_features)
-    ? brochure.key_features
-    : [];
   const specs = brochure.specifications || {};
   const accommodation = brochure.accommodation || {};
-  const amenities = Array.isArray(brochure.amenities) ? brochure.amenities : [];
   const tender = brochure.tender || {};
-  const toys = Array.isArray(brochure.water_toys) ? brochure.water_toys : [];
-  const areas = Array.isArray(brochure.areas) ? brochure.areas : [];
+
+  // 2026-09-02 — Operator brochures list features/amenities/toys in
+  // SHOUTING CAPS ("EXPANSIVE SUNDECK THE LARGEST IN HER CATEGORY").
+  // Verbatim data stays verbatim in the DB; the PAGE dresses it in
+  // sentence case so the lists read like the rest of the Cabin, with
+  // marine tokens (TV, DVD, Wi-Fi, SUP…) kept in their true form.
+  const KEEP_TOKENS = {
+    tv: "TV", dvd: "DVD", "wi-fi": "Wi-Fi", wifi: "Wi-Fi", sup: "SUP",
+    usb: "USB", ac: "AC", led: "LED", f5: "F5", hp: "hp", kw: "kW",
+    "&": "&", netflix: "Netflix", seabob: "Seabob", alcantara: "Alcantara",
+  };
+  function dressLine(s) {
+    if (typeof s !== "string" || !s.trim()) return s;
+    // Only intervene on lines that are (near-)all-caps; already
+    // mixed-case content passes through untouched.
+    const letters = s.replace(/[^A-Za-zΑ-Ωα-ω]/g, "");
+    if (!letters || letters !== letters.toUpperCase()) return s;
+    const lowered = s.toLowerCase();
+    // Split on whitespace AND slashes so "49"/dvd" still finds "dvd".
+    const words = lowered.split(/(\s+|\/)/).map((w) => {
+      const key = w.replace(/[^a-z0-9&-]/gi, "").toLowerCase();
+      if (KEEP_TOKENS[key]) return w.replace(new RegExp(key, "i"), KEEP_TOKENS[key]);
+      return w;
+    });
+    const joined = words.join("");
+    return joined.charAt(0).toUpperCase() + joined.slice(1);
+  }
+  const dressList = (arr) => (Array.isArray(arr) ? arr.map(dressLine) : []);
+
+  const features = dressList(brochure.key_features);
+  const amenities = dressList(brochure.amenities);
+  const toys = dressList(brochure.water_toys);
+  const areas = dressList(brochure.areas);
 
   // 2026-05-22 — The new Roberto P1 prompt returns specs as
   // verbatim strings ({length: "51 ft / 15.6 m"}). Older saved
