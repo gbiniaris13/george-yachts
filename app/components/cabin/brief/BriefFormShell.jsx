@@ -78,10 +78,22 @@ export default function BriefFormShell({
     defaultValues: defaultValues ?? {},
   });
 
-  // Reset when data loads
+  // Reset when data loads.
+  // 2026-09-02 — booleans become the strings the radios use. The
+  // server stores real true/false (zod coerces "true"/"false" on
+  // save) but RHF checks a radio with strict `value === fieldValue`,
+  // so `true !== "true"` left Pets-aboard and the photography
+  // preference looking unanswered on every revisit — and the filled
+  // pet_details textarea hidden behind the unchecked "Yes". Radios
+  // are the only boolean widgets in the brief (checkbox groups
+  // register arrays), so the top-level mapping is safe.
   useEffect(() => {
     if (initialData && Object.keys(initialData).length > 0) {
-      form.reset({ ...defaultValues, ...initialData });
+      const hydrated = { ...defaultValues, ...initialData };
+      for (const k of Object.keys(hydrated)) {
+        if (typeof hydrated[k] === "boolean") hydrated[k] = String(hydrated[k]);
+      }
+      form.reset(hydrated);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialData]);

@@ -65,6 +65,30 @@ function getSection(sections, key) {
   return row?.data ?? {};
 }
 
+// 2026-09-02 — The frequency-based cellar capture (spirits_frequency,
+// soft_drinks_frequency: { item: "often" | ... }) is the CANONICAL
+// model since 2026-05-20, but this crew-facing sheet still rendered
+// only the retired label×qty tables — the crew received a cellar
+// section full of dashes for every brief filled since. These helpers
+// mirror GuestBriefReadOnly's rendering.
+const FREQUENCY_LABEL = {
+  often: "Often",
+  sometimes: "Sometimes",
+  rarely: "Rarely",
+  skip: "Skip",
+};
+
+function fmtFrequencyRecord(rec) {
+  if (!rec || typeof rec !== "object" || Array.isArray(rec)) return null;
+  const entries = Object.entries(rec).filter(
+    ([, v]) => typeof v === "string" && v.length > 0 && v !== "skip",
+  );
+  if (entries.length === 0) return null;
+  return entries
+    .map(([k, v]) => `${titleCase(k)} - ${FREQUENCY_LABEL[v] || titleCase(v)}`)
+    .join(" · ");
+}
+
 function get(obj, path) {
   const parts = path.split(".");
   let cur = obj;
@@ -361,6 +385,25 @@ export default async function PreferenceSharePage({ params }) {
             </SubBlock>
           ) : null}
 
+          {/* 2026-09-02 — the photography preference is an explicit
+              privacy INSTRUCTION to the crew and was never making it
+              onto this sheet. Rendered whenever answered, either way,
+              so "cameras away" cannot be missed. */}
+          {get(guestsSection, "no_photos_of_guests") === true ||
+          get(guestsSection, "no_photos_of_guests") === "true" ? (
+            <SubBlock label="Photography — please note">
+              <Row
+                k="Guests' preference"
+                v="Please refrain from photographing the guests during the week - cameras and phones away."
+              />
+            </SubBlock>
+          ) : get(guestsSection, "no_photos_of_guests") === false ||
+            get(guestsSection, "no_photos_of_guests") === "false" ? (
+            <SubBlock label="Photography">
+              <Row k="Guests' preference" v="Photos are welcome - normal crew discretion applies." />
+            </SubBlock>
+          ) : null}
+
           <h3
             style={{
               fontFamily: FONT_UI,
@@ -391,13 +434,36 @@ export default async function PreferenceSharePage({ params }) {
 
         {/* ============ 03, HEALTH & ITINERARY ============ */}
         <Section number="03" title="Health, safety & itinerary" italic="what shapes the week" pageBreakBefore>
-          <SubBlock label="Health & safety">
-            <Row k="Allergies & dietary requirements" v={fmtMaybe(health.allergies_dietary)} />
-            <Row k="Medical conditions" v={fmtMaybe(health.medical_conditions)} />
-            <Row k="Medications brought on board" v={fmtMaybe(health.medications_onboard)} />
-            <Row k="Swimming experience" v={fmtMaybe(health.swimming_experience)} />
-            <Row k="Swimming notes" v={fmtMaybe(health.swimming_other)} />
-          </SubBlock>
+          {/* 2026-09-02 — The Health step now collects the emergency
+              contact (per-guest health details moved to /cabin/me/
+              private). This sheet rendered only the retired fields,
+              so the one thing the captain must have in an emergency
+              never reached him. Legacy rows below stay for briefs
+              filled under the old model, hidden when empty. */}
+          {get(health, "emergency_contact.full_name") ||
+          get(health, "emergency_contact.mobile") ||
+          get(health, "emergency_contact.email") ? (
+            <SubBlock label="Emergency contact ashore">
+              <Row k="Name" v={fmtMaybe(get(health, "emergency_contact.full_name"))} />
+              <Row k="Relationship to the party" v={fmtMaybe(get(health, "emergency_contact.relationship"))} />
+              <Row k="Mobile" v={fmtMaybe(get(health, "emergency_contact.mobile"))} />
+              <Row k="Email" v={fmtMaybe(get(health, "emergency_contact.email"))} />
+            </SubBlock>
+          ) : null}
+
+          {(health.allergies_dietary ||
+            health.medical_conditions ||
+            health.medications_onboard ||
+            health.swimming_experience ||
+            health.swimming_other) && (
+            <SubBlock label="Health & safety">
+              <Row k="Allergies & dietary requirements" v={fmtMaybe(health.allergies_dietary)} />
+              <Row k="Medical conditions" v={fmtMaybe(health.medical_conditions)} />
+              <Row k="Medications brought on board" v={fmtMaybe(health.medications_onboard)} />
+              <Row k="Swimming experience" v={fmtMaybe(health.swimming_experience)} />
+              <Row k="Swimming notes" v={fmtMaybe(health.swimming_other)} />
+            </SubBlock>
+          )}
 
           <SubBlock label="Itinerary">
             <Row k="Pace of the week" v={fmtMaybe(itinerary.pace)} />
@@ -527,7 +593,54 @@ export default async function PreferenceSharePage({ params }) {
             <Row k="Consumption estimate" v={fmtMaybe(beverages.water_consumption_estimate)} />
           </SubBlock>
 
-          <LabelQtyTable label="Soft drinks" rows={beverages.soft_drinks} />
+          {/* 2026-09-02 — the frequency-based capture (canonical since
+              2026-05-20). Everything the hostess provisions from now
+              lives here; the label×qty tables further down are legacy
+              and render only for briefs submitted under the old model. */}
+          {(beverages.champagne_wanted || beverages.champagne_tier || beverages.champagne_specifics) && (
+            <SubBlock label="Champagne">
+              <Row k="Aboard this week" v={fmtMaybe(beverages.champagne_wanted)} />
+              <Row k="Tier" v={fmtMaybe(beverages.champagne_tier)} />
+              <Row k="Specifics" v={fmtMaybe(beverages.champagne_specifics)} />
+            </SubBlock>
+          )}
+
+          {(beverages.wine_wanted || (beverages.wine_colors || []).length > 0 ||
+            beverages.wine_grapes || beverages.wine_tier || beverages.wine_specifics) && (
+            <SubBlock label="Wine">
+              <Row k="Aboard this week" v={fmtMaybe(beverages.wine_wanted)} />
+              <Row k="Colours" v={fmtMaybe(beverages.wine_colors)} />
+              <Row k="Grapes / styles" v={fmtMaybe(beverages.wine_grapes)} />
+              <Row k="Tier" v={fmtMaybe(beverages.wine_tier)} />
+              <Row k="Specifics" v={fmtMaybe(beverages.wine_specifics)} />
+            </SubBlock>
+          )}
+
+          {(fmtFrequencyRecord(beverages.spirits_frequency) || beverages.spirits_brands || beverages.spirits_notes) && (
+            <SubBlock label="Spirits">
+              <Row k="Frequency by spirit" v={fmtMaybe(fmtFrequencyRecord(beverages.spirits_frequency))} />
+              <Row k="Preferred brands" v={fmtMaybe(beverages.spirits_brands)} />
+              <Row k="Notes" v={fmtMaybe(beverages.spirits_notes)} />
+            </SubBlock>
+          )}
+
+          {(beverages.beers_frequency || beverages.beers_origin || beverages.beers_specifics || beverages.beers_notes) && (
+            <SubBlock label="Beer">
+              <Row k="Frequency" v={fmtMaybe(FREQUENCY_LABEL[beverages.beers_frequency] || beverages.beers_frequency)} />
+              <Row k="Origin" v={fmtMaybe(beverages.beers_origin)} />
+              <Row k="Specifics" v={fmtMaybe(beverages.beers_specifics)} />
+              <Row k="Notes" v={fmtMaybe(beverages.beers_notes)} />
+            </SubBlock>
+          )}
+
+          {(fmtFrequencyRecord(beverages.soft_drinks_frequency) || beverages.soft_drinks_brands) && (
+            <SubBlock label="Soft drinks">
+              <Row k="Frequency by drink" v={fmtMaybe(fmtFrequencyRecord(beverages.soft_drinks_frequency))} />
+              <Row k="Preferred brands" v={fmtMaybe(beverages.soft_drinks_brands)} />
+            </SubBlock>
+          )}
+
+          <LabelQtyTable label="Soft drinks (legacy)" rows={beverages.soft_drinks} />
 
           <SubBlock label="Standard bar (classics included)">
             <Row k="Tick-list" v={fmtMaybe(beverages.standard_bar_items)} />

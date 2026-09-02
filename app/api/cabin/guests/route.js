@@ -92,17 +92,35 @@ export async function POST(req) {
   const db = getCabinDb();
 
   // Insert as guest. Conflict on (cabin_id, email) → no-op then read.
+  // 2026-09-02 — deleted_at included in the select: a previously
+  // removed guest matched their soft-deleted row here, no live row
+  // was ever created, and the invite email still went out with
+  // mailed:true — but sessions exclude deleted members, so that
+  // guest landed on "No cabin found" forever and silently never
+  // counted in the crew-list gate. Re-adding now REVIVES the row.
   const existing = await dbQuery(
     db.from("cabin_members")
-      .select("id, role")
+      .select("id, role, deleted_at")
       .eq("cabin_id", a.cabinId)
       .ilike("email", email)
       .maybeSingle()
   );
 
   let member;
-  if (existing) {
+  if (existing && !existing.deleted_at) {
     member = existing;
+  } else if (existing && existing.deleted_at) {
+    member = await dbQuery(
+      db.from("cabin_members")
+        .update({
+          deleted_at: null,
+          display_name,
+          invite_sent_at: sendInvite ? new Date().toISOString() : null,
+        })
+        .eq("id", existing.id)
+        .select()
+        .single()
+    );
   } else {
     member = await dbQuery(
       db.from("cabin_members")

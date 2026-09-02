@@ -5,7 +5,7 @@ import PrincipalOnlyGate from "@/components/cabin/brief/PrincipalOnlyGate";
 
 export default function HealthSectionLayout({ children }) {
   return (
-    <PrincipalOnlyGate sectionTitle="Emergency Contact">
+    <PrincipalOnlyGate sectionTitle="Emergency Contact" sectionKey="health">
       {children}
     </PrincipalOnlyGate>
   );

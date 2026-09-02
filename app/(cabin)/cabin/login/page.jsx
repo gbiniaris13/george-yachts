@@ -28,6 +28,9 @@ export default async function CabinLoginPage({ searchParams }) {
   } else if (errorCode === "missing") {
     errorMessage =
       "That link looked incomplete. Please request a new one below.";
+  } else if (errorCode === "retry") {
+    errorMessage =
+      "Something hiccuped on our side just as you signed in. Your link is still good, please click it once more, or request a fresh one below.";
   }
 
   return (

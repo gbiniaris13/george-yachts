@@ -43,8 +43,9 @@ import DateOfBirthPicker from "../../../components/cabin/DateOfBirthPicker";
 // else. The select stores the +CC; the local number lives in a
 // separate text input; we join them with a space for storage.
 const COUNTRY_CODES = [
-  { code: "+30",  flag: "🇬🇷", label: "Greece" },
+  // 2026-09-02 — US first + default: ~90% of the clientele dials +1.
   { code: "+1",   flag: "🇺🇸", label: "US / Canada" },
+  { code: "+30",  flag: "🇬🇷", label: "Greece" },
   { code: "+44",  flag: "🇬🇧", label: "United Kingdom" },
   { code: "+33",  flag: "🇫🇷", label: "France" },
   { code: "+49",  flag: "🇩🇪", label: "Germany" },
@@ -132,7 +133,7 @@ export default function CabinMePage() {
     passport_number: "",
     passport_expiry: "",
     mobile: "",
-    mobile_cc: "+30",
+    mobile_cc: "+1",
     // ----- Aboard the yacht (social, OK to be visible across group)
     cabin_pairing: "",
     // 2026-05-26 — Brief 02 (A3.3): shoe_size lives in the Aboard
@@ -176,7 +177,7 @@ export default function CabinMePage() {
           // prefix match against the known COUNTRY_CODES list so
           // every supported dial code parses correctly regardless
           // of length (+1, +30, +44, +351, +972 etc.).
-          mobile_cc: matchKnownCountryCode(pd.mobile) ?? "+30",
+          mobile_cc: matchKnownCountryCode(pd.mobile) ?? "+1",
           cabin_pairing: pd.cabin_pairing ?? "",
           shoe_size: pd.shoe_size ?? "",
           special_dates_during_charter: pd.special_dates_during_charter ?? "",
@@ -607,7 +608,14 @@ export default function CabinMePage() {
         as you tap Save. Edit any time.
       </IntroParagraph>
 
-      <form className="me-form" onSubmit={onSave}>
+      {/* 2026-09-02 — noValidate, matching BriefFormShell. Without it
+          the `required` attributes below let the browser BLOCK Save on
+          any partial fill: a guest without their passport at hand who
+          filled DOB + nationality lost everything on leaving the page.
+          The intro promises "everything here is optional" — the form
+          now honours it: partial saves persist, `required` stays only
+          as the visual asterisk cue. */}
+      <form className="me-form" onSubmit={onSave} noValidate>
         {/* 2026-05-22, Crew List essentials block. Port authorities
             require name + gender + DOB + ID/passport + mobile for
             every person aboard. These five fields are MANDATORY for
@@ -717,7 +725,7 @@ export default function CabinMePage() {
               <select
                 className="me-mobile-cc"
                 aria-label="Country code"
-                value={form.mobile_cc || "+30"}
+                value={form.mobile_cc || "+1"}
                 onChange={(e) => {
                   const cc = e.target.value;
                   // 2026-05-25 — use longest-prefix helper so Greek
@@ -748,7 +756,7 @@ export default function CabinMePage() {
                 maxLength={24}
                 onChange={(e) => {
                   const local = e.target.value;
-                  const cc = form.mobile_cc || "+30";
+                  const cc = form.mobile_cc || "+1";
                   setForm({
                     ...form,
                     mobile: local ? `${cc} ${local}` : "",

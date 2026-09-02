@@ -210,6 +210,7 @@ export default function BeveragesSectionPage() {
       <BriefFormShell
         sectionKey="beverages"
         prevSection={{ key: "dining", title: "At the Table" }}
+        nextSection={{ key: "review", title: "Review & Send" }}
       >
         {({ register, initialData }) => (
           <BeveragesFields

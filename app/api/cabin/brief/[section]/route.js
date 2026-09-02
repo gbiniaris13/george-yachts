@@ -240,7 +240,17 @@ export async function PUT(req, ctx) {
   // something thoughtful here", which is what the dot is meant to
   // signal. Tighter gating still happens at the final readiness
   // check before Send-to-George, where it belongs.
-  const completed = completeness >= 21;
+  // 2026-09-02 — Health collects only the 4 emergency-contact
+  // fields, so 21 (3 fields) demanded name+phone+email-or-
+  // relationship before the tick lit; name+phone (the meaningful
+  // minimum, 14) left it "Not yet filled" forever and kept
+  // Send-to-George locked with no explanation. Same arithmetic
+  // trap for Life Aboard (tone + one activity = 14). Two populated
+  // fields say "the principal has answered this"; 21 stays right
+  // for the wide sections.
+  const SECTION_COMPLETE_THRESHOLD = { health: 14, life_aboard: 14 };
+  const completed =
+    completeness >= (SECTION_COMPLETE_THRESHOLD[a.section] ?? 21);
 
   const db = getCabinDb();
   await dbQuery(

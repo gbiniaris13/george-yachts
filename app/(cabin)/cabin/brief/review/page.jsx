@@ -289,6 +289,12 @@ export default async function BriefReviewPage() {
     visible.length > 0 &&
     visible.every((s) => {
       if (s.key === "life_aboard") return lifeAboardDoneAny;
+      // 2026-09-02 — mirror the server gate (submit/route.js), which
+      // does NOT require the children section. Minors are add-only
+      // (no edit/delete UI), so one mistaken "add a child" row was
+      // flipping hasMinors forever and hard-locking Send behind a
+      // section a 3-adult party can never meaningfully complete.
+      if (s.key === "children") return true;
       return Boolean(sectionsByKey[s.key]?.completed);
     });
   const completionPercent = cabin.brief_completion_percent ?? 0;

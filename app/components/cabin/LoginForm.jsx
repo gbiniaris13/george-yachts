@@ -63,7 +63,8 @@ export default function LoginForm({ initialError }) {
         <h2>Check your inbox.</h2>
         <p>
           If <strong>{email}</strong> is on a Cabin, a sign-in link is
-          on its way. It is valid for 24 hours. If you do not see it,
+          on its way. It stays valid for three months, so the same
+          email works again whenever you return. If you do not see it,
           please check your spam folder, or reply to George directly at
           <span>&nbsp;george@georgeyachts.com</span>.
         </p>
@@ -112,8 +113,8 @@ export default function LoginForm({ initialError }) {
       </button>
       {error && <p className="cabin-login-form__error">{error}</p>}
       <p className="cabin-login-form__hint">
-        No password is needed. We will send a single-use link to your
-        inbox.
+        No password is needed. We will send a sign-in link to your
+        inbox; the same link keeps working on all your devices.
       </p>
 
       <style>{styles}</style>

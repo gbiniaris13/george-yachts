@@ -6,7 +6,7 @@ import PrincipalOnlyGate from "@/components/cabin/brief/PrincipalOnlyGate";
 
 export default function GuestsSectionLayout({ children }) {
   return (
-    <PrincipalOnlyGate sectionTitle="Your Group">
+    <PrincipalOnlyGate sectionTitle="Your Group" sectionKey="guests">
       {children}
     </PrincipalOnlyGate>
   );

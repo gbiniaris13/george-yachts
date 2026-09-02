@@ -160,6 +160,12 @@ export default function useBriefAutosave(
         credentials: "same-origin",
         body: JSON.stringify({ data: payload }),
         signal: ctrl.signal,
+        // 2026-09-02 — keepalive lets the browser finish this PUT
+        // even when the page is being torn down (tab closed, mobile
+        // Safari swiped away). Without it an edit made inside the
+        // 600ms debounce window died with the page. Payloads here
+        // are far under the 64KB keepalive cap.
+        keepalive: true,
       });
       if (!r.ok) throw new Error(`save-${r.status}`);
       return r;
@@ -170,6 +176,13 @@ export default function useBriefAutosave(
       if (seq === seqRef.current) setState("saved");
     } catch (err1) {
       if (err1?.name === "AbortError") return;
+      // 423 = the brief is locked with George. Retrying can never
+      // succeed and "keep typing to retry" reads as a glitch —
+      // surface the calm truth instead.
+      if (err1?.message === "save-423") {
+        if (seq === seqRef.current) setState("locked");
+        return;
+      }
       // One-shot retry after 1.5s for transient errors. We do NOT
       // retry on validation errors (4xx) because the same payload
       // will fail again, but we keep the check cheap by accepting

@@ -47,9 +47,11 @@ export default function SaveStatus({ state }) {
         ? "Saved"
         : state === "error"
           ? "Couldn’t save - keep typing to retry"
-          : state === "preview"
-            ? "Admin preview · changes won’t be saved"
-            : "";
+          : state === "locked"
+            ? "The brief is with George - reply to his email for any change"
+            : state === "preview"
+              ? "Admin preview · changes won’t be saved"
+              : "";
 
   return (
     <div
@@ -109,6 +111,15 @@ export default function SaveStatus({ state }) {
           border-color: rgba(255, 255, 255, 0.45);
         }
         .cabin-save-status--preview .cabin-save-status__dot {
+          background: rgba(255, 255, 255, 0.85);
+        }
+        /* Locked (brief submitted): same calm teal family as
+           preview — informational, not an error. */
+        .cabin-save-status--locked {
+          background: #0E7C7B;
+          border-color: rgba(255, 255, 255, 0.45);
+        }
+        .cabin-save-status--locked .cabin-save-status__dot {
           background: rgba(255, 255, 255, 0.85);
         }
         @keyframes cabin-save-pulse {

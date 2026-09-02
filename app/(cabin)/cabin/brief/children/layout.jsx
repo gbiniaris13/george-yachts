@@ -16,7 +16,7 @@ import PrincipalOnlyGate from "@/components/cabin/brief/PrincipalOnlyGate";
 
 export default function ChildrenSectionLayout({ children }) {
   return (
-    <PrincipalOnlyGate sectionTitle="The Little Sailors">
+    <PrincipalOnlyGate sectionTitle="The Little Sailors" sectionKey="children">
       {children}
     </PrincipalOnlyGate>
   );

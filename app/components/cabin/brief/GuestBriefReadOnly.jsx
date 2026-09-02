@@ -339,6 +339,8 @@ export default function GuestBriefReadOnly({ sectionKey, kind }) {
   const introCopy =
     kind === "life_aboard"
       ? "The Main Charterer is arranging life aboard for the whole group. Here is what they have chosen so far."
+      : kind === "generic"
+      ? "The Main Charterer is arranging this part of the week for the whole group. Here is what they have shared so far."
       : "The Main Charterer is arranging the table and the cellar for the whole group. Here is what they have chosen so far.";
 
   if (state === "loading") {

@@ -102,6 +102,33 @@ export async function PUT(req) {
     );
   }
 
+  // 2026-09-02 — the welcome gate's DOB and mobile now ALSO feed
+  // personal_details, which is what the crew list (port-authority
+  // paperwork) reads. Before this, the welcome page collected a DOB
+  // "for the marina paperwork", stored it only in the Filotimo
+  // circle, and /cabin/me then presented an EMPTY crew-list line —
+  // every guest typed their birth date twice and wondered why the
+  // first one vanished. jsonb merge is read-modify-write per row
+  // (a handful of rows per person at most).
+  if (patch.date_of_birth || patch.mobile) {
+    const rows = await dbQuery(
+      db.from("cabin_members")
+        .select("id, personal_details")
+        .ilike("email", session.email)
+        .is("deleted_at", null)
+    );
+    for (const row of rows ?? []) {
+      const pd = { ...(row.personal_details ?? {}) };
+      // The explicit crew-list form stays authoritative — only fill
+      // gaps, never overwrite something the member already entered.
+      if (patch.date_of_birth && !pd.date_of_birth) pd.date_of_birth = patch.date_of_birth;
+      if (patch.mobile && !pd.mobile) pd.mobile = patch.mobile;
+      await dbQuery(
+        db.from("cabin_members").update({ personal_details: pd }).eq("id", row.id)
+      );
+    }
+  }
+
   // Update filotimo_circle_members (person-scoped, one row per email)
   const circleUpdate = {};
   if (patch.display_name) circleUpdate.display_name = patch.display_name;
@@ -109,11 +136,30 @@ export async function PUT(req) {
   if (patch.anniversary_date) circleUpdate.anniversary_date = patch.anniversary_date;
   if (patch.hometown) circleUpdate.hometown = patch.hometown;
   if (Object.keys(circleUpdate).length > 0) {
-    await dbQuery(
+    // 2026-09-02 — was a bare .update(): a brand-new client (no
+    // circle row yet) matched zero rows and their birthday vanished
+    // without a trace. Check-then-insert keeps the person-scoped
+    // one-row-per-email shape.
+    const existingCircle = await dbQuery(
       db.from("filotimo_circle_members")
-        .update(circleUpdate)
+        .select("email")
         .ilike("email", session.email)
+        .maybeSingle()
     );
+    if (existingCircle) {
+      await dbQuery(
+        db.from("filotimo_circle_members")
+          .update(circleUpdate)
+          .ilike("email", session.email)
+      );
+    } else {
+      await dbQuery(
+        db.from("filotimo_circle_members").insert({
+          email: session.email.toLowerCase(),
+          ...circleUpdate,
+        })
+      );
+    }
   }
 
   const filledFields = Object.keys(patch).filter((k) => patch[k]);

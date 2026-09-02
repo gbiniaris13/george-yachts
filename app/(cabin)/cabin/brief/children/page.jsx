@@ -34,7 +34,7 @@ export default function ChildrenSectionPage() {
           Guests shouldn't see other guests' children's allergies. */}
       <AllergyAlert source="self" />
 
-      <BriefFormShell sectionKey="children" prevSection={{ key: "little_things", title: "The Little Things" }}>
+      <BriefFormShell sectionKey="children" prevSection={{ key: "beverages", title: "In the Cellar" }}>
         {({ register, watch }) => (
           <>
             {[0, 1, 2, 3, 4, 5].map((i) => (

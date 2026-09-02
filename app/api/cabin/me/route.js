@@ -86,7 +86,16 @@ function sanitisePersonalDetails(body) {
     anything_else: cleanStr(body?.anything_else, 600),
     // 2026-05-24 — Christos pass: explicit GDPR consent for sharing
     // the personal health info above with the captain/chef/hostess.
-    consent_share_with_crew: Boolean(body?.consent_share_with_crew),
+    // 2026-09-02 — only coerced when the key is actually SENT. The
+    // unconditional Boolean() meant the main /cabin/me form (which
+    // deliberately omits the private fields) stamped `false` on
+    // every save, silently revoking a consent the guest had given
+    // on /cabin/me/private. Absent key → undefined → dropped by the
+    // null/empty merge below, so the stored consent survives.
+    consent_share_with_crew:
+      body && Object.prototype.hasOwnProperty.call(body, "consent_share_with_crew")
+        ? Boolean(body.consent_share_with_crew)
+        : undefined,
   };
 }
 

@@ -18,10 +18,12 @@
 // is the polite explanation; the API gate is the protection.
 // =============================================================
 
+import Link from "next/link";
 import { readSessionFromCookies, pickActiveCabinId, resolveMembership } from "@/lib/cabin/auth";
 import { getCabinDb, dbQuery } from "@/lib/cabin/supabase";
+import GuestBriefReadOnly from "./GuestBriefReadOnly";
 
-export default async function PrincipalOnlyGate({ sectionTitle, children }) {
+export default async function PrincipalOnlyGate({ sectionTitle, sectionKey, children }) {
   const session = await readSessionFromCookies();
   if (!session) return <>{children}</>;
 
@@ -49,7 +51,18 @@ export default async function PrincipalOnlyGate({ sectionTitle, children }) {
     return <>{children}</>;
   }
 
-  // Non-principal guest — calm read-only banner + disabled fieldset.
+  // Non-principal guest — calm banner + a read-only VIEW of the
+  // section's saved data instead of the form.
+  //
+  // 2026-05-26 (Domingo fresh-guest test) proved the old
+  // `<fieldset disabled>` wrap left the RHF form fully interactive
+  // on the live build — guests typed away, every autosave 403ed,
+  // and the "couldn't save" pill quietly discarded their words.
+  // Life Aboard / Dining / Beverages were switched to an
+  // early-return read-only then; the five layout-gated sections
+  // kept the broken fieldset until 2026-09-02. Now the editable
+  // form never reaches the guest's DOM at all — same pattern,
+  // applied here. The API 403 remains the actual protection.
   return (
     <>
       <aside className="pog-banner" role="note">
@@ -57,20 +70,33 @@ export default async function PrincipalOnlyGate({ sectionTitle, children }) {
         <p className="pog-banner__copy">
           Only the principal charterer can edit{" "}
           <strong>{sectionTitle}</strong>. You can read what&apos;s
-          here so you know the plan - but the fields are locked
-          for everyone except the person who organised the
-          charter. If something needs changing (a different
-          flight, a different island), let them know directly.
+          here so you know the plan - but changes stay with the
+          person who organised the charter. If something needs
+          changing (a different flight, a different island), let
+          them know directly.
         </p>
       </aside>
 
-      <fieldset
-        className="pog-readonly"
-        disabled
-        aria-label={`${sectionTitle} - read-only`}
-      >
-        {children}
-      </fieldset>
+      {sectionKey ? (
+        <>
+          <GuestBriefReadOnly sectionKey={sectionKey} kind="generic" />
+          <nav style={{ marginTop: 28 }}>
+            <Link href="/cabin" className="pog-back-link">
+              ← Back to your Cabin
+            </Link>
+          </nav>
+        </>
+      ) : (
+        // Legacy fallback for any call site that hasn't passed
+        // sectionKey yet — better a locked-looking form than a crash.
+        <fieldset
+          className="pog-readonly"
+          disabled
+          aria-label={`${sectionTitle} - read-only`}
+        >
+          {children}
+        </fieldset>
+      )}
 
       <style>{`
         .pog-banner {

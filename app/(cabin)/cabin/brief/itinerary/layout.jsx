@@ -7,7 +7,7 @@ import PrincipalOnlyGate from "@/components/cabin/brief/PrincipalOnlyGate";
 
 export default function ItinerarySectionLayout({ children }) {
   return (
-    <PrincipalOnlyGate sectionTitle="Your Itinerary">
+    <PrincipalOnlyGate sectionTitle="Your Itinerary" sectionKey="itinerary">
       {children}
     </PrincipalOnlyGate>
   );

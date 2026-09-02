@@ -11,7 +11,7 @@ import PrincipalOnlyGate from "@/components/cabin/brief/PrincipalOnlyGate";
 
 export default function ArrivalSectionLayout({ children }) {
   return (
-    <PrincipalOnlyGate sectionTitle="Arrival & Departure">
+    <PrincipalOnlyGate sectionTitle="Arrival & Departure" sectionKey="arrival">
       {children}
     </PrincipalOnlyGate>
   );
