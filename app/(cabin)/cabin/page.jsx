@@ -170,7 +170,14 @@ export default async function CabinHomePage() {
   const hasMobile = Boolean(memberRow?.mobile);
   const hasDOB = Boolean(circleRow?.date_of_birth);
   const onboardingIncomplete = !hasName || !hasMobile || !hasDOB;
-  if (onboardingIncomplete) {
+  // 2026-09-02 — Admin preview skips the welcome gate. Preview
+  // impersonates the principal read-only; before the invite goes
+  // out the principal has of course never onboarded, so the gate
+  // bounced the ADMIN to /cabin/welcome — which read-only mode can
+  // never complete. That is exactly the moment preview exists for
+  // (checking the cabin before sending), so the admin sees the home
+  // page as it will render once the client finishes the welcome.
+  if (onboardingIncomplete && !session?.preview_mode) {
     redirect("/cabin/welcome");
   }
 
