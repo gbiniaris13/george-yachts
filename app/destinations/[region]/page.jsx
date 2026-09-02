@@ -116,7 +116,18 @@ export async function generateMetadata({ params }) {
   const { region } = await params;
   const d = getDestination(region);
   if (!d) return { title: "Destination" };
-  const title = `${d.label} Yacht Charter - ${d.cardTitle}`;
+  // 2026-09-02 — Cyclades only: the ranking title carried the poetry
+  // ("Cyclades Yacht Charter - Volcanic Drama") while the page fell
+  // from ~18 to ~48 on its head terms in the 15-25 Aug recalibration.
+  // House rule: place before poetry - the title states the ROLE, the
+  // mood line stays on-page (hero + cards keep cardTitle untouched).
+  // Ionian/Saronic keep the old pattern deliberately: they held their
+  // positions, and a title change on a healthy page is risk for
+  // nothing.
+  const title =
+    d.slug === "cyclades"
+      ? `${d.label} Yacht Charter: Crewed Yachts, Routes & Weekly Rates`
+      : `${d.label} Yacht Charter - ${d.cardTitle}`;
   // 2026-08-06 (job 5) — was `${d.cardSubline} ${d.pageTagline}`, and those two
   // fields say the same thing in different words, so every regional snippet in
   // Google repeated itself: "Whitewashed cliffs. Deep blue caldera. The Aegean
