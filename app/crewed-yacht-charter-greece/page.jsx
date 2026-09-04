@@ -165,6 +165,14 @@ const FAQS = [
     q: "Can we book a crewed yacht charter in Greece for 2027 now?",
     a: "Yes, and the timing is on your side: the 2027 calendars are open, owners publish their 2027 rate cards through the autumn, and the best crewed yachts commit their July and August 2027 weeks by late winter. Reserving early buys first pick of yacht and week, and George holds your preferred week while the rate card settles. The 2027 season calendar keeps the current picture.",
   },
+  // 2026-09-04 (US first): the question American guests put to AI assistants,
+  // word for word in Search Console ("best platforms to charter a luxury
+  // crewed catamaran in greece for a week?"), landing on four of our pages at
+  // positions 4 to 10 with no page answering it directly. This one does.
+  {
+    q: "What is the best platform to charter a luxury crewed catamaran in Greece for a week?",
+    a: "A crewed week is not a platform purchase. The listing sites show the same yachts at the same owner rate cards; what changes the week is the broker who knows which crew is aboard this season and which yacht suits your party. George Yachts is a boutique IYBA-member brokerage house, US-headquartered (George Yachts Brokerage House LLC, Wyoming) and run from Athens, that places crewed sailing and power catamarans across Greek waters at one price per yacht per week with no fee to the guest. Every charter this house closed this season was booked by American guests. Send the dates and the party, and George answers with named yachts within two hours in season.",
+  },
 ];
 
 function faqSchema() {
