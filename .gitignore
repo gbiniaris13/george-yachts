@@ -54,6 +54,8 @@ public/videos/yacht-cruising-new-original.mp4
 leads/
 *.csv
 !public/**/*.csv
+# Route-handler directories named like files (app/**/data.csv/route.js)
+!app/**/*.csv/
 
 # Accidental macOS duplicate files (" 2.ext")
 * 2.jsx
