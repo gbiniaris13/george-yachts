@@ -120,6 +120,16 @@ const VERIFY_FAQ = {
         text: "Ask for the registered entity, its jurisdiction and its registration number, then check that jurisdiction's public register. A trading name is not a company, and you want to know who you would be suing and in which country. George Yachts Brokerage House LLC is registered in Wyoming, in the United States, and operates from Athens.",
       },
     },
+    // 2026-09-04 (US first): the registers by name, for the AI assistants
+    // that arrive here checking a broker's membership status.
+    {
+      "@type": "Question",
+      name: "Where are the IYBA directory and the MYBA register, and is George Yachts listed?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The IYBA member directory is public at iyba.org/member-directory and lists every current member of the International Yacht Brokers Association; George Yachts Brokerage House is listed. The MYBA members register at myba-association.com/en/myba-members.cfm can be searched by keyword and shows each member company's representative and individual members; George Yachts writes its charters on the MYBA Charter Agreement and is not a MYBA member company. The Wyoming Secretary of State business filing search shows the status of George Yachts Brokerage House LLC, the company you contract with.",
+      },
+    },
   ],
 };
 
@@ -789,6 +799,60 @@ export default function CredentialsPage() {
               </p>
             </div>
           ))}
+
+          {/* 2026-09-04 (US first): Search Console shows AI assistants
+              arriving here with queries like "burgess yachts current myba
+              membership status" and "camper and nicholsons current myba
+              membership status", 500+ US impressions at positions 5 to 7.
+              They want the registers by name. Every URL below was opened
+              and read on 2026-09-04; George Yachts' own status is stated
+              exactly: IYBA member, MYBA-standard contracts, not a MYBA
+              member company. */}
+          <div
+            className="gy-registers"
+            style={{
+              marginTop: 48,
+              padding: "28px 32px",
+              background: "rgba(218, 161, 16, 0.06)",
+              borderLeft: "3px solid #DAA110",
+            }}
+          >
+            <p className="gy-eyebrow" style={{ color: "#DAA110", margin: "0 0 14px" }}>
+              The registers, by name
+            </p>
+            <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: 14 }}>
+              {[
+                {
+                  name: "IYBA member directory",
+                  href: "https://iyba.org/member-directory",
+                  how: "An open list of every current member of the International Yacht Brokers Association. Search the company name; if it is not there, it is not a member. George Yachts Brokerage House is listed.",
+                },
+                {
+                  name: "MYBA members register",
+                  href: "https://www.myba-association.com/en/myba-members.cfm",
+                  how: "Search by keyword or browse alphabetically; each entry shows the commercial name, the corporate representative and the individual members. George Yachts writes its charters on the MYBA Charter Agreement and is not a MYBA member company; the two are different things, and any broker who blurs them has told you something.",
+                },
+                {
+                  name: "Wyoming Secretary of State, business filings",
+                  href: "https://wyobiz.wyo.gov/Business/FilingSearch.aspx",
+                  how: "The public register for George Yachts Brokerage House LLC, the Wyoming company you contract with. Search the name to see the filing status.",
+                },
+              ].map((r) => (
+                <li key={r.href} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, lineHeight: 1.7, color: "rgba(248,245,240,0.82)" }}>
+                  <a
+                    href={r.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#DAA110", textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.5)" }}
+                  >
+                    {r.name}
+                  </a>
+                  {": "}
+                  {r.how}
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
 
         {/* Mandatory legal disclaimer per Roberto legal directive §1
