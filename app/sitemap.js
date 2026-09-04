@@ -123,7 +123,6 @@ const staticRoutes = [
   // so they were "orphan from main" in Ahrefs. Folded in so /sitemap.xml
   // is the single canonical source after the multi-sitemap dedup.
   { path: "/charter-calendar-heat-map", priority: 0.78, changeFrequency: "monthly" },
-  { path: "/charter-cost-estimator", priority: 0.78, changeFrequency: "monthly" },
   { path: "/island-quiz", priority: 0.8, changeFrequency: "monthly" },
   // 2026-06-25: both were live + indexable (robots index,follow) but
   // absent from the sitemap, so Ahrefs flagged them "indexable not in

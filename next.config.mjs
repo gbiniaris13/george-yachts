@@ -313,6 +313,12 @@ const nextConfig = {
       // deleted outright (his call, and the standing no-thethoms rule).
       // The URL held rankings; it lands on the Journal, not a 404.
       { source: "/blog/pre-collaboration-interview-thethoms", destination: "/blog", permanent: true },
+      // 2026-09-04 (plan item 11, George's sign-off): two calculators were
+      // answering the same question. /charter-cost-estimator had zero
+      // impressions in ninety days and taxed everything at a flat 13% with a
+      // flat 33% APA; the tool at /tools/charter-cost-calculator has the
+      // impressions and now runs on the Index rate cards. One door.
+      { source: "/charter-cost-estimator", destination: "/tools/charter-cost-calculator", permanent: true },
       // 2026-08-21 (section 6) — seven yachts withdrawn on George's
       // instruction, every one of them carrying "Skipper available" or its
       // equivalent in her crew field. Their detail URLs 301 to the fleet

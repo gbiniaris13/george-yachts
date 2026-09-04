@@ -24,7 +24,7 @@ export const revalidate = 86400;
 export const metadata = {
   title: "Greek Yacht Charter Cost Calculator",
   description:
-    "Calculate the full cost of a Greek yacht charter - base fee + VAT + APA + delivery + gratuity. Free tool by George Yachts, IYBA member, MYBA-standard contracts.",
+    "Work out what a Greek crewed yacht charter really costs: real rate-card bands by yacht type, the certified VAT tier, APA, delivery and gratuity, per yacht per week. Free.",
   alternates: { canonical: "https://georgeyachts.com/tools/charter-cost-calculator" },
   openGraph: {
     title: "Greek Yacht Charter Cost Calculator",
@@ -40,30 +40,37 @@ export const metadata = {
   },
 };
 
+// 2026-09-04 rebuild. Every answer below states only what the Greek
+// Charter Index and the site's VAT, APA and gratuity pages already
+// document. No flat 13%, no flag switch, no invented medians.
 const FAQ = [
   {
-    q: "What's included in the calculator's estimate?",
-    a: "Base charter fee, Greek VAT estimated at the statutory 13% ceiling, APA (Advance Provisioning Allowance) at your selected percentage, delivery fee estimate from the Athens-based fleet, and crew gratuity range (10-15%). The total is shown as a range bracketing the gratuity since gratuity is customary, not contractual.",
+    q: "Where do the calculator's numbers come from?",
+    a: "From the Greek Charter Index, our own compilation of the current rate cards of the fully crewed yachts we represent, refreshed quarterly. Each band shows the lowest and highest weekly net base fee that appears on a rate card for that yacht type and size, per yacht, before VAT and APA. Nothing is a market average and nothing is estimated; if a figure is not on a rate card we hold, it is not here.",
   },
   {
-    q: "Why does the calculator use 13% VAT when my quote shows less?",
-    a: "13% is the statutory ceiling for a weekly crewed charter, so the calculator never understates your total. In practice most yachts are invoiced below it: certification-based reductions produce the 5.2%, 6.5%, 7.8% and 12% figures on 2026 rate sheets, so the VAT line in your written quote is usually lower than the estimate here. The exact certified rate for the specific yacht is confirmed before you sign.",
+    q: "Which Greek VAT rate applies to my charter?",
+    a: "A weekly crewed charter in Greek waters is invoiced at 5.2, 6.5, 7.8 or 12% depending on the yacht's certification, with 13% the statutory ceiling. Charters under 48 hours and bareboat charters are taxed at 24% instead. The calculator lets you set the tier because the yacht decides it, not the charterer; your written quote names the exact certified rate before you sign.",
   },
   {
-    q: "How accurate is the APA percentage?",
-    a: "APA percentages reflect industry-standard ranges. Motor yachts typically run 30%, sailing yachts 25%, performance planing-hull motor yachts 35%. Your captain reconciles APA at disembarkation - any unspent balance is refunded, any overspend is settled. The percentage you set here is the upfront cash you wire 14 days before embarkation.",
+    q: "How much APA should I expect?",
+    a: "On the yachts in the Index, APA runs 20 to 30% of the base fee for sailing yachts and catamarans and 30 to 40% for motor yachts, where fuel is the heaviest line. It covers fuel, food, wine, berths, port fees and consumables, is paid before boarding, is spent by the captain against receipts, and whatever is unspent is returned to you after the charter, usually within two weeks.",
   },
   {
-    q: "Why is delivery 'often negotiable'?",
-    a: "Most luxury Greek yachts are based in Athens (Alimos / Olympic Marine). When the yacht needs to reposition for your start port, delivery can be billed at 1/7 of weekly rate per day, OR negotiated as a flat fee, OR waived entirely if the yacht is already in your start port for another reason. A skilled broker eliminates or halves delivery on most charters.",
+    q: "What does delivery cost, and can it be avoided?",
+    a: "Most of the crewed fleet is based in Athens, so a week that starts in Athens carries no delivery line. When the yacht must reposition to Mykonos, Corfu, Rhodes or Santorini, the convention is one seventh of the weekly fee per delivery day, and it is often negotiated down or waived when the yacht is heading that way anyway. The calculator shows the convention; the quote shows what we obtained.",
   },
   {
-    q: "Why is gratuity shown as a range?",
-    a: "Greek-market 2026 median crew gratuity is 10-12% of the base charter fee. Below 7% signals dissatisfaction; above 18% reserved for exceptional service. The range reflects this band. Tipping is customary and goes directly to the crew in cash at disembarkation - not included in any invoice.",
+    q: "Why is the gratuity a range?",
+    a: "Crew gratuity in Greek waters is customary, not contractual: 10 to 15% of the base fee, calculated on the base alone and never on APA or VAT, handed to the captain at the end of the week. The calculator brackets the total with the lower and higher figure so nothing on the last day surprises you.",
   },
   {
-    q: "Can I use this for foreign-flagged yacht estimates?",
-    a: "Set 'Foreign-flagged' and the calculator will skip Greek VAT (the rate doesn't apply uniformly). The base fee + APA + delivery + gratuity calculations still work. For a precise foreign-flag quote, contact George directly - flag-state rules vary.",
+    q: "Does the price depend on how many guests we are?",
+    a: "No. A crewed yacht is chartered as a whole, by the week, and the fee is the same whether four or ten guests are aboard within her licensed capacity. That is why nothing here is divided by the number of guests: the honest number is the yacht's week, and the guest count only helps us choose the right size band for you.",
+  },
+  {
+    q: "Is there anything the total does not include?",
+    a: "Greece's TEPAI cruising tax, billed by yacht length and month at the official tariff, and any personal extras such as shore excursions or a chef upgrade agreed separately. Everything else a Greek week costs, the base fee, VAT, APA, delivery and gratuity, is on the screen.",
   },
 ];
 
@@ -74,7 +81,7 @@ function WebApplicationJsonLd() {
     "@id": "https://georgeyachts.com/tools/charter-cost-calculator#tool",
     name: "Greek Yacht Charter Cost Calculator",
     description:
-      "Interactive calculator estimating the full cost of a Greek yacht charter, including base fee, Greek VAT (estimated at the 13% ceiling), APA, delivery, and crew gratuity range.",
+      "Interactive calculator for the all-in cost of a Greek crewed yacht charter: base fee bands from the Greek Charter Index rate cards, the yacht's certified VAT tier (5.2 to 12%, 13% ceiling), APA, delivery and the customary crew gratuity, per yacht per week.",
     url: "https://georgeyachts.com/tools/charter-cost-calculator",
     applicationCategory: "FinanceApplication",
     operatingSystem: "Any (web browser)",
@@ -177,7 +184,7 @@ export default function ChartCostCalculatorPage() {
                 marginRight: "auto",
               }}
             >
-              Real numbers. The 4 cost buckets every Greek charter has: base fee, Greek VAT, APA, delivery, plus the gratuity range. No quote required.
+              Real rate cards, not averages. Pick the yacht type and size, set the certified VAT tier and the APA, and read the week all-in: base fee, VAT, APA, delivery and the gratuity range, per yacht.
             </p>
           </div>
         </header>
@@ -250,20 +257,20 @@ export default function ChartCostCalculatorPage() {
                   body: "The weekly hire of the yacht and its full crew. Includes salaries, insurance, normal maintenance, linens, standard amenities. Excludes everything below.",
                 },
                 {
-                  label: "Greek VAT (est. at 13% ceiling)",
-                  body: "Half the standard 24% Greek VAT, applied to the base fee for intra-Greek charters on Greek-flagged yachts. The most favourable Mediterranean rate after Croatia's 13%.",
+                  label: "Greek VAT, the certified tier (5.2 to 12%)",
+                  body: "Invoiced on the base fee at the rate the yacht's certification allows: 5.2, 6.5, 7.8 or 12%, with 13% the statutory ceiling for a weekly crewed charter. Charters under 48 hours and bareboat pay the standard 24%. The yacht sets the tier; the quote names it.",
                 },
                 {
-                  label: "APA (20-40% by yacht type)",
-                  body: "Advance Provisioning Allowance. Working float held by the captain to cover fuel, food, drink, port fees, laundry. Receipted - any unspent balance is refunded at disembarkation.",
+                  label: "APA (20 to 30% sail and catamaran, 30 to 40% motor)",
+                  body: "The Advance Provisioning Allowance, a float held by the captain for fuel, food, wine, berths and port fees, spent against receipts and returned unspent after the charter. Fuel is why motor yachts sit at the top of the range.",
                 },
                 {
-                  label: "Delivery fee (when applicable)",
-                  body: "Charged when the yacht must reposition from its home base to your embarkation port. Often negotiable, sometimes waived. Estimated here at 1/7 of weekly rate per delivery day.",
+                  label: "Delivery (only away from Athens)",
+                  body: "Charged when a yacht based in Athens repositions to Mykonos, Corfu, Rhodes or Santorini for your start. The convention is one seventh of the weekly fee per delivery day; it is often negotiated down and sometimes waived.",
                 },
                 {
-                  label: "Crew gratuity (10-15%)",
-                  body: "Cash tip paid to the crew at disembarkation. Customary, not contractual. Greek-market 2026 median 10-12% of base charter fee.",
+                  label: "Crew gratuity (10 to 15% of the base)",
+                  body: "Customary, not contractual, calculated on the base fee alone and handed to the captain at the end of the week. The calculator shows the total with both ends of the range.",
                 },
               ].map((b, i) => (
                 <li
