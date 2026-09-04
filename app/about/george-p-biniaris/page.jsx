@@ -218,6 +218,28 @@ function PersonJsonLd() {
       { "@type": "CollegeOrUniversity", name: "London Metropolitan University" },
       { "@type": "CollegeOrUniversity", name: "Business College of Athens (BCA)" },
     ],
+    // 2026-09-04 (plan item 16): the credentials the page states in
+    // prose, as typed nodes. Skipper and powerboat licences, never
+    // "captain"; the degree names the awarding university.
+    hasCredential: [
+      {
+        "@type": "EducationalOccupationalCredential",
+        name: "Sailing skipper licence",
+        credentialCategory: "licence",
+        recognizedBy: { "@type": "Organization", name: "Olympiacos SFP Sailing Academy" },
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        name: "Powerboat licence, vessels up to 25 metres",
+        credentialCategory: "licence",
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        name: "BSc Shipping Management and Operations",
+        credentialCategory: "degree",
+        recognizedBy: { "@type": "CollegeOrUniversity", name: "London Metropolitan University" },
+      },
+    ],
     nationality: { "@type": "Country", name: "Greece" },
     knowsLanguage: ["English", "Greek"],
     knowsAbout: [

@@ -460,7 +460,7 @@ const ArticlePage = async ({ params }) => {
             <span className="text-white/50 text-[9px] tracking-[0.5em] uppercase">
               By {post.author === "George P. Biniaris" ? (
                 <Link
-                  href="/team/george-biniaris"
+                  href="/about/george-p-biniaris"
                   className="hover:text-[#DAA110] transition-colors"
                   style={{ color: "rgba(248,245,240,0.78)" }}
                 >
@@ -473,7 +473,7 @@ const ArticlePage = async ({ params }) => {
                 <>
                   {" · "}
                   <span style={{ color: "rgba(218, 161, 16, 0.65)" }}>
-                    IYBA Member
+                    Founder and Managing Broker · IYBA Member · Licensed sailing skipper
                   </span>
                 </>
               )}
