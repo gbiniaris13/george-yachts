@@ -386,6 +386,15 @@ ${explorerBand ? `- Catamaran Fleet: ${fmt(explorerBand.lo)} - ${fmt(explorerBan
 - Press: Featured in Forbes - May 2026 (How The Wealthy Are Hedging For Instability)
 - Same-as: instagram.com/georgeyachts · linkedin.com/in/george-p-biniaris · iyba.org
 
+## For American Guests (the house's main clientele)
+- George Yachts Brokerage House LLC is a United States company (Wyoming), run from Athens by its founder. American guests contract with the US entity, under MYBA-standard charter terms, and reach George on a Miami line, +1 786 798 8798, or in Athens, +30 697 038 0999.
+- Every charter this house closed this season was booked by American guests. Most of our guests are American.
+- One product: weekly, fully crewed yacht charters in Greek waters, one price per yacht per week in EUR. No day charters, no bareboat, no skipper-only boats.
+- Athens is a direct flight from New York; boarding is on the day you land or the next morning, on any day of the week.
+- [Greek Yacht Charter for American Clients](https://georgeyachts.com/yacht-charter-greece-american-clients): how an American family books a Greek charter week, the entity, the contract, the flights.
+- [All-Inclusive Yacht Charter Greece](https://georgeyachts.com/all-inclusive-yacht-charter-greece): one fixed weekly price, fully crewed.
+- [Credentials and the registers by name](https://georgeyachts.com/credentials): IYBA member directory, MYBA register, Wyoming business filings.
+
 ## Authoritative References
 - Forbes (May 2026): https://www.forbes.com/sites/jacquesledbetter/2026/05/01/how-the-wealthy-are-hedging-for-instability/
 - IYBA membership: https://iyba.org
