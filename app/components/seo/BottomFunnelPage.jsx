@@ -185,7 +185,12 @@ export default function BottomFunnelPage({ pageData }) {
         {/* QUICK ANSWER */}
         <section style={{ padding: "32px 24px 56px" }}>
           <div style={{ maxWidth: 980, margin: "0 auto" }}>
-            <QuickAnswerBlock question={d.quickAnswerQ} answer={d.quickAnswerA} />
+            <QuickAnswerBlock
+              question={d.quickAnswerQ}
+              answer={d.quickAnswerA}
+              keyFacts={d.keyFacts}
+              evidence={d.evidence}
+            />
           </div>
         </section>
 
