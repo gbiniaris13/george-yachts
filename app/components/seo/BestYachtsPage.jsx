@@ -200,7 +200,25 @@ export default async function BestYachtsPage({ pageData }) {
 
         <section style={{ padding: "32px 24px 56px" }}>
           <div style={{ maxWidth: 980, margin: "0 auto" }}>
-            <QuickAnswerBlock question={d.quickAnswerQ} answer={d.quickAnswerA} />
+            {/* 2026-09-04 (US first): key facts under the answer. Explicit
+                per entry when present, otherwise derived verbatim from the
+                page's own ranked yachts (name and spec, weekly base), so
+                every best-of page states its numbers in the first screen. */}
+            <QuickAnswerBlock
+              question={d.quickAnswerQ}
+              answer={d.quickAnswerA}
+              keyFacts={
+                Array.isArray(d.keyFacts) && d.keyFacts.length > 0
+                  ? d.keyFacts
+                  : (d.yachts || [])
+                      .slice(0, 4)
+                      // Named yachts only ("ALTEYA - Sunreef 70 Power"); spec
+                      // classes with broad ranges are not facts to lead with.
+                      .filter((y) => y.spec && y.weekly && /\s-\s/.test(String(y.spec)))
+                      .map((y) => `${y.spec}: ${String(y.weekly).replace(/€/g, "EUR ").replace(/\s+/g, " ").trim()} a week, net base`)
+              }
+              evidence={d.evidence || { label: "George Yachts Greek Charter Index", href: "/greek-charter-index-2026" }}
+            />
           </div>
         </section>
 
