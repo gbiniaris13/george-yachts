@@ -221,7 +221,7 @@ export default function CalendarHeatMapPage() {
                 Find a yacht
               </Link>
               <Link
-                href="/charter-cost-estimator"
+                href="/tools/charter-cost-calculator"
                 style={{
                   display: "inline-block",
                   fontFamily: "var(--gy-font-ui)",

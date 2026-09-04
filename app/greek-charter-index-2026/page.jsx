@@ -276,6 +276,8 @@ export default async function GreekCharterIndexPage() {
               <a href={`/${SLUG}/data.json`} style={{ color: GOLD }}>JSON</a>
               {" · "}
               <Link href="/tools/charter-cost-calculator" style={{ color: GOLD }}>run the numbers in the cost calculator</Link>
+              {" · "}
+              <Link href="/blog/how-much-does-yacht-charter-greece-cost-complete-breakdown" style={{ color: GOLD }}>how much a yacht charter in Greece costs, the full breakdown</Link>
             </p>
           </div>
         </section>
@@ -328,7 +330,7 @@ export default async function GreekCharterIndexPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               <Link href="/weekly-yacht-charter-rates-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.25)", paddingBottom: 10 }}>Weekly charter rates, all-in: base, APA, VAT and gratuity by yacht size and season</Link>
               <Link href="/motor-yacht-charter-greece" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.25)", paddingBottom: 10 }}>Motor yacht charter in Greece: the full 2027 guide</Link>
-              <Link href="/charter-cost-estimator" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.25)", paddingBottom: 10 }}>Charter cost estimator</Link>
+              <Link href="/tools/charter-cost-calculator" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.25)", paddingBottom: 10 }}>Charter cost estimator</Link>
               <Link href="/glossary/greek-vat" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.25)", paddingBottom: 10 }}>Greek charter VAT, explained: 5.2 to 12% by certification</Link>
             </div>
           </div>

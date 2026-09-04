@@ -15,6 +15,8 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import BlogPostFooter from "@/components/BlogPostFooter";
 import { autoLinkPortableText } from "@/lib/auto-link-content";
 import { blogSeoTitle } from "@/lib/blogSeoTitles";
+import { getBlogAnswerUnit } from "@/lib/blogAnswerUnits";
+import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import { getClustersForPost } from "@/lib/journal-clusters";
 import RelatedPages from "@/app/components/seo/RelatedPages";
 import { titleField } from "@/lib/seoTitle";
@@ -312,17 +314,52 @@ const ArticlePage = async ({ params }) => {
     ? structuredFaqs
     : extractFAQs(post.body);
 
-  const faqSchema = faqs.length > 0 ? {
+  // 2026-09-04 (plan items 9 and 13): a code-side answer unit for the
+  // posts that win a cluster (lib/blogAnswerUnits.js). It leads the
+  // FAQPage, attributed to the canonical author, and is speakable.
+  // The code unit takes precedence over a Sanity quickAnswer on the same
+  // post: on 4/9 the Studio text for the cost breakdown still said a flat
+  // 12% VAT, EUR 13,000 entry and APA 25 to 35%, none of which is the
+  // house position (VAT by certification, Index bands, APA by type). The
+  // Studio field is left untouched for George to update; the page shows
+  // the verified numbers meanwhile. One block, not two.
+  const answerUnit = getBlogAnswerUnit(slug);
+  const leadQuestion = answerUnit
+    ? [
+        {
+          "@type": "Question",
+          name: answerUnit.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: answerUnit.answer,
+            author: {
+              "@type": "Person",
+              "@id": "https://georgeyachts.com/about/george-p-biniaris#person",
+              name: "George P. Biniaris",
+            },
+          },
+        },
+      ]
+    : [];
+
+  const faqSchema = faqs.length > 0 || leadQuestion.length > 0 ? {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
-      "@type": "Question",
-      name: f.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: f.answer,
-      },
-    })),
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: [".gy-qa-text", ".gy-key-facts", ".gy-quick-answer"],
+    },
+    mainEntity: [
+      ...leadQuestion,
+      ...faqs.map((f) => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: f.answer,
+        },
+      })),
+    ],
   } : null;
 
   // Stage 2 (Extra IA) - auto-link yacht NAMES in the body to their detail
@@ -522,7 +559,18 @@ const ArticlePage = async ({ params }) => {
               3-4 top-converting posts; future posts include it as a
               standard field. When missing, the block just doesn't
               render, no visual disruption. */}
-          {post.quickAnswer && (
+          {answerUnit && (
+            <div style={{ marginBottom: 48 }}>
+              <QuickAnswerBlock
+                question={answerUnit.question}
+                answer={answerUnit.answer}
+                keyFacts={answerUnit.keyFacts}
+                evidence={answerUnit.evidence}
+              />
+            </div>
+          )}
+
+          {post.quickAnswer && !answerUnit && (
             <aside
               className="gy-quick-answer"
               aria-label="Quick answer"

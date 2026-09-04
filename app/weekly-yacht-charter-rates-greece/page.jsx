@@ -297,8 +297,12 @@ export default function WeeklyRatesPage() {
                 <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.66)" }}> - our market data on rates by yacht type and region.</span>
               </li>
               <li>
-                <Link href="/charter-cost-estimator" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>Charter cost estimator</Link>
-                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.66)" }}> - run your own all-in figure for any size, season and length.</span>
+                <Link href="/tools/charter-cost-calculator" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>Charter cost calculator</Link>
+                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.66)" }}> - your own all-in figure from the Index bands, at the yacht&apos;s certified VAT tier.</span>
+              </li>
+              <li>
+                <Link href="/blog/how-much-does-yacht-charter-greece-cost-complete-breakdown" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 15, color: CREAM, textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>How much a yacht charter in Greece costs</Link>
+                <span style={{ fontFamily: "var(--gy-font-ui)", fontSize: 14, color: "rgba(248,245,240,0.66)" }}> - the complete breakdown, base to gratuity, in one read.</span>
               </li>
             </ul>
           </div>
