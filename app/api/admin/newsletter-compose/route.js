@@ -45,6 +45,7 @@ import {
 } from "@/lib/kv";
 import {
   getYachtForNewsletter,
+  getYachtsForFleetUpdate,
   getPostForNewsletter,
   slugFromBlogUrl,
 } from "@/lib/newsletter/sanity-yachts";
@@ -83,6 +84,7 @@ async function buildOneDraft({
   payload,
   yacht,
   post,
+  yachts,
 }) {
   // Assemble body per stream voice
   const built = assembleBody({
@@ -90,6 +92,7 @@ async function buildOneDraft({
     stream,
     yacht,
     post,
+    yachts,
     george_angle: payload.george_angle,
     headline: payload.headline,
     signal_text: payload.signal_text,
@@ -307,6 +310,7 @@ export async function POST(request) {
   // Type-specific slot validation.
   let yacht = null;
   let post = null;
+  let yachts = null;
   if (
     content_type === "announcement" ||
     content_type === "offer" ||
@@ -377,6 +381,19 @@ export async function POST(request) {
         { status: 400 },
       );
     }
+  } else if (content_type === "fleet_update") {
+    const slugs = Array.isArray(payload.yacht_slugs) ? payload.yacht_slugs : [];
+    if (slugs.length === 0) {
+      return NextResponse.json(
+        { error: "yacht_slugs (array) required for fleet_update" },
+        { status: 400 },
+      );
+    }
+    const r = await getYachtsForFleetUpdate(slugs);
+    if (!r.ok) {
+      return NextResponse.json({ error: r.error }, { status: 404 });
+    }
+    yachts = r.yachts;
   }
 
   // Build one draft per surviving stream.
@@ -389,6 +406,7 @@ export async function POST(request) {
         payload,
         yacht,
         post,
+        yachts,
       });
       results.push(r);
     } catch (err) {
