@@ -815,6 +815,32 @@ export default async function CrewedCharterPage() {
         </section>
       )}
 
+      {/* 2026-09-04 (George: American guests, weekly, fully crewed). The
+          United States is this page's largest audience in Search Console
+          and the Helm's closed charters this season are all from +1
+          numbers. The page said nothing to that reader about who the
+          broker is on their side of the Atlantic. Now it does. */}
+      <section style={{ padding: "64px 24px" }} aria-label="For American guests">
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={eyebrowStyle}>For American Guests</p>
+          <h2 style={h2Style}>Your broker in Greece is a US company</h2>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.78, color: "rgba(248,245,240,0.82)", margin: "0 0 18px" }}>
+            Most of our guests are American, and every charter this house closed this season was booked by American guests. You contract with George Yachts Brokerage House LLC, a Wyoming company, under MYBA-standard charter terms, at one price per yacht per week in EUR. You reach George on a Miami line, +1 786 798 8798, or in Athens on +30 697 038 0999, and he answers with named yachts within two hours in season.
+          </p>
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.78, color: "rgba(248,245,240,0.82)", margin: "0 0 18px" }}>
+            Athens is a direct flight from New York. The crewed fleet is based there, so you board at Alimos on the day you land or the next morning, on any day of the week, and the first anchorage is a lunch away. How the week is booked, the entity, the contract and the flights are set out on the page for{" "}
+            <Link href="/yacht-charter-greece-american-clients" style={{ color: GOLD, textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>
+              American clients
+            </Link>
+            , and the fixed-price version of the week on the{" "}
+            <Link href="/all-inclusive-yacht-charter-greece" style={{ color: GOLD, textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>
+              all-inclusive charter
+            </Link>{" "}
+            page.
+          </p>
+        </div>
+      </section>
+
       {/* FAQ - visible HTML matching the FAQPage schema */}
       <section
         style={{
