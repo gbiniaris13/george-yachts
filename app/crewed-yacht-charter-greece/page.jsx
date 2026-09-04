@@ -171,6 +171,12 @@ function faqSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    // 2026-09-04 (plan item 13): the quick answer and key facts are
+    // declared speakable so engines lift them as the page's answer.
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: [".gy-qa-text", ".gy-key-facts"],
+    },
     mainEntity: FAQS.map((f) => ({
       "@type": "Question",
       name: f.q,
@@ -373,6 +379,13 @@ export default async function CrewedCharterPage() {
           <QuickAnswerBlock
             question="What is a crewed yacht charter in Greece, and what does a week cost?"
             answer={`A crewed yacht charter means the yacht comes with a full professional crew: captain, chef and service. Per the George Yachts Greek Charter Index, weekly net base rates run EUR 10,900-22,000 for a crewed sailing catamaran of 12-16m and EUR 56,000-90,000 at 23-24m, EUR 14,000-90,000 for a power catamaran, EUR 17,500-33,000 for an 18-24m motor yacht, EUR 40,000-65,000 at 26-31m, EUR 60,000-120,000 at 35-40m, and EUR 162,500-235,000 above 50m. Add VAT at the yacht's certified rate (in practice 5.2-12%; statutory ceiling 13%) and APA of 20-40% by yacht type. George Yachts curates ${FLEET_COUNT} yachts in Greek waters, split between the Catamaran Fleet with a crew of two to four and the Motor Yacht Fleet with a full crew.`}
+            keyFacts={[
+              "Crew on every yacht: captain, chef, host; deckhand and engineer on the larger motor yachts",
+              "Base fee plus APA (20 to 30% sail and catamaran, 30 to 40% motor), VAT at the certified rate, gratuity 10 to 15% of base",
+              "Embark Athens (Alimos) for the Cyclades and Saronic, Lefkada or Corfu for the Ionian, Skiathos for the Sporades, Rhodes for the Dodecanese",
+              "One price per yacht per week; weeks start on any day",
+            ]}
+            evidence={{ label: "George Yachts Greek Charter Index", href: "/greek-charter-index-2026" }}
           />
         </div>
       </section>
@@ -698,7 +711,7 @@ export default async function CrewedCharterPage() {
             </Link>{" "}
             is where most families and most first-timers belong. Two hulls, no
             heel, the widest deck space per euro, and a captain, chef and
-            hostess aboard from the Saturday. Weeks begin around €18,000 for
+            hostess aboard from the first day. Weeks begin around €18,000 for
             the yacht and her crew.
           </p>
           <p style={{ ...bodyStyle, marginTop: 20 }}>

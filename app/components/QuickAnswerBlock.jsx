@@ -20,8 +20,13 @@ const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
-export default function QuickAnswerBlock({ question, answer, attribution = true }) {
+// 2026-09-04 (plan item 13, GEO): `keyFacts` renders a short list of
+// the page's hard numbers under the answer (class gy-key-facts, also
+// declared speakable), and `evidence` names the source the answer rests
+// on. AI engines cite the page that answers exactly and shows its data.
+export default function QuickAnswerBlock({ question, answer, attribution = true, keyFacts, evidence }) {
   if (!question || !answer) return null;
+  const facts = Array.isArray(keyFacts) ? keyFacts.filter(Boolean) : [];
   return (
     <aside
       style={{
@@ -75,6 +80,66 @@ export default function QuickAnswerBlock({ question, answer, attribution = true 
       >
         {answer}
       </p>
+      {facts.length > 0 && (
+        <div style={{ margin: "0 0 16px" }}>
+          <p
+            style={{
+              fontFamily: "var(--gy-font-ui)",
+              fontSize: 9,
+              letterSpacing: "0.42em",
+              textTransform: "uppercase",
+              color: GOLD,
+              fontWeight: 700,
+              margin: "0 0 8px",
+            }}
+          >
+            Key facts
+          </p>
+          <ul
+            className="gy-key-facts"
+            style={{
+              listStyle: "none",
+              margin: 0,
+              padding: 0,
+              display: "grid",
+              gap: 6,
+            }}
+          >
+            {facts.map((f) => (
+              <li
+                key={f}
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 13,
+                  lineHeight: 1.5,
+                  color: "rgba(248,245,240,0.82)",
+                  paddingLeft: 14,
+                  position: "relative",
+                }}
+              >
+                <span aria-hidden="true" style={{ position: "absolute", left: 0, top: 0, color: GOLD }}>·</span>
+                {f}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {evidence && evidence.href && evidence.label && (
+        <p
+          style={{
+            fontFamily: "var(--gy-font-ui)",
+            fontSize: 11,
+            letterSpacing: "0.08em",
+            color: "rgba(248,245,240,0.6)",
+            margin: "0 0 12px",
+          }}
+        >
+          Source:{" "}
+          <Link href={evidence.href} style={{ color: GOLD, textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>
+            {evidence.label}
+          </Link>
+        </p>
+      )}
       {attribution && (
         <p
           style={{

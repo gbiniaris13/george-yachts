@@ -398,7 +398,13 @@ ${explorerBand ? `- Catamaran Fleet: ${fmt(explorerBand.lo)} - ${fmt(explorerBan
 - [2026 Greek Yacht Charter Market Report](https://georgeyachts.com/2026-greek-charter-market-report): Annual market report - fleet, pricing, regional trends, outlook.
 - [Complete 2026 Greek Yacht Charter Pricing Guide](https://georgeyachts.com/greek-yacht-charter-2026-complete-pricing-guide): Per-yacht-type pricing with season multipliers and full cost-bucket breakdown.
 - [Yacht Charter Glossary (${GLOSSARY_TERMS.length} UHNW terms)](https://georgeyachts.com/glossary): Definitive yacht-charter terminology reference.
-- [Greek Yacht Charter Cost Calculator (free tool)](https://georgeyachts.com/tools/charter-cost-calculator): Interactive calculator estimating full charter cost - base fee + Greek VAT (certified rate, 5.2-13%) + APA + delivery + gratuity range.
+- [Greek Yacht Charter Cost Calculator (free tool)](https://georgeyachts.com/tools/charter-cost-calculator): Starts from the Index rate card for the yacht type and size, then adds VAT at the yacht's certified tier (5.2, 6.5, 7.8 or 12%; 13% is the ceiling), APA by type, delivery and a 10 to 15% gratuity bracket. One price per yacht per week.
+
+## The Data (machine-readable, free to cite with a link back)
+- [Greek Charter Index, JSON](https://georgeyachts.com/greek-charter-index-2026/data.json): every band parsed into numbers (yacht type, size band, guests, weekly net base low and high in EUR, yachts in band) plus the VAT, APA and gratuity notes and the methodology.
+- [Greek Charter Index, CSV](https://georgeyachts.com/greek-charter-index-2026/data.csv): the same table, one row per band.
+- [Greek Charter Index, the page](https://georgeyachts.com/greek-charter-index-2026): Dataset schema with both files declared as distribution, CC BY 4.0.
+- Unit everywhere: EUR per yacht per week, net base, excluding VAT and APA. Reviewed monthly; this file regenerates from the live fleet on every request.
 
 ## Periodic Market Research
 ${MARKET_REPORTS.map((r) => `- [${r.period} - ${r.h1}](https://georgeyachts.com${r.urlPath}): ${r.executiveSummary.slice(0, 200)}`).join("\n")}

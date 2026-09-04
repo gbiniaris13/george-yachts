@@ -37,6 +37,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import { DESTINATIONS, REGION_SLUGS, getDestination } from "@/lib/destinations";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 
 // Boss Ch.1D — Quick Facts blocks for AI-search citation. ChatGPT,
 // Perplexity, and Google AI Overviews preferentially cite plain-text
@@ -262,6 +263,23 @@ export default async function DestinationPage({ params }) {
           </div>
         </section>
 
+        {/* 2026-09-04 (plan item 13, GEO): one exact answer for the
+            region prompt the AI engines hand to rivals, with the
+            region's hard numbers underneath. Renders only when
+            lib/destinations.js provides quickAnswer. */}
+        {d.quickAnswer && d.quickAnswer.question && d.quickAnswer.answer && (
+          <section style={{ padding: "0 24px 8px" }}>
+            <div style={{ maxWidth: 980, margin: "0 auto" }}>
+              <QuickAnswerBlock
+                question={d.quickAnswer.question}
+                answer={d.quickAnswer.answer}
+                keyFacts={d.keyFacts}
+                evidence={d.evidence}
+              />
+            </div>
+          </section>
+        )}
+
         {/* FAQ, 2026-08-01 SD-1 (GSC striking distance). Optional per
             region: renders only when lib/destinations.js provides a faq
             array. Reuses the insider-picks visual system so the Boss
@@ -286,11 +304,34 @@ export default async function DestinationPage({ params }) {
                 __html: JSON.stringify({
                   "@context": "https://schema.org",
                   "@type": "FAQPage",
-                  mainEntity: d.faq.map((f) => ({
-                    "@type": "Question",
-                    name: f.q,
-                    acceptedAnswer: { "@type": "Answer", text: f.a },
-                  })),
+                  speakable: {
+                    "@type": "SpeakableSpecification",
+                    cssSelector: [".gy-qa-text", ".gy-key-facts"],
+                  },
+                  mainEntity: [
+                    ...(d.quickAnswer && d.quickAnswer.question && d.quickAnswer.answer
+                      ? [
+                          {
+                            "@type": "Question",
+                            name: d.quickAnswer.question,
+                            acceptedAnswer: {
+                              "@type": "Answer",
+                              text: d.quickAnswer.answer,
+                              author: {
+                                "@type": "Person",
+                                "@id": "https://georgeyachts.com/about/george-p-biniaris#person",
+                                name: "George P. Biniaris",
+                              },
+                            },
+                          },
+                        ]
+                      : []),
+                    ...d.faq.map((f) => ({
+                      "@type": "Question",
+                      name: f.q,
+                      acceptedAnswer: { "@type": "Answer", text: f.a },
+                    })),
+                  ],
                 }).replace(/</g, "\\u003c"),
               }}
             />

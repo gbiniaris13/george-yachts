@@ -79,21 +79,46 @@ async function loadFleetMatches(yachtFilter) {
   }
 }
 
-function FaqJsonLd({ faq }) {
-  if (!faq || faq.length === 0) return null;
+function FaqJsonLd({ faq, quickAnswer }) {
+  // 2026-09-04 (plan item 13): the quick answer at the top of the page is
+  // the one Q/A an engine should lift, so it leads the FAQPage entity,
+  // attributed to the canonical author, instead of living only in HTML.
+  const lead =
+    quickAnswer && quickAnswer.question && quickAnswer.answer
+      ? [
+          {
+            "@type": "Question",
+            name: quickAnswer.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: quickAnswer.answer,
+              author: {
+                "@type": "Person",
+                "@id": "https://georgeyachts.com/about/george-p-biniaris#person",
+                name: "George P. Biniaris",
+              },
+            },
+          },
+        ]
+      : [];
+  const rest = Array.isArray(faq) ? faq : [];
+  if (lead.length === 0 && rest.length === 0) return null;
   const json = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     dateModified: SITE_UPDATED,
     speakable: {
       "@type": "SpeakableSpecification",
-      cssSelector: [".gy-qa-text"],
+      cssSelector: [".gy-qa-text", ".gy-key-facts"],
     },
-    mainEntity: faq.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
+    mainEntity: [
+      ...lead,
+      ...rest.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    ],
   };
   return (
     <script
@@ -194,7 +219,7 @@ export default async function SeoLanding({ pageData }) {
   return (
     <>
       <ServiceJsonLd pageData={pageData} yachts={yachts} />
-      <FaqJsonLd faq={pageData.faq} />
+      <FaqJsonLd faq={pageData.faq} quickAnswer={pageData.quickAnswer} />
       <BreadcrumbSchema items={breadcrumbs} />
       {/* TouristTrip - only on itinerary pages (gated on structured stops) so
           yacht-type / combo / comparison pages never emit a spurious trip. */}
@@ -239,7 +264,12 @@ export default async function SeoLanding({ pageData }) {
               }}
             >
               <div style={{ maxWidth: 980, margin: "0 auto" }}>
-                <QuickAnswerBlock question={question} answer={answer} />
+                <QuickAnswerBlock
+                  question={question}
+                  answer={answer}
+                  keyFacts={qa && qa.question ? pageData.keyFacts : undefined}
+                  evidence={qa && qa.question ? pageData.evidence : undefined}
+                />
               </div>
             </section>
           );
