@@ -186,6 +186,22 @@ export default async function GreekCharterIndexPage() {
           : {}),
         ...(report.methodology ? { measurementTechnique: report.methodology } : {}),
         spatialCoverage: { "@type": "Place", name: "Greece (Cyclades, Ionian, Saronic, Dodecanese)" },
+        // 2026-09-04 (plan item 8): the data as files, so the Dataset is a
+        // dataset and not a description of one. Google Dataset Search and
+        // the AI crawlers read `distribution`; journalists read the CSV.
+        license: "https://creativecommons.org/licenses/by/4.0/",
+        distribution: [
+          {
+            "@type": "DataDownload",
+            encodingFormat: "text/csv",
+            contentUrl: `${URL}/data.csv`,
+          },
+          {
+            "@type": "DataDownload",
+            encodingFormat: "application/json",
+            contentUrl: `${URL}/data.json`,
+          },
+        ],
       }
     : null;
 
@@ -253,6 +269,14 @@ export default async function GreekCharterIndexPage() {
             </p>
             )}
             {report.summaryTable && <DataTable table={report.summaryTable} />}
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, letterSpacing: "0.04em", color: "rgba(248,245,240,0.66)", margin: "8px 0 0", lineHeight: 1.6 }}>
+              The data as files, free to cite with a link back:{" "}
+              <a href={`/${SLUG}/data.csv`} style={{ color: GOLD }}>CSV</a>
+              {" · "}
+              <a href={`/${SLUG}/data.json`} style={{ color: GOLD }}>JSON</a>
+              {" · "}
+              <Link href="/tools/charter-cost-calculator" style={{ color: GOLD }}>run the numbers in the cost calculator</Link>
+            </p>
           </div>
         </section>
 
