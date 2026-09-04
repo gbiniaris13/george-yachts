@@ -26,6 +26,7 @@ import Footer from "@/app/components/Footer";
 import { titleField } from "@/lib/seoTitle";
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
+import RelatedPages from "@/app/components/seo/RelatedPages";
 export const metadata = {
   // 2026-08-06 (job 7) — the old title, "Credentials: Forbes, IYBA, MYBA",
   // answered "who are you" for a page whose incoming query is "how do I check
@@ -854,6 +855,13 @@ export default function CredentialsPage() {
             </ul>
           </div>
         </section>
+
+        {/* 2026-09-04 (George: American guests): the credentials page had
+            no related block, so it sent readers nowhere but the footer.
+            The american-crewed cohort in lib/seoInternalLinks.js now
+            surfaces the fixed-price week, the American-clients page and
+            the private and luxury tiers here. */}
+        <RelatedPages path="/credentials" />
 
         {/* Mandatory legal disclaimer per Roberto legal directive §1
             (4 May 2026). Lato Light 9px, gray, italic, exact text. */}
