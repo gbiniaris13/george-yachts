@@ -38,6 +38,84 @@ const REGION_HUBS = {
 
 const REGION_ORDER = ["Cyclades", "Saronic", "Ionian", "Sporades", "Dodecanese", "Crete"];
 
+// 2026-09-04 (plan item 14, FAQPage everywhere): the guide's own data
+// answers the questions people ask an engine about an island, so the
+// FAQ is DERIVED from it at render time, verbatim, for all 48 guides:
+// nothing written by hand, nothing an anchorage record does not say.
+const SHELTERED_NORTH = /\b(from (the )?north|from n\b|from nw\b|from the meltemi|meltemi)/i;
+const OPEN_NORTH = /\b(open|exposed)( to)?( the)? (north|n\b|nw\b|meltemi)/i;
+
+export function deriveAnchorageFaq(g) {
+  const list = Array.isArray(g.anchorages) ? g.anchorages : [];
+  if (list.length === 0) return [];
+  const faq = [];
+  const island = g.islandName;
+
+  faq.push({
+    q: `Where can a yacht anchor at ${island}?`,
+    a: `${island} has ${list.length} anchorages in this guide: ${list.map((a) => a.name).join(", ")}. Each entry below gives depth, holding, shelter direction and what is ashore.`,
+  });
+
+  const sheltered = list.filter(
+    (a) => a.shelter && SHELTERED_NORTH.test(a.shelter) && !OPEN_NORTH.test(a.shelter),
+  );
+  if (sheltered.length > 0) {
+    faq.push({
+      q: `Which ${island} anchorages are sheltered from the meltemi, the summer north wind?`,
+      a: sheltered
+        .slice(0, 4)
+        .map((a) => `${a.name}: ${String(a.shelter).replace(/\.$/, "")}`)
+        .join(". ") + ".",
+    });
+  }
+
+  const depths = list.filter((a) => a.depth);
+  if (depths.length > 0) {
+    faq.push({
+      q: `How deep are the anchorages at ${island}?`,
+      a: depths.map((a) => `${a.name} ${a.depth}`).join("; ") + ". Depths are typical sand-bottom anchoring depths; the captain drops on current chart data.",
+    });
+  }
+
+  const holding = list.filter((a) => a.holding);
+  if (holding.length > 0) {
+    faq.push({
+      q: `What is the holding like at ${island}?`,
+      a: holding.map((a) => `${a.name}: ${String(a.holding).replace(/\.$/, "")}`).join(". ") + ".",
+    });
+  }
+
+  const families = list.filter((a) => a.bestFor && /famil|children|kids/i.test(a.bestFor));
+  if (families.length > 0) {
+    faq.push({
+      q: `Which ${island} anchorage is best for a family charter?`,
+      a: families.map((a) => `${a.name} (${String(a.bestFor).replace(/\.$/, "")})`).join("; ") + ".",
+    });
+  }
+
+  if (g.seasonality) faq.push({ q: `When is the best time to anchor at ${island}?`, a: String(g.seasonality) });
+  if (g.captainAdvice) faq.push({ q: `What does the captain plan around at ${island}?`, a: String(g.captainAdvice) });
+  return faq;
+}
+
+function FaqJsonLd({ faq }) {
+  if (!faq || faq.length === 0) return null;
+  const json = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: [".gy-qa-text", ".gy-key-facts"],
+    },
+    mainEntity: faq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }} />;
+}
+
 function CollectionAndArticleJsonLd({ data }) {
   // The guide page itself is an Article. Each anchorage is a Place
   // with GeoCoordinates, collected as ItemList. The combination
@@ -113,6 +191,7 @@ function CollectionAndArticleJsonLd({ data }) {
 
 export default function IslandAnchorages({ guideData }) {
   const g = guideData;
+  const faq = deriveAnchorageFaq(g);
 
   // Parent surface: the island root page when it exists, otherwise
   // the region page, otherwise the anchorage database. Never a 404.
@@ -143,6 +222,7 @@ export default function IslandAnchorages({ guideData }) {
   return (
     <>
       <CollectionAndArticleJsonLd data={g} />
+      <FaqJsonLd faq={faq} />
       <BreadcrumbSchema items={breadcrumbs} />
 
       <article style={{ background: NAVY, minHeight: "100vh", color: CREAM }}>
@@ -222,6 +302,11 @@ export default function IslandAnchorages({ guideData }) {
                       .join(", ")} - each with different shelter, holding, and ashore access. ${g.captainAdvice ? g.captainAdvice.split(". ")[0] + "." : ""}`
                   : g.intro.split(". ").slice(0, 2).join(". ") + "."
               }
+              keyFacts={(g.anchorages || []).slice(0, 4).map((a) =>
+                [a.name, a.depth, a.holding ? `holding ${String(a.holding).toLowerCase()}` : null]
+                  .filter(Boolean)
+                  .join(", "),
+              )}
             />
           </div>
         </section>
@@ -495,6 +580,54 @@ export default function IslandAnchorages({ guideData }) {
         )}
 
         {/* RELATED PAGES */}
+        {/* FAQ, derived from the guide's own records (plan item 14). */}
+        {faq.length > 0 && (
+          <section style={{ padding: "72px 24px" }}>
+            <div style={{ maxWidth: 720, margin: "0 auto" }}>
+              <p
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 9,
+                  letterSpacing: "0.42em",
+                  textTransform: "uppercase",
+                  color: GOLD,
+                  fontWeight: 600,
+                  margin: "0 0 24px",
+                }}
+              >
+                Questions about anchoring at {g.islandName}
+              </p>
+              {faq.map((f) => (
+                <div key={f.q} style={{ marginBottom: 28 }}>
+                  <h3
+                    style={{
+                      fontFamily: "var(--gy-font-editorial)",
+                      fontSize: "clamp(18px, 2vw, 22px)",
+                      fontWeight: 400,
+                      color: "rgba(248,245,240,0.92)",
+                      margin: "0 0 8px",
+                      lineHeight: 1.35,
+                    }}
+                  >
+                    {f.q}
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: "var(--gy-font-ui)",
+                      fontSize: 15,
+                      lineHeight: 1.75,
+                      color: "rgba(248, 245, 240, 0.8)",
+                      margin: 0,
+                    }}
+                  >
+                    {f.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {Array.isArray(g.relatedPages) && g.relatedPages.length > 0 && (
           <section style={{ padding: "72px 24px" }}>
             <div style={{ maxWidth: 1000, margin: "0 auto" }}>
