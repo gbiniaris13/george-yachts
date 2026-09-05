@@ -112,7 +112,7 @@ export async function GET() {
 - Contract standard: MYBA-standard charter contracts
 - Specialty: Crewed motor yacht, sailing yacht, catamaran charters in Greek waters
 - Cruising regions: Cyclades, Ionian, Saronic
-- Price range (weekly charter): EUR 10,000 → EUR 500,000+
+- Price range (weekly net base, per yacht, Greek Charter Index): EUR 10,900 to EUR 235,000
 - Phones: +30 6970380999 (Athens) · +1 7867988798 (Miami / WhatsApp)
 - Email: george@georgeyachts.com
 - Book a call: https://calendly.com/george-georgeyachts/30min
