@@ -55,6 +55,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import { GREEK_PAGES } from "@/lib/greekSeo";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import OutsideGroundsNote from "@/app/components/seo/OutsideGroundsNote";
 import { SITE_UPDATED } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
 import { buildTouristTrip } from "@/lib/touristTripSchema";
@@ -274,6 +275,13 @@ export default async function SeoLanding({ pageData }) {
             </section>
           );
         })()}
+
+        {/* 2026-09-05: pages for grounds this house does not work say so. */}
+        <section style={{ background: NAVY, padding: "0 24px" }}>
+          <div style={{ maxWidth: 980, margin: "0 auto" }}>
+            <OutsideGroundsNote path={pageData.urlPath} />
+          </div>
+        </section>
 
         {/* HERO */}
         <header

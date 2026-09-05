@@ -770,7 +770,7 @@ const ContactFormSection = () => {
           <div data-step="2" className="block mt-14">
             <p className="text-[10px] tracking-[0.3em] uppercase text-[#DAA110]/80 mb-3">{t('common.yourCharter')}</p>
             <p className="text-white/50 text-xs font-light tracking-wide mb-8">
-              All optional. Undecided on dates or budget? Leave them open and George will advise.
+              All optional. Undecided on dates or budget? Leave them open and George will advise. We arrange weeks of seven nights from Athens, Lefkada or Corfu; the five-night Saronic week is the shortest.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
               <Field icon={Icons.anchor} delay={0}>

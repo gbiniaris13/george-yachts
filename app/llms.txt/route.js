@@ -278,8 +278,7 @@ printed with their year because a crew that wins can also move.
 - [Cyclades](https://georgeyachts.com/destinations/cyclades)
 - [Ionian](https://georgeyachts.com/destinations/ionian)
 - [Saronic](https://georgeyachts.com/destinations/saronic)
-- [Dodecanese, from Rhodes](https://georgeyachts.com/yacht-charter-dodecanese-rhodes)
-- [Sporades Islands, from Skiathos](https://georgeyachts.com/yacht-charter-sporades-skiathos)
+- Outside our operating grounds, kept as sailing resources: [Dodecanese guide](https://georgeyachts.com/yacht-charter-dodecanese-rhodes) and [Sporades guide](https://georgeyachts.com/yacht-charter-sporades-skiathos). George Yachts does not arrange weeks from Rhodes or Skiathos.
 
 ## Catamarans
 Catamarans are ${catTotal} of the ${fleetCount} yachts in this house and the single largest part of
@@ -373,7 +372,7 @@ source we do not have, we leave the number out.
 - [Μεσίτης Σκαφών Ελλάδα](https://georgeyachts.com/el/mesitis-skafon-ellada)
 
 ## Key Facts
-- Regions: Cyclades, Ionian Sea, Saronic Gulf, Dodecanese, Sporades, Greece
+- Operating grounds: the Cyclades and the Saronic Gulf from Athens (Alimos), the Ionian from Lefkada or Corfu. Not the Dodecanese, not the Sporades; the house says so rather than selling a delivery.
 - Charter length: BY THE WEEK, starting on any day of the week rather than Saturday only. We do not broker day charters.
 - Fleet size: ${fleetCount} curated yachts (Catamaran Fleet - sailing and power catamarans · Motor Yacht Fleet - fully crewed motor yachts)
 - Fleet composition: ${compositionLine}

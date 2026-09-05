@@ -17,6 +17,7 @@
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import OutsideGroundsNote from "@/app/components/seo/OutsideGroundsNote";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
 import { getIslandBySlug } from "@/lib/islands";
@@ -308,6 +309,13 @@ export default function IslandAnchorages({ guideData }) {
                   .join(", "),
               )}
             />
+          </div>
+        </section>
+
+        {/* 2026-09-05: guides for grounds this house does not work say so. */}
+        <section style={{ padding: "0 24px" }}>
+          <div style={{ maxWidth: 980, margin: "0 auto" }}>
+            <OutsideGroundsNote path={g.urlPath} />
           </div>
         </section>
 

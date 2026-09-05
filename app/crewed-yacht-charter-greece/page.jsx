@@ -390,7 +390,7 @@ export default async function CrewedCharterPage() {
             keyFacts={[
               "Crew on every yacht: captain, chef, host; deckhand and engineer on the larger motor yachts",
               "Base fee plus APA (20 to 30% sail and catamaran, 30 to 40% motor), VAT at the certified rate, gratuity 10 to 15% of base",
-              "Embark Athens (Alimos) for the Cyclades and Saronic, Lefkada or Corfu for the Ionian, Skiathos for the Sporades, Rhodes for the Dodecanese",
+              "Embark Athens (Alimos) for the Cyclades and the Saronic, Lefkada or Corfu for the Ionian; these are the grounds this house works",
               "One price per yacht per week; weeks start on any day",
             ]}
             evidence={{ label: "George Yachts Greek Charter Index", href: "/greek-charter-index-2026" }}

@@ -6,6 +6,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import InlineCalendlySection from "@/app/components/InlineCalendlySection";
 import { relatedFor } from "@/lib/seoInternalLinks";
+import OutsideGroundsNote from "@/app/components/seo/OutsideGroundsNote";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
 import Footer from "@/app/components/Footer";
@@ -191,6 +192,13 @@ export default function BottomFunnelPage({ pageData }) {
               keyFacts={d.keyFacts}
               evidence={d.evidence}
             />
+          </div>
+        </section>
+
+        {/* 2026-09-05: pages for grounds this house does not work say so. */}
+        <section style={{ padding: "0 24px" }}>
+          <div style={{ maxWidth: 980, margin: "0 auto" }}>
+            <OutsideGroundsNote path={d.urlPath} />
           </div>
         </section>
 

@@ -24,6 +24,7 @@ import IslandPageTracker from "./IslandPageTracker";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import QuizCtaCard from "@/app/components/QuizCtaCard";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import OutsideGroundsNote from "@/app/components/seo/OutsideGroundsNote";
 import { pageMeta } from "@/lib/pageMeta";
 import Footer from "@/app/components/Footer";
 
@@ -414,6 +415,13 @@ export default async function IslandPage({ params }) {
                   : `${firstSentence}.`;
               })()}
             />
+          </div>
+        </section>
+
+        {/* 2026-09-05: islands outside the grounds this house works say so. */}
+        <section style={{ padding: "0 24px" }}>
+          <div style={{ maxWidth: 980, margin: "0 auto" }}>
+            <OutsideGroundsNote path={`/island/${island.slug}`} />
           </div>
         </section>
 
