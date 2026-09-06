@@ -18,6 +18,7 @@ import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { pageMeta } from "@/lib/pageMeta";
 import Footer from "@/app/components/Footer";
+import { FLEET_COUNT, CATAMARAN_COUNT, FLEET_COMPOSITION } from "@/lib/fleetCount";
 
 const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
@@ -355,9 +356,9 @@ export default function MarketReportPage() {
                 note="31 of the 57 dated enquiries this desk logged between 30 May and 6 September 2026 asked for exactly seven nights."
               />
               <StatCard
-                stat="42 of 65"
+                stat={`${CATAMARAN_COUNT} of ${FLEET_COUNT}`}
                 label="Catamarans in our fleet"
-                note="Of the 65 yachts we represent, 27 are sailing catamarans and 15 power catamarans, against 17 motor yachts and 6 sailing monohulls."
+                note={`Of the ${FLEET_COUNT} yachts we represent, ${FLEET_COMPOSITION.sailingCat} are sailing catamarans and ${FLEET_COMPOSITION.powerCat} power catamarans, against ${FLEET_COMPOSITION.motor} motor yachts.`}
               />
             </div>
           </div>
@@ -398,9 +399,10 @@ export default function MarketReportPage() {
             still took 57.52% of charter revenue <Src id="bookingMgr" />.
           </p>
           <p>
-            <Strong>The yachts we represent mirror the shift.</Strong> Of 65, 42 are
-            catamarans, 27 sailing and 15 power, against 17 motor yachts and 6 sailing
-            monohulls. The Greek Charter Index 2026 is compiled from the 58 that are
+            <Strong>The yachts we represent mirror the shift.</Strong> Of {FLEET_COUNT},{" "}
+            {CATAMARAN_COUNT} are catamarans, {FLEET_COMPOSITION.sailingCat} sailing and{" "}
+            {FLEET_COMPOSITION.powerCat} power, against {FLEET_COMPOSITION.motor} motor
+            yachts. The Greek Charter Index 2026 is compiled from the 58 that are
             fully crewed, meaning two or more crew, with seven smaller crewed yachts
             quoted separately.
           </p>
