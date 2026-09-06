@@ -123,13 +123,20 @@ export async function generateMetadata({ params }) {
   // from ~18 to ~48 on its head terms in the 15-25 Aug recalibration.
   // House rule: place before poetry - the title states the ROLE, the
   // mood line stays on-page (hero + cards keep cardTitle untouched).
-  // Ionian/Saronic keep the old pattern deliberately: they held their
-  // positions, and a title change on a healthy page is risk for
-  // nothing.
+  // Ionian/Saronic kept the old pattern on the theory that they held
+  // their positions. 2026-09-06, Search Console 90 days: the Ionian hub
+  // never had any. "ionian yacht charter" and "yacht charter ionian"
+  // reach the site two to four times a quarter and land on the sailing
+  // and two-week pages at 28 to 71; the hub's only query is another
+  // company's brand name. A page with nothing to lose is not frozen.
+  // Saronic (positions 57 to 78, 200 impressions a month) waits for the
+  // 18/9 measurement before its title moves.
   const title =
     d.slug === "cyclades"
       ? `${d.label} Yacht Charter: Crewed Yachts, Routes & Weekly Rates`
-      : `${d.label} Yacht Charter - ${d.cardTitle}`;
+      : d.slug === "ionian"
+        ? `${d.label} Yacht Charter: Crewed Yachts, Corfu & Lefkada Routes`
+        : `${d.label} Yacht Charter - ${d.cardTitle}`;
   // 2026-08-06 (job 5) — was `${d.cardSubline} ${d.pageTagline}`, and those two
   // fields say the same thing in different words, so every regional snippet in
   // Google repeated itself: "Whitewashed cliffs. Deep blue caldera. The Aegean
