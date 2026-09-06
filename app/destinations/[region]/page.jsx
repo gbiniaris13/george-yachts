@@ -38,6 +38,7 @@ import Footer from "@/components/Footer";
 import { DESTINATIONS, REGION_SLUGS, getDestination } from "@/lib/destinations";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import RelatedPages from "@/app/components/seo/RelatedPages";
 
 // Boss Ch.1D — Quick Facts blocks for AI-search citation. ChatGPT,
 // Perplexity, and Google AI Overviews preferentially cite plain-text
@@ -337,6 +338,13 @@ export default async function DestinationPage({ params }) {
             />
           </section>
         )}
+
+        {/* 2026-09-06 (plan item 12): the region hubs never rendered the
+            related block, so they linked out only through the footer.
+            The Cyclades hub now sits in its own cohort in
+            lib/seoInternalLinks.js; the Ionian and Saronic hubs draw
+            their region's pages by tag. */}
+        <RelatedPages path={`/destinations/${d.slug}`} />
 
         {/* CTA */}
         <section className="gy-dest-cta">
