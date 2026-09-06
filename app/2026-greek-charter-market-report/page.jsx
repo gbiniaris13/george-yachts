@@ -2,13 +2,17 @@
 //
 // 2026-05-11 Phase 7 Round 3 SEO execution. Section 8 Gap 5.
 //
-// This is a LINKABLE ASSET designed for citation by AI engines and
-// backlinks from travel/yachting publications. The strategy doc
-// notes that 47.9% of ChatGPT factual citations come from authority
-// sites with original data; this page positions George Yachts as
-// one. Numbers below are framed as "from our 2026 charter market
-// observations" — when Boss has actual data points he can update
-// the page with precise figures and citation will follow.
+// 2026-09-06 rewrite. The May edition carried headline figures the
+// house could not stand behind (a growth rate, a fleet count, source
+// market shares, a rate change, a lead time in months) presented as
+// observations from a booking record and an IYBA network that did
+// not exist as data. George's instruction: rewrite without invented
+// numbers, keep the page, tell the truth. Every figure below now
+// comes from one of three named sources: the Greek Charter Index 2026
+// (the current rate cards of the fifty-eight fully crewed yachts we
+// represent), this desk's own enquiry log (every request since 30 May
+// 2026, read on 6 September 2026), or a linked third-party publication.
+// Readings of the market are written as a broker's reading and say so.
 
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
@@ -24,10 +28,46 @@ export const revalidate = 86400;
 export const metadata = pageMeta({
   title: "2026 Greek Charter Market Report",
   description:
-    "Original 2026 Greek yacht charter market research. Booking patterns, source markets, fleet composition, pricing trends. Data-driven from IYBA member.",
+    "The 2026 Greek yacht charter market from a working Athens desk: rate cards by yacht class, fleet mix, who is asking, when they book. Sourced, no estimates.",
   path: "/2026-greek-charter-market-report",
   type: "article",
 });
+
+const SOURCES = {
+  gtpPorts: {
+    pub: "GTP Headlines",
+    url: "https://news.gtp.gr/2026/03/12/greece-to-upgrade-30-island-ports-with-e260m-investment-to-boost-yachting-sector/",
+  },
+  myba: {
+    pub: "SuperYacht24, citing MYBA",
+    url: "https://www.superyacht24.it/en/2026/04/27/da-myba-i-numeri-del-charter-di-yacht-italia-4-nel-2025-e-terza-destinazione-mondiale/",
+  },
+  nj: {
+    pub: "Northrop & Johnson",
+    url: "https://www.northropandjohnson.com/navigator-news/charter/2026-yacht-charter-market-trends-show-last-minute-booking-surge",
+  },
+  bookingMgr: {
+    pub: "Booking Manager",
+    url: "https://www.booking-manager.com/en/blog/state-of-the-yacht-charter-industry-2025.html",
+  },
+  traveler: {
+    pub: "The Traveler",
+    url: "https://www.thetraveler.org/greece-commands-global-yacht-charter-market-in-2025/",
+  },
+  gmh: {
+    pub: "Global Maritime Hub",
+    url: "https://globalmaritimehub.com/global-bunker-prices-surge-as-middle-east-tensions-shake-fuel-markets.html",
+  },
+};
+
+function Src({ id }) {
+  const s = SOURCES[id];
+  return (
+    <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: GOLD, textDecoration: "none", whiteSpace: "nowrap" }}>
+      ({s.pub})
+    </a>
+  );
+}
 
 function ArticleJsonLd() {
   const json = {
@@ -35,13 +75,14 @@ function ArticleJsonLd() {
     "@type": "Article",
     "@id": "https://georgeyachts.com/2026-greek-charter-market-report#article",
     headline: "2026 Greek Yacht Charter Market Report",
-    description: "Original research on the 2026 Greek yacht charter market: source-market shifts, fleet growth, pricing dynamics, and demand patterns.",
+    description:
+      "The 2026 Greek yacht charter market from a working Athens desk: rate cards by yacht class, fleet composition, who is asking and when they book. Sourced figures only.",
     datePublished: "2026-05-11",
-    dateModified: "2026-05-11",
+    dateModified: "2026-09-06",
     author: {
       "@type": "Person",
       name: "George P. Biniaris",
-      jobTitle: "Managing Broker",
+      jobTitle: "Founder and Managing Broker",
       worksFor: {
         "@type": "Organization",
         name: "George Yachts Brokerage House LLC",
@@ -166,6 +207,8 @@ function StatCard({ stat, label, note }) {
   );
 }
 
+const Strong = ({ children }) => <strong style={{ color: "#F8F5F0" }}>{children}</strong>;
+
 export default function MarketReportPage() {
   const breadcrumbs = [
     { name: "Home", url: "https://georgeyachts.com/" },
@@ -224,8 +267,8 @@ export default function MarketReportPage() {
                 lineHeight: 1.5,
               }}
             >
-              What's actually happening in the Greek yacht charter market in 2026.
-              Observations from inside the IYBA member network.
+              What is actually happening in the Greek yacht charter market in 2026,
+              from the desk of a working Athens broker. Sourced figures, no estimates.
             </p>
           </div>
         </header>
@@ -256,13 +299,14 @@ export default function MarketReportPage() {
                 lineHeight: 1.5,
               }}
             >
-              The 2026 Greek charter market is **growing 11-15% year over year**, driven by
-              a meaningful shift of demand from the French Riviera and a return of the
-              US source market post-2024. Fleet supply is keeping pace but **catamaran and
-              30-40 metre motor-yacht categories are tighter than ever** for peak August
-              weeks. Rates are up 5-8% on average vs 2025. The story under the headlines:
-              shoulder season (June and September) is the new peak as repeat clients
-              consolidate around lower-density weeks.
+              Greece entered 2026 on a documented rise, with a 24% increase in yachting
+              demand in 2025 and 40% of Eastern Mediterranean charter bookings, and the
+              state rebuilding thirty island ports through 2027. On the rate cards a
+              fully crewed week runs from EUR 10,900 for a 14 metre sailing catamaran to
+              EUR 235,000 above 50 metres, per yacht per week before VAT and APA. The
+              client who reaches this desk asks for a seven-night week departing Athens,
+              books the peak a year ahead, and increasingly asks for a catamaran. Where
+              this report offers a reading rather than a figure, it says so.
             </p>
           </div>
         </section>
@@ -282,183 +326,232 @@ export default function MarketReportPage() {
                 textAlign: "center",
               }}
             >
-              Headline numbers
+              Headline numbers, each with its source
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 18 }}>
               <StatCard
-                stat="+13%"
-                label="YoY growth"
-                note="Estimated booked-charter-revenue growth across the IYBA Greek-member network in 2026 vs 2025."
+                stat="+24%"
+                label="Greek yachting demand, 2025"
+                note="Rise in yachting demand recorded in Greece in 2025, with 40% of all Eastern Mediterranean charter bookings. Source: GTP Headlines."
               />
               <StatCard
-                stat="200+"
-                label="Active fleet"
-                note="Charter yachts operating in Greek waters across IYBA member brokerages."
+                stat="EUR 10,900"
+                label="The crewed floor"
+                note="Lowest weekly net base fee for a fully crewed yacht on our rate cards: a 14 metre sailing catamaran for eight guests. Greek Charter Index 2026."
               />
               <StatCard
-                stat="32%"
-                label="US market share"
-                note="US-source charters as a percentage of total bookings - up from 24% in 2024."
+                stat="58"
+                label="Crewed rate cards"
+                note="Fully crewed yachts whose current rate cards the Greek Charter Index 2026 is compiled from, plus seven smaller crewed yachts quoted separately."
               />
               <StatCard
-                stat="8 mo"
-                label="Lead time"
-                note="Median booking lead time for peak August weeks - up from 6 months in 2025."
+                stat="6 to 12 mo"
+                label="Peak lead time"
+                note="Booking lead time we recommend for July and August weeks; premium yachts above 40 metres a year or more ahead. Greek Charter Index 2026."
               />
               <StatCard
-                stat="+7%"
-                label="Average rate change"
-                note="Weighted-average weekly base rate change vs 2025 across the fleet sampled here."
+                stat="7 nights"
+                label="The week clients ask for"
+                note="31 of the 57 dated enquiries this desk logged between 30 May and 6 September 2026 asked for exactly seven nights."
               />
               <StatCard
-                stat="11"
-                label="New 30m+ yachts"
-                note="Vessels above 30 metres added to the Greek charter fleet for the 2026 season."
+                stat="42 of 65"
+                label="Catamarans in our fleet"
+                note="Of the 65 yachts we represent, 27 are sailing catamarans and 15 power catamarans, against 17 motor yachts and 6 sailing monohulls."
               />
             </div>
           </div>
         </section>
 
         {/* SOURCE MARKETS */}
-        <Section eyebrow="Source markets" h2="Where 2026 charterers are coming from">
+        <Section eyebrow="Who is asking" h2="Where the 2026 enquiries come from">
           <p>
-            The 2026 source-market mix has shifted meaningfully from the 2024 baseline.
-            <strong style={{ color: "#F8F5F0" }}> The US market is up 8 percentage points</strong>{" "}
-            (24% to 32% of bookings), with the strongest growth from New York, Miami, San
-            Francisco, and Los Angeles. We attribute the rise to (a) post-2024 recovery in
-            US international leisure travel, (b) currency tailwinds (USD remained strong
-            against EUR through Q1 2026), and (c) the increasing brand recognition of Greek
-            charter in US luxury-travel media.
+            <Strong>The majority of the clients who reach this house are American.</Strong>{" "}
+            Gulf, British and Israeli clients follow. We do not publish a percentage
+            split, because the log that would support one only began on 30 May 2026
+            and one desk's mix is not the Greek market's. What the log does show is how
+            the client arrives: 64 of the 68 enquiries in the window came directly from
+            the client, and four through a travel advisor.
           </p>
           <p>
-            <strong style={{ color: "#F8F5F0" }}>The UK and Northern European market is flat to slightly down</strong>,
-            reflecting general softness in UK luxury-travel spend through 2025-2026. The
-            GCC market (UAE, Saudi Arabia, Qatar) is up 3 points and now represents 11% of
-            our booked charters - a meaningful change from 7% in 2024.
+            <Strong>The wider record points the same way.</Strong> The Mediterranean
+            generated 76% of global charter activity in 2025 and global crewed bookings
+            grew 12% <Src id="myba" />. After the Middle East events of late February
+            2026, travel intent shifted toward the Southern Mediterranean, and Greece
+            was on the receiving end of that shift.
           </p>
           <p>
-            <strong style={{ color: "#F8F5F0" }}>Repeat-client share is up to 38%</strong>, the highest in our records.
-            This is consistent with industry-wide data showing UHNW charter clients
-            consolidating around 2-3 trusted brokerages rather than shopping each charter.
+            <Strong>How the American client phrases the number</Strong> is itself a
+            finding. Where a budget was stated in an enquiry it was most often phrased
+            all-in, not as a base fee, which is why every rate on this site is quoted
+            per yacht per week with the VAT, APA and gratuity rules beside it.
           </p>
         </Section>
 
         {/* FLEET COMPOSITION */}
-        <Section eyebrow="Fleet" h2="What's available and what's sold out">
+        <Section eyebrow="Fleet" h2="What the crewed fleet looks like">
           <p>
-            The Greek charter fleet grew by approximately 11 vessels (net of departures)
-            for the 2026 season. The growth concentrated in two categories:{" "}
-            <strong style={{ color: "#F8F5F0" }}>30-40 metre motor yachts (5 new vessels)</strong>{" "}
-            and <strong style={{ color: "#F8F5F0" }}>large sailing catamarans (4 new vessels in the 60-80 foot range)</strong>.
-            The 50+ metre megayacht category added 2 vessels.
+            Greece had <Strong>904 catamarans among 3,030 charter vessels in 2025</Strong>,
+            about 30% of the fleet, with luxury catamarans among the fastest growing
+            segments <Src id="traveler" />. Across the global charter market, catamarans
+            were about 26% of the fleet and 30% of all booked weeks, while motor yachts
+            still took 57.52% of charter revenue <Src id="bookingMgr" />.
           </p>
           <p>
-            <strong style={{ color: "#F8F5F0" }}>Tightness in 2026</strong>: catamaran availability for July-August
-            sells through by January. The 30-40m motor yacht segment for peak August is
-            typically gone by February. Below 25 metres, availability is better but
-            quality-tier yachts (recent refits, top crews) are still booking 6+ months
-            ahead. The 50+ metre megayacht segment has 8-12 weeks of peak inventory
-            remaining as of May 2026 - limited but possible for clients who can decide
-            quickly.
+            <Strong>The yachts we represent mirror the shift.</Strong> Of 65, 42 are
+            catamarans, 27 sailing and 15 power, against 17 motor yachts and 6 sailing
+            monohulls. The Greek Charter Index 2026 is compiled from the 58 that are
+            fully crewed, meaning two or more crew, with seven smaller crewed yachts
+            quoted separately.
           </p>
           <p>
-            <strong style={{ color: "#F8F5F0" }}>Shoulder-season availability</strong> (May, late June, September,
-            October) remains comfortable across all categories. This is where repeat
-            clients increasingly book.
-          </p>
-        </Section>
-
-        {/* PRICING DYNAMICS */}
-        <Section eyebrow="Pricing" h2="Where 2026 rates settled">
-          <p>
-            Weighted-average weekly base rates across the Greek charter fleet are up
-            approximately 7% vs 2025. The increase is uneven across categories.
-          </p>
-          <p>
-            <strong style={{ color: "#F8F5F0" }}>Up most: catamarans (+9-12%)</strong> reflecting strong demand and
-            limited new inventory. <strong style={{ color: "#F8F5F0" }}>Up moderately: motor yachts (+5-8%)</strong>{" "}
-            split between newer vessels gaining premium and older vessels holding flat.{" "}
-            <strong style={{ color: "#F8F5F0" }}>Up least: sailing yachts (+3-5%)</strong> in a market where pure
-            sailing weeks have a narrower core audience.
-          </p>
-          <p>
-            <strong style={{ color: "#F8F5F0" }}>APA convention has shifted slightly</strong>: average APA observed
-            is 28% of base rate (up from 26% in 2024) reflecting higher fuel costs and
-            general provisioning inflation in Greek charter ports.
+            <Strong>What goes first, every year:</Strong> the late July and August weeks
+            on the most requested yachts, then the five and six cabin catamarans, then
+            the premium motor yachts above 40 metres. We do not publish a sell-through
+            date or a fill percentage, because we hold our own quotations and the
+            owners' replies, not the calendars of the Greek fleet.
           </p>
         </Section>
 
-        {/* DESTINATION DEMAND */}
-        <Section eyebrow="Destinations" h2="Where 2026 charters are going">
+        {/* PRICING */}
+        <Section eyebrow="Pricing" h2="Where 2026 rates sit, by yacht class">
           <p>
-            <strong style={{ color: "#F8F5F0" }}>The Cyclades remain the dominant destination</strong> with roughly
-            55% of all booked charters. Within the Cyclades, Mykonos-centred itineraries
-            remain the strongest single category, but{" "}
-            <strong style={{ color: "#F8F5F0" }}>Folegandros, Sifnos, and Antiparos are growing the fastest</strong>{" "}
-            as part of multi-island Cycladic loops. The "Mykonos and only Mykonos" charter
-            is becoming less common; repeat clients prefer the Cycladic variety.
+            A crewed yacht's base rate attaches to the vessel, not to the cruising
+            ground: an owner publishes one Greece-wide rate card per boat. The bands
+            below are the lowest and highest weekly net base fee on a rate card in each
+            class, per yacht per week before VAT and APA, from the{" "}
+            <Link href="/greek-yacht-charter-price-index-2026" style={{ color: GOLD }}>
+              Greek Charter Index 2026
+            </Link>
+            . No cell is an average or an estimate.
           </p>
+          <div style={{ overflowX: "auto", margin: "24px 0" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14, fontVariantNumeric: "tabular-nums" }}>
+              <thead>
+                <tr>
+                  {["Yacht type and size", "Weekly net base (EUR)", "Yachts"].map((h) => (
+                    <th key={h} style={{ textAlign: "left", padding: "10px 12px", borderBottom: `1px solid ${GOLD}`, color: GOLD, fontWeight: 600, fontSize: 10, letterSpacing: "0.24em", textTransform: "uppercase" }}>
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["Sailing catamaran, 12 to 16m", "10,900 to 22,000", "5"],
+                  ["Sailing catamaran, 16 to 19m", "18,900 to 27,500", "4"],
+                  ["Sailing catamaran, 20 to 22m", "31,500 to 43,500", "7"],
+                  ["Sailing catamaran, 23 to 24m", "56,000 to 90,000", "7"],
+                  ["Power catamaran, 13 to 17m", "14,000 to 28,000", "2"],
+                  ["Power catamaran, 20 to 22m", "34,000 to 69,000", "7"],
+                  ["Power catamaran, 23 to 24m", "49,000 to 90,000", "5"],
+                  ["Motor yacht, 18 to 20m", "17,500 to 22,900", "3"],
+                  ["Motor yacht, 22 to 24m", "21,000 to 33,000", "2"],
+                  ["Motor yacht, 26 to 31m", "40,000 to 65,000", "5"],
+                  ["Motor yacht, 35 to 40m", "60,000 to 120,000", "5"],
+                  ["Superyacht, 50m and above", "162,500 to 235,000", "2"],
+                  ["Sailing monohull, 24 to 31m", "24,000 to 49,000", "4"],
+                ].map((row) => (
+                  <tr key={row[0]}>
+                    {row.map((c, i) => (
+                      <td key={i} style={{ padding: "10px 12px", borderBottom: "1px solid rgba(248,245,240,0.08)", color: i === 0 ? "#F8F5F0" : "rgba(248,245,240,0.85)" }}>
+                        {c}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <p>
-            <strong style={{ color: "#F8F5F0" }}>The Ionian has stable demand</strong> at 25% of booked charters.
-            Family weeks and first-time charters consistently choose the Ionian. The
-            Lefkada-Kefalonia-Ithaca-Paxos loop is the most-requested specific itinerary
-            in this region.
-          </p>
-          <p>
-            <strong style={{ color: "#F8F5F0" }}>The Sporades and Dodecanese together represent ~15%</strong>{" "}
-            of charters, mostly skewed toward repeat clients seeking less-trafficked
-            destinations. Sporades demand is up; Dodecanese demand stable.
-          </p>
-          <p>
-            <strong style={{ color: "#F8F5F0" }}>Crete is the underutilised destination of 2026</strong>. The fleet
-            available for Crete-departure charters is small (most Crete-active yachts
-            base in Chania or Heraklion seasonally rather than year-round) but the
-            destination is increasingly appearing in extended 14-day itineraries combined
-            with the southern Cyclades.
+            <Strong>On top of the base:</Strong> Greek VAT on a weekly crewed charter is
+            invoiced at 5.2, 6.5, 7.8 or 12% depending on the yacht's certification,
+            with 13% the statutory ceiling. APA runs 20 to 30% of the base for sailing
+            yachts and catamarans and 30 to 40% for motor yachts, where fuel weighs
+            heaviest, and marine VLSFO passed 650 US dollars a tonne in March 2026{" "}
+            <Src id="gmh" />. A crew gratuity of 10 to 15% of the base is customary.
+            Shoulder weeks, May and late September to October, price 15 to 25% below
+            peak on the same rate card.
           </p>
         </Section>
 
-        {/* SEASON SHIFTS */}
-        <Section eyebrow="Season patterns" h2="The shoulder season is the new peak">
+        {/* DESTINATIONS */}
+        <Section eyebrow="Destinations" h2="Where the 2026 enquiries want to go">
           <p>
-            The most meaningful 2026 trend in our booking data is{" "}
-            <strong style={{ color: "#F8F5F0" }}>growth in shoulder-season demand</strong>. June and September
-            charter weeks are up 18% YoY combined, while peak July-August is up only 4%.
-            For repeat clients, the math is straightforward: shoulder weeks offer 25-35%
-            lower rates, quieter anchorages, marginally warmer water in September than
-            June, and significantly less wind drama from the Meltemi.
+            <Strong>Athens is the departure.</Strong> On this desk's log the most common
+            request by a wide margin is an Athens to Athens week, with the Cyclades and
+            Mykonos named next, and the Ionian and the Saronic behind them. Every charter
+            we closed between June and September 2026 departs Athens.
           </p>
           <p>
-            <strong style={{ color: "#F8F5F0" }}>Late September and October are the under-the-radar months</strong>.
-            Available yacht inventory in these months is high; rates are 35-40% below
-            August peak; weather is reliably calm. We expect this trend to continue into
-            2027 as more clients learn the pattern.
+            <Strong>The Cyclades carry the deepest demand and the Meltemi</Strong>, which
+            favours larger, faster, more powerful yachts, so the boats that end up there
+            sit higher in the rate table. On our own most-requested list Mykonos and
+            Santorini still lead, Milos is the fastest rising, and Paros is the
+            sophisticated alternative that younger clients ask for.
+          </p>
+          <p>
+            <Strong>The Ionian and the Saronic are the best value in practice</Strong>:
+            calmer water, close to Athens, little or no repositioning cost, and ideal
+            conditions for a catamaran. The rate card does not change by region, so the
+            saving shows up in the delivery line and in what is still available. Our
+            weekly programmes run in the Saronic, the Cyclades and the Ionian from
+            Athens; other Greek waters we quote on request.
+          </p>
+        </Section>
+
+        {/* SEASON */}
+        <Section eyebrow="Season patterns" h2="When 2026 clients book, and for when">
+          <p>
+            Across the wider market, average booking lead time fell from 118 days in
+            2025 to 83 days in 2026, and median charter length rose from seven nights to
+            eight <Src id="nj" />. We believe both figures and also that the average is
+            easy to misread: it is dominated by shoulder and last-minute weeks, while
+            the peak July and August weeks on the most requested Greek yachts still move
+            six to twelve months ahead.
+          </p>
+          <p>
+            <Strong>This desk's own log says the same thing from the other side.</Strong>{" "}
+            Of the 57 dated enquiries received between 30 May and 6 September 2026, 26
+            were already for 2027 or later, and the 2027 months most asked for were June
+            and September, ahead of July and August. August was the busiest month for
+            new enquiries, with 25 of the 68. Three of the four charters we closed in
+            the window are for 2027 dates, confirmed a year ahead.
+          </p>
+          <p>
+            <Strong>The shoulder is where the thoughtful client goes.</Strong> May and
+            late September to October price 15 to 25% below peak, need three to four
+            months of lead time rather than a year, and sit outside the Meltemi. That is
+            a rule from our rate cards, not a forecast.
           </p>
         </Section>
 
         {/* METHODOLOGY */}
         <Section eyebrow="Methodology" h2="How this report was built">
           <p>
-            The data underlying this report comes from{" "}
-            <strong style={{ color: "#F8F5F0" }}>George Yachts internal booking records for 2024-2026</strong>{" "}
-            (anonymised charter contracts), supplemented by{" "}
-            <strong style={{ color: "#F8F5F0" }}>IYBA member-network observations</strong> shared at the spring
-            2026 IYBA annual meeting, and{" "}
-            <strong style={{ color: "#F8F5F0" }}>publicly available fleet listing data</strong> compiled across
-            the major Greek charter brokerages.
+            This report was rewritten on 6 September 2026 to remove estimates that
+            appeared in the May edition. Three sources remain, and each figure names
+            its own.{" "}
+            <Strong>The Greek Charter Index 2026</Strong> compiles the current rate cards
+            of the 58 fully crewed yachts we represent; each band is the lowest and
+            highest figure on a rate card, observed rather than modelled.{" "}
+            <Strong>This desk's enquiry log</Strong> has recorded every charter request
+            since 30 May 2026 and was read on 6 September 2026; its counts describe one
+            brokerage house and are not a market share of anything.{" "}
+            <Strong>Third-party publications</Strong> are linked where their figures
+            appear: GTP Headlines, SuperYacht24 citing MYBA, Northrop &amp; Johnson,
+            Booking Manager, The Traveler and Global Maritime Hub.
           </p>
           <p>
-            Percentages and growth rates are observational estimates based on these
-            sources. We do not represent the report as a statistically rigorous survey;
-            it reflects George Yachts' own view of the market backed by direct charter
-            operations and peer-network conversations. Where specific numbers are cited,
-            they reflect either our own bookings or IYBA-shared aggregated data.
+            We do not hold industry-wide booking data and do not claim to. Where the
+            text offers a reading of the market rather than a figure, it is a broker's
+            reading and is written as one.
           </p>
           <p>
-            <strong style={{ color: "#F8F5F0" }}>For journalists and analysts</strong>: this report is intended for
-            citation in luxury travel and yachting publications. We are happy to provide
-            additional context, specific data points, and on-record commentary on request.
-            Contact <a href="mailto:george@georgeyachts.com" style={{ color: GOLD }}>george@georgeyachts.com</a>.
+            <Strong>For journalists and analysts</Strong>: we are happy to provide the
+            rate cards behind any band, the enquiry counts behind any sentence, and
+            on-record commentary. Contact{" "}
+            <a href="mailto:george@georgeyachts.com" style={{ color: GOLD }}>george@georgeyachts.com</a>.
           </p>
         </Section>
 
@@ -475,7 +568,7 @@ export default function MarketReportPage() {
                 lineHeight: 1.2,
               }}
             >
-              Plan your 2026 charter.
+              Plan your 2027 charter.
             </h2>
             <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
               <Link
