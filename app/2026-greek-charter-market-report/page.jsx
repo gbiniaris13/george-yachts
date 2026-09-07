@@ -43,9 +43,11 @@ const SOURCES = {
     pub: "SuperYacht24, citing MYBA",
     url: "https://www.superyacht24.it/en/2026/04/27/da-myba-i-numeri-del-charter-di-yacht-italia-4-nel-2025-e-terza-destinazione-mondiale/",
   },
+  // 2026-09-07 (George): no other charter house is named on the site, not
+  // even as a source. The figures stay, attributed to the report, unlinked.
   nj: {
-    pub: "Northrop & Johnson",
-    url: "https://www.northropandjohnson.com/navigator-news/charter/2026-yacht-charter-market-trends-show-last-minute-booking-surge",
+    pub: "a global brokerage house's 2026 charter market report",
+    url: "",
   },
   bookingMgr: {
     pub: "Booking Manager",
@@ -63,6 +65,9 @@ const SOURCES = {
 
 function Src({ id }) {
   const s = SOURCES[id];
+  if (!s.url) {
+    return <span style={{ color: GOLD, whiteSpace: "nowrap" }}>({s.pub})</span>;
+  }
   return (
     <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: GOLD, textDecoration: "none", whiteSpace: "nowrap" }}>
       ({s.pub})
@@ -541,8 +546,8 @@ export default function MarketReportPage() {
             since 30 May 2026 and was read on 6 September 2026; its counts describe one
             brokerage house and are not a market share of anything.{" "}
             <Strong>Third-party publications</Strong> are linked where their figures
-            appear: GTP Headlines, SuperYacht24 citing MYBA, Northrop &amp; Johnson,
-            Booking Manager, The Traveler and Global Maritime Hub.
+            appear: GTP Headlines, SuperYacht24 citing MYBA, a global brokerage
+            house&rsquo;s market report, Booking Manager, The Traveler and Global Maritime Hub.
           </p>
           <p>
             We do not hold industry-wide booking data and do not claim to. Where the

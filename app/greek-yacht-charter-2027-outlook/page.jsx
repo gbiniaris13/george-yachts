@@ -41,9 +41,8 @@ const SOURCES = {
   gtpBoard: { pub: "GTP Headlines", url: "https://news.gtp.gr/2026/02/02/greek-yachting-association-elects-new-board-for-2026-2029-term/" },
   mys: { pub: "Mediterranean Yacht Show (Greek Yachting Association)", url: "https://www.mediterraneanyachtshow.gr/" },
   myba: { pub: "SuperYacht24, citing MYBA", url: "https://www.superyacht24.it/en/2026/04/27/da-myba-i-numeri-del-charter-di-yacht-italia-4-nel-2025-e-terza-destinazione-mondiale/" },
-  nj: { pub: "Northrop & Johnson", url: "https://www.northropandjohnson.com/navigator-news/charter/2026-yacht-charter-market-trends-show-last-minute-booking-surge" },
+  nj: { pub: "a global brokerage house's 2026 charter market report", url: "" },
   knightFrank: { pub: "Boat International, Knight Frank Wealth Report", url: "https://www.boatinternational.com/boat-pro/superyacht-insight/knight-frank-wealth-report-2026-superyacht-industry" },
-  iyc: { pub: "IYC", url: "https://iyc.com/blog/review-of-2025-yacht-sales-charter-performance/" },
   boataround: { pub: "Boataround", url: "https://www.boataround.com/blog/boatarounds-2024-in-numbers-sailing-trends-and-customer-insights" },
   bookingMgr: { pub: "Booking Manager", url: "https://www.booking-manager.com/en/blog/state-of-the-yacht-charter-industry-2025.html" },
   traveler: { pub: "The Traveler", url: "https://www.thetraveler.org/greece-commands-global-yacht-charter-market-in-2025/" },
@@ -173,9 +172,13 @@ export default function Outlook2027Page() {
                 {sec.facts.map((f, fi) => (
                   <li key={fi} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.65, color: "rgba(248,245,240,0.85)", fontWeight: 300, paddingLeft: 18, borderLeft: `2px solid ${GOLD}` }}>
                     {f.t}{" "}
-                    <a href={SOURCES[f.s].url} target="_blank" rel="noopener noreferrer" style={{ color: GOLD, textDecoration: "none", fontSize: 13, whiteSpace: "nowrap" }}>
-                      ({SOURCES[f.s].pub})
-                    </a>
+                    {SOURCES[f.s].url ? (
+                      <a href={SOURCES[f.s].url} target="_blank" rel="noopener noreferrer" style={{ color: GOLD, textDecoration: "none", fontSize: 13, whiteSpace: "nowrap" }}>
+                        ({SOURCES[f.s].pub})
+                      </a>
+                    ) : (
+                      <span style={{ color: GOLD, fontSize: 13, whiteSpace: "nowrap" }}>({SOURCES[f.s].pub})</span>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -203,7 +206,11 @@ export default function Outlook2027Page() {
             <ol style={{ margin: 0, paddingLeft: 20, display: "flex", flexDirection: "column", gap: 8 }}>
               {sourceList.map((s, i) => (
                 <li key={i} style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, color: "rgba(248,245,240,0.66)", fontWeight: 300 }}>
-                  <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(248,245,240,0.82)", textDecoration: "none" }}>{s.pub}</a>
+                  {s.url ? (
+                    <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(248,245,240,0.82)", textDecoration: "none" }}>{s.pub}</a>
+                  ) : (
+                    <span style={{ color: "rgba(248,245,240,0.82)" }}>{s.pub}</span>
+                  )}
                 </li>
               ))}
             </ol>
