@@ -239,15 +239,27 @@ export default async function HomePage() {
     privateCount = privateYachts.length;
     explorerCount = explorerYachts.length;
 
-    const extractPrice = (str) => {
-      const m = String(str || '').match(/[\d,]+/);
-      return m ? parseInt(m[0].replace(/,/g, '')) : 0;
+    // 2026-09-07: a rate card reads "€180,000 - €235,000". The old parser
+    // took the first figure only, so the fleet "to" price was the highest
+    // "from" on any card (180,000) rather than the top of the band
+    // (235,000). Low is the smallest opening figure, high the largest
+    // figure anywhere on a card.
+    const extractPrices = (str) => {
+      const all = (String(str || '').match(/\d[\d,]{3,}/g) || [])
+        .map((s) => parseInt(s.replace(/,/g, ''), 10))
+        .filter((n) => n >= 1000);
+      return all.length ? { first: all[0], max: Math.max(...all) } : null;
+    };
+    const extractPrice = (str) => (extractPrices(str) || { first: 0 }).first;
+    const rangeOf = (list) => {
+      const parsed = list.map((y) => extractPrices(y.weeklyRatePrice)).filter(Boolean);
+      return parsed.length
+        ? { low: Math.min(...parsed.map((p) => p.first)), high: Math.max(...parsed.map((p) => p.max)) }
+        : null;
     };
 
-    const privatePrices = privateYachts.map(y => extractPrice(y.weeklyRatePrice)).filter(p => p > 0);
-    if (privatePrices.length) {
-      privateRange = { low: Math.min(...privatePrices), high: Math.max(...privatePrices) };
-    }
+    const privateParsed = rangeOf(privateYachts);
+    if (privateParsed) privateRange = privateParsed;
 
     // 2026-08-21 (section 5). This used to divide the week by the number of
     // berths and publish the result as a per-person figure. George: "όλες οι
@@ -255,12 +267,8 @@ export default async function HomePage() {
     // honest number. A weekly rate divided by a bunk is not a price anybody
     // can pay: the yacht goes as one yacht, and a group of six on an eight
     // berth boat pays the eight berth week.
-    const explorerPrices = explorerYachts
-      .map(y => extractPrice(y.weeklyRatePrice))
-      .filter(p => p > 0);
-    if (explorerPrices.length) {
-      explorerRange = { low: Math.min(...explorerPrices), high: Math.max(...explorerPrices) };
-    }
+    const explorerParsed = rangeOf(explorerYachts);
+    if (explorerParsed) explorerRange = explorerParsed;
 
     budgetYachts = allYachts
       .map(y => {
