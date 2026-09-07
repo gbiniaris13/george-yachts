@@ -105,7 +105,14 @@ function contentOf(html) {
     html.match(/<body[\s\S]*?<\/body>/i)?.[0];
   if (!scoped) return null;
 
-  const text = scoped
+  // 2026-09-07: site-wide chrome that lives inside <main> must not stamp every
+  // page when it changes. The related-links block is recomputed by the
+  // internal-link engine (a cohort edit touches dozens of pages). A page keeps
+  // its date unless ITS OWN text changed.
+  const own = scoped
+    .replace(/<section[^>]*>(?:(?!<\/section>)[\s\S])*?Closely related to this page[\s\S]*?<\/section>/gi, " ")
+    .replace(/<section[^>]*>(?:(?!<\/section>)[\s\S])*?Continue exploring[\s\S]*?<\/section>/gi, " ")
+  const text = own
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<noscript[\s\S]*?<\/noscript>/gi, " ")
