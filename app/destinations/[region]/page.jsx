@@ -271,6 +271,32 @@ export default async function DestinationPage({ params }) {
           </div>
         </section>
 
+        {/* 2026-09-07 (plan item 10): the yachts this house places for a
+            week in the region, named with their fit and linked to the
+            rate card. Reuses the insider-picks visual system; no counts
+            and no prices on this page (boss directive). Renders only when
+            lib/destinations.js provides a yachts array. */}
+        {Array.isArray(d.yachts) && d.yachts.length > 0 && (
+          <section className="gy-dest-picks">
+            <div className="gy-dest-picks__inner">
+              <h2 className="gy-dest-picks__label">Yachts this house places for a {d.label} week</h2>
+              <p className="gy-dest-picks__subline">
+                Named from the fleet we represent. The rate card is on each yacht&apos;s page.
+              </p>
+              <ul className="gy-dest-picks__list">
+                {d.yachts.map((y) => (
+                  <li key={y.slug} className="gy-dest-pick">
+                    <h3 className="gy-dest-pick__name">
+                      <Link href={`/yachts/${y.slug}`} style={{ color: "inherit", textDecoration: "none" }}>{y.name}</Link>
+                    </h3>
+                    <p className="gy-dest-pick__desc">{y.note}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
+
         {/* 2026-09-04 (plan item 13, GEO): one exact answer for the
             region prompt the AI engines hand to rivals, with the
             region's hard numbers underneath. Renders only when
