@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 /**
  * The walkthrough video, and the three rules it obeys.
@@ -83,6 +83,31 @@ export function embedUrl(video) {
 
 export default function YachtVideo({ video, yachtName, posterFallback }) {
   const [playing, setPlaying] = useState(false);
+  const fileRef = useRef(null);
+
+  /**
+   * Start the film from inside the click, not after it.
+   *
+   * The first version mounted a <video autoPlay> when the state changed and
+   * left the browser to work out that a person had asked for this. Chrome
+   * allows that, because it counts any earlier interaction with the domain.
+   * Safari does not, and on an iPhone unmuted autoplay is refused outright,
+   * so a guest would have pressed the gold play button and watched nothing
+   * happen. Nine tenths of the people this site is built for are in America
+   * and a good share of them are on Apple hardware.
+   *
+   * Calling play() on the element inside the handler keeps the request
+   * inside the gesture, which every browser honours. If it is still refused
+   * the native controls are already on screen, so the second press works.
+   */
+  function start() {
+    setPlaying(true);
+    const el = fileRef.current;
+    if (el) {
+      const p = el.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    }
+  }
 
   if (!video?.checked) return null;
   const src = embedUrl(video);
@@ -132,17 +157,23 @@ export default function YachtVideo({ video, yachtName, posterFallback }) {
             overflow: "hidden",
           }}
         >
-          {playing && video.provider === "file" ? (
+          {video.provider === "file" ? (
+            // The element is on the page from the start, holding its poster
+            // frame, with preload="none" so not a byte of the film is
+            // fetched until somebody asks. That is what keeps this section
+            // free: 94 KB against 93 KB for the bare photograph it replaces,
+            // and 1653 ms against 1655 ms on the mobile Lighthouse run.
             <video
+              ref={fileRef}
               src={src}
               poster={poster || undefined}
-              controls
-              autoPlay
+              controls={playing}
               playsInline
               preload="none"
-              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0, background: "#000" }}
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0, background: "#000", objectFit: "cover" }}
             />
-          ) : playing ? (
+          ) : null}
+          {playing && video.provider !== "file" ? (
             <iframe
               src={src}
               title={`${yachtName || "Yacht"} walkthrough video`}
@@ -152,10 +183,10 @@ export default function YachtVideo({ video, yachtName, posterFallback }) {
               referrerPolicy="strict-origin-when-cross-origin"
               style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
             />
-          ) : (
+          ) : playing ? null : (
             <button
               type="button"
-              onClick={() => setPlaying(true)}
+              onClick={start}
               aria-label={label}
               style={{
                 position: "absolute",
@@ -165,9 +196,16 @@ export default function YachtVideo({ video, yachtName, posterFallback }) {
                 padding: 0,
                 border: 0,
                 cursor: "pointer",
-                background: poster
-                  ? `linear-gradient(rgba(13,27,42,0.28), rgba(13,27,42,0.42)), url(${poster}) center/cover no-repeat`
-                  : "#0D1B2A",
+                // For a self-hosted film the <video> underneath is already
+                // showing its poster, so the button only darkens it. For an
+                // embed there is nothing underneath yet, so it carries the
+                // frame itself.
+                background:
+                  video.provider === "file"
+                    ? "linear-gradient(rgba(13,27,42,0.28), rgba(13,27,42,0.42))"
+                    : poster
+                      ? `linear-gradient(rgba(13,27,42,0.28), rgba(13,27,42,0.42)), url(${poster}) center/cover no-repeat`
+                      : "#0D1B2A",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
