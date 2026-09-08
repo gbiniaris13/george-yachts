@@ -81,25 +81,25 @@ async function main() {
   const notes = [];
   let checked = 0;
 
-  // The same two cuts lib/sanity.js makes on every query the site runs.
-  // A retired hull and a hidden monohull render nowhere, so a stale week on
-  // one of them is not a reason to stop a deploy. It is still worth saying
-  // out loud, because a monohull that comes back into the list would bring
-  // its week with it.
+  // Retired hulls only. They redirect, so nothing renders their week.
+  //
+  // The monohulls were skipped here for about an hour on 8 September, on the
+  // reasoning that they are held back from the fleet lists. That reasoning
+  // was wrong and worth writing down: being absent from a list is not being
+  // absent from the site. All seven answer with a 200, all seven are in
+  // sitemap.xml, and a guest arriving from a search engine reads the same
+  // page as anybody else. HUAYRA was sitting there with a fifty five mile
+  // leg at seven knots, seven hours and fifty minutes under way, which is
+  // exactly the failure this guard was written to end. Hidden from a list is
+  // not hidden from Google.
   const retired = new Set(RETIRED_YACHT_SLUGS);
-  const invisible = rows.filter(
-    (y) => retired.has(y.slug) || y.category === "sailing-monohulls",
-  );
-  if (invisible.length) {
-    notes.push(
-      `${invisible.length} record(s) not checked because nothing renders them: ` +
-        `${invisible.filter((y) => retired.has(y.slug)).length} retired, ` +
-        `${invisible.filter((y) => y.category === "sailing-monohulls").length} monohulls held back from the lists.`,
-    );
+  const skipped = rows.filter((y) => retired.has(y.slug));
+  if (skipped.length) {
+    notes.push(`${skipped.length} retired record(s) not checked, because they redirect.`);
   }
 
   for (const y of rows) {
-    if (retired.has(y.slug) || y.category === "sailing-monohulls") continue;
+    if (retired.has(y.slug)) continue;
     const days = y.days || [];
     if (!days.length) {
       notes.push(`${y.slug}: no sample week.`);
