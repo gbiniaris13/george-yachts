@@ -34,6 +34,13 @@ const SKIP = [
 // "Camper & Nicholsons" is deliberately absent: it is the shipyard that
 // built NORTHWIND II in 1966, and a builder's name on a rate card is a fact.
 const NAMES = [
+  "cloud9 concierge",
+  "cloud 9 concierge",
+  "sotheby",
+  "arton capital",
+  "suite sojourn",
+  "onirikos",
+
   "istion", "fx yachting", "fx yachts", "fyly", "\\biyc\\b", "fraser", "burgess",
   "northrop", "edmiston", "mygreekcharter",
   "ionian-charter", "12knots", "thethoms", "valef", "yal'oou", "yaloou",

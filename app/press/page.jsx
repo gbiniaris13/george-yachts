@@ -27,7 +27,7 @@ const FORBES = {
     "That's the geopolitical shift playing out in real time on my desk.",
   attribution: "George P. Biniaris, Managing Broker",
   excerpt:
-    "George Yachts was quoted alongside leaders from Sotheby's Caribbean, Arton Capital, and Cloud9 Concierge in this Forbes piece on how UHNW wealth is repositioning across geography, passports, and portfolios in 2026. The article positions Greek waters as a strategic destination absorbing charter demand previously deployed to the Gulf, Red Sea, and UAE.",
+    "George Yachts was quoted alongside leaders in luxury real estate, citizenship advisory and private travel in this Forbes piece on how UHNW wealth is repositioning across geography, passports, and portfolios in 2026. The article positions Greek waters as a strategic destination absorbing charter demand previously deployed to the Gulf, Red Sea, and UAE.",
 };
 
 export const metadata = {
@@ -147,7 +147,7 @@ function PressFaqSchema() {
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "The Forbes piece included perspectives from Sotheby's, Arton Capital, Cloud9 Concierge, Suite Sojourn, and Onirikos Milan. George Yachts was the sole yacht brokerage featured.",
+            "The Forbes piece included perspectives from luxury real estate, citizenship advisory, private villa and luxury travel firms. George Yachts was the sole yacht brokerage featured.",
         },
       },
     ],
@@ -424,7 +424,7 @@ export default function PressPage() {
           },
           {
             q: "Who else was featured in the article?",
-            a: "The Forbes piece included perspectives from Sotheby's (Caribbean real estate), Arton Capital (citizenship and residency), Cloud9 Concierge (Mykonos villas and yachts), Suite Sojourn (private villas), and Onirikos Milan (luxury travel). George Yachts was the sole yacht brokerage featured.",
+            a: "The Forbes piece included perspectives from firms in Caribbean real estate, citizenship and residency advisory, private villas and luxury travel. George Yachts was the sole yacht brokerage featured, and the only one speaking for Greek waters.",
           },
         ].map((item, i) => (
           <div
