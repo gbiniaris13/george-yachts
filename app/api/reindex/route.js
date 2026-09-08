@@ -44,6 +44,40 @@ function verifySanitySignature(rawBody, signatureHeader) {
 }
 
 /**
+ * Read the slug out of whatever the caller sent.
+ *
+ * ── The bug this closes ──────────────────────────────────────────────────
+ *
+ * The handlers took `slug` and dropped it straight into a template literal.
+ * A string worked. An object did not: Sanity's slug field is
+ * `{_type: "slug", current: "wombat"}`, and a webhook projection that
+ * forwards the field rather than `slug.current` sends exactly that. The
+ * template literal then stringified it, the route revalidated
+ * "/yachts/[object Object]", which is a path that does not exist and which
+ * revalidatePath accepts without complaint, and the response came back 200
+ * with an "ok" for every service. Caught on 8 September while flushing two
+ * yacht pages by hand: both reported success and neither page changed.
+ *
+ * A cache flush that silently does nothing is worse than one that fails,
+ * because nobody goes looking. So this accepts either shape, and anything
+ * that is not a plain slug is a 400 rather than a cheerful 200.
+ */
+function readSlug(raw) {
+  const value =
+    typeof raw === "string"
+      ? raw
+      : raw && typeof raw === "object" && typeof raw.current === "string"
+        ? raw.current
+        : null;
+  if (!value) return null;
+  const slug = value.trim().replace(/^\/+|\/+$/g, "");
+  // A slug is one path segment. Anything with a slash, a space or a bracket
+  // in it is a mistake somewhere upstream and must not reach revalidatePath.
+  if (!slug || !/^[a-z0-9][a-z0-9-]*$/i.test(slug)) return null;
+  return slug;
+}
+
+/**
  * Sanity Webhook → Full auto-SEO pipeline.
  *
  * Sanity sends a POST with:
@@ -75,11 +109,23 @@ export async function POST(request) {
     }
 
     const body = JSON.parse(rawBody);
-    const { _type, slug, operation } = body;
+    const { _type, slug: rawSlug, operation } = body;
 
-    if (!_type || !slug) {
+    if (!_type || !rawSlug) {
       return NextResponse.json(
         { error: "Missing _type or slug" },
+        { status: 400 }
+      );
+    }
+
+    const slug = readSlug(rawSlug);
+    if (!slug) {
+      return NextResponse.json(
+        {
+          error:
+            "Unreadable slug. Send a string, or the Sanity slug object with a `current` field.",
+          received: rawSlug,
+        },
         { status: 400 }
       );
     }
@@ -255,9 +301,9 @@ function buildUrl(type, slug) {
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const type = searchParams.get("type");
-  const slug = searchParams.get("slug");
+  const rawSlug = searchParams.get("slug");
 
-  if (!type || !slug) {
+  if (!type || !rawSlug) {
     return NextResponse.json({
       status: "ready",
       message:
@@ -267,6 +313,13 @@ export async function GET(request) {
   }
 
   // Manual trigger — run revalidation + pings directly (bypasses auth)
+  const slug = readSlug(rawSlug);
+  if (!slug) {
+    return NextResponse.json(
+      { error: "Unreadable slug.", received: rawSlug },
+      { status: 400 }
+    );
+  }
   const url = buildUrl(type, slug);
   if (!url) {
     return NextResponse.json({ error: `Unknown content type: ${type}` }, { status: 400 });
