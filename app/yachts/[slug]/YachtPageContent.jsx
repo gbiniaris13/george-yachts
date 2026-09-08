@@ -663,6 +663,33 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
         {/* A.6, Breadcrumb (sits below hero) */}
         <Breadcrumbs items={breadcrumbItems.map(b => ({ name: b.name, url: b.url ? new URL(b.url).pathname : undefined }))} />
 
+        {/* 2026-09-08 (George), the walkthrough sits here, directly under the
+            hero and ahead of the specifications.
+
+            It spent an hour at the head of the image gallery, on Baymard's
+            product-page testing, which finds that people look for video
+            inside the gallery and that 41% watch it once they find it.
+            George overruled that, and on this business he is right and the
+            testing is beside the point. Baymard measures shoppers who have
+            already decided to buy a category and are choosing between items;
+            this page is read by somebody in America comparing four boats at
+            forty thousand euro a week who has never chartered before. The
+            gallery is eight hundred pixels down. He wants the film in front
+            of them before they can leave, because a guest who watches two
+            minutes of a walkthrough is a guest still on the site.
+
+            The cost of the position is one poster frame, 94 KB at 640x360,
+            below the hero and therefore not the Largest Contentful Paint.
+            preload="none" means the film itself is still not fetched until
+            somebody presses play, which is what makes a position this high
+            affordable at all. Sixty-nine yachts have no cleared video and
+            the component returns null, so this costs their pages nothing. */}
+        <YachtVideo
+          video={yacht.video}
+          yachtName={yacht.name}
+          posterFallback={yacht.images?.[0]?.url}
+        />
+
         {/* D.1, SPECS STRIP, pulled up here so the buyer sees the
             decision-grade information before the editorial. */}
         <section className="yacht-specs reveal">
@@ -750,23 +777,6 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           <section className="yacht-gallery">
             <div className="container">
               <h2 className="yacht-gallery__title">{q.gallery || `${t('yacht.galleryTitle', 'What Does')} ${yacht.name} ${t('yacht.lookLike', 'Look Like Inside and Out')}?`}</h2>
-              {/* 2026-09-08 — the walkthrough sits at the head of the gallery,
-                  not in a section of its own further down.
-                  Baymard's product-page testing (4,400+ sessions) is
-                  unambiguous on this: people look for video inside the image
-                  gallery, 41% watch it once they find it, and 35% of retailers
-                  lose it by placing it somewhere else on the page. It was in a
-                  section of its own for about an hour this afternoon, which is
-                  exactly the mistake they describe.
-                  It stays a poster with a play control. Measured on this page
-                  shape: poster-and-click 1653 ms LCP against 1655 ms for the
-                  bare photograph, and 94 KB against 93 KB. Autoplay would have
-                  cost 2.26 MB inside the measurement window alone. */}
-              <YachtVideo
-                video={yacht.video}
-                yachtName={yacht.name}
-                posterFallback={yacht.images?.[0]?.url}
-              />
               <Lightbox
                 images={yacht.images}
                 yachtName={yacht.name}

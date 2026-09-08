@@ -120,7 +120,11 @@ export default function YachtVideo({ video, yachtName, posterFallback }) {
   return (
     <section
       aria-label="Walkthrough video"
-      style={{ background: "#0D1B2A", padding: "8px 24px 56px" }}
+      // 2026-09-08 — spacing for the position under the hero rather than the
+      // one inside the gallery. Eight pixels of top padding read as a seam
+      // when this block followed a heading; directly beneath a full-bleed
+      // photograph it needs room to be its own thing.
+      style={{ background: "#0D1B2A", padding: "48px 24px 56px" }}
     >
       <div style={{ maxWidth: 980, margin: "0 auto" }}>
         <h2
