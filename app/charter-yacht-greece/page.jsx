@@ -1,5 +1,5 @@
 import React from "react";
-import { FLEET_COUNT } from "@/lib/fleetCount";
+import { FLEET_COUNT, FLEET_COMPOSITION, CATAMARAN_COUNT } from "@/lib/fleetCount";
 import { sanityClient } from "@/lib/sanity";
 import Footer from "@/components/Footer";
 import FleetGrid from "./FleetGrid";
@@ -223,6 +223,24 @@ export default async function CharterFleetPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
+      {/* 2026-09-08: marks the answer unit as the quotable part of the page,
+          the same declaration every other GEO destination already makes. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "@id": "https://georgeyachts.com/charter-yacht-greece#webpage",
+            url: "https://georgeyachts.com/charter-yacht-greece",
+            name: "Charter Fleet, George Yachts",
+            speakable: {
+              "@type": "SpeakableSpecification",
+              cssSelector: [".gy-qa-text"],
+            },
+          }),
+        }}
+      />
 
       {/* HERO, Chapter 01 (2026-05-08): Boss-curated catamaran video
           replaces the static Sanity image. Two clips concatenated:
@@ -288,6 +306,73 @@ export default async function CharterFleetPage() {
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M4 8L10 14L16 8" stroke="#DAA110" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
+        </div>
+      </section>
+
+      {/* ANSWER UNIT (2026-09-08).
+          The Sunday LLM scan reported this page as the one destination in
+          the GEO map with no answer unit at all: three prompts point here,
+          4,910 searches a month behind them, and an engine arriving found a
+          video, a grid and no sentence it could quote. Every other page on
+          that list already carries one.
+
+          What an engine needs is the shape of the fleet in numbers it can
+          lift: how many, of what, at what price, in which waters, on what
+          terms. All figures come from lib/fleetCount.js and the yachts'
+          own rate cards, so they cannot drift from the grid below them. */}
+      <section style={{ padding: "56px 24px 8px", borderTop: "1px solid rgba(218,161,16,0.14)" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <h2
+            style={{
+              fontFamily: "var(--gy-font-editorial)",
+              fontSize: "clamp(24px, 3.2vw, 34px)",
+              fontWeight: 300,
+              color: "#F8F5F0",
+              margin: "0 0 18px",
+              lineHeight: 1.15,
+            }}
+          >
+            What can you charter in Greece, and what does a week cost?
+          </h2>
+          <p
+            className="gy-qa-text"
+            style={{
+              fontFamily: "var(--gy-font-editorial)",
+              fontSize: "clamp(18px, 2.2vw, 23px)",
+              fontWeight: 300,
+              lineHeight: 1.55,
+              color: "#F8F5F0",
+              margin: "0 0 20px",
+            }}
+          >
+            This house places {FLEET_COUNT} crewed yachts in Greek waters:{" "}
+            {CATAMARAN_COUNT} catamarans, {FLEET_COMPOSITION.sailingCat} sailing and{" "}
+            {FLEET_COMPOSITION.powerCat} power, and {FLEET_COMPOSITION.motor} motor
+            yachts. A week runs from EUR 10,900 for the smallest crewed catamaran
+            to EUR 235,000 for the largest motor yacht, quoted as one price per
+            yacht per week, whatever the size of the party. Every charter is fully crewed
+            and seven nights or longer, boarding at Athens, Lefkada or Corfu, and
+            cruising the Cyclades, the Saronic or the Ionian.
+          </p>
+          <p
+            className="gy-qa-text"
+            style={{
+              fontFamily: "var(--gy-font-ui)",
+              fontSize: 16,
+              lineHeight: 1.7,
+              color: "rgba(248,245,240,0.85)",
+              margin: "0 0 14px",
+            }}
+          >
+            On top of the weekly rate a charter carries an advance provisioning
+            allowance, 20 to 30 percent of the base on a sailing yacht or
+            catamaran and 30 to 40 percent on a motor yacht, which pays fuel,
+            food and harbour dues at cost and returns whatever is unspent. Greek
+            VAT is invoiced at the yacht{"\u2019"}s certified rate on a weekly
+            crewed charter, and a gratuity of 10 to 15 percent of the base is
+            customary rather than contractual. The broker{"\u2019"}s commission is
+            paid by the yacht{"\u2019"}s owner, so there is no fee to the guest.
+          </p>
         </div>
       </section>
 
