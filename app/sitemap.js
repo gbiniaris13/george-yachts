@@ -472,7 +472,8 @@ export default async function sitemap() {
     const yachts = await sanityClient.fetch(
       `*[/* +mono */ _type == "yacht" && defined(slug.current)]{
         "slug": slug.current, _updatedAt,
-        "images": images[0..2].asset->url
+        "images": images[0..2].asset->url,
+        video
       }`
     );
     yachtEntries = yachts.map((yacht) => {
@@ -497,6 +498,29 @@ export default async function sitemap() {
         changeFrequency: "weekly",
         priority: 0.75,
         ...(imgs.length ? { images: imgs } : {}),
+        // 2026-09-08 — the video extension. Next's sitemap builder emits
+        // <video:video> from this field, which is how Google is told a page
+        // carries a video without having to render it and guess. Only a
+        // cleared video is declared, matching exactly what the page shows;
+        // a sitemap that promises a video the page does not render is the
+        // kind of mismatch that costs a site its video results outright.
+        ...(yacht.video?.checked && (yacht.video.url || yacht.video.videoId)
+          ? {
+              videos: [
+                {
+                  title: yacht.video.title || `${yacht.slug} walkthrough`,
+                  thumbnailLoc: yacht.video.thumbnail || imgs[0],
+                  description:
+                    yacht.video.title ||
+                    `Walkthrough video of a crewed charter yacht in Greek waters.`,
+                  contentLoc: yacht.video.url,
+                  duration: yacht.video.durationSeconds || undefined,
+                  publicationDate: yacht.video.uploadDate || undefined,
+                  familyFriendly: true,
+                },
+              ],
+            }
+          : {}),
       };
     });
   } catch (error) {

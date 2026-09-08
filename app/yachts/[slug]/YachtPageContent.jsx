@@ -27,6 +27,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ScrollReveal from './ScrollReveal';
 import Lightbox from './Lightbox';
+import YachtVideo from './YachtVideo';
 import YachtCinematicTour from './YachtCinematicTour';
 import WhatsAppEnquiry from '@/app/components/WhatsAppEnquiry';
 import Breadcrumbs from '@/app/components/Breadcrumbs';
@@ -749,6 +750,23 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           <section className="yacht-gallery">
             <div className="container">
               <h2 className="yacht-gallery__title">{q.gallery || `${t('yacht.galleryTitle', 'What Does')} ${yacht.name} ${t('yacht.lookLike', 'Look Like Inside and Out')}?`}</h2>
+              {/* 2026-09-08 — the walkthrough sits at the head of the gallery,
+                  not in a section of its own further down.
+                  Baymard's product-page testing (4,400+ sessions) is
+                  unambiguous on this: people look for video inside the image
+                  gallery, 41% watch it once they find it, and 35% of retailers
+                  lose it by placing it somewhere else on the page. It was in a
+                  section of its own for about an hour this afternoon, which is
+                  exactly the mistake they describe.
+                  It stays a poster with a play control. Measured on this page
+                  shape: poster-and-click 1653 ms LCP against 1655 ms for the
+                  bare photograph, and 94 KB against 93 KB. Autoplay would have
+                  cost 2.26 MB inside the measurement window alone. */}
+              <YachtVideo
+                video={yacht.video}
+                yachtName={yacht.name}
+                posterFallback={yacht.images?.[0]?.url}
+              />
               <Lightbox
                 images={yacht.images}
                 yachtName={yacht.name}

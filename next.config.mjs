@@ -141,7 +141,30 @@ const nextConfig = {
               // yacht has populated it yet. When George adds the first
               // 3D tour, the iframe would otherwise be silently
               // CSP-blocked.
-              "frame-src 'self' https://www.google.com https://calendly.com https://www.youtube.com https://my.matterport.com",
+              //
+              // 2026-09-08 — player.vimeo.com added, and this is worth
+              // recording because it cost an hour to find. The yacht
+              // walkthrough videos are Vimeo embeds, and every one of them
+              // rendered as a broken frame with NO console error and no
+              // network entry: a CSP frame-src refusal is silent in the
+              // parent document. The first instinct was that the partner had
+              // locked the videos to their own domains. A public Vimeo video
+              // dropped into the same page as a control failed identically,
+              // which located the fault here in one step.
+              //
+              // youtube-nocookie is listed alongside youtube because the
+              // video component uses the no-cookie host, which is a separate
+              // origin as far as CSP is concerned.
+              "frame-src 'self' https://www.google.com https://calendly.com https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://my.matterport.com",
+              // Self-hosted walkthrough files play through a <video> element
+              // rather than an iframe, so their origin belongs in media-src.
+              // 2026-09-08 — a partner's asset domain was here for about four hours
+              // this afternoon, while the walkthrough videos were still served
+              // from it. It is gone with them: all nineteen now sit on our own
+              // Sanity CDN. A Content-Security-Policy header is sent to every
+              // visitor and this file is in a public repository, so a supplier
+              // named here is a supplier named in public, which is precisely
+              // what the rule of 7 September forbids.
               "media-src 'self' https://cdn.sanity.io blob:",
             ].join("; "),
           },

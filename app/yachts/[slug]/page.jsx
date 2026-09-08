@@ -398,11 +398,68 @@ function YachtSchema({ yacht, imageUrl, slug }) {
     ].filter((prop) => prop.value),
   };
 
+  // 2026-09-08 — VideoObject, and why it is its own node rather than a
+  // property of the yacht.
+  //
+  // Google reads VideoObject to decide whether a page earns a video result:
+  // the thumbnail beside the listing, and the entry in the video tab. Its
+  // required fields are name, description, thumbnailUrl and uploadDate, and
+  // it wants either contentUrl or embedUrl. All of them are held on the
+  // yacht record, so the markup never depends on a third-party API at build
+  // time. Until today the site carried zero VideoObject markup and Search
+  // Console reported no videos indexed across 62 pages, so this is the first
+  // video signal the domain has ever sent.
+  //
+  // Only a cleared video is described. Publishing markup for a video the
+  // page does not render would be a lie to a crawler, and a video nobody has
+  // watched is not a published asset.
+  const v = yacht.video;
+  // uploadDate is a REQUIRED property of VideoObject, not a recommended one:
+  // without it the whole node fails validation and earns nothing, so it gates
+  // the markup exactly as the human clearance does.
+  const videoSchema =
+    v && v.checked && v.uploadDate && (v.url || v.videoId)
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'VideoObject',
+          '@id': `https://georgeyachts.com/yachts/${slug}#video`,
+          name: v.title || `${yacht.name} walkthrough`,
+          description:
+            `A walkthrough of ${yacht.name}, ${yacht.length || ''} ${yacht.subtitle || ''}`.trim() +
+            ', available for crewed charter in Greek waters.',
+          thumbnailUrl: v.thumbnail || imageUrl,
+          uploadDate: v.uploadDate || undefined,
+          duration: v.durationSeconds
+            ? `PT${Math.floor(v.durationSeconds / 60)}M${v.durationSeconds % 60}S`
+            : undefined,
+          // Google's wording is identical and explicit for both: "Don't link
+          // to the page where the video lives." embedUrl must be the player
+          // itself, which is what v.url holds. contentUrl must be the actual
+          // video file bytes, which we only have for a self-hosted file; for a
+          // Vimeo or YouTube video it is omitted rather than guessed, because a
+          // contentUrl pointing at a player is simply wrong.
+          embedUrl: v.url || undefined,
+          contentUrl: v.provider === "file" ? v.url : undefined,
+          // The video sits on a page about the yacht, so it points back at
+          // the yacht entity rather than floating unattached.
+          about: { '@id': `https://georgeyachts.com/yachts/${slug}#yacht` },
+          publisher: { '@id': 'https://georgeyachts.com/#organization' },
+        }
+      : null;
+
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      {videoSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }}
+        />
+      )}
+    </>
   );
 }
 
@@ -432,6 +489,8 @@ export default async function YachtPage({ params }) {
       maxSpeed,
       cruiseSpeed,
       cruisingRegion,
+      homePort,
+      category,
       weeklyRatePrice,
       features,
       toys,
@@ -441,6 +500,12 @@ export default async function YachtPage({ params }) {
       // one; her page has never offered it. Dead data on 65 hulls, and the one
       // asset a charterer comparing three boats at forty thousand euro a week
       // actually wants to keep open in a tab.
+      // 2026-09-08 - the walkthrough video. Only rendered when the checked
+      // field is set, which is the date somebody watched it and confirmed
+      // there is no watermark and no other company on screen. An unchecked
+      // video is data, not a published asset. (No backticks in this comment:
+      // it sits inside a template literal and a backtick would end the query.)
+      video,
       "brochureUrl": brochure.asset->url,
       "brochureSize": brochure.asset->size,
       "slug": slug.current,
@@ -519,9 +584,15 @@ export default async function YachtPage({ params }) {
   // per ISR window (3600s). No runtime cost per visit.
   const fleet = await sanityClient
     .fetch(
+      // 2026-09-08 - category and cruiseSpeed added to the projection.
+      // lib/yacht-similarity.js gates on the hull family and on power now,
+      // and both were absent here, so the scorer had been falling back to
+      // parsing the subtitle string for the hull and had no speed at all.
+      // That is how SEA U, a twenty five knot motor yacht, came to suggest
+      // a nine knot sailing catamaran as her closest match.
       `*[_type == "yacht" && defined(slug.current) && slug.current != $slug]{
         _id, name, subtitle, builder, length, sleeps, cabins,
-        weeklyRatePrice, cruisingRegion, fleetTier,
+        weeklyRatePrice, cruisingRegion, fleetTier, category, cruiseSpeed,
         "slug": slug.current,
         "imageUrl": images[0].asset->url
       }`,
@@ -603,11 +674,19 @@ export default async function YachtPage({ params }) {
           toys: yacht.toys,
           idealFor: yacht.idealFor,
           sampleItinerary: yacht.sampleItinerary,
+          // 2026-09-08 - the three fields lib/sample-itineraries.js needs to
+          // plan a week when Sanity holds none. Without them the fallback
+          // could only guess, which is how every yacht without a stored
+          // itinerary came to be shown the same Saronic sailing loop.
+          homePort: yacht.homePort,
+          category: yacht.category,
+          slug,
           crewProfiles: yacht.crewProfiles,
           matterportEmbedUrl: yacht.matterportEmbedUrl,
           deckPlans: yacht.deckPlans,
           layoutImages: yacht.layoutImages,
           images: yacht.images,
+          video: yacht.video,
           brochureUrl: yacht.brochureUrl,
           brochureSize: yacht.brochureSize,
         }}

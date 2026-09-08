@@ -52,6 +52,16 @@ const TYPE_NAMED =
 // Lines that are talking about something else that also carries a percentage.
 const NOT_APA_TOPIC = /\b(gratuity|tip|VAT VAT|deposit|commission|utilisation|occupancy)\b/i;
 
+/**
+ * A percentage that is a discount off a rate, not a rate.
+ *
+ * "fifteen to twenty five per cent below peak on the Index" is seasonality,
+ * and it was being read as an APA claim in two files on 8 September purely
+ * because the word APA appeared later in the same sentence. A guard that
+ * fires on correct copy gets switched off, and then it catches nothing.
+ */
+const A_DISCOUNT = /\b(below|under|off|cheaper|less than|discount|savings?)\b/i;
+
 function walk(dir, out = []) {
   for (const entry of readdirSync(dir)) {
     if (SKIP_DIRS.has(entry)) continue;
@@ -79,6 +89,10 @@ for (const dir of SEARCH_DIRS) {
         if (NOT_APA_TOPIC.test(window)) continue;
         const range = window.match(RANGE);
         if (!range) continue;
+
+        // What follows the figure decides what the figure is.
+        const after = window.slice(range.index + range[0].length, range.index + range[0].length + 24);
+        if (A_DISCOUNT.test(after)) continue;
 
         const lo = Number(range[1]);
         const hi = Number(range[2]);
