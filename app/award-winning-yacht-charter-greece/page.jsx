@@ -384,6 +384,47 @@ export default async function AwardWinningPage() {
         </section>
       )}
 
+      {/* 2026-09-08. Two yachts joined the fleet carrying finals rather than
+          wins, and a final is worth printing as long as it is printed as a
+          final. Both are verified against the show's own category pages under
+          the names the yachts carried at the time. This block is also the only
+          route a reader has to BLACK LION from inside the awards story, since
+          the sailing monohulls sit outside the browsing grid. */}
+      {(honoursFor("black-lion").length > 0 || honoursFor("riana-ii").length > 0) && (
+        <section style={{ padding: "clamp(48px, 6vw, 80px) 24px", borderTop: "1px solid rgba(218, 161, 16,0.14)" }}>
+          <div style={{ maxWidth: 880, margin: "0 auto" }}>
+            <h2 style={h2}>Two that reached the final</h2>
+            <p style={body}>
+              A place in the final of an international design award is not a win
+              and is not written here as one. It means a panel put the yacht in
+              front of the industry as one of a handful in the world worth
+              judging that year, and that is worth saying plainly.
+            </p>
+            {["black-lion", "riana-ii"].map((slug) =>
+              honoursFor(slug).length === 0 ? null : (
+                <div key={slug} style={{ marginTop: 28 }}>
+                  <p style={{ ...body, marginBottom: 8 }}>
+                    <a
+                      href={`/yachts/${slug}`}
+                      style={{ color: CREAM, textDecoration: "none", borderBottom: "1px solid rgba(218, 161, 16,0.4)" }}
+                    >
+                      {bySlug.get(slug)?.name || slug}
+                    </a>
+                  </p>
+                  <ul style={{ ...body, listStyle: "none", padding: 0, margin: 0 }}>
+                    {honoursFor(slug).map((h, i) => (
+                      <li key={i} style={{ marginBottom: 6 }}>
+                        {h.award}, {h.organiser} {h.year}. {h.note}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ),
+            )}
+          </div>
+        </section>
+      )}
+
       <section style={{ padding: "clamp(48px, 6vw, 80px) 24px", borderTop: "1px solid rgba(218, 161, 16,0.14)" }}>
         <div style={{ maxWidth: 880, margin: "0 auto" }}>
           <h2 style={h2}>What we do not call an award</h2>
@@ -393,6 +434,20 @@ export default async function AwardWinningPage() {
             Fountaine Pajot, the builder, and not to that hull. They are not on
             this page and they never will be, because a client who checks would
             find the same thing we did.
+          </p>
+          <p style={body}>
+            A fourth joined the fleet in September described the same way. We
+            looked for the result under her present name, under the name she
+            carried before it, and under her model, at every show that publishes
+            its own winners. There is none. She is an excellent yacht and she is
+            listed as one, without the phrase.
+          </p>
+          <p style={body}>
+            Two more arrived carrying awards that belong to the model line
+            rather than to the hull, given by bodies this register does not
+            accept, and in one case awarded two years before the hull was
+            delivered. A prize won by a sister ship is not a prize won by the
+            yacht a client is chartering.
           </p>
           <p style={body}>
             Four more are held back. One records a chef prize from 2021 while the
