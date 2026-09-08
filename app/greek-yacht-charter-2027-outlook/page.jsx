@@ -43,7 +43,8 @@ const SOURCES = {
   myba: { pub: "SuperYacht24, citing MYBA", url: "https://www.superyacht24.it/en/2026/04/27/da-myba-i-numeri-del-charter-di-yacht-italia-4-nel-2025-e-terza-destinazione-mondiale/" },
   nj: { pub: "a global brokerage house's 2026 charter market report", url: "" },
   knightFrank: { pub: "Boat International, Knight Frank Wealth Report", url: "https://www.boatinternational.com/boat-pro/superyacht-insight/knight-frank-wealth-report-2026-superyacht-industry" },
-  boataround: { pub: "Boataround", url: "https://www.boataround.com/blog/boatarounds-2024-in-numbers-sailing-trends-and-customer-insights" },
+  // 2026-09-08: the platform is a competitor, so it is described rather than named and the link is dropped.
+  bookingPlatform: { pub: "a large charter booking platform's 2025 review", url: "" },
   bookingMgr: { pub: "Booking Manager", url: "https://www.booking-manager.com/en/blog/state-of-the-yacht-charter-industry-2025.html" },
   traveler: { pub: "The Traveler", url: "https://www.thetraveler.org/greece-commands-global-yacht-charter-market-in-2025/" },
   mordor: { pub: "Mordor Intelligence", url: "https://www.mordorintelligence.com/industry-reports/catamaran-market" },
@@ -80,7 +81,7 @@ const SECTIONS = [
   {
     heading: "Catamarans vs motor yachts: where the demand sits",
     facts: [
-      { t: "The Lagoon 42 was the most-booked charter model of 2025 on Boataround, the first time a catamaran topped that platform's ranking, with bookings up more than 60% year on year.", s: "boataround" },
+      { t: "The Lagoon 42 was the most-booked charter model of 2025 on one of the largest booking platforms, the first time a catamaran topped that ranking, with bookings up more than 60% year on year.", s: "bookingPlatform" },
       { t: "Catamarans are about 26% of the global charter fleet and 30% of all booked weeks, yet motor yachts still accounted for 57.52% of the 2025 charter revenue pool.", s: "bookingMgr" },
       { t: "In 2025, peak-season occupancy of monohulls was higher than catamarans for the first time in several years, a shift within the sail segment rather than a motor-versus-sail move.", s: "bookingMgr" },
       { t: "Greece had 904 catamarans out of 3,030 charter vessels in 2025 (about 30% of the fleet), with luxury catamarans among the fastest-growing segments.", s: "traveler" },
@@ -116,7 +117,7 @@ const SECTIONS = [
 function FaqJsonLd() {
   const faq = [
     { q: "Is Greek yacht charter growing into 2027?", a: "The verifiable record points up, not down. Greece recorded a 24% rise in yachting demand in 2025 and took 40% of Eastern Mediterranean charter bookings, and the state is investing 260 million euros in island ports through 2027. Mediterranean crewed charter demand held strong into 2026." },
-    { q: "Are catamarans cheaper to run than motor yachts?", a: "Directionally yes: a sailing catamaran burns far less fuel than a comparable motor yacht, so fuel is a smaller share of the catamaran's running cost. We do not publish a precise litre or percentage split, because the figures vary widely by yacht and route and we could not independently verify a single industry standard. What is documented is that the Lagoon 42 was the most-booked charter model of 2025 on Boataround, the first catamaran to top that platform's ranking." },
+    { q: "Are catamarans cheaper to run than motor yachts?", a: "Directionally yes: a sailing catamaran burns far less fuel than a comparable motor yacht, so fuel is a smaller share of the catamaran's running cost. We do not publish a precise litre or percentage split, because the figures vary widely by yacht and route and we could not independently verify a single industry standard. What is documented is that the Lagoon 42 was the most-booked charter model of 2025 on one of the largest booking platforms, the first catamaran to top that ranking." },
     { q: "Did motor-yacht charter demand collapse in 2026?", a: "Not according to the public record. Motor yachts were still 57.52% of the 2025 charter revenue pool and monohull peak occupancy actually overtook catamarans that year. Catamarans gained share by volume, but motor yachts remained the revenue core. Our own forward view on a 2027 motor recovery is stated as opinion below." },
     { q: "What could push the 2027 Greek charter market?", a: "Documented tailwinds include a 260 million euro Greek port programme through 2027, a Mediterranean that is 76% of world charter, falling booking lead times, and a 2026 travel shift toward the Southern Mediterranean. The main watch-item is marine fuel, which spiked above 650 US dollars per ton in March 2026." },
   ];
