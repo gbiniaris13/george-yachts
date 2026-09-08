@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "guards": "for g in checkPricingCopy checkSnippetLengths checkCredentialClaims checkFleetCount checkOperatingGrounds checkPartnerNames checkAwardClaims checkApaClaims checkSanityCopy checkVideoSources checkItineraries; do node scripts/$g.mjs || exit 1; done"
+    "guards": "for g in checkPricingCopy checkSnippetLengths checkCredentialClaims checkFleetCount checkOperatingGrounds checkPartnerNames checkAwardClaims checkApaClaims checkSanityCopy checkVideoSources checkItineraries checkOutwardPolicy; do node scripts/$g.mjs || exit 1; done"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
