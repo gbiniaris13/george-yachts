@@ -1745,6 +1745,10 @@
    "hash": "6578be444f5b648c",
    "lastmod": "2026-08-28"
   },
+  "/yachts/alaya": {
+   "hash": "6ddede6996e2f6ab",
+   "lastmod": "2026-09-08"
+  },
   "/yachts/alegria": {
    "hash": "76583b5aa2ff5d3b",
    "lastmod": "2026-08-28"
@@ -1755,6 +1759,10 @@
   },
   "/yachts/alexandra-ii": {
    "hash": "3e45470cf2d37f87",
+   "lastmod": "2026-09-08"
+  },
+  "/yachts/alfa": {
+   "hash": "79ff29f01d5464fc",
    "lastmod": "2026-09-08"
   },
   "/yachts/alina": {
@@ -1773,6 +1781,14 @@
    "hash": "4a67e856d3fb397d",
    "lastmod": "2026-08-28"
   },
+  "/yachts/amici-per-sempre": {
+   "hash": "0277508096be74e4",
+   "lastmod": "2026-09-08"
+  },
+  "/yachts/andilis": {
+   "hash": "09f679afd4a42e94",
+   "lastmod": "2026-09-08"
+  },
   "/yachts/aphaea": {
    "hash": "8e3ad5f0dc4a19ae",
    "lastmod": "2026-08-28"
@@ -1788,6 +1804,14 @@
   "/yachts/azul": {
    "hash": "12ce7edaae56202e",
    "lastmod": "2026-08-28"
+  },
+  "/yachts/black-lion": {
+   "hash": "89002480f5344979",
+   "lastmod": "2026-09-08"
+  },
+  "/yachts/blue-symphonie": {
+   "hash": "4d4788460cff86ab",
+   "lastmod": "2026-09-08"
   },
   "/yachts/brooklyn": {
    "hash": "0137d8848b610e97",
@@ -1808,6 +1832,10 @@
   "/yachts/crazy-horse": {
    "hash": "b281b5e839437bd4",
    "lastmod": "2026-08-28"
+  },
+  "/yachts/daloli": {
+   "hash": "5f4034dcf8bced62",
+   "lastmod": "2026-09-08"
   },
   "/yachts/elly-ii": {
    "hash": "094a7136cdcc31b5",
@@ -1833,10 +1861,6 @@
    "hash": "4885e55bcd0134db",
    "lastmod": "2026-08-28"
   },
-  "/yachts/estia-poseidon": {
-   "hash": "5c48861ead04eab2",
-   "lastmod": "2026-08-28"
-  },
   "/yachts/explorion": {
    "hash": "61d4284d6065057f",
    "lastmod": "2026-08-28"
@@ -1857,13 +1881,21 @@
    "hash": "13addb5185b129ba",
    "lastmod": "2026-08-28"
   },
+  "/yachts/idylle": {
+   "hash": "c2f0a7cbd2cfb59e",
+   "lastmod": "2026-09-08"
+  },
   "/yachts/imladris": {
    "hash": "835669bd7e7c1f64",
    "lastmod": "2026-08-28"
   },
-  "/yachts/irenes": {
-   "hash": "a167a2efea19f6e0",
-   "lastmod": "2026-08-28"
+  "/yachts/irene": {
+   "hash": "75737f648f3c899f",
+   "lastmod": "2026-09-08"
+  },
+  "/yachts/islander-ii": {
+   "hash": "0b50da41b85f1bc6",
+   "lastmod": "2026-09-08"
   },
   "/yachts/just-marie-2": {
    "hash": "441cd67dfd2ce11f",
@@ -1872,6 +1904,10 @@
   "/yachts/kimata": {
    "hash": "cc3512d8fb9fcc77",
    "lastmod": "2026-08-28"
+  },
+  "/yachts/kintaro": {
+   "hash": "a9f2733ae5e7f200",
+   "lastmod": "2026-09-08"
   },
   "/yachts/kokomo-nights": {
    "hash": "045f9188b12101ef",
@@ -1893,10 +1929,6 @@
    "hash": "8580d1ae5cf32356",
    "lastmod": "2026-08-28"
   },
-  "/yachts/lidia": {
-   "hash": "67c19c894c63365e",
-   "lastmod": "2026-08-28"
-  },
   "/yachts/m-five": {
    "hash": "b552483c511bf982",
    "lastmod": "2026-08-28"
@@ -1905,25 +1937,45 @@
    "hash": "9c2a363cb50fe7d7",
    "lastmod": "2026-08-28"
   },
+  "/yachts/manu": {
+   "hash": "a49a84a2118fbe1f",
+   "lastmod": "2026-09-08"
+  },
   "/yachts/mary": {
    "hash": "0968036fb03fda4c",
    "lastmod": "2026-08-28"
+  },
+  "/yachts/meli": {
+   "hash": "2447f62946dc54d4",
+   "lastmod": "2026-09-08"
   },
   "/yachts/meliti-sy": {
    "hash": "1e4d1fb32033434c",
    "lastmod": "2026-08-28"
   },
+  "/yachts/mia-zoi": {
+   "hash": "a9a37f77b10cd4e4",
+   "lastmod": "2026-09-08"
+  },
   "/yachts/my-star": {
    "hash": "9baa4b09a5d8b2ee",
-   "lastmod": "2026-08-28"
-  },
-  "/yachts/n-ice": {
-   "hash": "c29bbb033d70ab5e",
    "lastmod": "2026-08-28"
   },
   "/yachts/nadamas": {
    "hash": "50a7a4d8a413636f",
    "lastmod": "2026-08-28"
+  },
+  "/yachts/naia": {
+   "hash": "7b08dce69c4ccd66",
+   "lastmod": "2026-09-08"
+  },
+  "/yachts/nayla": {
+   "hash": "8763b15a06605b0a",
+   "lastmod": "2026-09-08"
+  },
+  "/yachts/noema": {
+   "hash": "5a1004c28a3e73f7",
+   "lastmod": "2026-09-08"
   },
   "/yachts/northwind-ii": {
    "hash": "48ed7837825a131b",
@@ -1933,6 +1985,14 @@
    "hash": "fe50821b32059b97",
    "lastmod": "2026-09-08"
   },
+  "/yachts/oak": {
+   "hash": "95d19f6f76f3f63b",
+   "lastmod": "2026-09-08"
+  },
+  "/yachts/once-more": {
+   "hash": "ecd67cd496792d4d",
+   "lastmod": "2026-09-08"
+  },
   "/yachts/one": {
    "hash": "e192da71d45e16e3",
    "lastmod": "2026-08-28"
@@ -1940,6 +2000,14 @@
   "/yachts/ottawa": {
    "hash": "245c383b492c5791",
    "lastmod": "2026-08-28"
+  },
+  "/yachts/oval": {
+   "hash": "b4fe79f03d776bdd",
+   "lastmod": "2026-09-08"
+  },
+  "/yachts/pandion": {
+   "hash": "d958840d1678d97d",
+   "lastmod": "2026-09-08"
   },
   "/yachts/pareaki-ii": {
    "hash": "ad966fd9859ca9c1",
@@ -1957,13 +2025,17 @@
    "hash": "82c3814c79a20c25",
    "lastmod": "2026-08-28"
   },
-  "/yachts/red-rose": {
-   "hash": "8625c020ad17e4c7",
-   "lastmod": "2026-08-28"
+  "/yachts/riana-ii": {
+   "hash": "f51de32785c43a02",
+   "lastmod": "2026-09-08"
   },
   "/yachts/sahana": {
    "hash": "9755aa8a7360d379",
    "lastmod": "2026-08-28"
+  },
+  "/yachts/salty": {
+   "hash": "85dd4d3acdbf3092",
+   "lastmod": "2026-09-08"
   },
   "/yachts/samara": {
    "hash": "1a14e67ac2eef56e",
@@ -1973,6 +2045,10 @@
    "hash": "8db7df469e0fde36",
    "lastmod": "2026-08-28"
   },
+  "/yachts/sanjana": {
+   "hash": "d75cfc83934e836c",
+   "lastmod": "2026-09-08"
+  },
   "/yachts/sea-u": {
    "hash": "5259258c5deaa722",
    "lastmod": "2026-08-28"
@@ -1980,6 +2056,10 @@
   "/yachts/sea-ya": {
    "hash": "85b9d9e1646c8a73",
    "lastmod": "2026-08-28"
+  },
+  "/yachts/seas-the-day": {
+   "hash": "02980073fde30a6e",
+   "lastmod": "2026-09-08"
   },
   "/yachts/serenissima-iii": {
    "hash": "19d657c7de211c05",
@@ -2005,10 +2085,6 @@
    "hash": "13837ea2b88c31d3",
    "lastmod": "2026-08-28"
   },
-  "/yachts/star-link": {
-   "hash": "d701bdf9a05f5c6a",
-   "lastmod": "2026-08-28"
-  },
   "/yachts/stephanie": {
    "hash": "34a9f2651dfa87fc",
    "lastmod": "2026-08-28"
@@ -2025,12 +2101,16 @@
    "hash": "58a61a3a60f5e587",
    "lastmod": "2026-08-28"
   },
-  "/yachts/vista": {
-   "hash": "a1b74e57b3ff225c",
-   "lastmod": "2026-08-28"
+  "/yachts/wombat": {
+   "hash": "e5ef7e3d96d5671a",
+   "lastmod": "2026-09-08"
   },
   "/yachts/worlds-end": {
    "hash": "80d51410e21d9359",
+   "lastmod": "2026-09-08"
+  },
+  "/yachts/xiphias": {
+   "hash": "083bd83d7950dff9",
    "lastmod": "2026-09-08"
   },
   "/your-privacy-security": {

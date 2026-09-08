@@ -645,8 +645,8 @@ export default async function RootLayout({ children }) {
                  requested a quote for S/CAT Genny", asks George about that week,
                  and there is no good answer left to give.
               2. Wrong signal for this buyer. The rolling-toast pattern belongs
-                 to booking platforms. Fraser, IYC, Burgess and Northrop &
-                 Johnson do not run it, and the visitor who charters a 50 m
+                 to booking platforms. The established international houses
+                 do not run it, and the visitor who charters a 50 m
                  Couach knows where he has seen it before.
               3. It contradicted the page it sat on. The hero reads "A house,
                  not a platform. No call centres, no handovers, no ticket

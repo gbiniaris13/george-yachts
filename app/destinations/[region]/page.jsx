@@ -205,9 +205,9 @@ export default async function DestinationPage({ params }) {
                 no clicks, /destinations/saronic at 68.6 on 268.
 
                 George asked whether a visitor landing on "Volcanic Drama" would
-                even know where they were. The benchmark answers it: Fraser
-                ("Greece: the Cyclades"), IYC ("Cyclades") and Burgess ("The
-                Cyclades") all lead with the place, none with a mood phrase.
+                even know where they were. The benchmark answers it: the three
+                largest international houses all lead with the place in that
+                headline, none with a mood phrase.
                 His decision was to follow them.
 
                 So the place and the product are the headline now, and the mood

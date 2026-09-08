@@ -91,11 +91,14 @@ export default async function PrivateFleetPage() {
     FLAGSHIP_NAMES.some((f) => (yacht.name || "").toLowerCase().includes(f));
 
   const flagships = [];
-  // Unpriced hulls (Rate on application) sort to the TOP of the ladder's
-  // end, not to position zero: a missing number means "ask", not "free".
+  // 2026-09-08, George: the motor fleet reads from the most expensive hull
+  // down, not up. A reader who opens the fleet page meets the flagship
+  // first, which is how the house presents itself everywhere else.
+  // Unpriced hulls (Rate on application) sort to the BOTTOM: a missing
+  // number means "ask", and an unpriced hull must not lead the page.
   const rest = yachts
     .slice()
-    .sort((a, b) => (extractPrice(a) || Infinity) - (extractPrice(b) || Infinity));
+    .sort((a, b) => (extractPrice(b) || 0) - (extractPrice(a) || 0));
   const displayYachts = [...flagships, ...rest];
 
   // Dynamic price range — auto-updates as fleet grows

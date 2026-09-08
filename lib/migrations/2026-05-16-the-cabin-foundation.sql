@@ -122,7 +122,7 @@ create table if not exists cabins (
   principal_charterer_mobile text,
 
   -- Internal-only fields (NEVER returned to client UI)
-  central_agent_internal text,    -- e.g. "IYC", "Istion", "Fraser"
+  central_agent_internal text,    -- internal only, never rendered
   vessel_owner_internal text,
   captain_name_internal text,
   chef_name_internal text,

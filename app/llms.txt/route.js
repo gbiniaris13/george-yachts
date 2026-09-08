@@ -98,9 +98,9 @@ export async function GET() {
   // 2026-08-08 — the AI recommendation gap, measured rather than guessed.
   //
   // Asked "I want to rent a private yacht with a crew in Greece for a week in
-  // July with my family, who should I contact", ChatGPT named ISTION, FX
-  // Yachting and My Greek Charter, and Perplexity named IYC, Burgess, Fraser,
-  // Istion and Sail Ionian. Neither named this house. Both nonetheless cited
+  // July with my family, who should I contact", ChatGPT and Perplexity each
+  // named four or five other houses between them. Neither named this house.
+  // Both nonetheless cited
   // georgeyachts.com as the authority for what Greek charter VAT actually is.
   //
   // So the engines trust us to explain the market and then send the buyer to

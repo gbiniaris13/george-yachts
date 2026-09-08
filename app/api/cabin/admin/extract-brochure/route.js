@@ -274,7 +274,7 @@ value is illustrative, extract whatever the actual contract says.
     "contract_place": "Alimos, Athens",
     "owner_name": "STAR YACHTS MCPY",
     "owner_address": "43-45 Mousson Str., 17562, Athens, Greece",
-    "stakeholder_name": "Istion Yachting S.A.",
+    "stakeholder_name": "Example Yachting S.A.",
     "stakeholder_address": "1 Posidonos Avenue & Goumi Street Alimos, Athens 17455 Greece",
     "stakeholder_myba_id": "ISTIGR",
     "broker_name_on_contract": "ELENI IOANNA KARVOUNI",
@@ -293,7 +293,7 @@ value is illustrative, extract whatever the actual contract says.
       "branch_address": "2A Atlantos Str. & Posidonos Ave., Paleo Faliro Athens, GREECE",
       "swift_bic": "ERBKGRAA",
       "iban": "GR8502600350000120200909374",
-      "beneficiary": "ISTION YACHTING S.A."
+      "beneficiary": "EXAMPLE YACHTING S.A."
     },
     "special_conditions_summary": null
   }

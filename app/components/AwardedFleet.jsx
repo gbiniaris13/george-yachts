@@ -113,13 +113,24 @@ export default function AwardedFleet({ fleet = [] }) {
         price: weekFrom(y?.weeklyRatePrice),
         count: awards.length,
         firsts: awards.filter((a) => a.rank === 1).length,
+        // 2026-09-08: a prize won by the hull ranks above a prize won by a
+        // person aboard her, because the hull cannot leave and the person can.
+        // Until today every placing in the register was a crew award from a
+        // Greek charter show; NAIA's two 2009 World Superyacht Awards are the
+        // first won by a vessel, so she heads the list on the strength of what
+        // she won rather than on a hand-placed pin.
+        vesselFirsts: awards.filter((a) => a.rank === 1 && a.kind === "vessel").length,
         best,
       };
     })
     .filter(Boolean)
-    // Firsts first, then weight of record. A single win outranks three third
-    // places, which is how anybody reading a results sheet would order it.
-    .sort((a, b) => b.firsts - a.firsts || b.count - a.count);
+    // Vessel wins, then firsts, then weight of record. A single win outranks
+    // three third places, which is how anybody reading a results sheet would
+    // order it.
+    .sort(
+      (a, b) =>
+        b.vesselFirsts - a.vesselFirsts || b.firsts - a.firsts || b.count - a.count,
+    );
 
   if (winners.length === 0) return null;
 

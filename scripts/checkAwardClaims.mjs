@@ -150,7 +150,7 @@ for (const [slug, list] of Object.entries(HONOURS || {})) {
 }
 
 // ── 3c. every awarded yacht comes from a house we may place ──────────────
-// The permission question. A yacht outside FX, FYLY or Istion is one we have
+// The permission question. A yacht outside the houses we work alongside is one we have
 // no right to publish, and an award is the most quotable thing on the site,
 // so it is the worst place for that mistake to sit unnoticed.
 for (const slug of [...Object.keys(YACHT_AWARDS), ...Object.keys(HONOURS || {})]) {
