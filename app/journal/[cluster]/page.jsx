@@ -42,7 +42,9 @@ function clusterDescription(intro) {
   }
   if (packed && packed.length >= 80) return packed;
 
-  const cut = text.slice(0, 158);
+  // 2026-09-10 — 155, not 158: the ellipsis is three characters and the
+  // old cut could hand back 161.
+  const cut = text.slice(0, 155);
   return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:]$/, "") + "...";
 }
 

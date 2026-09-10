@@ -8,7 +8,7 @@ import { pageMeta } from "@/lib/pageMeta";
 export const metadata = pageMeta({
   title: "Partner With George Yachts | Travel-Pro Programme",
   description:
-    "Join George Yachts' partnership programme. White-label luxury yacht charter proposals, same-day turnaround, competitive commission. Greek waters exclusively.",
+    "Join the George Yachts partnership programme. White-label luxury yacht charter proposals, same-day turnaround, competitive commission. Greek waters only.",
   path: "/partners",
   image: "https://georgeyachts.com/images/yacht-1.jpeg",
 });
