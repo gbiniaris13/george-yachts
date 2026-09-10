@@ -20,6 +20,8 @@ import { LAST_REFRESH } from "@/lib/contentFreshness";
 import LASTMOD_MANIFEST from "@/lib/lastmodManifest.json";
 import { CHARTER_INDEX_2026 } from "@/lib/charterIndex2026";
 import { RETIRED_SLUGS } from "@/lib/retiredSlugs";
+import { RETIRED_YACHT_SLUGS } from "@/lib/retiredYachts";
+const RETIRED_YACHT_SLUGS_SET = new Set(RETIRED_YACHT_SLUGS);
 
 const BASE_URL = "https://georgeyachts.com";
 
@@ -256,6 +258,21 @@ export default async function sitemap() {
     }));
   } catch (error) {
     console.error("Sitemap: failed to fetch blog posts", error);
+    // 2026-09-10 — never ship a sitemap with the journal missing. On 10
+    // September Ahrefs recorded 486 URLs "removed from sitemap" and 515
+    // "indexable but not in sitemap", and this catch is how: one failed
+    // Sanity call and every article silently vanished from the document
+    // Google trusts most. The manifest already knows every prerendered
+    // page and the date its text last changed, so the fallback is the last
+    // known truth rather than an empty list. Retired hulls stay out.
+    blogEntries = Object.keys(LASTMOD_MANIFEST?.pages || {})
+      .filter((p) => p.startsWith("/blog/") && !RETIRED_SLUGS.includes(p.slice(6)))
+      .map((p) => ({
+        url: `${BASE_URL}${p}`,
+        lastModified: LASTMOD_MANIFEST.pages[p].lastmod || LAST_REFRESH.JOURNAL,
+        changeFrequency: "weekly",
+        priority: 0.8,
+      }));
   }
 
   // Stage 2 (Task 6) - the Greek Charter Index page always renders real data
@@ -525,6 +542,18 @@ export default async function sitemap() {
     });
   } catch (error) {
     console.error("Sitemap: failed to fetch yachts", error);
+    // 2026-09-10 — same fallback as the journal above, for the same reason.
+    // Without it a Sanity hiccup drops all 88 yacht pages from the sitemap
+    // in one go. Images and videos are not reconstructed here; a URL with
+    // an honest date is what matters when the source is unreachable.
+    yachtEntries = Object.keys(LASTMOD_MANIFEST?.pages || {})
+      .filter((p) => p.startsWith("/yachts/") && !RETIRED_YACHT_SLUGS_SET.has(p.slice(8)))
+      .map((p) => ({
+        url: `${BASE_URL}${p}`,
+        lastModified: LASTMOD_MANIFEST.pages[p].lastmod || LAST_REFRESH.FLEET,
+        changeFrequency: "weekly",
+        priority: 0.75,
+      }));
   }
 
   // PER-PAGE FRESHNESS, applied last so it overrides every family date above.

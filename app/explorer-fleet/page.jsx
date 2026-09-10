@@ -23,7 +23,7 @@ export async function generateMetadata() {
     // /catamaran-charter-greece; this title leads with the FLEET role so
     // the two never fight - the cannibalisation law.
     title: `Catamaran Fleet Greece: Sailing & Power Cats by Price`,
-    description: `Every crewed catamaran in the house, sailing and power together, from €${low.toLocaleString()} to €${high.toLocaleString()} per yacht per week, all-in guidance from George. Ranked cheapest to flagship.`,
+    description: `Every crewed catamaran in the house, sailing and power together, from €${low.toLocaleString()} to €${high.toLocaleString()} per yacht per week, ranked cheapest to flagship.`,
     alternates: { canonical: "https://georgeyachts.com/explorer-fleet" },
     openGraph: {
       type: "website",

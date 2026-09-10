@@ -24,7 +24,7 @@ export const revalidate = 86400;
 export const metadata = {
   title: "Greek Yacht Charter Cost Calculator",
   description:
-    "Work out what a Greek crewed yacht charter really costs: real rate-card bands by yacht type, the certified VAT tier, APA, delivery and gratuity, per yacht per week. Free.",
+    "Work out what a Greek crewed yacht charter really costs: rate-card bands by yacht type, the certified VAT tier, APA, delivery and gratuity, per yacht per week.",
   alternates: { canonical: "https://georgeyachts.com/tools/charter-cost-calculator" },
   openGraph: {
     title: "Greek Yacht Charter Cost Calculator",

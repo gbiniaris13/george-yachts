@@ -427,7 +427,7 @@ export default function MarketReportPage() {
             ground: an owner publishes one Greece-wide rate card per boat. The bands
             below are the lowest and highest weekly net base fee on a rate card in each
             class, per yacht per week before VAT and APA, from the{" "}
-            <Link href="/greek-yacht-charter-price-index-2026" style={{ color: GOLD }}>
+            <Link href="/greek-charter-index-2026" style={{ color: GOLD }}>
               Greek Charter Index 2026
             </Link>
             . No cell is an average or an estimate.

@@ -55,7 +55,7 @@ export const metadata = {
   // says so in its title.
   title: titleField("George Yachts Credentials: Forbes, IYBA, MYBA Contracts"),
   description:
-    "The documentary trail behind this house: the Forbes feature nobody paid for, IYBA Charter Active membership, MYBA-standard contracts, and the Wyoming entity that signs your agreement.",
+    "The documentary trail behind this house: the Forbes feature nobody paid for, IYBA Charter Active membership, MYBA-standard contracts, and the Wyoming entity that signs.",
   alternates: { canonical: "https://georgeyachts.com/credentials" },
   openGraph: {
     title: "Credentials | George Yachts",

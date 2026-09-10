@@ -20,7 +20,7 @@ export const revalidate = 3600;
 export const metadata = {
   title: `Charter Yacht Greece - ${FLEET_COUNT} Curated Yachts`,
   description:
-    `Curated fleet of ${FLEET_COUNT} yachts in Greek waters - Catamaran Fleet (crew of two to four) + Motor Yacht Fleet (full crew). Motor, sailing, catamaran. Cyclades, Ionian, Saronic.`,
+    `Curated fleet of ${FLEET_COUNT} yachts in Greek waters: catamarans with a crew of two to four, motor yachts with full crew. Cyclades, Ionian, Saronic.`,
   alternates: {
     canonical: "https://georgeyachts.com/charter-yacht-greece",
   },
