@@ -185,7 +185,7 @@ export default async function GreekCharterIndexPage() {
           ? { variableMeasured: report.statCallouts.map((s) => s.label).filter(Boolean) }
           : {}),
         ...(report.methodology ? { measurementTechnique: report.methodology } : {}),
-        spatialCoverage: { "@type": "Place", name: "Greece (Cyclades, Ionian, Saronic, Dodecanese)" },
+        spatialCoverage: { "@type": "Place", name: "Greece (Cyclades, Ionian, Saronic)" },
         // 2026-09-04 (plan item 8): the data as files, so the Dataset is a
         // dataset and not a description of one. Google Dataset Search and
         // the AI crawlers read `distribution`; journalists read the CSV.

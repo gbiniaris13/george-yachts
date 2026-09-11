@@ -163,8 +163,8 @@ export default function WeeklyRatesPage() {
     },
     publisher: { "@type": "Organization", "@id": "https://georgeyachts.com/#organization" },
     variableMeasured: ["All-in weekly charter cost", "Base charter fee", "APA", "VAT", "Crew gratuity"],
-    measurementTechnique: "George Yachts 2026 closing book and IYBA pricing surveys",
-    spatialCoverage: { "@type": "Place", name: "Greece (Cyclades, Ionian, Saronic, Dodecanese)" },
+    measurementTechnique: "The current rate cards of the fully crewed yachts George Yachts represents, compiled into the Greek Charter Index 2026, with APA, VAT and gratuity applied at the stated rates",
+    spatialCoverage: { "@type": "Place", name: "Greece (Cyclades, Ionian, Saronic)" },
   };
 
   const faqSchema = {
