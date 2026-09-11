@@ -99,7 +99,7 @@ const FAQS = [
   },
   {
     q: "How much does a crewed yacht charter in Greece cost?",
-    a: "Per the George Yachts Greek Charter Index, which is built from the rate cards of the yachts we actually represent: a crewed sailing catamaran runs EUR 10,900 to 22,000 per week net base at 12 to 16m and EUR 56,000 to 90,000 at 23 to 24m; a crewed power catamaran EUR 14,000 to 90,000 across the same span; motor yachts EUR 17,500 to 33,000 at 18 to 24m, EUR 40,000 to 65,000 at 26 to 31m and EUR 60,000 to 120,000 at 35 to 40m; and the two yachts above 50m EUR 162,500 to 235,000. Add VAT at the yacht's certified rate, in practice 5.2% to 12% (statutory ceiling 13%, and 24% on short or bareboat charters), and an APA of 20 to 40% by yacht type for fuel, food and berthing.",
+    a: "Per the George Yachts Greek Charter Index, which is built from the rate cards of the yachts we actually represent: a crewed sailing catamaran runs EUR 10,900 to 22,000 per week net base at 12 to 16m and EUR 54,900 to 90,000 at 23 to 24m; a crewed power catamaran EUR 14,000 to 90,000 across the same span; motor yachts EUR 17,500 to 47,500 at 18 to 25 m, EUR 35,900 to 75,000 at 26 to 31m and EUR 59,900 to 150,000 at 35 to 40m; and the two yachts above 50m EUR 162,500 to 235,000. Add VAT at the yacht's certified rate, in practice 5.2% to 12% (statutory ceiling 13%, and 24% on short or bareboat charters), and an APA of 20 to 40% by yacht type for fuel, food and berthing.",
   },
   {
     q: "What is included in the base charter rate?",
@@ -393,7 +393,7 @@ export default async function CrewedCharterPage() {
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <QuickAnswerBlock
             question="What is a crewed yacht charter in Greece, and what does a week cost?"
-            answer={`A crewed yacht charter means the yacht comes with a full professional crew: captain, chef and service. Per the George Yachts Greek Charter Index, weekly net base rates run EUR 10,900-22,000 for a crewed sailing catamaran of 12-16m and EUR 56,000-90,000 at 23-24m, EUR 14,000-90,000 for a power catamaran, EUR 17,500-33,000 for an 18-24m motor yacht, EUR 40,000-65,000 at 26-31m, EUR 60,000-120,000 at 35-40m, and EUR 162,500-235,000 above 50m. Add VAT at the yacht's certified rate (in practice 5.2-12%; statutory ceiling 13%) and APA of 20-40% by yacht type. George Yachts curates ${FLEET_COUNT} yachts in Greek waters, split between the Catamaran Fleet with a crew of two to four and the Motor Yacht Fleet with a full crew.`}
+            answer={`A crewed yacht charter means the yacht comes with a full professional crew: captain, chef and service. Per the George Yachts Greek Charter Index, weekly net base rates run EUR 10,900-22,000 for a crewed sailing catamaran of 12-16m and EUR 54,900-90,000 at 23-24m, EUR 14,000-90,000 for a power catamaran, EUR 17,500-47,500 for an 18-25m motor yacht, EUR 35,900-75,000 at 26-31m, EUR 59,900-150,000 at 35-40m, and EUR 162,500-235,000 above 50m. Add VAT at the yacht's certified rate (in practice 5.2-12%; statutory ceiling 13%) and APA of 20-40% by yacht type. George Yachts curates ${FLEET_COUNT} yachts in Greek waters, split between the Catamaran Fleet with a crew of two to four and the Motor Yacht Fleet with a full crew.`}
             keyFacts={[
               // 2026-09-11 (#23): the shape of the list in numbers an engine
               // can lift, from lib/fleetCount.js so it cannot drift.

@@ -201,6 +201,13 @@ export default async function GreekCharterIndexPage() {
             encodingFormat: "application/json",
             contentUrl: `${URL}/data.json`,
           },
+          // 2026-09-11 (plan item 2): the quarterly Rate Report, built from
+          // this same object by scripts/buildRateReportPdf.mjs.
+          {
+            "@type": "DataDownload",
+            encodingFormat: "application/pdf",
+            contentUrl: `${URL}/report.pdf`,
+          },
         ],
       }
     : null;
@@ -274,6 +281,8 @@ export default async function GreekCharterIndexPage() {
               <a href={`/${SLUG}/data.csv`} style={{ color: GOLD }}>CSV</a>
               {" · "}
               <a href={`/${SLUG}/data.json`} style={{ color: GOLD }}>JSON</a>
+              {" · "}
+              <a href={`/${SLUG}/report.pdf`} style={{ color: GOLD }}>the Rate Report as a PDF</a>
               {" · "}
               <Link href="/tools/charter-cost-calculator" style={{ color: GOLD }}>run the numbers in the cost calculator</Link>
               {" · "}

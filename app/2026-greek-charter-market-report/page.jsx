@@ -446,18 +446,18 @@ export default function MarketReportPage() {
               <tbody>
                 {[
                   ["Sailing catamaran, 12 to 16m", "10,900 to 22,000", "5"],
-                  ["Sailing catamaran, 16 to 19m", "18,900 to 27,500", "4"],
+                  ["Sailing catamaran, 16 to 19m", "18,900 to 41,500", "4"],
                   ["Sailing catamaran, 20 to 22m", "31,500 to 43,500", "7"],
-                  ["Sailing catamaran, 23 to 24m", "56,000 to 90,000", "7"],
+                  ["Sailing catamaran, 23 to 24m", "54,900 to 90,000", "7"],
                   ["Power catamaran, 13 to 17m", "14,000 to 28,000", "2"],
                   ["Power catamaran, 20 to 22m", "34,000 to 69,000", "7"],
                   ["Power catamaran, 23 to 24m", "49,000 to 90,000", "5"],
-                  ["Motor yacht, 18 to 20m", "17,500 to 22,900", "3"],
-                  ["Motor yacht, 22 to 24m", "21,000 to 33,000", "2"],
-                  ["Motor yacht, 26 to 31m", "40,000 to 65,000", "5"],
-                  ["Motor yacht, 35 to 40m", "60,000 to 120,000", "5"],
+                  ["Motor yacht, 18 to 21 m", "17,500 to 28,000", "3"],
+                  ["Motor yacht, 22 to 25 m", "21,000 to 47,500", "2"],
+                  ["Motor yacht, 26 to 31m", "35,900 to 75,000", "5"],
+                  ["Motor yacht, 35 to 40m", "59,900 to 150,000", "5"],
                   ["Superyacht, 50m and above", "162,500 to 235,000", "2"],
-                  ["Sailing monohull, 24 to 31m", "24,000 to 49,000", "4"],
+                  ["Sailing monohull, 24 to 31m", "24,000 to 55,000", "4"],
                 ].map((row) => (
                   <tr key={row[0]}>
                     {row.map((c, i) => (
@@ -540,7 +540,7 @@ export default function MarketReportPage() {
             appeared in the May edition. Three sources remain, and each figure names
             its own.{" "}
             <Strong>The Greek Charter Index 2026</Strong> compiles the current rate cards
-            of the 58 fully crewed yachts we represent; each band is the lowest and
+            of the 93 fully crewed yachts we represent; each band is the lowest and
             highest figure on a rate card, observed rather than modelled.{" "}
             <Strong>This desk's enquiry log</Strong> has recorded every charter request
             since 30 May 2026 and was read on 6 September 2026; its counts describe one
