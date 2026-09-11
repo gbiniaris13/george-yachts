@@ -28,7 +28,7 @@ function FaqJsonLd({ faq }) {
     "@type": "FAQPage",
     speakable: {
       "@type": "SpeakableSpecification",
-      cssSelector: [".gy-qa-text"],
+      cssSelector: [".gy-qa-text", ".gy-key-facts"],
     },
     mainEntity: faq.map((f) => ({
       "@type": "Question",
@@ -185,6 +185,11 @@ export default function DestinationComparison({ pageData }) {
             <QuickAnswerBlock
               question={`Greece or ${data.competitorName} for a 2026 yacht charter?`}
               answer={data.shortAnswer}
+              // 2026-09-11: the Greek-side figures under the answer, each
+              // with a source, so an engine has numbers it can lift and a
+              // link to where they come from.
+              keyFacts={data.keyFacts}
+              evidence={data.evidence}
             />
           </div>
         </section>
