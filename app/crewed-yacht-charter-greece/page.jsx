@@ -18,7 +18,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { FLEET_COUNT } from "@/lib/fleetCount";
+import { FLEET_COUNT, FLEET_COMPOSITION, CATAMARAN_COUNT, VIDEO_COUNT } from "@/lib/fleetCount";
 import { sanityClient } from "@/lib/sanity";
 import { CHARTER_INDEX_2026 } from "@/lib/charterIndex2026";
 import { REVIEWS, initials } from "@/lib/reviewsData";
@@ -395,6 +395,9 @@ export default async function CrewedCharterPage() {
             question="What is a crewed yacht charter in Greece, and what does a week cost?"
             answer={`A crewed yacht charter means the yacht comes with a full professional crew: captain, chef and service. Per the George Yachts Greek Charter Index, weekly net base rates run EUR 10,900-22,000 for a crewed sailing catamaran of 12-16m and EUR 56,000-90,000 at 23-24m, EUR 14,000-90,000 for a power catamaran, EUR 17,500-33,000 for an 18-24m motor yacht, EUR 40,000-65,000 at 26-31m, EUR 60,000-120,000 at 35-40m, and EUR 162,500-235,000 above 50m. Add VAT at the yacht's certified rate (in practice 5.2-12%; statutory ceiling 13%) and APA of 20-40% by yacht type. George Yachts curates ${FLEET_COUNT} yachts in Greek waters, split between the Catamaran Fleet with a crew of two to four and the Motor Yacht Fleet with a full crew.`}
             keyFacts={[
+              // 2026-09-11 (#23): the shape of the list in numbers an engine
+              // can lift, from lib/fleetCount.js so it cannot drift.
+              `${FLEET_COUNT} crewed yachts on the list: ${CATAMARAN_COUNT} catamarans (${FLEET_COMPOSITION.sailingCat} sailing, ${FLEET_COMPOSITION.powerCat} power) with a crew of two to six, and ${FLEET_COMPOSITION.motor} motor yachts with a crew of two to ten, ELYSIUM more; ${VIDEO_COUNT} of them carry a walkthrough video on their page`,
               "Crew on every yacht: captain, chef, host; deckhand and engineer on the larger motor yachts",
               "Base fee plus APA (20 to 30% sail and catamaran, 30 to 40% motor), VAT at the certified rate, gratuity 10 to 15% of base",
               "Embark Athens (Alimos) for the Cyclades and the Saronic, Lefkada or Corfu for the Ionian; these are the grounds this house works",

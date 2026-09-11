@@ -54,6 +54,7 @@ const FLEET_QUERY = `*[_type == "yacht" && defined(slug.current)] {
   crew,
   builder,
   weeklyRatePrice,
+  "video": defined(video.checked),
   cruisingRegion,
   fleetTier,
   priceModel,
@@ -67,6 +68,26 @@ const FLEET_QUERY = `*[_type == "yacht" && defined(slug.current)] {
   "imageAlt": images[0].alt,
   "hoverImages": images[1...4].asset->url
 }`;
+
+// 2026-09-11 (#23): the key facts under the answer unit. Every number is
+// counted off the yachts this page is about to render, so the list and the
+// grid beneath it cannot disagree. Three prompts with 4,910 searches a month
+// point at this page; what an engine lifts is a short line of figures.
+function hubKeyFacts(yachts) {
+  const ranges = yachts.map((y) => extractPriceRange(y.weeklyRatePrice)).filter((r) => r.low);
+  const low = ranges.length ? Math.min(...ranges.map((r) => r.low)) : 10900;
+  const high = ranges.length ? Math.max(...ranges.map((r) => r.high || r.low)) : 235000;
+  const videos = yachts.filter((y) => y.video).length;
+  const eur = (n) => "EUR " + Number(n).toLocaleString("en-US");
+  return [
+    `${FLEET_COUNT} crewed yachts: ${CATAMARAN_COUNT} catamarans (${FLEET_COMPOSITION.sailingCat} sailing, ${FLEET_COMPOSITION.powerCat} power) and ${FLEET_COMPOSITION.motor} motor yachts, 13 to 64 metres` +
+      (videos ? `; ${videos} carry a walkthrough video on their page` : ""),
+    `Weekly net base from ${eur(low)} to ${eur(high)} per yacht, each from the yacht's own rate card, before APA and VAT`,
+    "APA 20 to 30% of base on a catamaran and 30 to 40% on a motor yacht; Greek VAT at the yacht's certified rate, 5.2 to 12% in practice; gratuity 10 to 15% of base at your discretion",
+    "Boarding at Athens (Alimos or Flisvos), Lefkada or Corfu; the grounds are the Cyclades, the Saronic and the Ionian",
+    "Weeks start on any day and run seven nights or longer; the five-night Saronic week from Athens is the shortest programme",
+  ];
+}
 
 // Schema for SEO
 function generateFleetSchema(yachts) {
@@ -236,7 +257,7 @@ export default async function CharterFleetPage() {
             name: "Charter Fleet, George Yachts",
             speakable: {
               "@type": "SpeakableSpecification",
-              cssSelector: [".gy-qa-text"],
+              cssSelector: [".gy-qa-text", ".gy-key-facts"],
             },
           }),
         }}
@@ -373,6 +394,40 @@ export default async function CharterFleetPage() {
             customary rather than contractual. The broker{"\u2019"}s commission is
             paid by the yacht{"\u2019"}s owner, so there is no fee to the guest.
           </p>
+          <p
+            style={{
+              fontFamily: "var(--gy-font-ui)",
+              fontSize: 11,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: "#DAA110",
+              fontWeight: 700,
+              margin: "18px 0 8px",
+            }}
+          >
+            Key facts
+          </p>
+          <ul
+            className="gy-key-facts"
+            style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: 6 }}
+          >
+            {hubKeyFacts(yachts).map((f) => (
+              <li
+                key={f}
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 13,
+                  lineHeight: 1.5,
+                  color: "rgba(248,245,240,0.82)",
+                  paddingLeft: 14,
+                  position: "relative",
+                }}
+              >
+                <span aria-hidden="true" style={{ position: "absolute", left: 0, top: 0, color: "#DAA110" }}>·</span>
+                {f}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

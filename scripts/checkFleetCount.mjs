@@ -24,7 +24,7 @@ import { pathToFileURL } from "node:url";
 
 const ROOT = new URL("..", import.meta.url).pathname;
 
-const { FLEET_COUNT } = await import(pathToFileURL(join(ROOT, "lib/fleetCount.js")).href);
+const { FLEET_COUNT, VIDEO_COUNT } = await import(pathToFileURL(join(ROOT, "lib/fleetCount.js")).href);
 const { RETIRED_YACHT_SLUGS, excludeRetiredYachts } = await import(
   pathToFileURL(join(ROOT, "lib/retiredYachts.js")).href
 );
@@ -58,6 +58,20 @@ if (live !== FLEET_COUNT) {
       `Eighteen files print this number. Update lib/fleetCount.js.`
   );
 }
+
+// 2026-09-11: the walkthrough-video count is printed in answer units too.
+try {
+  const vq = excludeRetiredYachts(
+    `count(*[_type == "yacht" && defined(slug.current) && defined(video.checked) && !${MONO}])`
+  );
+  const url = `https://${PROJECT}.api.sanity.io/v2023-05-03/data/query/${DATASET}?query=${encodeURIComponent(vq)}`;
+  const v = (await (await fetch(url, { signal: AbortSignal.timeout(20000) })).json()).result;
+  if (typeof v === "number" && v !== VIDEO_COUNT) {
+    problems.push(
+      `VIDEO_COUNT is ${VIDEO_COUNT}, the site serves ${v} yachts with a cleared video. Update lib/fleetCount.js.`
+    );
+  }
+} catch {}
 
 // A retired yacht must not be readable through the client at all.
 const retiredQuery = excludeRetiredYachts(
