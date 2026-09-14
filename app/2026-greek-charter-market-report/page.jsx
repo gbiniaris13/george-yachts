@@ -309,7 +309,7 @@ export default function MarketReportPage() {
               Greece entered 2026 on a documented rise, with a 24% increase in yachting
               demand in 2025 and 40% of Eastern Mediterranean charter bookings, and the
               state rebuilding thirty island ports through 2027. On the rate cards a
-              fully crewed week runs from EUR 10,900 for a 14 metre sailing catamaran to
+              fully crewed week runs from EUR 17,000 for a 15 metre sailing catamaran to
               EUR 235,000 above 50 metres, per yacht per week before VAT and APA. The
               client who reaches this desk asks for a seven-night week departing Athens,
               books the peak a year ahead, and increasingly asks for a catamaran. Where
@@ -342,14 +342,14 @@ export default function MarketReportPage() {
                 note="Rise in yachting demand recorded in Greece in 2025, with 40% of all Eastern Mediterranean charter bookings. Source: GTP Headlines."
               />
               <StatCard
-                stat="EUR 10,900"
+                stat="EUR 17,000"
                 label="The crewed floor"
-                note="Lowest weekly net base fee for a fully crewed yacht on our rate cards: a 14 metre sailing catamaran for eight guests. Greek Charter Index 2026."
+                note="Lowest weekly net base fee for a fully crewed yacht on our rate cards: a 15 metre sailing catamaran for eight guests. Greek Charter Index 2026."
               />
               <StatCard
-                stat="58"
+                stat="96"
                 label="Crewed rate cards"
-                note="Fully crewed yachts whose current rate cards the Greek Charter Index 2026 is compiled from, plus seven smaller crewed yachts quoted separately."
+                note="Fully crewed yachts whose current rate cards the Greek Charter Index 2026 is compiled from: 90 of the 91 on our list, plus six crewed sailing monohulls quoted separately."
               />
               <StatCard
                 stat="6 to 12 mo"
@@ -527,7 +527,7 @@ export default function MarketReportPage() {
             appeared in the May edition. Three sources remain, and each figure names
             its own.{" "}
             <Strong>The Greek Charter Index 2026</Strong> compiles the current rate cards
-            of the 105 fully crewed yachts we represent; each band is the lowest and
+            of the 96 fully crewed yachts we represent; each band is the lowest and
             highest figure on a rate card, observed rather than modelled.{" "}
             <Strong>This desk's enquiry log</Strong> has recorded every charter request
             since 30 May 2026 and was read on 6 September 2026; its counts describe one

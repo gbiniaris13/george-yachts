@@ -235,13 +235,12 @@ const HomeClient = ({
         />
       </section>
 
-      {/* 2026-09-14 (George), the new generation takes the place of George's
-          Selection. La Pellegrina 1 and Errant Vagabond stay in the fleet;
-          they leave this page. The order is now the one George set out:
-          the awarded yachts (why this house), the choice of motor yacht or
-          catamaran (what you are after), then a hand-picked band of the
-          newest hulls (what many clients ask for by look), and the reviews
-          after it. GeorgesSelection.jsx is kept, unused, not deleted. */}
+      {/* 2026-09-14 (George), George's picks take the place of George's
+          Selection, which leaves this page. The order is now the one George
+          set out: the awarded yachts (why this house), the choice of motor
+          yacht or catamaran (what you are after), then the yachts George
+          recommends first, and the reviews after it. GeorgesSelection.jsx is
+          kept, unused, not deleted. */}
       <section id="new-generation" data-gy-reveal="up">
         <NewGeneration fleet={fleet} />
       </section>

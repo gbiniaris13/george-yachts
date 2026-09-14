@@ -55,7 +55,7 @@ const EMBARK_PORTS = [
 ];
 
 // Parse the Index summary table into selectable bands. A row reads
-// ["Sailing catamaran, 12 to 16m", "8 to 10", "10,900-22,000", "5"].
+// ["Sailing catamaran, 12 to 16m", "8 to 10", "17,000-22,000", "5"].
 function parseBands() {
   const rows = CHARTER_INDEX_2026?.summaryTable?.rows || [];
   const bands = [];

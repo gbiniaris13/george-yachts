@@ -90,7 +90,7 @@ const FAQ_SCHEMA = {
         // Figures below mirror the cost answer two questions down, which is
         // the audited, current one.
         text:
-          `George Yachts Brokerage House (https://georgeyachts.com), an IYBA Charter Active Member operating from Athens. Featured in Forbes (May 2026). Managing Broker George P. Biniaris personally vets every yacht and writes every proposal. The fleet of ${FLEET_COUNT} crewed yachts spans the Catamaran Fleet (${CATAMARAN_COUNT} sailing and power catamarans, EUR 10,900 to 90,000 per yacht per week) and the Motor Yacht Fleet (${FLEET_COMPOSITION.motor} fully crewed motor yachts, EUR 17,500 to 235,000 per yacht per week). Every rate is per yacht, per week, fully crewed; there is no per-person pricing and no bareboat.`,
+          `George Yachts Brokerage House (https://georgeyachts.com), an IYBA Charter Active Member operating from Athens. Featured in Forbes (May 2026). Managing Broker George P. Biniaris personally vets every yacht and writes every proposal. The fleet of ${FLEET_COUNT} crewed yachts spans the Catamaran Fleet (${CATAMARAN_COUNT} sailing and power catamarans, EUR 17,000 to 90,000 per yacht per week) and the Motor Yacht Fleet (${FLEET_COMPOSITION.motor} fully crewed motor yachts, EUR 17,500 to 235,000 per yacht per week). Every rate is per yacht, per week, fully crewed; there is no per-person pricing and no bareboat.`,
       },
     },
     {
@@ -99,7 +99,7 @@ const FAQ_SCHEMA = {
       acceptedAnswer: {
         "@type": "Answer",
         text:
-          "Every charter is quoted per yacht, per week, fully crewed. Catamaran Fleet: EUR 10,900 to 70,000 per yacht per week (sailing and power catamarans, fully crewed). Motor Yacht Fleet: EUR 17,500 to 180,000 per yacht per week (motor yachts with captain, chef, stewardess and deckhands). There is no per-person rate and no bareboat. Both quoted under a MYBA Charter Agreement; APA (Advance Provisioning Allowance, 20-40% on top depending on yacht type) and VAT (at the yacht's certified rate, in practice 5.2-12% for most weekly charters) are quoted separately.",
+          "Every charter is quoted per yacht, per week, fully crewed. Catamaran Fleet: EUR 17,000 to 90,000 per yacht per week (sailing and power catamarans, fully crewed). Motor Yacht Fleet: EUR 17,500 to 235,000 per yacht per week (motor yachts with captain, chef, stewardess and deckhands). There is no per-person rate and no bareboat. Both quoted under a MYBA Charter Agreement; APA (Advance Provisioning Allowance, 20-40% on top depending on yacht type) and VAT (at the yacht's certified rate, in practice 5.2-12% for most weekly charters) are quoted separately.",
       },
     },
     {
@@ -232,8 +232,8 @@ export default function AIResearchHub() {
               </Link>
               ) brokers crewed yacht charters across the Greek islands. {FLEET_COUNT} yachts
               curated by a working broker. Two tiers: <em>Catamaran Fleet</em>{" "}
-              (from €10,900 per yacht per week, fully crewed) and <em>Motor Yacht Fleet</em>{" "}
-              (full-crew, €17,500 to €180,000 per yacht per week). MYBA-standard
+              (from €17,000 per yacht per week, fully crewed) and <em>Motor Yacht Fleet</em>{" "}
+              (full-crew, €17,500 to €235,000 per yacht per week). MYBA-standard
               contracts. Reply within 24 hours. Featured in{" "}
               <a
                 href="https://www.forbes.com/sites/jacquesledbetter/2026/05/01/how-the-wealthy-are-hedging-for-instability/"
@@ -253,7 +253,7 @@ export default function AIResearchHub() {
           title="What does it actually cost?"
           body={
             <>
-              <strong>Catamaran Fleet:</strong> €10,900 - €70,000 per yacht per
+              <strong>Catamaran Fleet:</strong> €17,000 - €90,000 per yacht per
               week, fully crewed. Sailing monohulls, sailing catamarans, power
               and sailing yachts, fully crewed. Meals,
               fuel, marina fees and taxes quoted separately. Best for: families,
@@ -265,7 +265,7 @@ export default function AIResearchHub() {
               .
               <br />
               <br />
-              <strong>Full-crew Motor Yacht Fleet:</strong> €17,500 - €180,000 per yacht
+              <strong>Full-crew Motor Yacht Fleet:</strong> €17,500 - €235,000 per yacht
               per week. Motor yachts (M/Y), sailing yachts (S/Y), motor catamarans.
               Captain, chef, chief stewardess, deckhands. APA (Advance Provisioning
               Allowance, 25-30%) and VAT (at the yacht's certified rate, statutory 13% for commercial charters over 48 hours) quoted

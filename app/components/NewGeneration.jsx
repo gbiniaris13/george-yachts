@@ -1,19 +1,17 @@
 "use client";
 
-// 2026-09-14, George: La Pellegrina and Errant Vagabond leave the homepage
-// (not the fleet) and in their place goes a band of the modern yachts, the
-// ones a good share of clients ask for by look: new hulls, open decks,
-// contemporary interiors. His brief was explicit about the register. It must
-// not cheapen the site, so no "Instagram", no trend words; a plain title and
-// a hand-picked set.
+// 2026-09-14, George: La Pellegrina 1 and Errant Vagabond leave the
+// homepage, and in their place goes George's own picks: the yachts he
+// recommends first. His brief was explicit about the register. It must not
+// cheapen the site, so no trend words; a plain title and a hand-picked set.
+// (Errant Vagabond later left the list altogether the same evening, with
+// the other catamarans whose card starts below EUR 17,000.)
 //
-// The set is chosen, not queried: every yacht here was launched or rebuilt
-// in 2024 to 2026, and none is already in the awarded band above, so the
-// page never shows the same boat twice in a scroll. Everything printed on a
-// card (name, size, berths, the low end of the rate card, the year) is read
-// live from the fleet record, so a new rate card or a retired hull corrects
-// the band without anyone touching this file. A slug that is missing from
-// the fleet simply drops out.
+// The set is chosen by George, not queried. Everything printed on a card
+// (name, size, berths, the low end of the rate card, the year) is read live
+// from the fleet record, so a new rate card or a retired hull corrects the
+// band without anyone touching this file. A slug that is missing from the
+// fleet simply drops out.
 //
 // It reuses the awarded band's classes on purpose. Two bands, one hand.
 
@@ -23,18 +21,12 @@ import { sanityImg, sanityImgSrcSet } from "@/lib/sanity-image";
 import { metres, weekFrom, berths } from "./AwardedFleet";
 import { FLEET_COUNT } from "@/lib/fleetCount";
 
-// Order: the first card is an exterior, because the band is read by its
-// first frame. SERENITY has no exterior of her own on file (the builder's
-// photographs are of a sister hull and are not used), so she sits inside.
+// 2026-09-14, George's second brief: the band is his own picks, titled as
+// such, and he names the yachts. SEABARIT LX and ALTEYA are confirmed; the
+// rest of the list comes from him.
 const PICKS = [
   "seabarit-lx",   // Moon 60, 2024
-  "alina",         // Fountaine Pajot Power 80, 2026
-  "one",           // Pershing 90, refit 2024
-  "serenity",      // Sunreef 60, 2025
-  "sol-madinina",  // Fountaine Pajot Thira 80, 2025
-  "d2",            // Fountaine Pajot Power 67, 2024
-  "lady-m",        // Lagoon 60, 2025
-  "why-not",       // Dominator 780 S, refit 2024
+  "alteya",        // Sunreef 70 Power
 ];
 
 /** "2025" reads as launched, "2012 / 2024" as the refit. Null if neither parses. */
@@ -81,19 +73,19 @@ export default function NewGeneration({ fleet = [] }) {
       <div className="gy-awarded__inner">
         <header className="gy-awd__head">
           <div>
-            <p className="gy-awd__eyebrow">Launched or rebuilt, 2024 to 2026</p>
+            <p className="gy-awd__eyebrow">Chosen personally by George</p>
             <h2 id="gy-newgen-title" className="gy-awd__title">
-              The new generation
+              George&rsquo;s picks
             </h2>
             <p className="gy-awd__lede">
-              Chosen for their lines as much as their layouts: open decks,
-              contemporary interiors, and the newest hulls working Greek waters.
+              The yachts I recommend first when a client asks me where to
+              start, each one known to me and chosen on her own merits.
             </p>
           </div>
         </header>
 
         <div className="gy-awd__railwrap">
-          <ul className="gy-awd__rail" ref={railRef} aria-label="The new generation of yachts">
+          <ul className="gy-awd__rail" ref={railRef} aria-label="George's picks">
             {picks.map((y) => (
               <li key={y.slug} className="gy-awd__card">
                 <Link href={`/yachts/${y.slug}`} className="gy-awd__link">

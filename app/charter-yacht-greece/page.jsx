@@ -369,7 +369,7 @@ export default async function CharterFleetPage() {
             This house places {FLEET_COUNT} crewed yachts in Greek waters:{" "}
             {CATAMARAN_COUNT} catamarans, {FLEET_COMPOSITION.sailingCat} sailing and{" "}
             {FLEET_COMPOSITION.powerCat} power, and {FLEET_COMPOSITION.motor} motor
-            yachts. A week runs from EUR 10,900 for the smallest crewed catamaran
+            yachts. A week runs from EUR 17,000 for the smallest crewed catamaran
             to EUR 235,000 for the largest motor yacht, quoted as one price per
             yacht per week, whatever the size of the party. Every charter is fully crewed
             and seven nights or longer, boarding at Athens, Lefkada or Corfu, and
