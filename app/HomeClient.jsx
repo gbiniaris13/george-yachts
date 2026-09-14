@@ -9,7 +9,6 @@ import { HOME_FAQ } from "@/lib/houseFaq";
 // retired in favour of the new <GeorgesSelection /> 2-card pair
 // (La Pellegrina 1 + Errant Vagabond). The SignatureYacht component
 // file stays on disk for any future use.
-import GeorgesSelection from "./components/GeorgesSelection";
 import ClientReviews from "./components/ClientReviews";
 import FleetCTAs from "./components/FleetCTAs";
 import HomeStats from "./components/HomeStats";
@@ -20,6 +19,7 @@ import TrendingYachts from "./components/TrendingYachts";
 import InlineYachtStrip from "./components/InlineYachtStrip";
 import HomeForbesQuote from "./components/HomeForbesQuote";
 import AwardedFleet from "./components/AwardedFleet";
+import NewGeneration from "./components/NewGeneration";
 
 // Dynamic imports for below-fold components — reduces initial JS bundle.
 // 2026-04-21 declutter: the following were removed from the home tree
@@ -235,21 +235,23 @@ const HomeClient = ({
         />
       </section>
 
+      {/* 2026-09-14 (George), the new generation takes the place of George's
+          Selection. La Pellegrina 1 and Errant Vagabond stay in the fleet;
+          they leave this page. The order is now the one George set out:
+          the awarded yachts (why this house), the choice of motor yacht or
+          catamaran (what you are after), then a hand-picked band of the
+          newest hulls (what many clients ask for by look), and the reviews
+          after it. GeorgesSelection.jsx is kept, unused, not deleted. */}
+      <section id="new-generation" data-gy-reveal="up">
+        <NewGeneration fleet={fleet} />
+      </section>
+
       {/* 2026-06-28, real five-star Google reviews made visible (stars +
           aggregate), high on the page as social proof right after the fleet. */}
       <section id="reviews-proof" data-gy-reveal="up">
         <ClientReviews />
       </section>
 
-      {/* Chapter 08 (2026-05-08), George's Selection. Replaces the
-          prior Signature Yacht "Featured This Week" rotation slot
-          with two Boss-curated cards: La Pellegrina 1 (Private
-          Fleet flagship) + Errant Vagabond (Catamaran Fleet
-          flagship). No auto-rotation, no Sanity weekly pull
-          this is the broker's hand-picked pair. */}
-      <section id="selection" data-gy-reveal="up">
-        <GeorgesSelection />
-      </section>
 
       {/* 2026-07-03 (Wave 2), one quiet editorial line from the
           strongest page on the site to the two head-term guides.

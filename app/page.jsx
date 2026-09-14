@@ -176,7 +176,7 @@ export default async function HomePage() {
       // awards are the one surface a hidden monohull may appear on.
       sanityClient.fetch(`*[/* +mono */ _type == "yacht" && count(images) > 0]{
         name, "slug": slug.current, weeklyRatePrice, sleeps, length,
-        fleetTier, priceModel, cruisingRegion,
+        fleetTier, priceModel, cruisingRegion, subtitle, yearBuiltRefit,
         "image": images[0].asset->url
       } | order(name asc)`),
       // B.6 — three most recent blog posts for the homepage Journal

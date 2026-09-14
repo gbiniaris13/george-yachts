@@ -47,7 +47,7 @@ import { sanityImg, sanityImgSrcSet } from "@/lib/sanity-image";
  * ft", "23.87 m / 80ft", one with a trailing space. Take the metres, one
  * decimal. Returns null rather than a guess if the string does not parse.
  */
-function metres(raw) {
+export function metres(raw) {
   if (!raw) return null;
   const m = /([\d]+)[.,]?([\d]*)\s*m\b/i.exec(String(raw));
   if (!m) return null;
@@ -65,7 +65,7 @@ function metres(raw) {
  * overstatement, a single figure quoted flat would be. Returns null rather
  * than a guess when nothing parses, and the card then carries no price.
  */
-function weekFrom(raw) {
+export function weekFrom(raw) {
   if (!raw) return null;
   // Figures before the pipe; after it is the VAT and APA note, which is
   // handled once at the foot of the section.
@@ -79,7 +79,7 @@ function weekFrom(raw) {
 }
 
 /** sleeps comes back as a string on some records and a number on others. */
-function berths(raw) {
+export function berths(raw) {
   const n = parseInt(String(raw ?? ""), 10);
   return Number.isFinite(n) && n > 0 ? `sleeps ${n}` : null;
 }
