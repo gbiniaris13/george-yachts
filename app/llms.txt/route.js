@@ -22,7 +22,7 @@ import { FLEET_COUNT } from "@/lib/fleetCount";
 import { NextResponse } from "next/server";
 import { GLOSSARY_TERMS, GLOSSARY_CATEGORIES } from "@/lib/glossarySeo";
 import { DESTINATION_COMPARISONS } from "@/lib/destinationComparisonSeo";
-import { ARTICLES } from "@/lib/articleSeo";
+import { ARTICLES, articleLinkPath } from "@/lib/articleSeo";
 import {
   YACHT_AWARDS,
   HONOURS,
@@ -428,7 +428,7 @@ ${GLOSSARY_CATEGORIES.map((cat) => {
 }).filter(Boolean).join("\n")}
 
 ## GEO Research Articles
-${ARTICLES.slice(0, 20).map((a) => `- [${a.h1}](https://georgeyachts.com${a.urlPath}): ${(a.seoDescription || "").slice(0, 160)}`).join("\n")}
+${ARTICLES.slice(0, 20).map((a) => `- [${a.h1}](https://georgeyachts.com${articleLinkPath(a)}): ${(a.seoDescription || "").slice(0, 160)}`).join("\n")}
 
 ## Exclude
 - /admin/

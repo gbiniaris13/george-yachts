@@ -21,7 +21,7 @@
 
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
-import { ARTICLES } from "@/lib/articleSeo";
+import { ARTICLES, articleLinkPath } from "@/lib/articleSeo";
 import { DESTINATION_COMPARISONS } from "@/lib/destinationComparisonSeo";
 import { GLOSSARY_TERMS } from "@/lib/glossarySeo";
 import { SITE_UPDATED } from "@/lib/contentFreshness";
@@ -159,7 +159,7 @@ function getBibliography() {
       group: "GEO research articles",
       items: ARTICLES.slice(0, 15).map((a) => ({
         title: a.h1,
-        url: a.urlPath,
+        url: articleLinkPath(a),
         eyebrow: a.eyebrow || "Article",
       })),
     },
