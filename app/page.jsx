@@ -1,5 +1,5 @@
 import React from "react";
-import { FLEET_COUNT } from "@/lib/fleetCount";
+import { FLEET_COUNT, CATAMARAN_COUNT, FLEET_COMPOSITION } from "@/lib/fleetCount";
 import ReactDOM from "react-dom";
 import HomeClient from "./HomeClient";
 import { sanityClient } from "@/lib/sanity";
@@ -22,7 +22,7 @@ export const metadata = {
   },
   openGraph: {
     title: "George Yachts | Featured in Forbes · Luxury Yacht Charter Greece",
-    description: `Featured in Forbes (May 2026). ${FLEET_COUNT} curated yachts in Greek waters. Catamaran Fleet (42 sailing and power catamarans) + Motor Yacht Fleet (27 fully crewed motor yachts). IYBA Charter Active Member. Personal broker service from Athens.`,
+    description: `Featured in Forbes (May 2026). ${FLEET_COUNT} curated yachts in Greek waters. Catamaran Fleet (${CATAMARAN_COUNT} sailing and power catamarans) + Motor Yacht Fleet (${FLEET_COMPOSITION.motor} fully crewed motor yachts). IYBA Charter Active Member. Personal broker service from Athens.`,
     url: "https://georgeyachts.com",
     type: "website",
     siteName: "George Yachts Brokerage House",

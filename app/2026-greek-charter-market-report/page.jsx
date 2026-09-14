@@ -19,6 +19,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { pageMeta } from "@/lib/pageMeta";
 import Footer from "@/app/components/Footer";
 import { FLEET_COUNT, CATAMARAN_COUNT, FLEET_COMPOSITION } from "@/lib/fleetCount";
+import { CHARTER_INDEX_2026 } from "@/lib/charterIndex2026";
 
 const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
@@ -444,21 +445,7 @@ export default function MarketReportPage() {
                 </tr>
               </thead>
               <tbody>
-                {[
-                  ["Sailing catamaran, 12 to 16m", "10,900 to 22,000", "5"],
-                  ["Sailing catamaran, 16 to 19m", "18,900 to 41,500", "4"],
-                  ["Sailing catamaran, 20 to 22m", "31,500 to 43,500", "7"],
-                  ["Sailing catamaran, 23 to 24m", "54,900 to 90,000", "7"],
-                  ["Power catamaran, 13 to 17m", "14,000 to 28,000", "2"],
-                  ["Power catamaran, 20 to 22m", "34,000 to 69,000", "7"],
-                  ["Power catamaran, 23 to 24m", "49,000 to 90,000", "5"],
-                  ["Motor yacht, 18 to 21 m", "17,500 to 28,000", "3"],
-                  ["Motor yacht, 22 to 25 m", "21,000 to 47,500", "2"],
-                  ["Motor yacht, 26 to 31m", "35,900 to 75,000", "5"],
-                  ["Motor yacht, 35 to 40m", "59,900 to 150,000", "5"],
-                  ["Superyacht, 50m and above", "162,500 to 235,000", "2"],
-                  ["Sailing monohull, 24 to 31m", "24,000 to 55,000", "4"],
-                ].map((row) => (
+                {CHARTER_INDEX_2026.summaryTable.rows.map(({ cells }) => [cells[0], cells[2].replace("-", " to "), cells[3]]).map((row) => (
                   <tr key={row[0]}>
                     {row.map((c, i) => (
                       <td key={i} style={{ padding: "10px 12px", borderBottom: "1px solid rgba(248,245,240,0.08)", color: i === 0 ? "#F8F5F0" : "rgba(248,245,240,0.85)" }}>
@@ -540,7 +527,7 @@ export default function MarketReportPage() {
             appeared in the May edition. Three sources remain, and each figure names
             its own.{" "}
             <Strong>The Greek Charter Index 2026</Strong> compiles the current rate cards
-            of the 93 fully crewed yachts we represent; each band is the lowest and
+            of the 105 fully crewed yachts we represent; each band is the lowest and
             highest figure on a rate card, observed rather than modelled.{" "}
             <Strong>This desk's enquiry log</Strong> has recorded every charter request
             since 30 May 2026 and was read on 6 September 2026; its counts describe one
