@@ -5,6 +5,7 @@ import HomeClient from "./HomeClient";
 import { sanityClient } from "@/lib/sanity";
 import { SITE_UPDATED } from "@/lib/contentFreshness";
 import { HOME_FAQ } from "@/lib/houseFaq";
+import { orderPicks, picksQA, shortName } from "@/lib/georgesPicks";
 
 // Re-render at most once an hour. The homepage uses weekly-rotating
 // photography on the Sailing fleet panel; at the week-boundary the
@@ -46,7 +47,7 @@ export const metadata = {
 // Homepage FAQ schema — answers the 6 highest-volume questions about
 // crewed charter in Greece. Plays in answer-box queries on Google +
 // Perplexity / ChatGPT / Claude. Keep answers tight, factual, AI-citable.
-function HomepageFaqSchema() {
+function HomepageFaqSchema({ picksFaq = [] }) {
   // 2026-08-07 — these questions used to live inline here as schema with no
   // visible counterpart on the page, which Google's structured-data policy
   // does not credit. They now live in lib/houseFaq.js, the homepage renders
@@ -55,10 +56,34 @@ function HomepageFaqSchema() {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     dateModified: SITE_UPDATED,
-    mainEntity: HOME_FAQ.map(({ q, a }) => ({
+    // 2026-09-14: the questions under George's picks are visible on the page
+    // too, so they join the one FAQPage the homepage emits.
+    mainEntity: [...HOME_FAQ, ...picksFaq].map(({ q, a }) => ({
       "@type": "Question",
       name: q,
       acceptedAnswer: { "@type": "Answer", text: a },
+    })),
+  };
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
+}
+
+// 2026-09-14: George's picks as an ordered ItemList, cheapest week first,
+// the same order the homepage rail shows.
+function GeorgesPicksSchema({ fleet = [] }) {
+  const ordered = orderPicks(fleet);
+  if (ordered.length === 0) return null;
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "George's picks: crewed yachts George recommends first in Greece",
+    description: "George's personal picks, set out from the lowest weekly rate to the highest.",
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    numberOfItems: ordered.length,
+    itemListElement: ordered.map((y, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: shortName(y.name),
+      url: `https://georgeyachts.com/yachts/${y.slug}`,
     })),
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
@@ -287,7 +312,8 @@ export default async function HomePage() {
           Metadata API. The previous attempted preload was dead code.
           If hero-poster.jpg ever becomes LCP again, add via
           `metadata.other` or a Next `<link>` emitted via `generateMetadata`. */}
-      <HomepageFaqSchema />
+      <HomepageFaqSchema picksFaq={picksQA(orderPicks(fleetForMap))} />
+      <GeorgesPicksSchema fleet={fleetForMap} />
       <HomeClient
         yachtCount={yachtCount}
         privateRange={privateRange}

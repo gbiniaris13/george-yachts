@@ -20,14 +20,12 @@ import Link from "next/link";
 import { sanityImg, sanityImgSrcSet } from "@/lib/sanity-image";
 import { metres, weekFrom, berths } from "./AwardedFleet";
 import { FLEET_COUNT } from "@/lib/fleetCount";
+import { orderPicks, picksQA } from "@/lib/georgesPicks";
 
-// 2026-09-14, George's second brief: the band is his own picks, titled as
-// such, and he names the yachts. SEABARIT LX and ALTEYA are confirmed; the
-// rest of the list comes from him.
-const PICKS = [
-  "seabarit-lx",   // Moon 60, 2024
-  "alteya",        // Sunreef 70 Power
-];
+// 2026-09-14, George's third brief: thirteen yachts, his own, set out from
+// the cheapest week to the most expensive. The list and the ordering live in
+// lib/georgesPicks.js, which also writes the questions and answers under the
+// rail and feeds the homepage FAQ and ItemList structured data.
 
 /** "2025" reads as launched, "2012 / 2024" as the refit. Null if neither parses. */
 function yearLine(raw) {
@@ -44,7 +42,6 @@ function model(raw) {
 }
 
 export default function NewGeneration({ fleet = [] }) {
-  const bySlug = new Map(fleet.map((y) => [y.slug, y]));
   const railRef = useRef(null);
 
   const nudge = useCallback((dir) => {
@@ -55,8 +52,9 @@ export default function NewGeneration({ fleet = [] }) {
     rail.scrollBy({ left: dir * step, behavior: "smooth" });
   }, []);
 
-  const picks = PICKS.map((slug) => bySlug.get(slug))
-    .filter(Boolean)
+  const ordered = orderPicks(fleet);
+  const qa = picksQA(ordered);
+  const picks = ordered
     .map((y) => ({
       slug: y.slug,
       name: y.name,
@@ -78,8 +76,9 @@ export default function NewGeneration({ fleet = [] }) {
               George&rsquo;s picks
             </h2>
             <p className="gy-awd__lede">
-              The yachts I recommend first when a client asks me where to
-              start, each one known to me and chosen on her own merits.
+              My personal picks: the yachts I recommend first when a client
+              asks me where to start, set out from the lowest weekly rate to
+              the highest.
             </p>
           </div>
         </header>
@@ -134,6 +133,17 @@ export default function NewGeneration({ fleet = [] }) {
             </button>
           </div>
         </div>
+
+        {qa.length > 0 && (
+          <div className="gy-picks__qa">
+            {qa.map(({ q, a }) => (
+              <div key={q} className="gy-picks__item">
+                <h3 className="gy-picks__q">{q}</h3>
+                <p className="gy-picks__a">{a}</p>
+              </div>
+            ))}
+          </div>
+        )}
 
         <footer className="gy-awd__foot">
           <p className="gy-awd__ratenote">
