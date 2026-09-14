@@ -21,6 +21,17 @@ import LASTMOD_MANIFEST from "@/lib/lastmodManifest.json";
 import { CHARTER_INDEX_2026 } from "@/lib/charterIndex2026";
 import { RETIRED_SLUGS } from "@/lib/retiredSlugs";
 import { RETIRED_YACHT_SLUGS } from "@/lib/retiredYachts";
+
+// Next's sitemap serializer prints video fields raw, so anything that can
+// carry an ampersand or an angle bracket is escaped before it gets there.
+function xmlEscape(v) {
+  return String(v)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
 const RETIRED_YACHT_SLUGS_SET = new Set(RETIRED_YACHT_SLUGS);
 
 const BASE_URL = "https://georgeyachts.com";
@@ -521,19 +532,32 @@ export default async function sitemap() {
         // cleared video is declared, matching exactly what the page shows;
         // a sitemap that promises a video the page does not render is the
         // kind of mismatch that costs a site its video results outright.
-        ...(yacht.video?.checked && (yacht.video.url || yacht.video.videoId)
+        //
+        // 2026-09-14, the health audit after the fleet push: this block had
+        // been writing a broken sitemap since 8 September. Next's serializer
+        // (next/dist/build/webpack/loaders/metadata/resolve-route-data.js)
+        // reads snake_case keys, thumbnail_loc, content_loc, publication_date,
+        // family_friendly, and prints every value raw. The camelCase keys
+        // printed "undefined" as the thumbnail and dropped the video file
+        // altogether, and "S/CAT Above & Beyond walkthrough" put a bare
+        // ampersand into the XML, which made the whole document malformed.
+        // Search Console counted 15 errors. Keys are now the ones Next reads,
+        // every value is XML-escaped here, and family_friendly is the "yes"
+        // Google's schema asks for.
+        ...(yacht.video?.checked && yacht.video.url && (yacht.video.thumbnail || imgs[0])
           ? {
               videos: [
                 {
-                  title: yacht.video.title || `${yacht.slug} walkthrough`,
-                  thumbnailLoc: yacht.video.thumbnail || imgs[0],
-                  description:
+                  title: xmlEscape(yacht.video.title || `${yacht.slug} walkthrough`),
+                  thumbnail_loc: xmlEscape(yacht.video.thumbnail || imgs[0]),
+                  description: xmlEscape(
                     yacht.video.title ||
-                    `Walkthrough video of a crewed charter yacht in Greek waters.`,
-                  contentLoc: yacht.video.url,
+                    `Walkthrough video of a crewed charter yacht in Greek waters.`
+                  ),
+                  content_loc: xmlEscape(yacht.video.url),
                   duration: yacht.video.durationSeconds || undefined,
-                  publicationDate: yacht.video.uploadDate || undefined,
-                  familyFriendly: true,
+                  publication_date: yacht.video.uploadDate || undefined,
+                  family_friendly: "yes",
                 },
               ],
             }
