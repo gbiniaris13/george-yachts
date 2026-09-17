@@ -63,7 +63,6 @@ const YACHT_OVERRIDES = {
   'sol-madinina': { name: 'S/CAT SOL MADININA', price: '\u20ac12,000 - \u20ac16,000', guests: 6, cabins: 3, crew: 2 },
   'explorion': { name: 'P/CAT EXPLORION', price: '\u20ac16,000 - \u20ac20,000', guests: 8, cabins: 4, crew: 2 },
   'alteya': { name: 'P/CAT ALTEYA', price: '\u20ac25,000 - \u20ac32,000', guests: 10, cabins: 5, crew: 3 },
-  'shooting-star': { name: 'S/Y SHOOTING STAR', price: 'From \u20ac13,000', guests: 6, cabins: 3, crew: 2, builder: 'Gianetti 65' },
   'aizu': { name: 'S/Y AIZU', price: '\u20ac30,000 - \u20ac40,000', guests: 8, cabins: 4, crew: 4 },
   'gigreca': { name: 'S/Y GIGRECA', price: '\u20ac20,000 - \u20ac28,000', guests: 6, cabins: 3, crew: 3 },
 };
