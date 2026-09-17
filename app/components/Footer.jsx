@@ -191,6 +191,9 @@ const Footer = () => {
         // 2026-09-17 (GEO sprint): the luxury tier page had 189 inbound links
         // and sat at position 66 for its own head term.
         { name: "Luxury Yacht Charter", href: "/luxury-yacht-charter-greece" },
+        { name: "Private Yacht Charter", href: "/private-yacht-charter-greece" },
+        { name: "Yacht Cruise Greece", href: "/yacht-cruise-greece" },
+        { name: "2027 Demand Report", href: "/greek-yacht-charter-2027-demand-report" },
         { name: "American Clients", href: "/yacht-charter-greece-american-clients" },
         { name: "UK Clients", href: "/yacht-charter-greece-uk-clients" },
         { name: "Under €50,000", href: "/yacht-charter-greece-under-50000" },

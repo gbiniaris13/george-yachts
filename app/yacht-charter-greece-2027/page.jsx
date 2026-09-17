@@ -263,6 +263,15 @@ export default function Charter2027Page() {
             </Link>
             .
           </p>
+          {/* 2026-09-17: the desk's own request log, published as data. */}
+          <p style={bodyStyle}>
+            And if you want the numbers rather than the argument, this desk now publishes its own
+            request log:{" "}
+            <Link href="/greek-yacht-charter-2027-demand-report" style={goldLink}>
+              what one broker is being asked for 2027, month by month
+            </Link>
+            , with the lead times, the months and the budgets counted rather than modelled.
+          </p>
           <p style={bodyStyle}>
             If 2027 is on your horizon at all, the useful move costs nothing: tell me the month, the group
             and the mood now, and let the calendar come to you when it opens.

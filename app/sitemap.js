@@ -338,7 +338,11 @@ export default async function sitemap() {
     changeFrequency: "weekly",
     priority: 0.85,
   }));
-  const longTailEntries = LONG_TAIL_PAGES.map((p) => ({
+  // 2026-09-17: the same rule the articles follow (see the 13 August note
+  // below). A long-tail page whose data declares a canonical elsewhere is
+  // not advertised; today that is /private-yacht-charter-greece-2026, folded
+  // into the evergreen /private-yacht-charter-greece.
+  const longTailEntries = LONG_TAIL_PAGES.filter((p) => !p.canonical || p.canonical === `${BASE_URL}${p.urlPath}`).map((p) => ({
     url: `${BASE_URL}${p.urlPath}`,
     lastModified: LAST_REFRESH.LONG_TAIL,
     changeFrequency: "monthly",
