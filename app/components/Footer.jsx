@@ -188,6 +188,9 @@ const Footer = () => {
       heading: "Charter by Audience & Budget",
       links: [
         { name: "Crewed Yacht Charter →", href: "/crewed-yacht-charter-greece" },
+        // 2026-09-17 (GEO sprint): the luxury tier page had 189 inbound links
+        // and sat at position 66 for its own head term.
+        { name: "Luxury Yacht Charter", href: "/luxury-yacht-charter-greece" },
         { name: "American Clients", href: "/yacht-charter-greece-american-clients" },
         { name: "UK Clients", href: "/yacht-charter-greece-uk-clients" },
         { name: "Under €50,000", href: "/yacht-charter-greece-under-50000" },
@@ -265,6 +268,10 @@ const Footer = () => {
         // luxury power catamaran in greece" is already an impression
         // source at position 13.6 with nowhere strong to land.
         { name: "Power Catamaran Charter", href: "/power-catamaran-charter-greece" },
+        // 2026-09-17 (GEO sprint): the crewed catamaran pillar had 25 inbound
+        // links against 521 for its siblings, and Google served the "best
+        // catamarans" guide for "crewed catamaran greece" instead of it.
+        { name: "Crewed Catamaran Charter", href: "/crewed-catamaran-charter-greece" },
         // 2026-08-06 (job 9) — same audit, same finding, bigger page. An
         // inbound-link count across all 474 pages: /catamaran-charter-greece
         // 473, /crewed-yacht-charter-greece 473, both because they sit in this
