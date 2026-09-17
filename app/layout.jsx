@@ -22,6 +22,8 @@ import GlobalEffects from "./components/GlobalEffects";
 // utility components mounted globally; each one early-returns on
 // reduced-motion / coarse pointer / mute as appropriate.
 import SmoothScroll from "./components/SmoothScroll";
+import ScrollMemory from "./components/ScrollMemory";
+import BackNav from "./components/BackNav";
 import WhatsAppButton from "./components/WhatsAppButton";
 // 2026-08-19 (job 8) — not rendered; see the note at its old position.
 // import PushOptIn from "./components/PushOptIn";
@@ -614,6 +616,10 @@ export default async function RootLayout({ children }) {
               AmbientPlayer's session-key, so one toggle covers all
               sound on the site. */}
         <SmoothScroll />
+        {/* 2026-09-17: the site owns scroll restoration on back, and offers a
+            Back control on every page. Mounted after SmoothScroll so its
+            effects run after the new Lenis instance exists. */}
+        <ScrollMemory />
         {/* A4, Ambient scroll parallax driver (publishes CSS vars) */}
         {/* 2026-07-02 (ASK B 2.4), Speculation Rules prerender for the
             two highest-intent destinations. Progressive enhancement;
@@ -728,6 +734,7 @@ export default async function RootLayout({ children }) {
             Sanity round-trip on every route; the component falls
             back to "View All Yachts" when count is missing. */}
         <StickyFleetCTA />
+        <BackNav />
         {/* Phase 7 R22 (2026-05-12, technical brief Priority 1A) -
             StickyInquiryBar for programmatic pages. The component
             self-suppresses on homepage and conversion pages. */}

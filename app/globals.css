@@ -3596,6 +3596,54 @@ a.gy-fancy-link:hover {
   .gy-scroll-to-top { transition: opacity 200ms ease; transform: none !important; }
 }
 
+/* 2026-09-17, George: a Back control on every page but the home. Bottom
+   left, the mirror of the scroll-to-top ring on the right, above the sticky
+   fleet bar. Steps back through the visitor's own trail on the site. */
+.gy-backnav {
+  position: fixed;
+  left: 22px;
+  bottom: 96px;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 40px;
+  padding: 0 16px 0 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(218, 161, 16, 0.55);
+  background: rgba(13, 27, 42, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #F8F5F0;
+  font-family: var(--gy-font-ui);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 1;
+  transition: background 300ms ease, border-color 300ms ease, transform 300ms ease, box-shadow 300ms ease;
+}
+.gy-backnav span { padding-top: 1px; }
+.gy-backnav:hover,
+.gy-backnav:focus-visible {
+  background: radial-gradient(circle at 50% 50%, rgba(218, 161, 16, 0.32) 0%, rgba(218, 161, 16, 0.10) 70%, rgba(13, 27, 42, 0.4) 100%);
+  border-color: rgba(248, 245, 240, 0.85);
+  color: #FFFFFF;
+  box-shadow: 0 12px 28px rgba(218, 161, 16, 0.30), inset 0 0 18px rgba(248, 245, 240, 0.15);
+  transform: translateY(-2px);
+  outline: none;
+}
+@media (max-width: 600px) {
+  /* On a phone the bottom is taken by the inquiry bar and the right by the
+     concierge buttons; the top left, under the Forbes bar and across from
+     the menu, is free and is where a phone puts Back anyway. */
+  .gy-backnav { left: 14px; top: 72px; bottom: auto; height: 34px; padding: 0 13px 0 11px; font-size: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gy-backnav { transition: none; transform: none !important; }
+}
+
 /* Phase 27i.13 (2026-05-07) — Aegean wave SVG divider.
    Two layered sine waves drifting in opposite directions, tinted
    gold + ivory. Subtle horizon line between sections. */
