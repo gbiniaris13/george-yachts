@@ -25,9 +25,11 @@ function parentOf(pathname) {
   if (pathname.startsWith("/blog/")) return { href: "/blog", label: "The Journal" };
   if (pathname.startsWith("/journal/")) return { href: "/blog", label: "The Journal" };
   if (pathname.startsWith("/glossary/")) return { href: "/glossary", label: "Glossary" };
-  if (pathname.startsWith("/destinations/")) return { href: "/destinations", label: "Destinations" };
-  if (pathname.startsWith("/yacht-charter/")) return { href: "/destinations", label: "Destinations" };
-  if (pathname.startsWith("/island/")) return { href: "/destinations", label: "Destinations" };
+  // /destinations itself redirects to the homepage section, so the parent
+  // link goes straight there rather than through a 307 the crawlers count.
+  if (pathname.startsWith("/destinations/")) return { href: "/#destinations", label: "Destinations" };
+  if (pathname.startsWith("/yacht-charter/")) return { href: "/#destinations", label: "Destinations" };
+  if (pathname.startsWith("/island/")) return { href: "/#destinations", label: "Destinations" };
   if (pathname.startsWith("/market-reports/")) return { href: "/market-reports", label: "Market reports" };
   if (pathname.startsWith("/team/")) return { href: "/team", label: "The team" };
   return { href: "/", label: "Home" };
