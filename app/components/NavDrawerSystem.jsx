@@ -651,7 +651,11 @@ export default function NavDrawerSystem() {
            from painting and from the tab order until it opens; the delay
            on the way out lets the slide finish before it disappears. */
         .gy-nav-overlay {
-          transform: translateX(100%);
+          /* 100% of its own width leaves a 16 px strip inside the viewport
+             (max-width 96vw), and Lighthouse still named the closed panel
+             as the LCP on the live site. Fully outside the viewport, it
+             cannot be a candidate whatever the paint rules say. */
+          transform: translateX(calc(100% + 24px));
           opacity: 0;
           visibility: hidden;
           pointer-events: none;

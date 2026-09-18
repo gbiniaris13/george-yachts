@@ -24,6 +24,7 @@ import GlobalEffects from "./components/GlobalEffects";
 import SmoothScroll from "./components/SmoothScroll";
 import ScrollMemory from "./components/ScrollMemory";
 import BackNav from "./components/BackNav";
+import StyledJsxRegistry from "./components/StyledJsxRegistry";
 import WhatsAppButton from "./components/WhatsAppButton";
 // 2026-08-19 (job 8) — not rendered; see the note at its old position.
 // import PushOptIn from "./components/PushOptIn";
@@ -545,6 +546,7 @@ export default async function RootLayout({ children }) {
       <body
         className={`${boska.variable} ${switzer.variable} ${switzerItalic.variable} ${gfsDidot.variable} antialiased${forbesDismissed ? "" : " gy-with-forbes-bar"}`}
       >
+        <StyledJsxRegistry>
         {/* The gold-leaf ramp as an SVG gradient. clip:text cannot touch an
             SVG stroke, so every icon that must read as metal (hamburger, the
             drawer X) references url(#gyLeafSVG) via .gy-goldstroke. Hidden,
@@ -822,6 +824,7 @@ export default async function RootLayout({ children }) {
         {/* Ό,τι δεν χρειάζεται στο πρώτο καρέ, φορτώνει μετά. Δες
             DeferredWidgets.jsx για το κριτήριο και για το τι ΔΕΝ μπήκε. */}
         <DeferredWidgets />
+        </StyledJsxRegistry>
       </body>
     </html>
   );
