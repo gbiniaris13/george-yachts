@@ -13,7 +13,7 @@ export const metadata = {
   // /exclusive-yacht-charter-greece, the page that says off-market fifteen times
   // and is indexed, took zero. The title now says plainly that this page is
   // about buying, and the charter page below takes the charter phrasing.
-  title: "Buy a Yacht in Greece: Brokerage and Private Sales",
+  title: "Buy a Yacht in Greece: Brokerage Sales",
   description:
     "Buying a yacht in Greece or the Mediterranean? George Yachts sources off-market and partner listings to your exact specifications. Discreet advisory.",
   alternates: { canonical: "https://georgeyachts.com/yachts-for-sale" },

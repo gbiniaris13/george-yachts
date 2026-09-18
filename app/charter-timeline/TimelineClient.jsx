@@ -140,7 +140,7 @@ export default function TimelineClient() {
               transition: 'all 0.4s ease',
             }}>
               <div style={{ fontSize: 28, marginBottom: 8 }}>{step.icon}</div>
-              <h3 style={{
+              <h2 style={{
                 fontFamily: "var(--gy-font-editorial)",
                 fontSize: activeStep === i ? 22 : 18,
                 color: activeStep === i ? '#F8F5F0' : 'rgba(248, 245, 240,0.5)',
@@ -149,7 +149,7 @@ export default function TimelineClient() {
                 transition: 'all 0.3s ease',
               }}>
                 {step.title}
-              </h3>
+              </h2>
               <p style={{
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 13,

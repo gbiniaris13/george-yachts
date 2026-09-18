@@ -24,12 +24,12 @@ export const revalidate = 86400;
 export const metadata = {
   // 2026-06-25: `absolute` to avoid the double brand the site-wide
   // "%s | George Yachts" template otherwise appends (was 75 chars).
-  title: { absolute: "Greek Charter Market Data: Rates, Demand and the 2027 Outlook" },
+  title: { absolute: "Greek Charter Market Data: Rates, Demand, 2027 Outlook" },
   description:
     "Original research from a working Athens broker: how the 2026 season actually ran, where rates landed by yacht class, and what that means for booking 2027.",
   alternates: { canonical: "https://georgeyachts.com/market-reports" },
   openGraph: {
-    title: "Greek Charter Market Data: Rates, Demand and the 2027 Outlook",
+    title: "Greek Charter Market Data: Rates, Demand, 2027 Outlook",
     description:
       "Quarterly and forecast research on the Greek yacht charter market. Original data, no marketing fluff.",
     url: "https://georgeyachts.com/market-reports",

@@ -105,14 +105,18 @@ export default async function HomePage() {
   // asks for the 768 px one, and the phone pays for both. imageSrcSet and
   // imageSizes are what make a preload responsive; without them a preload
   // for an image that is served responsively is worse than none at all.
-  ReactDOM.preload("/images/posters/hero-loop-frame1.jpg", {
+  // 2026-09-18 — the poster is served as WebP first (see VideoSection), so
+  // the preload names the WebP ladder and carries type: a browser without
+  // WebP ignores a typed preload and fetches the JPEG from the markup.
+  ReactDOM.preload("/images/posters/hero-loop-frame1-1280.webp", {
     as: "image",
+    type: "image/webp",
     fetchPriority: "high",
     imageSrcSet: [
-      "/images/posters/hero-loop-frame1-768.jpg 768w",
-      "/images/posters/hero-loop-frame1-1080.jpg 1080w",
-      "/images/posters/hero-loop-frame1-1440.jpg 1440w",
-      "/images/posters/hero-loop-frame1.jpg 1920w",
+      "/images/posters/hero-loop-frame1-640.webp 640w",
+      "/images/posters/hero-loop-frame1-960.webp 960w",
+      "/images/posters/hero-loop-frame1-1280.webp 1280w",
+      "/images/posters/hero-loop-frame1-1920.webp 1920w",
     ].join(", "),
     imageSizes: "100vw",
   });

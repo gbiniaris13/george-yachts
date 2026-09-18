@@ -407,7 +407,7 @@ export default function PartnersClient() {
           <div className="grid md:grid-cols-3 gap-12 md:gap-8">
             {columns.map((col, i) => (
               <div key={i} className="text-center">
-                <h3
+                <h2
                   style={{
                     fontFamily: "var(--gy-font-ui)",
                     fontSize: "12px",
@@ -419,7 +419,7 @@ export default function PartnersClient() {
                   }}
                 >
                   {col.label}
-                </h3>
+                </h2>
                 <ul className="space-y-3">
                   {col.items.map((item, j) => (
                     <li
@@ -451,7 +451,7 @@ export default function PartnersClient() {
           <div className="grid md:grid-cols-2 gap-12">
             {reasons.map((r, i) => (
               <div key={i} className="border-l-2 pl-6" style={{ borderColor: "#DAA110" }}>
-                <h3
+                <h2
                   style={{
                     fontFamily: "var(--gy-font-editorial)",
                     fontSize: "24px",
@@ -461,7 +461,7 @@ export default function PartnersClient() {
                   }}
                 >
                   {r.title}
-                </h3>
+                </h2>
                 <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", fontWeight: 300, color: "rgba(248,245,240,0.6)", lineHeight: 1.7 }}>
                   {r.desc}
                 </p>
@@ -506,9 +506,9 @@ export default function PartnersClient() {
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {fleets.map((f, i) => (
               <div key={i} className="text-center p-8" style={{ border: "1px solid rgba(218, 161, 16, 0.2)", borderRadius: "2px" }}>
-                <h3 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "26px", fontWeight: 500, color: "#F8F5F0", marginBottom: "8px" }}>
+                <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "26px", fontWeight: 500, color: "#F8F5F0", marginBottom: "8px" }}>
                   {f.name}
-                </h3>
+                </h2>
                 <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "14px", fontWeight: 600, color: "#DAA110", marginBottom: "4px" }}>
                   {f.price}
                 </p>

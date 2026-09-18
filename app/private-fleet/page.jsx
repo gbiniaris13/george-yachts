@@ -19,7 +19,7 @@ export async function generateMetadata() {
     // Target: "luxury motor yacht charter greece" (320/mo, KD 5,
     // DataForSEO 30/8) - unclaimed by any pillar; the head term "crewed
     // motor yacht charter greece" stays with /motor-yacht-charter-greece.
-    title: "Motor Yacht Fleet: Luxury Motor Yacht Charter Greece",
+    title: "Motor Yacht Fleet: Crewed Charter Greece",
     description: `Fully crewed luxury motor yachts in Greek waters, ranked cheapest to flagship - from €${low.toLocaleString()} to €${high.toLocaleString()} per yacht per week. Full crew, total discretion.`,
     alternates: { canonical: "https://georgeyachts.com/private-fleet" },
     openGraph: {

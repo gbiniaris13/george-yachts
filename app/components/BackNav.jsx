@@ -38,6 +38,16 @@ function parentOf(pathname) {
 export default function BackNav() {
   const pathname = usePathname();
   const [hasHistory, setHasHistory] = useState(false);
+  // 2026-09-18 — the live home page carried a "Home" pill. The cached copy of
+  // "/" had been regenerated through /index (which answers 200 and renders
+  // the same page), so usePathname() saw "/index", not "/". Both spellings
+  // are the home, and after mount the address bar is the final word.
+  const [atRoot, setAtRoot] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const p = window.location.pathname;
+    setAtRoot(p === "/" || p === "/index" || p === "/index.html");
+  }, [pathname]);
 
   // The visitor's own trail inside the site for this tab, kept in
   // sessionStorage: a forward navigation adds the page, back or forward
@@ -86,7 +96,7 @@ export default function BackNav() {
     [hasHistory],
   );
 
-  if (!pathname || pathname === "/") return null;
+  if (!pathname || pathname === "/" || pathname === "/index" || atRoot) return null;
   if (pathname.startsWith("/studio") || pathname.startsWith("/admin") || pathname.startsWith("/cabin")) return null;
 
   const parent = parentOf(pathname);

@@ -133,9 +133,9 @@ export async function generateMetadata({ params }) {
   // 18/9 measurement before its title moves.
   const title =
     d.slug === "cyclades"
-      ? `${d.label} Yacht Charter: Crewed Yachts, Routes & Weekly Rates`
+      ? `${d.label} Yacht Charter: Crewed Weeks, Routes`
       : d.slug === "ionian"
-        ? `${d.label} Yacht Charter: Crewed Yachts, Corfu & Lefkada Routes`
+        ? `${d.label} Yacht Charter: Corfu, Lefkada, Crewed`
         : `${d.label} Yacht Charter - ${d.cardTitle}`;
   // 2026-08-06 (job 5) — was `${d.cardSubline} ${d.pageTagline}`, and those two
   // fields say the same thing in different words, so every regional snippet in

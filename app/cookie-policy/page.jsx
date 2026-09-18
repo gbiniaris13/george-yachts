@@ -4,7 +4,7 @@ import { pageMeta } from "@/lib/pageMeta";
 
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 export const metadata = pageMeta({
-  title: "Cookie Policy",
+  title: "Cookie Policy: What We Store and Why",
   description:
     "How georgeyachts.com uses cookies and similar technologies, and how to control them - analytics and session tools load only with your consent.",
   path: "/cookie-policy",

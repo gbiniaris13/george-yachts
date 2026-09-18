@@ -3599,6 +3599,12 @@ a.gy-fancy-link:hover {
 /* 2026-09-17, George: a Back control on every page but the home. Bottom
    left, the mirror of the scroll-to-top ring on the right, above the sticky
    fleet bar. Steps back through the visitor's own trail on the site. */
+/* 2026-09-18 - the pill sits at z-index 9999 and was floating over the
+   open mobile menu (z-index 60). NavDrawerSystem marks the body while the
+   overlay is open; the pill steps aside and returns when it closes. */
+body.gy-nav-open .gy-backnav {
+  visibility: hidden;
+}
 .gy-backnav {
   position: fixed;
   left: 22px;

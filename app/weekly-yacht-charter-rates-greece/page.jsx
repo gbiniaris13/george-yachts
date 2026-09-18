@@ -62,7 +62,7 @@ export const metadata = pageMeta({
   // Google truncates on pixel width well before that, eating the number that
   // is the whole reason a price searcher clicks. At 61 characters the title
   // rule drops the brand instead, and the phrase and both figures survive.
-  title: `Motor Yacht Charter Greece Prices: ${lowText} to ${highText} All-In`,
+  title: `Motor Yacht Charter Greece Prices: ${lowText}-${highText} All-In`,
   description: DESCRIPTION,
   path: `/${SLUG}`,
 });

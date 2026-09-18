@@ -66,13 +66,13 @@ function Step({ number, icon, title, description, detail, delay = 0 }) {
       {/* Content */}
       <div style={{ paddingTop: "12px" }}>
         <div style={{ color: "#DAA110", marginBottom: "16px" }}>{icon}</div>
-        <h3 style={{
+        <h2 style={{
           fontFamily: "var(--gy-font-editorial)",
           fontSize: "1.6rem", fontWeight: 400, color: "#F8F5F0",
           marginBottom: "16px",
         }}>
           {title}
-        </h3>
+        </h2>
         <p style={{
           fontFamily: "var(--gy-font-ui)",
           fontSize: "14px", lineHeight: 2, color: "rgba(248, 245, 240,0.5)",

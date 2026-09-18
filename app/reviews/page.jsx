@@ -67,7 +67,7 @@ function ReviewCard({ review }) {
           <Star key={i} filled={i <= review.rating} />
         ))}
       </div>
-      <h3
+      <h2
         itemProp="name"
         style={{
           fontFamily: "var(--gy-font-editorial)",
@@ -79,7 +79,7 @@ function ReviewCard({ review }) {
         }}
       >
         {review.title}
-      </h3>
+      </h2>
       <p
         itemProp="reviewBody"
         style={{

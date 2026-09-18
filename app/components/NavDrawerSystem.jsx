@@ -227,14 +227,21 @@ export default function NavDrawerSystem() {
     setMobileOpen(false);
   }, [pathname]);
 
-  // Lock body scroll while the mobile overlay is open.
+  // Lock body scroll while the mobile overlay is open. The body class lets
+  // fixed elements that sit above the overlay (BackNav's pill, z-index 9999)
+  // step aside: 2026-09-18 the "Back" pill was floating over the open menu.
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
+      document.body.classList.add("gy-nav-open");
     } else {
       document.body.style.overflow = "";
+      document.body.classList.remove("gy-nav-open");
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+      document.body.classList.remove("gy-nav-open");
+    };
   }, [mobileOpen]);
 
   // Scroll-state for the masthead (transparent → solid black on scroll).
@@ -636,21 +643,34 @@ export default function NavDrawerSystem() {
            by one. Same metal as everything else. */
 
         /* Mobile overlay - slide-in from right per Boss spec. */
+        /* 2026-09-18, Core Web Vitals: while closed the panel is painted,
+           invisible, at translateX(100%), and Chrome still reported its
+           inner column as the largest contentful paint on every text page
+           (measured: the LCP entry named this element on the crewed hub,
+           the glossary and the yacht pages). visibility: hidden removes it
+           from painting and from the tab order until it opens; the delay
+           on the way out lets the slide finish before it disappears. */
         .gy-nav-overlay {
           transform: translateX(100%);
           opacity: 0;
+          visibility: hidden;
           pointer-events: none;
-          transition: transform 0.3s ease, opacity 0.3s ease;
+          transition: transform 0.3s ease, opacity 0.3s ease, visibility 0s linear 0.3s;
         }
         .gy-nav-overlay--open {
           transform: translateX(0);
           opacity: 1;
+          visibility: visible;
           pointer-events: auto;
+          transition: transform 0.3s ease, opacity 0.3s ease, visibility 0s;
         }
         @media (prefers-reduced-motion: reduce) {
           .gy-nav-overlay {
-            transition: opacity 0.2s ease;
+            transition: opacity 0.2s ease, visibility 0s linear 0.2s;
             transform: none;
+          }
+          .gy-nav-overlay--open {
+            transition: opacity 0.2s ease, visibility 0s;
           }
         }
 

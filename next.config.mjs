@@ -332,6 +332,12 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // 2026-09-18 — /index answered 200 with the home page, a second URL
+      // for the same document, and an ISR regeneration through it once
+      // stamped the cached home with the wrong pathname (BackNav showed a
+      // "Home" pill on the home). One door.
+      { source: "/index", destination: "/", permanent: true },
+      { source: "/index.html", destination: "/", permanent: true },
       // 2026-08-30, George: the TheThoms collaboration interview is
       // deleted outright (his call, and the standing no-thethoms rule).
       // The URL held rankings; it lands on the Journal, not a 404.

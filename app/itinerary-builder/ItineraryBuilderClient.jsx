@@ -451,9 +451,9 @@ export default function ItineraryBuilderClient() {
 
         {/* ROUTE PANEL */}
         <div style={{ background: '#0D1B2A', border: '1px solid #0D1B2A', borderRadius: 12, padding: 24, display: 'flex', flexDirection: 'column' }}>
-          <h3 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 22, color: '#F8F5F0', margin: '0 0 4px 0' }}>
+          <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 22, color: '#F8F5F0', margin: '0 0 4px 0' }}>
             {t('builder.yourRoute', 'Your Route')}
-          </h3>
+          </h2>
           <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10, color: 'rgba(248, 245, 240,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 20 }}>
             {selected.length === 0 ? t('builder.clickToBegin', 'Click islands to begin') : `${selected.length} ${t('builder.stopsSelected', 'stops selected')}`}
           </p>
@@ -640,13 +640,13 @@ export default function ItineraryBuilderClient() {
                 }}>
                   Save your itinerary
                 </p>
-                <h3 style={{
+                <h2 style={{
                   fontFamily: "var(--gy-font-editorial)",
                   fontSize: 24, fontWeight: 400, color: '#F8F5F0',
                   margin: '0 0 6px', lineHeight: 1.2,
                 }}>
                   Your route, in your inbox + on George&apos;s desk
-                </h3>
+                </h2>
                 <p style={{
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 13, lineHeight: 1.6,

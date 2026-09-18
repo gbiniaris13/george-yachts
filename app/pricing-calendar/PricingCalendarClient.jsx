@@ -88,9 +88,9 @@ export default function PricingCalendarClient() {
         {/* Calendar grid */}
         {months.map(month => (
           <div key={month} style={{ marginBottom: 24 }}>
-            <h3 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 18, color: '#F8F5F0', fontWeight: 300, marginBottom: 12, paddingLeft: 4 }}>
+            <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: 18, color: '#F8F5F0', fontWeight: 300, marginBottom: 12, paddingLeft: 4 }}>
               {month}
-            </h3>
+            </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 8 }}>
               {WEEKS_2026.filter(w => w.month === month).map((w, i) => {
                 const tier = TIER_COLORS[w.tier];

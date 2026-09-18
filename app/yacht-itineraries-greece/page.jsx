@@ -16,7 +16,7 @@ export const metadata = pageMeta({
   // 2026-08-06 — the h1 was "Signature Itineraries", which contains neither
   // "Greek" nor "yacht charter" on the page built to rank for the itinerary
   // term. Same defect, same fix as the destination heroes earlier today.
-  title: "Greek Yacht Charter Itineraries: 8 Real Weeks",
+  title: "Greek Yacht Itineraries: 8 Real Weeks",
   description:
     "Eight Greek yacht charter itineraries: three signature routes plus five weeks George actually proposed to real enquiries this season, day by day.",
   path: "/yacht-itineraries-greece",

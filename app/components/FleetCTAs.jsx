@@ -28,6 +28,16 @@ import { useI18n } from "@/lib/i18n/I18nProvider";
 // (or any other policy) blocks autoplay. Pointer-events-none on
 // the video element so the entire panel still works as one
 // clickable Link.
+// WebP ladders for the two panel posters, generated 2026-09-18 from the JPEG
+// frames (PIL, quality 62). Keyed by the JPEG path so a caller that passes
+// any other poster simply gets the JPEG.
+const POSTER_WEBP = {
+  "/images/posters/private-fleet-bg-frame1.jpg":
+    "/images/posters/private-fleet-bg-frame1-768.webp 768w, /images/posters/private-fleet-bg-frame1-1280.webp 1280w, /images/posters/private-fleet-bg-frame1-1920.webp 1920w",
+  "/images/posters/explorer-fleet-bg-frame1.jpg":
+    "/images/posters/explorer-fleet-bg-frame1-768.webp 768w, /images/posters/explorer-fleet-bg-frame1-1280.webp 1280w, /images/posters/explorer-fleet-bg-frame1-1920.webp 1920w",
+};
+
 function PanelBackgroundVideo({ videoBase, posterSrc }) {
   const videoRef = useRef(null);
   const [failed, setFailed] = useState(false);
@@ -80,15 +90,29 @@ function PanelBackgroundVideo({ videoBase, posterSrc }) {
           panel is near the viewport, which is exactly when useNearViewport
           attaches the video anyway. Identical picture, same moment, off the
           critical path. */}
-      <img
-        src={posterSrc}
-        alt=""
-        aria-hidden="true"
-        loading="lazy"
-        decoding="async"
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
-        style={{ pointerEvents: "none" }}
-      />
+      {/* 2026-09-18, Core Web Vitals: on a throttled phone these two posters
+          (130 KB and 102 KB, 1920 px JPEG) start at 2.9 s because Chrome's
+          lazy threshold on a slow link reaches well below the fold, and they
+          share the pipe with the hero while it is still the LCP. A WebP ladder
+          gives the phone a 768 px file (63 KB and 49 KB), the same frame. */}
+      <picture>
+        {POSTER_WEBP[posterSrc] ? (
+          <source
+            type="image/webp"
+            srcSet={POSTER_WEBP[posterSrc]}
+            sizes="(min-width: 1024px) 50vw, 100vw"
+          />
+        ) : null}
+        <img
+          src={posterSrc}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+          style={{ pointerEvents: "none" }}
+        />
+      </picture>
       <video
         ref={videoRef}
         preload="none"

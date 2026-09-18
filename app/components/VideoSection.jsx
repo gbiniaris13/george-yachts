@@ -166,28 +166,49 @@ function HeroBackgroundVideo() {
           preload="none" Chrome defers the poster along with the video, so
           the very change that saved 3.8 MB had pushed the first paint of
           the hero later. This decouples them. */}
-      <img
-        src="/images/posters/hero-loop-frame1.jpg"
-        srcSet={[
-          "/images/posters/hero-loop-frame1-768.jpg 768w",
-          "/images/posters/hero-loop-frame1-1080.jpg 1080w",
-          "/images/posters/hero-loop-frame1-1440.jpg 1440w",
-          "/images/posters/hero-loop-frame1.jpg 1920w",
-        ].join(", ")}
-        sizes="100vw"
-        alt=""
-        aria-hidden="true"
-        fetchPriority="high"
-        decoding="async"
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          objectPosition: "center",
-        }}
-      />
+      {/* 2026-09-18, Core Web Vitals: measured on a throttled phone (1.5 Mbps,
+          4x CPU), the poster was the LCP and finished at 5.5 s, not because it
+          started late (422 ms, preloaded) but because the 1440 px JPEG (106 KB)
+          shared the pipe with thirty scripts, three fonts and the logo, and
+          the largest file on a shared pipe finishes last. The same frame as
+          WebP is 59 KB at 1280 px and 36 KB at 960 px, so it is no longer the
+          biggest thing in flight. The JPEG ladder stays as the fallback for
+          browsers without WebP, and the preload in app/page.jsx names the
+          same WebP candidates so the two never disagree. */}
+      <picture>
+        <source
+          type="image/webp"
+          srcSet={[
+            "/images/posters/hero-loop-frame1-640.webp 640w",
+            "/images/posters/hero-loop-frame1-960.webp 960w",
+            "/images/posters/hero-loop-frame1-1280.webp 1280w",
+            "/images/posters/hero-loop-frame1-1920.webp 1920w",
+          ].join(", ")}
+          sizes="100vw"
+        />
+        <img
+          src="/images/posters/hero-loop-frame1.jpg"
+          srcSet={[
+            "/images/posters/hero-loop-frame1-768.jpg 768w",
+            "/images/posters/hero-loop-frame1-1080.jpg 1080w",
+            "/images/posters/hero-loop-frame1-1440.jpg 1440w",
+            "/images/posters/hero-loop-frame1.jpg 1920w",
+          ].join(", ")}
+          sizes="100vw"
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          decoding="async"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+          }}
+        />
+      </picture>
 
       <video
         ref={ref}

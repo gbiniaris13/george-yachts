@@ -52,7 +52,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
             >
               George&rsquo;s Yachts for This Read
             </p>
-            <h3
+            <h2
               style={{
                 fontFamily: "var(--gy-font-editorial)",
                 fontSize: "clamp(26px, 3vw, 36px)",
@@ -64,7 +64,7 @@ export default function BlogPostFooter({ relatedYachts = [] }) {
               }}
             >
               Three yachts that fit this conversation
-            </h3>
+            </h2>
             <div
               style={{
                 display: "grid",

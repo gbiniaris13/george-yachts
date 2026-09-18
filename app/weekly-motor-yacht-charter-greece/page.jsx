@@ -34,7 +34,7 @@ const NAVY = "#0D1B2A";
 const CREAM = "#F8F5F0";
 
 export const metadata = pageMeta({
-  title: "Weekly Motor Yacht Charter Greece: Rates by Size",
+  title: "Weekly Motor Yacht Charter Greece: Rates",
   description: DESCRIPTION,
   path: `/${SLUG}`,
 });

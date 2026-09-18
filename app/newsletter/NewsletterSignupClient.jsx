@@ -192,7 +192,7 @@ export default function NewsletterSignupClient({ streams }) {
                     marginBottom: 4,
                   }}
                 >
-                  <h3
+                  <h2
                     style={{
                       margin: 0,
                       fontFamily: "var(--gy-font-editorial)",
@@ -202,7 +202,7 @@ export default function NewsletterSignupClient({ streams }) {
                     }}
                   >
                     {s.name}
-                  </h3>
+                  </h2>
                   <span
                     aria-hidden="true"
                     style={{
