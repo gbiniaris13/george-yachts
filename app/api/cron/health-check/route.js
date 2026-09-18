@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { WHATSAPP_DOWN, WHATSAPP_US_LOCKED } from "@/lib/whatsappStatus";
+import { emailGeorge } from "@/lib/notifyGeorge";
 
 export const dynamic = "force-dynamic";
 
@@ -35,22 +36,41 @@ async function checkAPI(name, url, body, expectStatus = 200) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    const ok = expectStatus === "lenient" ? res.status > 0 && res.status < 500 : res.status === expectStatus;
-    return { name, ok, status: res.status, ms: Date.now() - start, message: ok ? "OK" : `expected ${expectStatus}, got ${res.status}` };
+    const ok = expectStatus === "lenient"
+      ? res.status > 0 && res.status < 500
+      : Array.isArray(expectStatus)
+        ? expectStatus.includes(res.status)
+        : res.status === expectStatus;
+    // 2026-09-18: a 429 from our own rate limiter is the probe being
+    // throttled, not a customer being bounced; it passes but says so.
+    const message = ok ? (res.status === 429 ? "OK (rate limited, probe only)" : "OK") : `expected ${expectStatus}, got ${res.status}`;
+    return { name, ok, status: res.status, ms: Date.now() - start, message };
   } catch (err) {
     return { name, ok: false, status: 0, ms: Date.now() - start, message: err.message };
   }
 }
 
+// 2026-09-18 — George: "δεν τα παίρνω πια". The report went to Telegram
+// only, and this function threw the answer away, so a chat that stopped
+// receiving looked exactly like one that did. It now returns the truth
+// and the email carries it.
 async function sendTelegram(text) {
-  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return { ok: false, detail: "no token or chat id in env" };
   try {
-    await fetch("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage", {
+    const r = await fetch("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text, parse_mode: "Markdown" }),
     });
-  } catch {}
+    const j = await r.json().catch(() => ({}));
+    return { ok: r.ok && j.ok === true, detail: r.ok && j.ok ? "delivered" : `HTTP ${r.status} ${j.description || ""}`.trim() };
+  } catch (err) {
+    return { ok: false, detail: err.message };
+  }
+}
+
+function esc(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 export async function GET(request) {
@@ -92,8 +112,11 @@ export async function GET(request) {
     website: "health-probe", name: "HEALTH_CHECK", email: "health@test.invalid",
     message: "probe", source: "health_check",
   }));
-  results.push(await checkAPI("Newsletter API", BASE_URL + "/api/newsletter", { email: "health@test.invalid" }, "lenient"));
-  results.push(await checkAPI("Partner PDF API", BASE_URL + "/api/partner-request", { email: "health@test.invalid" }, "lenient"));
+  // 2026-09-18: both routes honour the honeypot, so the probe no longer
+  // subscribes a fake address or mails George a fake partner request every
+  // morning. Only 200 (or our own 429) is health; "lenient" hid a 400.
+  results.push(await checkAPI("Newsletter API (probe)", BASE_URL + "/api/newsletter", { website: "health-probe", email: "health@test.invalid" }, [200, 429]));
+  results.push(await checkAPI("Partner PDF API (probe)", BASE_URL + "/api/partner-request", { website: "health-probe", email: "health@test.invalid" }, [200, 429]));
 
   // Mondays: one REAL end-to-end submission through /api/inquiry so
   // the full Telegram+email+WhatsApp delivery chain is proven weekly
@@ -208,7 +231,32 @@ export async function GET(request) {
         "⚠️ *" + failed.length + " issue(s) need attention!*",
       ];
 
-  await sendTelegram(lines.join("\n"));
+  const tg = await sendTelegram(lines.join("\n"));
 
-  return NextResponse.json({ status: allOk ? "healthy" : "degraded", timestamp: ts, results });
+  // Email is the report George reads. Every day, pass or fail, with the
+  // Telegram outcome inside it, so a silent channel can never hide.
+  const subject = allOk
+    ? `Health check ${ts.slice(0, 5)}: ${results.length}/${results.length} OK`
+    : `ALERT health check ${ts.slice(0, 5)}: ${failed.length} of ${results.length} failed`;
+  const rows = results
+    .map((r) => `<tr><td style="padding:4px 10px">${r.ok ? "OK" : "FAIL"}</td><td style="padding:4px 10px">${esc(r.name)}</td><td style="padding:4px 10px">${r.status}</td><td style="padding:4px 10px">${r.ms} ms</td><td style="padding:4px 10px">${esc(r.message)}</td></tr>`)
+    .join("");
+  const html = `<div style="font-family:-apple-system,Helvetica,Arial,sans-serif;font-size:14px;color:#0D1B2A">
+<p><strong>${allOk ? "All checks passed." : failed.length + " check(s) failed."}</strong> ${esc(ts)} Athens, georgeyachts.com</p>
+<table style="border-collapse:collapse;border:1px solid #ddd">${rows}</table>
+<p>Telegram copy: ${tg.ok ? "delivered" : "NOT delivered (" + esc(tg.detail) + ")"}</p>
+<p style="color:#666">Pages, form APIs (honeypot probes, nothing is sent), WhatsApp links, Gmail SMTP, Telegram bot. Mondays add one real end-to-end lead marked (TEST).</p>
+</div>`;
+  let emailed = false;
+  let emailError = "";
+  try {
+    if (!GMAIL_USER || !GMAIL_PASS) throw new Error("no Gmail credentials in env");
+    await emailGeorge({ subject, html });
+    emailed = true;
+  } catch (err) {
+    emailError = err?.message || String(err);
+  }
+  console.log(`[health-check] ${allOk ? "healthy" : "degraded"} ${results.filter((r) => r.ok).length}/${results.length}; telegram ${tg.ok ? "ok" : "failed: " + tg.detail}; email ${emailed ? "ok" : "failed: " + emailError}`);
+
+  return NextResponse.json({ status: allOk ? "healthy" : "degraded", timestamp: ts, results, report: { telegram: tg, email: emailed ? "sent" : "failed: " + emailError } });
 }
