@@ -300,7 +300,13 @@ const ContactFormSection = () => {
               k !== "recaptchaToken" &&
               !(k === "country" && geoFilledRef.current)
           ).length;
-          if (filled > 0 && typeof window.gtag === "function") {
+          // 2026-09-19, second correction: 106 of 114 abandons in 28 days
+          // carried last_field "none". The selects and the route fields hold
+          // default values, so FormData is never empty and every visitor who
+          // merely scrolled past the form was counted as having abandoned it.
+          // The honest count was 7 against 27 submits. A form nobody touched
+          // was not abandoned: require a field the visitor actually entered.
+          if (filled > 0 && lastFieldRef.current && typeof window.gtag === "function") {
             window.gtag("event", "form_abandoned", {
               last_field: lastFieldRef.current || "none",
               fields_filled: filled,
