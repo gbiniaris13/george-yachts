@@ -630,6 +630,10 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                 alt={heroImage.alt || `${yacht.name} ${yacht.subtitle} - luxury yacht charter Greece`}
                 fill
                 priority
+                // 2026-09-19: priority alone emitted a preload with no fetch
+                // priority, and Chrome queued the hero as Low behind thirty
+                // scripts. High puts it at the front of the phone's narrow pipe.
+                fetchPriority="high"
                 className="yacht-hero__image"
                 sizes="100vw"
                 style={{ viewTransitionName: `yacht-cover-${yacht.slug}` }}
@@ -740,7 +744,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                   Request a personal proposal →
                 </button>
                 <a
-                  href={`https://api.whatsapp.com/send/?phone=17867988798&text=${encodeURIComponent(`Hi George - could you share availability and rates for ${yacht.name}?`)}`}
+                  href={`https://api.whatsapp.com/send/?phone=17867988798&text=${encodeURIComponent(`Hello George, I'm looking at ${yacht.name}. Could you share availability and rates for a week in 2027?`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   data-cursor="WhatsApp"
@@ -1199,7 +1203,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
                 Request a personal proposal
               </button>
               <a
-                href={`https://api.whatsapp.com/send/?phone=17867988798&text=${encodeURIComponent(`Hi, I'm interested in chartering ${yacht.name} - could you share availability and rates?`)}`}
+                href={`https://api.whatsapp.com/send/?phone=17867988798&text=${encodeURIComponent(`Hello George, I'm looking at ${yacht.name}. Could you share availability and rates for a week in 2027?`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-secondary"

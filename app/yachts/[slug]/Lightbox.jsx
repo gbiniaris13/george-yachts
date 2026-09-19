@@ -36,6 +36,33 @@ export default function Lightbox({ images, yachtName }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [autoplay, setAutoplay] = useState(true);
   const touchStartX = useRef(null);
+
+  // 2026-09-19, speed on phones. Every slide used to carry its photo as a
+  // CSS background at 1800 px from the first render, so the browser fetched
+  // the whole gallery at once: on M/Y PANDION thirteen files, 1.5 MB, all
+  // starting at 2.7 s on a throttled phone and sharing the pipe with the
+  // hero, which finished at 7.3 s because of them. Three changes, no change
+  // to what anyone sees: nothing in the gallery loads until the carousel is
+  // within a screen or so of the viewport; only the current slide and its
+  // two neighbours carry a photo (plus any slide already shown, so going
+  // back never flashes); and the width follows the screen, 1200 px on a
+  // phone instead of 1800. The neighbour preload below keeps every
+  // transition instant, which is what the background approach was for.
+  const stageRef = useRef(null);
+  const [imgW, setImgW] = useState(0); // 0 until the carousel is near
+  const [seen, setSeen] = useState(() => new Set([0]));
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    const w = Math.min(1800, Math.max(800, Math.ceil((window.innerWidth * (window.devicePixelRatio || 1)) / 200) * 200));
+    const el = stageRef.current;
+    if (!el || !('IntersectionObserver' in window)) { setImgW(w); return undefined; }
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) { setImgW(w); io.disconnect(); }
+    }, { rootMargin: '1200px 0px' });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  const slideSrc = (img) => `${img.url}?w=${imgW}&h=${Math.round((imgW * 2) / 3)}&fit=crop&auto=format`;
   const count = Array.isArray(images) ? images.length : 0;
 
   // ── Navigation ────────────────────────────────────────────
@@ -107,20 +134,26 @@ export default function Lightbox({ images, yachtName }) {
 
   // ── Preload prev + next so transitions are instant ────────
   useEffect(() => {
-    if (typeof window === 'undefined' || count < 2) return;
+    if (typeof window === 'undefined' || count < 2 || !imgW) return;
     const indices = [
       (currentIdx + 1) % count,
       (currentIdx - 1 + count) % count,
     ];
     const tags = indices.map((idx) => {
       const im = new window.Image();
-      im.src = `${images[idx].url}?w=1800&h=1200&fit=crop&auto=format`;
+      im.src = slideSrc(images[idx]);
       return im;
     });
-    return () => {
-      tags.forEach((t) => { t.src = ''; });
-    };
-  }, [currentIdx, images, count]);
+    setSeen((prev) => {
+      const next = new Set(prev);
+      [currentIdx, ...indices].forEach((i) => next.add(i));
+      return next.size === prev.size ? prev : next;
+    });
+    // The images stay referenced until the next change; clearing src here
+    // would cancel a neighbour that is still downloading.
+    return () => { tags.length = 0; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIdx, images, count, imgW]);
 
   // ── GA4 event on lightbox open ────────────────────────────
   const openModal = useCallback(() => {
@@ -157,13 +190,13 @@ export default function Lightbox({ images, yachtName }) {
         aria-roledescription="carousel"
         aria-label={`${yachtName} photo gallery`}
       >
-        <div className="yacht-carousel__stage">
+        <div className="yacht-carousel__stage" ref={stageRef}>
           {images.map((img, i) => (
             <div
               key={i}
               className={`yacht-carousel__slide ${i === currentIdx ? 'is-active' : ''}`}
               style={{
-                backgroundImage: `url(${img.url}?w=1800&h=1200&fit=crop&auto=format)`,
+                backgroundImage: imgW && seen.has(i) ? `url(${slideSrc(img)})` : undefined,
               }}
               aria-hidden={i !== currentIdx}
               role={i === currentIdx ? 'button' : undefined}
@@ -243,7 +276,7 @@ export default function Lightbox({ images, yachtName }) {
                 aria-controls={`yacht-carousel-slide-${i}`}
                 className={`yacht-carousel__thumb ${i === currentIdx ? 'is-active' : ''}`}
                 style={{
-                  backgroundImage: `url(${img.url}?w=300&h=200&fit=crop&auto=format)`,
+                  backgroundImage: imgW ? `url(${img.url}?w=300&h=200&fit=crop&auto=format)` : undefined,
                 }}
                 onClick={() => jump(i)}
                 aria-label={`Go to photo ${i + 1}`}

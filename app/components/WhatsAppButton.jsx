@@ -277,7 +277,23 @@ export default function WhatsAppButton() {
         aria-label="Contact us on WhatsApp"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        onClick={markGreeted}
+        onClick={(e) => {
+          // 2026-09-19 - on a yacht page the message names the yacht and the
+          // season, so George reads "M/Y PANDION, a week in 2027" instead of
+          // a bare hello and can answer with a rate in the first reply. The
+          // name is read from the page's own h1 at the moment of the tap; the
+          // server-rendered href stays the same on every page.
+          try {
+            const h1 = document.querySelector(".yacht-hero__title");
+            const name = h1 && h1.textContent ? h1.textContent.trim() : "";
+            if (name && !WHATSAPP_DOWN) {
+              e.currentTarget.href = buildHref(
+                `Hello George, I'm looking at ${name}. Could you share availability and rates for a week in 2027?`,
+              );
+            }
+          } catch {}
+          markGreeted();
+        }}
         className="fixed z-50 group gy-dock-fab"
         style={{
           // 2026-08-22: the dock line. Same baseline as the AmbientPlayer

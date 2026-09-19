@@ -16,7 +16,7 @@ const WhatsAppIcon = () => (
 
 const WhatsAppEnquiry = ({ yachtName, mobileBar = true }) => {
   const encodedMessage = encodeURIComponent(
-    `Hi George, I'm interested in ${yachtName} for a charter in Greece.`
+    `Hello George, I'm looking at ${yachtName}. Could you share availability and rates for a week in 2027?`
   );
   const whatsappUrl = `https://api.whatsapp.com/send/?phone=17867988798&text=${encodedMessage}`;
 
