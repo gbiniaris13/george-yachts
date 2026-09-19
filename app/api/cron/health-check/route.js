@@ -184,6 +184,45 @@ export async function GET(request) {
     }
   } catch {}
 
+  // Buttons a finger can reach (2026-09-19). A buried button still answers
+  // 200, so nothing above can see it: the WhatsApp button sat under the
+  // yacht page's Inquire bar on every phone from 22 August to 19 September
+  // and this report said "All OK" every morning. A real phone-sized browser
+  // now runs on GitHub Actions at 05:50 UTC (scripts/tapCheck.mjs) and this
+  // reads its verdict. A run older than 26 hours is a failure too: a test
+  // that stopped running protects nobody. If GitHub cannot be read at all,
+  // the line says so plainly instead of guessing either way.
+  try {
+    const gh = await fetch(
+      "https://api.github.com/repos/gbiniaris13/george-yachts/actions/workflows/tap-check.yml/runs?per_page=1&status=completed",
+      { cache: "no-store", headers: { "User-Agent": "georgeyachts-health", Accept: "application/vnd.github+json" } },
+    );
+    const name = "Buttons tappable on a phone (browser test)";
+    if (!gh.ok) {
+      results.push({ name, ok: true, status: gh.status, ms: 0, message: `UNKNOWN today: GitHub could not be read (HTTP ${gh.status}); not counted either way` });
+    } else {
+      const run = (await gh.json())?.workflow_runs?.[0];
+      if (!run) {
+        results.push({ name, ok: false, status: 200, ms: 0, message: "the browser test has never run" });
+      } else {
+        const ageH = Math.round((Date.now() - new Date(run.updated_at).getTime()) / 36e5);
+        const passed = run.conclusion === "success";
+        const fresh = ageH <= 26;
+        results.push({
+          name,
+          ok: passed && fresh,
+          status: 200,
+          ms: 0,
+          message: !passed
+            ? `A BUTTON IS COVERED OR MISSING, see ${run.html_url}`
+            : !fresh
+              ? `the browser test last ran ${ageH}h ago, it should run daily`
+              : `OK (WhatsApp, Inquire, menu; iPhone, Android, desktop; ran ${ageH}h ago)`,
+        });
+      }
+    }
+  } catch {}
+
   // Gmail SMTP
   let gmailOk = false;
   try {

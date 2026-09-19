@@ -1,0 +1,34 @@
+# Every morning, before the 10:00 Athens health check: a real phone-sized
+# browser opens the live site and asks of each button that earns a request,
+# "if a finger lands here, what does it hit?". See scripts/tapCheck.mjs.
+# No secrets, nothing is submitted, nothing is written back to the repo.
+# The health check (app/api/cron/health-check) reads this workflow's latest
+# result from the public GitHub API and prints it in George's email.
+name: Tap check
+
+on:
+  schedule:
+    - cron: "50 5 * * *" # 05:50 UTC, 08:50 Athens; scheduled runs can start late
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright outside the project
+        run: |
+          mkdir -p /tmp/tapcheck && cd /tmp/tapcheck
+          npm init -y > /dev/null
+          npm i playwright@1
+          npx playwright install --with-deps chromium webkit
+          cp "$GITHUB_WORKSPACE/scripts/tapCheck.mjs" .
+      - name: Can a visitor tap the buttons?
+        run: cd /tmp/tapcheck && node tapCheck.mjs
