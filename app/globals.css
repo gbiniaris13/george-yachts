@@ -5176,6 +5176,53 @@ body.gy-cookiebar-open,
 body.gy-cookiebar-open.gy-fleetbar-open {
   --gy-dock: 150px;
 }
+/* 2026-09-19 - the yacht page's Inquire bar was never on the dock line.
+   It is fixed to bottom 0 at z-60, 77px tall, on every yacht page on a
+   phone. When the floating buttons moved to --gy-dock (24px) on 22/8, the
+   WhatsApp button and the music pill slid underneath it: measured on the
+   live site, elementFromPoint on the WhatsApp button returned the bar at
+   its centre, top and bottom. A visitor on a phone, on the page where the
+   decision is made, could not reach WhatsApp at all. George's WhatsApp
+   enquiries fell from two or three a day in August to almost none, and
+   this is the same shape of bug as the cookie banner of 26/8. The bar now
+   raises the dock like every other fixed bottom element; when the bar
+   hides (a form field has focus) the buttons settle back. */
+@media (max-width: 767.98px) {
+  body:has(.gy-yacht-mobile-cta:not(.gy-yacht-mobile-cta--hidden)) {
+    --gy-dock: 101px;
+  }
+}
+/* 2026-09-19 - the phone banner, made small. It stood 249px on a 375px
+   phone, two fifths of the first screen a new visitor ever sees, and it
+   buried the yacht page's Inquire bar until the cookie question was
+   answered. Same words, same link, Accept and Decline still equal in size
+   and weight (HDPA Rec. 1/2020); only the padding, the type size and the
+   eyebrow give way. The Inquire bar rides on top of the banner for as long
+   as the banner is out. */
+@media (max-width: 767.98px) {
+  .gy-cookie-inner {
+    gap: 10px !important;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  .gy-cookie-eyebrow {
+    display: none;
+  }
+  .gy-cookie-text {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+  .gy-cookie-actions {
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+  }
+  .gy-cookie-btn {
+    flex: 1 1 0;
+    padding: 10px 12px !important;
+  }
+  body.gy-cookiebar-open .gy-yacht-mobile-cta {
+    bottom: var(--gy-cookiebar-h, 0px);
+  }
+}
 /* 2026-08-27, the David forensics. On a 375px phone the two dock FABs
    (WhatsApp right, AmbientPlayer pill left) sat over the submit button's
    bottom corners whenever it scrolled through the bottom band; centre

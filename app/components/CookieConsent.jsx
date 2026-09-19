@@ -70,19 +70,40 @@ export default function CookieConsent() {
   useEffect(() => {
     if (!open) return undefined;
     document.body.classList.add("gy-cookiebar-open");
+    // 2026-09-19 - the banner also publishes its own height. On a phone the
+    // yacht page's "Inquire" bar is fixed to bottom 0 at the same z-index,
+    // so until a visitor answered the cookie question the one button that
+    // earns a request was buried under it. The bar now rides on top of the
+    // banner (globals.css reads --gy-cookiebar-h), and the dock line counts
+    // the bar in, so the WhatsApp button never parks on the Inquire bar.
     const apply = () => {
       const h = barRef.current?.offsetHeight || 0;
-      if (h) document.body.style.setProperty("--gy-dock", `${h + 24}px`);
+      if (!h) return;
+      document.body.style.setProperty("--gy-cookiebar-h", `${h}px`);
+      const bar = document.querySelector(".gy-yacht-mobile-cta");
+      const barOut =
+        bar &&
+        getComputedStyle(bar).display !== "none" &&
+        !bar.classList.contains("gy-yacht-mobile-cta--hidden");
+      const barH = barOut ? bar.offsetHeight : 0;
+      document.body.style.setProperty("--gy-dock", `${h + barH + 24}px`);
     };
     apply();
+    // The Inquire bar mounts with the page, after this effect on some
+    // routes; measure again once it is there.
+    const t1 = setTimeout(apply, 600);
+    const t2 = setTimeout(apply, 2000);
     const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(apply) : null;
     if (ro && barRef.current) ro.observe(barRef.current);
     window.addEventListener("resize", apply);
     return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
       ro?.disconnect();
       window.removeEventListener("resize", apply);
       document.body.classList.remove("gy-cookiebar-open");
       document.body.style.removeProperty("--gy-dock");
+      document.body.style.removeProperty("--gy-cookiebar-h");
     };
   }, [open, showPrefs]);
 
@@ -109,11 +130,12 @@ export default function CookieConsent() {
       }}
     >
       <div
-        className="mx-auto flex flex-col gap-5 px-6 py-6 md:flex-row md:items-center md:justify-between md:gap-8"
+        className="gy-cookie-inner mx-auto flex flex-col gap-5 px-6 py-6 md:flex-row md:items-center md:justify-between md:gap-8"
         style={{ maxWidth: "1100px" }}
       >
         <div style={{ flex: 1 }}>
           <p
+            className="gy-cookie-eyebrow"
             style={{
               fontFamily: "var(--gy-font-ui)",
               fontSize: "9px",
@@ -126,6 +148,7 @@ export default function CookieConsent() {
             Privacy
           </p>
           <p
+            className="gy-cookie-text"
             style={{
               fontFamily: "var(--gy-font-body, Georgia, serif)",
               fontSize: "14px",
@@ -167,9 +190,10 @@ export default function CookieConsent() {
           )}
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 md:flex-nowrap md:shrink-0">
+        <div className="gy-cookie-actions flex flex-wrap items-center gap-3 md:flex-nowrap md:shrink-0">
           {/* Accept and Decline carry EQUAL visual weight (HDPA Rec. 1/2020). */}
           <button
+            className="gy-cookie-btn"
             onClick={() => decide(true)}
             style={{
               fontFamily: "var(--gy-font-ui)", fontSize: "10px", letterSpacing: "0.16em",
@@ -181,6 +205,7 @@ export default function CookieConsent() {
             Accept
           </button>
           <button
+            className="gy-cookie-btn"
             onClick={() => decide(false)}
             style={{
               fontFamily: "var(--gy-font-ui)", fontSize: "10px", letterSpacing: "0.16em",
