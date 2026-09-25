@@ -263,7 +263,23 @@ export default async function sitemap() {
       // 2026-08-06 — same correction as the fleet below: Sanity's _updatedAt
     // only moves when someone edits the post, so today's footer rollout was
     // invisible on all 44 articles. Take whichever date is later.
-    lastModified: [post._updatedAt, LAST_REFRESH.JOURNAL].filter(Boolean).sort().pop(),
+      // 2026-09-25 — and the same correction again, in the other direction.
+      // _updatedAt also moves when a script patches a field nobody can see:
+      // 37 posts took 10 September and 16 took 11 September from the bulk
+      // patches of those days, none of them a visible change, and Google
+      // recrawled the whole Journal. The manifest hashes the rendered text
+      // of every post (scripts/freshness.mjs), so it is the honest date:
+      // it moves when the words move and not otherwise. One honest
+      // exception: a Studio edit made AFTER the manifest was last generated
+      // has not been hashed yet (Vercel builds do not run the script), so
+      // for that post _updatedAt is the truth until the next local run.
+      lastModified: (() => {
+        const seen = LASTMOD_MANIFEST?.pages?.[`/blog/${post.slug}`]?.lastmod;
+        const generated = LASTMOD_MANIFEST?.generated;
+        const edited = (post._updatedAt || "").slice(0, 10);
+        if (seen && generated && edited && edited > generated) return edited;
+        return seen || [post._updatedAt, LAST_REFRESH.JOURNAL].filter(Boolean).sort().pop();
+      })(),
       changeFrequency: "weekly",
       priority: 0.8,
     }));

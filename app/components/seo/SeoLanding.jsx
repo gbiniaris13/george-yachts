@@ -577,6 +577,9 @@ export default async function SeoLanding({ pageData }) {
                 style={{ fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.78, color: "rgba(248,245,240,0.88)" }}
                 dangerouslySetInnerHTML={{
                   __html: sec.body
+                    // 2026-09-25: a blank line in the body is a paragraph
+                    // break (the private band section is four paragraphs).
+                    .replace(/\n\s*\n/g, "<br /><br />")
                     .replace(/\*\*(.+?)\*\*/g, '<strong style="color:#F8F5F0">$1</strong>')
                     .replace(/\[([^\]]+)\]\((\/[^)\s]*)\)/g, '<a href="$2" style="color:#DAA110;text-decoration:none;border-bottom:1px solid rgba(218, 161, 16,0.5)">$1</a>'),
                 }}

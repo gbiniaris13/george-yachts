@@ -112,6 +112,14 @@ function contentOf(html) {
   const own = scoped
     .replace(/<section[^>]*>(?:(?!<\/section>)[\s\S])*?Closely related to this page[\s\S]*?<\/section>/gi, " ")
     .replace(/<section[^>]*>(?:(?!<\/section>)[\s\S])*?Continue exploring[\s\S]*?<\/section>/gi, " ")
+    // 2026-09-25: the Journal's "Related Articles" block is the three
+    // NEWEST posts, so every new article (three a week) rewrote that block
+    // on all 57 posts and the next push stamped every one of them with a
+    // new date. That, not the Studio patches, was the recrawl storm of
+    // 10 and 11 September, and it was about to happen again today. The
+    // block is navigation, not the post; it leaves the hash like the
+    // other two.
+    .replace(/<section[^>]*>(?:(?!<\/section>)[\s\S])*?Related Articles[\s\S]*?<\/section>/gi, " ")
   const text = own
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
@@ -234,6 +242,38 @@ show("ΕΦΥΓΑΝ:", dropped);
 if (checkOnly) {
   console.log("\n--check: δεν γράφτηκε τίποτα.");
   process.exit(0);
+}
+
+// THE STORM GUARD (2026-09-25).
+//
+// Twice now a change to text that every page shares (a footer line, the
+// fleet count in a sentence, a byline) has moved the hash of nearly the
+// whole site in one run: 469 of 476 URLs on 8 August, and 246 URLs on
+// 11 September plus 77 on the 8th and 64 on the 10th. Google recrawled
+// everything, re-judged everything, and the cost breakdown post lost five
+// to seven positions on its generic queries while the recrawl settled
+// (16 to 22 September). A sitemap where a fifth of the site "changed" on
+// one day is a lie about which page changed, and it costs rankings.
+//
+// So: if more than 20% of the pages (and more than 20 pages) would take
+// today's date, the manifest is NOT written and the run fails. That stops
+// the commit before it stops the rankings. The list above says which
+// pages moved; find the shared string that moved them (it is usually one
+// line) and either exempt it from the hash in contentOf() or accept it
+// consciously with --force, once, on purpose.
+const STORM_SHARE = 0.2;
+const STORM_MIN = 20;
+const total = Object.keys(pages).length;
+const force = process.argv.includes("--force");
+if (!force && changed.length > STORM_MIN && changed.length > total * STORM_SHARE) {
+  console.error(
+    `\nΣΤΟΠ: ${changed.length} από ${total} σελίδες (${Math.round((changed.length / total) * 100)}%) θα έπαιρναν σημερινή ημερομηνία.\n` +
+      "Αυτό δεν είναι φρεσκάδα, είναι recrawl storm (8/8 και 8-11/9 μας κόστισαν θέσεις).\n" +
+      "Το manifest ΔΕΝ γράφτηκε. Βρες το κοινό κείμενο που άλλαξε σε όλες τις σελίδες\n" +
+      "(footer, byline, μέτρηση στόλου) και εξαίρεσέ το στο contentOf(), ή, αν όντως\n" +
+      "άλλαξαν όλες επίτηδες, ξανατρέξε με --force."
+  );
+  process.exit(2);
 }
 
 fs.writeFileSync(MANIFEST, JSON.stringify(out, null, 1) + "\n");

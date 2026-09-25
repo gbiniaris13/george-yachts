@@ -199,6 +199,10 @@ export default function GlossaryTerm({ termData }) {
               dangerouslySetInnerHTML={{
                 __html: term.longDefinition
                   .replace(/\*\*(.+?)\*\*/g, '<strong style="color:#F8F5F0">$1</strong>')
+                  // 2026-09-25: [text](/path) links, the same grammar the
+                  // landing pages use. The crewed entry had carried its
+                  // "long answer" link as literal brackets since 17/9.
+                  .replace(/\[([^\]]+)\]\((\/[^)\s]*)\)/g, '<a href="$2" style="color:#DAA110;text-decoration:none;border-bottom:1px solid rgba(218, 161, 16,0.5)">$1</a>')
                   .split(/\n\n|(?<=\.) (?=[A-Z])/)
                   .filter((p) => p.trim())
                   .map((p) => `<p style="margin: 0 0 18px;">${p.trim()}</p>`)
