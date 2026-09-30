@@ -45,6 +45,7 @@ import {
 } from "@/lib/kv";
 import {
   getYachtForNewsletter,
+  getYachtForLetter,
   getYachtsForFleetUpdate,
   getPostForNewsletter,
   slugFromBlogUrl,
@@ -102,6 +103,8 @@ async function buildOneDraft({
     hero_image_url: payload.hero_image_url,
     posture: payload.posture,
     link_label: payload.link_label,
+    desk_note: payload.desk_note,
+    yacht_is_new: payload.yacht_is_new === true,
     // Update 2 caveat #1 — captain credentials only when George
     // ticks the box in the Composer UI.
     include_captain_credentials: payload.include_captain_credentials === true,
@@ -380,6 +383,34 @@ export async function POST(request) {
         { error: "signal_text required for intel (min 40 chars)" },
         { status: 400 },
       );
+    }
+  } else if (content_type === "letter") {
+    // 2026-09-29. Any of: several new hulls, one yacht (with her rate),
+    // an article, George's note. Every yacht passes the website-only
+    // gate inside the loaders; a blocked slug fails the whole letter
+    // rather than being quietly dropped, so the orchestrator hears it.
+    const slugs = Array.isArray(payload.yacht_slugs) ? payload.yacht_slugs : [];
+    if (slugs.length > 0) {
+      const r = await getYachtsForFleetUpdate(slugs);
+      if (!r.ok || r.yachts.length !== slugs.length) {
+        return NextResponse.json(
+          { error: r.error || `only ${r.yachts.length} of ${slugs.length} yachts are cleared for a newsletter` },
+          { status: 422 },
+        );
+      }
+      yachts = r.yachts;
+    } else if (payload.yacht_slug) {
+      const r = await getYachtForLetter(payload.yacht_slug);
+      if (!r.ok) return NextResponse.json({ error: r.error }, { status: 422 });
+      yacht = r.yacht;
+    }
+    if (payload.post_slug) {
+      const r = await getPostForNewsletter(payload.post_slug);
+      if (!r.ok) return NextResponse.json({ error: r.error }, { status: 404 });
+      post = r.post;
+    }
+    if (!yachts && !yacht && !post) {
+      return NextResponse.json({ error: "letter needs yacht_slugs, yacht_slug or post_slug" }, { status: 400 });
     }
   } else if (content_type === "fleet_update") {
     const slugs = Array.isArray(payload.yacht_slugs) ? payload.yacht_slugs : [];
