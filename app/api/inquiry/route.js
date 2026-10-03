@@ -101,6 +101,7 @@ export async function POST(req) {
       preferredChannel = "email", // email | whatsapp | telegram | sms
       recaptchaToken = "",
       website = "",     // honeypot — bots autofill, humans never see
+      visitor_context = null, // what they looked at before writing (lib/visitorContext)
     } = body || {};
 
     // Honeypot — instant 200 with no side effects so bots don't
@@ -224,6 +225,7 @@ export async function POST(req) {
           body: JSON.stringify({
             name, email, phone, dates, message, yachtName,
             shortlist, source, preferredChannel,
+            visitor_context: visitor_context && typeof visitor_context === "object" ? visitor_context : undefined,
           }),
           signal: AbortSignal.timeout(4000),
         });

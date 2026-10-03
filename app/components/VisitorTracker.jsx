@@ -34,6 +34,7 @@ import {
   collectClientSignals,
   collectAudioFingerprint,
 } from '@/lib/visitor-signals';
+import { recordPageInTrail } from '@/lib/visitorContext';
 
 const SESSION_KEY = 'gy-tracker-session';
 const YACHT_HISTORY_KEY = 'gy-view-history';
@@ -256,6 +257,8 @@ export default function VisitorTracker({ onHotLead }) {
     if (!session.pages.includes(pathname)) {
       session.pages.push(pathname);
     }
+    // The last pages, with titles, for the inquiry forms (lib/visitorContext).
+    recordPageInTrail(pathname);
 
     // High-intent surface classification — boolean flags fed into
     // hot-score on the server side.

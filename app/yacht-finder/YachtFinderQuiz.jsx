@@ -31,6 +31,7 @@
 //   • SSR-safe (Q1 visible without JS)
 
 import { useState, useMemo, useRef, useEffect } from 'react';
+import { collectVisitorContext } from '@/lib/visitorContext';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -439,6 +440,7 @@ export default function YachtFinderQuiz({ fleet = [] }) {
           preferredChannel: contact.channel,
           recaptchaToken,
           website: contact.website,
+          visitor_context: collectVisitorContext(),
         }),
       });
       if (!res.ok) {

@@ -13,6 +13,7 @@
 //   1. WhatsApp George with a prefilled message about THIS yacht
 //   2. Leave one field (email) and George reaches out personally
 import { useEffect, useRef, useState } from "react";
+import { collectVisitorContext } from "@/lib/visitorContext";
 
 const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
@@ -84,6 +85,7 @@ export default function HotLeadConcierge({ signal }) {
           message: `Visitor asked George to reach out${yacht ? ` while viewing ${yacht}` : ""}. (Hot-lead concierge card)`,
           source: "hot_lead_concierge",
           yachtName: yacht || undefined,
+          visitor_context: collectVisitorContext(),
         }),
       });
       setSent(true);

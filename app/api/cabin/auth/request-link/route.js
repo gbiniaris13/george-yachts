@@ -105,14 +105,32 @@ export async function POST(req) {
   // drop it anyway, but we'd rather not write garbage to KV.
   const pinnedCabinId = targeted ? targetCabinId : null;
 
+  // 2026-10-03 — The edition's door. The CRM (admin mode only) may ask for
+  // the link itself instead of an email: the client arrives from their
+  // private edition page and is signed straight in. Same OTP, same 90 days,
+  // same membership check; nothing is mailed.
+  const returnLink = adminMode && body?.return_link === true;
+
   let mailed = false;
   let sendError = null;
+  let linkOut = null;
   try {
     const otp = await createMagicLinkOtp(email, pinnedCabinId);
     const origin = publicOrigin(req);
     const link = `${origin}/api/cabin/auth/verify?token=${encodeURIComponent(
       otp
     )}`;
+    if (returnLink) {
+      linkOut = link;
+      await writeAudit({
+        cabinId: primary?.cabin?.id ?? null,
+        actorEmail: email,
+        actorRole: primary?.role ?? "charterer",
+        action: AUDIT_ACTIONS.MAGIC_LINK_REQUESTED,
+        metadata: { memberships_count: memberships.length, via: "edition-door" },
+      });
+      return NextResponse.json({ ok: true, mailed: false, link: linkOut });
+    }
 
     // In local dev WITHOUT a Resend key set, print the link to the
     // server console so we can still walk through the flow without

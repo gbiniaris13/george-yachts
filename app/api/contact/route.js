@@ -322,6 +322,7 @@ export async function POST(request) {
             dates: check_in ? `${check_in} to ${check_out || "open"}` : (timing || ""),
             message: [message, yacht_type ? `Type: ${yacht_type}` : "", guests ? `Guests: ${guests}` : "", budget ? `Budget all-in: ${budget}` : ""].filter(Boolean).join(" · "),
             source: "contact_form",
+            visitor_context: visitor_context && typeof visitor_context === "object" ? visitor_context : undefined,
           }),
           signal: AbortSignal.timeout(4000),
         });

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 import ConstellationBackdrop from "./ConstellationBackdrop";
+import { collectVisitorContext } from "@/lib/visitorContext";
 
 const RECAPTCHA_PUBLIC_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
@@ -125,33 +126,6 @@ const TIMING_OPTIONS = [
   "October 2027",
   "Flexible - Advise Me",
 ];
-
-// 2026-08-23, George's #2: the brief arrives knowing what the
-// visitor already looked at. The tracker keeps yacht history and
-// session timing in the browser; the form reads them and sends
-// them along, so George replies like he already knows the guest.
-function collectVisitorContext() {
-  try {
-    const ctx = {};
-    const session = JSON.parse(sessionStorage.getItem("gy-tracker-session") || "null");
-    if (session) {
-      if (session.startTime) {
-        ctx.session_minutes = Math.max(0, Math.round((Date.now() - session.startTime) / 60000));
-      }
-      if (Array.isArray(session.yachtsViewed) && session.yachtsViewed.length) {
-        ctx.yachts_this_visit = session.yachtsViewed.slice(0, 8);
-      }
-      if (session.referrer) ctx.arrived_from = String(session.referrer).slice(0, 200);
-    }
-    const history = JSON.parse(localStorage.getItem("gy-view-history") || "[]");
-    if (Array.isArray(history) && history.length) {
-      ctx.yachts_history = history.slice(0, 5).map((h) => h && h.name).filter(Boolean);
-    }
-    return ctx;
-  } catch {
-    return {};
-  }
-}
 
 const ContactFormSection = () => {
   const { t } = useI18n();

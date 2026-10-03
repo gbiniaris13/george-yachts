@@ -20,6 +20,7 @@
 // ready we block submit with a friendly message (O.1).
 
 import { useEffect, useState } from "react";
+import { collectVisitorContext } from "@/lib/visitorContext";
 
 const CHANNELS = [
   { id: "email", label: "Email" },
@@ -142,6 +143,7 @@ export default function ExpressInquiryModal({
           preferredChannel: channel,
           recaptchaToken,
           website,
+          visitor_context: collectVisitorContext(),
         }),
       });
       const ok = res.ok;
