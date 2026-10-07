@@ -17,6 +17,7 @@ import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { getGlossaryTermBySlug } from "@/lib/glossarySeo";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import BridgeLine from "@/app/components/BridgeLine";
 import { closesOn } from "@/lib/aiAnswerClose";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
@@ -172,6 +173,7 @@ export default function GlossaryTerm({ termData }) {
               answer={term.shortDefinition}
               close={closesOn(`/glossary/${term.slug}`)}
             />
+            {term.bridge && <BridgeLine {...term.bridge} />}
           </div>
         </section>
 

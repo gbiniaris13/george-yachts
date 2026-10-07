@@ -15,10 +15,11 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import BlogPostFooter from "@/components/BlogPostFooter";
 import { autoLinkPortableText } from "@/lib/auto-link-content";
 import { blogSeoTitle } from "@/lib/blogSeoTitles";
-import { getBlogAnswerUnit } from "@/lib/blogAnswerUnits";
+import { getBlogAnswerUnit, getBlogBridge } from "@/lib/blogAnswerUnits";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import MicroBrief from "@/app/components/MicroBrief";
 import { AI_ANSWER_CLOSE, carriesClose } from "@/lib/aiAnswerClose";
+import BridgeLine from "@/app/components/BridgeLine";
 import { getClustersForPost } from "@/lib/journal-clusters";
 import RelatedPages from "@/app/components/seo/RelatedPages";
 import { titleField } from "@/lib/seoTitle";
@@ -326,6 +327,7 @@ const ArticlePage = async ({ params }) => {
   // Studio field is left untouched for George to update; the page shows
   // the verified numbers meanwhile. One block, not two.
   const answerUnit = getBlogAnswerUnit(slug);
+  const bridge = getBlogBridge(slug);
   const leadQuestion = answerUnit
     ? [
         {
@@ -613,6 +615,8 @@ const ArticlePage = async ({ params }) => {
               </p>
             </aside>
           )}
+
+          {bridge && <BridgeLine {...bridge} />}
 
           {/* 2026-10-07 (George): the three-field brief right after the answer.
               The journal is 40 percent of the visits and brought almost no

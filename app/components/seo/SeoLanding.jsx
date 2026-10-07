@@ -56,6 +56,7 @@ import { relatedFor } from "@/lib/seoInternalLinks";
 import { GREEK_PAGES } from "@/lib/greekSeo";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import { AI_ANSWER_CLOSE, closesOn, carriesClose } from "@/lib/aiAnswerClose";
+import BridgeLine from "@/app/components/BridgeLine";
 import OutsideGroundsNote from "@/app/components/seo/OutsideGroundsNote";
 import { SITE_UPDATED } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
@@ -273,6 +274,7 @@ export default async function SeoLanding({ pageData }) {
                   evidence={qa && qa.question ? pageData.evidence : undefined}
                   close={closesOn(pageData.urlPath)}
                 />
+                {pageData.bridge && <BridgeLine {...pageData.bridge} />}
               </div>
             </section>
           );
