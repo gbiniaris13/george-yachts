@@ -768,6 +768,17 @@ export default async function CrewedCharterPage() {
             you would rather not choose in the abstract, tell me the group and
             the dates and I will put three real boats in front of you.
           </p>
+          {/* 2026-10-07: the islands page carried this hub's own <title> and
+              Google filed it as a duplicate; it now owns the "greek islands"
+              family of queries, and this is its one in-copy link from the hub. */}
+          <p style={{ ...bodyStyle, marginTop: 20 }}>
+            Island by island, the same crewed week is laid out on the{" "}
+            <Link href="/crewed-yacht-charter-greek-islands-2026" style={goldLink}>
+              yacht charter in the Greek islands
+            </Link>{" "}
+            page: the three cruising grounds, the distances from Athens, Corfu
+            and Lefkada, and the questions a party of six asks before it books.
+          </p>
         </div>
       </section>
 
