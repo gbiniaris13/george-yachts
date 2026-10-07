@@ -18,6 +18,22 @@ import { BOTTOM_FUNNEL_PAGES } from "@/lib/bottomFunnelSeo";
 import { BEST_YACHTS_PAGES } from "@/lib/bestYachtsSeo";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
 import LASTMOD_MANIFEST from "@/lib/lastmodManifest.json";
+
+// 2026-10-07 (George, from the recovery plan): one rule for every family.
+// A page's <lastmod> is the day its rendered text last changed, as recorded
+// per page by scripts/freshness.mjs in lib/lastmodManifest.json. The family
+// dates in lib/contentFreshness.js are only the fallback for a URL the
+// manifest has never hashed (dynamic routes that are not prebuilt). A deploy,
+// a CSS change or a bump of a family date no longer moves a single page.
+// The one honest exception: a Studio edit made after the manifest was last
+// generated has not been hashed yet, so for that document Sanity's own
+// _updatedAt is the truth until the next local run.
+const stampOf = (urlPath, fallback) => LASTMOD_MANIFEST?.pages?.[urlPath]?.lastmod || fallback;
+const editedAfterManifest = (updatedAt) => {
+  const generated = LASTMOD_MANIFEST?.generated;
+  const edited = (updatedAt || "").slice(0, 10);
+  return generated && edited && edited > generated ? edited : null;
+};
 import { CHARTER_INDEX_2026 } from "@/lib/charterIndex2026";
 import { RETIRED_SLUGS } from "@/lib/retiredSlugs";
 import { RETIRED_YACHT_SLUGS } from "@/lib/retiredYachts";
@@ -226,7 +242,7 @@ export default async function sitemap() {
   // /ru/...) we'll re-add hreflang at that point.
   const staticEntries = staticRoutes.map((route) => ({
     url: `${BASE_URL}${route.path}`,
-    lastModified: LAST_REFRESH.STATIC,
+    lastModified: stampOf(`${route.path}`, LAST_REFRESH.STATIC),
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
@@ -316,7 +332,7 @@ export default async function sitemap() {
   }
   const dataReportEntries = [{
     url: `${BASE_URL}/greek-charter-index-2026`,
-    lastModified: charterIndexDate,
+    lastModified: stampOf("/greek-charter-index-2026", charterIndexDate),
     changeFrequency: "monthly",
     priority: 0.9,
   }];
@@ -324,7 +340,7 @@ export default async function sitemap() {
   // F.4 (Roberto brief) — topic-cluster landing pages.
   const journalClusterEntries = JOURNAL_CLUSTERS.map((c) => ({
     url: `${BASE_URL}/journal/${c.slug}`,
-    lastModified: LAST_REFRESH.JOURNAL,
+    lastModified: stampOf(`/journal/${c.slug}`, LAST_REFRESH.JOURNAL),
     changeFrequency: "weekly",
     priority: 0.8,
   }));
@@ -334,7 +350,7 @@ export default async function sitemap() {
   // charter" is the high-intent UHNW search.
   const islandEntries = ISLANDS.map((i) => ({
     url: `${BASE_URL}/yacht-charter-${i.slug}`,
-    lastModified: LAST_REFRESH.ISLANDS,
+    lastModified: stampOf(`/yacht-charter-${i.slug}`, LAST_REFRESH.ISLANDS),
     changeFrequency: "weekly",
     priority: 0.92,
   }));
@@ -344,13 +360,13 @@ export default async function sitemap() {
   // Higher priority than yacht detail pages, lower than islands.
   const yachtTypeEntries = YACHT_TYPES.map((t) => ({
     url: `${BASE_URL}${t.urlPath}`,
-    lastModified: LAST_REFRESH.YACHT_TYPES,
+    lastModified: stampOf(`${t.urlPath}`, LAST_REFRESH.YACHT_TYPES),
     changeFrequency: "weekly",
     priority: 0.88,
   }));
   const useCaseEntries = USE_CASES.map((u) => ({
     url: `${BASE_URL}${u.urlPath}`,
-    lastModified: LAST_REFRESH.USE_CASES,
+    lastModified: stampOf(`${u.urlPath}`, LAST_REFRESH.USE_CASES),
     changeFrequency: "weekly",
     priority: 0.85,
   }));
@@ -360,34 +376,34 @@ export default async function sitemap() {
   // into the evergreen /private-yacht-charter-greece.
   const longTailEntries = LONG_TAIL_PAGES.filter((p) => !p.canonical || p.canonical === `${BASE_URL}${p.urlPath}`).map((p) => ({
     url: `${BASE_URL}${p.urlPath}`,
-    lastModified: LAST_REFRESH.LONG_TAIL,
+    lastModified: stampOf(`${p.urlPath}`, LAST_REFRESH.LONG_TAIL),
     changeFrequency: "monthly",
     priority: 0.82,
   }));
   // 2026-07-14 — Greek-language landing pages (Brand Radar Greek queries).
   const greekEntries = GREEK_PAGES.map((p) => ({
     url: `${BASE_URL}${p.urlPath}`,
-    lastModified: LAST_REFRESH.STATIC,
+    lastModified: stampOf(`${p.urlPath}`, LAST_REFRESH.STATIC),
     changeFrequency: "monthly",
     priority: 0.8,
   }));
   // 2026-05-11 Phase 7 Round 2 — 8 comparison + 3 linkable assets.
   const comparisonEntries = COMPARISONS.map((c) => ({
     url: `${BASE_URL}${c.urlPath}`,
-    lastModified: LAST_REFRESH.COMPARISONS,
+    lastModified: stampOf(`${c.urlPath}`, LAST_REFRESH.COMPARISONS),
     changeFrequency: "monthly",
     priority: 0.85,
   }));
   const linkableAssetEntries = LINKABLE_ASSETS.map((a) => ({
     url: `${BASE_URL}${a.urlPath}`,
-    lastModified: LAST_REFRESH.LINKABLE,
+    lastModified: stampOf(`${a.urlPath}`, LAST_REFRESH.LINKABLE),
     changeFrequency: "monthly",
     priority: 0.83,
   }));
   // Phase 7 Round 3 — 13 yacht-type x destination combo pages.
   const comboEntries = COMBOS.map((c) => ({
     url: `${BASE_URL}${c.urlPath}`,
-    lastModified: LAST_REFRESH.COMBOS,
+    lastModified: stampOf(`${c.urlPath}`, LAST_REFRESH.COMBOS),
     changeFrequency: "monthly",
     priority: 0.84,
   }));
@@ -395,13 +411,13 @@ export default async function sitemap() {
   const otherSeoEntries = [
     {
       url: `${BASE_URL}/reviews`,
-      lastModified: LAST_REFRESH.STATIC,
+      lastModified: stampOf("/reviews", LAST_REFRESH.STATIC),
       changeFrequency: "weekly",
       priority: 0.85,
     },
     {
       url: `${BASE_URL}/2026-greek-charter-market-report`,
-      lastModified: LAST_REFRESH.STATIC,
+      lastModified: stampOf("/2026-greek-charter-market-report", LAST_REFRESH.STATIC),
       changeFrequency: "monthly",
       priority: 0.88,
     },
@@ -409,21 +425,21 @@ export default async function sitemap() {
   // Phase 7 Round 4 — 4 GEO reference articles.
   const articleEntries = ARTICLES.map((a) => ({
     url: `${BASE_URL}${a.urlPath}`,
-    lastModified: LAST_REFRESH.ARTICLES,
+    lastModified: stampOf(`${a.urlPath}`, LAST_REFRESH.ARTICLES),
     changeFrequency: "monthly",
     priority: 0.87,
   }));
   // Phase 7 Round 5 — 40 duration pages + sailing distance calculator.
   const durationEntries = DURATION_PAGES.map((p) => ({
     url: `${BASE_URL}${p.urlPath}`,
-    lastModified: LAST_REFRESH.DURATION,
+    lastModified: stampOf(`${p.urlPath}`, LAST_REFRESH.DURATION),
     changeFrequency: "monthly",
     priority: 0.82,
   }));
   const toolEntries = [
     {
       url: `${BASE_URL}/sailing-distance-calculator`,
-      lastModified: LAST_REFRESH.HUBS,
+      lastModified: stampOf("/sailing-distance-calculator", LAST_REFRESH.HUBS),
       changeFrequency: "monthly",
       priority: 0.86,
     },
@@ -437,13 +453,13 @@ export default async function sitemap() {
   // weekly, lower than islands/articles since each is narrow).
   const glossaryHubEntry = {
     url: `${BASE_URL}/glossary`,
-    lastModified: LAST_REFRESH.HUBS,
+    lastModified: stampOf("/glossary", LAST_REFRESH.HUBS),
     changeFrequency: "monthly",
     priority: 0.86,
   };
   const glossaryEntries = GLOSSARY_TERMS.map((t) => ({
     url: `${BASE_URL}/glossary/${t.slug}`,
-    lastModified: LAST_REFRESH.GLOSSARY,
+    lastModified: stampOf(`/glossary/${t.slug}`, LAST_REFRESH.GLOSSARY),
     changeFrequency: "monthly",
     priority: 0.78,
   }));
@@ -457,7 +473,7 @@ export default async function sitemap() {
   // extract directly.
   const destinationComparisonEntries = DESTINATION_COMPARISONS.map((c) => ({
     url: `${BASE_URL}${c.urlPath}`,
-    lastModified: LAST_REFRESH.DEST_COMPARISONS,
+    lastModified: stampOf(`${c.urlPath}`, LAST_REFRESH.DEST_COMPARISONS),
     changeFrequency: "monthly",
     priority: 0.9,
   }));
@@ -468,7 +484,7 @@ export default async function sitemap() {
   // glossary terms since these have time-sensitive research value).
   const marketReportsHubEntry = {
     url: `${BASE_URL}/market-reports`,
-    lastModified: LAST_REFRESH.HUBS,
+    lastModified: stampOf("/market-reports", LAST_REFRESH.HUBS),
     changeFrequency: "weekly",
     priority: 0.88,
   };
@@ -485,7 +501,7 @@ export default async function sitemap() {
   // crawlers prioritise the parent destination.
   const anchorageEntries = ISLAND_ANCHORAGES.map((a) => ({
     url: `${BASE_URL}${a.urlPath}`,
-    lastModified: LAST_REFRESH.ANCHORAGES,
+    lastModified: stampOf(`${a.urlPath}`, LAST_REFRESH.ANCHORAGES),
     changeFrequency: "monthly",
     priority: 0.84,
   }));
@@ -495,7 +511,7 @@ export default async function sitemap() {
   // pure purchase-intent queries.
   const bottomFunnelEntries = BOTTOM_FUNNEL_PAGES.map((p) => ({
     url: `${BASE_URL}${p.urlPath}`,
-    lastModified: LAST_REFRESH.BOTTOM_FUNNEL,
+    lastModified: stampOf(`${p.urlPath}`, LAST_REFRESH.BOTTOM_FUNNEL),
     changeFrequency: "weekly",
     priority: 0.88,
   }));
@@ -503,7 +519,7 @@ export default async function sitemap() {
   // Phase 7 R35 (2026-05-12) - "Best yachts for X" series.
   const bestYachtsEntries = BEST_YACHTS_PAGES.map((p) => ({
     url: `${BASE_URL}${p.urlPath}`,
-    lastModified: LAST_REFRESH.BEST_YACHTS,
+    lastModified: stampOf(`${p.urlPath}`, LAST_REFRESH.BEST_YACHTS),
     changeFrequency: "monthly",
     priority: 0.85,
   }));
@@ -539,10 +555,13 @@ export default async function sitemap() {
         // the accurate answer, because the page genuinely changed on whichever
         // came last. Still honest: if neither the content nor the code moved,
         // neither does this date.
-        lastModified: [yacht._updatedAt, LAST_REFRESH.FLEET]
-          .filter(Boolean)
-          .sort()
-          .pop(),
+        // 2026-10-07: the manifest first (the day the page's text last changed),
+        // a Studio edit after the manifest second, the old rule only as the
+        // fallback for a hull the manifest has not seen. A script patch that
+        // changes nothing visible no longer restamps the fleet.
+        lastModified:
+          editedAfterManifest(yacht._updatedAt) ||
+          stampOf(`/yachts/${yacht.slug}`, [yacht._updatedAt, LAST_REFRESH.FLEET].filter(Boolean).sort().pop()),
         changeFrequency: "weekly",
         priority: 0.75,
         ...(imgs.length ? { images: imgs } : {}),
