@@ -188,7 +188,7 @@ const FAQS = [
   },
   {
     q: "What does a yacht charter in Greece with crew cost per week?",
-    a: "Per yacht per week, from EUR 17,000 base for a 15 metre crewed sailing catamaran and EUR 17,500 for an 18 to 21 metre crewed motor yacht, to EUR 235,000 for a 50 metre motor yacht with nine crew, on the Greek Charter Index 2026. Add APA of 20 to 30 per cent on catamarans or 30 to 40 on motor yachts, Greek VAT at the yacht's certified rate of 5.2 to 12 per cent, and a gratuity of 10 to 15 per cent of base: all-in, roughly 1.35 to 1.7 times the base fee. Never a price by the head.",
+    a: "Per yacht per week, from EUR 17,000 base for a 15 metre crewed sailing catamaran and EUR 17,500 for an 18 to 21 metre crewed motor yacht, to EUR 235,000 for a 50 metre motor yacht with nine crew, on the Greek Charter Index 2026. Add APA of 20 to 30 per cent on catamarans or 30 to 40 on motor yachts, Greek VAT at the yacht's certified rate of 5.2 to 12 per cent, with the gratuity of 10 to 15 per cent of base separate and at your discretion: all in, with APA and VAT, roughly 1.25 to 1.5 times the base fee before the gratuity. Never a price by the head.",
   },
   {
     q: "Is a crewed sailboat charter in Greece available, or only catamarans and motor yachts?",
