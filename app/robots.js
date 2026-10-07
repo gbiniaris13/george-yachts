@@ -89,6 +89,41 @@ export default function robots() {
     "Diffbot",
   ];
 
+  const SEO_TOOL_BOTS = [
+    "AhrefsBot",
+    "AhrefsSiteAudit",
+    "SemrushBot",
+    "SemrushBot-BA",
+    "SemrushBot-SI",
+    "SemrushBot-SWA",
+    "SemrushBot-OCOB",
+    "SemrushBot-CT",
+    "SiteAuditBot",
+    "MJ12bot",
+    "DotBot",
+    "BLEXBot",
+    "DataForSeoBot",
+    "SerpstatBot",
+    "rogerbot",
+    "Screaming Frog SEO Spider",
+    "SEOkicks",
+    "Barkrowler",
+    "MegaIndex.ru",
+    "spbot",
+    "ZoominfoBot",
+    "linkdexbot",
+    "AspiegelBot",
+    "SeekportBot",
+    "BacklinkCrawler",
+    "magpie-crawler",
+    "Cocolyzebot",
+    "seoscanners.net",
+    "Sitebulb",
+    "OnCrawl",
+    "ia_archiver",
+    "archive.org_bot",
+  ];
+
   const rules = [
     // Traditional search engines — full public site, no internal.
     // 2026-05-11 — '/admin' (no trailing slash) instead of '/admin/'
@@ -109,6 +144,17 @@ export default function robots() {
     // disallowed. Doesn't drive AI citations and consumes bandwidth
     // — net-negative for our crawl budget.
     { userAgent: "Bytespider", disallow: "/" },
+
+    // 2026-10-07 (George: "hide what you can"). The crawlers of the SEO
+    // suites build a copy of every page they can fetch and sell it to whoever
+    // pays: a competitor opens Ahrefs or Semrush and reads our titles, our
+    // answers, our internal links and our new pages the week they go up.
+    // None of these bots is a search engine or an AI assistant; blocking them
+    // costs nothing with Google, Bing or the AI crawlers above. Our own
+    // audits with these suites will need the bot allowed again for the day.
+    // The Wayback Machine is in the list for the same reason: old versions
+    // of our pages are our business.
+    ...SEO_TOOL_BOTS.map((ua) => ({ userAgent: ua, disallow: "/" })),
   ];
 
   return {

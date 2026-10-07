@@ -273,7 +273,8 @@ export const metadata = {
     `Featured in Forbes (May 2026). George Yachts Brokerage House - boutique luxury yacht charter in Greek waters. ${FLEET_COUNT} curated yachts. Catamaran Fleet (${CATAMARAN_COUNT} sailing and power catamarans) + Motor Yacht Fleet (${FLEET_COMPOSITION.motor} fully crewed motor yachts). IYBA Charter Active Member. Cyclades, Ionian, Saronic. Personal broker service from Athens.`,
   applicationName: "George Yachts",
   authors: [{ name: "George P. Biniaris", url: "https://georgeyachts.com" }],
-  generator: "Next.js",
+  // 2026-10-07 (George): no generator tag. The framework is not the
+  // reader's business and the fingerprinting tools read this line first.
   keywords: [
     "yacht charter greece",
     "luxury yacht charter",
