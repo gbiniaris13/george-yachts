@@ -44,9 +44,9 @@ const reasons = [
 
 /* ─── FLEET TIERS ─── */
 const fleets = [
-  { name: "Catamaran Fleet", price: "from €11,500/yacht/week", count: "14 vessels" },
-  { name: "Motor Yacht Fleet", price: "€13K-€90K/week", count: "30+ vessels" },
-  { name: "Superyacht Collection", price: "€90K-€235K+/week", count: "Motor yachts 100-210 ft" },
+  { name: "Catamaran Fleet", price: "from €17,000/yacht/week", count: "45 vessels" },
+  { name: "Motor Yacht Fleet", price: "€17.5K-€150K/week", count: "46 vessels" },
+  { name: "Superyacht Collection", price: "€162.5K-€235K/week", count: "Motor yachts 150-210 ft" },
 ];
 
 /* ─── TESTIMONIALS ─── */

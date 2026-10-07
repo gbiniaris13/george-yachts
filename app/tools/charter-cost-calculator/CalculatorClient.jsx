@@ -51,7 +51,6 @@ const EMBARK_PORTS = [
   { value: "mykonos", label: "Mykonos", deliveryDays: 1 },
   { value: "santorini", label: "Santorini", deliveryDays: 1.5 },
   { value: "corfu", label: "Corfu", deliveryDays: 1 },
-  { value: "rhodes", label: "Rhodes (Dodecanese)", deliveryDays: 1.5 },
 ];
 
 // Parse the Index summary table into selectable bands. A row reads
@@ -125,7 +124,7 @@ export default function CalculatorClient() {
       const tipLow = base * 0.1;
       const tipHigh = base * 0.15;
       const known = base + vatAmt + apaAmt + delivery;
-      return { base, vatAmt, apaAmt, delivery, tipLow, tipHigh, totalLow: known + tipLow, totalHigh: known + tipHigh };
+      return { base, vatAmt, apaAmt, delivery, tipLow, tipHigh, totalLow: known, totalHigh: known };
     };
     return { port, low: calc(band.low), high: calc(band.high) };
   }, [band, weeks, embarkPort, vat, apa]);
@@ -283,7 +282,7 @@ export default function CalculatorClient() {
                 {rangeFormat(result.low.totalLow, result.high.totalHigh)}
               </p>
               <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, color: "rgba(248,245,240,0.72)", margin: "10px 0 0", lineHeight: 1.5 }}>
-                Cheapest yacht in the band with the lower gratuity, to the dearest with the higher. Greece&rsquo;s TEPAI cruising tax is billed separately by length and month.
+                Cheapest yacht in the band to the dearest, before the crew gratuity. Greece&rsquo;s TEPAI cruising tax is billed separately by length and month.
               </p>
             </div>
           </>

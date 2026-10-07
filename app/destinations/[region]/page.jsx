@@ -52,7 +52,7 @@ const QUICK_FACTS = {
     duration: "7-10 days",
     departurePorts: "Athens (Lavrion / Alimos), Mykonos, Paros",
     yachtTypes: "Motor yachts, sailing catamarans, sailing yachts",
-    weeklyRange: "€13,000 - €235,000",
+    weeklyRange: "€17,000 - €235,000",
     weatherNote:
       "Meltemi (NW) blows strongest mid-July through end-August; June and September are the calm-weather sweet spots.",
   },
@@ -62,7 +62,7 @@ const QUICK_FACTS = {
     duration: "7 days",
     departurePorts: "Corfu, Lefkada, Athens repositioning",
     yachtTypes: "Sailing catamarans, sailing yachts, motor yachts",
-    weeklyRange: "€11,500 - €180,000",
+    weeklyRange: "€17,000 - €235,000",
     weatherNote:
       "Sheltered waters, no Meltemi. Light afternoon thermals; the calmest sailing region in Greece.",
   },
@@ -72,7 +72,7 @@ const QUICK_FACTS = {
     duration: "3-7 days",
     departurePorts: "Athens (Alimos / Flisvos / Vouliagmeni)",
     yachtTypes: "Motor yachts, catamarans, sailing yachts",
-    weeklyRange: "€12,000 - €200,000",
+    weeklyRange: "€17,000 - €235,000",
     weatherNote:
       "Sheltered by the Peloponnese; sailable even when the Aegean Meltemi peaks.",
   },

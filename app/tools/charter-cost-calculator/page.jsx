@@ -24,12 +24,12 @@ export const revalidate = 86400;
 export const metadata = {
   title: "Greek Yacht Charter Cost Calculator",
   description:
-    "Work out what a Greek crewed yacht charter really costs: rate-card bands by yacht type, the certified VAT tier, APA, delivery and gratuity, per yacht per week.",
+    "Work out what a Greek crewed yacht charter really costs: rate-card bands by yacht type, the certified VAT tier, APA and delivery, per yacht per week, with the gratuity as its own line.",
   alternates: { canonical: "https://georgeyachts.com/tools/charter-cost-calculator" },
   openGraph: {
     title: "Greek Yacht Charter Cost Calculator",
     description:
-      "Free interactive calculator. Base + VAT + APA + delivery + gratuity. By George Yachts.",
+      "Free interactive calculator. Base + VAT + APA + delivery, gratuity shown separately. By George Yachts.",
     url: "https://georgeyachts.com/tools/charter-cost-calculator",
     type: "website",
     images: [
@@ -58,11 +58,11 @@ const FAQ = [
   },
   {
     q: "What does delivery cost, and can it be avoided?",
-    a: "Most of the crewed fleet is based in Athens, so a week that starts in Athens carries no delivery line. When the yacht must reposition to Mykonos, Corfu, Rhodes or Santorini, the convention is one seventh of the weekly fee per delivery day, and it is often negotiated down or waived when the yacht is heading that way anyway. The calculator shows the convention; the quote shows what we obtained.",
+    a: "Most of the crewed fleet is based in Athens, so a week that starts in Athens carries no delivery line. When the yacht must reposition to Mykonos, Corfu, Lefkada or Santorini, the convention is one seventh of the weekly fee per delivery day, and it is often negotiated down or waived when the yacht is heading that way anyway. The calculator shows the convention; the quote shows what we obtained.",
   },
   {
     q: "Why is the gratuity a range?",
-    a: "Crew gratuity in Greek waters is customary, not contractual: 10 to 15% of the base fee, calculated on the base alone and never on APA or VAT, handed to the captain at the end of the week. The calculator brackets the total with the lower and higher figure so nothing on the last day surprises you.",
+    a: "Crew gratuity in Greek waters is customary, not contractual: 10 to 15% of the base fee, calculated on the base alone and never on APA or VAT, handed to the captain at the end of the week. The calculator shows it as its own line, outside the all-in total, so nothing on the last day surprises you.",
   },
   {
     q: "Does the price depend on how many guests we are?",
@@ -70,7 +70,7 @@ const FAQ = [
   },
   {
     q: "Is there anything the total does not include?",
-    a: "Greece's TEPAI cruising tax, billed by yacht length and month at the official tariff, and any personal extras such as shore excursions or a chef upgrade agreed separately. Everything else a Greek week costs, the base fee, VAT, APA, delivery and gratuity, is on the screen.",
+    a: "Greece's TEPAI cruising tax, billed by yacht length and month at the official tariff, and any personal extras such as shore excursions or a chef upgrade agreed separately. Everything else a Greek week costs, the base fee, VAT, APA and delivery, is in the total, and the gratuity range is on the screen as its own line.",
   },
 ];
 
@@ -81,7 +81,7 @@ function WebApplicationJsonLd() {
     "@id": "https://georgeyachts.com/tools/charter-cost-calculator#tool",
     name: "Greek Yacht Charter Cost Calculator",
     description:
-      "Interactive calculator for the all-in cost of a Greek crewed yacht charter: base fee bands from the Greek Charter Index rate cards, the yacht's certified VAT tier (5.2 to 12%, 13% ceiling), APA, delivery and the customary crew gratuity, per yacht per week.",
+      "Interactive calculator for the all-in cost of a Greek crewed yacht charter: base fee bands from the Greek Charter Index rate cards, the yacht's certified VAT tier (5.2 to 12%, 13% ceiling), APA and delivery, per yacht per week, with the customary crew gratuity as a separate line.",
     url: "https://georgeyachts.com/tools/charter-cost-calculator",
     applicationCategory: "FinanceApplication",
     operatingSystem: "Any (web browser)",
@@ -184,7 +184,7 @@ export default function ChartCostCalculatorPage() {
                 marginRight: "auto",
               }}
             >
-              Real rate cards, not averages. Pick the yacht type and size, set the certified VAT tier and the APA, and read the week all-in: base fee, VAT, APA, delivery and the gratuity range, per yacht.
+              Real rate cards, not averages. Pick the yacht type and size, set the certified VAT tier and the APA, and read the week all in: base fee, VAT, APA and delivery, per yacht, with the gratuity range as its own line.
             </p>
           </div>
         </header>
@@ -266,11 +266,11 @@ export default function ChartCostCalculatorPage() {
                 },
                 {
                   label: "Delivery (only away from Athens)",
-                  body: "Charged when a yacht based in Athens repositions to Mykonos, Corfu, Rhodes or Santorini for your start. The convention is one seventh of the weekly fee per delivery day; it is often negotiated down and sometimes waived.",
+                  body: "Charged when a yacht based in Athens repositions to Mykonos, Corfu, Lefkada or Santorini for your start. The convention is one seventh of the weekly fee per delivery day; it is often negotiated down and sometimes waived.",
                 },
                 {
                   label: "Crew gratuity (10 to 15% of the base)",
-                  body: "Customary, not contractual, calculated on the base fee alone and handed to the captain at the end of the week. The calculator shows the total with both ends of the range.",
+                  body: "Customary, not contractual, calculated on the base fee alone and handed to the captain at the end of the week. The calculator shows the range as its own line, outside the all-in total.",
                 },
               ].map((b, i) => (
                 <li

@@ -38,7 +38,7 @@ function EstimatorJsonLd() {
     name: "Greek Yacht Charter Cost Estimator",
     applicationCategory: "FinanceApplication",
     operatingSystem: "Web",
-    description: "Interactive estimator for the all-in cost of a Greek yacht charter including base, APA, Greek VAT, and crew gratuity.",
+    description: "Interactive estimator for the all-in cost of a Greek yacht charter: base, APA and Greek VAT, with the crew gratuity shown as a separate line.",
     url: "https://georgeyachts.com/charter-cost-estimator",
     offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
     publisher: {
