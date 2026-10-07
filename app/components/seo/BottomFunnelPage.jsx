@@ -4,6 +4,7 @@
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import { closesOn } from "@/lib/aiAnswerClose";
 import InlineCalendlySection from "@/app/components/InlineCalendlySection";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import OutsideGroundsNote from "@/app/components/seo/OutsideGroundsNote";
@@ -191,6 +192,7 @@ export default function BottomFunnelPage({ pageData }) {
               answer={d.quickAnswerA}
               keyFacts={d.keyFacts}
               evidence={d.evidence}
+              close={closesOn(d.urlPath)}
             />
           </div>
         </section>

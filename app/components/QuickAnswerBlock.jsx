@@ -15,6 +15,7 @@
 // references this Q/A as one of its mainEntity items.
 
 import Link from "next/link";
+import { AI_ANSWER_CLOSE } from "@/lib/aiAnswerClose";
 
 const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
@@ -24,7 +25,10 @@ const CREAM = "#F8F5F0";
 // the page's hard numbers under the answer (class gy-key-facts, also
 // declared speakable), and `evidence` names the source the answer rests
 // on. AI engines cite the page that answers exactly and shows its data.
-export default function QuickAnswerBlock({ question, answer, attribution = true, keyFacts, evidence }) {
+// `close` (2026-10-07, George): the house and the one action as the last
+// sentence of the answer, inside the paragraph the engines extract. Passed by
+// the templates for the pages lib/aiAnswerClose.js lists and every post.
+export default function QuickAnswerBlock({ question, answer, attribution = true, keyFacts, evidence, close = false }) {
   if (!question || !answer) return null;
   const facts = Array.isArray(keyFacts) ? keyFacts.filter(Boolean) : [];
   return (
@@ -78,7 +82,7 @@ export default function QuickAnswerBlock({ question, answer, attribution = true,
           lineHeight: 1.55,
         }}
       >
-        {answer}
+        {answer}{close ? <>{" "}<span className="gy-qa-close">{AI_ANSWER_CLOSE}</span></> : null}
       </p>
       {facts.length > 0 && (
         <div style={{ margin: "0 0 16px" }}>

@@ -74,6 +74,8 @@ import { serviceSchema, websiteSchema, getServiceSchemaWithReviews } from "@/lib
 import ForbesTopBar from "./components/ForbesTopBar";
 import { cookies } from "next/headers";
 import DeferredWidgets from "./components/DeferredWidgets";
+import MicroBriefBand from "./components/MicroBriefBand";
+import AIVisitorBand from "./components/AIVisitorBand";
 // Swiper CSS moved to individual Swiper components to avoid loading on non-Swiper pages
 
 // 2026-08-20 (design pass, job 14) — Geist is gone. It was the Next.js
@@ -633,9 +635,17 @@ export default async function RootLayout({ children }) {
         <WishlistProvider>
         <CurrencyProvider>
         <NavDrawerSystem />
+        {/* 2026-10-07 (George): the visitor an assistant sent gets the short
+            version and the three-field brief before anything else. Client-only,
+            renders after mount, so no page's content hash moves. */}
+        <AIVisitorBand />
         <main id="main-content">
         {children}
         </main>
+        {/* 2026-10-07 (George): the three-field brief above the footer on every
+            page, OUTSIDE <main> on purpose: scripts/freshness.mjs hashes <main>,
+            and a sitewide strip inside it would stamp 500 lastmod dates. */}
+        <MicroBriefBand />
         {/* 2026-08-20 (design pass) — LiveTicker unmounted, George's call after
             it surfaced during job 13 testing. The component file stays on disk
             untouched, so this is one line to reverse.

@@ -17,6 +17,7 @@ import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { getGlossaryTermBySlug } from "@/lib/glossarySeo";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import { closesOn } from "@/lib/aiAnswerClose";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
 import RelatedPages from "@/app/components/seo/RelatedPages";
@@ -169,6 +170,7 @@ export default function GlossaryTerm({ termData }) {
             <QuickAnswerBlock
               question={`What is ${term.term} in yacht charter?`}
               answer={term.shortDefinition}
+              close={closesOn(`/glossary/${term.slug}`)}
             />
           </div>
         </section>

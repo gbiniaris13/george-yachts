@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { Fragment, useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic';
 // card image link in a View Transitions API navigation so the
 // photo morphs into the detail-page hero on click.
 import ViewTransitionLink from '../components/ViewTransitionLink';
+import MicroBrief from '../components/MicroBrief';
 // CompareYachts is a heavy modal only rendered after the visitor
 // actually ticks the compare checkbox on two yachts. Lazy-loaded to
 // keep the /charter-yacht-greece first-load bundle ~12 KB smaller.
@@ -1055,16 +1056,24 @@ export default function FleetGrid({ yachts }) {
         key={`${activeCategory}|${lengthRange}|${guestFilter}|${cabinFilter}|${priceRange}|${sortBy}`}
       >
         {filtered.map((yacht, i) => (
-          <YachtCard
-            key={yacht._id || yacht.slug}
-            yacht={yacht}
-            index={i}
-            isComparing={compareList.some((c) => c.slug === yacht.slug)}
-            onToggleCompare={() => toggleCompare(yacht)}
-            compareCount={compareList.length}
-            t={t}
-            onInquireClick={setInquiryYacht}
-          />
+          <Fragment key={yacht._id || yacht.slug}>
+            <YachtCard
+              yacht={yacht}
+              index={i}
+              isComparing={compareList.some((c) => c.slug === yacht.slug)}
+              onToggleCompare={() => toggleCompare(yacht)}
+              compareCount={compareList.length}
+              t={t}
+              onInquireClick={setInquiryYacht}
+            />
+            {/* 2026-10-07 (George): 72 visits a week on this page, one request.
+                After six cards, the three-field brief, full width of the grid. */}
+            {i === 5 && (
+              <div style={{ gridColumn: "1 / -1" }}>
+                <MicroBrief variant="inline" context="the fleet, after six cards" heading="Not sure which one? Two answers and I choose for you" />
+              </div>
+            )}
+          </Fragment>
         ))}
       </div>
 

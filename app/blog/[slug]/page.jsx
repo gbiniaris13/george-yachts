@@ -17,6 +17,8 @@ import { autoLinkPortableText } from "@/lib/auto-link-content";
 import { blogSeoTitle } from "@/lib/blogSeoTitles";
 import { getBlogAnswerUnit } from "@/lib/blogAnswerUnits";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import MicroBrief from "@/app/components/MicroBrief";
+import { AI_ANSWER_CLOSE } from "@/lib/aiAnswerClose";
 import { getClustersForPost } from "@/lib/journal-clusters";
 import RelatedPages from "@/app/components/seo/RelatedPages";
 import { titleField } from "@/lib/seoTitle";
@@ -566,6 +568,7 @@ const ArticlePage = async ({ params }) => {
                 answer={answerUnit.answer}
                 keyFacts={answerUnit.keyFacts}
                 evidence={answerUnit.evidence}
+                close
               />
             </div>
           )}
@@ -606,10 +609,16 @@ const ArticlePage = async ({ params }) => {
                   margin: 0,
                 }}
               >
-                {post.quickAnswer}
+                {post.quickAnswer}{" "}<span className="gy-qa-close">{AI_ANSWER_CLOSE}</span>
               </p>
             </aside>
           )}
+
+          {/* 2026-10-07 (George): the three-field brief right after the answer.
+              The journal is 40 percent of the visits and brought almost no
+              requests; the reader who has just read the number can now ask
+              for three yachts without finding the form at the foot. */}
+          <MicroBrief variant="inline" context={`journal: ${post.title}`} />
 
           <article className="editorial-content [&_p]:mb-10 [&_p]:leading-[2] [&_p]:text-white/60 [&_p]:text-[1.05rem] [&_p:first-of-type]:text-white/80 [&_p:first-of-type]:text-[1.15rem] [&_p:first-of-type]:leading-[1.85]">
             <PortableText value={enhancedBody} components={RichTextComponents} />

@@ -55,6 +55,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import { GREEK_PAGES } from "@/lib/greekSeo";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import { AI_ANSWER_CLOSE, closesOn } from "@/lib/aiAnswerClose";
 import OutsideGroundsNote from "@/app/components/seo/OutsideGroundsNote";
 import { SITE_UPDATED } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
@@ -80,7 +81,7 @@ async function loadFleetMatches(yachtFilter) {
   }
 }
 
-function FaqJsonLd({ faq, quickAnswer }) {
+function FaqJsonLd({ faq, quickAnswer, close = false }) {
   // 2026-09-04 (plan item 13): the quick answer at the top of the page is
   // the one Q/A an engine should lift, so it leads the FAQPage entity,
   // attributed to the canonical author, instead of living only in HTML.
@@ -92,7 +93,7 @@ function FaqJsonLd({ faq, quickAnswer }) {
             name: quickAnswer.question,
             acceptedAnswer: {
               "@type": "Answer",
-              text: quickAnswer.answer,
+              text: close ? `${quickAnswer.answer} ${AI_ANSWER_CLOSE}` : quickAnswer.answer,
               author: {
                 "@type": "Person",
                 "@id": "https://georgeyachts.com/about/george-p-biniaris#person",
@@ -220,7 +221,7 @@ export default async function SeoLanding({ pageData }) {
   return (
     <>
       <ServiceJsonLd pageData={pageData} yachts={yachts} />
-      <FaqJsonLd faq={pageData.faq} quickAnswer={pageData.quickAnswer} />
+      <FaqJsonLd faq={pageData.faq} quickAnswer={pageData.quickAnswer} close={closesOn(pageData.urlPath)} />
       <BreadcrumbSchema items={breadcrumbs} />
       {/* TouristTrip - only on itinerary pages (gated on structured stops) so
           yacht-type / combo / comparison pages never emit a spurious trip. */}
@@ -270,6 +271,7 @@ export default async function SeoLanding({ pageData }) {
                   answer={answer}
                   keyFacts={qa && qa.question ? pageData.keyFacts : undefined}
                   evidence={qa && qa.question ? pageData.evidence : undefined}
+                  close={closesOn(pageData.urlPath)}
                 />
               </div>
             </section>

@@ -406,6 +406,7 @@ export default async function CrewedCharterPage() {
       <section style={{ padding: "32px 24px 0" }}>
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <QuickAnswerBlock
+            close
             question="What is a crewed yacht charter in Greece, and what does a week cost?"
             answer={`A crewed yacht charter means the yacht comes with a full professional crew: captain, chef and service. Per the George Yachts Greek Charter Index, weekly net base rates run EUR 17,000-22,000 for a crewed sailing catamaran of 12-16m and EUR 54,900-90,000 at 23-24m, EUR 21,000-90,000 for a power catamaran, EUR 17,500-47,500 for an 18-25m motor yacht, EUR 35,900-75,000 at 26-31m, EUR 59,900-150,000 at 35-40m, and EUR 162,500-235,000 above 50m. Add VAT at the yacht's certified rate (in practice 5.2-12%; statutory ceiling 13%) and APA of 20-40% by yacht type. George Yachts curates ${FLEET_COUNT} yachts in Greek waters, split between the Catamaran Fleet with a crew of two to four and the Motor Yacht Fleet with a full crew.`}
             keyFacts={[

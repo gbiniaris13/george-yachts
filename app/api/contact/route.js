@@ -134,6 +134,12 @@ export async function POST(request) {
     );
   }
 
+  // 2026-10-07 (George): the three-field brief (month, party, email) posts
+  // here flagged `micro`. It carries no name by design; the subject says what
+  // it is and the page it came from, and everything downstream is unchanged.
+  const micro = payload && payload.micro === true;
+  if (micro && payload && !payload.name) payload.name = "Micro brief";
+
   try {
     // Honeypot: if the hidden "website" field is filled, it's a bot
     if (payload.website && payload.website.trim() !== "") {
@@ -212,7 +218,9 @@ export async function POST(request) {
     await sendMailPromise({
       from: GMAIL_USER,
       to: GMAIL_USER,
-      subject: `[Yacht Inquiry] New Contact from ${name}`,
+      subject: micro
+        ? `[Yacht Inquiry] Micro brief: ${guests || "guests ?"}, ${timing || "month ?"}${payload.page ? ` (${payload.page})` : ""}`
+        : `[Yacht Inquiry] New Contact from ${name}`,
       replyTo: email,
       html: `
         <h3>New Website Inquiry:</h3>
