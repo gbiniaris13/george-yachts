@@ -15,7 +15,7 @@
 // references this Q/A as one of its mainEntity items.
 
 import Link from "next/link";
-import { AI_ANSWER_CLOSE } from "@/lib/aiAnswerClose";
+import { AI_ANSWER_CLOSE, carriesClose } from "@/lib/aiAnswerClose";
 
 const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
@@ -82,7 +82,7 @@ export default function QuickAnswerBlock({ question, answer, attribution = true,
           lineHeight: 1.55,
         }}
       >
-        {answer}{close ? <>{" "}<span className="gy-qa-close">{AI_ANSWER_CLOSE}</span></> : null}
+        {answer}{close && !carriesClose(answer) ? <>{" "}<span className="gy-qa-close">{AI_ANSWER_CLOSE}</span></> : null}
       </p>
       {facts.length > 0 && (
         <div style={{ margin: "0 0 16px" }}>

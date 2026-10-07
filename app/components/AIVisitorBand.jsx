@@ -93,7 +93,7 @@ export default function AIVisitorBand() {
             maxWidth: 760,
           }}
         >
-          Whatever it told you about a crewed week in Greece, the numbers came from pages I wrote. The yachts I would put in front of you first for 2027 are{" "}
+          From EUR 17,000 a week, fully crewed, about EUR 22,000 all in with APA and VAT; I reply within 24 hours. Whatever it told you about a crewed week in Greece, the numbers came from pages I wrote. The yachts I would put in front of you first for 2027 are{" "}
           {home ? (
             <a href="#new-generation" style={{ color: GOLD, textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>
               George&rsquo;s picks, lowest week first

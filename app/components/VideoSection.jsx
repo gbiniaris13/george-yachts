@@ -444,10 +444,10 @@ export default function VideoSection() {
                 wrap; font clamp trimmed so each line fits one row on
                 desktop. */}
             <span style={{ display: "block", textWrap: "balance" }}>
-              A house, not a platform.
+              Crewed yacht charter
             </span>
             <span style={{ display: "block", textWrap: "balance" }}>
-              We host you at sea.
+              in Greece, by the week.
             </span>
           </h1>
 
@@ -469,7 +469,7 @@ export default function VideoSection() {
               textWrap: "balance",
             }}
           >
-            No call centres, no handovers, no ticket numbers. A table set for you before you even land.
+            A house, not a platform. We host you at sea. No call centres, no handovers, no ticket numbers.
           </p>
 
           {/* CTA pair - primary (gold-bordered transparent) + secondary

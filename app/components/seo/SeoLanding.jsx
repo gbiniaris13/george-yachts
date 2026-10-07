@@ -55,7 +55,7 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import { GREEK_PAGES } from "@/lib/greekSeo";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
-import { AI_ANSWER_CLOSE, closesOn } from "@/lib/aiAnswerClose";
+import { AI_ANSWER_CLOSE, closesOn, carriesClose } from "@/lib/aiAnswerClose";
 import OutsideGroundsNote from "@/app/components/seo/OutsideGroundsNote";
 import { SITE_UPDATED } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
@@ -93,7 +93,7 @@ function FaqJsonLd({ faq, quickAnswer, close = false }) {
             name: quickAnswer.question,
             acceptedAnswer: {
               "@type": "Answer",
-              text: close ? `${quickAnswer.answer} ${AI_ANSWER_CLOSE}` : quickAnswer.answer,
+              text: close && !carriesClose(quickAnswer.answer) ? `${quickAnswer.answer} ${AI_ANSWER_CLOSE}` : quickAnswer.answer,
               author: {
                 "@type": "Person",
                 "@id": "https://georgeyachts.com/about/george-p-biniaris#person",

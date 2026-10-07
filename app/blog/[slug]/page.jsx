@@ -18,7 +18,7 @@ import { blogSeoTitle } from "@/lib/blogSeoTitles";
 import { getBlogAnswerUnit } from "@/lib/blogAnswerUnits";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import MicroBrief from "@/app/components/MicroBrief";
-import { AI_ANSWER_CLOSE } from "@/lib/aiAnswerClose";
+import { AI_ANSWER_CLOSE, carriesClose } from "@/lib/aiAnswerClose";
 import { getClustersForPost } from "@/lib/journal-clusters";
 import RelatedPages from "@/app/components/seo/RelatedPages";
 import { titleField } from "@/lib/seoTitle";
@@ -609,7 +609,7 @@ const ArticlePage = async ({ params }) => {
                   margin: 0,
                 }}
               >
-                {post.quickAnswer}{" "}<span className="gy-qa-close">{AI_ANSWER_CLOSE}</span>
+                {post.quickAnswer}{carriesClose(post.quickAnswer) ? null : <>{" "}<span className="gy-qa-close">{AI_ANSWER_CLOSE}</span></>}
               </p>
             </aside>
           )}
