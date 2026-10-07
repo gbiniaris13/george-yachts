@@ -65,7 +65,7 @@ export default function AIVisitorBand() {
         borderBottom: "1px solid rgba(218, 161, 16, 0.22)",
         // The site nav is a fixed, transparent bar over the top of every page;
         // the band is the first thing under it, so it clears the bar itself.
-        padding: "calc(92px + 2vw) 24px 0",
+        padding: "calc(128px + 2vw) 24px 0",
       }}
     >
       <div style={{ maxWidth: 980, margin: "0 auto" }}>
