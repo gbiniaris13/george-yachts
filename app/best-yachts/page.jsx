@@ -30,7 +30,7 @@ export default function BestYachtsHub() {
     <HubPage
       eyebrow="Curated shortlists"
       h1="Best Yachts in Greece, by Use Case"
-      intro="Curated shortlists for the way you actually charter - by group size, occasion, and priority. Each guide gives the right yacht spec and price band."
+      intro="The best yacht for your party, from EUR 17,000 a week per yacht with crew: curated shortlists by group size, occasion and priority, each with the right yacht spec and price band."
       items={items}
       lastUpdated={LAST_REFRESH.BEST_YACHTS}
       collectionUrl={URL}

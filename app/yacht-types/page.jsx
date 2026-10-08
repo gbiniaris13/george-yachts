@@ -28,7 +28,7 @@ export default function YachtTypesHub() {
     <HubPage
       eyebrow="Choose your yacht"
       h1="Yacht Types for Charter in Greece"
-      intro="The yacht types we charter in Greek waters, with the honest trade-offs of each. Choose a type to see the fleet and who it suits best."
+      intro="The yacht types this house charters in Greek waters, from EUR 17,000 a week for a crewed catamaran and EUR 17,500 for a motor yacht, with the honest trade-offs of each."
       items={items}
       lastUpdated={LAST_REFRESH.YACHT_TYPES}
       collectionUrl={URL}

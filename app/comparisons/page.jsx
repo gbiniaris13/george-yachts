@@ -29,7 +29,7 @@ export default function ComparisonsHub() {
     <HubPage
       eyebrow="Decision guides"
       h1="Greece vs Other Charter Destinations"
-      intro="How Greek charter compares to the other major Mediterranean and Caribbean destinations - honest, side-by-side, for UHNW decision-making."
+      intro="A crewed week in Greece starts from EUR 17,000 per yacht, about EUR 22,000 all in; here is how it compares with the other Mediterranean and Caribbean destinations, side by side."
       items={items}
       lastUpdated={LAST_REFRESH.DEST_COMPARISONS}
       collectionUrl={URL}

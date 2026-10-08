@@ -24,7 +24,7 @@ import IslandPageTracker from "./IslandPageTracker";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import QuizCtaCard from "@/app/components/QuizCtaCard";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
-import OutsideGroundsNote from "@/app/components/seo/OutsideGroundsNote";
+import OutsideGroundsNote, { isOutsideGrounds } from "@/app/components/seo/OutsideGroundsNote";
 import { pageMeta } from "@/lib/pageMeta";
 import Footer from "@/app/components/Footer";
 
@@ -410,9 +410,15 @@ export default async function IslandPage({ params }) {
               answer={(() => {
                 const firstSentence = (island.whyVisit || "").split(". ")[0];
                 const tag = island.tagline ? island.tagline.replace(/\.$/, "") : "";
-                return tag
+                const base = tag
                   ? `${tag}. ${firstSentence}.`.replace(/\.\.$/, ".")
                   : `${firstSentence}.`;
+                // 2026-10-08 (George): the answer opens with the number, and an
+                // island outside the grounds this house works says so first.
+                const lead = isOutsideGrounds(`/island/${island.slug}`)
+                  ? `${island.name} lies outside the grounds this house works; a crewed week from Athens, Lefkada or Corfu starts from EUR 17,000 per yacht, about EUR 22,000 all in.`
+                  : `A crewed week that includes ${island.name} starts from EUR 17,000 per yacht, about EUR 22,000 all in with APA and VAT.`;
+                return `${lead} ${base}`;
               })()}
             />
           </div>

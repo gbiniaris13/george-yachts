@@ -30,7 +30,7 @@ export default function IslandsHub() {
     <HubPage
       eyebrow="Destinations"
       h1="Yacht Charter by Greek Island"
-      intro="Every Greek island we charter, organised by region. Choose a destination to see matched yachts, sample itineraries, and seasonality."
+      intro="Every Greek island this house charters, organised by region, with a crewed week from EUR 17,000 per yacht; choose a destination to see matched yachts, sample itineraries and seasonality."
       items={items}
       lastUpdated={LAST_REFRESH.ISLANDS}
       collectionUrl={URL}
