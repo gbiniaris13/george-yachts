@@ -13,6 +13,7 @@ import DossierRequest from './DossierRequest';
 import AwardsSection from './AwardsSection';
 import './yacht-page.css';
 import Footer from "@/app/components/Footer";
+import { walkthroughDescription } from '@/lib/walkthroughDescription';
 
 // ISR - revalidate every hour
 export const revalidate = 3600;
@@ -424,9 +425,10 @@ function YachtSchema({ yacht, imageUrl, slug }) {
           '@type': 'VideoObject',
           '@id': `https://georgeyachts.com/yachts/${slug}#video`,
           name: v.title || `${yacht.name} walkthrough`,
-          description:
-            `A walkthrough of ${yacht.name}, ${yacht.length || ''} ${yacht.subtitle || ''}`.trim() +
-            ', available for crewed charter in Greek waters.',
+          // 2026-10-08 (George): the description opens with her name, her
+          // length, her guests, her weekly base rate and her page, from one
+          // helper shared with the sitemap and the caption under the player.
+          description: walkthroughDescription({ ...yacht, slug }),
           thumbnailUrl: v.thumbnail || imageUrl,
           uploadDate: v.uploadDate || undefined,
           duration: v.durationSeconds

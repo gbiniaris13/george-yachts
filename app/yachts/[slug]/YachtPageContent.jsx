@@ -85,6 +85,7 @@ function iconForFeature(text = '') {
 import ExpressInquiryModal from '@/app/components/ExpressInquiryModal';
 import { isPerPerson } from '@/lib/pricing';
 import { yachtQuestions } from '@/lib/yachtQuestions';
+import { walkthroughDescription } from '@/lib/walkthroughDescription';
 
 // D.5 fallback (Boss directive 2026-05-05) — many yachts already
 // have a layout/floor-plan illustration in the regular gallery
@@ -692,6 +693,7 @@ export default function YachtPageContent({ yacht, heroImage, description }) {
           video={yacht.video}
           yachtName={yacht.name}
           posterFallback={yacht.images?.[0]?.url}
+          caption={walkthroughDescription(yacht, { withLink: false })}
         />
 
         {/* D.1, SPECS STRIP, pulled up here so the buyer sees the

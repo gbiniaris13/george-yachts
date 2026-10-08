@@ -37,6 +37,7 @@ const editedAfterManifest = (updatedAt) => {
 import { CHARTER_INDEX_2026 } from "@/lib/charterIndex2026";
 import { RETIRED_SLUGS } from "@/lib/retiredSlugs";
 import { RETIRED_YACHT_SLUGS } from "@/lib/retiredYachts";
+import { walkthroughDescription } from "@/lib/walkthroughDescription";
 
 // Next's sitemap serializer prints video fields raw, so anything that can
 // carry an ampersand or an angle bracket is escaped before it gets there.
@@ -537,7 +538,8 @@ export default async function sitemap() {
       `*[/* +mono */ _type == "yacht" && defined(slug.current)]{
         "slug": slug.current, _updatedAt,
         "images": images[0..2].asset->url,
-        video
+        video,
+        name, length, sleeps, cabins, weeklyRatePrice
       }`
     );
     yachtEntries = yachts.map((yacht) => {
@@ -589,7 +591,10 @@ export default async function sitemap() {
                 {
                   title: xmlEscape(yacht.video.title || `${yacht.slug} walkthrough`),
                   thumbnail_loc: xmlEscape(yacht.video.thumbnail || imgs[0]),
+                  // 2026-10-08 (George): name, length, guests, weekly base
+                  // rate and her page, the same sentence as the VideoObject.
                   description: xmlEscape(
+                    walkthroughDescription(yacht) ||
                     yacht.video.title ||
                     `Walkthrough video of a crewed charter yacht in Greek waters.`
                   ),

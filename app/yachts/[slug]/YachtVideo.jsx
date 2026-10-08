@@ -81,7 +81,7 @@ export function embedUrl(video) {
   return null;
 }
 
-export default function YachtVideo({ video, yachtName, posterFallback }) {
+export default function YachtVideo({ video, yachtName, posterFallback, caption }) {
   const [playing, setPlaying] = useState(false);
   const fileRef = useRef(null);
 
@@ -151,6 +151,22 @@ export default function YachtVideo({ video, yachtName, posterFallback }) {
             ? `${mins} ${mins === 1 ? "minute" : "minutes"} aboard, deck by deck.`
             : "Aboard her, deck by deck."}
         </p>
+        {caption ? (
+          // 2026-10-08 (George): the film's description, read before play:
+          // her name, her length, her guests and her weekly base rate, the
+          // same sentence the VideoObject and the video sitemap carry.
+          <p
+            style={{
+              fontFamily: "var(--gy-font-ui)",
+              fontSize: 14.5,
+              lineHeight: 1.55,
+              color: "rgba(248,245,240,0.82)",
+              margin: "0 0 18px",
+            }}
+          >
+            {caption}
+          </p>
+        ) : null}
 
         <div
           style={{
