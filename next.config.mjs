@@ -348,6 +348,12 @@ const nextConfig = {
       // flat 33% APA; the tool at /tools/charter-cost-calculator has the
       // impressions and now runs on the Index rate cards. One door.
       { source: "/charter-cost-estimator", destination: "/tools/charter-cost-calculator", permanent: true },
+      // 2026-10-08 (research plan item 10): two of the fifty answer pages
+      // asked a question another page already answered. The merged page's
+      // unique facts (the worked entry week; a rating you can read, paid by
+      // the owner's side) were folded into the survivor before the 301.
+      { source: "/how-much-does-a-catamaran-vacation-cost", destination: "/how-much-is-a-catamaran-for-a-week", permanent: true },
+      { source: "/top-rated-agencies-crewed-catamaran-charter-aegean", destination: "/best-companies-fully-crewed-catamaran-charters-cyclades", permanent: true },
       // 2026-08-21 (section 6) — seven yachts withdrawn on George's
       // instruction, every one of them carrying "Skipper available" or its
       // equivalent in her crew field. Their detail URLs 301 to the fleet
