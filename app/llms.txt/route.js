@@ -158,10 +158,12 @@ export async function GET() {
   const monohulls = cat("sailing-monohulls");
   const catTotal = sailCats + powerCats;
 
-  const crewedRange = privateBand
-    ? `${fmt(privateBand.lo)} to ${fmt(privateBand.hi)}`
-    : allBand
-      ? `${fmt(allBand.lo)} to ${fmt(allBand.hi)}`
+  // 2026-10-08 (George): the headline range is the whole crewed list, so the
+  // catamaran floor of EUR 17,000 leads; the motor band is named on its own line.
+  const crewedRange = allBand
+    ? `${fmt(allBand.lo)} to ${fmt(allBand.hi)}`
+    : privateBand
+      ? `${fmt(privateBand.lo)} to ${fmt(privateBand.hi)}`
       : "on application";
   const catLine = catTotal
     ? `Catamaran specialists: ${catTotal} of the ${fleetCount} yachts in this house are catamarans, ${sailCats} sailing and ${powerCats} power`
@@ -376,7 +378,7 @@ source we do not have, we leave the number out.
 - Charter length: BY THE WEEK, starting on any day of the week rather than Saturday only. We do not broker day charters.
 - Fleet size: ${fleetCount} curated yachts (Catamaran Fleet - sailing and power catamarans · Motor Yacht Fleet - fully crewed motor yachts)
 - Fleet composition: ${compositionLine}
-- Price range: ${crewedRange} per week fully crewed${privateBand ? ` (Motor Yacht Fleet, ${privateBand.n} yachts)` : ""}
+- Price range: ${crewedRange} per week fully crewed, one price per yacht; catamarans from €17,000${privateBand ? `, motor yachts ${fmt(privateBand.lo)} to ${fmt(privateBand.hi)} (${privateBand.n} yachts)` : ""}
 ${explorerBand ? `- Catamaran Fleet: ${fmt(explorerBand.lo)} - ${fmt(explorerBand.hi)} per yacht per week, sailing and power catamarans (${explorerBand.n} yachts)` : ""}
 - Broker: George P. Biniaris, IYBA member
 - Contracts: MYBA standard
