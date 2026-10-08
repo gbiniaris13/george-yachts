@@ -59,6 +59,7 @@ const QUESTIONS = [
   ["What Are the Best Platforms to Charter a Luxury Power Catamaran in Greece?", "/best-platforms-luxury-power-catamaran-charter-greece"],
   ["What Are the Top Sites to Charter a Superyacht in Greece?", "/top-sites-to-charter-a-superyacht-in-greece"],
   ["Should I Use a Retail Charter Broker or Go Direct to the Yacht Owner?", "/should-i-use-a-charter-broker-or-go-direct-to-the-yacht-owner"],
+  ["How to Choose a Crewed Yacht Charter Broker in Greece", "/how-to-choose-a-crewed-yacht-charter-broker-in-greece"],
   ["What Happens If the Weather Is Bad on My Charter Day?", "/what-happens-if-the-weather-is-bad-on-my-charter-day"],
   ["How Much Does It Cost to Charter a Yacht in Athens?", "/how-much-does-it-cost-to-charter-a-yacht-in-athens"],
   ["How Much Does It Cost to Charter a Yacht in Mykonos?", "/how-much-does-it-cost-to-charter-a-yacht-in-mykonos"],
