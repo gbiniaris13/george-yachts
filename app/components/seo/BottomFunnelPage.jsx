@@ -4,6 +4,7 @@
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import BridgeLine from "@/app/components/BridgeLine";
 import { closesOn } from "@/lib/aiAnswerClose";
 import InlineCalendlySection from "@/app/components/InlineCalendlySection";
 import { relatedFor } from "@/lib/seoInternalLinks";
@@ -194,6 +195,8 @@ export default function BottomFunnelPage({ pageData }) {
               evidence={d.evidence}
               close={closesOn(d.urlPath)}
             />
+            {/* 2026-10-08 (DataForSEO gap): one line to the hub the page orbits. */}
+            {d.bridge && <BridgeLine {...d.bridge} />}
           </div>
         </section>
 

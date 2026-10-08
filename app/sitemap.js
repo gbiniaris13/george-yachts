@@ -5,6 +5,7 @@ import { YACHT_TYPES } from "@/lib/yachtTypeSeo";
 import { USE_CASES } from "@/lib/useCaseSeo";
 import { LONG_TAIL_PAGES } from "@/lib/longTailSeo";
 import { GREEK_PAGES } from "@/lib/greekSeo";
+import { HEBREW_PAGES } from "@/lib/hebrewSeo";
 import { COMPARISONS } from "@/lib/comparisonSeo";
 import { LINKABLE_ASSETS } from "@/lib/linkableAssetSeo";
 import { COMBOS } from "@/lib/comboSeo";
@@ -388,6 +389,13 @@ export default async function sitemap() {
     changeFrequency: "monthly",
     priority: 0.8,
   }));
+  // 2026-10-08 — Hebrew landing page (DataForSEO Israel gap).
+  const hebrewEntries = HEBREW_PAGES.map((p) => ({
+    url: `${BASE_URL}${p.urlPath}`,
+    lastModified: stampOf(`${p.urlPath}`, LAST_REFRESH.STATIC),
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
   // 2026-05-11 Phase 7 Round 2 — 8 comparison + 3 linkable assets.
   const comparisonEntries = COMPARISONS.map((c) => ({
     url: `${BASE_URL}${c.urlPath}`,
@@ -697,6 +705,7 @@ export default async function sitemap() {
     ...useCaseEntries,
     ...longTailEntries,
     ...greekEntries,
+    ...hebrewEntries,
     ...comparisonEntries,
     ...linkableAssetEntries,
     ...comboEntries,

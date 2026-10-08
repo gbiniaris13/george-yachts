@@ -54,6 +54,7 @@ import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import { GREEK_PAGES } from "@/lib/greekSeo";
+import { HEBREW_RELATED } from "@/lib/hebrewSeo";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
 import { AI_ANSWER_CLOSE, closesOn, carriesClose } from "@/lib/aiAnswerClose";
 import BridgeLine from "@/app/components/BridgeLine";
@@ -197,6 +198,8 @@ export default async function SeoLanding({ pageData }) {
   // had zero incoming internal links). Cyclic window: each page links the
   // next 6, so every Greek page RECEIVES exactly 6 incoming links too.
   const isGreek = pageData.lang === "el";
+  // 2026-10-08: the Hebrew page renders right to left with its own labels.
+  const isHebrew = pageData.lang === "he";
   const related = isGreek
     ? (() => {
         const idx = GREEK_PAGES.findIndex((p) => p.urlPath === pageData.urlPath);
@@ -205,7 +208,9 @@ export default async function SeoLanding({ pageData }) {
           return { urlPath: p.urlPath, eyebrow: p.eyebrow, title: p.h1 };
         });
       })()
-    : relatedFor(pageData.urlPath, { max: 6 });
+    : isHebrew
+      ? HEBREW_RELATED
+      : relatedFor(pageData.urlPath, { max: 6 });
 
   const breadcrumbs = [
     { name: "Home", url: "https://georgeyachts.com/" },
@@ -240,7 +245,7 @@ export default async function SeoLanding({ pageData }) {
         ) : null;
       })()}
 
-      <article style={{ background: NAVY, minHeight: "100vh" }}>
+      <article style={{ background: NAVY, minHeight: "100vh" }} dir={isHebrew ? "rtl" : undefined} lang={isHebrew ? "he" : undefined}>
         {/* QUICK ANSWER - Phase 7 R27 (technical brief Priority 2B).
             Renders only when pageData.quickAnswer is present, OR
             falls back to derived Q/A using h1 + seoDescription. */}
@@ -675,7 +680,7 @@ export default async function SeoLanding({ pageData }) {
           <section style={{ padding: "72px 24px" }}>
             <div style={{ maxWidth: 720, margin: "0 auto" }}>
               <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px", textAlign: "center" }}>
-                Frequently asked
+                {isHebrew ? "שאלות נפוצות" : "Frequently asked"}
               </p>
               <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 36px", textAlign: "center" }}>
                 {/* 2026-08-06 (job 20), the fallback was `About ${h1.toLowerCase()}`,
@@ -708,10 +713,10 @@ export default async function SeoLanding({ pageData }) {
           <section style={{ padding: "72px 24px", borderTop: "1px solid rgba(248, 245, 240,0.06)" }}>
             <div style={{ maxWidth: 1100, margin: "0 auto" }}>
               <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 9, letterSpacing: "0.42em", textTransform: "uppercase", color: GOLD, fontWeight: 600, margin: "0 0 14px", textAlign: "center" }}>
-                {isGreek ? "Συνεχίστε την εξερεύνηση" : "Continue exploring"}
+                {isGreek ? "Συνεχίστε την εξερεύνηση" : isHebrew ? "המשיכו לקרוא" : "Continue exploring"}
               </p>
               <h2 style={{ fontFamily: "var(--gy-font-editorial)", fontSize: "clamp(24px, 3.4vw, 34px)", fontWeight: 300, color: "#F8F5F0", margin: "0 0 36px", textAlign: "center", lineHeight: 1.2 }}>
-                {isGreek ? "Σχετικές σελίδες" : "Closely related to this page"}
+                {isGreek ? "Σχετικές σελίδες" : isHebrew ? "עמודים קשורים" : "Closely related to this page"}
               </h2>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14 }}>
                 {related.map((r) => (

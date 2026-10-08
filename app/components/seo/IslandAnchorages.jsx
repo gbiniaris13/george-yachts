@@ -17,6 +17,7 @@
 import Link from "next/link";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import BridgeLine from "@/app/components/BridgeLine";
 import OutsideGroundsNote from "@/app/components/seo/OutsideGroundsNote";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
@@ -309,6 +310,8 @@ export default function IslandAnchorages({ guideData }) {
                   .join(", "),
               )}
             />
+            {/* 2026-10-08 (DataForSEO gap): one line to the hub the page orbits. */}
+            {g.bridge && <BridgeLine {...g.bridge} />}
           </div>
         </section>
 

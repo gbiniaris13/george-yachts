@@ -6,6 +6,7 @@ import { sanityClient } from "@/lib/sanity";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import QuickAnswerBlock from "@/app/components/QuickAnswerBlock";
+import BridgeLine from "@/app/components/BridgeLine";
 import InlineCalendlySection from "@/app/components/InlineCalendlySection";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
@@ -219,6 +220,8 @@ export default async function BestYachtsPage({ pageData }) {
               }
               evidence={d.evidence || { label: "George Yachts Greek Charter Index", href: "/greek-charter-index-2026" }}
             />
+            {/* 2026-10-08 (DataForSEO gap): one line to the hub the page orbits. */}
+            {d.bridge && <BridgeLine {...d.bridge} />}
           </div>
         </section>
 

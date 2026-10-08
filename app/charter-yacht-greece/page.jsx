@@ -18,7 +18,9 @@ import "./fleet-page.css";
 export const revalidate = 3600;
 
 export const metadata = {
-  title: `Charter Yacht Greece - ${FLEET_COUNT} Curated Yachts`,
+  // 2026-10-08 (DataForSEO): "yacht charter greece", 1,600 US and 1,300 UK searches a
+  // month, had no page carrying the term in H1 or title; this is that page.
+  title: `Yacht Charter Greece: ${FLEET_COUNT} Crewed Yachts by the Week`,
   description:
     `Curated fleet of ${FLEET_COUNT} yachts in Greek waters: catamarans with a crew of two to four, motor yachts with full crew. Cyclades, Ionian, Saronic.`,
   alternates: {
@@ -26,7 +28,7 @@ export const metadata = {
   },
   openGraph: {
       type: "website",
-    title: "Charter Fleet | George Yachts Brokerage House",
+    title: `Yacht Charter Greece: ${FLEET_COUNT} Crewed Yachts | George Yachts`,
     description:
       `${FLEET_COUNT} curated yachts for charter in Greek waters. From 14m sailing catamarans to 64m superyachts.`,
     url: "https://georgeyachts.com/charter-yacht-greece",
@@ -254,7 +256,7 @@ export default async function CharterFleetPage() {
             "@type": "WebPage",
             "@id": "https://georgeyachts.com/charter-yacht-greece#webpage",
             url: "https://georgeyachts.com/charter-yacht-greece",
-            name: "Charter Fleet, George Yachts",
+            name: "Yacht Charter Greece, George Yachts",
             speakable: {
               "@type": "SpeakableSpecification",
               cssSelector: [".gy-qa-text", ".gy-key-facts"],
@@ -315,11 +317,11 @@ export default async function CharterFleetPage() {
         <div className="fleet-hero__gradient" />
         <div className="fleet-hero__content">
           <div className="fleet-hero__eyebrow">Exclusively Greek Waters</div>
-          <h1 className="fleet-hero__title">Charter Fleet</h1>
+          <h1 className="fleet-hero__title">Yacht Charter Greece</h1>
           <div className="fleet-hero__line" />
           <p className="fleet-hero__desc">
-            {yachts.length} curated vessels - from intimate sailing catamarans
-            to 64-meter superyachts. Cyclades &middot; Ionian &middot; Saronic.
+            {yachts.length} crewed yachts by the week, from EUR 17,000: sailing
+            catamarans to 64-metre superyachts. Cyclades &middot; Ionian &middot; Saronic.
           </p>
         </div>
         {/* Scroll indicator */}
