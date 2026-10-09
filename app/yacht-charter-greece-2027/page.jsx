@@ -438,7 +438,7 @@ export default function Charter2027Page() {
           </div>
           <p style={{ ...bodyStyle, fontSize: 14, marginTop: 20, textAlign: "center" }}>
             Start from the fleet itself:{" "}
-            <Link href="/crewed-catamaran-charter-greece" style={goldLink}>
+            <Link href="/crewed-catamaran-charter-cyclades" style={goldLink}>
               crewed catamarans
             </Link>
             ,{" "}

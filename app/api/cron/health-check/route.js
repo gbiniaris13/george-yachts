@@ -139,7 +139,7 @@ export async function GET(request) {
   // the flag flipped, the same check inverts: the homepage MUST offer
   // WhatsApp again.
   try {
-    const ctaPages = [BASE_URL, BASE_URL + "/greek-charter-index-2026", BASE_URL + "/weekly-yacht-charter-rates-greece", BASE_URL + "/crewed-catamaran-charter-greece"];
+    const ctaPages = [BASE_URL, BASE_URL + "/greek-charter-index-2026", BASE_URL + "/weekly-yacht-charter-rates-greece", BASE_URL + "/catamaran-charter-greece"];
     const bodies = await Promise.all(ctaPages.map((u) => fetch(u, { cache: "no-store" }).then((r) => r.text()).catch(() => "")));
     const deadLinks = bodies.reduce((n, b) => n + (b.match(/wa\.me\/17867988798/g) || []).length, 0);
     if (WHATSAPP_US_LOCKED) {

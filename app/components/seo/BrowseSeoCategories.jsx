@@ -20,7 +20,7 @@ const TYPE_LINKS = [
   { label: "Catamaran charter", href: "/catamaran-charter-greece" },
   { label: "Power catamaran charter", href: "/power-catamaran-charter-greece" },
   { label: "Sailing catamaran charter", href: "/sailing-catamaran-charter-greece" },
-  { label: "Crewed catamaran charter", href: "/crewed-catamaran-charter-greece" },
+  { label: "Crewed catamaran charter", href: "/crewed-catamaran-charter-cyclades" },
   { label: "Superyacht charter", href: "/superyacht-charter-greece" },
   { label: "Megayacht charter", href: "/mega-yacht-charter-greece" },
   { label: "Gulet charter", href: "/gulet-charter-greece" },

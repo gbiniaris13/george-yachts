@@ -274,7 +274,7 @@ const Footer = () => {
         // 2026-09-17 (GEO sprint): the crewed catamaran pillar had 25 inbound
         // links against 521 for its siblings, and Google served the "best
         // catamarans" guide for "crewed catamaran greece" instead of it.
-        { name: "Crewed Catamaran Charter", href: "/crewed-catamaran-charter-greece" },
+        { name: "Crewed Catamaran Charter", href: "/crewed-catamaran-charter-cyclades" },
         // 2026-08-06 (job 9) — same audit, same finding, bigger page. An
         // inbound-link count across all 474 pages: /catamaran-charter-greece
         // 473, /crewed-yacht-charter-greece 473, both because they sit in this

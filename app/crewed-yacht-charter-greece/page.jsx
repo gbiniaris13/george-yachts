@@ -739,7 +739,7 @@ export default async function CrewedCharterPage() {
           </p>
           <p style={{ ...bodyStyle, marginTop: 20 }}>
             A{" "}
-            <Link href="/crewed-catamaran-charter-greece" style={goldLink}>
+            <Link href="/crewed-catamaran-charter-cyclades" style={goldLink}>
               crewed catamaran charter
             </Link>{" "}
             is where most families and most first-timers belong. Two hulls, no

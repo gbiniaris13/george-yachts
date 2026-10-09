@@ -354,6 +354,9 @@ const nextConfig = {
       // the owner's side) were folded into the survivor before the 301.
       { source: "/how-much-does-a-catamaran-vacation-cost", destination: "/how-much-is-a-catamaran-for-a-week", permanent: true },
       { source: "/top-rated-agencies-crewed-catamaran-charter-aegean", destination: "/best-companies-fully-crewed-catamaran-charters-cyclades", permanent: true },
+      // 2026-10-09 (George): four pages answered "crewed catamaran charter greece" and none
+      // ranked; the yacht-type duplicate folds into the catamaran hub, nothing 404s.
+      { source: "/crewed-catamaran-charter-greece", destination: "/catamaran-charter-greece", permanent: true },
       // 2026-08-21 (section 6) — seven yachts withdrawn on George's
       // instruction, every one of them carrying "Skipper available" or its
       // equivalent in her crew field. Their detail URLs 301 to the fleet
