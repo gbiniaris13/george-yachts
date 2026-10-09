@@ -44,6 +44,14 @@ export const metadata = {
 // Charter Index and the site's VAT, APA and gratuity pages already
 // document. No flat 13%, no flag switch, no invented medians.
 const FAQ = [
+  // 2026-10-09 GSC strike. "yacht charter price calculator": 85 impressions,
+  // position 6.9, zero clicks over 28 days, all of them on this page. Seven
+  // questions here explained how the tool works; none answered the thing
+  // being searched for, which is whether such a calculator exists at all.
+  {
+    q: "Is there a yacht charter price calculator for Greece?",
+    a: "This page is one, and it is free. Set the yacht type, the size band, the month, the yacht's certified VAT tier and the APA percentage, and it returns the all-in week: base fee plus VAT plus APA, with delivery when the yacht has to reposition and the customary crew gratuity shown as its own line outside the total. The bands are the real rate cards of the fully crewed yachts this house represents, from EUR 17,000 a week for a 15 metre catamaran, not market averages. It is a planning number; the written quote names the exact certified rate and the owner's own APA before anything is signed.",
+  },
   {
     q: "Where do the calculator's numbers come from?",
     a: "From the Greek Charter Index, our own compilation of the current rate cards of the fully crewed yachts we represent, refreshed quarterly. Each band shows the lowest and highest weekly net base fee that appears on a rate card for that yacht type and size, per yacht, before VAT and APA. Nothing is a market average and nothing is estimated; if a figure is not on a rate card we hold, it is not here.",
