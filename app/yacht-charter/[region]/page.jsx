@@ -76,7 +76,7 @@ const REGION_DATA = {
     metaDescription:
       "Crewed yacht charter in the Saronic Gulf: Hydra, Spetses, Aegina, Poros. The 5-day Greek charter that starts 45 minutes from Athens airport.",
     intro:
-      "The Saronic Gulf (Hydra, Spetses, Aegina, Poros, Agistri) is the closest charter region to Athens, which makes it the smartest choice for short charters (3 to 5 nights) or guests with limited time. From Athens airport you can land at noon and be aboard by 1:30 PM. Hydra has no cars and no high-rises; Spetses keeps the same scale; Aegina serves the best fish in the Saronic.",
+      "The Saronic Gulf (Hydra, Spetses, Aegina, Poros, Agistri) is the closest charter region to Athens, which makes it the smartest choice for the five-night week, the shortest programme this house writes, and for guests with limited time. From Athens airport you can land at noon and be aboard by 1:30 PM. Hydra has no cars and no high-rises; Spetses keeps the same scale; Aegina serves the best fish in the Saronic.",
     queries: [
       "yacht charter Saronic",
       "Hydra yacht charter",
