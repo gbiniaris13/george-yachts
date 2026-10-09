@@ -744,18 +744,18 @@ export default async function CrewedCharterPage() {
             </Link>{" "}
             is where most families and most first-timers belong. Two hulls, no
             heel, the widest deck space per euro, and a captain, chef and
-            hostess aboard from the first day. Weeks begin around €18,000 for
-            the yacht and her crew.
+            hostess aboard from the first day. Weeks begin from EUR 17,000 for
+            the yacht and her crew, about EUR 22,000 all in.
           </p>
           <p style={{ ...bodyStyle, marginTop: 20 }}>
             A{" "}
             <Link href="/motor-yacht-charter-greece" style={goldLink}>
-              crewed motor yacht charter
+              crewed motor yacht charter Greece
             </Link>{" "}
             is the answer when the route crosses island groups, when the
             Meltemi is blowing through July and August, or when the group
-            wants stabilisers and a master suite. Across the seventeen I place
-            personally, a week runs from €17,500 to €235,000, and the step
+            wants stabilisers and a master suite. Across the {FLEET_COMPOSITION.motor} on
+            the list, a week runs from EUR 17,500 to 235,000, and the step
             that moves the price is crew count rather than length: two crew at
             eighteen metres, nine at fifty.
           </p>
