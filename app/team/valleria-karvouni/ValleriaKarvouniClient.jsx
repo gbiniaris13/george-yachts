@@ -1,44 +1,21 @@
 "use client";
 
 import React from "react";
-import Footer from "@/components/Footer";
-import ProfileSection from "@/components/ProfileSection";
-import MemberAboutSection from "@/components/MemberAboutSection";
-import ContactFormSection from "@/components/ContactFormSection";
+import AdvisorProfile from "../AdvisorProfile";
 
-const georgeParagraphs = [
-  "With an accounting background and strong organisational discipline, Valleria is an independent advisor to George Yachts on charter logistics and documentation.",
-  "From documentation to guest logistics, she brings precision, calm, and quiet strength - the kind of order luxury requires.",
-];
-
-const ValleriaKarvouniClient = () => {
+export default function ValleriaKarvouniClient() {
   return (
-    <div className="min-h-screen font-sans">
-      <ProfileSection
-        heading="Valleria Karvouni"
-        subtitle="Advisor"
-        paragraph="Advisor, Charter Logistics"
-        imageUrl="/images/valeria.jpg"
-        altText="Portrait of Valleria Karvouni"
-        instagramUrl="https://instagram.com/valeria_karv"
-        bgColor="bg-black"
-        textColor="text-white"
-        accentColor="text-[#DAA110]"
-      />
-      <MemberAboutSection
-        name="VALLERIA"
-        paragraphs={georgeParagraphs}
-        ctaText="Valleria Karvouni"
-        ctaUrl="/contact"
-        instagramUrl="https://instagram.com/valeria_karv"
-        bgColor="bg-white"
-        headingColor="text-black"
-        textColor="text-[#9CA3AF]"
-      />
-            <ContactFormSection />
-      <Footer />
-    </div>
+    <AdvisorProfile
+      name="Valleria Karvouni"
+      eyebrow="Independent advisor to George Yachts"
+      role="Charter logistics and documentation"
+      imageUrl="/images/valeria.jpg"
+      imageAlt="Portrait of Valleria Karvouni"
+      paragraphs={[
+        "With an accounting background and strong organisational discipline, Valleria is an independent advisor to George Yachts on charter logistics and documentation.",
+        "From documentation to guest logistics, she brings precision, calm, and quiet strength, the kind of order luxury requires.",
+      ]}
+      instagramUrl="https://instagram.com/valeria_karv"
+    />
   );
-};
-
-export default ValleriaKarvouniClient;
+}

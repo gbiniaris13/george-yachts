@@ -1,56 +1,25 @@
 "use client";
 
 import React from "react";
-import Footer from "@/components/Footer";
-import ProfileSection from "@/components/ProfileSection";
-import MemberAboutSection from "@/components/MemberAboutSection";
-import ContactFormSection from "@/components/ContactFormSection";
+import AdvisorProfile from "../AdvisorProfile";
 
-// Mock data for the paragraphs
-const georgeParagraphs = [
-  "Managing Broker of George Yachts and member of the International Yacht Brokers Association (IYBA), George specializes in high-end motor yacht charters across the Mediterranean.",
-  "With an extensive background in luxury hospitality, leadership, and client relations, he approaches every charter with discretion, precision, and a deep understanding of UHNWI expectations.",
-  "Strategically focused on the East Med-including the Ionian, Cyclades, and Saronic islands-George is trusted by international families and private brokers from the U.S., U.K., and Middle East. He bridges local expertise with international operational standards to deliver seamless maritime experiences.",
-  "“Smooth seas & sharp suits.”",
-];
-
-// Renamed to 'GeorgeBiniarisClient'
-const GeorgeBiniarisClient = () => {
+export default function GeorgeBiniarisClient() {
   return (
-    <div className="min-h-screen font-sans">
-      {/* 1. The Split-Screen Profile Section (from before) */}
-      <ProfileSection
-        heading="George P. Biniaris"
-        subtitle="Managing Broker"
-        imageUrl="/images/george-syros-quay.jpg"
-        altText="Portrait of George Biniaris"
-        instagramUrl="https://instagram.com/george_p.biniaris"
-        bgColor="bg-black"
-        textColor="text-white"
-        accentColor="text-[#DAA110]"
-      />
-
-      {/* 2. The New Detailed "About" Section */}
-      <MemberAboutSection
-        name="GEORGE"
-        paragraphs={georgeParagraphs}
-        ctaText="Contact George"
-        ctaUrl="/contact"
-        // Socials are passed here again for the bottom section
-        instagramUrl="https://instagram.com/george_p.biniaris"
-        // linkedinUrl="https://linkedin.com/in/..."
-        bgColor="bg-white"
-        headingColor="text-black"
-        textColor="text-[#9CA3AF]"
-      />
-
-      {/* 3. The Contact Form */}
-      <ContactFormSection />
-
-      {/* 4. The Footer */}
-      <Footer />
-    </div>
+    <AdvisorProfile
+      name="George P. Biniaris"
+      eyebrow="Managing Broker, George Yachts"
+      role="Weekly, fully crewed yacht charters in Greek waters"
+      imageUrl="/images/george-syros-quay.jpg"
+      imageAlt="George P. Biniaris on the quay in Syros"
+      paragraphs={[
+        "Managing Broker of George Yachts, an IYBA Charter Active Member, George arranges weekly, fully crewed yacht charters in Greek waters: the Cyclades, the Ionian and the Saronic.",
+        "With a background in luxury hospitality, leadership and client relations, he approaches every charter with discretion, precision and an understanding of what private clients expect.",
+        "Families and private brokers from the U.S., the U.K. and the Middle East work with him directly, from the first call to the last day on board.",
+        { quote: "\u201cSmooth seas and sharp suits.\u201d" },
+      ]}
+      extraLinks={[{ href: "/about/george-p-biniaris", label: "Full biography" }]}
+      instagramUrl="https://instagram.com/george_p.biniaris"
+      closeText="Tell George who is coming, how many and when, and he will answer personally."
+    />
   );
-};
-
-export default GeorgeBiniarisClient;
+}

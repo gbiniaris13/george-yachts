@@ -1,43 +1,20 @@
 "use client";
 
 import React from "react";
-import Footer from "@/components/Footer";
-import ProfileSection from "@/components/ProfileSection";
-import MemberAboutSection from "@/components/MemberAboutSection";
-import ContactFormSection from "@/components/ContactFormSection";
+import AdvisorProfile from "../AdvisorProfile";
 
-// Mock data for the paragraphs
-const georgeParagraphs = [
-  "Former Olympic Airways captain with decades of aviation precision.",
-  "Captain Kourmoulakis is an independent advisor to George Yachts on private aviation, from jet coordination to the timing between the airport and the yacht.",
-];
-
-const ManosKourmoulakisClient = () => {
+export default function ManosKourmoulakisClient() {
   return (
-    <div className="min-h-screen font-sans">
-      <ProfileSection
-        heading="Cpt. Emmanouil 'Manos' Kourmoulakis"
-        subtitle="Advisor"
-        paragraph="Advisor, Aviation & Private Travel"
-        imageUrl="/images/manos-new.jpg"
-        altText="Portrait of Manos Kourmoulakis"
-        bgColor="bg-black"
-        textColor="text-white"
-        accentColor="text-[#DAA110]"
-      />
-      <MemberAboutSection
-        name="MANOS"
-        paragraphs={georgeParagraphs}
-        ctaText="Manos Kourmoulakis"
-        ctaUrl="/contact"
-        bgColor="bg-white"
-        headingColor="text-black"
-        textColor="text-[#9CA3AF]"
-      />
-      <ContactFormSection />
-      <Footer />
-    </div>
+    <AdvisorProfile
+      name={"Cpt. Emmanouil \u201cManos\u201d Kourmoulakis"}
+      eyebrow="Independent advisor to George Yachts"
+      role="Aviation and private travel"
+      imageUrl="/images/manos-new.jpg"
+      imageAlt="Portrait of Captain Manos Kourmoulakis"
+      paragraphs={[
+        "Former Olympic Airways captain with decades of aviation precision.",
+        "Captain Kourmoulakis is an independent advisor to George Yachts on private aviation, from jet coordination to the timing between the airport and the yacht.",
+      ]}
+    />
   );
-};
-
-export default ManosKourmoulakisClient;
+}

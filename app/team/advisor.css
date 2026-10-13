@@ -1,0 +1,38 @@
+/* 13/10/2026: one profile layout for the Managing Broker and every advisor,
+   in the site's own language: navy ground, light editorial serif, gold
+   hairlines, a portrait in a thin gold frame. Replaces the old Tailwind
+   ProfileSection + MemberAboutSection pair (bold uppercase, grey text). */
+.adv { background: var(--gy-navy, #0D1B2A); color: var(--gy-ivory, #F8F5F0); }
+.adv-hero { padding: 168px 24px 88px; border-bottom: 1px solid rgba(218,161,16,0.15); }
+.adv-hero__grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: minmax(0,1.5fr) minmax(0,1fr); gap: 64px; align-items: center; }
+.adv-eyebrow { font-family: var(--gy-font-ui); font-size: 10px; font-weight: 600; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gy-gold, #DAA110); margin: 0 0 22px; }
+.adv-name { font-family: var(--gy-font-editorial); font-size: clamp(44px, 6.4vw, 84px); font-weight: 300; line-height: 1; letter-spacing: -0.015em; margin: 0 0 26px; text-wrap: balance; }
+.adv-rule { display: block; width: 64px; height: 1px; background: rgba(218,161,16,0.6); margin: 0 0 24px; }
+.adv-role { font-family: var(--gy-font-editorial); font-size: clamp(19px, 2.1vw, 24px); font-weight: 300; font-style: italic; color: rgba(248,245,240,0.86); line-height: 1.5; margin: 0; max-width: 34ch; hyphens: manual; -webkit-hyphens: manual; }
+.adv-portrait { aspect-ratio: 4 / 5; overflow: hidden; border: 1px solid rgba(218,161,16,0.32); background: var(--gy-card, #142233); }
+.adv-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; display: block; }
+.adv-body { padding: 88px 24px 96px; }
+.adv-body__inner { max-width: 680px; margin: 0 auto; }
+.adv-body__label { font-family: var(--gy-font-ui); font-size: 10px; font-weight: 600; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gy-gold, #DAA110); margin: 0 0 28px; }
+.adv-body p.adv-para { font-family: var(--gy-font-editorial); font-size: clamp(19px, 1.7vw, 22px); font-weight: 300; line-height: 1.7; color: rgba(248,245,240,0.88); margin: 0 0 26px; hyphens: manual; -webkit-hyphens: manual; }
+.adv-body p.adv-quote { font-style: italic; color: var(--gy-gold-light, #F7DE8A); }
+.adv-body a.adv-inline { color: var(--gy-gold, #DAA110); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.adv-body a.adv-inline:hover, .adv-body a.adv-inline:focus-visible { color: var(--gy-gold-light, #F7DE8A); }
+.adv-meta { display: flex; flex-wrap: wrap; gap: 28px; align-items: center; margin-top: 44px; padding-top: 28px; border-top: 1px solid rgba(218,161,16,0.15); }
+.adv-meta a { font-family: var(--gy-font-ui); font-size: 11px; font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(248,245,240,0.78); text-decoration: none; }
+.adv-meta a:hover, .adv-meta a:focus-visible { color: var(--gy-gold, #DAA110); }
+.adv-close { padding: 0 24px 112px; }
+.adv-close__inner { max-width: 680px; margin: 0 auto; border: 1px solid rgba(218,161,16,0.22); padding: 44px 40px; text-align: center; }
+.adv-close__title { font-family: var(--gy-font-editorial); font-size: clamp(24px, 2.6vw, 30px); font-weight: 300; margin: 0 0 12px; }
+.adv-close__text { font-family: var(--gy-font-ui); font-size: 15px; line-height: 1.7; color: rgba(248,245,240,0.72); margin: 0 0 28px; }
+.adv-close__btn { display: inline-block; font-family: var(--gy-font-ui); font-size: 11px; font-weight: 600; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gy-navy, #0D1B2A); background: var(--gy-gold, #DAA110); padding: 16px 30px; text-decoration: none; transition: background .25s ease; }
+.adv-close__btn:hover, .adv-close__btn:focus-visible { background: var(--gy-gold-light, #F7DE8A); }
+@media (max-width: 820px) {
+  .adv-hero { padding: 132px 16px 56px; }
+  .adv-hero__grid { grid-template-columns: 1fr; gap: 40px; }
+  .adv-portrait { max-width: 420px; }
+  .adv-body { padding: 64px 16px 72px; }
+  .adv-close { padding: 0 16px 88px; }
+  .adv-close__inner { padding: 36px 22px; }
+}
+@media (prefers-reduced-motion: reduce) { .adv-close__btn { transition: none; } }
