@@ -9,9 +9,9 @@ import { pageMeta } from "@/lib/pageMeta";
 import PageBreadcrumb from "@/app/components/PageBreadcrumb";
 // 2026-05-14 — title trimmed from 67→48 chars (Ahrefs flag).
 export const metadata = pageMeta({
-  title: "Our Core Team and Advisory Network",
+  title: "The Managing Broker and Advisors",
   description:
-    "Meet the brokers, luxury travel liaisons, and maritime advisors behind George Yachts Brokerage House - boutique yacht brokerage based in Athens.",
+    "George P. Biniaris, Managing Broker of George Yachts, and the independent advisors he calls on for U.S. travel, aviation, logistics, finance and insurance.",
   path: "/team",
 });
 
@@ -24,7 +24,7 @@ export default function TeamPage() {
       <section className="team-hero">
         <Image
           src="https://cdn.sanity.io/images/ecqr94ey/production/bf9877a87748ca45db2d4d2462db5cb7439fe406-1024x768.jpg?w=1920&h=900&fit=crop&auto=format&q=85"
-          alt="George Yachts Core Team - luxury yacht brokerage Athens Greece"
+          alt="George Yachts, the Managing Broker and advisors, Athens"
           fill
           priority
           className="team-hero__bg"
@@ -33,9 +33,9 @@ export default function TeamPage() {
         <div className="team-hero__gradient" />
         <div className="team-hero__content">
           <p className="team-hero__eyebrow">Bespoke Service, Managed with Precision</p>
-          <h1 className="team-hero__title">Our Core Team</h1>
+          <h1 className="team-hero__title">The Managing Broker</h1>
           <div className="team-hero__line" />
-          <p className="team-hero__subtitle">&amp; Advisory Network</p>
+          <p className="team-hero__subtitle">&amp; Advisors</p>
         </div>
       </section>
 

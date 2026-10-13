@@ -60,14 +60,14 @@ const teamMembers = [
   },
   {
     name: "George Katrantzos",
-    title: "Luxury Travel Liaison & Strategic Associate (U.S.)",
+    title: "Advisor, U.S. Luxury Travel",
     imageUrl: "/images/george-katrantzos.jpg",
     instagram: "helllo.gk",
     profileUrl: "/team/george-katrantzos",
   },
   {
     name: "Elleanna Karvouni",
-    title: "Head of Business Operations & Finance",
+    title: "Advisor, Business Operations & Finance",
     imageUrl: "/images/elleanna.jpg",
     instagram: "eleanna_karvoun",
     email: "eleanna@georgeyachts.com",
@@ -75,21 +75,21 @@ const teamMembers = [
   },
   {
     name: "Chris Daskalopoulos",
-    title: "Marine Insurance & ISO Maritime Compliance Advisor",
+    title: "Independent Advisor, Marine Insurance & ISO",
     imageUrl: "/images/chris.jpg",
     instagram: "dask15",
     profileUrl: "/team/chris-daskalopoulos",
   },
   {
     name: "Valleria Karvouni",
-    title: "Administrative & Charter Logistics Coordinator",
+    title: "Advisor, Charter Logistics",
     imageUrl: "/images/valeria.jpg",
     instagram: "valeria_karv",
     profileUrl: "/team/valleria-karvouni",
   },
   {
     name: 'Captain Emmanouil "Manos" Kourmoulakis',
-    title: "Aviation & Private Travel Advisor",
+    title: "Advisor, Aviation & Private Travel",
     imageUrl: "/images/manos-new.jpg",
     instagram: "",
     profileUrl: "/team/manos-kourmoulakis",
@@ -120,7 +120,7 @@ function TeamCard({ member, index }) {
         <div className="team-card__image-wrap">
           <Image
             src={member.imageUrl}
-            alt={`${member.name} - ${member.title} at George Yachts`}
+            alt={`${member.name}, ${member.title}, George Yachts`}
             fill
             className="team-card__img"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -204,15 +204,16 @@ export default function TeamContent() {
       {/* ═══════ INTRO ═══════ */}
       <section className="team-intro">
         <RevealSection className="team-intro__inner">
-          <p className="team-intro__eyebrow">Yacht Management &middot; Yacht Sales &middot; Yacht Charter</p>
+          <p className="team-intro__eyebrow">Crewed Yacht Charter Brokerage &middot; Greek Waters</p>
           <h2 className="team-intro__title">
-            Meet the People<br />Behind Your Voyage
+            One Broker,<br />A Circle of Advisors
           </h2>
           <div className="team-intro__line" />
           <p className="team-intro__text">
-            Every member of our team shares one commitment - delivering an
-            experience that exceeds expectations. No call centers. No automated
-            responses. Real people, real expertise, real relationships.
+            You work with George directly, from the first call to the last day
+            on board. Around him sits a small circle of independent advisors he
+            calls on for U.S. travel, aviation, logistics, finance and insurance
+            questions. No call centres, no automated replies.
           </p>
         </RevealSection>
       </section>
@@ -236,7 +237,7 @@ export default function TeamContent() {
             { title: "Discretion", desc: "Your privacy is paramount. Every interaction is handled with absolute confidentiality." },
             { title: "Transparency", desc: "Clear pricing, MYBA contracts, no hidden fees. You know exactly what you're paying for." },
             { title: "Expertise", desc: "Deep local knowledge of every cove, every captain, and every sunset in Greek waters." },
-            { title: "Personal Touch", desc: "You work directly with our team. One point of contact from first call to disembarkation." },
+            { title: "Personal Touch", desc: "You work directly with George. One point of contact from first call to disembarkation." },
           ].map((value, i) => (
             <RevealSection key={i} className="team-values__card" delay={i * 0.1}>
               <h3 className="team-values__card-title">{value.title}</h3>

@@ -9,7 +9,7 @@ import ContactFormSection from "@/components/ContactFormSection"; // Kept Contac
 // Mock data for the paragraphs
 const georgeParagraphs = [
   "Senior HR and finance executive with deep expertise in corporate coordination, documentation, and client accounting.",
-  "Elleanna structures the financial backbone of George Yachts, ensuring every transaction, contract, and agreement meets the highest standards of clarity, discretion, and trust.",
+  "Elleanna is an independent advisor to George Yachts on business operations and finance, with an eye for clarity and discretion in every contract and payment schedule.",
 ];
 
 const ElleanaKarvouniClient = () => {
@@ -17,8 +17,8 @@ const ElleanaKarvouniClient = () => {
     <div className="min-h-screen font-sans">
       <ProfileSection
         heading="Elleana Karvouni"
-        subtitle="Operations & Finance"
-        paragraph="Head of Business Operations & Finance"
+        subtitle="Advisor"
+        paragraph="Advisor, Business Operations & Finance"
         imageUrl="/images/elleanna.jpg" // Update with the correct profile image path
         altText="Portrait of Elleana Karvouni"
         instagramUrl="https://instagram.com/eleanna_karvoun"

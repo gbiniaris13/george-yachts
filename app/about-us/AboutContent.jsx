@@ -23,31 +23,31 @@ const CORE_TEAM = [
   },
   {
     name: "George Katrantzos",
-    title: "Luxury Travel Liaison & Strategic Associate (U.S.)",
+    title: "Advisor, U.S. Luxury Travel",
     imageUrl: "/images/george-katrantzos.jpg",
     profileUrl: "/team/george-katrantzos",
   },
   {
     name: "Elleanna Karvouni",
-    title: "Head of Business Operations & Finance",
+    title: "Advisor, Business Operations & Finance",
     imageUrl: "/images/elleanna.jpg",
     profileUrl: "/team/elleana-karvouni",
   },
   {
     name: "Chris Daskalopoulos",
-    title: "Marine Insurance & ISO Maritime Compliance Advisor",
+    title: "Independent Advisor, Marine Insurance & ISO",
     imageUrl: "/images/chris.jpg",
     profileUrl: "/team/chris-daskalopoulos",
   },
   {
     name: "Valleria Karvouni",
-    title: "Administrative & Charter Logistics Coordinator",
+    title: "Advisor, Charter Logistics",
     imageUrl: "/images/valeria.jpg",
     profileUrl: "/team/valleria-karvouni",
   },
   {
     name: 'Captain Emmanouil "Manos" Kourmoulakis',
-    title: "Aviation & Private Travel Advisor",
+    title: "Advisor, Aviation & Private Travel",
     imageUrl: "/images/manos-new.jpg",
     profileUrl: "/team/manos-kourmoulakis",
   },
@@ -164,8 +164,8 @@ export default function AboutContent() {
             booking, you are a relationship.
           </p>
           <p className="about-philosophy__text">
-            Our clients describe it simply: <em>our guy in Greece</em>. A team
-            that came from the water and from five-star floors, a fleet where
+            Our clients describe it simply: <em>our guy in Greece</em>. A broker
+            who came from the water and from five-star floors, advisors he trusts, a fleet where
             every yacht has been personally vetted, and every request answered
             by the Managing Broker himself, through the full MYBA charter
             cycle, from the first proposal to the captain&apos;s briefing.
@@ -419,7 +419,7 @@ export default function AboutContent() {
                 marginBottom: "20px",
               }}
             >
-              Our Core Team
+              The Broker &amp; Advisors
             </p>
             <h2
               style={{
@@ -432,7 +432,7 @@ export default function AboutContent() {
                 margin: "0 0 24px",
               }}
             >
-              The people behind every charter
+              One broker, a circle of advisors
             </h2>
             <span
               aria-hidden="true"
@@ -579,7 +579,7 @@ export default function AboutContent() {
                 paddingBottom: "2px",
               }}
             >
-              Meet the full team &rarr;
+              Meet the broker and advisors &rarr;
             </Link>
           </p>
         </RevealSection>

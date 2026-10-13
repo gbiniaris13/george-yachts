@@ -5,9 +5,9 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { pageMeta } from "@/lib/pageMeta";
 
 export const metadata = pageMeta({
-  title: "Valleria Karvouni - Charter Logistics",
+  title: "Valleria Karvouni - Logistics Advisor",
   description:
-    "Valleria Karvouni, Administrative and Charter Logistics Coordinator at George Yachts, supporting our administrative core with precision.",
+    "Valleria Karvouni, independent advisor to George Yachts on charter logistics and documentation.",
   path: "/team/valleria-karvouni",
   type: "profile",
 });

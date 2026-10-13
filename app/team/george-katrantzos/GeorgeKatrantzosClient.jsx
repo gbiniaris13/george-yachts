@@ -9,7 +9,7 @@ import ContactFormSection from "@/components/ContactFormSection";
 // Mock data for the paragraphs
 const georgeParagraphs = [
   "Born and raised in Athens, Greece, GK developed an early passion for Mediterranean culture and hospitality. He attended the American Community Schools of Athens before relocating to New York in 2004 to pursue his studies in Hospitality Management at the New York City College of Technology.",
-  "Now based in New York, GK acts as a Strategic Associate for George Yachts, bridging the elegance of Greek luxury with the sophistication of the U.S. market. With over two decades of experience in hospitality and travel, GK provides high-level consulting and referral services, fostering connections between North American luxury travel advisors and bespoke yachting experiences in the Mediterranean. His role focuses on international networking and brand communication, ensuring a seamless link between U.S. client expectations and world-class Greek hospitality.",
+  "Now based in New York, GK is an independent advisor to George Yachts on the U.S. luxury travel market. With over two decades in hospitality and travel, he connects North American luxury travel advisors with the house and advises on what American clients expect from a week in Greek waters.",
 ];
 
 // Renamed to 'GeorgeKatrantzosClient'
@@ -18,8 +18,8 @@ const GeorgeKatrantzosClient = () => {
     <div className="min-h-screen font-sans">
       <ProfileSection
         heading="George Katrantzos"
-        subtitle="U.S. partner"
-        paragraph="Luxury Travel Liaison & Strategic Associate (U.S.)"
+        subtitle="U.S. Advisor"
+        paragraph="Advisor, U.S. Luxury Travel"
         imageUrl="/images/george-katrantzos.jpg"
         altText="Portrait of George Katrantzos"
         instagramUrl="https://instagram.com/helllo.gk"

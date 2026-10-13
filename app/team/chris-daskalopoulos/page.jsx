@@ -6,9 +6,9 @@ import { pageMeta } from "@/lib/pageMeta";
 
 // 2026-05-14 — title trimmed 73→55 chars.
 export const metadata = pageMeta({
-  title: "Chris Daskalopoulos - ISO & Insurance",
+  title: "Chris Daskalopoulos - Insurance & ISO Advisor",
   description:
-    "Meet Chris Daskalopoulos, Marine Insurance & ISO Maritime Compliance Advisor for George Yachts, ensuring safety protocols and international best practices.",
+    "Chris Daskalopoulos of Wattrate, independent advisor to George Yachts on marine insurance and ISO-based compliance questions.",
   path: "/team/chris-daskalopoulos",
   type: "profile",
 });

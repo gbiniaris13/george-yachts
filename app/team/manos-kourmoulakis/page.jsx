@@ -7,7 +7,7 @@ import { pageMeta } from "@/lib/pageMeta";
 export const metadata = pageMeta({
   title: "Cpt. Manos Kourmoulakis - Aviation Advisor",
   description:
-    "Cpt. Manos Kourmoulakis, Aviation and Private Travel Advisor for George Yachts. A former Olympic Airways captain advising on jet coordination.",
+    "Cpt. Manos Kourmoulakis, independent advisor to George Yachts on aviation and private travel, a former Olympic Airways captain.",
   path: "/team/manos-kourmoulakis",
   type: "profile",
 });

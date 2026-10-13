@@ -9,7 +9,7 @@ import ContactFormSection from "@/components/ContactFormSection";
 // Mock data for the paragraphs
 const georgeParagraphs = [
   "Former Olympic Airways captain with decades of aviation precision.",
-  "Captain Kourmoulakis advises on private travel partnerships, jet coordination, and high-profile client logistics - allowing our guests to experience seamless movement from sky to sea.",
+  "Captain Kourmoulakis is an independent advisor to George Yachts on private aviation, from jet coordination to the timing between the airport and the yacht.",
 ];
 
 const ManosKourmoulakisClient = () => {
@@ -17,8 +17,8 @@ const ManosKourmoulakisClient = () => {
     <div className="min-h-screen font-sans">
       <ProfileSection
         heading="Cpt. Emmanouil 'Manos' Kourmoulakis"
-        subtitle="Aviation"
-        paragraph="Aviation & Private Travel Advisor"
+        subtitle="Advisor"
+        paragraph="Advisor, Aviation & Private Travel"
         imageUrl="/images/manos-new.jpg"
         altText="Portrait of Manos Kourmoulakis"
         bgColor="bg-black"

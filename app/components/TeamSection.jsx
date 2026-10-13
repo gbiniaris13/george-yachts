@@ -19,21 +19,21 @@ const teamMembers = [
   },
   {
     name: "George Katrantzos",
-    title: "Luxury Travel Liaison & Strategic Associate (U.S.)",
+    title: "Advisor, U.S. Luxury Travel",
     imageUrl: "/images/george-katrantzos.jpg",
     instagram: "helllo.gk",
     profileUrl: "/team/george-katrantzos", // No link
   },
   {
     name: "Elleanna Karvouni",
-    title: "Head of Business Operations & Finance",
+    title: "Advisor, Business Operations & Finance",
     imageUrl: "/images/elleanna.jpg",
     instagram: "eleanna_karvoun",
     profileUrl: "/team/elleana-karvouni", // No link
   },
   {
     name: "Chris Daskalopoulos",
-    title: "Marine Insurance & ISO Maritime Compliance Advisor",
+    title: "Independent Advisor, Marine Insurance & ISO",
     imageUrl: "/images/chris.jpg",
     instagram: "dask15",
     profileUrl: "/team/chris-daskalopoulos", // No link
@@ -41,14 +41,14 @@ const teamMembers = [
 
   {
     name: "Valleria Karvouni",
-    title: "Administrative & Charter Logistics Coordinator",
+    title: "Advisor, Charter Logistics",
     imageUrl: "/images/valeria.jpg",
     instagram: "valeria_karv",
     profileUrl: "/team/valleria-karvouni", // No link
   },
   {
     name: "Captain Emmanouil “Manos” Kourmoulakis",
-    title: "Aviation & Private Travel Advisor",
+    title: "Advisor, Aviation & Private Travel",
     imageUrl: "/images/manos-new.jpg",
     instagram: "",
     profileUrl: "/team/manos-kourmoulakis", // No link

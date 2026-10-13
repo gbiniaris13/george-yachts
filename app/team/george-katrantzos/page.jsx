@@ -5,9 +5,9 @@ import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
 import { pageMeta } from "@/lib/pageMeta";
 
 export const metadata = pageMeta({
-  title: "George Katrantzos - U.S. Partner",
+  title: "George Katrantzos - U.S. Advisor",
   description:
-    "Meet George Katrantzos, U.S. Partner & Sales Director for George Yachts. Bridging Greek luxury with the sophistication of the U.S. market.",
+    "George Katrantzos, independent advisor to George Yachts on the U.S. luxury travel market, based in New York.",
   path: "/team/george-katrantzos",
   type: "profile",
 });
