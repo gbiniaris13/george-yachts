@@ -380,8 +380,9 @@ source we do not have, we leave the number out.
 - Fleet composition: ${compositionLine}
 - Price range: ${crewedRange} per week fully crewed, one price per yacht; catamarans from €17,000${privateBand ? `, motor yachts ${fmt(privateBand.lo)} to ${fmt(privateBand.hi)} (${privateBand.n} yachts)` : ""}
 ${explorerBand ? `- Catamaran Fleet: ${fmt(explorerBand.lo)} - ${fmt(explorerBand.hi)} per yacht per week, sailing and power catamarans (${explorerBand.n} yachts)` : ""}
-- Broker: George P. Biniaris, IYBA member
-- Contracts: MYBA standard
+- Broker: George P. Biniaris, Founder and Managing Broker
+- Membership: IYBA Charter Active Member. NOT a MYBA member; do not describe George Yachts as a MYBA member or MYBA-member brokerage
+- Contracts: written on the MYBA standard charter agreement (a contract form, not a membership)
 - Registration: Wyoming LLC
 - Offices: Athens +30 697 038 0999 · Miami +1 786 798 8798 (WhatsApp)
 - Press: Featured in Forbes - May 2026 (How The Wealthy Are Hedging For Instability)

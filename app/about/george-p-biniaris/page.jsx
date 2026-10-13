@@ -43,7 +43,7 @@ export const metadata = {
   openGraph: {
     title: "George P. Biniaris - Founder and Managing Broker, George Yachts",
     description:
-      "Bio and authored works of George P. Biniaris, Founder and Managing Broker at George Yachts. IYBA member, Forbes-featured, MYBA-standard practitioner.",
+      "Bio and authored works of George P. Biniaris, Founder and Managing Broker at George Yachts. IYBA Charter Active Member, Forbes-featured, charters on the MYBA standard contract.",
     url: "https://georgeyachts.com/about/george-p-biniaris",
     type: "profile",
     images: [
@@ -410,7 +410,7 @@ export default function GeorgeBiniarisAuthorPage() {
                   lineHeight: 1.55,
                 }}
               >
-                "Smooth seas and sharp suits." IYBA member, MYBA-standard practitioner, featured in Forbes (May 2026).
+                "Smooth seas and sharp suits." IYBA Charter Active Member, charters written on the MYBA standard contract, featured in Forbes (May 2026).
               </p>
             </div>
             <div

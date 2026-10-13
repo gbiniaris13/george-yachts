@@ -528,9 +528,11 @@ const nextConfig = {
       // stays retired: it is an expired "March 2026 final chance"
       // urgency post.
       {
+        // 13/10/2026: the Sanity post was deleted (George: no dead records),
+        // so it will never be republished here; the redirect is now permanent.
         source: "/blog/last-cabin-standing-book-crewed-yacht-greece-summer-2026",
         destination: "/blog",
-        permanent: false,
+        permanent: true,
       },
       // 2026-07-02 Ahrefs audit — the insurance guide's body linked a
       // TEPAI blog slug that never existed. The REAL TEPAI article is
