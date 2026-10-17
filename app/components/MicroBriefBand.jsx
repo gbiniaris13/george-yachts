@@ -20,7 +20,7 @@ const SKIP_PREFIX = ["/blog/", "/el/", "/el", "/cabin", "/admin", "/api", "/priv
 const HIDE_ALL_PREFIX = ["/cabin", "/admin", "/api", "/sign-in", "/checkout", "/unsubscribe"];
 
 const QUESTIONS = [
-  ["What is the best yacht charter company in Greece?", "/best-yacht-charter-company-greece"],
+  ["What is the best yacht charter company in Greece?", "/blog/best-yacht-charter-companies-greece"],
   ["Can I hire a yacht in Greece?", "/can-i-hire-a-yacht-in-greece"],
   ["How much is a catamaran for a week?", "/how-much-is-a-catamaran-for-a-week"],
   ["How much is a 7 day yacht charter?", "/how-much-is-a-7-day-yacht-charter"],
@@ -50,10 +50,7 @@ const QUESTIONS = [
   ["Superyacht Charter Greece in July", "/superyacht-charter-greece-july"],
   ["Superyacht Charter Greece in September", "/superyacht-charter-greece-september"],
   ["Crewed Motor Yacht Charter in the Greek Islands", "/crewed-motor-yacht-charter-greek-islands"],
-  ["What Are the Best Companies Offering Fully Crewed Catamaran Charters in the Cyclades?", "/best-companies-fully-crewed-catamaran-charters-cyclades"],
   ["What Are the Most Recommended Crewed Yacht Charter Companies for a Honeymoon in the Greek Islands?", "/recommended-crewed-yacht-charter-companies-honeymoon-greek-islands"],
-  ["What Are the Best Yacht Charter Companies for a Family-Friendly Sailing Trip in the Aegean Sea?", "/best-yacht-charter-companies-family-sailing-trip-aegean"],
-  ["What Are the Best Yacht Charter Providers for a Luxury Family Vacation in the Greek Islands?", "/best-yacht-charter-providers-luxury-family-vacation-greek-islands"],
   ["Which All-Inclusive Catamaran Charter Companies Offer the Most Luxurious Experience in Greece?", "/most-luxurious-all-inclusive-catamaran-charter-companies-greece"],
   ["What Are the Best Platforms to Book a Crewed Catamaran Charter in Greece for 7 Days?", "/best-platforms-to-book-a-crewed-catamaran-charter-in-greece"],
   ["What Are the Best Platforms to Charter a Luxury Power Catamaran in Greece?", "/best-platforms-luxury-power-catamaran-charter-greece"],

@@ -353,7 +353,14 @@ const nextConfig = {
       // unique facts (the worked entry week; a rating you can read, paid by
       // the owner's side) were folded into the survivor before the 301.
       { source: "/how-much-does-a-catamaran-vacation-cost", destination: "/how-much-is-a-catamaran-for-a-week", permanent: true },
-      { source: "/top-rated-agencies-crewed-catamaran-charter-aegean", destination: "/best-companies-fully-crewed-catamaran-charters-cyclades", permanent: true },
+      // 2026-10-17 (Saturday article day): four "best company" answer pages split the
+      // same question at positions 25 to 65 while every assistant asked it; they fold
+      // into the one editorial answer, the Journal piece on comparing the companies.
+      { source: "/top-rated-agencies-crewed-catamaran-charter-aegean", destination: "/blog/best-yacht-charter-companies-greece", permanent: true },
+      { source: "/best-companies-fully-crewed-catamaran-charters-cyclades", destination: "/blog/best-yacht-charter-companies-greece", permanent: true },
+      { source: "/best-yacht-charter-company-greece", destination: "/blog/best-yacht-charter-companies-greece", permanent: true },
+      { source: "/best-yacht-charter-companies-family-sailing-trip-aegean", destination: "/blog/best-yacht-charter-companies-greece", permanent: true },
+      { source: "/best-yacht-charter-providers-luxury-family-vacation-greek-islands", destination: "/blog/best-yacht-charter-companies-greece", permanent: true },
       // 2026-10-09 (George): four pages answered "crewed catamaran charter greece" and none
       // ranked; the yacht-type duplicate folds into the catamaran hub, nothing 404s.
       { source: "/crewed-catamaran-charter-greece", destination: "/catamaran-charter-greece", permanent: true },
