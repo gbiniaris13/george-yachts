@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { resolveLeadName } from "@/lib/leadName";
 import nodemailer from "nodemailer";
 import axios from "axios";
 import { kvLpush, todayKey } from "@/lib/kv";
@@ -138,7 +139,17 @@ export async function POST(request) {
   // here flagged `micro`. It carries no name by design; the subject says what
   // it is and the page it came from, and everything downstream is unchanged.
   const micro = payload && payload.micro === true;
-  if (micro && payload && !payload.name) payload.name = "Micro brief";
+  // 2026-10-22 (George): no card and no acknowledgment is ever named
+  // "Micro brief" or "Concierge card lead". A missing or placeholder name
+  // is read from the email (enzo.burito@ -> Enzo Burito); only when the
+  // email gives nothing readable does the old label remain for the Helm.
+  let greetAs = payload ? String(payload.name || "").trim() : "";
+  if (payload) {
+    const resolved = resolveLeadName(payload.name, payload.email);
+    if (resolved.name) payload.name = resolved.name;
+    else if (micro && !payload.name) payload.name = "Micro brief";
+    greetAs = resolved.greetAs;
+  }
 
   try {
     // Honeypot: if the hidden "website" field is filled, it's a bot
@@ -278,7 +289,7 @@ export async function POST(request) {
     ].filter(Boolean);
     (async () => {
       const { emailClient } = await import("@/lib/notifyGeorge");
-      await emailClient({ to: email, name, brief: briefLines });
+      await emailClient({ to: email, name: greetAs, brief: briefLines });
     })().catch(() => {});
     await Promise.allSettled([
       notifyTelegram(inquiryData),
