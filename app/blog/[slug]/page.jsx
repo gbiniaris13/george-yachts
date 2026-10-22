@@ -24,6 +24,23 @@ import { getClustersForPost } from "@/lib/journal-clusters";
 import RelatedPages from "@/app/components/seo/RelatedPages";
 import { titleField } from "@/lib/seoTitle";
 
+// The Journal's ten most-seen articles on Google (impressions, 20/9 to 17/10)
+// carry a second three-field brief at the end of the piece. Add a slug when a
+// newer article overtakes one of these; never more than ten or so, the brief
+// is a courtesy to the reader who finished, not a banner.
+const END_BRIEF_SLUGS = new Set([
+  "how-much-does-yacht-charter-greece-cost-complete-breakdown",
+  "12-passenger-rule-greek-yacht-charter-groups-of-14",
+  "greek-yacht-charter-insurance-complete-guide-2026",
+  "honeymoon-yacht-charter-greece-2026-romantic-itinerary",
+  "what-to-pack-greek-yacht-charter-dress-code-2026",
+  "greece-vs-croatia-yacht-charter-2026",
+  "yacht-charter-corfu-cost",
+  "yacht-charter-vs-5-star-hotel-greece-family-2026",
+  "mykonos-to-santorini-by-yacht",
+  "is-greek-yacht-charter-right-for-us-seasickness-safety-2026",
+]);
+
 // Non-CDN client for real-time content fetching.
 // withRetry — see lib/sanity.js: rides out transient CDN connect-timeouts
 // at build time so one blip can't abort the whole deploy.
@@ -627,6 +644,22 @@ const ArticlePage = async ({ params }) => {
           <article className="editorial-content [&_p]:mb-10 [&_p]:leading-[2] [&_p]:text-white/60 [&_p]:text-[1.05rem] [&_p:first-of-type]:text-white/80 [&_p:first-of-type]:text-[1.15rem] [&_p:first-of-type]:leading-[1.85]">
             <PortableText value={enhancedBody} components={RichTextComponents} />
           </article>
+
+          {/* 2026-10-22 (George, after the Monday 19/10 measurement held: 12
+              requests in 14 days against 8): the ten articles that carry most
+              of the Journal's Google traffic get a second brief at the END,
+              for the reader who finished the piece. Same three fields, same
+              Helm card; the heading tells them they have already read the
+              numbers. Slugs chosen from Search Console impressions, 20/9 to
+              17/10; the cost breakdown alone is 4,683 of them. */}
+          {END_BRIEF_SLUGS.has(slug) && (
+            <MicroBrief
+              variant="inline"
+              context={`journal end: ${post.title}`}
+              heading="You have read the numbers. Now three real yachts."
+              lead="Tell me the month and the party, and I will send you three yachts that fit, each with her base, APA and VAT on one page, usually within the day."
+            />
+          )}
 
           {/* End-of-article marker */}
           <div className="mt-20 pt-16 border-t border-white/[0.04] flex flex-col items-center space-y-5">
