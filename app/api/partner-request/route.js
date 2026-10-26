@@ -98,7 +98,7 @@ export async function POST(request) {
     await transporter.sendMail({
       from: `"George Yachts" <${GMAIL_USER}>`,
       to: email,
-      subject: "George Yachts, Partnership Programme 2026",
+      subject: "George Yachts, The Partnership Edition 2026-2027",
       html: `
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #0D1B2A;">
           <div style="text-align: center; padding: 40px 20px; background: #0D1B2A;">
@@ -115,9 +115,9 @@ export async function POST(request) {
               Thank you for your interest in partnering with George Yachts.
             </p>
             <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
-              Please find attached our <strong>Partnership Programme for 2026</strong>,
-              which includes the fleet overview, commission structure, and how we work
-              with travel professionals.
+              Please find attached <strong>The Partnership Edition</strong>, our partner
+              programme for the 2026 and 2027 seasons: the fleet, the commission structure
+              and how we work with travel professionals.
             </p>
             <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
               We remain invisible to your clients, you stay the hero.
@@ -141,20 +141,20 @@ export async function POST(request) {
             <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
               Looking forward to collaborating,<br>
               <strong>George P. Biniaris</strong><br>
-              <span style="font-size: 13px; color: #9CA3AF;">Managing Broker · IYBA Member</span>
+              <span style="font-size: 13px; color: #9CA3AF;">Founder and Managing Broker · IYBA Charter Active Member</span>
             </p>
           </div>
 
           <div style="text-align: center; padding: 20px; background: #0D1B2A;">
             <p style="font-size: 10px; letter-spacing: 0.2em; color: rgba(248, 245, 240,0.35); margin: 0;">
-              GEORGE YACHTS BROKERAGE HOUSE LLC · US REGISTERED · IYBA MEMBER
+              GEORGE YACHTS BROKERAGE HOUSE LLC · US REGISTERED · IYBA CHARTER ACTIVE MEMBER
             </p>
           </div>
         </div>
       `,
       attachments: [
         {
-          filename: "George_Yachts_Partnership_Programme_2026.pdf",
+          filename: "George_Yachts_Partnership_Edition_2026-2027.pdf",
           content: pdfBuffer,
           contentType: "application/pdf",
         },
