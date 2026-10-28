@@ -45,6 +45,26 @@ function contextLines(ctx) {
   if (typeof ctx.arrived_from === "string" && ctx.arrived_from && !ctx.arrived_from.includes("georgeyachts.com")) {
     lines.push(`Arrived from: ${ctx.arrived_from.slice(0, 120)}`);
   }
+  // 2026-10-28: where the visit began and which tags it carried, so a
+  // request keeps its source even when the referrer is lost (ChatGPT sent
+  // untagged clicks 8 to 15 October). Read-only on what the browser sent.
+  if (typeof ctx.landing_page === "string" && ctx.landing_page.startsWith("/")) {
+    lines.push(`Landed on: ${ctx.landing_page.slice(0, 120)}`);
+  }
+  if (typeof ctx.submitted_on === "string" && ctx.submitted_on.startsWith("/")) {
+    lines.push(`Sent from: ${ctx.submitted_on.slice(0, 120)}`);
+  }
+  if (ctx.attribution && typeof ctx.attribution === "object") {
+    const a = ctx.attribution;
+    const bits = [];
+    for (const k of ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "ref"]) {
+      if (typeof a[k] === "string" && a[k]) bits.push(`${k}=${a[k].slice(0, 60)}`);
+    }
+    for (const k of ["gclid", "fbclid", "msclkid", "li_fat_id"]) {
+      if (typeof a[k] === "string" && a[k]) bits.push(`${k}: yes`);
+    }
+    if (bits.length) lines.push(`Source tags: ${bits.join(", ")}`);
+  }
   return lines;
 }
 

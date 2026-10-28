@@ -275,19 +275,8 @@ export const metadata = {
   authors: [{ name: "George P. Biniaris", url: "https://georgeyachts.com" }],
   // 2026-10-07 (George): no generator tag. The framework is not the
   // reader's business and the fingerprinting tools read this line first.
-  keywords: [
-    "yacht charter greece",
-    "luxury yacht charter",
-    "crewed yacht charter",
-    "cyclades yacht charter",
-    "ionian yacht charter",
-    "saronic yacht charter",
-    "greek islands yacht",
-    "MYBA charter",
-    "catamaran charter greece",
-    "motor yacht charter greece",
-    "sailing yacht charter greece",
-  ],
+  // 2026-10-28: the keywords list is gone. Google has ignored the tag since
+  // 2009 and it only told scrapers which terms we chase.
   // Phase 27 (Forbes-launch eve, 2026-05-05) — Boss replaced the
   // bookmark logo with a Cinzel-style gold "G" matching the AskGeorge
   // widget identity ("multi-trillion level, αρμόζει στην ταυτότητά
@@ -532,12 +521,10 @@ export default async function RootLayout({ children }) {
         <meta name="ICBM" content="38.0876, 23.8084" />
         <meta name="distribution" content="global" />
         <meta name="rating" content="general" />
-        <meta name="revisit-after" content="3 days" />
         <meta name="coverage" content="Worldwide - service area Greek waters" />
-        <meta name="target" content="UHNW yacht charter clients globally" />
-        {/* AI-search hints (non-standard but parsed by some AI crawlers) */}
-        <meta name="ai-content-declaration" content="human-authored" />
-        <meta name="ai-search-priority" content="yacht-charter-greece, luxury-yacht-charter-greek-islands, crewed-yacht-charter-cyclades, motor-yacht-charter-mykonos, sailing-yacht-charter-ionian, superyacht-charter-greece" />
+        {/* 2026-10-28: "target UHNW", revisit-after, keywords and the two
+            ai-* hints removed. No engine reads them, and the first one said
+            something about our guests that the house does not say. */}
         {/* 2026-06-25, Cookiebot REMOVED (paid dependency beyond its
             50-page free tier; George: "no subscriptions"). Replaced by a
             free, self-hosted consent system: <CookieConsent /> banner +

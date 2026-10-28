@@ -74,3 +74,9 @@ scripts/OUTREACH-SETUP.md
 scripts/outreach-automation*.gs
 .claude/
 ffmpeg2pass-*.log*
+
+# 2026-10-28: the October audit (read-only exports: saved HTML, GSC/GA4 CSVs,
+# Helm data). Never committed, and kept out of Tailwind's automatic source
+# scan: three saved pages carried HTML-escaped class names such as
+# bg-[url(&#x27;/noise.svg&#x27;)] and the local build failed on them.
+docs/audit-2026-10/

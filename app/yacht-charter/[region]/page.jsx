@@ -22,6 +22,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { sanityClient } from "@/lib/sanity";
 import BreadcrumbSchema from "@/app/components/BreadcrumbSchema";
+import { CAT_FROM, MOTOR_FROM, BASE_CEILING } from "@/lib/officialPrices";
 import Footer from "@/app/components/Footer";
 
 export const revalidate = 3600;
@@ -148,8 +149,8 @@ function ServiceSchema({ region, data, yachtCount }) {
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "EUR",
-      lowPrice: 13000,
-      highPrice: 500000,
+      lowPrice: CAT_FROM,
+      highPrice: BASE_CEILING,
       offerCount: yachtCount,
       availability: "https://schema.org/InStock",
     },

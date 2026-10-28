@@ -245,7 +245,7 @@ export default async function SeoLanding({ pageData }) {
         ) : null;
       })()}
 
-      <article style={{ background: NAVY, minHeight: "100vh" }} dir={isHebrew ? "rtl" : undefined} lang={isHebrew ? "he" : undefined}>
+      <article style={{ background: NAVY, minHeight: "100vh" }} dir={isHebrew ? "rtl" : undefined} lang={isHebrew ? "he" : isGreek ? "el" : undefined}>
         {/* QUICK ANSWER - Phase 7 R27 (technical brief Priority 2B).
             Renders only when pageData.quickAnswer is present, OR
             falls back to derived Q/A using h1 + seoDescription. */}

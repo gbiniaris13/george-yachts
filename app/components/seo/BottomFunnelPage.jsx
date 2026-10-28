@@ -9,6 +9,7 @@ import { closesOn } from "@/lib/aiAnswerClose";
 import InlineCalendlySection from "@/app/components/InlineCalendlySection";
 import { relatedFor } from "@/lib/seoInternalLinks";
 import OutsideGroundsNote from "@/app/components/seo/OutsideGroundsNote";
+import { CAT_FROM, MOTOR_FROM, BASE_CEILING } from "@/lib/officialPrices";
 import { LAST_REFRESH } from "@/lib/contentFreshness";
 import LastUpdated from "@/app/components/seo/LastUpdated";
 import Footer from "@/app/components/Footer";
@@ -61,8 +62,10 @@ function ArticleAndTouristTripJsonLd({ data }) {
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "EUR",
-      lowPrice: "35000",
-      highPrice: "1800000",
+      // 2026-10-28: the house range from lib/officialPrices.js. This node said
+      // 35,000 to 1,800,000 on 26 pages, a range no yacht of ours has ever had.
+      lowPrice: String(CAT_FROM),
+      highPrice: String(BASE_CEILING),
       offerCount: data.yachtRecs?.length || 1,
       seller: {
         "@type": "Organization",

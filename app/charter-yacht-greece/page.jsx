@@ -3,6 +3,7 @@ import { FLEET_COUNT, FLEET_COMPOSITION, CATAMARAN_COUNT } from "@/lib/fleetCoun
 import { sanityClient } from "@/lib/sanity";
 import Footer from "@/components/Footer";
 import FleetGrid from "./FleetGrid";
+import FleetHeroVideo from "./FleetHeroVideo";
 import BriefGeorgeBanner from "@/app/components/BriefGeorgeBanner";
 // next/image import removed 2026-05-08 — fleet hero now uses a
 // <video> tag (Boss-curated catamaran concat) instead of next/image
@@ -276,44 +277,14 @@ export default async function CharterFleetPage() {
           sailing-cat texture so the visitor immediately reads
           "we cover both sides of the brokerage". */}
       <section className="fleet-hero">
-        {/* 2026-05-08 (Chapter 01 follow-up), poster + preload fix.
-            Boss reported the Pellegrina Sanity image flashing at
-            page load before the catamaran video kicked in. Two
-            changes:
-              (a) poster now points to a frame extracted directly
-                  from fleet-catamarans.mp4 at t=0, so even if the
-                  poster shows for 100 ms while the video buffers,
-                  it's the SAME image as frame 1 of the video.
-                  Swap is invisible.
-              (b) preload="auto" tells the browser to begin
-                  downloading the video bytes as soon as the page
-                  loads, instead of waiting for the play() call.
-                  Trade-off: 12 MB starts downloading immediately
-                  on this route, acceptable here because the fleet
-                  page is intent-driven (visitor typed it / clicked
-                  through) and bandwidth is rarely the constraint
-                  for the UHNW visitor. */}
-        <video
-          className="fleet-hero__bg"
-          poster="/images/posters/fleet-catamarans-frame1.jpg"
-          preload="auto"
-          autoPlay
-          loop
-          muted
-          playsInline
-          aria-label="George Yachts Charter Fleet Greece - catamarans in Greek waters"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center",
-          }}
-        >
-          <source src="/videos/fleet-catamarans.webm" type="video/webm" />
-          <source src="/videos/fleet-catamarans.mp4" type="video/mp4" />
-        </video>
+        {/* 2026-05-08 (Chapter 01 follow-up): the poster is frame 1 of the
+            film itself, so the swap is invisible.
+            2026-10-28: the <video> moved into FleetHeroVideo (client). It
+            used to carry preload="auto" and autoPlay, which made every
+            phone download 18 MB on arrival; the decision is now made per
+            device, exactly as the home hero does it. Same markup, same
+            poster, same classes. */}
+        <FleetHeroVideo />
         <div className="fleet-hero__gradient" />
         <div className="fleet-hero__content">
           <div className="fleet-hero__eyebrow">Exclusively Greek Waters</div>

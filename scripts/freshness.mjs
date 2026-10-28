@@ -50,6 +50,11 @@
 //   node scripts/freshness.mjs --check       report only, writes nothing
 //   node scripts/freshness.mjs --seed=x.xml  adopt an existing sitemap's dates
 //   node scripts/freshness.mjs --date=Y-M-D  stamp a date other than today
+//   node scripts/freshness.mjs --rebaseline  adopt the new hashes, keep every
+//                                            date (after a shared block is
+//                                            excluded from contentOf, so the
+//                                            next real run moves only pages
+//                                            whose own text changed)
 //
 // The manifest is committed. It is the record of when each page last really
 // changed, so it must travel with the code rather than be regenerated blind.
@@ -68,6 +73,11 @@ const BUILD_DIR = path.join(ROOT, ".next", "server", "app");
 const MANIFEST = path.join(ROOT, "lib", "lastmodManifest.json");
 
 const checkOnly = process.argv.includes("--check");
+// 2026-10-28: a hash can change without the page changing, when a block
+// that every page shares is newly excluded from contentOf(). Rebaselining
+// records the new hash and keeps the date, so the exclusion itself never
+// becomes a storm. It writes no new date, ever.
+const rebaseline = process.argv.includes("--rebaseline");
 // Overridable so a rebuild of an old commit cannot stamp today's date on it.
 const today =
   (process.argv.find((a) => a.startsWith("--date="))?.slice(7)) ||
@@ -182,6 +192,7 @@ if (seedArg) {
 
 const pages = {};
 const changed = [];
+const rebaselined = [];
 const added = [];
 let baselined = 0;
 let skipped = 0;
@@ -206,8 +217,13 @@ for (const file of walk(BUILD_DIR).sort()) {
     pages[url] = { hash, lastmod: before.lastmod };
     baselined++;
   } else if (before.hash !== hash) {
-    pages[url] = { hash, lastmod: today };
-    changed.push(url);
+    if (rebaseline) {
+      pages[url] = { hash, lastmod: before.lastmod };
+      rebaselined.push(url);
+    } else {
+      pages[url] = { hash, lastmod: today };
+      changed.push(url);
+    }
   } else {
     pages[url] = before;
   }
@@ -226,6 +242,7 @@ console.log(`  νέες                   ${added.length}`);
 console.log(`  άλλαξε το περιεχόμενο  ${changed.length}`);
 console.log(`  αμετάβλητες            ${Object.keys(pages).length - added.length - changed.length - baselined}`);
 if (baselined) console.log(`  πήραν αποτύπωμα πρώτη φορά ${baselined} (κράτησαν την ημερομηνία τους)`);
+if (rebaselined.length) console.log(`  νέο αποτύπωμα, ίδια ημερομηνία ${rebaselined.length} (--rebaseline)`);
 if (dropped.length) console.log(`  έφυγαν από το build    ${dropped.length}`);
 if (skipped) console.log(`  χωρίς κείμενο (αγνοήθηκαν) ${skipped}`);
 
@@ -237,6 +254,7 @@ const show = (label, list) => {
 };
 show("ΝΕΕΣ:", added);
 show("ΑΛΛΑΞΑΝ:", changed);
+show("REBASELINE (ίδια ημερομηνία):", rebaselined);
 show("ΕΦΥΓΑΝ:", dropped);
 
 if (checkOnly) {
@@ -255,14 +273,19 @@ if (checkOnly) {
 // (16 to 22 September). A sitemap where a fifth of the site "changed" on
 // one day is a lie about which page changed, and it costs rankings.
 //
-// So: if more than 20% of the pages (and more than 20 pages) would take
-// today's date, the manifest is NOT written and the run fails. That stops
-// the commit before it stops the rankings. The list above says which
-// pages moved; find the shared string that moved them (it is usually one
-// line) and either exempt it from the hash in contentOf() or accept it
-// consciously with --force, once, on purpose.
-const STORM_SHARE = 0.2;
-const STORM_MIN = 20;
+// So: if more than the share below of the pages (and more than the minimum)
+// would take today's date, the manifest is NOT written and the run fails.
+// That stops the commit before it stops the rankings. The list above says
+// which pages moved; find the shared string that moved them (it is usually
+// one line) and either exempt it from the hash in contentOf() (then run
+// --rebaseline once) or accept it consciously with --force, once, on purpose.
+//
+// 2026-10-28: 20% and 20 pages became 5% and 25 pages. The audit of 27
+// October counted 434 of 484 August URLs re-dated during September and the
+// US impressions at -61% by the end of it; a push on 8 October still moved
+// 126 dates under the old line. Five pages a week is the working size now.
+const STORM_SHARE = 0.05;
+const STORM_MIN = 25;
 const total = Object.keys(pages).length;
 const force = process.argv.includes("--force");
 if (!force && changed.length > STORM_MIN && changed.length > total * STORM_SHARE) {
