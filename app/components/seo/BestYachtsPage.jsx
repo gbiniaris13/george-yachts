@@ -222,6 +222,24 @@ export default async function BestYachtsPage({ pageData }) {
             />
             {/* 2026-10-08 (DataForSEO gap): one line to the hub the page orbits. */}
             {d.bridge && <BridgeLine {...d.bridge} />}
+            {/* 2026-10-29: optional editorial paragraphs with **bold** and
+                [text](/path) links, the same grammar as SeoLanding's deepDive.
+                Renders nothing when the entry has no `editorial`. */}
+            {Array.isArray(d.editorial) && d.editorial.length > 0 && (
+              <div style={{ maxWidth: 720, margin: "28px auto 0", fontFamily: "var(--gy-font-ui)", fontSize: 16, lineHeight: 1.78, color: "rgba(248,245,240,0.88)" }}>
+                {d.editorial.map((para, i) => (
+                  <p
+                    key={i}
+                    style={{ margin: i ? "14px 0 0" : 0 }}
+                    dangerouslySetInnerHTML={{
+                      __html: para
+                        .replace(/\*\*(.+?)\*\*/g, '<strong style="color:#F8F5F0">$1</strong>')
+                        .replace(/\[([^\]]+)\]\((\/[^)\s]*)\)/g, '<a href="$2" style="color:#DAA110;text-decoration:none;border-bottom:1px solid rgba(218, 161, 16,0.5)">$1</a>'),
+                    }}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
