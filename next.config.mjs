@@ -88,7 +88,17 @@ const nextConfig = {
               // the library the tag then loads. Allowing only the first is
               // exactly the state we were in.
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://scripts.clarity.ms",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com",
+              // 2026-11-02: the FIFTH time. The itinerary builder's Mapbox map
+              // (app/itinerary-builder/MapboxRouteMap.jsx) was blocked three ways:
+              // its stylesheet (style-src), its tiles and style (connect-src) and
+              // the blob: worker it draws with (no worker-src, so script-src
+              // applied). Every visitor saw an empty dark box, could not pick an
+              // island, and the "Save my itinerary" form, which appears after two
+              // stops, never appeared. worker-src repeats every script-src source
+              // so nothing that may start a worker today loses that right, and
+              // adds blob: for the map.
+              "worker-src 'self' blob: https://www.google.com https://www.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://scripts.clarity.ms",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com https://api.mapbox.com",
               "font-src 'self' https://fonts.gstatic.com https://cdn.fontshare.com",
               // 2026-05-17 — The Cabin (mood-board + voyage-album)
               // serves signed images from Supabase Storage. Without
@@ -133,7 +143,7 @@ const nextConfig = {
               // score behind them was starved of the very telemetry it grades.
               // Found on 19/8 by opening the console while a form was actually
               // being used, which is the only way any of these four surfaced.
-              "connect-src 'self' https://www.google.com https://cdn.sanity.io https://*.sanity.io https://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.clarity.ms",
+              "connect-src 'self' https://www.google.com https://cdn.sanity.io https://*.sanity.io https://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.clarity.ms https://api.mapbox.com https://events.mapbox.com",
               // 2026-05-12 — added my.matterport.com pre-emptively.
               // The yacht detail page (YachtPageContent.jsx Matterport
               // section) renders an <iframe src={yacht.matterportEmbedUrl}>

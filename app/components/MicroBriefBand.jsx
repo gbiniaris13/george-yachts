@@ -77,7 +77,14 @@ const QUESTIONS = [
 ];
 
 export default function MicroBriefBand() {
-  const pathname = usePathname() || "/";
+  // 2026-11-02: Vercel regenerates the homepage in the background (ISR) under
+  // the name "/index", so on the server usePathname() said "/index" and the
+  // band's form was drawn on the homepage, while the browser, on "/", drew
+  // none. React left that form in the page without wiring it: a visitor who
+  // filled it only reloaded the page, and the brief never left the browser.
+  // Both sides now read the homepage as "/".
+  const rawPath = usePathname() || "/";
+  const pathname = rawPath === "/index" ? "/" : rawPath;
   if (HIDE_ALL_PREFIX.some((p) => pathname === p || pathname.startsWith(p))) return null;
   const showForm = !SKIP_EXACT.has(pathname) && !SKIP_PREFIX.some((p) => pathname === p || pathname.startsWith(p));
   return (
