@@ -236,12 +236,14 @@ const QUESTIONS = [
     eyebrow: 'Question 4 of 5',
     title: 'Investment range for the week',
     options: [
+      // 2026-11-02 (George): no option below the floor. The list starts
+      // where the fleet starts, EUR 17,000 a week base.
       {
-        value: 'under-15',
-        label: 'Under €15K',
-        sub: 'Catamaran Fleet - crewed cats, sail and power',
+        value: '17-25',
+        label: '€17K - €25K',
+        sub: 'Catamaran Fleet - the entry crewed catamarans',
       },
-      { value: '15-40', label: '€15K - €40K', sub: 'Mid-tier crewed' },
+      { value: '25-40', label: '€25K - €40K', sub: 'Mid-tier crewed' },
       { value: '40-100', label: '€40K - €100K', sub: 'Premium crewed' },
       { value: 'over-100', label: '€100K+', sub: 'Superyachts' },
       { value: 'discuss', label: "I'd rather discuss with George", sub: '' },
@@ -273,12 +275,12 @@ function matchYachts(answers, fleet) {
 
     // Budget bucket
     const b = answers.budget;
-    if (b === 'under-15' && y.price < 15000) score += 25;
-    if (b === '15-40' && y.price >= 15000 && y.price <= 40000) score += 25;
+    if (b === '17-25' && y.price <= 25000) score += 25;
+    if (b === '25-40' && y.price > 25000 && y.price <= 40000) score += 25;
     if (b === '40-100' && y.price > 40000 && y.price <= 100000) score += 25;
     if (b === 'over-100' && y.price > 100000) score += 25;
     // Adjacent partial credit
-    if (b === '15-40' && y.price >= 12000 && y.price < 15000) score += 8;
+    if (b === '25-40' && y.price >= 20000 && y.price <= 25000) score += 8;
     if (b === '40-100' && y.price >= 30000 && y.price < 40000) score += 8;
     if (b === 'discuss') score += 5;
 

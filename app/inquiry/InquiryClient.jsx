@@ -25,6 +25,7 @@
 // gets an instant cross-fade; default is a 180ms slide-up.
 
 import { useEffect, useRef, useState } from "react";
+import { REQUIRED_NOTE, REQUIRED_MESSAGES, isValidEmail, isValidName, isValidPhone } from "@/lib/requiredContact";
 
 const GOLD = "#DAA110";
 
@@ -200,12 +201,17 @@ export default function InquiryClient() {
       setError("This one is required to send the inquiry.");
       return;
     }
-    if (step.type === "email" && v && !String(v).includes("@")) {
-      setError("That doesn't look like a valid email.");
+    // 2026-11-02: the same rule as every other request form (lib/requiredContact).
+    if (step.key === "name" && !isValidName(v)) {
+      setError(REQUIRED_MESSAGES.name);
       return;
     }
-    if (step.type === "tel" && v && String(v).replace(/\D/g, "").length < 7) {
-      setError("Please include the country code.");
+    if (step.type === "email" && !isValidEmail(v)) {
+      setError(REQUIRED_MESSAGES.email);
+      return;
+    }
+    if (step.type === "tel" && !isValidPhone(v)) {
+      setError(REQUIRED_MESSAGES.phone);
       return;
     }
     if (idx < TOTAL - 1) {
@@ -378,6 +384,11 @@ export default function InquiryClient() {
           Question {idx + 1} / {TOTAL}
         </p>
         <h1 style={question}>{step.label}</h1>
+        {step.required && (
+          <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: "rgba(248,245,240,0.6)", margin: "0 0 18px", lineHeight: 1.5 }}>
+            {REQUIRED_NOTE}
+          </p>
+        )}
 
         {/* Input per type */}
         <div style={{ marginTop: 28 }}>

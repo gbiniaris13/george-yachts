@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useWishlist } from '../components/WishlistProvider';
 import { useI18n } from '@/lib/i18n/I18nProvider';
+import { REQUIRED_NOTE, firstContactError } from '@/lib/requiredContact';
 
 const GOLD = '#DAA110';
 
@@ -38,8 +39,14 @@ export default function FavoritesContent() {
 
   const handleSendToGeorge = async () => {
     setError('');
-    if (!name.trim() || !email.includes('@') || items.length === 0) {
-      setError('Please add your name and a valid email.');
+    // 2026-11-02 (George): name, email and phone are required.
+    const problem = firstContactError({ name, email, phone });
+    if (problem) {
+      setError(problem.message);
+      return;
+    }
+    if (items.length === 0) {
+      setError('Add at least one yacht to your favorites first.');
       return;
     }
     setSending(true);
@@ -217,14 +224,19 @@ export default function FavoritesContent() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12, maxWidth: 520, marginLeft: 'auto', marginRight: 'auto' }}>
               <input
                 type="text"
-                placeholder={t('favorites.yourName', 'Your name')}
+                placeholder={`${t('favorites.yourName', 'Your name')} *`}
+                autoComplete="name"
+                aria-required="true"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 style={inputStyle}
               />
               <input
                 type="email"
-                placeholder={t('favorites.yourEmail', 'Your email')}
+                placeholder={`${t('favorites.yourEmail', 'Your email')} *`}
+                autoComplete="email"
+                inputMode="email"
+                aria-required="true"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={inputStyle}
@@ -233,12 +245,18 @@ export default function FavoritesContent() {
             <div style={{ maxWidth: 520, margin: '0 auto 14px' }}>
               <input
                 type="tel"
-                placeholder={t('favorites.yourPhone', 'Your phone (with country code)')}
+                placeholder={`${t('favorites.yourPhone', 'Phone / WhatsApp, with country code')} *`}
+                autoComplete="tel"
+                inputMode="tel"
+                aria-required="true"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 style={{ ...inputStyle, width: '100%' }}
               />
             </div>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, color: 'rgba(248,245,240,0.55)', margin: '0 0 16px', lineHeight: 1.5 }}>
+              {REQUIRED_NOTE}
+            </p>
 
             <label
               style={{
