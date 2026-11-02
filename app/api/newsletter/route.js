@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { checkRateLimit } from "@/lib/rateLimit";
+import { telegramSafe, htmlSafe } from "@/lib/requiredContact";
 import { kvSadd, kvGet, kvSet, kvSismember } from "@/lib/kv";
 
 // Legacy KV set key — kept writing to it during the transition so the
@@ -30,7 +31,7 @@ const transporter = nodemailer.createTransport({
 
 // Notify George via Telegram. Welcome flow status is folded in so a
 // silent welcome failure never goes unnoticed.
-async function notifyTelegram(email, welcomeResult) {
+async function notifyTelegram(email, welcomeResult, extra = []) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) return;
@@ -47,6 +48,7 @@ async function notifyTelegram(email, welcomeResult) {
     `📬 *New Newsletter Subscriber!*`,
     ``,
     `📧 ${email}`,
+    ...extra,
     ``,
     welcomeLine,
   ].join("\n");
@@ -79,6 +81,11 @@ export async function POST(request) {
   try {
     const body = await request.json();
     const { email } = body;
+    // 2026-11-02: the yacht dossier request posts here with a name, a phone
+    // and its source; the footer and the other signups send the email alone.
+    const name = String(body.name || "").slice(0, 120).trim();
+    const phone = String(body.phone || "").slice(0, 40).trim();
+    const source = String(body.source || "").slice(0, 120).trim();
 
     // Honeypot
     if (body.website && body.website.trim() !== "") {
@@ -258,11 +265,13 @@ export async function POST(request) {
     await transporter.sendMail({
       from: GMAIL_USER,
       to: "george@georgeyachts.com",
-      subject: `📬 New Newsletter Subscriber, ${email}`,
+      subject: `${source.startsWith("dossier") ? "📒 Dossier request" : "📬 New Newsletter Subscriber"}, ${email}`,
       html: `
         <h3>New Newsletter Subscriber</h3>
         <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Source:</strong> The George Yachts Journal (footer signup)</p>
+        ${name ? `<p><strong>Name:</strong> ${htmlSafe(name)}</p>` : ""}
+        ${phone ? `<p><strong>Phone / WhatsApp:</strong> ${htmlSafe(phone, 40)}</p>` : ""}
+        <p><strong>Source:</strong> ${source ? htmlSafe(source) : "The George Yachts Journal (footer signup)"}</p>
         <p><strong>Time:</strong> ${new Date().toISOString()}</p>
         <hr>
         <p style="font-size: 12px; color: #9CA3AF;">Add this email to your mailing list.</p>
@@ -276,7 +285,11 @@ export async function POST(request) {
     //    one-click unsubscribe.
 
     // 3. Telegram notification (non-blocking) — include welcome status
-    notifyTelegram(email, welcomeResult).catch(() => {});
+    notifyTelegram(email, welcomeResult, [
+      name ? `👤 ${telegramSafe(name)}` : null,
+      phone ? `📞 ${telegramSafe(phone, 40)}` : null,
+      source ? `🔎 ${telegramSafe(source, 80)}` : null,
+    ].filter(Boolean)).catch(() => {});
 
     return NextResponse.json(
       { message: "Subscribed successfully!" },

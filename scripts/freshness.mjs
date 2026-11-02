@@ -130,6 +130,12 @@ function contentOf(html) {
     // block is navigation, not the post; it leaves the hash like the
     // other two.
     .replace(/<section[^>]*>(?:(?!<\/section>)[\s\S])*?Related Articles[\s\S]*?<\/section>/gi, " ")
+    // 2026-11-02: forms are interface, not content. The newsletter form
+    // sits inside <main> on 594 of the 601 pages and the brief form on 84,
+    // so one word changed in a form (George made the phone required today)
+    // moved the hash of every one of them. A page's date now follows its own
+    // text only. The switch was adopted with --rebaseline: every date kept.
+    .replace(/<form\b[\s\S]*?<\/form>/gi, " ")
   const text = own
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<style[\s\S]*?<\/style>/gi, " ")

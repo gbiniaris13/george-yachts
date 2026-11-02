@@ -12,6 +12,7 @@
 //     (Telegram + Gmail + CRM sync)
 
 import { useState } from "react";
+import { REQUIRED_NOTE, firstContactError } from "@/lib/requiredContact";
 
 const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
@@ -27,6 +28,7 @@ const TIMING_OPTIONS = [
 export default function PricingGuidePdfGate() {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [timing, setTiming] = useState("");
   const [status, setStatus] = useState("idle"); // idle | submitting | success | success-no-pdf | error
   const [errorMsg, setErrorMsg] = useState("");
@@ -34,8 +36,10 @@ export default function PricingGuidePdfGate() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!firstName.trim() || !email.trim() || !timing) {
-      setErrorMsg("Please complete all fields.");
+    // 2026-11-02 (George): name, email and phone are required.
+    const problem = firstContactError({ name: firstName, email, phone });
+    if (problem || !timing) {
+      setErrorMsg(problem ? problem.message : "Please choose when you are planning to charter.");
       setStatus("error");
       return;
     }
@@ -48,6 +52,7 @@ export default function PricingGuidePdfGate() {
         body: JSON.stringify({
           firstName: firstName.trim(),
           email: email.trim(),
+          phone: phone.trim(),
           timing,
           sourcePage: typeof window !== "undefined" ? window.location.pathname : null,
         }),
@@ -257,7 +262,7 @@ export default function PricingGuidePdfGate() {
                     marginBottom: 6,
                   }}
                 >
-                  First name
+                  Full name *
                 </span>
                 <input
                   type="text"
@@ -265,7 +270,7 @@ export default function PricingGuidePdfGate() {
                   onChange={(e) => setFirstName(e.target.value)}
                   required
                   maxLength={80}
-                  autoComplete="given-name"
+                  autoComplete="name"
                   style={{
                     width: "100%",
                     fontFamily: "var(--gy-font-ui)",
@@ -276,7 +281,7 @@ export default function PricingGuidePdfGate() {
                     color: NAVY,
                     boxSizing: "border-box",
                   }}
-                  placeholder="e.g. Maria"
+                  placeholder="e.g. Maria Smith"
                 />
               </label>
               <label style={{ display: "block" }}>
@@ -292,7 +297,7 @@ export default function PricingGuidePdfGate() {
                     marginBottom: 6,
                   }}
                 >
-                  Email
+                  Email *
                 </span>
                 <input
                   type="email"
@@ -314,6 +319,45 @@ export default function PricingGuidePdfGate() {
                 />
               </label>
             </div>
+            <label style={{ display: "block", marginBottom: 10 }}>
+              <span
+                style={{
+                  display: "block",
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 9,
+                  letterSpacing: "0.32em",
+                  textTransform: "uppercase",
+                  color: NAVY,
+                  fontWeight: 700,
+                  marginBottom: 6,
+                }}
+              >
+                Phone / WhatsApp *
+              </span>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+                aria-required="true"
+                autoComplete="tel"
+                inputMode="tel"
+                style={{
+                  width: "100%",
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 15,
+                  padding: "12px 14px",
+                  background: CREAM,
+                  border: `1px solid rgba(13, 27, 42, 0.2)`,
+                  color: NAVY,
+                  boxSizing: "border-box",
+                }}
+                placeholder="+1 212 555 0100"
+              />
+            </label>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11.5, color: NAVY, opacity: 0.6, margin: "0 0 18px", lineHeight: 1.5 }}>
+              {REQUIRED_NOTE}
+            </p>
             <label style={{ display: "block", marginBottom: 18 }}>
               <span
                 style={{

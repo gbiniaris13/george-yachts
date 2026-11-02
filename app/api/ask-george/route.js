@@ -24,6 +24,7 @@
 
 import { isSailingFleet } from "@/lib/fleetTiers";
 import { sendTelegram } from "@/lib/telegram";
+import { telegramSafe } from "@/lib/requiredContact";
 import { FLEET_COUNT } from "@/lib/fleetCount";
 import { sanityClient } from "@/lib/sanity";
 import { kvIncr, kvExpire, kvLpush, kvLtrim } from "@/lib/kv";
@@ -157,6 +158,7 @@ export async function POST(req) {
   if (body?.saveForFollowUp) {
     const name = (body.name || "").toString().slice(0, 100).trim();
     const email = (body.email || "").toString().slice(0, 200).trim();
+    const phone = telegramSafe(body.phone, 40);
     const transcript = Array.isArray(body.messages) ? body.messages : [];
     if (!name || !email) {
       return new Response(JSON.stringify({ ok: false, error: "Missing name or email" }), { status: 400 });
@@ -165,7 +167,7 @@ export async function POST(req) {
       .map((m) => `*${m.role === "user" ? "Visitor" : "Ask George"}:* ${m.content}`)
       .join("\n\n")
       .slice(0, 3500);
-    const tg = `🤖 *Ask George, follow-up requested*\n\n👤 ${name}\n📧 ${email}\n\n${summary}\n\n_Source: ${body.path || "unknown"}_`;
+    const tg = `🤖 *Ask George, follow-up requested*\n\n👤 ${name}\n📧 ${email}\n${phone ? `📞 ${phone}\n` : ""}\n${summary}\n\n_Source: ${body.path || "unknown"}_`;
     try {
       await sendTelegram(tg);
     } catch {}

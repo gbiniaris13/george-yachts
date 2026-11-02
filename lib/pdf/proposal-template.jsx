@@ -34,6 +34,8 @@ const PAPER = "#F8F5F0";
 
 // ─── Font registration ───
 // Wrapped in try so a missing CDN doesn't break the renderer.
+// 2026-11-02: the v16/v25 files were retired by Google (404) and every proposal
+// failed to render; these are the current v21/v31 files of the same faces.
 let fontsRegistered = false;
 function registerFonts() {
   if (fontsRegistered) return;
@@ -42,12 +44,25 @@ function registerFonts() {
       family: "Cormorant",
       fonts: [
         {
-          src: "https://fonts.gstatic.com/s/cormorantgaramond/v16/co3YmX5slCNuHLi8bLeY9MK7whWMhyjornFLsS6V7w.ttf",
+          src: "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_v86KnTOjw.ttf",
           fontWeight: 400,
         },
         {
-          src: "https://fonts.gstatic.com/s/cormorantgaramond/v16/co3WmX5slCNuHLi8bLeYa15efrxWohYUrL0R-pyTdg.ttf",
+          src: "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_iE9KnTOjw.ttf",
           fontWeight: 600,
+        },
+        // 2026-11-02: the template sets italic Cormorant (the cover line, the
+        // insider tips) and no italic face was ever registered, so react-pdf
+        // refused to render ("Could not resolve font ... italic").
+        {
+          src: "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3smX5slCNuHLi8bLeY9MK7whWMhyjYrGFEsdtdc62E6zd58jD-iNM5.ttf",
+          fontWeight: 400,
+          fontStyle: "italic",
+        },
+        {
+          src: "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3smX5slCNuHLi8bLeY9MK7whWMhyjYrGFEsdtdc62E6zd5LDf-iNM5.ttf",
+          fontWeight: 600,
+          fontStyle: "italic",
         },
       ],
     });
@@ -55,16 +70,21 @@ function registerFonts() {
       family: "Montserrat",
       fonts: [
         {
-          src: "https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKm459W1hyzbi.ttf",
+          src: "https://fonts.gstatic.com/s/montserrat/v31/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw5aX8.ttf",
           fontWeight: 400,
         },
         {
-          src: "https://fonts.gstatic.com/s/montserrat/v25/JTURjIg1_i6t8kCHKm45_dJE3gnD-w.ttf",
+          src: "https://fonts.gstatic.com/s/montserrat/v31/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCu173w5aX8.ttf",
           fontWeight: 600,
         },
         {
-          src: "https://fonts.gstatic.com/s/montserrat/v25/JTURjIg1_i6t8kCHKm45_bZF3gnD-w.ttf",
+          src: "https://fonts.gstatic.com/s/montserrat/v31/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCuM73w5aX8.ttf",
           fontWeight: 700,
+        },
+        {
+          src: "https://fonts.gstatic.com/s/montserrat/v31/JTUFjIg1_i6t8kCHKm459Wx7xQYXK0vOoz6jq6R9WXh0ow.ttf",
+          fontWeight: 400,
+          fontStyle: "italic",
         },
       ],
     });

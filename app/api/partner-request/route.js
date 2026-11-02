@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import { readFileSync } from "fs";
 import { join } from "path";
 import { checkRateLimit } from "@/lib/rateLimit";
+import { telegramSafe, htmlSafe } from "@/lib/requiredContact";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +16,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // Notify George via Telegram
-async function notifyTelegram(email) {
+async function notifyTelegram(email, name = "", phone = "") {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) return;
@@ -24,6 +25,8 @@ async function notifyTelegram(email) {
     `🤝 *New Partner Request!*`,
     ``,
     `📧 ${email}`,
+    ...(name ? [`👤 ${telegramSafe(name)}`] : []),
+    ...(phone ? [`📞 ${telegramSafe(phone, 40)}`] : []),
     ``,
     `📎 Partnership Programme PDF was auto-sent.`,
     `⏱ _Follow up within 24h!_`,
@@ -57,6 +60,9 @@ export async function POST(request) {
   try {
     const body = await request.json();
     const { email } = body;
+    // 2026-11-02: the request form now sends the name and the phone too.
+    const name = String(body.name || "").slice(0, 120).trim();
+    const phone = String(body.phone || "").slice(0, 40).trim();
 
     // Honeypot
     if (body.website && body.website.trim() !== "") {
@@ -169,6 +175,8 @@ export async function POST(request) {
       html: `
         <h3>New Partnership Programme Request</h3>
         <p><strong>Email:</strong> ${email}</p>
+        ${name ? `<p><strong>Name:</strong> ${htmlSafe(name)}</p>` : ""}
+        ${phone ? `<p><strong>Phone / WhatsApp:</strong> ${htmlSafe(phone, 40)}</p>` : ""}
         <p><strong>Time:</strong> ${new Date().toISOString()}</p>
         <p>PDF was automatically sent to their inbox.</p>
         <p><strong>Action:</strong> Follow up within 24 hours.</p>
@@ -176,7 +184,7 @@ export async function POST(request) {
     });
 
     // 3. Notify via Telegram (non-blocking)
-    notifyTelegram(email).catch(() => {});
+    notifyTelegram(email, name, phone).catch(() => {});
 
     return NextResponse.json(
       { message: "Partnership programme sent to your inbox!" },

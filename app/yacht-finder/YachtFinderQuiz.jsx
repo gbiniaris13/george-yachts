@@ -32,6 +32,7 @@
 
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { collectVisitorContext } from '@/lib/visitorContext';
+import { REQUIRED_NOTE, firstContactError } from '@/lib/requiredContact';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -404,8 +405,10 @@ export default function YachtFinderQuiz({ fleet = [] }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (submitting) return;
-    if (!contact.name.trim() || !contact.email.includes('@')) {
-      setError("Please add your name and a valid email so George can reach you.");
+    // 2026-11-02 (George): name, email and phone are required.
+    const problem = firstContactError(contact);
+    if (problem) {
+      setError(problem.message);
       return;
     }
     setSubmitting(true);
@@ -685,7 +688,7 @@ function QuestionStep({ q, onAnswer, onSkip, onBack, value, setValue }) {
 
 function ContactStep({ contact, setContact, onBack, onSubmit, submitting, error, matchCount }) {
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} noValidate>
       <p
         style={{
           fontFamily: "var(--gy-font-ui)",
@@ -737,7 +740,8 @@ function ContactStep({ contact, setContact, onBack, onSubmit, submitting, error,
       />
 
       <Field
-        label="Name"
+        label="Full name"
+        autoComplete="name"
         value={contact.name}
         onChange={(v) => setContact({ ...contact, name: v })}
         required
@@ -750,11 +754,17 @@ function ContactStep({ contact, setContact, onBack, onSubmit, submitting, error,
         required
       />
       <Field
-        label="Phone (optional)"
+        label="Phone / WhatsApp"
         type="tel"
+        autoComplete="tel"
+        inputMode="tel"
         value={contact.phone}
         onChange={(v) => setContact({ ...contact, phone: v })}
+        required
       />
+      <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11.5, color: 'rgba(248,245,240,0.6)', margin: '12px 0 0', lineHeight: 1.5 }}>
+        {REQUIRED_NOTE}
+      </p>
 
       <div style={{ marginTop: 24 }}>
         <span
@@ -980,7 +990,7 @@ function ResultScreen({ matches, answers }) {
   );
 }
 
-function Field({ label, type = 'text', value, onChange, required }) {
+function Field({ label, type = 'text', value, onChange, required, autoComplete, inputMode }) {
   return (
     <label style={{ display: 'block', marginTop: 18 }}>
       <span
@@ -1002,7 +1012,9 @@ function Field({ label, type = 'text', value, onChange, required }) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         required={required}
-        autoComplete={type === 'email' ? 'email' : 'off'}
+        aria-required={required ? 'true' : undefined}
+        autoComplete={autoComplete || (type === 'email' ? 'email' : 'off')}
+        inputMode={inputMode}
         style={{
           width: '100%',
           background: 'transparent',

@@ -13,6 +13,7 @@
 
 import { sanityClient } from "@/lib/sanity";
 import { sendTelegram } from "@/lib/telegram";
+import { telegramSafe } from "@/lib/requiredContact";
 import { bumpKpi } from "@/lib/kpis";
 import { kvIncr, kvExpire } from "@/lib/kv";
 
@@ -103,6 +104,7 @@ export async function POST(req) {
 
   const name = (body?.name || "").toString().slice(0, 100).trim();
   const email = (body?.email || "").toString().slice(0, 200).trim();
+  const phone = telegramSafe(body?.phone, 40);
   const dates = (body?.dates || "").toString().slice(0, 100).trim();
   const notes = (body?.notes || "").toString().slice(0, 1500).trim();
   const slugs = Array.isArray(body?.yachtSlugs)
@@ -130,26 +132,28 @@ export async function POST(req) {
     );
   }
 
+  // Telegram to George BEFORE the PDF is attempted (2026-11-02). Until today
+  // it went after the render, and the render had been failing since Google
+  // retired the font files it fetched: every visitor got an error and George
+  // got nothing. The request now reaches him whatever happens to the PDF.
+  try {
+    const yachtList = yachts.map((y, i) => `  ${i + 1}. ${y.name} (/yachts/${y.slug})`).join("\n");
+    const tg = `📄 *Smart Proposal requested*\n\n👤 ${name}\n📧 ${email}\n${phone ? `📞 ${phone}\n` : ""}${dates ? `🗓 ${dates}\n` : ""}\n*Yachts (${yachts.length}):*\n${yachtList}\n${notes ? `\n*Notes:*\n${notes}\n` : ""}\n_The PDF is emailed to the visitor (BCC george@) when it renders._`;
+    await sendTelegram(tg);
+  } catch {}
+
   let pdfBuffer;
   try {
     pdfBuffer = await renderPdfBuffer({ name, dates, notes, yachts });
   } catch (err) {
     console.error("[proposal-generate] PDF render failed", err);
     return Response.json(
-      { ok: false, error: "PDF render failed. Please try again, or write to George at /inquiry." },
+      { ok: false, error: "The proposal could not be built just now. George has your request and will send it to you himself, usually within the day." },
       { status: 500 }
     );
   }
 
   const filename = fmtFile(name);
-  const sizeKb = Math.round((pdfBuffer.length || 0) / 1024);
-
-  // Telegram to George — first, so even if the email send fails, George knows.
-  try {
-    const yachtList = yachts.map((y, i) => `  ${i + 1}. ${y.name} (/yachts/${y.slug})`).join("\n");
-    const tg = `📄 *Smart Proposal generated*\n\n👤 ${name}\n📧 ${email}\n${dates ? `🗓 ${dates}\n` : ""}\n*Yachts (${yachts.length}):*\n${yachtList}\n${notes ? `\n*Notes:*\n${notes}\n` : ""}\n_PDF size: ${sizeKb} kB · sent to user (BCC george@)_`;
-    await sendTelegram(tg);
-  } catch {}
 
   // Email PDF to user with BCC to George — direct Resend call so we
   // can attach the PDF (the newsletter wrapper doesn't support

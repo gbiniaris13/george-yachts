@@ -16,6 +16,7 @@ import Image from "next/image";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 import { sanityCardImg } from "@/lib/sanity-image";
 import { priceUnitBadge, isPerPerson } from "@/lib/pricing";
+import { REQUIRED_NOTE, firstContactError } from "@/lib/requiredContact";
 
 const MAX_YACHTS = 5;
 const GOLD = "#DAA110";
@@ -36,6 +37,7 @@ export default function ProposalClient({ yachts = [] }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [dates, setDates] = useState("");
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -91,8 +93,10 @@ export default function ProposalClient({ yachts = [] }) {
     e.preventDefault();
     if (submitting) return;
     setError("");
-    if (!name.trim() || !email.includes("@")) {
-      setError("Please enter your name and a valid email.");
+    // 2026-11-02 (George): name, email and phone are required.
+    const problem = firstContactError({ name, email, phone });
+    if (problem) {
+      setError(problem.message);
       return;
     }
     if (picked.length === 0) {
@@ -107,6 +111,7 @@ export default function ProposalClient({ yachts = [] }) {
         body: JSON.stringify({
           name: name.trim(),
           email: email.trim(),
+          phone: phone.trim(),
           dates: dates.trim(),
           notes: notes.trim(),
           yachtSlugs: picked,
@@ -361,17 +366,25 @@ export default function ProposalClient({ yachts = [] }) {
                 }}>
                   We&apos;ll generate the proposal, email it to you, and George will write back within the day with availability.
                 </p>
-                <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   <input
-                    type="text" placeholder="Your name" required
+                    type="text" placeholder="Full name *" required aria-required="true" autoComplete="name"
                     value={name} onChange={(e) => setName(e.target.value)}
                     style={inputStyle}
                   />
                   <input
-                    type="email" placeholder="Your email" required
+                    type="email" placeholder="Email *" required aria-required="true" autoComplete="email" inputMode="email"
                     value={email} onChange={(e) => setEmail(e.target.value)}
                     style={inputStyle}
                   />
+                  <input
+                    type="tel" placeholder="Phone / WhatsApp *" required aria-required="true" autoComplete="tel" inputMode="tel"
+                    value={phone} onChange={(e) => setPhone(e.target.value)}
+                    style={inputStyle}
+                  />
+                  <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11.5, color: "rgba(248,245,240,0.6)", margin: 0, lineHeight: 1.5 }}>
+                    {REQUIRED_NOTE}
+                  </p>
                   <input
                     type="text" placeholder="Dates (optional, e.g. 12-19 July)"
                     value={dates} onChange={(e) => setDates(e.target.value)}
@@ -457,7 +470,7 @@ export default function ProposalClient({ yachts = [] }) {
                     type="button"
                     onClick={() => {
                       setResult(null); setOpen(false);
-                      setName(""); setEmail(""); setDates(""); setNotes("");
+                      setName(""); setEmail(""); setPhone(""); setDates(""); setNotes("");
                       setPicked([]);
                     }}
                     style={{

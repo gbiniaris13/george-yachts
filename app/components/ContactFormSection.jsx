@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 import ConstellationBackdrop from "./ConstellationBackdrop";
 import { collectVisitorContext } from "@/lib/visitorContext";
+import { PHONE_PATTERN, REQUIRED_MESSAGES, phoneValidityHandlers } from "@/lib/requiredContact";
 
 const RECAPTCHA_PUBLIC_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
@@ -334,6 +335,9 @@ const ContactFormSection = () => {
     if (!root) return true;
     const fields = root.querySelectorAll("input, select, textarea");
     for (const el of fields) {
+      // 2026-11-02: a message set by an earlier attempt must not outlive
+      // the value it was about.
+      if (el.name === "phone") el.setCustomValidity("");
       if (!el.checkValidity()) {
         el.reportValidity();
         return false;
@@ -360,6 +364,8 @@ const ContactFormSection = () => {
     // Next time the answer is in George's inbox, not in a guess.
     submitAttemptsRef.current += 1;
     lastSubmitErrorRef.current = "";
+    // 2026-11-02: after the first press, an empty required field turns red.
+    formRef.current?.classList.add("gy-tried");
     if (typeof window.gtag === "function") {
       window.gtag("event", "form_submit_attempt", { attempt: submitAttemptsRef.current });
     }
@@ -369,10 +375,15 @@ const ContactFormSection = () => {
     for (const n of [1, 2, 3]) {
       const root = formRef.current?.querySelector(`[data-step="${n}"]`);
       if (!root) continue;
-      const bad = [...root.querySelectorAll("input, select, textarea")].find((el) => !el.checkValidity());
+      const bad = [...root.querySelectorAll("input, select, textarea")].find((el) => {
+        if (el.name === "phone") el.setCustomValidity("");
+        return !el.checkValidity();
+      });
       if (bad) {
         setStep(n);
-        setStatus("Please complete the highlighted field.");
+        // 2026-11-02 (George): name, email and phone are required; the line
+        // above the button says which one, the field itself turns red.
+        setStatus(REQUIRED_MESSAGES[bad.name] || "Please complete the highlighted field.");
         lastSubmitErrorRef.current = `invalid:${bad.name || bad.id || "unknown"}`;
         setTimeout(() => bad.reportValidity(), 60);
         return;
@@ -720,22 +731,22 @@ const ContactFormSection = () => {
           <div data-step="1" className="block">
             <p className="text-[10px] tracking-[0.3em] uppercase text-[#DAA110]/80 mb-3">{t('common.aboutYou')}</p>
             <p className="text-white/50 text-xs font-light tracking-wide mb-8">
-              Only a name and an email are needed. Everything else simply helps George shape the right proposal.
+              Your name, email and phone are required, so George can reply to you personally. Everything else is optional and simply helps him shape the right proposal.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
               <Field icon={Icons.user} delay={0}>
                 <label htmlFor="name" className="sr-only">{t('contact.name')}</label>
-                <input type="text" id="name" name="name" required placeholder={`${t('contact.name')} *`} className={inputBase} />
+                <input type="text" id="name" name="name" required aria-required="true" autoComplete="name" placeholder={`${t('contact.name')} *`} className={inputBase} />
               </Field>
 
               <Field icon={Icons.mail} delay={0.05}>
                 <label htmlFor="email" className="sr-only">{t('contact.email')}</label>
-                <input type="email" id="email" name="email" required placeholder={`${t('contact.email')} *`} className={inputBase} />
+                <input type="email" id="email" name="email" required aria-required="true" autoComplete="email" inputMode="email" placeholder={`${t('contact.email')} *`} className={inputBase} />
               </Field>
 
               <Field icon={Icons.phone} delay={0.1}>
                 <label htmlFor="phone" className="sr-only">{t('contact.phone')}</label>
-                <input type="tel" id="phone" name="phone" placeholder={t('contact.phone')} className={inputBase} />
+                <input type="tel" id="phone" name="phone" required aria-required="true" inputMode="tel" autoComplete="tel" pattern={PHONE_PATTERN} {...phoneValidityHandlers()} placeholder={`${t('contact.phone')} *`} className={inputBase} />
               </Field>
 
               <Field icon={Icons.globe} delay={0.15}>
@@ -995,6 +1006,7 @@ const ContactFormSection = () => {
 
       <style jsx global>{`
         input, textarea, button, select { border-radius: 0 !important; }
+        form.gy-tried input:invalid { border-bottom-color: rgba(229, 115, 115, 0.9) !important; }
         input:-webkit-autofill,
         input:-webkit-autofill:hover,
         input:-webkit-autofill:focus,

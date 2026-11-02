@@ -9,6 +9,7 @@
 // notification flow on the existing SVG-based builder.
 
 import { sendTelegram } from "@/lib/telegram";
+import { telegramSafe } from "@/lib/requiredContact";
 import { sendNewsletterEmail } from "@/lib/newsletter/resend";
 import { bumpKpi } from "@/lib/kpis";
 import { checkRateLimit } from "@/lib/rateLimit";
@@ -39,6 +40,7 @@ export async function POST(req) {
 
   const name = (body?.name || "").toString().slice(0, 100).trim();
   const email = (body?.email || "").toString().slice(0, 200).trim();
+  const phone = telegramSafe(body?.phone, 40);
   const message = (body?.message || "").toString().slice(0, 1000).trim();
   const route = Array.isArray(body?.route) ? body.route.slice(0, 30) : [];
   const totalNM = (body?.totalNM || "").toString().slice(0, 20);
@@ -54,7 +56,7 @@ export async function POST(req) {
   const routeStr = route.map((s) => (typeof s === "string" ? s : s?.name || "?")).join(" → ");
 
   // Telegram to Boss
-  const tg = `🗺️ *Itinerary Builder, saved route*\n\n👤 ${name}\n📧 ${email}\n\n*Route:* ${routeStr}\n*Total:* ${totalNM || "?"} NM · ~${hours || "?"} sailing hours\n${message ? `\n*Notes:*\n${message}\n` : ""}\n_Source: /itinerary-builder_`;
+  const tg = `🗺️ *Itinerary Builder, saved route*\n\n👤 ${name}\n📧 ${email}\n${phone ? `📞 ${phone}\n` : ""}\n*Route:* ${routeStr}\n*Total:* ${totalNM || "?"} NM · ~${hours || "?"} sailing hours\n${message ? `\n*Notes:*\n${message}\n` : ""}\n_Source: /itinerary-builder_`;
   try {
     await sendTelegram(tg);
   } catch {}

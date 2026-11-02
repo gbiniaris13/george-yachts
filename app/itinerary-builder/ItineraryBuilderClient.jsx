@@ -10,6 +10,7 @@ import dynamic from 'next/dynamic';
 const MapboxRouteMap = dynamic(() => import('./MapboxRouteMap'), { ssr: false });
 const HAS_MAPBOX = typeof process !== 'undefined' && !!process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 import { useI18n } from '@/lib/i18n/I18nProvider';
+import { REQUIRED_NOTE, firstContactError } from '@/lib/requiredContact';
 
 const GOLD = '#DAA110';
 const DARK = '#0D1B2A';
@@ -91,6 +92,7 @@ export default function ItineraryBuilderClient() {
   const [saveOpen, setSaveOpen] = useState(false);
   const [saveName, setSaveName] = useState('');
   const [saveEmail, setSaveEmail] = useState('');
+  const [savePhone, setSavePhone] = useState('');
   const [saveMessage, setSaveMessage] = useState('');
   const [saveSubmitting, setSaveSubmitting] = useState(false);
   const [saveDone, setSaveDone] = useState(false);
@@ -655,11 +657,14 @@ export default function ItineraryBuilderClient() {
                   We&apos;ll email you a copy of this route and George will come back within 24 hours with the yachts that fit it.
                 </p>
                 <form
+                  noValidate
                   onSubmit={async (e) => {
                     e.preventDefault();
                     if (saveSubmitting) return;
-                    if (!saveName.trim() || !saveEmail.includes('@')) {
-                      setSaveError('Please enter your name and a valid email.');
+                    // 2026-11-02 (George): name, email and phone are required.
+                    const problem = firstContactError({ name: saveName, email: saveEmail, phone: savePhone });
+                    if (problem) {
+                      setSaveError(problem.message);
                       return;
                     }
                     setSaveError('');
@@ -671,6 +676,7 @@ export default function ItineraryBuilderClient() {
                         body: JSON.stringify({
                           name: saveName.trim(),
                           email: saveEmail.trim(),
+                          phone: savePhone.trim(),
                           message: saveMessage.trim(),
                           route: selected.map((s) => s.name),
                           totalNM: routeStats.totalNM,
@@ -693,15 +699,23 @@ export default function ItineraryBuilderClient() {
                   style={{ display: 'flex', flexDirection: 'column', gap: 10 }}
                 >
                   <input
-                    type="text" placeholder="Your name" required
+                    type="text" placeholder="Full name *" required aria-required="true" autoComplete="name"
                     value={saveName} onChange={(e) => setSaveName(e.target.value)}
                     style={modalInput}
                   />
                   <input
-                    type="email" placeholder="Your email" required
+                    type="email" placeholder="Email *" required aria-required="true" autoComplete="email" inputMode="email"
                     value={saveEmail} onChange={(e) => setSaveEmail(e.target.value)}
                     style={modalInput}
                   />
+                  <input
+                    type="tel" placeholder="Phone / WhatsApp *" required aria-required="true" autoComplete="tel" inputMode="tel"
+                    value={savePhone} onChange={(e) => setSavePhone(e.target.value)}
+                    style={modalInput}
+                  />
+                  <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11.5, color: 'rgba(248,245,240,0.6)', margin: 0, lineHeight: 1.5 }}>
+                    {REQUIRED_NOTE}
+                  </p>
                   <textarea
                     placeholder="Anything George should know? (group size, dates, vibe - optional)"
                     value={saveMessage} onChange={(e) => setSaveMessage(e.target.value)}

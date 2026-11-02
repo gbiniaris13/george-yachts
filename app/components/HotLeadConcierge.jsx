@@ -14,6 +14,7 @@
 //   2. Leave one field (email) and George reaches out personally
 import { useEffect, useRef, useState } from "react";
 import { collectVisitorContext } from "@/lib/visitorContext";
+import { REQUIRED_NOTE, firstContactError } from "@/lib/requiredContact";
 
 const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
@@ -37,6 +38,9 @@ export default function HotLeadConcierge({ signal }) {
   const [open, setOpen] = useState(false);
   const [yacht, setYacht] = useState(null);
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const shownRef = useRef(false);
@@ -73,15 +77,23 @@ export default function HotLeadConcierge({ signal }) {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (!email || sending) return;
+    if (sending) return;
+    // 2026-11-02 (George): name, email and phone are required.
+    const problem = firstContactError({ name, email, phone });
+    if (problem) {
+      setError(problem.message);
+      return;
+    }
+    setError("");
     setSending(true);
     try {
       await fetch("/api/inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: "Concierge card lead",
-          email,
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
           message: `Visitor asked George to reach out${yacht ? ` while viewing ${yacht}` : ""}. (Hot-lead concierge card)`,
           source: "hot_lead_concierge",
           yachtName: yacht || undefined,
@@ -194,30 +206,47 @@ export default function HotLeadConcierge({ signal }) {
             WhatsApp George
           </a>
 
-          <form onSubmit={submit} style={{ display: "flex", gap: 8 }}>
-            <label style={{ display: "contents" }}>
-              <span className="sr-only">Your email</span>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                /* 2026-08-19 (design pass) - was "Or your email, and George
-                   writes first", which did not fit its own field and was cut
-                   mid-word at "firs". Shorter, still says who moves next. */
-                placeholder="Or leave your email"
-                style={{
-                  flex: 1,
-                  minWidth: 0,
-                  fontFamily: "var(--gy-font-ui)",
-                  fontSize: 12,
-                  color: "#F8F5F0",
-                  background: "rgba(248,245,240,0.06)",
-                  border: "1px solid rgba(218, 161, 16,0.3)",
-                  padding: "10px 12px",
-                }}
-              />
-            </label>
+          <form onSubmit={submit} noValidate style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {[
+              { key: "name", label: "Full name", type: "text", auto: "name", mode: undefined, value: name, set: setName },
+              { key: "email", label: "Email", type: "email", auto: "email", mode: "email", value: email, set: setEmail },
+              { key: "phone", label: "Phone / WhatsApp", type: "tel", auto: "tel", mode: "tel", value: phone, set: setPhone },
+            ].map((f) => (
+              <label key={f.key} style={{ display: "contents" }}>
+                <span className="sr-only">{f.label} (required)</span>
+                <input
+                  type={f.type}
+                  required
+                  aria-required="true"
+                  autoComplete={f.auto}
+                  inputMode={f.mode}
+                  value={f.value}
+                  onChange={(e) => {
+                    f.set(e.target.value);
+                    setError("");
+                  }}
+                  placeholder={`${f.label} *`}
+                  style={{
+                    width: "100%",
+                    boxSizing: "border-box",
+                    fontFamily: "var(--gy-font-ui)",
+                    fontSize: 12,
+                    color: "#F8F5F0",
+                    background: "rgba(248,245,240,0.06)",
+                    border: "1px solid rgba(218, 161, 16,0.3)",
+                    padding: "10px 12px",
+                  }}
+                />
+              </label>
+            ))}
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 10.5, lineHeight: 1.5, color: "rgba(248,245,240,0.6)", margin: 0 }}>
+              {REQUIRED_NOTE}
+            </p>
+            {error && (
+              <p role="alert" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11.5, lineHeight: 1.5, color: GOLD, margin: 0 }}>
+                {error}
+              </p>
+            )}
             <button
               type="submit"
               disabled={sending}

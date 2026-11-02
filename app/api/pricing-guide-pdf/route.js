@@ -37,6 +37,7 @@ async function forwardLeadCapture(payload, req) {
         source: "pricing-guide-pdf",
         name: payload.firstName,
         email: payload.email,
+        phone: String(payload.phone || "").slice(0, 40),
         meta: {
           timing: payload.timing || "not specified",
           download: "2026 Greek Charter Pricing Guide",
@@ -67,7 +68,7 @@ export async function POST(req) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const { firstName, email, timing } = payload || {};
+  const { firstName, email, timing, phone } = payload || {};
   if (!firstName || typeof firstName !== "string" || firstName.length > 100) {
     return NextResponse.json({ error: "First name is required" }, { status: 400 });
   }
@@ -76,7 +77,7 @@ export async function POST(req) {
   }
 
   // Fire-and-forget lead capture so the PDF response stays fast.
-  forwardLeadCapture({ firstName, email, timing, sourcePage: payload.sourcePage }, req).catch(() => {});
+  forwardLeadCapture({ firstName, email, phone, timing, sourcePage: payload.sourcePage }, req).catch(() => {});
 
   // Generate the PDF. Dynamic imports + explicit React resolution.
   let pdfBuffer;

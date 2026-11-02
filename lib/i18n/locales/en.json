@@ -128,7 +128,7 @@
     "step3": "Details",
     "name": "Full Name",
     "email": "Email Address",
-    "phone": "Phone / WhatsApp (optional)",
+    "phone": "Phone / WhatsApp",
     "dates": "Preferred Dates",
     "guests": "Number of Guests",
     "budget": "Budget Range",

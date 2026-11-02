@@ -10,6 +10,7 @@
 // the retired exit-intent modal, so one capture retires every popup.
 
 import { useState } from "react";
+import { REQUIRED_NOTE, firstContactError } from "@/lib/requiredContact";
 
 const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
@@ -18,6 +19,9 @@ const SUBSCRIBED_KEY = "gy_exit_intent_subscribed";
 
 export default function DossierRequest({ slug, yachtName }) {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [fieldError, setFieldError] = useState("");
   const [website, setWebsite] = useState(""); // honeypot
   const [status, setStatus] = useState("idle"); // idle | submitting | ready | error
 
@@ -25,12 +29,19 @@ export default function DossierRequest({ slug, yachtName }) {
     e.preventDefault();
     if (status === "submitting" || status === "ready") return;
     if (website) return;
+    // 2026-11-02 (George): name, email and phone are required.
+    const problem = firstContactError({ name, email, phone });
+    if (problem) {
+      setFieldError(problem.message);
+      return;
+    }
+    setFieldError("");
     setStatus("submitting");
     try {
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, website: "" }),
+        body: JSON.stringify({ email: email.trim(), name: name.trim(), phone: phone.trim(), source: `dossier: ${yachtName || slug}`, website: "" }),
       });
       if (!res.ok) throw new Error("failed");
       try {
@@ -121,7 +132,7 @@ export default function DossierRequest({ slug, yachtName }) {
             </p>
           </div>
         ) : (
-          <form onSubmit={submit} style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+          <form onSubmit={submit} noValidate style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
             <input
               type="text"
               value={website}
@@ -132,17 +143,61 @@ export default function DossierRequest({ slug, yachtName }) {
               style={{ position: "absolute", left: "-9999px", height: 0, width: 0, opacity: 0 }}
             />
             <input
+              type="text"
+              required
+              aria-required="true"
+              autoComplete="name"
+              value={name}
+              onChange={(e) => { setName(e.target.value); setFieldError(""); }}
+              placeholder="Full name *"
+              aria-label="Full name (required)"
+              style={{
+                fontFamily: "var(--gy-font-ui)",
+                fontSize: 14,
+                padding: "13px 18px",
+                minWidth: 220,
+                background: "transparent",
+                border: "1px solid rgba(248,245,240,0.3)",
+                color: CREAM,
+                outline: "none",
+              }}
+            />
+            <input
               type="email"
               required
+              aria-required="true"
+              autoComplete="email"
+              inputMode="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              aria-label="Email address"
+              onChange={(e) => { setEmail(e.target.value); setFieldError(""); }}
+              placeholder="Email *"
+              aria-label="Email address (required)"
               style={{
                 fontFamily: "var(--gy-font-ui)",
                 fontSize: 14,
                 padding: "13px 18px",
                 minWidth: 250,
+                background: "transparent",
+                border: "1px solid rgba(248,245,240,0.3)",
+                color: CREAM,
+                outline: "none",
+              }}
+            />
+            <input
+              type="tel"
+              required
+              aria-required="true"
+              autoComplete="tel"
+              inputMode="tel"
+              value={phone}
+              onChange={(e) => { setPhone(e.target.value); setFieldError(""); }}
+              placeholder="Phone / WhatsApp *"
+              aria-label="Phone or WhatsApp (required)"
+              style={{
+                fontFamily: "var(--gy-font-ui)",
+                fontSize: 14,
+                padding: "13px 18px",
+                minWidth: 220,
                 background: "transparent",
                 border: "1px solid rgba(248,245,240,0.3)",
                 color: CREAM,
@@ -167,6 +222,14 @@ export default function DossierRequest({ slug, yachtName }) {
             >
               {status === "submitting" ? "One moment" : "Receive the dossier"}
             </button>
+            <p style={{ flexBasis: "100%", fontFamily: "var(--gy-font-ui)", fontSize: 11.5, color: "rgba(248,245,240,0.6)", margin: "4px 0 0", lineHeight: 1.5 }}>
+              {REQUIRED_NOTE}
+            </p>
+            {fieldError && (
+              <p role="alert" style={{ flexBasis: "100%", fontFamily: "var(--gy-font-ui)", fontSize: 12, color: GOLD, margin: 0, lineHeight: 1.5 }}>
+                {fieldError}
+              </p>
+            )}
           </form>
         )}
         {status === "error" && (

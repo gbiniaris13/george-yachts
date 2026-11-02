@@ -21,6 +21,7 @@
 
 import { useEffect, useState } from "react";
 import { collectVisitorContext } from "@/lib/visitorContext";
+import { REQUIRED_NOTE, firstContactError } from "@/lib/requiredContact";
 
 const CHANNELS = [
   { id: "email", label: "Email" },
@@ -41,6 +42,7 @@ export default function ExpressInquiryModal({
 }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [dates, setDates] = useState("");
   const [message, setMessage] = useState("");
   const [channel, setChannel] = useState("email");
@@ -81,8 +83,10 @@ export default function ExpressInquiryModal({
   const onSubmit = async (e) => {
     e.preventDefault();
     if (submitting) return;
-    if (!name.trim() || !email.trim()) {
-      setError("Please add your name and email so George can reach you.");
+    // 2026-11-02 (George): name, email and phone are required.
+    const problem = firstContactError({ name, email, phone });
+    if (problem) {
+      setError(problem.message);
       return;
     }
     setSubmitting(true);
@@ -134,6 +138,7 @@ export default function ExpressInquiryModal({
         body: JSON.stringify({
           name,
           email,
+          phone,
           dates,
           message,
           yachtSlug,
@@ -176,6 +181,7 @@ export default function ExpressInquiryModal({
         onClose?.();
         setName("");
         setEmail("");
+        setPhone("");
         setDates("");
         setMessage("");
       }, 2500);
@@ -296,9 +302,10 @@ export default function ExpressInquiryModal({
               />
 
               <FormField
-                label="Your name"
+                label="Full name"
                 value={name}
                 onChange={setName}
+                autoComplete="name"
                 required
               />
               <FormField
@@ -308,6 +315,19 @@ export default function ExpressInquiryModal({
                 onChange={setEmail}
                 required
               />
+              <FormField
+                label="Phone / WhatsApp"
+                type="tel"
+                value={phone}
+                onChange={setPhone}
+                autoComplete="tel"
+                inputMode="tel"
+                placeholder="+1 212 555 0100"
+                required
+              />
+              <p style={{ fontSize: 11, color: "rgba(248,245,240,0.6)", margin: "10px 0 0", lineHeight: 1.5 }}>
+                {REQUIRED_NOTE}
+              </p>
               <FormField
                 label="Approximate dates (optional)"
                 placeholder="e.g. 5-12 July 2026"
@@ -468,7 +488,7 @@ export default function ExpressInquiryModal({
   );
 }
 
-function FormField({ label, type = "text", value, onChange, required, multiline, placeholder }) {
+function FormField({ label, type = "text", value, onChange, required, multiline, placeholder, autoComplete, inputMode }) {
   // Phase 27 (Forbes-launch eve, 2026-05-05) — bumped from 14→16px so
   // iOS Safari doesn't auto-zoom on focus and push the modal off-screen.
   const inputStyle = {
@@ -514,8 +534,10 @@ function FormField({ label, type = "text", value, onChange, required, multiline,
           value={value}
           onChange={(e) => onChange(e.target.value)}
           required={required}
+          aria-required={required ? "true" : undefined}
           placeholder={placeholder}
-          autoComplete={type === "email" ? "email" : "off"}
+          autoComplete={autoComplete || (type === "email" ? "email" : "off")}
+          inputMode={inputMode}
           style={inputStyle}
           onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#DAA110")}
           onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(248, 245, 240,0.25)")}

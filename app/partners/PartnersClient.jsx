@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { FLEET_COUNT } from "@/lib/fleetCount";
+import { REQUIRED_NOTE, REQUIRED_MESSAGES, firstContactError, isValidPhone } from "@/lib/requiredContact";
 import Link from "next/link";
 
 const GATE_KEY = "gy_partners_unlocked";
@@ -73,6 +74,9 @@ const credentials = [
 
 export default function PartnersClient() {
   const [email, setEmail] = useState("");
+  const [partnerName, setPartnerName] = useState("");
+  const [partnerPhone, setPartnerPhone] = useState("");
+  const [requestError, setRequestError] = useState("");
   const [website, setWebsite] = useState(""); // honeypot
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -123,6 +127,11 @@ export default function PartnersClient() {
       setGateError("Please enter your company name.");
       return;
     }
+    // 2026-11-02 (George): the phone is required on every request form.
+    if (!isValidPhone(gate.phone)) {
+      setGateError(REQUIRED_MESSAGES.phone);
+      return;
+    }
     setGateSubmitting(true);
     try {
       await fetch("/api/lead-gate", {
@@ -149,14 +158,20 @@ export default function PartnersClient() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email) return;
+    // 2026-11-02 (George): name, email and phone are required.
+    const problem = firstContactError({ name: partnerName, email, phone: partnerPhone });
+    if (problem) {
+      setRequestError(problem.message);
+      return;
+    }
+    setRequestError("");
     setLoading(true);
     try {
       // POST to a serverless function that sends the PDF + notifies George
       await fetch("/api/partner-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, website }),
+        body: JSON.stringify({ email: email.trim(), name: partnerName.trim(), phone: partnerPhone.trim(), website }),
       });
       setSubmitted(true);
     } catch {
@@ -272,8 +287,9 @@ export default function PartnersClient() {
                   placeholder="Agency / Brand"
                 />
                 <FieldInput
-                  label="Phone"
+                  label="Phone / WhatsApp"
                   type="tel"
+                  required
                   value={gate.phone}
                   onChange={(v) => setGate((g) => ({ ...g, phone: v }))}
                   placeholder="+30 ..."
@@ -620,7 +636,7 @@ export default function PartnersClient() {
           </p>
 
           {!submitted ? (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-8">
+            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-3 max-w-md mx-auto mb-8">
               {/* Honeypot, hidden from real users, bots autofill it */}
               <input
                 type="text"
@@ -633,11 +649,32 @@ export default function PartnersClient() {
                 style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", opacity: 0 }}
               />
               <input
+                type="text"
+                required
+                aria-required="true"
+                autoComplete="name"
+                aria-label="Full name (required)"
+                value={partnerName}
+                onChange={(e) => { setPartnerName(e.target.value); setRequestError(""); }}
+                placeholder="Full name *"
+                className="px-5 py-3.5 text-sm border focus:outline-none focus:border-[#DAA110] transition-colors"
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  borderColor: "rgba(13, 27, 42, 0.15)",
+                  borderRadius: "2px",
+                  color: "#0D1B2A",
+                  backgroundColor: "#F8F5F0",
+                }}
+              />
+              <input
                 type="email"
                 required
+                aria-required="true"
+                autoComplete="email"
+                aria-label="Business email (required)"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Your business email"
+                onChange={(e) => { setEmail(e.target.value); setRequestError(""); }}
+                placeholder="Your business email *"
                 className="flex-1 px-5 py-3.5 text-sm border focus:outline-none focus:border-[#DAA110] transition-colors"
                 style={{
                   fontFamily: "var(--gy-font-ui)",
@@ -647,6 +684,33 @@ export default function PartnersClient() {
                   backgroundColor: "#F8F5F0",
                 }}
               />
+              <input
+                type="tel"
+                required
+                aria-required="true"
+                autoComplete="tel"
+                inputMode="tel"
+                aria-label="Phone or WhatsApp (required)"
+                value={partnerPhone}
+                onChange={(e) => { setPartnerPhone(e.target.value); setRequestError(""); }}
+                placeholder="Phone / WhatsApp *"
+                className="px-5 py-3.5 text-sm border focus:outline-none focus:border-[#DAA110] transition-colors"
+                style={{
+                  fontFamily: "var(--gy-font-ui)",
+                  borderColor: "rgba(13, 27, 42, 0.15)",
+                  borderRadius: "2px",
+                  color: "#0D1B2A",
+                  backgroundColor: "#F8F5F0",
+                }}
+              />
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: "#0D1B2A", opacity: 0.6, margin: 0, lineHeight: 1.5 }}>
+                {REQUIRED_NOTE}
+              </p>
+              {requestError && (
+                <p role="alert" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12.5, color: "#a5281b", margin: 0, lineHeight: 1.5 }}>
+                  {requestError}
+                </p>
+              )}
               <button
                 type="submit"
                 disabled={loading}

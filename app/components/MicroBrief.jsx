@@ -15,6 +15,7 @@
 import { useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { collectVisitorContext } from "@/lib/visitorContext";
+import { REQUIRED_NOTE, firstContactError } from "@/lib/requiredContact";
 
 const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
@@ -52,6 +53,9 @@ export default function MicroBrief({ variant = "inline", context = "", heading, 
   const pathname = usePathname();
   const [status, setStatus] = useState("idle"); // idle | sending | done | error
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [fieldError, setFieldError] = useState("");
   const [month, setMonth] = useState("");
   const [guests, setGuests] = useState("");
   const websiteRef = useRef(null);
@@ -64,17 +68,20 @@ export default function MicroBrief({ variant = "inline", context = "", heading, 
   async function submit(e) {
     e.preventDefault();
     if (websiteRef.current && websiteRef.current.value) return; // honeypot
-    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
-    if (!ok) {
-      setStatus("error");
+    // 2026-11-02 (George): name, email and phone are required here too.
+    const problem = firstContactError({ name, email, phone });
+    if (problem) {
+      setFieldError(problem.message);
       return;
     }
+    setFieldError("");
     setStatus("sending");
     const where = context || pathname || "";
     const payload = {
       micro: true,
-      name: "",
-      email,
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
       guests: guests || "Not specified",
       timing: month || "Not specified",
       message: `Micro brief from ${where}. Month: ${month || "not given"}. Guests: ${guests || "not given"}. Asked for three yachts with their numbers.`,
@@ -206,16 +213,47 @@ export default function MicroBrief({ variant = "inline", context = "", heading, 
               </select>
             </label>
             <label style={{ display: "contents" }}>
-              <span className="sr-only">Email</span>
+              <span className="sr-only">Full name (required)</span>
+              <input
+                type="text"
+                name="name"
+                autoComplete="name"
+                required
+                aria-required="true"
+                placeholder="Full name *"
+                value={name}
+                onChange={(e) => { setName(e.target.value); setFieldError(""); }}
+                style={{ ...fieldStyle, flex: "1 1 200px" }}
+              />
+            </label>
+            <label style={{ display: "contents" }}>
+              <span className="sr-only">Email (required)</span>
               <input
                 type="email"
                 name="email"
                 inputMode="email"
                 autoComplete="email"
-                placeholder="Your email"
+                required
+                aria-required="true"
+                placeholder="Email *"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => { setEmail(e.target.value); setFieldError(""); }}
                 style={{ ...fieldStyle, flex: "1 1 220px" }}
+              />
+            </label>
+            <label style={{ display: "contents" }}>
+              <span className="sr-only">Phone or WhatsApp (required)</span>
+              <input
+                type="tel"
+                name="phone"
+                inputMode="tel"
+                autoComplete="tel"
+                required
+                aria-required="true"
+                placeholder="Phone / WhatsApp *"
+                value={phone}
+                onChange={(e) => { setPhone(e.target.value); setFieldError(""); }}
+                style={{ ...fieldStyle, flex: "1 1 200px" }}
               />
             </label>
             <button
@@ -239,6 +277,33 @@ export default function MicroBrief({ variant = "inline", context = "", heading, 
             >
               {status === "sending" ? "Sending" : "Send me three yachts"}
             </button>
+            <p
+              style={{
+                flexBasis: "100%",
+                fontFamily: "var(--gy-font-ui)",
+                fontSize: 11.5,
+                color: "rgba(248, 245, 240, 0.6)",
+                margin: "2px 0 0",
+                lineHeight: 1.5,
+              }}
+            >
+              {REQUIRED_NOTE}
+            </p>
+            {fieldError && (
+              <p
+                role="alert"
+                style={{
+                  flexBasis: "100%",
+                  fontFamily: "var(--gy-font-ui)",
+                  fontSize: 12,
+                  color: GOLD,
+                  margin: "2px 0 0",
+                  lineHeight: 1.5,
+                }}
+              >
+                {fieldError}
+              </p>
+            )}
             {status === "error" && (
               <p
                 role="alert"

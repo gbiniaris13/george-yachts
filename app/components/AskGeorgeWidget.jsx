@@ -13,6 +13,7 @@
 // the existing Telegram bot fires immediately.
 
 import { useEffect, useRef, useState } from "react";
+import { REQUIRED_NOTE, firstContactError } from "@/lib/requiredContact";
 
 const QUICK_REPLIES = [
   "Recommend a yacht for a family of 8",
@@ -36,6 +37,8 @@ export default function AskGeorgeWidget() {
   const [followUp, setFollowUp] = useState(false);
   const [followName, setFollowName] = useState("");
   const [followEmail, setFollowEmail] = useState("");
+  const [followPhone, setFollowPhone] = useState("");
+  const [followError, setFollowError] = useState("");
   const [followSent, setFollowSent] = useState(false);
   const scrollRef = useRef(null);
 
@@ -118,7 +121,13 @@ export default function AskGeorgeWidget() {
 
   async function submitFollowUp(e) {
     e.preventDefault();
-    if (!followName.trim() || !followEmail.trim()) return;
+    // 2026-11-02 (George): name, email and phone are required.
+    const problem = firstContactError({ name: followName, email: followEmail, phone: followPhone });
+    if (problem) {
+      setFollowError(problem.message);
+      return;
+    }
+    setFollowError("");
     try {
       await fetch("/api/ask-george", {
         method: "POST",
@@ -127,6 +136,7 @@ export default function AskGeorgeWidget() {
           saveForFollowUp: true,
           name: followName.trim(),
           email: followEmail.trim(),
+          phone: followPhone.trim(),
           messages,
           path: typeof window !== "undefined" ? window.location.pathname : "",
         }),
@@ -406,6 +416,7 @@ export default function AskGeorgeWidget() {
           )}
           {followUp && !followSent && (
             <form
+              noValidate
               onSubmit={submitFollowUp}
               style={{
                 padding: "12px 18px",
@@ -417,20 +428,44 @@ export default function AskGeorgeWidget() {
             >
               <input
                 type="text"
-                placeholder="Your name"
+                placeholder="Full name *"
                 value={followName}
                 onChange={(e) => setFollowName(e.target.value)}
                 required
+                aria-required="true"
+                autoComplete="name"
                 style={inputStyle}
               />
               <input
                 type="email"
-                placeholder="Your email"
+                placeholder="Email *"
                 value={followEmail}
                 onChange={(e) => setFollowEmail(e.target.value)}
                 required
+                aria-required="true"
+                autoComplete="email"
+                inputMode="email"
                 style={inputStyle}
               />
+              <input
+                type="tel"
+                placeholder="Phone / WhatsApp *"
+                value={followPhone}
+                onChange={(e) => setFollowPhone(e.target.value)}
+                required
+                aria-required="true"
+                autoComplete="tel"
+                inputMode="tel"
+                style={inputStyle}
+              />
+              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, lineHeight: 1.5, color: "rgba(248,245,240,0.6)", margin: 0 }}>
+                {REQUIRED_NOTE}
+              </p>
+              {followError && (
+                <p role="alert" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11.5, lineHeight: 1.5, color: "#DAA110", margin: 0 }}>
+                  {followError}
+                </p>
+              )}
               <button
                 type="submit"
                 style={{
