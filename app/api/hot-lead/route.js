@@ -1,5 +1,5 @@
-// Hot Lead Alert — fires when a visitor views 3+ yacht pages in one session
-// Sends urgent Telegram notification with yacht names and visitor country
+// Hot lead ping from VisitorBeacon: a visitor opened 3+ yacht pages.
+// Since 2026-11-06 the Telegram alert for this comes from /api/track only.
 //
 // 2026-05-11 — Added validation + rate limiting. Previously the
 // endpoint fired a Telegram alert on ANY POST including empty {}
@@ -10,7 +10,6 @@
 
 export const runtime = 'edge';
 
-import { sendTelegram, getFlag, getCountryName, detectDevice, athensTime } from '@/lib/telegram';
 
 // Edge in-memory rate buckets — instances reset frequently so this
 // is defence-in-depth, not a guarantee. Combined with the >=3-yacht
@@ -37,9 +36,6 @@ function isPlausibleSlug(s) {
 
 export async function POST(request) {
   try {
-    const country = request.headers.get('x-vercel-ip-country') || '??';
-    const city = request.headers.get('x-vercel-ip-city') || '';
-    const ua = request.headers.get('user-agent') || '';
     const ip = (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'unknown';
 
     let body = {};
@@ -62,32 +58,12 @@ export async function POST(request) {
       });
     }
 
-    const flag = getFlag(country);
-    const countryName = getCountryName(country);
-    const device = detectDevice(ua);
-    const time = athensTime();
-    const cityStr = city ? `, ${decodeURIComponent(city)}` : '';
-
-    // Format yacht names nicely (remove slug format)
-    const yachtNames = yachts.map(s =>
-      s.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
-    ).join(', ');
-
-    const text = [
-      `🔥 *HOT LEAD, George Yachts*`,
-      ``,
-      `${flag} *${countryName}*${cityStr}`,
-      `${device}`,
-      ``,
-      `👀 Viewed *${yachts.length} yachts*:`,
-      `${yachtNames}`,
-      ``,
-      `💡 _This visitor is seriously browsing. Consider reaching out!_`,
-      `🕐 ${time} Athens time`,
-    ].join('\n');
-
-    await sendTelegram(text);
-
+    // 2026-11-06: this route no longer sends its own Telegram alert.
+    // The same moment (third yacht opened) already raises the fuller
+    // "HOT LEAD DETECTED" card from /api/track, with score, network,
+    // source and trail, so George was getting two alerts for one person.
+    // This one could not tell a person from a crawler either. The route
+    // still validates and answers, so the page script is unchanged.
     return new Response(JSON.stringify({ ok: true }), {
       status: 200, headers: { 'Content-Type': 'application/json' },
     });

@@ -19,6 +19,7 @@ import { enrichEmail } from '@/lib/email-enrich';
 import { countPremiumViews } from '@/lib/premium-yachts';
 import { computeHotScore, explainScore, isHotLead } from '@/lib/hot-score';
 import { parseUserAgent, scoreDeviceTier } from '@/lib/device-tier';
+import { machineReason, hasActivity } from '@/lib/dailyReport';
 
 export const dynamic = 'force-dynamic';
 
@@ -85,6 +86,30 @@ async function hasPriorSession(visitorId) {
     if (!res.ok) return false;
     const rows = await res.json();
     return Array.isArray(rows) && rows.length > 0;
+  } catch { return false; }
+}
+
+// 2026-11-06: a browser that keeps coming back and never does anything is
+// a monitor or a tab on auto-refresh, not a visitor (one of these loaded
+// the homepage 29 times in 8 days and pinged Telegram each time). True
+// when the last visits of this browser, three or more, left no trace of a
+// person. Any doubt or error answers false, so a real visitor still pings.
+async function returnsWithoutEverActing(visitorId) {
+  if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY || !visitorId) return false;
+  try {
+    const res = await fetch(
+      `${CRM_SUPABASE_URL}/rest/v1/sessions?visitor_id=eq.${encodeURIComponent(visitorId)}&select=time_on_site,active_seconds,pages_visited,mouse_samples,scroll_deep,cta_clicks,copy_events&order=started_at.desc&limit=6`,
+      {
+        headers: {
+          'apikey': CRM_SUPABASE_KEY,
+          'Authorization': `Bearer ${CRM_SUPABASE_KEY}`,
+        },
+        signal: AbortSignal.timeout(4000),
+      }
+    );
+    if (!res.ok) return false;
+    const rows = await res.json();
+    return Array.isArray(rows) && rows.length >= 3 && !rows.some(hasActivity);
   } catch { return false; }
 }
 
@@ -435,14 +460,34 @@ export async function POST(request) {
       // hit-list (Azure / AWS / GCP / DigitalOcean / Linode / etc), so
       // this gate finally catches Microsoft Corporation (AS8075) traffic
       // that previously slipped through with is_hosting=null.
-      const looksLikeBot =
-        ipEnrich?.is_hosting === true ||
-        ipEnrich?.is_tor === true ||
-        clientSignals?.webdriver === true ||
-        /bot|crawler|spider|scraper|headless|preview|monitor/i.test(ua);
+      //
+      // 2026-11-06: the person-or-machine question is now answered by the
+      // same rule the daily email uses (lib/dailyReport.js), so Telegram
+      // and the email agree. Two things change. The crawlers the old test
+      // missed are silenced: Meta's (264 visits in 8 days, never flagged
+      // as hosting), headless browsers with a software renderer, Linux
+      // desktops. And real people the old test silenced now ping: Safari
+      // behind iCloud Private Relay and Deutsche Telekom home lines were
+      // both read as "hosting".
+      const machineAtArrival = machineReason({
+        ip_company: ipEnrich?.company || ipEnrich?.asn_name || '',
+        ip_is_hosting: ipEnrich?.is_hosting ?? null,
+        ip_is_tor: ipEnrich?.is_tor ?? null,
+        webdriver: clientSignals?.webdriver ?? null,
+        webgl_renderer: clientSignals?.webgl_renderer || '',
+        browser: uaParsed.browser,
+        os: uaParsed.os,
+        country: countryCode,
+        pages_visited: [page || '/'],
+      });
 
       // Check if we've seen this visitor before.
       const isReturn = await hasPriorSession(visitorId);
+
+      const looksLikeBot =
+        !!machineAtArrival ||
+        /bot|crawler|spider|scraper|headless|preview|monitor/i.test(ua) ||
+        (isReturn && (await returnsWithoutEverActing(visitorId)));
 
       // Compute initial hot-score (mostly 0 — visit just started).
       const score = computeHotScore({
@@ -749,7 +794,13 @@ export async function POST(request) {
       ].filter(Boolean).join('\n');
 
       const hotLeadDesc = `${country}${decodedCity ? ` (${decodedCity})` : ''}, ${formatDuration(sanitisedTimeOnSite)}, ${(yachtsViewed || []).length} yachts (${premiumViews} premium), score ${score}${ipEnrich?.company ? `, ${ipEnrich.company}` : ''}`;
-      const sendTg = await shouldFireTelegram('hot_lead', ip);
+      // 2026-11-06: no hot-lead alert for a machine (a crawler that walks
+      // three yacht pages is not a client). With no session row to judge
+      // from, the alert goes out as before.
+      const hotByMachine = row
+        ? !!machineReason({ ...row, time_on_site: sanitisedTimeOnSite, active_seconds: activeSeconds ?? row.active_seconds })
+        : false;
+      const sendTg = !hotByMachine && (await shouldFireTelegram('hot_lead', ip));
       await Promise.allSettled([
         sendTg ? sendTelegram(card) : Promise.resolve(),
         updateCRMSession(sessionId, {
@@ -954,7 +1005,17 @@ export async function POST(request) {
         mouse_idle_gaps: mouseEntropy?.idle_gaps ?? undefined,
       });
 
-      if (sanitisedTimeOnSite > 30 && (await shouldFireTelegram('session_end', ip))) {
+      // 2026-11-06: same rule for the "Visitor Left" summary. A hand on
+      // the mouse counts as a person whatever the network, which is how a
+      // visitor on a company VPN still gets through here.
+      const leftByMachine = row
+        ? !!machineReason({
+            ...row,
+            time_on_site: sanitisedTimeOnSite,
+            mouse_samples: mouseEntropy?.samples ?? row.mouse_samples,
+          })
+        : false;
+      if (sanitisedTimeOnSite > 30 && !leftByMachine && (await shouldFireTelegram('session_end', ip))) {
         await sendTelegram(msg);
       }
     }
