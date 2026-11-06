@@ -192,16 +192,21 @@ export async function GET(request) {
   // reads its verdict. A run older than 26 hours is a failure too: a test
   // that stopped running protects nobody. If GitHub cannot be read at all,
   // the line says so plainly instead of guessing either way.
+  // 2026-11-06: the list is read WITHOUT GitHub's status filter. The filtered
+  // list comes from a search index that can lag by many hours: on 6 November
+  // it still ended at the run of the 4th while the run of the 5th had passed
+  // 17 hours earlier, and this report raised a false "last ran 42h ago". The
+  // plain list is current; the newest completed run is picked here instead.
   try {
     const gh = await fetch(
-      "https://api.github.com/repos/gbiniaris13/george-yachts/actions/workflows/tap-check.yml/runs?per_page=1&status=completed",
+      "https://api.github.com/repos/gbiniaris13/george-yachts/actions/workflows/tap-check.yml/runs?per_page=5",
       { cache: "no-store", headers: { "User-Agent": "georgeyachts-health", Accept: "application/vnd.github+json" } },
     );
     const name = "Buttons tappable on a phone (browser test)";
     if (!gh.ok) {
       results.push({ name, ok: true, status: gh.status, ms: 0, message: `UNKNOWN today: GitHub could not be read (HTTP ${gh.status}); not counted either way` });
     } else {
-      const run = (await gh.json())?.workflow_runs?.[0];
+      const run = (await gh.json())?.workflow_runs?.find((r) => r.status === "completed");
       if (!run) {
         results.push({ name, ok: false, status: 200, ms: 0, message: "the browser test has never run" });
       } else {
