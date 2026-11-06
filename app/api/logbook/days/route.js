@@ -8,7 +8,8 @@
 // functions that build the morning email.
 //
 // GET ?from=YYYY-MM-DD&to=YYYY-MM-DD  (at most 35 days per call)
-//   -> { days: [snapshot...], unique: { people, us, ai }, yachts: [[name, visits]...] }
+//   -> { days: [snapshot...], unique: { people, us, ai, google },
+//        yachts: [[name, visits]...], aiBy: [[assistant, people]...] }
 // A day runs 24 hours from 05:00 UTC, like the email. Only finished days
 // are returned. `unique` counts different people over the whole span.
 //
@@ -50,9 +51,9 @@ export async function GET(request) {
     const since = new Date(logbookWindow(from).startMs - LOGBOOK_LOOKBACK_DAYS * DAY_MS).toISOString();
     const until = new Date(Math.min(logbookWindow(to).endMs, Date.now())).toISOString();
     const [sessions, requests] = await Promise.all([readSessions(since, until), readRequests(since, until)]);
-    const { days, unique, yachts } = buildLogbookDays({ sessions, requests, from, to });
+    const { days, unique, yachts, aiBy } = buildLogbookDays({ sessions, requests, from, to });
     return Response.json(
-      { ok: true, from, to, days, unique, yachts },
+      { ok: true, from, to, days, unique, yachts, aiBy },
       { headers: { "cache-control": "no-store", "x-robots-tag": "noindex" } },
     );
   } catch (err) {
