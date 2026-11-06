@@ -14,7 +14,7 @@
 //   2. Leave one field (email) and George reaches out personally
 import { useEffect, useRef, useState } from "react";
 import { collectVisitorContext } from "@/lib/visitorContext";
-import { REQUIRED_NOTE, firstContactError } from "@/lib/requiredContact";
+import { REQUIRED_NOTE, SEND_FAILED_MESSAGE, firstContactError } from "@/lib/requiredContact";
 
 const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
@@ -87,7 +87,7 @@ export default function HotLeadConcierge({ signal }) {
     setError("");
     setSending(true);
     try {
-      await fetch("/api/inquiry", {
+      const res = await fetch("/api/inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -100,9 +100,16 @@ export default function HotLeadConcierge({ signal }) {
           visitor_context: collectVisitorContext(),
         }),
       });
+      // 2026-11-05 (form sweep): "Received" showed even when the note
+      // reached no one. A failed send now keeps the card filled and says
+      // so, with WhatsApp (the gold button above) and email as the way on.
+      if (!res.ok) {
+        setError(SEND_FAILED_MESSAGE);
+        return;
+      }
       setSent(true);
     } catch {
-      setSent(true); // never trap the visitor in an error state
+      setError(SEND_FAILED_MESSAGE);
     } finally {
       setSending(false);
     }

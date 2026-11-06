@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useWishlist } from '../components/WishlistProvider';
 import { useI18n } from '@/lib/i18n/I18nProvider';
-import { REQUIRED_NOTE, firstContactError } from '@/lib/requiredContact';
+import { REQUIRED_NOTE, SEND_FAILED_MESSAGE, firstContactError } from '@/lib/requiredContact';
 
 const GOLD = '#DAA110';
 
@@ -36,6 +36,7 @@ export default function FavoritesContent() {
   const [subscribe, setSubscribe] = useState(true);
   const [copyStatus, setCopyStatus] = useState('idle'); // idle | copied
   const [error, setError] = useState('');
+  const [waHref, setWaHref] = useState('');
 
   const handleSendToGeorge = async () => {
     setError('');
@@ -51,11 +52,28 @@ export default function FavoritesContent() {
     }
     setSending(true);
 
-    // Fire to lead-gate FIRST so George gets the contact details even
-    // if the visitor closes the WhatsApp tab before sending the
-    // message. Non-blocking — WhatsApp still opens if the API is down.
+    // Build WhatsApp message with favorites
+    const yachtList = items
+      .map((y) => `• ${y.name} (${y.price || 'Price on request'})`)
+      .join('\n');
+    const msg = `Hello George, I'm ${name} (${email}). I've saved these yachts from your website and would like to discuss:\n\n${yachtList}\n\nPlease send me a proposal.`;
+    const waUrl = `https://api.whatsapp.com/send/?phone=17867988798&text=${encodeURIComponent(msg)}`;
+    setWaHref(waUrl);
+
+    // 2026-11-05 (form sweep): the WhatsApp tab is opened NOW, inside the
+    // tap, and pointed at WhatsApp once the brief is sent; opened after
+    // the await, iPhone Safari blocked it as a pop-up.
+    let waWindow = null;
+    try { waWindow = window.open('', '_blank'); } catch { /* blocked */ }
+
+    // Lead-gate FIRST so George gets the contact details even if the
+    // visitor closes the WhatsApp tab before sending the message.
+    // 2026-11-05: the yachts go as readable lines (they reached George as
+    // "[object Object]"), and "Sent to George" shows only when the brief
+    // really reached him.
+    let delivered = false;
     try {
-      await fetch('/api/lead-gate', {
+      const res = await fetch('/api/lead-gate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -65,29 +83,27 @@ export default function FavoritesContent() {
           phone: phone.trim(),
           meta: {
             favorites_count: items.length,
-            favorites: items.map((y) => ({
-              name: y.name,
-              slug: y.slug,
-              price: y.price || null,
-            })),
+            favorites: items
+              .map((y) => `${y.name} (${y.price || 'price on request'}) georgeyachts.com/yachts/${y.slug}`)
+              .join('; '),
             wants_newsletter: subscribe,
           },
         }),
       });
+      delivered = res.ok;
     } catch {
-      /* non-blocking */
+      delivered = false;
     }
 
-    // Build WhatsApp message with favorites
-    const yachtList = items
-      .map((y) => `• ${y.name} (${y.price || 'Price on request'})`)
-      .join('\n');
-    const msg = `Hello George, I'm ${name} (${email}). I've saved these yachts from your website and would like to discuss:\n\n${yachtList}\n\nPlease send me a proposal.`;
-    const waUrl = `https://api.whatsapp.com/send/?phone=17867988798&text=${encodeURIComponent(msg)}`;
-
-    window.open(waUrl, '_blank');
+    if (waWindow) {
+      try { waWindow.location.href = waUrl; } catch { /* closed */ }
+    }
 
     setSending(false);
+    if (!delivered) {
+      setError(SEND_FAILED_MESSAGE);
+      return;
+    }
     setSent(true);
   };
 
@@ -283,8 +299,16 @@ export default function FavoritesContent() {
             </label>
 
             {error && (
-              <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, color: '#ff9b9b', marginBottom: 14 }}>
+              <p role="alert" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11, color: '#ff9b9b', marginBottom: 14 }}>
                 {error}
+                {error === SEND_FAILED_MESSAGE && waHref && (
+                  <>
+                    {' '}
+                    <a href={waHref} target="_blank" rel="noopener noreferrer" style={{ color: GOLD }}>
+                      Open WhatsApp with your list
+                    </a>
+                  </>
+                )}
               </p>
             )}
 
@@ -340,6 +364,11 @@ export default function FavoritesContent() {
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 13, color: 'rgba(248, 245, 240,0.4)' }}>
               {t('favorites.sentDesc', 'George will personally review your selection and respond within 24 hours.')}
             </p>
+            {waHref && (
+              <a href={waHref} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "var(--gy-font-ui)", fontSize: 12, color: GOLD }}>
+                WhatsApp did not open? Tap here.
+              </a>
+            )}
           </div>
         )}
 

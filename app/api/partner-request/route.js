@@ -4,6 +4,7 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { telegramSafe, htmlSafe } from "@/lib/requiredContact";
+import { sendTelegram } from "@/lib/telegram";
 
 export const dynamic = "force-dynamic";
 
@@ -15,12 +16,8 @@ const transporter = nodemailer.createTransport({
   auth: { user: GMAIL_USER, pass: GMAIL_PASS },
 });
 
-// Notify George via Telegram
-async function notifyTelegram(email, name = "", phone = "") {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) return;
-
+// Notify George via Telegram. Returns true when it arrived.
+async function notifyTelegram(email, name = "", phone = "", pdfLine = "") {
   const text = [
     `🤝 *New Partner Request!*`,
     ``,
@@ -28,17 +25,10 @@ async function notifyTelegram(email, name = "", phone = "") {
     ...(name ? [`👤 ${telegramSafe(name)}`] : []),
     ...(phone ? [`📞 ${telegramSafe(phone, 40)}`] : []),
     ``,
-    `📎 Partnership Programme PDF was auto-sent.`,
+    pdfLine,
     `⏱ _Follow up within 24h!_`,
   ].join("\n");
-
-  try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: chatId, text, parse_mode: "Markdown" }),
-    });
-  } catch {}
+  return sendTelegram(text);
 }
 
 export async function POST(request) {
@@ -100,94 +90,123 @@ export async function POST(request) {
       );
     }
 
-    // 1. Send PDF to the requesting partner
-    await transporter.sendMail({
-      from: `"George Yachts" <${GMAIL_USER}>`,
-      to: email,
-      subject: "George Yachts, The Partnership Edition 2026-2027",
-      html: `
-        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #0D1B2A;">
-          <div style="text-align: center; padding: 40px 20px; background: #0D1B2A;">
-            <h1 style="font-family: Georgia, serif; font-size: 28px; font-weight: 300; color: #F8F5F0; letter-spacing: 0.1em; margin: 0;">
-              GEORGE YACHTS
-            </h1>
-            <p style="font-size: 11px; letter-spacing: 0.3em; color: #DAA110; margin-top: 8px;">
-              PARTNERSHIP PROGRAMME
-            </p>
-          </div>
+    // 2026-11-05 (form sweep): George is told FIRST, and the request
+    // counts as received once his Telegram or his email has arrived.
+    // Before, the PDF to the partner went first; when it failed, George
+    // heard nothing, and the page still said "Thank you". A failed PDF
+    // email no longer costs the lead: the page links the PDF directly.
+    let georgeEmailOk = false;
+    try {
+      await transporter.sendMail({
+        from: GMAIL_USER,
+        to: GMAIL_USER,
+        subject: `🤝 New Partner Request, ${email}`,
+        html: `
+          <h3>New Partnership Programme Request</h3>
+          <p><strong>Email:</strong> ${htmlSafe(email)}</p>
+          ${name ? `<p><strong>Name:</strong> ${htmlSafe(name)}</p>` : ""}
+          ${phone ? `<p><strong>Phone / WhatsApp:</strong> ${htmlSafe(phone, 40)}</p>` : ""}
+          <p><strong>Time:</strong> ${new Date().toISOString()}</p>
+          <p>The PDF is sent to their inbox right after this email (the page also links it directly).</p>
+          <p><strong>Action:</strong> Follow up within 24 hours.</p>
+        `,
+      });
+      georgeEmailOk = true;
+    } catch (e) {
+      console.error("Partner request: email to George failed:", e?.message);
+    }
 
-          <div style="padding: 40px 30px; background: #F8F5F0;">
-            <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
-              Thank you for your interest in partnering with George Yachts.
-            </p>
-            <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
-              Please find attached <strong>The Partnership Edition</strong>, our partner
-              programme for the 2026 and 2027 seasons: the fleet, the commission structure
-              and how we work with travel professionals.
-            </p>
-            <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
-              We remain invisible to your clients, you stay the hero.
-            </p>
-
-            <div style="margin: 24px 0; padding: 18px 20px; border-left: 3px solid #DAA110; background: rgba(218, 161, 16,0.05);">
-              <p style="font-size: 14px; color: #0D1B2A; margin: 0 0 6px;">
-                The PDF is attached to this email. You can also
-                <a href="https://georgeyachts.com/partnership-deck.pdf" style="color: #DAA110; font-weight: 600;">open it directly in your browser</a>.
+    // 1. Send PDF to the requesting partner (best effort)
+    let pdfSent = false;
+    try {
+      await transporter.sendMail({
+        from: `"George Yachts" <${GMAIL_USER}>`,
+        to: email,
+        subject: "George Yachts, The Partnership Edition 2026-2027",
+        html: `
+          <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #0D1B2A;">
+            <div style="text-align: center; padding: 40px 20px; background: #0D1B2A;">
+              <h1 style="font-family: Georgia, serif; font-size: 28px; font-weight: 300; color: #F8F5F0; letter-spacing: 0.1em; margin: 0;">
+                GEORGE YACHTS
+              </h1>
+              <p style="font-size: 11px; letter-spacing: 0.3em; color: #DAA110; margin-top: 8px;">
+                PARTNERSHIP PROGRAMME
               </p>
             </div>
 
-            <div style="margin: 32px 0; padding: 20px; border-left: 3px solid #DAA110; background: rgba(218, 161, 16,0.05);">
-              <p style="font-size: 14px; color: #0D1B2A; margin: 0;">
-                <strong>Next step:</strong> Reply to this email or
-                <a href="https://calendly.com/george-georgeyachts/30min" style="color: #DAA110;">book a 30-minute call</a>
-                to discuss how we can work together.
+            <div style="padding: 40px 30px; background: #F8F5F0;">
+              <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
+                Thank you for your interest in partnering with George Yachts.
+              </p>
+              <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
+                Please find attached <strong>The Partnership Edition</strong>, our partner
+                programme for the 2026 and 2027 seasons: the fleet, the commission structure
+                and how we work with travel professionals.
+              </p>
+              <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
+                We remain invisible to your clients, you stay the hero.
+              </p>
+
+              <div style="margin: 24px 0; padding: 18px 20px; border-left: 3px solid #DAA110; background: rgba(218, 161, 16,0.05);">
+                <p style="font-size: 14px; color: #0D1B2A; margin: 0 0 6px;">
+                  The PDF is attached to this email. You can also
+                  <a href="https://georgeyachts.com/partnership-deck.pdf" style="color: #DAA110; font-weight: 600;">open it directly in your browser</a>.
+                </p>
+              </div>
+
+              <div style="margin: 32px 0; padding: 20px; border-left: 3px solid #DAA110; background: rgba(218, 161, 16,0.05);">
+                <p style="font-size: 14px; color: #0D1B2A; margin: 0;">
+                  <strong>Next step:</strong> Reply to this email or
+                  <a href="https://calendly.com/george-georgeyachts/30min" style="color: #DAA110;">book a 30-minute call</a>
+                  to discuss how we can work together.
+                </p>
+              </div>
+
+              <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
+                Looking forward to collaborating,<br>
+                <strong>George P. Biniaris</strong><br>
+                <span style="font-size: 13px; color: #9CA3AF;">Founder and Managing Broker · IYBA Charter Active Member</span>
               </p>
             </div>
 
-            <p style="font-size: 16px; line-height: 1.8; color: #0D1B2A;">
-              Looking forward to collaborating,<br>
-              <strong>George P. Biniaris</strong><br>
-              <span style="font-size: 13px; color: #9CA3AF;">Founder and Managing Broker · IYBA Charter Active Member</span>
-            </p>
+            <div style="text-align: center; padding: 20px; background: #0D1B2A;">
+              <p style="font-size: 10px; letter-spacing: 0.2em; color: rgba(248, 245, 240,0.35); margin: 0;">
+                GEORGE YACHTS BROKERAGE HOUSE LLC · US REGISTERED · IYBA CHARTER ACTIVE MEMBER
+              </p>
+            </div>
           </div>
+        `,
+        attachments: [
+          {
+            filename: "George_Yachts_Partnership_Edition_2026-2027.pdf",
+            content: pdfBuffer,
+            contentType: "application/pdf",
+          },
+        ],
+      });
+      pdfSent = true;
+    } catch (e) {
+      console.error("Partner request: PDF email to partner failed:", e?.message);
+    }
 
-          <div style="text-align: center; padding: 20px; background: #0D1B2A;">
-            <p style="font-size: 10px; letter-spacing: 0.2em; color: rgba(248, 245, 240,0.35); margin: 0;">
-              GEORGE YACHTS BROKERAGE HOUSE LLC · US REGISTERED · IYBA CHARTER ACTIVE MEMBER
-            </p>
-          </div>
-        </div>
-      `,
-      attachments: [
-        {
-          filename: "George_Yachts_Partnership_Edition_2026-2027.pdf",
-          content: pdfBuffer,
-          contentType: "application/pdf",
-        },
-      ],
-    });
+    // 2. Notify George via Telegram (awaited: a fire-and-forget fetch
+    //    dies when the function returns)
+    const telegramOk = await notifyTelegram(
+      email,
+      name,
+      phone,
+      pdfSent ? `📎 Partnership Programme PDF was auto-sent.` : `⚠️ The PDF email to them FAILED. Send it by hand.`,
+    ).catch(() => false);
 
-    // 2. Notify George via email
-    await transporter.sendMail({
-      from: GMAIL_USER,
-      to: GMAIL_USER,
-      subject: `🤝 New Partner Request, ${email}`,
-      html: `
-        <h3>New Partnership Programme Request</h3>
-        <p><strong>Email:</strong> ${email}</p>
-        ${name ? `<p><strong>Name:</strong> ${htmlSafe(name)}</p>` : ""}
-        ${phone ? `<p><strong>Phone / WhatsApp:</strong> ${htmlSafe(phone, 40)}</p>` : ""}
-        <p><strong>Time:</strong> ${new Date().toISOString()}</p>
-        <p>PDF was automatically sent to their inbox.</p>
-        <p><strong>Action:</strong> Follow up within 24 hours.</p>
-      `,
-    });
-
-    // 3. Notify via Telegram (non-blocking)
-    notifyTelegram(email, name, phone).catch(() => {});
+    if (!georgeEmailOk && !telegramOk) {
+      return NextResponse.json(
+        { message: "Failed to send. Please try again or email us directly." },
+        { status: 502, headers }
+      );
+    }
 
     return NextResponse.json(
-      { message: "Partnership programme sent to your inbox!" },
+      { message: "Partnership programme sent to your inbox!", pdfSent },
       { status: 200, headers }
     );
   } catch (error) {

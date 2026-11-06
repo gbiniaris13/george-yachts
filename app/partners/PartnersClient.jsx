@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { FLEET_COUNT } from "@/lib/fleetCount";
-import { REQUIRED_NOTE, REQUIRED_MESSAGES, firstContactError, isValidPhone } from "@/lib/requiredContact";
+import { REQUIRED_NOTE, REQUIRED_MESSAGES, SEND_FAILED_MESSAGE, firstContactError, isValidPhone } from "@/lib/requiredContact";
 import Link from "next/link";
 
 const GATE_KEY = "gy_partners_unlocked";
@@ -167,17 +167,23 @@ export default function PartnersClient() {
     setRequestError("");
     setLoading(true);
     try {
-      // POST to a serverless function that sends the PDF + notifies George
-      await fetch("/api/partner-request", {
+      // POST to a serverless function that notifies George + sends the PDF.
+      // 2026-11-05 (form sweep): "Thank you! Check your inbox" showed even
+      // when the request reached no one. Now only a request that reached
+      // George is thanked; otherwise the form stays filled and shows his
+      // WhatsApp and email.
+      const res = await fetch("/api/partner-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim(), name: partnerName.trim(), phone: partnerPhone.trim(), website }),
       });
+      if (!res.ok) {
+        setRequestError(SEND_FAILED_MESSAGE);
+        return;
+      }
       setSubmitted(true);
     } catch {
-      // Fallback: open mailto
-      window.location.href = `mailto:george@georgeyachts.com?subject=Partnership%20Programme%20Request&body=Please%20send%20me%20the%20Partnership%20Programme.%20My%20email%3A%20${encodeURIComponent(email)}`;
-      setSubmitted(true);
+      setRequestError(SEND_FAILED_MESSAGE);
     } finally {
       setLoading(false);
     }

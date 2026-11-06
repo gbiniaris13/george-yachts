@@ -16,7 +16,6 @@ import { REQUIRED_NOTE, firstContactError } from "@/lib/requiredContact";
 
 const GOLD = "#DAA110";
 const NAVY = "#0D1B2A";
-const CREAM = "#F8F5F0";
 
 const TIMING_OPTIONS = [
   { value: "summer-2026", label: "Summer 2026" },
@@ -113,10 +112,14 @@ export default function PricingGuidePdfGate() {
         background: "rgba(13, 27, 42, 0.04)",
         borderTop: `1px solid ${GOLD}`,
         borderBottom: `1px solid ${GOLD}`,
-        padding: "56px 24px",
+        padding: "120px 24px 56px",
       }}
     >
-      <div style={{ maxWidth: 640, margin: "0 auto" }}>
+      {/* 2026-11-05 (form sweep): the block was written for a light page
+          (navy text on a 4% navy tint), and this page is navy, so the
+          heading, the labels and the required note were navy on navy,
+          invisible. They now sit on an ivory card, below the header. */}
+      <div style={{ maxWidth: 640, margin: "0 auto", background: "#F8F5F0", padding: "40px 28px" }}>
         <p
           style={{
             fontFamily: "var(--gy-font-ui)",
@@ -276,7 +279,7 @@ export default function PricingGuidePdfGate() {
                     fontFamily: "var(--gy-font-ui)",
                     fontSize: 15,
                     padding: "12px 14px",
-                    background: CREAM,
+                    background: "#FFFFFF",
                     border: `1px solid rgba(13, 27, 42, 0.2)`,
                     color: NAVY,
                     boxSizing: "border-box",
@@ -310,7 +313,7 @@ export default function PricingGuidePdfGate() {
                     fontFamily: "var(--gy-font-ui)",
                     fontSize: 15,
                     padding: "12px 14px",
-                    background: CREAM,
+                    background: "#FFFFFF",
                     border: `1px solid rgba(13, 27, 42, 0.2)`,
                     color: NAVY,
                     boxSizing: "border-box",
@@ -347,7 +350,7 @@ export default function PricingGuidePdfGate() {
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 15,
                   padding: "12px 14px",
-                  background: CREAM,
+                  background: "#FFFFFF",
                   border: `1px solid rgba(13, 27, 42, 0.2)`,
                   color: NAVY,
                   boxSizing: "border-box",
@@ -355,7 +358,7 @@ export default function PricingGuidePdfGate() {
                 placeholder="+1 212 555 0100"
               />
             </label>
-            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11.5, color: NAVY, opacity: 0.6, margin: "0 0 18px", lineHeight: 1.5 }}>
+            <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: 11.5, color: NAVY, opacity: 0.7, margin: "0 0 18px", lineHeight: 1.5 }}>
               {REQUIRED_NOTE}
             </p>
             <label style={{ display: "block", marginBottom: 18 }}>
@@ -382,7 +385,7 @@ export default function PricingGuidePdfGate() {
                   fontFamily: "var(--gy-font-ui)",
                   fontSize: 15,
                   padding: "12px 14px",
-                  background: CREAM,
+                  background: "#FFFFFF",
                   border: `1px solid rgba(13, 27, 42, 0.2)`,
                   color: NAVY,
                   boxSizing: "border-box",

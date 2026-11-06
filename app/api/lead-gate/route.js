@@ -1,10 +1,15 @@
 // Lead-gate endpoint.
 //
 // Shared backend for the gated lead capture flows (Instant Proposal,
-// Partners page, Smart Inquiry). Non-blocking: both the Telegram ping
-// and the Gmail notification happen server-side, but if either fails
-// we still return 200 so the UI flow (e.g. the proposal preview) never
-// stalls on a missing integration.
+// Partners page, Smart Inquiry). Both the Telegram ping and the Gmail
+// notification happen server-side; one dead channel never blocks the
+// other.
+//
+// 2026-11-05 (form sweep): this route used to answer 200 even when
+// both channels had failed, and the /inquiry wizard and /favorites
+// then thanked a visitor whose brief had reached no one. It now
+// answers 502 { ok: false } when neither the Telegram nor the email
+// arrived, so the form can show George's WhatsApp and email instead.
 //
 // Expected payload:
 // {
@@ -20,6 +25,7 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { kvSadd } from "@/lib/kv";
+import { sendTelegram } from "@/lib/telegram";
 
 export const dynamic = "force-dynamic";
 
@@ -34,28 +40,25 @@ function buildTransporter() {
   });
 }
 
-async function notifyTelegram(text) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) return;
-  try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text,
-        parse_mode: "Markdown",
-        disable_web_page_preview: true,
-      }),
-    });
-  } catch {}
+// 2026-11-05 (form sweep): /favorites sent its yachts as an array of
+// objects, which reached George as "[object Object],[object Object]".
+// Lists and objects are spelled out (pages cached before the fix still
+// send the old shape).
+function metaText(v) {
+  if (Array.isArray(v)) return v.map(metaText).join("; ");
+  if (v && typeof v === "object") {
+    if (v.name || v.slug) {
+      return `${v.name || v.slug}${v.price ? ` (${v.price})` : ""}${v.slug ? ` georgeyachts.com/yachts/${v.slug}` : ""}`;
+    }
+    return JSON.stringify(v);
+  }
+  return String(v);
 }
 
 function fmtMeta(meta = {}) {
   return Object.entries(meta)
     .filter(([, v]) => v !== null && v !== undefined && v !== "")
-    .map(([k, v]) => `  • *${k}:* ${v}`)
+    .map(([k, v]) => `  • *${k}:* ${metaText(v)}`)
     .join("\n");
 }
 
@@ -83,7 +86,7 @@ const META_LABELS = {
 // the site domain so George can click them. Dates left as-is.
 function fmtMetaValue(key, raw) {
   if (raw == null) return "";
-  const v = String(raw);
+  const v = metaText(raw).replace(/</g, "&lt;");
   if (key === "source_page" && v.startsWith("/")) {
     return `<a href="https://georgeyachts.com${v}" style="color:#DAA110;text-decoration:none;border-bottom:1px solid #DAA110;">${v}</a>`;
   }
@@ -97,6 +100,7 @@ function fmtMetaValue(key, raw) {
     };
     return labels[v] || v;
   }
+  if (/georgeyachts\.com\//.test(v)) return v; // yacht links keep their hyphens
   return v.replace(/-/g, " ").replace(/^[a-z]/, (c) => c.toUpperCase());
 }
 
@@ -201,8 +205,8 @@ export async function POST(request) {
 
   // Fire both channels in parallel
   const transporter = buildTransporter();
-  await Promise.all([
-    notifyTelegram(lines),
+  const [telegramOk, emailOk] = await Promise.all([
+    sendTelegram(lines),
     transporter
       ? transporter
           .sendMail({
@@ -243,10 +247,18 @@ export async function POST(request) {
               </div>
             `,
           })
-          .catch(() => {})
-      : Promise.resolve(),
+          .then(() => true)
+          .catch((e) => {
+            console.error("lead-gate: email to George failed:", e?.message);
+            return false;
+          })
+      : Promise.resolve(false),
   ]);
 
+  if (!telegramOk && !emailOk) {
+    console.error(`lead-gate: lead from ${email} (${source}) reached no channel`);
+    return NextResponse.json({ ok: false, error: "not_delivered" }, { status: 502 });
+  }
   return NextResponse.json({ ok: true });
 }
 

@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { telegramSafe, htmlSafe } from "@/lib/requiredContact";
 import { kvSadd, kvGet, kvSet, kvSismember } from "@/lib/kv";
+import { sendTelegram } from "@/lib/telegram";
 
 // Legacy KV set key — kept writing to it during the transition so the
 // old weekly-newsletter cron keeps working until cut-over.
@@ -31,10 +32,9 @@ const transporter = nodemailer.createTransport({
 
 // Notify George via Telegram. Welcome flow status is folded in so a
 // silent welcome failure never goes unnoticed.
+// Returns true when the alert arrived (lib/telegram.js re-sends a
+// refused Markdown message as plain text).
 async function notifyTelegram(email, welcomeResult, extra = []) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) return;
 
   const welcomeLine = welcomeResult
     ? welcomeResult.ok
@@ -53,13 +53,7 @@ async function notifyTelegram(email, welcomeResult, extra = []) {
     welcomeLine,
   ].join("\n");
 
-  try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: chatId, text, parse_mode: "Markdown" }),
-    });
-  } catch {}
+  return sendTelegram(text);
 }
 
 export async function POST(request) {
@@ -261,22 +255,33 @@ export async function POST(request) {
       // best-effort only — signup succeeds regardless
     }
 
-    // 1. Notify George about the new subscriber
-    await transporter.sendMail({
-      from: GMAIL_USER,
-      to: "george@georgeyachts.com",
-      subject: `${source.startsWith("dossier") ? "📒 Dossier request" : "📬 New Newsletter Subscriber"}, ${email}`,
-      html: `
-        <h3>New Newsletter Subscriber</h3>
-        <p><strong>Email:</strong> ${email}</p>
-        ${name ? `<p><strong>Name:</strong> ${htmlSafe(name)}</p>` : ""}
-        ${phone ? `<p><strong>Phone / WhatsApp:</strong> ${htmlSafe(phone, 40)}</p>` : ""}
-        <p><strong>Source:</strong> ${source ? htmlSafe(source) : "The George Yachts Journal (footer signup)"}</p>
-        <p><strong>Time:</strong> ${new Date().toISOString()}</p>
-        <hr>
-        <p style="font-size: 12px; color: #9CA3AF;">Add this email to your mailing list.</p>
-      `,
-    });
+    // 1. Notify George about the new subscriber.
+    // 2026-11-05 (form sweep): a Gmail error used to throw straight to
+    // the 500 below, so George got no alert at all (the Telegram came
+    // after it) and a dossier reader saw an error although the signup
+    // was stored. Now both alerts are tried, and the signup counts as
+    // received when either reached George.
+    let emailOk = false;
+    try {
+      await transporter.sendMail({
+        from: GMAIL_USER,
+        to: "george@georgeyachts.com",
+        subject: `${source.startsWith("dossier") ? "📒 Dossier request" : "📬 New Newsletter Subscriber"}, ${email}`,
+        html: `
+          <h3>New Newsletter Subscriber</h3>
+          <p><strong>Email:</strong> ${email}</p>
+          ${name ? `<p><strong>Name:</strong> ${htmlSafe(name)}</p>` : ""}
+          ${phone ? `<p><strong>Phone / WhatsApp:</strong> ${htmlSafe(phone, 40)}</p>` : ""}
+          <p><strong>Source:</strong> ${source ? htmlSafe(source) : "The George Yachts Journal (footer signup)"}</p>
+          <p><strong>Time:</strong> ${new Date().toISOString()}</p>
+          <hr>
+          <p style="font-size: 12px; color: #9CA3AF;">Add this email to your mailing list.</p>
+        `,
+      });
+      emailOk = true;
+    } catch (e) {
+      console.error("Newsletter: email to George failed:", e?.message);
+    }
 
     // 2. (legacy Gmail welcome email removed) — Issue #1 already
     //    fired via Resend in step 0b, so we don't double-message the
@@ -284,12 +289,20 @@ export async function POST(request) {
     //    on: same template, same Wyoming footer, same per-recipient
     //    one-click unsubscribe.
 
-    // 3. Telegram notification (non-blocking) — include welcome status
-    notifyTelegram(email, welcomeResult, [
+    // 3. Telegram notification, awaited (a fire-and-forget fetch dies
+    //    when the function returns) — include welcome status
+    const telegramOk = await notifyTelegram(email, welcomeResult, [
       name ? `👤 ${telegramSafe(name)}` : null,
       phone ? `📞 ${telegramSafe(phone, 40)}` : null,
       source ? `🔎 ${telegramSafe(source, 80)}` : null,
-    ].filter(Boolean)).catch(() => {});
+    ].filter(Boolean)).catch(() => false);
+
+    if (!emailOk && !telegramOk) {
+      return NextResponse.json(
+        { message: "Failed to subscribe. Please try again." },
+        { status: 502, headers }
+      );
+    }
 
     return NextResponse.json(
       { message: "Subscribed successfully!" },

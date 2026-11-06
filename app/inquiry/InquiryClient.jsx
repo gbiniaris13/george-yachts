@@ -25,7 +25,7 @@
 // gets an instant cross-fade; default is a 180ms slide-up.
 
 import { useEffect, useRef, useState } from "react";
-import { REQUIRED_NOTE, REQUIRED_MESSAGES, isValidEmail, isValidName, isValidPhone } from "@/lib/requiredContact";
+import { REQUIRED_NOTE, REQUIRED_MESSAGES, SEND_FAILED_MESSAGE, isValidEmail, isValidName, isValidPhone } from "@/lib/requiredContact";
 
 const GOLD = "#DAA110";
 
@@ -229,7 +229,7 @@ export default function InquiryClient() {
     setSubmitting(true);
     setError("");
     try {
-      await fetch("/api/lead-gate", {
+      const res = await fetch("/api/lead-gate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -247,10 +247,20 @@ export default function InquiryClient() {
             duration: answers.duration || null,
             budget: answers.budget || null,
             style: answers.style || null,
+            // 2026-11-05 (form sweep): Q6 was asked and never sent.
+            occasion: answers.occasion || null,
             notes: answers.notes || null,
           },
         }),
       });
+      // 2026-11-05 (form sweep): the thank-you page used to show whatever
+      // the server answered, so a brief that reached no one was thanked.
+      // Now a failed send keeps the visitor on the last step, answers
+      // intact, with George's WhatsApp and email.
+      if (!res.ok) {
+        setError(SEND_FAILED_MESSAGE);
+        return;
+      }
       setDone(true);
       // GA4 conversion event — primary funnel completion. Tracks
       // region, fleet tier, party size, budget band so we can analyze
@@ -268,7 +278,7 @@ export default function InquiryClient() {
         } catch {}
       }
     } catch {
-      setError("Network hiccup. Please try again - if it keeps failing, WhatsApp george@georgeyachts.com directly.");
+      setError(SEND_FAILED_MESSAGE);
     } finally {
       setSubmitting(false);
     }

@@ -18,9 +18,16 @@
 // on transient KV issues).
 //
 // Save-for-follow-up: when the request body has { saveForFollowUp:
-// true, name, email }, fires the existing Telegram bot (chat
-// 8478263770) with the conversation transcript and returns ok. No
-// AI call.
+// true, name, email }, the follow-up and the conversation transcript
+// are handed to ./save (Node runtime: Telegram AND email to George)
+// and that route's answer is returned as is. No AI call.
+//
+// 2026-11-05 (form sweep): before, this branch sent one Telegram from
+// the edge and always answered ok, so a refused Telegram was a lost
+// lead behind a "Saved" screen. And the assistant invited visitors to
+// type their name and email INTO THE CHAT, which reached no one: a
+// chat message carrying an email or phone number now goes to ./save
+// too, with the conversation so far.
 
 import { isSailingFleet } from "@/lib/fleetTiers";
 import { sendTelegram } from "@/lib/telegram";
@@ -66,9 +73,9 @@ WHAT YOU NEVER DO:
 - Never make up yachts or itineraries that aren't in the catalog.
 
 AFTER 3-4 EXCHANGES:
-Gently offer: "Would you like me to save this conversation for George to follow up personally? Just share your name and email."
+Gently offer: "Would you like George to follow up personally? Tap Save just below this chat and leave your name, email and phone, and he will have this conversation in front of him."
 
-If the user shares contact details, thank them and confirm George will reach out within 24 hours. Stay friendly, brief, never pushy.
+If the user shares contact details in the chat, thank them and confirm George will reach out within 24 hours (they reach him with this conversation). Stay friendly, brief, never pushy.
 `;
 
 async function getFleetSnapshot() {
@@ -129,6 +136,43 @@ function fallbackReply() {
   });
 }
 
+// Hands a follow-up to ./save (Node runtime). The shared secret lets
+// ./save rate-limit by the VISITOR's address rather than this edge
+// function's, which every visitor would share. Returns the Response,
+// or null when ./save could not be reached at all.
+async function deliverFollowUp(req, ip, payload) {
+  const secret = process.env.CRON_SECRET || "";
+  try {
+    return await fetch(new URL("/api/ask-george/save", req.url), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(secret ? { "x-gy-internal": secret, "x-gy-visitor-ip": ip } : {}),
+      },
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(15000),
+    });
+  } catch {
+    return null;
+  }
+}
+
+// An email address, or a phone number written as one (a leading +, or
+// a word like phone / WhatsApp before it), in the visitor's latest
+// message. Budgets and years ("10 guests, 2027, 50000") do not match.
+const EMAIL_IN_TEXT = /[^\s@<>()]+@[^\s@<>()]+\.[a-z]{2,}/i;
+const PHONE_IN_TEXT = /(?:\+\s?\d[\d\s().-]{5,}\d|(?:phone|whatsapp|mobile|cell|tel|call|text|number|reach me)[^\d(]{0,12}\(?\d[\d\s().-]{5,}\d)/i;
+
+function contactInLatestMessage(messages) {
+  const last = [...messages].reverse().find((m) => m?.role === "user");
+  const text = String(last?.content || "");
+  const email = text.match(EMAIL_IN_TEXT)?.[0] || "";
+  const phoneMatch = text.match(PHONE_IN_TEXT)?.[0] || "";
+  const phone = phoneMatch.replace(/^[^+\d(]*/, "");
+  const digits = phone.replace(/\D/g, "").length;
+  return { email, phone: digits >= 7 && digits <= 18 ? phone : "" };
+}
+
 async function logConversation(ip, messages, finalReply) {
   if (!process.env.KV_REST_API_URL) return;
   try {
@@ -158,21 +202,46 @@ export async function POST(req) {
   if (body?.saveForFollowUp) {
     const name = (body.name || "").toString().slice(0, 100).trim();
     const email = (body.email || "").toString().slice(0, 200).trim();
-    const phone = telegramSafe(body.phone, 40);
+    const phone = (body.phone || "").toString().slice(0, 40).trim();
     const transcript = Array.isArray(body.messages) ? body.messages : [];
     if (!name || !email) {
       return new Response(JSON.stringify({ ok: false, error: "Missing name or email" }), { status: 400 });
     }
+    const res = await deliverFollowUp(req, ip, {
+      trigger: "form", name, email, phone, messages: transcript, path: body.path || "",
+    });
+    if (res) {
+      return new Response(await res.text(), {
+        status: res.status,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+    // ./save unreachable: one plain Telegram from here, and the truth.
     const summary = transcript
-      .map((m) => `*${m.role === "user" ? "Visitor" : "Ask George"}:* ${m.content}`)
+      .map((m) => `${m.role === "user" ? "Visitor" : "Ask George"}: ${telegramSafe(m.content, 4000)}`)
       .join("\n\n")
       .slice(0, 3500);
-    const tg = `🤖 *Ask George, follow-up requested*\n\n👤 ${name}\n📧 ${email}\n${phone ? `📞 ${phone}\n` : ""}\n${summary}\n\n_Source: ${body.path || "unknown"}_`;
-    try {
-      await sendTelegram(tg);
-    } catch {}
-    return new Response(JSON.stringify({ ok: true }), {
+    const delivered = await sendTelegram(
+      `🤖 *Ask George, follow-up requested*\n\n👤 ${telegramSafe(name, 100)}\n📧 ${telegramSafe(email, 200)}\n${phone ? `📞 ${telegramSafe(phone, 40)}\n` : ""}\n${summary}\n\nSource: ${telegramSafe(body.path || "unknown", 200)}`,
+    );
+    return new Response(JSON.stringify(delivered ? { ok: true } : { ok: false, error: "not_delivered" }), {
+      status: delivered ? 200 : 502,
       headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  // Contact details typed into the chat reach George, with the
+  // conversation so far, even when the model is rate-limited or off.
+  // Awaited (an edge fetch left running can be cut when the response
+  // ends), before the model answers.
+  const typed = contactInLatestMessage(Array.isArray(body?.messages) ? body.messages : []);
+  if (typed.email || typed.phone) {
+    await deliverFollowUp(req, ip, {
+      trigger: "chat",
+      email: typed.email,
+      phone: typed.phone,
+      messages: body.messages,
+      path: body.path || req.headers.get("referer") || "",
     });
   }
 
@@ -197,6 +266,7 @@ export async function POST(req) {
   if (messages.length === 0) {
     return new Response(JSON.stringify({ error: "Empty messages" }), { status: 400 });
   }
+
 
   const fleet = await getFleetSnapshot();
   const fleetText = formatFleetForPrompt(fleet);

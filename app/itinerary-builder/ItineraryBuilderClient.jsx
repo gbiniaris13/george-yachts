@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic';
 const MapboxRouteMap = dynamic(() => import('./MapboxRouteMap'), { ssr: false });
 const HAS_MAPBOX = typeof process !== 'undefined' && !!process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 import { useI18n } from '@/lib/i18n/I18nProvider';
-import { REQUIRED_NOTE, firstContactError } from '@/lib/requiredContact';
+import { REQUIRED_NOTE, SEND_FAILED_MESSAGE, firstContactError } from '@/lib/requiredContact';
 
 const GOLD = '#DAA110';
 const DARK = '#0D1B2A';
@@ -685,14 +685,17 @@ export default function ItineraryBuilderClient() {
                       });
                       const json = await res.json().catch(() => ({}));
                       if (!res.ok || !json?.ok) {
-                        setSaveError(json?.error || 'Something went wrong. Try again or write to George at /inquiry.');
+                        // 2026-11-05 (form sweep): a route that reached no one
+                        // answers "not_delivered"; the visitor gets words and
+                        // George's direct lines, never the code.
+                        setSaveError(res.status === 400 && json?.error ? json.error : SEND_FAILED_MESSAGE);
                         setSaveSubmitting(false);
                         return;
                       }
                       setSaveDone(true);
                       try { window.gtag?.('event', 'itinerary_saved', { route_length: selected.length }); } catch {}
                     } catch {
-                      setSaveError('Network error. Please try again.');
+                      setSaveError(SEND_FAILED_MESSAGE);
                       setSaveSubmitting(false);
                     }
                   }}

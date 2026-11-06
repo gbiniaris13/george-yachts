@@ -13,7 +13,7 @@
 // the existing Telegram bot fires immediately.
 
 import { useEffect, useRef, useState } from "react";
-import { REQUIRED_NOTE, firstContactError } from "@/lib/requiredContact";
+import { REQUIRED_NOTE, SEND_FAILED_MESSAGE, firstContactError } from "@/lib/requiredContact";
 
 const QUICK_REPLIES = [
   "Recommend a yacht for a family of 8",
@@ -40,6 +40,7 @@ export default function AskGeorgeWidget() {
   const [followPhone, setFollowPhone] = useState("");
   const [followError, setFollowError] = useState("");
   const [followSent, setFollowSent] = useState(false);
+  const [followSending, setFollowSending] = useState(false);
   const scrollRef = useRef(null);
 
   const userMsgCount = messages.filter((m) => m.role === "user").length;
@@ -72,7 +73,10 @@ export default function AskGeorgeWidget() {
       const res = await fetch("/api/ask-george", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next.slice(0, -1) }),
+        body: JSON.stringify({
+          messages: next.slice(0, -1),
+          path: typeof window !== "undefined" ? window.location.pathname : "",
+        }),
       });
       if (!res.ok || !res.body) throw new Error("upstream-failed");
       const reader = res.body.getReader();
@@ -121,6 +125,7 @@ export default function AskGeorgeWidget() {
 
   async function submitFollowUp(e) {
     e.preventDefault();
+    if (followSending) return;
     // 2026-11-02 (George): name, email and phone are required.
     const problem = firstContactError({ name: followName, email: followEmail, phone: followPhone });
     if (problem) {
@@ -128,8 +133,9 @@ export default function AskGeorgeWidget() {
       return;
     }
     setFollowError("");
+    setFollowSending(true);
     try {
-      await fetch("/api/ask-george", {
+      const res = await fetch("/api/ask-george", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -141,10 +147,19 @@ export default function AskGeorgeWidget() {
           path: typeof window !== "undefined" ? window.location.pathname : "",
         }),
       });
+      // 2026-11-05 (form sweep): "Saved" showed even when the follow-up
+      // reached no one. Now only a delivered one is "Saved"; otherwise the
+      // form stays filled with George's WhatsApp and email.
+      if (!res.ok) {
+        setFollowError(SEND_FAILED_MESSAGE);
+        return;
+      }
       gtagEvent("ai_concierge_email_captured", {});
       setFollowSent(true);
     } catch {
-      setFollowSent(true);
+      setFollowError(SEND_FAILED_MESSAGE);
+    } finally {
+      setFollowSending(false);
     }
   }
 
@@ -481,7 +496,7 @@ export default function AskGeorgeWidget() {
                   cursor: "pointer",
                 }}
               >
-                Send to George
+                {followSending ? "Sending" : "Send to George"}
               </button>
             </form>
           )}

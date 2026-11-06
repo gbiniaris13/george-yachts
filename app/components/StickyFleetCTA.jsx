@@ -29,6 +29,10 @@ const HIDE_PATH_PREFIXES = [
   "/private-fleet",
   "/explorer-fleet",
   "/yacht-finder",
+  // 2026-11-05 (form sweep): the generator is a fleet page with its own
+  // bottom bar; this bar covered its "Generate proposal" button, and a
+  // tap there left the page with the visitor's selection.
+  "/proposal-generator",
 ];
 
 export default function StickyFleetCTA({ yachtCount: yachtCountProp } = {}) {

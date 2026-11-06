@@ -127,6 +127,7 @@ export default function ProposalClient({ yachts = [] }) {
         dataUrl: json.dataUrl,
         filename: json.filename,
         emailSent: !!json.emailSent,
+        georgeNotified: json.georgeNotified !== false,
       });
       gtagEvent("proposal_generated", {
         yacht_count: picked.length,
@@ -449,7 +450,9 @@ export default function ProposalClient({ yachts = [] }) {
                 }}>
                   {result.emailSent
                     ? `The PDF is on its way to ${email}. George will reach out within the day.`
-                    : `Your PDF is ready below. (Email delivery wasn't available right now - George has been notified separately.)`}
+                    : result.georgeNotified
+                      ? `Your PDF is ready below. (Email delivery wasn't available right now - George has been notified separately.)`
+                      : `Your PDF is ready below. It did not reach George, so please send it to him on WhatsApp +1 786 798 8798 or at george@georgeyachts.com.`}
                 </p>
                 <a
                   href={result.dataUrl} download={result.filename}

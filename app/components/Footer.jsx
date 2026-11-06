@@ -72,6 +72,7 @@ const Footer = () => {
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState(""); // honeypot - bots autofill, humans never see
   const [subscribed, setSubscribed] = useState(false);
+  const [subscribeError, setSubscribeError] = useState("");
 
   // 2026-05-12 - trailing slashes removed. Next.js normalises
   // /path/ → /path via 308 redirect (audited Item 33), so each
@@ -669,6 +670,10 @@ const Footer = () => {
                 onSubmit={async (e) => {
                   e.preventDefault();
                   if (!email) return;
+                  // 2026-11-05 (form sweep): a server error showed nothing and
+                  // a network error showed "Thank you" (nothing had reached
+                  // the server). Both now say so, under the field.
+                  setSubscribeError("");
                   try {
                     const res = await fetch("/api/newsletter", {
                       method: "POST",
@@ -676,8 +681,9 @@ const Footer = () => {
                       body: JSON.stringify({ email, website }),
                     });
                     if (res.ok) setSubscribed(true);
+                    else setSubscribeError("That did not go through. Please try once more, or write to george@georgeyachts.com.");
                   } catch {
-                    setSubscribed(true); // Show success anyway - George gets notified via Telegram
+                    setSubscribeError("That did not go through. Please try once more, or write to george@georgeyachts.com.");
                   }
                 }}
                 className="flex flex-col sm:flex-row items-stretch gap-2 sm:gap-0 max-w-md mx-auto"
@@ -735,6 +741,11 @@ const Footer = () => {
                   {t('footer.subscribe')}
                 </button>
               </form>
+            )}
+            {subscribeError && (
+              <p role="alert" style={{ fontFamily: "var(--gy-font-ui)", fontSize: "12px", color: "#DAA110", marginTop: "10px", lineHeight: 1.5 }}>
+                {subscribeError}
+              </p>
             )}
             <p style={{ fontFamily: "var(--gy-font-ui)", fontSize: "8px", color: "rgba(248, 245, 240,0.15)", marginTop: "12px", letterSpacing: "0.05em" }}>
               By subscribing you agree to receive occasional emails from <span className="notranslate">George Yachts Brokerage House LLC</span>.

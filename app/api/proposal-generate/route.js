@@ -12,8 +12,8 @@
 // always reflect live pricing + insider tips.
 
 import { sanityClient } from "@/lib/sanity";
-import { sendTelegram } from "@/lib/telegram";
-import { telegramSafe } from "@/lib/requiredContact";
+import { notifyGeorge, reachedGeorge } from "@/lib/notifyGeorge";
+import { telegramSafe, htmlSafe, SEND_FAILED_MESSAGE } from "@/lib/requiredContact";
 import { bumpKpi } from "@/lib/kpis";
 import { kvIncr, kvExpire } from "@/lib/kv";
 
@@ -136,11 +136,28 @@ export async function POST(req) {
   // it went after the render, and the render had been failing since Google
   // retired the font files it fetched: every visitor got an error and George
   // got nothing. The request now reaches him whatever happens to the PDF.
-  try {
-    const yachtList = yachts.map((y, i) => `  ${i + 1}. ${y.name} (/yachts/${y.slug})`).join("\n");
-    const tg = `📄 *Smart Proposal requested*\n\n👤 ${name}\n📧 ${email}\n${phone ? `📞 ${phone}\n` : ""}${dates ? `🗓 ${dates}\n` : ""}\n*Yachts (${yachts.length}):*\n${yachtList}\n${notes ? `\n*Notes:*\n${notes}\n` : ""}\n_The PDF is emailed to the visitor (BCC george@) when it renders._`;
-    await sendTelegram(tg);
-  } catch {}
+  // 2026-11-05 (form sweep): Telegram AND email to George, and the route
+  // knows whether either arrived. Before, one Telegram whose answer nobody
+  // read; if it and the visitor's Resend email both failed, the page still
+  // said "George has been notified separately".
+  const yachtList = yachts.map((y, i) => `  ${i + 1}. ${y.name} (/yachts/${y.slug})`).join("\n");
+  const tg = `📄 *Smart Proposal requested*\n\n👤 ${telegramSafe(name, 100)}\n📧 ${telegramSafe(email, 200)}\n${phone ? `📞 ${phone}\n` : ""}${dates ? `🗓 ${telegramSafe(dates, 100)}\n` : ""}\n*Yachts (${yachts.length}):*\n${yachtList}\n${notes ? `\n*Notes:*\n${telegramSafe(notes, 1500)}\n` : ""}\n_The PDF is emailed to the visitor (BCC george@) when it renders._`;
+  const notified = await notifyGeorge({
+    telegramText: tg,
+    emailSubject: `[Lead] Smart Proposal requested, ${name}`,
+    emailHtml: `
+      <h3>Smart Proposal requested</h3>
+      <p><strong>Name:</strong> ${htmlSafe(name, 100)}</p>
+      <p><strong>Email:</strong> ${htmlSafe(email, 200)}</p>
+      ${phone ? `<p><strong>Phone / WhatsApp:</strong> ${htmlSafe(phone, 40)}</p>` : ""}
+      ${dates ? `<p><strong>Dates:</strong> ${htmlSafe(dates, 100)}</p>` : ""}
+      <p><strong>Yachts (${yachts.length}):</strong></p>
+      <ul>${yachts.map((y) => `<li>${htmlSafe(y.name)} (georgeyachts.com/yachts/${htmlSafe(y.slug)})</li>`).join("")}</ul>
+      ${notes ? `<hr><h4>Notes (full):</h4><p style="white-space: pre-line;">${htmlSafe(notes, 1500)}</p>` : ""}
+    `,
+    replyTo: email,
+  });
+  const georgeOk = reachedGeorge(notified);
 
   let pdfBuffer;
   try {
@@ -148,8 +165,13 @@ export async function POST(req) {
   } catch (err) {
     console.error("[proposal-generate] PDF render failed", err);
     return Response.json(
-      { ok: false, error: "The proposal could not be built just now. George has your request and will send it to you himself, usually within the day." },
-      { status: 500 }
+      {
+        ok: false,
+        error: georgeOk
+          ? "The proposal could not be built just now. George has your request and will send it to you himself, usually within the day."
+          : SEND_FAILED_MESSAGE,
+      },
+      { status: georgeOk ? 500 : 502 }
     );
   }
 
@@ -218,6 +240,8 @@ ${yachts.map((y) => y.name).join(" · ")}
   return Response.json({
     ok: true,
     emailSent: emailOk,
+    // George has it: his own Telegram/email, or the BCC of the visitor's email.
+    georgeNotified: georgeOk || emailOk,
     yachtCount: yachts.length,
     filename,
     dataUrl,

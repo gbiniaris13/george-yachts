@@ -1,15 +1,15 @@
 // L.1 (Roberto brief, May 2026) — Itinerary save flow.
 //
-// POST endpoint for /itinerary-builder. Validates name + email, fires
-// Telegram to Boss with the curated route + user info, sends the user
-// a confirmation email via the existing Resend wrapper.
+// POST endpoint for /itinerary-builder. Validates name + email, sends
+// George the curated route + user info by Telegram and email, sends the
+// user a confirmation email via the existing Resend wrapper.
 //
 // Mapbox upgrade is L.1 phase 2 — flagged for when Boss provides the
 // MAPBOX_ACCESS_TOKEN env var. This phase 1 covers the save +
 // notification flow on the existing SVG-based builder.
 
-import { sendTelegram } from "@/lib/telegram";
-import { telegramSafe } from "@/lib/requiredContact";
+import { notifyGeorge, reachedGeorge } from "@/lib/notifyGeorge";
+import { telegramSafe, htmlSafe } from "@/lib/requiredContact";
 import { sendNewsletterEmail } from "@/lib/newsletter/resend";
 import { bumpKpi } from "@/lib/kpis";
 import { checkRateLimit } from "@/lib/rateLimit";
@@ -55,11 +55,30 @@ export async function POST(req) {
 
   const routeStr = route.map((s) => (typeof s === "string" ? s : s?.name || "?")).join(" → ");
 
-  // Telegram to Boss
+  // Telegram AND email to George. 2026-11-05 (form sweep): this route
+  // used to send one Telegram and nothing else, and answer ok either
+  // way; a refused Telegram meant a lost lead behind a "Saved" screen.
+  // The email is the permanent record, with replyTo set to the visitor.
   const tg = `🗺️ *Itinerary Builder, saved route*\n\n👤 ${name}\n📧 ${email}\n${phone ? `📞 ${phone}\n` : ""}\n*Route:* ${routeStr}\n*Total:* ${totalNM || "?"} NM · ~${hours || "?"} sailing hours\n${message ? `\n*Notes:*\n${message}\n` : ""}\n_Source: /itinerary-builder_`;
-  try {
-    await sendTelegram(tg);
-  } catch {}
+  const notified = await notifyGeorge({
+    telegramText: tg,
+    emailSubject: `[Lead] Itinerary Builder, saved route, ${name}`,
+    emailHtml: `
+      <h3>Itinerary Builder, saved route</h3>
+      <p><strong>Name:</strong> ${htmlSafe(name, 100)}</p>
+      <p><strong>Email:</strong> ${htmlSafe(email, 200)}</p>
+      ${phone ? `<p><strong>Phone / WhatsApp:</strong> ${htmlSafe(phone, 40)}</p>` : ""}
+      <p><strong>Route:</strong> ${htmlSafe(routeStr, 2000)}</p>
+      <p><strong>Total:</strong> ${htmlSafe(totalNM || "?", 20)} NM, about ${htmlSafe(hours || "?", 20)} sailing hours</p>
+      ${message ? `<hr><h4>Notes (full):</h4><p style="white-space: pre-line;">${htmlSafe(message, 1000)}</p>` : ""}
+      <p style="color:#888;font-size:12px;">Source: /itinerary-builder</p>
+    `,
+    replyTo: email,
+  });
+  if (!reachedGeorge(notified)) {
+    console.error(`itinerary-save: route from ${email} reached no channel`);
+    return Response.json({ ok: false, error: "not_delivered" }, { status: 502 });
+  }
 
   // Confirmation email to user (best-effort; failures don't block).
   try {

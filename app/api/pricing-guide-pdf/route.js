@@ -33,6 +33,7 @@ async function forwardLeadCapture(payload, req) {
     await fetch(`${origin}/api/lead-gate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      signal: AbortSignal.timeout(8000),
       body: JSON.stringify({
         source: "pricing-guide-pdf",
         name: payload.firstName,
@@ -76,8 +77,11 @@ export async function POST(req) {
     return NextResponse.json({ error: "Valid email is required" }, { status: 400 });
   }
 
-  // Fire-and-forget lead capture so the PDF response stays fast.
-  forwardLeadCapture({ firstName, email, phone, timing, sourcePage: payload.sourcePage }, req).catch(() => {});
+  // 2026-11-05 (form sweep): awaited. A fire-and-forget fetch can die
+  // when the function returns, and then the PDF went out while George
+  // never heard of the reader. A second or two before the download is
+  // the price of never losing the lead; capped at 8s.
+  await forwardLeadCapture({ firstName, email, phone, timing, sourcePage: payload.sourcePage }, req).catch(() => {});
 
   // Generate the PDF. Dynamic imports + explicit React resolution.
   let pdfBuffer;

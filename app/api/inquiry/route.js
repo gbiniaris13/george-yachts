@@ -14,11 +14,15 @@
 //   • GA4 server-side event token returned (front-end fires the
 //     gtag event for funnel attribution)
 //
-// All channels best-effort — endpoint always returns 200 once
-// validation passes so the user never sees a transient failure.
+// All channels best-effort; one dead channel never blocks another.
+// 2026-11-05 (form sweep): the endpoint used to return 200 even when
+// nothing had reached George, and the concierge card then said
+// "Received". It now returns 502 { ok: false } when neither the
+// Telegram, the email nor the Helm request arrived, so the card can
+// show George's WhatsApp and email instead.
 
 import { NextResponse } from "next/server";
-import { notifyGeorge, emailClient } from "@/lib/notifyGeorge";
+import { notifyGeorge, emailClient, reachedGeorge } from "@/lib/notifyGeorge";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { bumpKpi } from "@/lib/kpis";
 
@@ -191,7 +195,7 @@ export async function POST(req) {
     // not stare at a silent inbox while competitors reply first.
     emailClient({ to: email, name }).catch(() => {});
 
-    await notifyGeorge({
+    const notified = await notifyGeorge({
       telegramText: lines.join("\n"),
       emailSubject: `[Lead] ${sourceLabel}${yachtName ? `, ${yachtName}` : ""}, ${name}`,
       emailHtml,
@@ -213,10 +217,11 @@ export async function POST(req) {
     // Awaited with a hard 4s cap (a fire-and-forget fetch dies when the
     // lambda returns); best-effort - a CRM hiccup never blocks the lead,
     // which has already been delivered via notifyGeorge above.
+    let helmOk = false;
     try {
       const crmSecret = process.env.NEWSLETTER_PROXY_SECRET;
       if (crmSecret) {
-        await fetch("https://gy-command.vercel.app/api/hooks/website-inquiry", {
+        const helmRes = await fetch("https://gy-command.vercel.app/api/hooks/website-inquiry", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -229,11 +234,16 @@ export async function POST(req) {
           }),
           signal: AbortSignal.timeout(4000),
         });
+        helmOk = helmRes.ok;
       }
     } catch {
       // best-effort only — the lead is already in George's hands
     }
 
+    if (!reachedGeorge(notified) && !helmOk) {
+      console.error(`inquiry: lead from ${email} (${source}) reached no channel`);
+      return NextResponse.json({ ok: false, error: "not_delivered" }, { status: 502 });
+    }
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("inquiry route error:", err);
