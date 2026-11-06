@@ -67,6 +67,33 @@ async function readAll(path) {
   return rows;
 }
 
+// 2026-11-06 (evening): the requests come from The Helm. The first version
+// counted the notes two of this site's forms leave in this app's database,
+// and George saw at once that the months could not be right: July showed
+// 6 requests where The Helm holds 23. A request is what is in The Helm,
+// however it arrived (a form, an email, WhatsApp, a travel agent), so the
+// email asks the CRM for the list, the same list the Logbook page shows.
+// Returns null when the CRM cannot be reached; the caller then falls back
+// to the forms' notes and the email says so.
+async function readHelmRequests(since, until) {
+  const secret = process.env.NEWSLETTER_PROXY_SECRET;
+  if (!secret) return null;
+  const base = (process.env.GY_COMMAND_URL || "https://command.georgeyachts.com").replace(/\/$/, "");
+  try {
+    const res = await fetch(
+      `${base}/api/hooks/logbook-requests?since=${encodeURIComponent(since)}&until=${encodeURIComponent(until)}`,
+      { headers: { Authorization: `Bearer ${secret}` }, cache: "no-store", signal: AbortSignal.timeout(15000) },
+    );
+    if (!res.ok) throw new Error(`the CRM answered ${res.status}`);
+    const body = await res.json();
+    if (!body?.ok || !Array.isArray(body.requests)) throw new Error("the CRM returned no list");
+    return body.requests;
+  } catch (e) {
+    console.error("daily-summary: The Helm could not be read:", e?.message);
+    return null;
+  }
+}
+
 export async function GET(request) {
   const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -83,18 +110,21 @@ export async function GET(request) {
   let report;
   try {
     if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY) throw new Error("the visitor database is not configured");
-    const [sessions, requests] = await Promise.all([
+    const [sessions, helmRequests] = await Promise.all([
       readAll(`sessions?select=${SESSION_COLUMNS}&started_at=gte.${since}&started_at=lt.${until}&order=started_at.asc`),
-      // The request list is a nicety: if it cannot be read the report
-      // still goes out, with the visitors.
-      readAll(
+      readHelmRequests(since, until),
+    ]);
+    // The request list is a nicety: if neither source can be read the
+    // report still goes out, with the visitors.
+    const requests =
+      helmRequests ||
+      (await readAll(
         `notifications?select=title,description,created_at&type=eq.form_submission&created_at=gte.${since}&created_at=lt.${until}&order=created_at.asc`,
       ).catch((e) => {
         console.error("daily-summary: requests could not be read:", e?.message);
         return [];
-      }),
-    ]);
-    report = buildDailyReport({ sessions, requests, endMs });
+      }));
+    report = buildDailyReport({ sessions, requests, endMs, requestsFromHelm: !!helmRequests });
   } catch (err) {
     console.error("daily-summary: could not build the report:", err?.message);
     if (!preview) {
