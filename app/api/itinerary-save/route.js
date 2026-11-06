@@ -74,6 +74,13 @@ export async function POST(req) {
       <p style="color:#888;font-size:12px;">Source: /itinerary-builder</p>
     `,
     replyTo: email,
+    // Counted as a request in the daily visitor email.
+    crm: {
+      type: "form_submission",
+      title: `📩 New saved itinerary from ${String(name).slice(0, 80)}`,
+      description: `${String(routeStr).slice(0, 200)} · ${email}`,
+      link: "/dashboard/contacts",
+    },
   });
   if (!reachedGeorge(notified)) {
     console.error(`itinerary-save: route from ${email} reached no channel`);

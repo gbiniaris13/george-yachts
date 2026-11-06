@@ -1,113 +1,135 @@
-// Daily Summary — runs at 22:00 Athens time via Vercel cron
-// Reads today's stats from KV and sends a formatted Telegram report
+// /api/cron/daily-summary: the daily visitor report, by EMAIL.
+//
+// 2026-11-06 (George): "this analysis should come to me by email, every
+// day, and be more detailed and better". Until today this route sent a
+// short Telegram message built from four KV counters, into the same chat
+// where every visitor ping lands, and its visitor number counted every
+// crawler that ran the page script (about two thirds of the total).
+//
+// Now it reads the per-visit rows the tracker writes (table `sessions`),
+// separates people from machines, and emails George a full report: who
+// came, how many from the US, who looked seriously and at which yachts,
+// where they came from, what they read, the requests, and the last seven
+// days side by side. The logic lives in lib/dailyReport.js.
+//
+// Window: the 24 hours that end at the top of the hour the cron fires.
+// The cron runs at 05:00 UTC = 07:00 in Athens in winter, which is midnight
+// in New York, so the report holds one complete American day.
+//
+// Never silent: if the email cannot be sent, or the data cannot be read,
+// a short Telegram message says so.
+//
+// GET ?preview=1 (with the cron secret) returns the HTML and sends nothing.
 
-import { sendTelegram, getFlag, getCountryName } from '@/lib/telegram';
-import { kvGet, kvHgetall, kvDel, todayKey } from '@/lib/kv';
+import { emailGeorge } from "@/lib/notifyGeorge";
+import { sendTelegram } from "@/lib/telegram";
+import { kvDel } from "@/lib/kv";
+import {
+  SESSION_COLUMNS,
+  buildDailyReport,
+  renderReportHtml,
+  reportSubject,
+  reportFallbackText,
+} from "@/lib/dailyReport";
 
-export const runtime = 'edge';
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const maxDuration = 60;
+
+const CRM_SUPABASE_URL = process.env.CRM_SUPABASE_URL;
+const CRM_SUPABASE_KEY = process.env.CRM_SUPABASE_SERVICE_KEY;
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+const HOUR_MS = 60 * 60 * 1000;
+// Seven days for the table, three more so a browser that reloads all week
+// without ever doing anything is recognised as a monitor.
+const LOOKBACK_DAYS = 10;
+
+// Reads every row of a query, a thousand at a time (the PostgREST cap).
+async function readAll(path) {
+  const rows = [];
+  for (let from = 0; from < 20000; from += 1000) {
+    const res = await fetch(`${CRM_SUPABASE_URL}/rest/v1/${path}`, {
+      headers: {
+        apikey: CRM_SUPABASE_KEY,
+        Authorization: `Bearer ${CRM_SUPABASE_KEY}`,
+        Range: `${from}-${from + 999}`,
+      },
+      cache: "no-store",
+      signal: AbortSignal.timeout(20000),
+    });
+    if (!res.ok) throw new Error(`${path.split("?")[0]} answered ${res.status}`);
+    const page = await res.json();
+    if (!Array.isArray(page)) throw new Error(`${path.split("?")[0]} did not return rows`);
+    rows.push(...page);
+    if (page.length < 1000) break;
+  }
+  return rows;
+}
 
 export async function GET(request) {
-  const authHeader = request.headers.get('authorization');
+  const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response("Unauthorized", { status: 401 });
   }
 
+  const url = new URL(request.url);
+  const preview = url.searchParams.get("preview") === "1";
+  const endParam = Date.parse(url.searchParams.get("end") || "");
+  const endMs = Number.isFinite(endParam) ? endParam : Math.floor(Date.now() / HOUR_MS) * HOUR_MS;
+  const since = new Date(endMs - LOOKBACK_DAYS * DAY_MS).toISOString();
+  const until = new Date(endMs).toISOString();
+
+  let report;
   try {
-    const date = todayKey();
-
-    // Fetch all stats in parallel
-    const [visitors, inquiries, countriesRaw, pagesRaw, sourcesRaw] = await Promise.all([
-      kvGet(`stats:${date}:visitors`),
-      kvGet(`stats:${date}:inquiries`),
-      kvHgetall(`stats:${date}:countries`),
-      kvHgetall(`stats:${date}:pages`),
-      kvHgetall(`stats:${date}:sources`),
+    if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY) throw new Error("the visitor database is not configured");
+    const [sessions, requests] = await Promise.all([
+      readAll(`sessions?select=${SESSION_COLUMNS}&started_at=gte.${since}&started_at=lt.${until}&order=started_at.asc`),
+      // The request list is a nicety: if it cannot be read the report
+      // still goes out, with the visitors.
+      readAll(
+        `notifications?select=title,description,created_at&type=eq.form_submission&created_at=gte.${since}&created_at=lt.${until}&order=created_at.asc`,
+      ).catch((e) => {
+        console.error("daily-summary: requests could not be read:", e?.message);
+        return [];
+      }),
     ]);
-
-    const totalVisitors = parseInt(visitors) || 0;
-    const totalInquiries = parseInt(inquiries) || 0;
-
-    // Parse hash results (HGETALL returns flat array: [key, value, key, value, ...])
-    function parseHash(raw) {
-      if (!raw || !Array.isArray(raw)) return {};
-      const result = {};
-      for (let i = 0; i < raw.length; i += 2) {
-        result[raw[i]] = parseInt(raw[i + 1]) || 0;
-      }
-      return result;
-    }
-
-    const countries = parseHash(countriesRaw);
-    const pages = parseHash(pagesRaw);
-    const sources = parseHash(sourcesRaw);
-
-    // Sort by count descending
-    const topCountries = Object.entries(countries)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 8);
-    const topPages = Object.entries(pages)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5);
-    const topSources = Object.entries(sources)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5);
-
-    // Build message
-    const lines = [
-      `📊 *Daily Report, George Yachts*`,
-      `📅 ${date}`,
-      ``,
-      `👥 *${totalVisitors}* visitors today`,
-      `📩 *${totalInquiries}* inquiries received`,
-      ``,
-    ];
-
-    if (topCountries.length > 0) {
-      lines.push(`🌍 *Top Countries:*`);
-      topCountries.forEach(([code, count]) => {
-        lines.push(`  ${getFlag(code)} ${getCountryName(code)}: ${count}`);
-      });
-      lines.push(``);
-    }
-
-    if (topPages.length > 0) {
-      lines.push(`📄 *Top Pages:*`);
-      topPages.forEach(([page, count]) => {
-        lines.push(`  \`${page}\`, ${count} views`);
-      });
-      lines.push(``);
-    }
-
-    if (topSources.length > 0) {
-      lines.push(`🔗 *Traffic Sources:*`);
-      topSources.forEach(([source, count]) => {
-        lines.push(`  ${source === 'Direct' ? 'Direct / Bookmark' : source}: ${count}`);
-      });
-      lines.push(``);
-    }
-
-    if (totalVisitors === 0) {
-      lines.push(`_No visitors recorded today. KV storage may not be connected._`);
-    }
-
-    lines.push(`, _George Yachts Analytics Bot_ 🤖`);
-
-    await sendTelegram(lines.join('\n'));
-
-    // Clean up stats older than 7 days
-    const weekAgo = new Date();
-    weekAgo.setDate(weekAgo.getDate() - 7);
-    const oldDate = weekAgo.toLocaleDateString('en-CA', { timeZone: 'Europe/Athens' });
-    await Promise.allSettled([
-      kvDel(`stats:${oldDate}:visitors`),
-      kvDel(`stats:${oldDate}:inquiries`),
-      kvDel(`stats:${oldDate}:countries`),
-      kvDel(`stats:${oldDate}:pages`),
-      kvDel(`stats:${oldDate}:sources`),
-    ]);
-
-    return new Response('OK', { status: 200 });
+    report = buildDailyReport({ sessions, requests, endMs });
   } catch (err) {
-    return new Response(`Error: ${err.message}`, { status: 500 });
+    console.error("daily-summary: could not build the report:", err?.message);
+    if (!preview) {
+      await sendTelegram(
+        `Η ημερήσια αναφορά επισκεπτών δεν βγήκε σήμερα: τα δεδομένα δεν διαβάστηκαν (${String(err?.message || "άγνωστο σφάλμα").slice(0, 120)}).`,
+      );
+    }
+    return Response.json({ ok: false, error: "report_failed" }, { status: 500 });
   }
+
+  const subject = reportSubject(report);
+  const html = renderReportHtml(report);
+
+  if (preview) {
+    return new Response(html, { status: 200, headers: { "content-type": "text/html; charset=utf-8", "x-robots-tag": "noindex" } });
+  }
+
+  let emailed = false;
+  try {
+    emailed = await emailGeorge({ subject, html });
+  } catch (err) {
+    console.error("daily-summary: email failed:", err?.message);
+  }
+  let telegramFallback = false;
+  if (!emailed) telegramFallback = await sendTelegram(reportFallbackText(report));
+
+  // The KV day counters the old report used are still written by
+  // /api/visitor-ping. Keep clearing the ones older than a week.
+  const oldDate = new Date(Date.now() - 7 * DAY_MS).toLocaleDateString("en-CA", { timeZone: "Europe/Athens" });
+  await Promise.allSettled(
+    ["visitors", "inquiries", "countries", "pages", "sources"].map((k) => kvDel(`stats:${oldDate}:${k}`)),
+  );
+
+  return Response.json(
+    { ok: emailed || telegramFallback, emailed, telegramFallback, subject, counts: report.counts },
+    { status: emailed || telegramFallback ? 200 : 502 },
+  );
 }

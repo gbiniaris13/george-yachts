@@ -156,6 +156,13 @@ export async function POST(req) {
       ${notes ? `<hr><h4>Notes (full):</h4><p style="white-space: pre-line;">${htmlSafe(notes, 1500)}</p>` : ""}
     `,
     replyTo: email,
+    // Counted as a request in the daily visitor email.
+    crm: {
+      type: "form_submission",
+      title: `📩 New proposal request from ${String(name).slice(0, 80)}`,
+      description: `${yachts.map((y) => y.name).join(", ").slice(0, 200)} · ${email}`,
+      link: "/dashboard/contacts",
+    },
   });
   const georgeOk = reachedGeorge(notified);
 

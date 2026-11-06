@@ -96,6 +96,13 @@ export async function POST(req) {
     emailSubject: `[Lead] ${heading}, ${name || email || phone}`,
     emailHtml,
     replyTo: hasEmail ? email : undefined,
+    // Counted as a request in the daily visitor email.
+    crm: {
+      type: "form_submission",
+      title: `📩 New Ask George follow-up from ${String(name || email || phone).slice(0, 80)}`,
+      description: `${path || "unknown page"} · ${email || phone}`,
+      link: "/dashboard/contacts",
+    },
   });
 
   if (!reachedGeorge(notified)) {

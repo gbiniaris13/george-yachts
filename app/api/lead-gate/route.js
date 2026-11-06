@@ -26,6 +26,7 @@ import nodemailer from "nodemailer";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { kvSadd } from "@/lib/kv";
 import { sendTelegram } from "@/lib/telegram";
+import { crmNotifyGeorge } from "@/lib/notifyGeorge";
 
 export const dynamic = "force-dynamic";
 
@@ -258,6 +259,20 @@ export async function POST(request) {
   if (!telegramOk && !emailOk) {
     console.error(`lead-gate: lead from ${email} (${source}) reached no channel`);
     return NextResponse.json({ ok: false, error: "not_delivered" }, { status: 502 });
+  }
+
+  // 2026-11-06: the daily visitor email counts requests from the CRM
+  // notification rows, and this route wrote none. Only the two charter
+  // request sources are recorded (the planner and the favorites list).
+  // Best effort: a failure here never changes the visitor's answer.
+  const requestKind = { inquiry: "charter brief", favorites: "favorites list" }[source];
+  if (requestKind) {
+    await crmNotifyGeorge({
+      type: "form_submission",
+      title: `📩 New ${requestKind} from ${String(name || email).slice(0, 80)}`,
+      description: `${source} · ${email}`,
+      link: "/dashboard/contacts",
+    }).catch(() => {});
   }
   return NextResponse.json({ ok: true });
 }
