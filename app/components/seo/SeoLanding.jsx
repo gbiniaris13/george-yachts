@@ -31,6 +31,12 @@
 //                              columns: [], rows: [{cells: []}] } — visible
 //                              HTML pricing table (GEO: engines extract
 //                              tables from HTML, not JSON-LD). 2026-07-02.
+//     updatedOn,             optional "YYYY-MM-DD". Set ONLY when this page's own
+//                              text was substantively rewritten: it then drives the
+//                              visible "Last updated" line and the FAQPage
+//                              dateModified for this page alone. Every page without
+//                              it keeps the shared SITE_UPDATED date, so setting it
+//                              on one page moves no other page. 2026-11-17.
 //     deepDive,              optional [{ eyebrow, heading, body }] — extra
 //                              long-form editorial sections. body supports
 //                              **bold** and [text](/path) internal links.
@@ -83,7 +89,7 @@ async function loadFleetMatches(yachtFilter) {
   }
 }
 
-function FaqJsonLd({ faq, quickAnswer, close = false }) {
+function FaqJsonLd({ faq, quickAnswer, close = false, updatedOn = SITE_UPDATED }) {
   // 2026-09-04 (plan item 13): the quick answer at the top of the page is
   // the one Q/A an engine should lift, so it leads the FAQPage entity,
   // attributed to the canonical author, instead of living only in HTML.
@@ -110,7 +116,7 @@ function FaqJsonLd({ faq, quickAnswer, close = false }) {
   const json = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    dateModified: SITE_UPDATED,
+    dateModified: updatedOn,
     speakable: {
       "@type": "SpeakableSpecification",
       cssSelector: [".gy-qa-text", ".gy-key-facts"],
@@ -227,7 +233,7 @@ export default async function SeoLanding({ pageData }) {
   return (
     <>
       <ServiceJsonLd pageData={pageData} yachts={yachts} />
-      <FaqJsonLd faq={pageData.faq} quickAnswer={pageData.quickAnswer} close={closesOn(pageData.urlPath)} />
+      <FaqJsonLd faq={pageData.faq} quickAnswer={pageData.quickAnswer} close={closesOn(pageData.urlPath)} updatedOn={pageData.updatedOn || SITE_UPDATED} />
       <BreadcrumbSchema items={breadcrumbs} />
       {/* TouristTrip - only on itinerary pages (gated on structured stops) so
           yacht-type / combo / comparison pages never emit a spurious trip. */}
@@ -341,7 +347,7 @@ export default async function SeoLanding({ pageData }) {
             >
               {pageData.tagline}
             </p>
-            <LastUpdated date={SITE_UPDATED} />
+            <LastUpdated date={pageData.updatedOn || SITE_UPDATED} />
           </div>
         </header>
 
