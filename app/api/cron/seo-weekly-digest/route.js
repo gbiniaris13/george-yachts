@@ -34,8 +34,11 @@ const SITE_URL = "https://georgeyachts.com";
 
 // Visitor analytics live in the CRM Supabase (same DB the site's
 // /api/track writes every session to). Read-only here.
-const CRM_SUPABASE_URL = process.env.CRM_SUPABASE_URL;
-const CRM_SUPABASE_KEY = process.env.CRM_SUPABASE_SERVICE_KEY;
+// 2026-11-19: sessions live in the live CRM project (GYC_SUPABASE_*) from
+// today; app/api/track writes them there. CRM_SUPABASE_* is the project the
+// CRM left in June and stays only as a fallback for local dev.
+const CRM_SUPABASE_URL = process.env.GYC_SUPABASE_URL || process.env.CRM_SUPABASE_URL;
+const CRM_SUPABASE_KEY = process.env.GYC_SUPABASE_SERVICE_ROLE_KEY || process.env.CRM_SUPABASE_SERVICE_KEY;
 
 // Bucket an already-classified referrer label into a channel group.
 function sourceGroup(label) {

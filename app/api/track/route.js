@@ -52,14 +52,29 @@ async function shouldFireTelegram(eventName, ip) {
 const CRM_SUPABASE_URL = process.env.CRM_SUPABASE_URL;
 const CRM_SUPABASE_KEY = process.env.CRM_SUPABASE_SERVICE_KEY;
 
+// 2026-11-19: where visitor sessions are written and read.
+// CRM_SUPABASE_* still names the project the CRM left in June 2026, so
+// from 3 June every session landed in a database nobody looked at: the
+// CRM's Visitors page, its Monday report and its visitor intelligence all
+// read the live project and saw nothing new for five months. Sessions now
+// follow GYC_SUPABASE_*, the name lib/socialPolicy.js already uses for the
+// live CRM. Only sessions move. Contacts, activities and notifications
+// keep their existing path here, because the forms also reach the live
+// CRM through its own webhooks and writing them twice into one database
+// is a separate decision. The fallback keeps local dev working.
+const SESSIONS_URL = process.env.GYC_SUPABASE_URL || CRM_SUPABASE_URL;
+const SESSIONS_KEY = process.env.GYC_SUPABASE_SERVICE_ROLE_KEY || CRM_SUPABASE_KEY;
+
 async function writeToCRM(table, data) {
-  if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY) return null;
+  const url = table === 'sessions' ? SESSIONS_URL : CRM_SUPABASE_URL;
+  const key = table === 'sessions' ? SESSIONS_KEY : CRM_SUPABASE_KEY;
+  if (!url || !key) return null;
   try {
-    const res = await fetch(`${CRM_SUPABASE_URL}/rest/v1/${table}`, {
+    const res = await fetch(`${url}/rest/v1/${table}`, {
       method: 'POST',
       headers: {
-        'apikey': CRM_SUPABASE_KEY,
-        'Authorization': `Bearer ${CRM_SUPABASE_KEY}`,
+        'apikey': key,
+        'Authorization': `Bearer ${key}`,
         'Content-Type': 'application/json',
         'Prefer': 'return=representation',
       },
@@ -72,14 +87,14 @@ async function writeToCRM(table, data) {
 
 // Used to flag return visitors without relying on IPs (mobile-friendly).
 async function hasPriorSession(visitorId) {
-  if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY || !visitorId) return false;
+  if (!SESSIONS_URL || !SESSIONS_KEY || !visitorId) return false;
   try {
     const res = await fetch(
-      `${CRM_SUPABASE_URL}/rest/v1/sessions?visitor_id=eq.${encodeURIComponent(visitorId)}&select=id&limit=1`,
+      `${SESSIONS_URL}/rest/v1/sessions?visitor_id=eq.${encodeURIComponent(visitorId)}&select=id&limit=1`,
       {
         headers: {
-          'apikey': CRM_SUPABASE_KEY,
-          'Authorization': `Bearer ${CRM_SUPABASE_KEY}`,
+          'apikey': SESSIONS_KEY,
+          'Authorization': `Bearer ${SESSIONS_KEY}`,
         },
       }
     );
@@ -95,14 +110,14 @@ async function hasPriorSession(visitorId) {
 // when the last visits of this browser, three or more, left no trace of a
 // person. Any doubt or error answers false, so a real visitor still pings.
 async function returnsWithoutEverActing(visitorId) {
-  if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY || !visitorId) return false;
+  if (!SESSIONS_URL || !SESSIONS_KEY || !visitorId) return false;
   try {
     const res = await fetch(
-      `${CRM_SUPABASE_URL}/rest/v1/sessions?visitor_id=eq.${encodeURIComponent(visitorId)}&select=time_on_site,active_seconds,pages_visited,mouse_samples,scroll_deep,cta_clicks,copy_events&order=started_at.desc&limit=6`,
+      `${SESSIONS_URL}/rest/v1/sessions?visitor_id=eq.${encodeURIComponent(visitorId)}&select=time_on_site,active_seconds,pages_visited,mouse_samples,scroll_deep,cta_clicks,copy_events&order=started_at.desc&limit=6`,
       {
         headers: {
-          'apikey': CRM_SUPABASE_KEY,
-          'Authorization': `Bearer ${CRM_SUPABASE_KEY}`,
+          'apikey': SESSIONS_KEY,
+          'Authorization': `Bearer ${SESSIONS_KEY}`,
         },
         signal: AbortSignal.timeout(4000),
       }
@@ -115,14 +130,14 @@ async function returnsWithoutEverActing(visitorId) {
 
 // Read the current session row (used by page_view to merge arrays + recompute score).
 async function getCRMSession(sessionId) {
-  if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY || !sessionId) return null;
+  if (!SESSIONS_URL || !SESSIONS_KEY || !sessionId) return null;
   try {
     const res = await fetch(
-      `${CRM_SUPABASE_URL}/rest/v1/sessions?session_id=eq.${encodeURIComponent(sessionId)}&select=*&limit=1`,
+      `${SESSIONS_URL}/rest/v1/sessions?session_id=eq.${encodeURIComponent(sessionId)}&select=*&limit=1`,
       {
         headers: {
-          'apikey': CRM_SUPABASE_KEY,
-          'Authorization': `Bearer ${CRM_SUPABASE_KEY}`,
+          'apikey': SESSIONS_KEY,
+          'Authorization': `Bearer ${SESSIONS_KEY}`,
         },
       }
     );
@@ -133,14 +148,14 @@ async function getCRMSession(sessionId) {
 }
 
 async function updateCRMSession(sessionId, patch) {
-  if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY || !sessionId) return null;
+  if (!SESSIONS_URL || !SESSIONS_KEY || !sessionId) return null;
   try {
-    const url = `${CRM_SUPABASE_URL}/rest/v1/sessions?session_id=eq.${encodeURIComponent(sessionId)}`;
+    const url = `${SESSIONS_URL}/rest/v1/sessions?session_id=eq.${encodeURIComponent(sessionId)}`;
     const res = await fetch(url, {
       method: 'PATCH',
       headers: {
-        'apikey': CRM_SUPABASE_KEY,
-        'Authorization': `Bearer ${CRM_SUPABASE_KEY}`,
+        'apikey': SESSIONS_KEY,
+        'Authorization': `Bearer ${SESSIONS_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(patch),
@@ -628,7 +643,7 @@ export async function POST(request) {
 
     // --- EVENT: Page View Update (aggregated, no Telegram) ---
     if (event === 'page_view') {
-      if (sessionId && CRM_SUPABASE_URL && CRM_SUPABASE_KEY) {
+      if (sessionId && SESSIONS_URL && SESSIONS_KEY) {
         try {
           const row = await getCRMSession(sessionId);
           const existingPages = Array.isArray(row?.pages_visited) ? row.pages_visited : [];
