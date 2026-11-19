@@ -126,6 +126,22 @@ const STEPS = [
     placeholder: "+30 ...",
     required: true,
   },
+  // 2026-11-19 (Instagram research): the house could not say which
+  // channel a brief came from unless the visitor happened to mention it.
+  // One tap, not required ("Continue" passes it), Instagram first.
+  {
+    key: "found",
+    label: "Where did you first come across George Yachts?",
+    type: "choice",
+    options: [
+      { value: "Instagram", label: "Instagram" },
+      { value: "Google", label: "Google" },
+      { value: "An AI assistant", label: "ChatGPT or another AI assistant" },
+      { value: "A friend or a travel advisor", label: "A friend or a travel advisor" },
+      { value: "The press", label: "The press" },
+      { value: "Somewhere else", label: "Somewhere else" },
+    ],
+  },
   {
     key: "notes",
     label: "Anything else we should know?",
@@ -249,6 +265,7 @@ export default function InquiryClient() {
             style: answers.style || null,
             // 2026-11-05 (form sweep): Q6 was asked and never sent.
             occasion: answers.occasion || null,
+            found: answers.found || null,
             notes: answers.notes || null,
           },
         }),

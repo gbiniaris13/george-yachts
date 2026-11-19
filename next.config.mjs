@@ -348,6 +348,11 @@ const nextConfig = {
       // "Home" pill on the home). One door.
       { source: "/index", destination: "/", permanent: true },
       { source: "/index.html", destination: "/", permanent: true },
+      // 2026-11-19: the Instagram bot had been logging /ig as the bio
+      // link's address for seven months and it was a 404. It now lands on
+      // the page built for people arriving from Instagram; the query
+      // string (utm_source and the rest) is carried over.
+      { source: "/ig", destination: "/instagram", permanent: true },
       // 2026-08-30, George: the TheThoms collaboration interview is
       // deleted outright (his call, and the standing no-thethoms rule).
       // The URL held rankings; it lands on the Journal, not a 404.

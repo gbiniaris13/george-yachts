@@ -81,6 +81,14 @@ const META_LABELS = {
   dates: "Preferred dates",
   language: "Language",
   referrer: "Referrer",
+  // 2026-11-19: where the visitor says they found the house (asked on
+  // /inquiry, known on /instagram), and what brought them to the page.
+  found: "Found the house via",
+  notes: "Notes",
+  utm_source: "Arrived from",
+  utm_medium: "Through",
+  utm_campaign: "Campaign",
+  utm_content: "Post or story",
 };
 
 // Format a value for human display. Slug paths get prefixed with
@@ -187,6 +195,8 @@ export async function POST(request) {
     "proposal-generator": "📄 Proposal Generator, lead captured",
     partners: "🤝 Partners, unlock request",
     inquiry: "✉️ Inquiry, new message",
+    // 2026-11-19: the short brief on /instagram (the bio link's page).
+    instagram: "📸 Instagram, new brief",
   }[source] || `📬 Lead, ${source}`;
 
   const lines = [
@@ -214,7 +224,7 @@ export async function POST(request) {
             from: `"George Yachts - Lead" <${GMAIL_USER}>`,
             to: "george@georgeyachts.com",
             replyTo: email,
-            subject: `${headline.replace(/[*]/g, "").replace(/[📬📄🤝✉️]/g, "").trim()}: ${name || email}`,
+            subject: `${headline.replace(/[*]/g, "").replace(/[📬📄🤝✉️📸]/gu, "").trim()}: ${name || email}`,
             // 2026-05-12 hotfix: replaced the raw JSON Context block
             // (which displayed as code) with a clean human-readable
             // key/value table. Brand-aligned typography + navy/gold,
@@ -223,7 +233,7 @@ export async function POST(request) {
               <div style="font-family:'Helvetica Neue',Arial,sans-serif;max-width:580px;margin:0 auto;color:#0D1B2A;background:#FFFFFF;border:1px solid rgba(13,27,42,0.08);">
                 <div style="background:#0D1B2A;padding:22px 28px;">
                   <p style="margin:0;color:#DAA110;font-size:9px;letter-spacing:0.42em;text-transform:uppercase;font-weight:700;">George Yachts</p>
-                  <p style="margin:8px 0 0;color:#F8F5F0;font-size:20px;font-weight:300;line-height:1.25;">${headline.replace(/[*]/g, "").replace(/[📬📄🤝✉️]/g, "").trim()}</p>
+                  <p style="margin:8px 0 0;color:#F8F5F0;font-size:20px;font-weight:300;line-height:1.25;">${headline.replace(/[*]/g, "").replace(/[📬📄🤝✉️📸]/gu, "").trim()}</p>
                 </div>
                 <div style="padding:26px 28px;">
                   <p style="margin:0 0 4px;color:#0D1B2A;opacity:0.65;font-size:10px;letter-spacing:0.32em;text-transform:uppercase;font-weight:600;">From</p>
@@ -265,7 +275,7 @@ export async function POST(request) {
   // notification rows, and this route wrote none. Only the two charter
   // request sources are recorded (the planner and the favorites list).
   // Best effort: a failure here never changes the visitor's answer.
-  const requestKind = { inquiry: "charter brief", favorites: "favorites list" }[source];
+  const requestKind = { inquiry: "charter brief", favorites: "favorites list", instagram: "Instagram brief" }[source];
   if (requestKind) {
     await crmNotifyGeorge({
       type: "form_submission",
