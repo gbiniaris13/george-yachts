@@ -18,6 +18,10 @@ import { pageMeta } from "@/lib/pageMeta";
 import { WHATSAPP_URL } from "@/lib/requiredContact";
 import Footer from "@/app/components/Footer";
 import InstagramEnquiry from "./InstagramEnquiry";
+import { latestFromInstagram } from "@/lib/instagramLatest";
+
+// The list of what Instagram showed last is refreshed every ten minutes.
+export const revalidate = 600;
 
 export const metadata = pageMeta({
   title: "From Instagram - George Yachts",
@@ -46,12 +50,54 @@ const eyebrow = {
   color: GOLD,
 };
 
-export default function InstagramPage() {
+export default async function InstagramPage() {
+  // 2026-11-20: a story cannot carry a tappable link, so the profile link
+  // lands here and the yacht or guide it was about is the first thing shown.
+  const seen = await latestFromInstagram(4);
   return (
     <div className="min-h-screen bg-black text-white" style={{ fontFamily: "var(--gy-font-ui)" }}>
       {/* The root layout already provides <main>. Hyphenation is switched off on the paragraphs below: "with-in 24 hours" on a phone reads badly. */}
       <div className="px-6 pt-36 pb-20 md:pt-44">
         <div className="mx-auto" style={{ maxWidth: 560 }}>
+          {seen.length > 0 && (
+            <div style={{ margin: "0 0 40px", paddingBottom: 30, borderBottom: "1px solid rgba(218, 161, 16,0.18)" }}>
+              <p style={{ ...eyebrow, margin: "0 0 14px" }}>Seen on our Instagram</p>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 12 }}>
+                {seen.map((item) => (
+                  <li key={item.href + item.title}>
+                    <Link
+                      href={item.href}
+                      style={{ display: "flex", alignItems: "center", gap: 16, padding: 10, border: "1px solid rgba(218, 161, 16,0.25)", textDecoration: "none" }}
+                    >
+                      {item.imageUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={`${item.imageUrl}?w=264&h=198&fit=crop&auto=format&q=75`}
+                          alt={`${item.title}, crewed yacht for charter in Greece`}
+                          width={132}
+                          height={99}
+                          loading="eager"
+                          style={{ width: 132, height: 99, objectFit: "cover", flexShrink: 0 }}
+                        />
+                      ) : (
+                        <span aria-hidden="true" style={{ width: 132, height: 99, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(218, 161, 16,0.08)", color: GOLD, fontSize: 10, letterSpacing: "0.3em" }}>
+                          GUIDE
+                        </span>
+                      )}
+                      <span style={{ display: "block", minWidth: 0 }}>
+                        <span style={{ display: "block", fontFamily: "var(--gy-font-editorial)", fontSize: 22, fontWeight: 300, lineHeight: 1.15, color: "#F8F5F0" }}>{item.title}</span>
+                        {item.line ? <span style={{ display: "block", marginTop: 5, fontSize: 13, color: "rgba(248,245,240,0.6)" }}>{item.line}</span> : null}
+                        <span style={{ display: "block", marginTop: 8, fontSize: 10, fontWeight: 600, letterSpacing: "0.26em", textTransform: "uppercase", color: GOLD }}>
+                          {item.kind === "yacht" ? "View this yacht" : "Read the guide"}
+                        </span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <p style={{ ...eyebrow, margin: "0 0 20px" }}>From Instagram</p>
           <h1
             style={{
