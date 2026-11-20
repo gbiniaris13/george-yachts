@@ -353,6 +353,19 @@ const nextConfig = {
       // the page built for people arriving from Instagram; the query
       // string (utm_source and the rest) is carried over.
       { source: "/ig", destination: "/instagram", permanent: true },
+      // 2026-11-20: Instagram does not let the profile link be edited from a
+      // computer, and it tags every tap on it with utm_content=link_in_bio
+      // (58 such visits since April, every one landing on the home page).
+      // So the link in the bio stays "georgeyachts.com" and a visitor who
+      // taps it is taken to the page built for them. Only the home page,
+      // only that tag; the query string is carried over. Not permanent: the
+      // home page itself has not moved.
+      {
+        source: "/",
+        has: [{ type: "query", key: "utm_content", value: "link_in_bio" }],
+        destination: "/instagram",
+        permanent: false,
+      },
       // 2026-08-30, George: the TheThoms collaboration interview is
       // deleted outright (his call, and the standing no-thethoms rule).
       // The URL held rankings; it lands on the Journal, not a 404.
