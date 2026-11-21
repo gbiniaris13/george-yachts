@@ -39,6 +39,19 @@ export const maxDuration = 60;
 const CRM_SUPABASE_URL = process.env.CRM_SUPABASE_URL;
 const CRM_SUPABASE_KEY = process.env.CRM_SUPABASE_SERVICE_KEY;
 
+// 2026-11-21: since fc60d6e0 (19 November) app/api/track writes visitor
+// sessions to the live CRM project (GYC_SUPABASE_*). This reader stayed on
+// CRM_SUPABASE_*, the project the CRM left in June, so from that afternoon
+// it found no visits and the 20 November report said 0 people. Sessions
+// are now read where they are written; notifications keep their old path,
+// as they do in app/api/track. The fallback keeps local dev working.
+const SESSIONS_URL = process.env.GYC_SUPABASE_URL || CRM_SUPABASE_URL;
+const SESSIONS_KEY = process.env.GYC_SUPABASE_SERVICE_ROLE_KEY || CRM_SUPABASE_KEY;
+const baseFor = (path) =>
+  path.startsWith("sessions")
+    ? { url: SESSIONS_URL, key: SESSIONS_KEY }
+    : { url: CRM_SUPABASE_URL, key: CRM_SUPABASE_KEY };
+
 const DAY_MS = 24 * 60 * 60 * 1000;
 const HOUR_MS = 60 * 60 * 1000;
 // Seven days for the table, three more so a browser that reloads all week
@@ -49,10 +62,11 @@ const LOOKBACK_DAYS = 10;
 async function readAll(path) {
   const rows = [];
   for (let from = 0; from < 20000; from += 1000) {
-    const res = await fetch(`${CRM_SUPABASE_URL}/rest/v1/${path}`, {
+    const { url, key } = baseFor(path);
+    const res = await fetch(`${url}/rest/v1/${path}`, {
       headers: {
-        apikey: CRM_SUPABASE_KEY,
-        Authorization: `Bearer ${CRM_SUPABASE_KEY}`,
+        apikey: key,
+        Authorization: `Bearer ${key}`,
         Range: `${from}-${from + 999}`,
       },
       cache: "no-store",
@@ -109,7 +123,7 @@ export async function GET(request) {
 
   let report;
   try {
-    if (!CRM_SUPABASE_URL || !CRM_SUPABASE_KEY) throw new Error("the visitor database is not configured");
+    if (!SESSIONS_URL || !SESSIONS_KEY || !CRM_SUPABASE_URL || !CRM_SUPABASE_KEY) throw new Error("the visitor database is not configured");
     const [sessions, helmRequests] = await Promise.all([
       readAll(`sessions?select=${SESSION_COLUMNS}&started_at=gte.${since}&started_at=lt.${until}&order=started_at.asc`),
       readHelmRequests(since, until),
