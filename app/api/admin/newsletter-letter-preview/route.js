@@ -118,7 +118,7 @@ export async function GET(request) {
   return NextResponse.json({
     ok: validation.ok,
     stream,
-    gate: shouldFireToday(new Date(), lastSent ? String(lastSent) : null),
+    gate: shouldFireToday(new Date(), lastSent ? String(lastSent) : null, stream),
     plan,
     desk_note: deskNote,
     subject: built.subject,
