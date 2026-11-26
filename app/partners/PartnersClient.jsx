@@ -560,7 +560,7 @@ export default function PartnersClient() {
               },
               {
                 q: "How fast is payment?",
-                a: "Within 7-10 days of the signed MYBA-standard contract - not after the charter, not after the season, not after a clearing cycle. Payment by SEPA or international wire in EUR. We send you a written confirmation the day the contract is signed so you know it's coming.",
+                a: "From the client's deposit - not after the charter and not at the end of the season. Usually about two weeks from signature, depending on international wires. Paid in US dollars: you receive your share of exactly the dollars that reach our account, so neither of us gains or loses on the exchange rate. We send you a written confirmation the day the contract is signed so you know it's coming.",
               },
               {
                 q: "Can I co-broker on a deal?",
